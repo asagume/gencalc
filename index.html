@@ -56,10 +56,19 @@
             </tr>
         </table>
         <div>
-            <p id="option"></p>
-            <div class="hidable">
-                
+            <p id="option">隠したい</p>
+            <div class="hidable" id="optionBox">
+                <input type="checkbox" value="CHECKBOX1" id="checkbox1">
+                <label for="checkbox1">CHECKBOX1</label>
+
+                <label for="select1">SELECT1</label>
+                <select id="select1">
+                    <option value=""></option>
+                    <option value="OPTION1">OPTION1</option>
+                    <option value="OPTION2">OPTION2</option>
+                </select>
             </div>
+            <p id="optionCheck">OPTION CHECK</p>
         </div>
     </div>
 
@@ -183,23 +192,116 @@
         console.log(calculateFormulaArray(analyzeFormulaStr("50%*3", "ATK"), itemValueObj));
 
         // テーブルクリックで行を隠したり表示したり
-        let toggleStateMap = new Map();
+        let selectorVisiblityStateMap = new Map();
         const elementOnClickHidableChildrenToggle = function () {
             let selector = "#" + this.id + " .hidable";
             $(selector).toggle();
             let isVisible = $(selector).is(":visible");
-            toggleStateMap.set(selector, $(selector).is(":visible"));
-            console.debug(toggleStateMap);
+            selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+            console.debug(selectorVisiblityStateMap);
         }
         const elementOnClickHidableNeighborToggle = function () {
             let selector = "#" + this.id + "+.hidable";
             $(selector).toggle();
             let isVisible = $(selector).is(":visible");
-            toggleStateMap.set(selector, $(selector).is(":visible"));
-            console.debug(toggleStateMap);
+            selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+            console.debug(selectorVisiblityStateMap);
         }
         document.getElementById("dmg-na").addEventListener("click", elementOnClickHidableChildrenToggle);
         document.getElementById("dmg-ca").addEventListener("click", elementOnClickHidableChildrenToggle);
+        document.getElementById("option").addEventListener("click", elementOnClickHidableNeighborToggle);
+
+        function isHidden(selector) {
+            let isHidden = false;
+            if (selectorVisiblityStateMap.has(selector)) {
+                isHidden = !selectorVisiblityStateMap.get(selector);
+            }
+            return isHidden;
+        }
+
+        var validConditionArr = [];
+        const setupValidConditionArr = function () {
+            validConditionArr = [];
+            $("#optionBox input[type='checkbox']").each(function (index, elem) {
+                if (elem.checked) {
+                    validConditionArr.push(elem.value);
+                }
+            });
+            $("#optionBox select").each(function (index, elem) {
+                if (elem.value) {
+                    validConditionArr.push(elem.value);
+                }
+            });
+        };
+        var conditionArr = ["CHECKBOX1", "OPTION2"];
+        const checkCondition = function (condArr) {
+            let result = true;
+            condArr.forEach(e => {
+                if (!validConditionArr.includes(e)) {
+                    result = false;
+                }
+            });
+            return result;
+        }
+        $(document).on("click", "#optionCheck", function () {
+            setupValidConditionArr();
+            console.log(validConditionArr);
+            console.log(checkCondition(conditionArr));
+        });
+
+        function analyzeConditionStrSub(str, conditionCheckboxArr, conditionSelectMap, exclusionMap) {
+            let resultArr = [];
+            let exclusionArr = null;
+            let strArr = str.split("^");
+            if (strArr > 2) {
+                console.error("%s[%o,%o,%o]", str, null, null);
+            } else if (strArr > 1) {
+                exclusion = strArr[1];
+            }
+            let optionArr = [];
+            strArr = strArr[0].split("@");
+            if (strArr > 2) {
+                console.error("%s[%o,%o,%o]", str, null, null);
+            } else if (strArr > 1) {
+                let re = new RegExp("([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)([^0-9\\.]*)");
+                reRet = re.exec(strArr[1]);
+                if (reRet) {
+                    let prefix = reRet[1];
+                    let start = Number(reRet[2]);
+                    let end = Number(reRet[3]);
+                    let postfix = reRet[4];
+                    for (let i = start; i <= end; i += start) {
+                        optionArr.push(prefix + i + postfix);
+                    }
+                } else {
+                    optionArr.push(strArr[1]);
+                }
+            }
+            if (optionArr.length == 0) {
+                if (!conditionCheckboxArr.includes(strArr[0])) {
+                    conditionCheckboxArr.push(strArr[0]);
+                }
+            } else {
+                if (!conditionSelectMap.has(strArr[0])) {
+                    conditionSelectMap.set(strArr[0], optionArr);
+                } else {
+                    optionArr.push(conditionSelectMap.get(strArr[0]));
+                    conditionSelectMap.set(strArr[0], $.unique(optionArr).sort());
+                }
+            }
+            if (!exclusionMap.has(strArr[0])) {
+                exclusionMap.set(strArr[0], exclusion);
+            }
+        }
+        // {CONDITION}                      checkbox
+        // {KEY}@{VALUE}                    select
+        // {PREFIX}@{START}-{END}{POSTFIX}  select
+        const analyzeConditionStr = function (str, conditionCheckboxArr, conditionSelectMap, exclusionMap) {
+            let strArr = str.split(",");
+            strArr.forEach(e => {
+                analyzeConditionStrSub(e, conditionCheckboxArr, conditionSelectMap, exclusionMap);
+            });
+        }
 
     </script>
 </body>
