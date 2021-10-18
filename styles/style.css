@@ -1,0 +1,358 @@
+@media screen and (min-width: 3000px) {
+    html {
+        font-size: 62.5%;
+    }
+    body {
+        font-size: 1.6em;
+    }
+    #main {
+        width: 801px;
+        margin: 0 auto;
+    }
+    .base-container {
+        display: grid;
+        grid-template-columns: 1px auto;
+        grid-template-rows: 32px 300px auto minmax(80px, 120px);
+        grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
+    }
+    select {
+        width: 300px;
+    }
+    input[type="number"] {
+        width: 80px;
+    }
+}
+
+@media screen and (max-width: 2000px) {
+    html {
+        font-size: 75%;
+    }
+    body {
+        font-size: 1.6em;
+    }
+    #main {
+        width: 800px;
+        margin: 0 auto;
+    }
+    .base-container {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 32px 120px 280px auto minmax(80px, 120px);
+        grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
+        font-size: 1.6rem;
+    }
+    select {
+        width: 240px;
+        height: 40px;
+        font-size: 1.7rem;
+    }
+    input[type="number"] {
+        width: 80px;
+    }
+}
+
+body {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    color: blanchedalmond;
+    background-color: rgb(58, 30, 10);
+    text-align: center;
+}
+
+p {
+    margin: 5px;
+}
+
+fieldset {
+    padding-bottom: 5px;
+}
+
+/* グリッド */
+
+.header {
+    grid-area: header;
+    width: 100%;
+}
+
+.aside {
+    grid-area: aside;
+    margin: 10px;
+}
+
+.input-area {
+    grid-area: input-area;
+    margin: 10px;
+}
+
+.result-area {
+    grid-area: result-area;
+    margin: 10px;
+}
+
+.footer {
+    grid-area: footer;
+    margin: 10px;
+}
+
+.float-menu {
+    border: 1px solid #CCC;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.float-menu ul {
+    list-style: none outside none;
+    float: left;
+    margin: 0 0 0 0;
+    padding: 0;
+    position: relative;
+    left: 50%;
+}
+
+.float-menu ul li {
+    float: left;
+    margin-right: 2px;
+    padding: 2px;
+    border: 1px solid #999;
+    position: relative;
+    left: -50%;
+}
+
+.tab-area {
+    width: 100%;
+    margin: auto;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    line-height: normal;
+}
+
+/* 入力エリア */
+
+.input-area-tab {
+    width: calc(100%/5);
+    height: 32px;
+    background-color: darkslategrey;
+    line-height: 32px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+input[name="input-area-tab-name"] {
+    display: none;
+}
+
+input:checked+.input-area-tab {
+    background-color: goldenrod;
+    color: aliceblue;
+}
+
+input:checked+.input-area-tab+.tab-content {
+    display: block;
+}
+
+.input-group article {
+    vertical-align: top;
+}
+
+.input-group article label {
+    display: block;
+}
+
+select {
+    height: 32px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 2px 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 5px;
+}
+
+section {
+    width: 100%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.input-area .input-item {
+    display: inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.input-area .input-item-hidden {
+    display: none;
+}
+
+.input-area .input-item label {
+    display: block;
+    margin: 2px;
+}
+
+.input-area .check-item {
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+}
+
+.input-area .check-item label {
+    display: inline;
+}
+
+.input-area .check-item:hover .baloon {
+    display: inline;
+}
+
+.baloon {
+    position: absolute;
+    display: none;
+    padding: 2px;
+    background-color: rgba(102, 102, 255, 0.50);
+    width: 180px;
+    left: -1%;
+    bottom: 30px;
+    font-size: 1.4rem;
+}
+
+.balloon:after {
+    border-left: 12px solid rgba(102, 102, 255, 0.50);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    right: -12px;
+    top: 5%;
+    content: "";
+    position: absolute;
+}
+
+.with-small-select {
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.with-small-select select {
+    display: block;
+    width: 200px;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+}
+
+table th {
+    font-weight: normal;
+    text-align: right;
+    padding: 6px;
+}
+
+input[type="number"] {
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 2px 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+/* 結果エリア */
+
+.result-area-tab {
+    width: calc(100%/5);
+    height: 32px;
+    background-color: darkslategrey;
+    line-height: 32px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+input[name="result-area-tab-name"] {
+    display: none;
+}
+
+input:checked+.result-area-tab {
+    background-color: goldenrod;
+    color: aliceblue;
+}
+
+input:checked+.result-area-tab+.tab-content {
+    display: block;
+}
+
+input[type="checkbox"]:checked+label {
+    color: gold;
+}
+
+.optionBox label {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.optionBox div {
+    display: inline-block;
+}
+
+.optionBox div select {
+    width: 80px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+table thead th, table tbody th, table tbody td {
+    padding: 1px 3px;
+    border-bottom: 1px solid #aaa;
+}
+
+table thead th {
+    background-color: black;
+    font-size: 1.4rem;
+}
+
+table tbody th {
+    background-color: dimgrey;
+    font-size: 1.4rem;
+}
+
+table thead th+th, table tbody td {
+    border-left: 1px solid #aaa;
+}
+
+table tbody tr:last-child th, table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table thead th, table tbody th {
+    padding: 2px 8px;
+    text-align: center;
+}
+
+table thead th.label, table tbody th.label {
+    width: 100px;
+    text-align: right;
+}
+

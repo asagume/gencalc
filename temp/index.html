@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Html Test</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <div>
+        <table id="dmg-na">
+            <tr>
+                <th>TITLE</th>
+                <th>COLUMN1</th>
+                <th>COLUMN2</th>
+            </tr>
+            <tr>
+                <th>ROW1</th>
+                <td>DATA1</td>
+                <td>DATA2</td>
+            </tr>
+            <tr class="hidable">
+                <th>ROW2</th>
+                <td>DATA1</td>
+                <td>DATA2</td>
+            </tr>
+            <tr class="hidable">
+                <th>ROW3</th>
+                <td>DATA1</td>
+                <td>DATA2</td>
+            </tr>
+        </table>
+        <table id="dmg-ca">
+            <th>TITLE</th>
+            <th>COLUMN1</th>
+            <th>COLUMN2</th>
+            </tr>
+            <tr>
+                <th>ROW1</th>
+                <td>DATA1</td>
+                <td>DATA2</td>
+            </tr>
+            <tr class="hidable">
+                <th>ROW2</th>
+                <td>DATA1</td>
+                <td>DATA2</td>
+            </tr>
+            <tr class="hidable">
+                <th>ROW3</th>
+                <td>DATA1</td>
+                <td>DATA2</td>
+            </tr>
+        </table>
+        <div>
+            <p id="option">隠したい</p>
+            <div class="hidable" id="optionBox">
+                <input type="checkbox" value="CHECKBOX1" id="checkbox1">
+                <label for="checkbox1">CHECKBOX1</label>
+
+                <label for="select1">SELECT1</label>
+                <select id="select1">
+                    <option value=""></option>
+                    <option value="OPTION1">OPTION1</option>
+                    <option value="OPTION2">OPTION2</option>
+                </select>
+            </div>
+            <p id="optionCheck">OPTION CHECK</p>
+        </div>
+    </div>
+
+    <script>
+        //// 計算式Arrayを計算します
+        const calculateFormulaArray = function (formulaArr, itemValueObj) {
+            let result = 0;
+            let operator = null;
+            formulaArr.forEach(entry => {
+                let subResult;
+                if (["+", "-", "*", "/"].includes(entry)) {
+                    operator = entry;
+                    return;
+                } else if ($.isNumeric(entry)) {
+                    subResult = Number(entry);
+                } else if ($.isArray(entry)) {
+                    subResult = calculateFormulaArray(entry, itemValueObj);
+                } else {
+                    if (entry in itemValueObj) {
+                        subResult = Number(itemValueObj[entry]);
+                    } else {
+                        console.error("%s[%o,%o]", calculateFormulaArray.name, itemValueObj, formulaArr);
+                    }
+                }
+                if (operator == null) {
+                    result += subResult;
+                } else {
+                    switch (operator) {
+                        case "+":
+                            result += subResult;
+                            break;
+                        case "-":
+                            result -= subResult;
+                            break;
+                        case "*":
+                            result *= subResult;
+                            break;
+                        case "/":
+                            result /= subResult;
+                            break;
+                    }
+                }
+            });
+            return result;
+        }
+        //// 文字列を解析して、計算式Arrayを作成します
+        // 数値|数値%|数値%文字列|文字列
+        function analyzeFormulaStrSub(str, defaultItem = null) {
+            let resultArr = [];
+            if ($.isNumeric(str)) {
+                resultArr.push(Number(str));
+            } else {
+                let strArr = str.split("%");
+                if (strArr.length == 1) {
+                    resultArr.push(strArr[0]);
+                } else {
+                    resultArr.push(Number(strArr[0]) / 100);
+                    resultArr.push("*");
+                    if (strArr[1].length > 0) {
+                        resultArr.push(strArr[1]);
+                    } else {
+                        resultArr.push(defaultItem);
+                    }
+                }
+            }
+            return resultArr;
+        }
+        const analyzeFormulaStr = function (str, defaultItem = null) {
+            let resultArr = [];
+            let re = new RegExp("([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|[0-9\\.]+)([\\+\\-\\*/]?)(.*)");
+            let workStr = str;
+            while (true) {
+                let reRet = re.exec(workStr);
+                if (reRet == null) break;
+                resultArr.push(analyzeFormulaStrSub(reRet[1], defaultItem));
+                if (reRet[2]) {
+                    resultArr.push(reRet[2]);
+                    if (reRet[3]) {
+                        workStr = reRet[3];
+                        continue;
+                    } else {
+                        console.error("%s[%o]", analyzeFormulaStr.name, str);
+                    }
+                } else if (reRet[3]) {
+                    console.error("%s[%o]", analyzeFormulaStr.name, str);
+                }
+                break;
+            }
+            return resultArr;
+        }
+        // 計算式Arrayを表示用の文字列に変換します
+        function formulaArrayToString(formulaArr) {
+            let result = "";
+            if ($.isArray(formulaArr)) {
+                result += "[";
+                formulaArr.forEach(entry => {
+                    result += formulaArrayToString(entry);
+                });
+                result += "]";
+            } else {
+                result += formulaArr;
+            }
+            return result;
+        }
+        console.log(formulaArrayToString(analyzeFormulaStr("123%", "ATK")));
+        console.log(formulaArrayToString(analyzeFormulaStr("123%DEF", "ATK")));
+        console.log(formulaArrayToString(analyzeFormulaStr("123%DEF+234", "ATK")));
+        console.log(formulaArrayToString(analyzeFormulaStr("100%ER-100*0.25", null)));
+        console.log(formulaArrayToString(analyzeFormulaStr("50%+60%", "ATK")));
+        console.log(formulaArrayToString(analyzeFormulaStr("50%*3", "ATK")));
+        let itemValueObj = {
+            ATK: 1300,
+            DEF: 799,
+            ER: 255
+        };
+        console.log(calculateFormulaArray(analyzeFormulaStr("123%", "ATK"), itemValueObj));
+        console.log(calculateFormulaArray(analyzeFormulaStr("123%DEF", "ATK"), itemValueObj));
+        console.log(calculateFormulaArray(analyzeFormulaStr("123%DEF+234", "ATK"), itemValueObj));
+        console.log(calculateFormulaArray(analyzeFormulaStr("100%ER-100*0.25"), itemValueObj));
+        console.log(calculateFormulaArray(analyzeFormulaStr("50%+60%", "ATK"), itemValueObj));
+        console.log(calculateFormulaArray(analyzeFormulaStr("50%*3", "ATK"), itemValueObj));
+
+        // テーブルクリックで行を隠したり表示したり
+        let selectorVisiblityStateMap = new Map();
+        const elementOnClickHidableChildrenToggle = function () {
+            let selector = "#" + this.id + " .hidable";
+            $(selector).toggle();
+            let isVisible = $(selector).is(":visible");
+            selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+            console.debug(selectorVisiblityStateMap);
+        }
+        const elementOnClickHidableNeighborToggle = function () {
+            let selector = "#" + this.id + "+.hidable";
+            $(selector).toggle();
+            let isVisible = $(selector).is(":visible");
+            selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+            console.debug(selectorVisiblityStateMap);
+        }
+        document.getElementById("dmg-na").addEventListener("click", elementOnClickHidableChildrenToggle);
+        document.getElementById("dmg-ca").addEventListener("click", elementOnClickHidableChildrenToggle);
+        document.getElementById("option").addEventListener("click", elementOnClickHidableNeighborToggle);
+
+        function isHidden(selector) {
+            let isHidden = false;
+            if (selectorVisiblityStateMap.has(selector)) {
+                isHidden = !selectorVisiblityStateMap.get(selector);
+            }
+            return isHidden;
+        }
+
+        var validConditionArr = [];
+        const setupValidConditionArr = function () {
+            validConditionArr = [];
+            $("#optionBox input[type='checkbox']").each(function (index, elem) {
+                if (elem.checked) {
+                    validConditionArr.push(elem.value);
+                }
+            });
+            $("#optionBox select").each(function (index, elem) {
+                if (elem.value) {
+                    validConditionArr.push(elem.value);
+                }
+            });
+        };
+        var conditionArr = ["CHECKBOX1", "OPTION2"];
+        const checkCondition = function (condArr) {
+            let result = true;
+            condArr.forEach(e => {
+                if (!validConditionArr.includes(e)) {
+                    result = false;
+                }
+            });
+            return result;
+        }
+        $(document).on("click", "#optionCheck", function () {
+            setupValidConditionArr();
+            console.log(validConditionArr);
+            console.log(checkCondition(conditionArr));
+        });
+
+        function analyzeConditionStrSub(str, conditionCheckboxArr, conditionSelectMap, exclusionMap) {
+            let resultArr = [];
+            let exclusionArr = null;
+            let strArr = str.split("^");
+            if (strArr > 2) {
+                console.error("%s[%o,%o,%o]", str, null, null);
+            } else if (strArr > 1) {
+                exclusion = strArr[1];
+            }
+            let optionArr = [];
+            strArr = strArr[0].split("@");
+            if (strArr > 2) {
+                console.error("%s[%o,%o,%o]", str, null, null);
+            } else if (strArr > 1) {
+                let re = new RegExp("([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)([^0-9\\.]*)");
+                reRet = re.exec(strArr[1]);
+                if (reRet) {
+                    let prefix = reRet[1];
+                    let start = Number(reRet[2]);
+                    let end = Number(reRet[3]);
+                    let postfix = reRet[4];
+                    for (let i = start; i <= end; i += start) {
+                        optionArr.push(prefix + i + postfix);
+                    }
+                } else {
+                    optionArr.push(strArr[1]);
+                }
+            }
+            if (optionArr.length == 0) {
+                if (!conditionCheckboxArr.includes(strArr[0])) {
+                    conditionCheckboxArr.push(strArr[0]);
+                }
+            } else {
+                if (!conditionSelectMap.has(strArr[0])) {
+                    conditionSelectMap.set(strArr[0], optionArr);
+                } else {
+                    optionArr.push(conditionSelectMap.get(strArr[0]));
+                    conditionSelectMap.set(strArr[0], $.unique(optionArr).sort());
+                }
+            }
+            if (!exclusionMap.has(strArr[0])) {
+                exclusionMap.set(strArr[0], exclusion);
+            }
+        }
+        // {CONDITION}                      checkbox
+        // {KEY}@{VALUE}                    select
+        // {PREFIX}@{START}-{END}{POSTFIX}  select
+        const analyzeConditionStr = function (str, conditionCheckboxArr, conditionSelectMap, exclusionMap) {
+            let strArr = str.split(",");
+            strArr.forEach(e => {
+                analyzeConditionStrSub(e, conditionCheckboxArr, conditionSelectMap, exclusionMap);
+            });
+        }
+
+    </script>
+</body>
+
+</html>
