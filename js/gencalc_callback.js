@@ -423,6 +423,15 @@ function calculateStatus(obj, kind, formula) {
     console.debug("%s[%o,%o,%o] => %o", calculateStatus.name, null, kind, formula, result);
 }
 
+function calculateSubStatus (obj, statusObj, level = null) {
+    let ignoreArr = ["基礎HP", "基礎攻撃力", "基礎防御力"];
+    Object.keys(statusObj).forEach(propName => {
+        if (ignoreArr.includes(propName)) return;
+        let formula = level != null ? statusObj[propName][level] : statusObj[propName];
+        calculateStatus(obj, propName, statusObj, formula);
+    });
+}
+
 // RESULT/INPUT ステータスを計算します
 const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     console.debug(inputOnChangeStatusUpdate.name);
@@ -430,10 +439,11 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     if (!selectedWeaponData) return;
     // 基礎
     initCalculateObj();
+    let myLevel = $("#レベルInput").val();
     if (baseUpdate) {
-        calculateObj["基礎HP"] = selectedCharacterData["基礎HP"][$("#レベルInput").val()];
-        calculateObj["基礎攻撃力"] = selectedCharacterData["基礎攻撃力"][$("#武器レベルInput").val()] + selectedWeaponData["基礎攻撃力"][$("#武器レベルInput").val()];
-        calculateObj["基礎防御力"] = selectedCharacterData["基礎防御力"][$("#レベルInput").val()];
+        calculateObj["基礎HP"] = selectedCharacterData["ステータス"]["基礎HP"][myLevel];
+        calculateObj["基礎攻撃力"] = selectedCharacterData["ステータス"]["基礎攻撃力"][myLevel] + selectedWeaponData["ステータス"]["基礎攻撃力"][myLevel];
+        calculateObj["基礎防御力"] = selectedCharacterData["ステータス"]["基礎防御力"][myLevel];
     } else {
         calculateObj["基礎HP"] = Number($("#基礎HPInput").val());
         calculateObj["基礎攻撃力"] = Number($("#基礎攻撃力Input").val());
@@ -451,6 +461,9 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     calculateObj["敵岩元素耐性"] = selectedEnemyData["岩元素耐性"];
     calculateObj["敵物理耐性"] = selectedEnemyData["物理耐性"];
     calculateObj["敵防御力"] = 0;
+    // キャラクターと武器のサブステータスを計算します
+    calculateSubStatus (calculateObj, selectedCharacterData["ステータス"], myLevel);
+    calculateSubStatus (calculateObj, selectedWeaponData["ステータス"], myLevel);
     // 聖遺物メイン効果
     $('select[name="聖遺物メイン効果Input"]').each(function () {
         calculateStatus(calculateObj, this.value, [artifactMainMaster["5"][this.value]]);
