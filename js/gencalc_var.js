@@ -36,6 +36,13 @@ const toggleHidableNeighbor = function (id = null) {
     $(selector).toggle();
     selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
 }
+function isHidden(selector) {
+    let isHidden = false;
+    if (selectorVisiblityStateMap.has(selector)) {
+        isHidden = !selectorVisiblityStateMap.get(selector);
+    }
+    return isHidden;
+}
 
 // 条件名
 var conditionCheckboxArr = [];

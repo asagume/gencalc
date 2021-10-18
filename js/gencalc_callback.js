@@ -109,6 +109,49 @@ function isDetailOpen(天賦種類, 攻撃種類) {
     return result;
 }
 
+//
+function buildResultTable(name) {
+    let tableId = name + "Result";
+    let tableElem = document.getElementById(tableId);
+    while (tableElem.firstChild) {
+        tableElem.removeChild(tableElem.firstChild);
+    }
+    let isHidden = isHidden("#" + tableId + " .hidable");
+
+    let theadElem = document.createElement("thead");
+    tableElem.appendChild(theadElem);
+    let tbodyElem = document.createElement("tbody");
+    tableElem.appendChild(tbodyElem);
+
+    let tr1Elem = document.createElement("tr");     // 1行目：タイトル行
+    theadElem.appendChild(tr1Elem);
+    let tr2Elem = document.createElement("tr");     // 2行目：ダメージ期待値
+    tbodyElem.appendChild(tr2Elem);
+    let tr3Elem = document.createElement("tr");     // 3行目：会心ダメージ
+    tr3Elem.className = "hidable";
+    tr3Elem.hidden = isHidden;
+    tbodyElem.appendChild(tr3Elem);
+    let tr4Elem = document.createElement("tr");     // 4行目：非会心ダメージ
+    tr4Elem.className = "hidable";
+    tr4Elem.hidden = isHidden;
+    tbodyElem.appendChild(tr4Elem);
+    let th1Elem1 = document.createElement("th");    // 1行目
+    th1Elem1.textContent = name.replace("ダメージ", "");
+    tr1Elem.appendChild(th1Elem1);
+    let th2Elem1 = document.createElement("th");    // 2行目
+    th2Elem1.textContent = "期待値";
+    tr2Elem.appendChild(th2Elem1);
+    let th3Elem1 = document.createElement("th");    // 3行目
+    th3Elem1.textContent = "会心";
+    tr3Elem.appendChild(th3Elem1);
+    let th4Elem1 = document.createElement("th");    // 4行目
+    th4Elem1.textContent = "非会心";
+    tr4Elem.appendChild(th4Elem1);
+
+
+}
+
+
 //// 
 function displayCalculateResultTable(計算式Map, 天賦種類, 攻撃種類, 元素, isDetailOpen = false) {
     let my防御補正 = calc防御補正();
@@ -458,51 +501,20 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
             calculateStatus(calculateObj, entry["種類"], entry["数値"]);
         }
     });
-    setInputValue("#基礎HPInput", calculateObj["基礎HP"]);
-    setInputValue("#基礎攻撃力Input", calculateObj["基礎攻撃力"]);
-    setInputValue("#基礎防御力Input", calculateObj["基礎防御力"]);
-    setInputValue("#HP上限Input", calculateObj["HP上限"]);
-    setInputValue("#攻撃力Input", calculateObj["攻撃力"]);
-    setInputValue("#防御力Input", calculateObj["防御力"]);
-    setInputValue("#元素熟知Input", calculateObj["元素熟知"]);
-    setInputValue("#会心率Input", calculateObj["会心率"]);
-    setInputValue("#会心ダメージInput", calculateObj["会心ダメージ"]);
-    setInputValue("#与える治療効果Input", calculateObj["与える治療効果"]);
-    setInputValue("#受ける治療効果Input", calculateObj["受ける治療効果"]);
-    setInputValue("#クールタイム短縮Input", calculateObj["クールタイム短縮"]);
-    setInputValue("#シールド強化Input", calculateObj["シールド強化"]);
-    setInputValue("#元素チャージ効率Input", calculateObj["元素チャージ効率"]);
-    setInputValue("#炎元素ダメージバフInput", calculateObj["炎元素ダメージバフ"]);
-    setInputValue("#水元素ダメージバフInput", calculateObj["水元素ダメージバフ"]);
-    setInputValue("#風元素ダメージバフInput", calculateObj["風元素ダメージバフ"]);
-    setInputValue("#雷元素ダメージバフInput", calculateObj["雷元素ダメージバフ"]);
-    setInputValue("#草元素ダメージバフInput", calculateObj["草元素ダメージバフ"]);
-    setInputValue("#氷元素ダメージバフInput", calculateObj["氷元素ダメージバフ"]);
-    setInputValue("#岩元素ダメージバフInput", calculateObj["岩元素ダメージバフ"]);
-    setInputValue("#物理ダメージバフInput", calculateObj["物理ダメージバフ"]);
-    setInputValue("#炎元素耐性Input", calculateObj["炎元素耐性"]);
-    setInputValue("#水元素耐性Input", calculateObj["水元素耐性"]);
-    setInputValue("#風元素耐性Input", calculateObj["風元素耐性"]);
-    setInputValue("#雷元素耐性Input", calculateObj["雷元素耐性"]);
-    setInputValue("#草元素耐性Input", calculateObj["草元素耐性"]);
-    setInputValue("#氷元素耐性Input", calculateObj["氷元素耐性"]);
-    setInputValue("#岩元素耐性Input", calculateObj["岩元素耐性"]);
-    setInputValue("#物理耐性Input", calculateObj["物理耐性"]);
-    setInputValue("#通常攻撃ダメージバフInput", calculateObj["通常攻撃ダメージバフ"]);
-    setInputValue("#重撃ダメージバフInput", calculateObj["重撃ダメージバフ"]);
-    setInputValue("#落下攻撃ダメージバフInput", calculateObj["落下攻撃ダメージバフ"]);
-    setInputValue("#元素スキルダメージバフInput", calculateObj["元素スキルダメージバフ"]);
-    setInputValue("#元素爆発ダメージバフInput", calculateObj["元素爆発ダメージバフ"]);
-    setInputValue("#与えるダメージInput", calculateObj["与えるダメージ"]);
-    setInputValue("#敵炎元素耐性Input", calculateObj["敵炎元素耐性"]);
-    setInputValue("#敵水元素耐性Input", calculateObj["敵水元素耐性"]);
-    setInputValue("#敵風元素耐性Input", calculateObj["敵風元素耐性"]);
-    setInputValue("#敵雷元素耐性Input", calculateObj["敵雷元素耐性"]);
-    setInputValue("#敵草元素耐性Input", calculateObj["敵草元素耐性"]);
-    setInputValue("#敵氷元素耐性Input", calculateObj["敵氷元素耐性"]);
-    setInputValue("#敵岩元素耐性Input", calculateObj["敵岩元素耐性"]);
-    setInputValue("#敵物理耐性Input", calculateObj["敵物理耐性"]);
-    setInputValue("#敵防御力Input", calculateObj["敵防御力"]);
+    // calculateObj⇒各Input要素 値をコピーします
+    Object.keys(calculateObj).forEach(propName => {
+        let inputElem = document.getElementById(propName + "Input");
+        if (inputElem) {
+            let value = calculateObj[propName];
+            let step = inputElem.step;
+            if (step && Number(step) < 1) {
+                value = Number(value.toFixed(1));
+            } else {
+                value = Math.round(value);
+            }
+            inputElem.value = value;
+        }
+    });
     inputOnChangeResultUpdate();
 }
 
@@ -554,7 +566,7 @@ const setupDamageFormulaMapSub = function (obj, damageName, talentKind, damageKi
     if ("名前" in obj) {
         myDamageName += "." + obj["名前"];
     } else {
-        if ("種類" in obj ) {
+        if ("種類" in obj) {
         }
     }
     if ("種類" in obj) {
@@ -624,40 +636,40 @@ const inputOnChangeOptionUpdate = function () {
     // キャラクター
     let myLevel = $("#レベルInput").val();
     setupTypeValueFormulaArr("副ステータス", selectedCharacterData["副ステータス"], myLevel);
-    let myDamageName = "通常攻撃";
-    let myDamageElement = selectedCharacterData["武器"] == "法器" ? selectedCharacterData["元素"] : "物理";
-    myLevel = $("#通常攻撃レベルInput").val();
-    selectedCharacterData["通常攻撃"].forEach(entry => {
-        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-    });
-    myDamageName = "重撃";
-    selectedCharacterData["重撃"].forEach(entry => {
-        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-    });
-    myDamageName = "落下攻撃";
-    selectedCharacterData["落下攻撃"].forEach(entry => {
-        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-    });
-    myDamageElement = selectedCharacterData["元素"];
-    myLevel = $("#元素スキルレベルInput").val();
-    selectedCharacterData["元素スキル"].forEach(entry => {
-        if ("一回押し" in entry) {
-            myDamageName = "元素スキル.一回押し";
-            setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-        }
-        if ("長押し" in entry) {
-            myDamageName = "元素スキル.長押し";
-            setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-        }
-        myDamageName = "元素スキル";
-        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-    });
-    myDamageName = "元素爆発";
-    myDamageElement = selectedCharacterData["元素"];
-    myLevel = $("#元素爆発レベルInput").val();
-    selectedCharacterData["元素爆発"].forEach(entry => {
-        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
-    });
+//    let myDamageName = "通常攻撃";
+//    let myDamageElement = selectedCharacterData["武器"] == "法器" ? selectedCharacterData["元素"] : "物理";
+//    myLevel = $("#通常攻撃レベルInput").val();
+//    selectedCharacterData["通常攻撃"].forEach(entry => {
+//        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//    });
+//    myDamageName = "重撃";
+//    selectedCharacterData["重撃"].forEach(entry => {
+//        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//    });
+//    myDamageName = "落下攻撃";
+//    selectedCharacterData["落下攻撃"].forEach(entry => {
+//        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//    });
+//    myDamageElement = selectedCharacterData["元素"];
+//    myLevel = $("#元素スキルレベルInput").val();
+//    selectedCharacterData["元素スキル"].forEach(entry => {
+//        if ("一回押し" in entry) {
+//            myDamageName = "元素スキル.一回押し";
+//            setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//        }
+//        if ("長押し" in entry) {
+//            myDamageName = "元素スキル.長押し";
+//            setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//        }
+//        myDamageName = "元素スキル";
+//        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//    });
+//    myDamageName = "元素爆発";
+//    myDamageElement = selectedCharacterData["元素"];
+//    myLevel = $("#元素爆発レベルInput").val();
+//    selectedCharacterData["元素爆発"].forEach(entry => {
+//        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+//    });
     selectedCharacterData["その他天賦"].forEach(entry => {
         if ("詳細" in entry) {
             let key = "天賦" + ("名前" in entry ? "." + entry["名前"] : null);
