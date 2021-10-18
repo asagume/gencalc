@@ -231,3 +231,20 @@ function calculateDamage(calculateObj, kind, formula) {
     console.debug("%s[%o,%o,%o] => %o", calculateDamage.name, null, kind, formula, result);
     return result;
 }
+
+//
+function setObjectPropertiesToElements(obj, prefix, postfix) {
+    Object.keys(obj).forEach(propName => {
+        let inputElem = document.getElementById(prefix + propName + postfix);
+        if (inputElem) {
+            let value = obj[propName];
+            let step = inputElem.step;
+            if (step && Number(step) < 1) {
+                value = Number(value.toFixed(1));
+            } else {
+                value = Math.round(value);
+            }
+            inputElem.value = value;
+        }
+    });
+}
