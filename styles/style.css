@@ -33,6 +33,7 @@
     #main {
         width: 800px;
         margin: 0 auto;
+        background: linear-gradient(to right,#574014, #3a2e0c );
     }
     .base-container {
         display: grid;
@@ -133,19 +134,20 @@ fieldset {
     line-height: normal;
 }
 
-/* 入力エリア */
-
 .input-area-tab {
-    width: calc(100%/5);
-    height: 32px;
-    background-color: darkslategrey;
-    line-height: 32px;
+    width: calc(96%/5);
+    height: 38px;
+    background: linear-gradient(to top, #ad5b18,#55290b);
+    line-height: 38px;
     text-align: center;
     display: block;
     float: left;
     order: -1;
     margin-top: 5px;
     margin-bottom: 5px;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
 }
 
 input[name="input-area-tab-name"] {
@@ -153,7 +155,7 @@ input[name="input-area-tab-name"] {
 }
 
 input:checked+.input-area-tab {
-    background-color: goldenrod;
+    background: linear-gradient(to top, #aa7777,#553333);
     color: aliceblue;
 }
 
@@ -162,16 +164,19 @@ input:checked+.input-area-tab+.tab-content {
 }
 
 .tab-area4 {
-    width: calc(100%/4);
-    height: 32px;
-    background-color: darkslategrey;
-    line-height: 32px;
+    width: calc(96%/4);
+    height: 38px;
+    background: linear-gradient(to top, #ad5b18,#55290b);
+    line-height: 38px;
     text-align: center;
     display: block;
     float: left;
     order: -1;
     margin-top: 5px;
     margin-bottom: 5px;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
 }
 
 input[name="tab-area-middle"] {
@@ -179,7 +184,7 @@ input[name="tab-area-middle"] {
 }
 
 input:checked+.tab-area4 {
-    background-color: goldenrod;
+    background: linear-gradient(to top, #aa7777,#553333);
     color: aliceblue;
 }
 
@@ -188,16 +193,19 @@ input:checked+.tab-area4+.tab-content {
 }
 
 .tab-area3 {
-    width: calc(100%/3);
-    height: 32px;
-    background-color: darkslategrey;
-    line-height: 32px;
+    width: calc(96%/3);
+    height: 38px;
+    background: linear-gradient(to top, #ad5b18,#55290b);
+    line-height: 38px;
     text-align: center;
     display: block;
     float: left;
     order: -1;
     margin-top: 5px;
     margin-bottom: 5px;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
 }
 
 input[name="tab-area-bottom"] {
@@ -205,7 +213,7 @@ input[name="tab-area-bottom"] {
 }
 
 input:checked+.tab-area3 {
-    background-color: goldenrod;
+    background: linear-gradient(to top, #aa7777,#553333);
     color: aliceblue;
 }
 
@@ -387,4 +395,8 @@ th.category {
     text-align: left;
     font-weight: bold;
     color: greenyellow;
+}
+
+fieldset article {
+    display: inline-block;
 }

@@ -1,4 +1,15 @@
 //
+const elementOnClickHideTabContentToggle = function () {
+    console.debug(this);
+    let selector = 'div[name="tab-content-middle"';
+    $(selector).toggle();
+    let isVisible = $(selector).is(":visible");
+    selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+    console.debug(selectorVisiblityStateMap);
+}
+$(document).on('click', 'input[name="tab-area-middle"]+label', elementOnClickHideTabContentToggle);
+
+//
 $(document).on('click', '#通常攻撃ダメージResult', elementOnClickHidableChildrenToggle);
 $(document).on('click', '#重撃ダメージResult', elementOnClickHidableChildrenToggle);
 $(document).on('click', '#落下攻撃ダメージResult', elementOnClickHidableChildrenToggle);

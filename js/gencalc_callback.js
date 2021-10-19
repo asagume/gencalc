@@ -139,7 +139,46 @@ const 計算結果テーブルを表示する = function (tableId, categoryName,
 }
 
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
+function calculateDamageFromDetailSub(detailObj, opt_element = null) {
+
+}
+
 function calculateDamageFromDetail(detailObj, opt_element = null) {
+    let my天賦性能変更詳細Arr = [];
+    switch (detailObj['種類']) {
+        case '通常攻撃ダメージ':
+        case '重撃ダメージ':
+        case '落下攻撃ダメージ':
+        case '元素スキル':
+        case '元素爆発':
+            let validConditionValueArr = makeValidConditionValueArr();
+            天賦性能変更系詳細ArrMapVar.forEach((valueArr, key) => {
+                valueArr.forEach(value => {
+                    let is条件Ok = true;
+                    if (value['条件']) {
+                        if (checkConditionMatches(value['条件'], validConditionValueArr) == 0) {
+                            is条件Ok = false;
+                        }
+                    }
+                    let is対象Ok = true;
+                    if (value['対象']) {
+                        let my対象カテゴリArr = value['対象'].split('.');
+                        if (my対象カテゴリArr[0] != detailObj['種類']) {
+                            is対象Ok = false;
+                        } if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != value['名前']) {
+                            is対象Ok = false;
+                        }
+                    }
+                    if (is条件Ok && is対象Ok) {
+                        my天賦性能変更詳細Arr.push(value);
+                    }
+                });
+            });
+            break;
+    }
+    console.debug('my天賦性能変更詳細Arr');
+    console.debug(my天賦性能変更詳細Arr);
+
     let my元素 = opt_element != null ? opt_element : detailObj['元素'] != null ? detailObj['元素'] : null;
     if (my元素 == null) {
         console.error("%s[%o,%o]", calculateDamageFromDetail.name, detailObj, opt_element);
@@ -325,6 +364,21 @@ const checkConditionMatches = function (conditionStr, validConditionValueArr) {
     return 0;
 }
 
+function makeValidConditionValueArr() {
+    let validConditionValueArr = [];
+    $('#オプションBox input[type="checkbox"]').each((index, elem) => {
+        if (elem.checked) {
+            validConditionValueArr.push(elem.id.replace(new RegExp('Option$'), ''));
+        }
+    });
+    $('#オプションBox select').each((index, elem) => {
+        if (elem.value) {
+            validConditionValueArr.push(elem.id.replace(new RegExp('Option$'), '') + '@' + elem.value);
+        }
+    });
+    return validConditionValueArr;
+}
+
 // RESULT/INPUT ステータスを計算します
 const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     console.debug(inputOnChangeStatusUpdate.name);
@@ -336,7 +390,7 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     // 敵関連データをセットします
     Object.keys(selectedEnemyData).forEach(propName => {
         if (propName in ステータス詳細ObjVar) {
-            ステータス詳細ObjVar[propName] = selectedEnemyData[propName];
+            ステータス詳細ObjVar['敵' + propName] = selectedEnemyData[propName];
         }
     });
     ステータス詳細ObjVar["敵防御力"] = 0;
@@ -505,18 +559,18 @@ const inputOnChangeOptionUpdate = function () {
     });
 
     // オプションを作り直します
-    $("#オプションBox").empty();
+    $('#オプションBox').empty();
     conditionOptionMap.forEach((value, key) => {
         if (value) return;
         console.debug(key);
-        let elem = document.createElement("input");
-        elem.type = "checkbox";
+        let elem = document.createElement('input');
+        elem.type = 'checkbox';
         elem.checked = true;
         elem.value = value;
-        elem.id = key + "Option";
-        elem.name = "オプション";
-        $("#オプションBox").append(elem);
-        let labelElem = document.createElement("label");
+        elem.id = key + 'Option';
+        elem.name = 'オプション';
+        $('#オプションBox').append(elem);
+        let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
         labelElem.textContent = key;
         elem.after(labelElem);
@@ -524,22 +578,22 @@ const inputOnChangeOptionUpdate = function () {
     });
     conditionOptionMap.forEach((value, key) => {
         if (!value) return;
-        let divElem = document.createElement("div");
-        $("#オプションBox").append(divElem);
-        let elem = document.createElement("select");
-        elem.id = key + "Option";
-        elem.name = "オプション";
+        let divElem = document.createElement('div');
+        $('#オプションBox').append(divElem);
+        let elem = document.createElement('select');
+        elem.id = key + 'Option';
+        elem.name = 'オプション';
         divElem.append(elem);
-        let optionElem = document.createElement("option");
+        let optionElem = document.createElement('option');
         elem.appendChild(optionElem);
         value.forEach(v => {
-            optionElem = document.createElement("option");
+            optionElem = document.createElement('option');
             optionElem.text = v;
             optionElem.value = v;
             elem.appendChild(optionElem);
         });
         optionElem.selected = true;
-        let labelElem = document.createElement("label");
+        let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
         labelElem.textContent = key;
         elem.before(labelElem);
