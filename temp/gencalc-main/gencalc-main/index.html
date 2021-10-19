@@ -285,7 +285,42 @@
                         <div id="聖遺物セット効果説明Box"></div>
                     </div>
                     <input type="radio" name="input-area-tab-name" id="input-area-tab4">
-                    <label class="input-area-tab" for="input-area-tab4">敵</label>
+                    <label class="input-area-tab" for="input-area-tab4">元素共鳴</label>
+                    <div class="tab-content">
+                        <section>
+                            <article class="check-item">
+                                <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input">
+                                <label for="炎元素共鳴Input">熱誠の炎</label>
+                            </article>
+                            <article class="check-item">
+                                <input type="checkbox" value="水元素共鳴" id="水元素共鳴Input" name="元素共鳴Input">
+                                <label for="水元素共鳴Input">治療の水</label>
+                            </article>
+                            <article class="check-item">
+                                <input type="checkbox" value="風元素共鳴" id="風元素共鳴Input" name="元素共鳴Input">
+                                <label for="風元素共鳴Input">迅速の風</label>
+                            </article>
+                            <article class="check-item">
+                                <input type="checkbox" value="雷元素共鳴" id="雷元素共鳴Input" name="元素共鳴Input">
+                                <label for="雷元素共鳴Input">強権の雷</label>
+                            </article>
+                            <article class="check-item">
+                                <input type="checkbox" value="氷元素共鳴" id="氷元素共鳴Input" name="元素共鳴Input">
+                                <label for="氷元素共鳴Input">粉砕の氷</label>
+                            </article>
+                            <article class="check-item">
+                                <input type="checkbox" value="岩元素共鳴" id="岩元素共鳴Input" name="元素共鳴Input">
+                                <label for="岩元素共鳴Input">不動の岩</label>
+                            </article>
+                            <article class="check-item" hidden>
+                                <input type="checkbox" value="元素共鳴なし" id="元素共鳴なしInput">
+                                <label for="元素共鳴なしInput">交錯の護り</label>
+                            </article>
+                        </section>
+                        <div id="元素共鳴効果説明Box"></div>
+                    </div>
+                    <input type="radio" name="input-area-tab-name" id="input-area-tab5">
+                    <label class="input-area-tab" for="input-area-tab5">敵</label>
                     <div class="tab-content">
                         <section>
                             <article class="input-item">
@@ -345,48 +380,13 @@
                             </article>
                         </fieldset>
                     </div>
-                    <input type="radio" name="input-area-tab-name" id="input-area-tab5">
-                    <label class="input-area-tab" for="input-area-tab5">元素共鳴</label>
-                    <div class="tab-content">
-                        <section>
-                            <article class="check-item">
-                                <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input">
-                                <label for="炎元素共鳴Input">熱誠の炎</label>
-                            </article>
-                            <article class="check-item">
-                                <input type="checkbox" value="水元素共鳴" id="水元素共鳴Input" name="元素共鳴Input">
-                                <label for="水元素共鳴Input">治療の水</label>
-                            </article>
-                            <article class="check-item">
-                                <input type="checkbox" value="風元素共鳴" id="風元素共鳴Input" name="元素共鳴Input">
-                                <label for="風元素共鳴Input">迅速の風</label>
-                            </article>
-                            <article class="check-item">
-                                <input type="checkbox" value="雷元素共鳴" id="雷元素共鳴Input" name="元素共鳴Input">
-                                <label for="雷元素共鳴Input">強権の雷</label>
-                            </article>
-                            <article class="check-item">
-                                <input type="checkbox" value="氷元素共鳴" id="氷元素共鳴Input" name="元素共鳴Input">
-                                <label for="氷元素共鳴Input">粉砕の氷</label>
-                            </article>
-                            <article class="check-item">
-                                <input type="checkbox" value="岩元素共鳴" id="岩元素共鳴Input" name="元素共鳴Input">
-                                <label for="岩元素共鳴Input">不動の岩</label>
-                            </article>
-                            <article class="check-item" hidden>
-                                <input type="checkbox" value="元素共鳴なし" id="元素共鳴なしInput">
-                                <label for="元素共鳴なしInput">交錯の護り</label>
-                            </article>
-                        </section>
-                        <div id="元素共鳴効果説明Box"></div>
-                    </div>
                 </div>
             </div>
             <div class="result-area">
                 <div class="hidable">
                     <div class="tab-area">
-                        <input type="radio" id="tab-area-middle1" name="tab-area-middle" checked>
-                        <label class="tab-area4" for="tab-area-middle1">ステータス1</label>
+                        <input type="radio" name="input-result-area-tab-name" id="input-result-area-tab1" checked>
+                        <label class="result-area-tab" for="input-result-area-tab1">ステータス1</label>
                         <div class="tab-content">
                             <section>
                                 <table>
@@ -460,8 +460,8 @@
                                 </table>
                             </section>
                         </div>
-                        <input type="radio" id="tab-area-middle2" name="tab-area-middle">
-                        <label class="tab-area4" for="tab-area-middle2">ステータス2</label>
+                        <input type="radio" name="input-result-area-tab-name" id="input-result-area-tab2">
+                        <label class="result-area-tab" for="input-result-area-tab2">ステータス2</label>
                         <div class="tab-content">
                             <section>
                                 <table>
@@ -531,8 +531,8 @@
                                 </table>
                             </section>
                         </div>
-                        <input type="radio" id="tab-area-middle3" name="tab-area-middle">
-                        <label class="tab-area4" for="tab-area-middle3">聖遺物詳細</label>
+                        <input type="radio" name="input-result-area-tab-name" id="input-result-area-tab3">
+                        <label class="result-area-tab" for="input-result-area-tab3">聖遺物詳細</label>
                         <div class="tab-content">
                             <fieldset>
                                 <legend>聖遺物サブ効果詳細</legend>
@@ -579,8 +579,8 @@
                                 </article>
                             </fieldset>
                         </div>
-                        <input type="radio" id="tab-area-middle4" name="tab-area-middle">
-                        <label class="tab-area4" for="tab-area-middle4">予備１</label>
+                        <input type="radio" name="input-result-area-tab-name" id="input-result-area-tab4">
+                        <label class="result-area-tab" for="input-result-area-tab4">？</label>
                         <div class="tab-content">
 
                         </div>
@@ -591,8 +591,8 @@
                     <section class="optionBox" id="オプションBox"></section>
                 </fieldset>
                 <div class="tab-area">
-                    <input type="radio" id="tab-area-bottom1" name="tab-area-bottom" checked>
-                    <label class="tab-area3" for="tab-area-bottom1">ダメージ計算</label>
+                    <input type="radio" name="result-area-tab-name" id="result-area-tab1" checked>
+                    <label class="result-area-tab" for="result-area-tab1">ダメージ計算</label>
                     <div class="tab-content">
                         <div id="計算結果Box"></div>
                         <table id="通常攻撃ダメージResult"></table>
@@ -605,13 +605,20 @@
                         <table id="元素爆発関連ダメージResult"></table>
                         <table id="その他ダメージResult"></table>
                     </div>
-                    <input type="radio" id="tab-area-bottom2" name="tab-area-bottom">
-                    <label class="tab-area3" for="tab-area-bottom2">予備２</label>
+                    <input type="radio" name="result-area-tab-name" id="result-area-tab2">
+                    <label class="result-area-tab" for="result-area-tab2">？</label>
                     <div class="tab-content">
-                        <p>実装予定</p>
                     </div>
-                    <input type="radio" id="tab-area-bottom3" name="tab-area-bottom">
-                    <label class="tab-area3" for="tab-area-bottom3">予備３</label>
+                    <input type="radio" name="result-area-tab-name" id="result-area-tab3">
+                    <label class="result-area-tab" for="result-area-tab3">？</label>
+                    <div class="tab-content">
+                    </div>
+                    <input type="radio" name="result-area-tab-name" id="result-area-tab4">
+                    <label class="result-area-tab" for="result-area-tab4">？</label>
+                    <div class="tab-content">
+                    </div>
+                    <input type="radio" name="result-area-tab-name" id="result-area-tab5">
+                    <label class="result-area-tab" for="result-area-tab5">？</label>
                     <div class="tab-content">
                         <p>実装予定</p>
                     </div>

@@ -1,78 +1,95 @@
 // DEBUG
 function detailToHtml(obj) {
     let myArr = [];
-    Object.keys(obj).forEach(key => {
-        if (obj[key]) myArr.push(key + '[' + obj[key] + ']');
-    });
-    return myArr.join(',');
+    if ("種類" in obj) myArr.push("種類:" + obj["種類"]);
+    if ("対象" in obj) myArr.push("対象:" + obj["対象"]);
+    if ("数値" in obj) myArr.push("数値:[" + obj["数値"] + "]");
+    if ("条件" in obj) myArr.push("条件:" + obj["条件"]);
+    if ("名前" in obj) myArr.push("名前:" + obj["名前"]);
+    return "{" + myArr.join(",") + "}";
 }
 
-// デバッグ情報を出力します
 const setDebugInfo = function () {
-    $('#debugInfo').empty();
+    $("#debugInfo").empty();
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
         value.forEach(entry => {
-            $('<p>', {
+            $("<p>", {
                 text: detailToHtml(entry)
-            }).appendTo('#debugInfo');
+            }).appendTo("#debugInfo");
         });
     });
-    $('<hr>').appendTo('#debugInfo');
-    天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(entry => {
-            $('<p>', {
-                text: detailToHtml(entry)
-            }).appendTo('#debugInfo');
-        });
-    });
-    $('<hr>').appendTo('#debugInfo');
     conditionOptionMap.forEach((value, key) => {
         if (value) {
             if ($.isArray(value)) {
                 value.forEach(entry => {
-                    $('<p>', {
-                        text: key + ':' + entry
-                    }).appendTo('#debugInfo');
+                    $("<p>", {
+                        text: key + ":" + entry
+                    }).appendTo("#debugInfo");
                 });
             } else {
-                $('<p>', {
-                    text: key + ':' + value
-                }).appendTo('#debugInfo');
+                $("<p>", {
+                    text: key + ":" + value
+                }).appendTo("#debugInfo");
             }
         } else {
-            $('<p>', {
+            $("<p>", {
                 text: key
-            }).appendTo('#debugInfo');
+            }).appendTo("#debugInfo");
         }
     });
-    $('<hr>').appendTo('#debugInfo');
     Object.keys(ステータス詳細ObjVar).forEach(key => {
-        if (ステータス詳細ObjVar[key] != 0) {
-            $('<p>', {
-                text: key + '=' + ステータス詳細ObjVar[key]
-            }).appendTo('#debugInfo');
-        }
+        $("<p>", {
+            text: key + "=" + ステータス詳細ObjVar[key]
+        }).appendTo("#debugInfo");
     });
+}
+
+// 天賦種類:通常攻撃|元素スキル|元素爆発
+// 攻撃種類:通常攻撃|重撃|落下攻撃|元素スキル|元素爆発|HP回復
+// 元素:炎|水|風|雷|草|氷|岩|物理
+function calcダメージバフ補正(天賦種類, 攻撃種類, 元素) {
+    let 天賦種類ダメージバフ = 0;
+    let 攻撃種類ダメージバフ = 0;
+    let 元素ダメージバフ = 0;
+    let 与えるダメージ = 0;
+    if (攻撃種類 == "HP回復") {
+        攻撃種類ダメージバフ = ステータス詳細ObjVar["与える治療効果"];
+    } else if (攻撃種類 == "シールド") {
+        攻撃種類ダメージバフ = ステータス詳細ObjVar["シールド強化"];
+    } else {
+        天賦種類ダメージバフ = ステータス詳細ObjVar[天賦種類 + "ダメージバフ"]
+        攻撃種類ダメージバフ = ステータス詳細ObjVar[攻撃種類 + "ダメージバフ"];
+        if (元素 == "物理") {
+            let propName = 元素 + "ダメージバフ";
+            元素ダメージバフ = ステータス詳細ObjVar[propName];
+        } else {
+            let propName = 元素 + "元素ダメージバフ";
+            元素ダメージバフ = ステータス詳細ObjVar[propName];
+        }
+        与えるダメージ = ステータス詳細ObjVar["与えるダメージ"];
+    }
+    let result = 1 + (天賦種類ダメージバフ + 攻撃種類ダメージバフ + 元素ダメージバフ + 与えるダメージ) / 100;
+    return result;
 }
 
 // 防御補正を計算します
 function calc防御補正(防御無視 = 0) {
-    let myレベル = Number($('#レベルInput').val().replace('+', ''));
-    let my敵レベル = Number($('#敵レベルInput').val());
+    let myレベル = Number($("#レベルInput").val().replace("+", ""));
+    let my敵レベル = Number($("#敵レベルInput").val());
     let my防御無視 = 防御無視;
     if (my防御無視 > 1) my防御無視 = my防御無視 / 100;    // 60(%) => 0.6
-    let my敵防御力 = Number($('#敵防御力Input').val()) / 100;    // -15(%) => -0.15
+    let my敵防御力 = Number($("#敵防御力Input").val()) / 100;    // -15(%) => -0.15
     let my防御補正 = (myレベル + 100) / ((1 - my防御無視) * (1 + my敵防御力) * (my敵レベル + 100) + myレベル + 100);
     return my防御補正;
 }
 
 // 元素耐性補正を計算します
 function calc敵元素耐性補正(元素) {
-    let mySelector = '#敵' + 元素;
-    if (元素 != '物理') {
-        mySelector += '元素';
+    let mySelector = "#敵" + 元素;
+    if (元素 != "物理") {
+        mySelector += "元素";
     }
-    mySelector += '耐性Input';
+    mySelector += "耐性Input";
     let my敵元素耐性 = Number($(mySelector).val());
     if (my敵元素耐性 < 0) {
         my敵元素耐性 = 100 - my敵元素耐性 / 2;
@@ -84,106 +101,189 @@ function calc敵元素耐性補正(元素) {
     return my敵元素耐性 / 100;
 }
 
-// 
-const 計算結果テーブルを表示する = function (tableId, categoryName, damageResultArr) {
+// 詳細行が展開済みかチェックします→展開済みであれば再構成後に再展開するため
+function isDetailOpen(天賦種類, 攻撃種類) {
+    let result = false;
+    if ($("tr[id^='" + 天賦種類 + 攻撃種類 + "DetailTr']").is(':visible')) {
+        result = true;
+    }
+    console.debug("isDetailOpen:" + result);
+    return result;
+}
+
+//
+function buildResultTable(name) {
+    let tableId = name + "Result";
     let tableElem = document.getElementById(tableId);
     while (tableElem.firstChild) {
         tableElem.removeChild(tableElem.firstChild);
     }
-    let theadElem = document.createElement('thead');
+    let isHidden = isHidden("#" + tableId + " .hidable");
+
+    let theadElem = document.createElement("thead");
     tableElem.appendChild(theadElem);
-    let trElem1 = document.createElement('tr');
-    theadElem.appendChild(trElem1);
-    let trElem2 = document.createElement('tr');
-    theadElem.appendChild(trElem2);
-    let trElem3 = document.createElement('tr');
-    trElem3.className = 'hidable';
-    trElem3.hidden = true;
-    theadElem.appendChild(trElem3);
-    let trElem4 = document.createElement('tr');
-    trElem4.className = 'hidable';
-    trElem4.hidden = true;
-    theadElem.appendChild(trElem4);
+    let tbodyElem = document.createElement("tbody");
+    tableElem.appendChild(tbodyElem);
 
-    let thElem1 = document.createElement('th');
-    thElem1.className = "category";
-    thElem1.textContent = categoryName;
-    trElem1.appendChild(thElem1);
-    let thElem2 = document.createElement('th');
-    thElem2.className = "label";
-    thElem2.textContent = '期待値';
-    trElem2.appendChild(thElem2);
-    let thElem3 = document.createElement('th');
-    thElem3.className = "label";
-    thElem3.textContent = '会心';
-    trElem3.appendChild(thElem3);
-    let thElem4 = document.createElement('th');
-    thElem4.className = "label";
-    thElem4.textContent = '非会心';
-    trElem4.appendChild(thElem4);
+    let tr1Elem = document.createElement("tr");     // 1行目：タイトル行
+    theadElem.appendChild(tr1Elem);
+    let tr2Elem = document.createElement("tr");     // 2行目：ダメージ期待値
+    tbodyElem.appendChild(tr2Elem);
+    let tr3Elem = document.createElement("tr");     // 3行目：会心ダメージ
+    tr3Elem.className = "hidable";
+    tr3Elem.hidden = isHidden;
+    tbodyElem.appendChild(tr3Elem);
+    let tr4Elem = document.createElement("tr");     // 4行目：非会心ダメージ
+    tr4Elem.className = "hidable";
+    tr4Elem.hidden = isHidden;
+    tbodyElem.appendChild(tr4Elem);
+    let th1Elem1 = document.createElement("th");    // 1行目
+    th1Elem1.textContent = name.replace("ダメージ", "");
+    tr1Elem.appendChild(th1Elem1);
+    let th2Elem1 = document.createElement("th");    // 2行目
+    th2Elem1.textContent = "期待値";
+    tr2Elem.appendChild(th2Elem1);
+    let th3Elem1 = document.createElement("th");    // 3行目
+    th3Elem1.textContent = "会心";
+    tr3Elem.appendChild(th3Elem1);
+    let th4Elem1 = document.createElement("th");    // 4行目
+    th4Elem1.textContent = "非会心";
+    tr4Elem.appendChild(th4Elem1);
 
-    damageResultArr.forEach(valueArr => {
-        let thElem1 = document.createElement('th');
-        thElem1.textContent = valueArr[0];
-        trElem1.appendChild(thElem1);
-        let tdElem2 = document.createElement('td');
-        tdElem2.textContent = valueArr[1];
-        trElem2.appendChild(tdElem2);
-        let tdElem3 = document.createElement('td');
-        tdElem3.textContent = valueArr[2] != null ? valueArr[2] : '-';
-        trElem3.appendChild(tdElem3);
-        let tdElem4 = document.createElement('td');
-        tdElem4.textContent = valueArr[3] != null ? valueArr[3] : '-';
-        trElem4.appendChild(tdElem4);
-    });
+
 }
 
-const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
+
+//// 
+function displayCalculateResultTable(計算式Map, 天賦種類, 攻撃種類, 元素, isDetailOpen = false) {
+    let my防御補正 = calc防御補正();
+    let my元素耐性補正 = calc敵元素耐性補正(元素);
+
+    let tableElem = document.createElement("table");
+    tableElem.id = 天賦種類 + 攻撃種類 + "TableTr";
+    document.getElementById("計算結果Box").appendChild(tableElem);
+    let theadElem = document.createElement("thead");
+    tableElem.appendChild(theadElem);
+    let tr1Elem = document.createElement("tr"); // タイトル行
+    theadElem.appendChild(tr1Elem);
+    let tbodyElem = document.createElement("tbody");
+    tableElem.appendChild(tbodyElem);
+    let tr2Elem = document.createElement("tr"); // ダメージ期待値
+    tbodyElem.appendChild(tr2Elem);
+    let tr3Elem = document.createElement("tr"); // 会心ダメージ
+    tr3Elem.id = 天賦種類 + 攻撃種類 + "DetailTr1";
+    tr3Elem.hidden = !isDetailOpen;
+    tbodyElem.appendChild(tr3Elem);
+    let tr4Elem = document.createElement("tr"); // 非会心ダメージ
+    tr4Elem.id = 天賦種類 + 攻撃種類 + "DetailTr2";
+    tr4Elem.hidden = !isDetailOpen;
+    tbodyElem.appendChild(tr4Elem);
+    let th1Elem1 = document.createElement("th");
+    th1Elem1.className = "label";
+    th1Elem1.textContent = 攻撃種類;
+    tr1Elem.appendChild(th1Elem1);
+    let th2Elem1 = document.createElement("th");
+    th2Elem1.className = "label";
+    th2Elem1.textContent = "期待値";
+    tr2Elem.appendChild(th2Elem1);
+    let th3Elem1 = document.createElement("th");
+    th3Elem1.className = "label";
+    th3Elem1.textContent = "会心";
+    tr3Elem.appendChild(th3Elem1);
+    let th4Elem1 = document.createElement("th");
+    th4Elem1.className = "label";
+    th4Elem1.textContent = "非会心";
+    tr4Elem.appendChild(th4Elem1);
+    計算式Map.forEach((value, key) => {
+        let my基礎ダメージ = calculateDamage(ステータス詳細ObjVar, value);
+        let myダメージバフ補正 = 1;
+        let my非会心ダメージ;
+        let my実会心率 = 0;
+        if ("種類" in key) {
+            switch (key["種類"]) {
+                case "HP回復":  // 会心補正なし 防御補正なし 元素耐性補正なし
+                    myダメージバフ補正 += Number($("#与える治療効果Input").val()) / 100;
+                    my非会心ダメージ = my基礎ダメージ * myダメージバフ補正;
+                    break;
+                case "シールド":  // 会心補正なし 防御補正なし 元素耐性補正なし
+                    myダメージバフ補正 += Number($("#シールド強化Input").val()) / 100;
+                    if (selectedCharacterData["元素"] == "岩") {    // 岩元素シールド補正150%
+                        myダメージバフ補正 *= 1.5;
+                    }
+                    my非会心ダメージ = my基礎ダメージ * myダメージバフ補正;
+                    break;
+                default:
+                    myダメージバフ補正 = calcダメージバフ補正(天賦種類, 攻撃種類, 元素);
+                    my非会心ダメージ = my基礎ダメージ * myダメージバフ補正 * my防御補正 * my元素耐性補正;
+                    my実会心率 = Math.max(0, Math.min(100, ステータス詳細ObjVar["会心率"]));
+                    break;
+            }
+        } else {
+            myダメージバフ補正 = calcダメージバフ補正(天賦種類, 攻撃種類, 元素);
+            my非会心ダメージ = my基礎ダメージ * myダメージバフ補正 * my防御補正 * my元素耐性補正;
+            my実会心率 = Math.max(0, Math.min(100, ステータス詳細ObjVar["会心率"]));
+        }
+        let myダメージ期待値 = my非会心ダメージ;
+        let my会心ダメージ;
+        if (my実会心率 > 0) {
+            my会心ダメージ = my非会心ダメージ * (100 + ステータス詳細ObjVar["会心ダメージ"]) / 100;
+            myダメージ期待値 = (my会心ダメージ * my実会心率 / 100) + (my非会心ダメージ * (100 - my実会心率) / 100);
+        }
+        let th1Elem = document.createElement("th");
+        th1Elem.textContent = key["名前"];
+        tr1Elem.appendChild(th1Elem);
+        let td2Elem = document.createElement("td");
+        td2Elem.textContent = Math.round(myダメージ期待値);
+        tr2Elem.appendChild(td2Elem);
+        let td3Elem = document.createElement("td");
+        if (my実会心率 > 0) {
+            td3Elem.textContent = Math.round(my会心ダメージ);
+        } else {
+            td3Elem.textContent = "-";
+        }
+        tr3Elem.appendChild(td3Elem);
+        let td4Elem = document.createElement("td");
+        td4Elem.textContent = Math.round(my非会心ダメージ);
+        tr4Elem.appendChild(td4Elem);
+        console.debug("%s:会心[%d]非会心[%d]期待値[%d]", key["名前"], my会心ダメージ, my非会心ダメージ, myダメージ期待値);
+    });
+    tableElem.onclick = function (event) {
+        let myName = event.currentTarget.id;
+        let detailName = myName.replace("TableTr", "DetailTr");
+        $("tr[id^='" + detailName + "']").toggle(500);
+    };
+}
+
 function calculateDamageFromDetail(detailObj, opt_element = null) {
-    let my元素 = opt_element != null ? opt_element : detailObj['元素'] != null ? detailObj['元素'] : null;
-    if (my元素 == null) {
-        console.error("%s[%o,%o]", calculateDamageFromDetail.name, detailObj, opt_element);
-    }
-    let my敵元素耐性補正 = calc敵元素耐性補正(my元素);
-    let my敵防御補正 = calc防御補正();
-    let my非会心ダメージ = calculateFormulaArray(ステータス詳細ObjVar, detailObj['数値'], null);
+    let my非会心ダメージ = calculateFormulaArray(detailObj['数値'], ステータス詳細ObjVar);
     let myダメージバフ = 0;
-    myダメージバフ += ステータス詳細ObjVar['与えるダメージ'];
-    myダメージバフ += ステータス詳細ObjVar[my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ'];
-    let my会心率 = ステータス詳細ObjVar['会心率'];
-    my会心率 = Math.min(100, Math.max(my会心率, 0));
     if (detailObj['種類'] != null) {
-        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+        if (['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'].includes(detailObj['種類'])) {
             myダメージバフ += ステータス詳細ObjVar[detailObj['種類'] + 'バフ'];
         } else {
             switch (detailObj['種類']) {
                 case 'HP回復':
-                    myダメージバフ = ステータス詳細ObjVar['与える治療効果'];
-                    my会心率 = 0;   // 会心は発生しない
-                    my敵元素耐性補正 = 1;   // 敵は関係しない
-                    my敵防御補正 = 1;   // 敵は関係しない
+                    myダメージバフ += ステータス詳細ObjVar['治療効果バフ'];
                     break;
                 case 'シールド':
-                    myダメージバフ = ステータス詳細ObjVar['シールド強化'];
-                    my会心率 = 0;   // 会心は発生しない
-                    my敵元素耐性補正 = 1;   // 敵は関係しない
-                    my敵防御補正 = 1;   // 敵は関係しない
-                    if (キャラクター元素Var == '岩') {
-                        my非会心ダメージ *= 1.5;
-                    }
-                    break;
-                case '元素創造物HP':
-                    myダメージバフ = 0;
-                    my会心率 = 0;   // 会心は発生しない
-                    my敵元素耐性補正 = 1;   // 敵は関係しない
-                    my敵防御補正 = 1;   // 敵は関係しない
+                    myダメージバフ += ステータス詳細ObjVar['シールド強化'] * (キャラクター元素Var == '岩' ? 1.5 : 1);
                     break;
             }
         }
     }
+    let my元素 = opt_element != null ? opt_element : detailObj['元素'] != null ? detailObj['元素'] : null;
+    if (my元素 == null) {
+        console.error("%s[%o,%o]", calculateDamageFromDetail.name, detailObj, opt_element);
+    }
+    myダメージバフ += ステータス詳細ObjVar[my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ'];
+    let my敵元素耐性補正 = calc敵元素耐性補正(my元素);
+    myダメージバフ += ステータス詳細ObjVar['与えるダメージ'];
     my非会心ダメージ += my非会心ダメージ * myダメージバフ / 100;
     my非会心ダメージ *= my敵元素耐性補正;
+    let my敵防御補正 = calc防御補正();
     my非会心ダメージ *= my敵防御補正;
+    let my会心率 = ステータス詳細ObjVar['会心率'];
+    my会心率 = Math.min(100, Math.max(my会心率, 0));
     let my会心ダメージ = null;
     let my期待ダメージ = null;
     if (my会心率 == 0) {
@@ -197,12 +297,8 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
         my期待ダメージ = (my会心ダメージ * my会心率 + my非会心ダメージ * (100 - my会心率)) / 100;
     }
     my期待ダメージ = Math.round(my期待ダメージ);        // 四捨五入
-    if (my会心ダメージ != null) {
-        my会心ダメージ = Math.round(my会心ダメージ);        // 四捨五入
-    }
-    if (my非会心ダメージ != null) {
-        my非会心ダメージ = Math.round(my非会心ダメージ);    // 四捨五入
-    }
+    my会心ダメージ = Math.round(my会心ダメージ);        // 四捨五入
+    my非会心ダメージ = Math.round(my非会心ダメージ);    // 四捨五入
     return [detailObj['名前'], my期待ダメージ, my会心ダメージ, my非会心ダメージ];
 }
 
@@ -211,6 +307,8 @@ const inputOnChangeResultUpdate = function () {
     if (!selectedCharacterData) return;
     if (!selectedWeaponData) return;
     if (!selectedEnemyData) return;
+    let my防御補正 = calc防御補正();
+    console.debug(my防御補正);
 
     // 通常攻撃ダメージを計算します
     let my通常攻撃ダメージResultArr = [];
@@ -219,11 +317,10 @@ const inputOnChangeResultUpdate = function () {
         // 条件にマッチしていたならば、myDamageDetailObjArrを置き換えます
     });
     myDamageDetailObjArr.forEach(detailObj => {
-        my通常攻撃ダメージResultArr.push(calculateDamageFromDetail(detailObj, 通常攻撃_元素Var));
+        my通常攻撃ダメージResultArr.push(calculateDamageFromDetail(detailObj, null));
     });
     console.debug('通常攻撃');
     console.debug(my通常攻撃ダメージResultArr);
-    計算結果テーブルを表示する("通常攻撃ダメージResult", "通常攻撃", my通常攻撃ダメージResultArr);
 
     // 重撃ダメージを計算します
     let my重撃ダメージResultArr = [];
@@ -232,14 +329,10 @@ const inputOnChangeResultUpdate = function () {
         // 条件にマッチしていたならば、myDamageDetailObjArrを置き換えます
     });
     myDamageDetailObjArr.forEach(detailObj => {
-        my重撃ダメージResultArr.push(calculateDamageFromDetail(detailObj, 重撃_元素Var));
+        my重撃ダメージResultArr.push(calculateDamageFromDetail(detailObj, null));
     });
     console.debug('重撃');
     console.debug(my重撃ダメージResultArr);
-    計算結果テーブルを表示する("重撃ダメージResult", "重撃", my重撃ダメージResultArr);
-
-    // 落下攻撃ダメージを計算します
-    // TODO
 
     // 元素スキルダメージを計算します
     let my元素スキルダメージResultArr = [];
@@ -249,7 +342,6 @@ const inputOnChangeResultUpdate = function () {
     });
     console.debug('元素スキル');
     console.debug(my元素スキルダメージResultArr);
-    計算結果テーブルを表示する("元素スキルダメージResult", "元素スキル", my元素スキルダメージResultArr);
 
     // 元素爆発ダメージを計算します
     let my元素爆発ダメージResultArr = [];
@@ -259,7 +351,6 @@ const inputOnChangeResultUpdate = function () {
     });
     console.debug('元素爆発');
     console.debug(my元素爆発ダメージResultArr);
-    計算結果テーブルを表示する("元素爆発ダメージResult", "元素爆発", my元素爆発ダメージResultArr);
 
     // デバッグ情報を出力します
     setDebugInfo();
@@ -279,19 +370,19 @@ function setInputValue(selector, value) {
 
 function compareFunction(a, b) {
     let arr = ["HP%", "HP", "HP上限", "防御力%", "防御力", "攻撃力%", "攻撃力", "元素熟知", "会心率", "会心ダメージ", "与える治療効果", "受ける治療効果", "元素チャージ効率"];
-    let aIndex = arr.indexOf(a[0]);
-    let bIndex = arr.indexOf(b[0]);
+    let aIndex = arr.indexOf(a["種類"]);
+    let bIndex = arr.indexOf(b["種類"]);
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
 }
 
 function calculateStatus(targetObj, kind, formulaArr) {
-    let result = calculateFormulaArray(targetObj, formulaArr, kind);
+    let result = calculateFormulaArray(formulaArr, targetObj);
     let statusName = kind;
     if (!$.isNumeric(result)) {
-        console.error("%s[%o,%o,%o] => %o", calculateStatus.name, targetObj, kind, formulaArr, result);
+        console.error("%s[%o,%o,%o] => %o", calculateStatus.name, null, kind, formulaArr, result);
     }
-    if (KIND_WITH_PERCENT_TO_TARGET_MAP.has(kind)) {
-        statusName = KIND_WITH_PERCENT_TO_TARGET_MAP.get(kind);
+    if (["HP", "HP%"].includes(kind)) {
+        statusName = "HP上限";
     } else if (kind == "自元素ダメージバフ") {
         statusName = selectedCharacterData["元素"] + "元素ダメージバフ";
     } else if (kind == "全元素ダメージバフ") {
@@ -304,25 +395,6 @@ function calculateStatus(targetObj, kind, formulaArr) {
     }
     targetObj[statusName] = targetObj[statusName] + result;
     console.debug("%s[%o,%o,%o] => %o", calculateStatus.name, null, kind, formulaArr, result);
-}
-
-// 条件適用可能かチェックします
-const checkConditionMatches = function (conditionStr, validConditionValueArr) {
-    let my条件 = conditionStr.split('^')[0];
-    if (validConditionValueArr.includes(my条件)) {
-        return 1;
-    } else if (my条件.indexOf('-') != -1) {
-        let my条件名 = my条件.split('@')[0];
-        let re1 = new RegExp('([\\.\\*\\+\\^\\|\\[\\]\\(\\)\\?\\$\\{\\}\\/])', 'g'); // エスケープ
-        let re2 = new RegExp(my条件名.replaceAll(re1, '\\' + '$1') + '\\@([0-9\\.]+).*');
-        for (let i = 0; i < validConditionValueArr.length; i++) {
-            let reRet = re2.exec(validConditionValueArr[i]);
-            if (reRet) {
-                return Number(reRet[1]);
-            }
-        }
-    }
-    return 0;
 }
 
 // RESULT/INPUT ステータスを計算します
@@ -355,11 +427,6 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     ステータス詳細ObjVar["HP上限"] = ステータス詳細ObjVar["基礎HP"];
     ステータス詳細ObjVar["攻撃力"] = ステータス詳細ObjVar["基礎攻撃力"];
     ステータス詳細ObjVar["防御力"] = ステータス詳細ObjVar["基礎防御力"];
-
-    // 通常攻撃天賦で使用する元素を設定します
-    通常攻撃_元素Var = selectedCharacterData['武器'] == '法器' ? selectedCharacterData['元素'] : '物理';
-    重撃_元素Var = selectedCharacterData['武器'] == '法器' ? selectedCharacterData['元素'] : '物理';
-    落下攻撃_元素Var = selectedCharacterData['武器'] == '法器' ? selectedCharacterData['元素'] : '物理';
 
     // キャラクターのサブステータスを計上します
     Object.keys(selectedCharacterData["ステータス"]).forEach(key => {
@@ -404,54 +471,12 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     });
 
     // ステータス変更系詳細ArrMapVarの登録内容を計上します
-    let validConditionValueArr = [];
-    $('#オプションBox input[type="checkbox"]').each((index, elem) => {
-        if (elem.checked) {
-            validConditionValueArr.push(elem.id.replace(new RegExp('Option$'), ''));
-        }
-    });
-    $('#オプションBox select').each((index, elem) => {
-        if (elem.value) {
-            validConditionValueArr.push(elem.id.replace(new RegExp('Option$'), '') + '@' + elem.value);
-        }
-    });
-    console.debug('validConditionValueArr');
-    console.debug(validConditionValueArr);
-    let myKindFormulaArr = [];
     ステータス変更系詳細ArrMapVar.forEach((valueArr, key) => {
         valueArr.forEach(value => {
-            if (value['条件']) {
-                let number = checkConditionMatches(value['条件'], validConditionValueArr);
-                if (number > 0) {
-                    let myNew数値 = value["数値"];
-                    if (number > 1) {
-                        myNew数値 = myNew数値.concat(['*', number]);
-                    }
-                    myKindFormulaArr.push([value["種類"], myNew数値]);
-                }
-                return;
+            if (value['条件']) {    // TODO 
+                console.debug(value['条件']);
             }
-            myKindFormulaArr.push([value["種類"], value["数値"]]);
-        });
-    });
-    myKindFormulaArr.sort(compareFunction);
-    myKindFormulaArr.forEach(entry => {
-        calculateStatus(ステータス詳細ObjVar, entry[0], entry[1]);
-    });
-
-    // 天賦性能変更系詳細ArrMapVarの登録内容を反映します
-    天賦性能変更系詳細ArrMapVar.forEach((valueArr, key) => {
-        valueArr.forEach(value => {
-            if (value['条件']) {
-                let number = checkConditionMatches(value['条件'], validConditionValueArr);
-                if (number == 0) return;
-            }
-            if (value['種類'].endsWith('元素付与')) {
-                let my元素 = value['種類'].replace('元素付与', '');
-                通常攻撃_元素Var = my元素;
-                重撃_元素Var = my元素;
-                落下攻撃_元素Var = my元素;
-            }
+            calculateStatus(ステータス詳細ObjVar, value["種類"], value["数値"]);
         });
     });
 
@@ -471,81 +496,260 @@ const inputOnChangeStatusUpdateExceptBase = function () {
 $(document).on("change", "input[name='基礎ステータスInput']", inputOnChangeStatusUpdateExceptBase);
 $(document).on("change", "input[name='ステータスInput']", inputOnChangeStatusUpdate);
 
+// INPUT オプションを構成します
+const analyzeDetailObj = function (obj, name, level) {
+    if ($.isArray(obj)) {
+        obj.forEach(e => {
+            analyzeDetailObj(e, name, level);
+        });
+    } else {
+        let resultObj = JSON.parse(JSON.stringify(obj));
+        let myName = name;
+        if ("名前" in obj) {
+            myName += "." + obj["名前"];
+        }
+        resultObj["名前"] = myName;
+        let myCondition = null;
+        if ("条件" in obj) {
+            myCondition = analyzeConditionStr(obj["条件"]);
+        }
+        let myFormula = null;
+        if ("数値" in obj) {
+            if (level) {
+                myFormula = obj["数値"][level];
+            }
+        }
+
+    }
+}
+// 名前なし：[計算式]
+var statusFormulaMap = new Map();
+// 名前あり・条件なし：名前 - [ 天賦種別(通常攻撃|元素スキル|元素爆発),攻撃種別(通常攻撃|重撃|落下攻撃|元素スキル|元素爆発),元素,[計算式] ]
+var unconditionalDamageFormulaMap = new Map();
+// 名前あり・条件あり：条件 - [ 対象,[計算式] ]
+var conditionalDamageFormulaMap = new Map();
+const setupDamageFormulaMapSub = function (obj, damageName, talentKind, damageKind, damageElement, level = null) {
+    let myDamageName = damageName;
+    if ("名前" in obj) {
+        myDamageName += "." + obj["名前"];
+    } else {
+        if ("種類" in obj) {
+        }
+    }
+    if ("種類" in obj) {
+
+    } else {
+        switch (damageKind) {
+            case "通常攻撃ダメージ":
+
+        }
+    }
+}
+const setupDamageFormulaMap = function (obj, damageName, talentKind, damageKind, damageElement, level = null) {
+    if (!"詳細" in obj) {
+        setupDamageFormulaMapSub(obj, null, null, null, null, level);
+        return;
+    }
+    if ($.Array(obj["詳細"])) {
+        obj["詳細"].forEach(entry => {
+            setupDamageFormulaMapSub(entry, damageName, talentKind, damageKind, damageElement, level);
+        });
+    } else {
+        setupDamageFormulaMapSub(obj["詳細"], damageName, talentKind, damageKind, damageElement, level);
+    }
+
+    let myCondition = null;
+    if ("条件" in obj) {
+        myCondition = obj["数値"];
+    } else {
+        let myDamageName = damageName;
+        if ("名前" in obj) {
+            myDamageName += "." + obj["名前"];
+        }
+        let myTalentKind = talentKind;  // 通常攻撃|元素スキル|元素爆発|その他=null
+        let myDamageKind = damageKind;  // 通常攻撃|重撃|落下攻撃|元素スキル|元素爆発|HP回復|シールド|その他=null
+        if ("種類" in obj) {
+            if (obj["種類"] in ステータス詳細ObjVar) {  // バフ/デバフ系
+                myDamageKind = obj["種類"];
+
+            } else {
+                switch (obj["種類"]) {
+                    case "追加ダメージ":
+                        break;
+                }
+            }
+        }
+        let myElement = damageElement;
+        if ("元素" in obj) {
+            myElement = obj["元素"];
+        }
+
+
+    }
+
+
+
+
+
+
+    let myFormula = level != null ? obj["数値"][level] : obj["数値"];
+
+}
 const inputOnChangeOptionUpdate = function () {
+    console.debug(inputOnChangeOptionUpdate.name);
     if (!selectedCharacterData) return;
     if (!selectedWeaponData) return;
 
     setupBaseDamageDetailDataCharacter();
+
     setupBaseDamageDetailDataWeapon();
+
     setupBaseDamageDetailDataArtifactSet();
 
-    let my条件付き詳細ObjArr = [];
-    天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(detailObj => {
-            if (detailObj['条件']) {
-                my条件付き詳細ObjArr.push(detailObj);
+    //    let myDamageName = "通常攻撃";
+    //    let myDamageElement = selectedCharacterData["武器"] == "法器" ? selectedCharacterData["元素"] : "物理";
+    //    myLevel = $("#通常攻撃レベルInput").val();
+    //    selectedCharacterData["通常攻撃"].forEach(entry => {
+    //        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //    });
+    //    myDamageName = "重撃";
+    //    selectedCharacterData["重撃"].forEach(entry => {
+    //        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //    });
+    //    myDamageName = "落下攻撃";
+    //    selectedCharacterData["落下攻撃"].forEach(entry => {
+    //        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //    });
+    //    myDamageElement = selectedCharacterData["元素"];
+    //    myLevel = $("#元素スキルレベルInput").val();
+    //    selectedCharacterData["元素スキル"].forEach(entry => {
+    //        if ("一回押し" in entry) {
+    //            myDamageName = "元素スキル.一回押し";
+    //            setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //        }
+    //        if ("長押し" in entry) {
+    //            myDamageName = "元素スキル.長押し";
+    //            setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //        }
+    //        myDamageName = "元素スキル";
+    //        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //    });
+    //    myDamageName = "元素爆発";
+    //    myDamageElement = selectedCharacterData["元素"];
+    //    myLevel = $("#元素爆発レベルInput").val();
+    //    selectedCharacterData["元素爆発"].forEach(entry => {
+    //        setupDamageFormulaMap(entry, myDamageName, myDamageElement, myLevel);
+    //    });
+    selectedCharacterData["その他天賦"].forEach(entry => {
+        if ("詳細" in entry) {
+            let key = "天賦" + ("名前" in entry ? "." + entry["名前"] : null);
+            let level = null;
+            if ("種類" in entry) {
+                switch (entry["種類"]) {
+                    case "元素スキル":
+                        level = $("#元素スキルレベルInput").val();
+                        break;
+                    case "元素爆発":
+                        level = $("#元素爆発レベルInput").val();
+                        break;
+                }
             }
-        });
+            setupTypeValueFormulaArr(key, entry["詳細"], level);
+        }
     });
-    ステータス変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(detailObj => {
-            if (detailObj['条件']) {
-                my条件付き詳細ObjArr.push(detailObj);
-            }
-        });
+    for (let i = $("#命ノ星座Input").val(); i > 0; i--) {
+        let myData = selectedCharacterData["命ノ星座"][i];
+        if ("詳細" in myData) {
+            let key = "命ノ星座" + ("名前" in myData ? "." + myData["名前"] : null);
+            setupTypeValueFormulaArr(key, myData["詳細"]);
+        }
+    }
+    // 武器
+    if ("武器スキル" in selectedWeaponData && "詳細" in selectedWeaponData["武器スキル"]) {
+        let key = "武器スキル" + ("名前" in selectedWeaponData["武器スキル"] ? "." + selectedWeaponData["武器スキル"]["名前"] : null);
+        setupTypeValueFormulaArr(key, selectedWeaponData["武器スキル"]["詳細"], $("#精錬ランクInput").val());
+    }
+    // 聖遺物セット
+    selectedArtifactSetDataArr.forEach(entry => {
+        if ("詳細" in entry) {
+            let key = "聖遺物";
+            setupTypeValueFormulaArr(key, entry["詳細"]);
+        }
     });
-    console.debug('my条件付き詳細ObjArr');
-    console.debug(my条件付き詳細ObjArr);
-
+    // 現在選択中のオプションの値を退避します
+    let currentInputUncheckedArr = [];
+    let currentSelectValueMap = new Map();
+    $('input[name="オプション"]').each(function () {
+        if (!this.checked) {
+            currentInputUncheckedArr.push(this.id);
+        }
+    });
+    $('select[name="オプション"]').each(function () {
+        currentSelectValueMap.set(this.id, this.value);
+    });
+    console.debug("currentInputCheckedArr:" + currentInputUncheckedArr);
+    console.debug("currentSelectValueMap:" + currentSelectValueMap);
     conditionOptionMap.clear();
     exclusionOptionMap.clear();
-
-    my条件付き詳細ObjArr.forEach(entry => {
-        makeConditionExclusionMapFromStr(entry['条件'], conditionOptionMap, exclusionOptionMap);
+    typeValueFormulaArr.forEach(entry => {
+        if ("条件" in entry) {
+            makeConditionExclusionMapFromStr(entry["条件"], conditionOptionMap, exclusionOptionMap);
+        }
     });
-
+    typeValueFormulaArr.sort(compareFunction);
     // オプションを作り直します
     $("#オプションBox").empty();
     conditionOptionMap.forEach((value, key) => {
-        if (value) return;
         console.debug(key);
-        let elem = document.createElement("input");
-        elem.type = "checkbox";
-        elem.checked = true;
-        elem.value = value;
-        elem.id = key + "Option";
-        elem.name = "オプション";
-        $("#オプションBox").append(elem);
-        let labelElem = document.createElement("label");
-        labelElem.htmlFor = elem.id;
-        labelElem.textContent = key;
-        elem.after(labelElem);
-        elem.onchange = optionInputOnChange;
-    });
-    conditionOptionMap.forEach((value, key) => {
-        if (!value) return;
-        let divElem = document.createElement("div");
-        $("#オプションBox").append(divElem);
-        let elem = document.createElement("select");
-        elem.id = key + "Option";
-        elem.name = "オプション";
-        divElem.append(elem);
-        let optionElem = document.createElement("option");
-        elem.appendChild(optionElem);
-        value.forEach(v => {
-            optionElem = document.createElement("option");
-            optionElem.text = v;
-            optionElem.value = v;
+        if (value) {
+            let divElem = document.createElement("div");
+            $("#オプションBox").append(divElem);
+            let elem = document.createElement("select");
+            elem.id = key + "Option";
+            elem.name = "オプション";
+            divElem.append(elem);
+            let optionElem = document.createElement("option");
             elem.appendChild(optionElem);
-        });
-        optionElem.selected = true;
-        let labelElem = document.createElement("label");
-        labelElem.htmlFor = elem.id;
-        labelElem.textContent = key;
-        elem.before(labelElem);
-        elem.onchange = optionInputOnChange;
+            value.forEach(v => {
+                optionElem = document.createElement("option");
+                optionElem.text = v;
+                optionElem.value = v;
+                elem.appendChild(optionElem);
+            });
+            optionElem.selected = true;
+            let labelElem = document.createElement("label");
+            labelElem.htmlFor = elem.id;
+            labelElem.textContent = key;
+            elem.before(labelElem);
+            elem.onchange = optionInputOnChange;
+        } else {
+            let elem = document.createElement("input");
+            elem.type = "checkbox";
+            elem.checked = true;
+            elem.value = value;
+            elem.id = key + "Option";
+            elem.name = "オプション";
+            $("#オプションBox").append(elem);
+            let labelElem = document.createElement("label");
+            labelElem.htmlFor = elem.id;
+            labelElem.textContent = key;
+            elem.after(labelElem);
+            elem.onchange = optionInputOnChange;
+        }
     });
-
+    // オプションの値を戻します
+    currentInputUncheckedArr.forEach(id => {
+        let elem = document.getElementById(id);
+        if (elem) {
+            elem.checked = false;
+        }
+    });
+    currentSelectValueMap.forEach((value, id) => {
+        let elem = document.getElementById(id);
+        if (elem) {
+            elem.value = value;
+        }
+    });
     inputOnChangeStatusUpdate();
 };
 const optionInputOnChange = function () {
@@ -570,7 +774,6 @@ $(document).on("change", "#敵氷元素耐性Input", inputOnChangeResultUpdate);
 $(document).on("change", "#敵岩元素耐性Input", inputOnChangeResultUpdate);
 $(document).on("change", "#敵物理耐性Input", inputOnChangeResultUpdate);
 $(document).on("change", "#敵防御力Input", inputOnChangeResultUpdate);
-
 // INPUT 元素共鳴
 const elementalResonanceInputOnChange = function (event) {
     if (event.currentTarget == $("#元素共鳴なしInput").get(0) && event.currentTarget.checked) {
@@ -766,7 +969,8 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                     }
                     my数値 = analyzeFormulaStr(my数値, defaultItem);
                     if (withPercent && my数値.length == 1) {
-                        my数値 = [my数値[0] / 100, '*', defaultItem];
+                        my数値.push('*');
+                        my数値.push(defaultItem);
                     }
                 }
             }
@@ -778,10 +982,10 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 条件: "条件" in detailObj ? detailObj["条件"] : null,
                 対象: "対象" in detailObj ? detailObj["対象"] : null
             }
-            if (resultObj["種類"] in ステータス詳細ObjVar || resultObj["種類"].endsWith("%") || new RegExp('[自全].+バフ').exec(resultObj["種類"])) { // ex,HP上限,攻撃力%
+            if (resultObj["種類"] in ステータス詳細ObjVar || resultObj["種類"].endsWith("%")) { // ex,HP上限,攻撃力%
                 resultObj["元素"] = "元素" in detailObj ? detailObj["元素"] : null;
                 ステータス変更系詳細ArrMapVar.get(inputCategory).push(resultObj);
-            } else if (resultObj["種類"].endsWith("強化") || resultObj["種類"].endsWith("付与") || resultObj["種類"].endsWith("アップ")) {   // ex.元素爆発強化,氷元素付与
+            } else if (resultObj["種類"].endsWith("強化") || resultObj["種類"].endsWith("付与")) {   // ex.元素爆発強化,氷元素付与
                 resultObj["元素"] = "元素" in detailObj ? detailObj["元素"] : null;
                 天賦性能変更系詳細ArrMapVar.get(inputCategory).push(resultObj);
             } else {
@@ -916,50 +1120,6 @@ const setupBaseDamageDetailDataCharacter = function () {
         console.debug(特殊元素爆発_基礎ダメージ詳細MapVar);
     }
 
-    let dummyArr;
-
-    // その他天賦を解析します。Array
-    if ('その他天賦' in selectedCharacterData) {
-        selectedCharacterData['その他天賦'].forEach(element => {
-            myTalentDataObject = element;
-            dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
-            if (dummyArr.length > 0) {
-                console.error(dummyArr);
-            }
-        })
-    };
-
-    // 命ノ星座を解析します。Object
-    if ('命ノ星座' in selectedCharacterData) {
-        switch ($("#命ノ星座Input").val()) {
-            case '6':   // 第6重
-                myTalentDataObject = selectedCharacterData['命ノ星座']['6'];
-                dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
-                if (dummyArr.length > 0) {
-                    console.error(dummyArr);
-                }
-            case '4':   // 第4重
-                myTalentDataObject = selectedCharacterData['命ノ星座']['4'];
-                dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
-                if (dummyArr.length > 0) {
-                    console.error(dummyArr);
-                }
-            case '2':   // 第2重
-                myTalentDataObject = selectedCharacterData['命ノ星座']['2'];
-                dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
-                if (dummyArr.length > 0) {
-                    console.error(dummyArr);
-                }
-            case '1':   // 第1重
-                myTalentDataObject = selectedCharacterData['命ノ星座']['1'];
-                dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
-                if (dummyArr.length > 0) {
-                    console.error(dummyArr);
-                }
-                break;
-        }
-    };
-
     console.debug('ステータス変更系詳細ArrMapVar.get(キャラクター)');
     console.debug(ステータス変更系詳細ArrMapVar.get('キャラクター'));
     console.debug('天賦性能変更系詳細ArrMapVar.get(キャラクター)');
@@ -973,11 +1133,8 @@ const setupBaseDamageDetailDataWeapon = function () {
 
     let my精錬ランク = $('#精錬ランクInput').val();
     if ('武器スキル' in selectedWeaponData) {
-        let resultArr = makeTalentDetailArray(selectedWeaponData['武器スキル'], my精錬ランク, null, null, "武器");
-        if (resultArr.length > 1) {
-            // TODO 武器による追加ダメージの行き先を作らないといけない
-            console.debug(resultArr);
-        }
+        let myArr = makeTalentDetailArray(selectedWeaponData['武器スキル'], my精錬ランク, null, null, "武器");
+        // TODO 武器による追加ダメージの行き先を作らないといけない
     }
     console.debug('ステータス変更系詳細ArrMapVar.get(武器)');
     console.debug(ステータス変更系詳細ArrMapVar.get('武器'));

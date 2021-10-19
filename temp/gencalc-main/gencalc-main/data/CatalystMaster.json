@@ -1,0 +1,69 @@
+{
+    "不滅の月華": {
+        "import": "data/weapons/catalyst_5_EverlastingMoonglow.json"
+    },
+    "浮世の錠": {
+        "import": "data/weapons/catalyst_5_Memory of Dust.json",
+        "disable": true
+    },
+    "天空の巻": {
+        "import": "data/weapons/catalyst_5_Skyward Atlas.json",
+        "disable": true
+    },
+    "四風原典": {
+        "import": "data/weapons/catalyst_5_LostPrayertotheSacredWinds.json",
+        "disable": true
+    },
+    "白辰の輪": {
+        "import": "data/weapons/catalyst_4_HakushinRing.json",
+        "disable": true
+    },
+    "ドドコの物語": {
+        "import": "data/weapons/catalyst_4_DodocoTales.json",
+        "disable": true
+    },
+    "冬忍びの実": {
+        "import": "data/weapons/catalyst_4_Frostbearer.json",
+        "disable": true
+    },
+    "昭心": {
+        "import": "data/weapons/catalyst_4_EyeofPerception.json",
+        "disable": true
+    },
+    "ダークアレイの酒と詩": {
+        "import": "data/weapons/catalyst_4_WineandSong.json",
+        "disable": true
+    },
+    "流浪楽章": {
+        "import": "data/weapons/catalyst_4_TheWidsith.json",
+        "disable": true
+    },
+    "匣中日月": {
+        "import": "data/weapons/catalyst_4_SolarPearl.json",
+        "disable": true
+    },
+    "祭礼の断片": {
+        "import": "data/weapons/catalyst_4_SacrificialFragments.json",
+        "disable": true
+    },
+    "旧貴族秘法録": {
+        "import": "data/weapons/catalyst_4_RoyalGrimoire.json",
+        "disable": true
+    },
+    "金珀・試作": {
+        "import": "data/weapons/catalyst_4_PrototypeAmber.json",
+        "disable": true
+    },
+    "万国諸海の図譜": {
+        "import": "data/weapons/catalyst_4_MappaMare.json",
+        "disable": true
+    },
+    "西風秘典": {
+        "import": "data/weapons/catalyst_4_FavoniusCodex.json",
+        "disable": true
+    },
+    "黒岩の緋玉": {
+        "import": "data/weapons/catalyst_4_BlackcliffAgate.json",
+        "disable": true
+    }
+}

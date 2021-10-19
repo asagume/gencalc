@@ -1,14 +1,3 @@
-//
-$(document).on('click', '#通常攻撃ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#重撃ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#落下攻撃ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#通常攻撃ダメージ関連Result', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素スキルダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素スキルダメージ関連Result', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素爆発ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素爆発ダメージ関連Result', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#その他ダメージResult', elementOnClickHidableChildrenToggle);
-
 // MAIN
 $(document).ready(function () {
     Promise.all([

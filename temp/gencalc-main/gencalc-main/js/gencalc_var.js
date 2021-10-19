@@ -43,11 +43,6 @@ var ダメージ増分詳細MapVar = new Map();
 var ステータス変更系詳細ArrMapVar = new Map();
 var 天賦性能変更系詳細ArrMapVar = new Map();
 
-// 通常攻撃天賦で使用する元素を設定します
-var 通常攻撃_元素Var;
-var 重撃_元素Var;
-var 落下攻撃_元素Var;
-
 // hidable要素に紐づくセレクタとvisibility=true/falseを保持するMap
 var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 // 子要素のhidableクラス要素の表示/非表示を切り替えるイベント処理です

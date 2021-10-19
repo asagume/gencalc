@@ -261,13 +261,8 @@ function setObjectPropertiesToElements(obj, prefix, postfix) {
     });
 }
 
-const KIND_WITH_PERCENT_TO_TARGET_MAP = new Map([['HP', 'HP上限'], ['HP%', 'HP上限'], ['攻撃力%', '攻撃力'], ['防御力%', '防御力']]);
-const KIND_WITH_PERCENT_TO_BASE_MAP = new Map([['HP%', '基礎HP'], ['攻撃力%', '基礎攻撃力'], ['防御力%', '基礎防御力']]);
-const calculateFormulaArray = function (itemValueObj, formulaArr, kind) {
+const calculateFormulaArray = function (formulaArr, itemValueObj) {
     let result = 0;
-    if (kind != null && kind.endsWith('%')) {   // HP% 攻撃力% 防御力%
-        return itemValueObj[KIND_WITH_PERCENT_TO_BASE_MAP.get(kind)] * Number(formulaArr) / 100;
-    }
     if (!$.isArray(formulaArr)) {
         if ($.isNumeric(formulaArr)) {
             return Number(formulaArr);
@@ -283,12 +278,12 @@ const calculateFormulaArray = function (itemValueObj, formulaArr, kind) {
         } else if ($.isNumeric(entry)) {
             subResult = Number(entry);
         } else if ($.isArray(entry)) {
-            subResult = calculateFormulaArray(itemValueObj, entry, kind);
+            subResult = calculateFormulaArray(entry, itemValueObj);
         } else {
             if (entry in itemValueObj) {
                 subResult = Number(itemValueObj[entry]);
             } else {
-                console.error("%s[%o,%o]", calculateFormulaArray.name, itemValueObj, kind, formulaArr);
+                console.error("%s[%o,%o]", calculateFormulaArray.name, formulaArr, itemValueObj);
             }
         }
         if (operator == null) {
@@ -338,7 +333,7 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
 
 const analyzeFormulaStr = function (str, defaultItem = null) {
     let resultArr = [];
-    let re = new RegExp("([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+)([\\+\\-\\*/]?)(.*)");
+    let re = new RegExp("([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|[0-9\\.]+)([\\+\\-\\*/]?)(.*)");
     let workStr = str;
     while (true) {
         let reRet = re.exec(workStr);
@@ -373,29 +368,4 @@ function formulaArrayToString(formulaArr) {
         result += formulaArr;
     }
     return result;
-}
-
-// テーブルクリックで行を隠したり表示したり
-var selectorVisiblityStateMap = new Map();
-const elementOnClickHidableChildrenToggle = function () {
-    let selector = "#" + this.id + " .hidable";
-    $(selector).toggle();
-    let isVisible = $(selector).is(":visible");
-    selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
-    console.debug(selectorVisiblityStateMap);
-}
-const elementOnClickHidableNeighborToggle = function () {
-    let selector = "#" + this.id + "+.hidable";
-    $(selector).toggle();
-    let isVisible = $(selector).is(":visible");
-    selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
-    console.debug(selectorVisiblityStateMap);
-}
-
-function isHidden(selector) {
-    let isHidden = false;
-    if (selectorVisiblityStateMap.has(selector)) {
-        isHidden = !selectorVisiblityStateMap.get(selector);
-    }
-    return isHidden;
 }

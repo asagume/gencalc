@@ -25,7 +25,8 @@
 
 @media screen and (max-width: 2000px) {
     html {
-        font-size: 75%;
+        /* font-size: 75%;*/
+        font-size: 40%;
     }
     body {
         font-size: 1.6em;
@@ -161,58 +162,6 @@ input:checked+.input-area-tab+.tab-content {
     display: block;
 }
 
-.tab-area4 {
-    width: calc(100%/4);
-    height: 32px;
-    background-color: darkslategrey;
-    line-height: 32px;
-    text-align: center;
-    display: block;
-    float: left;
-    order: -1;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-input[name="tab-area-middle"] {
-    display: none;
-}
-
-input:checked+.tab-area4 {
-    background-color: goldenrod;
-    color: aliceblue;
-}
-
-input:checked+.tab-area4+.tab-content {
-    display: block;
-}
-
-.tab-area3 {
-    width: calc(100%/3);
-    height: 32px;
-    background-color: darkslategrey;
-    line-height: 32px;
-    text-align: center;
-    display: block;
-    float: left;
-    order: -1;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-input[name="tab-area-bottom"] {
-    display: none;
-}
-
-input:checked+.tab-area3 {
-    background-color: goldenrod;
-    color: aliceblue;
-}
-
-input:checked+.tab-area3+.tab-content {
-    display: block;
-}
-
 .input-group article {
     vertical-align: top;
 }
@@ -325,6 +274,32 @@ input[type="number"] {
 
 /* 結果エリア */
 
+.result-area-tab {
+    width: calc(100%/5);
+    height: 32px;
+    background-color: darkslategrey;
+    line-height: 32px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+input[name="result-area-tab-name"] {
+    display: none;
+}
+
+input:checked+.result-area-tab {
+    background-color: goldenrod;
+    color: aliceblue;
+}
+
+input:checked+.result-area-tab+.tab-content {
+    display: block;
+}
+
 input[type="checkbox"]:checked+label {
     color: gold;
 }
@@ -380,11 +355,4 @@ table thead th, table tbody th {
 table thead th.label, table tbody th.label {
     width: 100px;
     text-align: right;
-}
-
-th.category {
-    width: 100px;
-    text-align: left;
-    font-weight: bold;
-    color: greenyellow;
 }

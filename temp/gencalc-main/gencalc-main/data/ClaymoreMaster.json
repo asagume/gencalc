@@ -1,0 +1,64 @@
+{
+    "松陰の響く頃": {
+        "import": "data/weapons/SongofBrokenPines.json",
+        "disabled": true
+    },
+    "無工の剣": {
+        "import": "data/weapons/claymore_5_TheUnforged.json"
+    },
+    "狼の末路": {
+        "import": "data/weapons/claymore_5_WolfsGravestone.json"
+    },
+    "天空の傲": {
+        "import": "data/weapons/claymore_5_SkywardPride.json",
+        "disabled": true
+    },
+    "銜玉の海皇": {
+        "import": "data/weapons/claymore_4_LuxuriousSea-Lord.json",
+        "disabled": true
+    },
+    "桂木斬長正": {
+        "import": "data/weapons/claymore_4_KatsuragikiriNagamasa.json",
+        "disabled": true
+    },
+    "雪葬の星銀": {
+        "import": "data/weapons/claymore_4_Snow-TombedStarsilver.json",
+        "disabled": true
+    },
+    "祭礼の大剣": {
+        "import": "data/weapons/claymore_4_SacrificialGreatsword.json"
+    },
+    "白影の剣": {
+        "import": "data/weapons/claymore_4_Whiteblind.json"
+    },
+    "鐘の剣": {
+        "import": "data/weapons/claymore_4_TheBell.json",
+        "disabled": true
+    },
+    "螭龍の剣": {
+        "import": "data/weapons/claymore_4_SerpentSpine.json"
+    },
+    "旧貴族大剣": {
+        "import": "data/weapons/claymore_4_RoyalGreatsword.json",
+        "disabled": true
+    },
+    "雨裁": {
+        "import": "data/weapons/claymore_4_Rainslasher.json",
+        "disabled": true
+    },
+    "古華・試作": {
+        "import": "data/weapons/claymore_4_PrototypeArchaic.json",
+        "disabled": true
+    },
+    "千岩古剣": {
+        "import": "data/weapons/claymore_4_LithicBlade.json",
+        "disabled": true
+    },
+    "西風大剣": {
+        "import": "data/weapons/claymore_4_FavoniusGreatsword.json"
+    },
+    "黒岩の斬刀": {
+        "import": "data/weapons/claymore_4_BlackcliffSlasher.json",
+        "disabled": true
+    }
+}

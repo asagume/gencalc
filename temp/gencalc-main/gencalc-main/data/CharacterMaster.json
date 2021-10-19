@@ -4,13 +4,13 @@
         "元素": "水",
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_SangonomiyaKokomi.json",
-        "disabled": false
+        "disabled": true
     },
     "雷電将軍": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "長柄武器",
-        "disabled": false
+        "disabled": true
     },
     "アーロイ": {
         "レアリティ": 5,
