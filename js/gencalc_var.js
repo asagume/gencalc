@@ -147,6 +147,12 @@ const conditionOptionMap = new Map();
 const exclusionOptionMap = new Map();
 //
 var ステータス詳細ObjVar = {
+    HP加算: 0,
+    HP乗算: 0,
+    攻撃力加算: 0,
+    攻撃力乗算: 0,
+    防御力加算: 0,
+    防御力乗算: 0,
     基礎HP: 0,
     基礎攻撃力: 0,
     基礎防御力: 0,
@@ -192,12 +198,30 @@ var ステータス詳細ObjVar = {
     敵岩元素耐性: 0,
     敵物理耐性: 0
 };
+//
+const KIND_TO_PROPERTY_MAP = new Map([
+    ['HP', 'HP加算'],
+    ['HP%', 'HP乗算'],
+    ['攻撃力', '攻撃力加算'],
+    ['攻撃力%', '攻撃力乗算'],
+    ['防御力', '防御力加算'],
+    ['防御力%', '防御力乗算']
+]);
+
+
 // 
 var normalAttackElement;
 var chargedAttackElement;
 var plungAttackElement;
 //
 function initCalculateObj() {
+    ステータス詳細ObjVar['HP加算'] = 0;
+    ステータス詳細ObjVar['HP乗算'] = 0;
+    ステータス詳細ObjVar['攻撃力加算'] = 0;
+    ステータス詳細ObjVar['攻撃力乗算'] = 0;
+    ステータス詳細ObjVar['防御力加算'] = 0;
+    ステータス詳細ObjVar['防御力乗算'] = 0;
+
     ステータス詳細ObjVar["基礎HP"] = 0;
     ステータス詳細ObjVar["基礎攻撃力"] = 0;
     ステータス詳細ObjVar["基礎防御力"] = 0;

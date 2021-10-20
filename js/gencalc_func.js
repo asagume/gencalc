@@ -75,7 +75,7 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
             pushToMapValueArray(conditionMap, name, condArr[1]);
         }
     } else {
-        console.error('%s[%o,%o,%o]', makeOptionConditionMap.name, conditionStr, conditionMap, exclusionMap);
+        console.error(conditionStr, conditionMap, exclusionMap);
     }
     if (exclusion) {
         pushToMapValueArray(exclusionMap, name, exclusion.split(','));
@@ -83,21 +83,6 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
 }
 
 const analyzeValueFormula = function (kind, valueStr) {
-    let param = kind;
-    if (kind.endsWith('%')) {
-        param = kind.replace('%$', '');
-        switch (param) {
-            case 'HP':
-                param = '基礎HP';
-                break;
-            case '攻撃力':
-                param = '基礎攻撃力';
-                break;
-            case '防御力':
-                param = '基礎防御力';
-                break;
-        }
-    }
     let workArr = [];
     let re = new RegExp('(\\+|\\-|\\*|\\/|\\%|[0-9\\.]+|[^\\+\\-\\*\\/\\%0-9\\.]+)(.*)');
     let workStr = valueStr;
@@ -122,10 +107,10 @@ const analyzeValueFormula = function (kind, valueStr) {
             valueArr.push('*');
             if ((i + 1) < workArr.length) {
                 if (['+', '-', '*', '/'].includes(workArr[i + 1])) {
-                    valueArr.push(param);
+                    valueArr.push(kind);
                 }
             } else {
-                valueArr.push(param);
+                valueArr.push(kind);
             }
             continue;
         }
@@ -261,22 +246,23 @@ function setObjectPropertiesToElements(obj, prefix, postfix) {
     });
 }
 
-const KIND_WITH_PERCENT_TO_TARGET_MAP = new Map([['HP', 'HP上限'], ['HP%', 'HP上限'], ['攻撃力%', '攻撃力'], ['防御力%', '防御力']]);
-const KIND_WITH_PERCENT_TO_BASE_MAP = new Map([['HP%', '基礎HP'], ['攻撃力%', '基礎攻撃力'], ['防御力%', '基礎防御力']]);
+//
 const calculateFormulaArray = function (itemValueObj, formulaArr, kind, opt_max = null) {
     let result = 0;
-    if (kind != null && kind.endsWith('%')) {   // HP% 攻撃力% 防御力%
-        result = itemValueObj[KIND_WITH_PERCENT_TO_BASE_MAP.get(kind)] * Number(formulaArr) / 100;
-    } else if (!$.isArray(formulaArr)) {
+    if (!$.isArray(formulaArr)) {
         if ($.isNumeric(formulaArr)) {
             result = Number(formulaArr);
         } else {
-            result = itemValueObj[formulaArr];
+            if (formulaArr in itemValueObj) {
+                result = itemValueObj[formulaArr];
+            } else {
+                console.error(itemValueObj, formulaArr, kind, opt_max);
+            }
         }
     } else {
         let operator = null;
         formulaArr.forEach(entry => {
-            let subResult;
+            let subResult = 0;
             if (['+', '-', '*', '/'].includes(entry)) {
                 operator = entry;
                 return;
@@ -288,7 +274,7 @@ const calculateFormulaArray = function (itemValueObj, formulaArr, kind, opt_max 
                 if (entry in itemValueObj) {
                     subResult = Number(itemValueObj[entry]);
                 } else {
-                    console.error('%s[%o,%o]', calculateFormulaArray.name, itemValueObj, kind, formulaArr);
+                    console.error(itemValueObj, formulaArr, kind, opt_max);
                 }
             }
             if (operator == null) {
@@ -354,10 +340,10 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
                 workStr = reRet[3];
                 continue;
             } else {
-                console.error('%s[%o]', analyzeFormulaStr.name, str);
+                console.error(str, defaultItem);
             }
         } else if (reRet[3]) {
-            console.error('%s[%o]', analyzeFormulaStr.name, str);
+            console.error(str, defaultItem);
         }
         break;
     }

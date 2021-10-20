@@ -457,3 +457,8 @@ input:checked+select {
 th.base {
     color: darksalmon;
 }
+
+table.result {
+    background: linear-gradient(to top, #312820, #030100);
+    margin: 5px 0;
+}
