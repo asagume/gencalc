@@ -426,19 +426,26 @@ function calculateStatus(targetObj, kind, formulaArr, opt_max = null) {
     let result = calculateFormulaArray(targetObj, formulaArr, kind, opt_max);
     let statusName = kind;
     if (!$.isNumeric(result)) {
-        console.error('%s[%o,%o,%o] => %o', calculateStatus.name, targetObj, kind, formulaArr, result);
+        console.error(targetObj, kind, formulaArr, result);
     }
-    if (KIND_WITH_PERCENT_TO_TARGET_MAP.has(kind)) {
-        statusName = KIND_WITH_PERCENT_TO_TARGET_MAP.get(kind);
-    } else if (kind == '自元素ダメージバフ') {
-        statusName = selectedCharacterData['元素'] + '元素ダメージバフ';
-    } else if (kind == '全元素ダメージバフ') {
-        ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
-            let statusName = entry + '元素ダメージバフ';
-            targetObj[statusName] = targetObj[statusName] + result;
-        });
-        console.debug('%s[%o,%o,%o] => %o', calculateStatus.name, null, kind, formulaArr, result);
-        return;
+    if (KIND_TO_PROPERTY_MAP.has(kind)) {
+        statusName = KIND_TO_PROPERTY_MAP.get(kind);
+    } else {
+        switch (kind) {
+            case '自元素ダメージバフ':
+                statusName = selectedCharacterData['元素'] + '元素ダメージバフ';
+                break;
+            case '全元素ダメージバフ':
+                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                    let statusName = entry + '元素ダメージバフ';
+                    targetObj[statusName] = targetObj[statusName] + result;
+                });
+                console.error(targetObj, kind, formulaArr, result);
+                return;
+            case '敵自元素耐性':
+                statusName = '敵' + selectedCharacterData['元素'] + '元素耐性';
+                break;
+        }
     }
     targetObj[statusName] = targetObj[statusName] + result;
     console.debug('%s[%o,%o,%o] => %o', calculateStatus.name, null, kind, formulaArr, result);
@@ -509,9 +516,9 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     ステータス詳細ObjVar['防御力'] = ステータス詳細ObjVar['基礎防御力'];
 
     // 通常攻撃天賦で使用する元素を設定します
-    通常攻撃_元素Var = selectedCharacterData['武器'] == '法器' ? selectedCharacterData['元素'] : '物理';
-    重撃_元素Var = selectedCharacterData['武器'] == '法器' ? selectedCharacterData['元素'] : '物理';
-    落下攻撃_元素Var = selectedCharacterData['武器'] == '法器' ? selectedCharacterData['元素'] : '物理';
+    通常攻撃_元素Var = getNormalAttackDefaultElement();
+    重撃_元素Var = getNormalAttackDefaultElement();
+    落下攻撃_元素Var = getNormalAttackDefaultElement();
 
     // キャラクターのサブステータスを計上します
     Object.keys(selectedCharacterData['ステータス']).forEach(key => {
@@ -532,9 +539,12 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     });
 
     // 聖遺物のサブステータスを計上します
-    ステータス詳細ObjVar['HP上限'] += Number($('#聖遺物サブ効果HPInput').val()) + (ステータス詳細ObjVar['基礎HP'] * Number($('#聖遺物サブ効果HPPInput').val()) / 100);
-    ステータス詳細ObjVar['攻撃力'] += Number($('#聖遺物サブ効果攻撃力Input').val()) + (ステータス詳細ObjVar['基礎攻撃力'] * Number($('#聖遺物サブ効果攻撃力PInput').val()) / 100);
-    ステータス詳細ObjVar['防御力'] += Number($('#聖遺物サブ効果防御力Input').val()) + (ステータス詳細ObjVar['基礎防御力'] * Number($('#聖遺物サブ効果防御力PInput').val()) / 100);;
+    ステータス詳細ObjVar['HP加算'] += Number($('#聖遺物サブ効果HPInput').val());
+    ステータス詳細ObjVar['HP乗算'] += Number($('#聖遺物サブ効果HPPInput').val());
+    ステータス詳細ObjVar['攻撃力加算'] += Number($('#聖遺物サブ効果攻撃力Input').val());
+    ステータス詳細ObjVar['攻撃力乗算'] += Number($('#聖遺物サブ効果攻撃力PInput').val());
+    ステータス詳細ObjVar['防御力加算'] += Number($('#聖遺物サブ効果防御力Input').val());
+    ステータス詳細ObjVar['防御力乗算'] += Number($('#聖遺物サブ効果防御力PInput').val());
     ステータス詳細ObjVar['元素熟知'] += Number($('#聖遺物サブ効果元素熟知Input').val());
     ステータス詳細ObjVar['会心率'] += Number($('#聖遺物サブ効果会心率Input').val());
     ステータス詳細ObjVar['会心ダメージ'] += Number($('#聖遺物サブ効果会心ダメージInput').val());
@@ -770,6 +780,7 @@ const elementalResonanceInputOnChange = function (event) {
 }
 $(document).on('change', 'input[name="元素共鳴Input"]', elementalResonanceInputOnChange);
 $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
+
 // INPUT 聖遺物
 const inputOnChangeArtifactSubUpdate = function () {
     let workObj = {
@@ -820,6 +831,7 @@ const inputOnChangeArtifactSubUpdate = function () {
     setInputValue('#聖遺物サブ効果元素チャージ効率Input', workObj['元素チャージ効率']);
     inputOnChangeStatusUpdate();
 };
+
 const artifactSetInputOnChange = function () {
     selectedArtifactSetDataArr = [];
     if ($('#聖遺物セット効果1Input').val() == $('#聖遺物セット効果2Input').val()) {
