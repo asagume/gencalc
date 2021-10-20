@@ -12,6 +12,7 @@ var artifactSubMaster;
 var artifactSetMaster;
 var elementalResonanceMaster;
 var enemyMaster;
+var バフデバフMaster;
 
 // 選択中のデータを保持します
 var selectedCharacterData;
@@ -29,10 +30,11 @@ var 元素爆発名称Var;
 var 元素エネルギーVar;
 
 var 通常攻撃_基礎ダメージ詳細ArrVar = [];
-var 重撃詳細_基礎ダメージArrVar = [];
+var 重撃_基礎ダメージ詳細ArrVar = [];
 var 落下攻撃_基礎ダメージ詳細ArrVar = [];
 var 元素スキル_基礎ダメージ詳細ArrVar = [];
 var 元素爆発_基礎ダメージ詳細ArrVar = [];
+var その他_基礎ダメージ詳細ArrMapVar = new Map();
 // key:条件,value:＊詳細Var
 var 特殊通常攻撃_基礎ダメージ詳細MapVar = new Map();
 var 特殊重撃_基礎ダメージ詳細MapVar = new Map();

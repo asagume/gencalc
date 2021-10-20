@@ -33,12 +33,12 @@
     #main {
         width: 800px;
         margin: 0 auto;
-        background: linear-gradient(to right,#574014, #3a2e0c );
+        background: linear-gradient(to right, #574014, #3a2e0c);
     }
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 120px 280px auto minmax(80px, 120px);
+        grid-template-rows: 32px 120px 300px auto minmax(80px, 120px);
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -96,6 +96,11 @@ fieldset {
     margin: 10px;
 }
 
+article.input-item {
+    width: 250px;
+    vertical-align: top;
+}
+
 .float-menu {
     border: 1px solid #CCC;
     padding: 10px;
@@ -136,9 +141,9 @@ fieldset {
 
 .input-area-tab {
     width: calc(96%/5);
-    height: 38px;
-    background: linear-gradient(to top, #ad5b18,#55290b);
-    line-height: 38px;
+    height: 35px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    line-height: 36px;
     text-align: center;
     display: block;
     float: left;
@@ -155,8 +160,8 @@ input[name="input-area-tab-name"] {
 }
 
 input:checked+.input-area-tab {
-    background: linear-gradient(to top, #aa7777,#553333);
-    color: aliceblue;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
 
 input:checked+.input-area-tab+.tab-content {
@@ -165,9 +170,9 @@ input:checked+.input-area-tab+.tab-content {
 
 .tab-area4 {
     width: calc(96%/4);
-    height: 38px;
-    background: linear-gradient(to top, #ad5b18,#55290b);
-    line-height: 38px;
+    height: 35px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    line-height: 35px;
     text-align: center;
     display: block;
     float: left;
@@ -184,8 +189,8 @@ input[name="tab-area-middle"] {
 }
 
 input:checked+.tab-area4 {
-    background: linear-gradient(to top, #aa7777,#553333);
-    color: aliceblue;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
 
 input:checked+.tab-area4+.tab-content {
@@ -194,9 +199,9 @@ input:checked+.tab-area4+.tab-content {
 
 .tab-area3 {
     width: calc(96%/3);
-    height: 38px;
-    background: linear-gradient(to top, #ad5b18,#55290b);
-    line-height: 38px;
+    height: 35px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    line-height: 35px;
     text-align: center;
     display: block;
     float: left;
@@ -213,8 +218,8 @@ input[name="tab-area-bottom"] {
 }
 
 input:checked+.tab-area3 {
-    background: linear-gradient(to top, #aa7777,#553333);
-    color: aliceblue;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
 
 input:checked+.tab-area3+.tab-content {
@@ -363,17 +368,20 @@ table thead th, table tbody th, table tbody td {
 }
 
 table thead th {
-    background-color: black;
+    background-color: #574014;
     font-size: 1.4rem;
 }
 
 table tbody th {
-    background-color: dimgrey;
     font-size: 1.4rem;
 }
 
 table thead th+th, table tbody td {
     border-left: 1px solid #aaa;
+}
+
+table td {
+    background-color: transparent;
 }
 
 table tbody tr:last-child th, table tbody tr:last-child td {
@@ -394,9 +402,58 @@ th.category {
     width: 100px;
     text-align: left;
     font-weight: bold;
-    color: greenyellow;
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
 
 fieldset article {
     display: inline-block;
+}
+
+#option-set {
+    width: 200px;
+    background: linear-gradient(to top, #aa7777, #553333);
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 3px;
+}
+
+legend#option-set {
+    width: 200px;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 3px;
+}
+
+legend#option-set.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
+legend#status-set {
+    width: 200px;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 3px;
+}
+
+legend#status-set.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
+input+select:checked {
+    display: none;
+}
+
+input:checked+select {
+    display: block;
+}
+
+th.base {
+    color: darksalmon;
 }

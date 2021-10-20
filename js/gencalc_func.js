@@ -50,18 +50,18 @@ function pushToMapValueArray(map, key, value) {
 const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
     let name;
     let exclusion;
-    let indexOf = conditionStr.indexOf("^");
+    let indexOf = conditionStr.indexOf('^');
     if (indexOf >= 0) {
         exclusion = conditionStr.substring(indexOf + 1);
         conditionStr = conditionStr.substring(0, indexOf);
     }
-    let condArr = conditionStr.split("@");
+    let condArr = conditionStr.split('@');
     if (condArr.length == 1) {
         name = conditionStr;
         pushToMapValueArray(conditionMap, name, null);
     } else if (condArr.length == 2) {
         name = condArr[0];
-        const re = new RegExp("([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)");
+        const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
         let reRet = re.exec(condArr[1]);
         if (reRet) {
             let prefix = reRet[1];
@@ -75,31 +75,31 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
             pushToMapValueArray(conditionMap, name, condArr[1]);
         }
     } else {
-        console.error("%s[%o,%o,%o]", makeOptionConditionMap.name, conditionStr, conditionMap, exclusionMap);
+        console.error('%s[%o,%o,%o]', makeOptionConditionMap.name, conditionStr, conditionMap, exclusionMap);
     }
     if (exclusion) {
-        pushToMapValueArray(exclusionMap, name, exclusion.split(","));
+        pushToMapValueArray(exclusionMap, name, exclusion.split(','));
     }
 }
 
 const analyzeValueFormula = function (kind, valueStr) {
     let param = kind;
-    if (kind.endsWith("%")) {
-        param = kind.replace("%$", "");
+    if (kind.endsWith('%')) {
+        param = kind.replace('%$', '');
         switch (param) {
-            case "HP":
-                param = "基礎HP";
+            case 'HP':
+                param = '基礎HP';
                 break;
-            case "攻撃力":
-                param = "基礎攻撃力";
+            case '攻撃力':
+                param = '基礎攻撃力';
                 break;
-            case "防御力":
-                param = "基礎防御力";
+            case '防御力':
+                param = '基礎防御力';
                 break;
         }
     }
     let workArr = [];
-    let re = new RegExp("(\\+|\\-|\\*|\\/|\\%|[0-9\\.]+|[^\\+\\-\\*\\/\\%0-9\\.]+)(.*)");
+    let re = new RegExp('(\\+|\\-|\\*|\\/|\\%|[0-9\\.]+|[^\\+\\-\\*\\/\\%0-9\\.]+)(.*)');
     let workStr = valueStr;
     while (true) {
         let reRet = re.exec(workStr);
@@ -113,15 +113,15 @@ const analyzeValueFormula = function (kind, valueStr) {
     for (let i = 0; i < workArr.length; i++) {
         if ($.isNumeric(workArr[i])) {
             if ((i + 1) < workArr.length) {
-                if (workArr[i + 1] == "%") {
+                if (workArr[i + 1] == '%') {
                     valueArr.push(workArr[i] / 100);
                     continue;
                 }
             }
-        } else if (workArr[i] == "%") {
-            valueArr.push("*");
+        } else if (workArr[i] == '%') {
+            valueArr.push('*');
             if ((i + 1) < workArr.length) {
-                if (["+", "-", "*", "/"].includes(workArr[i + 1])) {
+                if (['+', '-', '*', '/'].includes(workArr[i + 1])) {
                     valueArr.push(param);
                 }
             } else {
@@ -134,26 +134,26 @@ const analyzeValueFormula = function (kind, valueStr) {
     return valueArr;
 }
 const setupTypeValueFormulaArrFromObj = function (parentName, obj, level = null) {
-    //console.debug("%s[%o,%o,%o]", setupTypeValueFormulaArrFromObj.name, parentName, obj, level);
+    //console.debug('%s[%o,%o,%o]', setupTypeValueFormulaArrFromObj.name, parentName, obj, level);
     let newObj = JSON.parse(JSON.stringify(obj));
-    let my種類 = obj["種類"];
-    let my数値 = obj["数値"];
-    if ("数値" in obj && level) {
-        my数値 = obj["数値"][level];
+    let my種類 = obj['種類'];
+    let my数値 = obj['数値'];
+    if ('数値' in obj && level) {
+        my数値 = obj['数値'][level];
     }
-    newObj["数値"] = analyzeValueFormula(my種類, my数値);
+    newObj['数値'] = analyzeValueFormula(my種類, my数値);
     if (parentName) {
-        if ("名前" in obj) {
-            newObj["名前"] = parentName + "." + newObj["名前"];
+        if ('名前' in obj) {
+            newObj['名前'] = parentName + '.' + newObj['名前'];
         } else {
-            newObj["名前"] = parentName;
+            newObj['名前'] = parentName;
         }
     }
-    if ("条件" in obj) {
-        let my条件 = obj["条件"];
-        let my条件Arr = my条件.split("@");
+    if ('条件' in obj) {
+        let my条件 = obj['条件'];
+        let my条件Arr = my条件.split('@');
         if (my条件Arr.length > 1) {
-            const re = new RegExp("([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)");
+            const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
             let reRet = re.exec(my条件Arr[1]);
             if (reRet) {
                 let prefix = reRet[1];
@@ -162,9 +162,9 @@ const setupTypeValueFormulaArrFromObj = function (parentName, obj, level = null)
                 let postfix = reRet[4];
                 for (let i = rangeStart; i <= rangeEnd; i = addDecimal(i, rangeStart)) {
                     let newObj2 = JSON.parse(JSON.stringify(newObj));
-                    newObj2["条件"] = my条件Arr[0] + "@" + prefix + i + postfix;
-                    newObj2["数値"].push("*");
-                    newObj2["数値"].push(i);
+                    newObj2['条件'] = my条件Arr[0] + '@' + prefix + i + postfix;
+                    newObj2['数値'].push('*');
+                    newObj2['数値'].push(i);
                     typeValueFormulaArr.push(newObj2);
                 }
                 return;
@@ -185,11 +185,11 @@ const setupTypeValueFormulaArr = function (parentName, obj, level = null) {
 }
 
 const makeDamageFormulaArrFromObj = function (obj, level = null) {
-    let my数値 = obj["数値"];
+    let my数値 = obj['数値'];
     if (level) {
-        my数値 = obj["数値"][level];
+        my数値 = obj['数値'][level];
     }
-    return analyzeValueFormula("攻撃力", my数値);
+    return analyzeValueFormula('攻撃力', my数値);
 }
 
 // 計算式を評価します
@@ -198,7 +198,7 @@ function calculateDamage(calculateObj, formula) {
     if ($.isArray(formula)) {
         let op;
         formula.forEach(entry => {
-            if (["+", "-", "*"].includes(entry)) {  // 加算 減算 乗算
+            if (['+', '-', '*'].includes(entry)) {  // 加算 減算 乗算
                 op = entry;
                 return;
             }
@@ -214,13 +214,13 @@ function calculateDamage(calculateObj, formula) {
             }
             if (op) {
                 switch (op) {
-                    case "+":
+                    case '+':
                         result += value;
                         break;
-                    case "-":
+                    case '-':
                         result -= value;
                         break;
-                    case "*":
+                    case '*':
                         result *= value;
                         break;
                 }
@@ -240,7 +240,7 @@ function calculateDamage(calculateObj, formula) {
             }
         }
     }
-    //console.debug("%s[%o,%o,%o] => %o", calculateDamage.name, null, formula, result);
+    //console.debug('%s[%o,%o,%o] => %o', calculateDamage.name, null, formula, result);
     return result;
 }
 
@@ -263,53 +263,57 @@ function setObjectPropertiesToElements(obj, prefix, postfix) {
 
 const KIND_WITH_PERCENT_TO_TARGET_MAP = new Map([['HP', 'HP上限'], ['HP%', 'HP上限'], ['攻撃力%', '攻撃力'], ['防御力%', '防御力']]);
 const KIND_WITH_PERCENT_TO_BASE_MAP = new Map([['HP%', '基礎HP'], ['攻撃力%', '基礎攻撃力'], ['防御力%', '基礎防御力']]);
-const calculateFormulaArray = function (itemValueObj, formulaArr, kind) {
+const calculateFormulaArray = function (itemValueObj, formulaArr, kind, opt_max = null) {
     let result = 0;
     if (kind != null && kind.endsWith('%')) {   // HP% 攻撃力% 防御力%
-        return itemValueObj[KIND_WITH_PERCENT_TO_BASE_MAP.get(kind)] * Number(formulaArr) / 100;
-    }
-    if (!$.isArray(formulaArr)) {
+        result = itemValueObj[KIND_WITH_PERCENT_TO_BASE_MAP.get(kind)] * Number(formulaArr) / 100;
+    } else if (!$.isArray(formulaArr)) {
         if ($.isNumeric(formulaArr)) {
-            return Number(formulaArr);
-        }
-        return itemValueObj[formulaArr];
-    }
-    let operator = null;
-    formulaArr.forEach(entry => {
-        let subResult;
-        if (["+", "-", "*", "/"].includes(entry)) {
-            operator = entry;
-            return;
-        } else if ($.isNumeric(entry)) {
-            subResult = Number(entry);
-        } else if ($.isArray(entry)) {
-            subResult = calculateFormulaArray(itemValueObj, entry, kind);
+            result = Number(formulaArr);
         } else {
-            if (entry in itemValueObj) {
-                subResult = Number(itemValueObj[entry]);
+            result = itemValueObj[formulaArr];
+        }
+    } else {
+        let operator = null;
+        formulaArr.forEach(entry => {
+            let subResult;
+            if (['+', '-', '*', '/'].includes(entry)) {
+                operator = entry;
+                return;
+            } else if ($.isNumeric(entry)) {
+                subResult = Number(entry);
+            } else if ($.isArray(entry)) {
+                subResult = calculateFormulaArray(itemValueObj, entry, kind);
             } else {
-                console.error("%s[%o,%o]", calculateFormulaArray.name, itemValueObj, kind, formulaArr);
+                if (entry in itemValueObj) {
+                    subResult = Number(itemValueObj[entry]);
+                } else {
+                    console.error('%s[%o,%o]', calculateFormulaArray.name, itemValueObj, kind, formulaArr);
+                }
             }
-        }
-        if (operator == null) {
-            result += subResult;
-        } else {
-            switch (operator) {
-                case "+":
-                    result += subResult;
-                    break;
-                case "-":
-                    result -= subResult;
-                    break;
-                case "*":
-                    result *= subResult;
-                    break;
-                case "/":
-                    result /= subResult;
-                    break;
+            if (operator == null) {
+                result += subResult;
+            } else {
+                switch (operator) {
+                    case '+':
+                        result += subResult;
+                        break;
+                    case '-':
+                        result -= subResult;
+                        break;
+                    case '*':
+                        result *= subResult;
+                        break;
+                    case '/':
+                        result /= subResult;
+                        break;
+                }
             }
-        }
-    });
+        });
+    }
+    if (opt_max != null && $.isNumeric(opt_max) && result > Number(opt_max)) {
+        result = Number(opt_max);
+    }
     return result;
 }
 
@@ -320,12 +324,12 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
     if ($.isNumeric(str)) {
         resultArr.push(Number(str));
     } else {
-        let strArr = str.split("%");
+        let strArr = str.split('%');
         if (strArr.length == 1) {
             resultArr.push(strArr[0]);
         } else {
             resultArr.push(Number(strArr[0]) / 100);
-            resultArr.push("*");
+            resultArr.push('*');
             if (strArr[1].length > 0) {
                 resultArr.push(strArr[1]);
             } else if (defaultItem != null) {
@@ -338,7 +342,7 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
 
 const analyzeFormulaStr = function (str, defaultItem = null) {
     let resultArr = [];
-    let re = new RegExp("([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+)([\\+\\-\\*/]?)(.*)");
+    let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+)([\\+\\-\\*/]?)(.*)');
     let workStr = str;
     while (true) {
         let reRet = re.exec(workStr);
@@ -350,10 +354,10 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
                 workStr = reRet[3];
                 continue;
             } else {
-                console.error("%s[%o]", analyzeFormulaStr.name, str);
+                console.error('%s[%o]', analyzeFormulaStr.name, str);
             }
         } else if (reRet[3]) {
-            console.error("%s[%o]", analyzeFormulaStr.name, str);
+            console.error('%s[%o]', analyzeFormulaStr.name, str);
         }
         break;
     }
@@ -362,13 +366,13 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
 
 // 計算式Arrayを表示用の文字列に変換します
 function formulaArrayToString(formulaArr) {
-    let result = "";
+    let result = '';
     if ($.isArray(formulaArr)) {
-        result += "[";
+        result += '[';
         formulaArr.forEach(entry => {
             result += formulaArrayToString(entry);
         });
-        result += "]";
+        result += ']';
     } else {
         result += formulaArr;
     }
@@ -378,22 +382,22 @@ function formulaArrayToString(formulaArr) {
 // テーブルクリックで行を隠したり表示したり
 var selectorVisiblityStateMap = new Map();
 const elementOnClickHidableChildrenToggle = function () {
-    let selector = "#" + this.id + " .hidable";
+    let selector = '#' + this.id + ' .hidable';
     $(selector).toggle();
-    let isVisible = $(selector).is(":visible");
-    selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+    let isVisible = $(selector).is(':visible');
+    selectorVisiblityStateMap.set(selector, $(selector).is(':visible'));
     console.debug(selectorVisiblityStateMap);
 }
 const elementOnClickHidableNeighborToggle = function () {
-    let selector = "#" + this.id + "+.hidable";
+    let selector = '#' + this.id + '+.hidable';
     $(selector).toggle();
-    let isVisible = $(selector).is(":visible");
-    selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
+    let isVisible = $(selector).is(':visible');
+    selectorVisiblityStateMap.set(selector, $(selector).is(':visible'));
     console.debug(selectorVisiblityStateMap);
 }
 
-function isHidden(selector) {
-    let isHidden = false;
+function isHiddenHidableElement(selector, opt_default = false) {
+    let isHidden = opt_default;
     if (selectorVisiblityStateMap.has(selector)) {
         isHidden = !selectorVisiblityStateMap.get(selector);
     }

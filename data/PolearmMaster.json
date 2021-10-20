@@ -1,65 +1,65 @@
 {
     "草薙の稲光": {
         "import": "data/weapons/polearm_5_EngulfingLightning.json",
-        "disable": true
+        "disabled": true
     },
     "護摩の杖": {
         "import": "data/weapons/polearm_5_StaffofHoma.json",
-        "disable": true
+        "disabled": true
     },
     "破天の槍": {
         "import": "data/weapons/polearm_5_VortexVanquisher.json",
-        "disable": true
+        "disabled": true
     },
     "天空の脊": {
         "import": "data/weapons/polearm_5_SkywardSpine.json",
-        "disable": true
+        "disabled": true
     },
     "和璞鳶": {
         "import": "data/weapons/polearm_5_PrimordialJadeWinged-Spear.json",
-        "disable": true
+        "disabled": true
     },
     "「漁獲」": {
         "import": "data/weapons/polearm_4_TheCatch.json"
     },
     "喜多院十文字槍": {
         "import": "data/weapons/polearm_4_KitainCrossSpear.json",
-        "disable": true
+        "disabled": true
     },
     "ドラゴンスピア": {
         "import": "data/weapons/polearm_4_DragonspineSpear.json",
-        "disable": true
+        "disabled": true
     },
     "旧貴族猟槍": {
         "import": "data/weapons/polearm_4_RoyalSpear.json",
-        "disable": true
+        "disabled": true
     },
     "西風長槍": {
         "import": "data/weapons/polearm_4_FavoniusLance.json",
-        "disable": true
+        "disabled": true
     },
     "星鎌・試作": {
         "import": "data/weapons/polearm_4_PrototypeStarglitter.json",
-        "disable": true
+        "disabled": true
     },
     "千岩長槍": {
         "import": "data/weapons/polearm_4_LithicSpear.json",
-        "disable": true
+        "disabled": true
     },
     "匣中滅龍": {
         "import": "data/weapons/polearm_4_DragonsBane.json",
-        "disable": true
+        "disabled": true
     },
     "死闘の槍": {
         "import": "data/weapons/polearm_4_Deathmatch.json",
-        "disable": true
+        "disabled": true
     },
     "流月の針": {
         "import": "data/weapons/polearm_4_CrescentPike.json",
-        "disable": true
+        "disabled": true
     },
     "黒岩の突槍": {
         "import": "data/weapons/polearm_4_BlackcliffPole.json",
-        "disable": true
+        "disabled": true
     }
 }

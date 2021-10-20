@@ -4,6 +4,7 @@
         "元素": "水",
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_SangonomiyaKokomi.json",
+        "img": "img/SangonomiyaKokomi.jpg",
         "disabled": false
     },
     "雷電将軍": {
