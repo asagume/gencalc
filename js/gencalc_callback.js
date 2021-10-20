@@ -957,17 +957,17 @@ const makeSpecialTalentDetailArray = function (talentDataObj, level, defaultKind
     if ('種類' in talentDataObj) {
         switch (talentDataObj['種類']) {
             case '元素スキルダメージ':
-                level = my元素スキルレベル;
+                level = $('#元素スキルレベルInput').val();
                 defaultKind = talentDataObj['種類'];
                 break;
             case '元素爆発ダメージ':
-                level = my元素爆発レベル;
+                level = $('#元素爆発レベルInput').val();
                 defaultKind = talentDataObj['種類'];
                 break;
         }
     }
-    if ('元素' in myTalentDataObject) {
-        defaultElement = myTalentDataObject['元素'];
+    if ('元素' in talentDataObj) {
+        defaultElement = talentDataObj['元素'];
     }
     return makeTalentDetailArray(talentDataObj, level, defaultKind, defaultElement);
 }
@@ -989,16 +989,16 @@ const setupBaseDamageDetailDataCharacter = function () {
     let my天賦レベル = my通常攻撃レベル;
     let myデフォルト種類 = '通常攻撃ダメージ';
     let myデフォルト元素 = getNormalAttackDefaultElement();
-    let myTalentDataObject = selectedCharacterData['通常攻撃'];
-    通常攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    let myTalentDataObj = selectedCharacterData['通常攻撃'];
+    通常攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
     console.debug('通常攻撃_基礎ダメージ詳細ArrVar');
     console.debug(通常攻撃_基礎ダメージ詳細ArrVar);
     // 特殊通常攻撃を解析します。Object
     特殊通常攻撃_基礎ダメージ詳細MapVar.clear();
     if ('特殊通常攻撃' in selectedCharacterData) {
-        myTalentDataObject = selectedCharacterData['特殊通常攻撃'];
-        let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
-        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+        myTalentDataObj = selectedCharacterData['特殊通常攻撃'];
+        let myMapKey = myTalentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
+        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         特殊通常攻撃_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊通常攻撃_基礎ダメージ詳細MapVar');
         console.debug(特殊通常攻撃_基礎ダメージ詳細MapVar);
@@ -1008,15 +1008,15 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my通常攻撃レベル;
     myデフォルト種類 = '重撃ダメージ';
     myデフォルト元素 = getNormalAttackDefaultElement();
-    myTalentDataObject = selectedCharacterData['重撃'];
-    重撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    myTalentDataObj = selectedCharacterData['重撃'];
+    重撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
     console.debug('重撃_基礎ダメージ詳細ArrVar');
     console.debug(重撃_基礎ダメージ詳細ArrVar);
     // 特殊重撃を解析します。Object
     if ('特殊重撃' in selectedCharacterData) {
-        myTalentDataObject = selectedCharacterData['特殊重撃'];
-        let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
-        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+        myTalentDataObj = selectedCharacterData['特殊重撃'];
+        let myMapKey = myTalentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
+        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         特殊重撃_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊重撃_基礎ダメージ詳細MapVar');
         console.debug(特殊重撃_基礎ダメージ詳細MapVar);
@@ -1026,15 +1026,15 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my通常攻撃レベル;
     myデフォルト種類 = '落下攻撃ダメージ';
     myデフォルト元素 = getNormalAttackDefaultElement();
-    myTalentDataObject = selectedCharacterData['落下攻撃'];
-    落下攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    myTalentDataObj = selectedCharacterData['落下攻撃'];
+    落下攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
     console.debug('落下攻撃_基礎ダメージ詳細ArrVar');
     console.debug(落下攻撃_基礎ダメージ詳細ArrVar);
     // 特殊落下攻撃を解析します。Object
     if ('特殊落下攻撃' in selectedCharacterData) {
-        myTalentDataObject = selectedCharacterData['特殊落下攻撃'];
-        let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
-        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+        myTalentDataObj = selectedCharacterData['特殊落下攻撃'];
+        let myMapKey = myTalentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
+        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         特殊落下攻撃_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊落下攻撃_基礎ダメージ詳細MapVar');
         console.debug(特殊落下攻撃_基礎ダメージ詳細MapVar);
@@ -1044,23 +1044,23 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my元素スキルレベル;
     myデフォルト種類 = '元素スキルダメージ';
     myデフォルト元素 = キャラクター元素Var;
-    myTalentDataObject = selectedCharacterData['元素スキル'];
-    元素スキル_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
-    if ('一回押し' in myTalentDataObject) {
-        let myWorkArr = makeTalentDetailArray(myTalentDataObject['一回押し'], my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    myTalentDataObj = selectedCharacterData['元素スキル'];
+    元素スキル_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    if ('一回押し' in myTalentDataObj) {
+        let myWorkArr = makeTalentDetailArray(myTalentDataObj['一回押し'], my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         元素スキル_基礎ダメージ詳細ArrVar = 元素スキル_基礎ダメージ詳細ArrVar.concat(myWorkArr);
     }
-    if ('長押し' in myTalentDataObject) {
-        let myWorkArr = makeTalentDetailArray(myTalentDataObject['長押し'], my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    if ('長押し' in myTalentDataObj) {
+        let myWorkArr = makeTalentDetailArray(myTalentDataObj['長押し'], my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         元素スキル_基礎ダメージ詳細ArrVar = 元素スキル_基礎ダメージ詳細ArrVar.concat(myWorkArr);
     }
     console.debug('元素スキル_基礎ダメージ詳細ArrVar');
     console.debug(元素スキル_基礎ダメージ詳細ArrVar);
     // 特殊元素スキルを解析します。Object
     if ('特殊元素スキル' in selectedCharacterData) {
-        myTalentDataObject = selectedCharacterData['特殊元素スキル'];
+        myTalentDataObj = selectedCharacterData['特殊元素スキル'];
         let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
-        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         特殊元素スキル_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊元素スキル_基礎ダメージ詳細MapVar');
         console.debug(特殊元素スキル_基礎ダメージ詳細MapVar);
@@ -1070,15 +1070,15 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my元素爆発レベル;
     myデフォルト種類 = '元素爆発ダメージ';
     myデフォルト元素 = キャラクター元素Var;
-    myTalentDataObject = selectedCharacterData['元素爆発'];
-    元素爆発_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+    myTalentDataObj = selectedCharacterData['元素爆発'];
+    元素爆発_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
     console.debug('元素爆発_基礎ダメージ詳細ArrVar');
     console.debug(元素爆発_基礎ダメージ詳細ArrVar);
     // 特殊元素爆発を解析します。Object
     if ('特殊元素爆発' in selectedCharacterData) {
-        myTalentDataObject = selectedCharacterData['特殊元素爆発'];
+        myTalentDataObj = selectedCharacterData['特殊元素爆発'];
         let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
-        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObject, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
+        let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, 'キャラクター');
         特殊元素爆発_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊元素爆発_基礎ダメージ詳細MapVar');
         console.debug(特殊元素爆発_基礎ダメージ詳細MapVar);
@@ -1089,8 +1089,8 @@ const setupBaseDamageDetailDataCharacter = function () {
     // その他天賦を解析します。Array
     if ('その他天賦' in selectedCharacterData) {
         selectedCharacterData['その他天賦'].forEach(element => {
-            myTalentDataObject = element;
-            dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
+            myTalentDataObj = element;
+            dummyArr = makeTalentDetailArray(myTalentDataObj, null, null, null, 'キャラクター');
             if (dummyArr.length > 0) {
                 console.error(dummyArr);
             }
@@ -1100,8 +1100,8 @@ const setupBaseDamageDetailDataCharacter = function () {
     // 命ノ星座を解析します。Object
     if ('命ノ星座' in selectedCharacterData) {
         for (let i = $('#命ノ星座Input').val(); i > 0; i--) {
-            myTalentDataObject = selectedCharacterData['命ノ星座'][i];
-            dummyArr = makeTalentDetailArray(myTalentDataObject, null, null, null, 'キャラクター');
+            myTalentDataObj = selectedCharacterData['命ノ星座'][i];
+            dummyArr = makeTalentDetailArray(myTalentDataObj, null, null, null, 'キャラクター');
             if (dummyArr.length > 0) {
                 console.error(dummyArr);
             }

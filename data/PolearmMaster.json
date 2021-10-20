@@ -1,7 +1,7 @@
 {
     "草薙の稲光": {
         "import": "data/weapons/polearm_5_EngulfingLightning.json",
-        "disabled": true
+        "disabled": false
     },
     "護摩の杖": {
         "import": "data/weapons/polearm_5_StaffofHoma.json",

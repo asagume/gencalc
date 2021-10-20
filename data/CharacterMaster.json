@@ -11,6 +11,7 @@
         "レアリティ": 5,
         "元素": "雷",
         "武器": "長柄武器",
+        "import": "data/characters/electro_5_polearm_RaidenShogun.json",
         "disabled": false
     },
     "アーロイ": {
