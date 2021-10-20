@@ -416,7 +416,7 @@ function setInputValue(selector, value) {
 }
 
 function compareFunction(a, b) {
-    let arr = ['HP%', 'HP', 'HP上限', '防御力%', '防御力', '攻撃力%', '攻撃力', '元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率'];
+    let arr = ['HP%', 'HP', 'HP上限', '防御力%', '防御力', '元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', '攻撃力%', '攻撃力'];
     let aIndex = arr.indexOf(a[0]);
     let bIndex = arr.indexOf(b[0]);
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
