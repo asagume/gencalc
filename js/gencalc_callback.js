@@ -929,7 +929,7 @@ const inputOnChangeArtifactSubUpdate = function () {
             let newKey = key;
             if (key != 'HP') newKey = key.replace(new RegExp('P$'), '%');
             let value = artifactSubMaster[newKey];
-            workObj[key] = value * 4 * 優先しないサブ効果倍率;
+            workObj[key] = value * 3 * 優先しないサブ効果倍率;
         }
     });
     setInputValue('#聖遺物サブ効果HPInput', workObj['HP']);

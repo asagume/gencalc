@@ -16,8 +16,7 @@
         "import": "data/weapons/bow_5_SkywardHarp.json"
     },
     "破魔の弓": {
-        "import": "data/weapons/bow_4_Hamayumi.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_Hamayumi.json"
     },
     "幽夜のワルツ": {
         "import": "data/weapons/bow_4_MitternachtsWaltz.json",
