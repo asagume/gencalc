@@ -73,9 +73,13 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
                 pushToMapValueArray(conditionMap, name, condArr[1]);
             }
         } else if (condArr[1].indexOf(',') != -1) {
-            let condValurArr = condArr[1].split(',');
+            let re = new RegExp('([^0-9\\.]*)([0-9\\.,]+)(.*)');
+            let reRet = re.exec(condArr[1]);
+            let prefix = reRet[1];
+            let condValurArr = reRet[2].split(',');
+            let postfix = reRet[3];
             condValurArr.forEach(value => {
-                pushToMapValueArray(conditionMap, name, value);
+                pushToMapValueArray(conditionMap, name, prefix + value + postfix);
             });
         } else {
             pushToMapValueArray(conditionMap, name, condArr[1]);

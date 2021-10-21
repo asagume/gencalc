@@ -35,8 +35,7 @@
         "disabled": true
     },
     "西風長槍": {
-        "import": "data/weapons/polearm_4_FavoniusLance.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_FavoniusLance.json"
     },
     "星鎌・試作": {
         "import": "data/weapons/polearm_4_PrototypeStarglitter.json",
