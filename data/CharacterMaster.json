@@ -24,7 +24,8 @@
         "レアリティ": 5,
         "元素": "炎",
         "武器": "弓",
-        "disabled": true
+        "import": "data/characters/pyro_5_bow_Yoimiya.json",
+        "disabled": false
     },
     "神里綾華": {
         "import": "data/characters/cryo_5_sword_KamisatoAyaka.json"

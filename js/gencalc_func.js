@@ -52,7 +52,7 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
         exclusion = conditionStr.substring(indexOf + 1);
         conditionStr = conditionStr.substring(0, indexOf);
     }
-    let condArr = conditionStr.split('@');
+    let condArr = conditionStr.split(/[@#]/);
     if (condArr.length == 1) {
         name = conditionStr;
         pushToMapValueArray(conditionMap, name, null);
