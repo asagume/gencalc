@@ -352,7 +352,7 @@ input[type="checkbox"]:checked+label {
 }
 
 .optionBox div select {
-    width: 80px;
+    width: 100px;
 }
 
 table {
@@ -461,4 +461,8 @@ th.base {
 table.result {
     background: linear-gradient(to top, #312820, #030100);
     margin: 5px 0;
+}
+
+select.long {
+    width: 400px;
 }

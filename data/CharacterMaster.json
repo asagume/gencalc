@@ -99,7 +99,7 @@
         "レアリティ": 4,
         "元素": "風",
         "武器": "両手剣",
-        "disabled": true
+        "import": "data/characters/aero_4_claymore_Sayu.json"
     },
     "煙緋": {
         "武器": "法器",

@@ -7,6 +7,7 @@ const elementOnClickHideTabContentToggle = function () {
     selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
     console.debug(selectorVisiblityStateMap);
 }
+
 const elementOnClickToggleOther = function (selector, triggerSelector) {
     return function () {
         $(selector).toggle();
@@ -72,6 +73,25 @@ $(document).ready(function () {
         }),
         fetch("data/BuffDebuffMaster.json").then(response => response.json()).then(jsonObj => {
             バフデバフMaster = jsonObj;
+            Object.keys(バフデバフMaster).forEach(key => {
+                let myObj = バフデバフMaster[key];
+                if ('desabled' in myObj && myObj['desabled']) return;
+                let my条件 = '名前' in myObj ? myObj['名前'] : key;
+                myObj['詳細'].forEach(detailObj => {
+                    if (!('条件' in detailObj)) {
+                        detailObj['条件'] = my条件;
+                    }
+                    console.error(detailObj);
+                });
+                console.error(myObj['詳細']);
+                バフデバフ詳細ArrVar = バフデバフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
+            });
+            バフデバフオプション条件Map.clear();
+            バフデバフ詳細ArrVar.forEach(detailObj => {
+                makeConditionExclusionMapFromStr(detailObj['条件'], バフデバフオプション条件Map, バフデバフオプション排他Map);
+            });
+            $('#バフデバフオプションBox').empty();
+            appendInputForOptionElement('バフデバフオプションBox', バフデバフオプション条件Map, 'バフデバフ', false);
         })
     ]).then(() => {
         characterInputOnChange();

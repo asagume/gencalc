@@ -16,14 +16,10 @@ function addExistingProp(targetObj, propName, value) {
 
 // そこそこ正確めな加算関数です
 const addDecimal = function (value1, value2) {
-    let decimalDigits1 = String(value1).length - String(value1).lastIndexOf('.') - 1;
-    let decimalDigits2 = String(value2).length - String(value2).lastIndexOf('.') - 1;
+    let decimalDigits1 = String(value1).length - String(value1).lastIndexOf('.');
+    let decimalDigits2 = String(value2).length - String(value2).lastIndexOf('.');
     let decimalDigits = Math.max([decimalDigits1, decimalDigits2]);
-    if (decimalDigits > 0) {
-        let pow = Math.pow(10, decimalDigits);
-        return ((value1 * pow) + (value2 * pow)) / pow;
-    }
-    return value1 + value2;
+    return Math.round((value1 * 100 + value2 * 100) / 10) / 10;
 }
 
 // Mapのvalue(Array)にvalueを追加(push)します
@@ -47,6 +43,7 @@ function pushToMapValueArray(map, key, value) {
 // {条件名}@{条件値}
 // {条件名}@{PREFIX}{レンジSTART}-{レンジEND}{POSTFIX}
 // {条件名}^{排他条件}
+// {条件名}@{条件値1},{条件値2},{条件値3}...
 const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
     let name;
     let exclusion;
@@ -61,16 +58,25 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
         pushToMapValueArray(conditionMap, name, null);
     } else if (condArr.length == 2) {
         name = condArr[0];
-        const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
-        let reRet = re.exec(condArr[1]);
-        if (reRet) {
-            let prefix = reRet[1];
-            let rangeStart = Number(reRet[2]);
-            let rangeEnd = Number(reRet[3]);
-            let postfix = reRet[4];
-            for (let i = rangeStart; i <= rangeEnd; i = addDecimal(i, rangeStart)) {
-                pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);
+        if (condArr[1].indexOf('-') != -1) {
+            const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
+            let reRet = re.exec(condArr[1]);
+            if (reRet) {
+                let prefix = reRet[1];
+                let rangeStart = Number(reRet[2]);
+                let rangeEnd = Number(reRet[3]);
+                let postfix = reRet[4];
+                for (let i = rangeStart; i <= rangeEnd; i = addDecimal(i, rangeStart)) {
+                    pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);
+                }
+            } else {
+                pushToMapValueArray(conditionMap, name, condArr[1]);
             }
+        } else if (condArr[1].indexOf(',') != -1) {
+            let condValurArr = condArr[1].split(',');
+            condValurArr.forEach(value => {
+                pushToMapValueArray(conditionMap, name, value);
+            });
         } else {
             pushToMapValueArray(conditionMap, name, condArr[1]);
         }
@@ -332,7 +338,10 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
     let workStr = str;
     while (true) {
         let reRet = re.exec(workStr);
-        if (reRet == null) break;
+        if (!reRet) {
+            resultArr.push(workStr);
+            break;
+        }
         resultArr.push(analyzeFormulaStrSub(reRet[1], defaultItem));
         if (reRet[2]) {
             resultArr.push(reRet[2]);

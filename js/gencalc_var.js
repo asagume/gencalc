@@ -14,6 +14,10 @@ var elementalResonanceMaster;
 var enemyMaster;
 var バフデバフMaster;
 
+var バフデバフ詳細ArrVar = [];
+var バフデバフオプション条件Map = new Map();
+var バフデバフオプション排他Map = new Map();
+
 // 選択中のデータを保持します
 var selectedCharacterData;
 var selectedWeaponData;
@@ -147,11 +151,8 @@ const conditionOptionMap = new Map();
 const exclusionOptionMap = new Map();
 //
 var ステータス詳細ObjVar = {
-    HP加算: 0,
     HP乗算: 0,
-    攻撃力加算: 0,
     攻撃力乗算: 0,
-    防御力加算: 0,
     防御力乗算: 0,
     基礎HP: 0,
     基礎攻撃力: 0,
@@ -198,28 +199,20 @@ var ステータス詳細ObjVar = {
     敵岩元素耐性: 0,
     敵物理耐性: 0
 };
-//
+// マスターデータの詳細[].種類からステータス詳細ObjVarのプロパティへの変換表です
 const KIND_TO_PROPERTY_MAP = new Map([
-    ['HP', 'HP加算'],
+    ['HP', 'HP上限'],
     ['HP%', 'HP乗算'],
-    ['攻撃力', '攻撃力加算'],
+    ['攻撃力', '攻撃力'],
     ['攻撃力%', '攻撃力乗算'],
-    ['防御力', '防御力加算'],
+    ['防御力', '防御力'],
     ['防御力%', '防御力乗算']
 ]);
 
-
-// 
-var normalAttackElement;
-var chargedAttackElement;
-var plungAttackElement;
 //
-function initCalculateObj() {
-    ステータス詳細ObjVar['HP加算'] = 0;
+function initステータス詳細ObjVar() {
     ステータス詳細ObjVar['HP乗算'] = 0;
-    ステータス詳細ObjVar['攻撃力加算'] = 0;
     ステータス詳細ObjVar['攻撃力乗算'] = 0;
-    ステータス詳細ObjVar['防御力加算'] = 0;
     ステータス詳細ObjVar['防御力乗算'] = 0;
 
     ステータス詳細ObjVar["基礎HP"] = 0;
@@ -267,18 +260,14 @@ function initCalculateObj() {
     ステータス詳細ObjVar["敵岩元素耐性"] = 0;
     ステータス詳細ObjVar["敵物理耐性"] = 0;
 
-    normalAttackElement = null;
-    chargedAttackElement = null;
-    plungAttackElement = null;
+    通常攻撃_元素Var = "物理";
+    重撃_元素Var = "物理";
+    落下攻撃_元素Var = "物理";
     if (selectedCharacterData) {
         if (selectedCharacterData["武器"] == "法器") {
-            normalAttackElement = selectedCharacterData["元素"];
-            chargedAttackElement = selectedCharacterData["元素"];
-            plungAttackElement = selectedCharacterData["元素"];
-        } else {
-            normalAttackElement = "物理";
-            chargedAttackElement = "物理";
-            plungAttackElement = "物理";
+            通常攻撃_元素Var = selectedCharacterData["元素"];
+            重撃_元素Var = selectedCharacterData["元素"];
+            落下攻撃_元素Var = selectedCharacterData["元素"];
         }
     }
 }
