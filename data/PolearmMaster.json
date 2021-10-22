@@ -3,8 +3,7 @@
         "import": "data/weapons/polearm_5_EngulfingLightning.json"
     },
     "護摩の杖": {
-        "import": "data/weapons/polearm_5_StaffofHoma.json",
-        "disabled": true
+        "import": "data/weapons/polearm_5_StaffofHoma.json"
     },
     "破天の槍": {
         "import": "data/weapons/polearm_5_VortexVanquisher.json"

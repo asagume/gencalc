@@ -13,8 +13,7 @@
         "import": "data/weapons/sword_5_SummitShaper.json"
     },
     "天空の刃": {
-        "import": "data/weapons/sword_5_SkywardBlade.json",
-        "disabled": true
+        "import": "data/weapons/sword_5_SkywardBlade.json"
     },
     "風鷹剣": {
         "import": "data/weapons/sword_4_AquilaFavonia.json",

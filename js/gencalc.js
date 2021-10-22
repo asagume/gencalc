@@ -404,9 +404,9 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
         }
     });
 
-    if (detailObj['種類'] == 'シールド' && my元素 == '岩') {    // for ノエル 鍾離
-        my計算Result[0] *= 1.5;
-        my計算Result[2] *= 1.5;
+    if (detailObj['種類'] == 'シールド' && my元素 == '岩') {    // for ノエル 鍾離 岩元素シールド
+        my計算Result[0] = Math.round(my計算Result[0] * 1.5);
+        my計算Result[2] = Math.round(my計算Result[2] * 1.5);
     }
 
     return [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2]];
