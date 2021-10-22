@@ -41,55 +41,62 @@ function pushToMapValueArray(map, key, value) {
 
 // {条件名}
 // {条件名}@{条件値}
-// {条件名}@{PREFIX}{レンジSTART}-{レンジEND}{POSTFIX}
-// {条件名}^{排他条件}
-// {条件名}@{条件値1},{条件値2},{条件値3}...
-const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
-    let name;
-    let exclusion;
-    let indexOf = conditionStr.indexOf('^');
-    if (indexOf >= 0) {
-        exclusion = conditionStr.substring(indexOf + 1);
-        conditionStr = conditionStr.substring(0, indexOf);
-    }
-    let condArr = conditionStr.split(/[@#]/);
-    if (condArr.length == 1) {
-        name = conditionStr;
-        pushToMapValueArray(conditionMap, name, null);
-    } else if (condArr.length == 2) {
-        name = condArr[0];
-        if (condArr[1].indexOf('-') != -1) {
+// {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
+// {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
+// {上記}^{排他条件名}
+function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusionMap, exclusion) {
+    let myCondStrArr = conditionStr.split('@');
+    let myName = myCondStrArr[0];
+    if (myCondStrArr.length == 1) {
+        pushToMapValueArray(conditionMap, myName, null);
+    } else if (myCondStrArr.length == 2) {
+        if (myCondStrArr[1].indexOf('-') != -1) {
             const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
-            let reRet = re.exec(condArr[1]);
+            let reRet = re.exec(myCondStrArr[1]);
             if (reRet) {
                 let prefix = reRet[1];
                 let rangeStart = Number(reRet[2]);
                 let rangeEnd = Number(reRet[3]);
                 let postfix = reRet[4];
                 for (let i = rangeStart; i <= rangeEnd; i = addDecimal(i, rangeStart)) {
-                    pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);
+                    pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
                 }
             } else {
-                pushToMapValueArray(conditionMap, name, condArr[1]);
+                pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
             }
-        } else if (condArr[1].indexOf(',') != -1) {
-            let re = new RegExp('([^0-9\\.]*)([0-9\\.,]+)(.*)');
-            let reRet = re.exec(condArr[1]);
+        } else if (myCondStrArr[1].indexOf(',') != -1) {
+            const re = new RegExp('([^0-9\\.]*)([0-9\\.,]+)(.*)');
+            let reRet = re.exec(myCondStrArr[1]);
             let prefix = reRet[1];
             let condValurArr = reRet[2].split(',');
             let postfix = reRet[3];
             condValurArr.forEach(value => {
-                pushToMapValueArray(conditionMap, name, prefix + value + postfix);
+                pushToMapValueArray(conditionMap, myName, prefix + value + postfix);
             });
         } else {
-            pushToMapValueArray(conditionMap, name, condArr[1]);
+            pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
         }
     } else {
         console.error(conditionStr, conditionMap, exclusionMap);
     }
     if (exclusion) {
-        pushToMapValueArray(exclusionMap, name, exclusion.split(','));
+        exclusion.split(',').forEach(e => {
+            pushToMapValueArray(exclusionMap, myName, e);
+        });
     }
+}
+const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
+    // 排他条件を抽出します
+    let exclusionCond = null;
+    let myCondStrArr = conditionStr.split('^');
+    if (myCondStrArr.length > 1) {
+        exclusionCond = myCondStrArr[1];
+    }
+    // AND条件
+    myCondStrArr = myCondStrArr[0].split('&');
+    myCondStrArr.forEach(myCondStr => {
+        makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
+    });
 }
 
 const analyzeValueFormula = function (kind, valueStr) {
@@ -127,56 +134,6 @@ const analyzeValueFormula = function (kind, valueStr) {
         valueArr.push(workArr[i]);
     }
     return valueArr;
-}
-const setupTypeValueFormulaArrFromObj = function (parentName, obj, level = null) {
-    //console.debug('%s[%o,%o,%o]', setupTypeValueFormulaArrFromObj.name, parentName, obj, level);
-    let newObj = JSON.parse(JSON.stringify(obj));
-    let my種類 = obj['種類'];
-    let my数値 = obj['数値'];
-    if ('数値' in obj && level) {
-        my数値 = obj['数値'][level];
-    }
-    newObj['数値'] = analyzeValueFormula(my種類, my数値);
-    if (parentName) {
-        if ('名前' in obj) {
-            newObj['名前'] = parentName + '.' + newObj['名前'];
-        } else {
-            newObj['名前'] = parentName;
-        }
-    }
-    if ('条件' in obj) {
-        let my条件 = obj['条件'];
-        let my条件Arr = my条件.split('@');
-        if (my条件Arr.length > 1) {
-            const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
-            let reRet = re.exec(my条件Arr[1]);
-            if (reRet) {
-                let prefix = reRet[1];
-                let rangeStart = Number(reRet[2]);
-                let rangeEnd = Number(reRet[3]);
-                let postfix = reRet[4];
-                for (let i = rangeStart; i <= rangeEnd; i = addDecimal(i, rangeStart)) {
-                    let newObj2 = JSON.parse(JSON.stringify(newObj));
-                    newObj2['条件'] = my条件Arr[0] + '@' + prefix + i + postfix;
-                    newObj2['数値'].push('*');
-                    newObj2['数値'].push(i);
-                    typeValueFormulaArr.push(newObj2);
-                }
-                return;
-            }
-        }
-    }
-    typeValueFormulaArr.push(newObj);
-}
-
-const setupTypeValueFormulaArr = function (parentName, obj, level = null) {
-    if ($.isArray(obj)) {
-        obj.forEach(e => {
-            setupTypeValueFormulaArrFromObj(parentName, e, level);
-        });
-    } else {
-        setupTypeValueFormulaArrFromObj(parentName, obj, level);
-    }
 }
 
 const makeDamageFormulaArrFromObj = function (obj, level = null) {

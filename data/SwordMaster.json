@@ -10,8 +10,7 @@
         "import": "data/weapons/sword_5_PrimodialJadeCutter.json"
     },
     "斬山の刃": {
-        "import": "data/weapons/sword_5_SummitShaper.json",
-        "disabled": true
+        "import": "data/weapons/sword_5_SummitShaper.json"
     },
     "天空の刃": {
         "import": "data/weapons/sword_5_SkywardBlade.json",
@@ -22,15 +21,13 @@
         "disabled": true
     },
     "天目影打": {
-        "import": "data/weapons/sword_4_AmenomaKageuchi.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_AmenomaKageuchi.json"
     },
     "腐植の剣": {
-        "import": "data/weapons/sword_4_TheFlute.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_SwordofDescension.json"
     },
     "笛の剣": {
-        "import": "data/weapons/sword_4_SwordofDescension.json",
+        "import": "data/weapons/sword_4_TheFlute.json",
         "disabled": true
     },
     "黒剣": {

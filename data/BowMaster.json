@@ -27,16 +27,14 @@
         "disabled": true
     },
     "蒼翠の狩猟弓": {
-        "import": "data/weapons/bow_4_TheViridescentHunt.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_TheViridescentHunt.json"
     },
     "祭礼の弓": {
         "import": "data/weapons/bow_4_SacrificialBow.json",
         "disabled": false
     },
     "弓蔵": {
-        "import": "data/weapons/bow_4_Rust.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_Rust.json"
     },
     "旧貴族長弓": {
         "import": "data/weapons/bow_4_RoyalBow.json",

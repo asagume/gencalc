@@ -1,3 +1,7 @@
+function selectorEscape(val) {
+    return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
+}
+
 // DEBUG
 function detailToHtml(obj) {
     let myArr = [];
@@ -26,7 +30,27 @@ const setDebugInfo = function () {
         });
     });
     $('<hr>').appendTo('#debugInfo');
-    conditionOptionMap.forEach((value, key) => {
+    オプション条件MapVar.forEach((value, key) => {
+        if (value) {
+            if ($.isArray(value)) {
+                value.forEach(entry => {
+                    $('<p>', {
+                        text: key + ':' + entry
+                    }).appendTo('#debugInfo');
+                });
+            } else {
+                $('<p>', {
+                    text: key + ':' + value
+                }).appendTo('#debugInfo');
+            }
+        } else {
+            $('<p>', {
+                text: key
+            }).appendTo('#debugInfo');
+        }
+    });
+    $('<hr>').appendTo('#debugInfo');
+    オプション排他MapVar.forEach((value, key) => {
         if (value) {
             if ($.isArray(value)) {
                 value.forEach(entry => {
@@ -124,7 +148,7 @@ function calc防御補正(arg敵防御力, opt_防御無視 = 0) {
 }
 
 // 元素耐性補正を計算します
-function calc元素耐性補正(arg元素) {
+function calculate元素耐性補正(arg元素) {
     let mySelector = '#敵' + arg元素 + (arg元素 != '物理' ? '元素耐性Input' : '耐性Input');
     let my敵元素耐性 = Number($(mySelector).val());
     if (my敵元素耐性 < 0) {
@@ -148,7 +172,7 @@ function calculateDamageFromDetailSub(formula, argダメージバフ, arg会心�
     }
     if (isTargetEnemy) {
         if (arg敵元素) {
-            my非会心Result *= calc元素耐性補正(arg敵元素);
+            my非会心Result *= calculate元素耐性補正(arg敵元素);
         }
         my非会心Result *= calc防御補正(arg敵防御力, arg防御無視);
     }
@@ -360,9 +384,9 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
 
 // RESULT 計算結果
 const inputOnChangeResultUpdate = function () {
-    if (!selectedCharacterData) return;
-    if (!selectedWeaponData) return;
-    if (!selectedEnemyData) return;
+    if (!選択中キャラクターデータVar) return;
+    if (!選択中武器データVar) return;
+    if (!選択中敵データVar) return;
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');
 
@@ -471,7 +495,7 @@ function calculateStatus(targetObj, kind, formulaArr, opt_max = null) {
     } else {
         switch (kind) {
             case '自元素ダメージバフ':
-                statusName = selectedCharacterData['元素'] + '元素ダメージバフ';
+                statusName = 選択中キャラクターデータVar['元素'] + '元素ダメージバフ';
                 break;
             case '全元素ダメージバフ':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
@@ -480,7 +504,7 @@ function calculateStatus(targetObj, kind, formulaArr, opt_max = null) {
                 });
                 return;
             case '敵自元素耐性':
-                statusName = '敵' + selectedCharacterData['元素'] + '元素耐性';
+                statusName = '敵' + 選択中キャラクターデータVar['元素'] + '元素耐性';
                 break;
             case '敵全元素耐性':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
@@ -495,31 +519,46 @@ function calculateStatus(targetObj, kind, formulaArr, opt_max = null) {
 }
 
 // 条件適用可能かチェックします
-const checkConditionMatches = function (conditionStr, validConditionValueArr) {
-    let my条件 = conditionStr.split('^')[0];
-    if (validConditionValueArr.includes(my条件)) {
-        let re = new RegExp('.+@[^0-9]*([0-9\\.]+).*');
-        let reRet = re.exec(my条件);
-        if (reRet) {
-            return Number(reRet[1]);
-        } else {
-            return 1;
+// {条件名}
+// {条件名}@{条件値}
+// {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
+// {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
+// {上記}^{排他条件名}
+function checkConditionMatchesSub(conditionStr, validConditionValueArr) {
+    let myCondArr = conditionStr.split('@');
+    if (validConditionValueArr.includes(conditionStr)) {
+        if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
+            return 1;   // マッチ 等倍
         }
-    } else if (my条件.indexOf('@') != -1) {
-        let my条件名 = my条件.split('@')[0];
-        let re = new RegExp('[^0-9]*([0-9\\.]+).*');
-        for (let i = 0; i < validConditionValueArr.length; i++) {
-            if (validConditionValueArr[i].startsWith(my条件名 + '@')) {
-                let condArr = validConditionValueArr[i].split('@');
-                let reRet = re.exec(condArr[1]);
-                if (reRet) {
-                    return Number(reRet[1]);
-                }
-                break;
+    } else if (myCondArr.length == 1) {
+        return 0;   // アンマッチ
+    }
+    const re = new RegExp('[^0-9]*([0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
+    for (let i = 0; i < validConditionValueArr.length; i++) {
+        if (validConditionValueArr[i].startsWith(myCondArr[0] + '@')) {
+            let workArr = validConditionValueArr[i].split('@');
+            let reRet = re.exec(workArr[1]);
+            if (reRet) {
+                return Number(reRet[1]);    // マッチ x倍
             }
+            console.error(conditionStr, validConditionValueArr[i]);
         }
     }
-    return 0;
+    return 0;   // アンマッチ
+}
+const checkConditionMatches = function (conditionStr, validConditionValueArr) {
+    let myCondStrArr = conditionStr.split('^')[0].split('&');   // &はAND条件です
+    let result = 1;
+    for (let i = 0; i < myCondStrArr.length; i++) {
+        let resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr);
+        if (resultSub == 0) {
+            return 0;   // アンマッチ
+        }
+        if (resultSub != 1) {
+            result = resultSub;
+        }
+    }
+    return result;
 }
 
 function makeValidConditionValueArr(parentSelector) {
@@ -539,15 +578,15 @@ function makeValidConditionValueArr(parentSelector) {
 
 // RESULT/INPUT ステータスを計算します
 const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
-    if (!selectedCharacterData) return;
-    if (!selectedWeaponData) return;
+    if (!選択中キャラクターデータVar) return;
+    if (!選択中武器データVar) return;
     // 基礎
     initステータス詳細ObjVar();
 
     // 敵関連データをセットします
-    Object.keys(selectedEnemyData).forEach(propName => {
+    Object.keys(選択中敵データVar).forEach(propName => {
         if (propName in ステータス詳細ObjVar) {
-            ステータス詳細ObjVar['敵' + propName] = selectedEnemyData[propName];
+            ステータス詳細ObjVar['敵' + propName] = 選択中敵データVar[propName];
         }
     });
     ステータス詳細ObjVar['敵防御力'] = 0;
@@ -555,9 +594,9 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     // キャラクターの基本ステータスをセットします
     let myレベル = $('#レベルInput').val();
     if (baseUpdate) {
-        ステータス詳細ObjVar['基礎HP'] = selectedCharacterData['ステータス']['基礎HP'][myレベル];
-        ステータス詳細ObjVar['基礎攻撃力'] = selectedCharacterData['ステータス']['基礎攻撃力'][myレベル] + selectedWeaponData['ステータス']['基礎攻撃力'][myレベル];
-        ステータス詳細ObjVar['基礎防御力'] = selectedCharacterData['ステータス']['基礎防御力'][myレベル];
+        ステータス詳細ObjVar['基礎HP'] = 選択中キャラクターデータVar['ステータス']['基礎HP'][myレベル];
+        ステータス詳細ObjVar['基礎攻撃力'] = 選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myレベル] + 選択中武器データVar['ステータス']['基礎攻撃力'][myレベル];
+        ステータス詳細ObjVar['基礎防御力'] = 選択中キャラクターデータVar['ステータス']['基礎防御力'][myレベル];
     } else {
         ステータス詳細ObjVar['基礎HP'] = Number($('#基礎HPInput').val());
         ステータス詳細ObjVar['基礎攻撃力'] = Number($('#基礎攻撃力Input').val());
@@ -568,21 +607,21 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     ステータス詳細ObjVar['防御力'] = ステータス詳細ObjVar['基礎防御力'];
 
     // キャラクターのサブステータスを計上します
-    Object.keys(selectedCharacterData['ステータス']).forEach(key => {
+    Object.keys(選択中キャラクターデータVar['ステータス']).forEach(key => {
         if (['基礎HP', '基礎攻撃力', '基礎防御力'].includes(key)) return;
-        calculateStatus(ステータス詳細ObjVar, key, selectedCharacterData['ステータス'][key][myレベル]);
+        calculateStatus(ステータス詳細ObjVar, key, 選択中キャラクターデータVar['ステータス'][key][myレベル]);
     });
 
     // 武器のサブステータスを計上します
     let my武器レベル = $('#武器レベルInput').val();
-    Object.keys(selectedWeaponData['ステータス']).forEach(key => {
+    Object.keys(選択中武器データVar['ステータス']).forEach(key => {
         if (['基礎攻撃力'].includes(key)) return;
-        calculateStatus(ステータス詳細ObjVar, key, selectedWeaponData['ステータス'][key][my武器レベル]);
+        calculateStatus(ステータス詳細ObjVar, key, 選択中武器データVar['ステータス'][key][my武器レベル]);
     });
 
     // 聖遺物のメインステータスを計上します
     $('select[name="聖遺物メイン効果Input"]').each(function () {
-        calculateStatus(ステータス詳細ObjVar, this.value, [artifactMainMaster['5'][this.value]]);
+        calculateStatus(ステータス詳細ObjVar, this.value, [聖遺物メイン効果MasterVar['5'][this.value]]);
     });
 
     // 聖遺物のサブステータスを計上します
@@ -598,7 +637,7 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     ステータス詳細ObjVar['元素チャージ効率'] += Number($('#聖遺物サブ効果元素チャージ効率Input').val());
 
     // 元素共鳴を計上します
-    selectedElementalResonanceDataArr.forEach(detailObj => {
+    選択中元素共鳴データArrVar.forEach(detailObj => {
         if ('詳細' in detailObj) {
             if ($.isArray(detailObj['詳細'])) {
                 detailObj['詳細'].forEach(data => {
@@ -712,12 +751,25 @@ const inputOnChangeStatusUpdateExceptBase = function () {
 $(document).on('change', 'input[name="基礎ステータスInput"]', inputOnChangeStatusUpdateExceptBase);
 $(document).on('change', 'input[name="ステータスInput"]', inputOnChangeStatusUpdate);
 
+// オプションBox用 input[type=checkbox]およびselect要素を追加します
 const appendInputForOptionElement = function (parentElemId, optionMap, name, opt_checked = true) {
     optionMap.forEach((value, key) => {
         if (value) return;
         let elem = document.createElement('input');
         elem.type = 'checkbox';
-        elem.checked = opt_checked;
+        if (opt_checked) {  // チェック指定ありの場合でも、自身の排他条件のうちcheckedのものが存在すればチェックしません
+            let myChecked = true;
+            if (オプション排他MapVar.has(key)) {
+                オプション排他MapVar.get(key).forEach(entry => {
+                    if ($('#' + selectorEscape(entry) + 'Option').prop('checked')) {
+                        myChecked = false;
+                    }
+                });
+            }
+            elem.checked = myChecked;
+        } else {
+            elem.checked = opt_checked;
+        }
         elem.value = value;
         elem.id = key + 'Option';
         elem.name = name;
@@ -756,9 +808,10 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
     });
 }
 
+// 
 const inputOnChangeOptionUpdate = function () {
-    if (!selectedCharacterData) return;
-    if (!selectedWeaponData) return;
+    if (!選択中キャラクターデータVar) return;
+    if (!選択中武器データVar) return;
 
     setupBaseDamageDetailDataCharacter();
     setupBaseDamageDetailDataWeapon();
@@ -782,24 +835,24 @@ const inputOnChangeOptionUpdate = function () {
     console.debug('my条件付き詳細ObjArr');
     console.debug(my条件付き詳細ObjArr);
 
-    conditionOptionMap.clear();
-    exclusionOptionMap.clear();
+    オプション条件MapVar.clear();
+    オプション排他MapVar.clear();
 
     my条件付き詳細ObjArr.forEach(entry => {
-        makeConditionExclusionMapFromStr(entry['条件'], conditionOptionMap, exclusionOptionMap);
+        makeConditionExclusionMapFromStr(entry['条件'], オプション条件MapVar, オプション排他MapVar);
     });
 
     // オプションを作り直します
     $('#オプションBox').empty();
-    appendInputForOptionElement('オプションBox', conditionOptionMap, 'オプション');
+    appendInputForOptionElement('オプションBox', オプション条件MapVar, 'オプション');
     // オプションの状態を復元します
-    optionElemIdValueMap.forEach((value, key) => {
+    オプションElementIdValue記憶Map.forEach((value, key) => {
         let elem = document.getElementById(key);
         if (elem) {
             if (elem instanceof HTMLInputElement) {
                 elem.checked = value;
             } else {
-                elem.value = value;
+                elem.selectedIndex = value;
             }
         }
     });
@@ -809,10 +862,10 @@ const inputOnChangeOptionUpdate = function () {
 
 // オプションElementから対応する固有変数を更新します
 const applyOptionVariable = function (elem) {
-    if (!selectedCharacterData) return;
+    if (!選択中キャラクターデータVar) return;
     if (elem instanceof HTMLSelectElement) {
         let propName = elem.id.replace('Option', '');
-        if ('固有変数' in selectedCharacterData && propName in selectedCharacterData['固有変数']) {
+        if ('固有変数' in 選択中キャラクターデータVar && propName in 選択中キャラクターデータVar['固有変数']) {
             if (elem.value) {
                 let re = new RegExp('[^0-9]*([0-9\\.]+).*');
                 let reRet = re.exec(elem.value);
@@ -821,22 +874,34 @@ const applyOptionVariable = function (elem) {
                     ステータス詳細ObjVar[propName] = propValue;
                 }
             } else {    // 未選択の場合は初期値をセットします
-                ステータス詳細ObjVar[propName] = Number(selectedCharacterData['固有変数'][propName]);
+                ステータス詳細ObjVar[propName] = Number(選択中キャラクターデータVar['固有変数'][propName]);
             }
         }
     }
 }
 
-const optionElemIdValueMap = new Map(); // オプションの状態を記憶します。
+const オプションElementIdValue記憶Map = new Map(); // オプションの状態を記憶します。
 const optionInputOnChange = function () {
-    optionElemIdValueMap.set(this.id, this instanceof HTMLInputElement ? this.checked : this.value);
+    if (this instanceof HTMLInputElement && this.checked) {
+        let conditionName = this.id.replace('Option', '');
+        オプション排他MapVar.forEach((value, key) => {
+            if (key != conditionName) return;
+            console.log(value);
+            value.forEach(entry => {
+                $('#' + selectorEscape(entry) + 'Option').prop('checked', false);
+            });
+        });
+    }
+
+    オプションElementIdValue記憶Map.set(this.id, this instanceof HTMLInputElement ? this.checked : this.selectedIndex);    // チェック状態または選択要素のインデックスを保持します
     applyOptionVariable(this);
     inputOnChangeStatusUpdate();
 };
+
 // INPUT 敵
 const enemyInputOnChange = function () {
-    selectedEnemyData = enemyMaster[$('#敵Input').val()];
-    setObjectPropertiesToElements(selectedEnemyData, '敵', 'Input');
+    選択中敵データVar = 敵MasterVar[$('#敵Input').val()];
+    setObjectPropertiesToElements(選択中敵データVar, '敵', 'Input');
     setInputValue('#敵防御力Input', 0);
     inputOnChangeResultUpdate();
 }
@@ -860,8 +925,8 @@ const elementalResonanceInputOnChange = function (event) {
                 element.checked = false;
             }
         });
-        selectedElementalResonanceDataArr = [];
-        selectedElementalResonanceDataArr.push(elementalResonanceMaster['元素共鳴なし']);
+        選択中元素共鳴データArrVar = [];
+        選択中元素共鳴データArrVar.push(元素共鳴MasterVar['元素共鳴なし']);
     } else {
         $('#元素共鳴なしInput').prop('checked', false);
         let count = 0;
@@ -871,16 +936,16 @@ const elementalResonanceInputOnChange = function (event) {
         if (count > 2) {
             event.currentTarget.checked = false;
         } else {
-            selectedElementalResonanceDataArr = [];
+            選択中元素共鳴データArrVar = [];
             $('[name="元素共鳴Input"').each(function (index, element) {
                 if (element.checked) {
-                    selectedElementalResonanceDataArr.push(elementalResonanceMaster[element.value]);
+                    選択中元素共鳴データArrVar.push(元素共鳴MasterVar[element.value]);
                 }
             });
         }
     }
     $('#元素共鳴効果説明Box').empty();
-    selectedElementalResonanceDataArr.forEach(data => {
+    選択中元素共鳴データArrVar.forEach(data => {
         let my説明 = data['説明'];
         if (Array.isArray(my説明)) {
             my説明.join('<br>');
@@ -913,7 +978,7 @@ const inputOnChangeArtifactSubUpdate = function () {
     Array.from(document.getElementsByName('聖遺物優先するサブ効果Input')).forEach(elem => {
         let propName = elem.value;
         if (propName) {
-            let myValue = artifactSubMaster[elem.value];
+            let myValue = 聖遺物サブ効果MasterVar[elem.value];
             let myMagnification = Number(document.getElementById(elem.id.replace('Input', '倍率Input')).value);
             propName = propName.replace('%', 'P');
             workObj[propName] = workObj[propName] + (myValue * myMagnification) * 5;
@@ -928,7 +993,7 @@ const inputOnChangeArtifactSubUpdate = function () {
         if (workObj[key] == 0) {
             let newKey = key;
             if (key != 'HP') newKey = key.replace(new RegExp('P$'), '%');
-            let value = artifactSubMaster[newKey];
+            let value = 聖遺物サブ効果MasterVar[newKey];
             workObj[key] = value * 3 * 優先しないサブ効果倍率;
         }
     });
@@ -945,20 +1010,21 @@ const inputOnChangeArtifactSubUpdate = function () {
     inputOnChangeStatusUpdate();
 };
 
+// 聖遺物セット効果が変更されたときのイベント処理です
 const artifactSetInputOnChange = function () {
-    selectedArtifactSetDataArr = [];
+    選択中聖遺物セット効果データArrVar = [];
     if ($('#聖遺物セット効果1Input').val() == $('#聖遺物セット効果2Input').val()) {
-        let myData = artifactSetMaster[$('#聖遺物セット効果1Input').val()];
-        selectedArtifactSetDataArr.push(myData['2セット効果']);
+        let myData = 聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()];
+        選択中聖遺物セット効果データArrVar.push(myData['2セット効果']);
         if ('4セット効果' in myData) {
-            selectedArtifactSetDataArr.push(myData['4セット効果']);
+            選択中聖遺物セット効果データArrVar.push(myData['4セット効果']);
         }
     } else {
-        selectedArtifactSetDataArr.push(artifactSetMaster[$('#聖遺物セット効果1Input').val()]['2セット効果']);
-        selectedArtifactSetDataArr.push(artifactSetMaster[$('#聖遺物セット効果2Input').val()]['2セット効果']);
+        選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['2セット効果']);
+        選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['2セット効果']);
     }
     $('#聖遺物セット効果説明Box').empty();
-    selectedArtifactSetDataArr.forEach(data => {
+    選択中聖遺物セット効果データArrVar.forEach(data => {
         let my説明 = data['説明'];
         if (Array.isArray(my説明)) {
             my説明.join('<br>');
@@ -970,7 +1036,7 @@ const artifactSetInputOnChange = function () {
             Object.keys(data['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
                 let value = data['オプション初期値'][key];
-                optionElemIdValueMap.set(elemId, value);
+                オプションElementIdValue記憶Map.set(elemId, value);
             });
         }
     });
@@ -1085,18 +1151,18 @@ function afterCharacterChanged() {
     // あとは武器の処理に任せる
 }
 
-// INPUT 武器
+// 武器が変更されたときのイベント処理です
 const weaponInputOnChange = function () {
-    fetch(weaponMaster[selectedCharacterData['武器']][$('#武器Input').val()]['import']).then(response => response.json()).then(data => {
-        selectedWeaponData = data;
+    fetch(武器MasterVar[選択中キャラクターデータVar['武器']][$('#武器Input').val()]['import']).then(response => response.json()).then(data => {
+        選択中武器データVar = data;
         console.debug('selectedWeaponData');
-        console.debug(selectedWeaponData);
+        console.debug(選択中武器データVar);
 
-        if ('オプション初期値' in selectedWeaponData) {
-            Object.keys(selectedWeaponData['オプション初期値']).forEach(key => {
+        if ('オプション初期値' in 選択中武器データVar) {
+            Object.keys(選択中武器データVar['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
-                let value = selectedWeaponData['オプション初期値'][key];
-                optionElemIdValueMap.set(elemId, value);
+                let value = 選択中武器データVar['オプション初期値'][key];
+                オプションElementIdValue記憶Map.set(elemId, value);
             });
         }
 
@@ -1215,14 +1281,14 @@ const setupBaseDamageDetailDataCharacter = function () {
     let my天賦レベル = my通常攻撃レベル;
     let myデフォルト種類 = '通常攻撃ダメージ';
     let myデフォルト元素 = getNormalAttackDefaultElement();
-    let myTalentDataObj = selectedCharacterData['通常攻撃'];
+    let myTalentDataObj = 選択中キャラクターデータVar['通常攻撃'];
     通常攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
     console.debug('通常攻撃_基礎ダメージ詳細ArrVar');
     console.debug(通常攻撃_基礎ダメージ詳細ArrVar);
     // 特殊通常攻撃を解析します。Object
     特殊通常攻撃_基礎ダメージ詳細MapVar.clear();
-    if ('特殊通常攻撃' in selectedCharacterData) {
-        myTalentDataObj = selectedCharacterData['特殊通常攻撃'];
+    if ('特殊通常攻撃' in 選択中キャラクターデータVar) {
+        myTalentDataObj = 選択中キャラクターデータVar['特殊通常攻撃'];
         if ('種類' in myTalentDataObj) {
             switch (myTalentDataObj['種類']) {
                 case '元素スキルダメージ':
@@ -1247,13 +1313,13 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my通常攻撃レベル;
     myデフォルト種類 = '重撃ダメージ';
     myデフォルト元素 = getNormalAttackDefaultElement();
-    myTalentDataObj = selectedCharacterData['重撃'];
+    myTalentDataObj = 選択中キャラクターデータVar['重撃'];
     重撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
     console.debug('重撃_基礎ダメージ詳細ArrVar');
     console.debug(重撃_基礎ダメージ詳細ArrVar);
     // 特殊重撃を解析します。Object
-    if ('特殊重撃' in selectedCharacterData) {
-        myTalentDataObj = selectedCharacterData['特殊重撃'];
+    if ('特殊重撃' in 選択中キャラクターデータVar) {
+        myTalentDataObj = 選択中キャラクターデータVar['特殊重撃'];
         if ('種類' in myTalentDataObj) {
             switch (myTalentDataObj['種類']) {
                 case '元素スキルダメージ':
@@ -1278,13 +1344,13 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my通常攻撃レベル;
     myデフォルト種類 = '落下攻撃ダメージ';
     myデフォルト元素 = getNormalAttackDefaultElement();
-    myTalentDataObj = selectedCharacterData['落下攻撃'];
+    myTalentDataObj = 選択中キャラクターデータVar['落下攻撃'];
     落下攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
     console.debug('落下攻撃_基礎ダメージ詳細ArrVar');
     console.debug(落下攻撃_基礎ダメージ詳細ArrVar);
     // 特殊落下攻撃を解析します。Object
-    if ('特殊落下攻撃' in selectedCharacterData) {
-        myTalentDataObj = selectedCharacterData['特殊落下攻撃'];
+    if ('特殊落下攻撃' in 選択中キャラクターデータVar) {
+        myTalentDataObj = 選択中キャラクターデータVar['特殊落下攻撃'];
         let myMapKey = myTalentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
         let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
         特殊落下攻撃_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
@@ -1296,7 +1362,7 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my元素スキルレベル;
     myデフォルト種類 = '元素スキルダメージ';
     myデフォルト元素 = キャラクター元素Var;
-    myTalentDataObj = selectedCharacterData['元素スキル'];
+    myTalentDataObj = 選択中キャラクターデータVar['元素スキル'];
     元素スキル_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
     if ('一回押し' in myTalentDataObj) {
         let myWorkArr = makeTalentDetailArray(myTalentDataObj['一回押し'], my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
@@ -1309,8 +1375,8 @@ const setupBaseDamageDetailDataCharacter = function () {
     console.debug('元素スキル_基礎ダメージ詳細ArrVar');
     console.debug(元素スキル_基礎ダメージ詳細ArrVar);
     // 特殊元素スキルを解析します。Object
-    if ('特殊元素スキル' in selectedCharacterData) {
-        myTalentDataObj = selectedCharacterData['特殊元素スキル'];
+    if ('特殊元素スキル' in 選択中キャラクターデータVar) {
+        myTalentDataObj = 選択中キャラクターデータVar['特殊元素スキル'];
         let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
         let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
         特殊元素スキル_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
@@ -1322,13 +1388,13 @@ const setupBaseDamageDetailDataCharacter = function () {
     my天賦レベル = my元素爆発レベル;
     myデフォルト種類 = '元素爆発ダメージ';
     myデフォルト元素 = キャラクター元素Var;
-    myTalentDataObj = selectedCharacterData['元素爆発'];
+    myTalentDataObj = 選択中キャラクターデータVar['元素爆発'];
     元素爆発_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
     console.debug('元素爆発_基礎ダメージ詳細ArrVar');
     console.debug(元素爆発_基礎ダメージ詳細ArrVar);
     // 特殊元素爆発を解析します。Object
-    if ('特殊元素爆発' in selectedCharacterData) {
-        myTalentDataObj = selectedCharacterData['特殊元素爆発'];
+    if ('特殊元素爆発' in 選択中キャラクターデータVar) {
+        myTalentDataObj = 選択中キャラクターデータVar['特殊元素爆発'];
         let myMapKey = talentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
         let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
         特殊元素爆発_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
@@ -1339,8 +1405,8 @@ const setupBaseDamageDetailDataCharacter = function () {
     let dummyArr;
 
     // その他天賦を解析します。Array
-    if ('その他天賦' in selectedCharacterData) {
-        selectedCharacterData['その他天賦'].forEach(element => {
+    if ('その他天賦' in 選択中キャラクターデータVar) {
+        選択中キャラクターデータVar['その他天賦'].forEach(element => {
             myTalentDataObj = element;
             dummyArr = makeTalentDetailArray(myTalentDataObj, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
             if (dummyArr.length > 0) {
@@ -1350,9 +1416,9 @@ const setupBaseDamageDetailDataCharacter = function () {
     };
 
     // 命ノ星座を解析します。Object
-    if ('命ノ星座' in selectedCharacterData) {
+    if ('命ノ星座' in 選択中キャラクターデータVar) {
         for (let i = $('#命ノ星座Input').val(); i >= 1; i--) {
-            myTalentDataObj = selectedCharacterData['命ノ星座'][i];
+            myTalentDataObj = 選択中キャラクターデータVar['命ノ星座'][i];
             dummyArr = makeTalentDetailArray(myTalentDataObj, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
             if (dummyArr.length > 0) {
                 console.error(dummyArr);
@@ -1372,8 +1438,8 @@ const setupBaseDamageDetailDataWeapon = function () {
     天賦性能変更系詳細ArrMapVar.set('武器', []);
     その他_基礎ダメージ詳細ArrMapVar.set('武器', []);
     let my精錬ランク = $('#精錬ランクInput').val();
-    if ('武器スキル' in selectedWeaponData) {
-        let resultArr = makeTalentDetailArray(selectedWeaponData['武器スキル'], my精錬ランク, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, '武器');
+    if ('武器スキル' in 選択中武器データVar) {
+        let resultArr = makeTalentDetailArray(選択中武器データVar['武器スキル'], my精錬ランク, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, '武器');
         if (resultArr.length > 0) {
             その他_基礎ダメージ詳細ArrMapVar.set('武器', resultArr);
             console.debug('その他_基礎ダメージ詳細ArrMapVar.get(武器)');
@@ -1389,7 +1455,7 @@ const setupBaseDamageDetailDataWeapon = function () {
 // 聖遺物セットデータより
 const setupBaseDamageDetailDataArtifactSet = function () {
     ステータス変更系詳細ArrMapVar.set('聖遺物セット', []);
-    selectedArtifactSetDataArr.forEach(data => {
+    選択中聖遺物セット効果データArrVar.forEach(data => {
         let myArr = makeTalentDetailArray(data, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, '聖遺物セット');
         if (myArr.length != 0) {
             console.error(data);
@@ -1401,7 +1467,7 @@ const setupBaseDamageDetailDataArtifactSet = function () {
 
 // INPUT おすすめセット
 const recommendationInputOnChange = function () {
-    let entry = selectedCharacterData['おすすめセット'][$('#おすすめセットInput').val()];
+    let entry = 選択中キャラクターデータVar['おすすめセット'][$('#おすすめセットInput').val()];
     Object.keys(entry).forEach(key => {
         if (entry[key]) {
             $('#' + key + 'Input').val(entry[key]);
@@ -1415,40 +1481,40 @@ const recommendationInputOnChange = function () {
 };
 $(document).on('change', '#おすすめセットInput', recommendationInputOnChange);
 
-// INPUT キャラクター
+// キャラクターが変更されたときのイベント処理です
 const characterInputOnChange = function () {
-    fetch(characterMaster[$('#キャラクターInput').val()].import).then(response => response.json()).then(data => {
-        selectedCharacterData = data;
+    fetch(キャラクターMasterVar[$('#キャラクターInput').val()].import).then(response => response.json()).then(data => {
+        選択中キャラクターデータVar = data;
         console.debug('selectedCharacterData');
-        console.debug(selectedCharacterData);
+        console.debug(選択中キャラクターデータVar);
 
-        optionElemIdValueMap.clear();
-        if ('オプション初期値' in selectedCharacterData) {
-            Object.keys(selectedCharacterData['オプション初期値']).forEach(key => {
+        オプションElementIdValue記憶Map.clear();
+        if ('オプション初期値' in 選択中キャラクターデータVar) {
+            Object.keys(選択中キャラクターデータVar['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
-                let value = selectedCharacterData['オプション初期値'][key];
-                optionElemIdValueMap.set(elemId, value);
+                let value = 選択中キャラクターデータVar['オプション初期値'][key];
+                オプションElementIdValue記憶Map.set(elemId, value);
             });
         }
 
-        キャラクター名称Var = selectedCharacterData['名前'];
-        キャラクター元素Var = selectedCharacterData['元素'];
-        キャラクター武器Var = selectedCharacterData['武器'];
-        通常攻撃名称Var = selectedCharacterData['通常攻撃']['名前'];
-        元素スキル名称Var = selectedCharacterData['元素スキル']['名前'];
-        元素爆発名称Var = selectedCharacterData['元素爆発']['名前'];
-        if ('固有変数' in selectedCharacterData) {
-            Object.keys(selectedCharacterData['固有変数']).forEach(key => {
-                ステータス詳細ObjVar[key] = selectedCharacterData['固有変数'][key];
+        キャラクター名前Var = 選択中キャラクターデータVar['名前'];
+        キャラクター元素Var = 選択中キャラクターデータVar['元素'];
+        キャラクター武器Var = 選択中キャラクターデータVar['武器'];
+        通常攻撃名称Var = 選択中キャラクターデータVar['通常攻撃']['名前'];
+        元素スキル名称Var = 選択中キャラクターデータVar['元素スキル']['名前'];
+        元素爆発名称Var = 選択中キャラクターデータVar['元素爆発']['名前'];
+        if ('固有変数' in 選択中キャラクターデータVar) {
+            Object.keys(選択中キャラクターデータVar['固有変数']).forEach(key => {
+                ステータス詳細ObjVar[key] = 選択中キャラクターデータVar['固有変数'][key];
             });
         }
 
-        appendOptionElements(weaponMaster[selectedCharacterData['武器']], '#武器Input');
+        appendOptionElements(武器MasterVar[選択中キャラクターデータVar['武器']], '#武器Input');
 
         enemyInputOnChange();
 
-        if ('おすすめセット' in selectedCharacterData) {
-            appendOptionElements(selectedCharacterData['おすすめセット'], '#おすすめセットInput');
+        if ('おすすめセット' in 選択中キャラクターデータVar) {
+            appendOptionElements(選択中キャラクターデータVar['おすすめセット'], '#おすすめセットInput');
             recommendationInputOnChange();
         } else {
             weaponInputOnChange();

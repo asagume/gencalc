@@ -8,10 +8,11 @@
     <link href="styles/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <reference path="JQuery.d.ts"></reference>
-    <script src="js/gencalc_func.js"></script>
     <script src="js/gencalc_var.js"></script>
+    <!-- <script src="js/gencalc_func.js"></script>
     <script src="js/gencalc_callback.js"></script>
-    <script src="js/gencalc_main.js"></script>
+    <script src="js/gencalc_main.js"></script> -->
+    <script src="js/gencalc.js"></script>
     <script>
     </script>
 </head>
@@ -25,8 +26,8 @@
 
             <div class="sidebar">
                 <div class="float-menu">
-                    <p>製作中</p>
-                    <p>このへんに画像を並べたキャラ選択を配置したい</p>
+                    <p>ぬるりと製作中</p>
+                    <p>このへんに画像を並べたキャラ選択を配置できれば</p>
                     <section class="input-group">
                         <select class="long" id="おすすめセットInput"></select>
                     </section>
@@ -506,7 +507,7 @@
                                     <th>雷元素耐性</th>
                                     <td><input type="number" id="敵雷元素耐性Input" name="敵元素耐性Input"></td>
                                 </tr>
-                                <tr>
+                                <tr style="display: none;">
                                     <th>草元素耐性</th>
                                     <td><input type="number" id="敵草元素耐性Input" name="敵元素耐性Input"></td>
                                 </tr>
@@ -550,15 +551,12 @@
                     <label class="tab-area3" for="tab-area-bottom3">予備３</label>
                     <div class="tab-content">
                         <p>予備のスペース</p>
-                        <p>Cookieに選択を保存したり、呼び出したりできるとよい</p>
+                        <p>Cookieに選択を保存したり、呼び出したりできるとよい気がします</p>
                     </div>
                 </div>
-                <fieldset style="display: initial;">
+                <fieldset style="margin-top: 500px; display: initial;">
                     <legend>デバッグ情報</legend>
-                    <p></p>
-                    <div id="debugInfo">
-
-                    </div>
+                    <div id="debugInfo"></div>
                 </fieldset>
             </div>
 

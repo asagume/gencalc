@@ -1,15 +1,13 @@
 {
     "草薙の稲光": {
-        "import": "data/weapons/polearm_5_EngulfingLightning.json",
-        "disabled": false
+        "import": "data/weapons/polearm_5_EngulfingLightning.json"
     },
     "護摩の杖": {
         "import": "data/weapons/polearm_5_StaffofHoma.json",
         "disabled": true
     },
     "破天の槍": {
-        "import": "data/weapons/polearm_5_VortexVanquisher.json",
-        "disabled": true
+        "import": "data/weapons/polearm_5_VortexVanquisher.json"
     },
     "天空の脊": {
         "import": "data/weapons/polearm_5_SkywardSpine.json",

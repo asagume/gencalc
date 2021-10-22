@@ -94,7 +94,7 @@
         "レアリティ": 4,
         "元素": "雷",
         "武器": "弓",
-        "disabled": true
+        "import": "data/characters/electro_4_bow_KujouSara.json"
     },
     "早柚": {
         "レアリティ": 4,

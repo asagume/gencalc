@@ -36,45 +36,45 @@ $(document).on('click', '#その他ダメージResult', elementOnClickHidableChi
 $(document).ready(function () {
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
-            characterMaster = jsonObj;
-            appendOptionElements(characterMaster, "#キャラクターInput");
+            キャラクターMasterVar = jsonObj;
+            appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
         }),
         fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {
-            weaponMaster["片手剣"] = jsonObj;
+            武器MasterVar["片手剣"] = jsonObj;
         }),
         fetch("data/ClaymoreMaster.json").then(response => response.json()).then(jsonObj => {
-            weaponMaster["両手剣"] = jsonObj;
+            武器MasterVar["両手剣"] = jsonObj;
         }),
         fetch("data/PolearmMaster.json").then(response => response.json()).then(jsonObj => {
-            weaponMaster["長柄武器"] = jsonObj;
+            武器MasterVar["長柄武器"] = jsonObj;
         }),
         fetch("data/BowMaster.json").then(response => response.json()).then(jsonObj => {
-            weaponMaster["弓"] = jsonObj;
+            武器MasterVar["弓"] = jsonObj;
         }),
         fetch("data/CatalystMaster.json").then(response => response.json()).then(jsonObj => {
-            weaponMaster["法器"] = jsonObj;
+            武器MasterVar["法器"] = jsonObj;
         }),
         fetch("data/ArtifactMainMaster.json").then(response => response.json()).then(jsonObj => {
-            artifactMainMaster = jsonObj;
+            聖遺物メイン効果MasterVar = jsonObj;
         }),
         fetch("data/ArtifactSubMaster.json").then(response => response.json()).then(jsonObj => {
-            artifactSubMaster = jsonObj;
+            聖遺物サブ効果MasterVar = jsonObj;
         }),
         fetch("data/ArtifactSetMaster.json").then(response => response.json()).then(jsonObj => {
-            artifactSetMaster = jsonObj;
-            appendOptionElements(artifactSetMaster, ["#聖遺物セット効果1Input", "#聖遺物セット効果2Input"]);
+            聖遺物セット効果MasterVar = jsonObj;
+            appendOptionElements(聖遺物セット効果MasterVar, ["#聖遺物セット効果1Input", "#聖遺物セット効果2Input"]);
         }),
         fetch("data/ElementalResonanceMaster.json").then(response => response.json()).then(jsonObj => {
-            elementalResonanceMaster = jsonObj;
+            元素共鳴MasterVar = jsonObj;
         }),
         fetch("data/EnemyMaster.json").then(response => response.json()).then(jsonObj => {
-            enemyMaster = jsonObj;
-            appendOptionElements(enemyMaster, "#敵Input");
+            敵MasterVar = jsonObj;
+            appendOptionElements(敵MasterVar, "#敵Input");
         }),
         fetch("data/BuffDebuffMaster.json").then(response => response.json()).then(jsonObj => {
-            バフデバフMaster = jsonObj;
-            Object.keys(バフデバフMaster).forEach(key => {
-                let myObj = バフデバフMaster[key];
+            バフデバフMasterVar = jsonObj;
+            Object.keys(バフデバフMasterVar).forEach(key => {
+                let myObj = バフデバフMasterVar[key];
                 if ('desabled' in myObj && myObj['desabled']) return;
                 let my条件 = '名前' in myObj ? myObj['名前'] : key;
                 myObj['詳細'].forEach(detailObj => {
