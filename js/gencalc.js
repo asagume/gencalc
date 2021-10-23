@@ -908,21 +908,28 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
 
     if (damageResultArr.length == 0) return;
 
+    let elementalReaction = $('input[name="元素反応Input"]:checked').val();
+
+    let myIsHidden = true;
+    if (resultTableVisibilityMap.has(tableId)) {
+        myIsHidden = !resultTableVisibilityMap.get(tableId);
+    }
+
     let theadElem = document.createElement('thead');
     tableElem.appendChild(theadElem);
     let trElem1 = document.createElement('tr');
     theadElem.appendChild(trElem1);
     let trElem2 = document.createElement('tr');
     trElem2.className = 'noreaction';
+    trElem2.hidden = (elementalReaction != 'noreaction');
     tableElem.appendChild(trElem2);
-    let isHidden = isHiddenHidableElement('#' + tableId + ' .hidable', true);
     let trElem3 = document.createElement('tr');
     trElem3.className = 'noreaction hidable';
-    trElem3.hidden = isHidden;
+    trElem3.hidden = (elementalReaction != 'noreaction') || myIsHidden;
     tableElem.appendChild(trElem3);
     let trElem4 = document.createElement('tr');
     trElem4.className = 'noreaction hidable';
-    trElem4.hidden = isHidden;
+    trElem4.hidden = (elementalReaction != 'noreaction') || myIsHidden;
     tableElem.appendChild(trElem4);
 
     let thElem1 = document.createElement('th');
@@ -961,15 +968,15 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     if (withVaporize) { // 蒸発ダメージを表示します
         trElem5 = document.createElement('tr');
         trElem5.className = 'vaporize';
-        trElem5.hidden = isHidden;
+        trElem5.hidden = (elementalReaction != 'vaporize');
         tableElem.appendChild(trElem5);
         trElem6 = document.createElement('tr');
         trElem6.className = 'vaporize hidable';
-        trElem6.hidden = isHidden;
+        trElem6.hidden = (elementalReaction != 'vaporize') || myIsHidden;
         tableElem.appendChild(trElem6);
         trElem7 = document.createElement('tr');
         trElem7.className = 'vaporize hidable';
-        trElem7.hidden = isHidden;
+        trElem7.hidden = (elementalReaction != 'vaporize') || myIsHidden;
         tableElem.appendChild(trElem7);
 
         let thElem5 = document.createElement('th');
@@ -988,15 +995,15 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     if (withMelt) { // 溶解ダメージを表示します
         trElem8 = document.createElement('tr');
         trElem8.className = 'melt';
-        trElem8.hidden = isHidden;
+        trElem8.hidden = (elementalReaction != 'melt');
         tableElem.appendChild(trElem8);
         trElem9 = document.createElement('tr');
         trElem9.className = 'melt hidable';
-        trElem9.hidden = isHidden;
+        trElem9.hidden = (elementalReaction != 'melt') || myIsHidden;
         tableElem.appendChild(trElem9);
         trElem10 = document.createElement('tr');
         trElem10.className = 'melt hidable';
-        trElem10.hidden = isHidden;
+        trElem10.hidden = (elementalReaction != 'melt') || myIsHidden;
         tableElem.appendChild(trElem10);
 
         let thElem8 = document.createElement('th');
@@ -1946,39 +1953,12 @@ $(document).on('change', '#元素スキルレベルInput', inputOnChangeOptionUp
 $(document).on('change', '#元素爆発レベルInput', inputOnChangeOptionUpdate);
 
 ////////////////////////////////////////////////////////////////////////////////
-// テーブルクリックで行を隠したり表示したり
-const elementOnClickHidableChildrenToggle = function () {
-    let selector = '#' + this.id + ' .hidable';
-    $(selector).toggle();
-    let isVisible = $(selector).is(':visible');
-    selectorVisiblityStateMap.set(selector, $(selector).is(':visible'));
-    console.debug(selectorVisiblityStateMap);
-}
-
-const elementOnClickHidableNeighborToggle = function () {
-    let selector = '#' + this.id + '+.hidable';
-    $(selector).toggle();
-    let isVisible = $(selector).is(':visible');
-    selectorVisiblityStateMap.set(selector, $(selector).is(':visible'));
-    console.debug(selectorVisiblityStateMap);
-}
-
 function isHiddenHidableElement(selector, opt_default = false) {
     let isHidden = opt_default;
     if (selectorVisiblityStateMap.has(selector)) {
         isHidden = !selectorVisiblityStateMap.get(selector);
     }
     return isHidden;
-}
-
-// 中段のオプションとステータスの表示非表示を制御するイベント設定します
-const elementOnClickHideTabContentToggle = function () {
-    console.debug(this);
-    let selector = '#tab-area-middle-hidable';
-    $(selector).toggle();
-    let isVisible = $(selector).is(":visible");
-    selectorVisiblityStateMap.set(selector, $(selector).is(":visible"));
-    console.debug(selectorVisiblityStateMap);
 }
 
 // 指定要素の表示非表示を制御するイベント関数を返す関数です
