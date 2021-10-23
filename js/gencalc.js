@@ -190,6 +190,23 @@ function calculate元素耐性補正(element) {
     return res / 100;
 }
 
+function calculate乗算系元素反応倍率(element, elementalMastery, kind) {
+    if (!kind in 元素反応MasterVar[element]) {
+        return 0;
+    }
+    let result = 元素反応MasterVar[element]['数値'];
+    result *= (1 + 25 * elementalMastery / (9 * (elementalMastery + 1400) + ステータス詳細ObjVar[kind + 'ダメージバフ']));
+    return result;
+}
+
+function calculate蒸発倍率(element, elementalMastery) {
+    return calculate乗算系元素反応倍率(element, elementalMastery, '蒸発');
+}
+
+function calculate溶解倍率(element, elementalMastery) {
+    return calculate乗算系元素反応倍率(element, elementalMastery, '溶解');
+}
+
 // ダメージ計算を行います
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
 function calculateDamageFromDetailSub(formula, dmgBuff, critRate, critDmg, isTargetEnemy, element, enemyDef, ignoreDef, multi) {
@@ -225,7 +242,7 @@ function calculateDamageFromDetailSub(formula, dmgBuff, critRate, critDmg, isTar
         my期待値Result = my非会心Result;
     }
     console.debug(dmgBuff, critRate, critDmg, isTargetEnemy, element, enemyDef, ignoreDef, multi, '=>', my期待値Result, my会心Result, my非会心Result);
-    return [my期待値Result, my会心Result, my非会心Result];
+    return [element, my期待値Result, my会心Result, my非会心Result];
 }
 
 function calculateDamageFromDetail(detailObj, opt_element = null) {
@@ -350,7 +367,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
             break;
         case 'シールド':
             myダメージバフ = ステータス詳細ObjVar['シールド強化'];
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, null, null, null, null);
+            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, my元素, null, null, null);
             break;
         case '元素創造物HP':    // for アンバー 甘雨
             my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null);
@@ -376,40 +393,40 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
             if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
-                    myResultWork[0] *= myHIT数;
-                    if (myResultWork[1] != null) {
-                        myResultWork[1] *= myHIT数;
-                    }
+                    myResultWork[1] *= myHIT数;
                     if (myResultWork[2] != null) {
                         myResultWork[2] *= myHIT数;
                     }
+                    if (myResultWork[3] != null) {
+                        myResultWork[3] *= myHIT数;
+                    }
                 }
             }
-            my計算Result[0] += myResultWork[0];
-            if (my計算Result[1] != null) {
-                my計算Result[1] += myResultWork[1];
-            }
+            my計算Result[1] += myResultWork[1];
             if (my計算Result[2] != null) {
                 my計算Result[2] += myResultWork[2];
+            }
+            if (my計算Result[3] != null) {
+                my計算Result[3] += myResultWork[3];
             }
         } else if (valueObj['種類'].endsWith('強化')) {
             let myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myダメージバフ, my会心率, my会心ダメージ, true, my元素, my敵防御力, my防御無視, my別枠乗算);
-            my計算Result[0] += myResultWork[0];
-            if (my計算Result[1] != null) {
-                my計算Result[1] += myResultWork[1];
-            }
+            my計算Result[1] += myResultWork[1];
             if (my計算Result[2] != null) {
                 my計算Result[2] += myResultWork[2];
+            }
+            if (my計算Result[3] != null) {
+                my計算Result[3] += myResultWork[3];
             }
         }
     });
 
-    if (detailObj['種類'] == 'シールド' && my元素 == '岩') {    // for ノエル 鍾離 岩元素シールド
-        my計算Result[0] = Math.round(my計算Result[0] * 1.5);
-        my計算Result[2] = Math.round(my計算Result[2] * 1.5);
+    if (detailObj['種類'] == 'シールド' && my計算Result[0] == '岩') {    // for ノエル 鍾離 岩元素シールド
+        my計算Result[1] = Math.round(my計算Result[1] * 1.5);
+        my計算Result[3] = Math.round(my計算Result[3] * 1.5);
     }
 
-    return [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2]];
+    return [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]];
 }
 
 function compareFunction(a, b) {
@@ -882,19 +899,33 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     thElem4.textContent = '非会心';
     trElem4.appendChild(thElem4);
 
+    const ELEMENT_TD_CLASS_MAP = new Map([
+        ['炎', 'pyro'],
+        ['水', 'hydro'],
+        ['風', 'aero'],
+        ['雷', 'electro'],
+        ['氷', 'cryo'],
+        ['岩', 'geo']
+    ]);
     damageResultArr.forEach(valueArr => {
         let thElem1 = document.createElement('th');
         thElem1.textContent = valueArr[0];
         trElem1.appendChild(thElem1);
         let tdElem2 = document.createElement('td');
-        tdElem2.textContent = valueArr[1];
+        tdElem2.textContent = valueArr[2];
         trElem2.appendChild(tdElem2);
         let tdElem3 = document.createElement('td');
-        tdElem3.textContent = valueArr[2] != null ? valueArr[2] : '-';
+        tdElem3.textContent = valueArr[3] != null ? valueArr[3] : '-';
         trElem3.appendChild(tdElem3);
         let tdElem4 = document.createElement('td');
-        tdElem4.textContent = valueArr[3] != null ? valueArr[3] : '-';
+        tdElem4.textContent = valueArr[4] != null ? valueArr[4] : '-';
         trElem4.appendChild(tdElem4);
+        if (valueArr[1] && ELEMENT_TD_CLASS_MAP.has(valueArr[1])) {
+            let tdClassName = ELEMENT_TD_CLASS_MAP.get(valueArr[1]);
+            tdElem2.className = tdClassName;
+            tdElem3.className = tdClassName;
+            tdElem4.className = tdClassName;
+        }
     });
 }
 
@@ -1841,6 +1872,9 @@ $(document).ready(function () {
         fetch("data/EnemyMaster.json").then(response => response.json()).then(jsonObj => {
             敵MasterVar = jsonObj;
             appendOptionElements(敵MasterVar, "#敵Input");
+        }),
+        fetch("data/ElementalReactionMaster.json").then(response => response.json()).then(jsonObj => {
+            元素反応MasterVar = jsonObj;
         }),
         fetch("data/BuffDebuffMaster.json").then(response => response.json()).then(jsonObj => {
             バフデバフMasterVar = jsonObj;

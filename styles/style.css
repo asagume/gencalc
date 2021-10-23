@@ -467,3 +467,27 @@ table.result {
 select.long {
     width: 400px;
 }
+
+td.pyro {
+    color: #d2655a;
+}
+
+td.hydro {
+    color: #559cc9;
+}
+
+td.aero {
+    color: #3aaf7a;
+}
+
+td.electro {
+    color: #b681df;
+}
+
+td.cryo {
+    color: #63beb4;
+}
+
+td.geo {
+    color: #df8f37;
+}
