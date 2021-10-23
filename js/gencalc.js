@@ -190,12 +190,12 @@ function calculate元素耐性補正(element) {
     return res / 100;
 }
 
-function calculate乗算系元素反応倍率(element, elementalMastery, kind) {
-    if (!kind in 元素反応MasterVar[element]) {
+function calculate乗算系元素反応倍率(element, elementalMastery, elementalReaction) {
+    if (!element || element == '物理' || !(elementalReaction in 元素反応MasterVar[element])) {
         return 0;
     }
-    let result = 元素反応MasterVar[element]['数値'];
-    result *= (1 + 25 * elementalMastery / (9 * (elementalMastery + 1400) + ステータス詳細ObjVar[kind + 'ダメージバフ']));
+    let result = 元素反応MasterVar[element][elementalReaction]['数値'];
+    result *= (1 + 25 * elementalMastery / (9 * (elementalMastery + 1400) + ステータス詳細ObjVar[elementalReaction + 'ダメージバフ']));
     return result;
 }
 
@@ -421,12 +421,44 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
         }
     });
 
-    if (detailObj['種類'] == 'シールド' && my計算Result[0] == '岩') {    // for ノエル 鍾離 岩元素シールド
-        my計算Result[1] = Math.round(my計算Result[1] * 1.5);
-        my計算Result[3] = Math.round(my計算Result[3] * 1.5);
+    let my計算Result_蒸発 = [null, null, null];
+    let my計算Result_溶解 = [null, null, null];
+    if (detailObj['種類'] == 'シールド') {
+        if (my計算Result[0] == '岩') {  // for ノエル 鍾離 岩元素シールド
+            my計算Result[1] = Math.round(my計算Result[1] * 1.5);
+            my計算Result[3] = Math.round(my計算Result[3] * 1.5);
+        }
+    } else if (my計算Result[0]) {
+        let my元素熟知 = ステータス詳細ObjVar['元素熟知'];
+        let my蒸発倍率 = calculate蒸発倍率(my計算Result[0], my元素熟知);
+        if (my蒸発倍率 > 0) {
+            my計算Result_蒸発[0] = Math.round(my計算Result[1] * my蒸発倍率);
+            if (my計算Result[2] != null) {
+                my計算Result_蒸発[1] = Math.round(my計算Result[2] * my蒸発倍率);
+            }
+            if (my計算Result[3] != null) {
+                my計算Result_蒸発[2] = Math.round(my計算Result[3] * my蒸発倍率);
+            }
+        }
+        let my溶解倍率 = calculate溶解倍率(my計算Result[0], my元素熟知);
+        if (my溶解倍率 > 0) {
+            my計算Result_溶解[0] = Math.round(my計算Result[1] * my溶解倍率);
+            if (my計算Result[2] != null) {
+                my計算Result_溶解[1] = Math.round(my計算Result[2] * my溶解倍率);
+            }
+            if (my計算Result[3] != null) {
+                my計算Result_溶解[2] = Math.round(my計算Result[3] * my溶解倍率);
+            }
+        }
     }
-
-    return [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]];
+    let resultArr = [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]];
+    resultArr.push(my計算Result_蒸発[0]);
+    resultArr.push(my計算Result_蒸発[1]);
+    resultArr.push(my計算Result_蒸発[2]);
+    resultArr.push(my計算Result_溶解[0]);
+    resultArr.push(my計算Result_溶解[1]);
+    resultArr.push(my計算Result_溶解[2]);
+    return resultArr;
 }
 
 function compareFunction(a, b) {
@@ -689,6 +721,7 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
 
     // ステータス詳細ObjVar⇒各Input要素 値をコピーします
     setObjectPropertiesToElements(ステータス詳細ObjVar, '', 'Input');
+
     inputOnChangeResultUpdate();
 }
 
@@ -857,6 +890,15 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
     });
 }
 
+const ELEMENT_TD_CLASS_MAP = new Map([
+    ['炎', 'pyro'],
+    ['水', 'hydro'],
+    ['風', 'aero'],
+    ['雷', 'electro'],
+    ['氷', 'cryo'],
+    ['岩', 'geo']
+]);
+
 // ダメージ計算結果テーブルを表示します
 const displayResultTable = function (tableId, categoryName, damageResultArr) {
     let tableElem = document.getElementById(tableId);
@@ -871,16 +913,17 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     let trElem1 = document.createElement('tr');
     theadElem.appendChild(trElem1);
     let trElem2 = document.createElement('tr');
-    theadElem.appendChild(trElem2);
+    trElem2.className = 'noreaction';
+    tableElem.appendChild(trElem2);
     let isHidden = isHiddenHidableElement('#' + tableId + ' .hidable', true);
     let trElem3 = document.createElement('tr');
-    trElem3.className = 'hidable';
+    trElem3.className = 'noreaction hidable';
     trElem3.hidden = isHidden;
-    theadElem.appendChild(trElem3);
+    tableElem.appendChild(trElem3);
     let trElem4 = document.createElement('tr');
-    trElem4.className = 'hidable';
+    trElem4.className = 'noreaction hidable';
     trElem4.hidden = isHidden;
-    theadElem.appendChild(trElem4);
+    tableElem.appendChild(trElem4);
 
     let thElem1 = document.createElement('th');
     thElem1.className = 'category';
@@ -899,32 +942,124 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     thElem4.textContent = '非会心';
     trElem4.appendChild(thElem4);
 
-    const ELEMENT_TD_CLASS_MAP = new Map([
-        ['炎', 'pyro'],
-        ['水', 'hydro'],
-        ['風', 'aero'],
-        ['雷', 'electro'],
-        ['氷', 'cryo'],
-        ['岩', 'geo']
-    ]);
+    let withVaporize = false;
+    let withMelt = false;
+    for (let i = 0; i < damageResultArr.length; i++) {
+        if (damageResultArr[i][5]) {
+            withVaporize = true;
+        }
+        if (damageResultArr[i][8]) {
+            withMelt = true;
+        }
+    }
+    let trElem5;
+    let trElem6;
+    let trElem7;
+    let trElem8;
+    let trElem9;
+    let trElem10;
+    if (withVaporize) { // 蒸発ダメージを表示します
+        trElem5 = document.createElement('tr');
+        trElem5.className = 'vaporize';
+        trElem5.hidden = isHidden;
+        tableElem.appendChild(trElem5);
+        trElem6 = document.createElement('tr');
+        trElem6.className = 'vaporize hidable';
+        trElem6.hidden = isHidden;
+        tableElem.appendChild(trElem6);
+        trElem7 = document.createElement('tr');
+        trElem7.className = 'vaporize hidable';
+        trElem7.hidden = isHidden;
+        tableElem.appendChild(trElem7);
+
+        let thElem5 = document.createElement('th');
+        thElem5.className = 'label';
+        thElem5.textContent = '期待値';
+        trElem5.appendChild(thElem5);
+        let thElem6 = document.createElement('th');
+        thElem6.className = 'label';
+        thElem6.textContent = '会心';
+        trElem6.appendChild(thElem6);
+        let thElem7 = document.createElement('th');
+        thElem7.className = 'label';
+        thElem7.textContent = '非会心';
+        trElem7.appendChild(thElem7);
+    }
+    if (withMelt) { // 溶解ダメージを表示します
+        trElem8 = document.createElement('tr');
+        trElem8.className = 'melt';
+        trElem8.hidden = isHidden;
+        tableElem.appendChild(trElem8);
+        trElem9 = document.createElement('tr');
+        trElem9.className = 'melt hidable';
+        trElem9.hidden = isHidden;
+        tableElem.appendChild(trElem9);
+        trElem10 = document.createElement('tr');
+        trElem10.className = 'melt hidable';
+        trElem10.hidden = isHidden;
+        tableElem.appendChild(trElem10);
+
+        let thElem8 = document.createElement('th');
+        thElem8.className = 'label';
+        thElem8.textContent = '期待値';
+        trElem8.appendChild(thElem8);
+        let thElem9 = document.createElement('th');
+        thElem9.className = 'label';
+        thElem9.textContent = '会心';
+        trElem9.appendChild(thElem9);
+        let thElem10 = document.createElement('th');
+        thElem10.className = 'label';
+        thElem10.textContent = '非会心';
+        trElem10.appendChild(thElem10);
+    }
+
     damageResultArr.forEach(valueArr => {
+        let tdClassName = null;
+        if (valueArr[1] && ELEMENT_TD_CLASS_MAP.has(valueArr[1])) {
+            tdClassName = ELEMENT_TD_CLASS_MAP.get(valueArr[1]);
+        }
         let thElem1 = document.createElement('th');
         thElem1.textContent = valueArr[0];
         trElem1.appendChild(thElem1);
         let tdElem2 = document.createElement('td');
         tdElem2.textContent = valueArr[2];
+        tdElem2.className = tdClassName;
         trElem2.appendChild(tdElem2);
         let tdElem3 = document.createElement('td');
-        tdElem3.textContent = valueArr[3] != null ? valueArr[3] : '-';
+        tdElem3.textContent = valueArr[3];
+        tdElem3.className = tdClassName;
         trElem3.appendChild(tdElem3);
         let tdElem4 = document.createElement('td');
-        tdElem4.textContent = valueArr[4] != null ? valueArr[4] : '-';
+        tdElem4.textContent = valueArr[4];
+        tdElem4.className = tdClassName;
         trElem4.appendChild(tdElem4);
-        if (valueArr[1] && ELEMENT_TD_CLASS_MAP.has(valueArr[1])) {
-            let tdClassName = ELEMENT_TD_CLASS_MAP.get(valueArr[1]);
-            tdElem2.className = tdClassName;
-            tdElem3.className = tdClassName;
-            tdElem4.className = tdClassName;
+        if (withVaporize) { // 蒸発ダメージを表示します
+            let tdElem5 = document.createElement('td');
+            tdElem5.textContent = valueArr[5] != null ? valueArr[5] : valueArr[2];
+            tdElem5.className = tdClassName;
+            trElem5.appendChild(tdElem5);
+            let tdElem6 = document.createElement('td');
+            tdElem6.textContent = valueArr[6] != null ? valueArr[6] : valueArr[3];
+            tdElem6.className = tdClassName;
+            trElem6.appendChild(tdElem6);
+            let tdElem7 = document.createElement('td');
+            tdElem7.textContent = valueArr[7] != null ? valueArr[7] : valueArr[4];
+            tdElem7.className = tdClassName;
+            trElem7.appendChild(tdElem7);
+        }
+        if (withMelt) { // 溶解ダメージを表示します
+            let tdElem8 = document.createElement('td');
+            tdElem8.textContent = valueArr[8];
+            tdElem8.className = tdClassName;
+            trElem8.appendChild(tdElem8);
+            let tdElem9 = document.createElement('td');
+            tdElem9.textContent = valueArr[9];
+            tdElem9.className = tdClassName;
+            trElem9.appendChild(tdElem9);
+            let tdElem10 = document.createElement('td');
+            tdElem10.textContent = valueArr[10];
+            tdElem10.className = tdClassName;
+            trElem10.appendChild(tdElem10);
         }
     });
 }
@@ -1196,6 +1331,15 @@ const inputOnChangeResultUpdate = function () {
             ステータス詳細ObjVar[key] = Number(elem.value);
         }
     });
+
+    let my蒸発倍率 = calculate蒸発倍率(キャラクター元素Var, ステータス詳細ObjVar['元素熟知']);
+    if (my蒸発倍率) {
+        $('#元素反応蒸発Input+label').text('蒸発反応×' + Math.round(my蒸発倍率 * 100) / 100);
+    }
+    let my溶解倍率 = calculate溶解倍率(キャラクター元素Var, ステータス詳細ObjVar['元素熟知']);
+    if (my溶解倍率) {
+        $('#元素反応溶解Input+label').text('溶解反応×' + Math.round(my溶解倍率 * 100) / 100);
+    }
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');
 
@@ -1752,6 +1896,36 @@ const characterInputOnChange = function () {
             });
         }
 
+        switch (キャラクター元素Var) {
+            case '炎':
+                $('#元素反応なしInput+label').show();
+                $('#元素反応蒸発Input+label').show();
+                $('#元素反応溶解Input+label').show();
+                break;
+            case '水':
+                $('#元素反応なしInput+label').show();
+                $('#元素反応蒸発Input+label').show();
+                $('#元素反応溶解Input+label').hide();
+                if ($('#元素反応溶解Input').is(':checked')) {
+                    $('#元素反応なしInput').prop('checked', true);
+                }
+                break;
+            case '氷':
+                $('#元素反応なしInput+label').show();
+                $('#元素反応蒸発Input+label').hide();
+                $('#元素反応溶解Input+label').show();
+                if ($('#元素反応蒸発Input').is(':checked')) {
+                    $('#元素反応なしInput').prop('checked', true);
+                }
+                break;
+            default:
+                $('#元素反応なしInput').prop('checked', true);
+                $('#元素反応なしInput+label').hide();
+                $('#元素反応蒸発Input+label').hide();
+                $('#元素反応溶解Input+label').hide();
+                break;
+        }
+
         appendOptionElements(武器MasterVar[選択中キャラクターデータVar['武器']], '#武器Input');
 
         enemyInputOnChange();
@@ -1823,16 +1997,67 @@ const elementOnClickToggleOther = function (selector, triggerSelector) {
 $(document).on('click', '#option-set', elementOnClickToggleOther('#option-set+.hidable', '#option-set'));
 $(document).on('click', '#status-set', elementOnClickToggleOther('#status-set+.tab-area', '#status-set'));
 
+const resultTableVisibilityMap = new Map();
+
 // 下段のダメージ計算表の2行目以降を閉じたり開いたりします
-$(document).on('click', '#通常攻撃ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#重撃ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#落下攻撃ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#通常攻撃ダメージ関連Result', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素スキルダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素スキルダメージ関連Result', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素爆発ダメージResult', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#元素爆発ダメージ関連Result', elementOnClickHidableChildrenToggle);
-$(document).on('click', '#その他ダメージResult', elementOnClickHidableChildrenToggle);
+const resultTableOnClickToggle = function () {
+    let tableId = this.id;
+    let isVisible = false;
+    if (resultTableVisibilityMap.has(tableId)) {
+        isVisible = resultTableVisibilityMap.get(tableId);
+    }
+    resultTableVisibilityMap.set(tableId, !isVisible);
+    console.log(resultTableVisibilityMap);
+    elementalRectionOnChange();
+};
+$(document).on('click', '#通常攻撃ダメージResult', resultTableOnClickToggle);
+$(document).on('click', '#重撃ダメージResult', resultTableOnClickToggle);
+$(document).on('click', '#落下攻撃ダメージResult', resultTableOnClickToggle);
+$(document).on('click', '#通常攻撃ダメージ関連Result', resultTableOnClickToggle);
+$(document).on('click', '#元素スキルダメージResult', resultTableOnClickToggle);
+$(document).on('click', '#元素スキルダメージ関連Result', resultTableOnClickToggle);
+$(document).on('click', '#元素爆発ダメージResult', resultTableOnClickToggle);
+$(document).on('click', '#元素爆発ダメージ関連Result', resultTableOnClickToggle);
+$(document).on('click', '#その他ダメージResult', resultTableOnClickToggle);
+
+const DAMAGE_RESULT_TABLE_ID_ARR = [
+    '通常攻撃ダメージResult',
+    '重撃ダメージResult',
+    '落下攻撃ダメージResult',
+    '通常攻撃ダメージ関連Result',
+    '元素スキルダメージResult',
+    '元素スキルダメージ関連Result',
+    '元素爆発ダメージResult',
+    '元素爆発ダメージ関連Result',
+    'その他ダメージResult'
+];
+
+const elementalRectionOnChange = function () {
+    let elementalReaction = $('input[name="元素反応Input"]:checked').val();
+    DAMAGE_RESULT_TABLE_ID_ARR.forEach(tableId => {
+        let isVisible = false;
+        if (resultTableVisibilityMap.has(tableId)) {
+            isVisible = resultTableVisibilityMap.get(tableId);
+        }
+        $('#' + tableId + ' tr.' + elementalReaction).each((index, element) => {
+            if (element.className.indexOf('hidable') == -1) {
+                element.style.display = "table-row";
+            } else {
+                if (isVisible) {
+                    element.style.display = "table-row";
+                } else {
+                    element.style.display = "none";
+                }
+            }
+        });
+        ['noreaction', 'vaporize', 'melt'].forEach(className => {
+            if (className != elementalReaction) {
+                $('tr.' + className).hide();
+            }
+        });
+    });
+}
+$(document).on('change', 'input[name="元素反応Input"]', elementalRectionOnChange);
 
 // MAIN
 $(document).ready(function () {

@@ -491,3 +491,19 @@ td.cryo {
 td.geo {
     color: #df8f37;
 }
+
+input[name="元素反応Input"] {
+    display: none;
+}
+
+input[name="元素反応Input"]+label {
+    display: inline-block;
+    width: 200px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    border-radius: 5px;
+}
+
+input[name="元素反応Input"]:checked+label {
+    background: linear-gradient(to top, #ecc862, #978310);
+}

@@ -531,7 +531,13 @@
                     <input type="radio" id="tab-area-bottom1" name="tab-area-bottom" checked>
                     <label class="tab-area3" for="tab-area-bottom1">ダメージ計算</label>
                     <div class="tab-content">
-                        <div id="計算結果Box"></div>
+                        <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked>
+                        <label for="元素反応なしInput">元素反応なし</label>
+                        <input type="radio" value="vaporize" id="元素反応蒸発Input" name="元素反応Input">
+                        <label for="元素反応蒸発Input">蒸発反応</label>
+                        <input type="radio" value="melt" id="元素反応溶解Input" name="元素反応Input">
+                        <label for="元素反応溶解Input">溶解反応</label>
+
                         <table class="result" id="通常攻撃ダメージResult"></table>
                         <table class="result" id="重撃ダメージResult"></table>
                         <table class="result" id="落下攻撃ダメージResult"></table>
