@@ -43,8 +43,7 @@
     },
     "胡桃": {
         "武器": "長柄武器",
-        "import": "data/characters/pyro_5_polearm_HuTao.json",
-        "disabled": true
+        "import": "data/characters/pyro_5_polearm_HuTao.json"
     },
     "魈": {
         "武器": "長柄武器",

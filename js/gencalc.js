@@ -195,7 +195,7 @@ function calculate乗算系元素反応倍率(element, elementalMastery, element
         return 0;
     }
     let result = 元素反応MasterVar[element][elementalReaction]['数値'];
-    result *= (1 + 25 * elementalMastery / (9 * (elementalMastery + 1400) + ステータス詳細ObjVar[elementalReaction + 'ダメージバフ']));
+    result *= 1 + 25 * elementalMastery / (9 * (elementalMastery + 1400)) + ステータス詳細ObjVar[elementalReaction + 'ダメージバフ'] / 100;
     return result;
 }
 
@@ -493,6 +493,12 @@ function calculateStatus(targetObj, kind, formulaArr, opt_max = null) {
             case '敵全元素耐性':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
                     let statusName = '敵' + entry + '元素耐性';
+                    targetObj[statusName] += result;
+                });
+                return;
+            case '全元素耐性':
+                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                    let statusName = entry + '元素耐性';
                     targetObj[statusName] += result;
                 });
                 return;
@@ -931,7 +937,6 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     trElem4.className = 'noreaction hidable';
     trElem4.hidden = (elementalReaction != 'noreaction') || myIsHidden;
     tableElem.appendChild(trElem4);
-
     let thElem1 = document.createElement('th');
     thElem1.className = 'category';
     thElem1.textContent = categoryName;
@@ -948,77 +953,56 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     thElem4.className = 'label';
     thElem4.textContent = '非会心';
     trElem4.appendChild(thElem4);
-
-    let withVaporize = false;
-    let withMelt = false;
-    for (let i = 0; i < damageResultArr.length; i++) {
-        if (damageResultArr[i][5]) {
-            withVaporize = true;
-        }
-        if (damageResultArr[i][8]) {
-            withMelt = true;
-        }
-    }
-    let trElem5;
-    let trElem6;
-    let trElem7;
-    let trElem8;
-    let trElem9;
-    let trElem10;
-    if (withVaporize) { // 蒸発ダメージを表示します
-        trElem5 = document.createElement('tr');
-        trElem5.className = 'vaporize';
-        trElem5.hidden = (elementalReaction != 'vaporize');
-        tableElem.appendChild(trElem5);
-        trElem6 = document.createElement('tr');
-        trElem6.className = 'vaporize hidable';
-        trElem6.hidden = (elementalReaction != 'vaporize') || myIsHidden;
-        tableElem.appendChild(trElem6);
-        trElem7 = document.createElement('tr');
-        trElem7.className = 'vaporize hidable';
-        trElem7.hidden = (elementalReaction != 'vaporize') || myIsHidden;
-        tableElem.appendChild(trElem7);
-
-        let thElem5 = document.createElement('th');
-        thElem5.className = 'label';
-        thElem5.textContent = '期待値';
-        trElem5.appendChild(thElem5);
-        let thElem6 = document.createElement('th');
-        thElem6.className = 'label';
-        thElem6.textContent = '会心';
-        trElem6.appendChild(thElem6);
-        let thElem7 = document.createElement('th');
-        thElem7.className = 'label';
-        thElem7.textContent = '非会心';
-        trElem7.appendChild(thElem7);
-    }
-    if (withMelt) { // 溶解ダメージを表示します
-        trElem8 = document.createElement('tr');
-        trElem8.className = 'melt';
-        trElem8.hidden = (elementalReaction != 'melt');
-        tableElem.appendChild(trElem8);
-        trElem9 = document.createElement('tr');
-        trElem9.className = 'melt hidable';
-        trElem9.hidden = (elementalReaction != 'melt') || myIsHidden;
-        tableElem.appendChild(trElem9);
-        trElem10 = document.createElement('tr');
-        trElem10.className = 'melt hidable';
-        trElem10.hidden = (elementalReaction != 'melt') || myIsHidden;
-        tableElem.appendChild(trElem10);
-
-        let thElem8 = document.createElement('th');
-        thElem8.className = 'label';
-        thElem8.textContent = '期待値';
-        trElem8.appendChild(thElem8);
-        let thElem9 = document.createElement('th');
-        thElem9.className = 'label';
-        thElem9.textContent = '会心';
-        trElem9.appendChild(thElem9);
-        let thElem10 = document.createElement('th');
-        thElem10.className = 'label';
-        thElem10.textContent = '非会心';
-        trElem10.appendChild(thElem10);
-    }
+    // 蒸発ダメージ
+    let trElem5 = document.createElement('tr');
+    trElem5.className = 'vaporize';
+    trElem5.hidden = (elementalReaction != 'vaporize');
+    tableElem.appendChild(trElem5);
+    let trElem6 = document.createElement('tr');
+    trElem6.className = 'vaporize hidable';
+    trElem6.hidden = (elementalReaction != 'vaporize') || myIsHidden;
+    tableElem.appendChild(trElem6);
+    let trElem7 = document.createElement('tr');
+    trElem7.className = 'vaporize hidable';
+    trElem7.hidden = (elementalReaction != 'vaporize') || myIsHidden;
+    tableElem.appendChild(trElem7);
+    let thElem5 = document.createElement('th');
+    thElem5.className = 'label';
+    thElem5.textContent = '期待値';
+    trElem5.appendChild(thElem5);
+    let thElem6 = document.createElement('th');
+    thElem6.className = 'label';
+    thElem6.textContent = '会心';
+    trElem6.appendChild(thElem6);
+    let thElem7 = document.createElement('th');
+    thElem7.className = 'label';
+    thElem7.textContent = '非会心';
+    trElem7.appendChild(thElem7);
+    // 溶解ダメージ
+    let trElem8 = document.createElement('tr');
+    trElem8.className = 'melt';
+    trElem8.hidden = (elementalReaction != 'melt');
+    tableElem.appendChild(trElem8);
+    let trElem9 = document.createElement('tr');
+    trElem9.className = 'melt hidable';
+    trElem9.hidden = (elementalReaction != 'melt') || myIsHidden;
+    tableElem.appendChild(trElem9);
+    let trElem10 = document.createElement('tr');
+    trElem10.className = 'melt hidable';
+    trElem10.hidden = (elementalReaction != 'melt') || myIsHidden;
+    tableElem.appendChild(trElem10);
+    let thElem8 = document.createElement('th');
+    thElem8.className = 'label';
+    thElem8.textContent = '期待値';
+    trElem8.appendChild(thElem8);
+    let thElem9 = document.createElement('th');
+    thElem9.className = 'label';
+    thElem9.textContent = '会心';
+    trElem9.appendChild(thElem9);
+    let thElem10 = document.createElement('th');
+    thElem10.className = 'label';
+    thElem10.textContent = '非会心';
+    trElem10.appendChild(thElem10);
 
     damageResultArr.forEach(valueArr => {
         let tdClassName = null;
@@ -1040,34 +1024,32 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
         tdElem4.textContent = valueArr[4];
         tdElem4.className = tdClassName;
         trElem4.appendChild(tdElem4);
-        if (withVaporize) { // 蒸発ダメージを表示します
-            let tdElem5 = document.createElement('td');
-            tdElem5.textContent = valueArr[5] != null ? valueArr[5] : valueArr[2];
-            tdElem5.className = tdClassName;
-            trElem5.appendChild(tdElem5);
-            let tdElem6 = document.createElement('td');
-            tdElem6.textContent = valueArr[6] != null ? valueArr[6] : valueArr[3];
-            tdElem6.className = tdClassName;
-            trElem6.appendChild(tdElem6);
-            let tdElem7 = document.createElement('td');
-            tdElem7.textContent = valueArr[7] != null ? valueArr[7] : valueArr[4];
-            tdElem7.className = tdClassName;
-            trElem7.appendChild(tdElem7);
-        }
-        if (withMelt) { // 溶解ダメージを表示します
-            let tdElem8 = document.createElement('td');
-            tdElem8.textContent = valueArr[8];
-            tdElem8.className = tdClassName;
-            trElem8.appendChild(tdElem8);
-            let tdElem9 = document.createElement('td');
-            tdElem9.textContent = valueArr[9];
-            tdElem9.className = tdClassName;
-            trElem9.appendChild(tdElem9);
-            let tdElem10 = document.createElement('td');
-            tdElem10.textContent = valueArr[10];
-            tdElem10.className = tdClassName;
-            trElem10.appendChild(tdElem10);
-        }
+        // 蒸発ダメージ
+        let tdElem5 = document.createElement('td');
+        tdElem5.textContent = valueArr[5] != null ? valueArr[5] : valueArr[2];
+        tdElem5.className = tdClassName;
+        trElem5.appendChild(tdElem5);
+        let tdElem6 = document.createElement('td');
+        tdElem6.textContent = valueArr[6] != null ? valueArr[6] : valueArr[3];
+        tdElem6.className = tdClassName;
+        trElem6.appendChild(tdElem6);
+        let tdElem7 = document.createElement('td');
+        tdElem7.textContent = valueArr[7] != null ? valueArr[7] : valueArr[4];
+        tdElem7.className = tdClassName;
+        trElem7.appendChild(tdElem7);
+        // 溶解ダメージ
+        let tdElem8 = document.createElement('td');
+        tdElem8.textContent = valueArr[8] != null ? valueArr[8] : valueArr[2];
+        tdElem8.className = tdClassName;
+        trElem8.appendChild(tdElem8);
+        let tdElem9 = document.createElement('td');
+        tdElem9.textContent = valueArr[9] != null ? valueArr[9] : valueArr[3];
+        tdElem9.className = tdClassName;
+        trElem9.appendChild(tdElem9);
+        let tdElem10 = document.createElement('td');
+        tdElem10.textContent = valueArr[10] != null ? valueArr[10] : valueArr[4];
+        tdElem10.className = tdClassName;
+        trElem10.appendChild(tdElem10);
     });
 }
 
@@ -1933,7 +1915,17 @@ const characterInputOnChange = function () {
                 break;
         }
 
-        appendOptionElements(武器MasterVar[選択中キャラクターデータVar['武器']], '#武器Input');
+        if ($('#全武器解放Config').prop('checked')) {
+            let newObj = {};
+            Object.keys(武器MasterVar).forEach(key => {
+                Object.keys(武器MasterVar[key]).forEach(key2 => {
+                    newObj[key2] = 武器MasterVar[key][key2];
+                });
+            });
+            appendOptionElements(newObj, '#武器Input');
+        } else {
+            appendOptionElements(武器MasterVar[選択中キャラクターデータVar['武器']], '#武器Input');
+        }
 
         enemyInputOnChange();
 

@@ -25,7 +25,7 @@
 
 @media screen and (max-width: 2000px) {
     html {
-        font-size: 75%;
+        font-size: 85%;
     }
     body {
         font-size: 1.6em;
@@ -38,7 +38,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 120px 300px auto minmax(80px, 120px);
+        grid-template-rows: 32px 160px 300px auto minmax(80px, 120px);
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -48,7 +48,7 @@
         font-size: 1.7rem;
     }
     input[type="number"] {
-        width: 80px;
+        width: 100px;
     }
 }
 
@@ -373,7 +373,7 @@ table thead th {
     font-size: 1.4rem;
 }
 
-table tbody th {
+table th {
     font-size: 1.4rem;
 }
 
@@ -382,6 +382,7 @@ table thead th+th, table tbody td {
 }
 
 table td {
+    font-size: 1.8rem;
     background-color: transparent;
 }
 
@@ -400,7 +401,7 @@ table thead th.label, table tbody th.label {
 }
 
 th.category {
-    width: 100px;
+    width: 110px;
     text-align: left;
     font-weight: bold;
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
@@ -426,7 +427,7 @@ legend#option-set {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    padding: 3px;
+    padding: 1px;
 }
 
 legend#option-set.closed {
@@ -440,7 +441,7 @@ legend#status-set {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    padding: 3px;
+    padding: 1px;
 }
 
 legend#status-set.closed {
@@ -499,6 +500,7 @@ input[name="元素反応Input"] {
 input[name="元素反応Input"]+label {
     display: inline-block;
     width: 200px;
+    padding: 2px;
     background: linear-gradient(to top, #ad5b18, #55290b);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
@@ -506,4 +508,8 @@ input[name="元素反応Input"]+label {
 
 input[name="元素反応Input"]:checked+label {
     background: linear-gradient(to top, #ecc862, #978310);
+}
+
+div.description {
+    font-size: 1.4rem;
 }
