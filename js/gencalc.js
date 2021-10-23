@@ -1159,6 +1159,13 @@ const inputOnChangeResultUpdate = function () {
     if (!選択中武器データVar) return;
     if (!選択中敵データVar) return;
 
+    Object.keys(ステータス詳細ObjVar).forEach(key => {
+        let elem = document.getElementById(key + 'Input');
+        if (elem) {
+            ステータス詳細ObjVar[key] = Number(elem.value);
+        }
+    });
+
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');
 
     // 通常攻撃ダメージを計算します
@@ -1376,7 +1383,7 @@ const inputOnChangeStatusUpdateExceptBase = function () {
 }
 
 $(document).on('change', 'input[name="基礎ステータスInput"]', inputOnChangeStatusUpdateExceptBase);
-$(document).on('change', 'input[name="ステータスInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'input[name="ステータスInput"]', inputOnChangeResultUpdate);
 
 
 const inputOnChangeOptionUpdate = function () {

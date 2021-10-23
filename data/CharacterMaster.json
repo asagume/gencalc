@@ -18,6 +18,7 @@
         "レアリティ": 5,
         "元素": "氷",
         "武器": "弓",
+        "import": "data/characters/cryo_5_bow_Aloy.json",
         "disabled": true
     },
     "宵宮": {
@@ -32,18 +33,22 @@
     },
     "楓原万葉": {
         "武器": "片手剣",
+        "import": "data/characters/aero_5_sword_KaedeharaKazuha.json",
         "disabled": true
     },
     "エウルア": {
         "武器": "両手剣",
+        "import": "data/characters/cryo_5_claymore_Eula.json",
         "disabled": true
     },
     "胡桃": {
         "武器": "長柄武器",
+        "import": "data/characters/pyro_5_polearm_HuTao.json",
         "disabled": true
     },
     "魈": {
         "武器": "長柄武器",
+        "import": "data/characters/aero_5_polearm_Xiao.json",
         "disabled": true
     },
     "甘雨": {
@@ -52,42 +57,51 @@
     },
     "アルベド": {
         "武器": "片手剣",
+        "import": "data/characters/geo_5_sword_Albedo.json",
         "disabled": true
     },
     "鍾離": {
         "武器": "長柄武器",
+        "import": "data/characters/geo_5_polearm_Zhongli.json",
         "disabled": true
     },
     "タルタリヤ": {
         "武器": "弓",
-        "disabled": true
+        "import": "data/characters/hydro_5_bow_Tartaglia.json"
     },
     "クレー": {
         "武器": "法器",
+        "import": "data/characters/puro_5_catalyst_Klee.json",
         "disabled": true
     },
     "ウェンティ": {
         "武器": "弓",
+        "import": "data/characters/aero_5_bow_Venti.json",
         "disabled": true
     },
     "刻晴": {
         "武器": "片手剣",
+        "import": "data/characters/electro_5_sword_Keqing.json",
         "disabled": true
     },
     "モナ": {
         "武器": "法器",
+        "import": "data/characters/hydro_5_catalyst_Mona.json",
         "disabled": true
     },
     "七七": {
         "武器": "片手剣",
+        "import": "data/characters/cryo_5_sword_Qiqi.json",
         "disabled": true
     },
     "ディルック": {
         "武器": "両手剣",
+        "import": "data/characters/pyro_5_claymore_Diluc.json",
         "disabled": true
     },
     "ジン": {
         "武器": "片手剣",
+        "import": "data/characters/aero_5_sword_Jean.json",
         "disabled": true
     },
     "九条裟羅": {
@@ -104,26 +118,32 @@
     },
     "煙緋": {
         "武器": "法器",
+        "import": "data/characters/pyro_4_catalyst_Yanfei.json",
         "disabled": true
     },
     "ロサリア": {
         "武器": "長柄武器",
+        "import": "data/characters/cryo_4_polearm_Rosaria.json",
         "disabled": true
     },
     "辛炎": {
         "武器": "両手剣",
+        "import": "data/characters/pyro_4_claymore_Xinyan.json",
         "disabled": true
     },
     "ディオナ": {
         "武器": "弓",
+        "import": "data/characters/cryo_4_bow_Diona.json",
         "disabled": true
     },
     "スクロース": {
         "武器": "法器",
+        "import": "data/characters/aero_4_catalyst_Sucrose.json",
         "disabled": true
     },
     "重雲": {
         "武器": "両手剣",
+        "import": "data/characters/cryo_4_claymore_Chongyun.json",
         "disabled": true
     },
     "ノエル": {
@@ -135,50 +155,62 @@
     },
     "凝光": {
         "武器": "法器",
+        "import": "data/characters/geo_4_catalyst_Ningguang.json",
         "disabled": true
     },
     "フィッシュル": {
         "武器": "弓",
+        "import": "data/characters/electro_4_bow_Fischl.json",
         "disabled": true
     },
     "行秋": {
         "武器": "片手剣",
+        "import": "data/characters/hydro_4_sword_Xingqiu.json",
         "disabled": true
     },
     "北斗": {
         "武器": "両手剣",
+        "import": "data/characters/electro_4_claymore_Beidou.json",
         "disabled": true
     },
     "レザー": {
         "武器": "両手剣",
+        "import": "data/characters/electro_4_claymore_Razor.json",
         "disabled": true
     },
     "バーバラ": {
         "武器": "法器",
+        "import": "data/characters/hydro_4_catalyst_Barbara.json",
         "disabled": true
     },
     "リサ": {
         "武器": "法器",
+        "import": "data/characters/electro_4_catalyst_Lisa.json",
         "disabled": true
     },
     "ガイア": {
         "武器": "片手剣",
+        "import": "data/characters/cryo_4_sword_Kaeya.json",
         "disabled": true
     },
     "アンバー": {
         "武器": "弓",
+        "import": "data/characters/pyro_4_bow_Amber.json",
         "disabled": true
     },
     "旅人(雷)": {
         "武器": "片手剣",
+        "import": "data/characters/electro_4_sword_Traveler.json",
         "disabled": true
     },
     "旅人(岩)": {
         "武器": "片手剣",
+        "import": "data/characters/geo_4_sword_Traveler.json",
         "disabled": true
     },
     "旅人(風)": {
         "武器": "片手剣",
+        "import": "data/characters/aero_4_sword_Traveler.json",
         "disabled": true
     }
 }
