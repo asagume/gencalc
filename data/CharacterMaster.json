@@ -151,7 +151,8 @@
         "import": "data/characters/geo_4_claymore_Noelle.json"
     },
     "ベネット": {
-        "import": "data/characters/pyro_4_sword_Benette.json"
+        "import": "data/characters/pyro_4_sword_Benette.json",
+        "disabled": true
     },
     "凝光": {
         "武器": "法器",
