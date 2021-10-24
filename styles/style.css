@@ -38,7 +38,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 160px 300px auto minmax(80px, 120px);
+        grid-template-rows: 32px 160px 310px auto minmax(80px, 120px);
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -312,7 +312,7 @@ section {
 
 .with-small-select select {
     display: block;
-    width: 200px;
+    width: 220px;
 }
 
 table {
@@ -370,11 +370,11 @@ table thead th, table tbody th, table tbody td {
 
 table thead th {
     background-color: #574014;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 table th {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 table thead th+th, table tbody td {
@@ -427,7 +427,7 @@ legend#option-set {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    padding: 1px;
+    padding: 0;
 }
 
 legend#option-set.closed {
@@ -441,7 +441,7 @@ legend#status-set {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    padding: 1px;
+    padding: 0;
 }
 
 legend#status-set.closed {
@@ -513,3 +513,31 @@ input[name="元素反応Input"]:checked+label {
 div.description {
     font-size: 1.4rem;
 }
+
+tab-area label {
+    font-size: 1.6rem;
+}
+
+article.check-item label {
+    font-size: 1.6rem;
+}
+
+article.input-item label {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+select {
+    height: 38px;
+    margin: 2px;
+}
+
+input[type="number"] {
+    height: 32px;
+    margin: 2px;
+}
+
+.input-group fieldset {
+    width: 230px;
+}
+

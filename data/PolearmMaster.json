@@ -13,7 +13,7 @@
         "disabled": true
     },
     "和璞鳶": {
-        "import": "data/weapons/polearm_5_PrimordialJadeWinged-Spear.json",
+        "import": "data/weapons/polearm_5_PrimordialJadeWingedSpear.json",
         "disabled": true
     },
     "「漁獲」": {
@@ -43,8 +43,7 @@
         "disabled": true
     },
     "匣中滅龍": {
-        "import": "data/weapons/polearm_4_DragonsBane.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_DragonsBane.json"
     },
     "死闘の槍": {
         "import": "data/weapons/polearm_4_Deathmatch.json",
