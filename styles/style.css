@@ -1,4 +1,4 @@
-@media screen and (min-width: 3000px) {
+@media screen and (min-width: 10000px) {
     html {
         font-size: 62.5%;
     }
@@ -23,7 +23,7 @@
     }
 }
 
-@media screen and (max-width: 2000px) {
+@media screen and (max-width: 9999px) {
     html {
         font-size: 85%;
     }
