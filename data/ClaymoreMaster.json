@@ -1,8 +1,7 @@
 {
-    "松陰の響く頃": {
+    "松韻の響く頃": {
         "レアリティ": 5,
-        "import": "data/weapons/SongofBrokenPines.json",
-        "disabled": true
+        "import": "data/weapons/claymore_5_SongofBrokenPines.json"
     },
     "無工の剣": {
         "レアリティ": 5,
@@ -14,23 +13,23 @@
     },
     "天空の傲": {
         "レアリティ": 5,
-        "import": "data/weapons/claymore_5_SkywardPride.json",
-        "disabled": true
+        "import": "data/weapons/claymore_5_SkywardPride.json"
+    },
+    "惡王丸": {
+        "レアリティ": 4,
+        "import": "data/weapons/claymore_4_Akuoumaru.json"
     },
     "銜玉の海皇": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_LuxuriousSea-Lord.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_LuxuriousSeaLord.json"
     },
     "桂木斬長正": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_KatsuragikiriNagamasa.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_KatsuragikiriNagamasa.json"
     },
     "雪葬の星銀": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_Snow-TombedStarsilver.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_SnowTombedStarsilver.json"
     },
     "祭礼の大剣": {
         "レアリティ": 4,
@@ -61,13 +60,11 @@
     },
     "古華・試作": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_PrototypeArchaic.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_PrototypeArchaic.json"
     },
     "千岩古剣": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_LithicBlade.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_LithicBlade.json"
     },
     "西風大剣": {
         "レアリティ": 4,

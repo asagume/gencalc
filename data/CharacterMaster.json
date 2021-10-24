@@ -146,8 +146,7 @@
     "辛炎": {
         "レアリティ": 4,
         "武器": "両手剣",
-        "import": "data/characters/pyro_4_claymore_Xinyan.json",
-        "disabled": true
+        "import": "data/characters/pyro_4_claymore_Xinyan.json"
     },
     "ディオナ": {
         "レアリティ": 4,

@@ -5,11 +5,15 @@ function selectorEscape(val) {
 }
 
 // 加算関数です
-const addDecimal = function (value1, value2) {
+const addDecimal = function (value1, value2, opt_max = null) {
     let decimalDigits1 = String(value1).length - String(value1).lastIndexOf('.');
     let decimalDigits2 = String(value2).length - String(value2).lastIndexOf('.');
     let decimalDigits = Math.max([decimalDigits1, decimalDigits2]);
-    return Math.round((value1 * 100 + value2 * 100) / 10) / 10;
+    let result = Math.round((value1 * 100 + value2 * 100) / 10) / 10;
+    if (opt_max != null) {
+        result = Math.min(result, opt_max);
+    }
+    return result;
 }
 
 // 代入先のstep属性に併せて丸めた数値をセットします
@@ -848,9 +852,10 @@ function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusi
                 let rangeStart = Number(reRet[2]);
                 let rangeEnd = Number(reRet[3]);
                 let postfix = reRet[4];
-                for (let i = rangeStart; i <= rangeEnd; i = addDecimal(i, rangeStart)) {
+                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, rangeStart, rangeEnd)) {
                     pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
                 }
+                pushToMapValueArray(conditionMap, myName, prefix + String(rangeEnd) + postfix);
             } else {
                 pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
             }
@@ -1791,7 +1796,7 @@ const appendOptionElement = function (key, data, selector) {
     let myText = key;
     if ('レアリティ' in data[key]) {
         myText = '★' + data[key]['レアリティ'] + ' ' + key;
-    }    
+    }
     $('<option>', {
         text: myText,
         value: key,
