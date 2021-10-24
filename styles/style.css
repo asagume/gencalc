@@ -457,7 +457,7 @@ input:checked+select {
 }
 
 th.base {
-    color: darksalmon;
+    color: rgb(189, 189, 189);
 }
 
 table.result {

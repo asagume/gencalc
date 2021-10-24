@@ -1,64 +1,82 @@
 {
     "霧切の廻向": {
+        "レアリティ": 5,
         "import": "data/weapons/sword_5_MistsplitterReforged.json"
     },
     "蒼古なる自由への誓い": {
+        "レアリティ": 5,
         "import": "data/weapons/sword_5_Freedom-Sworn.json",
         "disabled": true
     },
     "磐岩結緑": {
+        "レアリティ": 5,
         "import": "data/weapons/sword_5_PrimodialJadeCutter.json"
     },
     "斬山の刃": {
+        "レアリティ": 5,
         "import": "data/weapons/sword_5_SummitShaper.json"
     },
     "天空の刃": {
+        "レアリティ": 5,
         "import": "data/weapons/sword_5_SkywardBlade.json"
     },
     "風鷹剣": {
+        "レアリティ": 5,
         "import": "data/weapons/sword_4_AquilaFavonia.json",
         "disabled": true
     },
     "天目影打": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_AmenomaKageuchi.json"
     },
     "腐植の剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_SwordofDescension.json"
     },
     "笛の剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_TheFlute.json",
         "disabled": true
     },
     "黒剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_TheBlackSword.json"
     },
     "ダークアレイの閃光": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_TheAlleyFlash.json",
         "disabled": true
     },
     "祭礼の剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_SacrificialSword.json"
     },
     "旧貴族の長剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_RoyalLongsword.json",
         "disabled": true
     },
     "斬岩・試作": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_PrototypeRancour.json",
         "disabled": true
     },
     "匣中龍吟": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_LionsRoar.json",
         "disabled": true
     },
     "鉄蜂の刺し": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_IronSting.json",
         "disabled": true
     },
     "西風剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_FavoniusSword.json"
     },
     "黒岩の長剣": {
+        "レアリティ": 4,
         "import": "data/weapons/sword_4_BlackcliffLongsword.json",
         "disabled": true
     }

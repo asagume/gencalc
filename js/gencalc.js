@@ -1788,8 +1788,12 @@ $(document).on('change', 'input[name="聖遺物サブ効果Input"]', inputOnChan
 ////
 const appendOptionElement = function (key, data, selector) {
     if ('disabled' in data[key] && data[key]['disabled']) return;   // とりあえず無効レコードは追加しません
+    let myText = key;
+    if ('レアリティ' in data[key]) {
+        myText = '★' + data[key]['レアリティ'] + ' ' + key;
+    }    
     $('<option>', {
-        text: key,
+        text: myText,
         value: key,
         disabled: ('disabled' in data[key]) && data[key]['disabled'],
         selected: ('selected' in data[key]) && data[key]['selected']

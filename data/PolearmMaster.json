@@ -1,59 +1,75 @@
 {
     "草薙の稲光": {
+        "レアリティ": 5,
         "import": "data/weapons/polearm_5_EngulfingLightning.json"
     },
     "護摩の杖": {
+        "レアリティ": 5,
         "import": "data/weapons/polearm_5_StaffofHoma.json"
     },
     "破天の槍": {
+        "レアリティ": 5,
         "import": "data/weapons/polearm_5_VortexVanquisher.json"
     },
     "天空の脊": {
+        "レアリティ": 5,
         "import": "data/weapons/polearm_5_SkywardSpine.json",
         "disabled": true
     },
     "和璞鳶": {
+        "レアリティ": 5,
         "import": "data/weapons/polearm_5_PrimordialJadeWingedSpear.json",
         "disabled": true
     },
     "「漁獲」": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_TheCatch.json"
     },
     "喜多院十文字槍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_KitainCrossSpear.json",
         "disabled": true
     },
     "ドラゴンスピア": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_DragonspineSpear.json",
         "disabled": true
     },
     "旧貴族猟槍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_RoyalSpear.json",
         "disabled": true
     },
     "西風長槍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_FavoniusLance.json"
     },
     "星鎌・試作": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_PrototypeStarglitter.json",
         "disabled": true
     },
     "千岩長槍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_LithicSpear.json",
         "disabled": true
     },
     "匣中滅龍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_DragonsBane.json"
     },
     "死闘の槍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_Deathmatch.json",
         "disabled": true
     },
     "流月の針": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_CrescentPike.json",
         "disabled": true
     },
     "黒岩の突槍": {
+        "レアリティ": 4,
         "import": "data/weapons/polearm_4_BlackcliffPole.json",
         "disabled": true
     }
