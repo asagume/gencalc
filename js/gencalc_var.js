@@ -138,6 +138,13 @@ const KIND_TO_PROPERTY_MAP = new Map([
 // ステータス詳細ObjVarを初期化します
 function initステータス詳細ObjVar() {
     Object.keys(ステータス詳細ObjVar).forEach(key => {
+        if (選択中キャラクターデータVar) {
+            if ('固有変数' in 選択中キャラクターデータVar) {
+                if (key in 選択中キャラクターデータVar['固有変数']) {
+                    return;
+                }
+            }
+        }
         ステータス詳細ObjVar[key] = 0;
     });
     ステータス詳細ObjVar['会心率'] = 5;

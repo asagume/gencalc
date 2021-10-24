@@ -573,13 +573,7 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     // 基礎
     initステータス詳細ObjVar();
 
-    if ('固有変数' in 選択中キャラクターデータVar) {
-        Object.keys(選択中キャラクターデータVar['固有変数']).forEach(key => {
-            ステータス詳細ObjVar[key] = 選択中キャラクターデータVar['固有変数'][key];
-        });
-    }
-
-// 敵関連データをセットします
+    // 敵関連データをセットします
     Object.keys(選択中敵データVar).forEach(propName => {
         if (propName in ステータス詳細ObjVar) {
             ステータス詳細ObjVar['敵' + propName] = 選択中敵データVar[propName];
