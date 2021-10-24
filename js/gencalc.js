@@ -573,7 +573,13 @@ const inputOnChangeStatusUpdateSub = function (baseUpdate = true) {
     // 基礎
     initステータス詳細ObjVar();
 
-    // 敵関連データをセットします
+    if ('固有変数' in 選択中キャラクターデータVar) {
+        Object.keys(選択中キャラクターデータVar['固有変数']).forEach(key => {
+            ステータス詳細ObjVar[key] = 選択中キャラクターデータVar['固有変数'][key];
+        });
+    }
+
+// 敵関連データをセットします
     Object.keys(選択中敵データVar).forEach(propName => {
         if (propName in ステータス詳細ObjVar) {
             ステータス詳細ObjVar['敵' + propName] = 選択中敵データVar[propName];
@@ -1505,12 +1511,6 @@ const キャラクターInputOnChange = function () {
             通常攻撃名称Var = 選択中キャラクターデータVar['通常攻撃']['名前'];
             元素スキル名称Var = 選択中キャラクターデータVar['元素スキル']['名前'];
             元素爆発名称Var = 選択中キャラクターデータVar['元素爆発']['名前'];
-
-            if ('固有変数' in 選択中キャラクターデータVar) {
-                Object.keys(選択中キャラクターデータVar['固有変数']).forEach(key => {
-                    ステータス詳細ObjVar[key] = 選択中キャラクターデータVar['固有変数'][key];
-                });
-            }
 
             オプションElementIdValue記憶Map.clear();
             if ('オプション初期値' in 選択中キャラクターデータVar) {
