@@ -376,6 +376,9 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
         case '元素創造物HP':    // for アンバー 甘雨
             my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null);
             break;
+        case '付加元素ダメージ':    // for 風キャラ
+            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, true, my元素, null, null, null);
+            break;
         default:
             myダメージバフ += ステータス詳細ObjVar['与えるダメージ'];
             if (detailObj['ダメージバフ'] != null) {
@@ -1718,9 +1721,10 @@ const inputOnChangeArtifactSubUpdate = function () {
     let my優先するサブ効果Arr = [];
     let my優先するサブ効果倍率合計 = 0;
     Array.from(document.getElementsByName('聖遺物優先するサブ効果Input')).forEach(elem => {
+        let rank = Number(elem.id.replace('聖遺物優先するサブ効果', '').replace('Input', '')) - 1;
         let propName = elem.value;
         if (propName) {
-            let myValue = 聖遺物サブ効果MasterVar[elem.value];
+            let myValue = 聖遺物サブ効果MasterVar[elem.value][rank];
             let myMagnification = Number(document.getElementById(elem.id.replace('Input', '倍率Input')).value);
             propName = propName.replace('%', 'P');
             workObj[propName] = workObj[propName] + (myValue * myMagnification) * 5;
@@ -1735,7 +1739,7 @@ const inputOnChangeArtifactSubUpdate = function () {
         if (workObj[key] == 0) {
             let newKey = key;
             if (key != 'HP') newKey = key.replace(new RegExp('P$'), '%');
-            let value = 聖遺物サブ効果MasterVar[newKey];
+            let value = 聖遺物サブ効果MasterVar[newKey][3];
             workObj[key] = value * 3 * 優先しないサブ効果倍率;
         }
     });
