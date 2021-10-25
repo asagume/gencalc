@@ -9,8 +9,7 @@
     },
     "終焉を嘆く詩": {
         "レアリティ": 5,
-        "import": "data/weapons/bow_5_ElegyfortheEnd.json",
-        "disabled": true
+        "import": "data/weapons/bow_5_ElegyfortheEnd.json"
     },
     "アモスの弓": {
         "レアリティ": 5,
@@ -40,8 +39,7 @@
     },
     "祭礼の弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_SacrificialBow.json",
-        "disabled": false
+        "import": "data/weapons/bow_4_SacrificialBow.json"
     },
     "弓蔵": {
         "レアリティ": 4,
@@ -59,8 +57,7 @@
     },
     "西風猟弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_FavoniusWarbow.json",
-        "disabled": false
+        "import": "data/weapons/bow_4_FavoniusWarbow.json"
     },
     "リングボウ": {
         "レアリティ": 4,
@@ -74,12 +71,10 @@
     },
     "ダークアレイの狩人": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_AlleyHunter.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_AlleyHunter.json"
     },
     "絶弦": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_TheStringless.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_TheStringless.json"
     }
 }

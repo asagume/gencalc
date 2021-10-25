@@ -22,6 +22,8 @@ var 選択中聖遺物セット効果データArrVar = [];
 var 選択中元素共鳴データArrVar = [];
 var 選択中敵データVar;
 
+var 選択可能武器セットObjVar = {};
+
 var キャラクター名前Var;
 var キャラクター元素Var;
 var キャラクター武器Var;

@@ -541,3 +541,14 @@ input[type="number"] {
     width: 230px;
 }
 
+section.tiny article.input-item {
+    width: 100px;
+}
+
+section.tiny article.input-item select {
+    width: 80px;
+}
+
+section.tiny article.input-item label {
+    display: block;
+}
