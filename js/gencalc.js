@@ -1844,7 +1844,13 @@ const キャラクターInputOnChange = function () {
                 ステータス詳細ObjVar[key] = Number(選択中キャラクターデータVar['固有変数'][key]);
             });
         }
-
+        通常攻撃_基礎ダメージ詳細ArrVar = [];
+        重撃_基礎ダメージ詳細ArrVar = [];
+        落下攻撃_基礎ダメージ詳細ArrVar = [];
+        元素スキル_基礎ダメージ詳細ArrVar = [];
+        元素爆発_基礎ダメージ詳細ArrVar = [];
+        その他_基礎ダメージ詳細ArrMapVar.clear();
+        
         setupBaseDamageDetailDataCharacter();
 
         switch (キャラクター元素Var) {
@@ -1947,22 +1953,16 @@ const resultTableOnClickToggle = function () {
 $(document).on('click', '#通常攻撃ダメージResult', resultTableOnClickToggle);
 $(document).on('click', '#重撃ダメージResult', resultTableOnClickToggle);
 $(document).on('click', '#落下攻撃ダメージResult', resultTableOnClickToggle);
-$(document).on('click', '#通常攻撃ダメージ関連Result', resultTableOnClickToggle);
 $(document).on('click', '#元素スキルダメージResult', resultTableOnClickToggle);
-$(document).on('click', '#元素スキルダメージ関連Result', resultTableOnClickToggle);
 $(document).on('click', '#元素爆発ダメージResult', resultTableOnClickToggle);
-$(document).on('click', '#元素爆発ダメージ関連Result', resultTableOnClickToggle);
 $(document).on('click', '#その他ダメージResult', resultTableOnClickToggle);
 
 const DAMAGE_RESULT_TABLE_ID_ARR = [
     '通常攻撃ダメージResult',
     '重撃ダメージResult',
     '落下攻撃ダメージResult',
-    '通常攻撃ダメージ関連Result',
     '元素スキルダメージResult',
-    '元素スキルダメージ関連Result',
     '元素爆発ダメージResult',
-    '元素爆発ダメージ関連Result',
     'その他ダメージResult'
 ];
 
