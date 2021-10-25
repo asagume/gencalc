@@ -2095,6 +2095,14 @@ const setDebugInfo = function () {
             }).appendTo('#debugInfo');
         });
     });
+    $('<hr>').appendTo('#debugInfo');
+    その他_基礎ダメージ詳細ArrMapVar.forEach((value, key) => {
+        value.forEach(entry => {
+            $('<p>', {
+                text: key + ':' + detailToHtml(entry)
+            }).appendTo('#debugInfo');
+        });
+    });
     //$('<hr>').appendTo('#debugInfo');
     // オプション条件MapVar.forEach((value, key) => {
     //     if (value) {
