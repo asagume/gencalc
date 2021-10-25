@@ -285,7 +285,9 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
                 }
             }
             if (valueObj['種類'].endsWith('元素付与')) {   // 元素付与は先んじて適用します
-                my元素 = valueObj['種類'].replace('元素付与', '');
+                if (detailObj['種類'] != '追加ダメージ') {
+                    my元素 = valueObj['種類'].replace('元素付与', '');
+                }
             } else if (valueObj['種類'] == '防御無視') {   // 防御無視は先んじて適用します for 雷電将軍
                 let myValue = calculateFormulaArray(ステータス詳細ObjVar, valueObj['数値'], valueObj['最大値']);
                 my防御無視 += myValue;
@@ -650,7 +652,8 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 対象: '対象' in detailObj ? detailObj['対象'] : null,
                 最大値: my最大値,
                 HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
-                ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null
+                ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
+                元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器'
             }
             if (statusChangeArrMap != null) {
                 if (resultObj['種類'] in ステータス詳細ObjVar || resultObj['種類'].endsWith('%') || new RegExp('[自全].+バフ').exec(resultObj['種類']) || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
@@ -1850,7 +1853,7 @@ const キャラクターInputOnChange = function () {
         元素スキル_基礎ダメージ詳細ArrVar = [];
         元素爆発_基礎ダメージ詳細ArrVar = [];
         その他_基礎ダメージ詳細ArrMapVar.clear();
-        
+
         setupBaseDamageDetailDataCharacter();
 
         switch (キャラクター元素Var) {
