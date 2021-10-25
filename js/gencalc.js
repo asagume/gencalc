@@ -1802,6 +1802,7 @@ const おすすめセットInputOnChange = function () {
             $('#' + key + 'Input').prop('selectedIndex', 0);
         }
     });
+    setupBaseDamageDetailDataCharacter();
     inputOnChangeArtifactSubUpdate();
     聖遺物セットInputOnChange();
     武器InputOnChange();
@@ -1854,8 +1855,6 @@ const キャラクターInputOnChange = function () {
         元素爆発_基礎ダメージ詳細ArrVar = [];
         その他_基礎ダメージ詳細ArrMapVar.clear();
 
-        setupBaseDamageDetailDataCharacter();
-
         switch (キャラクター元素Var) {
             case '炎':
                 $('#元素反応なしInput+label').show();
@@ -1885,6 +1884,8 @@ const キャラクターInputOnChange = function () {
                 $('#元素反応溶解Input+label').hide();
                 break;
         }
+
+        setupBaseDamageDetailDataCharacter();
 
         if ($('#全武器解放Config').prop('checked')) {
             選択可能武器セットObjVar = {};
