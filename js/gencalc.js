@@ -1127,6 +1127,9 @@ const setupBaseDamageDetailDataCharacter = function () {
             myTalentDataObj = 選択中キャラクターデータVar['命ノ星座'][i];
             let resultArr = makeTalentDetailArray(myTalentDataObj, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
             if (resultArr.length > 0) {
+                if (その他_基礎ダメージ詳細ArrMapVar.has('キャラクター')) {
+                    resultArr = その他_基礎ダメージ詳細ArrMapVar.get('キャラクター').concat(resultArr);
+                }
                 その他_基礎ダメージ詳細ArrMapVar.set('キャラクター', resultArr);
                 console.debug('その他_基礎ダメージ詳細ArrMapVar.get(キャラクター)');
                 console.debug(その他_基礎ダメージ詳細ArrMapVar.get('キャラクター'));

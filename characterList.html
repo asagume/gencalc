@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Datatables</title>
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+</head>
+
+<body>
+    <div id="main">
+        <div id="tableList">
+            </table>
+        </div>
+
+        <script>
+            const transpose = a => a[0].map((_, c) => a.map(r => r[c]));
+
+            const getMaster = function (url) {
+                return fetch(url).then(resp => resp.json());
+            }
+
+            window.onload = () => {
+                fetch('data/CharacterMaster.json').then(resp => resp.json()).then(json => {
+                    let getMasterArr = [];
+                    Object.keys(json).forEach(key => {
+                        if ('disabled' in json[key] && json[key]['disabled']) return;
+                        getMasterArr.push(getMaster(json[key]['import']));
+                    });
+                    let characterMasterArr = [];
+                    Promise.all(getMasterArr).then(jsonArr => {
+                        characterMasterArr = jsonArr;
+                    }).then(() => {
+                        console.log(characterMasterArr);
+                        characterMasterArr.forEach(characterMaster => {
+                            const ATTACK_TALENT_ARR = ['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'];
+                            ATTACK_TALENT_ARR.forEach(attackTalent => {
+                                if (!('詳細' in characterMaster[attackTalent])) return;
+                                let arrArr = [];
+                                let detailObjArr = characterMaster[attackTalent]['詳細'];
+                                detailObjArr.forEach(detailObj => {
+                                    if (!('数値' in detailObj)) return;
+                                    let arr = [];
+                                    arr.push(detailObj['名前']);
+                                    Object.keys(detailObj['数値']).forEach(level => {
+                                        arr.push(detailObj['数値'][level]);
+                                    });
+                                    arrArr.push(arr);
+                                });
+
+                                if (arrArr.length == 0) return;
+
+                                arrArr = transpose(arrArr);
+                                for (let i = 0; i < arrArr.length; i++) {
+                                    arrArr[i].unshift([i]);
+                                }
+                                let labelRow = arrArr.shift();
+
+                                let columns = [];
+                                for (let i = 0; i < labelRow.length; i++) {
+                                    if (i == 0) {
+                                        columns.push({ title: "" });
+                                    } else {
+                                        columns.push({ title: labelRow[i] });
+                                    }
+                                }
+
+                                let divElem = document.getElementById('tableList');
+                                let tableElem = document.createElement('table');
+                                tableElem.id = characterMaster['名前'] + attackTalent + 'Table';
+                                divElem.appendChild(tableElem);
+                                let captionElem = document.createElement('caption');
+                                captionElem.textContent = characterMaster['名前'] + ' ' + attackTalent;
+                                tableElem.appendChild(captionElem);
+                                $('#' + tableElem.id).DataTable({
+                                    data: arrArr,
+                                    columns: columns,
+                                    paging: false
+                                });
+                            });
+
+                        });
+                    });
+                });
+            };
+        </script>
+</body>
+
+</html>
