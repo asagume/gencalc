@@ -10,20 +10,23 @@
     <reference path="JQuery.d.ts"></reference>
     <script src="js/gencalc_var.js"></script>
     <script src="js/gencalc.js"></script>
-    <script>
-    </script>
 </head>
 
 <body>
     <div id="main">
         <div class="base-container">
             <header class="header">
-                げんかるく - 原神ダメージシミュレーター Ver.0.01
+                <div style="position: absolute; left: 0;">
+                    げんかるく - 原神ダメージシミュレーター Ver.0.10
+                </div>
+                <div style="position: absolute; right: 0;">
+                    バグ報告・要望掲示板
+                </div>
             </header>
 
             <div class="sidebar">
                 <div class="float-menu">
-                    <p>★★製作中★★</p>
+                    <p>【原神】ダメージ計算機です。★工事中</p>
                     <p>このへんに画像を並べたキャラ選択を配置できれば</p>
                     <section class="input-group">
                         <select class="long" id="おすすめセットInput"></select>
@@ -42,7 +45,7 @@
                                 <select id="キャラクターInput"></select>
                             </article>
                             <article class="input-item">
-                                <label for="レベルInput">キャラクターLv. </label>
+                                <label for="レベルInput">キャラクターLv.</label>
                                 <select id="レベルInput">
                                     <option value="80">Lv.80(未突破)</option>
                                     <option value="80+">Lv.80(突破済)</option>
@@ -117,7 +120,7 @@
                                 <select id="武器Input"></select>
                             </article>
                             <article class="input-item">
-                                <label for="武器レベルInput">武器Lv. </label>
+                                <label for="武器レベルInput">武器Lv.</label>
                                 <select id="武器レベルInput">
                                     <option value="80">Lv.80(未突破)</option>
                                     <option value="80+">Lv.80(突破済)</option>
@@ -600,35 +603,145 @@
                         <p>予備のスペース</p>
                         <p>Cookieに選択を保存したり、呼び出したりできるとよい気がします</p>
                         <a href="characterList.html">天賦倍率一覧(確認用)</a>
+                        <div class="cookie-area">
+                            <div>
+                                <select size="10" id="cookie-list"></select>
+                            </div>
+                            <div>
+                                <input type="text" id="cookie-name">
+                                <button type="button" id="save-cookie">セーブ</button>
+                                <button type="button" id="load-cookie">ロード</button>
+                                <button type="button" id="clear-cookie">クリア</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <fieldset style="margin-top: 500px; display: initial;">
-                    <legend>デバッグ情報</legend>
-                    <div id="debugInfo"></div>
-                </fieldset>
+                <div style="margin-top: 600px; display: initial;">
+                    <fieldset>
+                        <legend>デバッグ情報</legend>
+                        <div id="debugInfo"></div>
+                    </fieldset>
+                    <p style="color: #d2655a;">炎元素ダメージ</p>
+                    <p style="color: #559cc9;">水元素ダメージ</p>
+                    <p style="color: #3AAF7A;">風元素ダメージ</p>
+                    <p style="color: #b681df;">雷元素ダメージ</p>
+                    <p style="color: #63BEB4;">氷元素ダメージ</p>
+                    <p style="color: #BF8F37;">岩元素ダメージ</p>
+                    <p>物理ダメージ</p>
+                </div>
             </div>
 
             <footer class="footer">
-                <p style="color: #d2655a;">炎元素ダメージ</p>
-                <p style="color: #559cc9;">水元素ダメージ</p>
-                <p style="color: #3AAF7A;">風元素ダメージ</p>
-                <p style="color: #b681df">雷元素ダメージ</p>
-                <p style="color: #63BEB4;">氷元素ダメージ</p>
-                <p style="color: #BF8F37;">岩元素ダメージ</p>
-                <p>物理ダメージ</p>
             </footer>
         </div>
     </div>
 
     <script>
+        const KEY_ELEMENT_ID_ARR = [
+            'キャラクターInput',
+            'レベルInput',
+            '命ノ星座Input',
+            '通常攻撃レベルInput',
+            '元素スキルレベルInput',
+            '元素爆発レベルInput',
+            '武器Input',
+            '武器レベルInput',
+            '精錬ランクInput',
+            '聖遺物メイン効果1Input',
+            '聖遺物メイン効果2Input',
+            '聖遺物メイン効果3Input',
+            '聖遺物メイン効果4Input',
+            '聖遺物メイン効果5Input',
+            '聖遺物優先するサブ効果1Input',
+            '聖遺物優先するサブ効果2Input',
+            '聖遺物優先するサブ効果3Input',
+            '聖遺物優先するサブ効果1倍率Input',
+            '聖遺物優先するサブ効果2倍率Input',
+            '聖遺物優先するサブ効果3倍率Input',
+            '聖遺物セット効果1Input',
+            '聖遺物セット効果2Input',
+            '敵Input',
+            '敵レベルInput'
+        ];
 
-        function encodeCookie() {
+        const serializeCookie = function () {
+            let id = $('#cookie-id').val();
+            if (!id) return;
             let keyValueMap = new Map();
-            KEY_ELEMENT_ID_MAP.forEach((value, key) => {
-                keyValueMap.set(key, document.getElementById(value).value);
+            KEY_ELEMENT_ID_ARR.forEach(value => {
+                keyValueMap.set(value, document.getElementById(value).value);
             });
-            return keyValueMap;
+            オプション条件MapVar.forEach((value, key) => {
+                let elem = document.getElementById(key + 'Option');
+                if (elem instanceof HTMLInputElement) {
+                    keyValueMap.set(key, elem.checked);
+                } else {
+                    keyValueMap.set(key, elem.value);
+                }
+            });
+            let resultArr = [];
+            keyValueMap.forEach((value, key) => {
+                resultArr.push(key + '=' + value);
+            });
+            let result = resultArr.join('&');
+            console.log(result);
+            return result;
         }
+
+        $(document).on('click', '#load-cookie', serializeCookie);
+
+        let cookieMap = new Map();
+
+        var cookie = document.cookie;
+
+        cookie.split(';').forEach(entry => {
+            let entryArr = entry.split('=');
+            let key = entryArr[0];
+            let value = unescape(entryArr[1]);
+            cookieMap.set(key, value);
+        });
+
+        const applyInputFromCookieString = function (cookieStr) {
+            let strArr = cookieStr.split('&');
+            strArr.forEach(entry => {
+                let entryArr = entry.split('=');
+                let elem = document.getElementById(entryArr[0]);
+                if (elem) {
+                    if (elem instanceof HTMLInputElement) {
+                        elem.checked = entryArr[1];
+                    } else {
+                        elem.value = entryArr[1];
+                    }
+                    if (elem.id.endsWith('Option')) {
+                        オプションElementIdValue記憶Map.set(entryArr[0], entryArr[1]);
+                    }
+                } else {
+                    オプションElementIdValue記憶Map.set(entryArr[0], entryArr[1]);
+                }
+            });
+        }
+
+        var cookieArr = [];
+        cookieArr.length = 20;
+
+        let cookieListElem = document.getElementById('cookie-list');
+        for (let i = 0; i < cookieArr.length; i++) {
+            let optionElem = document.createElement('option');
+            optionElem.value = i + 1;
+            if (cookieArr[i]) {
+                optionElem.textContent = (i + 1) + ':';
+            } else {
+                optionElem.textContent = (i + 1) + ':';
+            }
+            cookieListElem.appendChild(optionElem);
+        }
+
+        const cookieListOnChange = function () {
+            $('#cookie-name').val(this.value);
+        };
+
+        $(document).on('change', '#cookie-list', cookieListOnChange);
+
     </script>
 </body>
 

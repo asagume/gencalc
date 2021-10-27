@@ -6,19 +6,47 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Datatables</title>
     <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="styles/style2.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        ul {
+            text-align: center;
+            list-style-type: none;
+            font-weight: bold;
+        }
+
+        ul a {
+            font-weight: normal;
+        }
+
+        table caption {
+            text-align: left;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        table tbody tr.odd {
+            background-color: #FFFFFF;
+        }
+
+        table tbody tr.even {
+            background-color: #EEEEEE;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
     <div id="main">
-        <div id="tableList">
-            </table>
-        </div>
+        <ul id="toc"></ul>
+        <div id="tableList"></div>
 
         <script>
+            // 二次元配列の縦横入れ替え パクリ
             const transpose = a => a[0].map((_, c) => a.map(r => r[c]));
 
             const getMaster = function (url) {
@@ -37,7 +65,11 @@
                         characterMasterArr = jsonArr;
                     }).then(() => {
                         console.log(characterMasterArr);
+                        let ulElem = document.getElementById('toc');
                         characterMasterArr.forEach(characterMaster => {
+                            let liElem = document.createElement('li');
+                            liElem.innerHTML = characterMaster['名前'] + '<br>';
+                            ulElem.appendChild(liElem);
                             const ATTACK_TALENT_ARR = ['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'];
                             ATTACK_TALENT_ARR.forEach(attackTalent => {
                                 if (!('詳細' in characterMaster[attackTalent])) return;
@@ -64,11 +96,16 @@
                                 let columns = [];
                                 for (let i = 0; i < labelRow.length; i++) {
                                     if (i == 0) {
-                                        columns.push({ title: "" });
+                                        columns.push({ title: 'Lv.' });
                                     } else {
                                         columns.push({ title: labelRow[i] });
                                     }
                                 }
+
+                                let aElem = document.createElement('a');
+                                aElem.href = '#' + characterMaster['名前'] + attackTalent + 'Table';
+                                aElem.textContent = attackTalent;
+                                liElem.innerHTML += ' ' + aElem.outerHTML;
 
                                 let divElem = document.getElementById('tableList');
                                 let tableElem = document.createElement('table');
@@ -77,13 +114,16 @@
                                 let captionElem = document.createElement('caption');
                                 captionElem.textContent = characterMaster['名前'] + ' ' + attackTalent;
                                 tableElem.appendChild(captionElem);
+
                                 $('#' + tableElem.id).DataTable({
                                     data: arrArr,
                                     columns: columns,
-                                    paging: false
+                                    info: false,
+                                    paging: false,
+                                    searching: false
                                 });
+                                divElem.appendChild(document.createElement('hr'));
                             });
-
                         });
                     });
                 });

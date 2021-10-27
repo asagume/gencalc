@@ -61,6 +61,10 @@ body {
     text-align: center;
 }
 
+a {
+    color: blanchedalmond;
+}
+
 p {
     margin: 5px;
 }
@@ -75,6 +79,14 @@ fieldset {
 .header {
     grid-area: header;
     width: 100%;
+    position: relative;
+}
+
+.header div {
+    display: inline-block;
+    font-size: 1.4rem;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .aside {
@@ -551,4 +563,38 @@ section.tiny article.input-item select {
 
 section.tiny article.input-item label {
     display: block;
+}
+
+.cookie-area div {
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    margin: 5px;
+}
+
+.cookie-area div select {
+    display: inline-block;
+    vertical-align: top;
+    size: 8;
+    width: 100%;
+    height: auto;
+}
+
+.cookie-area div input {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    margin: 5px;
+}
+
+.cookie-area div button {
+    display: inline-block;
+    vertical-align: top;
+    height: 34px;
+    border-radius: 5px;
+    font-size: 1.6rem;
+    margin: 5px;
 }

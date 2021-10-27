@@ -630,10 +630,6 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 if (level && $.isPlainObject(my条件) && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
                     my条件 = my条件[level];
                 }
-                if (my条件.indexOf("@") != -1) {
-                    console.log(my条件);
-                }
-
             }
             let my最大値 = null;
             if ('最大値' in detailObj) {
@@ -672,7 +668,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
             resultArr.push(resultObj);
         });
     } else {
-        console.error(talentDataObj, level, defaultKind, defaultElement, inputCategory);
+        //console.error(talentDataObj, level, defaultKind, defaultElement, inputCategory);
     }
     return resultArr;
 }
@@ -2052,9 +2048,7 @@ $(document).ready(function () {
                     if (!('条件' in detailObj)) {
                         detailObj['条件'] = my条件;
                     }
-                    console.error(detailObj);
                 });
-                console.error(myObj['詳細']);
                 バフデバフ詳細ArrVar = バフデバフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
             });
             バフデバフオプション条件Map.clear();
