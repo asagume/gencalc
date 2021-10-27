@@ -12,7 +12,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 1px auto;
-        grid-template-rows: 32px 300px auto minmax(80px, 120px);
+        grid-template-rows: 32px 300px minmax(800px, auto) 80px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
     select {
@@ -38,7 +38,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 160px 310px auto minmax(80px, 120px);
+        grid-template-rows: 32px 160px 320px minmax(800px, 1600px) 80px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -107,6 +107,10 @@ fieldset {
 .footer {
     grid-area: footer;
     margin: 10px;
+    background-color: #312820;
+    color: #3a2e0c;
+    text-align: left;
+    font-size: 1.4rem;
 }
 
 article.input-item {
@@ -593,7 +597,7 @@ section.tiny article.input-item label {
 .cookie-area div button {
     display: inline-block;
     vertical-align: top;
-    height: 34px;
+    height: 38px;
     border-radius: 5px;
     font-size: 1.6rem;
     margin: 5px;
