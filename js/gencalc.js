@@ -545,7 +545,7 @@ function checkConditionMatchesSub(conditionStr, validConditionValueArr) {
         if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
             return 1;   // マッチ 等倍
         }
-    } else if (myCondArr.length == 1) {
+    } else if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
         return 0;   // アンマッチ
     }
     const re = new RegExp('[^0-9]*([0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}

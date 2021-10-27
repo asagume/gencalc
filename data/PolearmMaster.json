@@ -13,13 +13,11 @@
     },
     "天空の脊": {
         "レアリティ": 5,
-        "import": "data/weapons/polearm_5_SkywardSpine.json",
-        "disabled": true
+        "import": "data/weapons/polearm_5_SkywardSpine.json"
     },
     "和璞鳶": {
         "レアリティ": 5,
-        "import": "data/weapons/polearm_5_PrimordialJadeWingedSpear.json",
-        "disabled": true
+        "import": "data/weapons/polearm_5_PrimordialJadeWingedSpear.json"
     },
     "「漁獲」": {
         "レアリティ": 4,
@@ -27,18 +25,15 @@
     },
     "喜多院十文字槍": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_KitainCrossSpear.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_KitainCrossSpear.json"
     },
     "ドラゴンスピア": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_DragonspineSpear.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_DragonspineSpear.json"
     },
     "旧貴族猟槍": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_RoyalSpear.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_RoyalSpear.json"
     },
     "西風長槍": {
         "レアリティ": 4,
@@ -46,13 +41,11 @@
     },
     "星鎌・試作": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_PrototypeStarglitter.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_PrototypeStarglitter.json"
     },
     "千岩長槍": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_LithicSpear.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_LithicSpear.json"
     },
     "匣中滅龍": {
         "レアリティ": 4,
@@ -60,17 +53,22 @@
     },
     "死闘の槍": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_Deathmatch.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_Deathmatch.json"
     },
     "流月の針": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_CrescentPike.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_CrescentPike.json"
     },
     "黒岩の突槍": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_BlackcliffPole.json",
-        "disabled": true
+        "import": "data/weapons/polearm_4_BlackcliffPole.json"
+    },
+    "黒纓槍": {
+        "レアリティ": 3,
+        "import": "data/weapons/polearm_3_BlackTassel.json"
+    },
+    "白纓槍": {
+        "レアリティ": 3,
+        "import": "data/weapons/polearm_3_WHiteTassel.json"
     }
 }
