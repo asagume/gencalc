@@ -70,5 +70,9 @@
     "黒岩の斬刀": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_BlackcliffSlasher.json"
+    },
+    "ノエルの剣": {
+        "レアリティ": 5,
+        "import": "data/weapons/claymore_5_RedhornStoneThresher.json"
     }
 }
