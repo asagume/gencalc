@@ -25,13 +25,11 @@
     },
     "幽夜のワルツ": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_MitternachtsWaltz.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_MitternachtsWaltz.json"
     },
     "風花の頌歌": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_WindblumeOde.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_WindblumeOde.json"
     },
     "蒼翠の狩猟弓": {
         "レアリティ": 4,
@@ -47,13 +45,11 @@
     },
     "旧貴族長弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_RoyalBow.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_RoyalBow.json"
     },
     "澹月・試作": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_PrototypeCrescent.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_PrototypeCrescent.json"
     },
     "西風猟弓": {
         "レアリティ": 4,
@@ -61,13 +57,11 @@
     },
     "リングボウ": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_CompoundBow.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_CompoundBow.json"
     },
     "黒岩の戦弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_BlackcliffWarbow.json",
-        "disabled": true
+        "import": "data/weapons/bow_4_BlackcliffWarbow.json"
     },
     "ダークアレイの狩人": {
         "レアリティ": 4,

@@ -41,8 +41,7 @@
     },
     "鐘の剣": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_TheBell.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_TheBell.json"
     },
     "螭龍の剣": {
         "レアリティ": 4,
@@ -50,13 +49,11 @@
     },
     "旧貴族大剣": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_RoyalGreatsword.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_RoyalGreatsword.json"
     },
     "雨裁": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_Rainslasher.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_Rainslasher.json"
     },
     "古華・試作": {
         "レアリティ": 4,
@@ -72,7 +69,6 @@
     },
     "黒岩の斬刀": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_BlackcliffSlasher.json",
-        "disabled": true
+        "import": "data/weapons/claymore_4_BlackcliffSlasher.json"
     }
 }

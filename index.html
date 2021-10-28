@@ -20,8 +20,7 @@
                     げんかるく - 原神ダメージシミュレーター Ver.0.11
                 </div>
                 <div style="position: absolute; right: 0;">
-                    <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank"
-                        rel="noopener noreferrer">バグ報告・要望</a>
+                    <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
                 </div>
             </header>
 
@@ -610,9 +609,9 @@
                             </div>
                             <div>
                                 <input type="text" id="cookie-name">
-                                <button type="button" id="save-cookie" disabled>セーブ</button>
-                                <button type="button" id="load-cookie" disabled>ロード</button>
-                                <button type="button" id="clear-cookie" disabled>クリア</button>
+                                <button type="button" id="save-cookie">セーブ</button>
+                                <button type="button" id="load-cookie">ロード</button>
+                                <button type="button" id="clear-cookie">クリア</button>
                             </div>
                         </div>
                     </div>
@@ -666,8 +665,6 @@
         ];
 
         const serializeCookie = function () {
-            let id = $('#cookie-id').val();
-            if (!id) return;
             let keyValueMap = new Map();
             KEY_ELEMENT_ID_ARR.forEach(value => {
                 keyValueMap.set(value, document.getElementById(value).value);
@@ -688,19 +685,6 @@
             console.log(result);
             return result;
         }
-
-        $(document).on('click', '#load-cookie', serializeCookie);
-
-        let cookieMap = new Map();
-
-        var cookie = document.cookie;
-
-        cookie.split(';').forEach(entry => {
-            let entryArr = entry.split('=');
-            let key = entryArr[0];
-            let value = unescape(entryArr[1]);
-            cookieMap.set(key, value);
-        });
 
         const applyInputFromCookieString = function (cookieStr) {
             let strArr = cookieStr.split('&');
@@ -737,11 +721,82 @@
             cookieListElem.appendChild(optionElem);
         }
 
+        document.cookie.split(';').filter(e => e.startsWith('save_')).forEach(entry => {
+            const partArr = entry.split('=');
+            if (partArr.length == 2) {
+                const index = partArr[0].replace('save_', '');
+                const value = unescape(partArr[1]);
+                const valueArr = value.split('&');
+                let saveName;
+                for (let i = 0; i < valueArr.length; i++) {
+                    if (valueArr[i].startsWith('saveName=')) {
+                        saveName = valueArr[i].split('=')[1];
+                        break;
+                    } else if (valueArr[i].startsWith('キャラクターInput=')) {
+                        saveName = valueArr[i].split('=')[1];
+                    }
+                }
+                Array.from(cookieListElem.children).forEach(child => {
+                    if (child instanceof HTMLOptionElement) {
+                        if (child.value == index) {
+                            child.textContent = index + ':' + saveName;
+                        }
+                    }
+                });
+            }
+        });
+
         const cookieListOnChange = function () {
-            $('#cookie-name').val(this.value);
+            Array.from(this.children).filter(e => e.value == this.value).forEach(child => {
+                let name = child.textContent;
+                if (name) {
+                    name = name.indexOf(':') > -1 ? name.substr(name.indexOf(':') + 1) : name;
+                }
+                $('#cookie-name').val(name);
+            });
         };
 
+        const cookieSave = function () {
+            let index = $('#cookie-list').val();
+            if (!index || index < 1) return;
+
+            let newCookie = 'save_' + index + '=' + escape(serializeCookie());
+            document.cookie = newCookie;
+            console.log(newCookie);
+        }
+
+        const cookieLoad = function () {
+            let index = $('#cookie-list').val();
+            if (!index || index < 1) return;
+
+            let saveCookies = document.cookie.split(';').filter(e => e.startsWith('save_' + index + '='));
+            if (saveCookies.length > 0) {
+                let partArr = saveCookies[0].split('=');
+                if (partArr.length == 2) {
+                    let name = partArr[0];
+                    let value = unescape(partArr[1]);
+                    console.log(value);
+                    // applyInputFromCookieString(value);
+
+                }
+            }
+        }
+
+        const deleteAllCookies = function () {
+            const cookies = document.cookie.split(';')
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf('=');
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                console.debug(name);
+                document.cookie = name + '=;max-age=0';
+            }
+        }
+
         $(document).on('change', '#cookie-list', cookieListOnChange);
+        $(document).on('click', '#save-cookie', cookieSave);
+        $(document).on('click', '#load-cookie', cookieLoad);
+        $(document).on('click', '#clear-cookie', deleteAllCookies);
 
     </script>
 </body>

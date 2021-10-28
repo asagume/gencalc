@@ -116,8 +116,7 @@
     "ジン": {
         "レアリティ": 5,
         "武器": "片手剣",
-        "import": "data/characters/aero_5_sword_Jean.json",
-        "disabled": true
+        "import": "data/characters/aero_5_sword_Jean.json"
     },
     "九条裟羅": {
         "レアリティ": 4,
@@ -209,8 +208,7 @@
     "バーバラ": {
         "レアリティ": 4,
         "武器": "法器",
-        "import": "data/characters/hydro_4_catalyst_Barbara.json",
-        "disabled": true
+        "import": "data/characters/hydro_4_catalyst_Barbara.json"
     },
     "リサ": {
         "レアリティ": 4,
