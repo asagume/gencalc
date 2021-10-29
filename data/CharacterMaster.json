@@ -69,8 +69,7 @@
     "鍾離": {
         "レアリティ": 5,
         "武器": "長柄武器",
-        "import": "data/characters/geo_5_polearm_Zhongli.json",
-        "disabled": true
+        "import": "data/characters/geo_5_polearm_Zhongli.json"
     },
     "タルタリヤ": {
         "レアリティ": 5,
