@@ -611,7 +611,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
             let my数値 = null;
             if ('数値' in detailObj) {
                 my数値 = detailObj['数値'];
-                if (level != null && level in my数値) { // キャラクター|武器のサブステータス
+                if ($.isPlainObject(my数値) && level != null && level in my数値) { // キャラクター|武器のサブステータス
                     my数値 = my数値[level];
                 } else if ($.isNumeric(my数値) || $.type(my数値) == 'string') {
                     // nop
@@ -652,7 +652,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器'
             }
             if (statusChangeArrMap != null) {
-                if (resultObj['種類'] in ステータス詳細ObjVar || resultObj['種類'].endsWith('%') || new RegExp('[自全].+バフ').exec(resultObj['種類']) || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
+                if (resultObj['種類'] in ステータス詳細ObjVar || resultObj['種類'].endsWith('%') || new RegExp('[自全].+バフ').exec(resultObj['種類']) || new RegExp('敵[自全]元素耐性').exec(resultObj['種類']) || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
                     resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                     statusChangeArrMap.get(inputCategory).push(resultObj);
                     return;

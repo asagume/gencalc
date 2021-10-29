@@ -77,8 +77,7 @@
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/geo_5_polearm_Zhongli.json",
-        "image": "images/Zhongli.png",
-        "disabled": true
+        "image": "images/Zhongli.png"
     },
     "タルタリヤ": {
         "レアリティ": 5,
