@@ -83,7 +83,8 @@
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/hydro_5_bow_Tartaglia.json",
-        "image": "images/Tartaglia.png"
+        "image": "images/Tartaglia.png",
+        "selected": true
     },
     "クレー": {
         "レアリティ": 5,
@@ -199,8 +200,7 @@
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/geo_4_claymore_Noelle.json",
-        "image": "images/Noelle.png",
-        "selected": true
+        "image": "images/Noelle.png"
     },
     "ベネット": {
         "レアリティ": 4,
