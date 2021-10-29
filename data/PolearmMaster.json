@@ -19,6 +19,10 @@
         "レアリティ": 5,
         "import": "data/weapons/polearm_5_PrimordialJadeWingedSpear.json"
     },
+    "斬波のひれ長": {
+        "レアリティ": 4,
+        "import": "data/weapons/polearm_4_WavebreakersFin.json"
+    },
     "「漁獲」": {
         "レアリティ": 4,
         "import": "data/weapons/polearm_4_TheCatch.json"

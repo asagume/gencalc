@@ -19,6 +19,10 @@
         "レアリティ": 5,
         "import": "data/weapons/bow_5_SkywardHarp.json"
     },
+    "曚雲の月": {
+        "レアリティ": 4,
+        "import": "data/weapons/bow_4_MouunsMoon.json"
+    },
     "破魔の弓": {
         "レアリティ": 4,
         "import": "data/weapons/bow_4_Hamayumi.json"
