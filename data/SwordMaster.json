@@ -5,8 +5,7 @@
     },
     "蒼古なる自由への誓い": {
         "レアリティ": 5,
-        "import": "data/weapons/sword_5_Freedom-Sworn.json",
-        "disabled": true
+        "import": "data/weapons/sword_5_Freedom-Sworn.json"
     },
     "磐岩結緑": {
         "レアリティ": 5,
@@ -34,8 +33,7 @@
     },
     "笛の剣": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_TheFlute.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_TheFlute.json"
     },
     "黒剣": {
         "レアリティ": 4,
@@ -43,8 +41,7 @@
     },
     "ダークアレイの閃光": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_TheAlleyFlash.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_TheAlleyFlash.json"
     },
     "祭礼の剣": {
         "レアリティ": 4,
@@ -52,23 +49,19 @@
     },
     "旧貴族の長剣": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_RoyalLongsword.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_RoyalLongsword.json"
     },
     "斬岩・試作": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_PrototypeRancour.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_PrototypeRancour.json"
     },
     "匣中龍吟": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_LionsRoar.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_LionsRoar.json"
     },
     "鉄蜂の刺し": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_IronSting.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_IronSting.json"
     },
     "西風剣": {
         "レアリティ": 4,
@@ -76,7 +69,10 @@
     },
     "黒岩の長剣": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_BlackcliffLongsword.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_BlackcliffLongsword.json"
+    },
+    "黎明の神剣": {
+        "レアリティ": 3,
+        "import": "data/weapons/sword_3_HarbingerofDawn.json"
     }
 }
