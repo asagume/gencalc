@@ -4,21 +4,21 @@
         "元素": "水",
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_SangonomiyaKokomi.json",
-        "img": "img/SangonomiyaKokomi.jpg",
-        "disabled": false
+        "image": "images/SangonomiyaKokomi.png"
     },
     "雷電将軍": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "長柄武器",
         "import": "data/characters/electro_5_polearm_RaidenShogun.json",
-        "disabled": false
+        "image": "images/RaidenShogun.png"
     },
     "アーロイ": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "弓",
         "import": "data/characters/cryo_5_bow_Aloy.json",
+        "image": "images/Aloy.png",
         "disabled": true
     },
     "宵宮": {
@@ -26,230 +26,269 @@
         "元素": "炎",
         "武器": "弓",
         "import": "data/characters/pyro_5_bow_Yoimiya.json",
-        "disabled": false
+        "image": "images/Yoimiya.png"
     },
     "神里綾華": {
         "レアリティ": 5,
-        "import": "data/characters/cryo_5_sword_KamisatoAyaka.json"
+        "import": "data/characters/cryo_5_sword_KamisatoAyaka.json",
+        "image": "images/KamisatoAyaka.png"
     },
     "楓原万葉": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_KaedeharaKazuha.json",
+        "image": "images/KaedeharaKazuha.png",
         "disabled": true
     },
     "エウルア": {
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/cryo_5_claymore_Eula.json",
+        "image": "images/Eula.png",
         "disabled": true
     },
     "胡桃": {
         "レアリティ": 5,
         "武器": "長柄武器",
-        "import": "data/characters/pyro_5_polearm_HuTao.json"
+        "import": "data/characters/pyro_5_polearm_HuTao.json",
+        "image": "images/HuTao.png"
     },
     "魈": {
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/aero_5_polearm_Xiao.json",
+        "image": "images/Xiao.png",
         "disabled": true
     },
     "甘雨": {
         "レアリティ": 5,
         "武器": "弓",
-        "import": "data/characters/cryo_5_bow_Ganyu.json"
+        "import": "data/characters/cryo_5_bow_Ganyu.json",
+        "image": "images/Ganyu.png"
     },
     "アルベド": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/geo_5_sword_Albedo.json",
+        "image": "images/Albedo.png",
         "disabled": true
     },
     "鍾離": {
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/geo_5_polearm_Zhongli.json",
+        "image": "images/Zhongli.png",
         "disabled": true
     },
     "タルタリヤ": {
         "レアリティ": 5,
         "武器": "弓",
-        "import": "data/characters/hydro_5_bow_Tartaglia.json"
+        "import": "data/characters/hydro_5_bow_Tartaglia.json",
+        "image": "images/Tartaglia.png"
     },
     "クレー": {
         "レアリティ": 5,
         "武器": "法器",
         "import": "data/characters/puro_5_catalyst_Klee.json",
+        "image": "images/Klee.png",
         "disabled": true
     },
     "ウェンティ": {
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/aero_5_bow_Venti.json",
+        "image": "images/Venti.png",
         "disabled": true
     },
     "刻晴": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/electro_5_sword_Keqing.json",
+        "image": "images/Keqing.png",
         "disabled": true
     },
     "モナ": {
         "レアリティ": 5,
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_Mona.json",
+        "image": "images/Mona.png",
         "disabled": true
     },
     "七七": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/cryo_5_sword_Qiqi.json",
+        "image": "images/Qiqi.png",
         "disabled": true
     },
     "ディルック": {
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/pyro_5_claymore_Diluc.json",
+        "image": "images/Diluc.png",
         "disabled": true
     },
     "ジン": {
         "レアリティ": 5,
         "武器": "片手剣",
-        "import": "data/characters/aero_5_sword_Jean.json"
+        "import": "data/characters/aero_5_sword_Jean.json",
+        "image": "images/Jean.png"
     },
     "トーマ": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "長柄武器",
-        "import": "data/characters/pyro_4_polearm_Thoma.json"
+        "import": "data/characters/pyro_4_polearm_Thoma.json",
+        "image": "images/Thoma.png"
     },
     "九条裟羅": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "弓",
-        "import": "data/characters/electro_4_bow_KujouSara.json"
+        "import": "data/characters/electro_4_bow_KujouSara.json",
+        "image": "images/KujouSara.png"
     },
     "早柚": {
         "レアリティ": 4,
         "元素": "風",
         "武器": "両手剣",
-        "import": "data/characters/aero_4_claymore_Sayu.json"
+        "import": "data/characters/aero_4_claymore_Sayu.json",
+        "image": "images/Sayu.png"
     },
     "煙緋": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/pyro_4_catalyst_Yanfei.json",
+        "image": "images/Yanfei.png",
         "disabled": true
     },
     "ロサリア": {
         "レアリティ": 4,
         "武器": "長柄武器",
         "import": "data/characters/cryo_4_polearm_Rosaria.json",
+        "image": "images/Rosaria.png",
         "disabled": true
     },
     "辛炎": {
         "レアリティ": 4,
         "武器": "両手剣",
-        "import": "data/characters/pyro_4_claymore_Xinyan.json"
+        "import": "data/characters/pyro_4_claymore_Xinyan.json",
+        "image": "images/Xinyan.png"
     },
     "ディオナ": {
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/cryo_4_bow_Diona.json",
+        "image": "images/Diona.png",
         "disabled": true
     },
     "スクロース": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/aero_4_catalyst_Sucrose.json",
+        "image": "images/Sucrose.png",
         "disabled": true
     },
     "重雲": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/cryo_4_claymore_Chongyun.json",
+        "image": "images/Chongyun.png",
         "disabled": true
     },
     "ノエル": {
         "レアリティ": 4,
         "武器": "両手剣",
-        "import": "data/characters/geo_4_claymore_Noelle.json"
+        "import": "data/characters/geo_4_claymore_Noelle.json",
+        "image": "images/Noelle.png"
     },
     "ベネット": {
         "レアリティ": 4,
         "import": "data/characters/pyro_4_sword_Benette.json",
+        "image": "images/Benette.png",
         "disabled": true
     },
     "凝光": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/geo_4_catalyst_Ningguang.json",
+        "image": "images/Ningguang.png",
         "disabled": true
     },
     "フィッシュル": {
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/electro_4_bow_Fischl.json",
+        "image": "images/Fischl.png",
         "disabled": true
     },
     "行秋": {
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/hydro_4_sword_Xingqiu.json",
+        "image": "images/Xingqiu.png",
         "disabled": true
     },
     "北斗": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Beidou.json",
+        "image": "images/Beidou.png",
         "disabled": true
     },
     "レザー": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Razor.json",
+        "image": "images/Razor.png",
         "disabled": true
     },
     "バーバラ": {
         "レアリティ": 4,
         "武器": "法器",
-        "import": "data/characters/hydro_4_catalyst_Barbara.json"
+        "import": "data/characters/hydro_4_catalyst_Barbara.json",
+        "image": "images/Barbara.png"
     },
     "リサ": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/electro_4_catalyst_Lisa.json",
+        "image": "images/Lisa.png",
         "disabled": true
     },
     "ガイア": {
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/cryo_4_sword_Kaeya.json",
+        "image": "images/Kaeya.png",
         "disabled": true
     },
     "アンバー": {
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/pyro_4_bow_Amber.json",
+        "image": "images/Amber.png",
         "disabled": true
     },
     "旅人(雷)": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/electro_4_sword_Traveler.json",
+        "image": "images/Traveler_electro.png",
         "disabled": true
     },
     "旅人(岩)": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/geo_4_sword_Traveler.json",
+        "image": "images/Traveler_geo.png",
         "disabled": true
     },
     "旅人(風)": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_4_sword_Traveler.json",
+        "image": "images/Traveler_aero.png",
         "disabled": true
     }
 }

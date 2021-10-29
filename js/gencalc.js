@@ -1996,11 +1996,36 @@ const elementalRectionOnChange = function () {
 }
 $(document).on('change', 'input[name="元素反応Input"]', elementalRectionOnChange);
 
+// キャラクター選択
+const selectCharacter = function () {
+    console.debug(this.alt);
+    $('#キャラクターInput').val(this.alt);
+    $('#選択キャラクターImg').prop('src', this.src);
+    $('#選択キャラクター名前Label').text(this.alt);
+    キャラクターInputOnChange();
+}
+
 // MAIN
 $(document).ready(function () {
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
             キャラクターMasterVar = jsonObj;
+
+            let ulElem = document.getElementById('キャラクター選択');
+            Object.keys(キャラクターMasterVar).forEach(key => {
+                if ('disabled' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['disabled']) return;
+                let liElem = document.createElement('li');
+                ulElem.appendChild(liElem);
+                let imgElem = document.createElement('img');
+                imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
+                imgElem.src = キャラクターMasterVar[key]['image'];
+                imgElem.alt = key;
+                imgElem.width = 50;
+                imgElem.height = 50;
+                liElem.appendChild(imgElem);
+                imgElem.onclick = selectCharacter;
+            });
+
             appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
         }),
         fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {

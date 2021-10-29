@@ -24,17 +24,25 @@
                 </div>
             </header>
 
-            <div class="sidebar">
-                <div class="float-menu">
-                    <p>【原神】ダメージ計算機です。★工事中</p>
-                    <p>このへんに画像を並べたキャラ選択を配置できれば</p>
-                    <section class="input-group">
-                        <select class="long" id="おすすめセットInput"></select>
-                    </section>
+            <div class="aside">
+                <div style="height: 100px;">
+                    <p>【原神】ダメージ計算機です。<br>★工事中</p>
+                    <p></p>
+                </div>
+                <div class="horizontal-list">
+                    <ul id="キャラクター選択"></ul>
                 </div>
             </div>
 
             <div class="input-area">
+                <div id="face">
+                    <img src="" width="100" height="100" id="選択キャラクターImg">
+                    <section class="input-group">
+                        <p id="選択キャラクター名前Label">キャラクターを選択してください</p>
+                        <label for="おすすめセットInput">おすすめセット</label>
+                        <select class="long" id="おすすめセットInput"></select>
+                    </section>
+                </div>
                 <div class="tab-area">
                     <input type="radio" name="input-area-tab-name" id="input-area-tab1" checked>
                     <label class="input-area-tab" for="input-area-tab1">基本</label>
@@ -42,7 +50,7 @@
                         <section>
                             <article class="input-item">
                                 <label for="キャラクターInput">キャラクター</label>
-                                <select id="キャラクターInput"></select>
+                                <select id="キャラクターInput" disabled></select>
                             </article>
                             <article class="input-item">
                                 <label for="レベルInput">キャラクターLv.</label>

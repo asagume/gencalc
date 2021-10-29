@@ -1,29 +1,24 @@
-@media screen and (min-width: 10000px) {
+@media screen and (min-width: 980px) {
     html {
-        font-size: 62.5%;
+        font-size: 75%;
     }
     body {
         font-size: 1.6em;
     }
     #main {
-        width: 801px;
+        width: 980px;
         margin: 0 auto;
+        background: linear-gradient(to right, #574014, #3a2e0c);
     }
     .base-container {
         display: grid;
-        grid-template-columns: 1px auto;
-        grid-template-rows: 32px 300px minmax(800px, auto) 80px;
+        grid-template-columns: 280px 700px;
+        grid-template-rows: 32px 390px minmax(800px, 1600px) 80px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
-    }
-    select {
-        width: 300px;
-    }
-    input[type="number"] {
-        width: 80px;
     }
 }
 
-@media screen and (max-width: 9999px) {
+@media screen and (max-width: 980px) {
     html {
         font-size: 85%;
     }
@@ -31,25 +26,27 @@
         font-size: 1.6em;
     }
     #main {
-        width: 800px;
+        width: 700px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 160px 320px minmax(800px, 1600px) 80px;
+        grid-template-rows: 32px 200px 320px minmax(800px, 1600px) 80px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
-    select {
-        width: 240px;
-        height: 40px;
-        font-size: 1.7rem;
-    }
-    input[type="number"] {
-        width: 100px;
-    }
+}
+
+select {
+    width: 220px;
+    height: 36px;
+    font-size: 1.7rem;
+}
+
+input[type="number"] {
+    width: 100px;
 }
 
 body {
@@ -91,7 +88,6 @@ fieldset {
 
 .aside {
     grid-area: aside;
-    margin: 10px;
 }
 
 .input-area {
@@ -114,7 +110,7 @@ fieldset {
 }
 
 article.input-item {
-    width: 250px;
+    width: 220px;
     vertical-align: top;
 }
 
@@ -187,9 +183,9 @@ input:checked+.input-area-tab+.tab-content {
 
 .tab-area4 {
     width: calc(96%/4);
-    height: 35px;
+    height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
-    line-height: 35px;
+    line-height: 34px;
     text-align: center;
     display: block;
     float: left;
@@ -216,9 +212,9 @@ input:checked+.tab-area4+.tab-content {
 
 .tab-area3 {
     width: calc(96%/3);
-    height: 35px;
+    height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
-    line-height: 35px;
+    line-height: 34px;
     text-align: center;
     display: block;
     float: left;
@@ -328,7 +324,7 @@ section {
 
 .with-small-select select {
     display: block;
-    width: 220px;
+    width: 200px;
 }
 
 table {
@@ -543,18 +539,8 @@ article.input-item label {
     margin: 0;
 }
 
-select {
-    height: 38px;
-    margin: 2px;
-}
-
-input[type="number"] {
-    height: 32px;
-    margin: 2px;
-}
-
 .input-group fieldset {
-    width: 230px;
+    width: 205px;
 }
 
 section.tiny article.input-item {
@@ -601,4 +587,60 @@ section.tiny article.input-item label {
     border-radius: 5px;
     font-size: 1.6rem;
     margin: 5px;
+}
+
+.aside fieldset {
+    text-align: center;
+}
+
+.horizontal-list {
+    width: 95%;
+    /*overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;*/
+    margin: 0;
+}
+
+.horizontal-list ul {
+    max-width: 400px;
+    display: block;
+    list-style: none;
+}
+
+.horizontal-list ul li {
+    display: inline-block;
+}
+
+.horizontal-list ul li img {
+    border-style: double;
+    border-width: 2px;
+}
+
+.star5 {
+    background: linear-gradient(to top, #ecc862, #978310);
+}
+
+.star4 {
+    background: linear-gradient(to top, #4a7bc5, #052b63);
+}
+
+#face {
+    display: block;
+    text-align: left;
+}
+
+#face img {
+    display: inline-block;
+}
+
+#face section {
+    width: 550px;
+    height: 100px;
+    text-align: left;
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+#face section p {
+    font-size: 2.4rem;
 }
