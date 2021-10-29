@@ -199,7 +199,8 @@
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/geo_4_claymore_Noelle.json",
-        "image": "images/Noelle.png"
+        "image": "images/Noelle.png",
+        "selected": true
     },
     "ベネット": {
         "レアリティ": 4,

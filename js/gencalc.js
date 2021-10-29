@@ -1996,13 +1996,17 @@ const elementalRectionOnChange = function () {
 }
 $(document).on('change', 'input[name="元素反応Input"]', elementalRectionOnChange);
 
+
+function characterSelected(name) {
+    $('#キャラクターInput').val(name);
+    $('#選択キャラクターImg').prop('src', キャラクターMasterVar[name]['image']);
+    $('#選択キャラクター名前Label').text(name);
+    キャラクターInputOnChange();
+}
+
 // キャラクター選択
 const selectCharacter = function () {
-    console.debug(this.alt);
-    $('#キャラクターInput').val(this.alt);
-    $('#選択キャラクターImg').prop('src', this.src);
-    $('#選択キャラクター名前Label').text(this.alt);
-    キャラクターInputOnChange();
+    characterSelected(this.alt);
 }
 
 // MAIN
@@ -2027,6 +2031,13 @@ $(document).ready(function () {
             });
 
             appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
+
+            let select = null;
+            Object.keys(キャラクターMasterVar).forEach(key => {
+                if (!select) select = key;
+                else if ('selected' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['selected']) select = key;
+            });
+            characterSelected(select);
         }),
         fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {
             武器MasterVar["片手剣"] = jsonObj;

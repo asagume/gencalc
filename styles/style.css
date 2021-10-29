@@ -1,6 +1,6 @@
 @media screen and (min-width: 980px) {
     html {
-        font-size: 75%;
+        font-size: 85%;
     }
     body {
         font-size: 1.6em;
@@ -13,7 +13,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 280px 700px;
-        grid-template-rows: 32px 390px minmax(800px, 1600px) 80px;
+        grid-template-rows: 32px 400px minmax(800px, 1600px) 80px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
 }
@@ -33,9 +33,14 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 200px 320px minmax(800px, 1600px) 80px;
+        grid-template-rows: 32px 240px 400px minmax(800px, 1600px) 80px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
+    }
+    .horizontal-list {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -88,6 +93,7 @@ fieldset {
 
 .aside {
     grid-area: aside;
+    font-size: 1.4rem;
 }
 
 .input-area {
@@ -382,11 +388,11 @@ table thead th, table tbody th, table tbody td {
 
 table thead th {
     background-color: #574014;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 table th {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 table thead th+th, table tbody td {
@@ -594,10 +600,7 @@ section.tiny article.input-item label {
 }
 
 .horizontal-list {
-    width: 95%;
-    /*overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;*/
+    width: 100%;
     margin: 0;
 }
 
@@ -642,5 +645,8 @@ section.tiny article.input-item label {
 }
 
 #face section p {
-    font-size: 2.4rem;
+    font-size: 2rem;
+}
+#face section label {
+    font-size: 1.4rem;
 }
