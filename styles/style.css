@@ -634,6 +634,8 @@ section.tiny article.input-item label {
 
 #face img {
     display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 #face section {
