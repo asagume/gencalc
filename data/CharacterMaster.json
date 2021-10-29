@@ -118,6 +118,12 @@
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_Jean.json"
     },
+    "トーマ": {
+        "レアリティ": 4,
+        "元素": "炎",
+        "武器": "長柄武器",
+        "import": "data/characters/pyro_4_polearm_Thoma.json"
+    },
     "九条裟羅": {
         "レアリティ": 4,
         "元素": "雷",
