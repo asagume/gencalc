@@ -172,6 +172,7 @@ article.input-item {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
+    font-size: 1.5rem;
 }
 
 input[name="input-area-tab-name"] {
@@ -201,6 +202,7 @@ input:checked+.input-area-tab+.tab-content {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
+    font-size: 1.5rem;
 }
 
 input[name="tab-area-middle"] {
@@ -230,6 +232,7 @@ input:checked+.tab-area4+.tab-content {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
+    font-size: 1.5rem;
 }
 
 input[name="tab-area-bottom"] {
