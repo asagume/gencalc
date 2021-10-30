@@ -158,8 +158,7 @@
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/pyro_4_catalyst_Yanfei.json",
-        "image": "images/Yanfei.png",
-        "disabled": true
+        "image": "images/Yanfei.png"
     },
     "ロサリア": {
         "レアリティ": 4,
@@ -192,8 +191,7 @@
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/cryo_4_claymore_Chongyun.json",
-        "image": "images/Chongyun.png",
-        "disabled": true
+        "image": "images/Chongyun.png"
     },
     "ノエル": {
         "レアリティ": 4,
@@ -204,8 +202,7 @@
     "ベネット": {
         "レアリティ": 4,
         "import": "data/characters/pyro_4_sword_Benette.json",
-        "image": "images/Benette.png",
-        "disabled": true
+        "image": "images/Benette.png"
     },
     "凝光": {
         "レアリティ": 4,
