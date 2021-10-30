@@ -70,8 +70,7 @@
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/geo_5_sword_Albedo.json",
-        "image": "images/Albedo.png",
-        "disabled": true
+        "image": "images/Albedo.png"
     },
     "鍾離": {
         "レアリティ": 5,
@@ -212,8 +211,7 @@
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/geo_4_catalyst_Ningguang.json",
-        "image": "images/Ningguang.png",
-        "disabled": true
+        "image": "images/Ningguang.png"
     },
     "フィッシュル": {
         "レアリティ": 4,
