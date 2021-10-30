@@ -147,7 +147,7 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
 
 const analyzeFormulaStr = function (str, defaultItem = null) {
     let resultArr = [];
-    let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+)([\\+\\-\\*/]?)(.*)');
+    let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+|[^0-9\\.%\\+\\-\\*/]+)([\\+\\-\\*/]?)(.*)');
     let workStr = str;
     while (true) {
         let reRet = re.exec(workStr);
@@ -291,6 +291,8 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
             } else if (valueObj['種類'] == '防御無視') {   // 防御無視は先んじて適用します for 雷電将軍
                 let myValue = calculateFormulaArray(ステータス詳細ObjVar, valueObj['数値'], valueObj['最大値']);
                 my防御無視 += myValue;
+            } else if (valueObj['種類'] == '固有変数') {
+                // nop
             } else {
                 if (number != null && number != 1) {    // オプションの@以降の数値でスケールする場合あり
                     let myNewValueObj = JSON.parse(JSON.stringify(valueObj)); // deepcopy
@@ -659,7 +661,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 }
             }
             if (talentChangeArrMap != null) {
-                if (resultObj['種類'].endsWith('強化') || resultObj['種類'].endsWith('付与') || resultObj['種類'].endsWith('アップ') || resultObj['種類'] == '防御無視') {   // ex.元素爆発強化,氷元素付与
+                if (resultObj['種類'].endsWith('強化') || resultObj['種類'].endsWith('付与') || resultObj['種類'].endsWith('アップ') || resultObj['種類'] == '防御無視' || resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
                     resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                     talentChangeArrMap.get(inputCategory).push(resultObj);
                     return;
