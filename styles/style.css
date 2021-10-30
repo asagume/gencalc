@@ -26,7 +26,8 @@
         font-size: 1.6em;
     }
     #main {
-        width: 700px;
+        width: 100%;
+        min-width: 700px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
