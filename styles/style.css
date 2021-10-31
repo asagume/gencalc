@@ -148,6 +148,7 @@ article.input-item {
 
 .tab-area {
     width: 100%;
+    text-align: center;
     margin: auto;
     flex-wrap: wrap;
     display: flex;
@@ -521,7 +522,7 @@ input[name="元素反応Input"] {
 
 label.elemental-reaction {
     display: inline-block;
-    width: 180px;
+    width: 160px;
     padding: 2px;
     background: linear-gradient(to top, #3d3d3b, #141414);
     text-shadow: 1px 1px 0.1em rgb(40, 80, 80), -1px -1px 0.1em rgb(40, 80, 80), -1px 1px 0.1em rgb(40, 80, 80), 1px -1px 0.1em rgb(40, 80, 80), 0 1px 0.1em rgb(40, 80, 80), 0 -1px 0.1em rgb(40, 80, 80), -1px 0 0.1em rgb(40, 80, 80), 1px 0 0.1em rgb(40, 80, 80);
