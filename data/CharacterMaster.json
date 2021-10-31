@@ -177,8 +177,7 @@
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/cryo_4_bow_Diona.json",
-        "image": "images/Diona.png",
-        "disabled": true
+        "image": "images/Diona.png"
     },
     "スクロース": {
         "レアリティ": 4,
