@@ -163,7 +163,7 @@ article.input-item {
 }
 
 .input-area-tab {
-    width: calc(96%/5);
+    width: calc(95%/5);
     height: 35px;
     background: linear-gradient(to top, #ad5b18, #55290b);
     line-height: 36px;
@@ -223,7 +223,7 @@ input:checked+.tab-area4+.tab-content {
 }
 
 .tab-area3 {
-    width: calc(96%/3);
+    width: calc(97%/3);
     height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
     line-height: 34px;
