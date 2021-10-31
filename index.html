@@ -17,7 +17,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0;">
-                    げんかるく - 原神ダメージシミュレーター Ver.0.20
+                    げんかるく - 原神ダメージシミュレーター Ver.0.30
                 </div>
                 <div style="position: absolute; right: 0;">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -585,11 +585,16 @@
                     <label class="tab-area3" for="tab-area-bottom1">ダメージ計算</label>
                     <div class="tab-content">
                         <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked>
-                        <label for="元素反応なしInput">元素反応なし</label>
+                        <label class="elemental-reaction" for="元素反応なしInput">反応なし</label>
                         <input type="radio" value="vaporize" id="元素反応蒸発Input" name="元素反応Input">
-                        <label for="元素反応蒸発Input">蒸発反応</label>
+                        <label class="elemental-reaction" for="元素反応蒸発Input">蒸発</label>
                         <input type="radio" value="melt" id="元素反応溶解Input" name="元素反応Input">
-                        <label for="元素反応溶解Input">溶解反応</label>
+                        <label class="elemental-reaction" for="元素反応溶解Input">溶解</label>
+                        <label class="elemental-reaction pyro" id="元素反応過負荷Label">過負荷</label>
+                        <label class="elemental-reaction electro" id="元素反応感電Label">感電</label>
+                        <label class="elemental-reaction cryo" id="元素反応超電導Label">超電導</label>
+                        <label class="elemental-reaction" id="元素反応拡散Label">拡散</label>
+                        <label class="elemental-reaction" id="元素反応結晶Label">結晶</label>
 
                         <table class="result" id="通常攻撃ダメージResult"></table>
                         <table class="result" id="重撃ダメージResult"></table>

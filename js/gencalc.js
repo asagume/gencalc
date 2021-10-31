@@ -206,6 +206,26 @@ function calculate乗算系元素反応倍率(element, elementalMastery, element
     return result;
 }
 
+function calculate固定値系元素反応ダメージ(element, elementalMastery, elementalReaction) {
+    if (!element || element == '物理' || !(elementalReaction in 元素反応MasterVar[element])) {
+        return 0;
+    }
+    let level = $('#レベルInput').val().replace('+', '');
+    let result = 元素反応MasterVar[element][elementalReaction]['数値'][level];
+    result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + ステータス詳細ObjVar[elementalReaction + 'ダメージバフ'] / 100;
+    return result;
+}
+
+function calculate結晶シールド吸収量(element, elementalMastery) {
+    if (!element || element == '物理' || !('結晶' in 元素反応MasterVar[element])) {
+        return 0;
+    }
+    let level = $('#レベルInput').val().replace('+', '');
+    let result = 元素反応MasterVar[element]['結晶']['数値'][level];
+    result *= 1 + 4.44 * elementalMastery / (elementalMastery + 1400);
+    return result;
+}
+
 function calculate蒸発倍率(element, elementalMastery) {
     return calculate乗算系元素反応倍率(element, elementalMastery, '蒸発');
 }
@@ -1189,11 +1209,46 @@ const inputOnChangeResultUpdate = function () {
 
     let my蒸発倍率 = calculate蒸発倍率(キャラクター元素Var, ステータス詳細ObjVar['元素熟知']);
     if (my蒸発倍率) {
-        $('#元素反応蒸発Input+label').text('蒸発反応×' + Math.round(my蒸発倍率 * 100) / 100);
+        $('#元素反応蒸発Input+label').text('蒸発×' + Math.round(my蒸発倍率 * 100) / 100);
     }
     let my溶解倍率 = calculate溶解倍率(キャラクター元素Var, ステータス詳細ObjVar['元素熟知']);
     if (my溶解倍率) {
-        $('#元素反応溶解Input+label').text('溶解反応×' + Math.round(my溶解倍率 * 100) / 100);
+        $('#元素反応溶解Input+label').text('溶解×' + Math.round(my溶解倍率 * 100) / 100);
+    }
+    let my過負荷ダメージ = calculate固定値系元素反応ダメージ(キャラクター元素Var, ステータス詳細ObjVar['元素熟知'], '過負荷');
+    if (my過負荷ダメージ) {
+        $('#元素反応過負荷Label').text('過負荷' + Math.round(my過負荷ダメージ));
+        $('#元素反応過負荷Label').show();
+    } else {
+        $('#元素反応過負荷Label').hide();
+    }
+    let my感電ダメージ = calculate固定値系元素反応ダメージ(キャラクター元素Var, ステータス詳細ObjVar['元素熟知'], '感電');
+    if (my感電ダメージ) {
+        $('#元素反応感電Label').text('感電' + Math.round(my感電ダメージ));
+        $('#元素反応感電Label').show();
+    } else {
+        $('#元素反応感電Label').hide();
+    }
+    let my超電導ダメージ = calculate固定値系元素反応ダメージ(キャラクター元素Var, ステータス詳細ObjVar['元素熟知'], '超電導');
+    if (my超電導ダメージ) {
+        $('#元素反応超電導Label').text('超電導' + Math.round(my超電導ダメージ));
+        $('#元素反応超電導Label').show();
+    } else {
+        $('#元素反応超電導Label').hide();
+    }
+    let my拡散ダメージ = calculate固定値系元素反応ダメージ(キャラクター元素Var, ステータス詳細ObjVar['元素熟知'], '拡散');
+    if (my拡散ダメージ) {
+        $('#元素反応拡散Label').text('拡散' + Math.round(my拡散ダメージ));
+        $('#元素反応拡散Label').show();
+    } else {
+        $('#元素反応拡散Label').hide();
+    }
+    let my結晶吸収量 = calculate結晶シールド吸収量(キャラクター元素Var, ステータス詳細ObjVar['元素熟知']);
+    if (my結晶吸収量) {
+        $('#元素反応結晶Label').text('結晶' + Math.round(my結晶吸収量));
+        $('#元素反応結晶Label').show();
+    } else {
+        $('#元素反応結晶Label').hide();
     }
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');

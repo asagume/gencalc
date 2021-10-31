@@ -491,27 +491,27 @@ select.long {
     width: 400px;
 }
 
-td.pyro {
+.pyro {
     color: #d2655a;
 }
 
-td.hydro {
+.hydro {
     color: #559cc9;
 }
 
-td.aero {
+.aero {
     color: #3aaf7a;
 }
 
-td.electro {
+.electro {
     color: #b681df;
 }
 
-td.cryo {
+.cryo {
     color: #63beb4;
 }
 
-td.geo {
+.geo {
     color: #df8f37;
 }
 
@@ -519,17 +519,23 @@ input[name="元素反応Input"] {
     display: none;
 }
 
-input[name="元素反応Input"]+label {
+label.elemental-reaction {
     display: inline-block;
-    width: 200px;
+    width: 180px;
     padding: 2px;
-    background: linear-gradient(to top, #ad5b18, #55290b);
-    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    background: linear-gradient(to top, #3d3d3b, #141414);
+    text-shadow: 1px 1px 0.1em rgb(40, 80, 80), -1px -1px 0.1em rgb(40, 80, 80), -1px 1px 0.1em rgb(40, 80, 80), 1px -1px 0.1em rgb(40, 80, 80), 0 1px 0.1em rgb(40, 80, 80), 0 -1px 0.1em rgb(40, 80, 80), -1px 0 0.1em rgb(40, 80, 80), 1px 0 0.1em rgb(40, 80, 80);
     border-radius: 5px;
+}
+
+input[name="元素反応Input"]+label {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    text-shadow: 1px 1px 2px black, 0 0 0.2em brown, 0 0 0.2em brown;
 }
 
 input[name="元素反応Input"]:checked+label {
     background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
 
 div.description {
@@ -653,6 +659,7 @@ section.tiny article.input-item label {
 #face section p {
     font-size: 2rem;
 }
+
 #face section label {
     font-size: 1.4rem;
 }
