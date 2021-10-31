@@ -374,7 +374,11 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
                 my会心ダメージ += myValue;
                 break;
             case '別枠乗算':    // for 宵宮
-                my別枠乗算 += myValue;
+                if (my別枠乗算 > 0) {
+                    my別枠乗算 *= myValue / 100;    // for ディオナ
+                } else {
+                    my別枠乗算 = myValue;
+                }
                 break;
             default:
                 if (valueObj['種類'] == '与えるダメージ') {
@@ -398,7 +402,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
             break;
         case 'シールド':
             myダメージバフ = ステータス詳細ObjVar['シールド強化'];
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, my元素, null, null, null);
+            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, my元素, null, null, my別枠乗算);
             break;
         case '元素創造物HP':    // for アンバー 甘雨
             my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null);
