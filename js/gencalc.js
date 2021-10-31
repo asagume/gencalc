@@ -2081,8 +2081,8 @@ $(document).ready(function () {
                 imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
                 imgElem.src = キャラクターMasterVar[key]['image'];
                 imgElem.alt = key;
-                imgElem.width = 50;
-                imgElem.height = 50;
+                imgElem.width = 75;
+                imgElem.height = 75;
                 liElem.appendChild(imgElem);
                 imgElem.onclick = selectCharacter;
             });

@@ -1,4 +1,4 @@
-@media screen and (min-width: 980px) {
+@media screen and (min-width: 1020px) {
     html {
         font-size: 85%;
     }
@@ -6,13 +6,13 @@
         font-size: 1.6em;
     }
     #main {
-        width: 980px;
+        width: 1020px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
     .base-container {
         display: grid;
-        grid-template-columns: 280px 700px;
+        grid-template-columns: auto 700px;
         grid-template-rows: 32px 400px minmax(800px, 1600px) 80px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
@@ -83,13 +83,15 @@ fieldset {
     grid-area: header;
     width: 100%;
     position: relative;
+    background: linear-gradient(to top, #ecc862, #978310);
 }
 
 .header div {
-    display: inline-block;
+    position: absolute;
+    top: 50%;
+    margin: 0 5px;
+    transform: translate(0, -50%);
     font-size: 1.4rem;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .aside {
@@ -617,12 +619,18 @@ section.tiny article.input-item label {
 
 .horizontal-list ul {
     max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
     display: block;
     list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
 }
 
 .horizontal-list ul li {
     display: inline-block;
+    margin: 0;
 }
 
 .horizontal-list ul li img {
