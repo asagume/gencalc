@@ -28,6 +28,7 @@
     #main {
         width: 100%;
         min-width: 700px;
+        max-width: 900px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
