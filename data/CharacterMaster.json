@@ -51,7 +51,8 @@
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/pyro_5_polearm_HuTao.json",
-        "image": "images/HuTao.png"
+        "image": "images/HuTao.png",
+        "selected": true
     },
     "魈": {
         "レアリティ": 5,
@@ -82,8 +83,7 @@
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/hydro_5_bow_Tartaglia.json",
-        "image": "images/Tartaglia.png",
-        "selected": true
+        "image": "images/Tartaglia.png"
     },
     "クレー": {
         "レアリティ": 5,
