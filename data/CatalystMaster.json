@@ -23,29 +23,21 @@
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_DodocoTales.json"
     },
-    "冬忍びの実": {
-        "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_Frostbearer.json"
-    },
-    "昭心": {
-        "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_EyeofPerception.json"
-    },
     "ダークアレイの酒と詩": {
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_WineandSong.json"
     },
-    "流浪楽章": {
+    "冬忍びの実": {
         "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_TheWidsith.json"
+        "import": "data/weapons/catalyst_4_Frostbearer.json"
     },
     "匣中日月": {
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_SolarPearl.json"
     },
-    "祭礼の断片": {
+    "黒岩の緋玉": {
         "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_SacrificialFragments.json"
+        "import": "data/weapons/catalyst_4_BlackcliffAgate.json"
     },
     "旧貴族秘法録": {
         "レアリティ": 4,
@@ -59,13 +51,21 @@
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_MappaMare.json"
     },
+    "昭心": {
+        "レアリティ": 4,
+        "import": "data/weapons/catalyst_4_EyeofPerception.json"
+    },
+    "祭礼の断片": {
+        "レアリティ": 4,
+        "import": "data/weapons/catalyst_4_SacrificialFragments.json"
+    },
+    "流浪楽章": {
+        "レアリティ": 4,
+        "import": "data/weapons/catalyst_4_TheWidsith.json"
+    },
     "西風秘典": {
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_FavoniusCodex.json"
-    },
-    "黒岩の緋玉": {
-        "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_BlackcliffAgate.json"
     },
     "龍殺しの英傑譚": {
         "レアリティ": 3,

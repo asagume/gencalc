@@ -11,13 +11,13 @@
         "レアリティ": 5,
         "import": "data/weapons/bow_5_ElegyfortheEnd.json"
     },
-    "アモスの弓": {
-        "レアリティ": 5,
-        "import": "data/weapons/bow_5_AmosBow.json"
-    },
     "天空の翼": {
         "レアリティ": 5,
         "import": "data/weapons/bow_5_SkywardHarp.json"
+    },
+    "アモスの弓": {
+        "レアリティ": 5,
+        "import": "data/weapons/bow_5_AmosBow.json"
     },
     "曚雲の月": {
         "レアリティ": 4,
@@ -35,17 +35,17 @@
         "レアリティ": 4,
         "import": "data/weapons/bow_4_WindblumeOde.json"
     },
+    "ダークアレイの狩人": {
+        "レアリティ": 4,
+        "import": "data/weapons/bow_4_AlleyHunter.json"
+    },
     "蒼翠の狩猟弓": {
         "レアリティ": 4,
         "import": "data/weapons/bow_4_TheViridescentHunt.json"
     },
-    "祭礼の弓": {
+    "黒岩の戦弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_SacrificialBow.json"
-    },
-    "弓蔵": {
-        "レアリティ": 4,
-        "import": "data/weapons/bow_4_Rust.json"
+        "import": "data/weapons/bow_4_BlackcliffWarbow.json"
     },
     "旧貴族長弓": {
         "レアリティ": 4,
@@ -55,24 +55,24 @@
         "レアリティ": 4,
         "import": "data/weapons/bow_4_PrototypeCrescent.json"
     },
-    "西風猟弓": {
-        "レアリティ": 4,
-        "import": "data/weapons/bow_4_FavoniusWarbow.json"
-    },
     "リングボウ": {
         "レアリティ": 4,
         "import": "data/weapons/bow_4_CompoundBow.json"
     },
-    "黒岩の戦弓": {
+    "弓蔵": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_BlackcliffWarbow.json"
+        "import": "data/weapons/bow_4_Rust.json"
     },
-    "ダークアレイの狩人": {
+    "祭礼の弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_AlleyHunter.json"
+        "import": "data/weapons/bow_4_SacrificialBow.json"
     },
     "絶弦": {
         "レアリティ": 4,
         "import": "data/weapons/bow_4_TheStringless.json"
+    },
+    "西風猟弓": {
+        "レアリティ": 4,
+        "import": "data/weapons/bow_4_FavoniusWarbow.json"
     }
 }

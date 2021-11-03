@@ -7,13 +7,13 @@
         "レアリティ": 5,
         "import": "data/weapons/claymore_5_TheUnforged.json"
     },
-    "狼の末路": {
-        "レアリティ": 5,
-        "import": "data/weapons/claymore_5_WolfsGravestone.json"
-    },
     "天空の傲": {
         "レアリティ": 5,
         "import": "data/weapons/claymore_5_SkywardPride.json"
+    },
+    "狼の末路": {
+        "レアリティ": 5,
+        "import": "data/weapons/claymore_5_WolfsGravestone.json"
     },
     "惡王丸": {
         "レアリティ": 4,
@@ -27,49 +27,49 @@
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_KatsuragikiriNagamasa.json"
     },
+    "千岩古剣": {
+        "レアリティ": 4,
+        "import": "data/weapons/claymore_4_LithicBlade.json"
+    },
     "雪葬の星銀": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_SnowTombedStarsilver.json"
-    },
-    "祭礼の大剣": {
-        "レアリティ": 4,
-        "import": "data/weapons/claymore_4_SacrificialGreatsword.json"
-    },
-    "白影の剣": {
-        "レアリティ": 4,
-        "import": "data/weapons/claymore_4_Whiteblind.json"
-    },
-    "鐘の剣": {
-        "レアリティ": 4,
-        "import": "data/weapons/claymore_4_TheBell.json"
     },
     "螭龍の剣": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_SerpentSpine.json"
     },
+    "黒岩の斬刀": {
+        "レアリティ": 4,
+        "import": "data/weapons/claymore_4_BlackcliffSlasher.json"
+    },
     "旧貴族大剣": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_RoyalGreatsword.json"
-    },
-    "雨裁": {
-        "レアリティ": 4,
-        "import": "data/weapons/claymore_4_Rainslasher.json"
     },
     "古華・試作": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_PrototypeArchaic.json"
     },
-    "千岩古剣": {
+    "白影の剣": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore_4_LithicBlade.json"
+        "import": "data/weapons/claymore_4_Whiteblind.json"
+    },
+    "雨裁": {
+        "レアリティ": 4,
+        "import": "data/weapons/claymore_4_Rainslasher.json"
+    },
+    "祭礼の大剣": {
+        "レアリティ": 4,
+        "import": "data/weapons/claymore_4_SacrificialGreatsword.json"
+    },
+    "鐘の剣": {
+        "レアリティ": 4,
+        "import": "data/weapons/claymore_4_TheBell.json"
     },
     "西風大剣": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_FavoniusGreatsword.json"
-    },
-    "黒岩の斬刀": {
-        "レアリティ": 4,
-        "import": "data/weapons/claymore_4_BlackcliffSlasher.json"
     },
     "ノエルの剣": {
         "レアリティ": 5,

@@ -98,6 +98,13 @@
         "image": "images/Venti.png",
         "disabled": true
     },
+    "七七": {
+        "レアリティ": 5,
+        "武器": "片手剣",
+        "import": "data/characters/cryo_5_sword_Qiqi.json",
+        "image": "images/Qiqi.png",
+        "disabled": true
+    },
     "刻晴": {
         "レアリティ": 5,
         "武器": "片手剣",
@@ -111,24 +118,17 @@
         "import": "data/characters/hydro_5_catalyst_Mona.json",
         "image": "images/Mona.png"
     },
-    "七七": {
+    "ジン": {
         "レアリティ": 5,
         "武器": "片手剣",
-        "import": "data/characters/cryo_5_sword_Qiqi.json",
-        "image": "images/Qiqi.png",
-        "disabled": true
+        "import": "data/characters/aero_5_sword_Jean.json",
+        "image": "images/Jean.png"
     },
     "ディルック": {
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/pyro_5_claymore_Diluc.json",
         "image": "images/Diluc.png"
-    },
-    "ジン": {
-        "レアリティ": 5,
-        "武器": "片手剣",
-        "import": "data/characters/aero_5_sword_Jean.json",
-        "image": "images/Jean.png"
     },
     "トーマ": {
         "レアリティ": 4,
@@ -176,18 +176,11 @@
         "import": "data/characters/cryo_4_bow_Diona.json",
         "image": "images/Diona.png"
     },
-    "スクロース": {
+    "凝光": {
         "レアリティ": 4,
         "武器": "法器",
-        "import": "data/characters/aero_4_catalyst_Sucrose.json",
-        "image": "images/Sucrose.png",
-        "disabled": true
-    },
-    "重雲": {
-        "レアリティ": 4,
-        "武器": "両手剣",
-        "import": "data/characters/cryo_4_claymore_Chongyun.json",
-        "image": "images/Chongyun.png"
+        "import": "data/characters/geo_4_catalyst_Ningguang.json",
+        "image": "images/Ningguang.png"
     },
     "ノエル": {
         "レアリティ": 4,
@@ -195,29 +188,18 @@
         "import": "data/characters/geo_4_claymore_Noelle.json",
         "image": "images/Noelle.png"
     },
-    "ベネット": {
+    "重雲": {
         "レアリティ": 4,
-        "import": "data/characters/pyro_4_sword_Benette.json",
-        "image": "images/Benette.png"
+        "武器": "両手剣",
+        "import": "data/characters/cryo_4_claymore_Chongyun.json",
+        "image": "images/Chongyun.png"
     },
-    "凝光": {
+    "スクロース": {
         "レアリティ": 4,
         "武器": "法器",
-        "import": "data/characters/geo_4_catalyst_Ningguang.json",
-        "image": "images/Ningguang.png"
-    },
-    "フィッシュル": {
-        "レアリティ": 4,
-        "武器": "弓",
-        "import": "data/characters/electro_4_bow_Fischl.json",
-        "image": "images/Fischl.png",
+        "import": "data/characters/aero_4_catalyst_Sucrose.json",
+        "image": "images/Sucrose.png",
         "disabled": true
-    },
-    "行秋": {
-        "レアリティ": 4,
-        "武器": "片手剣",
-        "import": "data/characters/hydro_4_sword_Xingqiu.json",
-        "image": "images/Xingqiu.png"
     },
     "北斗": {
         "レアリティ": 4,
@@ -226,11 +208,12 @@
         "image": "images/Beidou.png",
         "disabled": true
     },
-    "香菱": {
+    "フィッシュル": {
         "レアリティ": 4,
-        "武器": "長柄武器",
-        "import": "data/characters/pyro_4_polearm_Xiangling.json",
-        "image": "images/Xiangling.png"
+        "武器": "弓",
+        "import": "data/characters/electro_4_bow_Fischl.json",
+        "image": "images/Fischl.png",
+        "disabled": true
     },
     "レザー": {
         "レアリティ": 4,
@@ -239,24 +222,41 @@
         "image": "images/Razor.png",
         "disabled": true
     },
+    "行秋": {
+        "レアリティ": 4,
+        "武器": "片手剣",
+        "import": "data/characters/hydro_4_sword_Xingqiu.json",
+        "image": "images/Xingqiu.png"
+    },
     "バーバラ": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/hydro_4_catalyst_Barbara.json",
         "image": "images/Barbara.png"
     },
-    "リサ": {
+    "香菱": {
         "レアリティ": 4,
-        "武器": "法器",
-        "import": "data/characters/electro_4_catalyst_Lisa.json",
-        "image": "images/Lisa.png",
-        "disabled": true
+        "武器": "長柄武器",
+        "import": "data/characters/pyro_4_polearm_Xiangling.json",
+        "image": "images/Xiangling.png"
+    },
+    "ベネット": {
+        "レアリティ": 4,
+        "import": "data/characters/pyro_4_sword_Benette.json",
+        "image": "images/Benette.png"
     },
     "ガイア": {
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/cryo_4_sword_Kaeya.json",
         "image": "images/Kaeya.png",
+        "disabled": true
+    },
+    "リサ": {
+        "レアリティ": 4,
+        "武器": "法器",
+        "import": "data/characters/electro_4_catalyst_Lisa.json",
+        "image": "images/Lisa.png",
         "disabled": true
     },
     "アンバー": {
