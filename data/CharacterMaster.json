@@ -112,17 +112,17 @@
         "image": "images/Keqing.png",
         "disabled": true
     },
-    "モナ": {
-        "レアリティ": 5,
-        "武器": "法器",
-        "import": "data/characters/hydro_5_catalyst_Mona.json",
-        "image": "images/Mona.png"
-    },
     "ジン": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_Jean.json",
         "image": "images/Jean.png"
+    },
+    "モナ": {
+        "レアリティ": 5,
+        "武器": "法器",
+        "import": "data/characters/hydro_5_catalyst_Mona.json",
+        "image": "images/Mona.png"
     },
     "ディルック": {
         "レアリティ": 5,
