@@ -230,6 +230,12 @@
         "image": "images/Beidou.png",
         "disabled": true
     },
+    "香菱": {
+        "レアリティ": 4,
+        "武器": "長柄武器",
+        "import": "data/characters/pyro_4_polearm_Xiangling.json",
+        "image": "images/Xiangling.png"
+    },
     "レザー": {
         "レアリティ": 4,
         "武器": "両手剣",
@@ -261,8 +267,7 @@
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/pyro_4_bow_Amber.json",
-        "image": "images/Amber.png",
-        "disabled": true
+        "image": "images/Amber.png"
     },
     "旅人(雷)": {
         "レアリティ": 5,
