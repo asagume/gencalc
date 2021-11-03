@@ -109,8 +109,7 @@
         "レアリティ": 5,
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_Mona.json",
-        "image": "images/Mona.png",
-        "disabled": true
+        "image": "images/Mona.png"
     },
     "七七": {
         "レアリティ": 5,
@@ -218,8 +217,7 @@
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/hydro_4_sword_Xingqiu.json",
-        "image": "images/Xingqiu.png",
-        "disabled": true
+        "image": "images/Xingqiu.png"
     },
     "北斗": {
         "レアリティ": 4,
