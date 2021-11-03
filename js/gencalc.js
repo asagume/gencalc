@@ -1807,7 +1807,9 @@ const 聖遺物セットInputOnChange = function () {
             Object.keys(data['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
                 let value = data['オプション初期値'][key];
-                オプションElementIdValue記憶Map.set(elemId, value);
+                if (!オプションElementIdValue記憶Map.has(elemId)) {
+                    オプションElementIdValue記憶Map.set(elemId, value);
+                }
             });
         }
     });
@@ -1866,7 +1868,9 @@ const 武器InputOnChange = function () {
             Object.keys(選択中武器データVar['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
                 let value = 選択中武器データVar['オプション初期値'][key];
-                オプションElementIdValue記憶Map.set(elemId, value);
+                if (!オプションElementIdValue記憶Map.has(elemId)) {
+                    オプションElementIdValue記憶Map.set(elemId, value);
+                }
             });
         }
 

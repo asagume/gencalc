@@ -88,9 +88,8 @@
     "クレー": {
         "レアリティ": 5,
         "武器": "法器",
-        "import": "data/characters/puro_5_catalyst_Klee.json",
-        "image": "images/Klee.png",
-        "disabled": true
+        "import": "data/characters/pyro_5_catalyst_Klee.json",
+        "image": "images/Klee.png"
     },
     "ウェンティ": {
         "レアリティ": 5,
@@ -124,8 +123,7 @@
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/pyro_5_claymore_Diluc.json",
-        "image": "images/Diluc.png",
-        "disabled": true
+        "image": "images/Diluc.png"
     },
     "ジン": {
         "レアリティ": 5,
