@@ -44,8 +44,7 @@
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/cryo_5_claymore_Eula.json",
-        "image": "images/Eula.png",
-        "disabled": true
+        "image": "images/Eula.png"
     },
     "胡桃": {
         "レアリティ": 5,

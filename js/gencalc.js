@@ -905,7 +905,14 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
             tdClassName = ELEMENT_TD_CLASS_MAP.get(valueArr[1]);
         }
         let thElem1 = document.createElement('th');
-        thElem1.textContent = valueArr[0];
+        if (valueArr[0]) {
+            let name = valueArr[0].replace('のダメージ', '');
+            if (damageResultArr.length > 3) {
+                thElem1.textContent = name.replace('ダメージ', '');
+            } else {
+                thElem1.textContent = name;
+            }
+        }
         trElem1.appendChild(thElem1);
         let tdElem2 = document.createElement('td');
         tdElem2.textContent = valueArr[2];
@@ -1020,9 +1027,6 @@ const setupBaseDamageDetailDataCharacter = function () {
     let myデフォルト元素 = getNormalAttackDefaultElement();
     let myTalentDataObj = 選択中キャラクターデータVar['通常攻撃'];
     通常攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
-    通常攻撃_基礎ダメージ詳細ArrVar.forEach(detailObj => {
-        detailObj['名前'] = detailObj['名前'].replace('ダメージ', '');
-    });
     console.debug('通常攻撃_基礎ダメージ詳細ArrVar');
     console.debug(通常攻撃_基礎ダメージ詳細ArrVar);
     // 特殊通常攻撃を解析します。Object
@@ -1044,9 +1048,6 @@ const setupBaseDamageDetailDataCharacter = function () {
         }
         let myMapKey = myTalentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
         let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
-        myMapValue.forEach(detailObj => {
-            detailObj['名前'] = detailObj['名前'].replace('ダメージ', '');
-        });
         特殊通常攻撃_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊通常攻撃_基礎ダメージ詳細MapVar');
         console.debug(特殊通常攻撃_基礎ダメージ詳細MapVar);
@@ -1089,9 +1090,6 @@ const setupBaseDamageDetailDataCharacter = function () {
     myデフォルト元素 = getNormalAttackDefaultElement();
     myTalentDataObj = 選択中キャラクターデータVar['落下攻撃'];
     落下攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
-    落下攻撃_基礎ダメージ詳細ArrVar.forEach(detailObj => {
-        detailObj['名前'] = detailObj['名前'].replace(new RegExp('の?ダメージ'), '');
-    });
     console.debug('落下攻撃_基礎ダメージ詳細ArrVar');
     console.debug(落下攻撃_基礎ダメージ詳細ArrVar);
     // 特殊落下攻撃を解析します。Object
@@ -1099,9 +1097,6 @@ const setupBaseDamageDetailDataCharacter = function () {
         myTalentDataObj = 選択中キャラクターデータVar['特殊落下攻撃'];
         let myMapKey = myTalentDataObj['条件'];    // 特殊＊＊に切り替わる条件です。必須です
         let myMapValue = makeSpecialTalentDetailArray(myTalentDataObj, my天賦レベル, myデフォルト種類, myデフォルト元素, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
-        myMapValue.forEach(detailObj => {
-            detailObj['名前'] = detailObj['名前'].replace(new RegExp('の?ダメージ'), '');
-        });
         特殊落下攻撃_基礎ダメージ詳細MapVar.set(myMapKey, myMapValue);
         console.debug('特殊落下攻撃_基礎ダメージ詳細MapVar');
         console.debug(特殊落下攻撃_基礎ダメージ詳細MapVar);
