@@ -727,13 +727,22 @@ function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusi
     } else if (myCondStrArr.length == 2) {
         if (myCondStrArr[1].indexOf('-') != -1) {
             const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
+            const re2 = new RegExp('/([0-9\\.]+)(.*)');
             let reRet = re.exec(myCondStrArr[1]);
             if (reRet) {
                 let prefix = reRet[1];
                 let rangeStart = Number(reRet[2]);
                 let rangeEnd = Number(reRet[3]);
+                let skip = rangeStart;
                 let postfix = reRet[4];
-                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, rangeStart, rangeEnd)) {
+                if (postfix) {
+                    let re2Ret = re2.exec(postfix);
+                    if (re2Ret) {
+                        skip = Number(re2Ret[1]);
+                        postfix = re2Ret[2];
+                    }
+                }
+                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, skip, rangeEnd)) {
                     pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
                 }
                 pushToMapValueArray(conditionMap, myName, prefix + String(rangeEnd) + postfix);
