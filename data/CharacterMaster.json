@@ -94,8 +94,7 @@
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/aero_5_bow_Venti.json",
-        "image": "images/Venti.png",
-        "disabled": true
+        "image": "images/Venti.png"
     },
     "七七": {
         "レアリティ": 5,
