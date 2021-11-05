@@ -94,22 +94,19 @@
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/aero_5_bow_Venti.json",
-        "image": "images/Venti.png",
-        "disabled": true
+        "image": "images/Venti.png"
     },
     "七七": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/cryo_5_sword_Qiqi.json",
-        "image": "images/Qiqi.png",
-        "disabled": true
+        "image": "images/Qiqi.png"
     },
     "刻晴": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/electro_5_sword_Keqing.json",
-        "image": "images/Keqing.png",
-        "disabled": true
+        "image": "images/Keqing.png"
     },
     "ジン": {
         "レアリティ": 5,

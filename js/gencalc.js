@@ -2013,8 +2013,6 @@ const キャラクターInputOnChange = function () {
                 break;
         }
 
-        setupBaseDamageDetailDataCharacter();
-
         let my命ノ星座 = 0;
         if (キャラクター名前Var in キャラクター所持状況ObjVar) {
             my命ノ星座 = キャラクター所持状況ObjVar[キャラクター名前Var];
@@ -2061,6 +2059,7 @@ const キャラクターInputOnChange = function () {
             appendOptionElements(選択中キャラクターデータVar['おすすめセット'], '#おすすめセットInput');
             おすすめセットInputOnChange();
         } else {
+            setupBaseDamageDetailDataCharacter();
             武器InputOnChange();
         }
     });
