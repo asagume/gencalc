@@ -1878,6 +1878,22 @@ const 武器InputOnChange = function () {
             });
         }
 
+        let my精錬ランク = 1;
+        if ('レアリティ' in 選択中武器データVar) {
+            switch (選択中武器データVar['レアリティ']) {
+                case 5:
+                    my精錬ランク = 1;
+                    break;
+                case 4:
+                    my精錬ランク = 3;
+                    break;
+                case 3:
+                    my精錬ランク = 5;
+                    break;
+            }
+        }
+        $('#精錬ランクInput').val(my精錬ランク);
+
         setupBaseDamageDetailDataWeapon();
         inputOnChangeOptionUpdate();
     });
@@ -1918,6 +1934,20 @@ const 命ノ星座InputOnChange = function () {
     setupBaseDamageDetailDataCharacter();
     inputOnChangeOptionUpdate();
 };
+
+function get説明(obj) {
+    let result = '';
+    if ('説明' in obj) {
+        if ($.isArray(obj['説明'])) {
+            obj['説明'].forEach(e => {
+                result += e;
+            });
+        } else if (obj['説明'] instanceof String || typeof (obj['説明']) == 'string') {
+            result = obj['説明'];
+        }
+    }
+    return result;
+}
 
 // キャラクター 変更イベント
 const キャラクターInputOnChange = function () {
@@ -1985,14 +2015,33 @@ const キャラクターInputOnChange = function () {
 
         setupBaseDamageDetailDataCharacter();
 
+        let my命ノ星座 = 0;
         if (キャラクター名前Var in キャラクター所持状況ObjVar) {
-            let my命ノ星座 = キャラクター所持状況ObjVar[キャラクター名前Var];
-            if (my命ノ星座 != null) {
-                $('#命ノ星座Input').val(my命ノ星座);
+            my命ノ星座 = キャラクター所持状況ObjVar[キャラクター名前Var];
+            if (my命ノ星座 == null) {
+                my命ノ星座 = 0;
             }
-        } else {
-            $('#命ノ星座Input').val(0);
         }
+        $('#命ノ星座Input').val(my命ノ星座);
+
+        let my通常攻撃レベル = 8;
+        let my元素スキルレベル = 8;
+        let my元素爆発レベル = 8;
+        if ('命ノ星座' in 選択中キャラクターデータVar) {
+            for (let i = Number(my命ノ星座); i > 0; i--) {
+                if ((i == 3 || i == 5) && i in 選択中キャラクターデータVar['命ノ星座']) {
+                    let my説明 = get説明(選択中キャラクターデータVar['命ノ星座'][i]);
+                    if (my説明.startsWith(元素スキル名称Var)) {
+                        my元素スキルレベル = 11;
+                    } else if (my説明.startsWith(元素爆発名称Var)) {
+                        my元素爆発レベル = 11;
+                    }
+                }
+            }
+        }
+        $('#通常攻撃レベルInput').val(my通常攻撃レベル);
+        $('#元素スキルレベルInput').val(my元素スキルレベル);
+        $('#元素爆発レベルInput').val(my元素爆発レベル);
 
         if ($('#全武器解放Config').prop('checked')) {
             選択可能武器セットObjVar = {};
