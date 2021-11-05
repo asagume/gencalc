@@ -108,8 +108,7 @@
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/electro_5_sword_Keqing.json",
-        "image": "images/Keqing.png",
-        "disabled": true
+        "image": "images/Keqing.png"
     },
     "ジン": {
         "レアリティ": 5,
