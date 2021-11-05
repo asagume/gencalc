@@ -733,16 +733,16 @@ function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusi
                 let prefix = reRet[1];
                 let rangeStart = Number(reRet[2]);
                 let rangeEnd = Number(reRet[3]);
-                let skip = rangeStart;
+                let step = rangeStart;
                 let postfix = reRet[4];
                 if (postfix) {
                     let re2Ret = re2.exec(postfix);
                     if (re2Ret) {
-                        skip = Number(re2Ret[1]);
+                        step = Number(re2Ret[1]);
                         postfix = re2Ret[2];
                     }
                 }
-                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, skip, rangeEnd)) {
+                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
                     pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
                 }
                 pushToMapValueArray(conditionMap, myName, prefix + String(rangeEnd) + postfix);
@@ -1985,6 +1985,15 @@ const キャラクターInputOnChange = function () {
 
         setupBaseDamageDetailDataCharacter();
 
+        if (キャラクター名前Var in キャラクター所持状況ObjVar) {
+            let my命ノ星座 = キャラクター所持状況ObjVar[キャラクター名前Var];
+            if (my命ノ星座 != null) {
+                $('#命ノ星座Input').val(my命ノ星座);
+            }
+        } else {
+            $('#命ノ星座Input').val(0);
+        }
+
         if ($('#全武器解放Config').prop('checked')) {
             選択可能武器セットObjVar = {};
             Object.keys(武器MasterVar).forEach(key => {
@@ -2137,6 +2146,9 @@ $(document).ready(function () {
                 else if ('selected' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['selected']) select = key;
             });
             characterSelected(select);
+
+            loadキャラクター所持状況();
+            buildキャラクター所持状況List();
         }),
         fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {
             武器MasterVar["片手剣"] = jsonObj;
@@ -2200,6 +2212,9 @@ $(document).ready(function () {
         敵InputOnChange();
     });
 });
+
+
+$(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

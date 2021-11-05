@@ -17,7 +17,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0;">
-                    げんかるく - 原神ダメージシミュレーター Ver.0.31
+                    げんかるく - 原神ダメージシミュレーター Ver.0.35
                 </div>
                 <div style="position: absolute; right: 0;">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -635,7 +635,14 @@
                 © 2021 asagume
             </footer>
         </div>
-        <div style="display: block;">
+
+        <div style="text-align: center;">
+            <h2>キャラクター所持状況</h2>
+            <ul id="キャラクター所持状況List"></ul>
+            <button type="button" id="キャラクター所持状況保存Button">ローカルストレージに保存</button>
+        </div>
+
+        <div style="display: none;">
             <fieldset>
                 <legend>デバッグ情報</legend>
                 <div id="debugInfo"></div>

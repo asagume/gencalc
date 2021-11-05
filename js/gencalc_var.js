@@ -166,3 +166,72 @@ function initステータス詳細ObjVar() {
     }
 }
 
+var キャラクター所持状況ObjVar = {}
+
+function buildキャラクター所持状況List() {
+    $('#キャラクター所持状況List').empty();
+
+    let ulElem = document.getElementById('キャラクター所持状況List');
+    Object.keys(キャラクターMasterVar).forEach(key => {
+        let myCharacterMaster = キャラクターMasterVar[key];
+        if ('image' in myCharacterMaster) {
+            let liElem = document.createElement('li');
+            ulElem.appendChild(liElem);
+
+            let divElem = document.createElement('div');
+            divElem.id = key + '_所持状況Input';
+            liElem.appendChild(divElem);
+
+            let imgElem = document.createElement('img');
+            imgElem.src = myCharacterMaster['image'];
+            imgElem.alt = key;
+            imgElem.width = 100;
+            imgElem.height = 100;
+            divElem.appendChild(imgElem);
+
+            let pElem = document.createElement('p');
+            if (key in キャラクター所持状況ObjVar) {
+                pElem.textContent = キャラクター所持状況ObjVar[key];
+            }
+            divElem.appendChild(pElem);
+
+            if (!pElem.textContent) {
+                imgElem.className = 'darken';
+            }
+        }
+    });
+
+    $(document).on('click', '#キャラクター所持状況List li div', キャラクター所持状況OnClick);
+}
+
+const キャラクター所持状況OnClick = function () {
+    let val = $('#' + this.id + ' p').text();
+    if (val) {
+        if (++val > 6) {
+            val = null;
+            $('#' + this.id + ' img').addClass('darken');
+        }
+    } else {
+        val = 0;
+        $('#' + this.id + ' img').removeClass('darken');
+    }
+    $('#' + this.id + ' p').text(val);
+
+    キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
+}
+
+const loadキャラクター所持状況 = function () {
+    if (localStorage['キャラクター所持状況']) {
+        try {
+            キャラクター所持状況ObjVar = JSON.parse(localStorage['キャラクター所持状況']);
+        } catch (error) {
+            キャラクター所持状況ObjVar = {};
+        }
+    } else {
+        キャラクター所持状況ObjVar = {};
+    }
+}
+
+const saveキャラクター所持状況 = function () {
+    localStorage['キャラクター所持状況'] = JSON.stringify(キャラクター所持状況ObjVar);
+}

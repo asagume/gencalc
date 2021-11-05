@@ -114,7 +114,7 @@ fieldset {
     grid-area: footer;
     margin: 10px;
     background-color: #312820;
-    color: #3a2e0c;
+    color: #886b1d;
     text-align: left;
     font-size: 1.4rem;
 }
@@ -672,4 +672,48 @@ section.tiny article.input-item label {
 
 #face section label {
     font-size: 1.4rem;
+}
+
+ul#キャラクター所持状況List {
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    width: 100%;
+}
+
+#キャラクター所持状況List li {
+    position: relative;
+    display: inline-block;
+}
+
+#キャラクター所持状況List li div {
+    border-style: double;
+    border-width: 2px;
+}
+
+#キャラクター所持状況List li div img {
+    vertical-align: top;
+}
+
+#キャラクター所持状況List li div img.darken {
+    opacity: 0.5;
+}
+
+#キャラクター所持状況List li div p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    color: blanchedalmond;
+    font-size: 2rem;
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+}
+
+button {
+    width: 300px;
+    height: 40px;
+    font-size: 1.6rem;
+    border-radius: 10px;
+    margin: 20px;
 }
