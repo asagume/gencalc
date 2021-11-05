@@ -101,8 +101,7 @@
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/cryo_5_sword_Qiqi.json",
-        "image": "images/Qiqi.png",
-        "disabled": true
+        "image": "images/Qiqi.png"
     },
     "刻晴": {
         "レアリティ": 5,
