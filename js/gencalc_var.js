@@ -64,6 +64,9 @@ var バフデバフオプション排他Map = new Map();
 const オプション条件MapVar = new Map();
 const オプション排他MapVar = new Map(); // 同時にcheckedにならない条件を保持します
 
+// オプションの状態を記憶します。
+const オプションElementIdValue記憶Map = new Map();
+
 // hidable要素に紐づくセレクタとvisibility=true/falseを保持するMap
 var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 
@@ -248,7 +251,7 @@ const clearローカルストレージ = function () {
     toggleローカルストレージクリア();
 }
 
-const toggleローカルストレージクリア = function() {
+const toggleローカルストレージクリア = function () {
     let checked = $('#ローカルストレージクリアInput').prop('checked');
     $('#ローカルストレージクリアButton').prop('disabled', !checked);
 }

@@ -1636,8 +1636,6 @@ const applyOptionVariable = function (elem) {
     }
 }
 
-const オプションElementIdValue記憶Map = new Map(); // オプションの状態を記憶します。
-
 // オプション 変更イベント
 const オプションInputOnChange = function () {
     if ((this instanceof HTMLInputElement && this.checked) || (this instanceof HTMLSelectElement && this)) {
@@ -1910,11 +1908,24 @@ function getNormalAttackDefaultElement() {
 const おすすめセットInputOnChange = function () {
     let entry = 選択中キャラクターデータVar['おすすめセット'][$('#おすすめセットInput').val()];
     Object.keys(entry).forEach(key => {
-        if (entry[key]) {
-            $('#' + key + 'Input').val(entry[key]);
-        } else {
-            $('#' + key + 'Input').prop('selectedIndex', 0);
-        }
+        ['Input', 'Option'].forEach(suffix => {
+            let elemId = key + suffix;
+            let elem = document.getElementById(elemId);
+            if (elem != null) {
+                if (elem instanceof HTMLInputElement) {
+                    elem.checked = entry[key];  // true or false
+                } else if (elem instanceof HTMLSelectElement) {
+                    if (suffix == 'Option') {
+                        elem.selectedIndex = entry[key];    // number
+                    } else {
+                        elem.value = entry[key];    // string
+                    }
+                }
+                if (suffix == 'Option') {
+                    オプションElementIdValue記憶Map.set(elemId, entry[key]);
+                }
+            }
+        });
     });
     setupBaseDamageDetailDataCharacter();
     inputOnChangeArtifactSubUpdate();
