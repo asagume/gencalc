@@ -234,8 +234,7 @@
         "武器": "弓",
         "import": "data/characters/electro_4_bow_Fischl.json",
         "image": "images/Fischl.png",
-        "image2": "images/hoyolab/0bb4e376b31993e6fdab02786bc6a20a.png",
-        "disabled": true
+        "image2": "images/hoyolab/0bb4e376b31993e6fdab02786bc6a20a.png"
     },
     "レザー": {
         "レアリティ": 4,
