@@ -20,8 +20,7 @@
         "元素": "氷",
         "武器": "弓",
         "import": "data/characters/cryo_5_bow_Aloy.json",
-        "image": "images/Aloy.png",
-        "disabled": true
+        "image": "images/Aloy.png"
     },
     "宵宮": {
         "レアリティ": 5,

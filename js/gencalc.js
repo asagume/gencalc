@@ -1001,7 +1001,15 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
             elem.appendChild(optionElem);
         });
         if (opt_checked) {
-            optionElem.selected = true;
+            let mySelected = true;
+            if (オプション排他MapVar.has(key)) {
+                オプション排他MapVar.get(key).forEach(entry => {
+                    if ($('#' + selectorEscape(entry) + 'Option').prop('checked')) {
+                        mySelected = false;
+                    }
+                });
+            }
+            optionElem.selected = mySelected;
         }
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
@@ -1994,6 +2002,82 @@ const キャラクターInputOnChange = function () {
         元素爆発_基礎ダメージ詳細ArrVar = [];
         その他_基礎ダメージ詳細ArrMapVar.clear();
 
+        // 命ノ星座selectの範囲(option)設定を行います for アーロイ
+        if ('命ノ星座' in 選択中キャラクターデータVar) {
+            $('#命ノ星座Input option').each((index, elem) => {
+                elem.hidden = false;
+            });
+        } else {
+            $('#命ノ星座Input option').each((index, elem) => {
+                if (elem.value != 0) {
+                    elem.hidden = true;
+                }
+            });
+        }
+
+        // 天賦レベルselectの範囲(option)設定を行います for アーロイ
+        let max通常攻撃レベル = 11;
+        let max元素スキルレベル = 13;
+        let max元素爆発レベル = 13;
+        for (let i = 11; i > 10; i--) {
+            選択中キャラクターデータVar['通常攻撃']['詳細'].forEach(detailObj => {
+                if ('数値' in detailObj) {
+                    if ($.isPlainObject(detailObj['数値'])) {
+                        if (!(i in detailObj['数値'])) {
+                            max通常攻撃レベル = i - 1;
+                        }
+                    }
+                }
+            });
+            選択中キャラクターデータVar['重撃']['詳細'].forEach(detailObj => {
+                if ('数値' in detailObj) {
+                    if ($.isPlainObject(detailObj['数値'])) {
+                        if (!(i in detailObj['数値'])) {
+                            max通常攻撃レベル = i - 1;
+                        }
+                    }
+                }
+            });
+            選択中キャラクターデータVar['落下攻撃']['詳細'].forEach(detailObj => {
+                if ('数値' in detailObj) {
+                    if ($.isPlainObject(detailObj['数値'])) {
+                        if (!(i in detailObj['数値'])) {
+                            max通常攻撃レベル = i - 1;
+                        }
+                    }
+                }
+            });
+        }
+        for (let i = 13; i > 10; i--) {
+            選択中キャラクターデータVar['元素スキル']['詳細'].forEach(detailObj => {
+                if ('数値' in detailObj) {
+                    if ($.isPlainObject(detailObj['数値'])) {
+                        if (!(i in detailObj['数値'])) {
+                            max元素スキルレベル = i - 1;
+                        }
+                    }
+                }
+            });
+            選択中キャラクターデータVar['元素爆発']['詳細'].forEach(detailObj => {
+                if ('数値' in detailObj) {
+                    if ($.isPlainObject(detailObj['数値'])) {
+                        if (!(i in detailObj['数値'])) {
+                            max元素爆発レベル = i - 1;
+                        }
+                    }
+                }
+            });
+        }
+        $('#通常攻撃レベルInput option').each((index, elem) => {
+            elem.hidden = elem.value > max通常攻撃レベル;
+        });
+        $('#元素スキルレベルInput option').each((index, elem) => {
+            elem.hidden = elem.value > max元素スキルレベル;
+        });
+        $('#元素爆発レベルInput option').each((index, elem) => {
+            elem.hidden = elem.value > max元素爆発レベル;
+        });
+
         switch (キャラクター元素Var) {
             case '炎':
                 $('#元素反応なしInput+label').show();
@@ -2030,6 +2114,13 @@ const キャラクターInputOnChange = function () {
             if (my命ノ星座 == null) {
                 my命ノ星座 = 0;
             }
+        }
+        if ('命ノ星座' in 選択中キャラクターデータVar) {
+            if (!(my命ノ星座 in 選択中キャラクターデータVar['命ノ星座'])) {
+                my命ノ星座 = 0;
+            }
+        } else {
+            my命ノ星座 = 0;
         }
         $('#命ノ星座Input').val(my命ノ星座);
 
