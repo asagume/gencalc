@@ -2263,9 +2263,8 @@ $(document).ready(function () {
 
 
 $(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
-$(document).on('click', '#ローカルストレージクリアButton', function () {
-    localStorage.clear();
-});
+$(document).on('click', '#ローカルストレージクリアInput', toggleローカルストレージクリア);
+$(document).on('click', '#ローカルストレージクリアButton', clearローカルストレージ);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

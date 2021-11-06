@@ -218,6 +218,8 @@ const キャラクター所持状況OnClick = function () {
     $('#' + this.id + ' p').text(val);
 
     キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
+
+    $('#キャラクター所持状況保存Button').prop('disabled', false);
 }
 
 const loadキャラクター所持状況 = function () {
@@ -230,8 +232,24 @@ const loadキャラクター所持状況 = function () {
     } else {
         キャラクター所持状況ObjVar = {};
     }
+    $('#キャラクター所持状況Button').prop('disabled', true);
 }
 
 const saveキャラクター所持状況 = function () {
     localStorage['キャラクター所持状況'] = JSON.stringify(キャラクター所持状況ObjVar);
+    $('#キャラクター所持状況保存Button').prop('disabled', true);
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
 }
+
+const clearローカルストレージ = function () {
+    localStorage.clear();
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
+}
+
+const toggleローカルストレージクリア = function() {
+    let checked = $('#ローカルストレージクリアInput').prop('checked');
+    $('#ローカルストレージクリアButton').prop('disabled', !checked);
+}
+

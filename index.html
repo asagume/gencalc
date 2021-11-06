@@ -639,8 +639,12 @@
         <div style="text-align: center;">
             <h2>キャラクター所持状況</h2>
             <ul id="キャラクター所持状況List"></ul>
-            <button type="button" id="キャラクター所持状況保存Button">キャラクター所持状況を保存</button>
-            <button type="button" id="ローカルストレージクリアButton">ローカルストレージをクリア</button>
+            <button type="button" id="キャラクター所持状況保存Button" disabled>キャラクター所持状況を保存</button>
+            <hr>
+            <input type="checkbox" id="ローカルストレージクリアInput">
+            <label for="ローカルストレージクリアInput">ローカルストレージをクリアする</label>
+            <button type="button" id="ローカルストレージクリアButton" disabled>実行</button>
+            <p>ブラウザーからキャラクター所持状況のセーブデータが削除されます。</p>
         </div>
 
         <div style="display: none;">

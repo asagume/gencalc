@@ -57,8 +57,7 @@
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/aero_5_polearm_Xiao.json",
-        "image": "images/Xiao.png",
-        "disabled": true
+        "image": "images/Xiao.png"
     },
     "甘雨": {
         "レアリティ": 5,
