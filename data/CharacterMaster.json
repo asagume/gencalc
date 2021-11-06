@@ -4,14 +4,16 @@
         "元素": "水",
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_SangonomiyaKokomi.json",
-        "image": "images/SangonomiyaKokomi.png"
+        "image": "images/SangonomiyaKokomi.png",
+        "image2": "images/hoyolab/fd94f2afc70ab075c727ce0805fd0201.png"
     },
     "雷電将軍": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "長柄武器",
         "import": "data/characters/electro_5_polearm_RaidenShogun.json",
-        "image": "images/RaidenShogun.png"
+        "image": "images/RaidenShogun.png",
+        "image2": "images/hoyolab/af8df0bbece1be9ab90d3cf2cb0ee7bd.png"
     },
     "アーロイ": {
         "レアリティ": 5,
@@ -26,103 +28,120 @@
         "元素": "炎",
         "武器": "弓",
         "import": "data/characters/pyro_5_bow_Yoimiya.json",
-        "image": "images/Yoimiya.png"
+        "image": "images/Yoimiya.png",
+        "image2": "images/hoyolab/7c15028cb304de316e2cdb584bc33ff3.png"
     },
     "神里綾華": {
         "レアリティ": 5,
         "import": "data/characters/cryo_5_sword_KamisatoAyaka.json",
-        "image": "images/KamisatoAyaka.png"
+        "image": "images/KamisatoAyaka.png",
+        "image2": "images/hoyolab/dbb893c26e20822aabd876a52361fffa.png"
     },
     "楓原万葉": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_KaedeharaKazuha.json",
-        "image": "images/KaedeharaKazuha.png"
+        "image": "images/KaedeharaKazuha.png",
+        "image2": "images/hoyolab/d2df66ab1ab047fd2392ab816c77ea19.png"
     },
     "エウルア": {
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/cryo_5_claymore_Eula.json",
-        "image": "images/Eula.png"
+        "image": "images/Eula.png",
+        "image2": "images/hoyolab/6840f27db9745020aad45853bff79c7c.png"
     },
     "胡桃": {
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/pyro_5_polearm_HuTao.json",
         "image": "images/HuTao.png",
+        "image2": "images/hoyolab/e160b5fac097d628f5b2227fd507373b.png",
         "selected": true
     },
     "魈": {
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/aero_5_polearm_Xiao.json",
-        "image": "images/Xiao.png"
+        "image": "images/Xiao.png",
+        "image2": "images/hoyolab/59cb768b56ebc0143d6d2e37385c934c.png"
     },
     "甘雨": {
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/cryo_5_bow_Ganyu.json",
-        "image": "images/Ganyu.png"
+        "image": "images/Ganyu.png",
+        "image2": "images/hoyolab/b38c9b47c9e18a8b91f23e468c1cc85b.png"
     },
     "アルベド": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/geo_5_sword_Albedo.json",
-        "image": "images/Albedo.png"
+        "image": "images/Albedo.png",
+        "image2": "images/hoyolab/066e0473fa8868ece3f2e5802c1a11d8.png"
     },
     "鍾離": {
         "レアリティ": 5,
         "武器": "長柄武器",
         "import": "data/characters/geo_5_polearm_Zhongli.json",
-        "image": "images/Zhongli.png"
+        "image": "images/Zhongli.png",
+        "image2": "images/hoyolab/693b8a54de3e9ea43854615c14a5032b.png"
     },
     "タルタリヤ": {
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/hydro_5_bow_Tartaglia.json",
-        "image": "images/Tartaglia.png"
+        "image": "images/Tartaglia.png",
+        "image2": "images/hoyolab/5b8a09e2b9f4a087b76042f556cadf08.png"
     },
     "クレー": {
         "レアリティ": 5,
         "武器": "法器",
         "import": "data/characters/pyro_5_catalyst_Klee.json",
-        "image": "images/Klee.png"
+        "image": "images/Klee.png",
+        "image2": "images/hoyolab/9fc58c36fc45bfc64211f5254378d788.png"
     },
     "ウェンティ": {
         "レアリティ": 5,
         "武器": "弓",
         "import": "data/characters/aero_5_bow_Venti.json",
-        "image": "images/Venti.png"
+        "image": "images/Venti.png",
+        "image2": "images/hoyolab/f42e16fca94650e2e932c093de92ae54.png"
     },
     "七七": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/cryo_5_sword_Qiqi.json",
-        "image": "images/Qiqi.png"
+        "image": "images/Qiqi.png",
+        "image2": "images/hoyolab/d696551575bc6c117462563fc92eae6c.png"
     },
     "刻晴": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/electro_5_sword_Keqing.json",
-        "image": "images/Keqing.png"
+        "image": "images/Keqing.png",
+        "image2": "images/hoyolab/40d97fbb1ae120a4d97573aef702d0a3.png"
     },
     "ジン": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_Jean.json",
-        "image": "images/Jean.png"
+        "image": "images/Jean.png",
+        "image2": "images/hoyolab/e15d789a558b128c05763495d35d55b9.png"
     },
     "モナ": {
         "レアリティ": 5,
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_Mona.json",
-        "image": "images/Mona.png"
+        "image": "images/Mona.png",
+        "image2": "images/hoyolab/d8cd53b171e51e3bd1319529bc925ffc.png"
     },
     "ディルック": {
         "レアリティ": 5,
         "武器": "両手剣",
         "import": "data/characters/pyro_5_claymore_Diluc.json",
-        "image": "images/Diluc.png"
+        "image": "images/Diluc.png",
+        "image2": "images/hoyolab/7f68f45a650bbcf804215fc7890c7f35.png"
     },
     "トーマ": {
         "レアリティ": 4,
@@ -136,68 +155,79 @@
         "元素": "雷",
         "武器": "弓",
         "import": "data/characters/electro_4_bow_KujouSara.json",
-        "image": "images/KujouSara.png"
+        "image": "images/KujouSara.png",
+        "image2": "images/hoyolab/5ea7bdaf660c0da94ff445221daf483c.png"
     },
     "早柚": {
         "レアリティ": 4,
         "元素": "風",
         "武器": "両手剣",
         "import": "data/characters/aero_4_claymore_Sayu.json",
-        "image": "images/Sayu.png"
+        "image": "images/Sayu.png",
+        "image2": "images/hoyolab/94b60ed23cb102d39f99335e9658b17d.png"
     },
     "煙緋": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/pyro_4_catalyst_Yanfei.json",
-        "image": "images/Yanfei.png"
+        "image": "images/Yanfei.png",
+        "image2": "images/hoyolab/75c1d48b2fa08bd4c583501a3bb476d3.png"
     },
     "ロサリア": {
         "レアリティ": 4,
         "武器": "長柄武器",
         "import": "data/characters/cryo_4_polearm_Rosaria.json",
-        "image": "images/Rosaria.png"
+        "image": "images/Rosaria.png",
+        "image2": "images/hoyolab/da6ff2b868b5ff680484149c69518001.png"
     },
     "辛炎": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/pyro_4_claymore_Xinyan.json",
-        "image": "images/Xinyan.png"
+        "image": "images/Xinyan.png",
+        "image2": "images/hoyolab/1a30faffb4b122f778b1ab4c7c39d6bf.png"
     },
     "ディオナ": {
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/cryo_4_bow_Diona.json",
-        "image": "images/Diona.png"
+        "image": "images/Diona.png",
+        "image2": "images/hoyolab/d4e511080346c2ce43636eeb10dd7226.png"
     },
     "凝光": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/geo_4_catalyst_Ningguang.json",
-        "image": "images/Ningguang.png"
+        "image": "images/Ningguang.png",
+        "image2": "images/hoyolab/498b811beba3fbeb2549a5b362190d43.png"
     },
     "ノエル": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/geo_4_claymore_Noelle.json",
-        "image": "images/Noelle.png"
+        "image": "images/Noelle.png",
+        "image2": "images/hoyolab/13501ee5d8e3cf851d300d10cd489eda.png"
     },
     "重雲": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/cryo_4_claymore_Chongyun.json",
-        "image": "images/Chongyun.png"
+        "image": "images/Chongyun.png",
+        "image2": "images/hoyolab/af335b6e68883e7e40237040aa020cf1.png"
     },
     "スクロース": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/aero_4_catalyst_Sucrose.json",
-        "image": "images/Sucrose.png"
+        "image": "images/Sucrose.png",
+        "image2": "images/hoyolab/847f473c066889902758a5fb8ef96b20.png"
     },
     "北斗": {
         "レアリティ": 4,
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Beidou.json",
         "image": "images/Beidou.png",
+        "image2": "images/hoyolab/515effa5bfabb8fc03a52cbf76a4a79e.png",
         "disabled": true
     },
     "フィッシュル": {
@@ -205,6 +235,7 @@
         "武器": "弓",
         "import": "data/characters/electro_4_bow_Fischl.json",
         "image": "images/Fischl.png",
+        "image2": "images/hoyolab/0bb4e376b31993e6fdab02786bc6a20a.png",
         "disabled": true
     },
     "レザー": {
@@ -212,69 +243,77 @@
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Razor.json",
         "image": "images/Razor.png",
+        "image2": "images/hoyolab/997709a43b4f8d80a58ac14d412bf2e7.png",
         "disabled": true
     },
     "行秋": {
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/hydro_4_sword_Xingqiu.json",
-        "image": "images/Xingqiu.png"
+        "image": "images/Xingqiu.png",
+        "image2": "images/hoyolab/d68cbf2479e0dfecaa1a74a0cf92938d.png"
     },
     "バーバラ": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/hydro_4_catalyst_Barbara.json",
-        "image": "images/Barbara.png"
+        "image": "images/Barbara.png",
+        "image2": "images/hoyolab/ab379e098108dde5d69bff755ee84eec.png"
     },
     "香菱": {
         "レアリティ": 4,
         "武器": "長柄武器",
         "import": "data/characters/pyro_4_polearm_Xiangling.json",
-        "image": "images/Xiangling.png"
+        "image": "images/Xiangling.png",
+        "image2": "images/hoyolab/a7c7c7c0e2f25a56973eee17fc4481ab.png"
     },
     "ベネット": {
         "レアリティ": 4,
         "import": "data/characters/pyro_4_sword_Benette.json",
-        "image": "images/Benette.png"
+        "image": "images/Benette.png",
+        "image2": "images/hoyolab/ae28c20334e122c68423ccc3c9522b75.png"
     },
     "ガイア": {
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/cryo_4_sword_Kaeya.json",
-        "image": "images/Kaeya.png"
+        "image": "images/Kaeya.png",
+        "image2": "images/hoyolab/428a3008f1d6fda010ccfcf7d83b08fe.png"
     },
     "リサ": {
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/electro_4_catalyst_Lisa.json",
         "image": "images/Lisa.png",
+        "image2": "images/hoyolab/06b5a07d8f98649e5e09c58aa7904752.png",
         "disabled": true
     },
     "アンバー": {
         "レアリティ": 4,
         "武器": "弓",
         "import": "data/characters/pyro_4_bow_Amber.json",
-        "image": "images/Amber.png"
+        "image": "images/Amber.png",
+        "image2": "images/hoyolab/b7c1e4d14fdaac060eb86e3ad09bbf78.png"
     },
     "旅人(雷)": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/electro_4_sword_Traveler.json",
-        "image": "images/Traveler_electro.png",
+        "image2": "images/hoyolab/762377aee992cb1dfd4e0e0a7911096d.png",
         "disabled": true
     },
     "旅人(岩)": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/geo_4_sword_Traveler.json",
-        "image": "images/Traveler_geo.png",
+        "image2": "images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png",
         "disabled": true
     },
     "旅人(風)": {
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_4_sword_Traveler.json",
-        "image": "images/Traveler_aero.png",
+        "image2": "images/hoyolab/762377aee992cb1dfd4e0e0a7911096d.png",
         "disabled": true
     }
 }

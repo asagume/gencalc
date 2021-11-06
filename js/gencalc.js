@@ -2166,7 +2166,8 @@ $(document).on('change', 'input[name="元素反応Input"]', elementalRectionOnCh
 
 function characterSelected(name) {
     $('#キャラクターInput').val(name);
-    $('#選択キャラクターImg').prop('src', キャラクターMasterVar[name]['image']);
+    let src = 'image2' in キャラクターMasterVar[name] ? キャラクターMasterVar[name]['image2'] : キャラクターMasterVar[name]['image'];
+    $('#選択キャラクターImg').prop('src', src);
     $('#選択キャラクター名前Label').text(name);
     キャラクターInputOnChange();
 }

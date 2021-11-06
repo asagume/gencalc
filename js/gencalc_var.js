@@ -177,7 +177,9 @@ function buildキャラクター所持状況List() {
     let ulElem = document.getElementById('キャラクター所持状況List');
     Object.keys(キャラクターMasterVar).forEach(key => {
         let myCharacterMaster = キャラクターMasterVar[key];
-        if ('image' in myCharacterMaster) {
+        if ('image' in myCharacterMaster || 'image2' in myCharacterMaster) {
+            let src = 'image' in myCharacterMaster ? myCharacterMaster['image'] : myCharacterMaster['image2'];
+
             let liElem = document.createElement('li');
             ulElem.appendChild(liElem);
 
@@ -186,7 +188,7 @@ function buildキャラクター所持状況List() {
             liElem.appendChild(divElem);
 
             let imgElem = document.createElement('img');
-            imgElem.src = myCharacterMaster['image'];
+            imgElem.src = src;
             imgElem.alt = key;
             imgElem.width = 100;
             imgElem.height = 100;
