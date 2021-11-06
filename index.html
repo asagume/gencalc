@@ -614,20 +614,8 @@
                     <label class="tab-area3" for="tab-area-bottom3">予備３</label>
                     <div class="tab-content">
                         <p>予備のスペース</p>
-                        <p>Cookieに選択を保存したり、呼び出したりできるとよい気がします</p>
-                        <a href="characterList.html">キャラクター天賦倍率一覧(確認用)</a>
-                        <a href="normalAttackList.html">武器別通常攻撃天賦倍率一覧(確認用)</a>
-                        <div class="cookie-area">
-                            <div>
-                                <select size="8" id="cookie-list"></select>
-                            </div>
-                            <div>
-                                <input type="text" id="cookie-name">
-                                <button type="button" id="save-cookie">セーブ</button>
-                                <button type="button" id="load-cookie">ロード</button>
-                                <button type="button" id="clear-cookie">クリア</button>
-                            </div>
-                        </div>
+                        <p><a href="characterList.html">キャラクター天賦倍率一覧(確認用)</a></p>
+                        <p><a href="normalAttackList.html">武器別通常攻撃天賦倍率一覧(確認用)</a></p>
                     </div>
                 </div>
             </div>
@@ -690,124 +678,6 @@
             '敵レベルInput'
         ];
 
-        const serializeCookie = function () {
-            let keyValueMap = new Map();
-            KEY_ELEMENT_ID_ARR.forEach(value => {
-                keyValueMap.set(value, document.getElementById(value).value);
-            });
-            オプション条件MapVar.forEach((value, key) => {
-                let elem = document.getElementById(key + 'Option');
-                if (elem instanceof HTMLInputElement) {
-                    keyValueMap.set(key, elem.checked);
-                } else {
-                    keyValueMap.set(key, elem.value);
-                }
-            });
-            let resultArr = [];
-            keyValueMap.forEach((value, key) => {
-                resultArr.push(key + '=' + value);
-            });
-            let result = resultArr.join('&');
-            console.log(result);
-            return result;
-        }
-
-        const applyInputFromCookieString = function (cookieStr) {
-            let strArr = cookieStr.split('&');
-            strArr.forEach(entry => {
-                let entryArr = entry.split('=');
-                let elem = document.getElementById(entryArr[0]);
-                if (elem) {
-                    if (elem instanceof HTMLInputElement) {
-                        elem.checked = entryArr[1];
-                    } else {
-                        elem.value = entryArr[1];
-                    }
-                    if (elem.id.endsWith('Option')) {
-                        オプションElementIdValue記憶Map.set(entryArr[0], entryArr[1]);
-                    }
-                } else {
-                    オプションElementIdValue記憶Map.set(entryArr[0], entryArr[1]);
-                }
-            });
-        }
-
-        var cookieArr = [];
-        cookieArr.length = 20;
-
-        let cookieListElem = document.getElementById('cookie-list');
-        for (let i = 0; i < cookieArr.length; i++) {
-            let optionElem = document.createElement('option');
-            optionElem.value = i + 1;
-            if (cookieArr[i]) {
-                optionElem.textContent = (i + 1) + ':';
-            } else {
-                optionElem.textContent = (i + 1) + ':';
-            }
-            cookieListElem.appendChild(optionElem);
-        }
-
-        document.cookie.split(';').filter(e => e.startsWith('save_')).forEach(entry => {
-            const partArr = entry.split('=');
-            if (partArr.length == 2) {
-                const index = partArr[0].replace('save_', '');
-                const value = unescape(partArr[1]);
-                const valueArr = value.split('&');
-                let saveName;
-                for (let i = 0; i < valueArr.length; i++) {
-                    if (valueArr[i].startsWith('saveName=')) {
-                        saveName = valueArr[i].split('=')[1];
-                        break;
-                    } else if (valueArr[i].startsWith('キャラクターInput=')) {
-                        saveName = valueArr[i].split('=')[1];
-                    }
-                }
-                Array.from(cookieListElem.children).forEach(child => {
-                    if (child instanceof HTMLOptionElement) {
-                        if (child.value == index) {
-                            child.textContent = index + ':' + saveName;
-                        }
-                    }
-                });
-            }
-        });
-
-        const cookieListOnChange = function () {
-            Array.from(this.children).filter(e => e.value == this.value).forEach(child => {
-                let name = child.textContent;
-                if (name) {
-                    name = name.indexOf(':') > -1 ? name.substr(name.indexOf(':') + 1) : name;
-                }
-                $('#cookie-name').val(name);
-            });
-        };
-
-        const cookieSave = function () {
-            let index = $('#cookie-list').val();
-            if (!index || index < 1) return;
-
-            let newCookie = 'save_' + index + '=' + escape(serializeCookie());
-            document.cookie = newCookie;
-            console.log(newCookie);
-        }
-
-        const cookieLoad = function () {
-            let index = $('#cookie-list').val();
-            if (!index || index < 1) return;
-
-            let saveCookies = document.cookie.split(';').filter(e => e.startsWith('save_' + index + '='));
-            if (saveCookies.length > 0) {
-                let partArr = saveCookies[0].split('=');
-                if (partArr.length == 2) {
-                    let name = partArr[0];
-                    let value = unescape(partArr[1]);
-                    console.log(value);
-                    // applyInputFromCookieString(value);
-
-                }
-            }
-        }
-
         const deleteAllCookies = function () {
             const cookies = document.cookie.split(';')
             for (let i = 0; i < cookies.length; i++) {
@@ -818,12 +688,7 @@
                 document.cookie = name + '=;max-age=0';
             }
         }
-
-        $(document).on('change', '#cookie-list', cookieListOnChange);
-        $(document).on('click', '#save-cookie', cookieSave);
-        $(document).on('click', '#load-cookie', cookieLoad);
-        $(document).on('click', '#clear-cookie', deleteAllCookies);
-
+        deleteAllCookies();
     </script>
 </body>
 
