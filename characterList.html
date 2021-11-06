@@ -76,7 +76,7 @@
                                 let arrArr = [];
                                 let detailObjArr = characterMaster[attackTalent]['詳細'];
                                 detailObjArr.forEach(detailObj => {
-                                    if (!('数値' in detailObj)) return;
+                                    if (!('数値' in detailObj) || !$.isPlainObject(detailObj['数値'])) return;
                                     let arr = [];
                                     arr.push(detailObj['名前']);
                                     Object.keys(detailObj['数値']).forEach(level => {
