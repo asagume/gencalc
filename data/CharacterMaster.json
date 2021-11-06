@@ -32,12 +32,14 @@
     },
     "神里綾華": {
         "レアリティ": 5,
+        "元素": "氷",
         "import": "data/characters/cryo_5_sword_KamisatoAyaka.json",
         "image": "images/KamisatoAyaka.png",
         "image2": "images/hoyolab/dbb893c26e20822aabd876a52361fffa.png"
     },
     "楓原万葉": {
         "レアリティ": 5,
+        "元素": "風",
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_KaedeharaKazuha.json",
         "image": "images/KaedeharaKazuha.png",
@@ -45,6 +47,7 @@
     },
     "エウルア": {
         "レアリティ": 5,
+        "元素": "氷",
         "武器": "両手剣",
         "import": "data/characters/cryo_5_claymore_Eula.json",
         "image": "images/Eula.png",
@@ -52,6 +55,7 @@
     },
     "胡桃": {
         "レアリティ": 5,
+        "元素": "炎",
         "武器": "長柄武器",
         "import": "data/characters/pyro_5_polearm_HuTao.json",
         "image": "images/HuTao.png",
@@ -60,6 +64,7 @@
     },
     "魈": {
         "レアリティ": 5,
+        "元素": "風",
         "武器": "長柄武器",
         "import": "data/characters/aero_5_polearm_Xiao.json",
         "image": "images/Xiao.png",
@@ -67,6 +72,7 @@
     },
     "甘雨": {
         "レアリティ": 5,
+        "元素": "氷",
         "武器": "弓",
         "import": "data/characters/cryo_5_bow_Ganyu.json",
         "image": "images/Ganyu.png",
@@ -74,6 +80,7 @@
     },
     "アルベド": {
         "レアリティ": 5,
+        "元素": "岩",
         "武器": "片手剣",
         "import": "data/characters/geo_5_sword_Albedo.json",
         "image": "images/Albedo.png",
@@ -81,6 +88,7 @@
     },
     "鍾離": {
         "レアリティ": 5,
+        "元素": "岩",
         "武器": "長柄武器",
         "import": "data/characters/geo_5_polearm_Zhongli.json",
         "image": "images/Zhongli.png",
@@ -88,6 +96,7 @@
     },
     "タルタリヤ": {
         "レアリティ": 5,
+        "元素": "水",
         "武器": "弓",
         "import": "data/characters/hydro_5_bow_Tartaglia.json",
         "image": "images/Tartaglia.png",
@@ -95,6 +104,7 @@
     },
     "クレー": {
         "レアリティ": 5,
+        "元素": "炎",
         "武器": "法器",
         "import": "data/characters/pyro_5_catalyst_Klee.json",
         "image": "images/Klee.png",
@@ -102,6 +112,7 @@
     },
     "ウェンティ": {
         "レアリティ": 5,
+        "元素": "風",
         "武器": "弓",
         "import": "data/characters/aero_5_bow_Venti.json",
         "image": "images/Venti.png",
@@ -109,6 +120,7 @@
     },
     "七七": {
         "レアリティ": 5,
+        "元素": "氷",
         "武器": "片手剣",
         "import": "data/characters/cryo_5_sword_Qiqi.json",
         "image": "images/Qiqi.png",
@@ -116,6 +128,7 @@
     },
     "刻晴": {
         "レアリティ": 5,
+        "元素": "雷",
         "武器": "片手剣",
         "import": "data/characters/electro_5_sword_Keqing.json",
         "image": "images/Keqing.png",
@@ -123,6 +136,7 @@
     },
     "ジン": {
         "レアリティ": 5,
+        "元素": "風",
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_Jean.json",
         "image": "images/Jean.png",
@@ -130,6 +144,7 @@
     },
     "モナ": {
         "レアリティ": 5,
+        "元素": "水",
         "武器": "法器",
         "import": "data/characters/hydro_5_catalyst_Mona.json",
         "image": "images/Mona.png",
@@ -137,6 +152,7 @@
     },
     "ディルック": {
         "レアリティ": 5,
+        "元素": "炎",
         "武器": "両手剣",
         "import": "data/characters/pyro_5_claymore_Diluc.json",
         "image": "images/Diluc.png",
@@ -167,6 +183,7 @@
     },
     "煙緋": {
         "レアリティ": 4,
+        "元素": "炎",
         "武器": "法器",
         "import": "data/characters/pyro_4_catalyst_Yanfei.json",
         "image": "images/Yanfei.png",
@@ -174,6 +191,7 @@
     },
     "ロサリア": {
         "レアリティ": 4,
+        "元素": "氷",
         "武器": "長柄武器",
         "import": "data/characters/cryo_4_polearm_Rosaria.json",
         "image": "images/Rosaria.png",
@@ -181,6 +199,7 @@
     },
     "辛炎": {
         "レアリティ": 4,
+        "元素": "炎",
         "武器": "両手剣",
         "import": "data/characters/pyro_4_claymore_Xinyan.json",
         "image": "images/Xinyan.png",
@@ -188,6 +207,7 @@
     },
     "ディオナ": {
         "レアリティ": 4,
+        "元素": "氷",
         "武器": "弓",
         "import": "data/characters/cryo_4_bow_Diona.json",
         "image": "images/Diona.png",
@@ -195,6 +215,7 @@
     },
     "凝光": {
         "レアリティ": 4,
+        "元素": "岩",
         "武器": "法器",
         "import": "data/characters/geo_4_catalyst_Ningguang.json",
         "image": "images/Ningguang.png",
@@ -202,6 +223,7 @@
     },
     "ノエル": {
         "レアリティ": 4,
+        "元素": "岩",
         "武器": "両手剣",
         "import": "data/characters/geo_4_claymore_Noelle.json",
         "image": "images/Noelle.png",
@@ -209,6 +231,7 @@
     },
     "重雲": {
         "レアリティ": 4,
+        "元素": "氷",
         "武器": "両手剣",
         "import": "data/characters/cryo_4_claymore_Chongyun.json",
         "image": "images/Chongyun.png",
@@ -216,6 +239,7 @@
     },
     "スクロース": {
         "レアリティ": 4,
+        "元素": "風",
         "武器": "法器",
         "import": "data/characters/aero_4_catalyst_Sucrose.json",
         "image": "images/Sucrose.png",
@@ -223,6 +247,7 @@
     },
     "北斗": {
         "レアリティ": 4,
+        "元素": "雷",
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Beidou.json",
         "image": "images/Beidou.png",
@@ -230,6 +255,7 @@
     },
     "フィッシュル": {
         "レアリティ": 4,
+        "元素": "雷",
         "武器": "弓",
         "import": "data/characters/electro_4_bow_Fischl.json",
         "image": "images/Fischl.png",
@@ -237,6 +263,7 @@
     },
     "レザー": {
         "レアリティ": 4,
+        "元素": "雷",
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Razor.json",
         "image": "images/Razor.png",
@@ -244,6 +271,7 @@
     },
     "行秋": {
         "レアリティ": 4,
+        "元素": "水",
         "武器": "片手剣",
         "import": "data/characters/hydro_4_sword_Xingqiu.json",
         "image": "images/Xingqiu.png",
@@ -251,6 +279,7 @@
     },
     "バーバラ": {
         "レアリティ": 4,
+        "元素": "水",
         "武器": "法器",
         "import": "data/characters/hydro_4_catalyst_Barbara.json",
         "image": "images/Barbara.png",
@@ -258,6 +287,7 @@
     },
     "香菱": {
         "レアリティ": 4,
+        "元素": "炎",
         "武器": "長柄武器",
         "import": "data/characters/pyro_4_polearm_Xiangling.json",
         "image": "images/Xiangling.png",
@@ -265,12 +295,14 @@
     },
     "ベネット": {
         "レアリティ": 4,
+        "元素": "炎",
         "import": "data/characters/pyro_4_sword_Benette.json",
         "image": "images/Benette.png",
         "image2": "images/hoyolab/ae28c20334e122c68423ccc3c9522b75.png"
     },
     "ガイア": {
         "レアリティ": 4,
+        "元素": "氷",
         "武器": "片手剣",
         "import": "data/characters/cryo_4_sword_Kaeya.json",
         "image": "images/Kaeya.png",
@@ -278,6 +310,7 @@
     },
     "リサ": {
         "レアリティ": 4,
+        "元素": "雷",
         "武器": "法器",
         "import": "data/characters/electro_4_catalyst_Lisa.json",
         "image": "images/Lisa.png",
@@ -285,6 +318,7 @@
     },
     "アンバー": {
         "レアリティ": 4,
+        "元素": "炎",
         "武器": "弓",
         "import": "data/characters/pyro_4_bow_Amber.json",
         "image": "images/Amber.png",
@@ -292,6 +326,7 @@
     },
     "旅人(雷)": {
         "レアリティ": 5,
+        "元素": "雷",
         "武器": "片手剣",
         "import": "data/characters/electro_4_sword_Traveler.json",
         "image2": "images/hoyolab/762377aee992cb1dfd4e0e0a7911096d.png",
@@ -299,6 +334,7 @@
     },
     "旅人(岩)": {
         "レアリティ": 5,
+        "元素": "岩",
         "武器": "片手剣",
         "import": "data/characters/geo_4_sword_Traveler.json",
         "image2": "images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png",
@@ -306,6 +342,7 @@
     },
     "旅人(風)": {
         "レアリティ": 5,
+        "元素": "風",
         "武器": "片手剣",
         "import": "data/characters/aero_4_sword_Traveler.json",
         "image2": "images/hoyolab/762377aee992cb1dfd4e0e0a7911096d.png",

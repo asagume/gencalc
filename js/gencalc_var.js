@@ -171,6 +171,15 @@ function initステータス詳細ObjVar() {
 
 var キャラクター所持状況ObjVar = {}
 
+const ELEMENT_IMG_SRC_MAP = new Map([
+    ['炎', 'images/element_pyro.png'],
+    ['水', 'images/element_hydro.png'],
+    ['風', 'images/element_aero.png'],
+    ['雷', 'images/element_electro.png'],
+    ['氷', 'images/element_cryo.png'],
+    ['岩', 'images/element_geo.png']
+]);
+
 function buildキャラクター所持状況List() {
     $('#キャラクター所持状況List').empty();
 
@@ -194,6 +203,14 @@ function buildキャラクター所持状況List() {
             imgElem.height = 100;
             divElem.appendChild(imgElem);
 
+            let img2Elem = document.createElement('img');
+            img2Elem.className = 'element';
+            img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myCharacterMaster['元素']);
+            img2Elem.alt = myCharacterMaster['元素'];
+            img2Elem.width = 30;
+            img2Elem.height = 30;
+            divElem.appendChild(img2Elem);
+
             let pElem = document.createElement('p');
             if (key in キャラクター所持状況ObjVar) {
                 pElem.textContent = キャラクター所持状況ObjVar[key];
@@ -201,7 +218,8 @@ function buildキャラクター所持状況List() {
             divElem.appendChild(pElem);
 
             if (!pElem.textContent) {
-                imgElem.className = 'darken';
+                imgElem.classList.add('darken');
+                img2Elem.classList.add('darken');
             }
         }
     });

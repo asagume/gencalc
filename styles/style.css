@@ -592,6 +592,7 @@ section.tiny article.input-item label {
 }
 
 .horizontal-list ul li {
+    position: relative;
     display: inline-block;
     margin: 0;
 }
@@ -599,6 +600,13 @@ section.tiny article.input-item label {
 .horizontal-list ul li img {
     border-style: double;
     border-width: 2px;
+}
+
+.horizontal-list ul li img.element {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border: none;
 }
 
 .star5 {
@@ -669,14 +677,21 @@ ul#キャラクター所持状況List {
     opacity: 0.5;
 }
 
+#キャラクター所持状況List li div img.element {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
 #キャラクター所持状況List li div p {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 4px;
     background: transparent;
     color: blanchedalmond;
     font-size: 2rem;
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    margin: 0;
 }
 
 button {

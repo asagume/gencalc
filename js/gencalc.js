@@ -2286,6 +2286,15 @@ $(document).ready(function () {
                 imgElem.width = 75;
                 imgElem.height = 75;
                 liElem.appendChild(imgElem);
+
+                let img2Elem = document.createElement('img');
+                img2Elem.className = 'element';
+                img2Elem.src = ELEMENT_IMG_SRC_MAP.get(キャラクターMasterVar[key]['元素']);
+                img2Elem.alt = キャラクターMasterVar[key]['元素'];
+                img2Elem.width = 22;
+                img2Elem.height = 22;
+                liElem.appendChild(img2Elem);
+
                 imgElem.onclick = selectCharacter;
             });
 
