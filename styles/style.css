@@ -13,7 +13,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto 700px;
-        grid-template-rows: 32px 480px minmax(800px, 1600px) 100px;
+        grid-template-rows: 32px 480px minmax(800px, 1600px) 140px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
 }
@@ -35,7 +35,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 240px 480px minmax(800px, 1600px) 100px;
+        grid-template-rows: 32px 240px 480px minmax(800px, 1600px) 140px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
