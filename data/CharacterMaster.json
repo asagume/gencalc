@@ -227,8 +227,7 @@
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Beidou.json",
         "image": "images/Beidou.png",
-        "image2": "images/hoyolab/515effa5bfabb8fc03a52cbf76a4a79e.png",
-        "disabled": true
+        "image2": "images/hoyolab/515effa5bfabb8fc03a52cbf76a4a79e.png"
     },
     "フィッシュル": {
         "レアリティ": 4,
@@ -243,8 +242,7 @@
         "武器": "両手剣",
         "import": "data/characters/electro_4_claymore_Razor.json",
         "image": "images/Razor.png",
-        "image2": "images/hoyolab/997709a43b4f8d80a58ac14d412bf2e7.png",
-        "disabled": true
+        "image2": "images/hoyolab/997709a43b4f8d80a58ac14d412bf2e7.png"
     },
     "行秋": {
         "レアリティ": 4,
@@ -285,8 +283,7 @@
         "武器": "法器",
         "import": "data/characters/electro_4_catalyst_Lisa.json",
         "image": "images/Lisa.png",
-        "image2": "images/hoyolab/06b5a07d8f98649e5e09c58aa7904752.png",
-        "disabled": true
+        "image2": "images/hoyolab/06b5a07d8f98649e5e09c58aa7904752.png"
     },
     "アンバー": {
         "レアリティ": 4,
