@@ -155,8 +155,7 @@
         "レアリティ": 4,
         "武器": "長柄武器",
         "import": "data/characters/cryo_4_polearm_Rosaria.json",
-        "image": "images/Rosaria.png",
-        "disabled": true
+        "image": "images/Rosaria.png"
     },
     "辛炎": {
         "レアリティ": 4,
@@ -192,8 +191,7 @@
         "レアリティ": 4,
         "武器": "法器",
         "import": "data/characters/aero_4_catalyst_Sucrose.json",
-        "image": "images/Sucrose.png",
-        "disabled": true
+        "image": "images/Sucrose.png"
     },
     "北斗": {
         "レアリティ": 4,
@@ -243,8 +241,7 @@
         "レアリティ": 4,
         "武器": "片手剣",
         "import": "data/characters/cryo_4_sword_Kaeya.json",
-        "image": "images/Kaeya.png",
-        "disabled": true
+        "image": "images/Kaeya.png"
     },
     "リサ": {
         "レアリティ": 4,
