@@ -305,7 +305,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
                 }
             }
             if (valueObj['種類'].endsWith('元素付与')) {   // 元素付与は先んじて適用します
-                if (detailObj['種類'] != '追加ダメージ') {
+                if (!detailObj['元素付与無効'] && detailObj['種類'] != '追加ダメージ') {
                     my元素 = valueObj['種類'].replace('元素付与', '');
                 }
             } else if (valueObj['種類'] == '防御無視') {   // 防御無視は先んじて適用します for 雷電将軍

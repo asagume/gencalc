@@ -37,8 +37,7 @@
         "レアリティ": 5,
         "武器": "片手剣",
         "import": "data/characters/aero_5_sword_KaedeharaKazuha.json",
-        "image": "images/KaedeharaKazuha.png",
-        "disabled": true
+        "image": "images/KaedeharaKazuha.png"
     },
     "エウルア": {
         "レアリティ": 5,
