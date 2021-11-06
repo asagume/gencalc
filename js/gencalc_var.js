@@ -210,17 +210,17 @@ function buildキャラクター所持状況List() {
 }
 
 const キャラクター所持状況OnClick = function () {
-    let val = $('#' + this.id + ' p').text();
+    let val = $('#' + selectorEscape(this.id) + ' p').text();
     if (val) {
         if (++val > 6) {
             val = null;
-            $('#' + this.id + ' img').addClass('darken');
+            $('#' + selectorEscape(this.id) + ' img').addClass('darken');
         }
     } else {
         val = 0;
-        $('#' + this.id + ' img').removeClass('darken');
+        $('#' + selectorEscape(this.id) + ' img').removeClass('darken');
     }
-    $('#' + this.id + ' p').text(val);
+    $('#' + selectorEscape(this.id) + ' p').text(val);
 
     キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
 

@@ -977,7 +977,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
         elem.value = value;
         elem.id = key + 'Option';
         elem.name = name;
-        $('#' + parentElemId).append(elem);
+        $('#' + selectorEscape(parentElemId)).append(elem);
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
         labelElem.textContent = key;
@@ -987,7 +987,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
     optionMap.forEach((value, key) => {
         if (!value) return;
         let divElem = document.createElement('div');
-        $('#' + parentElemId).append(divElem);
+        $('#' + selectorEscape(parentElemId)).append(divElem);
         let elem = document.createElement('select');
         elem.id = key + 'Option';
         elem.name = name;
@@ -2143,7 +2143,7 @@ const elementalRectionOnChange = function () {
         if (resultTableVisibilityMap.has(tableId)) {
             isVisible = resultTableVisibilityMap.get(tableId);
         }
-        $('#' + tableId + ' tr.' + elementalReaction).each((index, element) => {
+        $('#' + selectorEscape(tableId) + ' tr.' + elementalReaction).each((index, element) => {
             if (element.className.indexOf('hidable') == -1) {
                 element.style.display = "table-row";
             } else {
