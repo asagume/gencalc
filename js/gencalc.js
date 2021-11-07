@@ -2049,15 +2049,39 @@ const キャラクターInputOnChange = function () {
             });
         }
         for (let i = 13; i > 10; i--) {
-            選択中キャラクターデータVar['元素スキル']['詳細'].forEach(detailObj => {
-                if ('数値' in detailObj) {
-                    if ($.isPlainObject(detailObj['数値'])) {
-                        if (!(i in detailObj['数値'])) {
-                            max元素スキルレベル = i - 1;
+            if ('詳細' in 選択中キャラクターデータVar['元素スキル']) {
+                選択中キャラクターデータVar['元素スキル']['詳細'].forEach(detailObj => {
+                    if ('数値' in detailObj) {
+                        if ($.isPlainObject(detailObj['数値'])) {
+                            if (!(i in detailObj['数値'])) {
+                                max元素スキルレベル = i - 1;
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+            if ('一回押し' in 選択中キャラクターデータVar['元素スキル']) {
+                選択中キャラクターデータVar['元素スキル']['一回押し']['詳細'].forEach(detailObj => {
+                    if ('数値' in detailObj) {
+                        if ($.isPlainObject(detailObj['数値'])) {
+                            if (!(i in detailObj['数値'])) {
+                                max元素スキルレベル = i - 1;
+                            }
+                        }
+                    }
+                });
+            }
+            if ('長押し' in 選択中キャラクターデータVar['元素スキル']) {
+                選択中キャラクターデータVar['元素スキル']['長押し']['詳細'].forEach(detailObj => {
+                    if ('数値' in detailObj) {
+                        if ($.isPlainObject(detailObj['数値'])) {
+                            if (!(i in detailObj['数値'])) {
+                                max元素スキルレベル = i - 1;
+                            }
+                        }
+                    }
+                });
+            }
             選択中キャラクターデータVar['元素爆発']['詳細'].forEach(detailObj => {
                 if ('数値' in detailObj) {
                     if ($.isPlainObject(detailObj['数値'])) {
