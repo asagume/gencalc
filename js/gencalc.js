@@ -2281,7 +2281,7 @@ $(document).ready(function () {
                 ulElem.appendChild(liElem);
                 let imgElem = document.createElement('img');
                 imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
-                imgElem.src = キャラクターMasterVar[key]['image'];
+                imgElem.src = 'image' in キャラクターMasterVar[key] ? キャラクターMasterVar[key]['image'] : キャラクターMasterVar[key]['image2'];
                 imgElem.alt = key;
                 imgElem.width = 75;
                 imgElem.height = 75;
