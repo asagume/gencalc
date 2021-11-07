@@ -906,7 +906,10 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
         }
         let thElem1 = document.createElement('th');
         if (valueArr[0]) {
-            let name = valueArr[0].replace('のダメージ', '');
+            let name = valueArr[0];
+            if (damageResultArr.length > 2) {
+                name = name.replace('のダメージ', '');
+            }
             if (damageResultArr.length > 3) {
                 thElem1.textContent = name.replace('ダメージ', '');
             } else {
