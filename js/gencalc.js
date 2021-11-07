@@ -2023,7 +2023,7 @@ const キャラクターInputOnChange = function () {
             選択中キャラクターデータVar['通常攻撃']['詳細'].forEach(detailObj => {
                 if ('数値' in detailObj) {
                     if ($.isPlainObject(detailObj['数値'])) {
-                        if (!(i in detailObj['数値'])) {
+                        if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max通常攻撃レベル >= i) {
                             max通常攻撃レベル = i - 1;
                         }
                     }
@@ -2032,7 +2032,7 @@ const キャラクターInputOnChange = function () {
             選択中キャラクターデータVar['重撃']['詳細'].forEach(detailObj => {
                 if ('数値' in detailObj) {
                     if ($.isPlainObject(detailObj['数値'])) {
-                        if (!(i in detailObj['数値'])) {
+                        if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max通常攻撃レベル >= i) {
                             max通常攻撃レベル = i - 1;
                         }
                     }
@@ -2041,7 +2041,7 @@ const キャラクターInputOnChange = function () {
             選択中キャラクターデータVar['落下攻撃']['詳細'].forEach(detailObj => {
                 if ('数値' in detailObj) {
                     if ($.isPlainObject(detailObj['数値'])) {
-                        if (!(i in detailObj['数値'])) {
+                        if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max通常攻撃レベル >= i) {
                             max通常攻撃レベル = i - 1;
                         }
                     }
@@ -2053,7 +2053,7 @@ const キャラクターInputOnChange = function () {
                 選択中キャラクターデータVar['元素スキル']['詳細'].forEach(detailObj => {
                     if ('数値' in detailObj) {
                         if ($.isPlainObject(detailObj['数値'])) {
-                            if (!(i in detailObj['数値'])) {
+                            if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max元素スキルレベル >= i) {
                                 max元素スキルレベル = i - 1;
                             }
                         }
@@ -2064,7 +2064,7 @@ const キャラクターInputOnChange = function () {
                 選択中キャラクターデータVar['元素スキル']['一回押し']['詳細'].forEach(detailObj => {
                     if ('数値' in detailObj) {
                         if ($.isPlainObject(detailObj['数値'])) {
-                            if (!(i in detailObj['数値'])) {
+                            if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max元素スキルレベル >= i) {
                                 max元素スキルレベル = i - 1;
                             }
                         }
@@ -2075,7 +2075,7 @@ const キャラクターInputOnChange = function () {
                 選択中キャラクターデータVar['元素スキル']['長押し']['詳細'].forEach(detailObj => {
                     if ('数値' in detailObj) {
                         if ($.isPlainObject(detailObj['数値'])) {
-                            if (!(i in detailObj['数値'])) {
+                            if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max元素スキルレベル >= i) {
                                 max元素スキルレベル = i - 1;
                             }
                         }
@@ -2085,7 +2085,7 @@ const キャラクターInputOnChange = function () {
             選択中キャラクターデータVar['元素爆発']['詳細'].forEach(detailObj => {
                 if ('数値' in detailObj) {
                     if ($.isPlainObject(detailObj['数値'])) {
-                        if (!(i in detailObj['数値'])) {
+                        if ((!(i in detailObj['数値']) || !detailObj['数値'][i]) && max元素爆発レベル >= i) {
                             max元素爆発レベル = i - 1;
                         }
                     }
