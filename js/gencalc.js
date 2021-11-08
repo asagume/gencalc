@@ -410,6 +410,9 @@ function calculateDamageFromDetail(detailObj, opt_element = null) {
         case '付加元素ダメージ':    // for 風キャラ
             my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, true, '炎', null, null, null);
             break;
+        case '表示':    // for ベネット 九条裟羅 攻撃力上昇
+            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null);
+            break;
         default:
             myダメージバフ += ステータス詳細ObjVar['与えるダメージ'];
             if (detailObj['ダメージバフ'] != null) {
@@ -1031,6 +1034,7 @@ const setupBaseDamageDetailDataCharacter = function () {
 
     ステータス変更系詳細ArrMapVar.set('キャラクター', []);
     天賦性能変更系詳細ArrMapVar.set('キャラクター', []);
+    その他_基礎ダメージ詳細ArrMapVar.set('キャラクター', []);
 
     // 通常攻撃を解析します。Object
     let my天賦レベル = my通常攻撃レベル;
@@ -1917,6 +1921,13 @@ function getNormalAttackDefaultElement() {
 
 // おすすめセット 変更イベント
 const おすすめセットInputOnChange = function () {
+    通常攻撃_基礎ダメージ詳細ArrVar = [];
+    重撃_基礎ダメージ詳細ArrVar = [];
+    落下攻撃_基礎ダメージ詳細ArrVar = [];
+    元素スキル_基礎ダメージ詳細ArrVar = [];
+    元素爆発_基礎ダメージ詳細ArrVar = [];
+    その他_基礎ダメージ詳細ArrMapVar.clear();
+
     let entry = 選択中キャラクターデータVar['おすすめセット'][$('#おすすめセットInput').val()];
     Object.keys(entry).forEach(key => {
         ['Input', 'Option'].forEach(suffix => {
@@ -1998,12 +2009,6 @@ const キャラクターInputOnChange = function () {
                 ステータス詳細ObjVar[key] = Number(選択中キャラクターデータVar['固有変数'][key]);
             });
         }
-        通常攻撃_基礎ダメージ詳細ArrVar = [];
-        重撃_基礎ダメージ詳細ArrVar = [];
-        落下攻撃_基礎ダメージ詳細ArrVar = [];
-        元素スキル_基礎ダメージ詳細ArrVar = [];
-        元素爆発_基礎ダメージ詳細ArrVar = [];
-        その他_基礎ダメージ詳細ArrMapVar.clear();
 
         // 命ノ星座selectの範囲(option)設定を行います for アーロイ
         if ('命ノ星座' in 選択中キャラクターデータVar) {
@@ -2188,6 +2193,12 @@ const キャラクターInputOnChange = function () {
             appendOptionElements(選択中キャラクターデータVar['おすすめセット'], '#おすすめセットInput');
             おすすめセットInputOnChange();
         } else {
+            通常攻撃_基礎ダメージ詳細ArrVar = [];
+            重撃_基礎ダメージ詳細ArrVar = [];
+            落下攻撃_基礎ダメージ詳細ArrVar = [];
+            元素スキル_基礎ダメージ詳細ArrVar = [];
+            元素爆発_基礎ダメージ詳細ArrVar = [];
+            その他_基礎ダメージ詳細ArrMapVar.clear();
             setupBaseDamageDetailDataCharacter();
             武器InputOnChange();
         }
