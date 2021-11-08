@@ -1984,7 +1984,13 @@ function get説明(obj) {
 
 // キャラクター 変更イベント
 const キャラクターInputOnChange = function () {
-    fetch(キャラクターMasterVar[$('#キャラクターInput').val()].import).then(response => response.json()).then(data => {
+    キャラクター名前Var = $('#キャラクターInput').val();
+    let myキャラクターMaster = キャラクターMasterVar[キャラクター名前Var];
+    let src = 'image2' in myキャラクターMaster ? myキャラクターMaster['image2'] : myキャラクターMaster['image'];
+    $('#選択キャラクターImg').prop('src', src);
+    $('#選択キャラクター名前Label').text(キャラクター名前Var);
+
+    fetch(myキャラクターMaster.import).then(response => response.json()).then(data => {
         選択中キャラクターデータVar = data;
         console.debug('選択中キャラクターデータVar');
         console.debug(選択中キャラクターデータVar);
@@ -1998,7 +2004,6 @@ const キャラクターInputOnChange = function () {
             });
         }
 
-        キャラクター名前Var = 選択中キャラクターデータVar['名前'];
         キャラクター元素Var = 選択中キャラクターデータVar['元素'];
         キャラクター武器Var = 選択中キャラクターデータVar['武器'];
         通常攻撃名称Var = 選択中キャラクターデータVar['通常攻撃']['名前'];
@@ -2295,9 +2300,6 @@ $(document).on('change', 'input[name="元素反応Input"]', elementalRectionOnCh
 
 function characterSelected(name) {
     $('#キャラクターInput').val(name);
-    let src = 'image2' in キャラクターMasterVar[name] ? キャラクターMasterVar[name]['image2'] : キャラクターMasterVar[name]['image'];
-    $('#選択キャラクターImg').prop('src', src);
-    $('#選択キャラクター名前Label').text(name);
     キャラクターInputOnChange();
 }
 
