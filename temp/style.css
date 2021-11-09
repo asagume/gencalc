@@ -1,0 +1,739 @@
+@media screen and (min-width: 1020px) {
+    html {
+        font-size: 85%;
+    }
+    body {
+        font-size: 1.6em;
+    }
+    #main {
+        width: 1020px;
+        margin: 0 auto;
+        background: linear-gradient(to right, #574014, #3a2e0c);
+    }
+    .base-container {
+        display: grid;
+        grid-template-columns: auto 700px;
+        grid-template-rows: 32px 480px minmax(800px, 1600px) 140px;
+        grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    html {
+        font-size: 85%;
+    }
+    body {
+        font-size: 1.6em;
+    }
+    #main {
+        width: 100%;
+        min-width: 700px;
+        max-width: 900px;
+        margin: 0 auto;
+        background: linear-gradient(to right, #574014, #3a2e0c);
+    }
+    .base-container {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 32px 240px 480px minmax(800px, 1600px) 140px;
+        grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
+        font-size: 1.6rem;
+    }
+    .horizontal-list {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+select {
+    width: 220px;
+    height: 36px;
+    font-size: 1.7rem;
+}
+
+input[type="number"] {
+    width: 100px;
+}
+
+body {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    color: blanchedalmond;
+    background-color: rgb(58, 30, 10);
+    text-align: center;
+}
+
+a {
+    color: blanchedalmond;
+}
+
+p {
+    margin: 5px;
+}
+
+fieldset {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* グリッド */
+
+.header {
+    grid-area: header;
+    width: 100%;
+    position: relative;
+    background: linear-gradient(to top, #ecc862, #978310);
+}
+
+.header div {
+    position: absolute;
+    top: 50%;
+    margin: 0 5px;
+    transform: translate(0, -50%);
+    font-size: 1.4rem;
+}
+
+.aside {
+    grid-area: aside;
+    font-size: 1.4rem;
+}
+
+.input-area {
+    grid-area: input-area;
+    margin: 10px;
+}
+
+.result-area {
+    grid-area: result-area;
+    margin: 10px;
+}
+
+.footer {
+    grid-area: footer;
+    margin: 10px;
+    background-color: #312820;
+    color: #886b1d;
+    text-align: left;
+    font-size: 1.4rem;
+}
+
+article.input-item {
+    width: 220px;
+    vertical-align: top;
+}
+
+.float-menu {
+    border: 1px solid #CCC;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.float-menu ul {
+    list-style: none outside none;
+    float: left;
+    margin: 0 0 0 0;
+    padding: 0;
+    position: relative;
+    left: 50%;
+}
+
+.float-menu ul li {
+    float: left;
+    margin-right: 2px;
+    padding: 2px;
+    border: 1px solid #999;
+    position: relative;
+    left: -50%;
+}
+
+.tab-area {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    line-height: normal;
+}
+
+.input-area-tab {
+    width: calc(95%/5);
+    height: 35px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    line-height: 36px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    font-size: 1.5rem;
+}
+
+input[name="input-area-tab-name"] {
+    display: none;
+}
+
+input:checked+.input-area-tab {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+}
+
+input:checked+.input-area-tab+.tab-content {
+    display: block;
+}
+
+.tab-area4 {
+    width: calc(96%/4);
+    height: 34px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    line-height: 34px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    font-size: 1.5rem;
+}
+
+input[name="tab-area-middle"] {
+    display: none;
+}
+
+input:checked+.tab-area4 {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+}
+
+input:checked+.tab-area4+.tab-content {
+    display: block;
+}
+
+.tab-area3 {
+    width: calc(97%/3);
+    height: 34px;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    line-height: 34px;
+    text-align: center;
+    display: block;
+    float: left;
+    order: -1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    font-size: 1.5rem;
+}
+
+input[name="tab-area-bottom"] {
+    display: none;
+}
+
+input:checked+.tab-area3 {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+}
+
+input:checked+.tab-area3+.tab-content {
+    display: block;
+}
+
+.input-group article {
+    vertical-align: top;
+}
+
+.input-group article label {
+    display: block;
+}
+
+select {
+    height: 32px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 2px 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 5px;
+}
+
+section {
+    width: 100%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.input-area .input-item {
+    display: inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.input-area .input-item-hidden {
+    display: none;
+}
+
+.input-area .input-item label {
+    display: block;
+    margin: 2px;
+}
+
+.input-area .check-item {
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+}
+
+.input-area .check-item label {
+    display: inline;
+}
+
+.input-area .check-item:hover .baloon {
+    display: inline;
+}
+
+.baloon {
+    position: absolute;
+    display: none;
+    padding: 2px;
+    background-color: rgba(102, 102, 255, 0.50);
+    width: 180px;
+    left: -1%;
+    bottom: 30px;
+    font-size: 1.4rem;
+}
+
+.balloon:after {
+    border-left: 12px solid rgba(102, 102, 255, 0.50);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    right: -12px;
+    top: 5%;
+    content: "";
+    position: absolute;
+}
+
+.with-small-select {
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.with-small-select select {
+    display: block;
+    width: 200px;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+}
+
+table th {
+    font-weight: normal;
+    text-align: right;
+    padding: 6px;
+}
+
+input[type="number"] {
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 2px 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+/* 結果エリア */
+
+input[type="checkbox"]:checked+label {
+    color: gold;
+}
+
+.optionBox label {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.optionBox div {
+    display: inline-block;
+}
+
+.optionBox div select {
+    width: 100px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+table thead th, table tbody th, table tbody td {
+    padding: 1px 3px;
+    border-bottom: 1px solid #aaa;
+}
+
+table thead th {
+    background-color: #574014;
+    font-size: 1.4rem;
+}
+
+table th {
+    font-size: 1.4rem;
+}
+
+table thead th+th, table tbody td {
+    border-left: 1px solid #aaa;
+}
+
+table td {
+    font-size: 1.8rem;
+    background-color: transparent;
+}
+
+table tbody tr:last-child th, table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table thead th, table tbody th {
+    padding: 2px 8px;
+    text-align: center;
+}
+
+table thead th.label, table tbody th.label {
+    width: 100px;
+    text-align: right;
+}
+
+th.category {
+    width: 110px;
+    text-align: left;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+}
+
+fieldset article {
+    display: inline-block;
+}
+
+#option-set {
+    width: 200px;
+    background: linear-gradient(to top, #aa7777, #553333);
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 3px;
+}
+
+legend#option-set {
+    width: 200px;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 0;
+}
+
+legend#option-set.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
+legend#status-set {
+    width: 200px;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 0;
+}
+
+legend#status-set.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
+input+select:checked {
+    display: none;
+}
+
+input:checked+select {
+    display: block;
+}
+
+th.base {
+    color: rgb(189, 189, 189);
+}
+
+table.result {
+    background: linear-gradient(to top, #312820, #030100);
+    margin: 5px 0;
+}
+
+.pyro {
+    color: #d2655a;
+}
+
+.hydro {
+    color: #559cc9;
+}
+
+.aero {
+    color: #3aaf7a;
+}
+
+.electro {
+    color: #b681df;
+}
+
+.cryo {
+    color: #63beb4;
+}
+
+.geo {
+    color: #df8f37;
+}
+
+input[name="元素反応Input"] {
+    display: none;
+}
+
+label.elemental-reaction {
+    display: inline-block;
+    width: 160px;
+    padding: 2px;
+    background: linear-gradient(to top, #3d3d3b, #141414);
+    text-shadow: 1px 1px 0.1em rgb(40, 80, 80), -1px -1px 0.1em rgb(40, 80, 80), -1px 1px 0.1em rgb(40, 80, 80), 1px -1px 0.1em rgb(40, 80, 80), 0 1px 0.1em rgb(40, 80, 80), 0 -1px 0.1em rgb(40, 80, 80), -1px 0 0.1em rgb(40, 80, 80), 1px 0 0.1em rgb(40, 80, 80);
+    border-radius: 5px;
+}
+
+input[name="元素反応Input"]+label {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    text-shadow: 1px 1px 2px black, 0 0 0.2em brown, 0 0 0.2em brown;
+}
+
+input[name="元素反応Input"]:checked+label {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+}
+
+div.description {
+    font-size: 1.4rem;
+}
+
+tab-area label {
+    font-size: 1.6rem;
+}
+
+article.check-item label {
+    font-size: 1.6rem;
+}
+
+article.input-item label {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.input-group fieldset {
+    width: 205px;
+}
+
+section.tiny article.input-item {
+    width: 100px;
+}
+
+section.tiny article.input-item select {
+    width: 80px;
+}
+
+section.tiny article.input-item label {
+    display: block;
+}
+
+.aside fieldset {
+    text-align: center;
+}
+
+.horizontal-list {
+    width: 100%;
+    margin: 0;
+}
+
+.horizontal-list ul {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+
+.horizontal-list ul li {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+}
+
+.horizontal-list ul li img {
+    border-style: double;
+    border-width: 2px;
+}
+
+.horizontal-list ul li img.element {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border: none;
+}
+
+.star5 {
+    background: linear-gradient(to top, #ecc862, #978310);
+}
+
+.star4 {
+    background: linear-gradient(to top, #59447a, #400b64);
+}
+
+#face {
+    display: block;
+    text-align: left;
+    margin: 10px 0;
+    position: relative;
+    width: 100%;
+    height: 150px;
+}
+
+#face img {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: bottom;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#face section {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    display: inline-block;
+    vertical-align: bottom;
+    position: absolute;
+    left: 160px;
+    bottom: 0;
+}
+
+#face section p {
+    font-size: 2rem;
+    display: block;
+}
+
+#face section label {
+    font-size: 1.4rem;
+    display: block;
+    position: absolute;
+    left: 10px;
+    bottom: 40px;
+}
+
+#face section select {
+    width: calc(100% - 160px);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#face #構成保存Button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    font-size: 1.4rem;
+    color: blanchedalmond;
+    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
+}
+
+#face #保存構成削除Button {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    width: 250px;
+    font-size: 1.4rem;
+    color: blanchedalmond;
+    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
+}
+
+ul#キャラクター所持状況List {
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    width: 100%;
+}
+
+#キャラクター所持状況List li {
+    position: relative;
+    display: inline-block;
+}
+
+#キャラクター所持状況List li div {
+    border-style: double;
+    border-width: 2px;
+}
+
+#キャラクター所持状況List li div img {
+    vertical-align: top;
+}
+
+#キャラクター所持状況List li div img.darken {
+    opacity: 0.5;
+}
+
+#キャラクター所持状況List li div img.element {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+#キャラクター所持状況List li div p {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    background: transparent;
+    color: blanchedalmond;
+    font-size: 2rem;
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    margin: 0;
+}
+
+button {
+    width: 300px;
+    height: 40px;
+    font-size: 1.6rem;
+    border-radius: 10px;
+    margin: 20px;
+}
