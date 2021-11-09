@@ -301,6 +301,7 @@ function setupおすすめセット() {
 }
 
 const saveキャラクター構成 = function () {
+    if ($('#全武器解放Config').prop('checked')) return;
     let myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;
     キャラクター構成ObjVar = {
@@ -330,8 +331,6 @@ const saveキャラクター構成 = function () {
         敵レベル: $('#敵レベルInput').val()
     };
     localStorage.setItem(key, JSON.stringify(キャラクター構成ObjVar));
-    //$('#構成保存Button').prop('disabled', true);
-    $('#保存構成削除Button').prop('disabled', false);
 
     setupおすすめセット();
 }
@@ -341,8 +340,6 @@ const clearキャラクター構成 = function () {
     if (localStorage[key]) {
         localStorage.removeItem(key);
     }
-    $('#構成保存Button').prop('disabled', false);
-    $('#保存構成削除Button').prop('disabled', true);
 
     setupおすすめセット();
 }
@@ -354,7 +351,7 @@ const loadキャラクター構成 = function () {
         Object.keys(キャラクター構成ObjVar).forEach(objKey => {
             $('#' + selectorEscape(objKey) + 'Input').val(キャラクター構成ObjVar[objKey]);
         });
-        $('#構成保存Button').prop('disabled', false);
+        $('#構成保存Button').prop('disabled', true);
         $('#保存構成削除Button').prop('disabled', false);
     } else {
         キャラクター構成ObjVar = null;
@@ -387,6 +384,10 @@ function changeキャラクター構成(elem) {
         $('#構成保存Button').prop('disabled', false);
     }
 }
+
+const enable構成保存Button = function () {
+    $('#構成保存Button').prop('disabled', false);
+};
 
 function initキャラクター構成関連要素() {
     $('#構成保存Button').prop('disabled', true);

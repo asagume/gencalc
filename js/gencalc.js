@@ -2221,6 +2221,25 @@ $(document).on('change', '#通常攻撃レベルInput', 天賦レベルInputOnCh
 $(document).on('change', '#元素スキルレベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素爆発レベルInput', 天賦レベルInputOnChange);
 
+// 構成保存ボタンを活性化します
+$(document).on('change', '#レベルInput', enable構成保存Button);
+$(document).on('change', '#命ノ星座Input', enable構成保存Button);
+$(document).on('change', '#通常攻撃レベルInput', enable構成保存Button);
+$(document).on('change', '#元素スキルレベルInput', enable構成保存Button);
+$(document).on('change', '#元素爆発レベルInput', enable構成保存Button);
+$(document).on('change', '#武器Input', enable構成保存Button);
+$(document).on('change', '#武器レベルInput', enable構成保存Button);
+$(document).on('change', '#精錬ランクInput', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物メイン効果Input"]', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物セット効果Input"]', enable構成保存Button);
+//$(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構成保存Button);
+//$(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
+$(document).on('change', '#敵Input', enable構成保存Button);
+$(document).on('change', '#おすすめセットInput', enable構成保存Button);
+
+
 ////////////////////////////////////////////////////////////////////////////////
 function isHiddenHidableElement(selector, opt_default = false) {
     let isHidden = opt_default;
