@@ -637,7 +637,7 @@ section.tiny article.input-item label {
 }
 
 #face section {
-    width: 100%;
+    width: calc(100% - 160px);
     height: 100%;
     text-align: left;
     display: inline-block;
@@ -664,7 +664,7 @@ section.tiny article.input-item label {
 }
 
 #face section select {
-    width: calc(100% - 160px);
+    width: 100%;
     position: absolute;
     left: 0;
     bottom: 0;
