@@ -621,6 +621,9 @@ section.tiny article.input-item label {
     display: block;
     text-align: left;
     margin: 10px 0;
+    position: relative;
+    width: 100%;
+    height: 150px;
 }
 
 #face img {
@@ -628,27 +631,68 @@ section.tiny article.input-item label {
     margin-left: 5px;
     margin-right: 5px;
     vertical-align: bottom;
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 #face section {
-    width: 500px;
+    width: 100%;
+    height: 100%;
     text-align: left;
     display: inline-block;
     vertical-align: bottom;
+    position: absolute;
+    left: 160px;
+    bottom: 0;
 }
 
 #face section p {
     font-size: 2rem;
     display: block;
+    position: absolute;
+    left: 10px;
+    top: 20px;
 }
 
 #face section label {
     font-size: 1.4rem;
     display: block;
+    position: absolute;
+    left: 10px;
+    bottom: 40px;
 }
 
 #face section select {
-    width: 500px;
+    width: calc(100% - 160px);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#face #構成保存Button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+}
+
+#face #保存構成削除Button {
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+
+#face button {
+    width: 250px;
+    margin: 0;
+    font-size: 1.4rem;
+    color: blanchedalmond;
+    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
+}
+
+#face button:disabled {
+    color: darkgray;
 }
 
 ul#キャラクター所持状況List {

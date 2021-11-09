@@ -31,6 +31,7 @@ var 通常攻撃名称Var;
 var 元素スキル名称Var;
 var 元素爆発名称Var;
 var 元素エネルギーVar;
+var おすすめセットArrVar;
 
 // 通常攻撃天賦で使用する元素を設定します
 var 通常攻撃_元素Var;
@@ -276,3 +277,121 @@ const toggleローカルストレージクリア = function () {
     $('#ローカルストレージクリアButton').prop('disabled', !checked);
 }
 
+//////////////////////
+//////////////////////
+var キャラクター構成ObjVar = null;
+
+// おすすめセットをセットアップします
+function setupおすすめセット() {
+    おすすめセットArrVar = [];
+    loadキャラクター構成();
+    if (キャラクター構成ObjVar) {
+        おすすめセットArrVar.push(['あなたの' + キャラクター構成ObjVar['キャラクター'], キャラクター構成ObjVar]);
+    }
+    if ('おすすめセット' in 選択中キャラクターデータVar) {
+        Object.keys(選択中キャラクターデータVar['おすすめセット']).forEach(key => {
+            おすすめセットArrVar.push([key, 選択中キャラクターデータVar['おすすめセット'][key]]);
+        });
+    }
+    let selector = '#おすすめセットInput';
+    $(selector).empty();
+    おすすめセットArrVar.forEach(entry => {
+        appendOptionElement(entry[0], entry[1], selector);
+    });
+}
+
+const saveキャラクター構成 = function () {
+    let myキャラクター = $('#キャラクターInput').val();
+    let key = '構成_' + myキャラクター;
+    キャラクター構成ObjVar = {
+        キャラクター: myキャラクター,
+        レベル: $('#レベルInput').val(),
+        命ノ星座: $('#命ノ星座Input').val(),
+        通常攻撃レベル: $('#通常攻撃レベルInput').val(),
+        元素スキルレベル: $('#元素スキルレベルInput').val(),
+        元素爆発レベル: $('#元素爆発レベルInput').val(),
+        武器: $('#武器Input').val(),
+        武器レベル: $('#武器レベルInput').val(),
+        精錬ランク: $('#精錬ランクInput').val(),
+        聖遺物メイン効果1: $('#聖遺物メイン効果1Input').val(),
+        聖遺物メイン効果2: $('#聖遺物メイン効果2Input').val(),
+        聖遺物メイン効果3: $('#聖遺物メイン効果3Input').val(),
+        聖遺物メイン効果4: $('#聖遺物メイン効果4Input').val(),
+        聖遺物メイン効果5: $('#聖遺物メイン効果5Input').val(),
+        聖遺物優先するサブ効果1: $('#聖遺物優先するサブ効果1Input').val(),
+        聖遺物優先するサブ効果1倍率: $('#聖遺物優先するサブ効果1倍率Input').val(),
+        聖遺物優先するサブ効果2: $('#聖遺物優先するサブ効果2Input').val(),
+        聖遺物優先するサブ効果2倍率: $('#聖遺物優先するサブ効果2倍率Input').val(),
+        聖遺物優先するサブ効果3: $('#聖遺物優先するサブ効果3Input').val(),
+        聖遺物優先するサブ効果3倍率: $('#聖遺物優先するサブ効果3倍率Input').val(),
+        聖遺物セット効果1: $('#聖遺物セット効果1Input').val(),
+        聖遺物セット効果2: $('#聖遺物セット効果2Input').val(),
+        敵: $('#敵Input').val(),
+        敵レベル: $('#敵レベルInput').val()
+    };
+    localStorage.setItem(key, JSON.stringify(キャラクター構成ObjVar));
+    //$('#構成保存Button').prop('disabled', true);
+    $('#保存構成削除Button').prop('disabled', false);
+
+    setupおすすめセット();
+}
+
+const clearキャラクター構成 = function () {
+    let key = '構成_' + $('#キャラクターInput').val();
+    if (localStorage[key]) {
+        localStorage.removeItem(key);
+    }
+    $('#構成保存Button').prop('disabled', false);
+    $('#保存構成削除Button').prop('disabled', true);
+
+    setupおすすめセット();
+}
+
+const loadキャラクター構成 = function () {
+    let key = '構成_' + $('#キャラクターInput').val();
+    if (localStorage[key]) {
+        キャラクター構成ObjVar = JSON.parse(localStorage[key]);
+        Object.keys(キャラクター構成ObjVar).forEach(objKey => {
+            $('#' + selectorEscape(objKey) + 'Input').val(キャラクター構成ObjVar[objKey]);
+        });
+        $('#構成保存Button').prop('disabled', false);
+        $('#保存構成削除Button').prop('disabled', false);
+    } else {
+        キャラクター構成ObjVar = null;
+        $('#構成保存Button').prop('disabled', false);
+        $('#保存構成削除Button').prop('disabled', true);
+    }
+}
+
+function changeキャラクター構成(elem) {
+    if (!$('#構成保存Button').prop('disabled')) return;
+    if (キャラクター構成ObjVar) {
+        $('#構成保存Button').prop('disabled', false);
+        return;
+    }
+    let key = elem.id.replace('Input', '');
+    let value = null;
+    if (elem instanceof HTMLSelectElement) {
+        value = elem.value;
+    } else if (elem instanceof HTMLInputElement) {
+        switch (elem.type) {
+            case 'number':
+                value = elem.value;
+                break;
+            case 'checkbox':
+                value = elem.checked;
+                break;
+        }
+    }
+    if (value != null && key in キャラクター構成ObjVar && value != キャラクター構成ObjVar[key]) {
+        $('#構成保存Button').prop('disabled', false);
+    }
+}
+
+function initキャラクター構成関連要素() {
+    $('#構成保存Button').prop('disabled', true);
+    $('#保存構成削除Button').prop('disabled', true);
+
+    $(document).on('click', '#構成保存Button', saveキャラクター構成);
+    $(document).on('click', '#保存構成削除Button', clearキャラクター構成);
+}

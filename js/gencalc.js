@@ -1833,6 +1833,7 @@ const 聖遺物セットInputOnChange = function () {
     setupBaseDamageDetailDataArtifactSet();
     inputOnChangeOptionUpdate();
 }
+
 $(document).on('change', 'select[name="聖遺物メイン効果Input"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', inputOnChangeArtifactSubUpdate);
@@ -1841,17 +1842,17 @@ $(document).on('change', 'input[name="聖遺物サブ効果Input"]', inputOnChan
 $(document).on('change', 'select[name = "聖遺物レアリティInput"]', inputOnChangeArtifactSubUpdate);
 
 ////
-const appendOptionElement = function (key, data, selector) {
-    if ('disabled' in data[key] && data[key]['disabled']) return;   // とりあえず無効レコードは追加しません
+const appendOptionElement = function (key, valueObj, selector) {
+    if ('disabled' in valueObj && valueObj['disabled']) return;   // とりあえず無効レコードは追加しません
     let myText = key;
-    if ('レアリティ' in data[key]) {
-        myText = '★' + data[key]['レアリティ'] + ' ' + key;
+    if ('レアリティ' in valueObj) {
+        myText = '★' + valueObj['レアリティ'] + ' ' + key;
     }
     $('<option>', {
         text: myText,
         value: key,
-        disabled: ('disabled' in data[key]) && data[key]['disabled'],
-        selected: ('selected' in data[key]) && data[key]['selected']
+        disabled: ('disabled' in valueObj) && valueObj['disabled'],
+        selected: ('selected' in valueObj) && valueObj['selected']
     }).appendTo(selector);
 };
 
@@ -1860,10 +1861,10 @@ const appendOptionElements = function (data, selector) {
     Object.keys(data).forEach(key => {
         if ($.isArray(selector)) {
             selector.forEach(entry => {
-                appendOptionElement(key, data, entry);
+                appendOptionElement(key, data[key], entry);
             });
         } else {
-            appendOptionElement(key, data, selector);
+            appendOptionElement(key, data[key], selector);
         }
     });
 };
@@ -1891,20 +1892,29 @@ const 武器InputOnChange = function () {
             });
         }
 
-        let my精錬ランク = 1;
-        if ('レアリティ' in 選択中武器データVar) {
-            switch (選択中武器データVar['レアリティ']) {
-                case 5:
-                    my精錬ランク = 1;
-                    break;
-                case 4:
-                    my精錬ランク = 3;
-                    break;
-                case 3:
-                    my精錬ランク = 5;
-                    break;
+        let my精錬ランク = 0;
+        if (おすすめセットArrVar.length > 0) {
+            let myObj = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
+            if ('精錬ランク' in myObj) {
+                my精錬ランク = myObj['精錬ランク'];
             }
         }
+        if (my精錬ランク == 0) {
+            if ('レアリティ' in 選択中武器データVar) {
+                switch (選択中武器データVar['レアリティ']) {
+                    case 5:
+                        my精錬ランク = 1;
+                        break;
+                    case 4:
+                        my精錬ランク = 3;
+                        break;
+                    case 3:
+                        my精錬ランク = 5;
+                        break;
+                }
+            }
+        }
+
         $('#精錬ランクInput').val(my精錬ランク);
 
         setupBaseDamageDetailDataWeapon();
@@ -1928,7 +1938,7 @@ const おすすめセットInputOnChange = function () {
     元素爆発_基礎ダメージ詳細ArrVar = [];
     その他_基礎ダメージ詳細ArrMapVar.clear();
 
-    let entry = 選択中キャラクターデータVar['おすすめセット'][$('#おすすめセットInput').val()];
+    let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
     Object.keys(entry).forEach(key => {
         ['Input', 'Option'].forEach(suffix => {
             let elemId = key + suffix;
@@ -2192,19 +2202,14 @@ const キャラクターInputOnChange = function () {
         }
         appendOptionElements(選択可能武器セットObjVar, '#武器Input');
 
-        敵InputOnChange();
+        setupおすすめセット();
 
-        if ('おすすめセット' in 選択中キャラクターデータVar) {
-            appendOptionElements(選択中キャラクターデータVar['おすすめセット'], '#おすすめセットInput');
+        if (おすすめセットArrVar.length > 0) {
             おすすめセットInputOnChange();
+            敵InputOnChange();
         } else {
-            通常攻撃_基礎ダメージ詳細ArrVar = [];
-            重撃_基礎ダメージ詳細ArrVar = [];
-            落下攻撃_基礎ダメージ詳細ArrVar = [];
-            元素スキル_基礎ダメージ詳細ArrVar = [];
-            元素爆発_基礎ダメージ詳細ArrVar = [];
-            その他_基礎ダメージ詳細ArrMapVar.clear();
             setupBaseDamageDetailDataCharacter();
+            敵InputOnChange();
             武器InputOnChange();
         }
     });
@@ -2413,6 +2418,8 @@ $(document).ready(function () {
     });
 });
 
+
+initキャラクター構成関連要素();
 
 $(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
 $(document).on('click', '#ローカルストレージクリアInput', toggleローカルストレージクリア);

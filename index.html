@@ -17,7 +17,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0;">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.00
+                    げんかるく - 原神ダメージシミュレーター Ver.1.1.0
                 </div>
                 <div style="position: absolute; right: 0;">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -26,8 +26,8 @@
 
             <div class="aside">
                 <div style="height: 130px;">
-                    <p>【原神】ダメージ計算機です。</p>
-                    <p>Chromeで動作確認しています。</p>
+                    <p>【原神】ダメージ計算機です</p>
+                    <p>構成保存機能テスト実装</p>
                 </div>
                 <div class="horizontal-list">
                     <ul id="キャラクター選択"></ul>
@@ -36,12 +36,15 @@
 
             <div class="input-area">
                 <div id="face">
-                    <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150" id="選択キャラクターImg">
+                    <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
+                        id="選択キャラクターImg">
                     <section class="input-group">
                         <p id="選択キャラクター名前Label">キャラクターを選択してください</p>
                         <label for="おすすめセットInput">おすすめセット</label>
                         <select class="long" id="おすすめセットInput"></select>
                     </section>
+                    <button type="button" id="構成保存Button">この構成を保存</button>
+                    <button type="button" id="保存構成削除Button">保存構成を削除</button>
                 </div>
                 <div class="tab-area">
                     <input type="radio" name="input-area-tab-name" id="input-area-tab1" checked>
@@ -635,7 +638,7 @@
             <input type="checkbox" id="ローカルストレージクリアInput">
             <label for="ローカルストレージクリアInput">ローカルストレージをクリアする</label>
             <button type="button" id="ローカルストレージクリアButton" disabled>実行</button>
-            <p>ブラウザーからキャラクター所持状況のセーブデータが削除されます。</p>
+            <p>全ての保存データを削除します。</p>
         </div>
 
         <div style="display: none;">
@@ -654,33 +657,6 @@
     </div>
 
     <script>
-        const KEY_ELEMENT_ID_ARR = [
-            'キャラクターInput',
-            'レベルInput',
-            '命ノ星座Input',
-            '通常攻撃レベルInput',
-            '元素スキルレベルInput',
-            '元素爆発レベルInput',
-            '武器Input',
-            '武器レベルInput',
-            '精錬ランクInput',
-            '聖遺物メイン効果1Input',
-            '聖遺物メイン効果2Input',
-            '聖遺物メイン効果3Input',
-            '聖遺物メイン効果4Input',
-            '聖遺物メイン効果5Input',
-            '聖遺物優先するサブ効果1Input',
-            '聖遺物優先するサブ効果2Input',
-            '聖遺物優先するサブ効果3Input',
-            '聖遺物優先するサブ効果1倍率Input',
-            '聖遺物優先するサブ効果2倍率Input',
-            '聖遺物優先するサブ効果3倍率Input',
-            '聖遺物セット効果1Input',
-            '聖遺物セット効果2Input',
-            '敵Input',
-            '敵レベルInput'
-        ];
-
         const deleteAllCookies = function () {
             const cookies = document.cookie.split(';')
             for (let i = 0; i < cookies.length; i++) {
