@@ -1671,6 +1671,8 @@ const オプションInputOnChange = function () {
     オプションElementIdValue記憶Map.set(this.id, this instanceof HTMLInputElement ? this.checked : this.selectedIndex);    // チェック状態または選択要素のインデックスを保持します
     applyOptionVariable(this);
     inputOnChangeStatusUpdate();
+
+    enable構成保存Button();
 };
 
 // 敵 変更イベント
@@ -1940,25 +1942,36 @@ const おすすめセットInputOnChange = function () {
 
     let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
     Object.keys(entry).forEach(key => {
+        let isElemExists = false;
         ['Input', 'Option'].forEach(suffix => {
-            let elemId = key + suffix;
-            let elem = document.getElementById(elemId);
+            let elem = document.getElementById(key + suffix);
             if (elem != null) {
+                isElemExists = true;
                 if (elem instanceof HTMLInputElement) {
-                    elem.checked = entry[key];  // true or false
-                } else if (elem instanceof HTMLSelectElement) {
-                    if (suffix == 'Option') {
-                        elem.selectedIndex = entry[key];    // number
+                    if (elem.type == 'checkbox') {
+                        elem.checked = entry[key];  // true or false
+                    } else if (elem.type == 'number') {
+                        elem.value = Number(entry[key]);    // number
                     } else {
                         elem.value = entry[key];    // string
                     }
+                } else if (elem instanceof HTMLSelectElement) {
+                    if (suffix == 'Input') {
+                        elem.value = entry[key];
+                    } else {
+                        elem.selectedIndex = entry[key];
+                    }
                 }
                 if (suffix == 'Option') {
-                    オプションElementIdValue記憶Map.set(elemId, entry[key]);
+                    オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
                 }
             }
         });
+        if (!isElemExists) {
+            オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
+        }
     });
+
     setupBaseDamageDetailDataCharacter();
     inputOnChangeArtifactSubUpdate();
     聖遺物セットInputOnChange();
@@ -2005,23 +2018,24 @@ const キャラクターInputOnChange = function () {
         console.debug('選択中キャラクターデータVar');
         console.debug(選択中キャラクターデータVar);
 
+        キャラクター元素Var = 選択中キャラクターデータVar['元素'];
+        キャラクター武器Var = 選択中キャラクターデータVar['武器'];
+        通常攻撃名称Var = 選択中キャラクターデータVar['通常攻撃']['名前'];
+        元素スキル名称Var = 選択中キャラクターデータVar['元素スキル']['名前'];
+        元素爆発名称Var = 選択中キャラクターデータVar['元素爆発']['名前'];
+
+        if ('固有変数' in 選択中キャラクターデータVar) {
+            Object.keys(選択中キャラクターデータVar['固有変数']).forEach(key => {
+                ステータス詳細ObjVar[key] = Number(選択中キャラクターデータVar['固有変数'][key]);
+            });
+        }
+
         オプションElementIdValue記憶Map.clear();
         if ('オプション初期値' in 選択中キャラクターデータVar) {
             Object.keys(選択中キャラクターデータVar['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
                 let value = 選択中キャラクターデータVar['オプション初期値'][key];
                 オプションElementIdValue記憶Map.set(elemId, value);
-            });
-        }
-
-        キャラクター元素Var = 選択中キャラクターデータVar['元素'];
-        キャラクター武器Var = 選択中キャラクターデータVar['武器'];
-        通常攻撃名称Var = 選択中キャラクターデータVar['通常攻撃']['名前'];
-        元素スキル名称Var = 選択中キャラクターデータVar['元素スキル']['名前'];
-        元素爆発名称Var = 選択中キャラクターデータVar['元素爆発']['名前'];
-        if ('固有変数' in 選択中キャラクターデータVar) {
-            Object.keys(選択中キャラクターデータVar['固有変数']).forEach(key => {
-                ステータス詳細ObjVar[key] = Number(選択中キャラクターデータVar['固有変数'][key]);
             });
         }
 

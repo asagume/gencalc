@@ -301,7 +301,8 @@ function setupおすすめセット() {
 }
 
 const saveキャラクター構成 = function () {
-    if ($('#全武器解放Config').prop('checked')) return;
+    if (!($('#武器Input').val() in 武器MasterVar[選択中キャラクターデータVar['武器']])) return;
+
     let myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;
     キャラクター構成ObjVar = {
@@ -330,6 +331,18 @@ const saveキャラクター構成 = function () {
         敵: $('#敵Input').val(),
         敵レベル: $('#敵レベルInput').val()
     };
+
+    $('#オプションBox input[type="checkbox"]').each((index, elem) => {
+        let key = elem.id.replace('Option', '');
+        let value = elem.checked;
+        キャラクター構成ObjVar[key] = value;
+    });
+    $('#オプションBox select').each((index, elem) => {
+        let key = elem.id.replace('Option', '');
+        let value = elem.selectedIndex;
+        キャラクター構成ObjVar[key] = value;
+    });
+
     localStorage.setItem(key, JSON.stringify(キャラクター構成ObjVar));
 
     setupおすすめセット();
