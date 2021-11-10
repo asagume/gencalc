@@ -73,6 +73,7 @@
     },
     "ノエルの剣": {
         "レアリティ": 5,
-        "import": "data/weapons/claymore_5_RedhornStoneThresher.json"
+        "import": "data/weapons/claymore_5_RedhornStoneThresher.json",
+        "disabled": true
     }
 }
