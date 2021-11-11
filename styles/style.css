@@ -194,7 +194,7 @@ article.input-item {
     display: block;
     float: left;
     order: -1;
-    width: calc(100% / 5 - 6px);
+    width: calc(100% / 5 - 10px);
     height: 34px;
     line-height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
@@ -225,7 +225,7 @@ input:checked+.input-area-tab+.tab-content {
     display: block;
     float: left;
     order: -1;
-    width: calc(100% / 4 - 6px);
+    width: calc(100% / 4 - 10px);
     height: 34px;
     line-height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
@@ -256,7 +256,7 @@ input:checked+.tab-area4+.tab-content {
     display: block;
     float: left;
     order: -1;
-    width: calc(100% / 3 - 6px);
+    width: calc(100% / 3 - 10px);
     height: 34px;
     line-height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
