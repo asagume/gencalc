@@ -344,7 +344,7 @@ table th {
     font-weight: normal;
     text-align: right;
     padding: 6px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* 結果エリア */
@@ -410,6 +410,7 @@ table thead th.label, table tbody th.label {
 th.category {
     width: 110px;
     text-align: left;
+    font-size: 20px;
     font-weight: bold;
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
