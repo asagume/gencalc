@@ -2250,7 +2250,6 @@ $(document).on('change', 'select[name="聖遺物優先するサブ効果倍率In
 $(document).on('change', 'select[name="聖遺物セット効果Input"]', enable構成保存Button);
 //$(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構成保存Button);
 //$(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
-$(document).on('change', '#敵Input', enable構成保存Button);
 $(document).on('change', '#おすすめセットInput', enable構成保存Button);
 
 
