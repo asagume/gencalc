@@ -73,6 +73,7 @@ var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 
 //
 var ステータス詳細ObjVar = {
+    レベル: 0,
     HP乗算: 0,
     攻撃力乗算: 0,
     防御力乗算: 0,
@@ -112,6 +113,7 @@ var ステータス詳細ObjVar = {
     元素スキルダメージバフ: 0,
     元素爆発ダメージバフ: 0,
     与えるダメージ: 0,
+    敵レベル: 0,
     敵炎元素耐性: 0,
     敵水元素耐性: 0,
     敵風元素耐性: 0,
@@ -151,7 +153,17 @@ function initステータス詳細ObjVar() {
                 }
             }
         }
-        ステータス詳細ObjVar[key] = 0;
+        if ($.isPlainObject(ステータス詳細ObjVar[key])) {
+            if (key == 'ダメージ計算') {
+                Object.keys(ステータス詳細ObjVar[key]).forEach(subKey => {
+                    ステータス詳細ObjVar[key][subKey] = [];
+                });
+            } else {
+                console.error(initステータス詳細ObjVar.name, key);
+            }
+        } else {
+            ステータス詳細ObjVar[key] = 0;
+        }
     });
     ステータス詳細ObjVar['会心率'] = 5;
     ステータス詳細ObjVar['会心ダメージ'] = 50;
