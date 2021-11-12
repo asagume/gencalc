@@ -13,7 +13,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto 700px;
-        grid-template-rows: 32px 500px minmax(800px, 1600px) 140px;
+        grid-template-rows: 32px minmax(500px, auto) minmax(800px, 1600px) 140px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
 }
@@ -35,7 +35,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 240px 500px minmax(800px, 1600px) 140px;
+        grid-template-rows: 32px 240px minmax(500px, auto) minmax(800px, 1600px) 140px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -100,6 +100,13 @@ fieldset {
     padding-bottom: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-inline-start: 4px;
+    margin-inline-end: 4px;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    padding-block-start: 2px;
+    padding-block-end: 2px;
+    border-radius: 10px;
 }
 
 legend {
@@ -176,6 +183,10 @@ article.input-item {
     vertical-align: top;
 }
 
+article.input-item label {
+    font-size: 18px;
+}
+
 .tab-area {
     width: 100%;
     text-align: center;
@@ -194,7 +205,7 @@ article.input-item {
     display: block;
     float: left;
     order: -1;
-    width: calc(100% / 5 - 10px);
+    width: calc(100% / 4 - 10px);
     height: 34px;
     line-height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
@@ -295,10 +306,6 @@ input:checked+.tab-area3+.tab-content {
     display: inline-block;
 }
 
-.input-area .input-item-hidden {
-    display: none;
-}
-
 .input-area .input-item label {
     display: block;
 }
@@ -306,6 +313,10 @@ input:checked+.tab-area3+.tab-content {
 .input-area .input-item2 {
     display: inline-block;
     width: 280px;
+}
+
+.input-area .input-item2 label {
+    font-size: 18px;
 }
 
 .input-area .input-item2 select {
@@ -329,9 +340,13 @@ input:checked+.tab-area3+.tab-content {
     border-radius: 5px;
 }
 
+.with-small-select legend {
+    font-size: 18px;
+}
+
 .with-small-select select {
     display: block;
-    width: 200px;
+    width: 185px;
 }
 
 table {
@@ -517,19 +532,28 @@ div.description {
 }
 
 .input-group fieldset {
-    width: 205px;
+    width: 150px;
 }
 
 section.tiny article.input-item {
-    width: 100px;
+    width: 90px;
 }
 
 section.tiny article.input-item select {
     width: 80px;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 0;
 }
 
 section.tiny article.input-item label {
     display: block;
+    font-size: 18px;
+    margin: 0;
+}
+
+.input-group .input-item label {
+    font-size: 18px;
 }
 
 .horizontal-list {
