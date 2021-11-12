@@ -1905,15 +1905,15 @@ const 聖遺物セットInputOnChange = function () {
         $('#聖遺物レアリティ' + (i + 1) + 'Input').val(ARTIFACT_RARITY_ARR[myRarity4SetNumber][i]);
     }
     // 説明Boxを再構成します
-    $('#聖遺物セット効果説明Box').empty();
+    //$('#聖遺物セット効果説明Box').empty();
     選択中聖遺物セット効果データArrVar.forEach(data => {
-        let my説明 = data['説明'];
-        if (Array.isArray(my説明)) {
-            my説明.join('<br>');
-        }
-        $('<p>', {
-            html: my説明
-        }).appendTo('#聖遺物セット効果説明Box');
+        //let my説明 = data['説明'];
+        //if (Array.isArray(my説明)) {
+        //    my説明.join('<br>');
+        //}
+        //$('<p>', {
+        //    html: my説明
+        //}).appendTo('#聖遺物セット効果説明Box');
         if ('オプション初期値' in data) {
             Object.keys(data['オプション初期値']).forEach(key => {
                 let elemId = key + 'Option';
@@ -2518,7 +2518,7 @@ $(document).ready(function () {
             バフデバフMasterVar = jsonObj;
             Object.keys(バフデバフMasterVar).forEach(key => {
                 let myObj = バフデバフMasterVar[key];
-                if ('desabled' in myObj && myObj['desabled']) return;
+                if ('disabled' in myObj && myObj['disabled']) return;
                 let my条件 = '名前' in myObj ? myObj['名前'] : key;
                 myObj['詳細'].forEach(detailObj => {
                     if (!('条件' in detailObj)) {

@@ -13,7 +13,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto 700px;
-        grid-template-rows: 32px 470px minmax(800px, 1600px) 140px;
+        grid-template-rows: 32px 500px minmax(800px, 1600px) 140px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
 }
@@ -35,7 +35,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 240px 470px minmax(800px, 1600px) 140px;
+        grid-template-rows: 32px 240px 500px minmax(800px, 1600px) 140px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -199,7 +199,7 @@ article.input-item {
     line-height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
