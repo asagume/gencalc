@@ -1880,7 +1880,7 @@ const inputOnChangeArtifactSubUpdate = function () {
 };
 
 // 聖遺物セット効果 変更イベント
-const 聖遺物セットInputOnChange = function () {
+const 聖遺物セットInputOnChange = function (opt_skipRearity = false) {
     選択中聖遺物セット効果データArrVar = [];
     if ($('#聖遺物セット効果1Input').val() == $('#聖遺物セット効果2Input').val()) {
         let myData = 聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()];
@@ -1893,16 +1893,18 @@ const 聖遺物セットInputOnChange = function () {
         選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['2セット効果']);
     }
     // レアリティを設定します
-    const ARTIFACT_RARITY_ARR = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
-    let myRarity4SetNumber = 0;
-    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['レアリティ'] == 4) {
-        myRarity4SetNumber++;
-    }
-    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['レアリティ'] == 4) {
-        myRarity4SetNumber++;
-    }
-    for (let i = 0; i < 5; i++) {
-        $('#聖遺物レアリティ' + (i + 1) + 'Input').val(ARTIFACT_RARITY_ARR[myRarity4SetNumber][i]);
+    if (!opt_skipRearity) {
+        const ARTIFACT_RARITY_ARR = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
+        let myRarity4SetNumber = 0;
+        if (聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['レアリティ'] == 4) {
+            myRarity4SetNumber++;
+        }
+        if (聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['レアリティ'] == 4) {
+            myRarity4SetNumber++;
+        }
+        for (let i = 0; i < 5; i++) {
+            $('#聖遺物レアリティ' + (i + 1) + 'Input').val(ARTIFACT_RARITY_ARR[myRarity4SetNumber][i]);
+        }
     }
     // 説明Boxを再構成します
     //$('#聖遺物セット効果説明Box').empty();
@@ -2033,6 +2035,7 @@ const おすすめセットInputOnChange = function () {
     その他_基礎ダメージ詳細ArrMapVar.clear();
 
     let is聖遺物サブ効果Includes = false;
+    let is聖遺物レアリティIncludes = false;
     let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
     Object.keys(entry).forEach(key => {
         let isElemExists = false;
@@ -2059,6 +2062,8 @@ const おすすめセットInputOnChange = function () {
                     オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
                 } else if (elem.name == '聖遺物サブ効果Input') {
                     is聖遺物サブ効果Includes = true;
+                } else if (elem.name == '聖遺物レアリティInput') {
+                    is聖遺物レアリティIncludes = true;
                 }
             }
         });
@@ -2071,7 +2076,7 @@ const おすすめセットInputOnChange = function () {
     if (!is聖遺物サブ効果Includes) {
         inputOnChangeArtifactSubUpdate();
     }
-    聖遺物セットInputOnChange();
+    聖遺物セットInputOnChange(opt_skipRearity = is聖遺物レアリティIncludes);
     武器InputOnChange();
 };
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
