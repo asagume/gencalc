@@ -438,12 +438,12 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
     let my計算Result;
     switch (detailObj['種類']) {
         case 'HP回復':
-            myダメージバフ = opt_statusObj['与える治療効果'] + opt_statusObj['受ける治療効果'];
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, null, null, null, null, opt_statusObj);
+            let my回復バフ = opt_statusObj['与える治療効果'] + opt_statusObj['受ける治療効果'];
+            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], my回復バフ, null, null, false, null, null, null, null, opt_statusObj);
             break;
         case 'シールド':
-            myダメージバフ = opt_statusObj['シールド強化'];
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, my元素, null, null, my別枠乗算, opt_statusObj);
+            let myシールドバフ = opt_statusObj['シールド強化'];
+            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myシールドバフ, null, null, false, my元素, null, null, my別枠乗算, opt_statusObj);
             break;
         case '元素創造物HP':    // for アンバー 甘雨
             my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null, opt_statusObj);
@@ -495,7 +495,23 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
                 my計算Result[3] += myResultWork[3];
             }
         } else if (valueObj['種類'].endsWith('強化')) {
-            let myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myダメージバフ, my会心率, my会心ダメージ, true, my元素, my敵防御力, my防御無視, my別枠乗算, opt_statusObj);
+            let myResultWork;
+            switch (detailObj['種類']) {
+                case 'HP回復':  // for 早柚 珊瑚宮心海
+                    let my回復バフ = opt_statusObj['与える治療効果'] + opt_statusObj['受ける治療効果'];
+                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], my回復バフ, null, null, false, null, null, null, null, opt_statusObj);
+                    break;
+                case 'シールド':
+                    let myシールドバフ = opt_statusObj['シールド強化'];
+                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myシールドバフ, null, null, false, my元素, null, null, my別枠乗算, opt_statusObj);
+                    break;
+                case '表示':    // for ベネット
+                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], null, null, null, false, null, null, null, null, opt_statusObj);
+                    break;
+                default:
+                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myダメージバフ, my会心率, my会心ダメージ, true, my元素, my敵防御力, my防御無視, my別枠乗算, opt_statusObj);
+                    break;
+            }
             my計算Result[1] += myResultWork[1];
             if (my計算Result[2] != null) {
                 my計算Result[2] += myResultWork[2];
