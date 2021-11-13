@@ -1775,6 +1775,21 @@ $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnCh
 
 // 聖遺物サブ効果 変更イベント
 const inputOnChangeArtifactSubUpdate = function () {
+    if (this.id == '聖遺物優先するサブ効果1Input') {
+        if (this.value == '‐直接入力‐') {
+            $('#聖遺物優先するサブ効果2Input').prop('disabled', true);
+            $('#聖遺物優先するサブ効果3Input').prop('disabled', true);
+            $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', true);
+            return;
+        } else {
+            $('#聖遺物優先するサブ効果2Input').prop('disabled', false);
+            $('#聖遺物優先するサブ効果3Input').prop('disabled', false);
+            $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', false);
+        }
+    } else if ($('#聖遺物優先するサブ効果1Input').val() == '‐直接入力‐') {
+        return;
+    }
+
     if ($('#聖遺物詳細計算停止Config').prop('checked')) return;
 
     let priorityArr = [];
@@ -2336,12 +2351,12 @@ $(document).on('change', '#元素爆発レベルInput', enable構成保存Button
 $(document).on('change', '#武器Input', enable構成保存Button);
 $(document).on('change', '#武器レベルInput', enable構成保存Button);
 $(document).on('change', '#精錬ランクInput', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物セット効果Input"]', enable構成保存Button);
 $(document).on('change', 'select[name="聖遺物メイン効果Input"]', enable構成保存Button);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', enable構成保存Button);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物セット効果Input"]', enable構成保存Button);
-//$(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構成保存Button);
-//$(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
+$(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構成保存Button);
+$(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
 $(document).on('change', '#おすすめセットInput', enable構成保存Button);
 
 
