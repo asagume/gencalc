@@ -437,7 +437,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
     let my計算Result;
     switch (detailObj['種類']) {
         case 'HP回復':
-            myダメージバフ = opt_statusObj['与える治療効果'];
+            myダメージバフ = opt_statusObj['与える治療効果'] + opt_statusObj['受ける治療効果'];
             my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, null, null, false, null, null, null, null, opt_statusObj);
             break;
         case 'シールド':
