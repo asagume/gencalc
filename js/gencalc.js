@@ -1210,7 +1210,7 @@ const setupBaseDamageDetailDataCharacter = function () {
 
     // 命ノ星座を解析します。Object
     if ('命ノ星座' in 選択中キャラクターデータVar) {
-        for (let i = $('#命ノ星座Input').val(); i >= 1; i--) {
+        for (let i = 1; i <= $('#命ノ星座Input').val(); i++) {
             myTalentDataObj = 選択中キャラクターデータVar['命ノ星座'][i];
             let resultArr = makeTalentDetailArray(myTalentDataObj, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
             if (resultArr.length > 0) {
