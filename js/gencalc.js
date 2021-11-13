@@ -1775,21 +1775,6 @@ $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnCh
 
 // 聖遺物サブ効果 変更イベント
 const inputOnChangeArtifactSubUpdate = function () {
-    if (this.id == '聖遺物優先するサブ効果1Input') {
-        if (this.value == '‐直接入力‐') {
-            $('#聖遺物優先するサブ効果2Input').prop('disabled', true);
-            $('#聖遺物優先するサブ効果3Input').prop('disabled', true);
-            $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', true);
-            return;
-        } else {
-            $('#聖遺物優先するサブ効果2Input').prop('disabled', false);
-            $('#聖遺物優先するサブ効果3Input').prop('disabled', false);
-            $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', false);
-        }
-    } else if ($('#聖遺物優先するサブ効果1Input').val() == '‐直接入力‐') {
-        return;
-    }
-
     if ($('#聖遺物詳細計算停止Config').prop('checked')) return;
 
     let priorityArr = [];
@@ -2047,6 +2032,7 @@ const おすすめセットInputOnChange = function () {
     元素爆発_基礎ダメージ詳細ArrVar = [];
     その他_基礎ダメージ詳細ArrMapVar.clear();
 
+    let is聖遺物サブ効果Includes = false;
     let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
     Object.keys(entry).forEach(key => {
         let isElemExists = false;
@@ -2071,6 +2057,8 @@ const おすすめセットInputOnChange = function () {
                 }
                 if (suffix == 'Option') {
                     オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
+                } else if (elem.name == '聖遺物サブ効果Input') {
+                    is聖遺物サブ効果Includes = true;
                 }
             }
         });
@@ -2080,7 +2068,9 @@ const おすすめセットInputOnChange = function () {
     });
 
     setupBaseDamageDetailDataCharacter();
-    inputOnChangeArtifactSubUpdate();
+    if (!is聖遺物サブ効果Includes) {
+        inputOnChangeArtifactSubUpdate();
+    }
     聖遺物セットInputOnChange();
     武器InputOnChange();
 };
