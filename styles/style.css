@@ -107,7 +107,7 @@ fieldset {
     padding-block-start: 2px;
     padding-block-end: 2px;
     border-radius: 10px;
-    background: linear-gradient(to right, #47340d, #1d180b);
+    background: linear-gradient(to bottom, #47340d, #1d180b);
 }
 
 legend {
