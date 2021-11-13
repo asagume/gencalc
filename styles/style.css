@@ -110,6 +110,10 @@ fieldset {
     background: linear-gradient(to bottom, #2b1f08, #292312);
 }
 
+.tab-area fieldset {
+    background: transparent;
+}
+
 legend {
     font-size: 20px;
 }
