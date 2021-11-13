@@ -9,7 +9,7 @@ const addDecimal = function (value1, value2, opt_max = null) {
     let decimalDigits1 = String(value1).length - String(value1).lastIndexOf('.');
     let decimalDigits2 = String(value2).length - String(value2).lastIndexOf('.');
     let decimalDigits = Math.max([decimalDigits1, decimalDigits2]);
-    let result = Math.round((value1 * 100 + value2 * 100) / 10) / 10;
+    let result = Math.floor((value1 * 100 + value2 * 100) / 10) / 10;
     if (opt_max != null) {
         result = Math.min(result, opt_max);
     }
@@ -122,6 +122,7 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
                         break;
                     case '*':
                         result *= subResult;
+                        result = Math.floor(result * 100) / 100;
                         break;
                     case '/':
                         result /= subResult;
@@ -195,7 +196,7 @@ function calculate防御補正(opt_def = 0, opt_ignoreDef = 0, opt_statusObj = n
     if (opt_statusObj == null) {
         opt_statusObj = ステータス詳細ObjVar;
     }
-    let level = opt_statusObj['レベル'];
+    let level = Number($('#レベルInput').val().replace('+', ''));
     let enemyLevel = opt_statusObj['敵レベル'];
     let calcIgnoreDef = opt_ignoreDef / 100;
     let calcDef = opt_def / 100;
@@ -241,7 +242,7 @@ function calculate固定値系元素反応ダメージ(element, elementalMastery
     if (!element || element == '物理' || !(elementalReaction in 元素反応MasterVar[element])) {
         return 0;
     }
-    let level = opt_statusObj['レベル'];
+    let level = Number($('#レベルInput').val().replace('+', ''));
     let dmgBuff = opt_statusObj[elementalReaction + 'ダメージバフ'];
     let result = 元素反応MasterVar[element][elementalReaction]['数値'][level];
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
@@ -256,7 +257,7 @@ function calculate結晶シールド吸収量(element, elementalMastery, opt_sta
     if (!element || element == '物理' || !('結晶' in 元素反応MasterVar[element])) {
         return 0;
     }
-    let level = ステータス詳細ObjVar['レベル'];
+    let level = Number($('#レベルInput').val().replace('+', ''));
     let result = 元素反応MasterVar[element]['結晶']['数値'][level];
     result *= 1 + 4.44 * elementalMastery / (elementalMastery + 1400);
     return result;
@@ -1444,80 +1445,50 @@ const inputOnChangeResultUpdate = function () {
     setDebugInfo();
 }
 
-// ステータスを計算します
-const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
-    if (!選択中キャラクターデータVar) return;
-    if (!選択中武器データVar) return;
-    // 初期化
-    initステータス詳細ObjVar();
-
-    // 敵関連データをセットします
-    Object.keys(選択中敵データVar).forEach(propName => {
-        if (propName in ステータス詳細ObjVar) {
-            ステータス詳細ObjVar['敵' + propName] = Number(選択中敵データVar[propName]);
-        }
-    });
-    ステータス詳細ObjVar['敵レベル'] = Number($('#敵レベルInput').val());
-    ステータス詳細ObjVar['敵防御力'] = 0;
-
-    // キャラクターの基本ステータスをセットします
-    let myレベル = $('#レベルInput').val();
-    ステータス詳細ObjVar['レベル'] = Number(myレベル.replace('+', ''));
-    if (opt_baseUpdate) {
-        ステータス詳細ObjVar['基礎HP'] = Number(選択中キャラクターデータVar['ステータス']['基礎HP'][myレベル]);
-        ステータス詳細ObjVar['基礎攻撃力'] = Number(選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myレベル]) + Number(選択中武器データVar['ステータス']['基礎攻撃力'][myレベル]);
-        ステータス詳細ObjVar['基礎防御力'] = Number(選択中キャラクターデータVar['ステータス']['基礎防御力'][myレベル]);
-    } else {
-        ステータス詳細ObjVar['基礎HP'] = Number($('#基礎HPInput').val());
-        ステータス詳細ObjVar['基礎攻撃力'] = Number($('#基礎攻撃力Input').val());
-        ステータス詳細ObjVar['基礎防御力'] = Number($('#基礎防御力Input').val());
-    }
-    ステータス詳細ObjVar['HP上限'] = ステータス詳細ObjVar['基礎HP'];
-    ステータス詳細ObjVar['攻撃力'] = ステータス詳細ObjVar['基礎攻撃力'];
-    ステータス詳細ObjVar['防御力'] = ステータス詳細ObjVar['基礎防御力'];
-
+function calculateStatusObj(statusObj) {
     // キャラクターのサブステータスを計上します
+    let myレベル = $('#レベルInput').val();
     Object.keys(選択中キャラクターデータVar['ステータス']).forEach(key => {
         if (['基礎HP', '基礎攻撃力', '基礎防御力'].includes(key)) return;
-        calculateStatus(ステータス詳細ObjVar, key, 選択中キャラクターデータVar['ステータス'][key][myレベル]);
+        calculateStatus(statusObj, key, 選択中キャラクターデータVar['ステータス'][key][myレベル]);
     });
 
     // 武器のサブステータスを計上します
     let my武器レベル = $('#武器レベルInput').val();
     Object.keys(選択中武器データVar['ステータス']).forEach(key => {
         if (['基礎攻撃力'].includes(key)) return;
-        calculateStatus(ステータス詳細ObjVar, key, 選択中武器データVar['ステータス'][key][my武器レベル]);
+        calculateStatus(statusObj, key, 選択中武器データVar['ステータス'][key][my武器レベル]);
     });
 
     // 聖遺物のメインステータスを計上します
     $('select[name="聖遺物メイン効果Input"]').each(function () {
         let rarerityId = this.id.replace('メイン効果', 'レアリティ');
         let rarerityElem = document.getElementById(rarerityId);
-        calculateStatus(ステータス詳細ObjVar, this.value, [聖遺物メイン効果MasterVar[rarerityElem.value][this.value]]);
+        calculateStatus(statusObj, this.value, [聖遺物メイン効果MasterVar[rarerityElem.value][this.value]]);
     });
 
     // 聖遺物のサブステータスを計上します
-    ステータス詳細ObjVar['HP上限'] += Number($('#聖遺物サブ効果HPInput').val());
-    ステータス詳細ObjVar['HP乗算'] += Number($('#聖遺物サブ効果HPPInput').val());
-    ステータス詳細ObjVar['攻撃力'] += Number($('#聖遺物サブ効果攻撃力Input').val());
-    ステータス詳細ObjVar['攻撃力乗算'] += Number($('#聖遺物サブ効果攻撃力PInput').val());
-    ステータス詳細ObjVar['防御力'] += Number($('#聖遺物サブ効果防御力Input').val());
-    ステータス詳細ObjVar['防御力乗算'] += Number($('#聖遺物サブ効果防御力PInput').val());
-    ステータス詳細ObjVar['元素熟知'] += Number($('#聖遺物サブ効果元素熟知Input').val());
-    ステータス詳細ObjVar['会心率'] += Number($('#聖遺物サブ効果会心率Input').val());
-    ステータス詳細ObjVar['会心ダメージ'] += Number($('#聖遺物サブ効果会心ダメージInput').val());
-    ステータス詳細ObjVar['元素チャージ効率'] += Number($('#聖遺物サブ効果元素チャージ効率Input').val());
+    statusObj['HP上限'] += Number($('#聖遺物サブ効果HPInput').val());
+    statusObj['HP乗算'] += Number($('#聖遺物サブ効果HPPInput').val());
+    statusObj['攻撃力'] += Number($('#聖遺物サブ効果攻撃力Input').val());
+    statusObj['攻撃力乗算'] += Number($('#聖遺物サブ効果攻撃力PInput').val());
+    statusObj['防御力'] += Number($('#聖遺物サブ効果防御力Input').val());
+    statusObj['防御力乗算'] += Number($('#聖遺物サブ効果防御力PInput').val());
+    statusObj['元素熟知'] += Number($('#聖遺物サブ効果元素熟知Input').val());
+    statusObj['会心率'] += Number($('#聖遺物サブ効果会心率Input').val());
+    statusObj['会心ダメージ'] += Number($('#聖遺物サブ効果会心ダメージInput').val());
+    statusObj['元素チャージ効率'] += Number($('#聖遺物サブ効果元素チャージ効率Input').val());
 
     // 元素共鳴を計上します
     選択中元素共鳴データArrVar.forEach(detailObj => {
         if ('詳細' in detailObj) {
             if ($.isArray(detailObj['詳細'])) {
                 detailObj['詳細'].forEach(data => {
-                    calculateStatus(ステータス詳細ObjVar, data['種類'], data['数値']);
+                    calculateStatus(statusObj, data['種類'], data['数値']);
                 });
             } else {
                 let data = detailObj['詳細'];
-                calculateStatus(ステータス詳細ObjVar, data['種類'], data['数値']);
+                calculateStatus(statusObj, data['種類'], data['数値']);
             }
         }
     });
@@ -1531,7 +1502,7 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
         if (number != 1) {
             myNew数値 = myNew数値.concat(['*', number]);
         }
-        calculateStatus(ステータス詳細ObjVar, detailObj['種類'], myNew数値);
+        calculateStatus(statusObj, detailObj['種類'], myNew数値);
     });
 
     // ステータス変更系詳細ArrMapVarの登録内容を計上します
@@ -1567,27 +1538,27 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
     });
     // 攻撃力の計算で参照されるステータスアップを先に計上します
     myPriority1KindFormulaArr.forEach(entry => {
-        calculateStatus(ステータス詳細ObjVar, entry[0], entry[1], entry[2]);
+        calculateStatus(statusObj, entry[0], entry[1], entry[2]);
     });
     // 乗算系のステータスアップを計上します HP% 攻撃力% 防御力%
     myPriority2KindFormulaArr.sort(compareFunction);
     myPriority2KindFormulaArr.forEach(entry => {
-        calculateStatus(ステータス詳細ObjVar, entry[0], entry[1], entry[2]);
+        calculateStatus(statusObj, entry[0], entry[1], entry[2]);
     });
 
     // HP上限 攻撃力 防御力を計算します
     // これより後に乗算系(%付き)のステータスアップがあると計算が狂います
-    ステータス詳細ObjVar['HP上限'] += ステータス詳細ObjVar['基礎HP'] * (ステータス詳細ObjVar['HP乗算']) / 100;
-    ステータス詳細ObjVar['HP上限'] = Math.round(ステータス詳細ObjVar['HP上限']);
-    ステータス詳細ObjVar['攻撃力'] += ステータス詳細ObjVar['基礎攻撃力'] * (ステータス詳細ObjVar['攻撃力乗算']) / 100;
-    ステータス詳細ObjVar['攻撃力'] = Math.round(ステータス詳細ObjVar['攻撃力']);
-    ステータス詳細ObjVar['防御力'] += ステータス詳細ObjVar['基礎防御力'] * (ステータス詳細ObjVar['防御力乗算']) / 100;
-    ステータス詳細ObjVar['防御力'] = Math.round(ステータス詳細ObjVar['防御力']);
+    statusObj['HP上限'] += statusObj['基礎HP'] * (statusObj['HP乗算']) / 100;
+    statusObj['HP上限'] = Math.floor(statusObj['HP上限']);  // 切り捨て
+    statusObj['攻撃力'] += statusObj['基礎攻撃力'] * (statusObj['攻撃力乗算']) / 100;
+    statusObj['攻撃力'] = Math.floor(statusObj['攻撃力']);  // 切り捨て
+    statusObj['防御力'] += statusObj['基礎防御力'] * (statusObj['防御力乗算']) / 100;
+    statusObj['防御力'] = Math.floor(statusObj['防御力']);  // 切り捨て
 
     // それ以外のステータスアップを計上します
     myKindFormulaArr.sort(compareFunction);
     myKindFormulaArr.forEach(entry => {
-        calculateStatus(ステータス詳細ObjVar, entry[0], entry[1], entry[2]);
+        calculateStatus(statusObj, entry[0], entry[1], entry[2]);
     });
 
     // 天賦性能変更系詳細ArrMapVarの登録内容を反映します
@@ -1606,6 +1577,46 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
             }
         });
     });
+}
+
+// ステータスを計算します
+const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
+    if (!選択中キャラクターデータVar) return;
+    if (!選択中武器データVar) return;
+    // 初期化
+    initステータス詳細ObjVar();
+
+    // 敵関連データをセットします
+    Object.keys(選択中敵データVar).forEach(propName => {
+        if (propName in ステータス詳細ObjVar) {
+            ステータス詳細ObjVar['敵' + propName] = Number(選択中敵データVar[propName]);
+        }
+    });
+    ステータス詳細ObjVar['敵レベル'] = Number($('#敵レベルInput').val());
+    ステータス詳細ObjVar['敵防御力'] = 0;
+
+    // キャラクターの基本ステータスをセットします
+    let myレベル = $('#レベルInput').val();
+    let my武器レベル = $('#武器レベルInput').val();
+    if (opt_baseUpdate) {
+        ステータス詳細ObjVar['基礎HP'] = Number(選択中キャラクターデータVar['ステータス']['基礎HP'][myレベル]);
+        ステータス詳細ObjVar['基礎攻撃力'] = Number(選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myレベル]) + Number(選択中武器データVar['ステータス']['基礎攻撃力'][my武器レベル]);
+        ステータス詳細ObjVar['基礎防御力'] = Number(選択中キャラクターデータVar['ステータス']['基礎防御力'][myレベル]);
+    } else {
+        ステータス詳細ObjVar['基礎HP'] = Number($('#基礎HPInput').val());
+        ステータス詳細ObjVar['基礎攻撃力'] = Number($('#基礎攻撃力Input').val());
+        ステータス詳細ObjVar['基礎防御力'] = Number($('#基礎防御力Input').val());
+    }
+    ステータス詳細ObjVar['HP上限'] = ステータス詳細ObjVar['基礎HP'];
+    ステータス詳細ObjVar['攻撃力'] = ステータス詳細ObjVar['基礎攻撃力'];
+    ステータス詳細ObjVar['防御力'] = ステータス詳細ObjVar['基礎防御力'];
+
+    calculateStatusObj(ステータス詳細ObjVar);
+}
+
+// ステータスAreaを更新します
+const inputOnChangeStatusUpdate = function () {
+    inputOnChangeStatusUpdateSub(true);
 
     // ステータス詳細ObjVar⇒各Input要素 値をコピーします
     setObjectPropertiesToElements(ステータス詳細ObjVar, '', 'Input');
@@ -1614,13 +1625,13 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
 }
 
 // ステータスAreaを更新します
-const inputOnChangeStatusUpdate = function () {
-    inputOnChangeStatusUpdateSub(true);
-}
-
-// ステータスAreaを更新します
 const inputOnChangeStatusUpdateExceptBase = function () {
     inputOnChangeStatusUpdateSub(false);
+
+    // ステータス詳細ObjVar⇒各Input要素 値をコピーします
+    setObjectPropertiesToElements(ステータス詳細ObjVar, '', 'Input');
+
+    inputOnChangeResultUpdate();
 }
 
 $(document).on('change', 'input[name="基礎ステータスInput"]', inputOnChangeStatusUpdateExceptBase);
