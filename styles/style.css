@@ -458,13 +458,15 @@ fieldset article {
 
 legend#condition-set {
     width: 200px;
+    text-align: left;
+    margin-left: 15px;
+    margin-bottom: 10px;
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
     padding: 0;
-    margin-bottom: 10px;
 }
 
 legend#condition-set.closed {
@@ -474,13 +476,15 @@ legend#condition-set.closed {
 
 legend#option-set {
     width: 200px;
+    text-align: left;
+    margin-left: 15px;
+    margin-bottom: 10px;
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
     padding: 0;
-    margin-bottom: 10px;
 }
 
 legend#option-set.closed {
@@ -490,13 +494,15 @@ legend#option-set.closed {
 
 legend#status-set {
     width: 200px;
+    text-align: left;
+    margin-left: 15px;
+    margin-bottom: 10px;
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
     padding: 0;
-    margin-bottom: 10px;
 }
 
 legend#status-set.closed {
