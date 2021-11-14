@@ -1659,19 +1659,21 @@ const inputOnChangeOptionUpdate = function () {
     if (!選択中武器データVar) return;
 
     let my条件付き詳細ObjArr = [];
-    天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(detailObj => {
-            if (detailObj['条件']) {
-                my条件付き詳細ObjArr.push(detailObj);
-            }
-        });
-    });
-    ステータス変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(detailObj => {
-            if (detailObj['条件']) {
-                my条件付き詳細ObjArr.push(detailObj);
-            }
-        });
+    ['キャラクター', '武器', '聖遺物セット'].forEach(key => {
+        if (天賦性能変更系詳細ArrMapVar.has(key)) {
+            天賦性能変更系詳細ArrMapVar.get(key).forEach(detailObj => {
+                if (detailObj['条件']) {
+                    my条件付き詳細ObjArr.push(detailObj);
+                }
+            });
+        }
+        if (ステータス変更系詳細ArrMapVar.has(key)) {
+            ステータス変更系詳細ArrMapVar.get(key).forEach(detailObj => {
+                if (detailObj['条件']) {
+                    my条件付き詳細ObjArr.push(detailObj);
+                }
+            });
+        }
     });
     console.debug('my条件付き詳細ObjArr');
     console.debug(my条件付き詳細ObjArr);
