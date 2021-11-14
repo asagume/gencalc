@@ -1016,6 +1016,10 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
 const appendInputForOptionElement = function (parentElemId, optionMap, name, opt_checked = true) {
     optionMap.forEach((value, key) => {
         if (value) return;
+
+        let divElem = document.createElement('div');
+        $('#' + selectorEscape(parentElemId)).append(divElem);
+
         let elem = document.createElement('input');
         elem.type = 'checkbox';
         if (opt_checked) {  // チェック指定ありの場合でも、自身の排他条件のうちcheckedのものが存在すればチェックしません
@@ -1034,17 +1038,21 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
         elem.value = value;
         elem.id = key + 'Option';
         elem.name = name;
-        $('#' + selectorEscape(parentElemId)).append(elem);
+        divElem.appendChild(elem);
+
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
         labelElem.textContent = key;
         elem.after(labelElem);
+
         elem.onchange = オプションInputOnChange;
     });
     optionMap.forEach((value, key) => {
         if (!value) return;
+
         let divElem = document.createElement('div');
         $('#' + selectorEscape(parentElemId)).append(divElem);
+
         let elem = document.createElement('select');
         elem.id = key + 'Option';
         elem.name = name;
@@ -1068,10 +1076,12 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
             }
             optionElem.selected = mySelected;
         }
+
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
         labelElem.textContent = key;
         elem.before(labelElem);
+
         elem.onchange = オプションInputOnChange;
         applyOptionVariable(elem);
     });
@@ -1520,6 +1530,19 @@ function calculateStatusObj(statusObj) {
         }
         calculateStatus(statusObj, detailObj['種類'], myNew数値);
     });
+
+    // チームバフを計上します
+    statusObj['攻撃力'] += Number($('#チーム攻撃力Input').val());
+    statusObj['攻撃力乗算'] += Number($('#チーム攻撃力PInput').val());
+    statusObj['元素熟知'] += Number($('#チーム元素熟知Input').val());
+    statusObj['会心率'] += Number($('#チーム会心率Input').val());
+    statusObj['会心ダメージ'] += Number($('#チーム会心ダメージInput').val());
+    statusObj['通常攻撃ダメージバフ'] += Number($('#チーム通常攻撃ダメージバフInput').val());
+    statusObj['重撃ダメージバフ'] += Number($('#チーム重撃ダメージバフInput').val());
+    statusObj['落下攻撃ダメージバフ'] += Number($('#チーム落下攻撃ダメージバフInput').val());
+    statusObj['元素スキルダメージバフ'] += Number($('#チーム元素スキルダメージバフInput').val());
+    statusObj['元素爆発ダメージバフ'] += Number($('#チーム元素爆発ダメージバフInput').val());
+    statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージバフ'] += Number($('#チーム自元素ダメージバフInput').val());
 
     // ステータス変更系詳細ArrMapVarの登録内容を計上します
     // * キャラクター 固有天賦 命ノ星座
@@ -2383,6 +2406,7 @@ $(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構�
 $(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
 $(document).on('change', '#おすすめセットInput', enable構成保存Button);
 
+$(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
 
 ////////////////////////////////////////////////////////////////////////////////
 function isHiddenHidableElement(selector, opt_default = false) {

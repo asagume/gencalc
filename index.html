@@ -17,7 +17,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.3.3
+                    げんかるく - 原神ダメージシミュレーター Ver.1.4.0
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -27,7 +27,7 @@
             <div class="aside">
                 <div style="height: 130px">
                     <p>【原神】ダメージ計算機です</p>
-                    <p>2.3 新聖遺物</p>
+                    <p>上級者のためのチームバフ追加</p>
                     <p>聖遺物タブの全項目を保存可能になりました</p>
                 </div>
                 <div class="horizontal-list">
@@ -395,27 +395,9 @@
                         </fieldset>
                     </div>
                     <input type="radio" name="input-area-tab-name" id="input-area-tab3" />
-                    <label class="input-area-tab" for="input-area-tab3">敵</label>
-                    <div class="tab-content">
+                    <label class="input-area-tab" for="input-area-tab3">元素共鳴</label>
+                    <div class="tab-content" style="padding-top: 10px;">
                         <section>
-                            <article class="input-item">
-                                <label for="敵Input">敵</label>
-                                <select id="敵Input"></select>
-                            </article>
-                            <article class="input-item">
-                                <label for="敵レベルInput">敵Lv.</label>
-                                <input type="number" min="1" value="90" id="敵レベルInput" />
-                            </article>
-                            <fieldset>
-                                <legend id="buffdebuff-set">デバフ</legend>
-                                <section class="optionBox" id="バフデバフオプションBox"></section>
-                            </fieldset>
-                        </section>
-                    </div>
-                    <input type="radio" name="input-area-tab-name" id="input-area-tab4" />
-                    <label class="input-area-tab" for="input-area-tab4">元素共鳴</label>
-                    <div class="tab-content">
-                        <section style="margin-top: 10px;">
                             <article class="check-item">
                                 <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input" />
                                 <label for="炎元素共鳴Input">熱誠の炎</label>
@@ -446,6 +428,66 @@
                             </article>
                         </section>
                         <div class="description" id="元素共鳴効果説明Box"></div>
+                    </div>
+                    <input type="radio" name="input-area-tab-name" id="input-area-tab4" />
+                    <label class="input-area-tab" for="input-area-tab4">敵/デバフ</label>
+                    <div class="tab-content">
+                        <section>
+                            <article class="input-item">
+                                <label for="敵Input">敵</label>
+                                <select id="敵Input"></select>
+                            </article>
+                            <article class="input-item">
+                                <label for="敵レベルInput">敵Lv.</label>
+                                <input type="number" min="1" value="90" id="敵レベルInput" />
+                            </article>
+                        </section>
+                        <fieldset>
+                            <legend>デバフ</legend>
+                            <section class="column2-option" id="バフデバフオプションBox"></section>
+                        </fieldset>
+                    </div>
+                    <input type="radio" name="input-area-tab-name" id="input-area-tab5" />
+                    <label class="input-area-tab" for="input-area-tab5">チームバフ</label>
+                    <div class="tab-content" style="padding-top: 10px;">
+                        <table>
+                            <tr>
+                                <th>攻撃力+</th>
+                                <td><input type="number" value="0" id="チーム攻撃力Input" name="チームInput"></td>
+                                <th>通常攻撃ダメージ+</th>
+                                <td><input type="number" value="0" id="チーム通常攻撃ダメージバフInput" name="チームInput"></td>
+                            </tr>
+                            <tr>
+                                <th>攻撃力%+</th>
+                                <td><input type="number" value="0" id="チーム攻撃力PInput" name="チームInput"></td>
+                                <th>重撃ダメージ+</th>
+                                <td><input type="number" value="0" id="チーム重撃ダメージバフInput" name="チームInput"></td>
+                            </tr>
+                            <tr>
+                                <th>元素熟知+</th>
+                                <td><input type="number" value="0" id="チーム元素熟知Input" name="チームInput"></td>
+                                <th>落下攻撃ダメージ+</th>
+                                <td><input type="number" value="0" id="チーム落下攻撃ダメージバフInput" name="チームInput"></td>
+                            </tr>
+                            <tr>
+                                <th>会心率+</th>
+                                <td><input type="number" value="0" id="チーム会心率Input" name="チームInput"></td>
+                                <th>元素スキルダメージ+</th>
+                                <td><input type="number" value="0" id="チーム元素スキルダメージバフInput" name="チームInput"></td>
+                            </tr>
+                            <tr>
+                                <th>会心ダメージ+</th>
+                                <td><input type="number" value="0" id="チーム会心ダメージInput" name="チームInput"></td>
+                                <th>元素爆発ダメージ+</th>
+                                <td><input type="number" value="0" id="チーム元素爆発ダメージバフInput" name="チームInput"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td></td>
+                                <th>自元素ダメージ+</th>
+                                <td><input type="number" value="0" id="チーム自元素ダメージバフInput" name="チームInput"></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
