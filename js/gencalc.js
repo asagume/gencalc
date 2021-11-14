@@ -322,6 +322,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
     let my敵防御力 = opt_statusObj['敵防御力'];
     let my防御無視 = 0; // for 雷電将軍
     let myHIT数 = detailObj['HIT数'] != null ? Number(detailObj['HIT数']) : 1;
+    let myステータス補正 = {};
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');  // 有効な条件
 
@@ -407,6 +408,12 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
         if (!valueObj['数値']) return;
         let myValue = calculateFormulaArray(opt_statusObj, valueObj['数値'], valueObj['最大値']);
         switch (valueObj['種類']) {
+            case '攻撃力':
+                if (!('攻撃力' in myステータス補正)){
+                    myステータス補正['攻撃力'] = 0;
+                }
+                myステータス補正['攻撃力'] += myValue;
+                break;
             case '会心率':      // for 辛炎 腐植の剣 甘雨 「漁獲」
                 console.debug('my会心率', valueObj['数値'], my会心率, myValue);
                 my会心率 += myValue;
@@ -433,6 +440,11 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
                 }
                 break;
         }
+    });
+
+    // 一時的にステータスを書き換えます。
+    Object.keys(myステータス補正).forEach(statusName => {
+        opt_statusObj[statusName] += myステータス補正[statusName];
     });
 
     let my計算Result;
@@ -520,6 +532,11 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
                 my計算Result[3] += myResultWork[3];
             }
         }
+    });
+
+    // 書き換えたステータスを元に戻します。
+    Object.keys(myステータス補正).forEach(statusName => {
+        opt_statusObj[statusName] -= myステータス補正[statusName];
     });
 
     let my計算Result_蒸発 = [null, null, null];

@@ -23,6 +23,11 @@
         "レアリティ": 5,
         "import": "data/weapons/sword_5_AquilaFavonia.json"
     },
+    "シナバースピンドル": {
+        "レアリティ": 4,
+        "import": "data/weapons/sword_4_CinnabarSpindle.json",
+        "disabled": true
+    },
     "天目影打": {
         "レアリティ": 4,
         "import": "data/weapons/sword_4_AmenomaKageuchi.json"

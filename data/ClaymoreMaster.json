@@ -1,4 +1,9 @@
 {
+    "赤角石塵滅砕": {
+        "レアリティ": 5,
+        "import": "data/weapons/claymore_5_RedhornStoneThresher.json",
+        "disabled": true
+    },
     "松韻の響く頃": {
         "レアリティ": 5,
         "import": "data/weapons/claymore_5_SongofBrokenPines.json"
@@ -70,10 +75,5 @@
     "西風大剣": {
         "レアリティ": 4,
         "import": "data/weapons/claymore_4_FavoniusGreatsword.json"
-    },
-    "ノエルの剣": {
-        "レアリティ": 5,
-        "import": "data/weapons/claymore_5_RedhornStoneThresher.json",
-        "disabled": true
     }
 }
