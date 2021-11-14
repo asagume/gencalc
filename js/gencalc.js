@@ -1534,6 +1534,8 @@ function calculateStatusObj(statusObj) {
     // チームバフを計上します
     statusObj['攻撃力'] += Number($('#チーム攻撃力Input').val());
     statusObj['攻撃力乗算'] += Number($('#チーム攻撃力PInput').val());
+    statusObj['防御力'] += Number($('#チーム防御力Input').val());
+    statusObj['防御力乗算'] += Number($('#チーム防御力PInput').val());
     statusObj['元素熟知'] += Number($('#チーム元素熟知Input').val());
     statusObj['会心率'] += Number($('#チーム会心率Input').val());
     statusObj['会心ダメージ'] += Number($('#チーム会心ダメージInput').val());
@@ -1543,6 +1545,7 @@ function calculateStatusObj(statusObj) {
     statusObj['元素スキルダメージバフ'] += Number($('#チーム元素スキルダメージバフInput').val());
     statusObj['元素爆発ダメージバフ'] += Number($('#チーム元素爆発ダメージバフInput').val());
     statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージバフ'] += Number($('#チーム自元素ダメージバフInput').val());
+    statusObj['物理ダメージバフ'] += Number($('#チーム物理ダメージバフInput').val());
 
     // ステータス変更系詳細ArrMapVarの登録内容を計上します
     // * キャラクター 固有天賦 命ノ星座
