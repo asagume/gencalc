@@ -13,7 +13,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto 700px;
-        grid-template-rows: 32px minmax(500px, auto) minmax(800px, 1600px) 140px;
+        grid-template-rows: 32px auto minmax(1500px, auto) 140px;
         grid-template-areas: "header header" "aside input-area" "aside result-area" "footer footer";
     }
 }
@@ -35,7 +35,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 240px minmax(500px, auto) minmax(800px, 1600px) 140px;
+        grid-template-rows: 32px 240px auto minmax(1500px, auto) 140px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
         font-size: 1.6rem;
     }
@@ -64,7 +64,7 @@ p {
 }
 
 select {
-    width: 220px;
+    width: 100%;
     height: 34px;
     padding: 2px 8px;
     margin: 4px;
@@ -184,7 +184,7 @@ input[type="checkbox"]+label {
 }
 
 article.input-item {
-    width: 220px;
+    width: calc(100% / 3 - 10px);
     vertical-align: top;
 }
 
@@ -317,7 +317,7 @@ input:checked+.tab-area3+.tab-content {
 
 .input-area .input-item2 {
     display: inline-block;
-    width: 280px;
+    width: calc(100% / 2 - 30px);
 }
 
 .input-area .input-item2 label {
@@ -339,9 +339,8 @@ input:checked+.tab-area3+.tab-content {
 
 .with-small-select {
     display: inline-block;
-    padding-left: 2px;
-    padding-right: 2px;
-    margin-top: 5px;
+    width: calc(100% / 3 - 30px);
+    padding: 5px;
     border-radius: 5px;
 }
 
@@ -351,7 +350,7 @@ input:checked+.tab-area3+.tab-content {
 
 .with-small-select select {
     display: block;
-    width: 185px;
+    width: calc(100% - 5px);
 }
 
 table {
@@ -457,6 +456,22 @@ fieldset article {
     display: inline-block;
 }
 
+legend#condition-set {
+    width: 200px;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    border-radius: 5px;
+    border-color: #999;
+    border-style: solid;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+legend#condition-set.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    margin-bottom: 0;
+}
+
 legend#option-set {
     width: 200px;
     background: linear-gradient(to top, #ecc862, #978310);
@@ -465,10 +480,12 @@ legend#option-set {
     border-color: #999;
     border-style: solid;
     padding: 0;
+    margin-bottom: 10px;
 }
 
 legend#option-set.closed {
     background: linear-gradient(to top, #ad5b18, #55290b);
+    margin-bottom: 0;
 }
 
 legend#status-set {
@@ -479,10 +496,12 @@ legend#status-set {
     border-color: #999;
     border-style: solid;
     padding: 0;
+    margin-bottom: 10px;
 }
 
 legend#status-set.closed {
     background: linear-gradient(to top, #ad5b18, #55290b);
+    margin-bottom: 0;
 }
 
 input+select:checked {
@@ -552,10 +571,6 @@ input[name="元素反応Input"]:checked+label {
 
 div.description {
     font-size: 20px;
-}
-
-.input-group fieldset {
-    width: 150px;
 }
 
 section.tiny article.input-item {
