@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+</head>
+
+<body>
+
+    <script>
+        const TEST_ARR = [
+            7.8,
+            7,
+            6.2,
+            5.4
+        ];
+
+        function resolvePartitionPattern(n, p) {
+            if (p == 0) return [];
+            if (p == 1) return [[n]];
+            let ans = [];
+            for (let x0 = 0; x0 <= n; x0++) {
+                resolvePartitionPattern(n - x0, p - 1).forEach(sub => {
+                    if (sub.length > 0) {
+                        ans.push([x0].concat(sub));
+                    }
+                });
+            }
+            return ans;
+        }
+
+        console.log(resolvePartitionPattern(5, 4));
+        console.log(resolvePartitionPattern(6, 4));
+        console.log(resolvePartitionPattern(7, 4));
+        console.log(resolvePartitionPattern(8, 4));
+        console.log(resolvePartitionPattern(9, 4));
+        console.log(resolvePartitionPattern(10, 4));
+        console.log(resolvePartitionPattern(11, 4));
+        console.log(resolvePartitionPattern(12, 4));
+        console.log(resolvePartitionPattern(13, 4));
+        console.log(resolvePartitionPattern(14, 4));
+        console.log(resolvePartitionPattern(15, 4));
+
+    </script>
+</body>
+
+</html>
