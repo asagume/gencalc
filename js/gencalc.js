@@ -2097,7 +2097,7 @@ $(document).on('change', '#聖遺物サブ効果一括設定Input', function () 
         $('#聖遺物サブ効果一括設定Toggle').prop('checked', false);
         $('#聖遺物サブ効果一括設定Input').prop('disabled', true);
 
-        const 上昇回数Arr = [[5, 5, 5], [5, 5, 5], [8, 6, 5], [10, 8, 7], [12, 10, 9]];
+        const 上昇回数Arr = [[5, 5, 5], [5, 5, 5], [8, 7, 6], [10, 9, 8], [13, 12, 11]];
         $('#聖遺物優先するサブ効果1上昇回数Input').val(上昇回数Arr[this.value][0]);
         $('#聖遺物優先するサブ効果2上昇回数Input').val(上昇回数Arr[this.value][1]);
         $('#聖遺物優先するサブ効果3上昇回数Input').val(上昇回数Arr[this.value][2]);
@@ -2567,9 +2567,9 @@ const elementOnClickToggleOther = function (selector, triggerSelector) {
 }
 
 // 中段のオプション、ステータスを閉じたり開いたりします
-$(document).on('click', '#condition-set', elementOnClickToggleOther('#condition-set+.tab-area', '#condition-set'));
-$(document).on('click', '#option-set', elementOnClickToggleOther('#option-set+.hidable', '#option-set'));
-$(document).on('click', '#status-set', elementOnClickToggleOther('#status-set+.tab-area', '#status-set'));
+$(document).on('click', '#condition-set', elementOnClickToggleOther('#condition-area', '#condition-set'));
+$(document).on('click', '#option-set', elementOnClickToggleOther('#option-area', '#option-set'));
+$(document).on('click', '#status-set', elementOnClickToggleOther('#status-area', '#status-set'));
 
 const resultTableVisibilityMap = new Map();
 
