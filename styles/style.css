@@ -193,6 +193,10 @@ article.input-item label {
     font-size: 1.8rem;
 }
 
+fieldset.input-group legend {
+    text-align: left;
+}
+
 .tab-area {
     width: 100%;
     text-align: center;
@@ -466,7 +470,7 @@ fieldset article {
     padding-bottom: 10px; margin-top: 0;
 }
 
-#condition-set {
+.open-close {
     width: 164px;
     height: 34px;
     margin-bottom: 5px;
@@ -476,41 +480,10 @@ fieldset article {
     border-color: #999;
     border-style: solid;
     padding: 0;
+    text-align: center;
 }
 
-#condition-set.closed {
-    background: linear-gradient(to top, #ad5b18, #55290b);
-}
-
-#option-set {
-    width: 164px;
-    height: 34px;
-    margin-bottom: 5px;
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
-    border-radius: 5px;
-    border-color: #999;
-    border-style: solid;
-    padding: 0;
-}
-
-#option-set.closed {
-    background: linear-gradient(to top, #ad5b18, #55290b);
-}
-
-#status-set {
-    width: 164px;
-    height: 34px;
-    margin-bottom: 5px;
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
-    border-radius: 5px;
-    border-color: #999;
-    border-style: solid;
-    padding: 0;
-}
-
-#status-set.closed {
+.open-close.closed {
     background: linear-gradient(to top, #ad5b18, #55290b);
 }
 
@@ -561,7 +534,7 @@ input[name="元素反応Input"] {
 
 label.elemental-reaction {
     display: inline-block;
-    width: 155px;
+    width: calc(100% / 4 - 20px);
     padding: 2px;
     margin-bottom: 10px;
     background: linear-gradient(to top, #3d3d3b, #141414);
