@@ -1,9 +1,9 @@
 @media screen and (min-width: 1020px) {
     html {
-        font-size: 85%;
+        font-size: 10px;
     }
     body {
-        font-size: 1.6em;
+        font-size: 10px;
     }
     #main {
         width: 1020px;
@@ -20,10 +20,10 @@
 
 @media screen and (max-width: 1020px) {
     html {
-        font-size: 85%;
+        font-size: 10px;
     }
     body {
-        font-size: 1.6em;
+        font-size: 10px;
     }
     #main {
         width: 100%;
@@ -37,7 +37,6 @@
         grid-template-columns: auto;
         grid-template-rows: 32px 240px auto minmax(1500px, auto) 140px;
         grid-template-areas: "header" "aside" "input-area" "result-area" "footer";
-        font-size: 1.6rem;
     }
     .horizontal-list {
         overflow-x: auto;
@@ -53,6 +52,7 @@ body {
     color: blanchedalmond;
     background-color: rgb(58, 30, 10);
     text-align: center;
+    font-size: 1.8rem;
 }
 
 a {
@@ -68,7 +68,7 @@ select {
     height: 34px;
     padding: 2px 8px;
     margin: 4px;
-    font-size: 24px;
+    font-size: 2.2rem;
     border-radius: 10px;
     box-shadow: none;
 }
@@ -77,7 +77,7 @@ input[type="number"] {
     width: 100px;
     padding-left: 8px;
     margin: 2px 4px;
-    font-size: 24px;
+    font-size: 2.2rem;
     border: none;
     border-radius: 10px;
     box-shadow: none;
@@ -85,7 +85,7 @@ input[type="number"] {
 
 label {
     margin: 2px;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 label+select {
@@ -98,8 +98,8 @@ label+input[type="number"] {
 
 fieldset {
     padding-bottom: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-inline-start: 4px;
     margin-inline-end: 4px;
     padding-inline-start: 4px;
@@ -108,6 +108,7 @@ fieldset {
     padding-block-end: 2px;
     border-radius: 10px;
     background: linear-gradient(to bottom, #2b1f08, #292312);
+    text-align: center;
 }
 
 .tab-area fieldset {
@@ -115,7 +116,7 @@ fieldset {
 }
 
 legend {
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 section {
@@ -128,7 +129,7 @@ button {
     width: 250px;
     height: 40px;
     margin: 0;
-    font-size: 20px;
+    font-size: 2rem;
     color: blanchedalmond;
     background: linear-gradient(to top, #5e5c5c, #2b2a2a);
     border-radius: 10px;
@@ -139,7 +140,7 @@ button:disabled {
 }
 
 input[type="checkbox"]+label {
-    font-size: 22px;
+    font-size: 2.2rem;
 }
 
 /* グリッド */
@@ -156,12 +157,12 @@ input[type="checkbox"]+label {
     top: 50%;
     margin: 0 5px;
     transform: translate(0, -50%);
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 }
 
 .aside {
     grid-area: aside;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 }
 
 .input-area {
@@ -180,7 +181,7 @@ input[type="checkbox"]+label {
     background-color: #312820;
     color: #886b1d;
     text-align: left;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 }
 
 article.input-item {
@@ -189,7 +190,7 @@ article.input-item {
 }
 
 article.input-item label {
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 .tab-area {
@@ -221,7 +222,7 @@ article.input-item label {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 input[name="input-area-tab-name"] {
@@ -252,7 +253,7 @@ input:checked+.input-area-tab+.tab-content {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 input[name="tab-area-middle"] {
@@ -283,7 +284,7 @@ input:checked+.tab-area4+.tab-content {
     border-radius: 5px;
     border-color: #999;
     border-style: solid;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 input[name="tab-area-bottom"] {
@@ -321,7 +322,7 @@ input:checked+.tab-area3+.tab-content {
 }
 
 .input-area .input-item2 label {
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 .input-area .input-item2 select {
@@ -345,7 +346,7 @@ input:checked+.tab-area3+.tab-content {
 }
 
 .with-small-select legend {
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 .with-small-select select {
@@ -357,13 +358,36 @@ table {
     width: 100%;
     text-align: center;
     margin-right: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 table th {
     font-weight: normal;
-    text-align: right;
-    padding: 6px;
-    font-size: 18px;
+    padding: 0px 6px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+#artifactsub-detail {
+    font-size: 1.8rem;
+    margin-top: 0;
+}
+
+.input-item-short {
+    margin-bottom: 0;
+    width: 21%;
+    text-align: center;
+}
+
+#artifactsub-detail label {
+    font-size: 1.8rem;
+}
+
+#artifactsub-detail select {
+    font-size: 2.2rem;
 }
 
 /* 結果エリア */
@@ -375,7 +399,7 @@ input[type="checkbox"]:checked+label {
 .optionBox label {
     margin-left: 5px;
     margin-right: 5px;
-    font-size: 22px;
+    font-size: 2.2rem;
 }
 
 .optionBox div {
@@ -397,23 +421,15 @@ input[type="checkbox"]:checked+label {
 }
 
 .column2-option div label {
-    font-size: 22px;
+    font-size: 2.2rem;
 }
 
 .column2-option div select {
     width: 100px;
 }
 
-table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 6px;
-    overflow: hidden;
-    font-size: 20px;
-}
-
 table thead th, table tbody th, table tbody td {
-    padding: 1px 3px;
+    padding: 0px 6px;
     border-bottom: 1px solid #aaa;
 }
 
@@ -426,7 +442,7 @@ table thead th+th, table tbody td {
 }
 
 table td {
-    font-size: 24px;
+    font-size: 2.4rem;
     background-color: transparent;
 }
 
@@ -434,33 +450,26 @@ table tbody tr:last-child th, table tbody tr:last-child td {
     border-bottom: none;
 }
 
-table thead th, table tbody th {
-    padding: 2px 8px;
-    text-align: center;
-}
-
-table thead th.label, table tbody th.label {
-    width: 100px;
-    text-align: right;
-}
-
 th.category {
-    width: 110px;
+    width: 90px;
     text-align: left;
-    font-size: 20px;
     font-weight: bold;
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
+    font-size: 1.6rem;
 }
 
 fieldset article {
     display: inline-block;
 }
 
-legend#condition-set {
-    width: 200px;
-    text-align: left;
-    margin-left: 15px;
-    margin-bottom: 10px;
+#condition-area {
+    padding-bottom: 10px; margin-top: 0;
+}
+
+#condition-set {
+    width: 164px;
+    height: 34px;
+    margin-bottom: 5px;
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
@@ -469,16 +478,14 @@ legend#condition-set {
     padding: 0;
 }
 
-legend#condition-set.closed {
+#condition-set.closed {
     background: linear-gradient(to top, #ad5b18, #55290b);
-    margin-bottom: 0;
 }
 
-legend#option-set {
-    width: 200px;
-    text-align: left;
-    margin-left: 15px;
-    margin-bottom: 10px;
+#option-set {
+    width: 164px;
+    height: 34px;
+    margin-bottom: 5px;
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
@@ -487,16 +494,14 @@ legend#option-set {
     padding: 0;
 }
 
-legend#option-set.closed {
+#option-set.closed {
     background: linear-gradient(to top, #ad5b18, #55290b);
-    margin-bottom: 0;
 }
 
-legend#status-set {
-    width: 200px;
-    text-align: left;
-    margin-left: 15px;
-    margin-bottom: 10px;
+#status-set {
+    width: 164px;
+    height: 34px;
+    margin-bottom: 5px;
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
     border-radius: 5px;
@@ -505,9 +510,8 @@ legend#status-set {
     padding: 0;
 }
 
-legend#status-set.closed {
+#status-set.closed {
     background: linear-gradient(to top, #ad5b18, #55290b);
-    margin-bottom: 0;
 }
 
 input+select:checked {
@@ -576,28 +580,28 @@ input[name="元素反応Input"]:checked+label {
 }
 
 div.description {
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 section.tiny article.input-item {
-    width: 90px;
+    width: calc(100% / 5 - 30px);
 }
 
 section.tiny article.input-item select {
-    width: 80px;
+    width: 90%;
     height: 30px;
-    font-size: 20px;
+    font-size: 2rem;
     margin-top: 0;
 }
 
 section.tiny article.input-item label {
     display: block;
-    font-size: 18px;
+    font-size: 1.8rem;
     margin: 0;
 }
 
 .input-group .input-item label {
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 .horizontal-list {
@@ -677,7 +681,7 @@ section.tiny article.input-item label {
     position: absolute;
     left: 10px;
     top: 20px;
-    font-size: 32px;
+    font-size: 3.2rem;
 }
 
 #face section label {
@@ -691,7 +695,7 @@ section.tiny article.input-item label {
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 5px;
 }
 
 #face #構成保存Button {

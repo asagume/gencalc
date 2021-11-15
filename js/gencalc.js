@@ -2450,9 +2450,9 @@ const elementOnClickToggleOther = function (selector, triggerSelector) {
 }
 
 // 中段のオプション、ステータスを閉じたり開いたりします
-$(document).on('click', '#condition-set', elementOnClickToggleOther('#condition-set+.tab-area', '#condition-set'));
-$(document).on('click', '#option-set', elementOnClickToggleOther('#option-set+.hidable', '#option-set'));
-$(document).on('click', '#status-set', elementOnClickToggleOther('#status-set+.tab-area', '#status-set'));
+$(document).on('click', '#condition-set', elementOnClickToggleOther('#condition-area', '#condition-set'));
+$(document).on('click', '#option-set', elementOnClickToggleOther('#option-area', '#option-set'));
+$(document).on('click', '#status-set', elementOnClickToggleOther('#status-area', '#status-set'));
 
 const resultTableVisibilityMap = new Map();
 
