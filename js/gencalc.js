@@ -1845,22 +1845,18 @@ const elementalResonanceInputOnChange = function (event) {
 $(document).on('change', 'input[name="元素共鳴Input"]', elementalResonanceInputOnChange);
 $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
 
-function makeBruteForceSet(resultSet, arr1, arr2, depth) {
-    if (depth <= 1) {
-        arr1.forEach(value => {
-            resultSet.add(value);
+function resolvePartitionPattern(n, p) {
+    if (p == 0) return [];
+    if (p == 1) return [[n]];
+    let ans = [];
+    for (let x0 = 0; x0 <= n; x0++) {
+        resolvePartitionPattern(n - x0, p - 1).forEach(sub => {
+            if (sub.length > 0) {
+                ans.push([x0].concat(sub));
+            }
         });
-        return null;
     }
-    let resultMap = new Map();
-    for (let i = 0; i < arr1.length; i++) {
-        let newArr = [];
-        for (let j = 0; j < arr2.length; j++) {
-            newArr.push(Math.round((arr1[i] + arr2[j]) * 10) / 10);
-        }
-        resultMap.set(arr1[i], makeBruteForceSet(resultSet, newArr, arr2, depth - 1));
-    }
-    return resultMap;
+    return ans;
 }
 
 // 聖遺物サブ効果 変更イベント
@@ -1932,21 +1928,25 @@ const inputOnChangeArtifactSubUpdate = function () {
         if (propName) {
             let times = Number(document.getElementById(elem.id.replace('Input', '上昇回数Input')).value);
             let baseValue = Number(document.getElementById(elem.id.replace('Input', '基準値Input')).value);
-            let artifactSubArr = 聖遺物サブ効果MasterVar[propName];
+            let artifactSubValueArr = 聖遺物サブ効果MasterVar[propName];
             let resultValue;
             let targetValue = times * baseValue;
-            if (artifactSubArr.includes(baseValue)) {
+            if (artifactSubValueArr.includes(baseValue)) {
                 resultValue = targetValue;
             } else {
-                let bruteForceSet = new Set();
-                let bruteForceMap = makeBruteForceSet(bruteForceSet, artifactSubArr, artifactSubArr, times);
-                let bruteForceArr = Array.from(bruteForceSet);
-                bruteForceArr.sort();
-                for (let i = 0; i < bruteForceArr.length; i++) {
-                    if (targetValue <= bruteForceArr[i]) {
-                        resultValue = bruteForceArr[i];
-                        break;
+                let arrArr = PARTITION_PATTERN_ARR_MAP.get(times);
+                if (arrArr != null) {
+                    for (arr of arrArr) {
+                        resultValue = 0;
+                        for (let i = 0; i < arr.length; i++) {
+                            resultValue += arr[i] * artifactSubValueArr[i];
+                        }
+                        if (resultValue >= targetValue) {
+                            break;
+                        }
                     }
+                } else {
+                    resultValue = targetValue;
                 }
             }
             propName = propName.replace('%', 'P');
@@ -2052,6 +2052,7 @@ function build聖遺物優先するサブ効果基準値(elemId) {
     let selectedIndex = $(my上昇傾向InputSelector).prop('selectedIndex');
     let valueArr = 聖遺物サブ効果MasterVar[statusName];
     let valueMap = new Map();
+    const LABEL_ARR = ['最高', '高め', '低め', '最低'];
     const divide = 4;
     for (let i = 0; i < valueArr.length; i++) {
         if (i > 0) {
@@ -2062,11 +2063,11 @@ function build聖遺物優先するサブ効果基準値(elemId) {
                 valueMap.set(newValue, newValue);
             }
         }
-        valueMap.set(valueArr[i], valueArr[i] + ' (T' + (i + 1) + ')');
+        valueMap.set(valueArr[i], valueArr[i] + ' (' + LABEL_ARR[i] + ')');
     }
     valueMap.forEach((value, key) => {
         $('<option>', {
-            text: '×' + value,
+            text: value,
             value: key
         }).appendTo(my上昇傾向InputSelector);
     });
@@ -2740,6 +2741,10 @@ $(document).ready(function () {
         聖遺物セットInputOnChange();
         敵InputOnChange();
     });
+
+    for (let i = 5; i <= 15; i++) {
+        PARTITION_PATTERN_ARR_MAP.set(i, resolvePartitionPattern(i, 4));
+    }
 });
 
 initキャラクター構成関連要素();

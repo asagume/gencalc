@@ -72,6 +72,9 @@ const オプションElementIdValue記憶Map = new Map();
 var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 
 //
+const PARTITION_PATTERN_ARR_MAP = new Map();
+
+//
 var ステータス詳細ObjVar = {
     HP乗算: 0,
     攻撃力乗算: 0,
