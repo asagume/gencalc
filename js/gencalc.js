@@ -2063,7 +2063,7 @@ const 武器InputOnChange = function () {
         let my精錬ランク = 0;
         if (おすすめセットArrVar.length > 0) {
             let myObj = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
-            if ('精錬ランク' in myObj) {
+            if ('精錬ランク' in myObj && myObj['武器'] == 選択中武器データVar['名前']) {
                 my精錬ランク = myObj['精錬ランク'];
             }
         }
