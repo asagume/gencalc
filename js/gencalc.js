@@ -1972,6 +1972,39 @@ const inputOnChangeArtifactSubUpdate = function () {
 
 // 聖遺物セット効果 変更イベント
 const 聖遺物セットInputOnChange = function () {
+    const preSet1Value = ELEMENT_VALUE_AT_FOCUS_MAP.get('聖遺物セット効果1Input');
+    const preSet2Value = ELEMENT_VALUE_AT_FOCUS_MAP.get('聖遺物セット効果2Input');
+    ['聖遺物セット効果1Input', '聖遺物セット効果2Input'].forEach(id => {
+        ELEMENT_VALUE_AT_FOCUS_MAP.set(id, document.getElementById(id).value);
+    });
+
+    let preRarerity4Num = 0;
+    if (preSet1Value && 聖遺物セット効果MasterVar[preSet1Value]['レアリティ'] == 4) {
+        preRarerity4Num++;
+    }
+    if (preSet2Value && 聖遺物セット効果MasterVar[preSet2Value]['レアリティ'] == 4) {
+        preRarerity4Num++;
+    }
+    let curRarerity4Num = 0;
+    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['レアリティ'] == 4) {
+        curRarerity4Num++;
+    }
+    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['レアリティ'] == 4) {
+        curRarerity4Num++;
+    }
+    // 聖遺物セットのレアリティが変化する場合は、聖遺物メイン効果のレアリティを書き換えます
+    if (preRarerity4Num != curRarerity4Num) {
+        const rarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
+        for (let i = 0; i < rarerityArrArr[curRarerity4Num].length; i++) {
+            let elem = document.getElementById('聖遺物メイン効果' + (i + 1) + 'Input');
+            let rarerity = rarerityArrArr[curRarerity4Num][i];
+            let statusName = elem.value.split('_')[1];
+            elem.value = rarerity + '_' + statusName;
+        }
+        // サブ効果を再計算します
+        inputOnChangeArtifactSubUpdate();
+    }
+
     選択中聖遺物セット効果データArrVar = [];
     if ($('#聖遺物セット効果1Input').val() == $('#聖遺物セット効果2Input').val()) {
         let myData = 聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()];
@@ -1982,33 +2015,6 @@ const 聖遺物セットInputOnChange = function () {
     } else {
         選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['2セット効果']);
         選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['2セット効果']);
-    }
-
-    // レアリティを設定します
-    let artifactRarerity4Num = 0;
-    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['レアリティ'] == 4) {
-        artifactRarerity4Num += 2;
-    }
-    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['レアリティ'] == 4) {
-        artifactRarerity4Num += 2;
-    }
-    let currentArtifactRarerityArr = [];
-    $('[name="聖遺物メイン効果Input"]').each(function (index, element) {
-        currentArtifactRarerityArr.push(element.value.split('_')[0]);
-    });
-    let currentArtifactRarerity4Num = currentArtifactRarerityArr.filter(v => v == '4').length;
-    if (artifactRarerity4Num > currentArtifactRarerity4Num) {
-        let modifyCount = artifactRarerity4Num - currentArtifactRarerity4Num;
-        for (let i = 0; i < currentArtifactRarerityArr.length; i++) {
-            if (currentArtifactRarerityArr[i] == '5') {
-                let selector = '#聖遺物メイン効果' + (i + 1) + 'Input';
-                let value = '4_' + $(selector).val().split('_')[1];
-                $(selector).val(value);
-                if (--modifyCount <= 0) break;
-            }
-        }
-        // サブ効果を再計算します
-        inputOnChangeArtifactSubUpdate();
     }
 
     // 説明Boxを再構成します
@@ -2137,6 +2143,8 @@ const おすすめセットInputOnChange = function () {
     元素スキル_基礎ダメージ詳細ArrVar = [];
     元素爆発_基礎ダメージ詳細ArrVar = [];
     その他_基礎ダメージ詳細ArrMapVar.clear();
+
+    ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
     let is聖遺物サブ効果Includes = false;
     let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
@@ -2447,6 +2455,8 @@ const キャラクターInputOnChange = function () {
         appendOptionElements(選択可能武器セットObjVar, '#武器Input');
 
         setupおすすめセット();
+
+        ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
         if (おすすめセットArrVar.length > 0) {
             おすすめセットInputOnChange();
