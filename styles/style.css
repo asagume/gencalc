@@ -167,17 +167,17 @@ input[type="checkbox"]+label {
 
 .input-area {
     grid-area: input-area;
-    margin: 10px;
+    margin: 5px;
 }
 
 .result-area {
     grid-area: result-area;
-    margin: 10px;
+    margin: 5px;
 }
 
 .footer {
     grid-area: footer;
-    margin: 10px;
+    margin: 5px;
     background-color: #312820;
     color: #886b1d;
     text-align: left;
@@ -187,15 +187,28 @@ input[type="checkbox"]+label {
 article.input-item {
     width: calc(100% / 3 - 10px);
     vertical-align: top;
+    position: relative;
 }
 
 article.input-item label {
     font-size: 1.8rem;
 }
 
+article.input-item img.info {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+dialog {
+    text-align: left;
+}
+
 fieldset.input-group legend {
     text-align: left;
 }
+
+/* タブのスタイル設定 */
 
 .tab-area {
     width: 100%;
@@ -205,48 +218,14 @@ fieldset.input-group legend {
     display: flex;
 }
 
-.tab-content {
-    display: none;
-    width: 100%;
-    line-height: normal;
-}
-
-.input-area-tab {
-    display: block;
-    float: left;
-    order: -1;
-    width: calc(100% / 5 - 10px);
-    height: 34px;
-    line-height: 34px;
-    background: linear-gradient(to top, #ad5b18, #55290b);
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 5px;
-    border-color: #999;
-    border-style: solid;
-    font-size: 2rem;
-}
-
-input[name="input-area-tab-name"] {
+.tab-button {
     display: none;
 }
 
-input:checked+.input-area-tab {
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
-}
-
-input:checked+.input-area-tab+.tab-content {
-    display: block;
-}
-
-.tab-area4 {
+.tab-button+label {
     display: block;
     float: left;
     order: -1;
-    width: calc(100% / 4 - 10px);
     height: 34px;
     line-height: 34px;
     background: linear-gradient(to top, #ad5b18, #55290b);
@@ -260,48 +239,31 @@ input:checked+.input-area-tab+.tab-content {
     font-size: 2rem;
 }
 
-input[name="tab-area-middle"] {
-    display: none;
-}
-
-input:checked+.tab-area4 {
+.tab-button:checked+label {
     background: linear-gradient(to top, #ecc862, #978310);
     text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
 }
 
-input:checked+.tab-area4+.tab-content {
+.tab-button:checked+label+.tab-content {
     display: block;
 }
 
-.tab-area3 {
-    display: block;
-    float: left;
-    order: -1;
+.tab-content {
+    display: none;
+    width: 100%;
+    line-height: normal;
+}
+
+.input-set1+label {
+    width: calc(100% / 5 - 10px);
+}
+
+.input-set2+label {
+    width: calc(100% / 4 - 10px);
+}
+
+.others-set+label {
     width: calc(100% / 3 - 10px);
-    height: 34px;
-    line-height: 34px;
-    background: linear-gradient(to top, #ad5b18, #55290b);
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 5px;
-    border-color: #999;
-    border-style: solid;
-    font-size: 2rem;
-}
-
-input[name="tab-area-bottom"] {
-    display: none;
-}
-
-input:checked+.tab-area3 {
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 1em brown, 0 0 0.2em brown;
-}
-
-input:checked+.tab-area3+.tab-content {
-    display: block;
 }
 
 .input-group article {
@@ -378,6 +340,10 @@ table th {
 #artifactsub-detail {
     font-size: 1.8rem;
     margin-top: 0;
+}
+
+#artifactsub-detail legend {
+    text-align: center;
 }
 
 .input-item-short {
@@ -467,7 +433,8 @@ fieldset article {
 }
 
 #condition-area {
-    padding-bottom: 10px; margin-top: 0;
+    padding-bottom: 10px;
+    margin-top: 0;
 }
 
 .open-close {
@@ -653,7 +620,7 @@ section.tiny article.input-item label {
     display: block;
     position: absolute;
     left: 10px;
-    top: 20px;
+    top: 10px;
     font-size: 3.2rem;
 }
 
@@ -661,7 +628,7 @@ section.tiny article.input-item label {
     display: block;
     position: absolute;
     left: 10px;
-    bottom: 40px;
+    bottom: 45px;
 }
 
 #face section select {

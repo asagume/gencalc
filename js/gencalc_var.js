@@ -300,7 +300,26 @@ function setupおすすめセット() {
     }
     if ('おすすめセット' in 選択中キャラクターデータVar) {
         Object.keys(選択中キャラクターデータVar['おすすめセット']).forEach(key => {
-            おすすめセットArrVar.push([key, 選択中キャラクターデータVar['おすすめセット'][key]]);
+            let myおすすめセット = 選択中キャラクターデータVar['おすすめセット'][key];
+            let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
+            let artifactRarerity4Num = 0;
+            if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {
+                artifactRarerity4Num++;
+            }
+            if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果2']]['レアリティ'] == 4) {
+                artifactRarerity4Num++;
+            }
+            for (let i = 0; i < 2; i++) {
+                let name = '聖遺物メイン効果' + (i + 1);
+                if (!(name in myおすすめセット)) {
+                    if (i == 0) {
+                        myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
+                    } else if (i == 1) {
+                        myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
+                    }
+                }
+            }
+            おすすめセットArrVar.push([key, myおすすめセット]);
         });
     }
     let selector = '#おすすめセットInput';
@@ -347,12 +366,7 @@ const saveキャラクター構成 = function () {
         聖遺物サブ効果元素チャージ効率: $('#聖遺物サブ効果元素チャージ効率Input').val(),
         聖遺物サブ効果HP: $('#聖遺物サブ効果HPInput').val(),
         聖遺物サブ効果攻撃力: $('#聖遺物サブ効果攻撃力Input').val(),
-        聖遺物サブ効果防御力: $('#聖遺物サブ効果防御力Input').val(),
-        聖遺物レアリティ1: $('#聖遺物レアリティ1Input').val(),
-        聖遺物レアリティ2: $('#聖遺物レアリティ2Input').val(),
-        聖遺物レアリティ3: $('#聖遺物レアリティ3Input').val(),
-        聖遺物レアリティ4: $('#聖遺物レアリティ4Input').val(),
-        聖遺物レアリティ5: $('#聖遺物レアリティ5Input').val()
+        聖遺物サブ効果防御力: $('#聖遺物サブ効果防御力Input').val()
     };
 
     $('#オプションBox input[type="checkbox"]').each((index, elem) => {
@@ -384,9 +398,44 @@ const loadキャラクター構成 = function () {
     let key = '構成_' + $('#キャラクターInput').val();
     if (localStorage[key]) {
         キャラクター構成ObjVar = JSON.parse(localStorage[key]);
+
+        // 互換性維持のための小細工
+        // 聖遺物レアリティありの場合：聖遺物レアリティ→聖遺物メイン効果
+        for (let i = 1; i <= 5; i++) {
+            let name1 = '聖遺物レアリティ' + i;
+            if (name1 in キャラクター構成ObjVar) {
+                let name2 = '聖遺物メイン効果' + i;
+                キャラクター構成ObjVar[name2] = キャラクター構成ObjVar[name1] + '_' + キャラクター構成ObjVar[name2];
+                delete キャラクター構成ObjVar[name1];
+            }
+        }
+        // 聖遺物メイン効果が旧形式の場合：聖遺物セット効果→聖遺物メイン効果
+        let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
+        let artifactRarerity4Num = 0;
+        if (聖遺物セット効果MasterVar[キャラクター構成ObjVar['聖遺物セット効果1']]['レアリティ'] == 4) {
+            artifactRarerity4Num++;
+        }
+        if (聖遺物セット効果MasterVar[キャラクター構成ObjVar['聖遺物セット効果2']]['レアリティ'] == 4) {
+            artifactRarerity4Num++;
+        }
+        for (let i = 0; i < 5; i++) {
+            let name = '聖遺物メイン効果' + (i + 1);
+            if (name in キャラクター構成ObjVar) {
+                let value = キャラクター構成ObjVar[name];
+                if (value.indexOf('_') == -1) {
+                    キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_' + キャラクター構成ObjVar[name];
+                }
+            } else if (i == 0) {
+                キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
+            } else if (i == 1) {
+                キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
+            }
+        }
+
         Object.keys(キャラクター構成ObjVar).forEach(objKey => {
             $('#' + selectorEscape(objKey) + 'Input').val(キャラクター構成ObjVar[objKey]);
         });
+
         $('#構成保存Button').prop('disabled', true);
         $('#保存構成削除Button').prop('disabled', false);
     } else {

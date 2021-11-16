@@ -17,7 +17,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.4.3
+                    げんかるく - 原神ダメージシミュレーター Ver.1.4.4
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -28,7 +28,7 @@
                 <div style="height: 130px">
                     <p>【原神】ダメージ計算機です</p>
                     <p>レイアウト変更テスト</p>
-                    <p>上級者のためのチームバフ追加</p>
+                    <p>入力項目を変えたのでデグレがこわい</p>
                 </div>
                 <div class="horizontal-list">
                     <ul id="キャラクター選択"></ul>
@@ -40,16 +40,12 @@
                     <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
                         id="選択キャラクターImg" />
                     <section class="input-group">
-                        <p id="選択キャラクター名前Label">
-                            キャラクターを選択してください
-                        </p>
+                        <p id="選択キャラクター名前Label"></p>
                         <label for="おすすめセットInput">おすすめセット</label>
                         <select class="long" id="おすすめセットInput"></select>
                     </section>
                     <button type="button" id="構成保存Button">この構成を保存</button>
-                    <button type="button" id="保存構成削除Button">
-                        保存構成を削除
-                    </button>
+                    <button type="button" id="保存構成削除Button">保存構成を削除</button>
                 </div>
 
                 <fieldset class="input-group">
@@ -60,8 +56,9 @@
                     </legend>
 
                     <div class="tab-area" id="condition-area">
-                        <input type="radio" name="input-area-tab-name" id="input-area-tab1" checked />
-                        <label class="input-area-tab" for="input-area-tab1">キャラ/武器</label>
+                        <input type="radio" class="tab-button input-set1" id="basic-condition1"
+                            name="basic-condition-group" checked />
+                        <label for="basic-condition1">キャラ/武器</label>
                         <div class="tab-content">
                             <section>
                                 <article class="input-item">
@@ -164,105 +161,95 @@
                                 </article>
                             </section>
                         </div>
-                        <input type="radio" name="input-area-tab-name" id="input-area-tab2" />
-                        <label class="input-area-tab" for="input-area-tab2">聖遺物</label>
+
+                        <input type="radio" class="tab-button input-set1" id="basic-condition2"
+                            name="basic-condition-group" />
+                        <label for="basic-condition2">聖遺物</label>
                         <div class="tab-content">
-                            <section class="tiny">
-                                <article class="input-item">
-                                    <label for="聖遺物レアリティ1Input">生の花</label>
-                                    <select id="聖遺物レアリティ1Input" name="聖遺物レアリティInput">
-                                        <option value="5">★5</option>
-                                        <option value="4">★4</option>
-                                    </select>
-                                </article>
-                                <article class="input-item">
-                                    <label for="聖遺物レアリティ2Input">死の羽</label>
-                                    <select id="聖遺物レアリティ2Input" name="聖遺物レアリティInput">
-                                        <option value="5">★5</option>
-                                        <option value="4">★4</option>
-                                    </select>
-                                </article>
-                                <article class="input-item">
-                                    <label for="聖遺物レアリティ3Input">時の砂</label>
-                                    <select id="聖遺物レアリティ3Input" name="聖遺物レアリティInput">
-                                        <option value="5">★5</option>
-                                        <option value="4">★4</option>
-                                    </select>
-                                </article>
-                                <article class="input-item">
-                                    <label for="聖遺物レアリティ4Input">空の杯</label>
-                                    <select id="聖遺物レアリティ4Input" name="聖遺物レアリティInput">
-                                        <option value="5">★5</option>
-                                        <option value="4">★4</option>
-                                    </select>
-                                </article>
-                                <article class="input-item">
-                                    <label for="聖遺物レアリティ5Input">理の冠</label>
-                                    <select id="聖遺物レアリティ5Input" name="聖遺物レアリティInput">
-                                        <option value="5">★5</option>
-                                        <option value="4">★4</option>
-                                    </select>
-                                </article>
-                            </section>
                             <section>
-                                <article class="input-item2">
+                                <article class="input-item" style="width: 12%">
+                                    <label for="聖遺物メイン効果1Input">生の花</label>
+                                    <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
+                                        <option value="5_HP" selected>★5</option>
+                                        <option value="4_HP">★4</option>
+                                    </select>
+                                </article>
+                                <article class="input-item" style="width: 12%">
+                                    <label for="聖遺物メイン効果2Input">死の羽</label>
+                                    <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
+                                        <option value="5_攻撃力" selected>★5</option>
+                                        <option value="4_攻撃力">★4</option>
+                                    </select>
+                                </article>
+                                <article class="input-item" style="width: calc(76% / 2 - 18px)">
                                     <label for="聖遺物セット効果1Input">セット効果1</label>
                                     <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
                                 </article>
-                                <article class="input-item2">
+                                <article class="input-item" style="width: calc(76% / 2 - 18px)">
                                     <label for="聖遺物セット効果2Input">セット効果2</label>
                                     <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
                                 </article>
                             </section>
                             <section class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
-                                <article class="input-item" style="display: none">
-                                    <label for="聖遺物メイン効果1Input">生の花・メイン効果</label>
-                                    <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
-                                        <option selected>HP</option>
-                                    </select>
-                                </article>
-                                <article class="input-item" style="display: none">
-                                    <label for="聖遺物メイン効果2Input">死の羽・メイン効果</label>
-                                    <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
-                                        <option selected>攻撃力</option>
-                                    </select>
-                                </article>
                                 <article class="input-item">
                                     <label for="聖遺物メイン効果3Input">時の砂・メイン効果</label>
                                     <select id="聖遺物メイン効果3Input" name="聖遺物メイン効果Input">
-                                        <option>元素チャージ効率</option>
-                                        <option>HP%</option>
-                                        <option>攻撃力%</option>
-                                        <option>防御力%</option>
-                                        <option>元素熟知</option>
+                                        <option value="5_元素チャージ効率">★5 元素チャージ効率</option>
+                                        <option value="5_HP%">★5 HP%</option>
+                                        <option value="5_攻撃力%">★5 攻撃力%</option>
+                                        <option value="5_防御力%">★5 防御力%</option>
+                                        <option value="5_元素熟知">★5 元素熟知</option>
+                                        <option value="4_元素チャージ効率">★4 元素チャージ効率</option>
+                                        <option value="4_HP%">★4 HP%</option>
+                                        <option value="4_攻撃力%">★4 攻撃力%</option>
+                                        <option value="4_防御力%">★4 防御力%</option>
+                                        <option value="4_元素熟知">★4 元素熟知</option>
                                     </select>
                                 </article>
                                 <article class="input-item">
                                     <label for="聖遺物メイン効果4Input">空の杯・メイン効果</label>
                                     <select id="聖遺物メイン効果4Input" name="聖遺物メイン効果Input">
-                                        <option>炎元素ダメージバフ</option>
-                                        <option>水元素ダメージバフ</option>
-                                        <option>風元素ダメージバフ</option>
-                                        <option>雷元素ダメージバフ</option>
-                                        <option>氷元素ダメージバフ</option>
-                                        <option>岩元素ダメージバフ</option>
-                                        <option>物理ダメージバフ</option>
-                                        <option>HP%</option>
-                                        <option>攻撃力%</option>
-                                        <option>防御力%</option>
-                                        <option>元素熟知</option>
+                                        <option value="5_炎元素ダメージバフ">★5 炎元素ダメージバフ</option>
+                                        <option value="5_水元素ダメージバフ">★5 水元素ダメージバフ</option>
+                                        <option value="5_風元素ダメージバフ">★5 風元素ダメージバフ</option>
+                                        <option value="5_雷元素ダメージバフ">★5 雷元素ダメージバフ</option>
+                                        <option value="5_氷元素ダメージバフ">★5 氷元素ダメージバフ</option>
+                                        <option value="5_岩元素ダメージバフ">★5 岩元素ダメージバフ</option>
+                                        <option value="5_物理ダメージバフ">★5 物理ダメージバフ</option>
+                                        <option value="5_HP%">★5 HP%</option>
+                                        <option value="5_攻撃力%">★5 攻撃力%</option>
+                                        <option value="5_防御力%">★5 防御力%</option>
+                                        <option value="5_元素熟知">★5 元素熟知</option>
+                                        <option value="4_炎元素ダメージバフ">★4 炎元素ダメージバフ</option>
+                                        <option value="4_水元素ダメージバフ">★4 水元素ダメージバフ</option>
+                                        <option value="4_風元素ダメージバフ">★4 風元素ダメージバフ</option>
+                                        <option value="4_雷元素ダメージバフ">★4 雷元素ダメージバフ</option>
+                                        <option value="4_氷元素ダメージバフ">★4 氷元素ダメージバフ</option>
+                                        <option value="4_岩元素ダメージバフ">★4 岩元素ダメージバフ</option>
+                                        <option value="4_物理ダメージバフ">★4 物理ダメージバフ</option>
+                                        <option value="4_HP%">★4 HP%</option>
+                                        <option value="4_攻撃力%">★4 攻撃力%</option>
+                                        <option value="4_防御力%">★4 防御力%</option>
+                                        <option value="4_元素熟知">★4 元素熟知</option>
                                     </select>
                                 </article>
                                 <article class="input-item">
                                     <label for="聖遺物メイン効果5Input">理の冠・メイン効果</label>
                                     <select id="聖遺物メイン効果5Input" name="聖遺物メイン効果Input">
-                                        <option>会心率</option>
-                                        <option>会心ダメージ</option>
-                                        <option>与える治療効果</option>
-                                        <option>HP%</option>
-                                        <option>攻撃力%</option>
-                                        <option>防御力%</option>
-                                        <option>元素熟知</option>
+                                        <option value="5_会心率">★5 会心率</option>
+                                        <option value="5_会心ダメージ">★5 会心ダメージ</option>
+                                        <option value="5_与える治療効果">★5 与える治療効果</option>
+                                        <option value="5_HP%">★5 HP%</option>
+                                        <option value="5_攻撃力%">★5 攻撃力%</option>
+                                        <option value="5_防御力%">★5 防御力%</option>
+                                        <option value="5_元素熟知">★5 元素熟知</option>
+                                        <option value="4_会心率">★4 会心率</option>
+                                        <option value="4_会心ダメージ">★4 会心ダメージ</option>
+                                        <option value="4_与える治療効果">★4 与える治療効果</option>
+                                        <option value="4_HP%">★4 HP%</option>
+                                        <option value="4_攻撃力%">★4 攻撃力%</option>
+                                        <option value="4_防御力%">★4 防御力%</option>
+                                        <option value="4_元素熟知">★4 元素熟知</option>
                                     </select>
                                 </article>
                             </section>
@@ -403,8 +390,10 @@
                                 </table>
                             </fieldset>
                         </div>
-                        <input type="radio" name="input-area-tab-name" id="input-area-tab3" />
-                        <label class="input-area-tab" for="input-area-tab3">元素共鳴</label>
+
+                        <input type="radio" class="tab-button input-set1" id="basic-condition3"
+                            name="basic-condition-group" />
+                        <label for="basic-condition3">元素共鳴</label>
                         <div class="tab-content" style="padding-top: 10px;">
                             <section>
                                 <article class="check-item">
@@ -438,8 +427,10 @@
                             </section>
                             <div class="description" id="元素共鳴効果説明Box"></div>
                         </div>
-                        <input type="radio" name="input-area-tab-name" id="input-area-tab4" />
-                        <label class="input-area-tab" for="input-area-tab4">敵/デバフ</label>
+
+                        <input type="radio" class="tab-button input-set1" id="basic-condition4"
+                            name="basic-condition-group" />
+                        <label for="basic-condition4">敵/デバフ</label>
                         <div class="tab-content">
                             <section>
                                 <article class="input-item">
@@ -456,8 +447,10 @@
                                 <section class="column2-option" id="バフデバフオプションBox"></section>
                             </fieldset>
                         </div>
-                        <input type="radio" name="input-area-tab-name" id="input-area-tab5" />
-                        <label class="input-area-tab" for="input-area-tab5">チームバフ</label>
+
+                        <input type="radio" class="tab-button input-set1" id="basic-condition5"
+                            name="basic-condition-group" />
+                        <label for="basic-condition5">チームバフ</label>
                         <div class="tab-content" style="padding-top: 10px;">
                             <table>
                                 <tr>
@@ -514,9 +507,10 @@
                     <div id="status-area" style="display: none;">
                         <hr>
                         <div class="tab-area">
-                            <input type="radio" id="tab-area-middle1" name="tab-area-middle" checked />
-                            <label class="tab-area4" for="tab-area-middle1">ステータス</label>
-                            <div class="tab-content" name="tab-content-middle">
+                            <input type="radio" class="tab-button input-set2" id="status-table1"
+                                name="status-table-group" checked />
+                            <label for="status-table1">ステータス</label>
+                            <div class="tab-content">
                                 <table>
                                     <tr>
                                         <th>HP上限</th>
@@ -590,9 +584,10 @@
                                     </tr>
                                 </table>
                             </div>
-                            <input type="radio" id="tab-area-middle2" name="tab-area-middle" />
-                            <label class="tab-area4" for="tab-area-middle2">ダメージバフ</label>
-                            <div class="tab-content" name="tab-content-middle">
+                            <input type="radio" class="tab-button input-set2" id="status-table2"
+                                name="status-table-group" />
+                            <label for="status-table2">ダメージバフ</label>
+                            <div class="tab-content">
                                 <table>
                                     <tr>
                                         <th>炎元素ダメージ</th>
@@ -668,14 +663,18 @@
                                     </tr>
                                 </table>
                             </div>
-                            <input type="radio" id="tab-area-middle3" name="tab-area-middle" />
-                            <label class="tab-area4" for="tab-area-middle3">予備1</label>
-                            <div class="tab-content" name="tab-content-middle">
+
+                            <input type="radio" class="tab-button input-set2" id="status-table3"
+                                name="status-table-group" />
+                            <label for="status-table3">予備1</label>
+                            <div class="tab-content">
                                 <p>予備のスペース</p>
                             </div>
-                            <input type="radio" id="tab-area-middle4" name="tab-area-middle" />
-                            <label class="tab-area4" for="tab-area-middle4">敵耐性詳細</label>
-                            <div class="tab-content" name="tab-content-middle">
+
+                            <input type="radio" class="tab-button input-set2" id="status-table4"
+                                name="status-table-group" />
+                            <label for="status-table4">敵耐性詳細</label>
+                            <div class="tab-content">
                                 <table>
                                     <tr>
                                         <th>炎元素耐性</th>
@@ -735,32 +734,36 @@
             </div>
 
             <div class="result-area">
-                <div class="tab-area">
-                    <input type="radio" id="tab-area-bottom1" name="tab-area-bottom" checked />
-                    <label class="tab-area3" for="tab-area-bottom1">ダメージ計算</label>
-                    <div class="tab-content">
-                        <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked />
-                        <label class="elemental-reaction" for="元素反応なしInput">反応なし</label>
-                        <input type="radio" value="vaporize" id="元素反応蒸発Input" name="元素反応Input" />
-                        <label class="elemental-reaction" for="元素反応蒸発Input">蒸発</label>
-                        <input type="radio" value="melt" id="元素反応溶解Input" name="元素反応Input" />
-                        <label class="elemental-reaction" for="元素反応溶解Input">溶解</label>
-                        <label class="elemental-reaction pyro" id="元素反応過負荷Label">過負荷</label>
-                        <label class="elemental-reaction electro" id="元素反応感電Label">感電</label>
-                        <label class="elemental-reaction cryo" id="元素反応超電導Label">超電導</label>
-                        <label class="elemental-reaction" id="元素反応拡散Label">拡散</label>
-                        <label class="elemental-reaction" id="元素反応結晶Label">結晶</label>
+                <div style="height: 1000px;">
+                    <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked />
+                    <label class="elemental-reaction" for="元素反応なしInput">反応なし</label>
+                    <input type="radio" value="vaporize" id="元素反応蒸発Input" name="元素反応Input" />
+                    <label class="elemental-reaction" for="元素反応蒸発Input">蒸発</label>
+                    <input type="radio" value="melt" id="元素反応溶解Input" name="元素反応Input" />
+                    <label class="elemental-reaction" for="元素反応溶解Input">溶解</label>
+                    <label class="elemental-reaction pyro" id="元素反応過負荷Label">過負荷</label>
+                    <label class="elemental-reaction electro" id="元素反応感電Label">感電</label>
+                    <label class="elemental-reaction cryo" id="元素反応超電導Label">超電導</label>
+                    <label class="elemental-reaction" id="元素反応拡散Label">拡散</label>
+                    <label class="elemental-reaction" id="元素反応結晶Label">結晶</label>
 
-                        <table class="result" id="通常攻撃ダメージResult"></table>
-                        <table class="result" id="重撃ダメージResult"></table>
-                        <table class="result" id="落下攻撃ダメージResult"></table>
-                        <table class="result" id="元素スキルダメージResult"></table>
-                        <table class="result" id="元素爆発ダメージResult"></table>
-                        <table class="result" id="その他ダメージResult"></table>
+                    <table class="result" id="通常攻撃ダメージResult"></table>
+                    <table class="result" id="重撃ダメージResult"></table>
+                    <table class="result" id="落下攻撃ダメージResult"></table>
+                    <table class="result" id="元素スキルダメージResult"></table>
+                    <table class="result" id="元素爆発ダメージResult"></table>
+                    <table class="result" id="その他ダメージResult"></table>
+                </div>
+
+                <div class="tab-area">
+                    <input type="radio" class="tab-button others-set" id="other-box1" name="others-group" checked />
+                    <label for="other-box1">げんかるくについて</label>
+                    <div class="tab-content" style="text-align: left;">
+                        げんかるくは 原神 ©miHoYo のファンサイトです。
                     </div>
 
-                    <input type="radio" id="tab-area-bottom2" name="tab-area-bottom" />
-                    <label class="tab-area3" for="tab-area-bottom2">予備2</label>
+                    <input type="radio" class="tab-button others-set" id="other-box2" name="others-group" />
+                    <label for="other-box2">予備2</label>
                     <div class="tab-content">
                         <p>予備のスペース</p>
                         <fieldset>
@@ -782,8 +785,8 @@
                         </div>
                     </div>
 
-                    <input type="radio" id="tab-area-bottom3" name="tab-area-bottom" />
-                    <label class="tab-area3" for="tab-area-bottom3">予備3</label>
+                    <input type="radio" class="tab-button others-set" id="other-box3" name="others-group" />
+                    <label for="other-box3">予備3</label>
                     <div class="tab-content">
                         <p>予備のスペース</p>
                         <p>
@@ -799,8 +802,7 @@
             <footer class="footer">
                 <p>© 2021 asagume</p>
                 <p>
-                    本サイト内の画像はmiHoYoの著作物です。Copyright © 2020 miHoYo All
-                    Rights Reserved
+                    本サイト内の画像はmiHoYoの著作物です。Copyright © 2020 miHoYo All Rights Reserved
                 </p>
             </footer>
         </div>
@@ -814,9 +816,7 @@
             <hr />
             <input type="checkbox" id="ローカルストレージクリアInput" />
             <label for="ローカルストレージクリアInput">ローカルストレージをクリア</label>
-            <button type="button" id="ローカルストレージクリアButton" disabled>
-                実行
-            </button>
+            <button type="button" id="ローカルストレージクリアButton" disabled>実行</button>
             <p>全ての保存データを削除します</p>
         </div>
 

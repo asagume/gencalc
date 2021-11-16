@@ -409,7 +409,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
         let myValue = calculateFormulaArray(opt_statusObj, valueObj['数値'], valueObj['最大値']);
         switch (valueObj['種類']) {
             case '攻撃力':
-                if (!('攻撃力' in myステータス補正)){
+                if (!('攻撃力' in myステータス補正)) {
                     myステータス補正['攻撃力'] = 0;
                 }
                 myステータス補正['攻撃力'] += myValue;
@@ -1504,10 +1504,11 @@ function calculateStatusObj(statusObj) {
     });
 
     // 聖遺物のメインステータスを計上します
-    $('select[name="聖遺物メイン効果Input"]').each(function () {
-        let rarerityId = this.id.replace('メイン効果', 'レアリティ');
-        let rarerityElem = document.getElementById(rarerityId);
-        calculateStatus(statusObj, this.value, [聖遺物メイン効果MasterVar[rarerityElem.value][this.value]]);
+    $('select[name="聖遺物メイン効果Input"]').each(function (index, element) {
+        let splitted = element.value.split('_');
+        let rarerity = splitted[0];
+        let statusName = splitted[1];
+        calculateStatus(statusObj, statusName, [聖遺物メイン効果MasterVar[rarerity][statusName]]);
     });
 
     // 聖遺物のサブステータスを計上します
@@ -1830,16 +1831,16 @@ const elementalResonanceInputOnChange = function (event) {
             });
         }
     }
-    $('#元素共鳴効果説明Box').empty();
-    選択中元素共鳴データArrVar.forEach(data => {
-        let my説明 = data['説明'];
-        if (Array.isArray(my説明)) {
-            my説明.join('<br>');
-        }
-        $('<p>', {
-            html: my説明
-        }).appendTo('#元素共鳴効果説明Box');
-    });
+    // $('#元素共鳴効果説明Box').empty();
+    // 選択中元素共鳴データArrVar.forEach(data => {
+    //     let my説明 = data['説明'];
+    //     if (Array.isArray(my説明)) {
+    //         my説明.join('<br>');
+    //     }
+    //     $('<p>', {
+    //         html: my説明
+    //     }).appendTo('#元素共鳴効果説明Box');
+    // });
     inputOnChangeStatusUpdate();
 }
 $(document).on('change', 'input[name="元素共鳴Input"]', elementalResonanceInputOnChange);
@@ -1847,7 +1848,23 @@ $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnCh
 
 // 聖遺物サブ効果 変更イベント
 const inputOnChangeArtifactSubUpdate = function () {
-    if ($('#聖遺物詳細計算停止Config').prop('checked')) return;
+    if ($('#聖遺物詳細計算停止Config').prop('checked')) {
+        inputOnChangeStatusUpdate();
+        return;
+    }
+
+    // レアリティに変化がない場合はサブ効果の再計算を行わないようにします
+    // if (this.name == '聖遺物メイン効果Input') {
+    //     let preValue = ELEMENT_VALUE_AT_FOCUS_MAP.get(this.id);
+    //     if (preValue) {
+    //         let curRarerity = this.value.split('_')[0];
+    //         let preRarerity = preValue.split('_')[0];
+    //         if (curRarerity == preRarerity) {
+    //             inputOnChangeStatusUpdate();
+    //             return;
+    //         }
+    //     }
+    // }
 
     let priorityArr = [];
     let middlePriorityArr = [];
@@ -1902,8 +1919,9 @@ const inputOnChangeArtifactSubUpdate = function () {
         元素チャージ効率: 0
     };
     let myレアリティ補正 = 0;
-    $('select[name="聖遺物レアリティInput"').each((index, element) => {
-        if (element.value == 4) {   // ★4ひとつ当たり7%数値を下げます
+    $('select[name="聖遺物メイン効果Input"').each((index, element) => {
+        let splitted = element.value.split('_');
+        if (splitted[0] == 4) {   // ★4ひとつ当たり7%数値を下げます
             myレアリティ補正 += 7;
         }
     });
@@ -1948,11 +1966,12 @@ const inputOnChangeArtifactSubUpdate = function () {
     setInputValue('#聖遺物サブ効果会心率Input', workObj['会心率']);
     setInputValue('#聖遺物サブ効果会心ダメージInput', workObj['会心ダメージ']);
     setInputValue('#聖遺物サブ効果元素チャージ効率Input', workObj['元素チャージ効率']);
+
     inputOnChangeStatusUpdate();
 };
 
 // 聖遺物セット効果 変更イベント
-const 聖遺物セットInputOnChange = function (opt_skipRearity = false) {
+const 聖遺物セットInputOnChange = function () {
     選択中聖遺物セット効果データArrVar = [];
     if ($('#聖遺物セット効果1Input').val() == $('#聖遺物セット効果2Input').val()) {
         let myData = 聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()];
@@ -1964,20 +1983,34 @@ const 聖遺物セットInputOnChange = function (opt_skipRearity = false) {
         選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['2セット効果']);
         選択中聖遺物セット効果データArrVar.push(聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['2セット効果']);
     }
+
     // レアリティを設定します
-    if (!opt_skipRearity) {
-        const ARTIFACT_RARITY_ARR = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
-        let myRarity4SetNumber = 0;
-        if (聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['レアリティ'] == 4) {
-            myRarity4SetNumber++;
-        }
-        if (聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['レアリティ'] == 4) {
-            myRarity4SetNumber++;
-        }
-        for (let i = 0; i < 5; i++) {
-            $('#聖遺物レアリティ' + (i + 1) + 'Input').val(ARTIFACT_RARITY_ARR[myRarity4SetNumber][i]);
-        }
+    let artifactRarerity4Num = 0;
+    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果1Input').val()]['レアリティ'] == 4) {
+        artifactRarerity4Num += 2;
     }
+    if (聖遺物セット効果MasterVar[$('#聖遺物セット効果2Input').val()]['レアリティ'] == 4) {
+        artifactRarerity4Num += 2;
+    }
+    let currentArtifactRarerityArr = [];
+    $('[name="聖遺物メイン効果Input"]').each(function (index, element) {
+        currentArtifactRarerityArr.push(element.value.split('_')[0]);
+    });
+    let currentArtifactRarerity4Num = currentArtifactRarerityArr.filter(v => v == '4').length;
+    if (artifactRarerity4Num > currentArtifactRarerity4Num) {
+        let modifyCount = artifactRarerity4Num - currentArtifactRarerity4Num;
+        for (let i = 0; i < currentArtifactRarerityArr.length; i++) {
+            if (currentArtifactRarerityArr[i] == '5') {
+                let selector = '#聖遺物メイン効果' + (i + 1) + 'Input';
+                let value = '4_' + $(selector).val().split('_')[1];
+                $(selector).val(value);
+                if (--modifyCount <= 0) break;
+            }
+        }
+        // サブ効果を再計算します
+        inputOnChangeArtifactSubUpdate();
+    }
+
     // 説明Boxを再構成します
     //$('#聖遺物セット効果説明Box').empty();
     選択中聖遺物セット効果データArrVar.forEach(data => {
@@ -2002,12 +2035,11 @@ const 聖遺物セットInputOnChange = function (opt_skipRearity = false) {
     inputOnChangeOptionUpdate();
 }
 
-$(document).on('change', 'select[name="聖遺物メイン効果Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'select[name="聖遺物メイン効果Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
 $(document).on('change', 'input[name="聖遺物サブ効果Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', 'select[name = "聖遺物レアリティInput"]', inputOnChangeArtifactSubUpdate);
 
 ////
 const appendOptionElement = function (key, valueObj, selector) {
@@ -2107,7 +2139,6 @@ const おすすめセットInputOnChange = function () {
     その他_基礎ダメージ詳細ArrMapVar.clear();
 
     let is聖遺物サブ効果Includes = false;
-    let is聖遺物レアリティIncludes = false;
     let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
     Object.keys(entry).forEach(key => {
         let isElemExists = false;
@@ -2134,8 +2165,6 @@ const おすすめセットInputOnChange = function () {
                     オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
                 } else if (elem.name == '聖遺物サブ効果Input') {
                     is聖遺物サブ効果Includes = true;
-                } else if (elem.name == '聖遺物レアリティInput') {
-                    is聖遺物レアリティIncludes = true;
                 }
             }
         });
@@ -2148,7 +2177,7 @@ const おすすめセットInputOnChange = function () {
     if (!is聖遺物サブ効果Includes) {
         inputOnChangeArtifactSubUpdate();
     }
-    聖遺物セットInputOnChange(opt_skipRearity = is聖遺物レアリティIncludes);
+    聖遺物セットInputOnChange();
     武器InputOnChange();
 };
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
@@ -2172,6 +2201,18 @@ function get説明(obj) {
             obj['説明'].forEach(e => {
                 result += e;
             });
+        } else if (obj['説明'] instanceof String || typeof (obj['説明']) == 'string') {
+            result = obj['説明'];
+        }
+    }
+    return result;
+}
+
+function get説明Html(obj) {
+    let result = '';
+    if ('説明' in obj) {
+        if ($.isArray(obj['説明'])) {
+            result += obj['説明'].join('<br>');
         } else if (obj['説明'] instanceof String || typeof (obj['説明']) == 'string') {
             result = obj['説明'];
         }
@@ -2378,6 +2419,21 @@ const キャラクターInputOnChange = function () {
         $('#元素スキルレベルInput').val(my元素スキルレベル);
         $('#元素爆発レベルInput').val(my元素爆発レベル);
 
+        if ('命ノ星座' in 選択中キャラクターデータVar) {
+            let infoHtml = "";
+            infoHtml += '<dl>';
+            Object.keys(選択中キャラクターデータVar['命ノ星座']).forEach(key => {
+                infoHtml += '<dt>';
+                infoHtml += '第' + key + '重 ' + 選択中キャラクターデータVar['命ノ星座'][key]['名前'];
+                infoHtml += '</dt>';
+                infoHtml += '<dd>';
+                infoHtml += get説明Html(選択中キャラクターデータVar['命ノ星座'][key]);
+                infoHtml += '</dd>';
+            });
+            infoHtml += '</dl>';
+            // $('#命ノ星座Dialog').html(infoHtml);
+        }
+
         if ($('#全武器解放Config').prop('checked')) {
             選択可能武器セットObjVar = {};
             Object.keys(武器MasterVar).forEach(key => {
@@ -2521,6 +2577,15 @@ const selectCharacter = function () {
     characterSelected(this.alt);
 }
 
+// Info ダイアログを表示します
+$(document).on('click', 'img.info', function () {
+    document.getElementById(this.id.replace('Info', 'Dialog')).showModal();
+});
+
+$(document).on('click', 'dialog.info', function () {
+    this.close();
+});
+
 // MAIN
 $(document).ready(function () {
     Promise.all([
@@ -2643,6 +2708,18 @@ $(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳
 $(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
 $(document).on('click', '#ローカルストレージクリアInput', toggleローカルストレージクリア);
 $(document).on('click', '#ローカルストレージクリアButton', clearローカルストレージ);
+
+// inputとselectのフォーカス時点の値を保存しておきます
+const ELEMENT_VALUE_AT_FOCUS_MAP = new Map();
+$(document).on('focus', 'input, select', function () {
+    let value = this.value;
+    if (this instanceof HTMLInputElement) {
+        if (['checkbox', 'radio'].includes(this.type)) {
+            value = this.checked;
+        }
+    }
+    ELEMENT_VALUE_AT_FOCUS_MAP.set(this.id, value);
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
