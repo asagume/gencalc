@@ -308,22 +308,6 @@ fieldset.input-group legend {
     display: inline;
 }
 
-.with-small-select {
-    display: inline-block;
-    width: calc(100% / 3 - 30px);
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.with-small-select legend {
-    font-size: 1.8rem;
-}
-
-.with-small-select select {
-    display: block;
-    width: calc(100% - 5px);
-}
-
 table {
     width: 100%;
     text-align: center;
@@ -342,6 +326,7 @@ table th {
 }
 
 #artifactsub-detail {
+    position: relative;
     font-size: 1.8rem;
     margin-top: 0;
 }
@@ -350,12 +335,18 @@ table th {
     text-align: center;
 }
 
+#artifactsub-detail section.input-group {
+    width: 70%;
+}
+
 #artifactsub-detail .input-item {
-    width: calc(50% - 5px);
+    width: calc(50% - 10px);
+    display: inline-block;
 }
 
 #artifactsub-detail .input-item-short {
-    width: calc(25% - 5px);
+    width: calc(25% - 10px);
+    display: inline-block;
 }
 
 #artifactsub-detail label {
