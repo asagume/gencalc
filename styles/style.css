@@ -328,7 +328,7 @@ table th {
 #artifactsub-detail {
     position: relative;
     font-size: 1.8rem;
-    margin-top: 0;
+    margin: 0;
 }
 
 #artifactsub-detail legend {
@@ -337,15 +337,17 @@ table th {
 
 #artifactsub-detail section.input-group {
     width: 70%;
+    margin: 0;
+    padding: 0;
 }
 
 #artifactsub-detail .input-item {
-    width: calc(50% - 10px);
+    width: calc(40% - 10px);
     display: inline-block;
 }
 
 #artifactsub-detail .input-item-short {
-    width: calc(25% - 10px);
+    width: calc(30% - 10px);
     display: inline-block;
 }
 
@@ -355,6 +357,7 @@ table th {
 
 #artifactsub-detail select {
     font-size: 2.2rem;
+    margin: 2px 0;
 }
 
 /* 結果エリア */
