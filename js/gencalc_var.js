@@ -504,8 +504,8 @@ function resolvePartitionPattern(n, p) {
 function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end = null) {
     if (opt_start == null) opt_start = 0;
     if (opt_end == null) opt_end = arr.length;
-    let index = (opt_end - opt_start) / 2;
-    if (targetValue >= arr[index] && (index + 1 >= opt_end || targetValue < arr[index + 1])) {
+    let index = ((opt_end - opt_start) / 2).toFixed(0);
+    if (targetValue <= arr[index] && (index + 1 >= opt_end || targetValue < arr[index - 1])) {
         return arr[index];
     }
     let newStart = opt_start;
@@ -519,7 +519,10 @@ function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end 
 }
 
 function searchArtifactSubApproximation(statusName, times, targetValue) {
-    let arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(times);
-    let result = searchApproximationFromArr(targetValue, arr);
-    return result;
+    let arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(String(times));
+    for (let i = 0; i < arr.length; i++) {
+        if (targetValue <= arr[i]) {
+            return arr[i];
+        }
+    }
 }

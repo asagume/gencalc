@@ -1753,22 +1753,23 @@ const inputOnChangeArtifactSubUpdate = function () {
         }
     });
     let my優先するサブ効果Arr = [];
-    let my優先するサブ効果倍率合計 = 0;
+    let my優先するサブ効果回数合計 = 0;
     Array.from(document.getElementsByName('聖遺物優先するサブ効果Input')).forEach(elem => {
         let propName = elem.value;
         if (propName) {
-            let rank = Number(elem.id.replace('聖遺物優先するサブ効果', '').replace('Input', '')) - 1;
-            let myValue = 聖遺物サブ効果MasterVar[elem.value][rank];
-            let myMagnification = Number(document.getElementById(elem.id.replace('Input', '倍率Input')).value) * 5;
+            let 上昇値 = Number(document.getElementById(elem.id.replace('Input', '上昇値Input')).value);
+            let 上昇回数 = Number(document.getElementById(elem.id.replace('Input', '上昇回数Input')).value);
+            let targetValue = 上昇値 * 上昇回数;
+            let resultValue = searchArtifactSubApproximation(propName, 上昇回数, targetValue);
             propName = propName.replace('%', 'P');
-            workObj[propName] += myValue * myMagnification * (100 - myレアリティ補正) / 100;
+            workObj[propName] += resultValue * (100 - myレアリティ補正) / 100;
             if (!my優先するサブ効果Arr.includes(elem.value)) {
                 my優先するサブ効果Arr.push(elem.value);
             }
-            my優先するサブ効果倍率合計 += myMagnification;
+            my優先するサブ効果回数合計 += 上昇回数;
         }
     });
-    let 優先しないサブ効果倍率 = Math.max(0, 45 - my優先するサブ効果倍率合計);
+    let 優先しないサブ効果倍率 = Math.max(0, 45 - my優先するサブ効果回数合計);
     for (let i = 0; i < priorityArr.length; i++) {
         let status = priorityArr[i];
         let workStatus = status;
@@ -1938,7 +1939,8 @@ const 聖遺物優先するサブ効果InputOnChange = function () {
 
 $(document).on('change', 'select[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', inputOnChangeArtifactSubUpdate);
+$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇値Input"]', inputOnChangeArtifactSubUpdate);
+$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇回数Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
 $(document).on('change', 'input[name="聖遺物サブ効果Input"]', inputOnChangeStatusUpdate);
 
