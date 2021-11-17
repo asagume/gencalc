@@ -1,205 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////////
-// セレクターに使用できない文字をエスケープします
-function selectorEscape(val) {
-    return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
-}
-
-// 加算関数です
-const addDecimal = function (value1, value2, opt_max = null) {
-    let decimalDigits1 = String(value1).length - String(value1).lastIndexOf('.');
-    let decimalDigits2 = String(value2).length - String(value2).lastIndexOf('.');
-    let decimalDigits = Math.max([decimalDigits1, decimalDigits2]);
-    let result = Math.floor((value1 * 100 + value2 * 100) / 10) / 10;
-    if (opt_max != null) {
-        result = Math.min(result, opt_max);
-    }
-    return result;
-}
-
-// 代入先のstep属性に併せて丸めた数値をセットします
-function setInputValue(selector, value) {
-    let step = $(selector).attr('step');
-    let newValue = value;
-    if (step && Number(step) < 1) {
-        newValue = Number(value.toFixed(1));
-    } else {
-        newValue = Math.round(value);
-    }
-    $(selector).val(newValue);
-}
-
-// Mapのvalue(Array)にvalueを追加(push)します
-function pushToMapValueArray(map, key, value) {
-    if (map.has(key)) {
-        if (value != null) {
-            if (!map.get(key).includes(value)) {
-                map.get(key).push(value);
-            }
-        }
-    } else {
-        if (value == null) {
-            map.set(key, null);
-        } else {
-            map.set(key, [value]);
-        }
-    }
-}
-
-// オブジェクトのプロパティ値を同名の要素にセットします
-function setObjectPropertiesToElements(obj, prefix, postfix) {
-    Object.keys(obj).forEach(propName => {
-        let inputElem = document.getElementById(prefix + propName + postfix);
-        if (inputElem) {
-            let value = obj[propName];
-            let step = inputElem.step;
-            if (step && Number(step) < 1) {
-                value = value.toFixed(1);
-            } else {
-                value = Math.round(value);
-            }
-            inputElem.value = value;
-        }
-    });
-}
 
 ////////////////////////////////////////////////////////////////////////////////
-const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
-    let result = 0;
-    if (!$.isArray(formulaArr)) {
-        if ($.isNumeric(formulaArr)) {
-            result = Number(formulaArr);
-        } else {
-            if (formulaArr in statusObj) {
-                result = statusObj[formulaArr];
-            } else {
-                console.error(statusObj, formulaArr, opt_max);
-            }
-        }
-    } else {
-        let operator = null;
-        formulaArr.forEach(entry => {
-            let subResult = 0;
-            if (['+', '-', '*', '/'].includes(entry)) {
-                operator = entry;
-                return;
-            } else if ($.isNumeric(entry)) {
-                subResult = Number(entry);
-            } else if ($.isArray(entry)) {
-                subResult = calculateFormulaArray(statusObj, entry);
-            } else {
-                if (entry in statusObj) {
-                    subResult = Number(statusObj[entry]);
-                } else if (entry.indexOf('#') != -1) {
-                    let nameArr = entry.split('#');
-                    if ('ダメージ計算' in statusObj && nameArr[0] in statusObj['ダメージ計算']) {
-                        let damageArrArr = statusObj['ダメージ計算'][nameArr[0]];
-                        let damage = null;
-                        for (let damageArr of damageArrArr) {
-                            if (nameArr[1] == damageArr[0]) {
-                                damage = damageArr[4];  // 非会心
-                                break;
-                            }
-                        }
-                        if (damage != null) {
-                            subResult = damage;
-                        } else {
-                            console.error(statusObj, formulaArr, opt_max, entry);
-                        }
-                    }
-                } else {
-                    console.error(statusObj, formulaArr, opt_max);
-                }
-            }
-            if (operator == null) {
-                result += subResult;
-            } else {
-                switch (operator) {
-                    case '+':
-                        result += subResult;
-                        break;
-                    case '-':
-                        result -= subResult;
-                        break;
-                    case '*':
-                        result *= subResult;
-                        result = Math.floor(result * 100) / 100;
-                        break;
-                    case '/':
-                        result /= subResult;
-                        break;
-                }
-            }
-        });
-    }
-    if (opt_max != null) {
-        let maxValue = calculateFormulaArray(statusObj, opt_max);
-        if (result > maxValue) {
-            result = maxValue;
-        }
-    }
-    return result;
-}
 
-// 文字列を解析して、計算式Arrayを作成します
-// 数値|数値%|数値%文字列|文字列
-function analyzeFormulaStrSub(str, defaultItem = null) {
-    let resultArr = [];
-    if ($.isNumeric(str)) {
-        resultArr.push(Number(str));
-    } else {
-        let strArr = str.split('%');
-        if (strArr.length == 1) {
-            resultArr.push(strArr[0]);
-        } else {
-            resultArr.push(Number(strArr[0]) / 100);
-            resultArr.push('*');
-            if (strArr[1].length > 0) {
-                resultArr.push(strArr[1]);
-            } else if (defaultItem != null) {
-                resultArr.push(defaultItem);
-            }
-        }
-    }
-    return resultArr;
-}
-
-const analyzeFormulaStr = function (str, defaultItem = null) {
-    let resultArr = [];
-    let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+|[^0-9\\.%\\+\\-\\*/]+)([\\+\\-\\*/]?)(.*)');
-    let workStr = str;
-    while (true) {
-        let reRet = re.exec(workStr);
-        if (!reRet) {
-            resultArr.push(workStr);
-            break;
-        }
-        resultArr.push(analyzeFormulaStrSub(reRet[1], defaultItem));
-        if (reRet[2]) {
-            resultArr.push(reRet[2]);
-            if (reRet[3]) {
-                workStr = reRet[3];
-                continue;
-            } else {
-                console.error(str, defaultItem);
-            }
-        } else if (reRet[3]) {
-            console.error(str, defaultItem);
-        }
-        break;
-    }
-    return resultArr;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // 防御補正を計算します
-function calculate防御補正(opt_def = 0, opt_ignoreDef = 0, opt_statusObj = null) { // 防御力,防御無視
+function calculate防御補正(opt_ignoreDef = 0, opt_statusObj = null) { // 防御力,防御無視
     if (opt_statusObj == null) {
         opt_statusObj = ステータス詳細ObjVar;
     }
     let level = Number($('#レベルInput').val().replace('+', ''));
     let enemyLevel = opt_statusObj['敵レベル'];
     let calcIgnoreDef = opt_ignoreDef / 100;
-    let calcDef = opt_def / 100;
+    let calcDef = opt_statusObj['敵防御力'] / 100;
     let result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
     return result;
 }
@@ -275,7 +88,7 @@ function calculate溶解倍率(element, elementalMastery, opt_statusObj = null) 
 
 // ダメージ計算を行います
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
-function calculateDamageFromDetailSub(formula, dmgBuff, critRate, critDmg, isTargetEnemy, element, enemyDef, ignoreDef, multi, opt_statusObj = null) {
+function calculateDamageFromDetailSub(formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, opt_statusObj = null) {
     if (opt_statusObj == null) {
         opt_statusObj = ステータス詳細ObjVar;
     }
@@ -283,48 +96,87 @@ function calculateDamageFromDetailSub(formula, dmgBuff, critRate, critDmg, isTar
     console.debug("%o => %o", formula, Math.round(my非会心Result));
     let my会心Result = null;
     let my期待値Result;
-    if (dmgBuff) {
-        my非会心Result *= (100 + dmgBuff) / 100;
+    let myバフ = 0;
+    if (buffArr) {
+        buffArr.forEach(buff => {
+            myバフ += opt_statusObj[buff];
+        });
     }
-    if (isTargetEnemy) {    // 敵対象の場合、敵の耐性補正と防御補正を計算に加えます
-        if (element) {
-            my非会心Result *= calculate元素耐性補正(element, opt_statusObj);
+    if (myバフ != 0) {
+        my非会心Result *= (100 + myバフ) / 100;
+    }
+    if (is防御補正Calc) {
+        my非会心Result *= calculate防御補正(防御無視, opt_statusObj);
+    }
+    if (is耐性補正Calc && 元素) {
+        my非会心Result *= calculate元素耐性補正(元素, opt_statusObj);
+    }
+    if (別枠乗算) {    // 別枠乗算 for 宵宮
+        my非会心Result *= 別枠乗算 / 100;
+    }
+    my非会心Result = Math.round(my非会心Result);
+    my期待値Result = my非会心Result;
+    let my会心率 = Math.min(100, Math.max(0, opt_statusObj['会心率']));    // 0≦会心率≦100
+    let my会心ダメージ = opt_statusObj['会心ダメージ'];
+    if (is会心Calc) {
+        if (my会心率 > 0) {
+            my会心Result = my非会心Result * (100 + my会心ダメージ) / 100;
+            my会心Result = Math.round(my会心Result);
+            my期待値Result = (my会心Result * my会心率 / 100) + (my非会心Result * (100 - my会心率) / 100);
+            my期待値Result = Math.round(my期待値Result);
+            my非会心Result = Math.round(my非会心Result);
         }
-        my非会心Result *= calculate防御補正(enemyDef, ignoreDef, opt_statusObj);
     }
-    if (multi) {    // 別枠乗算 for 宵宮
-        my非会心Result *= multi / 100;
-    }
-    if (critRate > 0) {
-        my会心Result = my非会心Result * (100 + critDmg) / 100;
-        my会心Result = Math.round(my会心Result);
-        let my会心率 = Math.min(100, Math.max(0, critRate));    // 0≦会心率≦100
-        my期待値Result = (my会心Result * my会心率 / 100) + (my非会心Result * (100 - my会心率) / 100);
-        my期待値Result = Math.round(my期待値Result);
-        my非会心Result = Math.round(my非会心Result);
-    } else {
-        my非会心Result = Math.round(my非会心Result);
-        my期待値Result = my非会心Result;
-    }
-    console.debug(dmgBuff, critRate, critDmg, isTargetEnemy, element, enemyDef, ignoreDef, multi, '=>', my期待値Result, my会心Result, my非会心Result);
-    return [element, my期待値Result, my会心Result, my非会心Result];
+    console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
+    return [元素, my期待値Result, my会心Result, my非会心Result];
 }
 
 function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj = null) {
+    console.debug(detailObj['種類'], detailObj['名前']);
+
     if (opt_statusObj == null) {
         opt_statusObj = ステータス詳細ObjVar;
     }
+
+    let myバフArr = [];
+    let is会心Calc = true;
+    let is防御補正Calc = true;
+    let is耐性補正Calc = true;
     let my元素 = detailObj['元素'] != null ? detailObj['元素'] : opt_element != null ? opt_element : null;
-    let myダメージバフ = 0;
-    let my会心率 = opt_statusObj['会心率'];
-    let my会心ダメージ = opt_statusObj['会心ダメージ'];
-    let my別枠乗算 = 0; // for 宵宮
-    let my敵防御力 = opt_statusObj['敵防御力'];
     let my防御無視 = 0; // for 雷電将軍
+    let my別枠乗算 = 0; // for 宵宮
     let myHIT数 = detailObj['HIT数'] != null ? Number(detailObj['HIT数']) : 1;
     let myステータス補正 = {};
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');  // 有効な条件
+
+    if ('除外条件' in detailObj) {
+        detailObj['除外条件'].forEach(condition => {
+            if (validConditionValueArr.includes(condition)) {
+                ステータス変更系詳細ArrMapVar.forEach((value, key) => {
+                    value.forEach(valueObj => {
+                        if ('条件' in valueObj && valueObj['条件'] == condition) {
+
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    if ('適用条件' in detailObj) {
+        detailObj['適用条件'].forEach(condition => {
+            if (!validConditionValueArr.includes(condition)) {
+                ステータス変更系詳細ArrMapVar.forEach((value, key) => {
+                    value.forEach(valueObj => {
+                        if ('条件' in valueObj && valueObj['条件'] == condition) {
+
+                        }
+                    });
+                });
+            }
+        });
+    }
 
     let my天賦性能変更詳細Arr = [];
     let myステータス変更系詳細Arr = [];
@@ -371,30 +223,32 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
 
     // 対象指定ありのステータスアップを適用したい
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(value => {
-            if (!value['対象']) return; // 対象指定なしのものは適用済みのためスキップします
-            if (value['対象'].endsWith('元素ダメージ')) {   // for 九条裟羅
-                if (!value['対象'].startsWith(my元素)) {
+        value.forEach(valueObj => {
+            if (!valueObj['対象']) {
+                return; // 対象指定なしのものは適用済みのためスキップします
+            }
+            if (valueObj['対象'].endsWith('元素ダメージ')) {   // for 九条裟羅
+                if (!valueObj['対象'].startsWith(my元素)) {
                     return;
                 }
             } else {
-                let my対象カテゴリArr = value['対象'].split('.');
+                let my対象カテゴリArr = valueObj['対象'].split('.');
                 if (my対象カテゴリArr[0] != detailObj['種類']) {
                     return;
                 } if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
                     return;
                 }
             }
-            let myNewValue = value;
+            let myNewValue = valueObj;
             let number = null;
-            if (value['条件']) {
-                number = checkConditionMatches(value['条件'], validConditionValueArr);
+            if (valueObj['条件']) {
+                number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
                 if (number == 0) {
                     return;
                 }
                 if (number != null && number != 1) {    // オプションの@以降の数値でスケールする場合あり
-                    let myNew数値 = value['数値'].concat(['*', number]);
-                    myNewValue = JSON.parse(JSON.stringify(value)); // deepcopy
+                    let myNew数値 = valueObj['数値'].concat(['*', number]);
+                    myNewValue = JSON.parse(JSON.stringify(valueObj)); // deepcopy
                     myNewValue['数値'] = myNew数値;
                 }
             }
@@ -407,38 +261,24 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
     myステータス変更系詳細Arr.forEach(valueObj => {
         if (!valueObj['数値']) return;
         let myValue = calculateFormulaArray(opt_statusObj, valueObj['数値'], valueObj['最大値']);
-        switch (valueObj['種類']) {
-            case '攻撃力':
-                if (!('攻撃力' in myステータス補正)) {
-                    myステータス補正['攻撃力'] = 0;
-                }
-                myステータス補正['攻撃力'] += myValue;
-                break;
-            case '会心率':      // for 辛炎 腐植の剣 甘雨 「漁獲」
-                console.debug('my会心率', valueObj['数値'], my会心率, myValue);
-                my会心率 += myValue;
-                break;
-            case '会心ダメージ':    // for 九条裟羅
-                my会心ダメージ += myValue;
-                break;
-            case '別枠乗算':    // for 宵宮
-                if (my別枠乗算 > 0) {
-                    my別枠乗算 *= myValue / 100;    // for ディオナ
-                } else {
-                    my別枠乗算 = myValue;
-                }
-                break;
-            default:
-                if (valueObj['種類'] == '与えるダメージ') {
-                    myダメージバフ += myValue;
-                } else if (valueObj['種類'].endsWith('ダメージバフ')) {
-                    if (valueObj['種類'].startsWith(my元素)) {
-                        myダメージバフ += myValue;
-                    } else if (valueObj['種類'].startsWith(valueObj['種類'])) {
-                        myダメージバフ += myValue;
+        if (valueObj['種類'] in opt_statusObj) {
+            if (valueObj['種類'] in myステータス補正) {
+                myステータス補正[valueObj['種類']] += myValue;
+            } else {
+                myステータス補正[valueObj['種類']] = myValue;
+            }
+        } else {
+            switch (valueObj['種類']) {
+                case '別枠乗算':    // for 宵宮
+                    if (my別枠乗算 > 0) {
+                        my別枠乗算 *= myValue / 100;    // for ディオナ
+                    } else {
+                        my別枠乗算 = myValue;
                     }
-                }
-                break;
+                    break;
+                default:
+                    console.error(detailObj, opt_element, null, valueObj['種類'], myValue);
+            }
         }
     });
 
@@ -450,43 +290,58 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
     let my計算Result;
     switch (detailObj['種類']) {
         case 'HP回復':
-            let my回復バフ = opt_statusObj['与える治療効果'] + opt_statusObj['受ける治療効果'];
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], my回復バフ, null, null, false, null, null, null, null, opt_statusObj);
+            myバフArr.push('与える治療効果');
+            myバフArr.push('受ける治療効果');
+            is会心Calc = false;
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
+            my元素 = null;
             break;
         case 'シールド':
-            let myシールドバフ = opt_statusObj['シールド強化'];
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myシールドバフ, null, null, false, my元素, null, null, my別枠乗算, opt_statusObj);
+            myバフArr.push('シールド強化');
+            is会心Calc = false;
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
             break;
         case '元素創造物HP':    // for アンバー 甘雨
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null, opt_statusObj);
+            is会心Calc = false;
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
+            my元素 = null;
             break;
         case '付加元素ダメージ':    // for 風キャラ
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, true, '炎', null, null, null, opt_statusObj);
+            is会心Calc = false;
+            is防御補正Calc = false;
+            my元素 = '炎';
             break;
         case '表示':    // for ベネット 九条裟羅 攻撃力上昇
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, null, null, false, null, null, null, null, opt_statusObj);
+            is会心Calc = false;
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
+            my元素 = null;
             break;
         case '他所基準ダメージ':
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], null, my会心率, my会心ダメージ, false, my元素, null, null, null, opt_statusObj);
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
             break;
         default:
-            myダメージバフ += opt_statusObj['与えるダメージ'];
+            myバフArr.push('与えるダメージ');
             if (detailObj['ダメージバフ'] != null) {
-                myダメージバフ += opt_statusObj[detailObj['ダメージバフ']];
+                myバフArr.push(detailObj['ダメージバフ']);
             } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-                myダメージバフ += opt_statusObj[detailObj['種類'] + 'バフ'];
+                myバフArr.push(detailObj['種類'] + 'バフ');
             }
             if (my元素 != null) {
-                myダメージバフ += opt_statusObj[my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ'];
+                myバフArr.push(my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ');
             }
-            my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myダメージバフ, my会心率, my会心ダメージ, true, my元素, my敵防御力, my防御無視, my別枠乗算, opt_statusObj);
             break;
     }
+    my計算Result = calculateDamageFromDetailSub(detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, opt_statusObj);
     console.debug(my計算Result);
 
     my天賦性能変更詳細Arr.forEach(valueObj => {
+        let myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, opt_statusObj);
         if (valueObj['種類'].endsWith('ダメージアップ')) {
-            let myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myダメージバフ, my会心率, my会心ダメージ, true, my元素, my敵防御力, my防御無視, my別枠乗算, opt_statusObj);
             if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
@@ -499,38 +354,13 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
                     }
                 }
             }
-            my計算Result[1] += myResultWork[1];
-            if (my計算Result[2] != null) {
-                my計算Result[2] += myResultWork[2];
-            }
-            if (my計算Result[3] != null) {
-                my計算Result[3] += myResultWork[3];
-            }
-        } else if (valueObj['種類'].endsWith('強化')) {
-            let myResultWork;
-            switch (detailObj['種類']) {
-                case 'HP回復':  // for 早柚 珊瑚宮心海
-                    let my回復バフ = opt_statusObj['与える治療効果'] + opt_statusObj['受ける治療効果'];
-                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], my回復バフ, null, null, false, null, null, null, null, opt_statusObj);
-                    break;
-                case 'シールド':
-                    let myシールドバフ = opt_statusObj['シールド強化'];
-                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myシールドバフ, null, null, false, my元素, null, null, my別枠乗算, opt_statusObj);
-                    break;
-                case '表示':    // for ベネット
-                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], null, null, null, false, null, null, null, null, opt_statusObj);
-                    break;
-                default:
-                    myResultWork = calculateDamageFromDetailSub(valueObj['数値'], myダメージバフ, my会心率, my会心ダメージ, true, my元素, my敵防御力, my防御無視, my別枠乗算, opt_statusObj);
-                    break;
-            }
-            my計算Result[1] += myResultWork[1];
-            if (my計算Result[2] != null) {
-                my計算Result[2] += myResultWork[2];
-            }
-            if (my計算Result[3] != null) {
-                my計算Result[3] += myResultWork[3];
-            }
+        }
+        my計算Result[1] += myResultWork[1];
+        if (my計算Result[2] != null) {
+            my計算Result[2] += myResultWork[2];
+        }
+        if (my計算Result[3] != null) {
+            my計算Result[3] += myResultWork[3];
         }
     });
 
@@ -542,7 +372,7 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
     let my計算Result_蒸発 = [null, null, null];
     let my計算Result_溶解 = [null, null, null];
     if (detailObj['種類'] == 'シールド') {
-        if (my計算Result[0] == '岩') {  // for ノエル 鍾離 岩元素シールド
+        if (my計算Result[0] == '岩') {  // 岩元素シールド for ノエル 鍾離
             my計算Result[1] = Math.round(my計算Result[1] * 1.5);
             my計算Result[3] = Math.round(my計算Result[3] * 1.5);
         }
@@ -1380,6 +1210,7 @@ const inputOnChangeResultUpdate = function () {
     myダメージ計算['その他'] = [];
 
     // 通常攻撃ダメージを計算します
+    console.debug('通常攻撃 start');
     let myDamageDetailObjArr = 通常攻撃_基礎ダメージ詳細ArrVar;
     // 条件にマッチしていたならば、myDamageDetailObjArrを置き換えます
     特殊通常攻撃_基礎ダメージ詳細MapVar.forEach((value, key) => {
@@ -1395,10 +1226,11 @@ const inputOnChangeResultUpdate = function () {
         }
         myダメージ計算['通常攻撃'].push(calculateDamageFromDetail(detailObj, 通常攻撃_元素Var));
     });
-    console.debug('通常攻撃');
+    console.debug('通常攻撃 summary');
     console.debug(myダメージ計算['通常攻撃']);
 
     // 重撃ダメージを計算します
+    console.debug('重撃 start');
     myDamageDetailObjArr = 重撃_基礎ダメージ詳細ArrVar;
     // 条件にマッチしていたならば、myDamageDetailObjArrを置き換えます
     特殊重撃_基礎ダメージ詳細MapVar.forEach((value, key) => {
@@ -1414,10 +1246,11 @@ const inputOnChangeResultUpdate = function () {
         }
         myダメージ計算['重撃'].push(calculateDamageFromDetail(detailObj, 重撃_元素Var));
     });
-    console.debug('重撃');
+    console.debug('重撃 summary');
     console.debug(myダメージ計算['重撃']);
 
     // 落下攻撃ダメージを計算します
+    console.debug('落下攻撃 start');
     myDamageDetailObjArr = 落下攻撃_基礎ダメージ詳細ArrVar;
     // 条件にマッチしていたならば、myDamageDetailObjArrを置き換えます
     特殊落下攻撃_基礎ダメージ詳細MapVar.forEach((value, key) => {
@@ -1433,10 +1266,11 @@ const inputOnChangeResultUpdate = function () {
         }
         myダメージ計算['落下攻撃'].push(calculateDamageFromDetail(detailObj, 落下攻撃_元素Var));
     });
-    console.debug('落下攻撃');
+    console.debug('落下攻撃 summary');
     console.debug(myダメージ計算['落下攻撃']);
 
     // 元素スキルダメージを計算します
+    console.debug('元素スキル start');
     myDamageDetailObjArr = 元素スキル_基礎ダメージ詳細ArrVar;
     myDamageDetailObjArr.forEach(detailObj => {
         if (detailObj['条件'] != null) {
@@ -1446,10 +1280,11 @@ const inputOnChangeResultUpdate = function () {
         }
         myダメージ計算['元素スキル'].push(calculateDamageFromDetail(detailObj, null));
     });
-    console.debug('元素スキル');
+    console.debug('元素スキル summary');
     console.debug(myダメージ計算['元素スキル']);
 
     // 元素爆発ダメージを計算します
+    console.debug('元素爆発 start');
     myDamageDetailObjArr = 元素爆発_基礎ダメージ詳細ArrVar;
     myDamageDetailObjArr.forEach(detailObj => {
         if (detailObj['条件'] != null) {
@@ -1459,17 +1294,18 @@ const inputOnChangeResultUpdate = function () {
         }
         myダメージ計算['元素爆発'].push(calculateDamageFromDetail(detailObj, null));
     });
-    console.debug('元素爆発');
+    console.debug('元素爆発 summary');
     console.debug(myダメージ計算['元素爆発']);
 
     // その他ダメージを計算します
+    console.debug('その他 start');
     その他_基礎ダメージ詳細ArrMapVar.forEach((value, key) => {
         myDamageDetailObjArr = value;
         myDamageDetailObjArr.forEach(detailObj => {
             myダメージ計算['その他'].push(calculateDamageFromDetail(detailObj, null));
         });
     });
-    console.debug('その他');
+    console.debug('その他 summary');
     console.debug(myダメージ計算['その他']);
 
     displayResultTable('通常攻撃ダメージResult', '通常攻撃', myダメージ計算['通常攻撃']);
@@ -1699,8 +1535,7 @@ $(document).on('change', 'input[name="ステータスInput"]', inputOnChangeResu
 
 // オプションBoxを再構成します
 const inputOnChangeOptionUpdate = function () {
-    if (!選択中キャラクターデータVar) return;
-    if (!選択中武器データVar) return;
+    if (!選択中キャラクターデータVar || !選択中武器データVar) return;
 
     let my条件付き詳細ObjArr = [];
     ['キャラクター', '武器', '聖遺物セット'].forEach(key => {
@@ -1793,14 +1628,19 @@ const オプションInputOnChange = function () {
 };
 
 // 敵 変更イベント
-const 敵InputOnChange = function () {
+function inputOnChangeEnemyUpdate() {
     選択中敵データVar = 敵MasterVar[$('#敵Input').val()];
     setObjectPropertiesToElements(選択中敵データVar, '敵', 'Input');
     setInputValue('#敵防御力Input', 0);
+}
+
+const 敵InputOnChange = function () {
+    inputOnChangeEnemyUpdate();
     inputOnChangeResultUpdate();
 }
 
 $(document).on('change', '#敵Input', 敵InputOnChange);
+$(document).on('change', '#敵レベルInput', inputOnChangeResultUpdate);
 $(document).on('change', 'input[name="敵元素耐性Input"]', inputOnChangeResultUpdate);
 $(document).on('change', '#敵防御力Input', inputOnChangeResultUpdate);
 
@@ -1852,19 +1692,6 @@ const inputOnChangeArtifactSubUpdate = function () {
         inputOnChangeStatusUpdate();
         return;
     }
-
-    // レアリティに変化がない場合はサブ効果の再計算を行わないようにします
-    // if (this.name == '聖遺物メイン効果Input') {
-    //     let preValue = ELEMENT_VALUE_AT_FOCUS_MAP.get(this.id);
-    //     if (preValue) {
-    //         let curRarerity = this.value.split('_')[0];
-    //         let preRarerity = preValue.split('_')[0];
-    //         if (curRarerity == preRarerity) {
-    //             inputOnChangeStatusUpdate();
-    //             return;
-    //         }
-    //     }
-    // }
 
     let priorityArr = [];
     let middlePriorityArr = [];
@@ -1970,8 +1797,12 @@ const inputOnChangeArtifactSubUpdate = function () {
     inputOnChangeStatusUpdate();
 };
 
-// 聖遺物セット効果 変更イベント
-const 聖遺物セットInputOnChange = function () {
+// 聖遺物セット効果変更時の処理
+// 戻り値
+//  true: 聖遺物メイン効果を更新した
+function inputOnChangeArtifactSetUpdate() {
+    let isArtifactMainUpdated = false;
+
     const preSet1Value = ELEMENT_VALUE_AT_FOCUS_MAP.get('聖遺物セット効果1Input');
     const preSet2Value = ELEMENT_VALUE_AT_FOCUS_MAP.get('聖遺物セット効果2Input');
     ['聖遺物セット効果1Input', '聖遺物セット効果2Input'].forEach(id => {
@@ -2000,9 +1831,10 @@ const 聖遺物セットInputOnChange = function () {
             let rarerity = rarerityArrArr[curRarerity4Num][i];
             let statusName = elem.value.split('_')[1];
             elem.value = rarerity + '_' + statusName;
+            ELEMENT_VALUE_AT_FOCUS_MAP.set(elem.id, elem.value);
         }
-        // サブ効果を再計算します
-        inputOnChangeArtifactSubUpdate();
+        // 聖遺物メイン効果を更新しました
+        isArtifactMainUpdated = true;
     }
 
     選択中聖遺物セット効果データArrVar = [];
@@ -2037,11 +1869,34 @@ const 聖遺物セットInputOnChange = function () {
             });
         }
     });
+
+    return isArtifactMainUpdated;
+}
+
+// 聖遺物セット効果 変更イベント
+const 聖遺物セットInputOnChange = function () {
+    let isArtifactMainUpdated = inputOnChangeArtifactSetUpdate();
+    if (isArtifactMainUpdated) {    // メイン効果のレアリティ変更時はサブ効果を再計算します
+        inputOnChangeArtifactSubUpdate();
+    }
     setupBaseDamageDetailDataArtifactSet();
     inputOnChangeOptionUpdate();
 }
 
-$(document).on('change', 'select[name="聖遺物メイン効果Input"]', inputOnChangeArtifactSubUpdate);
+const 聖遺物メイン効果InputOnChange = function () {
+    let preValue = ELEMENT_VALUE_AT_FOCUS_MAP.get(this.id);
+    if (preValue != null) {
+        let preRarerity = preValue.split('_')[0];
+        let curRarerity = this.value.split('_')[0];
+        if (curRarerity != preRarerity) {
+            inputOnChangeArtifactSubUpdate();
+        }
+    } else {
+        inputOnChangeArtifactSubUpdate();
+    }
+}
+
+$(document).on('change', 'select[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
@@ -2120,7 +1975,6 @@ const 武器InputOnChange = function () {
                 }
             }
         }
-
         $('#精錬ランクInput').val(my精錬ランク);
 
         setupBaseDamageDetailDataWeapon();
@@ -2172,7 +2026,7 @@ const おすすめセットInputOnChange = function () {
                 if (suffix == 'Option') {
                     オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
                 } else if (elem.name == '聖遺物サブ効果Input') {
-                    is聖遺物サブ効果Includes = true;
+                    is聖遺物サブ効果Includes = true;    // セーブデータを想定
                 }
             }
         });
@@ -2180,12 +2034,15 @@ const おすすめセットInputOnChange = function () {
             オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
         }
     });
-
+    // キャラクター
     setupBaseDamageDetailDataCharacter();
-    if (!is聖遺物サブ効果Includes) {
+    // 聖遺物
+    inputOnChangeArtifactSetUpdate();
+    setupBaseDamageDetailDataArtifactSet();
+    if (!is聖遺物サブ効果Includes) {    // セーブデータの場合聖遺物サブ効果を再計算しません
         inputOnChangeArtifactSubUpdate();
     }
-    聖遺物セットInputOnChange();
+    // 武器
     武器InputOnChange();
 };
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
@@ -2458,13 +2315,13 @@ const キャラクターInputOnChange = function () {
 
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
+        inputOnChangeEnemyUpdate(); // 敵
         if (おすすめセットArrVar.length > 0) {
             おすすめセットInputOnChange();
-            敵InputOnChange();
-        } else {
-            setupBaseDamageDetailDataCharacter();
-            敵InputOnChange();
-            武器InputOnChange();
+        } else {    // 基本的におすすめセットを用意するので、こちらのルートはまず通らないはず
+            setupBaseDamageDetailDataCharacter();   // キャラクター
+            setupBaseDamageDetailDataArtifactSet(); // 聖遺物セット効果
+            武器InputOnChange();    // 武器
         }
     });
 };
@@ -2658,6 +2515,39 @@ $(document).ready(function () {
         }),
         fetch("data/ArtifactSubMaster.json").then(response => response.json()).then(jsonObj => {
             聖遺物サブ効果MasterVar = jsonObj;
+            // 聖遺物サブ効果の小計の組み合わせを計算します
+            // かなり高コストな処理です
+            $('[name="聖遺物セット効果Input"]').prop('disabled', true);
+            $('[name="聖遺物メイン効果Input"]').prop('disabled', true);
+            $('[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
+            $('#聖遺物優先するサブ効果1上昇回数Input option').each((index, element) => {
+                let n = element.value;
+                if (n == 0) {
+                    ARTIFACT_SUB_PATTERN_ARR_MAP.set(n, [[0, 0, 0, 0]]);
+                } else {
+                    ARTIFACT_SUB_PATTERN_ARR_MAP.set(n, resolvePartitionPattern(n, 4));
+                }
+                console.debug(n, new Date(), ARTIFACT_SUB_PATTERN_ARR_MAP.get(n));
+            });
+            Object.keys(聖遺物サブ効果MasterVar).forEach(statusName => {
+                let subMap = new Map();
+                ARTIFACT_SUB_PATTERN_ARR_MAP.forEach((arrArr, key) => {
+                    let resultArr = [];
+                    for (arr of arrArr) {
+                        let result = 0;
+                        for (let i = 0; i < arr.length; i++) {
+                            result += 聖遺物サブ効果MasterVar[statusName][i] * arr[i];
+                        }
+                        resultArr.push(result.toFixed(1));
+                    }
+                    subMap.set(key, resultArr);
+                });
+                ARTIFACT_SUB_NAME_VALUE_ARR_MAP.set(statusName, subMap);
+                console.debug(statusName, new Date(), ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName));
+            });
+            $('[name="聖遺物セット効果Input"]').prop('disabled', false);
+            $('[name="聖遺物メイン効果Input"]').prop('disabled', false);
+            $('[name="聖遺物優先するサブ効果Input"]').prop('disabled', false);
         }),
         fetch("data/ArtifactSetMaster.json").then(response => response.json()).then(jsonObj => {
             聖遺物セット効果MasterVar = jsonObj;
@@ -2695,9 +2585,6 @@ $(document).ready(function () {
         })
     ]).then(() => {
         キャラクターInputOnChange();
-        inputOnChangeArtifactSubUpdate();
-        聖遺物セットInputOnChange();
-        敵InputOnChange();
     });
 });
 
@@ -2721,7 +2608,7 @@ $(document).on('click', '#ローカルストレージクリアButton', clearロ�
 
 // inputとselectのフォーカス時点の値を保存しておきます
 const ELEMENT_VALUE_AT_FOCUS_MAP = new Map();
-$(document).on('focus', 'input, select', function () {
+$(document).on('focus', 'input,select', function () {
     let value = this.value;
     if (this instanceof HTMLInputElement) {
         if (['checkbox', 'radio'].includes(this.type)) {

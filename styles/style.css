@@ -254,6 +254,10 @@ fieldset.input-group legend {
     line-height: normal;
 }
 
+.tab-content fieldset legend {
+    text-align: center;
+}
+
 .input-set1+label {
     width: calc(100% / 5 - 10px);
 }
@@ -346,10 +350,12 @@ table th {
     text-align: center;
 }
 
-.input-item-short {
-    margin-bottom: 0;
-    width: 21%;
-    text-align: center;
+#artifactsub-detail .input-item {
+    width: calc(50% - 5px);
+}
+
+#artifactsub-detail .input-item-short {
+    width: calc(25% - 5px);
 }
 
 #artifactsub-detail label {

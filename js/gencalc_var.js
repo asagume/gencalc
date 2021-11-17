@@ -481,3 +481,45 @@ function initキャラクター構成関連要素() {
     $(document).on('click', '#構成保存Button', saveキャラクター構成);
     $(document).on('click', '#保存構成削除Button', clearキャラクター構成);
 }
+
+// 聖遺物サブ効果
+const ARTIFACT_SUB_PATTERN_ARR_MAP = new Map();
+const ARTIFACT_SUB_NAME_VALUE_ARR_MAP = new Map();
+
+// 組み合わせ
+function resolvePartitionPattern(n, p) {
+    if (p == 0) return [];
+    if (p == 1) return [[n]];
+    let ans = [];
+    for (let x0 = 0; x0 <= n; x0++) {
+        resolvePartitionPattern(n - x0, p - 1).forEach(sub => {
+            if (sub.length > 0) {
+                ans.push([x0].concat(sub));
+            }
+        });
+    }
+    return ans;
+}
+
+function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end = null) {
+    if (opt_start == null) opt_start = 0;
+    if (opt_end == null) opt_end = arr.length;
+    let index = (opt_end - opt_start) / 2;
+    if (targetValue >= arr[index] && (index + 1 >= opt_end || targetValue < arr[index + 1])) {
+        return arr[index];
+    }
+    let newStart = opt_start;
+    let newEnd = opt_end;
+    if (targetValue < arr[index]) {
+        newEnd = index;
+    } else {
+        newStart = index + 1;
+    }
+    return searchApproximationFromArr(targetValue, arr, newStart, newEnd);
+}
+
+function searchArtifactSubApproximation(statusName, times, targetValue) {
+    let arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(times);
+    let result = searchApproximationFromArr(targetValue, arr);
+    return result;
+}
