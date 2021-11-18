@@ -1800,6 +1800,7 @@ const inputOnChangeArtifactSubUpdate = function () {
     setInputValue('#聖遺物サブ効果元素チャージ効率Input', workObj['元素チャージ効率']);
 
     inputOnChangeStatusUpdate();
+    enable構成保存Button();
 };
 
 // 聖遺物セット効果変更時の処理
