@@ -412,6 +412,25 @@ input[type="checkbox"]:checked+label {
     width: 100px;
 }
 
+table.status tr th {
+    text-align: right;
+}
+
+table.status tr td input[type="number"] {
+    opacity: 0.5;
+    width: 70px;
+}
+
+table.status tr td input[type="number"]:focus {
+    opacity: 1;
+}
+
+table.status tr td {
+    font-size: 2.0rem;
+    border-width: 0 0 1px 0;
+    text-align: right;
+}
+
 table thead th, table tbody th, table tbody td {
     padding: 0px 6px;
     border-bottom: 1px solid #aaa;

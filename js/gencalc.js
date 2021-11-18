@@ -1143,13 +1143,6 @@ const inputOnChangeResultUpdate = function () {
     if (!選択中武器データVar) return;
     if (!選択中敵データVar) return;
 
-    Object.keys(ステータス詳細ObjVar).forEach(key => {
-        let elem = document.getElementById(key + 'Input');
-        if (elem) {
-            ステータス詳細ObjVar[key] = Number(elem.value);
-        }
-    });
-
     let my元素熟知 = ステータス詳細ObjVar['元素熟知'];
     let my蒸発倍率 = calculate蒸発倍率(キャラクター元素Var, my元素熟知, ステータス詳細ObjVar);
     if (my蒸発倍率) {
@@ -1401,6 +1394,12 @@ function calculateStatusObj(statusObj) {
     statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージバフ'] += Number($('#チーム自元素ダメージバフInput').val());
     statusObj['物理ダメージバフ'] += Number($('#チーム物理ダメージバフInput').val());
 
+    // ステータス補正を計上します
+    Array.from(document.getElementsByName('ステータスInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
+
     // ステータス変更系詳細ArrMapVarの登録内容を計上します
     // * キャラクター 固有天賦 命ノ星座
     // * 武器 アビリティ
@@ -1473,6 +1472,12 @@ function calculateStatusObj(statusObj) {
             }
         });
     });
+
+    Object.keys(statusObj).forEach(propName => {
+        if ($.isNumeric(statusObj[propName])) {
+            statusObj[propName] = Math.round(statusObj[propName] * 10) / 10;
+        }
+    });
 }
 
 // ステータスを計算します
@@ -1514,8 +1519,8 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
 const inputOnChangeStatusUpdate = function () {
     inputOnChangeStatusUpdateSub(true);
 
-    // ステータス詳細ObjVar⇒各Input要素 値をコピーします
-    setObjectPropertiesToElements(ステータス詳細ObjVar, '', 'Input');
+    // ステータス詳細ObjVar⇒各Value要素 値をコピーします
+    setObjectPropertiesToTableTd(ステータス詳細ObjVar);
 
     inputOnChangeResultUpdate();
 }
@@ -1524,14 +1529,14 @@ const inputOnChangeStatusUpdate = function () {
 const inputOnChangeStatusUpdateExceptBase = function () {
     inputOnChangeStatusUpdateSub(false);
 
-    // ステータス詳細ObjVar⇒各Input要素 値をコピーします
-    setObjectPropertiesToElements(ステータス詳細ObjVar, '', 'Input');
+    // ステータス詳細ObjVar⇒各Value要素 値をコピーします
+    setObjectPropertiesToTableTd(ステータス詳細ObjVar);
 
     inputOnChangeResultUpdate();
 }
 
-$(document).on('change', 'input[name="基礎ステータスInput"]', inputOnChangeStatusUpdateExceptBase);
-$(document).on('change', 'input[name="ステータスInput"]', inputOnChangeResultUpdate);
+$(document).on('change', 'input[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'input[name="ステータスInput"]', inputOnChangeStatusUpdate);
 
 // オプションBoxを再構成します
 const inputOnChangeOptionUpdate = function () {

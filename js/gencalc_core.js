@@ -61,6 +61,24 @@ function setObjectPropertiesToElements(obj, prefix, postfix) {
     });
 }
 
+function setObjectPropertiesToTableTd(obj) {
+    Object.keys(obj).forEach(propName => {
+        let valueElem = document.getElementById(propName + 'Value');
+        if (valueElem) {
+            let value = obj[propName];
+            let inputElem = document.getElementById(propName + 'Input');
+            if (inputElem) {
+                if (inputElem.step && Number(inputElem.step) < 1) {
+                    value = Math.round(value * 10) / 10;
+                } else {
+                    value = Math.round(value);
+                }
+            }
+            valueElem.textContent = value;
+        }
+    });
+}
+
 // 計算式を計算します
 const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
     let result = 0;
