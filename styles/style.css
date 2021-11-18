@@ -413,12 +413,12 @@ input[type="checkbox"]:checked+label {
 }
 
 table.status tr th {
-    text-align: right;
+    width: 26%;
 }
 
 table.status tr td input[type="number"] {
     opacity: 0.5;
-    width: 70px;
+    width: 85%;
 }
 
 table.status tr td input[type="number"]:focus {
@@ -426,6 +426,7 @@ table.status tr td input[type="number"]:focus {
 }
 
 table.status tr td {
+    width: 12%;
     font-size: 2.0rem;
     border-width: 0 0 1px 0;
     text-align: right;
