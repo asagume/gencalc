@@ -1769,7 +1769,11 @@ const inputOnChangeArtifactSubUpdate = function () {
             my優先するサブ効果回数合計 += 上昇回数;
         }
     });
-    let 優先しないサブ効果倍率 = Math.max(0, 45 - my優先するサブ効果回数合計);
+    let my優先しないサブ効果回数 = Math.min(45, 40 + Math.round(Math.max(0, (my優先するサブ効果回数合計 - 12) / 4)));
+    my優先しないサブ効果回数 -= Math.min(45, my優先するサブ効果回数合計);
+
+    $('#回数Display').text(my優先するサブ効果回数合計 + my優先しないサブ効果回数);
+
     for (let i = 0; i < priorityArr.length; i++) {
         let status = priorityArr[i];
         let workStatus = status;
@@ -1777,8 +1781,8 @@ const inputOnChangeArtifactSubUpdate = function () {
             workStatus = status.replace('%', 'P');
         }
         let value = 聖遺物サブ効果MasterVar[status][3];
-        let multi = Math.floor(優先しないサブ効果倍率 / (10 - my優先するサブ効果Arr.length));
-        let mod = 優先しないサブ効果倍率 % (10 - my優先するサブ効果Arr.length);
+        let multi = Math.floor(my優先しないサブ効果回数 / (10 - my優先するサブ効果Arr.length));
+        let mod = my優先しないサブ効果回数 % (10 - my優先するサブ効果Arr.length);
         if (i < mod) {
             multi += 1;
         }
@@ -1897,14 +1901,17 @@ const 聖遺物メイン効果InputOnChange = function () {
     }
 }
 
-function inputOnChangeArtifactPrioritySubUpdate(element) {
-    let statusName = element.value;
+function inputOnChangeArtifactPrioritySubUpdate(element, opt_value = null) {
     let unitSelector = '#' + element.id.replace('Input', '上昇値Input');
     let selectedIndex = $(unitSelector).prop('selectedIndex');
     if (selectedIndex == -1) {
         selectedIndex = 6;
     }
     $(unitSelector).empty();
+    let statusName = element.value;
+    if (!statusName) {
+        return;
+    }
     let master = 聖遺物サブ効果MasterVar[statusName];
     const postfixArr = ['(最高)', '(高め)', '(低め)', '(最低)'];
     for (let j = 0; j < master.length; j++) {
@@ -1922,7 +1929,11 @@ function inputOnChangeArtifactPrioritySubUpdate(element) {
             }
         }
     }
-    $(unitSelector).prop('selectedIndex', selectedIndex);
+    if (opt_value != null) {
+        $(unitSelector).val(opt_value);
+    } else {
+        $(unitSelector).prop('selectedIndex', selectedIndex);
+    }
 }
 
 function inputOnChangeArtifactPrioritySubUpdateAll() {
@@ -1937,12 +1948,38 @@ const 聖遺物優先するサブ効果InputOnChange = function () {
     inputOnChangeArtifactSubUpdate();
 }
 
+const 厳選目安ToggleOnChange = function () {
+    $('#厳選目安Input').prop('disabled', !this.checked);
+    $('#厳選目安Input').prop('selectedIndex', 0);
+}
+
+const 厳選目安InputOnChange = function () {
+    if (this.value) {
+        const 上昇値Arr = [[], [6, 6, 6], [6, 6, 6], [5, 5, 5], [4, 4, 4]];
+        const 上昇回数Arr = [[], [4, 4, 4], [8, 5, 5], [11, 7, 7], [15, 10, 10]];
+        for (let i = 0; i < 上昇回数Arr[Number(this.value)].length; i++) {
+            let id = '聖遺物優先するサブ効果' + (i + 1) + 'Input';
+            if (document.getElementById(id).value) {
+                let 上昇値Id = '聖遺物優先するサブ効果' + (i + 1) + '上昇値Input';
+                let 上昇回数Id = '聖遺物優先するサブ効果' + (i + 1) + '上昇回数Input';
+                $('#' + 上昇値Id).prop('selectedIndex', 上昇値Arr[Number(this.value)][i]);
+                $('#' + 上昇回数Id).val(上昇回数Arr[Number(this.value)][i]);
+            }
+        }
+        $('#厳選目安Input').prop('disabled', true);
+        $('#厳選目安Toggle').prop('checked', false);
+        inputOnChangeArtifactSubUpdate();
+    }
+}
+
 $(document).on('change', 'select[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果上昇値Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果上昇回数Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', 'select[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
 $(document).on('change', 'input[name="聖遺物サブ効果Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
+$(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
 
 ////
 const appendOptionElement = function (key, valueObj, selector) {
@@ -2043,8 +2080,17 @@ const おすすめセットInputOnChange = function () {
     ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
     let is聖遺物サブ効果Includes = false;
-    let entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
+    const entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
+    const 聖遺物優先するサブ効果上昇値ValueMap = new Map([
+        ['聖遺物優先するサブ効果1上昇値Input', null],
+        ['聖遺物優先するサブ効果2上昇値Input', null],
+        ['聖遺物優先するサブ効果3上昇値Input', null]
+    ]);
     Object.keys(entry).forEach(key => {
+        if (key.match(/聖遺物優先するサブ効果\d上昇値/)) {  // 後回し
+            聖遺物優先するサブ効果上昇値ValueMap.set(key + 'Input', entry[key]);
+            return;
+        }
         let isElemExists = false;
         ['Input', 'Option'].forEach(suffix => {
             let elem = document.getElementById(key + suffix);
@@ -2076,12 +2122,16 @@ const おすすめセットInputOnChange = function () {
             オプションElementIdValue記憶Map.set(key + 'Option', entry[key]);
         }
     });
+    // 聖遺物優先するサブ効果上昇値
+    聖遺物優先するサブ効果上昇値ValueMap.forEach((value, key) => {
+        let elem = document.getElementById(key.replace('上昇値', ''));
+        inputOnChangeArtifactPrioritySubUpdate(elem, value);
+    });
     // キャラクター
     setupBaseDamageDetailDataCharacter();
     // 聖遺物
     inputOnChangeArtifactSetUpdate();
     setupBaseDamageDetailDataArtifactSet();
-    inputOnChangeArtifactPrioritySubUpdateAll();
     if (!is聖遺物サブ効果Includes) {    // セーブデータの場合聖遺物サブ効果を再計算しません
         inputOnChangeArtifactSubUpdate();
     }

@@ -352,11 +352,14 @@ const saveキャラクター構成 = function () {
         聖遺物メイン効果4: $('#聖遺物メイン効果4Input').val(),
         聖遺物メイン効果5: $('#聖遺物メイン効果5Input').val(),
         聖遺物優先するサブ効果1: $('#聖遺物優先するサブ効果1Input').val(),
-        聖遺物優先するサブ効果1倍率: $('#聖遺物優先するサブ効果1倍率Input').val(),
+        聖遺物優先するサブ効果1上昇値: $('#聖遺物優先するサブ効果1上昇値Input').val(),
+        聖遺物優先するサブ効果1上昇回数: $('#聖遺物優先するサブ効果1上昇回数Input').val(),
         聖遺物優先するサブ効果2: $('#聖遺物優先するサブ効果2Input').val(),
-        聖遺物優先するサブ効果2倍率: $('#聖遺物優先するサブ効果2倍率Input').val(),
+        聖遺物優先するサブ効果2上昇値: $('#聖遺物優先するサブ効果2上昇値Input').val(),
+        聖遺物優先するサブ効果2上昇回数: $('#聖遺物優先するサブ効果2上昇回数Input').val(),
         聖遺物優先するサブ効果3: $('#聖遺物優先するサブ効果3Input').val(),
-        聖遺物優先するサブ効果3倍率: $('#聖遺物優先するサブ効果3倍率Input').val(),
+        聖遺物優先するサブ効果3上昇値: $('#聖遺物優先するサブ効果3上昇値Input').val(),
+        聖遺物優先するサブ効果3上昇回数: $('#聖遺物優先するサブ効果3上昇回数Input').val(),
         聖遺物サブ効果HPP: $('#聖遺物サブ効果HPPInput').val(),
         聖遺物サブ効果攻撃力P: $('#聖遺物サブ効果攻撃力PInput').val(),
         聖遺物サブ効果防御力P: $('#聖遺物サブ効果防御力PInput').val(),
@@ -429,6 +432,22 @@ const loadキャラクター構成 = function () {
                 キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
             } else if (i == 1) {
                 キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
+            }
+        }
+        // 聖遺物サブ効果 倍率→上昇値+上昇回数
+        for (let i = 0; i < 3; i++) {
+            let name1 = '聖遺物優先するサブ効果' + (i + 1);
+            let name2 = name1 + '倍率';         // old
+            let name3 = name1 + '上昇値';       // new
+            let name4 = name1 + '上昇回数';     // new
+            if (name2 in キャラクター構成ObjVar) {
+                let value1 = キャラクター構成ObjVar[name1];
+                let value2 = キャラクター構成ObjVar[name2];
+                let value3 = 聖遺物サブ効果MasterVar[value1][i];
+                let value4 = Math.round(value2 * 5);
+                delete キャラクター構成ObjVar[name2];
+                キャラクター構成ObjVar[name3] = value3;
+                キャラクター構成ObjVar[name4] = value4;
             }
         }
 
