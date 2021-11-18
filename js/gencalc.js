@@ -1800,7 +1800,6 @@ const inputOnChangeArtifactSubUpdate = function () {
     setInputValue('#聖遺物サブ効果元素チャージ効率Input', workObj['元素チャージ効率']);
 
     inputOnChangeStatusUpdate();
-    enable構成保存Button();
 };
 
 // 聖遺物セット効果変更時の処理
@@ -1970,6 +1969,7 @@ const 厳選目安InputOnChange = function () {
         $('#厳選目安Input').prop('disabled', true);
         $('#厳選目安Toggle').prop('checked', false);
         inputOnChangeArtifactSubUpdate();
+        enable構成保存Button();
     }
 }
 
@@ -2438,7 +2438,8 @@ $(document).on('change', '#精錬ランクInput', enable構成保存Button);
 $(document).on('change', 'select[name="聖遺物セット効果Input"]', enable構成保存Button);
 $(document).on('change', 'select[name="聖遺物メイン効果Input"]', enable構成保存Button);
 $(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果倍率Input"]', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇値Input"]', enable構成保存Button);
+$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇回数Input"]', enable構成保存Button);
 $(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構成保存Button);
 $(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
 $(document).on('change', '#おすすめセットInput', enable構成保存Button);
