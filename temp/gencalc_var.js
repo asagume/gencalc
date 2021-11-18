@@ -72,6 +72,9 @@ const オプションElementIdValue記憶Map = new Map();
 var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 
 //
+const PARTITION_PATTERN_ARR_MAP = new Map();
+
+//
 var ステータス詳細ObjVar = {
     HP乗算: 0,
     攻撃力乗算: 0,
@@ -300,26 +303,7 @@ function setupおすすめセット() {
     }
     if ('おすすめセット' in 選択中キャラクターデータVar) {
         Object.keys(選択中キャラクターデータVar['おすすめセット']).forEach(key => {
-            let myおすすめセット = 選択中キャラクターデータVar['おすすめセット'][key];
-            let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
-            let artifactRarerity4Num = 0;
-            if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {
-                artifactRarerity4Num++;
-            }
-            if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果2']]['レアリティ'] == 4) {
-                artifactRarerity4Num++;
-            }
-            for (let i = 0; i < 2; i++) {
-                let name = '聖遺物メイン効果' + (i + 1);
-                if (!(name in myおすすめセット)) {
-                    if (i == 0) {
-                        myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
-                    } else if (i == 1) {
-                        myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
-                    }
-                }
-            }
-            おすすめセットArrVar.push([key, myおすすめセット]);
+            おすすめセットArrVar.push([key, 選択中キャラクターデータVar['おすすめセット'][key]]);
         });
     }
     let selector = '#おすすめセットInput';
@@ -352,14 +336,11 @@ const saveキャラクター構成 = function () {
         聖遺物メイン効果4: $('#聖遺物メイン効果4Input').val(),
         聖遺物メイン効果5: $('#聖遺物メイン効果5Input').val(),
         聖遺物優先するサブ効果1: $('#聖遺物優先するサブ効果1Input').val(),
-        聖遺物優先するサブ効果1上昇値: $('#聖遺物優先するサブ効果1上昇値Input').val(),
-        聖遺物優先するサブ効果1上昇回数: $('#聖遺物優先するサブ効果1上昇回数Input').val(),
+        聖遺物優先するサブ効果1倍率: $('#聖遺物優先するサブ効果1倍率Input').val(),
         聖遺物優先するサブ効果2: $('#聖遺物優先するサブ効果2Input').val(),
-        聖遺物優先するサブ効果2上昇値: $('#聖遺物優先するサブ効果2上昇値Input').val(),
-        聖遺物優先するサブ効果2上昇回数: $('#聖遺物優先するサブ効果2上昇回数Input').val(),
+        聖遺物優先するサブ効果2倍率: $('#聖遺物優先するサブ効果2倍率Input').val(),
         聖遺物優先するサブ効果3: $('#聖遺物優先するサブ効果3Input').val(),
-        聖遺物優先するサブ効果3上昇値: $('#聖遺物優先するサブ効果3上昇値Input').val(),
-        聖遺物優先するサブ効果3上昇回数: $('#聖遺物優先するサブ効果3上昇回数Input').val(),
+        聖遺物優先するサブ効果3倍率: $('#聖遺物優先するサブ効果3倍率Input').val(),
         聖遺物サブ効果HPP: $('#聖遺物サブ効果HPPInput').val(),
         聖遺物サブ効果攻撃力P: $('#聖遺物サブ効果攻撃力PInput').val(),
         聖遺物サブ効果防御力P: $('#聖遺物サブ効果防御力PInput').val(),
@@ -369,7 +350,12 @@ const saveキャラクター構成 = function () {
         聖遺物サブ効果元素チャージ効率: $('#聖遺物サブ効果元素チャージ効率Input').val(),
         聖遺物サブ効果HP: $('#聖遺物サブ効果HPInput').val(),
         聖遺物サブ効果攻撃力: $('#聖遺物サブ効果攻撃力Input').val(),
-        聖遺物サブ効果防御力: $('#聖遺物サブ効果防御力Input').val()
+        聖遺物サブ効果防御力: $('#聖遺物サブ効果防御力Input').val(),
+        聖遺物レアリティ1: $('#聖遺物レアリティ1Input').val(),
+        聖遺物レアリティ2: $('#聖遺物レアリティ2Input').val(),
+        聖遺物レアリティ3: $('#聖遺物レアリティ3Input').val(),
+        聖遺物レアリティ4: $('#聖遺物レアリティ4Input').val(),
+        聖遺物レアリティ5: $('#聖遺物レアリティ5Input').val()
     };
 
     $('#オプションBox input[type="checkbox"]').each((index, elem) => {
@@ -401,60 +387,9 @@ const loadキャラクター構成 = function () {
     let key = '構成_' + $('#キャラクターInput').val();
     if (localStorage[key]) {
         キャラクター構成ObjVar = JSON.parse(localStorage[key]);
-
-        // 互換性維持のための小細工
-        // 聖遺物レアリティありの場合：聖遺物レアリティ→聖遺物メイン効果
-        for (let i = 1; i <= 5; i++) {
-            let name1 = '聖遺物レアリティ' + i;
-            if (name1 in キャラクター構成ObjVar) {
-                let name2 = '聖遺物メイン効果' + i;
-                キャラクター構成ObjVar[name2] = キャラクター構成ObjVar[name1] + '_' + キャラクター構成ObjVar[name2];
-                delete キャラクター構成ObjVar[name1];
-            }
-        }
-        // 聖遺物メイン効果が旧形式の場合：聖遺物セット効果→聖遺物メイン効果
-        let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
-        let artifactRarerity4Num = 0;
-        if (聖遺物セット効果MasterVar[キャラクター構成ObjVar['聖遺物セット効果1']]['レアリティ'] == 4) {
-            artifactRarerity4Num++;
-        }
-        if (聖遺物セット効果MasterVar[キャラクター構成ObjVar['聖遺物セット効果2']]['レアリティ'] == 4) {
-            artifactRarerity4Num++;
-        }
-        for (let i = 0; i < 5; i++) {
-            let name = '聖遺物メイン効果' + (i + 1);
-            if (name in キャラクター構成ObjVar) {
-                let value = キャラクター構成ObjVar[name];
-                if (value.indexOf('_') == -1) {
-                    キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_' + キャラクター構成ObjVar[name];
-                }
-            } else if (i == 0) {
-                キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
-            } else if (i == 1) {
-                キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
-            }
-        }
-        // 聖遺物サブ効果 倍率→上昇値+上昇回数
-        for (let i = 0; i < 3; i++) {
-            let name1 = '聖遺物優先するサブ効果' + (i + 1);
-            let name2 = name1 + '倍率';         // old
-            let name3 = name1 + '上昇値';       // new
-            let name4 = name1 + '上昇回数';     // new
-            if (name2 in キャラクター構成ObjVar) {
-                let value1 = キャラクター構成ObjVar[name1];
-                let value2 = キャラクター構成ObjVar[name2];
-                let value3 = 聖遺物サブ効果MasterVar[value1][i];
-                let value4 = Math.round(value2 * 5);
-                delete キャラクター構成ObjVar[name2];
-                キャラクター構成ObjVar[name3] = value3;
-                キャラクター構成ObjVar[name4] = value4;
-            }
-        }
-
         Object.keys(キャラクター構成ObjVar).forEach(objKey => {
             $('#' + selectorEscape(objKey) + 'Input').val(キャラクター構成ObjVar[objKey]);
         });
-
         $('#構成保存Button').prop('disabled', true);
         $('#保存構成削除Button').prop('disabled', false);
     } else {
@@ -499,49 +434,4 @@ function initキャラクター構成関連要素() {
 
     $(document).on('click', '#構成保存Button', saveキャラクター構成);
     $(document).on('click', '#保存構成削除Button', clearキャラクター構成);
-}
-
-// 聖遺物サブ効果
-const ARTIFACT_SUB_PATTERN_ARR_MAP = new Map();
-const ARTIFACT_SUB_NAME_VALUE_ARR_MAP = new Map();
-
-// 組み合わせ
-function resolvePartitionPattern(n, p) {
-    if (p == 0) return [];
-    if (p == 1) return [[n]];
-    let ans = [];
-    for (let x0 = 0; x0 <= n; x0++) {
-        resolvePartitionPattern(n - x0, p - 1).forEach(sub => {
-            if (sub.length > 0) {
-                ans.push([x0].concat(sub));
-            }
-        });
-    }
-    return ans;
-}
-
-function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end = null) {
-    if (opt_start == null) opt_start = 0;
-    if (opt_end == null) opt_end = arr.length;
-    let index = ((opt_end - opt_start) / 2).toFixed(0);
-    if (targetValue <= arr[index] && (index + 1 >= opt_end || targetValue < arr[index - 1])) {
-        return arr[index];
-    }
-    let newStart = opt_start;
-    let newEnd = opt_end;
-    if (targetValue < arr[index]) {
-        newEnd = index;
-    } else {
-        newStart = index + 1;
-    }
-    return searchApproximationFromArr(targetValue, arr, newStart, newEnd);
-}
-
-function searchArtifactSubApproximation(statusName, times, targetValue) {
-    let arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(String(times));
-    for (let i = 0; i < arr.length; i++) {
-        if (targetValue <= arr[i]) {
-            return arr[i];
-        }
-    }
 }
