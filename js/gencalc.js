@@ -2037,6 +2037,11 @@ const 武器InputOnChange = function () {
             }
         }
         if (my精錬ランク == 0) {
+            if ('精錬ランク' in 選択中武器データVar) {
+                my精錬ランク = 選択中武器データVar['精錬ランク'];
+            }
+        }
+        if (my精錬ランク == 0) {
             if ('レアリティ' in 選択中武器データVar) {
                 switch (選択中武器データVar['レアリティ']) {
                     case 5:
