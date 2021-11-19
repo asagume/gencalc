@@ -1399,6 +1399,14 @@ function calculateStatusObj(statusObj) {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
     });
+    Array.from(document.getElementsByName('ダメージバフInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
+    Array.from(document.getElementsByName('敵ステータスInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
 
     // ステータス変更系詳細ArrMapVarの登録内容を計上します
     // * キャラクター 固有天賦 命ノ星座
@@ -1481,7 +1489,7 @@ function calculateStatusObj(statusObj) {
 }
 
 // ステータスを計算します
-const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
+const inputOnChangeStatusUpdateSub = function () {
     if (!選択中キャラクターデータVar) return;
     if (!選択中武器データVar) return;
     // 初期化
@@ -1499,15 +1507,16 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
     // キャラクターの基本ステータスをセットします
     let myレベル = $('#レベルInput').val();
     let my武器レベル = $('#武器レベルInput').val();
-    if (opt_baseUpdate) {
-        ステータス詳細ObjVar['基礎HP'] = Number(選択中キャラクターデータVar['ステータス']['基礎HP'][myレベル]);
-        ステータス詳細ObjVar['基礎攻撃力'] = Number(選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myレベル]) + Number(選択中武器データVar['ステータス']['基礎攻撃力'][my武器レベル]);
-        ステータス詳細ObjVar['基礎防御力'] = Number(選択中キャラクターデータVar['ステータス']['基礎防御力'][myレベル]);
-    } else {
-        ステータス詳細ObjVar['基礎HP'] = Number($('#基礎HPInput').val());
-        ステータス詳細ObjVar['基礎攻撃力'] = Number($('#基礎攻撃力Input').val());
-        ステータス詳細ObjVar['基礎防御力'] = Number($('#基礎防御力Input').val());
-    }
+    ステータス詳細ObjVar['基礎HP'] = Number(選択中キャラクターデータVar['ステータス']['基礎HP'][myレベル]);
+    ステータス詳細ObjVar['基礎攻撃力'] = Number(選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myレベル]) + Number(選択中武器データVar['ステータス']['基礎攻撃力'][my武器レベル]);
+    ステータス詳細ObjVar['基礎防御力'] = Number(選択中キャラクターデータVar['ステータス']['基礎防御力'][myレベル]);
+
+    // 基礎ステータス補正を計上します
+    Array.from(document.getElementsByName('基礎ステータスInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        ステータス詳細ObjVar[statusName] += Number(elem.value);
+    });
+
     ステータス詳細ObjVar['HP上限'] = ステータス詳細ObjVar['基礎HP'];
     ステータス詳細ObjVar['攻撃力'] = ステータス詳細ObjVar['基礎攻撃力'];
     ステータス詳細ObjVar['防御力'] = ステータス詳細ObjVar['基礎防御力'];
@@ -1517,7 +1526,7 @@ const inputOnChangeStatusUpdateSub = function (opt_baseUpdate = true) {
 
 // ステータスAreaを更新します
 const inputOnChangeStatusUpdate = function () {
-    inputOnChangeStatusUpdateSub(true);
+    inputOnChangeStatusUpdateSub();
 
     // ステータス詳細ObjVar⇒各Value要素 値をコピーします
     setObjectPropertiesToTableTd(ステータス詳細ObjVar);
@@ -1525,18 +1534,12 @@ const inputOnChangeStatusUpdate = function () {
     inputOnChangeResultUpdate();
 }
 
-// ステータスAreaを更新します
-const inputOnChangeStatusUpdateExceptBase = function () {
-    inputOnChangeStatusUpdateSub(false);
-
-    // ステータス詳細ObjVar⇒各Value要素 値をコピーします
-    setObjectPropertiesToTableTd(ステータス詳細ObjVar);
-
-    inputOnChangeResultUpdate();
+const buttonToggleCheckboxOnChange = function () {
+    let buttonElem = document.getElementById(this.id.replace('Toggle', 'Button'));
+    if (buttonElem) {
+        buttonElem.disabled = !this.checked;
+    }
 }
-
-$(document).on('change', 'input[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', 'input[name="ステータスInput"]', inputOnChangeStatusUpdate);
 
 // オプションBoxを再構成します
 const inputOnChangeOptionUpdate = function () {
@@ -1635,19 +1638,16 @@ const オプションInputOnChange = function () {
 // 敵 変更イベント
 function inputOnChangeEnemyUpdate() {
     選択中敵データVar = 敵MasterVar[$('#敵Input').val()];
-    setObjectPropertiesToElements(選択中敵データVar, '敵', 'Input');
-    setInputValue('#敵防御力Input', 0);
+    Object.keys(選択中敵データVar).forEach(propName => {
+        ステータス詳細ObjVar['敵' + propName] = 選択中敵データVar[propName];
+    });
+    ステータス詳細ObjVar['敵防御力'] = 0;
 }
 
 const 敵InputOnChange = function () {
     inputOnChangeEnemyUpdate();
-    inputOnChangeResultUpdate();
+    inputOnChangeStatusUpdate();
 }
-
-$(document).on('change', '#敵Input', 敵InputOnChange);
-$(document).on('change', '#敵レベルInput', inputOnChangeResultUpdate);
-$(document).on('change', 'input[name="敵元素耐性Input"]', inputOnChangeResultUpdate);
-$(document).on('change', '#敵防御力Input', inputOnChangeResultUpdate);
 
 // 元素共鳴 変更イベント
 const elementalResonanceInputOnChange = function (event) {
@@ -1688,8 +1688,6 @@ const elementalResonanceInputOnChange = function (event) {
     // });
     inputOnChangeStatusUpdate();
 }
-$(document).on('change', 'input[name="元素共鳴Input"]', elementalResonanceInputOnChange);
-$(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
 
 // 聖遺物サブ効果 変更イベント
 const inputOnChangeArtifactSubUpdate = function () {
@@ -1978,15 +1976,6 @@ const 厳選目安InputOnChange = function () {
     }
 }
 
-$(document).on('change', 'select[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇値Input"]', inputOnChangeArtifactSubUpdate);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇回数Input"]', inputOnChangeArtifactSubUpdate);
-$(document).on('change', 'select[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
-$(document).on('change', 'input[name="聖遺物サブ効果Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
-$(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
-
 ////
 const appendOptionElement = function (key, valueObj, selector) {
     if ('disabled' in valueObj && valueObj['disabled']) return;   // とりあえず無効レコードは追加しません
@@ -2066,9 +2055,6 @@ const 武器InputOnChange = function () {
         inputOnChangeOptionUpdate();
     });
 };
-$(document).on('change', '#武器Input', 武器InputOnChange);
-$(document).on('change', '#武器レベルInput', inputOnChangeStatusUpdate);
-$(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
 
 function getNormalAttackDefaultElement() {
     キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
@@ -2144,7 +2130,6 @@ const おすすめセットInputOnChange = function () {
     // 武器
     武器InputOnChange();
 };
-$(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
 
 // 通常攻撃Lv. 元素スキルLv. 元素爆発Lv. 変更イベント
 const 天賦レベルInputOnChange = function () {
@@ -2424,14 +2409,78 @@ const キャラクターInputOnChange = function () {
         }
     });
 };
+
+// おすすめセット
+$(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
+
+// 基本条件・キャラ/武器
 $(document).on('change', '#キャラクターInput', キャラクターInputOnChange);
 $(document).on('change', '#レベルInput', inputOnChangeStatusUpdate);
 $(document).on('change', '#命ノ星座Input', 命ノ星座InputOnChange);
 $(document).on('change', '#通常攻撃レベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素スキルレベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素爆発レベルInput', 天賦レベルInputOnChange);
+$(document).on('change', '#武器Input', 武器InputOnChange);
+$(document).on('change', '#武器レベルInput', inputOnChangeStatusUpdate);
+$(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
+
+// 基本条件・聖遺物
+$(document).on('change', '[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
+$(document).on('change', '[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
+$(document).on('change', '[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
+$(document).on('change', '[name="聖遺物優先するサブ効果上昇値Input"]', inputOnChangeArtifactSubUpdate);
+$(document).on('change', '[name="聖遺物優先するサブ効果上昇回数Input"]', inputOnChangeArtifactSubUpdate);
+$(document).on('change', '[name="聖遺物サブ効果Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
+$(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
+
+// 基本条件・元素共鳴
+$(document).on('change', '[name="元素共鳴Input"]', elementalResonanceInputOnChange);
+$(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
+
+// 基本条件・敵/デバフ
+$(document).on('change', '#敵Input', 敵InputOnChange);
+$(document).on('change', '#敵レベルInput', inputOnChangeResultUpdate);
+
+// 基本条件・チームバフ
+$(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
+
+// オプション条件
+
+// ステータス・ステータス
+$(document).on('change', '[name="ステータスInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#ステータス補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#ステータス補正初期化Button', function () {
+    $('[name="ステータスInput"]').val(0);
+    $('[name="基礎ステータスInput"]').val(0);
+    this.disabled = true;
+    $('#ステータス補正初期化Toggle').prop('checked', false);
+    inputOnChangeStatusUpdate();
+});
+
+// ステータス・ダメージバフ
+$(document).on('change', 'input[name="ダメージバフInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#ダメージバフ補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#ダメージバフ補正初期化Button', function () {
+    $('[name="ダメージバフInput"]').val(0);
+    this.disabled = true;
+    $('#ダメージバフ補正初期化Toggle').prop('checked', false);
+    inputOnChangeStatusUpdate();
+});
+
+// ステータス・敵耐性詳細
+$(document).on('change', 'input[name="敵ステータスInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#敵耐性補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#敵耐性補正初期化Button', function () {
+    $('[name="敵ステータスInput"]').val(0);
+    this.disabled = true;
+    $('#敵耐性補正初期化Toggle').prop('checked', false);
+    inputOnChangeStatusUpdate();
+});
 
 // 構成保存ボタンを活性化します
+$(document).on('change', '#おすすめセットInput', enable構成保存Button);
 $(document).on('change', '#レベルInput', enable構成保存Button);
 $(document).on('change', '#命ノ星座Input', enable構成保存Button);
 $(document).on('change', '#通常攻撃レベルInput', enable構成保存Button);
@@ -2440,16 +2489,12 @@ $(document).on('change', '#元素爆発レベルInput', enable構成保存Button
 $(document).on('change', '#武器Input', enable構成保存Button);
 $(document).on('change', '#武器レベルInput', enable構成保存Button);
 $(document).on('change', '#精錬ランクInput', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物セット効果Input"]', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物メイン効果Input"]', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果Input"]', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇値Input"]', enable構成保存Button);
-$(document).on('change', 'select[name="聖遺物優先するサブ効果上昇回数Input"]', enable構成保存Button);
-$(document).on('change', 'input[name="聖遺物サブ効果Input"]', enable構成保存Button);
-$(document).on('change', 'select[name = "聖遺物レアリティInput"]', enable構成保存Button);
-$(document).on('change', '#おすすめセットInput', enable構成保存Button);
-
-$(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '[name="聖遺物セット効果Input"]', enable構成保存Button);
+$(document).on('change', '[name="聖遺物メイン効果Input"]', enable構成保存Button);
+$(document).on('change', '[name="聖遺物優先するサブ効果Input"]', enable構成保存Button);
+$(document).on('change', '[name="聖遺物優先するサブ効果上昇値Input"]', enable構成保存Button);
+$(document).on('change', '[name="聖遺物優先するサブ効果上昇回数Input"]', enable構成保存Button);
+$(document).on('change', '[name="聖遺物サブ効果Input"]', enable構成保存Button);
 
 ////////////////////////////////////////////////////////////////////////////////
 function isHiddenHidableElement(selector, opt_default = false) {

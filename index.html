@@ -18,7 +18,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.5.1
+                    げんかるく - 原神ダメージシミュレーター Ver.1.5.2
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -569,87 +569,67 @@
                                 <table class="status">
                                     <tr>
                                         <th>HP上限</th>
-                                        <td>
-                                            <input type="number" value="0" id="HP上限Input" name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="HP上限Input" name="ステータスInput" /></td>
                                         <td id="HP上限Value"></td>
                                         <th>会心率</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="会心率Input" name="ステータスInput" />
+                                        <td><input type="number" value="0" step="0.1" id="会心率Input" name="ステータスInput" />
                                         </td>
                                         <td id="会心率Value"></td>
                                     </tr>
                                     <tr>
                                         <th>攻撃力</th>
-                                        <td>
-                                            <input type="number" value="0" id="攻撃力Input" name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="攻撃力Input" name="ステータスInput" /></td>
                                         <td id="攻撃力Value"></td>
                                         <th>会心ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="会心ダメージInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="会心ダメージInput"
+                                                name="ステータスInput" /></td>
                                         <td id="会心ダメージValue"></td>
                                     </tr>
                                     <tr>
                                         <th>防御力</th>
-                                        <td>
-                                            <input type="number" value="0" id="防御力Input" name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="防御力Input" name="ステータスInput" /></td>
                                         <td id="防御力Value"></td>
                                         <th>与える治療効果</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="与える治療効果Input"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="与える治療効果Input"
+                                                name="ステータスInput" /></td>
                                         <td id="与える治療効果Value"></td>
                                     </tr>
                                     <tr>
                                         <th>元素熟知</th>
-                                        <td>
-                                            <input type="number" value="0" id="元素熟知Input" name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="元素熟知Input" name="ステータスInput" /></td>
                                         <td id="元素熟知Value"></td>
                                         <th>受ける治療効果</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="受ける治療効果Input"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="受ける治療効果Input"
+                                                name="ステータスInput" /></td>
                                         <td id="受ける治療効果Value"></td>
                                     </tr>
                                     <tr>
                                         <th class="base">基礎HP</th>
-                                        <td>
-                                            <input type="number" value="0" id="基礎HPInput" name="基礎ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="基礎HPInput" name="基礎ステータスInput" /></td>
                                         <td id="基礎HPValue"></td>
                                         <th>元素チャージ効率</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="元素チャージ効率Input"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="元素チャージ効率Input"
+                                                name="ステータスInput" /></td>
                                         <td id="元素チャージ効率Value"></td>
                                     </tr>
                                     <tr>
                                         <th class="base">基礎攻撃力</th>
-                                        <td>
-                                            <input type="number" value="0" id="基礎攻撃力Input" name="基礎ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="基礎攻撃力Input" name="基礎ステータスInput" /></td>
                                         <td id="基礎攻撃力Value"></td>
                                         <th>シールド強化</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="シールド強化Input"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="シールド強化Input"
+                                                name="ステータスInput" /></td>
                                         <td id="シールド強化Value"></td>
                                     </tr>
                                     <tr>
                                         <th class="base">基礎防御力</th>
-                                        <td>
-                                            <input type="number" value="0" id="基礎防御力Input" name="基礎ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" id="基礎防御力Input" name="基礎ステータスInput" /></td>
                                         <td id="基礎防御力Value"></td>
+                                        <td colspan="3">
+                                            <input type="checkbox" id="ステータス補正初期化Toggle">
+                                            <label for="ステータス補正初期化Toggle">補正値0初期化</label>
+                                            <button type="button" id="ステータス補正初期化Button" disabled>実行</button>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -660,102 +640,80 @@
                                 <table class="status">
                                     <tr>
                                         <th>炎元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="炎元素ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="炎元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="炎元素ダメージバフValue"></td>
                                         <th>通常攻撃ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="通常攻撃ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="通常攻撃ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="通常攻撃ダメージバフValue"></td>
                                     </tr>
                                     <tr>
                                         <th>水元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="水元素ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="水元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="水元素ダメージバフValue"></td>
                                         <th>重撃ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="重撃ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="重撃ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="重撃ダメージバフValue"></td>
                                     </tr>
                                     <tr>
                                         <th>風元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="風元素ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="風元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="風元素ダメージバフValue"></td>
                                         <th>落下攻撃ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="落下攻撃ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="落下攻撃ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="落下攻撃ダメージバフValue"></td>
                                     </tr>
                                     <tr>
                                         <th>雷元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="雷元素ダメージバフInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="雷元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="雷元素ダメージバフValue"></td>
                                         <th>元素スキルダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="元素スキルダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="元素スキルダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="元素スキルダメージバフValue"></td>
                                     </tr>
                                     <tr>
                                         <th>草元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="草元素ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="草元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="草元素ダメージバフValue"></td>
                                         <th>元素爆発ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="元素爆発ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="元素爆発ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="元素爆発ダメージバフValue"></td>
                                     </tr>
                                     <tr>
                                         <th>氷元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="氷元素ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="氷元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="氷元素ダメージバフValue"></td>
                                         <th>与えるダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="与えるダメージInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="与えるダメージInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="与えるダメージValue"></td>
                                     </tr>
                                     <tr>
                                         <th>岩元素ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="岩元素ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="岩元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="岩元素ダメージバフValue"></td>
                                     </tr>
                                     <tr>
                                         <th>物理ダメージ</th>
-                                        <td>
-                                            <input type="number" value="0" step="0.1" id="物理ダメージバフInput"
-                                                name="ステータスInput" />
-                                        </td>
+                                        <td><input type="number" value="0" step="0.1" id="物理ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
                                         <td id="物理ダメージバフValue"></td>
+                                        <td colspan="3">
+                                            <input type="checkbox" id="ダメージバフ補正初期化Toggle">
+                                            <label for="ダメージバフ補正初期化Toggle">補正値0初期化</label>
+                                            <button type="button" id="ダメージバフ補正初期化Button" disabled>実行</button>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -771,55 +729,53 @@
                                 name="status-table-group" />
                             <label for="status-table4">敵耐性詳細</label>
                             <div class="tab-content">
-                                <table>
+                                <table class="status">
                                     <tr>
                                         <th>炎元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵炎元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵炎元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵炎元素耐性Value"></td>
                                         <th>防御力</th>
-                                        <td><input type="number" id="敵防御力Input" /></td>
+                                        <td><input type="number" value="0" id="敵防御力Input" name="敵ステータスInput" /></td>
+                                        <td id="敵防御力Value"></td>
                                     </tr>
                                     <tr>
                                         <th>水元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵水元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵水元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵水元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>風元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵風元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵風元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵風元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>雷元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵雷元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵雷元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵雷元素耐性Value"></td>
                                     </tr>
                                     <tr style="display: none">
                                         <th>草元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵草元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵草元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵草元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>氷元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵氷元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵氷元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵氷元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>岩元素耐性</th>
-                                        <td>
-                                            <input type="number" id="敵岩元素耐性Input" name="敵元素耐性Input" />
-                                        </td>
+                                        <td><input type="number" value="0" id="敵岩元素耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵岩元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>物理耐性</th>
-                                        <td>
-                                            <input type="number" id="敵物理耐性Input" name="敵元素耐性Input" />
+                                        <td><input type="number" value="0" id="敵物理耐性Input" name="敵ステータスInput" /></td>
+                                        <td id="敵物理耐性Value"></td>
+                                        <td colspan="3">
+                                            <input type="checkbox" id="敵耐性補正初期化Toggle">
+                                            <label for="敵耐性補正初期化Toggle">補正値0初期化</label>
+                                            <button type="button" id="敵耐性補正初期化Button" disabled>実行</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -912,7 +868,7 @@
             <hr />
             <input type="checkbox" id="ローカルストレージクリアInput" />
             <label for="ローカルストレージクリアInput">ローカルストレージをクリア</label>
-            <button type="button" id="ローカルストレージクリアButton" disabled>実行</button>
+            <button type="button" id="ローカルストレージクリアButton" style="width: 100px;" disabled>実行</button>
             <p>全ての保存データを削除します</p>
         </div>
 
