@@ -233,10 +233,6 @@ article.input-item img.info {
     right: 0;
 }
 
-dialog {
-    text-align: left;
-}
-
 fieldset.input-group legend {
     text-align: left;
 }
@@ -353,9 +349,35 @@ table {
 
 table th {
     font-weight: normal;
-    padding: 0px 6px;
     text-align: center;
     font-size: 1.8rem;
+    border-left: 3px double #aaa;
+    border-right: 1px solid #aaa;
+}
+
+table th:first-child {
+    border-left: 0;
+}
+
+table td {
+    background-color: transparent;
+    padding: 1px 6px;
+}
+
+table thead th, table tbody th, table tbody td {
+    border-bottom: 1px solid #aaa;
+}
+
+table thead th {
+    background-color: #574014;
+}
+
+table thead th+th, table tbody td {
+    border-left: 1px solid #aaa;
+}
+
+table tbody tr:last-child th, table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 #artifactsub-detail {
@@ -398,6 +420,10 @@ table th {
     top: 2px;
     right: 5px;
     width: calc(25% - 10px);
+}
+
+#artifactsub-detail table {
+    margin-top: 10px;
 }
 
 /* 結果エリア */
@@ -454,7 +480,7 @@ table.status tr td input[type="number"]:focus {
 table.status tr td {
     width: 12%;
     font-size: 2rem;
-    border-width: 0 0 1px 0;
+    border-left: 0;
     text-align: right;
 }
 
@@ -466,26 +492,8 @@ table.status tr td button {
     width: 24%;
 }
 
-table thead th, table tbody th, table tbody td {
-    padding: 0px 6px;
-    border-bottom: 1px solid #aaa;
-}
-
-table thead th {
-    background-color: #574014;
-}
-
-table thead th+th, table tbody td {
-    border-left: 1px solid #aaa;
-}
-
-table td {
+.result-area div table tr td {
     font-size: 2.4rem;
-    background-color: transparent;
-}
-
-table tbody tr:last-child th, table tbody tr:last-child td {
-    border-bottom: none;
 }
 
 th.category {
