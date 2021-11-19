@@ -484,11 +484,15 @@ table.status tr td {
     text-align: right;
 }
 
-table.status tr td label {
-    font-size: 2rem;
+table.status tr td[colspan="3"] {
+    text-align: right;
 }
 
-table.status tr td button {
+table.status tr td[colspan="3"] label {
+    font-size: 1.8rem;
+}
+
+table.status tr td[colspan="3"] button {
     width: 24%;
 }
 
