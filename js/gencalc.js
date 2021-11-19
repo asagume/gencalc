@@ -1898,6 +1898,8 @@ const 聖遺物メイン効果InputOnChange = function () {
         let curRarerity = this.value.split('_')[0];
         if (curRarerity != preRarerity) {
             inputOnChangeArtifactSubUpdate();
+        } else {
+            inputOnChangeStatusUpdate();
         }
     } else {
         inputOnChangeArtifactSubUpdate();
