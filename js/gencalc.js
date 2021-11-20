@@ -152,7 +152,9 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
 
     if (detailObj['除外条件']) {
         detailObj['除外条件'].forEach(condition => {
-            if (validConditionValueArr.includes(condition)) {
+            if ($.isPlainObject(condition)) {
+                // nop
+            } else if (validConditionValueArr.includes(condition)) {
                 ステータス変更系詳細ArrMapVar.forEach((value, key) => {
                     value.forEach(valueObj => {
                         if (valueObj['対象'] || !valueObj['数値']) return;
@@ -176,7 +178,85 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
 
     if (detailObj['適用条件']) {
         detailObj['適用条件'].forEach(condition => {
-            if (!validConditionValueArr.includes(condition)) {
+            if ($.isPlainObject(condition)) {
+                let optionElem = document.getElementById(condition['名前'] + 'Option');
+                if (!optionElem) return;
+                switch (condition['種類']) {
+                    case 'selectedIndex':   // for 甘雨+アモスの弓
+                        if (!(optionElem instanceof HTMLSelectElement)) return;
+                        let curSelectedIndex = optionElem.selectedIndex;
+                        let curSelectedValue = optionElem.children[curSelectedIndex].textContent;
+                        let newSelectedIndex;
+                        let newSelectedValue;
+                        const re = new RegExp('([\\+\\-]?)(\\d+)');
+                        let reRet = re.exec(String(condition['数値']));
+                        if (reRet) {
+                            if (reRet[1]) {
+                                if (reRet[1] == '+') {  // 加算
+                                    newSelectedIndex = Math.min(curSelectedIndex + Number(reRet[2]), optionElem.children.length - 1);
+                                } else {    // 減算
+                                    newSelectedIndex = Math.min(curSelectedIndex - Number(reRet[2]), 0);
+                                }
+                            } else {    // 直値
+                                newSelectedIndex = Number(reRet[2]);
+                            }
+                            newSelectedValue = optionElem.children[newSelectedIndex].textContent;
+                            if (curSelectedIndex > 0) {
+                                let curCondition = condition['名前'] + '@' + curSelectedValue;
+                                if (validConditionValueArr.includes(curCondition)) {
+                                    validConditionValueArr = validConditionValueArr.filter(p => p != curCondition);
+                                }
+                                ステータス変更系詳細ArrMapVar.forEach((value, key) => {
+                                    value.forEach(valueObj => {
+                                        if (!valueObj['条件']) return;
+                                        if (valueObj['対象']) return;   // 暫定
+                                        let number = checkConditionMatches(valueObj['条件'], [curCondition]);
+                                        if (number == 0) return;
+                                        let myNew数値 = valueObj['数値'];
+                                        if (number != 1) {
+                                            myNew数値 = myNew数値.concat(['*', number]);
+                                        }
+                                        let workObj = JSON.parse(JSON.stringify(opt_statusObj));    //　力技
+                                        calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['最大値']);
+                                        Object.keys(workObj).forEach(statusName => {
+                                            if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == opt_statusObj[statusName]) return;
+                                            if (!(statusName in myステータス補正)) {
+                                                myステータス補正[statusName] = 0;
+                                            }
+                                            myステータス補正[statusName] -= workObj[statusName] - opt_statusObj[statusName];
+                                        });
+                                    });
+                                });
+                            }
+                            let newCondition = condition['名前'] + '@' + newSelectedValue;
+                            validConditionValueArr.push(newCondition);
+                            ステータス変更系詳細ArrMapVar.forEach((value, key) => {
+                                value.forEach(valueObj => {
+                                    if (!valueObj['条件']) return;
+                                    if (valueObj['対象']) return;   // 暫定
+                                    let number = checkConditionMatches(valueObj['条件'], [newCondition]);
+                                    if (number == 0) return;
+                                    let myNew数値 = valueObj['数値'];
+                                    if (number != 1) {
+                                        myNew数値 = myNew数値.concat(['*', number]);
+                                    }
+                                    let workObj = JSON.parse(JSON.stringify(opt_statusObj));    //　力技
+                                    calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['最大値']);
+                                    Object.keys(workObj).forEach(statusName => {
+                                        if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == opt_statusObj[statusName]) return;
+                                        if (!(statusName in myステータス補正)) {
+                                            myステータス補正[statusName] = 0;
+                                        }
+                                        myステータス補正[statusName] += workObj[statusName] - opt_statusObj[statusName];
+                                    });
+                                });
+                            });
+                        } else {
+                            console.error(detailObj, opt_element, null, condition);
+                        }
+                        break;
+                }
+            } else if (!validConditionValueArr.includes(condition)) {
                 ステータス変更系詳細ArrMapVar.forEach((value, key) => {
                     value.forEach(valueObj => {
                         if (valueObj['対象'] || !valueObj['数値']) return;
@@ -2846,7 +2926,17 @@ const setDebugInfo = function () {
             }).appendTo('#debugInfo');
         });
     });
-    //$('<hr>').appendTo('#debugInfo');
+    $('<hr>').appendTo('#debugInfo');
+    $('#オプションBox input').each((index, element) => {
+        $('<p>', {
+            text: element.id + '=' + element.checked
+        }).appendTo('#debugInfo');
+    });
+    $('#オプションBox select').each((index, element) => {
+        $('<p>', {
+            text: element.id + '=[' + element.selectedIndex + ']=' + element.value
+        }).appendTo('#debugInfo');
+    });
     // オプション条件MapVar.forEach((value, key) => {
     //     if (value) {
     //         if ($.isArray(value)) {
