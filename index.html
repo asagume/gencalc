@@ -18,7 +18,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.6.0
+                    げんかるく - 原神ダメージシミュレーター Ver.1.6.1
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -805,6 +805,8 @@
                     <table class="result" id="元素スキルダメージResult"></table>
                     <table class="result" id="元素爆発ダメージResult"></table>
                     <table class="result" id="その他ダメージResult"></table>
+
+                    <div id="ダメージ計算注釈" style="color: #93a721; margin-top: 20px;"></div>
                 </div>
 
                 <div class="tab-area">
@@ -872,7 +874,7 @@
             <p>全ての保存データを削除します</p>
         </div>
 
-        <div style="display: initial;">
+        <div style="display: none;">
             <fieldset>
                 <legend>デバッグ情報</legend>
                 <div id="debugInfo"></div>
