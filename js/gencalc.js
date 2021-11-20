@@ -484,7 +484,7 @@ function calculateStatus(statusObj, kind, formulaArr, opt_max = null) {
     if (!(statusName in statusObj)) {
         statusObj[statusName] = 0;
     }
-    statusObj[statusName] += result;
+    statusObj[statusName] += Math.round(result * 10) / 10;
     console.debug(calculateStatus.name, null, kind, formulaArr, '=>', result);
 }
 
