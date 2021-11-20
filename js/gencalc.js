@@ -150,30 +150,50 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');  // 有効な条件
 
-    if ('除外条件' in detailObj) {
+    if (detailObj['除外条件']) {
         detailObj['除外条件'].forEach(condition => {
             if (validConditionValueArr.includes(condition)) {
                 ステータス変更系詳細ArrMapVar.forEach((value, key) => {
                     value.forEach(valueObj => {
-                        if ('条件' in valueObj && valueObj['条件'] == condition) {
-
+                        if (valueObj['対象'] || !valueObj['数値']) return;
+                        if (valueObj['条件'] == condition) {
+                            let workObj = JSON.parse(JSON.stringify(opt_statusObj));    //　力技
+                            calculateStatus(workObj, valueObj['種類'], valueObj['数値'], valueObj['最大値']);
+                            Object.keys(workObj).forEach(statusName => {
+                                if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == opt_statusObj[statusName]) return;
+                                if (!(statusName in myステータス補正)) {
+                                    myステータス補正[statusName] = 0;
+                                }
+                                myステータス補正[statusName] -= workObj[statusName] - opt_statusObj[statusName];
+                            });
                         }
                     });
                 });
+                validConditionValueArr = validConditionValueArr.filter(p => p != condition);
             }
         });
     }
 
-    if ('適用条件' in detailObj) {
+    if (detailObj['適用条件']) {
         detailObj['適用条件'].forEach(condition => {
             if (!validConditionValueArr.includes(condition)) {
                 ステータス変更系詳細ArrMapVar.forEach((value, key) => {
                     value.forEach(valueObj => {
-                        if ('条件' in valueObj && valueObj['条件'] == condition) {
-
+                        if (valueObj['対象'] || !valueObj['数値']) return;
+                        if (valueObj['条件'] == condition) {
+                            let workObj = JSON.parse(JSON.stringify(opt_statusObj));    //　力技
+                            calculateStatus(workObj, valueObj['種類'], valueObj['数値'], valueObj['最大値']);
+                            Object.keys(workObj).forEach(statusName => {
+                                if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == opt_statusObj[statusName]) return;
+                                if (!(statusName in myステータス補正)) {
+                                    myステータス補正[statusName] = 0;
+                                }
+                                myステータス補正[statusName] += workObj[statusName] - opt_statusObj[statusName];
+                            });
                         }
                     });
                 });
+                validConditionValueArr.push(condition);
             }
         });
     }
@@ -432,6 +452,9 @@ function calculateStatus(statusObj, kind, formulaArr, opt_max = null) {
             case '全元素ダメージバフ':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
                     let statusName = entry + '元素ダメージバフ';
+                    if (!(statusName in statusObj)) {
+                        statusObj[statusName] = 0;
+                    }
                     statusObj[statusName] += result;
                 });
                 return;
@@ -441,16 +464,25 @@ function calculateStatus(statusObj, kind, formulaArr, opt_max = null) {
             case '敵全元素耐性':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
                     let statusName = '敵' + entry + '元素耐性';
+                    if (!(statusName in statusObj)) {
+                        statusObj[statusName] = 0;
+                    }
                     statusObj[statusName] += result;
                 });
                 return;
             case '全元素耐性':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
                     let statusName = entry + '元素耐性';
+                    if (!(statusName in statusObj)) {
+                        statusObj[statusName] = 0;
+                    }
                     statusObj[statusName] += result;
                 });
                 return;
         }
+    }
+    if (!(statusName in statusObj)) {
+        statusObj[statusName] = 0;
     }
     statusObj[statusName] += result;
     console.debug(calculateStatus.name, null, kind, formulaArr, '=>', result);
@@ -576,7 +608,9 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 最大値: my最大値,
                 HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
                 ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
-                元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器'
+                元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
+                除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
+                適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
             }
             if (statusChangeArrMap != null) {
                 if (resultObj['種類'] in ステータス詳細ObjVar || resultObj['種類'].endsWith('%') || new RegExp('[自全].+バフ').exec(resultObj['種類']) || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類']) || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
@@ -1420,22 +1454,22 @@ function calculateStatusObj(statusObj) {
     let myPriority2KindFormulaArr = [];
     let myKindFormulaArr = [];
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(value => {
-            if (value['対象']) return;  // 対象指定ありのものはスキップします
-            let myNew数値 = value['数値'];
-            if (value['条件']) {
-                let number = checkConditionMatches(value['条件'], validConditionValueArr);
+        value.forEach(valueObj => {
+            if (valueObj['対象']) return;  // 対象指定ありのものはスキップします
+            let myNew数値 = valueObj['数値'];
+            if (valueObj['条件']) {
+                let number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
                 if (number == 0) return;
                 if (number != 1) {
                     myNew数値 = myNew数値.concat(['*', number]);
                 }
             }
-            if (myPriority1KindArr.includes(value['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
-                myPriority1KindFormulaArr.push([value['種類'], myNew数値, value['最大値']]);
-            } else if (value['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
-                myPriority2KindFormulaArr.push([value['種類'], myNew数値, value['最大値']]);
+            if (myPriority1KindArr.includes(valueObj['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
+                myPriority1KindFormulaArr.push([valueObj['種類'], myNew数値, valueObj['最大値']]);
+            } else if (valueObj['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
+                myPriority2KindFormulaArr.push([valueObj['種類'], myNew数値, valueObj['最大値']]);
             } else {
-                myKindFormulaArr.push([value['種類'], myNew数値, value['最大値']]);
+                myKindFormulaArr.push([valueObj['種類'], myNew数値, valueObj['最大値']]);
             }
         });
     });
