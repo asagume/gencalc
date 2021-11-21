@@ -442,11 +442,14 @@ const loadキャラクター構成 = function () {
             let name3 = name1 + '上昇値';       // new
             let name4 = name1 + '上昇回数';     // new
             if (name2 in キャラクター構成ObjVar) {
-                let value1 = キャラクター構成ObjVar[name1];
                 let value2 = キャラクター構成ObjVar[name2];
+                delete キャラクター構成ObjVar[name2];
+                let value1 = キャラクター構成ObjVar[name1];
+                if (!value1) {
+                    continue;
+                }
                 let value3 = 聖遺物サブ効果MasterVar[value1][i];
                 let value4 = Math.round(value2 * 5);
-                delete キャラクター構成ObjVar[name2];
                 キャラクター構成ObjVar[name3] = value3;
                 キャラクター構成ObjVar[name4] = value4;
             }
