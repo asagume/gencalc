@@ -23,10 +23,9 @@
         "レアリティ": 5,
         "import": "data/weapons/sword_5_AquilaFavonia.json"
     },
-    "シナバースピンドル": {
+    "シナバースピンドル[暫定]": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_CinnabarSpindle.json",
-        "disabled": true
+        "import": "data/weapons/sword_4_CinnabarSpindle.json"
     },
     "天目影打": {
         "レアリティ": 4,
