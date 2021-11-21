@@ -47,7 +47,7 @@ function calculate乗算系元素反応倍率(element, elementalMastery, element
     return result;
 }
 
-// 過負荷 感電 超電導
+// 過負荷 感電 超電導 拡散
 function calculate固定値系元素反応ダメージ(element, elementalMastery, elementalReaction, opt_statusObj = null) {
     if (opt_statusObj == null) {
         opt_statusObj = ステータス詳細ObjVar;
@@ -59,6 +59,11 @@ function calculate固定値系元素反応ダメージ(element, elementalMastery
     let dmgBuff = opt_statusObj[elementalReaction + 'ダメージバフ'];
     let result = 元素反応MasterVar[element][elementalReaction]['数値'][level];
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
+    if (elementalReaction == '拡散') {
+        result *= calculate元素耐性補正('炎', opt_statusObj);
+    } else {
+        result *= calculate元素耐性補正(element, opt_statusObj);
+    }
     return result;
 }
 
@@ -456,11 +461,6 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
             is耐性補正Calc = false;
             my元素 = null;
             break;
-        case '付加元素ダメージ':    // for 風キャラ
-            is会心Calc = false;
-            is防御補正Calc = false;
-            my元素 = '炎';
-            break;
         case '表示':    // for ベネット 九条裟羅 攻撃力上昇
             is会心Calc = false;
             is防御補正Calc = false;
@@ -471,6 +471,8 @@ function calculateDamageFromDetail(detailObj, opt_element = null, opt_statusObj 
             is防御補正Calc = false;
             is耐性補正Calc = false;
             break;
+        case '付加元素ダメージ':    // for 風キャラ
+            my元素 = '炎';
         default:
             myバフArr.push('与えるダメージ');
             if (detailObj['ダメージバフ'] != null) {
@@ -1364,6 +1366,9 @@ const inputOnChangeResultUpdate = function () {
     myダメージ計算['その他'] = [];
 
     ステータス詳細ObjVar['キャラクター注釈'] = [];
+    if (選択中キャラクターデータVar['元素'] == '風') {
+        ステータス詳細ObjVar['キャラクター注釈'].push('拡散、元素変化、付加元素ダメージの計算は炎元素との接触と仮定');
+    }
 
     // 通常攻撃ダメージを計算します
     console.debug('通常攻撃 start');
