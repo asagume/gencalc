@@ -72,7 +72,8 @@ const オプションElementIdValue記憶Map = new Map();
 var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 
 //
-var ステータス詳細ObjVar = {
+var ステータス詳細ObjVar = {};
+const ステータス詳細ObjTemplate = {
     HP乗算: 0,
     攻撃力乗算: 0,
     防御力乗算: 0,
@@ -83,8 +84,8 @@ var ステータス詳細ObjVar = {
     攻撃力: 0,
     防御力: 0,
     元素熟知: 0,
-    会心率: 0,
-    会心ダメージ: 0,
+    会心率: 5,
+    会心ダメージ: 50,
     与える治療効果: 0,
     受ける治療効果: 0,
     クールタイム短縮: 0,
@@ -143,30 +144,18 @@ const KIND_TO_PROPERTY_MAP = new Map([
 ]);
 
 // ステータス詳細ObjVarを初期化します
-function initステータス詳細ObjVar() {
-    Object.keys(ステータス詳細ObjVar).forEach(key => {
-        if (選択中キャラクターデータVar) {
-            if ('固有変数' in 選択中キャラクターデータVar) {
-                if (key in 選択中キャラクターデータVar['固有変数']) {
-                    return;
-                }
-            }
-        }
-        if ($.isPlainObject(ステータス詳細ObjVar[key])) {
-            if (key == 'ダメージ計算') {
-                Object.keys(ステータス詳細ObjVar[key]).forEach(subKey => {
-                    ステータス詳細ObjVar[key][subKey] = [];
-                });
-            } else {
-                console.error(initステータス詳細ObjVar.name, key);
-            }
-        } else {
-            ステータス詳細ObjVar[key] = 0;
-        }
+function initステータス詳細ObjVar(statusObj) {
+    Object.keys(ステータス詳細ObjTemplate).forEach(propName => {
+        statusObj[propName] = ステータス詳細ObjTemplate[propName];
     });
-    ステータス詳細ObjVar['会心率'] = 5;
-    ステータス詳細ObjVar['会心ダメージ'] = 50;
-    ステータス詳細ObjVar['元素チャージ効率'] = 100;
+
+    if ('ダメージ計算' in statusObj) {
+        if ($.isPlainObject(statusObj['ダメージ計算'])) {
+            Object.keys(statusObj['ダメージ計算']).forEach(subPropName => {
+                statusObj['ダメージ計算'][subPropName] = [];
+            });
+        }
+    }
 
     // 通常攻撃の元素
     通常攻撃_元素Var = '物理';
