@@ -1,11 +1,4 @@
 {
-    "トーマ": {
-        "レアリティ": 4,
-        "元素": "炎",
-        "武器": "長柄武器",
-        "import": "data/characters/pyro_4_polearm_Thoma.json",
-        "image": "images/Thoma.png"
-    },
     "珊瑚宮心海": {
         "レアリティ": 5,
         "元素": "水",
@@ -22,14 +15,6 @@
         "image": "images/RaidenShogun.png",
         "image2": "images/hoyolab/af8df0bbece1be9ab90d3cf2cb0ee7bd.png"
     },
-    "九条裟羅": {
-        "レアリティ": 4,
-        "元素": "雷",
-        "武器": "弓",
-        "import": "data/characters/electro_4_bow_KujouSara.json",
-        "image": "images/KujouSara.png",
-        "image2": "images/hoyolab/5ea7bdaf660c0da94ff445221daf483c.png"
-    },
     "アーロイ": {
         "レアリティ": 5,
         "元素": "氷",
@@ -44,14 +29,6 @@
         "import": "data/characters/pyro_5_bow_Yoimiya.json",
         "image": "images/Yoimiya.png",
         "image2": "images/hoyolab/7c15028cb304de316e2cdb584bc33ff3.png"
-    },
-    "早柚": {
-        "レアリティ": 4,
-        "元素": "風",
-        "武器": "両手剣",
-        "import": "data/characters/aero_4_claymore_Sayu.json",
-        "image": "images/Sayu.png",
-        "image2": "images/hoyolab/94b60ed23cb102d39f99335e9658b17d.png"
     },
     "神里綾華": {
         "レアリティ": 5,
@@ -75,22 +52,6 @@
         "import": "data/characters/cryo_5_claymore_Eula.json",
         "image": "images/Eula.png",
         "image2": "images/hoyolab/6840f27db9745020aad45853bff79c7c.png"
-    },
-    "煙緋": {
-        "レアリティ": 4,
-        "元素": "炎",
-        "武器": "法器",
-        "import": "data/characters/pyro_4_catalyst_Yanfei.json",
-        "image": "images/Yanfei.png",
-        "image2": "images/hoyolab/75c1d48b2fa08bd4c583501a3bb476d3.png"
-    },
-    "ロサリア": {
-        "レアリティ": 4,
-        "元素": "氷",
-        "武器": "長柄武器",
-        "import": "data/characters/cryo_4_polearm_Rosaria.json",
-        "image": "images/Rosaria.png",
-        "image2": "images/hoyolab/da6ff2b868b5ff680484149c69518001.png"
     },
     "胡桃": {
         "レアリティ": 5,
@@ -133,14 +94,6 @@
         "image": "images/Zhongli.png",
         "image2": "images/hoyolab/693b8a54de3e9ea43854615c14a5032b.png"
     },
-    "辛炎": {
-        "レアリティ": 4,
-        "元素": "炎",
-        "武器": "両手剣",
-        "import": "data/characters/pyro_4_claymore_Xinyan.json",
-        "image": "images/Xinyan.png",
-        "image2": "images/hoyolab/1a30faffb4b122f778b1ab4c7c39d6bf.png"
-    },
     "タルタリヤ": {
         "レアリティ": 5,
         "元素": "水",
@@ -148,14 +101,6 @@
         "import": "data/characters/hydro_5_bow_Tartaglia.json",
         "image": "images/Tartaglia.png",
         "image2": "images/hoyolab/5b8a09e2b9f4a087b76042f556cadf08.png"
-    },
-    "ディオナ": {
-        "レアリティ": 4,
-        "元素": "氷",
-        "武器": "弓",
-        "import": "data/characters/cryo_4_bow_Diona.json",
-        "image": "images/Diona.png",
-        "image2": "images/hoyolab/d4e511080346c2ce43636eeb10dd7226.png"
     },
     "クレー": {
         "レアリティ": 5,
@@ -212,6 +157,61 @@
         "import": "data/characters/aero_5_sword_Jean.json",
         "image": "images/Jean.png",
         "image2": "images/hoyolab/e15d789a558b128c05763495d35d55b9.png"
+    },
+    "トーマ": {
+        "レアリティ": 4,
+        "元素": "炎",
+        "武器": "長柄武器",
+        "import": "data/characters/pyro_4_polearm_Thoma.json",
+        "image": "images/Thoma.png"
+    },
+    "九条裟羅": {
+        "レアリティ": 4,
+        "元素": "雷",
+        "武器": "弓",
+        "import": "data/characters/electro_4_bow_KujouSara.json",
+        "image": "images/KujouSara.png",
+        "image2": "images/hoyolab/5ea7bdaf660c0da94ff445221daf483c.png"
+    },
+    "早柚": {
+        "レアリティ": 4,
+        "元素": "風",
+        "武器": "両手剣",
+        "import": "data/characters/aero_4_claymore_Sayu.json",
+        "image": "images/Sayu.png",
+        "image2": "images/hoyolab/94b60ed23cb102d39f99335e9658b17d.png"
+    },
+    "煙緋": {
+        "レアリティ": 4,
+        "元素": "炎",
+        "武器": "法器",
+        "import": "data/characters/pyro_4_catalyst_Yanfei.json",
+        "image": "images/Yanfei.png",
+        "image2": "images/hoyolab/75c1d48b2fa08bd4c583501a3bb476d3.png"
+    },
+    "ロサリア": {
+        "レアリティ": 4,
+        "元素": "氷",
+        "武器": "長柄武器",
+        "import": "data/characters/cryo_4_polearm_Rosaria.json",
+        "image": "images/Rosaria.png",
+        "image2": "images/hoyolab/da6ff2b868b5ff680484149c69518001.png"
+    },
+    "辛炎": {
+        "レアリティ": 4,
+        "元素": "炎",
+        "武器": "両手剣",
+        "import": "data/characters/pyro_4_claymore_Xinyan.json",
+        "image": "images/Xinyan.png",
+        "image2": "images/hoyolab/1a30faffb4b122f778b1ab4c7c39d6bf.png"
+    },
+    "ディオナ": {
+        "レアリティ": 4,
+        "元素": "氷",
+        "武器": "弓",
+        "import": "data/characters/cryo_4_bow_Diona.json",
+        "image": "images/Diona.png",
+        "image2": "images/hoyolab/d4e511080346c2ce43636eeb10dd7226.png"
     },
     "スクロース": {
         "レアリティ": 4,
