@@ -39,6 +39,14 @@
         "レアリティ": 4,
         "import": "data/weapons/polearm_4_DragonspineSpear.json"
     },
+    "旧貴族猟槍": {
+        "レアリティ": 4,
+        "import": "data/weapons/polearm_4_RoyalSpear.json"
+    },
+    "西風長槍": {
+        "レアリティ": 4,
+        "import": "data/weapons/polearm_4_FavoniusLance.json"
+    },
     "死闘の槍": {
         "レアリティ": 4,
         "import": "data/weapons/polearm_4_Deathmatch.json"
@@ -47,25 +55,17 @@
         "レアリティ": 4,
         "import": "data/weapons/polearm_4_BlackcliffPole.json"
     },
-    "旧貴族猟槍": {
+    "流月の針": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm_4_RoyalSpear.json"
+        "import": "data/weapons/polearm_4_CrescentPike.json"
     },
     "星鎌・試作": {
         "レアリティ": 4,
         "import": "data/weapons/polearm_4_PrototypeStarglitter.json"
     },
-    "流月の針": {
-        "レアリティ": 4,
-        "import": "data/weapons/polearm_4_CrescentPike.json"
-    },
     "匣中滅龍": {
         "レアリティ": 4,
         "import": "data/weapons/polearm_4_DragonsBane.json"
-    },
-    "西風長槍": {
-        "レアリティ": 4,
-        "import": "data/weapons/polearm_4_FavoniusLance.json"
     },
     "黒纓槍": {
         "レアリティ": 3,

@@ -11,13 +11,13 @@
         "レアリティ": 5,
         "import": "data/weapons/bow_5_ElegyfortheEnd.json"
     },
-    "天空の翼": {
-        "レアリティ": 5,
-        "import": "data/weapons/bow_5_SkywardHarp.json"
-    },
     "アモスの弓": {
         "レアリティ": 5,
         "import": "data/weapons/bow_5_AmosBow.json"
+    },
+    "天空の翼": {
+        "レアリティ": 5,
+        "import": "data/weapons/bow_5_SkywardHarp.json"
     },
     "曚雲の月": {
         "レアリティ": 4,
@@ -47,21 +47,21 @@
         "レアリティ": 4,
         "import": "data/weapons/bow_4_BlackcliffWarbow.json"
     },
-    "旧貴族長弓": {
+    "リングボウ": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_RoyalBow.json"
+        "import": "data/weapons/bow_4_CompoundBow.json"
     },
     "澹月・試作": {
         "レアリティ": 4,
         "import": "data/weapons/bow_4_PrototypeCrescent.json"
     },
-    "リングボウ": {
-        "レアリティ": 4,
-        "import": "data/weapons/bow_4_CompoundBow.json"
-    },
     "弓蔵": {
         "レアリティ": 4,
         "import": "data/weapons/bow_4_Rust.json"
+    },
+    "旧貴族長弓": {
+        "レアリティ": 4,
+        "import": "data/weapons/bow_4_RoyalBow.json"
     },
     "祭礼の弓": {
         "レアリティ": 4,

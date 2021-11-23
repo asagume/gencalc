@@ -7,13 +7,13 @@
         "レアリティ": 5,
         "import": "data/weapons/catalyst_5_MemoryofDust.json"
     },
-    "天空の巻": {
-        "レアリティ": 5,
-        "import": "data/weapons/catalyst_5_SkywardAtlas.json"
-    },
     "四風原典": {
         "レアリティ": 5,
         "import": "data/weapons/catalyst_5_LostPrayertotheSacredWinds.json"
+    },
+    "天空の巻": {
+        "レアリティ": 5,
+        "import": "data/weapons/catalyst_5_SkywardAtlas.json"
     },
     "白辰の輪": {
         "レアリティ": 4,
@@ -31,29 +31,29 @@
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_Frostbearer.json"
     },
-    "匣中日月": {
+    "昭心": {
         "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_SolarPearl.json"
+        "import": "data/weapons/catalyst_4_EyeofPerception.json"
     },
     "黒岩の緋玉": {
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_BlackcliffAgate.json"
     },
-    "旧貴族秘法録": {
+    "万国諸海の図譜": {
         "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_RoyalGrimoire.json"
+        "import": "data/weapons/catalyst_4_MappaMare.json"
     },
     "金珀・試作": {
         "レアリティ": 4,
         "import": "data/weapons/catalyst_4_PrototypeAmber.json"
     },
-    "万国諸海の図譜": {
+    "匣中日月": {
         "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_MappaMare.json"
+        "import": "data/weapons/catalyst_4_SolarPearl.json"
     },
-    "昭心": {
+    "旧貴族秘法録": {
         "レアリティ": 4,
-        "import": "data/weapons/catalyst_4_EyeofPerception.json"
+        "import": "data/weapons/catalyst_4_RoyalGrimoire.json"
     },
     "祭礼の断片": {
         "レアリティ": 4,

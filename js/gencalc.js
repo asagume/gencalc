@@ -1345,7 +1345,7 @@ const inputOnChangeResultUpdate = function (statusObj) {
 
     statusObj['キャラクター注釈'] = [];
     if (選択中キャラクターデータVar['元素'] == '風') {
-        statusObj['キャラクター注釈'].push('拡散、元素変化、付加元素ダメージは炎元素との接触と仮定して計算している');
+        statusObj['キャラクター注釈'].push('拡散、元素変化、付加元素ダメージは炎元素との接触と仮定して計算しています');
     }
 
     // 通常攻撃ダメージを計算します

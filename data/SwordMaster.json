@@ -31,13 +31,13 @@
         "レアリティ": 4,
         "import": "data/weapons/sword_4_AmenomaKageuchi.json"
     },
-    "腐植の剣": {
-        "レアリティ": 4,
-        "import": "data/weapons/sword_4_SwordofDescension.json"
-    },
     "ダークアレイの閃光": {
         "レアリティ": 4,
         "import": "data/weapons/sword_4_TheAlleyFlash.json"
+    },
+    "腐植の剣": {
+        "レアリティ": 4,
+        "import": "data/weapons/sword_4_SwordofDescension.json"
     },
     "黒剣": {
         "レアリティ": 4,
@@ -47,21 +47,21 @@
         "レアリティ": 4,
         "import": "data/weapons/sword_4_BlackcliffLongsword.json"
     },
-    "旧貴族の長剣": {
+    "鉄蜂の刺し": {
         "レアリティ": 4,
-        "import": "data/weapons/sword_4_RoyalLongsword.json"
+        "import": "data/weapons/sword_4_IronSting.json"
     },
     "斬岩・試作": {
         "レアリティ": 4,
         "import": "data/weapons/sword_4_PrototypeRancour.json"
     },
-    "鉄蜂の刺し": {
-        "レアリティ": 4,
-        "import": "data/weapons/sword_4_IronSting.json"
-    },
     "匣中龍吟": {
         "レアリティ": 4,
         "import": "data/weapons/sword_4_LionsRoar.json"
+    },
+    "旧貴族の長剣": {
+        "レアリティ": 4,
+        "import": "data/weapons/sword_4_RoyalLongsword.json"
     },
     "祭礼の剣": {
         "レアリティ": 4,
