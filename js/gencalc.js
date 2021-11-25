@@ -1482,6 +1482,7 @@ function calculateStatusObj(statusObj) {
 
     // 聖遺物のメインステータスを計上します
     $('select[name="聖遺物メイン効果Input"]').each(function (index, element) {
+        if (!element.value) return;
         let splitted = element.value.split('_');
         let rarerity = splitted[0];
         let statusName = splitted[1];
@@ -1900,6 +1901,7 @@ const inputOnChangeArtifactSubUpdate = function () {
     };
     let myレアリティ補正 = 0;
     $('select[name="聖遺物メイン効果Input"').each((index, element) => {
+        if (!element.value) return;
         let splitted = element.value.split('_');
         if (splitted[0] == 4) {   // ★4ひとつ当たり7%数値を下げます
             myレアリティ補正 += 7;
@@ -1986,6 +1988,7 @@ function inputOnChangeArtifactSetUpdate() {
         const rarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
         for (let i = 0; i < rarerityArrArr[curRarerity4Num].length; i++) {
             let elem = document.getElementById('聖遺物メイン効果' + (i + 1) + 'Input');
+            if (!elem.value) continue;
             let rarerity = rarerityArrArr[curRarerity4Num][i];
             let statusName = elem.value.split('_')[1];
             elem.value = rarerity + '_' + statusName;
@@ -2042,17 +2045,21 @@ const 聖遺物セットInputOnChange = function () {
 }
 
 const 聖遺物メイン効果InputOnChange = function () {
-    let preValue = ELEMENT_VALUE_AT_FOCUS_MAP.get(this.id);
-    if (preValue != null) {
-        let preRarerity = preValue.split('_')[0];
-        let curRarerity = this.value.split('_')[0];
-        if (curRarerity != preRarerity) {
-            inputOnChangeArtifactSubUpdate();
+    if (this.value) {
+        let preValue = ELEMENT_VALUE_AT_FOCUS_MAP.get(this.id);
+        if (preValue != null) {
+            let preRarerity = preValue.split('_')[0];
+            let curRarerity = this.value.split('_')[0];
+            if (curRarerity != preRarerity) {
+                inputOnChangeArtifactSubUpdate();
+            } else {
+                inputOnChangeStatusUpdate();
+            }
         } else {
-            inputOnChangeStatusUpdate();
+            inputOnChangeArtifactSubUpdate();
         }
     } else {
-        inputOnChangeArtifactSubUpdate();
+        inputOnChangeStatusUpdate();
     }
 }
 
