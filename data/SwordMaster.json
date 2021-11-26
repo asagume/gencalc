@@ -23,7 +23,7 @@
         "レアリティ": 5,
         "import": "data/weapons/sword_5_AquilaFavonia.json"
     },
-    "シナバースピンドル[暫定]": {
+    "シナバースピンドル": {
         "レアリティ": 4,
         "import": "data/weapons/sword_4_CinnabarSpindle.json"
     },

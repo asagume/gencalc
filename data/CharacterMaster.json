@@ -59,8 +59,7 @@
         "武器": "長柄武器",
         "import": "data/characters/pyro_5_polearm_HuTao.json",
         "image": "images/HuTao.png",
-        "image2": "images/hoyolab/e160b5fac097d628f5b2227fd507373b.png",
-        "selected": true
+        "image2": "images/hoyolab/e160b5fac097d628f5b2227fd507373b.png"
     },
     "魈": {
         "レアリティ": 5,
@@ -84,7 +83,8 @@
         "武器": "片手剣",
         "import": "data/characters/geo_5_sword_Albedo.json",
         "image": "images/Albedo.png",
-        "image2": "images/hoyolab/066e0473fa8868ece3f2e5802c1a11d8.png"
+        "image2": "images/hoyolab/066e0473fa8868ece3f2e5802c1a11d8.png",
+        "selected": true
     },
     "鍾離": {
         "レアリティ": 5,
