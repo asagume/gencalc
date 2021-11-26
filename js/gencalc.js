@@ -11,7 +11,7 @@ function calculate防御補正(statusObj, opt_ignoreDef = 0) { // 防御力,防�
     let calcIgnoreDef = opt_ignoreDef / 100;
     let calcDef = statusObj['敵防御力'] / 100;
     let result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
-    result = Math.round(result * 1000) / 1000;
+    result = Math.floor(result * 10000) / 10000;
     console.debug(calculate防御補正.name, level, enemyLevel, calcIgnoreDef, calcDef, '=>', result);
     return result;
 }
@@ -26,7 +26,7 @@ function calculate元素耐性補正(statusObj, element) {
     } else {
         result = 100 / (4 * result + 100)
     }
-    result = Math.round(result * 10) / 1000;
+    result = Math.floor(result * 100) / 10000;
     console.debug(calculate元素耐性補正.name, element, '=>', result);
     return result;
 }
@@ -83,8 +83,8 @@ function calculate溶解倍率(statusObj, element, elementalMastery) {
 // ダメージ計算を行います
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
 function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
-    let my非会心Result = calculateFormulaArray(statusObj, formula);
-    console.debug("%o => %o", formula, Math.round(my非会心Result));
+    let my非会心Result = Math.floor(calculateFormulaArray(statusObj, formula));
+    console.debug("%o => %o", formula, my非会心Result);
     let my会心Result = null;
     let my期待値Result;
     let myバフ = 0;
