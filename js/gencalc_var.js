@@ -415,7 +415,7 @@ const loadキャラクター構成 = function () {
             let name = '聖遺物メイン効果' + (i + 1);
             if (name in キャラクター構成ObjVar) {
                 let value = キャラクター構成ObjVar[name];
-                if (value.indexOf('_') == -1) {
+                if (value && value.indexOf('_') == -1) {
                     キャラクター構成ObjVar[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_' + キャラクター構成ObjVar[name];
                 }
             } else if (i == 0) {
