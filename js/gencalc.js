@@ -11,20 +11,24 @@ function calculate防御補正(statusObj, opt_ignoreDef = 0) { // 防御力,防�
     let calcIgnoreDef = opt_ignoreDef / 100;
     let calcDef = statusObj['敵防御力'] / 100;
     let result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
+    result = Math.round(result * 1000) / 1000;
+    console.debug(calculate防御補正.name, level, enemyLevel, calcIgnoreDef, calcDef, '=>', result);
     return result;
 }
 
 // 元素耐性補正を計算します
 function calculate元素耐性補正(statusObj, element) {
-    let res = statusObj['敵' + element + (element != '物理' ? '元素' : '') + '耐性'];
-    if (res < 0) {
-        res = 100 - res / 2;
-    } else if (res < 75) {
-        res = 100 - res;
+    let result = statusObj['敵' + element + (element != '物理' ? '元素' : '') + '耐性'];
+    if (result < 0) {
+        result = 100 - result / 2;
+    } else if (result < 75) {
+        result = 100 - result;
     } else {
-        res = 100 / (4 * res + 100)
+        result = 100 / (4 * result + 100)
     }
-    return res / 100;
+    result = Math.round(result * 10) / 1000;
+    console.debug(calculate元素耐性補正.name, element, '=>', result);
+    return result;
 }
 
 // 蒸発 融解
