@@ -1,4 +1,12 @@
 {
+    "荒瀧一斗": {
+        "レアリティ": 5,
+        "元素": "岩",
+        "武器": "両手剣",
+        "import": "data/characters/geo_5_claymore_AratakiItto.json",
+        "image2": "images/hoyolab/967e2ef70766038305b5e939a8baa314.png",
+        "disabled": true
+    },
     "珊瑚宮心海": {
         "レアリティ": 5,
         "元素": "水",
