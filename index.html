@@ -18,7 +18,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.6.7
+                    げんかるく - 原神ダメージシミュレーター Ver.1.6.8
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -28,9 +28,7 @@
             <div class="aside">
                 <div style="height: 130px">
                     <p>【原神】ダメージ計算機です</p>
-                    <p>聖遺物サブ効果UI大幅修正</p>
                     <p>バグを探しましょう</p>
-                    <p>ステータス入力を補正形式に</p>
                 </div>
                 <div class="horizontal-list">
                     <ul id="キャラクター選択"></ul>
@@ -906,6 +904,13 @@
         <div style="text-align: left;">
             <hr>
             <dl style="padding: 1px 20px;">
+                <dt>1.6.8</dt>
+                <dd>
+                    <ul>
+                        <li>おすすめセット変更・修正 宵宮 アルベド 九条裟羅</li>
+                        <li>シナバースピンドルの精錬ランクの初期値を5に変更</li>
+                    </ul>
+                </dd>
                 <dt>1.6.7</dt>
                 <dd>
                     <ul>
@@ -930,17 +935,6 @@
     </div>
 
     <script>
-        const deleteAllCookies = function () {
-            const cookies = document.cookie.split(";");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i];
-                const eqPos = cookie.indexOf("=");
-                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-                console.debug(name);
-                document.cookie = name + "=;max-age=0";
-            }
-        };
-        deleteAllCookies();
     </script>
 </body>
 
