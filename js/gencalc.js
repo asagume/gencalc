@@ -1497,7 +1497,9 @@ const inputOnChangeResultUpdate = function (statusObj) {
     resNameArr.forEach(element => {
         let resValue = statusObj[element + '元素耐性'];
         if (!resValueArr.includes(resValue)) {
-            resValueArr.push(resValue);
+            if (element == '炎') {
+                resValueArr = [resValue];
+            }
             resArrArr.push([element, calculate被ダメージ(statusObj, 10000, element)]);
         }
     });
