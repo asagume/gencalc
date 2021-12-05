@@ -508,6 +508,11 @@ th.category {
     font-size: 1.6rem;
 }
 
+.result-area div table tr td.damage-taken {
+    font-size: 2rem;
+    text-align: left;
+}
+
 fieldset article {
     display: inline-block;
 }

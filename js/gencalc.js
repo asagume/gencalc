@@ -24,7 +24,7 @@ function calculate元素耐性補正(statusObj, element) {
     } else if (result < 75) {
         result = 100 - result;
     } else {
-        result = 100 / (4 * result + 100)
+        result = 10000 / (4 * result + 100)
     }
     result = Math.floor(result * 100) / 10000;
     console.debug(calculate元素耐性補正.name, element, '=>', result);
@@ -80,10 +80,34 @@ function calculate溶解倍率(statusObj, element, elementalMastery) {
     return calculate乗算系元素反応倍率(statusObj, element, elementalMastery, '溶解');
 }
 
+// 被ダメージ
+function calculate被ダメージ(statusObj, damage, element) {
+    let def = statusObj['防御力'];
+    let enemyLevel = statusObj['敵レベル'];
+    let dmgReduction = statusObj['ダメージ軽減'];
+    let res = statusObj[element == '物理' ? '物理耐性' : element + '元素耐性'];
+    if (res < 0) {
+        res = 100 - res / 2;
+    } else if (res < 75) {
+        res = 100 - res;
+    } else {
+        res = 10000 / (4 * res + 100)
+    }
+    res /= 100;
+    let result = damage * (1 - def / (def + 5 * enemyLevel + 501)) * (100 - dmgReduction) / 100 * res;
+    result = Math.max(0, Math.floor(result));
+    return result;
+}
+
 // ダメージ計算を行います
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
-function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
-    let my非会心Result = Math.floor(calculateFormulaArray(statusObj, formula));
+function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, opt_精度 = 0) {
+    let my精度補正 = '1';
+    for (let i = 0; i < opt_精度; i++) {
+        my精度補正 += '0';
+    }
+    my精度補正 = Number(my精度補正);
+    let my非会心Result = Math.floor(calculateFormulaArray(statusObj, formula) * my精度補正) / my精度補正;
     console.debug("%o => %o", formula, my非会心Result);
     let my会心Result = null;
     let my期待値Result;
@@ -105,17 +129,17 @@ function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc,
     if (別枠乗算) {    // 別枠乗算 for 宵宮
         my非会心Result *= 別枠乗算 / 100;
     }
-    my非会心Result = Math.round(my非会心Result);
+    my非会心Result = Math.round(my非会心Result * my精度補正) / my精度補正;
     my期待値Result = my非会心Result;
     let my会心率 = Math.min(100, Math.max(0, statusObj['会心率']));    // 0≦会心率≦100
     let my会心ダメージ = statusObj['会心ダメージ'];
     if (is会心Calc) {
         if (my会心率 > 0) {
             my会心Result = my非会心Result * (100 + my会心ダメージ) / 100;
-            my会心Result = Math.round(my会心Result);
+            my会心Result = Math.round(my会心Result * my精度補正) / my精度補正;
             my期待値Result = (my会心Result * my会心率 / 100) + (my非会心Result * (100 - my会心率) / 100);
-            my期待値Result = Math.round(my期待値Result);
-            my非会心Result = Math.round(my非会心Result);
+            my期待値Result = Math.round(my期待値Result * my精度補正) / my精度補正;
+            my非会心Result = Math.round(my非会心Result * my精度補正) / my精度補正;
         }
     }
     console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
@@ -172,6 +196,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     let my別枠乗算 = 0; // for 宵宮
     let myHIT数 = detailObj['HIT数'] != null ? Number(detailObj['HIT数']) : 1;
     let myステータス補正 = {};
+    let my精度 = 0;
 
     let validConditionValueArr = makeValidConditionValueArr('#オプションBox');  // 有効な条件
 
@@ -449,6 +474,13 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
             is耐性補正Calc = false;
             my元素 = null;
             break;
+        case '表示_1':    // for 行秋 ダメージ軽減
+            is会心Calc = false;
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
+            my元素 = null;
+            my精度 = 1;
+            break;
         case '他所基準ダメージ':
             is防御補正Calc = false;
             is耐性補正Calc = false;
@@ -467,11 +499,11 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
             }
             break;
     }
-    my計算Result = calculateDamageFromDetailSub(statusObj, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
+    my計算Result = calculateDamageFromDetailSub(statusObj, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
     console.debug(my計算Result);
 
     my天賦性能変更詳細Arr.forEach(valueObj => {
-        let myResultWork = calculateDamageFromDetailSub(statusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
+        let myResultWork = calculateDamageFromDetailSub(statusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
         if (valueObj['種類'].endsWith('ダメージアップ')) {
             if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                 // 複数回HITするダメージについては、HIT数を乗算します
@@ -541,9 +573,16 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
 }
 
 function compareFunction(a, b) {
-    let arr = ['HP%', 'HP', 'HP上限', '防御力%', '防御力', '元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', '攻撃力%', '攻撃力'];
+    const arr = ['HP%', 'HP', 'HP上限', '防御力%', '防御力', '元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', '攻撃力%', '攻撃力'];
+    const lowestArr = ['ダメージ軽減'];
     let aIndex = arr.indexOf(a[0]);
+    if (lowestArr.indexOf(a[0]) >= 0) {
+        aIndex = arr.length + 1;
+    }
     let bIndex = arr.indexOf(b[0]);
+    if (lowestArr.indexOf(b[0]) >= 0) {
+        bIndex = arr.length + 1;
+    }
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
 }
 
@@ -1346,6 +1385,7 @@ const inputOnChangeResultUpdate = function (statusObj) {
     myダメージ計算['元素スキル'] = [];
     myダメージ計算['元素爆発'] = [];
     myダメージ計算['その他'] = [];
+    myダメージ計算['被ダメージ'] = [];
 
     statusObj['キャラクター注釈'] = [];
     if (選択中キャラクターデータVar['元素'] == '風') {
@@ -1451,6 +1491,22 @@ const inputOnChangeResultUpdate = function (statusObj) {
     console.debug('その他 summary');
     console.debug(myダメージ計算['その他']);
 
+    let resValueArr = [statusObj['物理耐性']];
+    let resArrArr = [['物理', calculate被ダメージ(statusObj, 10000, '物理')]];
+    const resNameArr = ['炎', '水', '風', '雷', '氷', '岩'];
+    resNameArr.forEach(element => {
+        let resValue = statusObj[element + '元素耐性'];
+        if (!resValueArr.includes(resValue)) {
+            resValueArr.push(resValue);
+            resArrArr.push([element, calculate被ダメージ(statusObj, 10000, element)]);
+        }
+    });
+    let my被ダメージHtml = '';
+    resArrArr.forEach(arr => {
+        my被ダメージHtml += ' <span class="' + ELEMENT_TD_CLASS_MAP.get(arr[0]) + '">' + arr[1] + '</span>';
+    });
+    $('#被ダメージResult').html(my被ダメージHtml);
+
     displayResultTable('通常攻撃ダメージResult', '通常攻撃', myダメージ計算['通常攻撃']);
     displayResultTable('重撃ダメージResult', '重撃', myダメージ計算['重撃']);
     displayResultTable('落下攻撃ダメージResult', '落下攻撃', myダメージ計算['落下攻撃']);
@@ -1553,6 +1609,10 @@ function calculateStatusObj(statusObj) {
         statusObj[statusName] += Number(elem.value);
     });
     Array.from(document.getElementsByName('ダメージバフInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
+    Array.from(document.getElementsByName('耐性軽減Input')).forEach(elem => {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
     });
@@ -2634,6 +2694,16 @@ $(document).on('click', '#ダメージバフ補正初期化Button', function () 
     $('[name="ダメージバフInput"]').val(0);
     this.disabled = true;
     $('#ダメージバフ補正初期化Toggle').prop('checked', false);
+    inputOnChangeStatusUpdate();
+});
+
+// ステータス・耐性/軽減
+$(document).on('change', 'input[name="耐性軽減Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#耐性軽減補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#耐性軽減補正初期化Button', function () {
+    $('[name="耐性軽減Input"]').val(0);
+    this.disabled = true;
+    $('#耐性軽減補正初期化Toggle').prop('checked', false);
     inputOnChangeStatusUpdate();
 });
 

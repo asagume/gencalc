@@ -74,6 +74,7 @@ var selectorVisiblityStateMap = new Map();  // セレクタ, is visible
 //
 var ステータス詳細ObjVar = {};
 const ステータス詳細ObjTemplate = {
+    レベル: 0,
     HP乗算: 0,
     攻撃力乗算: 0,
     防御力乗算: 0,
@@ -113,6 +114,8 @@ const ステータス詳細ObjTemplate = {
     元素スキルダメージバフ: 0,
     元素爆発ダメージバフ: 0,
     与えるダメージ: 0,
+    ダメージ軽減: 0,
+    敵レベル: 0,
     敵炎元素耐性: 0,
     敵水元素耐性: 0,
     敵風元素耐性: 0,
