@@ -18,7 +18,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.7.0
+                    げんかるく - 原神ダメージシミュレーター Ver.1.7.1
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -36,19 +36,21 @@
                 </div>
             </div>
 
-            <div class="input-area">
+            <div class="face-area">
                 <div id="face" style="margin-bottom: 0;">
                     <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
                         id="選択キャラクターImg" />
                     <section class="input-group">
                         <p id="選択キャラクター名前Label"></p>
                         <label for="おすすめセットInput">おすすめセット</label>
-                        <select class="long" id="おすすめセットInput"></select>
+                        <select id="おすすめセットInput"></select>
                     </section>
                     <button type="button" id="構成保存Button">この構成を保存</button>
                     <button type="button" id="保存構成削除Button">保存構成を削除</button>
                 </div>
+            </div>
 
+            <div class="input-area">
                 <fieldset class="input-group">
                     <legend>
                         <button type="button" class="open-close" id="condition-set">基本条件</button>
@@ -877,7 +879,9 @@
 
                     <div id="ダメージ計算注釈" style="color: #93a721; margin-top: 20px;"></div>
                 </div>
+            </div>
 
+            <div class="bottom-area">
                 <div class="tab-area">
                     <input type="radio" class="tab-button others-set" id="other-box1" name="others-group" checked />
                     <label for="other-box1">げんかるくについて</label>
@@ -975,6 +979,12 @@
         <div style="text-align: left;">
             <hr>
             <dl style="padding: 1px 20px;">
+                <dt>1.7.1</dt>
+                <dd>
+                    <ul>
+                        <li>PC用3カラムレイアウトのテスト</li>
+                    </ul>
+                </dd>
                 <dt>1.7.0</dt>
                 <dd>
                     <ul>
@@ -1018,6 +1028,7 @@
     </div>
 
     <script>
+        console.log('screen.width', screen.width);
     </script>
 </body>
 
