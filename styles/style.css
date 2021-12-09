@@ -1,4 +1,4 @@
-@media screen and (min-width: 1536px) {
+@media screen and (min-width: 1440px) {
     html {
         font-size: 8px;
     }
@@ -8,20 +8,20 @@
     }
 
     #main {
-        width: 1510px;
+        width: 1440px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
 
     .base-container {
         display: grid;
-        grid-template-columns: auto 595px 595px;
+        grid-template-columns: auto 560px 560px;
         grid-template-rows: 32px 160px minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header header header""aside face-area face-area""aside input-area result-area""aside bottom-area bottom-area""footer footer footer";
     }
 }
 
-@media screen and (max-width: 1535px) and (min-width: 1020px) {
+@media screen and (max-width: 1439px) and (min-width: 1020px) {
     html {
         font-size: 10px;
     }
