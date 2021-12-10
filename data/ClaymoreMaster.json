@@ -1,8 +1,7 @@
 {
     "赤角石塵滅砕": {
         "レアリティ": 5,
-        "import": "data/weapons/claymore_5_RedhornStoneThresher.json",
-        "disabled": true
+        "import": "data/weapons/claymore_5_RedhornStoneThresher.json"
     },
     "松韻の響く頃": {
         "レアリティ": 5,
