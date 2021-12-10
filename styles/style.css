@@ -1,4 +1,4 @@
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1250px) {
     html {
         font-size: 8px;
     }
@@ -8,16 +8,17 @@
     }
 
     #main {
-        width: 1440px;
+        min-width: 1250px;
+        max-width: 1536px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
 
     .base-container {
         display: grid;
-        grid-template-columns: auto 560px 560px;
+        grid-template-columns: 238px 532px auto;
         grid-template-rows: 32px 160px minmax(1000px, auto) 500px 140px;
-        grid-template-areas: "header header header""aside face-area face-area""aside input-area result-area""aside bottom-area bottom-area""footer footer footer";
+        grid-template-areas: "header header header""aside face-area greeting-area""aside input-area result-area""aside bottom-area bottom-area""footer footer footer";
     }
 
     #status-area {
@@ -25,7 +26,7 @@
     }
 }
 
-@media screen and (max-width: 1439px) and (min-width: 1020px) {
+@media screen and (max-width: 1250px) and (min-width: 1020px) {
     html {
         font-size: 10px;
     }
@@ -44,7 +45,7 @@
         display: grid;
         grid-template-columns: auto 700px;
         grid-template-rows: 32px 160px auto minmax(1000px, auto) 500px 140px;
-        grid-template-areas: "header header""aside face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
+        grid-template-areas: "header header""greeting-area face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
     }
 
     #status-area {
@@ -72,8 +73,8 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 240px 160px auto minmax(1000px, auto) 500px 140px;
-        grid-template-areas: "header""aside""face-area""input-area""result-area""bottom-area""footer";
+        grid-template-rows: 32px 130px 100px 160px auto minmax(1000px, auto) 500px 140px;
+        grid-template-areas: "header""greeting-area""aside""face-area""input-area""result-area""bottom-area""footer";
     }
 
     #status-area {
@@ -89,8 +90,7 @@
 
 body {
     width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0;
     color: blanchedalmond;
     background-color: rgb(58, 30, 10);
     text-align: center;
@@ -136,28 +136,28 @@ button:disabled {
 }
 
 select {
-    width: calc(100%);
+    width: 100%;
     height: 3rem;
-    padding: 2px 8px;
-    margin: 4px;
+    padding: 1px 0.5rem;
+    margin: 0;
     font-size: 2rem;
-    border-radius: 1rem;
+    border-radius: 0.8rem;
     box-shadow: none;
 }
 
 input[type="number"] {
     width: 100px;
     height: 2.4rem;
-    padding-left: 8px;
-    margin: 2px 4px;
+    padding-left: 0.5rem;
+    margin: 0;
     font-size: 2rem;
     border: none;
-    border-radius: 1rem;
+    border-radius: 0.8rem;
     box-shadow: none;
 }
 
 label {
-    margin: 2px;
+    margin: 1px;
     font-size: 2rem;
 }
 
@@ -173,10 +173,10 @@ fieldset {
     padding-bottom: 0.5rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    margin-inline-start: 4px;
-    margin-inline-end: 4px;
-    padding-inline-start: 4px;
-    padding-inline-end: 4px;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
     padding-block-start: 2px;
     padding-block-end: 2px;
     border-radius: 1rem;
@@ -219,19 +219,25 @@ input[type="checkbox"]+label {
     width: 100%;
     position: relative;
     background: linear-gradient(to top, #ecc862, #978310);
+    margin: 0 0 2px;
 }
 
 .header div {
     position: absolute;
     top: 50%;
-    margin: 0 0.5rem;
+    padding: 0 0.5em;
     transform: translate(0, -50%);
-    font-size: 1.6rem;
+    font-size: 2rem;
+}
+
+.greeting-area {
+    grid-area: greeting-area;
+    font-size: 1.8rem;
 }
 
 .aside {
     grid-area: aside;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
 }
 
 .face-area {
@@ -240,17 +246,17 @@ input[type="checkbox"]+label {
 
 .input-area {
     grid-area: input-area;
-    margin: 0.5rem;
+    margin: 4px;
 }
 
 .result-area {
     grid-area: result-area;
-    margin: 0.5rem;
+    margin: 4px;
 }
 
 .bottom-area {
     grid-area: bottom-area;
-    margin: 0.5rem;
+    margin: 4px;
 }
 
 .footer {
@@ -263,7 +269,7 @@ input[type="checkbox"]+label {
 }
 
 article.input-item {
-    width: calc(100% / 3 - 1rem);
+    width: calc(100% / 3 - 0.5rem);
     vertical-align: top;
     position: relative;
 }
@@ -304,7 +310,7 @@ fieldset.input-group legend {
     line-height: 3rem;
     background: linear-gradient(to top, #ad5b18, #55290b);
     margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     margin-left: auto;
     margin-right: auto;
     border-radius: 0.5rem;
@@ -358,19 +364,6 @@ fieldset.input-group legend {
 
 .input-area .input-item label {
     display: block;
-}
-
-.input-area .input-item2 {
-    display: inline-block;
-    width: calc(100% / 2 - 3rem);
-}
-
-.input-area .input-item2 label {
-    font-size: 1.8rem;
-}
-
-.input-area .input-item2 select {
-    width: 100%;
 }
 
 .input-area .check-item {
@@ -488,7 +481,7 @@ input[type="checkbox"]:checked+label {
 }
 
 .optionBox div select {
-    width: 100px;
+    width: 10rem;
 }
 
 .column2-option {
@@ -510,12 +503,12 @@ input[type="checkbox"]:checked+label {
 }
 
 table.status tr th {
-    width: 26%;
+    width: auto;
 }
 
 table.status tr td input[type="number"] {
     opacity: 0.5;
-    width: 85%;
+    width: 7rem;
 }
 
 table.status tr td input[type="number"]:focus {
@@ -523,7 +516,8 @@ table.status tr td input[type="number"]:focus {
 }
 
 table.status tr td {
-    width: 12%;
+    min-width: 6rem;
+    max-width: 7rem;
     font-size: 2rem;
     border-left: 0;
     text-align: right;
@@ -546,7 +540,7 @@ table.status tr td[colspan="3"] button {
 }
 
 th.category {
-    width: 90px;
+    width: 10rem;
     text-align: left;
     font-weight: bold;
     text-shadow: 1px 1px 2px black, 0 0 10px brown, 0 0 2px brown;
