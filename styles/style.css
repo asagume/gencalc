@@ -691,6 +691,7 @@ section.tiny article.input-item label {
 }
 
 .horizontal-list ul li img {
+    vertical-align: top;
     border-style: double;
     border-width: 2px;
 }
@@ -814,7 +815,7 @@ ul#キャラクター所持状況List {
     right: 4px;
     background: transparent;
     color: blanchedalmond;
-    font-size: 2rem;
+    font-size: 24px;
     text-shadow: 1px 1px 2px black, 0 0 10px brown, 0 0 2px brown;
     margin: 0;
 }
