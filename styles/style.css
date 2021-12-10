@@ -744,15 +744,15 @@ section.tiny article.input-item label {
 #face section p {
     display: block;
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: 1rem;
+    top: 1rem;
     font-size: 3.2rem;
 }
 
 #face section label {
     display: block;
     position: absolute;
-    left: 5px;
+    left: 0.5rem;
     bottom: calc(5px + 3rem);
 }
 
@@ -767,14 +767,14 @@ section.tiny article.input-item label {
     position: absolute;
     top: 0;
     right: 0;
-    width: 250px;
+    width: 24rem;
 }
 
 #face #保存構成削除Button {
     position: absolute;
     top: 4rem;
     right: 0;
-    width: 250px;
+    width: 24rem;
 }
 
 ul#キャラクター所持状況List {
