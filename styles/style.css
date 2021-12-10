@@ -752,8 +752,8 @@ section.tiny article.input-item label {
 #face section label {
     display: block;
     position: absolute;
-    left: 10px;
-    bottom: 45px;
+    left: 5px;
+    bottom: calc(5px + 3rem);
 }
 
 #face section select {
