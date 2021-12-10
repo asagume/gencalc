@@ -55,7 +55,7 @@
                     <legend>
                         <button type="button" class="open-close" id="condition-set">基本条件</button>
                         <button type="button" class="open-close" id="option-set">オプション条件</button>
-                        <button type="button" class="open-close closed" id="status-set">ステータス</button>
+                        <button type="button" class="open-close" id="status-set">ステータス</button>
                     </legend>
 
                     <div class="tab-area" id="condition-area">
@@ -565,7 +565,7 @@
                         <section class="optionBox" id="オプションBox"></section>
                     </div>
 
-                    <div id="status-area" style="display: none;">
+                    <div id="status-area">
                         <hr>
                         <div class="tab-area">
                             <input type="radio" class="tab-button input-set2" id="status-table1"
@@ -1034,7 +1034,26 @@
     </div>
 
     <script>
-        console.log('screen.width', screen.width);
+        const setOpenClose = function () {
+            console.log('screen.width', screen.width);
+
+            ['status-area'].forEach(areaId => {
+                let buttonId = areaId.replace('area', 'set');
+                if ($('#' + areaId).css('display') == 'none') {
+                    document.getElementById(buttonId).classList.add('closed');
+                } else {
+                    document.getElementById(buttonId).classList.remove('closed');
+                }
+            });
+        };
+
+        $(window).resize(function () {
+            setOpenClose();
+        });
+
+        $(document).ready(() => {
+            setOpenClose();
+        });
     </script>
 </body>
 

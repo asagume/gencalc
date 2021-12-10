@@ -19,6 +19,10 @@
         grid-template-rows: 32px 160px minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header header header""aside face-area face-area""aside input-area result-area""aside bottom-area bottom-area""footer footer footer";
     }
+
+    #status-area {
+        display: initial;
+    }
 }
 
 @media screen and (max-width: 1439px) and (min-width: 1020px) {
@@ -41,6 +45,10 @@
         grid-template-columns: auto 700px;
         grid-template-rows: 32px 160px auto minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header header""aside face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
+    }
+
+    #status-area {
+        display: none;
     }
 }
 
@@ -66,6 +74,10 @@
         grid-template-columns: auto;
         grid-template-rows: 32px 240px 160px auto minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header""aside""face-area""input-area""result-area""bottom-area""footer";
+    }
+
+    #status-area {
+        display: none;
     }
 
     .horizontal-list {
