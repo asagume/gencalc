@@ -485,6 +485,12 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
             is防御補正Calc = false;
             is耐性補正Calc = false;
             break;
+        case '他所基準HP回復':
+            is会心Calc = false;
+            is防御補正Calc = false;
+            is耐性補正Calc = false;
+            my元素 = null;
+            break;
         case '付加元素ダメージ':    // for 風キャラ
             my元素 = '炎';
         default:
