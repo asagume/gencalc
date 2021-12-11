@@ -823,3 +823,33 @@ ul#キャラクター所持状況List {
     width: 300px;
     margin-top: 15px;
 }
+
+dl {
+    padding-left: 2rem;
+}
+
+dl dt {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+}
+
+dl dd {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+    padding-inline-start: 2rem;
+}
+
+dl dd ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+    padding-inline-start: 2rem;
+}
+
+dl dd ul li {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+}
