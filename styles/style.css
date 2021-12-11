@@ -17,7 +17,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 238px 532px auto;
-        grid-template-rows: 32px 160px minmax(1000px, auto) 500px 140px;
+        grid-template-rows: 32px 150px minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header header header""aside face-area greeting-area""aside input-area result-area""aside bottom-area bottom-area""footer footer footer";
     }
 
@@ -44,7 +44,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto 700px;
-        grid-template-rows: 32px 160px auto minmax(1000px, auto) 500px 140px;
+        grid-template-rows: 32px 150px auto minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header header""greeting-area face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
     }
 
@@ -73,7 +73,7 @@
     .base-container {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 32px 130px 100px 160px auto minmax(1000px, auto) 500px 140px;
+        grid-template-rows: 32px 130px 100px 150px auto minmax(1000px, auto) 500px 140px;
         grid-template-areas: "header""greeting-area""aside""face-area""input-area""result-area""bottom-area""footer";
     }
 
@@ -171,7 +171,7 @@ label+input[type="number"] {
 
 fieldset {
     padding-bottom: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 1px;
     margin-bottom: 0.5rem;
     margin-inline-start: 2px;
     margin-inline-end: 2px;
@@ -710,7 +710,7 @@ section.tiny article.input-item label {
 #face {
     display: block;
     text-align: left;
-    margin: 10px 0;
+    margin: 0;
     position: relative;
     width: 100%;
     height: 150px;
