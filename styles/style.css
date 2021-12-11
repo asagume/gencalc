@@ -246,22 +246,18 @@ input[type="checkbox"]+label {
 
 .input-area {
     grid-area: input-area;
-    margin: 4px;
 }
 
 .result-area {
     grid-area: result-area;
-    margin: 4px;
 }
 
 .bottom-area {
     grid-area: bottom-area;
-    margin: 4px;
 }
 
 .footer {
     grid-area: footer;
-    margin: 0.5rem;
     background-color: #312820;
     color: #886b1d;
     text-align: left;
@@ -545,6 +541,7 @@ th.category {
     font-weight: bold;
     text-shadow: 1px 1px 2px black, 0 0 10px brown, 0 0 2px brown;
     font-size: 1.8rem;
+    padding-left: 0.5rem;
 }
 
 .result-area div table tr td.damage-taken {
