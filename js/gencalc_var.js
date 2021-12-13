@@ -190,6 +190,7 @@ function buildキャラクター所持状況List() {
     let ulElem = document.getElementById('キャラクター所持状況List');
     Object.keys(キャラクターMasterVar).forEach(key => {
         let myCharacterMaster = キャラクターMasterVar[key];
+        if ('disabled' in myCharacterMaster && myCharacterMaster['disabled']) return;
         if ('image' in myCharacterMaster || 'image2' in myCharacterMaster) {
             let src = 'image' in myCharacterMaster ? myCharacterMaster['image'] : myCharacterMaster['image2'];
 
