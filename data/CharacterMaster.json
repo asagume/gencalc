@@ -5,7 +5,8 @@
         "武器": "両手剣",
         "import": "data/characters/geo_5_claymore_AratakiItto.json",
         "image": "images/2021120310445229494.png",
-        "image2": "images/hoyolab/c71eda86923329c3f286e959205178bb.png"
+        "image2": "images/hoyolab/c71eda86923329c3f286e959205178bb.png",
+        "selected": true
     },
     "珊瑚宮心海": {
         "レアリティ": 5,
@@ -91,8 +92,7 @@
         "武器": "片手剣",
         "import": "data/characters/geo_5_sword_Albedo.json",
         "image": "images/Albedo.png",
-        "image2": "images/hoyolab/066e0473fa8868ece3f2e5802c1a11d8.png",
-        "selected": true
+        "image2": "images/hoyolab/066e0473fa8868ece3f2e5802c1a11d8.png"
     },
     "鍾離": {
         "レアリティ": 5,
