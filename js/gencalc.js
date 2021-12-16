@@ -1802,6 +1802,20 @@ const inputOnChangeOptionUpdate = function () {
         if (elem) {
             if (elem instanceof HTMLInputElement) {
                 elem.checked = value;
+                if (value) {
+                    let myName = key.replace('Option', '');
+                    if (オプション排他MapVar.has(myName)) {
+                        let exclusionArr = オプション排他MapVar.get(myName);
+                        if (exclusionArr) {
+                            exclusionArr.forEach(exclusion => {
+                                let exclusionElem = document.getElementById(exclusion + 'Option');
+                                if (exclusionElem && exclusionElem instanceof HTMLInputElement) {
+                                    exclusionElem.checked = false;
+                                }
+                            });
+                        }
+                    }
+                }
             } else {
                 elem.selectedIndex = value;
                 applyOptionVariable(ステータス詳細ObjVar, elem);
