@@ -38,7 +38,7 @@ function calculate乗算系元素反応倍率(statusObj, element, elementalMaste
     }
     let result = 元素反応MasterVar[element][elementalReaction]['数値'];
     let dmgBuff = statusObj[elementalReaction + 'ダメージバフ'];
-    result *= 1 + 2.78 * elementalMastery / (elementalMastery + 1400) + dmgBuff / 100;
+    result *= 1 + 25 * elementalMastery / (9 * (elementalMastery + 1400)) + dmgBuff / 100;
     return result;
 }
 
