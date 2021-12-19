@@ -66,7 +66,7 @@ function calculate結晶シールド吸収量(statusObj, element, elementalMaste
     }
     let level = Number($('#レベルInput').val().replace('+', ''));
     let result = 元素反応MasterVar[element]['結晶']['数値'][level];
-    result *= 1 + 4.44 * elementalMastery / (elementalMastery + 1400);
+    result *= 1 + 40 * elementalMastery / (9 * (elementalMastery + 1400));
     return result;
 }
 
