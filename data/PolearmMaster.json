@@ -1,4 +1,8 @@
 {
+    "息災": {
+        "レアリティ": 5,
+        "import": "data/weapons/polearm_5_CalamityQueller.json"
+    },
     "草薙の稲光": {
         "レアリティ": 5,
         "import": "data/weapons/polearm_5_EngulfingLightning.json"

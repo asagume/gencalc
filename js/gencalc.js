@@ -1106,7 +1106,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
             let mySelected = true;
             if (オプション排他MapVar.has(key)) {
                 オプション排他MapVar.get(key).forEach(entry => {
-                    if ($('#' + selectorEscape(entry) + 'Option').prop('checked')) {
+                    if ($('#' + selectorEscape(entry) + 'Option').prop('selectedIndex') > 0) {
                         mySelected = false;
                     }
                 });
@@ -1818,8 +1818,22 @@ const inputOnChangeOptionUpdate = function () {
                 }
             } else {
                 elem.selectedIndex = value;
-                applyOptionVariable(ステータス詳細ObjVar, elem);
+                if (value > 0) {
+                    let myName = key.replace('Option', '');
+                    if (オプション排他MapVar.has(myName)) {
+                        let exclusionArr = オプション排他MapVar.get(myName);
+                        if (exclusionArr) {
+                            exclusionArr.forEach(exclusion => {
+                                let exclusionElem = document.getElementById(exclusion + 'Option');
+                                if (exclusionElem && exclusionElem instanceof HTMLSelectElement) {
+                                    exclusionElem.selectedIndex = 0;
+                                }
+                            });
+                        }
+                    }
+                }
             }
+            applyOptionVariable(ステータス詳細ObjVar, elem);
         }
     });
 
@@ -3001,6 +3015,152 @@ $(document).ready(function () {
 
 initキャラクター構成関連要素();
 
+// 聖遺物詳細画面のスクリーンショットから取込
+$(document).on('click', '#artifactDetailImageButton', function () {
+    document.getElementById('artifactDetailImage').click();
+});
+
+var artifactDetailText = null;
+
+function setArtifactDetail(text) {
+    artifactDetailText = text;
+
+    text = text.replace(/[,\s]/g, '');
+    text = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+    text = text.replace(/[①②③④⑤⑥⑦⑧⑨]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - ('①'.charCodeAt(0) - '1'.charCodeAt(0)));
+    });
+    console.log(text);
+
+    let subStatusObj = {};
+    ['HP上限', '攻撃力', '防御力', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率'].forEach(statusName => {
+        let re = new RegExp(statusName + '\\+([0-9\\.]+)');
+        let reRet = re.exec(text);
+        if (reRet) {
+            subStatusObj[statusName] = reRet[1];
+        } else {
+            subStatusObj[statusName] = 0;
+        }
+    });
+    console.log('subStatus', subStatusObj);
+
+    $('#聖遺物メイン効果1Input').val(null);
+    $('#聖遺物メイン効果2Input').val(null);
+    $('#聖遺物メイン効果3Input').val(null);
+    if (!$('#聖遺物メイン効果4Input').val().endsWith('ダメージバフ')) {
+        $('#聖遺物メイン効果4Input').val(null);
+    }
+    $('#聖遺物メイン効果5Input').val(null);
+
+    $('#聖遺物優先するサブ効果1Input').val(null);
+    $('#聖遺物優先するサブ効果2Input').val(null);
+    $('#聖遺物優先するサブ効果3Input').val(null);
+
+    $('#聖遺物サブ効果HPPInput').val(0);
+    $('#聖遺物サブ効果攻撃力PInput').val(0);
+    $('#聖遺物サブ効果防御力PInput').val(0);
+    $('#聖遺物サブ効果HPInput').val(subStatusObj['HP上限']);
+    $('#聖遺物サブ効果攻撃力Input').val(subStatusObj['攻撃力']);
+    $('#聖遺物サブ効果防御力Input').val(subStatusObj['防御力']);
+    $('#聖遺物サブ効果元素熟知Input').val(subStatusObj['元素熟知']);
+    $('#聖遺物サブ効果会心率Input').val(subStatusObj['会心率']);
+    $('#聖遺物サブ効果会心ダメージInput').val(subStatusObj['会心ダメージ']);
+    $('#聖遺物サブ効果元素チャージ効率Input').val(subStatusObj['元素チャージ効率']);
+
+    $('#loading').hide();
+    inputOnChangeStatusUpdate();
+}
+
+function resizePinnedImage(e) {
+    const file = e.target.files[0];
+    if (!file.type.match('image.*')) { return; }
+    resize(file);
+    e.currentTarget.files = null;
+    e.currentTarget.value = null;
+    enable構成保存Button();
+};
+
+const { createWorker } = Tesseract;
+
+const worker = createWorker({
+    logger: m => console.debug(m)
+});
+
+function resize(file) {
+    imageToCanvas(file).then(function (canvas) {
+        $('#loading').show();
+
+        (async () => {
+            await worker.load();
+            await worker.loadLanguage('jpn');
+            await worker.initialize('jpn');
+            //await worker.setParameters({
+            //    tessedit_char_blacklist: '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳',
+            //});
+            //await worker.setParameters({
+            //    tessedit_char_whitelist: '0123456789+,.%HP上限攻撃力防御元素熟知会心率ダメージチャ効',
+            //});
+            const { data: { text } } = await worker.recognize(canvas);
+            setArtifactDetail(text);
+            await worker.terminate();
+        })();
+    });
+}
+
+function imageToCanvas(imageFile) {
+    return new Promise(function (resolve, reject) {
+        readImage(imageFile).then(function (src) {
+            loadImage(src).then(function (image) {
+                const canvas = document.getElementById('artifactDetailCanvas');
+                const ctx = canvas.getContext('2d');
+                const scale = 2;
+                canvas.width = image.width * scale;
+                canvas.height = image.height * scale;
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                let imgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                for (let y = 0; y < imgPixels.height; y++) {
+                    for (let x = 0; x < imgPixels.width; x++) {
+                        let i = (y * 4) * imgPixels.width + x * 4;
+                        let avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+                        imgPixels.data[i] = avg < 64 ? 0 : imgPixels.data[i];
+                        imgPixels.data[i + 1] = avg < 64 ? 0 : imgPixels.data[i + 1];
+                        imgPixels.data[i + 2] = avg < 64 ? 0 : imgPixels.data[i + 2];
+                    }
+                }
+                ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+                resolve(canvas);
+            }).catch(function (error) {
+                reject(error);
+            });
+        }).catch(function (error) {
+            reject(error);
+        });
+    })
+}
+
+function readImage(image) {
+    return new Promise(function (resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); }
+        reader.onerror = function (e) { reject(e); }
+        reader.readAsDataURL(image);
+    });
+}
+
+function loadImage(src) {
+    return new Promise(function (resolve, reject) {
+        const img = new Image();
+        img.onload = function () { resolve(img); }
+        img.onerror = function (e) { reject(e); }
+        img.src = src;
+    });
+}
+
+$(document).on('change', '#artifactDetailImage', resizePinnedImage);
+
+
 const toggle聖遺物詳細計算停止 = function () {
     if (this.checked) {
         $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
@@ -3125,4 +3285,8 @@ const setDebugInfo = function () {
             }).appendTo('#debugInfo');
         }
     });
+    $('<hr>').appendTo('#debugInfo');
+    $('<p>', {
+        text: artifactDetailText
+    }).appendTo('#debugInfo');
 }

@@ -773,6 +773,28 @@ section.tiny article.input-item label {
     width: 24rem;
 }
 
+#face #artifactDetailImageButton {
+    position: absolute;
+    top: 8rem;
+    right: 0;
+    width: calc(100% - 150px - 1rem);
+}
+
+#face #loading {
+    display: none;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+#face #loading img {
+    background-color: transparent;
+}
+
 ul#キャラクター所持状況List {
     list-style: none;
     margin-block-start: 0;

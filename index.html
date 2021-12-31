@@ -7,6 +7,7 @@
     <title>げんかるく - 原神ダメージシミュレーター</title>
     <link href="styles/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
     <reference path="JQuery.d.ts"></reference>
     <script src="js/gencalc_var.js"></script>
     <script src="js/gencalc_core.js"></script>
@@ -18,7 +19,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.7.6
+                    げんかるく - 原神ダメージシミュレーター Ver.1.7.7
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -41,13 +42,18 @@
                 <div id="face" style="margin-bottom: 0;">
                     <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
                         id="選択キャラクターImg" />
-                    <section class="input-group">
+
+                        <section class="input-group">
                         <p id="選択キャラクター名前Label"></p>
                         <label for="おすすめセットInput">おすすめセット</label>
                         <select id="おすすめセットInput"></select>
                     </section>
+
                     <button type="button" id="構成保存Button">この構成を保存</button>
                     <button type="button" id="保存構成削除Button">保存構成を削除</button>
+
+                    <input type="file" id="artifactDetailImage" style="display: none;">
+                    <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48"></div>
                 </div>
             </div>
 
@@ -926,6 +932,7 @@
                         <div class="description" style="color: chocolate; font-size: smaller">
                             <p>キャラクター再選択後に有効になります</p>
                         </div>
+                        <button type="button" id="artifactDetailImageButton">聖遺物詳細画面のスクリーンショットを読込</button>
                     </div>
 
                     <input type="radio" class="tab-button others-set" id="other-box3" name="others-group" />
@@ -963,7 +970,7 @@
             <p>全ての保存データを削除します</p>
         </div>
 
-        <div style="display: none;">
+        <div style="display: initial;">
             <fieldset>
                 <legend>デバッグ情報</legend>
                 <div id="debugInfo"></div>
@@ -975,11 +982,18 @@
             <p style="color: #63beb4">氷元素ダメージ</p>
             <p style="color: #bf8f37">岩元素ダメージ</p>
             <p>物理ダメージ</p>
+            <canvas id="artifactDetailCanvas" style="display: initial;"></canvas>
         </div>
 
         <div style="text-align: left;">
             <hr>
             <dl>
+                <dt>1.7.7</dt>
+                <dd>
+                    <ul>
+                        <li>息災 ※精錬ランク2以降推測</li>
+                    </ul>
+                </dd>
                 <dt>1.7.6</dt>
                 <dd>
                     <ul>
