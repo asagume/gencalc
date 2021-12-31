@@ -3084,15 +3084,15 @@ function resizePinnedImage(e) {
 
 const { createWorker } = Tesseract;
 
-const worker = createWorker({
-    logger: m => console.debug(m)
-});
-
 function resize(file) {
     imageToCanvas(file).then(function (canvas) {
         $('#loading').show();
 
         (async () => {
+            const worker = createWorker({
+                langPath: 'tessdata/4.0.0_fast',
+                logger: m => console.debug(m)
+            });
             await worker.load();
             await worker.loadLanguage('jpn');
             await worker.initialize('jpn');
@@ -3124,9 +3124,9 @@ function imageToCanvas(imageFile) {
                     for (let x = 0; x < imgPixels.width; x++) {
                         let i = (y * 4) * imgPixels.width + x * 4;
                         let avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-                        imgPixels.data[i] = avg < 64 ? 0 : imgPixels.data[i];
-                        imgPixels.data[i + 1] = avg < 64 ? 0 : imgPixels.data[i + 1];
-                        imgPixels.data[i + 2] = avg < 64 ? 0 : imgPixels.data[i + 2];
+                        imgPixels.data[i] = 255 - (avg < 64 ? 0 : imgPixels.data[i]);
+                        imgPixels.data[i + 1] = 255 - (avg < 64 ? 0 : imgPixels.data[i + 1]);
+                        imgPixels.data[i + 2] = 255 - (avg < 64 ? 0 : imgPixels.data[i + 2]);
                     }
                 }
                 ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
