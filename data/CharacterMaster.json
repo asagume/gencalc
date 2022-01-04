@@ -179,7 +179,8 @@
         "元素": "炎",
         "武器": "長柄武器",
         "import": "data/characters/pyro_4_polearm_Thoma.json",
-        "image": "images/Thoma.png"
+        "image": "images/Thoma.png",
+        "image2": "images/hoyolab/3efac14b33f37b567cc3f48f47b3158d.png"
     },
     "九条裟羅": {
         "レアリティ": 4,
