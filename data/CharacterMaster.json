@@ -1,4 +1,12 @@
 {
+    "申鶴": {
+        "レアリティ": 5,
+        "元素": "氷",
+        "武器": "長柄武器",
+        "import": "data/characters/cryo_5_polearm_Shenhe.json",
+        "image": "images/2021122614031218964.png",
+        "disabled": true
+    },
     "荒瀧一斗": {
         "レアリティ": 5,
         "元素": "岩",
