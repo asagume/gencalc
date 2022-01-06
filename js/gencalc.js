@@ -349,12 +349,23 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                     return;
                 }
             }
-            if (valueObj['対象']) {    // 大分類 or 大分類.小分類
-                let my対象カテゴリArr = valueObj['対象'].split('.');
-                if (my対象カテゴリArr[0] != detailObj['種類']) {
-                    return;
-                } if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
-                    return;
+            if (valueObj['対象']) {
+                if (valueObj['対象'].endsWith('元素ダメージ')) {    // for 申鶴
+                    if (!valueObj['対象'].startsWith(my元素)) {
+                        return;
+                    }
+                } else if (valueObj['対象'] == '物理ダメージ') {
+                    if (my元素 != '物理') {
+                        return;
+                    }
+                } else {
+                    // 大分類 or 大分類.小分類
+                    let my対象カテゴリArr = valueObj['対象'].split('.');
+                    if (my対象カテゴリArr[0] != detailObj['種類']) {
+                        return;
+                    } if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
+                        return;
+                    }
                 }
             }
             if (valueObj['種類'].endsWith('元素付与')) {   // 元素付与は先んじて適用します
@@ -511,6 +522,9 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     my天賦性能変更詳細Arr.forEach(valueObj => {
         let myResultWork = calculateDamageFromDetailSub(statusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
         if (valueObj['種類'].endsWith('ダメージアップ')) {
+            if (detailObj['名前'] == 'ダメージアップ') {    // for 申鶴
+                return;
+            }
             if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
@@ -686,7 +700,20 @@ function checkConditionMatchesSub(conditionStr, validConditionValueArr) {
     return 0;   // アンマッチ
 }
 const checkConditionMatches = function (conditionStr, validConditionValueArr) {
-    let myCondStrArr = conditionStr.split('^')[0].split('&');   // &はAND条件です
+    let myCondStr = conditionStr.split('^')[0];
+
+    if (myCondStr.indexOf('|') != -1) {  // |はOR条件です
+        let myCondStrArr = myCondStr.split('|');
+        for (let i = 0; i < myCondStrArr.length; i++) {
+            let resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr);
+            if (resultSub == 1) {
+                return 1;   // マッチ
+            }
+        }
+        return 0;
+    }
+
+    let myCondStrArr = myCondStr.split('&');    // &はAND条件です
     let result = 1;
     for (let i = 0; i < myCondStrArr.length; i++) {
         let resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr);
@@ -714,7 +741,6 @@ function makeValidConditionValueArr(parentSelector) {
     });
     return validConditionValueArr;
 }
-
 
 
 // とても大事なデータを作成しています
@@ -875,11 +901,20 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
     if (myCondStrArr.length > 1) {
         exclusionCond = myCondStrArr[1];
     }
-    // AND条件
-    myCondStrArr = myCondStrArr[0].split('&');
-    myCondStrArr.forEach(myCondStr => {
-        makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
-    });
+    let myCondStr = myCondStrArr[0];
+    if (myCondStr.indexOf('|') != -1) {
+        // OR条件 for 申鶴
+        myCondStrArr = myCondStr.split('|');
+        myCondStrArr.forEach(myCondStr => {
+            makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
+        });
+    } else {
+        // AND条件
+        myCondStrArr = myCondStr.split('&');
+        myCondStrArr.forEach(myCondStr => {
+            makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
+        });
+    }
 }
 
 const ELEMENT_TD_CLASS_MAP = new Map([

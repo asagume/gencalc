@@ -5,7 +5,7 @@
         "武器": "長柄武器",
         "import": "data/characters/cryo_5_polearm_Shenhe.json",
         "image": "images/2021122614031218964.png",
-        "disabled": true
+        "selected": true
     },
     "荒瀧一斗": {
         "レアリティ": 5,
@@ -13,8 +13,7 @@
         "武器": "両手剣",
         "import": "data/characters/geo_5_claymore_AratakiItto.json",
         "image": "images/2021120310445229494.png",
-        "image2": "images/hoyolab/c71eda86923329c3f286e959205178bb.png",
-        "selected": true
+        "image2": "images/hoyolab/c71eda86923329c3f286e959205178bb.png"
     },
     "珊瑚宮心海": {
         "レアリティ": 5,
