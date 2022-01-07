@@ -1612,7 +1612,7 @@ const inputOnChangeResultUpdate = function (statusObj) {
         $('#その他ダメージResult').show();
         displayResultTable('その他ダメージResult', 'その他', myダメージ計算['その他']);
     } else {
-        $('#その他ダメージResult').hide();
+        $('#その他ダメージResult').hide();  
     }
 
     $('#ダメージ計算注釈').html(statusObj['キャラクター注釈'].join('<br>'));
@@ -2836,6 +2836,16 @@ $(document).on('click', '#ダメージバフ補正初期化Button', function () 
     $('[name="ダメージバフInput"]').val(0);
     this.disabled = true;
     $('#ダメージバフ補正初期化Toggle').prop('checked', false);
+    inputOnChangeStatusUpdate();
+});
+
+// ステータス・ダメージアップ
+$(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#ダメージアップ補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#ダメージアップ補正初期化Button', function () {
+    $('[name="ダメージアップInput"]').val(0);
+    this.disabled = true;
+    $('#ダメージアップ補正初期化Toggle').prop('checked', false);
     inputOnChangeStatusUpdate();
 });
 
