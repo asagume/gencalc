@@ -99,6 +99,32 @@ function calculate被ダメージ(statusObj, damage, element) {
     return result;
 }
 
+function isUseReference(formulaArr) {
+    if (!$.isArray(formulaArr)) {
+        if ($.isNumeric(formulaArr)) {
+            return false;
+        }
+        return formulaArr.indexOf('#') != -1;
+    }
+    let result = false;
+    formulaArr.forEach(entry => {
+        if (['+', '-', '*', '/'].includes(entry)) {
+            return;
+        } else if ($.isNumeric(entry)) {
+            return;
+        } else if ($.isArray(entry)) {
+            if (isUseReference(entry)) {
+                result = true;
+            }
+        } else {
+            if (entry.indexOf('#') != -1) {
+                result = true;
+            }
+        }
+    });
+    return result;
+}
+
 // ダメージ計算を行います
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
 function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, opt_精度 = 0) {
@@ -109,6 +135,14 @@ function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc,
     my精度補正 = Number(my精度補正);
     let my非会心Result = Math.floor(calculateFormulaArray(statusObj, formula) * my精度補正) / my精度補正;
     console.debug("%o => %o", formula, my非会心Result);
+
+    // 計算済みの値を参照する場合は、バフと防御、耐性補正の計算を省略します
+    if (isUseReference(formula)) {
+        buffArr = null;
+        is防御補正Calc = false;
+        is耐性補正Calc = false;
+    }
+
     let my会心Result = null;
     let my期待値Result;
     let myバフ = 0;
@@ -1612,7 +1646,7 @@ const inputOnChangeResultUpdate = function (statusObj) {
         $('#その他ダメージResult').show();
         displayResultTable('その他ダメージResult', 'その他', myダメージ計算['その他']);
     } else {
-        $('#その他ダメージResult').hide();  
+        $('#その他ダメージResult').hide();
     }
 
     $('#ダメージ計算注釈').html(statusObj['キャラクター注釈'].join('<br>'));
