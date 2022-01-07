@@ -133,7 +133,20 @@ const ステータス詳細ObjTemplate = {
     過負荷ダメージバフ: 0,
     超電導ダメージバフ: 0,
     拡散ダメージバフ: 0,
-    キャラクター注釈: []
+    キャラクター注釈: [],
+    通常攻撃ダメージアップ: 0,
+    重撃ダメージアップ: 0,
+    落下攻撃ダメージアップ: 0,
+    元素スキルダメージアップ: 0,
+    元素爆発ダメージアップ: 0,
+    炎元素ダメージアップ: 0,
+    水元素ダメージアップ: 0,
+    風元素ダメージアップ: 0,
+    雷元素ダメージアップ: 0,
+    草元素ダメージアップ: 0,
+    氷元素ダメージアップ: 0,
+    岩元素ダメージアップ: 0,
+    物理ダメージアップ: 0
 };
 
 // マスターデータの詳細[].種類からステータス詳細ObjVarのプロパティへの変換表です
@@ -286,12 +299,32 @@ const toggleローカルストレージクリア = function () {
 var キャラクター構成ObjVar = null;
 
 // おすすめセットをセットアップします
-function setupおすすめセット() {
+function setupおすすめセット(opt_saveName = null) {
     おすすめセットArrVar = [];
-    loadキャラクター構成();
-    if (キャラクター構成ObjVar) {
-        おすすめセットArrVar.push(['あなたの' + キャラクター構成ObjVar['キャラクター'], キャラクター構成ObjVar]);
+    if (!opt_saveName) {
+        loadキャラクター構成();
     }
+
+    const myCharacter = $('#キャラクターInput').val();
+
+    let storageKeyArr = [];
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('構成_' + myCharacter)) {
+            storageKeyArr.push(key);
+        }
+    });
+    storageKeyArr.sort();
+    const re = new RegExp('^構成_' + myCharacter + '_');
+    storageKeyArr.forEach(key => {
+        let setName;
+        if (key == '構成_' + myCharacter) {
+            setName = 'あなたの' + myCharacter;
+        } else {
+            setName = key.replace(re, '');
+        }
+        おすすめセットArrVar.push([setName, JSON.parse(localStorage[key]), true]);
+    });
+
     if ('おすすめセット' in 選択中キャラクターデータVar) {
         Object.keys(選択中キャラクターデータVar['おすすめセット']).forEach(key => {
             let myおすすめセット = 選択中キャラクターデータVar['おすすめセット'][key];
@@ -313,7 +346,7 @@ function setupおすすめセット() {
                     }
                 }
             }
-            おすすめセットArrVar.push([key, myおすすめセット]);
+            おすすめセットArrVar.push([key, myおすすめセット, false]);
         });
     }
     let selector = '#おすすめセットInput';
@@ -321,6 +354,10 @@ function setupおすすめセット() {
     おすすめセットArrVar.forEach(entry => {
         appendOptionElement(entry[0], entry[1], selector);
     });
+
+    if (opt_saveName) {
+        $(selector).val(opt_saveName);
+    }
 }
 
 const saveキャラクター構成 = function () {
@@ -328,6 +365,10 @@ const saveキャラクター構成 = function () {
 
     let myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;
+    let saveName = $('#構成名称Input').val().trim();
+    if (saveName && saveName != 'あなたの' + myキャラクター) {
+        key += '_' + saveName;
+    }
     キャラクター構成ObjVar = {
         キャラクター: myキャラクター,
         レベル: $('#レベルInput').val(),
@@ -379,11 +420,22 @@ const saveキャラクター構成 = function () {
 
     localStorage.setItem(key, JSON.stringify(キャラクター構成ObjVar));
 
-    setupおすすめセット();
+    $('#構成保存Button').prop('disabled', true);
+    $('#保存構成削除Button').prop('disabled', false);
+    $('#構成名称Input').prop('disabled', true);
+
+    setupおすすめセット(saveName);
 }
 
 const clearキャラクター構成 = function () {
-    let key = '構成_' + $('#キャラクターInput').val();
+    let setName = $('#構成名称Input').val();
+    if (!setName) return;
+
+    let myキャラクター = $('#キャラクターInput').val();
+    let key = '構成_' + myキャラクター;
+    if (setName != 'あなたの' + myキャラクター) {
+        key += '_' + setName;
+    }
     if (localStorage[key]) {
         localStorage.removeItem(key);
     }
@@ -454,10 +506,14 @@ const loadキャラクター構成 = function () {
 
         $('#構成保存Button').prop('disabled', true);
         $('#保存構成削除Button').prop('disabled', false);
+        $('#構成名称Input').val('あなたの' + $('#キャラクターInput').val());
+        $('#構成名称Input').prop('disabled', true);
     } else {
         キャラクター構成ObjVar = null;
         $('#構成保存Button').prop('disabled', false);
         $('#保存構成削除Button').prop('disabled', true);
+        $('#構成名称Input').val(null);
+        $('#構成名称Input').prop('disabled', false);
     }
 }
 
@@ -465,6 +521,7 @@ function changeキャラクター構成(elem) {
     if (!$('#構成保存Button').prop('disabled')) return;
     if (キャラクター構成ObjVar) {
         $('#構成保存Button').prop('disabled', false);
+        $('#構成名称Input').prop('disabled', false);
         return;
     }
     let key = elem.id.replace('Input', '');
@@ -483,16 +540,19 @@ function changeキャラクター構成(elem) {
     }
     if (value != null && key in キャラクター構成ObjVar && value != キャラクター構成ObjVar[key]) {
         $('#構成保存Button').prop('disabled', false);
+        $('#構成名称Input').prop('disabled', false);
     }
 }
 
 const enable構成保存Button = function () {
     $('#構成保存Button').prop('disabled', false);
+    $('#構成名称Input').prop('disabled', false);
 };
 
 function initキャラクター構成関連要素() {
     $('#構成保存Button').prop('disabled', true);
     $('#保存構成削除Button').prop('disabled', true);
+    $('#構成名称Input').prop('disabled', true);
 
     $(document).on('click', '#構成保存Button', saveキャラクター構成);
     $(document).on('click', '#保存構成削除Button', clearキャラクター構成);

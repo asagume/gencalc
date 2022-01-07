@@ -156,6 +156,17 @@ input[type="number"] {
     box-shadow: none;
 }
 
+input[type="text"] {
+    width: 100px;
+    height: 2.4rem;
+    padding-left: 0.5rem;
+    margin: 0;
+    font-size: 2rem;
+    border: none;
+    border-radius: 0.8rem;
+    box-shadow: none;
+}
+
 label {
     margin: 1px;
     font-size: 2rem;
@@ -339,7 +350,7 @@ fieldset.input-group legend {
 }
 
 .input-set2+label {
-    width: calc(100% / 4 - 1rem);
+    width: calc(100% / 5 - 1rem);
 }
 
 .others-set+label {
@@ -771,6 +782,13 @@ section.tiny article.input-item label {
     top: 4rem;
     right: 0;
     width: 24rem;
+}
+
+#face #構成名称Input {
+    position: absolute;
+    bottom: 4rem;
+    right: 0;
+    width: 23rem;
 }
 
 #face #artifactDetailImageButton {

@@ -547,6 +547,51 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
         }
     });
 
+    if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+        if (statusObj[detailObj['種類'] + 'アップ'] > 0) {
+            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
+            // 複数回HITするダメージについては、HIT数を乗算します
+            if (myHIT数 > 1) {
+                myResultWork[1] *= myHIT数;
+                if (myResultWork[2] != null) {
+                    myResultWork[2] *= myHIT数;
+                }
+                if (myResultWork[3] != null) {
+                    myResultWork[3] *= myHIT数;
+                }
+            }
+            my計算Result[1] += myResultWork[1];
+            if (my計算Result[2] != null) {
+                my計算Result[2] += myResultWork[2];
+            }
+            if (my計算Result[3] != null) {
+                my計算Result[3] += myResultWork[3];
+            }
+        }
+    }
+    if (my元素 + '元素ダメージアップ' in statusObj && statusObj[my元素 + '元素ダメージアップ'] > 0) {
+        let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
+        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+            // 複数回HITするダメージについては、HIT数を乗算します
+            if (myHIT数 > 1) {
+                myResultWork[1] *= myHIT数;
+                if (myResultWork[2] != null) {
+                    myResultWork[2] *= myHIT数;
+                }
+                if (myResultWork[3] != null) {
+                    myResultWork[3] *= myHIT数;
+                }
+            }
+        }
+        my計算Result[1] += myResultWork[1];
+        if (my計算Result[2] != null) {
+            my計算Result[2] += myResultWork[2];
+        }
+        if (my計算Result[3] != null) {
+            my計算Result[3] += myResultWork[3];
+        }
+    }
+
     // 書き換えたステータスを元に戻します。
     Object.keys(myステータス補正).forEach(statusName => {
         statusObj[statusName] -= myステータス補正[statusName];
@@ -795,14 +840,22 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
             }
             if (statusChangeArrMap != null) {
-                if (resultObj['種類'] in ステータス詳細ObjVar || resultObj['種類'].endsWith('%') || new RegExp('[自全].+バフ').exec(resultObj['種類']) || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類']) || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
+                if (resultObj['種類'] in ステータス詳細ObjVar
+                    || resultObj['種類'].endsWith('%')
+                    || new RegExp('[自全].+バフ').exec(resultObj['種類'])
+                    || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
+                    || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
                     resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                     statusChangeArrMap.get(inputCategory).push(resultObj);
                     return;
                 }
             }
             if (talentChangeArrMap != null) {
-                if (resultObj['種類'].endsWith('強化') || resultObj['種類'].endsWith('付与') || resultObj['種類'].endsWith('アップ') || resultObj['種類'] == '防御無視' || resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
+                if (resultObj['種類'].endsWith('強化')
+                    || resultObj['種類'].endsWith('付与')
+                    || resultObj['種類'].endsWith('アップ')
+                    || resultObj['種類'] == '防御無視' ||
+                    resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
                     resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                     talentChangeArrMap.get(inputCategory).push(resultObj);
                     return;
@@ -1646,6 +1699,14 @@ function calculateStatusObj(statusObj) {
     statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージバフ'] += Number($('#チーム自元素ダメージバフInput').val());
     statusObj['物理ダメージバフ'] += Number($('#チーム物理ダメージバフInput').val());
 
+    statusObj['通常攻撃ダメージアップ'] += Number($('#チーム通常攻撃ダメージアップInput').val());
+    statusObj['重撃ダメージアップ'] += Number($('#チーム重撃ダメージアップInput').val());
+    statusObj['落下攻撃ダメージアップ'] += Number($('#チーム落下攻撃ダメージアップInput').val());
+    statusObj['元素スキルダメージアップ'] += Number($('#チーム元素スキルダメージアップInput').val());
+    statusObj['元素爆発ダメージアップ'] += Number($('#チーム元素爆発ダメージアップInput').val());
+    statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージアップ'] += Number($('#チーム自元素ダメージアップInput').val());
+    statusObj['物理ダメージアップ'] += Number($('#チーム物理ダメージアップInput').val());
+
     // ステータス補正を計上します
     Array.from(document.getElementsByName('ステータスInput')).forEach(elem => {
         let statusName = elem.id.replace('Input', '');
@@ -2371,7 +2432,17 @@ const おすすめセットInputOnChange = function () {
     ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
     let is聖遺物サブ効果Includes = false;
-    const entry = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
+    const selectedSet = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')];
+    if (selectedSet[2]) {
+        $('#構成名称Input').val(selectedSet[0]);
+        $('#保存構成削除Button').prop('disabled', false);
+    } else {
+        $('#構成名称Input').val('');
+        $('#保存構成削除Button').prop('disabled', true);
+    }
+
+    const entry = selectedSet[1];
+
     const 聖遺物優先するサブ効果上昇値ValueMap = new Map([
         ['聖遺物優先するサブ効果1上昇値Input', null],
         ['聖遺物優先するサブ効果2上昇値Input', null],

@@ -19,7 +19,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.7.8
+                    げんかるく - 原神ダメージシミュレーター Ver.1.8.0
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -43,7 +43,7 @@
                     <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
                         id="選択キャラクターImg" />
 
-                        <section class="input-group">
+                    <section class="input-group">
                         <p id="選択キャラクター名前Label"></p>
                         <label for="おすすめセットInput">おすすめセット</label>
                         <select id="おすすめセットInput"></select>
@@ -51,6 +51,7 @@
 
                     <button type="button" id="構成保存Button">この構成を保存</button>
                     <button type="button" id="保存構成削除Button">保存構成を削除</button>
+                    <input type="text" id="構成名称Input" minlength="1" maxlength="12">
 
                     <input type="file" id="artifactDetailImage" style="display: none;">
                     <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48"></div>
@@ -522,46 +523,88 @@
                         <div class="tab-content" style="padding-top: 10px;">
                             <table>
                                 <tr>
-                                    <th>攻撃力+</th>
+                                    <th>攻撃力</th>
                                     <td><input type="number" value="0" id="チーム攻撃力Input" name="チームInput"></td>
-                                    <th>通常攻撃ダメージ+</th>
+                                    <th>通常攻撃ダメージ</th>
                                     <td><input type="number" value="0" id="チーム通常攻撃ダメージバフInput" name="チームInput"></td>
                                 </tr>
                                 <tr>
-                                    <th>攻撃力%+</th>
+                                    <th>攻撃力%</th>
                                     <td><input type="number" value="0" id="チーム攻撃力PInput" name="チームInput"></td>
-                                    <th>重撃ダメージ+</th>
+                                    <th>重撃ダメージ</th>
                                     <td><input type="number" value="0" id="チーム重撃ダメージバフInput" name="チームInput"></td>
                                 </tr>
                                 <tr>
-                                    <th>防御力+</th>
+                                    <th>防御力</th>
                                     <td><input type="number" value="0" id="チーム防御力Input" name="チームInput"></td>
-                                    <th>落下攻撃ダメージ+</th>
+                                    <th>落下攻撃ダメージ</th>
                                     <td><input type="number" value="0" id="チーム落下攻撃ダメージバフInput" name="チームInput"></td>
                                 </tr>
                                 <tr>
-                                    <th>防御力%+</th>
+                                    <th>防御力%</th>
                                     <td><input type="number" value="0" id="チーム防御力PInput" name="チームInput"></td>
-                                    <th>元素スキルダメージ+</th>
+                                    <th>元素スキルダメージ</th>
                                     <td><input type="number" value="0" id="チーム元素スキルダメージバフInput" name="チームInput"></td>
                                 </tr>
                                 <tr>
-                                    <th>元素熟知+</th>
+                                    <th>元素熟知</th>
                                     <td><input type="number" value="0" id="チーム元素熟知Input" name="チームInput"></td>
-                                    <th>元素爆発ダメージ+</th>
+                                    <th>元素爆発ダメージ</th>
                                     <td><input type="number" value="0" id="チーム元素爆発ダメージバフInput" name="チームInput"></td>
                                 </tr>
                                 <tr>
-                                    <th>会心率+</th>
+                                    <th>会心率</th>
                                     <td><input type="number" value="0" id="チーム会心率Input" name="チームInput"></td>
-                                    <th>自元素ダメージ+</th>
+                                    <th>自元素ダメージ</th>
                                     <td><input type="number" value="0" id="チーム自元素ダメージバフInput" name="チームInput"></td>
                                 </tr>
                                 <tr>
-                                    <th>会心ダメージ+</th>
+                                    <th>会心ダメージ</th>
                                     <td><input type="number" value="0" id="チーム会心ダメージInput" name="チームInput"></td>
-                                    <th>物理ダメージ+</th>
+                                    <th>物理ダメージ</th>
                                     <td><input type="number" value="0" id="チーム物理ダメージバフInput" name="チームInput"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>通常攻撃ダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム通常攻撃ダメージアップInput" name="チームInput"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>重撃ダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム重撃ダメージアップInput" name="チームInput"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>落下攻撃ダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム落下攻撃ダメージアップInput" name="チームInput"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>元素スキルダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム元素スキルダメージアップInput" name="チームInput"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>元素爆発ダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム元素爆発ダメージアップInput" name="チームInput"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>自元素ダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム自元素ダメージアップInput" name="チームInput"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th></th>
+                                    <td></td>
+                                    <th>物理ダメージアップ</th>
+                                    <td><input type="number" value="0" id="チーム物理ダメージアップInput" name="チームInput"></td>
                                 </tr>
                             </table>
                         </div>
@@ -733,7 +776,92 @@
 
                             <input type="radio" class="tab-button input-set2" id="status-table3"
                                 name="status-table-group" />
-                            <label for="status-table3">耐性/軽減</label>
+                            <label for="status-table3" style="font-size: smaller;">ダメージアップ</label>
+                            <div class="tab-content">
+                                <table class="status">
+                                    <tr>
+                                        <th>炎元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="炎元素ダメージアップInput"
+                                                name="ダメージアップInput" />
+                                        </td>
+                                        <td id="炎元素ダメージアップValue"></td>
+                                        <th>通常攻撃ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="通常攻撃ダメージアップInput"
+                                                name="ダメージアップInput" />
+                                        </td>
+                                        <td id="通常攻撃ダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>水元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="水元素ダメージアップInput"
+                                                name="ダメージアップInput" />
+                                        </td>
+                                        <td id="水元素ダメージアップValue"></td>
+                                        <th>重撃ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="重撃ダメージアップInput"
+                                                name="ダメージアップInput" />
+                                        </td>
+                                        <td id="重撃ダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>風元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="風元素ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="風元素ダメージアップValue"></td>
+                                        <th>落下攻撃ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="落下攻撃ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="落下攻撃ダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>雷元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="雷元素ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="雷元素ダメージアップValue"></td>
+                                        <th>元素スキルダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="元素スキルダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="元素スキルダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>草元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="草元素ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="草元素ダメージアップValue"></td>
+                                        <th>元素爆発ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="元素爆発ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="元素爆発ダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>氷元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="氷元素ダメージバフInput"
+                                                name="ダメージバフInput" /></td>
+                                        <td id="氷元素ダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>岩元素ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="岩元素ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="岩元素ダメージアップValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>物理ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="物理ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="物理ダメージアップValue"></td>
+                                        <td colspan="3">
+                                            <input type="checkbox" id="ダメージアップ補正初期化Toggle">
+                                            <label for="ダメージアップ補正初期化Toggle">補正値0初期化</label>
+                                            <button type="button" id="ダメージアップ補正初期化Button" disabled>実行</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <input type="radio" class="tab-button input-set2" id="status-table4"
+                                name="status-table-group" />
+                            <label for="status-table4">耐性/軽減</label>
                             <div class="tab-content">
                                 <table class="status">
                                     <tr>
@@ -796,9 +924,9 @@
                                 </table>
                             </div>
 
-                            <input type="radio" class="tab-button input-set2" id="status-table4"
+                            <input type="radio" class="tab-button input-set2" id="status-table5"
                                 name="status-table-group" />
-                            <label for="status-table4">敵耐性詳細</label>
+                            <label for="status-table5">敵耐性詳細</label>
                             <div class="tab-content">
                                 <table class="status">
                                     <tr>
@@ -988,6 +1116,16 @@
         <div style="text-align: left;">
             <hr>
             <dl>
+                <dt>1.8.0</dt>
+                <dd>
+                    <ul>
+                        <li>雲菫</li>
+                        <li>ダメージアップ系の処理方式を変更。対象指定なしのものをステータス扱いにした。計算タイミングが早くなったことで問題が発生する可能性あり</li>
+                        <li>基本条件・チームバフに各種ダメージアップ項目を追加</li>
+                        <li>ステータスにダメージアップタブを追加</li>
+                        <li>構成保存、削除機能を拡張。名前をつけることで複数件保存可能にした</li>
+                    </ul>
+                </dd>
                 <dt>1.7.8</dt>
                 <dd>
                     <ul>
