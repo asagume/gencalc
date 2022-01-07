@@ -1716,6 +1716,10 @@ function calculateStatusObj(statusObj) {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
     });
+    Array.from(document.getElementsByName('ダメージアップInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
     Array.from(document.getElementsByName('耐性軽減Input')).forEach(elem => {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
