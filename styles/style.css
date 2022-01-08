@@ -323,7 +323,7 @@ fieldset.input-group legend {
     border-radius: 0.5rem;
     border-color: #999;
     border-style: solid;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .tab-button:checked+label {
