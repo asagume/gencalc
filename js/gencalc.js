@@ -1709,7 +1709,16 @@ function calculateStatusObj(statusObj) {
     let validBuffDebuffConditionValueArr = makeValidConditionValueArr('#バフデバフオプションBox');;
     バフデバフ詳細ArrVar.forEach(detailObj => {
         let number = checkConditionMatches(detailObj['条件'], validBuffDebuffConditionValueArr);
-        if (number == 0) return;
+        if (number == 0) {
+            return;
+        }
+        if (detailObj['種類'].endsWith('元素付与')) {
+            let my元素 = detailObj['種類'].replace('元素付与', '');
+            通常攻撃_元素Var = my元素;
+            重撃_元素Var = my元素;
+            落下攻撃_元素Var = my元素;
+            return;
+        }
         let myNew数値 = detailObj['数値'];
         if (number != 1) {
             myNew数値 = myNew数値.concat(['*', number]);
