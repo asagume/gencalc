@@ -4,8 +4,7 @@
         "元素": "氷",
         "武器": "長柄武器",
         "import": "data/characters/cryo_5_polearm_Shenhe.json",
-        "image": "images/2021122614031218964.png",
-        "selected": true
+        "image": "images/2021122614031218964.png"
     },
     "荒瀧一斗": {
         "レアリティ": 5,
@@ -107,7 +106,8 @@
         "武器": "長柄武器",
         "import": "data/characters/geo_5_polearm_Zhongli.json",
         "image": "images/Zhongli.png",
-        "image2": "images/hoyolab/693b8a54de3e9ea43854615c14a5032b.png"
+        "image2": "images/hoyolab/693b8a54de3e9ea43854615c14a5032b.png",
+        "selected": true
     },
     "タルタリヤ": {
         "レアリティ": 5,
