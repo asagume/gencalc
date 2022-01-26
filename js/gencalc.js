@@ -604,8 +604,8 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
         }
     }
     if (my元素 + '元素ダメージアップ' in statusObj && statusObj[my元素 + '元素ダメージアップ'] > 0) {
-        let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0, my精度);
         if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0, my精度);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
                 myResultWork[1] *= myHIT数;
@@ -616,13 +616,13 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                     myResultWork[3] *= myHIT数;
                 }
             }
-        }
-        my計算Result[1] += myResultWork[1];
-        if (my計算Result[2] != null) {
-            my計算Result[2] += myResultWork[2];
-        }
-        if (my計算Result[3] != null) {
-            my計算Result[3] += myResultWork[3];
+            my計算Result[1] += myResultWork[1];
+            if (my計算Result[2] != null) {
+                my計算Result[2] += myResultWork[2];
+            }
+            if (my計算Result[3] != null) {
+                my計算Result[3] += myResultWork[3];
+            }
         }
     }
 
