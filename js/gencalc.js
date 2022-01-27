@@ -2596,6 +2596,41 @@ const キャラクターInputOnChange = function () {
 
     fetch(myキャラクターMaster.import).then(response => response.json()).then(data => {
         選択中キャラクターデータVar = data;
+
+        ['通常攻撃', '特殊通常攻撃'].forEach(category => {
+            if (category in 選択中キャラクターデータVar) {
+                if ('詳細' in 選択中キャラクターデータVar[category]) {
+                    if ($.isArray(選択中キャラクターデータVar[category]['詳細'])) {
+                        let my段数 = 0;
+                        let myNew数値 = '';
+                        let my元素 = null;
+                        選択中キャラクターデータVar[category]['詳細'].forEach(detailObj => {
+                            if (detailObj['名前'].endsWith('段ダメージ')) {
+                                my段数 = detailObj['名前'].replace('段ダメージ', '');
+                                if (myNew数値) {
+                                    myNew数値 += '+';
+                                }
+                                myNew数値 += '通常攻撃#' + detailObj['名前'];
+                                if ('元素' in detailObj) {
+                                    my元素 = detailObj['元素'];
+                                }
+                            }
+                        });
+                        if (myNew数値) {
+                            let myNewObj = {
+                                名前: '合計ダメージ',
+                                種類: '他所基準ダメージ',
+                                数値: myNew数値,
+                                元素: my元素
+                            }
+                            my段数 = Number(my段数);
+                            選択中キャラクターデータVar[category]['詳細'].splice(my段数, 0, myNewObj);
+                        }
+                    }
+                }
+            }
+        });
+
         console.debug('選択中キャラクターデータVar');
         console.debug(選択中キャラクターデータVar);
 

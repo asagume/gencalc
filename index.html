@@ -19,7 +19,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.8.4
+                    げんかるく - 原神ダメージシミュレーター Ver.1.8.5
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -844,17 +844,17 @@
                                         <td><input type="number" value="0" step="0.1" id="岩元素ダメージアップInput"
                                                 name="ダメージアップInput" /></td>
                                         <td id="岩元素ダメージアップValue"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>物理ダメージ</th>
-                                        <td><input type="number" value="0" step="0.1" id="物理ダメージアップInput"
-                                                name="ダメージアップInput" /></td>
-                                        <td id="物理ダメージアップValue"></td>
                                         <td colspan="3">
                                             <input type="checkbox" id="ダメージアップ補正初期化Toggle">
                                             <label for="ダメージアップ補正初期化Toggle">補正値0初期化</label>
                                             <button type="button" id="ダメージアップ補正初期化Button" disabled>実行</button>
                                         </td>
+                                    </tr>
+                                    <tr style="display: none;">
+                                        <th>物理ダメージ</th>
+                                        <td><input type="number" value="0" step="0.1" id="物理ダメージアップInput"
+                                                name="ダメージアップInput" /></td>
+                                        <td id="物理ダメージアップValue"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -1116,6 +1116,16 @@
         <div style="text-align: left;">
             <hr>
             <dl>
+                <dt>1.8.5 (2022/01/27)</dt>
+                <dd>
+                    <ul>
+                        <li>通常攻撃ダメージの合計ダメージ表示を追加<br>
+                            表示に必要な幅が大きくなったせいでレイアウトが崩れるようならオプションにするかもしれません</li>
+                        <li>Known Bugs<br>
+                            通常攻撃指定の元素付与(ex.宵宮)が合計ダメージに反映されない不具合あり<br>
+                            元素反応(溶解、蒸発)ダメージ計算の対象になりません</li>
+                    </ul>
+                </dd>
                 <dt>1.8.4 (2022/01/26)</dt>
                 <dd>
                     <ul>

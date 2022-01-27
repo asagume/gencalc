@@ -183,7 +183,7 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
 
 const analyzeFormulaStr = function (str, defaultItem = null) {
     let resultArr = [];
-    let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+|[^0-9\\.%\\+\\-\\*/]+)([\\+\\-\\*/]?)(.*)');
+    let re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
     let workStr = str;
     while (true) {
         let reRet = re.exec(workStr);
@@ -191,22 +191,44 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
             resultArr.push(workStr);
             break;
         }
-        resultArr.push(analyzeFormulaStrSub(reRet[1], defaultItem));
-        if (reRet[2]) {
-            resultArr.push(reRet[2]);
-            if (reRet[3]) {
-                workStr = reRet[3];
-                continue;
-            } else {
-                console.error(str, defaultItem);
-            }
-        } else if (reRet[3]) {
-            console.error(str, defaultItem);
+        if (reRet[1]) { // + - * /
+            resultArr.push(reRet[1]);
         }
-        break;
+        resultArr.push(analyzeFormulaStrSub(reRet[2], defaultItem));
+        if (!reRet[3]) {
+            break;
+        }
+        workStr = reRet[3];
     }
     return resultArr;
 }
+
+// const analyzeFormulaStr_ = function (str, defaultItem = null) {
+//     let resultArr = [];
+//     let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+|[^0-9\\.%\\+\\-\\*/]+)([\\+\\-\\*/]?)(.*)');
+//     let workStr = str;
+//     while (true) {
+//         let reRet = re.exec(workStr);
+//         if (!reRet) {
+//             resultArr.push(workStr);
+//             break;
+//         }
+//         resultArr.push(analyzeFormulaStrSub(reRet[1], defaultItem));
+//         if (reRet[2]) {
+//             resultArr.push(reRet[2]);
+//             if (reRet[3]) {
+//                 workStr = reRet[3];
+//                 continue;
+//             } else {
+//                 console.error(str, defaultItem);
+//             }
+//         } else if (reRet[3]) {
+//             console.error(str, defaultItem);
+//         }
+//         break;
+//     }
+//     return resultArr;
+// }
 
 // 防御補正を計算します
 //function calcurate防御補正(level, enemyLevel, opt_def = 0, opt_ignoreDef = 0) {
