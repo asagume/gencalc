@@ -1831,16 +1831,23 @@ function calculateStatusObj(statusObj) {
     // 天賦性能変更系詳細ArrMapVarの登録内容を反映します
     天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
         value.forEach(value => {
-            if (value['対象']) return;  // 対象指定ありのものはスキップします
             if (value['条件']) {
                 let number = checkConditionMatches(value['条件'], validConditionValueArr);
                 if (number == 0) return;
             }
             if (value['種類'].endsWith('元素付与')) {
                 let my元素 = value['種類'].replace('元素付与', '');
-                通常攻撃_元素Var = my元素;
-                重撃_元素Var = my元素;
-                落下攻撃_元素Var = my元素;
+                if (!value['対象']) {
+                    通常攻撃_元素Var = my元素;
+                    重撃_元素Var = my元素;
+                    落下攻撃_元素Var = my元素;
+                } else if (value['対象'] == '通常攻撃ダメージ') {
+                    通常攻撃_元素Var = my元素;
+                } else if (value['対象'] == '重撃ダメージ') {
+                    重撃_元素Var = my元素;
+                } else if (value['対象'] == '落下攻撃ダメージ') {
+                    落下攻撃_元素Var = my元素;
+                }
             }
         });
     });
