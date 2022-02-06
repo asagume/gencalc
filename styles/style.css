@@ -291,6 +291,22 @@ article.input-item img.info {
     right: 0;
 }
 
+article.input-item p.info {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+article.input-item p.info+p.description {
+    display: none;
+}
+
+article.input-item p.info:hover+p.description {
+    display: block;
+    font-size: 1.8rem;
+    color: #ecce8d;
+}
+
 fieldset.input-group legend {
     text-align: left;
 }

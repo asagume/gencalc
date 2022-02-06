@@ -28,7 +28,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.8.6
+                    げんかるく - 原神ダメージシミュレーター Ver.1.8.7
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -84,6 +84,8 @@
                                 <article class="input-item">
                                     <label for="キャラクターInput">キャラクター</label>
                                     <select id="キャラクターInput"></select>
+                                    <p class="info">ℹ️</p>
+                                    <p id="character-description" class="description"></p>
                                 </article>
                                 <article class="input-item">
                                     <label for="レベルInput">キャラクターLv.</label>
@@ -160,6 +162,8 @@
                                 <article class="input-item">
                                     <label for="武器Input">武器</label>
                                     <select id="武器Input"></select>
+                                    <p class="info">ℹ️</p>
+                                    <p id="weapon-description" class="description"></p>
                                 </article>
                                 <article class="input-item">
                                     <label for="武器レベルInput">武器Lv.</label>
@@ -1125,6 +1129,12 @@
         <div style="text-align: left;">
             <hr>
             <dl>
+                <dt>1.8.7 (2022/02/06)</dt>
+                <dd>
+                    <ul>
+                        <li>キャラクターと武器にℹ️を追加(テスト)</li>
+                    </ul>
+                </dd>
                 <dt>1.8.6 (2022/01/28)</dt>
                 <dd>
                     <ul>

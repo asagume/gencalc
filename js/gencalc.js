@@ -2419,6 +2419,12 @@ const 精錬ランクInputOnChange = function () {
     inputOnChangeOptionUpdate();
 };
 
+// 武器レベル 変更イベント
+const 武器レベルInputOnChange = function () {
+    setup武器説明();
+    inputOnChangeOptionUpdate();
+};
+
 // 武器 変更イベント
 const 武器InputOnChange = function () {
     fetch(選択可能武器セットObjVar[$('#武器Input').val()]['import']).then(response => response.json()).then(data => {
@@ -2465,10 +2471,24 @@ const 武器InputOnChange = function () {
         }
         $('#精錬ランクInput').val(my精錬ランク);
 
+        setup武器説明();
+
         setupBaseDamageDetailDataWeapon();
         inputOnChangeOptionUpdate();
     });
 };
+
+function setup武器説明() {
+    let my武器レベル = $('#武器レベルInput').val();
+    let my武器OP;
+    Object.keys(選択中武器データVar['ステータス']).forEach(status => {
+        if (status != '基礎攻撃力') {
+            my武器OP = status;
+        }
+    });
+    $('#weapon-description').html('基礎攻撃力' + 選択中武器データVar['ステータス']['基礎攻撃力'][my武器レベル] + '<br>'
+        + my武器OP + 選択中武器データVar['ステータス'][my武器OP][my武器レベル]);
+}
 
 function getNormalAttackDefaultElement() {
     キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
@@ -2564,6 +2584,12 @@ const 天賦レベルInputOnChange = function () {
 // 命ノ星座 変更イベント
 const 命ノ星座InputOnChange = function () {
     setupBaseDamageDetailDataCharacter();
+    inputOnChangeOptionUpdate();
+};
+
+// レベル 変更イベント
+const レベルInputOnChange = function () {
+    setupキャラクター説明();
     inputOnChangeOptionUpdate();
 };
 
@@ -2858,6 +2884,8 @@ const キャラクターInputOnChange = function () {
 
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
+        setupキャラクター説明();
+
         inputOnChangeEnemyUpdate(ステータス詳細ObjVar); // 敵
         if (おすすめセットArrVar.length > 0) {
             おすすめセットInputOnChange();
@@ -2869,18 +2897,33 @@ const キャラクターInputOnChange = function () {
     });
 };
 
+function setupキャラクター説明() {
+    let myレベル = $('#レベルInput').val();
+    let my突破ステータス;
+    Object.keys(選択中キャラクターデータVar['ステータス']).forEach(status => {
+        if (!['基礎HP', '基礎攻撃力', '基礎防御力'].includes(status)) {
+            my突破ステータス = status;
+        }
+    });
+    $('#character-description').html(
+        '基礎HP' + 選択中キャラクターデータVar['ステータス']['基礎HP'][myレベル] + '<br>'
+        + '基礎攻撃力' + 選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myレベル] + '<br>'
+        + '基礎防御力' + 選択中キャラクターデータVar['ステータス']['基礎防御力'][myレベル] + '<br>'
+        + my突破ステータス.replace('バフ', '') + 選択中キャラクターデータVar['ステータス'][my突破ステータス][myレベル]);
+}
+
 // おすすめセット
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
 
 // 基本条件・キャラ/武器
 $(document).on('change', '#キャラクターInput', キャラクターInputOnChange);
-$(document).on('change', '#レベルInput', inputOnChangeStatusUpdate);
+$(document).on('change', '#レベルInput', レベルInputOnChange);
 $(document).on('change', '#命ノ星座Input', 命ノ星座InputOnChange);
 $(document).on('change', '#通常攻撃レベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素スキルレベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素爆発レベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#武器Input', 武器InputOnChange);
-$(document).on('change', '#武器レベルInput', inputOnChangeStatusUpdate);
+$(document).on('change', '#武器レベルInput', 武器レベルInputOnChange);
 $(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
 
 // 基本条件・聖遺物
