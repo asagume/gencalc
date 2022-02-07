@@ -1,0 +1,917 @@
+/* 3 Columns */
+@media all and (min-width: 1251px) {
+    html {
+        font-size: 8px;
+    }
+
+    body {
+        font-size: 8px;
+    }
+
+    #main {
+        min-width: 1250px;
+        max-width: 1536px;
+        margin: 0 auto;
+        background: linear-gradient(to right, #574014, #3a2e0c);
+    }
+
+    .base-container {
+        display: grid;
+        grid-template-columns: 238px 532px auto;
+        grid-template-rows: 32px 150px minmax(1000px, auto) 500px 140px;
+        grid-template-areas: "header header header""aside face-area greeting-area""aside input-area result-area""aside bottom-area bottom-area""footer footer footer";
+    }
+
+    #status-area {
+        display: initial;
+    }
+}
+
+/* 2 Columns */
+@media all and (min-width: 769px) and (max-width: 1250px) {
+    html {
+        font-size: calc(100vw / 96);
+    }
+
+    body {
+        font-size: calc(100vw / 96);
+    }
+
+    #main {
+        min-width: 769px;
+        max-width: 1250px;
+        margin: 0 auto;
+        background: linear-gradient(to right, #574014, #3a2e0c);
+    }
+
+    .base-container {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 3rem 150px auto minmax(100rem, auto) 50rem 14rem;
+        grid-template-areas: "header header""greeting-area face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
+    }
+
+    #status-area {
+        display: none;
+    }
+}
+
+/* 1 Column */
+@media all and (max-width: 768px) {
+    html {
+        font-size: calc(100vw / 72);
+    }
+
+    body {
+        font-size: calc(100vw / 72);
+    }
+
+    #main {
+        min-width: 360px;
+        max-width: 768px;
+        margin: 0 auto;
+        background: linear-gradient(to right, #574014, #3a2e0c);
+    }
+
+    .base-container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 3rem 8rem 100px 150px auto minmax(100rem, auto) 50rem 14rem;
+        grid-template-areas: "header""greeting-area""aside""face-area""input-area""result-area""bottom-area""footer";
+    }
+
+    #status-area {
+        display: none;
+    }
+
+    .horizontal-list {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+body {
+    width: 100%;
+    color: blanchedalmond;
+    background-color: rgb(58, 30, 10);
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+
+a {
+    color: blanchedalmond;
+}
+
+p {
+    margin: 0.5rem;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
+
+button {
+    margin: 0;
+    font-size: 2rem;
+    color: blanchedalmond;
+    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
+    border-radius: 1rem;
+    border: solid 0.1rem black;
+}
+
+button:hover {
+    border: solid 0.1rem gray;
+}
+
+button:active {
+    border: solid 0.1rem darkgray;
+}
+
+button:disabled {
+    color: darkgray;
+}
+
+select {
+    width: 100%;
+    height: 3rem;
+    padding: 0.1rem 0.5rem;
+    margin: 0;
+    font-size: 2rem;
+    border-radius: 0.8rem;
+    box-shadow: none;
+}
+
+input[type="number"] {
+    width: 10rem;
+    height: 2.4rem;
+    padding-left: 0.5rem;
+    margin: 0;
+    font-size: 2rem;
+    border: none;
+    border-radius: 0.8rem;
+    box-shadow: none;
+}
+
+input[type="text"] {
+    width: 10rem;
+    height: 2.4rem;
+    padding-left: 0.5rem;
+    margin: 0;
+    font-size: 2rem;
+    border: none;
+    border-radius: 0.8rem;
+    box-shadow: none;
+}
+
+label {
+    margin: 0.1rem;
+    font-size: 2rem;
+}
+
+label+select {
+    margin-top: 0;
+}
+
+label+input[type="number"] {
+    margin-top: 0;
+}
+
+fieldset {
+    padding-bottom: 0.5rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.5rem;
+    padding-inline-start: 0.2rem;
+    padding-inline-end: 0.2rem;
+    padding-block-start: 0.2rem;
+    padding-block-end: 0.2rem;
+    border-radius: 1rem;
+    background: linear-gradient(to bottom, #2b1f08, #292312);
+    text-align: center;
+}
+
+.tab-area fieldset {
+    background: transparent;
+}
+
+legend {
+    font-size: 2rem;
+}
+
+section {
+    width: 100%;
+    text-align: center;
+    vertical-align: top;
+}
+
+/* button {
+    width: 250px;
+    height: 40px;
+    margin: 0;
+    font-size: 2rem;
+    color: blanchedalmond;
+    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
+    border-radius: 10px;
+} */
+
+input[type="checkbox"]+label {
+    font-size: 2rem;
+}
+
+/* グリッド */
+
+.header {
+    grid-area: header;
+    width: 100%;
+    position: relative;
+    background: linear-gradient(to top, #ecc862, #978310);
+    padding: 0 0 0.2rem;
+}
+
+.header div {
+    position: absolute;
+    top: 50%;
+    padding: 0 0.5em;
+    transform: translate(0, -50%);
+    font-size: 2rem;
+}
+
+.greeting-area {
+    grid-area: greeting-area;
+    font-size: 1.8rem;
+}
+
+.aside {
+    grid-area: aside;
+    font-size: 1.8rem;
+}
+
+.face-area {
+    grid-area: face-area;
+}
+
+.input-area {
+    grid-area: input-area;
+}
+
+.result-area {
+    grid-area: result-area;
+}
+
+.bottom-area {
+    grid-area: bottom-area;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #312820;
+    color: #886b1d;
+    text-align: left;
+    font-size: 1.8rem;
+}
+
+article.input-item {
+    width: calc(100% / 3 - 0.5rem);
+    vertical-align: top;
+    position: relative;
+}
+
+article.input-item label {
+    font-size: 1.8rem;
+}
+
+article.input-item img.info {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+article.input-item p.info {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+article.input-item p.info+p.description {
+    display: none;
+}
+
+article.input-item p.info:hover+p.description {
+    display: block;
+    font-size: 1.8rem;
+    color: #ecce8d;
+}
+
+fieldset.input-group legend {
+    text-align: left;
+}
+
+/* タブのスタイル設定 */
+
+.tab-area {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.tab-button {
+    display: none;
+}
+
+.tab-button+label {
+    display: block;
+    float: left;
+    order: -1;
+    height: 3rem;
+    line-height: 3rem;
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.5rem;
+    border-color: #999;
+    border-style: solid;
+    font-size: 1.8rem;
+}
+
+.tab-button:checked+label {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+}
+
+.tab-button:checked+label+.tab-content {
+    display: block;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    line-height: normal;
+}
+
+.tab-content fieldset legend {
+    text-align: center;
+}
+
+.input-set1+label {
+    width: calc(100% / 5 - 1.5rem);
+}
+
+.input-set2+label {
+    width: calc(100% / 5 - 1.5rem);
+}
+
+.others-set+label {
+    width: calc(100% / 3 - 1.5rem);
+}
+
+.input-group article {
+    vertical-align: top;
+}
+
+.input-group article label {
+    display: block;
+}
+
+.input-area .input-item {
+    display: inline-block;
+}
+
+.input-area .input-item label {
+    display: block;
+}
+
+.input-area .check-item {
+    display: inline-block;
+    position: relative;
+}
+
+.input-area .check-item label {
+    display: inline;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+table th {
+    font-weight: normal;
+    text-align: center;
+    font-size: 1.8rem;
+    border-left: 0.3rem double #aaa;
+    border-right: 0.1rem solid #aaa;
+}
+
+table th:first-child {
+    border-left: 0;
+}
+
+table td {
+    background-color: transparent;
+    padding: 0.1rem 0.5rem;
+}
+
+table thead th, table tbody th, table tbody td {
+    border-bottom: 0.1rem solid #aaa;
+}
+
+table thead th {
+    background-color: #574014;
+}
+
+table thead th+th, table tbody td {
+    border-left: 0.1rem solid #aaa;
+}
+
+table tbody tr:last-child th, table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#artifactsub-detail {
+    position: relative;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+#artifactsub-detail legend {
+    text-align: center;
+}
+
+#artifactsub-detail section.input-group {
+    width: 75%;
+    margin: 0;
+    padding: 0;
+}
+
+#artifactsub-detail .input-item {
+    width: calc(44% - 0.5rem);
+    display: inline-block;
+}
+
+#artifactsub-detail .input-item-short {
+    width: calc(28% - 0.5rem);
+    display: inline-block;
+}
+
+#artifactsub-detail label {
+    font-size: 1.8rem;
+}
+
+#artifactsub-detail select {
+    font-size: 2rem;
+    margin: 0.2rem 0;
+}
+
+#artifactsub-detail .special-box {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.5rem;
+    width: calc(25% - 1rem);
+}
+
+#artifactsub-detail table {
+    margin-top: 1rem;
+}
+
+/* 結果エリア */
+
+input[type="checkbox"]:checked+label {
+    color: gold;
+}
+
+.optionBox label {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 2rem;
+}
+
+.optionBox div {
+    display: inline-block;
+}
+
+.optionBox div select {
+    width: 10rem;
+}
+
+.column2-option {
+    width: 100%;
+}
+
+.column2-option div {
+    display: inline-block;
+    width: calc(100% / 2 - 1rem);
+    text-align: left;
+}
+
+.column2-option div label {
+    font-size: 2rem;
+}
+
+.column2-option div select {
+    width: 10rem;
+}
+
+table.status tr th {
+    width: auto;
+}
+
+table.status tr td input[type="number"] {
+    opacity: 0.5;
+    width: 7rem;
+}
+
+table.status tr td input[type="number"]:focus {
+    opacity: 1;
+}
+
+table.status tr td {
+    min-width: 6rem;
+    max-width: 7rem;
+    font-size: 2rem;
+    border-left: 0;
+    text-align: right;
+}
+
+table.status tr td[colspan="3"] {
+    text-align: right;
+}
+
+table.status tr td[colspan="3"] label {
+    font-size: 1.8rem;
+}
+
+table.status tr td[colspan="3"] button {
+    width: 24%;
+}
+
+.result-area div table tr td {
+    font-size: 2.4rem;
+}
+
+th.category {
+    width: 10rem;
+    text-align: left;
+    font-weight: bold;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    font-size: 1.8rem;
+    padding-left: 0.5rem;
+}
+
+.result-area div table tr td.damage-taken {
+    text-align: left;
+}
+
+fieldset article {
+    display: inline-block;
+}
+
+#condition-area {
+    padding-bottom: 1rem;
+    margin-top: 0;
+}
+
+.input-group legend {
+    width: 100%;
+}
+
+.open-close {
+    width: calc(100% / 3 - 1.5rem);
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    border-radius: 0.5rem;
+    border-color: #999;
+    border-style: solid;
+    padding: 0;
+    text-align: center;
+}
+
+.open-close.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
+input+select:checked {
+    display: none;
+}
+
+input:checked+select {
+    display: block;
+}
+
+th.base {
+    color: rgb(189, 189, 189);
+}
+
+table.result {
+    background: linear-gradient(to top, #312820, #030100);
+    margin: 0.5rem 0;
+}
+
+.pyro {
+    color: #d2655a;
+}
+
+.hydro {
+    color: #559cc9;
+}
+
+.aero {
+    color: #3aaf7a;
+}
+
+.electro {
+    color: #b681df;
+}
+
+.cryo {
+    color: #63beb4;
+}
+
+.geo {
+    color: #df8f37;
+}
+
+input[name="元素反応Input"] {
+    display: none;
+}
+
+label.elemental-reaction {
+    display: inline-block;
+    width: calc(100% / 4 - 2rem);
+    padding: 0.2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to top, #3d3d3b, #141414);
+    text-shadow: 0.1rem 0.1rem 0.1rem rgb(40, 80, 80), -0.1rem -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0.1rem 0.1rem rgb(40, 80, 80), 0.1rem -0.1rem 0.1rem rgb(40, 80, 80), 0 0.1rem 0.1rem rgb(40, 80, 80), 0 -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0 0.1rem rgb(40, 80, 80), 0.1rem 0 0.1rem rgb(40, 80, 80);
+    border-radius: 0.5rem;
+}
+
+input[name="元素反応Input"]+label {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
+}
+
+input[name="元素反応Input"]:checked+label {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
+}
+
+div.description {
+    font-size: 2rem;
+}
+
+section.tiny article.input-item {
+    width: calc(100% / 5 - 3rem);
+}
+
+section.tiny article.input-item select {
+    width: 90%;
+    height: 3rem;
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+section.tiny article.input-item label {
+    display: block;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.input-group .input-item label {
+    font-size: 1.8rem;
+}
+
+.horizontal-list {
+    width: 100%;
+    margin: 0;
+}
+
+.horizontal-list ul {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+
+.horizontal-list ul li {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+}
+
+.horizontal-list ul li img {
+    vertical-align: top;
+    border-style: double;
+    border-width: 0.2rem;
+}
+
+.horizontal-list ul li img.element {
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    border: none;
+}
+
+.star5 {
+    background: linear-gradient(to top, #dd7a09, #9c6424);
+}
+
+.star4 {
+    background: linear-gradient(to top, #59447a, #400b64);
+}
+
+#face {
+    display: block;
+    text-align: left;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    height: 150px;
+}
+
+#face img {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: bottom;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#face section {
+    width: calc(100% - 160px);
+    height: 100%;
+    text-align: left;
+    display: inline-block;
+    vertical-align: bottom;
+    position: absolute;
+    left: 160px;
+    bottom: 0;
+}
+
+#face section p {
+    display: block;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-size: 3.2rem;
+}
+
+#face section label {
+    display: block;
+    position: absolute;
+    left: 0.5rem;
+    bottom: calc(0.5rem + 3rem);
+}
+
+#face section select {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0.5rem;
+}
+
+#face #構成保存Button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24rem;
+}
+
+#face #保存構成削除Button {
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    width: 24rem;
+}
+
+#face #構成名称Input {
+    position: absolute;
+    bottom: 4rem;
+    right: 0;
+    width: 23rem;
+}
+
+#face #artifactDetailImageButton {
+    position: absolute;
+    top: 8rem;
+    right: 0;
+    width: calc(100% - 150px - 1rem);
+}
+
+#face #loading {
+    display: none;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+#face #loading img {
+    background-color: transparent;
+}
+
+ul#キャラクター所持状況List {
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    width: 100%;
+}
+
+#キャラクター所持状況List li {
+    position: relative;
+    display: inline-block;
+}
+
+#キャラクター所持状況List li div {
+    border-style: double;
+    border-width: 0.2rem;
+}
+
+#キャラクター所持状況List li div img {
+    vertical-align: top;
+}
+
+#キャラクター所持状況List li div img.darken {
+    opacity: 0.5;
+}
+
+#キャラクター所持状況List li div img.element {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+#キャラクター所持状況List li div p {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    background: transparent;
+    color: blanchedalmond;
+    font-size: 24px;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    margin: 0;
+}
+
+#キャラクター所持状況保存Button {
+    width: 30rem;
+    margin-top: 1.5rem;
+}
+
+dl {
+    padding-left: 2rem;
+}
+
+dl dt {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+}
+
+dl dd {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+    padding-inline-start: 2rem;
+}
+
+dl dd ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+    padding-inline-start: 2rem;
+}
+
+dl dd ul li {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+}
