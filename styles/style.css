@@ -1,4 +1,5 @@
-@media screen and (min-width: 1250px) {
+/* 3 Columns */
+@media all and (min-width: 1251px) {
     html {
         font-size: 8px;
     }
@@ -26,25 +27,26 @@
     }
 }
 
-@media screen and (max-width: 1250px) and (min-width: 1020px) {
+/* 2 Columns */
+@media all and (min-width: 769px) and (max-width: 1250px) {
     html {
-        font-size: 10px;
+        font-size: 8px;
     }
 
     body {
-        font-size: 10px;
+        font-size: 8px;
     }
 
     #main {
-        width: 1020px;
+        width: 100%;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
 
     .base-container {
         display: grid;
-        grid-template-columns: auto 700px;
-        grid-template-rows: 32px 150px auto minmax(1000px, auto) 500px 140px;
+        grid-template-columns: 320px auto;
+        grid-template-rows: 3rem 150px auto minmax(100rem, auto) 50rem 14rem;
         grid-template-areas: "header header""greeting-area face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
     }
 
@@ -53,27 +55,27 @@
     }
 }
 
-@media screen and (max-width: 1020px) {
+/* 1 Column */
+@media all and (max-width: 768px) {
     html {
-        font-size: 10px;
+        font-size: calc(100vw / 72);
     }
 
     body {
-        font-size: 10px;
+        font-size: calc(100vw / 72);
     }
 
     #main {
         width: 100%;
-        min-width: 700px;
-        max-width: 900px;
+        min-width: 360px;
         margin: 0 auto;
         background: linear-gradient(to right, #574014, #3a2e0c);
     }
 
     .base-container {
         display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: 32px 130px 100px 150px auto minmax(1000px, auto) 500px 140px;
+        grid-template-columns: 100%;
+        grid-template-rows: 4rem 12rem 100px 150px auto minmax(100rem, auto) 50rem 14rem;
         grid-template-areas: "header""greeting-area""aside""face-area""input-area""result-area""bottom-area""footer";
     }
 
@@ -90,11 +92,16 @@
 
 body {
     width: 100%;
-    margin: 0;
     color: blanchedalmond;
     background-color: rgb(58, 30, 10);
     text-align: center;
     font-size: 1.8rem;
+    box-sizing: border-box;
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
 }
 
 a {
@@ -102,7 +109,7 @@ a {
 }
 
 p {
-    margin: 0.5rem;
+    margin: 0 0.5rem;
 }
 
 button {
@@ -120,15 +127,15 @@ button {
     color: blanchedalmond;
     background: linear-gradient(to top, #5e5c5c, #2b2a2a);
     border-radius: 1rem;
-    border: solid 1px black;
+    border: solid 0.1rem black;
 }
 
 button:hover {
-    border: solid 1px gray;
+    border: solid 0.1rem gray;
 }
 
 button:active {
-    border: solid 1px darkgray;
+    border: solid 0.1rem darkgray;
 }
 
 button:disabled {
@@ -137,59 +144,65 @@ button:disabled {
 
 select {
     width: 100%;
-    height: 3rem;
-    padding: 1px 0.5rem;
-    margin: 0;
     font-size: 2rem;
+    height: 3rem;
+    vertical-align: middle;
+    padding: 0.1rem;
+    margin: 0.5rem 0;
     border-radius: 0.8rem;
     box-shadow: none;
 }
 
-input[type="number"] {
-    width: 100px;
-    height: 2.4rem;
-    padding-left: 0.5rem;
+input {
     margin: 0;
+}
+
+input[type="number"] {
+    width: 10rem;
     font-size: 2rem;
+    height: 2.4rem;
+    margin: 0.5rem 0;
+    padding-left: 0.5rem;
     border: none;
     border-radius: 0.8rem;
     box-shadow: none;
 }
 
 input[type="text"] {
-    width: 100px;
-    height: 2.4rem;
-    padding-left: 0.5rem;
-    margin: 0;
+    width: 10rem;
     font-size: 2rem;
+    height: 2.4rem;
+    margin: 0.5rem 0;
+    padding-left: 0.5rem;
     border: none;
     border-radius: 0.8rem;
     box-shadow: none;
 }
 
+input[type="checkbox"] {
+    height: 2.4rem;
+    margin: 0.5rem 0;
+    vertical-align: middle;
+}
+
 label {
-    margin: 1px;
+    margin: 0;
     font-size: 2rem;
+    height: 2rem;
+    vertical-align: middle;
 }
 
-label+select {
-    margin-top: 0;
-}
-
-label+input[type="number"] {
-    margin-top: 0;
+input[type="checkbox"]+label {
+    height: 2rem;
 }
 
 fieldset {
+    margin: 0;
     padding-bottom: 0.5rem;
-    margin-top: 1px;
-    margin-bottom: 0.5rem;
-    margin-inline-start: 2px;
-    margin-inline-end: 2px;
-    padding-inline-start: 2px;
-    padding-inline-end: 2px;
-    padding-block-start: 2px;
-    padding-block-end: 2px;
+    padding-inline-start: 0.2rem;
+    padding-inline-end: 0.2rem;
+    padding-block-start: 0.2rem;
+    padding-block-end: 0.2rem;
     border-radius: 1rem;
     background: linear-gradient(to bottom, #2b1f08, #292312);
     text-align: center;
@@ -201,6 +214,7 @@ fieldset {
 
 legend {
     font-size: 2rem;
+    margin: 0;
 }
 
 section {
@@ -219,10 +233,6 @@ section {
     border-radius: 10px;
 } */
 
-input[type="checkbox"]+label {
-    font-size: 2rem;
-}
-
 /* グリッド */
 
 .header {
@@ -230,7 +240,7 @@ input[type="checkbox"]+label {
     width: 100%;
     position: relative;
     background: linear-gradient(to top, #ecc862, #978310);
-    margin: 0 0 2px;
+    padding: 0 0 0.2rem;
 }
 
 .header div {
@@ -308,7 +318,7 @@ article.input-item p.info:hover+p.description {
 }
 
 fieldset.input-group legend {
-    text-align: left;
+    text-align: center;
 }
 
 /* タブのスタイル設定 */
@@ -332,10 +342,7 @@ fieldset.input-group legend {
     height: 3rem;
     line-height: 3rem;
     background: linear-gradient(to top, #ad5b18, #55290b);
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0.2rem 0;
     border-radius: 0.5rem;
     border-color: #999;
     border-style: solid;
@@ -344,7 +351,7 @@ fieldset.input-group legend {
 
 .tab-button:checked+label {
     background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 1rem brown, 0 0 0.2rem brown;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
 }
 
 .tab-button:checked+label+.tab-content {
@@ -362,15 +369,15 @@ fieldset.input-group legend {
 }
 
 .input-set1+label {
-    width: calc(100% / 5 - 1rem);
+    width: calc(100% / 5 - 0.8rem);
 }
 
 .input-set2+label {
-    width: calc(100% / 5 - 1rem);
+    width: calc(100% / 5 - 0.8rem);
 }
 
 .others-set+label {
-    width: calc(100% / 3 - 1rem);
+    width: calc(100% / 3 - 0.8rem);
 }
 
 .input-group article {
@@ -401,7 +408,6 @@ fieldset.input-group legend {
 table {
     width: 100%;
     text-align: center;
-    margin-right: 0;
     border-collapse: separate;
     border-spacing: 0;
     border-radius: 0.5rem;
@@ -412,8 +418,8 @@ table th {
     font-weight: normal;
     text-align: center;
     font-size: 1.8rem;
-    border-left: 3px double #aaa;
-    border-right: 1px solid #aaa;
+    border-left: 0.3rem double #aaa;
+    border-right: 0.1rem solid #aaa;
 }
 
 table th:first-child {
@@ -422,11 +428,11 @@ table th:first-child {
 
 table td {
     background-color: transparent;
-    padding: 1px 0.5rem;
+    padding: 0.1rem 0.5rem;
 }
 
 table thead th, table tbody th, table tbody td {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 0.1rem solid #aaa;
 }
 
 table thead th {
@@ -434,7 +440,7 @@ table thead th {
 }
 
 table thead th+th, table tbody td {
-    border-left: 1px solid #aaa;
+    border-left: 0.1rem solid #aaa;
 }
 
 table tbody tr:last-child th, table tbody tr:last-child td {
@@ -444,7 +450,6 @@ table tbody tr:last-child th, table tbody tr:last-child td {
 #artifactsub-detail {
     position: relative;
     font-size: 1.8rem;
-    margin: 0;
 }
 
 #artifactsub-detail legend {
@@ -453,7 +458,6 @@ table tbody tr:last-child th, table tbody tr:last-child td {
 
 #artifactsub-detail section.input-group {
     width: 75%;
-    margin: 0;
     padding: 0;
 }
 
@@ -473,14 +477,26 @@ table tbody tr:last-child th, table tbody tr:last-child td {
 
 #artifactsub-detail select {
     font-size: 2rem;
-    margin: 2px 0;
 }
 
 #artifactsub-detail .special-box {
     position: absolute;
-    top: 2px;
-    right: 5px;
+    top: 0.2rem;
+    right: 0.5rem;
     width: calc(25% - 1rem);
+}
+
+#artifactsub-detail .special-box input {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+#artifactsub-detail .special-box label {
+    margin: 0;
+}
+
+#artifactsub-detail .special-box select {
+    margin: 0;
 }
 
 #artifactsub-detail table {
@@ -522,7 +538,7 @@ input[type="checkbox"]:checked+label {
 }
 
 .column2-option div select {
-    width: 100px;
+    width: 10rem;
 }
 
 table.status tr th {
@@ -566,9 +582,15 @@ th.category {
     width: 10rem;
     text-align: left;
     font-weight: bold;
-    text-shadow: 1px 1px 2px black, 0 0 10px brown, 0 0 2px brown;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
     font-size: 1.8rem;
     padding-left: 0.5rem;
+}
+
+.result-area div label {
+    height: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .result-area div table tr td.damage-taken {
@@ -581,15 +603,22 @@ fieldset article {
 
 #condition-area {
     padding-bottom: 1rem;
-    margin-top: 0;
+}
+
+.bottom-area .tab-content {
+    padding-left: 1rem;
+}
+
+.footer {
+    padding-left: 1rem;
 }
 
 .open-close {
-    width: 164px;
-    height: 3rem;
+    width: 18rem;
+    height: 3.5rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 10px brown, 0 0 2px brown;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
     border-radius: 0.5rem;
     border-color: #999;
     border-style: solid;
@@ -648,43 +677,26 @@ input[name="元素反応Input"] {
 
 label.elemental-reaction {
     display: inline-block;
-    width: calc(100% / 4 - 2rem);
-    padding: 2px;
+    width: calc(100% / 4 - 1.5rem);
+    padding: 0.2rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(to top, #3d3d3b, #141414);
-    text-shadow: 1px 1px 1px rgb(40, 80, 80), -1px -1px 1px rgb(40, 80, 80), -1px 1px 1px rgb(40, 80, 80), 1px -1px 1px rgb(40, 80, 80), 0 1px 1px rgb(40, 80, 80), 0 -1px 1px rgb(40, 80, 80), -1px 0 1px rgb(40, 80, 80), 1px 0 1px rgb(40, 80, 80);
+    text-shadow: 0.1rem 0.1rem 0.1rem rgb(40, 80, 80), -0.1rem -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0.1rem 0.1rem rgb(40, 80, 80), 0.1rem -0.1rem 0.1rem rgb(40, 80, 80), 0 0.1rem 0.1rem rgb(40, 80, 80), 0 -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0 0.1rem rgb(40, 80, 80), 0.1rem 0 0.1rem rgb(40, 80, 80);
     border-radius: 0.5rem;
 }
 
 input[name="元素反応Input"]+label {
     background: linear-gradient(to top, #ad5b18, #55290b);
-    text-shadow: 1px 1px 2px black, 0 0 2px brown, 0 0 2px brown;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
 }
 
 input[name="元素反応Input"]:checked+label {
     background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 1px 1px 2px black, 0 0 2px brown, 0 0 2px brown;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
 }
 
 div.description {
     font-size: 2rem;
-}
-
-section.tiny article.input-item {
-    width: calc(100% / 5 - 3rem);
-}
-
-section.tiny article.input-item select {
-    width: 90%;
-    height: 3rem;
-    font-size: 2rem;
-    margin-top: 0;
-}
-
-section.tiny article.input-item label {
-    display: block;
-    font-size: 1.8rem;
-    margin: 0;
 }
 
 .input-group .input-item label {
@@ -693,7 +705,6 @@ section.tiny article.input-item label {
 
 .horizontal-list {
     width: 100%;
-    margin: 0;
 }
 
 .horizontal-list ul {
@@ -716,13 +727,13 @@ section.tiny article.input-item label {
 .horizontal-list ul li img {
     vertical-align: top;
     border-style: double;
-    border-width: 2px;
+    border-width: 0.2rem;
 }
 
 .horizontal-list ul li img.element {
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 0.2rem;
+    left: 0.2rem;
     border: none;
 }
 
@@ -745,8 +756,7 @@ section.tiny article.input-item label {
 
 #face img {
     display: inline-block;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 0;
     vertical-align: bottom;
     position: absolute;
     left: 0;
@@ -754,20 +764,20 @@ section.tiny article.input-item label {
 }
 
 #face section {
-    width: calc(100% - 160px);
+    width: calc(100% - 150px);
     height: 100%;
     text-align: left;
     display: inline-block;
     vertical-align: bottom;
     position: absolute;
-    left: 160px;
+    left: 150px;
     bottom: 0;
 }
 
 #face section p {
     display: block;
     position: absolute;
-    left: 1rem;
+    left: 0rem;
     top: 1rem;
     font-size: 3.2rem;
 }
@@ -776,14 +786,14 @@ section.tiny article.input-item label {
     display: block;
     position: absolute;
     left: 0.5rem;
-    bottom: calc(5px + 3rem);
+    bottom: calc(0.5rem + 3rem + 1.6rem);
 }
 
 #face section select {
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: 5px;
+    bottom: 0.5rem;
 }
 
 #face #構成保存Button {
@@ -795,14 +805,14 @@ section.tiny article.input-item label {
 
 #face #保存構成削除Button {
     position: absolute;
-    top: 4rem;
+    top: 3.6rem;
     right: 0;
     width: 24rem;
 }
 
 #face #構成名称Input {
     position: absolute;
-    bottom: 4rem;
+    bottom: calc(0.5rem + 3rem + 0.4rem);
     right: 0;
     width: 23rem;
 }
@@ -844,7 +854,7 @@ ul#キャラクター所持状況List {
 
 #キャラクター所持状況List li div {
     border-style: double;
-    border-width: 2px;
+    border-width: 0.2rem;
 }
 
 #キャラクター所持状況List li div img {
@@ -868,13 +878,13 @@ ul#キャラクター所持状況List {
     background: transparent;
     color: blanchedalmond;
     font-size: 24px;
-    text-shadow: 1px 1px 2px black, 0 0 10px brown, 0 0 2px brown;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
     margin: 0;
 }
 
 #キャラクター所持状況保存Button {
-    width: 300px;
-    margin-top: 15px;
+    width: 30rem;
+    margin-top: 1.5rem;
 }
 
 dl {

@@ -28,7 +28,7 @@
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
-                    げんかるく - 原神ダメージシミュレーター Ver.1.8.7
+                    げんかるく - 原神ダメージシミュレーター Ver.1.8.8
                 </div>
                 <div style="position: absolute; right: 0">
                     <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
@@ -207,16 +207,16 @@
                                         <option value="4_攻撃力">★4</option>
                                     </select>
                                 </article>
-                                <article class="input-item" style="width: calc(76% / 2 - 18px)">
+                                <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
                                     <label for="聖遺物セット効果1Input">セット効果1</label>
                                     <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
                                 </article>
-                                <article class="input-item" style="width: calc(76% / 2 - 18px)">
+                                <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
                                     <label for="聖遺物セット効果2Input">セット効果2</label>
                                     <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
                                 </article>
                             </section>
-                            <section class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
+                            <section class="input-group" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
                                 <article class="input-item">
                                     <label for="聖遺物メイン効果3Input">時の砂・メイン効果</label>
                                     <select id="聖遺物メイン効果3Input" name="聖遺物メイン効果Input">
@@ -407,7 +407,7 @@
                                         <option value="3">厳選3ヶ月</option>
                                         <option value="4">日々石割り</option>
                                     </select>
-                                    <div style="font-size: 1.5rem; text-align: left; margin-top: 4px; color: olive;">
+                                    <div style="font-size: 1.5rem; text-align: left; margin-top: 0.4rem; color: olive;">
                                         選択外のサブ効果は均等割り振り
                                     </div>
                                 </div>
@@ -476,7 +476,7 @@
                         <input type="radio" class="tab-button input-set1" id="basic-condition3"
                             name="basic-condition-group" />
                         <label for="basic-condition3">元素共鳴</label>
-                        <div class="tab-content" style="padding-top: 10px;">
+                        <div class="tab-content" style="padding-top: 1rem;">
                             <section>
                                 <article class="check-item">
                                     <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input" />
@@ -533,7 +533,7 @@
                         <input type="radio" class="tab-button input-set1" id="basic-condition5"
                             name="basic-condition-group" />
                         <label for="basic-condition5">チームバフ</label>
-                        <div class="tab-content" style="padding-top: 10px;">
+                        <div class="tab-content" style="padding-top: 1rem;">
                             <table>
                                 <tr>
                                     <th>攻撃力</th>
@@ -789,7 +789,7 @@
 
                             <input type="radio" class="tab-button input-set2" id="status-table3"
                                 name="status-table-group" />
-                            <label for="status-table3" style="font-size: 1.6rem;">ダメージアップ</label>
+                            <label for="status-table3" style="font-size: smaller;">ダメージアップ</label>
                             <div class="tab-content">
                                 <table class="status">
                                     <tr>
@@ -998,7 +998,7 @@
             </div>
 
             <div class="result-area">
-                <div style="height: 1000px;">
+                <div style="height: 100rem;">
                     <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked />
                     <label class="elemental-reaction" for="元素反応なしInput">反応なし</label>
                     <input type="radio" value="vaporize" id="元素反応蒸発Input" name="元素反応Input" />
@@ -1107,7 +1107,7 @@
             <hr />
             <input type="checkbox" id="ローカルストレージクリアInput" />
             <label for="ローカルストレージクリアInput">ローカルストレージをクリア</label>
-            <button type="button" id="ローカルストレージクリアButton" style="width: 100px;" disabled>実行</button>
+            <button type="button" id="ローカルストレージクリアButton" style="width: 15rem;" disabled>実行</button>
             <p>全ての保存データを削除します</p>
         </div>
 
@@ -1129,6 +1129,12 @@
         <div style="text-align: left;">
             <hr>
             <dl>
+                <dt>1.8.8 (2022/02/07)</dt>
+                <dd>
+                    <ul>
+                        <li>レイアウト調整中</li>
+                    </ul>
+                </dd>
                 <dt>1.8.7 (2022/02/06)</dt>
                 <dd>
                     <ul>

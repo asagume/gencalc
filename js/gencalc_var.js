@@ -217,8 +217,8 @@ function buildキャラクター所持状況List() {
             let imgElem = document.createElement('img');
             imgElem.src = src;
             imgElem.alt = key;
-            imgElem.width = 100;
-            imgElem.height = 100;
+            imgElem.width = 85;
+            imgElem.height = 85;
             divElem.appendChild(imgElem);
 
             let img2Elem = document.createElement('img');
