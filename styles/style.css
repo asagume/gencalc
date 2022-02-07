@@ -45,7 +45,7 @@
 
     .base-container {
         display: grid;
-        grid-template-columns: 320px auto;
+        grid-template-columns: 240px auto;
         grid-template-rows: 3rem 150px auto minmax(100rem, auto) 50rem 14rem;
         grid-template-areas: "header header""greeting-area face-area""aside input-area""aside result-area""aside bottom-area""footer footer";
     }

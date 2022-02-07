@@ -3137,16 +3137,16 @@ $(document).ready(function () {
                 imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
                 imgElem.src = 'image' in キャラクターMasterVar[key] ? キャラクターMasterVar[key]['image'] : キャラクターMasterVar[key]['image2'];
                 imgElem.alt = key;
-                imgElem.width = 75;
-                imgElem.height = 75;
+                imgElem.width = 55;
+                imgElem.height = 55;
                 liElem.appendChild(imgElem);
 
                 let img2Elem = document.createElement('img');
                 img2Elem.className = 'element';
                 img2Elem.src = ELEMENT_IMG_SRC_MAP.get(キャラクターMasterVar[key]['元素']);
                 img2Elem.alt = キャラクターMasterVar[key]['元素'];
-                img2Elem.width = 22;
-                img2Elem.height = 22;
+                img2Elem.width = 20;
+                img2Elem.height = 20;
                 liElem.appendChild(img2Elem);
 
                 imgElem.onclick = selectCharacter;
