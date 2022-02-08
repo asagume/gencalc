@@ -145,7 +145,7 @@ button:disabled {
 select {
     width: 100%;
     font-size: 2rem;
-    height: 3rem;
+    height: 3.2rem;
     vertical-align: middle;
     padding: 0.1rem;
     margin: 0.5rem 0;
@@ -160,7 +160,7 @@ input {
 input[type="number"] {
     width: 10rem;
     font-size: 2rem;
-    height: 2.4rem;
+    height: 2.6rem;
     margin: 0.5rem 0;
     padding-left: 0.5rem;
     border: none;
@@ -171,7 +171,7 @@ input[type="number"] {
 input[type="text"] {
     width: 10rem;
     font-size: 2rem;
-    height: 2.4rem;
+    height: 2.6rem;
     margin: 0.5rem 0;
     padding-left: 0.5rem;
     border: none;
@@ -180,7 +180,7 @@ input[type="text"] {
 }
 
 input[type="checkbox"] {
-    height: 2.4rem;
+    height: 2.6rem;
     margin: 0.5rem 0;
     vertical-align: middle;
 }
@@ -188,7 +188,7 @@ input[type="checkbox"] {
 label {
     margin: 0;
     font-size: 2rem;
-    height: 2rem;
+    height: 2.2rem;
     vertical-align: middle;
 }
 
@@ -286,13 +286,9 @@ section {
 }
 
 article.input-item {
-    width: calc(100% / 3 - 0.5rem);
+    width: calc(100% / 3 - 0.6rem);
     vertical-align: top;
     position: relative;
-}
-
-article.input-item label {
-    font-size: 1.8rem;
 }
 
 article.input-item img.info {
@@ -329,6 +325,7 @@ fieldset.input-group legend {
     margin: auto;
     flex-wrap: wrap;
     display: flex;
+    justify-content: center;
 }
 
 .tab-button {
@@ -369,15 +366,15 @@ fieldset.input-group legend {
 }
 
 .input-set1+label {
-    width: calc(100% / 5 - 0.8rem);
+    width: calc(100% / 5 - 0.9rem);
 }
 
 .input-set2+label {
-    width: calc(100% / 5 - 0.8rem);
+    width: calc(100% / 5 - 0.9rem);
 }
 
 .others-set+label {
-    width: calc(100% / 3 - 0.8rem);
+    width: calc(100% / 3 - 0.9rem);
 }
 
 .input-group article {
@@ -461,14 +458,16 @@ table tbody tr:last-child th, table tbody tr:last-child td {
     padding: 0;
 }
 
-#artifactsub-detail .input-item {
-    width: calc(44% - 0.5rem);
+#artifactsub-detail .input-group .input-item {
+    width: calc(44% - 0.6rem);
     display: inline-block;
+    font-size: 1.8rem;
 }
 
-#artifactsub-detail .input-item-short {
-    width: calc(28% - 0.5rem);
+#artifactsub-detail .input-group .input-item-short {
+    width: calc(28% - 0.6rem);
     display: inline-block;
+    font-size: 1.8rem;
 }
 
 #artifactsub-detail label {
@@ -579,7 +578,7 @@ table.status tr td[colspan="3"] button {
 }
 
 th.category {
-    width: 10rem;
+    width: 12rem;
     text-align: left;
     font-weight: bold;
     text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
