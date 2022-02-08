@@ -359,6 +359,7 @@ fieldset.input-group legend {
     display: none;
     width: 100%;
     line-height: normal;
+    padding-top: 1rem;
 }
 
 .tab-content fieldset legend {
