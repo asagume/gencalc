@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLF3R2FB5T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BLF3R2FB5T');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - 原神ダメージシミュレーター</title>
+    <link href="styles/style_test.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <reference path="JQuery.d.ts"></reference>
+    <script src="js/gencalc_var.js"></script>
+    <script src="js/gencalc_core.js"></script>
+    <script src="js/gencalc.js"></script>
+</head>
+
+<body>
+    <div id="main" class="base-container">
+        <div class="header">
+            <div style="position: absolute; left: 1rem">
+                げんかるく - 原神ダメージシミュレーター Ver.2.0.0
+            </div>
+            <div style="position: absolute; right: 1rem">
+                <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告・要望</a>
+            </div>
+        </div>
+
+        <div class="aside">
+            <input type="checkbox" id="element-type-pyro" name="element-type-input">
+            <label for="element-type-pyro"><img width="35" height="35" src="images/element_pyro.png" alt="炎"></label>
+
+            <input type="checkbox" id="element-type-hydro" name="element-type-input">
+            <label for="element-type-hydro"><img width="35" height="35" src="images/element_hydro.png" alt="水"></label>
+
+            <input type="checkbox" id="element-type-aero" name="element-type-input">
+            <label for="element-type-aero"><img width="35" height="35" src="images/element_aero.png" alt="風"></label>
+
+            <input type="checkbox" id="element-type-electro" name="element-type-input">
+            <label for="element-type-electro"><img width="35" height="35" src="images/element_electro.png"
+                    alt="雷"></label>
+
+            <input type="checkbox" id="element-type-cryo" name="element-type-input">
+            <label for="element-type-cryo"><img width="35" height="35" src="images/element_cryo.png" alt="氷"></label>
+
+            <input type="checkbox" id="element-type-geo" name="element-type-input">
+            <label for="element-type-geo"><img width="35" height="35" src="images/element_geo.png" alt="岩"></label>
+
+            <div class="horizontal-list">
+                <ul id="キャラクター選択"></ul>
+            </div>
+
+
+        </div>
+
+        <div class="pane1">
+            <div>
+            </div>
+
+
+            <div
+                style="width: 100%; height: 800px;  background: top / contain no-repeat url(./images/characters/huge/geo_4_claymore_Noelle.png); background-blend-mode: lighten;">
+
+
+                <select id="レベルInput">
+                    <option value="80">Lv.80</option>
+                    <option value="80+">Lv.80+</option>
+                    <option value="90">Lv.90</option>
+                </select>
+                <select id="命ノ星座Input">
+                    <option value="0">C0</option>
+                    <option value="1">C1</option>
+                    <option value="2">C2</option>
+                    <option value="3">C3</option>
+                    <option value="4">C4</option>
+                    <option value="5">C5</option>
+                    <option value="6">C6</option>
+                </select>
+
+                <img width="75" height="75" src="images/weapons/claymore/5_RedhornStonethresher.png" alt="赤角石塵滅砕"
+                    style="position: absolute; left:0">
+                <select id="武器レベルInput">
+                    <option value="80">Lv.80</option>
+                    <option value="80+">Lv.80+</option>
+                    <option value="90">Lv.90</option>
+                </select>
+                <select id="精錬ランクInput">
+                    <option value="1">R1</option>
+                    <option value="2">R2</option>
+                    <option value="3">R3</option>
+                    <option value="4">R4</option>
+                    <option value="5">R5</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="pane2">
+            オプション条件
+        </div>
+
+        <div class="pane3">
+            計算結果
+        </div>
+
+        <div class="pane4">
+            <input type="text">
+            <button type="button">SAVE</button>
+            <button type="button">LOAD</button>
+            <select id="おすすめセットInput" style="width: 90%;">
+                <option value=""></option>
+            </select>
+        </div>
+
+        <div class="footer">
+            footer
+        </div>
+    </div>
+
+</body>
+
+</html>

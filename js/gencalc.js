@@ -2912,6 +2912,51 @@ function setupキャラクター説明() {
         + my突破ステータス.replace('バフ', '') + 選択中キャラクターデータVar['ステータス'][my突破ステータス][myレベル]);
 }
 
+// 
+function setupキャラクター選択(opt_elementType = null) {
+    document.querySelector('#キャラクター選択').innerHTML = '';
+    let ulElem = document.getElementById('キャラクター選択');
+    Object.keys(キャラクターMasterVar).forEach(key => {
+        if ('disabled' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['disabled']) return;
+        if (opt_elementType) {
+            if (キャラクターMasterVar[key]['元素'] != opt_elementType) return;
+        }
+        let liElem = document.createElement('li');
+        ulElem.appendChild(liElem);
+        let imgElem = document.createElement('img');
+        imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
+        imgElem.src = 'image' in キャラクターMasterVar[key] ? キャラクターMasterVar[key]['image'] : キャラクターMasterVar[key]['image2'];
+        imgElem.alt = key;
+        imgElem.width = 55;
+        imgElem.height = 55;
+        liElem.appendChild(imgElem);
+
+        let img2Elem = document.createElement('img');
+        img2Elem.className = 'element';
+        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(キャラクターMasterVar[key]['元素']);
+        img2Elem.alt = キャラクターMasterVar[key]['元素'];
+        img2Elem.width = 20;
+        img2Elem.height = 20;
+        liElem.appendChild(img2Elem);
+
+        imgElem.onclick = selectCharacter;
+    });
+}
+
+// キャラクター選択 絞り込み
+$(document).on('click', '[name="element-type-input"]', function () {
+    let elementType = null;
+    if (this.checked) {
+        elementType = $('#' + this.id + '+label img').prop('alt');
+        Array.from(document.getElementsByName('element-type-input')).forEach(e => {
+            if (e != this) {
+                e.checked = false;
+            }
+        });
+    }
+    setupキャラクター選択(elementType);
+});
+
 // おすすめセット
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
 
@@ -3128,29 +3173,7 @@ $(document).ready(function () {
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
             キャラクターMasterVar = jsonObj;
 
-            let ulElem = document.getElementById('キャラクター選択');
-            Object.keys(キャラクターMasterVar).forEach(key => {
-                if ('disabled' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['disabled']) return;
-                let liElem = document.createElement('li');
-                ulElem.appendChild(liElem);
-                let imgElem = document.createElement('img');
-                imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
-                imgElem.src = 'image' in キャラクターMasterVar[key] ? キャラクターMasterVar[key]['image'] : キャラクターMasterVar[key]['image2'];
-                imgElem.alt = key;
-                imgElem.width = 55;
-                imgElem.height = 55;
-                liElem.appendChild(imgElem);
-
-                let img2Elem = document.createElement('img');
-                img2Elem.className = 'element';
-                img2Elem.src = ELEMENT_IMG_SRC_MAP.get(キャラクターMasterVar[key]['元素']);
-                img2Elem.alt = キャラクターMasterVar[key]['元素'];
-                img2Elem.width = 20;
-                img2Elem.height = 20;
-                liElem.appendChild(img2Elem);
-
-                imgElem.onclick = selectCharacter;
-            });
+            setupキャラクター選択();
 
             appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
 

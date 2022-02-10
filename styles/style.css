@@ -285,6 +285,15 @@ section {
     font-size: 1.8rem;
 }
 
+[name="element-type-input"] {
+    display: none;
+}
+
+[name="element-type-input"]+label {
+    display: inline;
+    height: 35px;
+}
+
 article.input-item {
     width: calc(100% / 3 - 0.6rem);
     vertical-align: top;
