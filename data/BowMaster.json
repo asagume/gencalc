@@ -1,78 +1,78 @@
 {
     "冬極の白星": {
         "レアリティ": 5,
-        "import": "data/weapons/bow_5_PolarStar.json"
+        "import": "data/weapons/bow/5_PolarStar.json"
     },
     "飛雷の鳴弦": {
         "レアリティ": 5,
-        "import": "data/weapons/bow_5_ThunderingPulse.json"
+        "import": "data/weapons/bow/5_ThunderingPulse.json"
     },
     "終焉を嘆く詩": {
         "レアリティ": 5,
-        "import": "data/weapons/bow_5_ElegyfortheEnd.json"
+        "import": "data/weapons/bow/5_ElegyfortheEnd.json"
     },
     "アモスの弓": {
         "レアリティ": 5,
-        "import": "data/weapons/bow_5_AmosBow.json"
+        "import": "data/weapons/bow/5_AmosBow.json"
     },
     "天空の翼": {
         "レアリティ": 5,
-        "import": "data/weapons/bow_5_SkywardHarp.json"
+        "import": "data/weapons/bow/5_SkywardHarp.json"
     },
     "曚雲の月": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_MouunsMoon.json"
+        "import": "data/weapons/bow/4_MouunsMoon.json"
     },
     "破魔の弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_Hamayumi.json"
+        "import": "data/weapons/bow/4_Hamayumi.json"
     },
     "幽夜のワルツ": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_MitternachtsWaltz.json"
+        "import": "data/weapons/bow/4_MitternachtsWaltz.json"
     },
     "風花の頌歌": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_WindblumeOde.json"
+        "import": "data/weapons/bow/4_WindblumeOde.json"
     },
     "ダークアレイの狩人": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_AlleyHunter.json"
+        "import": "data/weapons/bow/4_AlleyHunter.json"
     },
     "蒼翠の狩猟弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_TheViridescentHunt.json"
+        "import": "data/weapons/bow/4_TheViridescentHunt.json"
     },
     "黒岩の戦弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_BlackcliffWarbow.json"
+        "import": "data/weapons/bow/4_BlackcliffWarbow.json"
     },
     "リングボウ": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_CompoundBow.json"
+        "import": "data/weapons/bow/4_CompoundBow.json"
     },
     "澹月・試作": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_PrototypeCrescent.json"
+        "import": "data/weapons/bow/4_PrototypeCrescent.json"
     },
     "弓蔵": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_Rust.json"
+        "import": "data/weapons/bow/4_Rust.json"
     },
     "旧貴族長弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_RoyalBow.json"
+        "import": "data/weapons/bow/4_RoyalBow.json"
     },
     "祭礼の弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_SacrificialBow.json"
+        "import": "data/weapons/bow/4_SacrificialBow.json"
     },
     "絶弦": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_TheStringless.json"
+        "import": "data/weapons/bow/4_TheStringless.json"
     },
     "西風猟弓": {
         "レアリティ": 4,
-        "import": "data/weapons/bow_4_FavoniusWarbow.json"
+        "import": "data/weapons/bow/4_FavoniusWarbow.json"
     }
 }
