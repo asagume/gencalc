@@ -1708,7 +1708,7 @@ function calculateStatusObj(statusObj) {
     // バフオプションを計上します
     let validBuffConditionValueArr = makeValidConditionValueArr('#バフオプションBox');
     バフ詳細ArrVar.forEach(detailObj => {
-        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'])) {
+        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'].replace(/^\*/, ''))) {
             return;
         }
         let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
@@ -1732,7 +1732,7 @@ function calculateStatusObj(statusObj) {
     // デバフオプションを計上します
     let validDebuffConditionValueArr = makeValidConditionValueArr('#デバフオプションBox');
     デバフ詳細ArrVar.forEach(detailObj => {
-        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'])) {
+        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'].replace(/^\*/, ''))) {
             return;
         }
         let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
@@ -3293,7 +3293,7 @@ $(document).ready(function () {
             Object.keys(バフMasterVar).forEach(key => {
                 let myObj = バフMasterVar[key];
                 if ('disabled' in myObj && myObj['disabled']) return;
-                let my条件 = '名前' in myObj ? myObj['名前'] : key;
+                let my条件 = '*' + ('名前' in myObj ? myObj['名前'] : key);
                 myObj['詳細'].forEach(detailObj => {
                     if (!('条件' in detailObj)) {
                         detailObj['条件'] = my条件;
@@ -3313,7 +3313,7 @@ $(document).ready(function () {
             Object.keys(デバフMasterVar).forEach(key => {
                 let myObj = デバフMasterVar[key];
                 if ('disabled' in myObj && myObj['disabled']) return;
-                let my条件 = '名前' in myObj ? myObj['名前'] : key;
+                let my条件 = '*' + ('名前' in myObj ? myObj['名前'] : key);
                 myObj['詳細'].forEach(detailObj => {
                     if (!('条件' in detailObj)) {
                         detailObj['条件'] = my条件;
