@@ -86,10 +86,10 @@
             </div>
 
             <div class="pane4">
-                <button type="button" class="open-close" id="characterweapon-set-open-close">キャラ/武器</button>
-                <button type="button" class="open-close" id="artifact-set-open-close">聖遺物</button>
+                <button type="button" class="open-close" id="characterweapon-open-close">キャラ/武器</button>
+                <button type="button" class="open-close" id="artifact-open-close">聖遺物</button>
 
-                <section class="columns-3" id="characterweapon-set">
+                <section class="columns-3" id="characterweapon-area">
                     <article class="input-item">
                         <select id="キャラクターInput"></select>
                     </article>
@@ -474,9 +474,9 @@
             </div>
 
             <div class="input-pane">
-                <button type="button" class="open-close" id="status-set">ステータス</button>
-                <button type="button" class="open-close" id="condition-set">バフ/デバフ</button>
-                <button type="button" class="open-close" id="option-set">オプション条件</button>
+                <button type="button" class="open-close" id="status-open-close">ステータス</button>
+                <button type="button" class="open-close" id="condition-open-close">バフ/デバフ</button>
+                <button type="button" class="open-close" id="option-open-close">オプション条件</button>
 
                 <fieldset class="input-group">
                     <div id="status-area">
@@ -851,49 +851,58 @@
                     </div>
 
                     <hr>
-                    <div class="tab-area" id="condition-area">
-                        <input type="radio" class="tab-button input-set1" id="basic-condition1"
-                            name="basic-condition-group" checked />
-                        <label for="basic-condition1">元素共鳴</label>
-                        <div class="tab-content" style="padding-top: 1rem;">
-                            <section>
-                                <article class="check-item">
-                                    <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input" />
-                                    <label for="炎元素共鳴Input">熱誠の炎</label>
-                                </article>
-                                <article class="check-item">
-                                    <input type="checkbox" value="水元素共鳴" id="水元素共鳴Input" name="元素共鳴Input" />
-                                    <label for="水元素共鳴Input">治療の水</label>
-                                </article>
-                                <article class="check-item">
-                                    <input type="checkbox" value="風元素共鳴" id="風元素共鳴Input" name="元素共鳴Input" />
-                                    <label for="風元素共鳴Input">迅速の風</label>
-                                </article>
-                                <article class="check-item">
-                                    <input type="checkbox" value="雷元素共鳴" id="雷元素共鳴Input" name="元素共鳴Input" />
-                                    <label for="雷元素共鳴Input">強権の雷</label>
-                                </article>
-                                <article class="check-item">
-                                    <input type="checkbox" value="氷元素共鳴" id="氷元素共鳴Input" name="元素共鳴Input" />
-                                    <label for="氷元素共鳴Input">粉砕の氷</label>
-                                </article>
-                                <article class="check-item">
-                                    <input type="checkbox" value="岩元素共鳴" id="岩元素共鳴Input" name="元素共鳴Input" />
-                                    <label for="岩元素共鳴Input">不動の岩</label>
-                                </article>
-                                <article class="check-item" hidden>
-                                    <input type="checkbox" value="元素共鳴なし" id="元素共鳴なしInput" />
-                                    <label for="元素共鳴なしInput">交錯の護り</label>
-                                </article>
-                            </section>
-                            <div class="description" id="元素共鳴効果説明Box"></div>
-                        </div>
+                    <div id="condition-area">
+                        <div class="tab-area">
+                            <input type="radio" class="tab-button input-set1" id="basic-condition1"
+                                name="basic-condition-group" checked />
+                            <label for="basic-condition1">元素共鳴</label>
+                            <div class="tab-content" style="padding-top: 1rem;">
+                                <section>
+                                    <article class="check-item">
+                                        <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input" />
+                                        <label for="炎元素共鳴Input">熱誠の炎</label>
+                                    </article>
+                                    <article class="check-item">
+                                        <input type="checkbox" value="水元素共鳴" id="水元素共鳴Input" name="元素共鳴Input" />
+                                        <label for="水元素共鳴Input">治療の水</label>
+                                    </article>
+                                    <article class="check-item">
+                                        <input type="checkbox" value="風元素共鳴" id="風元素共鳴Input" name="元素共鳴Input" />
+                                        <label for="風元素共鳴Input">迅速の風</label>
+                                    </article>
+                                    <article class="check-item">
+                                        <input type="checkbox" value="雷元素共鳴" id="雷元素共鳴Input" name="元素共鳴Input" />
+                                        <label for="雷元素共鳴Input">強権の雷</label>
+                                    </article>
+                                    <article class="check-item">
+                                        <input type="checkbox" value="氷元素共鳴" id="氷元素共鳴Input" name="元素共鳴Input" />
+                                        <label for="氷元素共鳴Input">粉砕の氷</label>
+                                    </article>
+                                    <article class="check-item">
+                                        <input type="checkbox" value="岩元素共鳴" id="岩元素共鳴Input" name="元素共鳴Input" />
+                                        <label for="岩元素共鳴Input">不動の岩</label>
+                                    </article>
+                                    <article class="check-item" hidden>
+                                        <input type="checkbox" value="元素共鳴なし" id="元素共鳴なしInput" />
+                                        <label for="元素共鳴なしInput">交錯の護り</label>
+                                    </article>
+                                </section>
+                                <div class="description" id="元素共鳴効果説明Box"></div>
+                            </div>
 
-                        <input type="radio" class="tab-button input-set1" id="basic-condition2"
-                            name="basic-condition-group" />
-                        <label for="basic-condition2">バフ/デバフ</label>
-                        <div class="tab-content">
-                            <section class="column2-option" id="バフデバフオプションBox"></section>
+                            <input type="radio" class="tab-button input-set1" id="basic-condition2"
+                                name="basic-condition-group" />
+                            <label for="basic-condition2">バフ</label>
+                            <div class="tab-content">
+                                <section class="column1-option" id="バフオプションBox"></section>
+                            </div>
+
+                            <input type="radio" class="tab-button input-set1" id="basic-condition3"
+                                name="basic-condition-group" />
+                            <label for="basic-condition3">デバフ</label>
+                            <div class="tab-content">
+                                <section class="column1-option" id="デバフオプションBox"></section>
+                            </div>
                         </div>
                     </div>
 
@@ -1215,8 +1224,8 @@
         const setOpenClose = function () {
             console.log('screen.width', screen.width);
 
-            ['status-area'].forEach(areaId => {
-                let buttonId = areaId.replace('area', 'set');
+            ['status-area', 'condition-area'].forEach(areaId => {
+                let buttonId = areaId.replace('area', 'open-close');
                 if ($('#' + areaId).css('display') == 'none') {
                     document.getElementById(buttonId).classList.add('closed');
                 } else {

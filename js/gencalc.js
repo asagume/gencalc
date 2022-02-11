@@ -1705,10 +1705,31 @@ function calculateStatusObj(statusObj) {
         }
     });
 
-    // バフデバフオプションを計上します
-    let validBuffDebuffConditionValueArr = makeValidConditionValueArr('#バフデバフオプションBox');;
-    バフデバフ詳細ArrVar.forEach(detailObj => {
-        let number = checkConditionMatches(detailObj['条件'], validBuffDebuffConditionValueArr);
+    // バフオプションを計上します
+    let validBuffConditionValueArr = makeValidConditionValueArr('#バフオプションBox');
+    バフ詳細ArrVar.forEach(detailObj => {
+        let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
+        if (number == 0) {
+            return;
+        }
+        if (detailObj['種類'].endsWith('元素付与')) {
+            let my元素 = detailObj['種類'].replace('元素付与', '');
+            通常攻撃_元素Var = my元素;
+            重撃_元素Var = my元素;
+            落下攻撃_元素Var = my元素;
+            return;
+        }
+        let myNew数値 = detailObj['数値'];
+        if (number != 1) {
+            myNew数値 = myNew数値.concat(['*', number]);
+        }
+        calculateStatus(statusObj, detailObj['種類'], myNew数値);
+    });
+
+    // デバフオプションを計上します
+    let validDebuffConditionValueArr = makeValidConditionValueArr('#デバフオプションBox');
+    デバフ詳細ArrVar.forEach(detailObj => {
+        let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
         if (number == 0) {
             return;
         }
@@ -3085,11 +3106,11 @@ const elementOnClickToggleOther = function (selector, triggerSelector) {
 }
 
 // 中段のオプション、ステータスを閉じたり開いたりします
-$(document).on('click', '#characterweapon-set-open-close', elementOnClickToggleOther('#characterweapon-set', '#characterweapon-set-open-close'));
-$(document).on('click', '#artifact-set-open-close', elementOnClickToggleOther('#artifact-set', '#artifact-set-open-close'));
-$(document).on('click', '#status-set', elementOnClickToggleOther('#status-area', '#status-set'));
-$(document).on('click', '#condition-set', elementOnClickToggleOther('#condition-area', '#condition-set'));
-$(document).on('click', '#option-set', elementOnClickToggleOther('#option-area', '#option-set'));
+$(document).on('click', '#characterweapon-open-close', elementOnClickToggleOther('#characterweapon-area', '#characterweapon-open-close'));
+$(document).on('click', '#artifact-open-close', elementOnClickToggleOther('#artifact-area', '#artifact-open-close'));
+$(document).on('click', '#status-open-close', elementOnClickToggleOther('#status-area', '#status-open-close'));
+$(document).on('click', '#condition-open-close', elementOnClickToggleOther('#condition-area', '#condition-open-close'));
+$(document).on('click', '#option-open-close', elementOnClickToggleOther('#option-area', '#option-open-close'));
 
 const resultTableVisibilityMap = new Map();
 
@@ -3261,10 +3282,10 @@ $(document).ready(function () {
         fetch("data/ElementalReactionMaster.json").then(response => response.json()).then(jsonObj => {
             元素反応MasterVar = jsonObj;
         }),
-        fetch("data/DebuffMaster.json").then(response => response.json()).then(jsonObj => {
-            バフデバフMasterVar = jsonObj;
-            Object.keys(バフデバフMasterVar).forEach(key => {
-                let myObj = バフデバフMasterVar[key];
+        fetch("data/BuffMaster.json").then(response => response.json()).then(jsonObj => {
+            バフMasterVar = jsonObj;
+            Object.keys(バフMasterVar).forEach(key => {
+                let myObj = バフMasterVar[key];
                 if ('disabled' in myObj && myObj['disabled']) return;
                 let my条件 = '名前' in myObj ? myObj['名前'] : key;
                 myObj['詳細'].forEach(detailObj => {
@@ -3272,14 +3293,34 @@ $(document).ready(function () {
                         detailObj['条件'] = my条件;
                     }
                 });
-                バフデバフ詳細ArrVar = バフデバフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
+                バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
             });
-            バフデバフオプション条件Map.clear();
-            バフデバフ詳細ArrVar.forEach(detailObj => {
-                makeConditionExclusionMapFromStr(detailObj['条件'], バフデバフオプション条件Map, バフデバフオプション排他Map);
+            バフオプション条件Map.clear();
+            バフ詳細ArrVar.forEach(detailObj => {
+                makeConditionExclusionMapFromStr(detailObj['条件'], バフオプション条件Map, バフオプション排他Map);
             });
-            $('#バフデバフオプションBox').empty();
-            appendInputForOptionElement('バフデバフオプションBox', バフデバフオプション条件Map, 'バフデバフ', false);
+            $('#バフオプションBox').empty();
+            appendInputForOptionElement('バフオプションBox', バフオプション条件Map, 'バフ', false);
+        }),
+        fetch("data/DebuffMaster.json").then(response => response.json()).then(jsonObj => {
+            デバフMasterVar = jsonObj;
+            Object.keys(デバフMasterVar).forEach(key => {
+                let myObj = デバフMasterVar[key];
+                if ('disabled' in myObj && myObj['disabled']) return;
+                let my条件 = '名前' in myObj ? myObj['名前'] : key;
+                myObj['詳細'].forEach(detailObj => {
+                    if (!('条件' in detailObj)) {
+                        detailObj['条件'] = my条件;
+                    }
+                });
+                デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
+            });
+            デバフオプション条件Map.clear();
+            デバフ詳細ArrVar.forEach(detailObj => {
+                makeConditionExclusionMapFromStr(detailObj['条件'], デバフオプション条件Map, デバフオプション排他Map);
+            });
+            $('#デバフオプションBox').empty();
+            appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, 'デバフ', false);
         })
     ]).then(() => {
         キャラクターInputOnChange();

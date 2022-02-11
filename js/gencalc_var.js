@@ -14,7 +14,7 @@ var 元素共鳴MasterVar;
 var 敵MasterVar;
 var 元素反応MasterVar;
 var バフMasterVar;
-var バフデバフMasterVar;
+var デバフMasterVar;
 
 // 選択中のデータを保持します
 var 選択中キャラクターデータVar;
@@ -54,13 +54,13 @@ var 特殊落下攻撃_基礎ダメージ詳細MapVar = new Map();
 var ステータス変更系詳細ArrMapVar = new Map();
 var 天賦性能変更系詳細ArrMapVar = new Map();
 
-// バフデバフBox用
+// バフ/デバフBox用
 var バフ詳細ArrVar = [];
 var バフオプション条件Map = new Map();
 var バフオプション排他Map = new Map();
-var バフデバフ詳細ArrVar = [];
-var バフデバフオプション条件Map = new Map();
-var バフデバフオプション排他Map = new Map();
+var デバフ詳細ArrVar = [];
+var デバフオプション条件Map = new Map();
+var デバフオプション排他Map = new Map();
 
 // オプションBox用
 // checkboxとselectの描画用の情報を保持します

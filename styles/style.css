@@ -28,6 +28,10 @@
     #status-area {
         display: initial;
     }
+
+    #condition-area {
+        display: initial;
+    }
 }
 
 /* 2 Columns */
@@ -55,6 +59,10 @@
     }
 
     #status-area {
+        display: none;
+    }
+
+    #condition-area {
         display: none;
     }
 }
@@ -91,6 +99,10 @@
     }
 
     #status-area {
+        display: none;
+    }
+
+    #condition-area {
         display: none;
     }
 }
@@ -595,21 +607,21 @@ input[type="checkbox"]:checked+label {
     width: 10rem;
 }
 
-.column2-option {
+.column1-option {
     width: 100%;
 }
 
-.column2-option div {
-    display: inline-block;
-    width: calc(100% / 2 - 1rem);
+.column1-option div {
+    display: block;
     text-align: left;
+    padding-left: 1rem;
 }
 
-.column2-option div label {
+.column1-option div label {
     font-size: 2rem;
 }
 
-.column2-option div select {
+.column1-option div select {
     width: 10rem;
 }
 
