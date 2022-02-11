@@ -1727,28 +1727,28 @@ function calculateStatusObj(statusObj) {
     });
 
     // チームバフを計上します
-    statusObj['攻撃力'] += Number($('#チーム攻撃力Input').val());
-    statusObj['攻撃力乗算'] += Number($('#チーム攻撃力PInput').val());
-    statusObj['防御力'] += Number($('#チーム防御力Input').val());
-    statusObj['防御力乗算'] += Number($('#チーム防御力PInput').val());
-    statusObj['元素熟知'] += Number($('#チーム元素熟知Input').val());
-    statusObj['会心率'] += Number($('#チーム会心率Input').val());
-    statusObj['会心ダメージ'] += Number($('#チーム会心ダメージInput').val());
-    statusObj['通常攻撃ダメージバフ'] += Number($('#チーム通常攻撃ダメージバフInput').val());
-    statusObj['重撃ダメージバフ'] += Number($('#チーム重撃ダメージバフInput').val());
-    statusObj['落下攻撃ダメージバフ'] += Number($('#チーム落下攻撃ダメージバフInput').val());
-    statusObj['元素スキルダメージバフ'] += Number($('#チーム元素スキルダメージバフInput').val());
-    statusObj['元素爆発ダメージバフ'] += Number($('#チーム元素爆発ダメージバフInput').val());
-    statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージバフ'] += Number($('#チーム自元素ダメージバフInput').val());
-    statusObj['物理ダメージバフ'] += Number($('#チーム物理ダメージバフInput').val());
+    // statusObj['攻撃力'] += Number($('#チーム攻撃力Input').val());
+    // statusObj['攻撃力乗算'] += Number($('#チーム攻撃力PInput').val());
+    // statusObj['防御力'] += Number($('#チーム防御力Input').val());
+    // statusObj['防御力乗算'] += Number($('#チーム防御力PInput').val());
+    // statusObj['元素熟知'] += Number($('#チーム元素熟知Input').val());
+    // statusObj['会心率'] += Number($('#チーム会心率Input').val());
+    // statusObj['会心ダメージ'] += Number($('#チーム会心ダメージInput').val());
+    // statusObj['通常攻撃ダメージバフ'] += Number($('#チーム通常攻撃ダメージバフInput').val());
+    // statusObj['重撃ダメージバフ'] += Number($('#チーム重撃ダメージバフInput').val());
+    // statusObj['落下攻撃ダメージバフ'] += Number($('#チーム落下攻撃ダメージバフInput').val());
+    // statusObj['元素スキルダメージバフ'] += Number($('#チーム元素スキルダメージバフInput').val());
+    // statusObj['元素爆発ダメージバフ'] += Number($('#チーム元素爆発ダメージバフInput').val());
+    // statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージバフ'] += Number($('#チーム自元素ダメージバフInput').val());
+    // statusObj['物理ダメージバフ'] += Number($('#チーム物理ダメージバフInput').val());
 
-    statusObj['通常攻撃ダメージアップ'] += Number($('#チーム通常攻撃ダメージアップInput').val());
-    statusObj['重撃ダメージアップ'] += Number($('#チーム重撃ダメージアップInput').val());
-    statusObj['落下攻撃ダメージアップ'] += Number($('#チーム落下攻撃ダメージアップInput').val());
-    statusObj['元素スキルダメージアップ'] += Number($('#チーム元素スキルダメージアップInput').val());
-    statusObj['元素爆発ダメージアップ'] += Number($('#チーム元素爆発ダメージアップInput').val());
-    statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージアップ'] += Number($('#チーム自元素ダメージアップInput').val());
-    statusObj['物理ダメージアップ'] += Number($('#チーム物理ダメージアップInput').val());
+    // statusObj['通常攻撃ダメージアップ'] += Number($('#チーム通常攻撃ダメージアップInput').val());
+    // statusObj['重撃ダメージアップ'] += Number($('#チーム重撃ダメージアップInput').val());
+    // statusObj['落下攻撃ダメージアップ'] += Number($('#チーム落下攻撃ダメージアップInput').val());
+    // statusObj['元素スキルダメージアップ'] += Number($('#チーム元素スキルダメージアップInput').val());
+    // statusObj['元素爆発ダメージアップ'] += Number($('#チーム元素爆発ダメージアップInput').val());
+    // statusObj[選択中キャラクターデータVar['元素'] + '元素ダメージアップ'] += Number($('#チーム自元素ダメージアップInput').val());
+    // statusObj['物理ダメージアップ'] += Number($('#チーム物理ダメージアップInput').val());
 
     // ステータス補正を計上します
     Array.from(document.getElementsByName('ステータスInput')).forEach(elem => {
@@ -3085,9 +3085,11 @@ const elementOnClickToggleOther = function (selector, triggerSelector) {
 }
 
 // 中段のオプション、ステータスを閉じたり開いたりします
+$(document).on('click', '#characterweapon-set-open-close', elementOnClickToggleOther('#characterweapon-set', '#characterweapon-set-open-close'));
+$(document).on('click', '#artifact-set-open-close', elementOnClickToggleOther('#artifact-set', '#artifact-set-open-close'));
+$(document).on('click', '#status-set', elementOnClickToggleOther('#status-area', '#status-set'));
 $(document).on('click', '#condition-set', elementOnClickToggleOther('#condition-area', '#condition-set'));
 $(document).on('click', '#option-set', elementOnClickToggleOther('#option-area', '#option-set'));
-$(document).on('click', '#status-set', elementOnClickToggleOther('#status-area', '#status-set'));
 
 const resultTableVisibilityMap = new Map();
 
