@@ -155,7 +155,7 @@ input {
 }
 
 input[type="number"] {
-    width: 10rem;
+    width: 8rem;
     font-size: 2rem;
     height: 2.6rem;
     margin: 0.5rem 0;
@@ -433,7 +433,7 @@ table th {
     font-weight: normal;
     text-align: center;
     font-size: 1.8rem;
-    border-left: 0.3rem double #aaa;
+    border-left: 0.1rem double #aaa;
     border-right: 0.1rem solid #aaa;
 }
 
@@ -443,7 +443,7 @@ table th:first-child {
 
 table td {
     background-color: transparent;
-    padding: 0.1rem 0.5rem;
+    padding: 0.1rem 0.2rem;
 }
 
 table thead th, table tbody th, table tbody td {
