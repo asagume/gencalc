@@ -1708,6 +1708,9 @@ function calculateStatusObj(statusObj) {
     // バフオプションを計上します
     let validBuffConditionValueArr = makeValidConditionValueArr('#バフオプションBox');
     バフ詳細ArrVar.forEach(detailObj => {
+        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'])) {
+            return;
+        }
         let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
         if (number == 0) {
             return;
@@ -1729,6 +1732,9 @@ function calculateStatusObj(statusObj) {
     // デバフオプションを計上します
     let validDebuffConditionValueArr = makeValidConditionValueArr('#デバフオプションBox');
     デバフ詳細ArrVar.forEach(detailObj => {
+        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'])) {
+            return;
+        }
         let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
         if (number == 0) {
             return;
