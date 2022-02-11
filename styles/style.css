@@ -59,7 +59,7 @@
 }
 
 /* 1 Column */
-@media all and (max-width: 900px) {
+@media all and (max-width: 768px) {
     html {
         font-size: calc(100vw / 72);
     }
