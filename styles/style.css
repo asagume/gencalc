@@ -10,15 +10,19 @@
 
     #main {
         max-width: 1536px;
-        margin: 0 auto;
-        background: linear-gradient(to right, #574014, #3a2e0c);
     }
 
     .base-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 32px 125px 150px 800px 400px 140px;
-        grid-template-areas: "header header header""aside aside pane1""pane3 input-pane result-pane""pane4 input-pane result-pane""pane4 bottom-pane bottom-pane""footer footer footer";
+        grid-template-areas:
+            "header header header"
+            "aside aside pane1"
+            "pane3 input-pane result-pane"
+            "pane4 input-pane result-pane"
+            "pane4 bottom-pane bottom-pane"
+            "footer footer footer";
     }
 
     #status-area {
@@ -36,21 +40,18 @@
         font-size: calc(100vw / 72 / 2);
     }
 
-    #main {
-        margin: 0 auto;
-        background: linear-gradient(to right, #574014, #3a2e0c);
-    }
-
     .base-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 3rem 125px 150px 1200px 500px 14rem;
-        grid-template-areas: "header header"
-        "aside aside"
-        "pane3 pane1"
-        "input-pane result-pane"
-        "bottom-pane bottom-pane"
-        "footer footer";
+        grid-template-rows: 3rem 125px 150px auto 600px 500px 14rem;
+        grid-template-areas:
+            "header header"
+            "aside aside"
+            "pane3 pane1"
+            "pane4 result-pane"
+            "input-pane result-pane"
+            "bottom-pane bottom-pane"
+            "footer footer";
     }
 
     #status-area {
@@ -71,15 +72,22 @@
     #main {
         width: 100%;
         min-width: 360px;
-        margin: 0 auto;
-        background: linear-gradient(to right, #574014, #3a2e0c);
     }
 
     .base-container {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 4rem 12rem 125px 150px auto minmax(100rem, auto) 50rem 14rem;
-        grid-template-areas: "header""pane1""aside""pane3""input-pane""result-pane""bottom-pane""footer";
+        grid-template-rows: 4rem 12rem 125px 150px auto auto minmax(100rem, auto) 50rem 14rem;
+        grid-template-areas:
+            "header"
+            "pane1"
+            "aside"
+            "pane3"
+            "pane4"
+            "input-pane"
+            "result-pane"
+            "bottom-pane"
+            "footer";
     }
 
     #status-area {
@@ -99,6 +107,11 @@ body {
     margin-block-end: 0;
     margin-inline-start: 0;
     margin-inline-end: 0;
+}
+
+#main {
+    margin: 0 auto;
+    background: linear-gradient(to right, #574014, #3a2e0c);
 }
 
 a {
@@ -150,12 +163,8 @@ select {
     box-shadow: none;
 }
 
-input {
-    margin: 0;
-}
-
 input[type="number"] {
-    width: 8rem;
+    width: 9rem;
     font-size: 2rem;
     height: 2.6rem;
     margin: 0.5rem 0;
@@ -220,16 +229,6 @@ section {
     vertical-align: top;
 }
 
-/* button {
-    width: 250px;
-    height: 40px;
-    margin: 0;
-    font-size: 2rem;
-    color: blanchedalmond;
-    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
-    border-radius: 10px;
-} */
-
 /* グリッド */
 
 .header {
@@ -237,59 +236,20 @@ section {
     width: 100%;
     position: relative;
     background: linear-gradient(to top, #ecc862, #978310);
-    padding: 0 0 0.2rem;
+    padding: 0 0 1rem;
 }
 
 .header div {
     position: absolute;
     top: 50%;
-    padding: 0 0.5em;
+    padding: 0 0.5rem;
     transform: translate(0, -50%);
     font-size: 2rem;
 }
 
 .aside {
     grid-area: aside;
-    padding-top: 5px;
-    font-size: 1.8rem;
-}
-
-.horizontal-list {
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-}
-
-.pane1 {
-    grid-area: pane1;
-    margin: 5px;
-    padding: 5px;
-    border-style: double;
-    border-radius: 2rem;
-    font-size: 2rem;
-}
-
-.pane3 {
-    grid-area: pane3;
-}
-
-.input-pane {
-    grid-area: input-pane;
-}
-
-.result-pane {
-    grid-area: result-pane;
-}
-
-.bottom-pane {
-    grid-area: bottom-pane;
-}
-
-.footer {
-    grid-area: footer;
-    background-color: #312820;
-    color: #886b1d;
-    text-align: left;
+    padding: 5px 0 1rem;
     font-size: 1.8rem;
 }
 
@@ -300,6 +260,154 @@ section {
 [name="element-type-input"]+label {
     display: inline;
     height: 35px;
+}
+
+.horizontal-list {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pane1 {
+    grid-area: pane1;
+    margin: 5px 1rem;
+    border-style: double;
+    border-radius: 2rem;
+    font-size: 2rem;
+}
+
+.pane3 {
+    grid-area: pane3;
+    margin: 5px 1rem;
+}
+
+.pane4 {
+    grid-area: pane4;
+    margin: 5px 1rem;
+}
+
+.artifact {
+    margin: 5px 1px;
+    padding: 5px 1px;
+    border-style: double;
+    border-radius: 2rem;
+    font-size: 1.6rem;
+}
+
+.columns-3 {
+    justify-content: center;
+}
+
+.pane4 .input-item {
+    width: calc(100% / 3 - 1rem);
+    display: inline-block;
+}
+
+.pane4 label {
+    font-size: 1.7rem;
+}
+
+.complex-4-2 {
+    justify-content: center;
+}
+
+.complex-4-2 .input-item {
+    display: inline-block;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+#artifactsub-detail {
+    font-size: 1.8rem;
+}
+
+#artifactsub-detail legend {
+    text-align: center;
+}
+
+#artifactsub-detail .input-group {
+    width: 75%;
+    padding: 0;
+}
+
+#artifactsub-detail .input-group .input-item {
+    width: calc(44% - 0.6rem);
+    display: inline-block;
+}
+
+#artifactsub-detail .input-group .input-item-short {
+    width: calc(28% - 0.6rem);
+    display: inline-block;
+}
+
+#artifactsub-detail select {
+    font-size: 2rem;
+}
+
+#artifactsub-detail-priority {
+    position: relative;
+    width: 100%;
+}
+
+#artifactsub-detail .special-box {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.5rem;
+    width: calc(25% - 1rem);
+}
+
+#artifactsub-detail .special-box input {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+#artifactsub-detail .special-box label {
+    margin: 0;
+}
+
+#artifactsub-detail .special-box select {
+    margin: 0;
+}
+
+#artifactsub-detail table {
+    margin-top: 1rem;
+}
+
+/* */
+
+.input-pane {
+    grid-area: input-pane;
+    margin: 5px 1rem;
+}
+
+#enemy .input-item {
+    width: calc(100% / 2 - 3rem);
+}
+
+#enemy .input-item label {
+    display: inline-block;
+}
+
+.result-pane {
+    grid-area: result-pane;
+    margin: 5px 1rem;
+}
+
+.bottom-pane {
+    grid-area: bottom-pane;
+    margin: 5px 1rem;
+}
+
+.footer {
+    grid-area: footer;
+    margin: 5px 1rem;
+    background-color: #312820;
+    color: #886b1d;
+    text-align: left;
+    font-size: 1.8rem;
 }
 
 article.input-item {
@@ -384,11 +492,11 @@ fieldset.input-group legend {
 }
 
 .input-set1+label {
-    width: calc(100% / 5 - 0.9rem);
+    width: calc(100% / 4 - 0.9rem);
 }
 
 .input-set2+label {
-    width: calc(100% / 5 - 0.9rem);
+    width: calc(100% / 4 - 0.9rem);
 }
 
 .others-set+label {
@@ -441,6 +549,10 @@ table th:first-child {
     border-left: 0;
 }
 
+table thead th:first-child {
+    padding-left: 1rem;
+}
+
 table td {
     background-color: transparent;
     padding: 0.1rem 0.2rem;
@@ -462,63 +574,6 @@ table tbody tr:last-child th, table tbody tr:last-child td {
     border-bottom: none;
 }
 
-#artifactsub-detail {
-    position: relative;
-    font-size: 1.8rem;
-}
-
-#artifactsub-detail legend {
-    text-align: center;
-}
-
-#artifactsub-detail section.input-group {
-    width: 75%;
-    padding: 0;
-}
-
-#artifactsub-detail .input-group .input-item {
-    width: calc(44% - 0.6rem);
-    display: inline-block;
-    font-size: 1.8rem;
-}
-
-#artifactsub-detail .input-group .input-item-short {
-    width: calc(28% - 0.6rem);
-    display: inline-block;
-    font-size: 1.8rem;
-}
-
-#artifactsub-detail label {
-    font-size: 1.8rem;
-}
-
-#artifactsub-detail select {
-    font-size: 2rem;
-}
-
-#artifactsub-detail .special-box {
-    position: absolute;
-    top: 0.2rem;
-    right: 0.5rem;
-    width: calc(25% - 1rem);
-}
-
-#artifactsub-detail .special-box input {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-}
-
-#artifactsub-detail .special-box label {
-    margin: 0;
-}
-
-#artifactsub-detail .special-box select {
-    margin: 0;
-}
-
-#artifactsub-detail table {
-    margin-top: 1rem;
-}
 
 /* 結果エリア */
 
@@ -564,7 +619,7 @@ table.status tr th {
 
 table.status tr td input[type="number"] {
     opacity: 0.5;
-    width: 7rem;
+    width: 8rem;
 }
 
 table.status tr td input[type="number"]:focus {
@@ -797,7 +852,7 @@ div.description {
     position: absolute;
     left: 0rem;
     top: 1rem;
-    font-size: 3.2rem;
+    font-size: 2.4rem;
 }
 
 #face section label {
