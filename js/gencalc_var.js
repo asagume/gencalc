@@ -13,6 +13,7 @@ var 聖遺物セット効果MasterVar;
 var 元素共鳴MasterVar;
 var 敵MasterVar;
 var 元素反応MasterVar;
+var バフMasterVar;
 var バフデバフMasterVar;
 
 // 選択中のデータを保持します
@@ -54,6 +55,9 @@ var ステータス変更系詳細ArrMapVar = new Map();
 var 天賦性能変更系詳細ArrMapVar = new Map();
 
 // バフデバフBox用
+var バフ詳細ArrVar = [];
+var バフオプション条件Map = new Map();
+var バフオプション排他Map = new Map();
 var バフデバフ詳細ArrVar = [];
 var バフデバフオプション条件Map = new Map();
 var バフデバフオプション排他Map = new Map();

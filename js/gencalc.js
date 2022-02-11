@@ -3259,7 +3259,7 @@ $(document).ready(function () {
         fetch("data/ElementalReactionMaster.json").then(response => response.json()).then(jsonObj => {
             元素反応MasterVar = jsonObj;
         }),
-        fetch("data/BuffDebuffMaster.json").then(response => response.json()).then(jsonObj => {
+        fetch("data/DebuffMaster.json").then(response => response.json()).then(jsonObj => {
             バフデバフMasterVar = jsonObj;
             Object.keys(バフデバフMasterVar).forEach(key => {
                 let myObj = バフデバフMasterVar[key];
