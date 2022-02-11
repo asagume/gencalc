@@ -35,7 +35,7 @@
                 </div>
             </header>
 
-            <div class="greeting-area">
+            <div class="pane1">
                 <p>【原神】ダメージ計算機です</p>
                 <p>バグを探しましょう</p>
                 <p>防御力の時代到来につき、被ダメージ表示を追加しました</p>
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            <div class="face-area">
+            <div class="pane3">
                 <div id="face" style="margin-bottom: 0;">
                     <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
                         id="選択キャラクターImg" />
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="input-area">
+            <div class="input-pane">
                 <fieldset class="input-group">
                     <legend>
                         <button type="button" class="open-close" id="condition-set">基本条件</button>
@@ -709,7 +709,7 @@
                             </div>
                             <input type="radio" class="tab-button input-set2" id="status-table2"
                                 name="status-table-group" />
-                            <label for="status-table2">ダメージバフ</label>
+                            <label for="status-table2" style="font-size: smaller;" >ダメージバフ</label>
                             <div class="tab-content">
                                 <table class="status">
                                     <tr>
@@ -1002,7 +1002,7 @@
                 </fieldset>
             </div>
 
-            <div class="result-area">
+            <div class="result-pane">
                 <div style="height: 100rem;">
                     <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked />
                     <label class="elemental-reaction" for="元素反応なしInput">反応なし</label>
@@ -1034,7 +1034,7 @@
                 </div>
             </div>
 
-            <div class="bottom-area">
+            <div class="bottom-pane">
                 <div class="tab-area">
                     <input type="radio" class="tab-button others-set" id="other-box1" name="others-group" checked />
                     <label for="other-box1">げんかるくについて</label>
@@ -1137,7 +1137,8 @@
                 <dt>1.8.9 (2022/02/11)</dt>
                 <dd>
                     <ul>
-                        <li>絞り込み</li>
+                        <li>キャラクターリスト 絞り込み</li>
+                        <li>レイアウト調整中</li>
                     </ul>
                 </dd>
                 <dt>1.8.8 (2022/02/07,2022/02/08)</dt>
