@@ -1201,7 +1201,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
 
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
-        labelElem.textContent = key;
+        labelElem.textContent = key.replace(/^\*/, '');
         elem.after(labelElem);
 
         elem.onchange = オプションInputOnChange;
@@ -1238,8 +1238,8 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
 
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
-        labelElem.textContent = key;
-        elem.before(labelElem);
+        labelElem.textContent = key.replace(/^\*/, '');
+        elem.after(labelElem);
 
         elem.onchange = オプションInputOnChange;
         applyOptionVariable(ステータス詳細ObjVar, elem);
@@ -1708,7 +1708,8 @@ function calculateStatusObj(statusObj) {
     // バフオプションを計上します
     let validBuffConditionValueArr = makeValidConditionValueArr('#バフオプションBox');
     バフ詳細ArrVar.forEach(detailObj => {
-        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'].replace(/^\*/, ''))) {
+        let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
+        if (Array.from(オプション条件MapVar.keys()).includes(key)) {
             return;
         }
         let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
@@ -1732,7 +1733,8 @@ function calculateStatusObj(statusObj) {
     // デバフオプションを計上します
     let validDebuffConditionValueArr = makeValidConditionValueArr('#デバフオプションBox');
     デバフ詳細ArrVar.forEach(detailObj => {
-        if (Array.from(オプション条件MapVar.keys()).includes(detailObj['条件'].replace(/^\*/, ''))) {
+        let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
+        if (Array.from(オプション条件MapVar.keys()).includes(key)) {
             return;
         }
         let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
@@ -1968,6 +1970,21 @@ const inputOnChangeOptionUpdate = function () {
 
     my条件付き詳細ObjArr.forEach(entry => {
         makeConditionExclusionMapFromStr(entry['条件'], オプション条件MapVar, オプション排他MapVar);
+    });
+
+    Array.from(バフオプション条件Map.keys()).forEach(key => {
+        if (Array.from(オプション条件MapVar.keys()).includes(key.replace(/^\*/, ''))) {
+            $('#' + selectorEscape(key + 'Option')).prop('disabled', true);
+        } else {
+            $('#' + selectorEscape(key + 'Option')).prop('disabled', false);
+        }
+    });
+    Array.from(デバフオプション条件Map.keys()).forEach(key => {
+        if (Array.from(オプション条件MapVar.keys()).includes(key.replace(/^\*/, ''))) {
+            $('#' + selectorEscape(key + 'Option')).prop('disabled', true);
+        } else {
+            $('#' + selectorEscape(key + 'Option')).prop('disabled', false);
+        }
     });
 
     // オプションを作り直します
@@ -3295,7 +3312,9 @@ $(document).ready(function () {
                 if ('disabled' in myObj && myObj['disabled']) return;
                 let my条件 = '*' + ('名前' in myObj ? myObj['名前'] : key);
                 myObj['詳細'].forEach(detailObj => {
-                    if (!('条件' in detailObj)) {
+                    if ('条件' in detailObj) {
+                        detailObj['条件'] = '*' + detailObj['条件'];
+                    } else {
                         detailObj['条件'] = my条件;
                     }
                 });
@@ -3315,7 +3334,9 @@ $(document).ready(function () {
                 if ('disabled' in myObj && myObj['disabled']) return;
                 let my条件 = '*' + ('名前' in myObj ? myObj['名前'] : key);
                 myObj['詳細'].forEach(detailObj => {
-                    if (!('条件' in detailObj)) {
+                    if ('条件' in detailObj) {
+                        detailObj['条件'] = '*' + detailObj['条件'];
+                    } else {
                         detailObj['条件'] = my条件;
                     }
                 });

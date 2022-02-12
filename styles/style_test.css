@@ -19,7 +19,7 @@
         display: grid;
         grid-template-columns: 280px 320px 320px 320px;
         grid-template-rows: 24px 280px 280px 100px auto;
-        grid-template-areas: "header header header header""aside pane1 pane2 pane3""pane4 pane1 pane2 pane3""footer footer footer footer""history history history history";
+        grid-template-areas: "header header header header""pane2 pane1 pane2 pane3""pane4 pane1 pane2 pane3""footer footer footer footer""history history history history";
     }
 
     #status-area {
@@ -55,8 +55,8 @@ body {
     background: linear-gradient(to top, #ecc862, #978310);
 }
 
-.aside {
-    grid-area: aside;
+.pane2 {
+    grid-area: pane2;
     width: 100%;
     justify-content: center;
     overflow-y: scroll;
