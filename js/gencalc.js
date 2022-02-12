@@ -1680,16 +1680,20 @@ function calculateStatusObj(statusObj) {
     });
 
     // 聖遺物のサブステータスを計上します
-    statusObj['HP上限'] += Number($('#聖遺物サブ効果HPInput').val());
-    statusObj['HP乗算'] += Number($('#聖遺物サブ効果HPPInput').val());
-    statusObj['攻撃力'] += Number($('#聖遺物サブ効果攻撃力Input').val());
-    statusObj['攻撃力乗算'] += Number($('#聖遺物サブ効果攻撃力PInput').val());
-    statusObj['防御力'] += Number($('#聖遺物サブ効果防御力Input').val());
-    statusObj['防御力乗算'] += Number($('#聖遺物サブ効果防御力PInput').val());
-    statusObj['元素熟知'] += Number($('#聖遺物サブ効果元素熟知Input').val());
-    statusObj['会心率'] += Number($('#聖遺物サブ効果会心率Input').val());
-    statusObj['会心ダメージ'] += Number($('#聖遺物サブ効果会心ダメージInput').val());
-    statusObj['元素チャージ効率'] += Number($('#聖遺物サブ効果元素チャージ効率Input').val());
+    Array.from(document.getElementsByName('聖遺物サブ効果Input')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] = Number(elem.value);
+    });
+    statusObj['HP上限'] += statusObj['聖遺物サブ効果HP'];
+    statusObj['HP乗算'] += statusObj['聖遺物サブ効果HPP'];
+    statusObj['攻撃力'] += statusObj['聖遺物サブ効果攻撃力'];
+    statusObj['攻撃力乗算'] += statusObj['聖遺物サブ効果攻撃力P'];
+    statusObj['防御力'] += statusObj['聖遺物サブ効果防御力'];
+    statusObj['防御力乗算'] += statusObj['聖遺物サブ効果防御力P'];
+    statusObj['元素熟知'] += statusObj['聖遺物サブ効果元素熟知'];
+    statusObj['会心率'] += statusObj['聖遺物サブ効果会心率'];
+    statusObj['会心ダメージ'] += statusObj['聖遺物サブ効果会心ダメージ'];
+    statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
     // 元素共鳴を計上します
     選択中元素共鳴データArrVar.forEach(detailObj => {
@@ -2998,12 +3002,45 @@ $(document).on('change', '#武器レベルInput', 武器レベルInputOnChange);
 $(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
 
 // 基本条件・聖遺物
+function 聖遺物サブ効果直接入力モードToggleOnChange() {
+    if (this.checked) {
+        $('#聖遺物サブ効果直接入力Toggle').prop('checked', true);
+    } else {
+        $('#聖遺物サブ効果直接入力Toggle').prop('checked', false);
+    }
+    if ($('#聖遺物サブ効果直接入力Toggle').prop('checked')) {
+        $('[name="聖遺物サブ効果Input"]').show();
+        $('#聖遺物サブ効果HPValue').hide();
+        $('#聖遺物サブ効果HPPValue').hide();
+        $('#聖遺物サブ効果攻撃力Value').hide();
+        $('#聖遺物サブ効果攻撃力PValue').hide();
+        $('#聖遺物サブ効果防御力Value').hide();
+        $('#聖遺物サブ効果防御力PValue').hide();
+        $('#聖遺物サブ効果元素熟知Value').hide();
+        $('#聖遺物サブ効果会心率Value').hide();
+        $('#聖遺物サブ効果会心ダメージValue').hide();
+        $('#聖遺物サブ効果元素チャージ効率Value').hide();
+    } else {
+        $('[name="聖遺物サブ効果Input"]').hide();
+        $('#聖遺物サブ効果HPValue').show();
+        $('#聖遺物サブ効果HPPValue').show();
+        $('#聖遺物サブ効果攻撃力Value').show();
+        $('#聖遺物サブ効果攻撃力PValue').show();
+        $('#聖遺物サブ効果防御力Value').show();
+        $('#聖遺物サブ効果防御力PValue').show();
+        $('#聖遺物サブ効果元素熟知Value').show();
+        $('#聖遺物サブ効果会心率Value').show();
+        $('#聖遺物サブ効果会心ダメージValue').show();
+        $('#聖遺物サブ効果元素チャージ効率Value').show();
+    }
+}
 $(document).on('change', '[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
 $(document).on('change', '[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
 $(document).on('change', '[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
 $(document).on('change', '[name="聖遺物優先するサブ効果上昇値Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', '[name="聖遺物優先するサブ効果上昇回数Input"]', inputOnChangeArtifactSubUpdate);
 $(document).on('change', '[name="聖遺物サブ効果Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#聖遺物サブ効果直接入力Toggle', 聖遺物サブ効果直接入力モードToggleOnChange);
 $(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
 $(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
 
@@ -3021,7 +3058,7 @@ $(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
 // オプション条件
 
 // ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ
-function 補正入力モードToggleOnChange() {
+function ステータス補正入力モードToggleOnChange() {
     if (this.checked) {
         $('#ステータス1補正入力Toggle').prop('checked', true);
         $('#ステータス2補正入力Toggle').prop('checked', true);
@@ -3054,7 +3091,7 @@ function 補正入力モードToggleOnChange() {
 $(document).on('change', '[name="ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージバフ1Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス1補正入力Toggle', 補正入力モードToggleOnChange);
+$(document).on('change', '#ステータス1補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス1補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス1補正初期化Button', function () {
     $('[name="ステータスInput"]').val(0);
@@ -3067,7 +3104,7 @@ $(document).on('click', '#ステータス1補正初期化Button', function () {
 
 // ステータス2 元素ステータス・ダメージ/その他
 $(document).on('change', 'input[name="耐性軽減Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス2補正入力Toggle', 補正入力モードToggleOnChange);
+$(document).on('change', '#ステータス2補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス2補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス2補正初期化Button', function () {
     $('[name="耐性軽減Input"]').val(0);
@@ -3079,7 +3116,7 @@ $(document).on('click', '#ステータス2補正初期化Button', function () {
 // ステータス3 ダメージバフ/ダメージアップ
 $(document).on('change', 'input[name="ダメージバフ2Input"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス3補正入力Toggle', 補正入力モードToggleOnChange);
+$(document).on('change', '#ステータス3補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス3補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス3補正初期化Button', function () {
     $('[name="ダメージバフ2Input"]').val(0);
@@ -3091,7 +3128,7 @@ $(document).on('click', '#ステータス3補正初期化Button', function () {
 
 // ステータス・敵耐性詳細
 $(document).on('change', 'input[name="敵ステータスInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#敵耐性補正入力Toggle', 補正入力モードToggleOnChange);
+$(document).on('change', '#敵耐性補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#敵耐性補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#敵耐性補正初期化Button', function () {
     $('[name="敵ステータスInput"]').val(0);
@@ -3225,7 +3262,8 @@ $(document).on('click', 'dialog.info', function () {
 $(document).ready(function () {
     initステータス詳細ObjVar(ステータス詳細ObjVar);
 
-    補正入力モードToggleOnChange();
+    ステータス補正入力モードToggleOnChange();
+    聖遺物サブ効果直接入力モードToggleOnChange();
 
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {

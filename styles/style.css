@@ -641,15 +641,6 @@ table.status tr th {
     width: auto;
 }
 
-table.status tr td input[type="number"] {
-    opacity: 0.5;
-    width: 8rem;
-}
-
-table.status tr td input[type="number"]:focus {
-    opacity: 1;
-}
-
 table.status tr td {
     min-width: 6rem;
     max-width: 7rem;
