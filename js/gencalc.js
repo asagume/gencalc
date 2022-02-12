@@ -3122,7 +3122,7 @@ const resultTableOnClickToggle = function () {
     }
     resultTableVisibilityMap.set(tableId, !isVisible);
     console.log(resultTableVisibilityMap);
-    elementalRectionOnChange();
+    elementalReactionOnChange();
 };
 $(document).on('click', '#通常攻撃ダメージResult', resultTableOnClickToggle);
 $(document).on('click', '#重撃ダメージResult', resultTableOnClickToggle);
@@ -3140,7 +3140,7 @@ const DAMAGE_RESULT_TABLE_ID_ARR = [
     'その他ダメージResult'
 ];
 
-const elementalRectionOnChange = function () {
+const elementalReactionOnChange = function () {
     let elementalReaction = $('input[name="元素反応Input"]:checked').val();
     DAMAGE_RESULT_TABLE_ID_ARR.forEach(tableId => {
         let isVisible = false;
@@ -3165,7 +3165,7 @@ const elementalRectionOnChange = function () {
         });
     });
 }
-$(document).on('change', 'input[name="元素反応Input"]', elementalRectionOnChange);
+$(document).on('change', 'input[name="元素反応Input"]', elementalReactionOnChange);
 
 
 function characterSelected(name) {

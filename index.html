@@ -1250,6 +1250,8 @@
     <script>
         const setOpenClose = function () {
             console.log('screen.width', screen.width);
+            console.log('window.innerWidth', window.innerWidth);
+            console.log('window.devicePixelRatio', window.devicePixelRatio);
 
             ['status-area', 'condition-area'].forEach(areaId => {
                 let buttonId = areaId.replace('area', 'open-close');
@@ -1259,6 +1261,13 @@
                     document.getElementById(buttonId).classList.remove('closed');
                 }
             });
+
+            if (window.innerWidth > 768) {
+                DAMAGE_RESULT_TABLE_ID_ARR.forEach(entry => {
+                    resultTableVisibilityMap.set(entry, true);
+                });
+                elementalReactionOnChange();
+            }
         };
 
         $(window).resize(function () {
