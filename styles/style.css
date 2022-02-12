@@ -219,6 +219,10 @@ input[type="checkbox"]:disabled+label {
     color: grey;
 }
 
+.disabled {
+    color: grey;
+}
+
 label {
     margin: 0;
     font-size: 2rem;
@@ -405,15 +409,22 @@ section {
 
 /**/
 .option-box div {
-    display: inline-flex;
-    flex-direction: row;
+    display: inline;
+    margin-left: 0.5rem;
 }
 
 .option-box div label {
-    margin-left: 0.5rem;
     margin-right: 0.5rem;
     font-size: 2rem;
     height: 75%;
+}
+
+.option-box div input+label {
+    margin-right: 1rem;
+}
+
+.option-box div label+select {
+    margin-right: 1rem;
 }
 
 .option-box div select {
@@ -421,27 +432,9 @@ section {
 }
 
 .column1-option div {
-    display: flex;
+    display: block;
     text-align: left;
     padding-left: 1rem;
-}
-
-select+label {
-    height: 3.2rem;
-    padding: 0.1rem;
-    margin: 0.3rem 0;
-}
-
-select:disabled+label {
-    color: grey;
-}
-
-.option-box div select {
-    order: 1;
-}
-
-.option-box div label {
-    order: 0;
 }
 
 /* */
