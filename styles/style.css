@@ -930,6 +930,20 @@ div.description {
 }
 
 /* 説明・武器 */
+#elemental-skill-desc {
+    text-align: left;
+    height: 75px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#elemental-burst-desc {
+    text-align: left;
+    height: 75px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 #weapon-skill-desc {
     text-align: left;
     height: 75px;

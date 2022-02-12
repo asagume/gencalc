@@ -2443,6 +2443,32 @@ const appendOptionElements = function (data, selector) {
     });
 };
 
+// 天賦説明設定
+function setupキャラクター天賦画像説明() {
+    let url = キャラクターMasterVar[$('#キャラクターInput').val()]['import'];
+    // 画像と説明
+    $('#elemental-skill-img').prop('alt', '');
+    $('#elemental-skill-desc').html('');
+    if ('元素スキル' in 選択中キャラクターデータVar) {
+        if ('名前' in 選択中キャラクターデータVar['元素スキル']) {
+            $('#elemental-skill-img').prop('alt', 選択中キャラクターデータVar['元素スキル']['名前']);
+        }
+        if ('説明' in 選択中キャラクターデータVar['元素スキル']) {
+            $('#elemental-skill-desc').html(get説明Html(選択中キャラクターデータVar['元素スキル']));
+        }
+    }
+    $('#elemental-burst-img').prop('alt', '');
+    $('#elemental-burst-desc').html('');
+    if ('元素爆発' in 選択中キャラクターデータVar) {
+        if ('名前' in 選択中キャラクターデータVar['元素爆発']) {
+            $('#elemental-burst-img').prop('alt', 選択中キャラクターデータVar['元素爆発']['名前']);
+        }
+        if ('説明' in 選択中キャラクターデータVar['元素爆発']) {
+            $('#elemental-burst-desc').html(get説明Html(選択中キャラクターデータVar['元素爆発']));
+        }
+    }
+}
+
 // 武器説明設定
 function setup武器画像説明() {
     let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
@@ -2673,7 +2699,7 @@ function get説明Html(obj) {
     let result = '';
     if ('説明' in obj) {
         if ($.isArray(obj['説明'])) {
-            result += obj['説明'].join('');
+            result += obj['説明'].join('<br>');
         } else if (obj['説明'] instanceof String || typeof (obj['説明']) == 'string') {
             result = obj['説明'];
         }
@@ -2947,6 +2973,7 @@ const キャラクターInputOnChange = function () {
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
         setupキャラクター説明();
+        setupキャラクター天賦画像説明();
 
         inputOnChangeEnemyUpdate(ステータス詳細ObjVar); // 敵
         if (おすすめセットArrVar.length > 0) {
