@@ -2458,7 +2458,7 @@ function setup武器画像説明() {
         if ('説明' in 選択中武器データVar['武器スキル']) {
             let desc = 選択中武器データVar['武器スキル']['説明'];
             if ($.isArray(desc)) {
-                desc = desc.join();
+                desc = desc.join('');
             }
             const re = /.*\{(.+)\}.*/;
             let reRet = re.exec(desc);
