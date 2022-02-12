@@ -2465,6 +2465,7 @@ const 武器InputOnChange = function () {
 
         // 画像と説明
         $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
+        $('#weapon-img').prop('alt', $('#武器Input').val());
         if ('武器スキル' in 選択中武器データVar) {
             if ('名前' in 選択中武器データVar['武器スキル']) {
                 $('#weapon-skill-name').html(選択中武器データVar['武器スキル']['名前']);
