@@ -2457,10 +2457,20 @@ const 武器レベルInputOnChange = function () {
 
 // 武器 変更イベント
 const 武器InputOnChange = function () {
-    fetch(選択可能武器セットObjVar[$('#武器Input').val()]['import']).then(response => response.json()).then(data => {
+    let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
+    fetch(url).then(response => response.json()).then(data => {
         選択中武器データVar = data;
         console.debug('選択中武器データVar');
         console.debug(選択中武器データVar);
+
+        // 画像と説明
+        $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
+        if ('武器スキル' in 選択中武器データVar) {
+            if ('名前' in 選択中武器データVar['武器スキル']) {
+                $('#weapon-skill-name').html(選択中武器データVar['武器スキル']['名前']);
+            }
+            $('#weapon-skill-desc').html(get説明Html(選択中武器データVar['武器スキル']));
+        }
 
         if ('オプション初期値' in 選択中武器データVar) {
             Object.keys(選択中武器データVar['オプション初期値']).forEach(key => {
@@ -2641,7 +2651,7 @@ function get説明Html(obj) {
     let result = '';
     if ('説明' in obj) {
         if ($.isArray(obj['説明'])) {
-            result += obj['説明'].join('<br>');
+            result += obj['説明'].join('');
         } else if (obj['説明'] instanceof String || typeof (obj['説明']) == 'string') {
             result = obj['説明'];
         }
