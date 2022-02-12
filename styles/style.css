@@ -905,11 +905,8 @@ div.description {
     width: 23rem;
 }
 
-#face #artifactDetailImageButton {
-    position: absolute;
-    top: 8rem;
-    right: 0;
-    width: calc(100% - 150px - 1rem);
+#artifactDetailImageButton {
+    width: 100%;
 }
 
 #face #loading {

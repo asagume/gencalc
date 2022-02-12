@@ -341,6 +341,10 @@
                                         name="聖遺物サブ効果Input" />
                                 </td>
                                 <td id="聖遺物サブ効果会心ダメージValue"></td>
+                                <td colspan="3" style="border: none;">
+                                    <input type="checkbox" id="聖遺物サブ効果直接入力Toggle">
+                                    <label for="聖遺物サブ効果直接入力Toggle">直接入力モード</label>
+                                </td>
                             </tr>
                             <tr>
                                 <th>元素チャージ効率</th>
@@ -350,8 +354,7 @@
                                 </td>
                                 <td id="聖遺物サブ効果元素チャージ効率Value"></td>
                                 <td colspan="3" style="border: none;">
-                                    <input type="checkbox" id="聖遺物サブ効果直接入力Toggle">
-                                    <label for="聖遺物サブ効果直接入力Toggle">直接入力モード</label>
+                                    <button type="button" id="artifactDetailImageButton">聖遺物詳細画面OCR</button>
                                 </td>
                             </tr>
                         </table>
@@ -1013,10 +1016,16 @@
                                     <li>オプション条件</li>
                                 </ul>
                             </dd>
+                            <dt>聖遺物詳細画面OCRについて</dt>
+                            <dd>
+                                ゲームの聖遺物＞聖遺物詳細画面のスクリーンショットから聖遺物のステータスを設定する機能です。<br>
+                                読み取り精度はいまひとつなので、実行後に目視にて確認、修正願います。<br>
+                                本機能はすべてブラウザ内で処理されます。外部へのデータ送信などはありません。
+                            </dd>
                             <dt>被ダメージ表示について</dt>
                             <dd>
-                                基礎ダメージ10000に対する被ダメージ(推定値)を表示します<br>
-                                基礎ダメージはざっくり防御力0の場合の被ダメージです
+                                基礎ダメージ10000に対する被ダメージ(推定値)を表示します。<br>
+                                基礎ダメージはざっくり防御力0の場合の被ダメージです。
                             </dd>
                         </dl>
                     </div>
@@ -1042,7 +1051,6 @@
                         <div class="description" style="color: chocolate; font-size: smaller">
                             <p>キャラクター再選択後に有効になります</p>
                         </div>
-                        <button type="button" id="artifactDetailImageButton">聖遺物詳細画面のスクリーンショットを読込</button>
                     </div>
 
                     <input type="radio" class="tab-button others-set" id="other-box3" name="others-group" />
@@ -1102,6 +1110,7 @@
                 <dd>
                     <ul>
                         <li>レイアウト調整ほか いったん了</li>
+                        <li>聖遺物詳細画面OCRを予備タブから引っ張り出しました。昨年の作成時から精度の改善なし</li>
                     </ul>
                 </dd>
                 <dt>1.8.9 (2022/02/11)</dt>
