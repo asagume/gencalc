@@ -3021,21 +3021,40 @@ $(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
 // オプション条件
 
 // ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ
-function ステータス1補正入力ToggleOnChange() {
+function 補正入力モードToggleOnChange() {
+    if (this.checked) {
+        $('#ステータス1補正入力Toggle').prop('checked', true);
+        $('#ステータス2補正入力Toggle').prop('checked', true);
+        $('#ステータス3補正入力Toggle').prop('checked', true);
+        $('#敵耐性補正入力Toggle').prop('checked', true);
+    } else {
+        $('#ステータス1補正入力Toggle').prop('checked', false);
+        $('#ステータス2補正入力Toggle').prop('checked', false);
+        $('#ステータス3補正入力Toggle').prop('checked', false);
+        $('#敵耐性補正入力Toggle').prop('checked', false);
+    }
     if ($('#ステータス1補正入力Toggle').prop('checked')) {
         $('[name="ステータスInput"]').show();
         $('[name="基礎ステータスInput"]').show();
         $('[name="ダメージバフ1Input"]').show();
+        $('[name="耐性軽減Input"]').show();
+        $('[name="ダメージバフ2Input"]').show();
+        $('[name="ダメージアップInput"]').show();
+        $('[name="敵ステータスInput"]').show();
     } else {
         $('[name="ステータスInput"]').hide();
         $('[name="基礎ステータスInput"]').hide();
         $('[name="ダメージバフ1Input"]').hide();
+        $('[name="耐性軽減Input"]').hide();
+        $('[name="ダメージバフ2Input"]').hide();
+        $('[name="ダメージアップInput"]').hide();
+        $('[name="敵ステータスInput"]').hide();
     }
 }
 $(document).on('change', '[name="ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージバフ1Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス1補正入力Toggle', ステータス1補正入力ToggleOnChange);
+$(document).on('change', '#ステータス1補正入力Toggle', 補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス1補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス1補正初期化Button', function () {
     $('[name="ステータスInput"]').val(0);
@@ -3047,15 +3066,8 @@ $(document).on('click', '#ステータス1補正初期化Button', function () {
 });
 
 // ステータス2 元素ステータス・ダメージ/その他
-function ステータス2補正入力ToggleOnChange() {
-    if ($('#ステータス2補正入力Toggle').prop('checked')) {
-        $('[name="耐性軽減Input"]').show();
-    } else {
-        $('[name="耐性軽減Input"]').hide();
-    }
-}
 $(document).on('change', 'input[name="耐性軽減Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス2補正入力Toggle', ステータス2補正入力ToggleOnChange);
+$(document).on('change', '#ステータス2補正入力Toggle', 補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス2補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス2補正初期化Button', function () {
     $('[name="耐性軽減Input"]').val(0);
@@ -3065,18 +3077,9 @@ $(document).on('click', '#ステータス2補正初期化Button', function () {
 });
 
 // ステータス3 ダメージバフ/ダメージアップ
-function ステータス3補正入力ToggleOnChange() {
-    if ($('#ステータス3補正入力Toggle').prop('checked')) {
-        $('[name="ダメージバフ2Input"]').show();
-        $('[name="ダメージアップInput"]').show();
-    } else {
-        $('[name="ダメージバフ2Input"]').hide();
-        $('[name="ダメージアップInput"]').hide();
-    }
-}
 $(document).on('change', 'input[name="ダメージバフ2Input"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス3補正入力Toggle', ステータス3補正入力ToggleOnChange);
+$(document).on('change', '#ステータス3補正入力Toggle', 補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス3補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス3補正初期化Button', function () {
     $('[name="ダメージバフ2Input"]').val(0);
@@ -3087,15 +3090,8 @@ $(document).on('click', '#ステータス3補正初期化Button', function () {
 });
 
 // ステータス・敵耐性詳細
-function 敵耐性補正入力ToggleOnChange() {
-    if ($('#敵耐性補正入力Toggle').prop('checked')) {
-        $('[name="敵ステータスInput"]').show();
-    } else {
-        $('[name="敵ステータスInput"]').hide();
-    }
-}
 $(document).on('change', 'input[name="敵ステータスInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#敵耐性補正入力Toggle', 敵耐性補正入力ToggleOnChange);
+$(document).on('change', '#敵耐性補正入力Toggle', 補正入力モードToggleOnChange);
 $(document).on('change', '#敵耐性補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#敵耐性補正初期化Button', function () {
     $('[name="敵ステータスInput"]').val(0);
@@ -3229,10 +3225,7 @@ $(document).on('click', 'dialog.info', function () {
 $(document).ready(function () {
     initステータス詳細ObjVar(ステータス詳細ObjVar);
 
-    ステータス1補正入力ToggleOnChange();
-    ステータス2補正入力ToggleOnChange();
-    ステータス3補正入力ToggleOnChange();
-    敵耐性補正入力ToggleOnChange();
+    補正入力モードToggleOnChange();
 
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
