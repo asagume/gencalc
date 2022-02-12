@@ -2448,20 +2448,41 @@ function setupキャラクター天賦画像説明() {
     let url = キャラクターMasterVar[$('#キャラクターInput').val()]['import'];
     // 画像と説明
     $('#elemental-skill-img').prop('alt', '');
+    $('#elemental-skill-duration').html('-');
+    $('#elemental-skill-cd').html('-');
+    $('#elemental-skill-energy').html('-');
     $('#elemental-skill-desc').html('');
     if ('元素スキル' in 選択中キャラクターデータVar) {
         if ('名前' in 選択中キャラクターデータVar['元素スキル']) {
             $('#elemental-skill-img').prop('alt', 選択中キャラクターデータVar['元素スキル']['名前']);
+        }
+        if ('継続時間' in 選択中キャラクターデータVar['元素スキル']) {
+            $('#elemental-skill-duration').html(選択中キャラクターデータVar['元素スキル']['継続時間']);
+        }
+        if ('クールタイム' in 選択中キャラクターデータVar['元素スキル']) {
+            $('#elemental-skill-cd').html(選択中キャラクターデータVar['元素スキル']['クールタイム']);
         }
         if ('説明' in 選択中キャラクターデータVar['元素スキル']) {
             $('#elemental-skill-desc').html(get説明Html(選択中キャラクターデータVar['元素スキル']));
         }
     }
     $('#elemental-burst-img').prop('alt', '');
+    $('#elemental-burst-duration').html('-');
+    $('#elemental-burst-cd').html('-');
+    $('#elemental-burst-energy-cost').html('-');
     $('#elemental-burst-desc').html('');
     if ('元素爆発' in 選択中キャラクターデータVar) {
         if ('名前' in 選択中キャラクターデータVar['元素爆発']) {
             $('#elemental-burst-img').prop('alt', 選択中キャラクターデータVar['元素爆発']['名前']);
+        }
+        if ('継続時間' in 選択中キャラクターデータVar['元素爆発']) {
+            $('#elemental-burst-duration').html(選択中キャラクターデータVar['元素爆発']['継続時間']);
+        }
+        if ('クールタイム' in 選択中キャラクターデータVar['元素爆発']) {
+            $('#elemental-burst-cd').html(選択中キャラクターデータVar['元素爆発']['クールタイム']);
+        }
+        if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) {
+            $('#elemental-burst-energy-cost').html(選択中キャラクターデータVar['元素爆発']['元素エネルギー']);
         }
         if ('説明' in 選択中キャラクターデータVar['元素爆発']) {
             $('#elemental-burst-desc').html(get説明Html(選択中キャラクターデータVar['元素爆発']));
