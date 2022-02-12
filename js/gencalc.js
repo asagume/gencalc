@@ -2443,9 +2443,39 @@ const appendOptionElements = function (data, selector) {
     });
 };
 
+// 武器説明設定
+function setup武器画像説明() {
+    let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
+    // 画像と説明
+    $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
+    $('#weapon-img').prop('alt', $('#武器Input').val());
+    $('#weapon-skill-name').html('');
+    $('#weapon-skill-desc').html('');
+    if ('武器スキル' in 選択中武器データVar) {
+        if ('名前' in 選択中武器データVar['武器スキル']) {
+            $('#weapon-skill-name').html(選択中武器データVar['武器スキル']['名前']);
+        }
+        if ('説明' in 選択中武器データVar['武器スキル']) {
+            let desc = 選択中武器データVar['武器スキル']['説明'];
+            if ($.isArray(desc)) {
+                desc = desc.join();
+            }
+            const re = /.*\{(.+)\}.*/;
+            let reRet = re.exec(desc);
+            while (reRet) {
+                let refineVar = reRet[1].split('/')[$('#精錬ランクInput').val() - 1];
+                desc = desc.replace('{' + reRet[1] + '}', '<span class="refine-var">' + refineVar + '</span>');
+                reRet = re.exec(desc);
+            }
+            $('#weapon-skill-desc').html(desc);
+        }
+    }
+}
+
 // 武器・精錬ランク 変更イベント
 const 精錬ランクInputOnChange = function () {
     setupBaseDamageDetailDataWeapon();
+    setup武器画像説明();
     inputOnChangeOptionUpdate();
 };
 
@@ -2462,16 +2492,6 @@ const 武器InputOnChange = function () {
         選択中武器データVar = data;
         console.debug('選択中武器データVar');
         console.debug(選択中武器データVar);
-
-        // 画像と説明
-        $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
-        $('#weapon-img').prop('alt', $('#武器Input').val());
-        if ('武器スキル' in 選択中武器データVar) {
-            if ('名前' in 選択中武器データVar['武器スキル']) {
-                $('#weapon-skill-name').html(選択中武器データVar['武器スキル']['名前']);
-            }
-            $('#weapon-skill-desc').html(get説明Html(選択中武器データVar['武器スキル']));
-        }
 
         if ('オプション初期値' in 選択中武器データVar) {
             Object.keys(選択中武器データVar['オプション初期値']).forEach(key => {
@@ -2512,6 +2532,7 @@ const 武器InputOnChange = function () {
         }
         $('#精錬ランクInput').val(my精錬ランク);
 
+        setup武器画像説明();
         setup武器説明();
 
         setupBaseDamageDetailDataWeapon();

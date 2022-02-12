@@ -937,6 +937,10 @@ div.description {
     -webkit-overflow-scrolling: touch;
 }
 
+.refine-var {
+    color: aquamarine;
+}
+
 /**/
 ul#キャラクター所持状況List {
     list-style: none;
