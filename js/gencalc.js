@@ -1123,7 +1123,7 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
             if (damageResultArr.length > 2) {
                 name = name.replace('のダメージ', '');
             }
-            if (damageResultArr.length > 3) {
+            if (damageResultArr.length > 3 || categoryName == '落下攻撃') {
                 thElem1.textContent = name.replace('ダメージ', '');
             } else {
                 thElem1.textContent = name;
@@ -3020,45 +3020,39 @@ $(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
 
 // オプション条件
 
-// ステータス・ステータス
+// ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ
 $(document).on('change', '[name="ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス補正初期化Toggle', buttonToggleCheckboxOnChange);
-$(document).on('click', '#ステータス補正初期化Button', function () {
+$(document).on('change', 'input[name="ダメージバフ1Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#ステータス1補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#ステータス1補正初期化Button', function () {
     $('[name="ステータスInput"]').val(0);
     $('[name="基礎ステータスInput"]').val(0);
+    $('[name="ダメージバフ1Input"]').val(0);
     this.disabled = true;
-    $('#ステータス補正初期化Toggle').prop('checked', false);
+    $('#ステータス1補正初期化Toggle').prop('checked', false);
     inputOnChangeStatusUpdate();
 });
 
-// ステータス・ダメージバフ
-$(document).on('change', 'input[name="ダメージバフInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ダメージバフ補正初期化Toggle', buttonToggleCheckboxOnChange);
-$(document).on('click', '#ダメージバフ補正初期化Button', function () {
-    $('[name="ダメージバフInput"]').val(0);
-    this.disabled = true;
-    $('#ダメージバフ補正初期化Toggle').prop('checked', false);
-    inputOnChangeStatusUpdate();
-});
-
-// ステータス・ダメージアップ
-$(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ダメージアップ補正初期化Toggle', buttonToggleCheckboxOnChange);
-$(document).on('click', '#ダメージアップ補正初期化Button', function () {
-    $('[name="ダメージアップInput"]').val(0);
-    this.disabled = true;
-    $('#ダメージアップ補正初期化Toggle').prop('checked', false);
-    inputOnChangeStatusUpdate();
-});
-
-// ステータス・耐性/軽減
+// ステータス2 元素ステータス・ダメージ/その他
 $(document).on('change', 'input[name="耐性軽減Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#耐性軽減補正初期化Toggle', buttonToggleCheckboxOnChange);
-$(document).on('click', '#耐性軽減補正初期化Button', function () {
+$(document).on('change', '#ステータス2補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#ステータス2補正初期化Button', function () {
     $('[name="耐性軽減Input"]').val(0);
     this.disabled = true;
-    $('#耐性軽減補正初期化Toggle').prop('checked', false);
+    $('#ステータス2補正初期化Toggle').prop('checked', false);
+    inputOnChangeStatusUpdate();
+});
+
+// ステータス3 ダメージバフ/ダメージアップ
+$(document).on('change', 'input[name="ダメージバフ2Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', '#ステータス3補正初期化Toggle', buttonToggleCheckboxOnChange);
+$(document).on('click', '#ステータス3補正初期化Button', function () {
+    $('[name="ダメージバフ2Input"]').val(0);
+    $('[name="ダメージアップInput"]').val(0);
+    this.disabled = true;
+    $('#ステータス3補正初期化Toggle').prop('checked', false);
     inputOnChangeStatusUpdate();
 });
 
