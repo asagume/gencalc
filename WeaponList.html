@@ -93,6 +93,11 @@
             padding: 0;
             text-align: center;
         }
+
+        .var {
+            font-weight: bold;
+            color: darkslateblue;
+        }
     </style>
 </head>
 
@@ -169,6 +174,7 @@
                                 desc = desc.join('');
                             }
                         }
+                        desc = desc.replace(/\{.+?\}/g, '<span class="var">$&</span>');
                         dataArr.push(desc);
 
                         dataMap.set(json2['名前'], dataArr);
