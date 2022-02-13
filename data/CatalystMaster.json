@@ -1,4 +1,8 @@
 {
+    "神楽の真意": {
+        "レアリティ": 5,
+        "import": "data/weapons/catalyst/5_KagurasVerity.json"
+    },
     "不滅の月華": {
         "レアリティ": 5,
         "import": "data/weapons/catalyst/5_EverlastingMoonglow.json"
@@ -14,6 +18,10 @@
     "天空の巻": {
         "レアリティ": 5,
         "import": "data/weapons/catalyst/5_SkywardAtlas.json"
+    },
+    "誓いの明瞳": {
+        "レアリティ": 4,
+        "import": "data/weapons/catalyst/4_OathswornEye.json"
     },
     "白辰の輪": {
         "レアリティ": 4,
