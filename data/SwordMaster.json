@@ -59,7 +59,7 @@
         "レアリティ": 4,
         "import": "data/weapons/sword/4_LionsRoar.json"
     },
-    "旧貴族の長剣": {
+    "旧貴族長剣": {
         "レアリティ": 4,
         "import": "data/weapons/sword/4_RoyalLongsword.json"
     },

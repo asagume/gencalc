@@ -77,6 +77,6 @@
     },
     "白纓槍": {
         "レアリティ": 3,
-        "import": "data/weapons/polearm/3_WHiteTassel.json"
+        "import": "data/weapons/polearm/3_WhiteTassel.json"
     }
 }
