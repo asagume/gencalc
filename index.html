@@ -14,6 +14,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>げんかるく - 原神ダメージシミュレーター</title>
+    <meta name="description" content="原神@miHoYoのダメージ計算を行うシミュレーターです。" />
+    <meta name="keywords" content="原神,ダメージ,計算,武器,聖遺物" />
     <link href="styles/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
@@ -36,9 +38,10 @@
             </header>
 
             <div class="pane1">
-                <p>【原神】ダメージ計算機です</p>
-                <p>バグを探しましょう</p>
-                <p>防御力の時代到来につき、被ダメージ表示を追加しました</p>
+                <fieldset style="height: calc(100% - 2rem); margin: 1rem;">
+                    <legend>Links</legend>
+                    <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
+                </fieldset>
             </div>
 
             <div class="pane2">
@@ -1054,7 +1057,9 @@
                                     <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
                                         id="artifactset1-img">
                                 </td>
-                                <td><div id="artifactset1-desc">blank</div></td>
+                                <td>
+                                    <div id="artifactset1-desc">blank</div>
+                                </td>
                             </tr>
                             <tr>
                                 <th colspan="2" id="artifactset2-name">blank</th>
@@ -1064,7 +1069,9 @@
                                     <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
                                         id="artifactset2-img">
                                 </td>
-                                <td><div id="artifactset2-desc">blank</div></td>
+                                <td>
+                                    <div id="artifactset2-desc">blank</div>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -1130,29 +1137,31 @@
                 <div class="tab-area">
                     <input type="radio" class="tab-button others-set" id="other-box1" name="others-group" checked />
                     <label for="other-box1">げんかるくについて</label>
-                    <div class="tab-content" style="text-align: left;">
-                        げんかるくは 原神 Genshin ©miHoYo のファンサイトです。
-                        <dl>
-                            <dt>構成保存の範囲について</dt>
-                            <dd>
-                                <ul>
-                                    <li>基本条件・キャラ/武器</li>
-                                    <li>基本条件・聖遺物</li>
-                                    <li>オプション条件</li>
-                                </ul>
-                            </dd>
-                            <dt>聖遺物詳細画面OCRについて</dt>
-                            <dd>
-                                ゲームの聖遺物＞聖遺物詳細画面のスクリーンショットから聖遺物のステータスを設定する機能です。<br>
-                                読み取り精度はいまひとつなので、実行後に目視にて確認、修正願います。<br>
-                                本機能はすべてブラウザ内で処理されます。外部へのデータ送信などはありません。
-                            </dd>
-                            <dt>被ダメージ表示について</dt>
-                            <dd>
-                                基礎ダメージ10000に対する被ダメージ(推定値)を表示します。<br>
-                                基礎ダメージはざっくり防御力0の場合の被ダメージです。
-                            </dd>
-                        </dl>
+                    <div class="tab-content">
+                        <p>げんかるくは 原神 Genshin ©miHoYo のファンサイトです。</p>
+                        <p>キャラクター、武器、聖遺物の情報を入力することで、予測ダメージを算出するダメージシミュレーターです。</p>
+
+                        <fieldset>
+                            <legend>構成保存の範囲について</legend>
+                            <ul>
+                                <li>キャラ/武器</li>
+                                <li>聖遺物</li>
+                                <li>オプション条件</li>
+                            </ul>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>聖遺物詳細画面OCRについて</legend>
+                            ゲームの聖遺物＞聖遺物詳細画面のスクリーンショットから聖遺物のステータスを設定する機能です。
+                            読み取り精度はいまひとつなので、実行後に目視にて確認、修正願います。
+                            本機能はすべてブラウザ内で処理されます。外部へのデータ送信などはありません。
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>被ダメージ表示について</legend>
+                            基礎ダメージ10000に対する被ダメージ(推定値)を表示します。<br>
+                            基礎ダメージはざっくり防御力0の場合の被ダメージです。
+                        </fieldset>
                     </div>
 
                     <input type="radio" class="tab-button others-set" id="other-box2" name="others-group" />
@@ -1182,9 +1191,6 @@
                     <label for="other-box3">予備3</label>
                     <div class="tab-content">
                         <p>予備のスペース</p>
-                        <p>
-                            <a href="ArtifactSetList.html">聖遺物一覧</a>
-                        </p>
                         <p>
                             <a href="characterList.html">キャラクター天賦倍率一覧(確認用)</a>
                         </p>
