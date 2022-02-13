@@ -77,7 +77,7 @@
     },
     "龍殺しの英傑譚": {
         "レアリティ": 3,
-        "import": "data/weapons/catalyst/3_ThrillingTalesOfDragonSlayers.json"
+        "import": "data/weapons/catalyst/3_ThrillingTalesofDragonSlayers.json"
     },
     "魔導緒論": {
         "レアリティ": 3,
