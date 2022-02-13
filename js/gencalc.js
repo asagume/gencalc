@@ -2582,7 +2582,7 @@ function setup武器説明レベル変動() {
     $('#weapon-secondary-stat').html('-');
     $('#weapon-secondary-stat-value').html('-');
     if (my武器OP) {
-        $('#weapon-secondary-stat').html(my武器OP);
+        $('#weapon-secondary-stat').html(my武器OP.replace('%', ''));
         let my武器OPVal = 選択中武器データVar['ステータス'][my武器OP][my武器レベル];
         if (my武器OP != '元素熟知') {
             my武器OPVal += '%';
