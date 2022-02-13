@@ -1074,7 +1074,7 @@
                 </table>
             </div>
 
-            <div class="bottom-pane">
+            <div class=" bottom-pane">
                 <div class="tab-area">
                     <input type="radio" class="tab-button others-set" id="other-box1" name="others-group" checked />
                     <label for="other-box1">げんかるくについて</label>
@@ -1389,6 +1389,14 @@
 
         $(document).ready(() => {
             setOpenClose();
+
+            jQuery(function ($) {
+                $('#weapon-imageselect').change(function () {
+                    var opt = $('#weapon-imageselect option:selected');
+                    var url = opt.css('background-image');
+                    $('#weapon-imageselect').css('background-image', url);
+                });
+            });
         });
     </script>
 </body>

@@ -1695,6 +1695,20 @@ function calculateStatusObj(statusObj) {
     statusObj['会心ダメージ'] += statusObj['聖遺物サブ効果会心ダメージ'];
     statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
+    statusObj['ダメージ計算'] = {};
+    let my元素スキルObj = 選択中キャラクターデータVar['元素スキル'];
+    statusObj['元素スキル'] = {
+        継続時間: '継続時間' in my元素スキルObj ? my元素スキルObj['継続時間'] : '-',
+        クールタイム: 'クールタイム' in my元素スキルObj ? my元素スキルObj['クールタイム'] : '-',
+        元素粒子生成: '元素粒子生成' in my元素スキルObj ? my元素スキルObj['元素粒子生成'] : '-'
+    };
+    let my元素爆発Obj = 選択中キャラクターデータVar['元素爆発'];
+    statusObj['元素爆発'] = {
+        継続時間: '継続時間' in my元素爆発Obj ? my元素爆発Obj['継続時間'] : '-',
+        クールタイム: 'クールタイム' in my元素爆発Obj ? my元素爆発Obj['クールタイム'] : '?',
+        元素エネルギー: '元素エネルギー' in my元素爆発Obj ? my元素爆発Obj['元素エネルギー'] : '?'
+    };
+
     // 元素共鳴を計上します
     選択中元素共鳴データArrVar.forEach(detailObj => {
         if ('詳細' in detailObj) {
@@ -2457,10 +2471,22 @@ function setupキャラクター天賦画像説明() {
             $('#elemental-skill-img').prop('alt', 選択中キャラクターデータVar['元素スキル']['名前']);
         }
         if ('継続時間' in 選択中キャラクターデータVar['元素スキル']) {
-            $('#elemental-skill-duration').html(選択中キャラクターデータVar['元素スキル']['継続時間']);
+            let value = 選択中キャラクターデータVar['元素スキル']['継続時間'];
+            if ('元素スキル' in ステータス詳細ObjVar['ダメージ計算']) {
+                if ('継続時間' in ステータス詳細ObjVar['ダメージ計算']['元素スキル']) {
+                    value = ステータス詳細ObjVar['ダメージ計算']['元素スキル']['継続時間'];
+                }
+            }
+            $('#elemental-skill-duration').html(value);
         }
         if ('クールタイム' in 選択中キャラクターデータVar['元素スキル']) {
-            $('#elemental-skill-cd').html(選択中キャラクターデータVar['元素スキル']['クールタイム']);
+            let value = 選択中キャラクターデータVar['元素スキル']['クールタイム'];
+            if ('元素スキル' in ステータス詳細ObjVar['ダメージ計算']) {
+                if ('クールタイム' in ステータス詳細ObjVar['ダメージ計算']['元素スキル']) {
+                    value = ステータス詳細ObjVar['ダメージ計算']['元素スキル']['クールタイム'];
+                }
+            }
+            $('#elemental-skill-cd').html(value);
         }
         if ('説明' in 選択中キャラクターデータVar['元素スキル']) {
             $('#elemental-skill-desc').html(get説明Html(選択中キャラクターデータVar['元素スキル']));
@@ -2476,13 +2502,25 @@ function setupキャラクター天賦画像説明() {
             $('#elemental-burst-img').prop('alt', 選択中キャラクターデータVar['元素爆発']['名前']);
         }
         if ('継続時間' in 選択中キャラクターデータVar['元素爆発']) {
-            $('#elemental-burst-duration').html(選択中キャラクターデータVar['元素爆発']['継続時間']);
+            $('#elemental-burst-duration').html(ステータス詳細ObjVar['ダメージ計算']['元素爆発']['継続時間']);
         }
         if ('クールタイム' in 選択中キャラクターデータVar['元素爆発']) {
-            $('#elemental-burst-cd').html(選択中キャラクターデータVar['元素爆発']['クールタイム']);
+            let value = 選択中キャラクターデータVar['元素爆発']['クールタイム'];
+            if ('元素爆発' in ステータス詳細ObjVar['ダメージ計算']) {
+                if ('クールタイム' in ステータス詳細ObjVar['ダメージ計算']['元素爆発']) {
+                    value = ステータス詳細ObjVar['ダメージ計算']['元素爆発']['クールタイム'];
+                }
+            }
+            $('#elemental-burst-cd').html(value);
         }
         if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) {
-            $('#elemental-burst-energy-cost').html(選択中キャラクターデータVar['元素爆発']['元素エネルギー']);
+            let value = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
+            if ('元素爆発' in ステータス詳細ObjVar['ダメージ計算']) {
+                if ('元素エネルギー' in ステータス詳細ObjVar['ダメージ計算']['元素爆発']) {
+                    value = ステータス詳細ObjVar['ダメージ計算']['元素爆発']['元素エネルギー'];
+                }
+            }
+            $('#elemental-burst-energy-cost').html(value);
         }
         if ('説明' in 選択中キャラクターデータVar['元素爆発']) {
             $('#elemental-burst-desc').html(get説明Html(選択中キャラクターデータVar['元素爆発']));

@@ -179,12 +179,13 @@ function initステータス詳細ObjVar(statusObj) {
         statusObj[propName] = ステータス詳細ObjTemplate[propName];
     });
 
-    if ('ダメージ計算' in statusObj) {
-        if ($.isPlainObject(statusObj['ダメージ計算'])) {
-            Object.keys(statusObj['ダメージ計算']).forEach(subPropName => {
-                statusObj['ダメージ計算'][subPropName] = [];
-            });
-        }
+    if (!('ダメージ計算' in statusObj)) {
+        statusObj['ダメージ計算'] = {};
+    }
+    if ($.isPlainObject(statusObj['ダメージ計算'])) {
+        Object.keys(statusObj['ダメージ計算']).forEach(subPropName => {
+            statusObj['ダメージ計算'][subPropName] = [];
+        });
     }
 
     // 通常攻撃の元素
