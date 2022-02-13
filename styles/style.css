@@ -15,7 +15,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 32px 125px 150px auto auto auto;
+        grid-template-rows: 32px 125px 150px auto minmax(400px, auto) auto;
         grid-template-areas:
             "header header header"
             "pane2 pane2 pane1"
@@ -47,7 +47,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 3rem 125px 150px auto auto auto auto;
+        grid-template-rows: 3rem 125px 150px auto auto minmax(400px, auto) auto;
         grid-template-areas:
             "header header"
             "pane2 pane2"
@@ -85,7 +85,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 4rem 12rem 125px 150px auto auto auto auto auto auto;
+        grid-template-rows: 4rem 12rem 125px 150px auto auto auto minmax(400px, auto) auto auto;
         grid-template-areas:
             "header"
             "pane1"
