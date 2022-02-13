@@ -1002,22 +1002,74 @@
             </div>
 
             <div class="pane6">
-                <table class="result">
-                    <tr>
-                        <td rowspan="2">
-                            <img width="75" height="75" src="images/weapons/sword/1_DullBlade.png" alt="無鋒の剣"
-                                id="weapon-img">
-                        </td>
-                        <td colspan="2" style="display: none;">
-                            <div id="weapon-skill-name"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div id="weapon-skill-desc"></div>
-                        </td>
-                    </tr>
-                </table>
+                <div class="tab-area">
+                    <input type="radio" class="tab-button input-set1" id="detail1" name="detail-group" />
+                    <label for="detail1">天賦詳細</label>
+                    <div class="tab-content" style="padding-top: 1rem;">
+                    </div>
+
+                    <input type="radio" class="tab-button input-set1" id="detail2" name="detail-group" checked />
+                    <label for="detail2">武器詳細</label>
+                    <div class="tab-content" style="padding-top: 1rem;">
+                        <table class="result">
+                            <tr>
+                                <th colspan="3" id="weapon-name">blank</th>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" style="width: 75px;">
+                                    <img width="75" height="75" src="images/weapons/sword/1_DullBlade.png" alt="無鋒の剣"
+                                        id="weapon-img">
+                                </td>
+                                <td>レアリティ</td>
+                                <td id="weapon-rarity"></td>
+                            </tr>
+                            <tr>
+                                <td>基礎攻撃力</td>
+                                <td id="weapon-base-attack"></td>
+                            </tr>
+                            <tr>
+                                <td id="weapon-secondary-stat">blank</td>
+                                <td id="weapon-secondary-stat-value">blank</td>
+                            </tr>
+                            <tr>
+                                <th colspan="3" id="weapon-ability-name"></th>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div id="weapon-ability-desc"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <input type="radio" class="tab-button input-set1" id="detail3" name="detail-group" />
+                    <label for="detail3">聖遺物詳細</label>
+                    <div class="tab-content" style="padding-top: 1rem;">
+                        <table class="result">
+                            <tr>
+                                <th colspan="2" id="artifactset1-name">blank</th>
+                            </tr>
+                            <tr>
+                                <td rowspan="1" style="width: 75px;">
+                                    <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
+                                        id="artifactset1-img">
+                                </td>
+                                <td><div id="artifactset1-desc">blank</div></td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" id="artifactset2-name">blank</th>
+                            </tr>
+                            <tr>
+                                <td rowspan="1" style="width: 75px;">
+                                    <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
+                                        id="artifactset2-img">
+                                </td>
+                                <td><div id="artifactset2-desc">blank</div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
                 <table class="result" style="display: none;">
                     <tr>
                         <td rowspan="4">

@@ -944,9 +944,22 @@ div.description {
     -webkit-overflow-scrolling: touch;
 }
 
-#weapon-skill-desc {
+#weapon-ability-desc {
     text-align: left;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#artifactset1-desc {
     height: 75px;
+    text-align: left;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#artifactset2-desc {
+    height: 75px;
+    text-align: left;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }

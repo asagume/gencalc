@@ -2134,6 +2134,45 @@ const elementalResonanceInputOnChange = function (event) {
     inputOnChangeStatusUpdate();
 }
 
+// 聖遺物セット効果説明
+function setup聖遺物セット効果説明() {
+    $('#artifactset1-desc').html('');
+    $('#artifactset2-desc').html('');
+    let myInput1Value = $('#聖遺物セット効果1Input').val();
+    let mySet1Name = myInput1Value;
+    if (myInput1Value) {
+        mySet1Name += ' 2セット効果';
+        if ('image' in 聖遺物セット効果MasterVar[myInput1Value]) {
+            $('#artifactset1-img').attr('src', 聖遺物セット効果MasterVar[myInput1Value]['image']);
+        } else {
+            $('#artifactset1-img').attr('src', 'images/artifacts/3_Adventurer.png');
+        }
+        $('#artifactset1-img').attr('alt', myInput1Value);
+        $('#artifactset1-desc').html(get説明Html(聖遺物セット効果MasterVar[myInput1Value]['2セット効果']));
+    }
+    let myInput2Value = $('#聖遺物セット効果2Input').val();
+    let mySet2Name = myInput2Value;
+    if (myInput2Value) {
+        if ('image' in 聖遺物セット効果MasterVar[myInput2Value]) {
+            $('#artifactset2-img').attr('src', 聖遺物セット効果MasterVar[myInput2Value]['image']);
+        } else {
+            $('#artifactset2-img').attr('src', 'images/artifacts/3_Adventurer.png');
+        }
+        $('#artifactset2-img').attr('alt', myInput1Value);
+        if (myInput1Value == myInput2Value) {
+            mySet2Name += ' 4セット効果';
+            if ('4セット効果' in 聖遺物セット効果MasterVar[myInput2Value]) {
+                $('#artifactset2-desc').html(get説明Html(聖遺物セット効果MasterVar[myInput2Value]['4セット効果']));
+            }
+        } else {
+            mySet2Name += ' 2セット効果';
+            $('#artifactset2-desc').html(get説明Html(聖遺物セット効果MasterVar[myInput2Value]['2セット効果']));
+        }
+    }
+    $('#artifactset1-name').html(mySet1Name);
+    $('#artifactset2-name').html(mySet2Name);
+}
+
 // 聖遺物サブ効果 変更イベント
 const inputOnChangeArtifactSubUpdate = function () {
     if ($('#聖遺物詳細計算停止Config').prop('checked')) {
@@ -2324,6 +2363,8 @@ function inputOnChangeArtifactSetUpdate() {
             });
         }
     });
+
+    setup聖遺物セット効果説明();
 
     return isArtifactMainUpdated;
 }
@@ -2529,16 +2570,38 @@ function setupキャラクター天賦画像説明() {
 }
 
 // 武器説明設定
-function setup武器画像説明() {
+function setup武器説明レベル変動() {
+    let my武器レベル = $('#武器レベルInput').val();
+    let my武器OP;
+    Object.keys(選択中武器データVar['ステータス']).forEach(status => {
+        if (status != '基礎攻撃力') {
+            my武器OP = status;
+        }
+    });
+    $('#weapon-base-attack').html(選択中武器データVar['ステータス']['基礎攻撃力'][my武器レベル]);
+    $('#weapon-secondary-stat').html('-');
+    $('#weapon-secondary-stat-value').html('-');
+    if (my武器OP) {
+        $('#weapon-secondary-stat').html(my武器OP);
+        let my武器OPVal = 選択中武器データVar['ステータス'][my武器OP][my武器レベル];
+        if (my武器OP != '元素熟知') {
+            my武器OPVal += '%';
+        }
+        $('#weapon-secondary-stat-value').html(my武器OPVal);
+    }
+}
+function setup武器説明() {
     let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
     // 画像と説明
+    $('#weapon-name').html($('#武器Input').val());
     $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
     $('#weapon-img').prop('alt', $('#武器Input').val());
-    $('#weapon-skill-name').html('');
-    $('#weapon-skill-desc').html('');
+    $('#weapon-rarity').html(選択中武器データVar['レアリティ']);
+    $('#weapon-ability-name').html('');
+    $('#weapon-ability-desc').html('');
     if ('武器スキル' in 選択中武器データVar) {
         if ('名前' in 選択中武器データVar['武器スキル']) {
-            $('#weapon-skill-name').html(選択中武器データVar['武器スキル']['名前']);
+            $('#weapon-ability-name').html(選択中武器データVar['武器スキル']['名前']);
         }
         if ('説明' in 選択中武器データVar['武器スキル']) {
             let desc = 選択中武器データVar['武器スキル']['説明'];
@@ -2552,21 +2615,22 @@ function setup武器画像説明() {
                 desc = desc.replace('{' + reRet[1] + '}', '<span class="refine-var">' + refineVar + '</span>');
                 reRet = re.exec(desc);
             }
-            $('#weapon-skill-desc').html(desc);
+            $('#weapon-ability-desc').html(desc);
         }
     }
+    setup武器説明レベル変動();
 }
 
 // 武器・精錬ランク 変更イベント
 const 精錬ランクInputOnChange = function () {
     setupBaseDamageDetailDataWeapon();
-    setup武器画像説明();
+    setup武器説明();
     inputOnChangeOptionUpdate();
 };
 
 // 武器レベル 変更イベント
 const 武器レベルInputOnChange = function () {
-    setup武器説明();
+    setup武器説明レベル変動();
     inputOnChangeOptionUpdate();
 };
 
@@ -2617,25 +2681,13 @@ const 武器InputOnChange = function () {
         }
         $('#精錬ランクInput').val(my精錬ランク);
 
-        setup武器画像説明();
         setup武器説明();
+        setup武器説明レベル変動();
 
         setupBaseDamageDetailDataWeapon();
         inputOnChangeOptionUpdate();
     });
 };
-
-function setup武器説明() {
-    let my武器レベル = $('#武器レベルInput').val();
-    let my武器OP;
-    Object.keys(選択中武器データVar['ステータス']).forEach(status => {
-        if (status != '基礎攻撃力') {
-            my武器OP = status;
-        }
-    });
-    $('#weapon-description').html('基礎攻撃力' + 選択中武器データVar['ステータス']['基礎攻撃力'][my武器レベル] + '<br>'
-        + my武器OP + 選択中武器データVar['ステータス'][my武器OP][my武器レベル]);
-}
 
 function getNormalAttackDefaultElement() {
     キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
