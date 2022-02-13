@@ -1,13 +1,5 @@
 /* 3 Columns */
 @media all and (min-width: 1251px) {
-    html {
-        font-size: 7px;
-    }
-
-    body {
-        font-size: 7px;
-    }
-
     #main {
         max-width: 1536px;
     }
@@ -36,14 +28,6 @@
 
 /* 2 Columns */
 @media all and (min-width: 769px) and (max-width: 1250px) {
-    html {
-        font-size: calc(100vw / 72 / 2);
-    }
-
-    body {
-        font-size: calc(100vw / 72 / 2);
-    }
-
     .base-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -69,16 +53,7 @@
 
 /* 1 Column */
 @media all and (max-width: 768px) {
-    html {
-        font-size: calc(100vw / 72);
-    }
-
-    body {
-        font-size: calc(100vw / 72);
-    }
-
     #main {
-        width: 100%;
         min-width: 360px;
     }
 
@@ -108,26 +83,8 @@
     }
 }
 
-body {
-    width: 100%;
-    color: blanchedalmond;
-    background-color: rgb(58, 30, 10);
-    text-align: center;
-    font-size: 2rem;
-    box-sizing: border-box;
-    margin: 0;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    word-break: break-all;
-    line-break: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
 #main {
-    margin: 0 auto;
+    color: blanchedalmond;
     background: linear-gradient(to right, #574014, #3a2e0c);
 }
 

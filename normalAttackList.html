@@ -6,26 +6,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>げんかるく - 通常攻撃天賦倍率一覧</title>
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <reference path="JQuery.d.ts"></reference>
     <style type="text/css">
         #main {
             text-align: center;
+            margin: 1rem;
         }
 
         label {
-            font-size: large;
+            font-size: larger;
         }
 
         select {
             width: 100px;
-            font-size: large;
+            font-size: larger;
         }
 
         table caption {
             text-align: left;
-            font-size: large;
+            font-size: larger;
             font-weight: bold;
         }
 
@@ -52,6 +54,12 @@
 
         table tbody td {
             border-right: 1px solid #404040;
+        }
+
+        table.dataTable tbody td {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            padding: 0.5rem 0;
         }
 
         td {
@@ -208,7 +216,7 @@
                         switch (attackTalent) {
                             case '通常攻撃':
                                 for (let i = 0; i < maxLength; i++) {
-                                    columnArr.push({ title: i == 0 ? '名前' : i + '段ダメージ' });
+                                    columnArr.push({ title: i == 0 ? '名前' : i + '段', width: '15rem' });
                                 }
                                 break;
                             case '重撃':
@@ -245,7 +253,7 @@
                         });
 
                         if (attackTalent == '通常攻撃') {
-                            columnArr.push({ title: '合計' });
+                            columnArr.push({ title: '合計', width: '9rem' });
                             for (let i = 0; i < rowDataArr.length; i++) {
                                 rowDataArr[i].push(totalArr[i]);
                             }
@@ -261,9 +269,7 @@
                         $('#' + selectorEscape(tableElem.id)).DataTable({
                             data: rowDataArr,
                             columns: columnArr,
-                            columnDefs: [
-                                { targets: [0], width: '100px' }
-                            ],
+                            autoWidth: true,
                             info: false,
                             paging: false,
                             searching: false
