@@ -7,7 +7,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 32px 125px 150px auto minmax(400px, auto) auto;
+        grid-template-rows: auto auto auto auto minmax(400px, auto) auto;
         grid-template-areas:
             "header header header"
             "pane2 pane2 pane2"
@@ -93,30 +93,6 @@ a:link {
 
 a:visited {
     color: blanchedalmond;
-}
-
-.pyro-bg {
-    background-color: darkred;
-}
-
-.hydro-bg {
-    background-color: darkcyan;
-}
-
-.aero-bg {
-    background-color: darkgreen;
-}
-
-.electro-bg {
-    background-color: darkviolet;
-}
-
-.cryo-bg {
-    background-color: darkturquoise;
-}
-
-.geo-bg {
-    background-color: darkgoldenrod;
 }
 
 button {
@@ -242,3 +218,155 @@ article select {
     text-align: center;
 }
 
+
+/*  */
+.open-close {
+    width: 18rem;
+    height: 3.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    border-radius: 0.5rem;
+    border-color: #999;
+    border-style: solid;
+    padding: 0;
+    text-align: center;
+}
+
+.open-close.closed {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
+input+select:checked {
+    display: none;
+}
+
+input:checked+select {
+    display: block;
+}
+
+th.base {
+    color: rgb(189, 189, 189);
+}
+
+table.result {
+    margin: 0.5rem 0;
+}
+
+/* 元素反応 */
+input[name="元素反応Input"] {
+    display: none;
+}
+
+label.elemental-reaction {
+    display: inline-block;
+    width: calc(100% / 4 - 1.5rem);
+    padding: 0.2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to top, #3d3d3b, #141414);
+    text-shadow: 0.1rem 0.1rem 0.1rem rgb(40, 80, 80), -0.1rem -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0.1rem 0.1rem rgb(40, 80, 80), 0.1rem -0.1rem 0.1rem rgb(40, 80, 80), 0 0.1rem 0.1rem rgb(40, 80, 80), 0 -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0 0.1rem rgb(40, 80, 80), 0.1rem 0 0.1rem rgb(40, 80, 80);
+    border-radius: 0.5rem;
+}
+
+input[name="元素反応Input"]+label {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
+}
+
+input[name="元素反応Input"]:checked+label {
+    background: linear-gradient(to top, #ecc862, #978310);
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
+}
+
+/* 元素色 */
+.pyro {
+    color: #d2655a;
+}
+
+.hydro {
+    color: #559cc9;
+}
+
+.aero {
+    color: #3aaf7a;
+}
+
+.electro {
+    color: #b681df;
+}
+
+.cryo {
+    color: #63beb4;
+}
+
+.geo {
+    color: #df8f37;
+}
+
+.pyro-bg {
+    background-color: darkred;
+}
+
+.hydro-bg {
+    background-color: darkcyan;
+}
+
+.aero-bg {
+    background-color: darkgreen;
+}
+
+.electro-bg {
+    background-color: darkviolet;
+}
+
+.cryo-bg {
+    background-color: darkturquoise;
+}
+
+.geo-bg {
+    background-color: darkgoldenrod;
+}
+
+/* キャラクター所持状況List */
+#キャラクター所持状況List {
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    width: 100%;
+}
+
+#キャラクター所持状況List li {
+    position: relative;
+    display: inline-block;
+}
+
+#キャラクター所持状況List li div {
+    border-style: double;
+    border-width: 0.2rem;
+}
+
+#キャラクター所持状況List li div img {
+    vertical-align: top;
+}
+
+#キャラクター所持状況List li div img.darken {
+    opacity: 0.5;
+}
+
+#キャラクター所持状況List li div img.element {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+#キャラクター所持状況List li div p {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    background: transparent;
+    color: blanchedalmond;
+    font-size: 24px;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    margin: 0;
+}
