@@ -2594,8 +2594,6 @@ function setup武器説明() {
     let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
     // 画像と説明
     $('#weapon-name').html($('#武器Input').val());
-    $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
-    $('#weapon-img').prop('alt', $('#武器Input').val());
     $('#weapon-rarity').html(選択中武器データVar['レアリティ']);
     $('#weapon-ability-name').html('');
     $('#weapon-ability-desc').html('');
@@ -2829,6 +2827,11 @@ function setupCharacterImg(url) {
 
     // キャラクター画像
     $('#character-button img').attr('src', '/images/characters/face/' + fileName);
+    if (url.indexOf('5') == -1) {
+        $('#character-button').css('background-image', 'url(/images/star4-bg.png)');
+    } else {
+        $('#character-button').css('background-image', 'url(/images/star5-bg.png)');
+    }
 }
 const WEAPON_TYPE_IMG_FILE_ALIST = {
     片手剣: 'NormalAttack_sword.png',
@@ -2865,8 +2868,6 @@ const キャラクターInputOnChange = function () {
 
         setupCharacterImg(url);
         setupTalentButton(url, 選択中キャラクターデータVar);
-
-        setup武器選択リスト();
 
         ['通常攻撃', '特殊通常攻撃'].forEach(category => {
             if (category in 選択中キャラクターデータVar) {
@@ -3122,6 +3123,8 @@ const キャラクターInputOnChange = function () {
         }
         appendOptionElements(選択可能武器セットObjVar, '#武器Input');
 
+        setup武器選択リスト();
+
         setupおすすめセット();
 
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
@@ -3156,28 +3159,35 @@ function setupキャラクター説明() {
 }
 
 // 
-function setupキャラクター選択(opt_elementType = null) {
+function setupキャラクター選択リスト(opt_elementType = null) {
     document.querySelector('#キャラクター選択').innerHTML = '';
     let ulElem = document.getElementById('キャラクター選択');
-    Object.keys(キャラクターMasterVar).forEach(key => {
-        if ('disabled' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['disabled']) return;
-        if (opt_elementType) {
-            if (キャラクターMasterVar[key]['元素'] != opt_elementType) return;
+    Object.keys(キャラクターMasterVar).forEach(name => {
+        let myMasterObj = キャラクターMasterVar[name];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
+        if (opt_elementType && myMasterObj['元素'] != opt_elementType) {
+            return;
         }
         let liElem = document.createElement('li');
         ulElem.appendChild(liElem);
+
+        let urlArr = myMasterObj['import'].split('/');
+        let fileName = urlArr[urlArr.length - 1].replace('.json', '.png');
+        let srcUrl = '/images/characters/face/' + fileName;
+
         let imgElem = document.createElement('img');
-        imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
-        imgElem.src = 'image' in キャラクターMasterVar[key] ? キャラクターMasterVar[key]['image'] : キャラクターMasterVar[key]['image2'];
-        imgElem.alt = key;
-        imgElem.width = 55;
-        imgElem.height = 55;
+        imgElem.className = 'star' + myMasterObj['レアリティ'];
+        imgElem.src = srcUrl;
+        imgElem.alt = name;
+        imgElem.width = 80;
         liElem.appendChild(imgElem);
 
         let img2Elem = document.createElement('img');
         img2Elem.className = 'element';
-        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(キャラクターMasterVar[key]['元素']);
-        img2Elem.alt = キャラクターMasterVar[key]['元素'];
+        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
+        img2Elem.alt = myMasterObj['元素'];
         img2Elem.width = 20;
         img2Elem.height = 20;
         liElem.appendChild(img2Elem);
@@ -3207,6 +3217,13 @@ function setupWeaponImg(url, name) {
     // 武器画像
     $('#weapon-button img').attr('src', srcUrl);
     $('#weapon-button img').attr('alt', name);
+    if (url.indexOf('3') != -1) {
+        $('#weapon-button').css('background-image', 'url(/images/star3-bg.png)');
+    } else if (url.indexOf('4') != -1) {
+        $('#weapon-button').css('background-image', 'url(/images/star4-bg.png)');
+    } else {
+        $('#weapon-button').css('background-image', 'url(/images/star5-bg.png)');
+    }
 }
 
 function setup武器選択リスト() {
@@ -3527,7 +3544,7 @@ $(document).ready(function () {
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
             キャラクターMasterVar = jsonObj;
 
-            setupキャラクター選択();
+            setupキャラクター選択リスト();
 
             appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
 

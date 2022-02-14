@@ -16,7 +16,8 @@
     <title>げんかるく - 原神ダメージシミュレーター</title>
     <meta name="description" content="原神@miHoYoのダメージ計算を行うシミュレーターです。" />
     <meta name="keywords" content="原神,ダメージ,計算,武器,聖遺物" />
-    <link href="stylesNew/base-style.css" rel="stylesheet" />
+    <link href="styles/normalize.css" rel="stylesheet" />
+    <link href="styles/base-style.css" rel="stylesheet" />
     <link href="stylesNew/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
@@ -77,140 +78,175 @@
             </div>
 
             <div class="pane3">
-                <div id="face" style="margin-bottom: 0; display: none;">
-                    <img src="images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png" width="150" height="150"
-                        id="選択キャラクターImg" />
+                <table>
+                    <tr>
+                        <td colspan="2" rowspan="3">
+                            <button type="button" id="character-button">
+                                <img width="150" height="150" src="images/characters/face/aero_5_sword_Traveler.png">
+                            </button>
+                        </td>
+                        <td colspan="2" id="character-name">旅人(風)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" id="構成保存Button">保存</button>
+                        </td>
+                        <td>
+                            <button type="button" id="保存構成削除Button">削除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="text" id="構成名称Input" minlength="1" maxlength="12">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="レベルInput">
+                                <option value="80">Lv.80</option>
+                                <option value="80+">Lv.80+</option>
+                                <option value="90" selected>Lv.90</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="命ノ星座Input">
+                                <option value="0">-</option>
+                                <option value="1">C1</option>
+                                <option value="2">C2</option>
+                                <option value="3">C3</option>
+                                <option value="4">C4</option>
+                                <option value="5">C5</option>
+                                <option value="6">C6</option>
+                            </select>
+                        </td>
+                        <td colspan="2">
+                            <button type="button" id="recomend-button">おすすめセット</button>
+                        </td>
+                    </tr>
+                </table>
 
-                    <section class="input-group">
-                        <p id="選択キャラクター名前Label"></p>
-                        <label for="おすすめセットInput">おすすめ</label>
-                        <select id="おすすめセットInput"></select>
-                    </section>
+                <select id="おすすめセットInput"></select>
 
-                    <button type="button" id="構成保存Button">この構成を保存</button>
-                    <button type="button" id="保存構成削除Button">保存構成を削除</button>
-                    <input type="text" id="構成名称Input" minlength="1" maxlength="12">
+                <table>
+                    <tr>
+                        <td colspan="2" rowspan="2">
+                            <button id="weapon-button">
+                                <img width="120" height="120" src="images/weapons/sword/1_DullBlade.png" alt="武器">
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" id="talent1-button">
+                                <img width="60" height="60" src="images/characters/NormalAttack_sword.png" alt="通常攻撃">
+                            </button>
+                            <select id="通常攻撃レベルInput">
+                                <option value="1">Lv.1</option>
+                                <option value="2">Lv.2</option>
+                                <option value="3">Lv.3</option>
+                                <option value="4">Lv.4</option>
+                                <option value="5">Lv.5</option>
+                                <option value="6">Lv.6</option>
+                                <option value="7">Lv.7</option>
+                                <option value="8" selected>Lv.8</option>
+                                <option value="9">Lv.9</option>
+                                <option value="10">Lv.10</option>
+                                <option value="11">Lv.11</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" id="talent2-button">
+                                <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png"
+                                    alt="元素スキル">
+                            </button>
+                            <select id="元素スキルレベルInput">
+                                <option value="1">Lv.1</option>
+                                <option value="2">Lv.2</option>
+                                <option value="3">Lv.3</option>
+                                <option value="4">Lv.4</option>
+                                <option value="5">Lv.5</option>
+                                <option value="6">Lv.6</option>
+                                <option value="7">Lv.7</option>
+                                <option value="8" selected>Lv.8</option>
+                                <option value="9">Lv.9</option>
+                                <option value="10">Lv.10</option>
+                                <option value="11">Lv.11</option>
+                                <option value="12">Lv.12</option>
+                                <option value="13">Lv.13</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" id="talent3-button">
+                                <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png"
+                                    alt="元素爆発">
+                            </button>
+                            <select id="元素爆発レベルInput">
+                                <option value="1">Lv.1</option>
+                                <option value="2">Lv.2</option>
+                                <option value="3">Lv.3</option>
+                                <option value="4">Lv.4</option>
+                                <option value="5">Lv.5</option>
+                                <option value="6">Lv.6</option>
+                                <option value="7">Lv.7</option>
+                                <option value="8" selected>Lv.8</option>
+                                <option value="9">Lv.9</option>
+                                <option value="10">Lv.10</option>
+                                <option value="11">Lv.11</option>
+                                <option value="12">Lv.12</option>
+                                <option value="13">Lv.13</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">
+                            <button id="artifactset1-button">
+                                <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット1">
+                            </button>
+                        </td>
+                        <td rowspan="2">
+                            <button id="artifactset2-button">
+                                <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット2">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="武器レベルInput">
+                                <option value="80">Lv.80</option>
+                                <option value="80+">Lv.80+</option>
+                                <option value="90" selected>Lv.90</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="精錬ランクInput">
+                                <option value="1" selected>R1</option>
+                                <option value="2">R2</option>
+                                <option value="3">R3</option>
+                                <option value="4">R4</option>
+                                <option value="5">R5</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
 
-                    <input type="file" id="artifactDetailImage" style="display: none;">
-                    <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48"></div>
-                </div>
-
-                <article style="width: 180px;">
-                    <button type="button" id="character-button">
-                        <img src="images/characters/huge/electro_5_polearm_RaidenShogun.png" width="180">
-                    </button>
-                    <select id="レベルInput">
-                        <option value="80">Lv.80</option>
-                        <option value="80+">Lv.80+</option>
-                        <option value="90" selected>Lv.90</option>
-                    </select>
-                </article>
-
-                <article style="width: 60px;">
-                    <button type="button" id="constellation-button">
-                        <img src="images/characters/constellation_lock.png" width="60">
-                    </button>
-                    <select id="命ノ星座Input">
-                        <option value="0">-</option>
-                        <option value="1">C1</option>
-                        <option value="2">C2</option>
-                        <option value="3">C3</option>
-                        <option value="4">C4</option>
-                        <option value="5">C5</option>
-                        <option value="6">C6</option>
-                    </select>
-                </article>
-
-                <section style="vertical-align:baseline;">
-
-                    <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <select id="精錬ランクInput">
-                            <option value="1" selected>R1</option>
-                            <option value="2">R2</option>
-                            <option value="3">R3</option>
-                            <option value="4">R4</option>
-                            <option value="5">R5</option>
-                        </select>
-                        <button id="weapon-button">
-                            <img width="60" height="60" src="images/weapons/polearm/5_EngulfingLightning.png">
-                        </button>
-                        <select id="武器レベルInput">
-                            <option value="80">Lv.80</option>
-                            <option value="80+">Lv.80+</option>
-                            <option value="90" selected>Lv.90</option>
-                        </select>
-                    </article>
-
-                    <article style="display: inline-block; position: relative; border: 1px solid;">
-                        <img width="60" height="60" src="images/artifacts/5_EmblemofSeveredFate.png">
-                    </article>
-                    <article style="display: inline-block; position: relative; border: 1px solid;">
-                        <img width="60" height="60" src="images/artifacts/5_EmblemofSeveredFate.png">
-                    </article>
-
-                    <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <button type="button" id="talent1-button">
-                            <img width="60" height="60" src="images/characters/NormalAttack_sword.png" alt="通常攻撃">
-                        </button>
-                        <select id="通常攻撃レベルInput">
-                            <option value="1">Lv.1</option>
-                            <option value="2">Lv.2</option>
-                            <option value="3">Lv.3</option>
-                            <option value="4">Lv.4</option>
-                            <option value="5">Lv.5</option>
-                            <option value="6">Lv.6</option>
-                            <option value="7">Lv.7</option>
-                            <option value="8" selected>Lv.8</option>
-                            <option value="9">Lv.9</option>
-                            <option value="10">Lv.10</option>
-                            <option value="11">Lv.11</option>
-                        </select>
-                    </article>
-
-                    <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <button type="button" id="talent2-button">
-                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png"
-                                alt="元素スキル">
-                        </button>
-                        <select id="元素スキルレベルInput">
-                            <option value="1">Lv.1</option>
-                            <option value="2">Lv.2</option>
-                            <option value="3">Lv.3</option>
-                            <option value="4">Lv.4</option>
-                            <option value="5">Lv.5</option>
-                            <option value="6">Lv.6</option>
-                            <option value="7">Lv.7</option>
-                            <option value="8" selected>Lv.8</option>
-                            <option value="9">Lv.9</option>
-                            <option value="10">Lv.10</option>
-                            <option value="11">Lv.11</option>
-                            <option value="12">Lv.12</option>
-                            <option value="13">Lv.13</option>
-                        </select>
-                    </article>
-
-                    <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <button type="button" id="talent3-button">
-                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png"
-                                alt="元素爆発">
-                        </button>
-                        <select id="元素爆発レベルInput">
-                            <option value="1">Lv.1</option>
-                            <option value="2">Lv.2</option>
-                            <option value="3">Lv.3</option>
-                            <option value="4">Lv.4</option>
-                            <option value="5">Lv.5</option>
-                            <option value="6">Lv.6</option>
-                            <option value="7">Lv.7</option>
-                            <option value="8" selected>Lv.8</option>
-                            <option value="9">Lv.9</option>
-                            <option value="10">Lv.10</option>
-                            <option value="11">Lv.11</option>
-                            <option value="12">Lv.12</option>
-                            <option value="13">Lv.13</option>
-                        </select>
-                    </article>
-                </section>
+                <table class="result">
+                    <tr>
+                        <td colspan="3" id="weapon-name">blank</td>
+                        <td id="weapon-rarity"></td>
+                    </tr>
+                    <tr>
+                        <td>基礎攻撃力</td>
+                        <td id="weapon-base-attack"></td>
+                        <td id="weapon-secondary-stat">blank</td>
+                        <td id="weapon-secondary-stat-value">blank</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" id="weapon-ability-name"></th>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div id="weapon-ability-desc"></div>
+                        </td>
+                    </tr>
+                </table>
 
                 <div class="horizontal-list">
                     <ul id="weapon-list"></ul>
@@ -1074,35 +1110,6 @@
                     <input type="radio" class="tab-button input-set1" id="detail2" name="detail-group" checked />
                     <label for="detail2">武器詳細</label>
                     <div class="tab-content" style="padding-top: 1rem;">
-                        <table class="result">
-                            <tr>
-                                <th colspan="3" id="weapon-name">blank</th>
-                            </tr>
-                            <tr>
-                                <td rowspan="3" style="width: 75px;">
-                                    <img width="75" height="75" src="images/weapons/sword/1_DullBlade.png" alt="無鋒の剣"
-                                        id="weapon-img">
-                                </td>
-                                <td>レアリティ</td>
-                                <td id="weapon-rarity"></td>
-                            </tr>
-                            <tr>
-                                <td>基礎攻撃力</td>
-                                <td id="weapon-base-attack"></td>
-                            </tr>
-                            <tr>
-                                <td id="weapon-secondary-stat">blank</td>
-                                <td id="weapon-secondary-stat-value">blank</td>
-                            </tr>
-                            <tr>
-                                <th colspan="3" id="weapon-ability-name"></th>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div id="weapon-ability-desc"></div>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
 
                     <input type="radio" class="tab-button input-set1" id="detail3" name="detail-group" />

@@ -1,777 +1,37 @@
-/* 3 Columns */
-@media all and (min-width: 1251px) {
-    #main {
-        max-width: 1536px;
-    }
-
-    .base-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 32px 125px 150px auto minmax(400px, auto) auto;
-        grid-template-areas:
-            "header header header"
-            "pane2 pane2 pane1"
-            "pane3 pane5 result-pane"
-            "pane4 pane5 result-pane"
-            "pane6 bottom-pane bottom-pane"
-            "footer footer footer";
-    }
-
-    #status-area {
-        display: initial;
-    }
-
-    #condition-area {
-        display: initial;
-    }
+.pyro-bg {
+    background-color: darkred;
 }
 
-/* 2 Columns */
-@media all and (min-width: 769px) and (max-width: 1250px) {
-    .base-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 3rem 125px 150px auto auto minmax(400px, auto) auto;
-        grid-template-areas:
-            "header header"
-            "pane2 pane2"
-            "pane3 pane1"
-            "pane4 result-pane"
-            "pane5 result-pane"
-            "pane6 bottom-pane"
-            "footer footer";
-    }
-
-    #status-area {
-        display: none;
-    }
-
-    #condition-area {
-        display: none;
-    }
+.hydro-bg {
+    background-color: darkcyan;
 }
 
-/* 1 Column */
-@media all and (max-width: 768px) {
-    #main {
-        min-width: 360px;
-    }
-
-    .base-container {
-        display: grid;
-        grid-template-columns: 100%;
-        grid-template-rows: 4rem 12rem 125px 150px auto auto auto minmax(400px, auto) auto auto;
-        grid-template-areas:
-            "header"
-            "pane1"
-            "pane2"
-            "pane3"
-            "pane4"
-            "pane5"
-            "result-pane"
-            "pane6"
-            "bottom-pane"
-            "footer";
-    }
-
-    #status-area {
-        display: none;
-    }
-
-    #condition-area {
-        display: none;
-    }
+.aero-bg {
+    background-color: darkgreen;
 }
 
-#main {
-    color: blanchedalmond;
-    background: linear-gradient(to right, #574014, #3a2e0c);
+.electro-bg {
+    background-color: darkviolet;
 }
 
-a {
-    color: blanchedalmond;
+.cryo-bg {
+    background-color: darkturquoise;
 }
 
-p {
-    margin: 0 0.5rem;
+.geo-bg {
+    background-color: darkgoldenrod;
 }
 
 button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
     padding: 0;
-    appearance: none;
-}
-
-button {
     margin: 0;
-    font-size: 2rem;
-    color: blanchedalmond;
-    background: linear-gradient(to top, #5e5c5c, #2b2a2a);
-    border-radius: 1rem;
-    border: solid 0.1rem black;
-}
-
-button:hover {
-    border: solid 0.1rem gray;
-}
-
-button:active {
-    border: solid 0.1rem darkgray;
-}
-
-button:disabled {
-    color: darkgray;
-}
-
-select {
-    width: 100%;
-    font-size: 2rem;
-    height: 3.2rem;
-    vertical-align: middle;
-    padding: 0.1rem;
-    margin: 0.4rem 0;
-    border-radius: 0.8rem;
-    box-shadow: none;
-}
-
-label+select {
-    margin-top: 0.1rem;
-}
-
-select+label {
-    margin-top: 0.1rem;
-}
-
-input[type="number"] {
-    width: 9rem;
-    font-size: 2rem;
-    height: 2.6rem;
-    margin: 0.5rem 0;
-    padding-left: 0.5rem;
     border: none;
-    border-radius: 0.8rem;
-    box-shadow: none;
+    background-color: black;
+    background-size: contain;
 }
 
-input[type="text"] {
-    width: 10rem;
-    font-size: 2rem;
-    height: 2.6rem;
-    margin: 0.5rem 0;
-    padding-left: 0.5rem;
-    border: none;
-    border-radius: 0.8rem;
-    box-shadow: none;
-}
-
-input[type="checkbox"] {
-    height: 2.6rem;
-    margin: 0.5rem 0;
-    vertical-align: middle;
-}
-
-input[type="checkbox"]:checked+label {
-    color: gold;
-}
-
-input[type="checkbox"]:disabled+label {
-    color: grey;
-}
-
-.disabled {
-    color: grey;
-}
-
-label {
-    margin: 0;
-    font-size: 2rem;
-    height: 2.6rem;
-    vertical-align: middle;
-}
-
-input[type="checkbox"]+label {
-    height: 2.6rem;
-    margin: 0.3rem 0;
-}
-
-fieldset {
-    margin: 0;
-    padding-bottom: 0.5rem;
-    padding-inline-start: 0.2rem;
-    padding-inline-end: 0.2rem;
-    padding-block-start: 0.2rem;
-    padding-block-end: 0.2rem;
-    border-radius: 1rem;
-    background: linear-gradient(to bottom, #2b1f08, #292312);
-    text-align: center;
-}
-
-.tab-area fieldset {
-    background: transparent;
-}
-
-legend {
-    font-size: 2rem;
-    margin: 0;
-}
-
-section {
-    width: 100%;
-    text-align: center;
+img {
     vertical-align: top;
-}
-
-/* グリッド */
-
-.header {
-    grid-area: header;
-    width: 100%;
-    position: relative;
-    background: linear-gradient(to top, #ecc862, #978310);
-    padding: 0 0 1rem;
-}
-
-.header div {
-    position: absolute;
-    top: 50%;
-    padding: 0 0.5rem;
-    transform: translate(0, -50%);
-    font-size: 2rem;
-}
-
-.pane1 {
-    grid-area: pane1;
-}
-
-.pane2 {
-    grid-area: pane2;
-    padding: 5px 0 1rem;
-}
-
-[name="element-type-input"] {
-    display: none;
-}
-
-[name="element-type-input"]+label {
-    display: inline;
-    height: 35px;
-}
-
-.horizontal-list {
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-}
-
-.pane3 {
-    grid-area: pane3;
-    margin: 5px 1rem;
-}
-
-.pane4 {
-    grid-area: pane4;
-    margin: 5px 1rem;
-}
-
-.artifact {
-    margin: 5px 1px;
-    padding: 5px 1px;
-    border-style: double;
-    border-radius: 2rem;
-    font-size: 1.6rem;
-}
-
-.columns-3 {
-    justify-content: center;
-}
-
-.pane4 .input-item {
-    width: calc(100% / 3 - 1rem);
-    display: inline-block;
-}
-
-.pane4 label {
-    font-size: 1.7rem;
-}
-
-.complex-4-2 {
-    justify-content: center;
-}
-
-.complex-4-2 .input-item {
-    display: inline-block;
-}
-
-.input-group {
-    position: relative;
-    width: 100%;
-}
-
-#artifactsub-detail {
-    font-size: 1.8rem;
-}
-
-#artifactsub-detail legend {
-    text-align: center;
-}
-
-#artifactsub-detail .input-group {
-    width: 75%;
-    padding: 0;
-}
-
-#artifactsub-detail .input-group .input-item {
-    width: calc(44% - 0.6rem);
-    display: inline-block;
-}
-
-#artifactsub-detail .input-group .input-item-short {
-    width: calc(28% - 0.6rem);
-    display: inline-block;
-}
-
-#artifactsub-detail select {
-    font-size: 2rem;
-}
-
-#artifactsub-detail-priority {
-    position: relative;
-    width: 100%;
-}
-
-#artifactsub-detail .special-box {
-    position: absolute;
-    top: 0.2rem;
-    right: 0.5rem;
-    width: calc(25% - 1rem);
-}
-
-#artifactsub-detail .special-box input {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-}
-
-#artifactsub-detail .special-box label {
-    margin: 0;
-}
-
-#artifactsub-detail .special-box select {
-    margin: 0;
-}
-
-#artifactsub-detail table {
-    margin-top: 1rem;
-}
-
-/**/
-.option-box div {
-    display: inline;
-    margin-left: 0.5rem;
-}
-
-.option-box div label {
-    margin-right: 0.5rem;
-    font-size: 2rem;
-    height: 75%;
-}
-
-.option-box div input+label {
-    margin-right: 1rem;
-}
-
-.option-box div label+select {
-    margin-right: 1rem;
-}
-
-.option-box div select {
-    width: 10rem;
-}
-
-.column1-option div {
-    display: block;
-    text-align: left;
-    padding-left: 1rem;
-}
-
-/* */
-
-.pane5 {
-    grid-area: pane5;
-    margin: 5px 1rem;
-}
-
-#enemy .input-item {
-    width: calc(100% / 2 - 3rem);
-}
-
-#enemy .input-item label {
-    display: inline-block;
-}
-
-.result-pane {
-    grid-area: result-pane;
-    margin: 5px 1rem;
-}
-
-.bottom-pane {
-    grid-area: bottom-pane;
-    margin: 5px 1rem;
-}
-
-.bottom-pane .tab-content {
-    text-align: left;
-}
-
-.bottom-pane .tab-content fieldset legend {
-    text-align: left;
-    margin-left: 3rem;
-}
-
-.bottom-pane fieldset {
-    text-align: left;
-    margin: 1rem;
-    padding: 0 2rem 1rem;
-}
-
-.bottom-pane fieldset ul {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 2rem;
-}
-
-.footer {
-    grid-area: footer;
-    margin: 5px 1rem;
-    background-color: #312820;
-    color: #886b1d;
-    text-align: left;
-}
-
-article.input-item {
-    width: calc(100% / 3 - 0.6rem);
-    vertical-align: top;
-    position: relative;
-}
-
-article.input-item img.info {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-article.input-item p.info {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-article.input-item p.info+p.description {
-    display: none;
-}
-
-article.input-item p.info:hover+p.description {
-    display: block;
-    font-size: 1.8rem;
-    color: #ecce8d;
-}
-
-fieldset.input-group legend {
-    text-align: center;
-}
-
-/* タブのスタイル設定 */
-
-.tab-area {
-    width: 100%;
-    text-align: center;
-    margin: auto;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: center;
-}
-
-.tab-button {
-    display: none;
-}
-
-.tab-button+label {
-    display: block;
-    float: left;
-    order: -1;
-    height: 3rem;
-    line-height: 3rem;
-    background: linear-gradient(to top, #ad5b18, #55290b);
-    margin: 0.2rem 0;
-    border-radius: 0.5rem;
-    border-color: #999;
-    border-style: solid;
-    font-size: 1.8rem;
-}
-
-.tab-button:checked+label {
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
-}
-
-.tab-button:checked+label+.tab-content {
-    display: block;
-}
-
-.tab-content {
-    display: none;
-    width: 100%;
-    line-height: normal;
-    padding-top: 1rem;
-}
-
-.tab-content fieldset legend {
-    text-align: center;
-}
-
-.input-set1+label {
-    width: calc(100% / 4 - 0.9rem);
-}
-
-.input-set2+label {
-    width: calc(100% / 4 - 0.9rem);
-}
-
-.others-set+label {
-    width: calc(100% / 3 - 0.9rem);
-}
-
-.input-group article {
-    vertical-align: top;
-}
-
-.input-group article label {
-    display: block;
-}
-
-.pane5 .input-item {
-    display: inline-block;
-}
-
-.pane5 .input-item label {
-    display: block;
-}
-
-.pane5 .check-item {
-    display: inline-block;
-    position: relative;
-}
-
-.pane5 .check-item label {
-    display: inline;
-}
-
-table {
-    width: 100%;
-    text-align: center;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 0.5rem;
-    overflow: hidden;
-}
-
-table th {
-    font-weight: normal;
-    text-align: center;
-    font-size: 1.8rem;
-    border-left: 0.1rem double #aaa;
-    border-right: 0.1rem solid #aaa;
-}
-
-table th:first-child {
-    border-left: 0;
-}
-
-table thead th:first-child {
-    padding-left: 1rem;
-}
-
-table td {
-    background-color: transparent;
-    padding: 0rem 0.4rem 0rem 0.2rem;
-}
-
-table thead th, table tbody th, table tbody td {
-    border-bottom: 0.1rem solid #aaa;
-}
-
-table thead th {
-    background-color: #574014;
-}
-
-table thead th+th, table tbody td {
-    border-left: 0.1rem solid #aaa;
-}
-
-table tbody tr:last-child th, table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-
-/* 結果エリア */
-
-table.status tr th {
-    width: auto;
-}
-
-table.status tr td {
-    min-width: 6rem;
-    max-width: 7rem;
-    font-size: 2rem;
-    border-left: 0;
-    text-align: right;
-}
-
-table.status tr td[colspan="3"] {
-    text-align: right;
-}
-
-table.status tr td[colspan="3"] label {
-    font-size: 1.8rem;
-}
-
-table.status tr td[colspan="3"] button {
-    width: 24%;
-}
-
-.result-pane div table tr td {
-    font-size: 2.2rem;
-}
-
-th.category {
-    width: 12rem;
-    text-align: left;
-    font-weight: bold;
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
-    font-size: 1.8rem;
-    padding-left: 0.5rem;
-}
-
-.result-pane div label {
-    height: 3rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.result-pane div table tr td.damage-taken {
-    text-align: left;
-}
-
-fieldset article {
-    display: inline-block;
-}
-
-#condition-area {
-    padding-bottom: 1rem;
-}
-
-.bottom-pane .tab-content {
-    padding-left: 1rem;
-}
-
-.footer {
-    padding-left: 1rem;
-}
-
-.open-close {
-    width: 18rem;
-    height: 3.5rem;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
-    border-radius: 0.5rem;
-    border-color: #999;
-    border-style: solid;
-    padding: 0;
-    text-align: center;
-}
-
-.open-close.closed {
-    background: linear-gradient(to top, #ad5b18, #55290b);
-}
-
-input+select:checked {
-    display: none;
-}
-
-input:checked+select {
-    display: block;
-}
-
-th.base {
-    color: rgb(189, 189, 189);
-}
-
-table.result {
-    background: linear-gradient(to top, #312820, #030100);
-    margin: 0.5rem 0;
-}
-
-.pyro {
-    color: #d2655a;
-}
-
-.hydro {
-    color: #559cc9;
-}
-
-.aero {
-    color: #3aaf7a;
-}
-
-.electro {
-    color: #b681df;
-}
-
-.cryo {
-    color: #63beb4;
-}
-
-.geo {
-    color: #df8f37;
-}
-
-input[name="元素反応Input"] {
-    display: none;
-}
-
-label.elemental-reaction {
-    display: inline-block;
-    width: calc(100% / 4 - 1.5rem);
-    padding: 0.2rem;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(to top, #3d3d3b, #141414);
-    text-shadow: 0.1rem 0.1rem 0.1rem rgb(40, 80, 80), -0.1rem -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0.1rem 0.1rem rgb(40, 80, 80), 0.1rem -0.1rem 0.1rem rgb(40, 80, 80), 0 0.1rem 0.1rem rgb(40, 80, 80), 0 -0.1rem 0.1rem rgb(40, 80, 80), -0.1rem 0 0.1rem rgb(40, 80, 80), 0.1rem 0 0.1rem rgb(40, 80, 80);
-    border-radius: 0.5rem;
-}
-
-input[name="元素反応Input"]+label {
-    background: linear-gradient(to top, #ad5b18, #55290b);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
-}
-
-input[name="元素反応Input"]:checked+label {
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
-}
-
-div.description {
-    font-size: 2rem;
-}
-
-.input-group .input-item label {
-    font-size: 1.8rem;
-}
-
-.horizontal-list {
-    width: 100%;
 }
 
 .horizontal-list ul {
@@ -784,6 +44,9 @@ div.description {
     margin-block-end: 0;
     padding-inline-start: 0;
     padding-inline-end: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
 }
 
 .horizontal-list ul li {
@@ -805,219 +68,64 @@ div.description {
     border: none;
 }
 
-.star5 {
-    background: linear-gradient(to top, #dd7a09, #9c6424);
+.pane3 {
+    width: 360px;
 }
 
-.star4 {
-    background: linear-gradient(to top, #59447a, #400b64);
-}
-
-#face {
-    display: block;
-    text-align: left;
+.pane3 table {
+    display: inline-block;
+    width: 100%;
     margin: 0;
-    position: relative;
-    width: 100%;
-    height: 150px;
-}
-
-#face img {
-    display: inline-block;
-    margin: 0;
+    padding: 0;
+    border: none;
     vertical-align: bottom;
-    position: absolute;
-    left: 0;
-    bottom: 0;
 }
 
-#face section {
-    width: calc(100% - 150px);
-    height: 100%;
-    text-align: left;
-    display: inline-block;
-    vertical-align: bottom;
-    position: absolute;
-    left: 150px;
-    bottom: 0;
+.pane3 table tr {
+    height: 25px;
 }
 
-#face section p {
-    display: block;
-    position: absolute;
-    left: 0rem;
-    top: 1rem;
-    font-size: 2.4rem;
+.pane3 select {
+    width: 95%;
+    margin: 0 auto;
 }
 
-#face section label {
-    display: block;
-    position: absolute;
-    left: 0.5rem;
-    bottom: calc(0.5rem + 3rem + 1.6rem);
-}
-
-#face section select {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0.5rem;
-}
-
-#face #構成保存Button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 21rem;
-}
-
-#face #保存構成削除Button {
-    position: absolute;
-    top: 3.6rem;
-    right: 0;
-    width: 21rem;
-}
-
-#face #構成名称Input {
-    position: absolute;
-    bottom: calc(0.5rem + 3rem + 0.4rem);
-    right: 0;
-    width: 23rem;
-}
-
-#artifactDetailImageButton {
-    width: 90%;
-}
-
-#face #loading {
-    display: none;
-    background-color: transparent;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-}
-
-#face #loading img {
-    background-color: transparent;
-}
-
-/* 説明・武器 */
-#elemental-skill-desc {
-    text-align: left;
-    height: 75px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-#elemental-burst-desc {
-    text-align: left;
-    height: 75px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-#weapon-ability-desc {
-    text-align: left;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-#artifactset1-desc {
-    height: 75px;
-    text-align: left;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-#artifactset2-desc {
-    height: 75px;
-    text-align: left;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.refine-var {
-    color: aquamarine;
-}
-
-/**/
-ul#キャラクター所持状況List {
-    list-style: none;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
-    width: 100%;
-}
-
-#キャラクター所持状況List li {
-    position: relative;
-    display: inline-block;
-}
-
-#キャラクター所持状況List li div {
-    border-style: double;
-    border-width: 0.2rem;
-}
-
-#キャラクター所持状況List li div img {
-    vertical-align: top;
-}
-
-#キャラクター所持状況List li div img.darken {
-    opacity: 0.5;
-}
-
-#キャラクター所持状況List li div img.element {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-}
-
-#キャラクター所持状況List li div p {
-    position: absolute;
-    top: 0;
-    right: 4px;
-    background: transparent;
+td {
     color: blanchedalmond;
-    font-size: 24px;
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
-    margin: 0;
 }
 
-#キャラクター所持状況保存Button {
-    width: 30rem;
-    margin-top: 1.5rem;
+td select {
+    width: 100%;
+    text-align: center;
 }
 
-dl {
-    padding-left: 2rem;
+td button {
+    width: 100%;
+    text-align: center;
 }
 
-dl dt {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin: 0;
+td input {
+    width: 100%;
+    text-align: center;
 }
 
-dl dd {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin: 0;
-    padding-inline-start: 2rem;
+button {
+    font-size: 2rem;
+    color: blanchedalmond;
 }
 
-dl dd ul {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin: 0;
-    padding-inline-start: 2rem;
+section {
+    vertical-align: baseline;
 }
 
-dl dd ul li {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin: 0;
+article {
+    font-size: 0;
+    display: inline-block;
+    vertical-align: bottom;
 }
+
+article select {
+    width: 100%;
+    text-align: center;
+}
+
