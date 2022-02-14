@@ -16,14 +16,14 @@
     <title>げんかるく - 原神ダメージシミュレーター</title>
     <meta name="description" content="原神@miHoYoのダメージ計算を行うシミュレーターです。" />
     <meta name="keywords" content="原神,ダメージ,計算,武器,聖遺物" />
-    <link href="styles/base-style.css" rel="stylesheet" />
-    <link href="styles/style.css" rel="stylesheet" />
+    <link href="stylesNew/base-style.css" rel="stylesheet" />
+    <link href="stylesNew/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
     <reference path="JQuery.d.ts"></reference>
-    <script src="js/gencalc_var.js"></script>
-    <script src="js/gencalc_core.js"></script>
-    <script src="js/gencalc.js"></script>
+    <script src="jsNew/gencalc_var.js"></script>
+    <script src="jsNew/gencalc_core.js"></script>
+    <script src="jsNew/gencalc.js"></script>
 </head>
 
 <body>
@@ -99,36 +99,86 @@
                 <section style="vertical-align:baseline;">
 
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <select style="margin: 0;">
-                            <option value="1">R1</option>
+                        <select id="精錬ランクInput">
+                            <option value="1" selected>R1</option>
+                            <option value="2">R2</option>
+                            <option value="3">R3</option>
+                            <option value="4">R4</option>
+                            <option value="5">R5</option>
                         </select>
                         <img width="60" height="60" src="images/weapons/polearm/5_EngulfingLightning.png">
-                        <select style="margin: 0;">
-                            <option value="90">Lv.90</option>
+                        <select id="武器レベルInput">
+                            <option value="80">Lv.80</option>
+                            <option value="80+">Lv.80+</option>
+                            <option value="90" selected>Lv.90</option>
                         </select>
                     </article>
+
                     <article style="display: inline-block; position: relative; border: 1px solid;">
                         <img width="60" height="60" src="images/artifacts/5_EmblemofSeveredFate.png">
                     </article>
                     <article style="display: inline-block; position: relative; border: 1px solid;">
                         <img width="60" height="60" src="images/artifacts/5_EmblemofSeveredFate.png">
                     </article>
+
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <img width="60" height="60" src="images/characters/NormalAttack_polearm.png">
-                        <select style="margin: 0;">
+                        <button type="button" id="talent1-button">
+                            <img width="60" height="60" src="images/characters/NormalAttack_sword.png" alt="通常攻撃">
+                        </button>
+                        <select id="通常攻撃レベルInput">
+                            <option value="1">Lv.1</option>
+                            <option value="2">Lv.2</option>
+                            <option value="3">Lv.3</option>
+                            <option value="4">Lv.4</option>
+                            <option value="5">Lv.5</option>
+                            <option value="6">Lv.6</option>
+                            <option value="7">Lv.7</option>
+                            <option value="8" selected>Lv.8</option>
+                            <option value="9">Lv.9</option>
                             <option value="10">Lv.10</option>
+                            <option value="11">Lv.11</option>
                         </select>
                     </article>
+
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <img width="60" height="60" src="images/characters/electro_5_RaidenShogun/ElementalSkill.png">
-                        <select style="margin: 0;">
+                        <button type="button" id="talent2-button">
+                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png" alt="元素スキル">
+                        </button>
+                        <select id="元素スキルレベルInput">
+                            <option value="1">Lv.1</option>
+                            <option value="2">Lv.2</option>
+                            <option value="3">Lv.3</option>
+                            <option value="4">Lv.4</option>
+                            <option value="5">Lv.5</option>
+                            <option value="6">Lv.6</option>
+                            <option value="7">Lv.7</option>
+                            <option value="8" selected>Lv.8</option>
+                            <option value="9">Lv.9</option>
                             <option value="10">Lv.10</option>
+                            <option value="11">Lv.11</option>
+                            <option value="12">Lv.12</option>
+                            <option value="13">Lv.13</option>
                         </select>
                     </article>
+
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
-                        <img width="60" height="60" src="images/characters/electro_5_RaidenShogun/ElementalBurst.png">
-                        <select style="margin: 0;">
+                        <button type="button" id="talent3-button">
+                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png" alt="元素爆発">
+                        </button>
+                        <select id="元素爆発レベルInput">
+                            <option value="1">Lv.1</option>
+                            <option value="2">Lv.2</option>
+                            <option value="3">Lv.3</option>
+                            <option value="4">Lv.4</option>
+                            <option value="5">Lv.5</option>
+                            <option value="6">Lv.6</option>
+                            <option value="7">Lv.7</option>
+                            <option value="8" selected>Lv.8</option>
+                            <option value="9">Lv.9</option>
                             <option value="10">Lv.10</option>
+                            <option value="11">Lv.11</option>
+                            <option value="12">Lv.12</option>
+                            <option value="13">Lv.13</option>
                         </select>
                     </article>
                 </section>
@@ -162,72 +212,17 @@
                         </select>
                     </article>
                     <article class="input-item">
-                        <select id="通常攻撃レベルInput">
-                            <option value="1">通常攻撃Lv.1</option>
-                            <option value="2">通常攻撃Lv.2</option>
-                            <option value="3">通常攻撃Lv.3</option>
-                            <option value="4">通常攻撃Lv.4</option>
-                            <option value="5">通常攻撃Lv.5</option>
-                            <option value="6">通常攻撃Lv.6</option>
-                            <option value="7">通常攻撃Lv.7</option>
-                            <option value="8" selected>通常攻撃Lv.8</option>
-                            <option value="9">通常攻撃Lv.9</option>
-                            <option value="10">通常攻撃Lv.10</option>
-                            <option value="11">通常攻撃Lv.11</option>
-                        </select>
                     </article>
                     <article class="input-item">
-                        <select id="元素スキルレベルInput">
-                            <option value="1">元素スキルLv.1</option>
-                            <option value="2">元素スキルLv.2</option>
-                            <option value="3">元素スキルLv.3</option>
-                            <option value="4">元素スキルLv.4</option>
-                            <option value="5">元素スキルLv.5</option>
-                            <option value="6">元素スキルLv.6</option>
-                            <option value="7">元素スキルLv.7</option>
-                            <option value="8" selected>元素スキルLv.8</option>
-                            <option value="9">元素スキルLv.9</option>
-                            <option value="10">元素スキルLv.10</option>
-                            <option value="11">元素スキルLv.11</option>
-                            <option value="12">元素スキルLv.12</option>
-                            <option value="13">元素スキルLv.13</option>
-                        </select>
                     </article>
                     <article class="input-item">
-                        <select id="元素爆発レベルInput">
-                            <option value="1">元素爆発Lv.1</option>
-                            <option value="2">元素爆発Lv.2</option>
-                            <option value="3">元素爆発Lv.3</option>
-                            <option value="4">元素爆発Lv.4</option>
-                            <option value="5">元素爆発Lv.5</option>
-                            <option value="6">元素爆発Lv.6</option>
-                            <option value="7">元素爆発Lv.7</option>
-                            <option value="8" selected>元素爆発Lv.8</option>
-                            <option value="9">元素爆発Lv.9</option>
-                            <option value="10">元素爆発Lv.10</option>
-                            <option value="11">元素爆発Lv.11</option>
-                            <option value="12">元素爆発Lv.12</option>
-                            <option value="13">元素爆発Lv.13</option>
-                        </select>
                     </article>
                     <article class="input-item">
                         <select id="武器Input"></select>
                     </article>
                     <article class="input-item">
-                        <select id="武器レベルInput">
-                            <option value="80">武器Lv.80(未突破)</option>
-                            <option value="80+">武器Lv.80(突破済)</option>
-                            <option value="90" selected>武器Lv.90</option>
-                        </select>
                     </article>
                     <article class="input-item">
-                        <select id="精錬ランクInput">
-                            <option value="1" selected>精錬ランク1</option>
-                            <option value="2">精錬ランク2</option>
-                            <option value="3">精錬ランク3</option>
-                            <option value="4">精錬ランク4</option>
-                            <option value="5">精錬ランク5</option>
-                        </select>
                     </article>
                 </section>
 
