@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <div id="main" style="background: linear-gradient(to top, #3d3d3b, #141414);">    
+    <div id="main" style="background: linear-gradient(to top, #3d3d3b, #141414);">
         <div class="base-container">
             <header class="header">
                 <div style="position: absolute; left: 0">
@@ -95,7 +95,32 @@
                     <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48"></div>
                 </div>
 
-                <img src="images/characters/huge/electro_5_polearm_RaidenShogun.png" width="360">
+                <article style="width: 180px;">
+                    <button type="button" id="character-button">
+                        <img src="images/characters/huge/electro_5_polearm_RaidenShogun.png" width="180">
+                    </button>
+                    <select id="レベルInput">
+                        <option value="80">Lv.80</option>
+                        <option value="80+">Lv.80+</option>
+                        <option value="90" selected>Lv.90</option>
+                    </select>
+                </article>
+
+                <article style="width: 60px;">
+                    <button type="button" id="constellation-button">
+                        <img src="images/characters/constellation_lock.png" width="60">
+                    </button>
+                    <select id="命ノ星座Input">
+                        <option value="0">-</option>
+                        <option value="1">C1</option>
+                        <option value="2">C2</option>
+                        <option value="3">C3</option>
+                        <option value="4">C4</option>
+                        <option value="5">C5</option>
+                        <option value="6">C6</option>
+                    </select>
+                </article>
+
                 <section style="vertical-align:baseline;">
 
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
@@ -106,7 +131,9 @@
                             <option value="4">R4</option>
                             <option value="5">R5</option>
                         </select>
-                        <img width="60" height="60" src="images/weapons/polearm/5_EngulfingLightning.png">
+                        <button id="weapon-button">
+                            <img width="60" height="60" src="images/weapons/polearm/5_EngulfingLightning.png">
+                        </button>
                         <select id="武器レベルInput">
                             <option value="80">Lv.80</option>
                             <option value="80+">Lv.80+</option>
@@ -142,7 +169,8 @@
 
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
                         <button type="button" id="talent2-button">
-                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png" alt="元素スキル">
+                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png"
+                                alt="元素スキル">
                         </button>
                         <select id="元素スキルレベルInput">
                             <option value="1">Lv.1</option>
@@ -163,7 +191,8 @@
 
                     <article style="display: inline-block; position: relative; width: 60px; border: 1px solid;">
                         <button type="button" id="talent3-button">
-                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png" alt="元素爆発">
+                            <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png"
+                                alt="元素爆発">
                         </button>
                         <select id="元素爆発レベルInput">
                             <option value="1">Lv.1</option>
@@ -183,6 +212,9 @@
                     </article>
                 </section>
 
+                <div class="horizontal-list">
+                    <ul id="weapon-list"></ul>
+                </div>
             </div>
 
             <div class="pane4" style="display: none;">
@@ -194,22 +226,8 @@
                         <select id="キャラクターInput"></select>
                     </article>
                     <article class="input-item">
-                        <select id="レベルInput">
-                            <option value="80">Lv.80(未突破)</option>
-                            <option value="80+">Lv.80(突破済)</option>
-                            <option value="90" selected>Lv.90</option>
-                        </select>
                     </article>
                     <article class="input-item">
-                        <select id="命ノ星座Input">
-                            <option value="0">命ノ星座 未解放</option>
-                            <option value="1">命ノ星座 第1重</option>
-                            <option value="2">命ノ星座 第2重</option>
-                            <option value="3">命ノ星座 第3重</option>
-                            <option value="4">命ノ星座 第4重</option>
-                            <option value="5">命ノ星座 第5重</option>
-                            <option value="6">命ノ星座 第6重</option>
-                        </select>
                     </article>
                     <article class="input-item">
                     </article>

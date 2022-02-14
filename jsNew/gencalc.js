@@ -2636,7 +2636,11 @@ const 武器レベルInputOnChange = function () {
 
 // 武器 変更イベント
 const 武器InputOnChange = function () {
-    let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
+    const name = $('#武器Input').val();
+    const url = 選択可能武器セットObjVar[name]['import'];
+
+    setupWeaponImg(url, name);
+
     fetch(url).then(response => response.json()).then(data => {
         選択中武器データVar = data;
         console.debug('選択中武器データVar');
@@ -2819,6 +2823,13 @@ function get説明Html(obj) {
 }
 
 // キャラクター 変更イベント
+function setupCharacterImg(url) {
+    let urlArr = url.split('/');
+    let fileName = urlArr[urlArr.length - 1].replace('.json', '.png');
+
+    // キャラクター画像
+    $('#character-button img').attr('src', '/images/characters/face/' + fileName);
+}
 const WEAPON_TYPE_IMG_FILE_ALIST = {
     片手剣: 'NormalAttack_sword.png',
     両手剣: 'NormalAttack_claymore.png',
@@ -2852,7 +2863,10 @@ const キャラクターInputOnChange = function () {
     fetch(url).then(response => response.json()).then(data => {
         選択中キャラクターデータVar = data;
 
+        setupCharacterImg(url);
         setupTalentButton(url, 選択中キャラクターデータVar);
+
+        setup武器選択リスト();
 
         ['通常攻撃', '特殊通常攻撃'].forEach(category => {
             if (category in 選択中キャラクターデータVar) {
@@ -3186,6 +3200,44 @@ $(document).on('click', '[name="element-type-input"]', function () {
     setupキャラクター選択(elementType);
 });
 
+// 武器変更イベント
+function setupWeaponImg(url, name) {
+    let srcUrl = url.replace('data/', 'images/').replace('.json', '.png');
+
+    // 武器画像
+    $('#weapon-button img').attr('src', srcUrl);
+    $('#weapon-button img').attr('alt', name);
+}
+
+function setup武器選択リスト() {
+    document.querySelector('#weapon-list').innerHTML = '';
+    let ulElem = document.getElementById('weapon-list');
+    Object.keys(武器MasterVar).forEach(kind => {
+        Object.keys(武器MasterVar[kind]).forEach(name => {
+            let myMasterObj = 武器MasterVar[kind][name];
+            if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                return;
+            }
+            if (!(name in 選択可能武器セットObjVar)) {
+                return;
+            }
+            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
+
+            let liElem = document.createElement('li');
+            ulElem.appendChild(liElem);
+            let imgElem = document.createElement('img');
+            imgElem.className = 'star' + myMasterObj['レアリティ'];
+            imgElem.src = srcUrl;
+            imgElem.alt = name;
+            imgElem.width = 58;
+            imgElem.height = 58;
+            liElem.appendChild(imgElem);
+
+            imgElem.onclick = selectWeapon;
+        });
+    });
+}
+
 // おすすめセット
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
 
@@ -3437,15 +3489,22 @@ const elementalReactionOnChange = function () {
 }
 $(document).on('change', 'input[name="元素反応Input"]', elementalReactionOnChange);
 
-
+// キャラクター選択
+const selectCharacter = function () {
+    characterSelected(this.alt);
+}
 function characterSelected(name) {
     $('#キャラクターInput').val(name);
     キャラクターInputOnChange();
 }
 
 // キャラクター選択
-const selectCharacter = function () {
-    characterSelected(this.alt);
+const selectWeapon = function () {
+    weaponSelected(this.alt);
+}
+function weaponSelected(name) {
+    $('#武器Input').val(name);
+    武器InputOnChange();
 }
 
 // Info ダイアログを表示します
