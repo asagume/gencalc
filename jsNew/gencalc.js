@@ -1695,6 +1695,13 @@ function calculateStatusObj(statusObj) {
     statusObj['会心ダメージ'] += statusObj['聖遺物サブ効果会心ダメージ'];
     statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
+    let my聖遺物スコア = 0;
+    my聖遺物スコア += statusObj['聖遺物サブ効果攻撃力P'];
+    my聖遺物スコア += statusObj['聖遺物サブ効果会心率'] * 2;
+    my聖遺物スコア += statusObj['聖遺物サブ効果会心ダメージ'];
+    my聖遺物スコア = Math.round(my聖遺物スコア * 10) / 10;
+    $('#artifact-score').html(my聖遺物スコア);
+
     statusObj['ダメージ計算'] = {};
     let my元素スキルObj = 選択中キャラクターデータVar['元素スキル'];
     statusObj['元素スキル'] = {
@@ -2141,6 +2148,9 @@ function setup聖遺物セット効果説明() {
     let myInput1Value = $('#聖遺物セット効果1Input').val();
     let mySet1Name = myInput1Value;
     if (myInput1Value) {
+        $('#artifactset1-button img').attr('src', 聖遺物セット効果MasterVar[myInput1Value]['image']);
+        $('#artifactset1-button img').attr('alt', myInput1Value);
+
         mySet1Name += ' 2セット効果';
         if ('image' in 聖遺物セット効果MasterVar[myInput1Value]) {
             $('#artifactset1-img').attr('src', 聖遺物セット効果MasterVar[myInput1Value]['image']);
@@ -2153,6 +2163,9 @@ function setup聖遺物セット効果説明() {
     let myInput2Value = $('#聖遺物セット効果2Input').val();
     let mySet2Name = myInput2Value;
     if (myInput2Value) {
+        $('#artifactset2-button img').attr('src', 聖遺物セット効果MasterVar[myInput2Value]['image']);
+        $('#artifactset2-button img').attr('alt', myInput2Value);
+
         if ('image' in 聖遺物セット効果MasterVar[myInput2Value]) {
             $('#artifactset2-img').attr('src', 聖遺物セット効果MasterVar[myInput2Value]['image']);
         } else {
@@ -2857,12 +2870,12 @@ function setupTalentButton(url, characterData) {
 }
 const キャラクターInputOnChange = function () {
     キャラクター名前Var = $('#キャラクターInput').val();
-    let myキャラクターMaster = キャラクターMasterVar[キャラクター名前Var];
-    let src = 'image2' in myキャラクターMaster ? myキャラクターMaster['image2'] : myキャラクターMaster['image'];
-    $('#選択キャラクターImg').prop('src', src);
-    $('#選択キャラクター名前Label').text(キャラクター名前Var);
 
-    const url = myキャラクターMaster.import;
+    let myキャラクターMaster = キャラクターMasterVar[キャラクター名前Var];
+
+    $('#character-name').html(キャラクター名前Var);
+
+    const url = myキャラクターMaster['import'];
     fetch(url).then(response => response.json()).then(data => {
         選択中キャラクターデータVar = data;
 
@@ -3508,6 +3521,7 @@ $(document).on('change', 'input[name="元素反応Input"]', elementalReactionOnC
 
 // キャラクター選択
 const selectCharacter = function () {
+    $('#character-select').hide();
     characterSelected(this.alt);
 }
 function characterSelected(name) {
@@ -3517,6 +3531,7 @@ function characterSelected(name) {
 
 // キャラクター選択
 const selectWeapon = function () {
+    $('#weapon-detail-and-select').hide();
     weaponSelected(this.alt);
 }
 function weaponSelected(name) {
@@ -3956,3 +3971,37 @@ const setDebugInfo = function () {
         text: artifactDetailText
     }).appendTo('#debugInfo');
 }
+
+//
+const toggleShowHide = function (selector) {
+    if ($(selector).is(':visible')) {
+        $(selector).hide();
+    } else {
+        $(selector).show();
+    }
+}
+
+// キャラクター画像 クリック処理
+$(document).on('click', '#character-button', () => {
+    toggleShowHide('#character-select');
+});
+// 武器画像 クリック処理
+$(document).on('click', '#weapon-button', () => {
+    toggleShowHide('#weapon-detail-and-select');
+    if ($('#artifact-area').is(':visible')) {
+        $('#artifact-area').hide();
+    }
+});
+// 聖遺物画像 クリック処理
+$(document).on('click', '#artifactset1-button', () => {
+    toggleShowHide('#artifact-area');
+    if ($('#weapon-detail-and-select').is(':visible')) {
+        $('#weapon-detail-and-select').hide();
+    }
+});
+$(document).on('click', '#artifactset2-button', () => {
+    toggleShowHide('#artifact-area');
+    if ($('#weapon-detail-and-select').is(':visible')) {
+        $('#weapon-detail-and-select').hide();
+    }
+});

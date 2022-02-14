@@ -54,34 +54,40 @@
             </div>
 
             <div class="pane2">
-                <input type="checkbox" id="element-type-pyro" name="element-type-input">
-                <label for="element-type-pyro"><img width="35" height="35" src="images/element_pyro.png"
-                        alt="炎"></label>
-                <input type="checkbox" id="element-type-hydro" name="element-type-input">
-                <label for="element-type-hydro"><img width="35" height="35" src="images/element_hydro.png"
-                        alt="水"></label>
-                <input type="checkbox" id="element-type-aero" name="element-type-input">
-                <label for="element-type-aero"><img width="35" height="35" src="images/element_aero.png"
-                        alt="風"></label>
-                <input type="checkbox" id="element-type-electro" name="element-type-input">
-                <label for="element-type-electro"><img width="35" height="35" src="images/element_electro.png"
-                        alt="雷"></label>
-                <input type="checkbox" id="element-type-cryo" name="element-type-input">
-                <label for="element-type-cryo"><img width="35" height="35" src="images/element_cryo.png"
-                        alt="氷"></label>
-                <input type="checkbox" id="element-type-geo" name="element-type-input">
-                <label for="element-type-geo"><img width="35" height="35" src="images/element_geo.png" alt="岩"></label>
+                <div id="character-select">
+                    <input type="checkbox" id="element-type-pyro" name="element-type-input">
+                    <label for="element-type-pyro"><img width="35" height="35" src="images/element_pyro.png"
+                            alt="炎"></label>
+                    <input type="checkbox" id="element-type-hydro" name="element-type-input">
+                    <label for="element-type-hydro"><img width="35" height="35" src="images/element_hydro.png"
+                            alt="水"></label>
+                    <input type="checkbox" id="element-type-aero" name="element-type-input">
+                    <label for="element-type-aero"><img width="35" height="35" src="images/element_aero.png"
+                            alt="風"></label>
+                    <input type="checkbox" id="element-type-electro" name="element-type-input">
+                    <label for="element-type-electro"><img width="35" height="35" src="images/element_electro.png"
+                            alt="雷"></label>
+                    <input type="checkbox" id="element-type-cryo" name="element-type-input">
+                    <label for="element-type-cryo"><img width="35" height="35" src="images/element_cryo.png"
+                            alt="氷"></label>
+                    <input type="checkbox" id="element-type-geo" name="element-type-input">
+                    <label for="element-type-geo"><img width="35" height="35" src="images/element_geo.png"
+                            alt="岩"></label>
 
-                <div class="horizontal-list">
-                    <ul id="キャラクター選択"></ul>
+                    <div class="horizontal-list">
+                        <ul id="キャラクター選択"></ul>
+                    </div>
                 </div>
             </div>
 
             <div class="pane3">
+                <select id="キャラクターInput" style="display: none;"></select>
+                <select id="武器Input" style="display: none;"></select>
+
                 <table>
                     <tr>
-                        <td colspan="2" rowspan="3">
-                            <button type="button" id="character-button">
+                        <td colspan="2" rowspan="4">
+                            <button type="button" class="image-button" id="character-button">
                                 <img width="150" height="150" src="images/characters/face/aero_5_sword_Traveler.png">
                             </button>
                         </td>
@@ -99,6 +105,10 @@
                         <td colspan="2">
                             <input type="text" id="構成名称Input" minlength="1" maxlength="12">
                         </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>
@@ -120,7 +130,7 @@
                             </select>
                         </td>
                         <td colspan="2">
-                            <button type="button" id="recomend-button">おすすめセット</button>
+                            <button type="button" class="wide" id="recomend-button">おすすめセット</button>
                         </td>
                     </tr>
                 </table>
@@ -130,12 +140,12 @@
                 <table>
                     <tr>
                         <td colspan="2" rowspan="2">
-                            <button id="weapon-button">
+                            <button type="button" class="image-button" id="weapon-button">
                                 <img width="120" height="120" src="images/weapons/sword/1_DullBlade.png" alt="武器">
                             </button>
                         </td>
                         <td>
-                            <button type="button" id="talent1-button">
+                            <button type="button" class="image-button" id="talent1-button">
                                 <img width="60" height="60" src="images/characters/NormalAttack_sword.png" alt="通常攻撃">
                             </button>
                             <select id="通常攻撃レベルInput">
@@ -153,7 +163,7 @@
                             </select>
                         </td>
                         <td>
-                            <button type="button" id="talent2-button">
+                            <button type="button" class="image-button" id="talent2-button">
                                 <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png"
                                     alt="元素スキル">
                             </button>
@@ -174,7 +184,7 @@
                             </select>
                         </td>
                         <td>
-                            <button type="button" id="talent3-button">
+                            <button type="button" class="image-button" id="talent3-button">
                                 <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png"
                                     alt="元素爆発">
                             </button>
@@ -197,15 +207,16 @@
                     </tr>
                     <tr>
                         <td rowspan="2">
-                            <button id="artifactset1-button">
+                            <button type="button" class="image-button" id="artifactset1-button">
                                 <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット1">
                             </button>
                         </td>
                         <td rowspan="2">
-                            <button id="artifactset2-button">
+                            <button type="button" class="image-button" id="artifactset2-button">
                                 <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット2">
                             </button>
                         </td>
+                        <td style="vertical-align: bottom;">SCORE</td>
                     </tr>
                     <tr>
                         <td>
@@ -224,63 +235,38 @@
                                 <option value="5">R5</option>
                             </select>
                         </td>
+                        <td id="artifact-score" style="vertical-align: top;">0</td>
                     </tr>
                 </table>
 
-                <table class="result">
-                    <tr>
-                        <td colspan="3" id="weapon-name">blank</td>
-                        <td id="weapon-rarity"></td>
-                    </tr>
-                    <tr>
-                        <td>基礎攻撃力</td>
-                        <td id="weapon-base-attack"></td>
-                        <td id="weapon-secondary-stat">blank</td>
-                        <td id="weapon-secondary-stat-value">blank</td>
-                    </tr>
-                    <tr>
-                        <th colspan="4" id="weapon-ability-name"></th>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <div id="weapon-ability-desc"></div>
-                        </td>
-                    </tr>
-                </table>
+                <div id="weapon-detail-and-select" style="display: none;">
+                    <table class="result">
+                        <tr>
+                            <td colspan="3" id="weapon-name">blank</td>
+                            <td id="weapon-rarity"></td>
+                        </tr>
+                        <tr>
+                            <td>基礎攻撃力</td>
+                            <td id="weapon-base-attack"></td>
+                            <td id="weapon-secondary-stat">blank</td>
+                            <td id="weapon-secondary-stat-value">blank</td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" id="weapon-ability-name"></th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div id="weapon-ability-desc"></div>
+                            </td>
+                        </tr>
+                    </table>
 
-                <div class="horizontal-list">
-                    <ul id="weapon-list"></ul>
+                    <div class="horizontal-list">
+                        <ul id="weapon-list"></ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="pane4" style="display: none;">
-                <button type="button" class="open-close" id="characterweapon-open-close">キャラ/武器</button>
-                <button type="button" class="open-close" id="artifact-open-close">聖遺物</button>
-
-                <section class="columns-3" id="characterweapon-area">
-                    <article class="input-item">
-                        <select id="キャラクターInput"></select>
-                    </article>
-                    <article class="input-item">
-                    </article>
-                    <article class="input-item">
-                    </article>
-                    <article class="input-item">
-                    </article>
-                    <article class="input-item">
-                    </article>
-                    <article class="input-item">
-                    </article>
-                    <article class="input-item">
-                        <select id="武器Input"></select>
-                    </article>
-                    <article class="input-item">
-                    </article>
-                    <article class="input-item">
-                    </article>
-                </section>
-
-                <div id="artifact-area">
+                <div id="artifact-area" style="display: none;">
                     <fieldset>
                         <legend>聖遺物 セット/メイン効果</legend>
 
@@ -593,6 +579,10 @@
                 </div>
             </div>
 
+            <div class="pane4" style="display: none;">
+
+            </div>
+
             <div class="pane5">
                 <button type="button" class="open-close" id="status-open-close">ステータス</button>
                 <button type="button" class="open-close" id="condition-open-close">バフ/デバフ</button>
@@ -661,7 +651,8 @@
                                     <tr>
                                         <th>会心ダメージ</th>
                                         <td><input type="number" value="0" step="0.1" id="会心ダメージInput"
-                                                name="ステータスInput"></td>
+                                                name="ステータスInput">
+                                        </td>
                                         <td id="会心ダメージValue"></td>
                                         <th>氷元素</th>
                                         <td><input type="number" value="0" step="0.1" id="氷元素ダメージバフ1Input"
@@ -671,7 +662,8 @@
                                     <tr>
                                         <th>与える治療効果</th>
                                         <td><input type="number" value="0" step="0.1" id="与える治療効果Input"
-                                                name="ステータスInput"></td>
+                                                name="ステータスInput">
+                                        </td>
                                         <td id="与える治療効果Value"></td>
                                         <th>岩元素</th>
                                         <td><input type="number" value="0" step="0.1" id="岩元素ダメージバフ1Input"
@@ -681,7 +673,8 @@
                                     <tr>
                                         <th>受ける治療効果</th>
                                         <td><input type="number" value="0" step="0.1" id="受ける治療効果Input"
-                                                name="ステータスInput"></td>
+                                                name="ステータスInput">
+                                        </td>
                                         <td id="受ける治療効果Value"></td>
                                         <th>物理</th>
                                         <td><input type="number" value="0" step="0.1" id="物理ダメージバフ1Input"
@@ -691,7 +684,8 @@
                                     <tr>
                                         <th>元素チャージ効率</th>
                                         <td><input type="number" value="0" step="0.1" id="元素チャージ効率Input"
-                                                name="ステータスInput"></td>
+                                                name="ステータスInput">
+                                        </td>
                                         <td id="元素チャージ効率Value"></td>
                                         <td colspan="3" style="border: none;">
                                             <input type="checkbox" id="ステータス1補正入力Toggle">
@@ -725,47 +719,55 @@
                                     <tr>
                                         <th>炎元素</th>
                                         <td><input type="number" value="0" step="0.1" id="炎元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="炎元素耐性Value"></td>
                                         <th>ダメージ軽減</th>
                                         <td><input type="number" value="0" step="0.1" id="ダメージ軽減Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="ダメージ軽減Value"></td>
                                     </tr>
                                     <tr>
                                         <th>水元素</th>
                                         <td><input type="number" value="0" step="0.1" id="水元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="水元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>風元素</th>
                                         <td><input type="number" value="0" step="0.1" id="風元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="風元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>雷元素</th>
                                         <td><input type="number" value="0" step="0.1" id="雷元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="雷元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>草元素</th>
                                         <td><input type="number" value="0" step="0.1" id="草元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="草元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>氷元素</th>
                                         <td><input type="number" value="0" step="0.1" id="氷元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="氷元素耐性Value"></td>
                                     </tr>
                                     <tr>
                                         <th>岩元素</th>
                                         <td><input type="number" value="0" step="0.1" id="岩元素耐性Input"
-                                                name="耐性軽減Input" /></td>
+                                                name="耐性軽減Input" />
+                                        </td>
                                         <td id="岩元素耐性Value"></td>
                                         <td colspan="3" style="border: none;">
                                             <input type="checkbox" id="ステータス2補正入力Toggle">
@@ -849,7 +851,8 @@
                                     <tr>
                                         <th>与えるダメージ</th>
                                         <td><input type="number" value="0" step="0.1" id="与えるダメージInput"
-                                                name="ダメージバフ2Input"></td>
+                                                name="ダメージバフ2Input">
+                                        </td>
                                         <td id="与えるダメージValue"></td>
                                         <th>炎元素</th>
                                         <td><input type="number" value="0" id="炎元素ダメージアップInput" name="ダメージアップInput">

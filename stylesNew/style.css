@@ -1,3 +1,100 @@
+/* 3 Columns */
+@media all and (min-width: 1251px) {
+    #main {
+        max-width: 1536px;
+    }
+
+    .base-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 32px 125px 150px auto minmax(400px, auto) auto;
+        grid-template-areas:
+            "header header header"
+            "pane2 pane2 pane2"
+            "pane3 pane5 result-pane"
+            "pane4 pane5 result-pane"
+            "pane6 bottom-pane bottom-pane"
+            "footer footer footer";
+    }
+
+    #status-area {
+        display: initial;
+    }
+
+    #condition-area {
+        display: initial;
+    }
+}
+
+/* 2 Columns */
+@media all and (min-width: 769px) and (max-width: 1250px) {
+    .base-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 3rem 125px 150px auto auto minmax(400px, auto) auto;
+        grid-template-areas:
+            "header header"
+            "pane2 pane2"
+            "pane3 pane1"
+            "pane4 result-pane"
+            "pane5 result-pane"
+            "pane6 bottom-pane"
+            "footer footer";
+    }
+
+    #status-area {
+        display: none;
+    }
+
+    #condition-area {
+        display: none;
+    }
+}
+
+/* 1 Column */
+@media all and (max-width: 768px) {
+    #main {
+        min-width: 360px;
+    }
+
+    .base-container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 4rem auto auto auto auto auto auto minmax(400px, auto) auto auto;
+        grid-template-areas:
+            "header"
+            "pane1"
+            "pane2"
+            "pane3"
+            "pane4"
+            "pane5"
+            "result-pane"
+            "pane6"
+            "bottom-pane"
+            "footer";
+    }
+
+    #status-area {
+        display: none;
+    }
+
+    #condition-area {
+        display: none;
+    }
+}
+
+#main {
+    color: blanchedalmond;
+}
+
+a:link {
+    color: blanchedalmond;
+}
+
+a:visited {
+    color: blanchedalmond;
+}
+
 .pyro-bg {
     background-color: darkred;
 }
@@ -69,13 +166,13 @@ img {
 }
 
 .pane3 {
-    width: 360px;
+    width: auto;
 }
 
 .pane3 table {
     display: inline-block;
-    width: 100%;
-    margin: 0;
+    width: auto;
+    margin: 0 auto;
     padding: 0;
     border: none;
     vertical-align: bottom;
@@ -90,8 +187,18 @@ img {
     margin: 0 auto;
 }
 
+.image-button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 td {
     color: blanchedalmond;
+}
+
+#character-name {
+    font-size: 2.6rem;
 }
 
 td select {
@@ -100,8 +207,15 @@ td select {
 }
 
 td button {
-    width: 100%;
+    width: 14rem;
     text-align: center;
+    border-radius: 10px;
+    margin: 5px 0;
+    padding: 5px;
+}
+
+td button.wide {
+    width: 100%;
 }
 
 td input {
@@ -119,7 +233,6 @@ section {
 }
 
 article {
-    font-size: 0;
     display: inline-block;
     vertical-align: bottom;
 }
