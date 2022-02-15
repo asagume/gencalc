@@ -222,7 +222,7 @@ function buildキャラクター所持状況List() {
         if ('image' in myMasterObj || 'image2' in myMasterObj) {
             let splittedUrl = myMasterObj['import'].split('/');
             let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-            let srcUrl = '/images/characters/face/' + fileName;
+            let srcUrl = 'images/characters/face/' + fileName;
 
             let liElem = document.createElement('li');
             ulElem.appendChild(liElem);
