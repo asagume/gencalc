@@ -503,6 +503,10 @@ article select {
     margin: 2rem 0;
 }
 
+#status-area button {
+    width: 8rem;
+}
+
 #condition-area {
     margin: 2rem 0;
     padding: 1rem;
