@@ -2606,7 +2606,7 @@ function setup武器説明レベル変動() {
 function setup武器説明() {
     // 画像と説明
     $('#weapon-name').html($('#武器Input').val());
-    const starImg = '<img width="16", height="16" src="/images/star.png" alt="star">';
+    const starImg = '<img width="16", height="16" src="images/star.png" alt="star">';
     let myRarerityHtml = starImg;
     for (i = 1; i < 選択中武器データVar['レアリティ']; i++) {
         myRarerityHtml += starImg;
@@ -2846,11 +2846,11 @@ function setupCharacterImg(url) {
     let fileName = urlArr[urlArr.length - 1].replace('.json', '.png');
 
     // キャラクター画像
-    $('#character-button img').attr('src', '/images/characters/face/' + fileName);
+    $('#character-button img').attr('src', 'images/characters/face/' + fileName);
     if (url.indexOf('5') == -1) {
-        $('#character-button').css('background-image', 'url(/images/star4-bg.png)');
+        $('#character-button').css('background-image', 'url(images/star4-bg.png)');
     } else {
-        $('#character-button').css('background-image', 'url(/images/star5-bg.png)');
+        $('#character-button').css('background-image', 'url(images/star5-bg.png)');
     }
 }
 const WEAPON_TYPE_IMG_FILE_ALIST = {
@@ -2865,14 +2865,14 @@ function setupTalentButton(url, characterData) {
     let dirName = urlArr[urlArr.length - 1].replace('.json', '');
 
     // 通常攻撃
-    $('#talent1-button img').attr('src', '/images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
+    $('#talent1-button img').attr('src', 'images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
 
     // 元素スキル
-    $('#talent2-button img').attr('src', '/images/characters/' + dirName + '/ElementalSkill.png');
+    $('#talent2-button img').attr('src', 'images/characters/' + dirName + '/ElementalSkill.png');
     $('#talent2-button img').attr('alt', characterData['元素スキル']['名前']);
 
     // 元素爆発
-    $('#talent3-button img').attr('src', '/images/characters/' + dirName + '/ElementalBurst.png');
+    $('#talent3-button img').attr('src', 'images/characters/' + dirName + '/ElementalBurst.png');
     $('#talent3-button img').attr('alt', characterData['元素爆発']['名前']);
 }
 const キャラクターInputOnChange = function () {
@@ -2880,7 +2880,7 @@ const キャラクターInputOnChange = function () {
 
     let myMasterObj = キャラクターMasterVar[キャラクター名前Var];
 
-    let elementSrcUrl = '/images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
+    let elementSrcUrl = 'images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
     let imgElem = '<img width="18" height="18" src="' + elementSrcUrl + '" alt="' + myMasterObj['元素'] + '">';
     $('#character-name').html(imgElem + キャラクター名前Var);
 
@@ -3197,7 +3197,7 @@ function setupキャラクター選択リスト(opt_elementType = null) {
 
         let splittedUrl = myMasterObj['import'].split('/');
         let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-        let srcUrl = '/images/characters/face/' + fileName;
+        let srcUrl = 'images/characters/face/' + fileName;
 
         let imgElem = document.createElement('img');
         imgElem.className = 'star' + myMasterObj['レアリティ'];
@@ -3240,11 +3240,11 @@ function setupWeaponImg(url, name) {
     $('#weapon-button img').attr('src', srcUrl);
     $('#weapon-button img').attr('alt', name);
     if (url.indexOf('3') != -1) {
-        $('#weapon-button').css('background-image', 'url(/images/star3-bg.png)');
+        $('#weapon-button').css('background-image', 'url(images/star3-bg.png)');
     } else if (url.indexOf('4') != -1) {
-        $('#weapon-button').css('background-image', 'url(/images/star4-bg.png)');
+        $('#weapon-button').css('background-image', 'url(images/star4-bg.png)');
     } else {
-        $('#weapon-button').css('background-image', 'url(/images/star5-bg.png)');
+        $('#weapon-button').css('background-image', 'url(images/star5-bg.png)');
     }
 }
 
