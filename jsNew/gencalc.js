@@ -2128,16 +2128,16 @@ const elementalResonanceInputOnChange = function (event) {
             });
         }
     }
-    // $('#元素共鳴効果説明Box').empty();
-    // 選択中元素共鳴データArrVar.forEach(data => {
-    //     let my説明 = data['説明'];
-    //     if (Array.isArray(my説明)) {
-    //         my説明.join('<br>');
-    //     }
-    //     $('<p>', {
-    //         html: my説明
-    //     }).appendTo('#元素共鳴効果説明Box');
-    // });
+    $('#元素共鳴効果説明Box').empty();
+    選択中元素共鳴データArrVar.forEach(data => {
+        let my説明 = data['説明'];
+        if (Array.isArray(my説明)) {
+            my説明.join('<br>');
+        }
+        $('<p>', {
+            html: my説明
+        }).appendTo('#元素共鳴効果説明Box');
+    });
     inputOnChangeStatusUpdate();
 }
 
