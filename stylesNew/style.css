@@ -503,7 +503,11 @@ article select {
     margin: 2rem 0;
 }
 
-#status-area button {
+.status label {
+    font-size: 2rem;
+}
+
+.status button {
     width: 8rem;
 }
 
