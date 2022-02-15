@@ -2604,10 +2604,14 @@ function setup武器説明レベル変動() {
     }
 }
 function setup武器説明() {
-    let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
     // 画像と説明
     $('#weapon-name').html($('#武器Input').val());
-    $('#weapon-rarity').html(選択中武器データVar['レアリティ']);
+    const starImg = '<img width="16", height="16" src="/images/star.png" alt="star">';
+    let myRarerityHtml = starImg;
+    for (i = 1; i < 選択中武器データVar['レアリティ']; i++) {
+        myRarerityHtml += starImg;
+    }
+    $('#weapon-rarity').html(myRarerityHtml);
     $('#weapon-ability-name').html('');
     $('#weapon-ability-desc').html('');
     if ('武器スキル' in 選択中武器データVar) {
@@ -2710,6 +2714,9 @@ function getNormalAttackDefaultElement() {
 
 // おすすめセット 変更イベント
 const おすすめセットInputOnChange = function () {
+    // 非表示
+    $('#おすすめセットInput').hide();
+
     通常攻撃_基礎ダメージ詳細ArrVar = [];
     重撃_基礎ダメージ詳細ArrVar = [];
     落下攻撃_基礎ダメージ詳細ArrVar = [];
@@ -2871,11 +2878,13 @@ function setupTalentButton(url, characterData) {
 const キャラクターInputOnChange = function () {
     キャラクター名前Var = $('#キャラクターInput').val();
 
-    let myキャラクターMaster = キャラクターMasterVar[キャラクター名前Var];
+    let myMasterObj = キャラクターMasterVar[キャラクター名前Var];
 
-    $('#character-name').html(キャラクター名前Var);
+    let elementSrcUrl = '/images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
+    let imgElem = '<img width="18" height="18" src="' + elementSrcUrl + '" alt="' + myMasterObj['元素'] + '">';
+    $('#character-name').html(imgElem + キャラクター名前Var);
 
-    const url = myキャラクターMaster['import'];
+    const url = myMasterObj['import'];
     fetch(url).then(response => response.json()).then(data => {
         選択中キャラクターデータVar = data;
 
@@ -3186,8 +3195,8 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         let liElem = document.createElement('li');
         ulElem.appendChild(liElem);
 
-        let urlArr = myMasterObj['import'].split('/');
-        let fileName = urlArr[urlArr.length - 1].replace('.json', '.png');
+        let splittedUrl = myMasterObj['import'].split('/');
+        let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
         let srcUrl = '/images/characters/face/' + fileName;
 
         let imgElem = document.createElement('img');
@@ -3220,7 +3229,7 @@ $(document).on('click', '[name="element-type-input"]', function () {
             }
         });
     }
-    setupキャラクター選択(elementType);
+    setupキャラクター選択リスト(elementType);
 });
 
 // 武器変更イベント
@@ -3984,6 +3993,10 @@ const toggleShowHide = function (selector) {
 // キャラクター画像 クリック処理
 $(document).on('click', '#character-button', () => {
     toggleShowHide('#character-select');
+});
+// おすすめセット クリック処理
+$(document).on('click', '#recomend-button', () => {
+    toggleShowHide('#おすすめセットInput');
 });
 // 武器画像 クリック処理
 $(document).on('click', '#weapon-button', () => {

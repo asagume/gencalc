@@ -217,10 +217,12 @@ function buildキャラクター所持状況List() {
 
     let ulElem = document.getElementById('キャラクター所持状況List');
     Object.keys(キャラクターMasterVar).forEach(key => {
-        let myCharacterMaster = キャラクターMasterVar[key];
-        if ('disabled' in myCharacterMaster && myCharacterMaster['disabled']) return;
-        if ('image' in myCharacterMaster || 'image2' in myCharacterMaster) {
-            let src = 'image' in myCharacterMaster ? myCharacterMaster['image'] : myCharacterMaster['image2'];
+        let myMasterObj = キャラクターMasterVar[key];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) return;
+        if ('image' in myMasterObj || 'image2' in myMasterObj) {
+            let splittedUrl = myMasterObj['import'].split('/');
+            let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
+            let srcUrl = '/images/characters/face/' + fileName;
 
             let liElem = document.createElement('li');
             ulElem.appendChild(liElem);
@@ -230,16 +232,15 @@ function buildキャラクター所持状況List() {
             liElem.appendChild(divElem);
 
             let imgElem = document.createElement('img');
-            imgElem.src = src;
+            imgElem.src = srcUrl;
             imgElem.alt = key;
-            imgElem.width = 85;
-            imgElem.height = 85;
+            imgElem.width = 80;
             divElem.appendChild(imgElem);
 
             let img2Elem = document.createElement('img');
             img2Elem.className = 'element';
-            img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myCharacterMaster['元素']);
-            img2Elem.alt = myCharacterMaster['元素'];
+            img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
+            img2Elem.alt = myMasterObj['元素'];
             img2Elem.width = 30;
             img2Elem.height = 30;
             divElem.appendChild(img2Elem);
