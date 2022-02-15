@@ -355,6 +355,7 @@ legend {
 .image-button {
     width: 100%;
     padding: 0;
+    border-radius: 15px;
 }
 
 #character-name {
@@ -745,27 +746,31 @@ th.category {
 }
 
 .pyro-bg {
-    background-color: darkred;
+    background-color: #d2655a;
 }
 
 .hydro-bg {
-    background-color: darkcyan;
+    background-color: #559cc9;
 }
 
 .aero-bg {
-    background-color: darkgreen;
+    background-color: #3aaf7a;
 }
 
 .electro-bg {
-    background-color: darkviolet;
+    background-color: #b681df;
 }
 
 .cryo-bg {
-    background-color: darkturquoise;
+    background-color: #63beb4;
 }
 
 .geo-bg {
-    background-color: darkgoldenrod;
+    background-color: #df8f37;
+}
+
+.refine-var {
+    color: aquamarine;
 }
 
 /* レアリティ背景色 */

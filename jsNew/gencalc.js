@@ -2866,14 +2866,35 @@ function setupTalentButton(url, characterData) {
 
     // 通常攻撃
     $('#talent1-button img').attr('src', 'images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        if (key == characterData['元素']) {
+            $('#talent1-button').addClass(value + '-bg');
+        } else {
+            $('#talent1-button').removeClass(value + '-bg');
+        }
+    });
 
     // 元素スキル
     $('#talent2-button img').attr('src', 'images/characters/' + dirName + '/ElementalSkill.png');
     $('#talent2-button img').attr('alt', characterData['元素スキル']['名前']);
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        if (key == characterData['元素']) {
+            $('#talent2-button').addClass(value + '-bg');
+        } else {
+            $('#talent2-button').removeClass(value + '-bg');
+        }
+    });
 
     // 元素爆発
     $('#talent3-button img').attr('src', 'images/characters/' + dirName + '/ElementalBurst.png');
     $('#talent3-button img').attr('alt', characterData['元素爆発']['名前']);
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        if (key == characterData['元素']) {
+            $('#talent3-button').addClass(value + '-bg');
+        } else {
+            $('#talent3-button').removeClass(value + '-bg');
+        }
+    });
 }
 const キャラクターInputOnChange = function () {
     キャラクター名前Var = $('#キャラクターInput').val();
@@ -3192,7 +3213,11 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         if (opt_elementType && myMasterObj['元素'] != opt_elementType) {
             return;
         }
+        let liBackgroundImage = 'url(images/star' + myMasterObj['レアリティ'] + '-bg.png)';
+
         let liElem = document.createElement('li');
+        liElem.style.backgroundSize = 'contain';
+        liElem.style.backgroundImage = liBackgroundImage;
         ulElem.appendChild(liElem);
 
         let splittedUrl = myMasterObj['import'].split('/');
@@ -3200,7 +3225,7 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         let srcUrl = 'images/characters/face/' + fileName;
 
         let imgElem = document.createElement('img');
-        imgElem.className = 'star' + myMasterObj['レアリティ'];
+        //imgElem.className = 'star' + myMasterObj['レアリティ'];
         imgElem.src = srcUrl;
         imgElem.alt = name;
         imgElem.width = 80;
@@ -3210,8 +3235,8 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         img2Elem.className = 'element';
         img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
         img2Elem.alt = myMasterObj['元素'];
-        img2Elem.width = 20;
-        img2Elem.height = 20;
+        img2Elem.width = 24;
+        img2Elem.height = 24;
         liElem.appendChild(img2Elem);
 
         imgElem.onclick = selectCharacter;
@@ -3262,10 +3287,14 @@ function setup武器選択リスト() {
             }
             let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
 
+            let liBackgroundImage = 'url(images/star' + myMasterObj['レアリティ'] + '-bg.png)';
+
             let liElem = document.createElement('li');
+            liElem.style.backgroundSize = 'contain';
+            liElem.style.backgroundImage = liBackgroundImage;
             ulElem.appendChild(liElem);
             let imgElem = document.createElement('img');
-            imgElem.className = 'star' + myMasterObj['レアリティ'];
+            //imgElem.className = 'star' + myMasterObj['レアリティ'];
             imgElem.src = srcUrl;
             imgElem.alt = name;
             imgElem.width = 58;
