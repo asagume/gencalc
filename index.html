@@ -128,6 +128,9 @@
                     </tr>
                 </table>
 
+                <input type="file" id="artifact-detail-image" style="display: none;">
+                <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48"></div>
+
                 <select id="おすすめセットInput"></select>
 
                 <table>
@@ -433,7 +436,7 @@
                                 </td>
                                 <td id="聖遺物サブ効果元素チャージ効率Value"></td>
                                 <td colspan="3" style="border: none;">
-                                    <button type="button" id="artifactDetailImageButton">聖遺物詳細画面OCR</button>
+                                    <button type="button" id="artifact-detail-ocr-button">聖遺物詳細画面OCR</button>
                                 </td>
                             </tr>
                         </table>
@@ -442,10 +445,10 @@
 
                         <table id="artifactsub-detail-priority">
                             <tr>
-                                <td>優先するサブ効果</td>
-                                <td>上昇値の目安</td>
-                                <td>初期+強化</td>
-                                <td style="text-align: right; color: olive;">合計 <span id="回数Display"></span> 回</td>
+                                <th>優先するサブ効果</th>
+                                <th>上昇値の目安</th>
+                                <th>初期+強化</th>
+                                <th style="text-align: right; color: olive;">合計 <span id="回数Display"></span> 回</th>
                             </tr>
                             <tr>
                                 <td>

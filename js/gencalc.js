@@ -3581,8 +3581,8 @@ $(document).ready(function () {
 initキャラクター構成関連要素();
 
 // 聖遺物詳細画面のスクリーンショットから取込
-$(document).on('click', '#artifactDetailImageButton', function () {
-    document.getElementById('artifactDetailImage').click();
+$(document).on('click', '#artifact-detail-ocr-button', function () {
+    document.getElementById('artifact-detail-image').click();
 });
 
 var artifactDetailText = null;
@@ -3723,7 +3723,7 @@ function loadImage(src) {
     });
 }
 
-$(document).on('change', '#artifactDetailImage', resizePinnedImage);
+$(document).on('change', '#artifact-detail-image', resizePinnedImage);
 
 
 const toggle聖遺物詳細計算停止 = function () {

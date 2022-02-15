@@ -3321,13 +3321,13 @@ $(document).on('change', '#武器レベルInput', 武器レベルInputOnChange);
 $(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
 
 // 基本条件・聖遺物
-function 聖遺物サブ効果直接入力モードToggleOnChange() {
-    if (this.checked) {
+function apply聖遺物サブ効果直接入力モード(mode) {
+    if (mode) {
         $('#聖遺物サブ効果直接入力Toggle').prop('checked', true);
     } else {
         $('#聖遺物サブ効果直接入力Toggle').prop('checked', false);
     }
-    if ($('#聖遺物サブ効果直接入力Toggle').prop('checked')) {
+    if (mode) {
         $('[name="聖遺物サブ効果Input"]').show();
         $('#聖遺物サブ効果HPValue').hide();
         $('#聖遺物サブ効果HPPValue').hide();
@@ -3353,6 +3353,11 @@ function 聖遺物サブ効果直接入力モードToggleOnChange() {
         $('#聖遺物サブ効果元素チャージ効率Value').show();
     }
 }
+function 聖遺物サブ効果直接入力モードToggleOnChange() {
+    const mode = this.checked;
+    apply聖遺物サブ効果直接入力モード(mode);
+    localStorage['聖遺物サブ効果直接入力モード'] = mode;
+}
 $(document).on('change', '[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
 $(document).on('change', '[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
 $(document).on('change', '[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
@@ -3377,8 +3382,8 @@ $(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
 // オプション条件
 
 // ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ
-function ステータス補正入力モードToggleOnChange() {
-    if (this.checked) {
+function applyステータス補正入力モード(mode) {
+    if (mode) {
         $('#ステータス1補正入力Toggle').prop('checked', true);
         $('#ステータス2補正入力Toggle').prop('checked', true);
         $('#ステータス3補正入力Toggle').prop('checked', true);
@@ -3389,7 +3394,7 @@ function ステータス補正入力モードToggleOnChange() {
         $('#ステータス3補正入力Toggle').prop('checked', false);
         $('#敵耐性補正入力Toggle').prop('checked', false);
     }
-    if ($('#ステータス1補正入力Toggle').prop('checked')) {
+    if (mode) {
         $('[name="ステータスInput"]').show();
         $('[name="基礎ステータスInput"]').show();
         $('[name="ダメージバフ1Input"]').show();
@@ -3406,6 +3411,11 @@ function ステータス補正入力モードToggleOnChange() {
         $('[name="ダメージアップInput"]').hide();
         $('[name="敵ステータスInput"]').hide();
     }
+}
+function ステータス補正入力モードToggleOnChange() {
+    const mode = this.checked;
+    applyステータス補正入力モード(mode);
+    localStorage['ステータス補正入力モード'] = mode;
 }
 $(document).on('change', '[name="ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
@@ -3590,8 +3600,26 @@ $(document).on('click', 'dialog.info', function () {
 $(document).ready(function () {
     initステータス詳細ObjVar(ステータス詳細ObjVar);
 
-    ステータス補正入力モードToggleOnChange();
-    聖遺物サブ効果直接入力モードToggleOnChange();
+    const myステータス補正入力モード = localStorage['ステータス補正入力モード'];
+    if (myステータス補正入力モード != null) {
+        if (myステータス補正入力モード == 'true') {
+            applyステータス補正入力モード(true);
+        } else {
+            applyステータス補正入力モード(false);
+        }
+    } else {
+        ステータス補正入力モードToggleOnChange();
+    }
+    const my聖遺物サブ効果直接入力モード = localStorage['聖遺物サブ効果直接入力モード'];
+    if (my聖遺物サブ効果直接入力モード != null) {
+        if (my聖遺物サブ効果直接入力モード == 'true') {
+            apply聖遺物サブ効果直接入力モード(true);
+        } else {
+            apply聖遺物サブ効果直接入力モード(false);
+        }
+    } else {
+        聖遺物サブ効果直接入力モードToggleOnChange();
+    }
 
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
@@ -3735,8 +3763,8 @@ $(document).ready(function () {
 initキャラクター構成関連要素();
 
 // 聖遺物詳細画面のスクリーンショットから取込
-$(document).on('click', '#artifactDetailImageButton', function () {
-    document.getElementById('artifactDetailImage').click();
+$(document).on('click', '#artifact-detail-ocr-button', function () {
+    document.getElementById('artifact-detail-image').click();
 });
 
 var artifactDetailText = null;
@@ -3877,8 +3905,7 @@ function loadImage(src) {
     });
 }
 
-$(document).on('change', '#artifactDetailImage', resizePinnedImage);
-
+$(document).on('change', '#artifact-detail-image', resizePinnedImage);
 
 const toggle聖遺物詳細計算停止 = function () {
     if (this.checked) {
