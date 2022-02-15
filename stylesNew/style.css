@@ -430,6 +430,10 @@ article select {
     display: inline-block;
 }
 
+.complex-4-2 label {
+    font-size: 1.8rem;
+}
+
 .columns-3 {
     justify-content: center;
 }
@@ -437,6 +441,10 @@ article select {
 .columns-3 .input-item {
     display: inline-block;
     width: calc(100% / 3 - 1rem);
+}
+
+.columns-3 label {
+    font-size: 1.8rem;
 }
 
 #artifactsub-detail th {
@@ -464,7 +472,7 @@ article select {
 }
 
 #artifactsub-detail-priority th {
-    font-size: 2rem;
+    font-size: 1.8rem;
     border: none;
     padding: 0;
 }
