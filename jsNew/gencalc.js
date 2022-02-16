@@ -3229,6 +3229,7 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         imgElem.src = srcUrl;
         imgElem.alt = name;
         imgElem.width = 80;
+        imgElem.height = 80;
         liElem.appendChild(imgElem);
 
         let img2Elem = document.createElement('img');
@@ -3297,8 +3298,8 @@ function setup武器選択リスト() {
             //imgElem.className = 'star' + myMasterObj['レアリティ'];
             imgElem.src = srcUrl;
             imgElem.alt = name;
-            imgElem.width = 58;
-            imgElem.height = 58;
+            imgElem.width = 60;
+            imgElem.height = 60;
             liElem.appendChild(imgElem);
 
             imgElem.onclick = selectWeapon;

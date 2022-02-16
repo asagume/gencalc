@@ -218,43 +218,45 @@ function buildキャラクター所持状況List() {
     let ulElem = document.getElementById('キャラクター所持状況List');
     Object.keys(キャラクターMasterVar).forEach(key => {
         let myMasterObj = キャラクターMasterVar[key];
-        if ('disabled' in myMasterObj && myMasterObj['disabled']) return;
-        if ('image' in myMasterObj || 'image2' in myMasterObj) {
-            let splittedUrl = myMasterObj['import'].split('/');
-            let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-            let srcUrl = 'images/characters/face/' + fileName;
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
 
-            let liElem = document.createElement('li');
-            ulElem.appendChild(liElem);
+        let splittedUrl = myMasterObj['import'].split('/');
+        let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
+        let srcUrl = 'images/characters/face/' + fileName;
 
-            let divElem = document.createElement('div');
-            divElem.id = key + '_所持状況Input';
-            liElem.appendChild(divElem);
+        let liElem = document.createElement('li');
+        ulElem.appendChild(liElem);
 
-            let imgElem = document.createElement('img');
-            imgElem.src = srcUrl;
-            imgElem.alt = key;
-            imgElem.width = 80;
-            divElem.appendChild(imgElem);
+        let divElem = document.createElement('div');
+        divElem.id = key + '_所持状況Input';
+        liElem.appendChild(divElem);
 
-            let img2Elem = document.createElement('img');
-            img2Elem.className = 'element';
-            img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
-            img2Elem.alt = myMasterObj['元素'];
-            img2Elem.width = 30;
-            img2Elem.height = 30;
-            divElem.appendChild(img2Elem);
+        let imgElem = document.createElement('img');
+        imgElem.src = srcUrl;
+        imgElem.alt = key;
+        imgElem.width = 80;
+        imgElem.height = 80;
+        divElem.appendChild(imgElem);
 
-            let pElem = document.createElement('p');
-            if (key in キャラクター所持状況ObjVar) {
-                pElem.textContent = キャラクター所持状況ObjVar[key];
-            }
-            divElem.appendChild(pElem);
+        let img2Elem = document.createElement('img');
+        img2Elem.className = 'element';
+        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
+        img2Elem.alt = myMasterObj['元素'];
+        img2Elem.width = 24;
+        img2Elem.height = 24;
+        divElem.appendChild(img2Elem);
 
-            if (!pElem.textContent) {
-                imgElem.classList.add('darken');
-                img2Elem.classList.add('darken');
-            }
+        let pElem = document.createElement('p');
+        if (key in キャラクター所持状況ObjVar) {
+            pElem.textContent = キャラクター所持状況ObjVar[key];
+        }
+        divElem.appendChild(pElem);
+
+        if (!pElem.textContent) {
+            imgElem.classList.add('darken');
+            img2Elem.classList.add('darken');
         }
     });
 

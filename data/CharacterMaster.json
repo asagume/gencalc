@@ -1,4 +1,11 @@
 {
+    "八重神子": {
+        "レアリティ": 5,
+        "元素": "雷",
+        "武器": "法器",
+        "import": "data/characters/electro_5_catalyst_Yaemiko.json",
+        "selected": true
+    },
     "申鶴": {
         "レアリティ": 5,
         "元素": "氷",
@@ -106,8 +113,7 @@
         "武器": "長柄武器",
         "import": "data/characters/geo_5_polearm_Zhongli.json",
         "image": "images/Zhongli.png",
-        "image2": "images/hoyolab/693b8a54de3e9ea43854615c14a5032b.png",
-        "selected": true
+        "image2": "images/hoyolab/693b8a54de3e9ea43854615c14a5032b.png"
     },
     "タルタリヤ": {
         "レアリティ": 5,

@@ -151,6 +151,10 @@ td {
     height: 3.2rem;
 }
 
+.horizontal-list {
+    margin-top: 1rem;
+}
+
 .horizontal-list ul {
     max-width: 100%;
     margin-left: auto;
@@ -530,7 +534,7 @@ article select {
     font-size: 2rem;
 }
 
-.status th, .statustd {
+.status th, .status td {
     width: auto;
 }
 
@@ -701,6 +705,7 @@ th.category {
 
 .damage-taken {
     text-align: left;
+    padding-left: 1rem;
 }
 
 /* BOTTOM PANE */
