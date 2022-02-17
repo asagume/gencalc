@@ -1695,10 +1695,23 @@ function calculateStatusObj(statusObj) {
     statusObj['会心ダメージ'] += statusObj['聖遺物サブ効果会心ダメージ'];
     statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
-    let my聖遺物スコア = 0;
-    my聖遺物スコア += statusObj['聖遺物サブ効果攻撃力P'];
-    my聖遺物スコア += statusObj['聖遺物サブ効果会心率'] * 2;
-    my聖遺物スコア += statusObj['聖遺物サブ効果会心ダメージ'];
+    // 聖遺物スコアを計算します
+    let my攻撃力P小計 = statusObj['聖遺物サブ効果攻撃力P'];
+    if (!$('聖遺物メイン効果3Input').val()) { // 時の砂未設定の場合、攻撃力%と見做します
+        if (my攻撃力P小計 >= 聖遺物メイン効果MasterVar["5"]['攻撃力%']) {
+            my攻撃力P小計 -= 聖遺物メイン効果MasterVar["5"]['攻撃力%'];
+        }
+    }
+    let my会心率小計 = statusObj['聖遺物サブ効果会心率'];
+    let my会心ダメージ小計 = statusObj['聖遺物サブ効果会心ダメージ'];
+    if (!$('聖遺物メイン効果5Input').val()) { // 空の杯未設定の場合、会心率または会心ダメージと見做します
+        if (my会心率小計 >= 聖遺物メイン効果MasterVar["5"]['会心率']) {
+            my会心率小計 -= 聖遺物メイン効果MasterVar["5"]['会心率'];
+        } else if (my会心ダメージ小計 >= 聖遺物メイン効果MasterVar["5"]['会心ダメージ']) {
+            my会心ダメージ小計 -= 聖遺物メイン効果MasterVar["5"]['会心ダメージ'];
+        }
+    }
+    let my聖遺物スコア = my攻撃力P小計 + (my会心率小計 * 2) + my会心ダメージ小計;
     my聖遺物スコア = Math.round(my聖遺物スコア * 10) / 10;
     $('#artifact-score').html(my聖遺物スコア);
 
