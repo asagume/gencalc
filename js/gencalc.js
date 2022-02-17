@@ -37,7 +37,7 @@ function calculate乗算系元素反応倍率(statusObj, element, elementalMaste
         return 0;
     }
     let result = 元素反応MasterVar[element][elementalReaction]['数値'];
-    let dmgBuff = statusObj[elementalReaction + 'ダメージバフ'];
+    let dmgBuff = statusObj[elementalReaction + '反応ボーナス'];
     result *= 1 + 25 * elementalMastery / (9 * (elementalMastery + 1400)) + dmgBuff / 100;
     return result;
 }
@@ -48,7 +48,7 @@ function calculate固定値系元素反応ダメージ(statusObj, element, eleme
         return 0;
     }
     let level = Number($('#レベルInput').val().replace('+', ''));
-    let dmgBuff = statusObj[elementalReaction + 'ダメージバフ'];
+    let dmgBuff = statusObj[elementalReaction + '反応ボーナス'];
     let result = 元素反応MasterVar[element][elementalReaction]['数値'][level];
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
     if (elementalReaction == '拡散') {
@@ -1810,6 +1810,10 @@ function calculateStatusObj(statusObj) {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
     });
+    Array.from(document.getElementsByName('元素反応ボーナスInput')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
     Array.from(document.getElementsByName('耐性軽減Input')).forEach(elem => {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
@@ -3487,17 +3491,17 @@ function applyステータス補正入力モード(mode) {
     }
     if (mode) {
         // input要素を表示します
-        ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "耐性軽減", "敵ステータス"].forEach(name => {
+        ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "元素反応ボーナス", "耐性軽減", "敵ステータス"].forEach(name => {
             $('[name="' + name + 'Input"]').show();
         });
     } else {
         // input要素を隠します
-        ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "耐性軽減", "敵ステータス"].forEach(name => {
+        ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "元素反応ボーナス", "耐性軽減", "敵ステータス"].forEach(name => {
             $('[name="' + name + 'Input"]').hide();
         });
     }
 
-    ["ダメージバフ1", "ダメージバフ2", "ダメージアップ"].forEach(name => {
+    ["ダメージバフ1", "ダメージバフ2", "ダメージアップ", "元素反応ボーナス"].forEach(name => {
         if ($('#' + name + 'RowGroup').hasClass('opened')) {
             $('[name="' + name + 'Input"]').closest('tr').show();
             return;
@@ -3526,6 +3530,7 @@ $(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeSta
 $(document).on('change', 'input[name="ダメージバフ1Input"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージバフ2Input"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'input[name="元素反応ボーナスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '#ステータス1補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス1補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス1補正初期化Button', function () {
@@ -3539,6 +3544,7 @@ $(document).on('click', '#ステータス1補正初期化Button', function () {
 $(document).on('click', '#ダメージバフ1RowGroup', StatusRowGroupOnClick);
 $(document).on('click', '#ダメージバフ2RowGroup', StatusRowGroupOnClick);
 $(document).on('click', '#ダメージアップRowGroup', StatusRowGroupOnClick);
+$(document).on('click', '#元素反応ボーナスRowGroup', StatusRowGroupOnClick);
 
 
 // ステータス2 元素ステータス・耐性/その他

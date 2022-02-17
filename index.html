@@ -820,95 +820,155 @@
                                                 <th>与えるダメージ</th>
                                                 <td><input type="number" value="0" step="0.1" id="与えるダメージInput"
                                                         name="ダメージバフ2Input"></td>
+                                                <td id="与えるダメージValue"></td>
+                                            </tr>
+                                            <thead>
+                                                <tr id="ダメージアップRowGroup">
+                                                    <th colspan="3">ダメージアップ</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <th>通常攻撃</th>
+                                                <td><input type="number" value="0" step="0.1" id="通常攻撃ダメージアップInput"
+                                                        name="ダメージアップInput"></td>
+                                                <td id="通常攻撃ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>重撃</th>
+                                                <td><input type="number" value="0" step="0.1" id="重撃ダメージアップInput"
+                                                        name="ダメージアップInput"></td>
+                                                <td id="重撃ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>落下攻撃</th>
+                                                <td><input type="number" value="0" step="0.1" id="落下攻撃ダメージアップInput"
+                                                        name="ダメージアップInput"></td>
+                                                <td id="落下攻撃ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>元素スキル</th>
+                                                <td><input type="number" value="0" step="0.1" id="元素スキルダメージアップInput"
+                                                        name="ダメージアップInput"></td>
+                                                <td id="元素スキルダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>元素爆発</th>
+                                                <td><input type="number" value="0" step="0.1" id="元素爆発ダメージアップInput"
+                                                        name="ダメージアップInput"></td>
+                                                <td id="元素爆発ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>炎元素</th>
+                                                <td><input type="number" value="0" id="炎元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="炎元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>水元素</th>
+                                                <td><input type="number" value="0" id="水元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="水元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>風元素</th>
+                                                <td><input type="number" value="0" id="風元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="風元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>雷元素</th>
+                                                <td><input type="number" value="0" id="雷元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="雷元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>草元素</th>
+                                                <td><input type="number" value="0" id="草元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="草元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>氷元素</th>
+                                                <td><input type="number" value="0" id="氷元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="氷元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>岩元素</th>
+                                                <td><input type="number" value="0" id="岩元素ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="岩元素ダメージアップValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>物理</th>
+                                                <td><input type="number" value="0" id="物理ダメージアップInput"
+                                                        name="ダメージアップInput">
+                                                </td>
+                                                <td id="物理ダメージアップValue"></td>
+                                            </tr>
+                                            <thead>
+                                                <tr id="元素反応ボーナスRowGroup">
+                                                    <th colspan="3">元素反応ボーナス</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <th>蒸発</th>
+                                                <td><input type="number" value="0" step="1" id="蒸発反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="蒸発反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>溶解</th>
+                                                <td><input type="number" value="0" step="1" id="溶解反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="溶解反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>過負荷</th>
+                                                <td><input type="number" value="0" step="1" id="過負荷反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="過負荷反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>燃焼</th>
+                                                <td><input type="number" value="0" step="1" id="燃焼反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="燃焼反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>感電</th>
+                                                <td><input type="number" value="0" step="1" id="感電反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="感電反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>凍結</th>
+                                                <td><input type="number" value="0" step="1" id="凍結反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="凍結反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>拡散</th>
+                                                <td><input type="number" value="0" step="1" id="拡散反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="拡散反応ボーナスValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>超電導</th>
+                                                <td><input type="number" value="0" step="1" id="超電導反応ボーナスInput"
+                                                        name="元素反応ボーナスInput"></td>
+                                                <td id="超電導反応ボーナスValue"></td>
+                                            </tr>
+                                        </table>
                                     </td>
-                                    <td id="与えるダメージValue"></td>
                                 </tr>
-                                <thead>
-                                    <tr id="ダメージアップRowGroup">
-                                        <th colspan="3">ダメージアップ</th>
-                                    </tr>
-                                </thead>
-                                <tr>
-                                    <th>通常攻撃</th>
-                                    <td><input type="number" value="0" step="0.1" id="通常攻撃ダメージアップInput"
-                                            name="ダメージアップInput"></td>
-                                    <td id="通常攻撃ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>重撃</th>
-                                    <td><input type="number" value="0" step="0.1" id="重撃ダメージアップInput"
-                                            name="ダメージアップInput"></td>
-                                    <td id="重撃ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>落下攻撃</th>
-                                    <td><input type="number" value="0" step="0.1" id="落下攻撃ダメージアップInput"
-                                            name="ダメージアップInput"></td>
-                                    <td id="落下攻撃ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>元素スキル</th>
-                                    <td><input type="number" value="0" step="0.1" id="元素スキルダメージアップInput"
-                                            name="ダメージアップInput"></td>
-                                    <td id="元素スキルダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>元素爆発</th>
-                                    <td><input type="number" value="0" step="0.1" id="元素爆発ダメージアップInput"
-                                            name="ダメージアップInput"></td>
-                                    <td id="元素爆発ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>炎元素</th>
-                                    <td><input type="number" value="0" id="炎元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="炎元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>水元素</th>
-                                    <td><input type="number" value="0" id="水元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="水元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>風元素</th>
-                                    <td><input type="number" value="0" id="風元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="風元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>雷元素</th>
-                                    <td><input type="number" value="0" id="雷元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="雷元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>草元素</th>
-                                    <td><input type="number" value="0" id="草元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="草元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>氷元素</th>
-                                    <td><input type="number" value="0" id="氷元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="氷元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>岩元素</th>
-                                    <td><input type="number" value="0" id="岩元素ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="岩元素ダメージアップValue"></td>
-                                </tr>
-                                <tr>
-                                    <th>物理</th>
-                                    <td><input type="number" value="0" id="物理ダメージアップInput" name="ダメージアップInput">
-                                    </td>
-                                    <td id="物理ダメージアップValue"></td>
-                                </tr>
-                            </table>
-                            </td>
-                            </tr>
                             </table>
                         </div>
 
