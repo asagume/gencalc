@@ -21,7 +21,6 @@
     <link href="styles/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
-    <reference path="JQuery.d.ts"></reference>
     <script src="js/gencalc_var.js"></script>
     <script src="js/gencalc_core.js"></script>
     <script src="js/gencalc.js"></script>
@@ -32,7 +31,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="height: calc(100% - 2rem); margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.0.0</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.0.1</legend>
                     <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
                     <p>
                         <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
@@ -161,8 +160,8 @@
                         </td>
                         <td>
                             <button type="button" class="image-button" id="talent2-button">
-                                <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalSkill.png"
-                                    alt="元素スキル">
+                                <img width="60" height="60"
+                                    src="images/characters/aero_5_sword_Traveller/ElementalSkill.png" alt="元素スキル">
                             </button>
                             <select id="元素スキルレベルInput">
                                 <option value="1">Lv.1</option>
@@ -182,8 +181,8 @@
                         </td>
                         <td>
                             <button type="button" class="image-button" id="talent3-button">
-                                <img width="60" height="60" src="images/characters/aero_5_Traveller/ElementalBurst.png"
-                                    alt="元素爆発">
+                                <img width="60" height="60"
+                                    src="images/characters/aero_5_sword_Traveller/ElementalBurst.png" alt="元素爆発">
                             </button>
                             <select id="元素爆発レベルInput">
                                 <option value="1">Lv.1</option>
@@ -574,6 +573,54 @@
             </div>
 
             <div class="pane5">
+                <table class="talent-detail" id="talent2-detail">
+                    <tr>
+                        <td rowspan="3">
+                            <img width="120" height="120"
+                                src="images/characters/aero_5_sword_Traveler/ElementalSkill.png" alt="元素スキル"
+                                id="elemental-skill-img">
+                        </td>
+                        <td colspan="2" id="elemental-skill-name">名前</td>
+                    </tr>
+                    <tr>
+                        <th>クールタイム</th>
+                        <td id="elemental-skill-cd"></td>
+                    </tr>
+                    <tr>
+                        <th>継続時間</th>
+                        <td id="elemental-skill-duration"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="description" id="elemental-skill-desc"></td>
+                    </tr>
+                </table>
+
+                <table class="talent-detail" id="talent3-detail">
+                    <tr>
+                        <td rowspan="4">
+                            <img width="120" height="120"
+                                src="images/characters/aero_5_sword_Traveler/ElementalBurst.png" alt="元素爆発"
+                                id="detail-elemental-burst-img">
+                        </td>
+                        <td colspan="2" id="elemental-burst-name">名前</td>
+                    </tr>
+                    <tr>
+                        <th>元素エネルギー</th>
+                        <td id="elemental-burst-energy-cost"></td>
+                    </tr>
+                    <tr>
+                        <th>クールタイム</th>
+                        <td id="elemental-burst-cd"></td>
+                    </tr>
+                    <tr>
+                        <th>継続時間</th>
+                        <td id="elemental-burst-duration"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="description" id="elemental-burst-desc"></td>
+                    </tr>
+                </table>
+
                 <button type="button" class="open-close" id="option-open-close">オプション条件</button>
                 <button type="button" class="open-close" id="status-open-close">ステータス</button>
                 <button type="button" class="open-close" id="condition-open-close">バフ/デバフ</button>
@@ -1106,100 +1153,30 @@
             </div>
 
             <div class="pane6">
-                <div class="tab-area" style="display: none;">
-                    <input type="radio" class="tab-button input-set1" id="detail1" name="detail-group" />
-                    <label for="detail1">天賦詳細</label>
-                    <div class="tab-content" style="padding-top: 1rem;">
-                    </div>
 
-                    <input type="radio" class="tab-button input-set1" id="detail2" name="detail-group" checked />
-                    <label for="detail2">武器詳細</label>
-                    <div class="tab-content" style="padding-top: 1rem;">
-                    </div>
-
-                    <input type="radio" class="tab-button input-set1" id="detail3" name="detail-group" />
-                    <label for="detail3">聖遺物詳細</label>
-                    <div class="tab-content" style="padding-top: 1rem;">
-                        <table class="result">
-                            <tr>
-                                <th colspan="2" id="artifactset1-name">blank</th>
-                            </tr>
-                            <tr>
-                                <td rowspan="1" style="width: 75px;">
-                                    <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
-                                        id="artifactset1-img">
-                                </td>
-                                <td>
-                                    <div id="artifactset1-desc">blank</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" id="artifactset2-name">blank</th>
-                            </tr>
-                            <tr>
-                                <td rowspan="1" style="width: 75px;">
-                                    <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
-                                        id="artifactset2-img">
-                                </td>
-                                <td>
-                                    <div id="artifactset2-desc">blank</div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <table class="result" style="display: none;">
+                <table id="artifact-set-detail" style="display: none;">
                     <tr>
-                        <td rowspan="4">
-                            <img width="75" height="75" src="images/weapons/sword/1_DullBlade.png" alt="無鋒の剣"
-                                id="elemental-skill-img">
+                        <th colspan="2" id="artifactset1-name">blank</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="1" style="width: 75px;">
+                            <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
+                                id="artifactset1-img">
                         </td>
                         <td>
-                            <div id="elemental-skill-name"></div>
+                            <div id="artifactset1-desc">blank</div>
                         </td>
                     </tr>
                     <tr>
-                        <th>継続時間</th>
-                        <td id="elemental-skill-duration"></td>
+                        <th colspan="2" id="artifactset2-name">blank</th>
                     </tr>
                     <tr>
-                        <th>クールタイム</th>
-                        <td id="elemental-skill-cd"></td>
-                    </tr>
-                    <tr>
-                        <th>元素粒子生成数</th>
-                        <td id="elemental-skill-energy"></td>
-                    </tr>
-                    <tr style="display: none;">
-                        <td colspan="2">
-                            <div id="elemental-skill-desc"></div>
+                        <td rowspan="1" style="width: 75px;">
+                            <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
+                                id="artifactset2-img">
                         </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="4">
-                            <img width="75" height="75" src="images/weapons/sword/1_DullBlade.png" alt="無鋒の剣"
-                                id="elemental-burst-img">
-                        </td>
-                        <td colspan="2">
-                            <div id="elemental-burst-name"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>継続時間</th>
-                        <td id="elemental-burst-duration"></td>
-                    </tr>
-                    <tr>
-                        <th>クールタイム</th>
-                        <td id="elemental-burst-cd"></td>
-                    </tr>
-                    <tr>
-                        <th>元素エネルギー</th>
-                        <td id="elemental-burst-energy-cost"></td>
-                    </tr>
-                    <tr style="display: none;">
-                        <td colspan="2">
-                            <div id="elemental-burst-desc"></div>
+                        <td>
+                            <div id="artifactset2-desc">blank</div>
                         </td>
                     </tr>
                 </table>

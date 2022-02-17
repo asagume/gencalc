@@ -577,6 +577,31 @@ article select {
     margin: 5px 1rem;
 }
 
+.talent-detail {
+    display: none;
+    margin: 1rem;
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid gray;
+    border-radius: 1rem;
+}
+
+.talent-detail th {
+    min-width: 10rem;
+    padding: auto 1rem;
+    text-align: left;
+}
+
+.talent-detail td {
+    min-width: 10rem;
+    padding: auto 1rem;
+    text-align: left;
+}
+
+.talent-detail .description {
+    padding: 1rem;
+}
+
 .tab-button {
     display: none;
 }
@@ -601,11 +626,11 @@ article select {
     width: calc(100% / 4 - 0.9rem);
 }
 
-.pane5 td {
+.status-area td {
     text-align: right;
 }
 
-.pane5 td button {
+.status-area td button {
     margin: 1px;
     padding: 1px;
 }
