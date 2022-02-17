@@ -1,10 +1,10 @@
 @media all and (min-width: 1251px) {
     html {
-        font-size: 7px;
+        font-size: calc(100vw / 72 / 3);
     }
 
     body {
-        font-size: 7px;
+        font-size: calc(100vw / 72 / 3);
     }
 
     #main {
