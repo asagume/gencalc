@@ -3534,7 +3534,7 @@ $(document).on('change', 'input[name="元素反応ボーナスInput"]', inputOnC
 $(document).on('change', '#ステータス1補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス1補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス1補正初期化Button', function () {
-    ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ"].forEach(name => {
+    ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "元素反応ボーナス"].forEach(name => {
         $('[name="' + name + 'Input"]').val(0);
     });
     this.disabled = true;
