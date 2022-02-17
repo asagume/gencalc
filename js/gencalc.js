@@ -1695,6 +1695,26 @@ function calculateStatusObj(statusObj) {
     statusObj['会心ダメージ'] += statusObj['聖遺物サブ効果会心ダメージ'];
     statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
+    // 聖遺物スコアを計算します
+    let my攻撃力P小計 = statusObj['聖遺物サブ効果攻撃力P'];
+    if (!$('聖遺物メイン効果3Input').val()) { // 時の砂未設定の場合、攻撃力%と見做します
+        if (my攻撃力P小計 >= 聖遺物メイン効果MasterVar["5"]['攻撃力%']) {
+            my攻撃力P小計 -= 聖遺物メイン効果MasterVar["5"]['攻撃力%'];
+        }
+    }
+    let my会心率小計 = statusObj['聖遺物サブ効果会心率'];
+    let my会心ダメージ小計 = statusObj['聖遺物サブ効果会心ダメージ'];
+    if (!$('聖遺物メイン効果5Input').val()) { // 空の杯未設定の場合、会心率または会心ダメージと見做します
+        if (my会心率小計 >= 聖遺物メイン効果MasterVar["5"]['会心率']) {
+            my会心率小計 -= 聖遺物メイン効果MasterVar["5"]['会心率'];
+        } else if (my会心ダメージ小計 >= 聖遺物メイン効果MasterVar["5"]['会心ダメージ']) {
+            my会心ダメージ小計 -= 聖遺物メイン効果MasterVar["5"]['会心ダメージ'];
+        }
+    }
+    let my聖遺物スコア = my攻撃力P小計 + (my会心率小計 * 2) + my会心ダメージ小計;
+    my聖遺物スコア = Math.round(my聖遺物スコア * 10) / 10;
+    $('#artifact-score').html(my聖遺物スコア);
+
     statusObj['ダメージ計算'] = {};
     let my元素スキルObj = 選択中キャラクターデータVar['元素スキル'];
     statusObj['元素スキル'] = {
@@ -1778,7 +1798,11 @@ function calculateStatusObj(statusObj) {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
     });
-    Array.from(document.getElementsByName('ダメージバフInput')).forEach(elem => {
+    Array.from(document.getElementsByName('ダメージバフ1Input')).forEach(elem => {
+        let statusName = elem.id.replace('Input', '');
+        statusObj[statusName] += Number(elem.value);
+    });
+    Array.from(document.getElementsByName('ダメージバフ2Input')).forEach(elem => {
         let statusName = elem.id.replace('Input', '');
         statusObj[statusName] += Number(elem.value);
     });
@@ -1924,6 +1948,10 @@ const inputOnChangeStatusUpdate = function () {
 
     // ステータス詳細ObjVar⇒各Value要素 値をコピーします
     setObjectPropertiesToTableTd(ステータス詳細ObjVar);
+
+    //
+    let mode = $('#ステータス1補正入力Toggle').prop('checked') || $('#ステータス2補正入力Toggle').prop('checked');
+    applyステータス補正入力モード(mode);
 
     inputOnChangeResultUpdate(ステータス詳細ObjVar);
 }
@@ -2121,16 +2149,16 @@ const elementalResonanceInputOnChange = function (event) {
             });
         }
     }
-    // $('#元素共鳴効果説明Box').empty();
-    // 選択中元素共鳴データArrVar.forEach(data => {
-    //     let my説明 = data['説明'];
-    //     if (Array.isArray(my説明)) {
-    //         my説明.join('<br>');
-    //     }
-    //     $('<p>', {
-    //         html: my説明
-    //     }).appendTo('#元素共鳴効果説明Box');
-    // });
+    $('#元素共鳴効果説明Box').empty();
+    選択中元素共鳴データArrVar.forEach(data => {
+        let my説明 = data['説明'];
+        if (Array.isArray(my説明)) {
+            my説明.join('<br>');
+        }
+        $('<p>', {
+            html: my説明
+        }).appendTo('#元素共鳴効果説明Box');
+    });
     inputOnChangeStatusUpdate();
 }
 
@@ -2141,6 +2169,9 @@ function setup聖遺物セット効果説明() {
     let myInput1Value = $('#聖遺物セット効果1Input').val();
     let mySet1Name = myInput1Value;
     if (myInput1Value) {
+        $('#artifactset1-button img').attr('src', 聖遺物セット効果MasterVar[myInput1Value]['image']);
+        $('#artifactset1-button img').attr('alt', myInput1Value);
+
         mySet1Name += ' 2セット効果';
         if ('image' in 聖遺物セット効果MasterVar[myInput1Value]) {
             $('#artifactset1-img').attr('src', 聖遺物セット効果MasterVar[myInput1Value]['image']);
@@ -2153,6 +2184,9 @@ function setup聖遺物セット効果説明() {
     let myInput2Value = $('#聖遺物セット効果2Input').val();
     let mySet2Name = myInput2Value;
     if (myInput2Value) {
+        $('#artifactset2-button img').attr('src', 聖遺物セット効果MasterVar[myInput2Value]['image']);
+        $('#artifactset2-button img').attr('alt', myInput2Value);
+
         if ('image' in 聖遺物セット効果MasterVar[myInput2Value]) {
             $('#artifactset2-img').attr('src', 聖遺物セット効果MasterVar[myInput2Value]['image']);
         } else {
@@ -2591,12 +2625,14 @@ function setup武器説明レベル変動() {
     }
 }
 function setup武器説明() {
-    let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
     // 画像と説明
     $('#weapon-name').html($('#武器Input').val());
-    $('#weapon-img').prop('src', url.replace('data', 'images').replace('json', 'png'));
-    $('#weapon-img').prop('alt', $('#武器Input').val());
-    $('#weapon-rarity').html(選択中武器データVar['レアリティ']);
+    const starImg = '<img width="16", height="16" src="images/star.png" alt="star">';
+    let myRarerityHtml = starImg;
+    for (i = 1; i < 選択中武器データVar['レアリティ']; i++) {
+        myRarerityHtml += starImg;
+    }
+    $('#weapon-rarity').html(myRarerityHtml);
     $('#weapon-ability-name').html('');
     $('#weapon-ability-desc').html('');
     if ('武器スキル' in 選択中武器データVar) {
@@ -2636,7 +2672,11 @@ const 武器レベルInputOnChange = function () {
 
 // 武器 変更イベント
 const 武器InputOnChange = function () {
-    let url = 選択可能武器セットObjVar[$('#武器Input').val()]['import'];
+    const name = $('#武器Input').val();
+    const url = 選択可能武器セットObjVar[name]['import'];
+
+    setupWeaponImg(url, name);
+
     fetch(url).then(response => response.json()).then(data => {
         選択中武器データVar = data;
         console.debug('選択中武器データVar');
@@ -2695,6 +2735,9 @@ function getNormalAttackDefaultElement() {
 
 // おすすめセット 変更イベント
 const おすすめセットInputOnChange = function () {
+    // 非表示
+    $('#おすすめセットInput').hide();
+
     通常攻撃_基礎ダメージ詳細ArrVar = [];
     重撃_基礎ダメージ詳細ArrVar = [];
     落下攻撃_基礎ダメージ詳細ArrVar = [];
@@ -2819,15 +2862,76 @@ function get説明Html(obj) {
 }
 
 // キャラクター 変更イベント
+function setupCharacterImg(url) {
+    let urlArr = url.split('/');
+    let fileName = urlArr[urlArr.length - 1].replace('.json', '.png');
+
+    // キャラクター画像
+    $('#character-button img').attr('src', 'images/characters/face/' + fileName);
+    if (url.indexOf('5') == -1) {
+        $('#character-button').css('background-image', 'url(images/star4-bg.png)');
+    } else {
+        $('#character-button').css('background-image', 'url(images/star5-bg.png)');
+    }
+}
+const WEAPON_TYPE_IMG_FILE_ALIST = {
+    片手剣: 'NormalAttack_sword.png',
+    両手剣: 'NormalAttack_claymore.png',
+    長柄武器: 'NormalAttack_polearm.png',
+    弓: 'NormalAttack_bow.png',
+    法器: 'NormalAttack_catalyst.png'
+}
+function setupTalentButton(url, characterData) {
+    let urlArr = url.split('/');
+    let dirName = urlArr[urlArr.length - 1].replace('.json', '');
+
+    // 通常攻撃
+    $('#talent1-button img').attr('src', 'images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        if (key == characterData['元素']) {
+            $('#talent1-button').addClass(value + '-bg');
+        } else {
+            $('#talent1-button').removeClass(value + '-bg');
+        }
+    });
+
+    // 元素スキル
+    $('#talent2-button img').attr('src', 'images/characters/' + dirName + '/ElementalSkill.png');
+    $('#talent2-button img').attr('alt', characterData['元素スキル']['名前']);
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        if (key == characterData['元素']) {
+            $('#talent2-button').addClass(value + '-bg');
+        } else {
+            $('#talent2-button').removeClass(value + '-bg');
+        }
+    });
+
+    // 元素爆発
+    $('#talent3-button img').attr('src', 'images/characters/' + dirName + '/ElementalBurst.png');
+    $('#talent3-button img').attr('alt', characterData['元素爆発']['名前']);
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        if (key == characterData['元素']) {
+            $('#talent3-button').addClass(value + '-bg');
+        } else {
+            $('#talent3-button').removeClass(value + '-bg');
+        }
+    });
+}
 const キャラクターInputOnChange = function () {
     キャラクター名前Var = $('#キャラクターInput').val();
-    let myキャラクターMaster = キャラクターMasterVar[キャラクター名前Var];
-    let src = 'image2' in myキャラクターMaster ? myキャラクターMaster['image2'] : myキャラクターMaster['image'];
-    $('#選択キャラクターImg').prop('src', src);
-    $('#選択キャラクター名前Label').text(キャラクター名前Var);
 
-    fetch(myキャラクターMaster.import).then(response => response.json()).then(data => {
+    let myMasterObj = キャラクターMasterVar[キャラクター名前Var];
+
+    let elementSrcUrl = 'images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
+    let imgElem = '<img width="18" height="18" src="' + elementSrcUrl + '" alt="' + myMasterObj['元素'] + '">';
+    $('#character-name').html(imgElem + キャラクター名前Var);
+
+    const url = myMasterObj['import'];
+    fetch(url).then(response => response.json()).then(data => {
         選択中キャラクターデータVar = data;
+
+        setupCharacterImg(url);
+        setupTalentButton(url, 選択中キャラクターデータVar);
 
         ['通常攻撃', '特殊通常攻撃'].forEach(category => {
             if (category in 選択中キャラクターデータVar) {
@@ -3083,6 +3187,8 @@ const キャラクターInputOnChange = function () {
         }
         appendOptionElements(選択可能武器セットObjVar, '#武器Input');
 
+        setup武器選択リスト();
+
         setupおすすめセット();
 
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
@@ -3117,30 +3223,41 @@ function setupキャラクター説明() {
 }
 
 // 
-function setupキャラクター選択(opt_elementType = null) {
+function setupキャラクター選択リスト(opt_elementType = null) {
     document.querySelector('#キャラクター選択').innerHTML = '';
     let ulElem = document.getElementById('キャラクター選択');
-    Object.keys(キャラクターMasterVar).forEach(key => {
-        if ('disabled' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['disabled']) return;
-        if (opt_elementType) {
-            if (キャラクターMasterVar[key]['元素'] != opt_elementType) return;
+    Object.keys(キャラクターMasterVar).forEach(name => {
+        let myMasterObj = キャラクターMasterVar[name];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
         }
+        if (opt_elementType && myMasterObj['元素'] != opt_elementType) {
+            return;
+        }
+        let liBackgroundImage = 'url(images/star' + myMasterObj['レアリティ'] + '-bg.png)';
+
         let liElem = document.createElement('li');
+        liElem.style.backgroundSize = 'contain';
+        liElem.style.backgroundImage = liBackgroundImage;
         ulElem.appendChild(liElem);
+
+        let splittedUrl = myMasterObj['import'].split('/');
+        let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
+        let srcUrl = 'images/characters/face/' + fileName;
+
         let imgElem = document.createElement('img');
-        imgElem.className = 'star' + キャラクターMasterVar[key]['レアリティ'];
-        imgElem.src = 'image' in キャラクターMasterVar[key] ? キャラクターMasterVar[key]['image'] : キャラクターMasterVar[key]['image2'];
-        imgElem.alt = key;
-        imgElem.width = 55;
-        imgElem.height = 55;
+        imgElem.src = srcUrl;
+        imgElem.alt = name;
+        imgElem.width = 80;
+        imgElem.height = 80;
         liElem.appendChild(imgElem);
 
         let img2Elem = document.createElement('img');
         img2Elem.className = 'element';
-        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(キャラクターMasterVar[key]['元素']);
-        img2Elem.alt = キャラクターMasterVar[key]['元素'];
-        img2Elem.width = 20;
-        img2Elem.height = 20;
+        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
+        img2Elem.alt = myMasterObj['元素'];
+        img2Elem.width = 24;
+        img2Elem.height = 24;
         liElem.appendChild(img2Elem);
 
         imgElem.onclick = selectCharacter;
@@ -3158,31 +3275,124 @@ $(document).on('click', '[name="element-type-input"]', function () {
             }
         });
     }
-    setupキャラクター選択(elementType);
+    setupキャラクター選択リスト(elementType);
 });
 
-// おすすめセット
-$(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
+// 武器変更イベント
+function setupWeaponImg(url, name) {
+    let srcUrl = url.replace('data/', 'images/').replace('.json', '.png');
 
-// 基本条件・キャラ/武器
+    // 武器画像
+    $('#weapon-button img').attr('src', srcUrl);
+    $('#weapon-button img').attr('alt', name);
+    if (url.indexOf('3') != -1) {
+        $('#weapon-button').css('background-image', 'url(images/star3-bg.png)');
+    } else if (url.indexOf('4') != -1) {
+        $('#weapon-button').css('background-image', 'url(images/star4-bg.png)');
+    } else {
+        $('#weapon-button').css('background-image', 'url(images/star5-bg.png)');
+    }
+}
+
+function setup武器選択リスト() {
+    document.querySelector('#weapon-list').innerHTML = '';
+    let ulElem = document.getElementById('weapon-list');
+    Object.keys(武器MasterVar).forEach(kind => {
+        Object.keys(武器MasterVar[kind]).forEach(name => {
+            let myMasterObj = 武器MasterVar[kind][name];
+            if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                return;
+            }
+            if (!(name in 選択可能武器セットObjVar)) {
+                return;
+            }
+            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
+
+            let liBackgroundImage = 'url(images/star' + myMasterObj['レアリティ'] + '-bg.png)';
+
+            let liElem = document.createElement('li');
+            liElem.style.backgroundSize = 'contain';
+            liElem.style.backgroundImage = liBackgroundImage;
+            ulElem.appendChild(liElem);
+            let imgElem = document.createElement('img');
+            //imgElem.className = 'star' + myMasterObj['レアリティ'];
+            imgElem.src = srcUrl;
+            imgElem.alt = name;
+            imgElem.width = 60;
+            imgElem.height = 60;
+            liElem.appendChild(imgElem);
+
+            imgElem.onclick = selectWeapon;
+        });
+    });
+}
+
+
+// キャラクター選択
+const selectCharacter = function () {
+    $('#character-select').hide();
+    characterSelected(this.alt);
+}
+function characterSelected(name) {
+    $('#キャラクターInput').val(name);
+    キャラクターInputOnChange();
+}
+// キャラクター
 $(document).on('change', '#キャラクターInput', キャラクターInputOnChange);
 $(document).on('change', '#レベルInput', レベルInputOnChange);
 $(document).on('change', '#命ノ星座Input', 命ノ星座InputOnChange);
 $(document).on('change', '#通常攻撃レベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素スキルレベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素爆発レベルInput', 天賦レベルInputOnChange);
+// キャラクター画像 クリック処理
+$(document).on('click', '#character-button', () => {
+    toggleShowHide('#character-select');
+});
+
+// おすすめセット
+$(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
+// おすすめセット クリック処理
+$(document).on('click', '#recomend-button', () => {
+    toggleShowHide('#おすすめセットInput');
+});
+
+// 天賦画像 クリック処理
+$(document).on('click', '#talent2-button', () => {
+//    toggleShowHide('#talent2-detail');
+});
+$(document).on('click', '#talent3-button', () => {
+//    toggleShowHide('#talent3-detail');
+});
+
+// 武器選択
+const selectWeapon = function () {
+    $('#weapon-detail-and-select').hide();
+    weaponSelected(this.alt);
+}
+function weaponSelected(name) {
+    $('#武器Input').val(name);
+    武器InputOnChange();
+}
+// 武器
 $(document).on('change', '#武器Input', 武器InputOnChange);
 $(document).on('change', '#武器レベルInput', 武器レベルInputOnChange);
 $(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
+// 武器画像 クリック処理
+$(document).on('click', '#weapon-button', () => {
+    toggleShowHide('#weapon-detail-and-select');
+    if ($('#artifact-area').is(':visible')) {
+        $('#artifact-area').hide();
+    }
+});
 
-// 基本条件・聖遺物
-function 聖遺物サブ効果直接入力モードToggleOnChange() {
-    if (this.checked) {
+// 聖遺物
+function apply聖遺物サブ効果直接入力モード(mode) {
+    if (mode) {
         $('#聖遺物サブ効果直接入力Toggle').prop('checked', true);
     } else {
         $('#聖遺物サブ効果直接入力Toggle').prop('checked', false);
     }
-    if ($('#聖遺物サブ効果直接入力Toggle').prop('checked')) {
+    if (mode) {
         $('[name="聖遺物サブ効果Input"]').show();
         $('#聖遺物サブ効果HPValue').hide();
         $('#聖遺物サブ効果HPPValue').hide();
@@ -3208,6 +3418,11 @@ function 聖遺物サブ効果直接入力モードToggleOnChange() {
         $('#聖遺物サブ効果元素チャージ効率Value').show();
     }
 }
+function 聖遺物サブ効果直接入力モードToggleOnChange() {
+    const mode = this.checked;
+    apply聖遺物サブ効果直接入力モード(mode);
+    localStorage['聖遺物サブ効果直接入力モード'] = mode;
+}
 $(document).on('change', '[name="聖遺物セット効果Input"]', 聖遺物セットInputOnChange);
 $(document).on('change', '[name="聖遺物メイン効果Input"]', 聖遺物メイン効果InputOnChange);
 $(document).on('change', '[name="聖遺物優先するサブ効果Input"]', 聖遺物優先するサブ効果InputOnChange);
@@ -3217,66 +3432,116 @@ $(document).on('change', '[name="聖遺物サブ効果Input"]', inputOnChangeSta
 $(document).on('change', '#聖遺物サブ効果直接入力Toggle', 聖遺物サブ効果直接入力モードToggleOnChange);
 $(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
 $(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
+// 聖遺物画像 クリック処理
+$(document).on('click', '#artifactset1-button', () => {
+    toggleShowHide('#artifact-area');
+    if ($('#weapon-detail-and-select').is(':visible')) {
+        $('#weapon-detail-and-select').hide();
+    }
+});
+$(document).on('click', '#artifactset2-button', () => {
+    toggleShowHide('#artifact-area');
+    if ($('#weapon-detail-and-select').is(':visible')) {
+        $('#weapon-detail-and-select').hide();
+    }
+});
 
-// 基本条件・元素共鳴
-$(document).on('change', '[name="元素共鳴Input"]', elementalResonanceInputOnChange);
-$(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
-
-// 基本条件・敵/デバフ
-$(document).on('change', '#敵Input', 敵InputOnChange);
-$(document).on('change', '#敵レベルInput', inputOnChangeStatusUpdate);
-
-// 基本条件・チームバフ
-$(document).on('change', '[name="チームInput"]', inputOnChangeStatusUpdate);
 
 // オプション条件
 
-// ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ
-function ステータス補正入力モードToggleOnChange() {
-    if (this.checked) {
+// ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ/ダメージバフ/ダメージアップ
+const StatusRowGroupOnClick = function () {
+    let name = this.id.replace('RowGroup', '');
+    let mode = this.classList.contains('opened');
+    if (mode) {
+        this.classList.remove('opened');
+        $('[name="' + name + 'Input"]').each((index, element) => {
+            let statusName = element.id.replace('Input', '');
+            if (statusName in ステータス詳細ObjVar) {
+                if (ステータス詳細ObjVar[statusName]) {
+                    $('#' + statusName + 'Value').closest('tr').show();
+                } else {
+                    $('#' + statusName + 'Value').closest('tr').hide();
+                }
+            } else {
+                $('#' + statusName + 'Value').closest('tr').show();
+            }
+        });
+    } else {
+        this.classList.add('opened');
+        $('[name="' + name + 'Input"]').each((index, element) => {
+            $(element).closest('tr').show();
+        });
+    }
+}
+
+function applyステータス補正入力モード(mode) {
+    if (mode) {
         $('#ステータス1補正入力Toggle').prop('checked', true);
         $('#ステータス2補正入力Toggle').prop('checked', true);
-        $('#ステータス3補正入力Toggle').prop('checked', true);
         $('#敵耐性補正入力Toggle').prop('checked', true);
     } else {
         $('#ステータス1補正入力Toggle').prop('checked', false);
         $('#ステータス2補正入力Toggle').prop('checked', false);
-        $('#ステータス3補正入力Toggle').prop('checked', false);
         $('#敵耐性補正入力Toggle').prop('checked', false);
     }
-    if ($('#ステータス1補正入力Toggle').prop('checked')) {
-        $('[name="ステータスInput"]').show();
-        $('[name="基礎ステータスInput"]').show();
-        $('[name="ダメージバフ1Input"]').show();
-        $('[name="耐性軽減Input"]').show();
-        $('[name="ダメージバフ2Input"]').show();
-        $('[name="ダメージアップInput"]').show();
-        $('[name="敵ステータスInput"]').show();
+    if (mode) {
+        // input要素を表示します
+        ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "耐性軽減", "敵ステータス"].forEach(name => {
+            $('[name="' + name + 'Input"]').show();
+        });
     } else {
-        $('[name="ステータスInput"]').hide();
-        $('[name="基礎ステータスInput"]').hide();
-        $('[name="ダメージバフ1Input"]').hide();
-        $('[name="耐性軽減Input"]').hide();
-        $('[name="ダメージバフ2Input"]').hide();
-        $('[name="ダメージアップInput"]').hide();
-        $('[name="敵ステータスInput"]').hide();
+        // input要素を隠します
+        ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ", "耐性軽減", "敵ステータス"].forEach(name => {
+            $('[name="' + name + 'Input"]').hide();
+        });
     }
+
+    ["ダメージバフ1", "ダメージバフ2", "ダメージアップ"].forEach(name => {
+        if ($('#' + name + 'RowGroup').hasClass('opened')) {
+            $('[name="' + name + 'Input"]').closest('tr').show();
+            return;
+        }
+        $('[name="' + name + 'Input"]').each((index, element) => {
+            let statusName = element.id.replace('Input', '');
+            if (statusName in ステータス詳細ObjVar) {
+                if (ステータス詳細ObjVar[statusName]) {
+                    $('#' + statusName + 'Value').closest('tr').show();
+                } else {
+                    $('#' + statusName + 'Value').closest('tr').hide();
+                }
+            } else {
+                $('#' + statusName + 'Value').closest('tr').show();
+            }
+        });
+    });
+}
+function ステータス補正入力モードToggleOnChange() {
+    const mode = this.checked;
+    localStorage['ステータス補正入力モード'] = mode;
+    applyステータス補正入力モード(mode);
 }
 $(document).on('change', '[name="ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '[name="基礎ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="ダメージバフ1Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'input[name="ダメージバフ2Input"]', inputOnChangeStatusUpdate);
+$(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '#ステータス1補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス1補正初期化Toggle', buttonToggleCheckboxOnChange);
 $(document).on('click', '#ステータス1補正初期化Button', function () {
-    $('[name="ステータスInput"]').val(0);
-    $('[name="基礎ステータスInput"]').val(0);
-    $('[name="ダメージバフ1Input"]').val(0);
+    ["ステータス", "基礎ステータス", "ダメージバフ1", "ダメージバフ2", "ダメージアップ"].forEach(name => {
+        $('[name="' + name + 'Input"]').val(0);
+    });
     this.disabled = true;
     $('#ステータス1補正初期化Toggle').prop('checked', false);
     inputOnChangeStatusUpdate();
 });
+$(document).on('click', '#ダメージバフ1RowGroup', StatusRowGroupOnClick);
+$(document).on('click', '#ダメージバフ2RowGroup', StatusRowGroupOnClick);
+$(document).on('click', '#ダメージアップRowGroup', StatusRowGroupOnClick);
 
-// ステータス2 元素ステータス・ダメージ/その他
+
+// ステータス2 元素ステータス・耐性/その他
 $(document).on('change', 'input[name="耐性軽減Input"]', inputOnChangeStatusUpdate);
 $(document).on('change', '#ステータス2補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#ステータス2補正初期化Toggle', buttonToggleCheckboxOnChange);
@@ -3287,20 +3552,9 @@ $(document).on('click', '#ステータス2補正初期化Button', function () {
     inputOnChangeStatusUpdate();
 });
 
-// ステータス3 ダメージバフ/ダメージアップ
-$(document).on('change', 'input[name="ダメージバフ2Input"]', inputOnChangeStatusUpdate);
-$(document).on('change', 'input[name="ダメージアップInput"]', inputOnChangeStatusUpdate);
-$(document).on('change', '#ステータス3補正入力Toggle', ステータス補正入力モードToggleOnChange);
-$(document).on('change', '#ステータス3補正初期化Toggle', buttonToggleCheckboxOnChange);
-$(document).on('click', '#ステータス3補正初期化Button', function () {
-    $('[name="ダメージバフ2Input"]').val(0);
-    $('[name="ダメージアップInput"]').val(0);
-    this.disabled = true;
-    $('#ステータス3補正初期化Toggle').prop('checked', false);
-    inputOnChangeStatusUpdate();
-});
-
-// ステータス・敵耐性詳細
+// 敵
+$(document).on('change', '#敵Input', 敵InputOnChange);
+$(document).on('change', '#敵レベルInput', inputOnChangeStatusUpdate);
 $(document).on('change', 'input[name="敵ステータスInput"]', inputOnChangeStatusUpdate);
 $(document).on('change', '#敵耐性補正入力Toggle', ステータス補正入力モードToggleOnChange);
 $(document).on('change', '#敵耐性補正初期化Toggle', buttonToggleCheckboxOnChange);
@@ -3310,6 +3564,10 @@ $(document).on('click', '#敵耐性補正初期化Button', function () {
     $('#敵耐性補正初期化Toggle').prop('checked', false);
     inputOnChangeStatusUpdate();
 });
+
+// バフ/デバフ・元素共鳴
+$(document).on('change', '[name="元素共鳴Input"]', elementalResonanceInputOnChange);
+$(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
 
 // 構成保存ボタンを活性化します
 $(document).on('change', '#おすすめセットInput', enable構成保存Button);
@@ -3413,37 +3671,36 @@ const elementalReactionOnChange = function () {
 $(document).on('change', 'input[name="元素反応Input"]', elementalReactionOnChange);
 
 
-function characterSelected(name) {
-    $('#キャラクターInput').val(name);
-    キャラクターInputOnChange();
-}
-
-// キャラクター選択
-const selectCharacter = function () {
-    characterSelected(this.alt);
-}
-
-// Info ダイアログを表示します
-$(document).on('click', 'img.info', function () {
-    document.getElementById(this.id.replace('Info', 'Dialog')).showModal();
-});
-
-$(document).on('click', 'dialog.info', function () {
-    this.close();
-});
-
 // MAIN
 $(document).ready(function () {
     initステータス詳細ObjVar(ステータス詳細ObjVar);
 
-    ステータス補正入力モードToggleOnChange();
-    聖遺物サブ効果直接入力モードToggleOnChange();
+    const myステータス補正入力モード = localStorage['ステータス補正入力モード'];
+    if (myステータス補正入力モード != null) {
+        if (myステータス補正入力モード == 'true') {
+            applyステータス補正入力モード(true);
+        } else {
+            applyステータス補正入力モード(false);
+        }
+    } else {
+        ステータス補正入力モードToggleOnChange();
+    }
+    const my聖遺物サブ効果直接入力モード = localStorage['聖遺物サブ効果直接入力モード'];
+    if (my聖遺物サブ効果直接入力モード != null) {
+        if (my聖遺物サブ効果直接入力モード == 'true') {
+            apply聖遺物サブ効果直接入力モード(true);
+        } else {
+            apply聖遺物サブ効果直接入力モード(false);
+        }
+    } else {
+        聖遺物サブ効果直接入力モードToggleOnChange();
+    }
 
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
             キャラクターMasterVar = jsonObj;
 
-            setupキャラクター選択();
+            setupキャラクター選択リスト();
 
             appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
 
@@ -3532,17 +3789,19 @@ $(document).ready(function () {
         fetch("data/BuffMaster.json").then(response => response.json()).then(jsonObj => {
             バフMasterVar = jsonObj;
             Object.keys(バフMasterVar).forEach(key => {
-                let myObj = バフMasterVar[key];
-                if ('disabled' in myObj && myObj['disabled']) return;
-                let my条件 = '*' + ('名前' in myObj ? myObj['名前'] : key);
-                myObj['詳細'].forEach(detailObj => {
+                let myMasterObj = バフMasterVar[key];
+                if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                    return;
+                }
+                let my条件 = '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+                myMasterObj['詳細'].forEach(detailObj => {
                     if ('条件' in detailObj) {
                         detailObj['条件'] = '*' + detailObj['条件'];
                     } else {
                         detailObj['条件'] = my条件;
                     }
                 });
-                バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
+                バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
             });
             バフオプション条件Map.clear();
             バフ詳細ArrVar.forEach(detailObj => {
@@ -3554,17 +3813,19 @@ $(document).ready(function () {
         fetch("data/DebuffMaster.json").then(response => response.json()).then(jsonObj => {
             デバフMasterVar = jsonObj;
             Object.keys(デバフMasterVar).forEach(key => {
-                let myObj = デバフMasterVar[key];
-                if ('disabled' in myObj && myObj['disabled']) return;
-                let my条件 = '*' + ('名前' in myObj ? myObj['名前'] : key);
-                myObj['詳細'].forEach(detailObj => {
+                let myMasterObj = デバフMasterVar[key];
+                if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                    return;
+                }
+                let my条件 = '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+                myMasterObj['詳細'].forEach(detailObj => {
                     if ('条件' in detailObj) {
                         detailObj['条件'] = '*' + detailObj['条件'];
                     } else {
                         detailObj['条件'] = my条件;
                     }
                 });
-                デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myObj, null, null, null, null, null, null));
+                デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
             });
             デバフオプション条件Map.clear();
             デバフ詳細ArrVar.forEach(detailObj => {
@@ -3725,7 +3986,6 @@ function loadImage(src) {
 
 $(document).on('change', '#artifact-detail-image', resizePinnedImage);
 
-
 const toggle聖遺物詳細計算停止 = function () {
     if (this.checked) {
         $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
@@ -3738,6 +3998,7 @@ const toggle聖遺物詳細計算停止 = function () {
 
 $(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳細計算停止);
 
+// キャラクター所持状況/ローカルストレージ
 $(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
 $(document).on('click', '#ローカルストレージクリアInput', toggleローカルストレージクリア);
 $(document).on('click', '#ローカルストレージクリアButton', clearローカルストレージ);
@@ -3855,3 +4116,13 @@ const setDebugInfo = function () {
         text: artifactDetailText
     }).appendTo('#debugInfo');
 }
+
+//
+const toggleShowHide = function (selector) {
+    if ($(selector).is(':visible')) {
+        $(selector).hide();
+    } else {
+        $(selector).show();
+    }
+}
+
