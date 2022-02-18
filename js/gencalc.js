@@ -3393,7 +3393,7 @@ $(document).on('click', '#character-button', function () {
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
 // おすすめセット クリック処理
 $(document).on('click', '#recomend-button', function () {
-    toggleShowHide('#おすすめセットInput');
+    toggleShowHide(this, '#おすすめセットInput');
 });
 
 // 天賦画像 クリック処理
