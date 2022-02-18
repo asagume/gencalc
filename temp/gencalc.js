@@ -3870,13 +3870,20 @@ $(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳
 
 // キャラクター所持状況
 $(document).on('click', '#my-character-list', function () {
+    // 初回表示時にリストを作成します
+    if ($('#my-character-list + div').find('li').length == 0) {
+        buildキャラクター所持状況List();
+    }
     toggleShowHide(this, '#my-character-list + div');
 });
 $(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
 
 // 武器所持状況
 $(document).on('click', '#my-weapon-list', function () {
-    build武器所持状況List();
+    // 初回表示時にリストを作成します
+    if ($('#my-weapon-list + div').find('li').length == 0) {
+        build武器所持状況List();
+    }
     toggleShowHide(this, '#my-weapon-list + div')
 });
 $(document).on('click', '#my-weapon-save-button', save武器所持状況);
@@ -4028,7 +4035,7 @@ $(document).ready(function () {
             characterSelected(select);
 
             loadキャラクター所持状況();
-            buildキャラクター所持状況List();
+            load武器所持状況();
         }),
         fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {
             武器MasterVar["片手剣"] = jsonObj;
