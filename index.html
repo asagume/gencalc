@@ -215,7 +215,14 @@
                                 <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット2">
                             </button>
                         </td>
-                        <td style="vertical-align: bottom;">SCORE</td>
+                        <td rowspan="2">
+                            <button type="button" class="image-button" id="artifactstatus-button">
+                                <img width="32" height="32" src="images/artifact.png" class="left-icon">
+                                <img width="32" height="32" src="images/artifact.png" class="right-icon">
+                                <p>SCORE</p>
+                                <p id="artifact-score"></p>
+                            </button>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -234,7 +241,6 @@
                                 <option value="5">R5</option>
                             </select>
                         </td>
-                        <td id="artifact-score" style="vertical-align: top;">0</td>
                     </tr>
                 </table>
             </div>
@@ -1193,11 +1199,14 @@
                             <table class="status" style="margin-top: 1rem;">
                                 <tr>
                                     <th>HP%</th>
-                                    <td><input type="number" value="0" step="0.1" id="ステータス調整HPPInput" name="ステータス調整Input" /></td>
+                                    <td><input type="number" value="0" step="0.1" id="ステータス調整HPPInput"
+                                            name="ステータス調整Input" /></td>
                                     <th>攻撃力%</th>
-                                    <td><input type="number" value="0" step="0.1" id="ステータス調整攻撃力PInput" name="ステータス調整Input" /></td>
+                                    <td><input type="number" value="0" step="0.1" id="ステータス調整攻撃力PInput"
+                                            name="ステータス調整Input" /></td>
                                     <th>防御力%</th>
-                                    <td><input type="number" value="0" step="0.1" id="ステータス調整防御力PInput" name="ステータス調整Input" /></td>
+                                    <td><input type="number" value="0" step="0.1" id="ステータス調整防御力PInput"
+                                            name="ステータス調整Input" /></td>
                                 </tr>
                             </table>
                         </div>

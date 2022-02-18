@@ -300,7 +300,7 @@ legend {
 
 /* text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown; */
 .tab-button:checked+label {
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 1px black;
     background: linear-gradient(to top, #dcc751, #bba116);
 }
 
@@ -392,6 +392,44 @@ td button.wide {
 td input[type="text"] {
     width: 100%;
     text-align: center;
+}
+
+#artifactstatus-button {
+    position: relative;
+    width: 100%;
+    height: 62px;
+}
+
+#artifactstatus-button .left-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.5rem;
+    margin: auto;
+}
+
+#artifactstatus-button .right-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0.5rem;
+    margin: auto;
+}
+
+#artifactstatus-button p {
+    position: absolute;
+    top: calc(50% - 2.5rem);
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+p#artifact-score {
+    position: absolute;
+    top: calc(50% + 0.3rem);
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 button {
@@ -704,7 +742,7 @@ article select {
     height: 3.5rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(to top, #dcc751, #bba116);
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 1px black;
     border-radius: 0.5rem;
     border-color: #999;
     border-style: solid;
