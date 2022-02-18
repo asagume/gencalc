@@ -14,7 +14,7 @@
             "pane3 pane6 result-pane"
             "pane4 pane6 result-pane"
             "pane5 pane6 result-pane"
-            "bottom-pane bottom-pane bottom-pane"
+            "bottom-pane bottom-pane pane7"
             "footer footer footer";
     }
 
@@ -41,6 +41,7 @@
             "pane5 result-pane"
             "pane6 result-pane"
             "bottom-pane bottom-pane"
+            "pane7 pane7"
             "footer footer";
     }
 
@@ -72,6 +73,7 @@
             "pane6"
             "result-pane"
             "bottom-pane"
+            "pane7"
             "footer";
     }
 
@@ -810,6 +812,11 @@ th.category {
 .damage-taken {
     text-align: left;
     padding-left: 1rem;
+}
+
+.pane7 {
+    grid-area: pane7;
+    margin: 1rem 0.2rem;
 }
 
 /* BOTTOM PANE */
