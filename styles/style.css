@@ -45,7 +45,7 @@
     }
 
     #status-area {
-        display: none;
+        display: block;
     }
 
     #condition-area {

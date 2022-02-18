@@ -1134,9 +1134,9 @@
 
                 <div id="condition-area">
                     <div class="tab-area">
-                        <input type="radio" class="tab-button input-set1" id="basic-condition1"
-                            name="basic-condition-group" checked />
-                        <label for="basic-condition1">元素共鳴</label>
+                        <input type="radio" class="tab-button input-set1" id="buffdebuff-condition1"
+                            name="buffdebuff-condition-group" checked />
+                        <label for="buffdebuff-condition1">元素共鳴</label>
                         <div class="tab-content" style="padding-top: 1rem;">
                             <section class="option-box">
                                 <div style="display: inline-block;">
@@ -1172,19 +1172,36 @@
                             <div class="description" id="元素共鳴効果説明Box"></div>
                         </div>
 
-                        <input type="radio" class="tab-button input-set1" id="basic-condition2"
-                            name="basic-condition-group" />
-                        <label for="basic-condition2">バフ</label>
+                        <input type="radio" class="tab-button input-set1" id="buffdebuff-condition2"
+                            name="buffdebuff-condition-group" />
+                        <label for="buffdebuff-condition2">バフ</label>
                         <div class="tab-content">
                             <section class="option-box column1-option" id="バフオプションBox"></section>
                         </div>
 
-                        <input type="radio" class="tab-button input-set1" id="basic-condition3"
-                            name="basic-condition-group" />
-                        <label for="basic-condition3">デバフ</label>
+                        <input type="radio" class="tab-button input-set1" id="buffdebuff-condition3"
+                            name="buffdebuff-condition-group" />
+                        <label for="buffdebuff-condition3">デバフ</label>
                         <div class="tab-content">
                             <section class="option-box column1-option" id="デバフオプションBox"></section>
                         </div>
+
+                        <input type="radio" class="tab-button input-set1" id="buffdebuff-condition4"
+                            name="buffdebuff-condition-group" />
+                        <label for="buffdebuff-condition4">調整</label>
+                        <div class="tab-content">
+                            <table class="status" style="margin-top: 1rem;">
+                                <tr>
+                                    <th>HP%</th>
+                                    <td><input type="number" value="0" step="0.1" id="ステータス調整HPPInput" name="ステータス調整Input" /></td>
+                                    <th>攻撃力%</th>
+                                    <td><input type="number" value="0" step="0.1" id="ステータス調整攻撃力PInput" name="ステータス調整Input" /></td>
+                                    <th>防御力%</th>
+                                    <td><input type="number" value="0" step="0.1" id="ステータス調整防御力PInput" name="ステータス調整Input" /></td>
+                                </tr>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

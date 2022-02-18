@@ -1714,6 +1714,15 @@ function calculateStatusObj(statusObj) {
     statusObj['会心ダメージ'] += statusObj['聖遺物サブ効果会心ダメージ'];
     statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
+    // ステータス調整の入力値を計上します
+    $('[name="ステータス調整Input"]').each(function(index, element) {
+        let statusName = element.id.replace('Input', '');
+        statusObj[statusName] = Number(element.value);
+    });
+    statusObj['HP乗算'] += statusObj['ステータス調整HPP'];
+    statusObj['攻撃力乗算'] += statusObj['ステータス調整攻撃力P'];
+    statusObj['防御力乗算'] += statusObj['ステータス調整防御力P'];
+
     // 聖遺物スコアを計算します
     let my攻撃力P小計 = statusObj['聖遺物サブ効果攻撃力P'];
     if (!$('#聖遺物メイン効果3Input').val()) { // 時の砂未設定の場合、攻撃力%と見做します
@@ -3601,6 +3610,9 @@ $(document).on('click', '#敵耐性補正初期化Button', function () {
 // バフ/デバフ・元素共鳴
 $(document).on('change', '[name="元素共鳴Input"]', elementalResonanceInputOnChange);
 $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
+
+// バフ/デバフ・ステータス調整
+$(document).on('change', '[name="ステータス調整Input"]', inputOnChangeStatusUpdate);
 
 // 構成保存ボタンを活性化します
 $(document).on('change', '#おすすめセットInput', enable構成保存Button);
