@@ -7,7 +7,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto minmax(500px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1 pane1"
             "pane2 pane2 pane2"
@@ -32,7 +32,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto auto minmax(400px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1"
             "pane2 pane2"
@@ -542,8 +542,7 @@ article select {
 /* PANE4 */
 .pane4 {
     grid-area: pane4;
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
+    margin: 1rem 0.2rem;
 }
 
 .talent-detail {
@@ -575,16 +574,14 @@ article select {
 /* PANE5*/
 .pane5 {
     grid-area: pane5;
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
+    margin: 1rem 0.2rem;
 }
 
 
 /* PANE6 */
 .pane6 {
     grid-area: pane6;
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
+    margin: 1rem 0.2rem;
 }
 
 #option-area {
@@ -731,8 +728,7 @@ article select {
 /* RESULT PANE */
 .result-pane {
     grid-area: result-pane;
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
+    margin: 1rem 0.2rem;
     line-height: 3.6rem;
 }
 
@@ -819,8 +815,7 @@ th.category {
 /* BOTTOM PANE */
 .bottom-pane {
     grid-area: bottom-pane;
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
+    margin: 1rem 0.2rem;
 }
 
 .bottom-pane .tab-content {
@@ -829,6 +824,7 @@ th.category {
 
 .footer {
     grid-area: footer;
+    margin: 1rem 0.2rem;
     padding-left: 1rem;
 }
 
