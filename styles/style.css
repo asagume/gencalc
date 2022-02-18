@@ -7,13 +7,14 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto auto auto auto;
         grid-template-areas:
             "pane1 pane1 pane1"
             "pane2 pane2 pane2"
             "pane3 pane6 result-pane"
             "pane4 pane6 result-pane"
             "pane5 pane6 result-pane"
+            "bottom-pane bottom-pane bottom-pane"
             "footer footer footer";
     }
 
@@ -31,7 +32,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto auto auto auto auto;
         grid-template-areas:
             "pane1 pane1"
             "pane2 pane2"
@@ -39,6 +40,7 @@
             "pane4 result-pane"
             "pane5 result-pane"
             "pane6 result-pane"
+            "bottom-pane bottom-pane"
             "footer footer";
     }
 
@@ -60,7 +62,7 @@
     .base-container {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: auto auto auto auto auto auto minmax(400px, auto) auto;
+        grid-template-rows: auto auto auto auto auto auto minmax(400px, auto) auto auto;
         grid-template-areas:
             "pane1"
             "pane2"
@@ -69,6 +71,7 @@
             "pane5"
             "pane6"
             "result-pane"
+            "bottom-pane"
             "footer";
     }
 
@@ -94,6 +97,12 @@ body {
 
 #main {
     font-size: 2.2rem;
+}
+
+h2 {
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 a:link {
@@ -277,22 +286,22 @@ legend {
     display: none;
 }
 
+/* background: linear-gradient(to top, #ad5b18, #55290b); */
 .tab-button+label {
     display: block;
     float: left;
     order: -1;
     height: 3rem;
     line-height: 3rem;
-    background: linear-gradient(to top, #ad5b18, #55290b);
     margin: 0.2rem 0;
-    border-radius: 0.5rem;
-    border-color: #999;
-    border-style: solid;
+    border-radius: 15px;
+    border: 1px solid gray;
 }
 
+/* text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown; */
 .tab-button:checked+label {
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    text-shadow: 1px 1px 3px black;
+    background: linear-gradient(to top, #dcc751, #bba116);
 }
 
 .tab-button:checked+label+.tab-content {
@@ -304,10 +313,6 @@ legend {
     width: 100%;
     line-height: normal;
     padding-top: 1rem;
-}
-
-.tab-content fieldset legend {
-    text-align: center;
 }
 
 /* PANE1  */
@@ -583,12 +588,30 @@ article select {
     font-size: 2.2rem;
 }
 
-.status .opened {
-    color: gold;
+.toggle-switch {
+    position: relative;
+}
+
+.toggle-switch::before, .toggle-switch::after {
+    content: '';
+    width: 1.5rem;
+    height: 2px;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+.toggle-switch::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.toggle-switch.opened::after {
+    transform: translateY(-50%) rotate(0);
 }
 
 .status th {
-    font-size: 2rem;
     text-align: center;
 }
 
@@ -607,10 +630,6 @@ article select {
     padding: auto 1px;
 }
 
-.status label {
-    font-size: 2rem;
-}
-
 .status button {
     width: 8rem;
 }
@@ -622,28 +641,16 @@ article select {
     border-radius: 10px;
 }
 
-.tab-button {
-    display: none;
-}
-
-.tab-button+label {
-    float: left;
-    order: -1;
-    height: 3rem;
-    line-height: 3rem;
-    background: linear-gradient(to top, #ad5b18, #55290b);
-    margin: 0.2rem 0;
-    border-radius: 0.5rem;
-    border-color: #999;
-    border: 2px solid;
-}
-
 .input-set1+label {
     width: calc(100% / 4 - 0.9rem);
 }
 
 .input-set2+label {
     width: calc(100% / 4 - 0.9rem);
+}
+
+.input-set5+label {
+    width: calc(100% / 5 - 0.9rem);
 }
 
 .status-area td {
@@ -696,8 +703,8 @@ article select {
     width: 18rem;
     height: 3.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    background: linear-gradient(to top, #dcc751, #bba116);
+    text-shadow: 1px 1px 3px black;
     border-radius: 0.5rem;
     border-color: #999;
     border-style: solid;
@@ -842,15 +849,36 @@ th.category {
 
 /* レアリティ背景色 */
 .star5 {
-    background: linear-gradient(to top, #dd7a09, #9c6424);
+    background-image: url(../images/star5-bg.png);
+    background-size: contain;
 }
 
 .star4 {
-    background: linear-gradient(to top, #59447a, #400b64);
+    background-image: url(../images/star4-bg.png);
+    background-size: contain;
 }
 
-/* キャラクター所持状況List */
-#キャラクター所持状況List {
+.star3 {
+    background-image: url(../images/star3-bg.png);
+    background-size: contain;
+}
+
+.star2 {
+    background-image: url(../images/star2-bg.png);
+    background-size: contain;
+}
+
+.star1 {
+    background-image: url(../images/star1-bg.png);
+    background-size: contain;
+}
+
+/* キャラクター所持状況 */
+#my-character-list+div {
+    display: none;
+}
+
+.my-list {
     list-style: none;
     margin-block-start: 0;
     margin-block-end: 0;
@@ -858,22 +886,33 @@ th.category {
     width: 100%;
 }
 
-#キャラクター所持状況List li {
+.my-list li {
     position: relative;
     display: inline-block;
 }
 
-#キャラクター所持状況List li div {
+.my-list li div {
     border-style: double;
     border-width: 0.2rem;
 }
 
-#キャラクター所持状況List li div img {
+.my-list li div img {
     vertical-align: top;
 }
 
-#キャラクター所持状況List li div img.darken {
+.my-list li div img.darken {
     opacity: 0.5;
+}
+
+.my-list li div p {
+    position: absolute;
+    top: 3px;
+    right: 7px;
+    background: transparent;
+    color: blanchedalmond;
+    font-size: 24px;
+    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    margin: 0;
 }
 
 #キャラクター所持状況List li div img.element {
@@ -882,15 +921,9 @@ th.category {
     left: 4px;
 }
 
-#キャラクター所持状況List li div p {
-    position: absolute;
-    top: 0;
-    right: 4px;
-    background: transparent;
-    color: blanchedalmond;
-    font-size: 24px;
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
-    margin: 0;
+/* 武器所持状況 */
+#my-weapon-list+div {
+    display: none;
 }
 
 /* OCR */

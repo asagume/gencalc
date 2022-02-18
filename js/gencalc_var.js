@@ -203,6 +203,17 @@ function initステータス詳細ObjVar(statusObj) {
     }
 }
 
+const clearローカルストレージ = function () {
+    localStorage.clear();
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
+}
+
+const toggleローカルストレージクリア = function () {
+    let checked = $('#ローカルストレージクリアInput').prop('checked');
+    $('#ローカルストレージクリアButton').prop('disabled', !checked);
+}
+
 var キャラクター所持状況ObjVar = {}
 
 const ELEMENT_IMG_SRC_MAP = new Map([
@@ -236,6 +247,7 @@ function buildキャラクター所持状況List() {
         liElem.appendChild(divElem);
 
         let imgElem = document.createElement('img');
+        imgElem.className ='star' + myMasterObj['レアリティ'];
         imgElem.src = srcUrl;
         imgElem.alt = key;
         imgElem.width = 80;
@@ -303,15 +315,89 @@ const saveキャラクター所持状況 = function () {
     toggleローカルストレージクリア();
 }
 
-const clearローカルストレージ = function () {
-    localStorage.clear();
-    $('#ローカルストレージクリアInput').prop('checked', false);
-    toggleローカルストレージクリア();
+// 武器所持状況リスト
+var 武器所持状況ObjVar = {}
+
+function build武器所持状況List() {
+    Object.keys(武器MasterVar).forEach(weaponType => {
+        const listElemId = weaponType + '所持状況List';
+        $('#' + listElemId).empty();
+
+        let ulElem = document.getElementById(listElemId);
+        Object.keys(武器MasterVar[weaponType]).forEach(key => {
+            let myMasterObj = 武器MasterVar[weaponType][key];
+            if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                return;
+            }
+
+            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
+
+            let liElem = document.createElement('li');
+            ulElem.appendChild(liElem);
+
+            let divElem = document.createElement('div');
+            divElem.id = key + '_所持状況Input';
+            liElem.appendChild(divElem);
+
+            let imgElem = document.createElement('img');
+            imgElem.classList.add('star' + myMasterObj['レアリティ']);
+            imgElem.src = srcUrl;
+            imgElem.alt = key;
+            imgElem.width = 80;
+            imgElem.height = 80;
+            divElem.appendChild(imgElem);
+
+            let pElem = document.createElement('p');
+            if (key in 武器所持状況ObjVar) {
+                pElem.textContent = 武器所持状況ObjVar[key];
+            }
+            divElem.appendChild(pElem);
+
+            if (!pElem.textContent) {
+                imgElem.classList.add('darken');
+            }
+        });
+
+        $('#' + listElemId + ' li div').off('click').on('click', 武器所持状況OnClick);
+    });
 }
 
-const toggleローカルストレージクリア = function () {
-    let checked = $('#ローカルストレージクリアInput').prop('checked');
-    $('#ローカルストレージクリアButton').prop('disabled', !checked);
+const 武器所持状況OnClick = function () {
+    let val = $('#' + selectorEscape(this.id) + ' p').text();
+    if (val) {
+        if (++val > 5) {
+            val = null;
+            $('#' + selectorEscape(this.id) + ' img').addClass('darken');
+        }
+    } else {
+        val = 1;
+        $('#' + selectorEscape(this.id) + ' img').removeClass('darken');
+    }
+    $('#' + selectorEscape(this.id) + ' p').text(val);
+
+    武器所持状況ObjVar[this.id.split('_')[0]] = val;
+
+    $('#my-weapon-save-button').prop('disabled', false);
+}
+
+const load武器所持状況 = function () {
+    if (localStorage['武器所持状況']) {
+        try {
+            武器所持状況ObjVar = JSON.parse(localStorage['武器所持状況']);
+        } catch (error) {
+            武器所持状況ObjVar = {};
+        }
+    } else {
+        武器所持状況ObjVar = {};
+    }
+    $('#my-weapon-save-button').prop('disabled', true);
+}
+
+const save武器所持状況 = function () {
+    localStorage['武器所持状況'] = JSON.stringify(武器所持状況ObjVar);
+    $('#my-weapon-save-button').prop('disabled', true);
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
 }
 
 //////////////////////

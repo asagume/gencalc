@@ -365,21 +365,21 @@
         "レアリティ": 5,
         "元素": "雷",
         "武器": "片手剣",
-        "import": "data/characters/electro_5_sword_Traveler.json",
+        "import": "data/characters/electro_5_sword_Traveller.json",
         "image2": "images/hoyolab/762377aee992cb1dfd4e0e0a7911096d.png"
     },
     "旅人(岩)": {
         "レアリティ": 5,
         "元素": "岩",
         "武器": "片手剣",
-        "import": "data/characters/geo_5_sword_Traveler.json",
+        "import": "data/characters/geo_5_sword_Traveller.json",
         "image2": "images/hoyolab/f11f153ff86acab65e3610f73b0d1728.png"
     },
     "旅人(風)": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "片手剣",
-        "import": "data/characters/aero_5_sword_Traveler.json",
+        "import": "data/characters/aero_5_sword_Traveller.json",
         "image2": "images/hoyolab/762377aee992cb1dfd4e0e0a7911096d.png"
     }
 }

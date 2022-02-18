@@ -31,7 +31,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="height: calc(100% - 2rem); margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.0.1</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.1.1</legend>
                     <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
                     <p>
                         <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
@@ -43,6 +43,9 @@
                     <div style="position: absolute; right: 1rem; top: 0">
                         <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank"
                             rel="noopener noreferrer">バグ報告・要望</a>
+                    </div>
+                    <div style="position: absolute; left: 1rem; top: 0">
+                        <a href="history.html">更新履歴</a>
                     </div>
                 </fieldset>
             </div>
@@ -79,7 +82,7 @@
                     <tr>
                         <td colspan="2" rowspan="4">
                             <button type="button" class="image-button" id="character-button">
-                                <img width="150" height="150" src="images/characters/face/aero_5_sword_Traveler.png">
+                                <img width="150" height="150" src="images/characters/face/aero_5_sword_Traveller.png">
                             </button>
                         </td>
                         <td rowspan="5" style="width: 1rem;"></td>
@@ -241,7 +244,7 @@
                     <tr>
                         <td rowspan="3">
                             <img width="120" height="120"
-                                src="images/characters/aero_5_sword_Traveler/ElementalSkill.png" alt="元素スキル"
+                                src="images/characters/aero_5_sword_Traveller/ElementalSkill.png" alt="元素スキル"
                                 id="elemental-skill-img">
                         </td>
                         <td colspan="2" id="elemental-skill-name">名前</td>
@@ -263,7 +266,7 @@
                     <tr>
                         <td rowspan="4">
                             <img width="120" height="120"
-                                src="images/characters/aero_5_sword_Traveler/ElementalBurst.png" alt="元素爆発"
+                                src="images/characters/aero_5_sword_Traveller/ElementalBurst.png" alt="元素爆発"
                                 id="detail-elemental-burst-img">
                         </td>
                         <td colspan="2" id="elemental-burst-name">名前</td>
@@ -697,7 +700,7 @@
                                                 <td id="受ける治療効果Value"></td>
                                             </tr>
                                             <tr>
-                                                <th>元素チャージ効率</th>
+                                                <th style="font-size: 2rem;">元素チャージ効率</th>
                                                 <td><input type="number" value="0" step="0.1" id="元素チャージ効率Input"
                                                         name="ステータスInput">
                                                 </td>
@@ -729,8 +732,9 @@
                                     <td style="width: 50%;">
                                         <table class="status">
                                             <thead>
-                                                <tr id="ダメージバフ1RowGroup">
-                                                    <th colspan="3">元素ステータス・ダメージ</th>
+                                                <tr>
+                                                    <th colspan="3" class="toggle-switch" id="ダメージバフ1RowGroup">
+                                                        元素ステータス・ダメージ</th>
                                                 </tr>
                                             </thead>
                                             <tr>
@@ -782,8 +786,9 @@
                                                 <td id="物理ダメージバフValue"></td>
                                             </tr>
                                             <thead>
-                                                <tr id="ダメージバフ2RowGroup">
-                                                    <th colspan="3">ダメージバフ</th>
+                                                <tr>
+                                                    <th colspan="3" class="toggle-switch" id="ダメージバフ2RowGroup">ダメージバフ
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tr>
@@ -823,8 +828,9 @@
                                                 <td id="与えるダメージValue"></td>
                                             </tr>
                                             <thead>
-                                                <tr id="ダメージアップRowGroup">
-                                                    <th colspan="3">ダメージアップ</th>
+                                                <tr>
+                                                    <th colspan="3" class="toggle-switch" id="ダメージアップRowGroup">ダメージアップ
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tr>
@@ -914,8 +920,9 @@
                                                 <td id="物理ダメージアップValue"></td>
                                             </tr>
                                             <thead>
-                                                <tr id="元素反応ボーナスRowGroup">
-                                                    <th colspan="3">元素反応バフ</th>
+                                                <tr>
+                                                    <th colspan="3" class="toggle-switch" id="元素反応ボーナスRowGroup">元素反応バフ
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tr>
@@ -1245,6 +1252,61 @@
             </div>
 
             <div class="bottom-pane">
+                <hr>
+                <div style="width: 100%; text-align: center;">
+                    <h2 class="toggle-switch" id="my-character-list">キャラクター所持状況</h2>
+                    <div>
+                        <ul class="my-list" id="キャラクター所持状況List"></ul>
+                        <button type="button" id="キャラクター所持状況保存Button" disabled>キャラクター所持状況を保存</button>
+
+                        <hr />
+                    </div>
+
+                    <h2 class="toggle-switch" id="my-weapon-list">武器所持状況</h2>
+                    <div>
+                        <div class="tab-area">
+                            <input type="radio" class="tab-button input-set5" id="weapon-list-tab1"
+                                name="weapon-list-tab" checked />
+                            <label for="weapon-list-tab1">片手剣</label>
+                            <div class="tab-content">
+                                <ul class="my-list" id="片手剣所持状況List"></ul>
+                            </div>
+                            <input type="radio" class="tab-button input-set5" id="weapon-list-tab2"
+                                name="weapon-list-tab" />
+                            <label for="weapon-list-tab2">両手剣</label>
+                            <div class="tab-content">
+                                <ul class="my-list" id="両手剣所持状況List"></ul>
+                            </div>
+                            <input type="radio" class="tab-button input-set5" id="weapon-list-tab3"
+                                name="weapon-list-tab" />
+                            <label for="weapon-list-tab3">長柄武器</label>
+                            <div class="tab-content">
+                                <ul class="my-list" id="長柄武器所持状況List"></ul>
+                            </div>
+                            <input type="radio" class="tab-button input-set5" id="weapon-list-tab4"
+                                name="weapon-list-tab" />
+                            <label for="weapon-list-tab4">弓</label>
+                            <div class="tab-content">
+                                <ul class="my-list" id="弓所持状況List"></ul>
+                            </div>
+                            <input type="radio" class="tab-button input-set5" id="weapon-list-tab5"
+                                name="weapon-list-tab" />
+                            <label for="weapon-list-tab5">法器</label>
+                            <div class="tab-content">
+                                <ul class="my-list" id="法器所持状況List"></ul>
+                            </div>
+                        </div>
+                        <button type="button" id="my-weapon-save-button" disabled>武器所持状況を保存</button>
+
+                        <hr />
+                    </div>
+
+                    <input type="checkbox" id="ローカルストレージクリアInput" />
+                    <label for="ローカルストレージクリアInput">ローカルストレージをクリア</label>
+                    <button type="button" id="ローカルストレージクリアButton" style="width: 15rem;" disabled>実行</button>
+                    <p style="margin-top: 0;">全ての保存データを削除します</p>
+                </div>
+
                 <div class="tab-area" style="display: none;">
                     <input type="radio" class="tab-button others-set" id="other-box1" name="others-group" checked />
                     <label for="other-box1">げんかるくについて</label>
@@ -1322,19 +1384,6 @@
                 </p>
                 <hr>
             </footer>
-        </div>
-
-        <div style="text-align: center">
-            <h2>キャラクター所持状況</h2>
-            <ul id="キャラクター所持状況List"></ul>
-            <button type="button" id="キャラクター所持状況保存Button" disabled>
-                キャラクター所持状況を保存
-            </button>
-            <hr />
-            <input type="checkbox" id="ローカルストレージクリアInput" />
-            <label for="ローカルストレージクリアInput">ローカルストレージをクリア</label>
-            <button type="button" id="ローカルストレージクリアButton" style="width: 15rem;" disabled>実行</button>
-            <p>全ての保存データを削除します</p>
         </div>
 
         <div style="display: none;">

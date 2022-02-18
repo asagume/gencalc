@@ -1,5 +1,24 @@
 ////////////////////////////////////////////////////////////////////////////////
-
+// selector
+// elem, selector
+const toggleShowHide = function () {
+    let elem;
+    let selector = arguments[arguments.length - 1];
+    if (arguments.length > 1) {
+        elem = arguments[0];
+    }
+    if ($(selector).is(':visible')) {
+        $(selector).hide();
+        if (elem) {
+            $(elem).removeClass('opened');
+        }
+    } else {
+        $(selector).show();
+        if (elem) {
+            $(elem).addClass('opened');
+        }
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -2704,7 +2723,9 @@ const 武器InputOnChange = function () {
             }
         }
         if (my精錬ランク == 0) {
-            if ('精錬ランク' in 選択中武器データVar) {
+            if (name in 武器所持状況ObjVar && 武器所持状況ObjVar[name]) {
+                my精錬ランク = 武器所持状況ObjVar[name];
+            } else if ('精錬ランク' in 選択中武器データVar) {
                 my精錬ランク = 選択中武器データVar['精錬ランク'];
             }
         }
@@ -2872,10 +2893,13 @@ function setupCharacterImg(url) {
 
     // キャラクター画像
     $('#character-button img').attr('src', 'images/characters/face/' + fileName);
+    for (i = 4; i <= 5; i++) {
+        $('#character-button img').removeClass('star' + i);
+    }
     if (url.indexOf('5') == -1) {
-        $('#character-button').css('background-image', 'url(images/star4-bg.png)');
+        $('#character-button img').addClass('star4');
     } else {
-        $('#character-button').css('background-image', 'url(images/star5-bg.png)');
+        $('#character-button img').addClass('star5');
     }
 }
 const WEAPON_TYPE_IMG_FILE_ALIST = {
@@ -3289,12 +3313,15 @@ function setupWeaponImg(url, name) {
     // 武器画像
     $('#weapon-button img').attr('src', srcUrl);
     $('#weapon-button img').attr('alt', name);
+    for (i = 3; i <= 5; i++) {
+        $('#weapon-button img').removeClass('star' + i);
+    }
     if (url.indexOf('3') != -1) {
-        $('#weapon-button').css('background-image', 'url(images/star3-bg.png)');
+        $('#weapon-button img').addClass('star3');
     } else if (url.indexOf('4') != -1) {
-        $('#weapon-button').css('background-image', 'url(images/star4-bg.png)');
+        $('#weapon-button img').addClass('star4');
     } else {
-        $('#weapon-button').css('background-image', 'url(images/star5-bg.png)');
+        $('#weapon-button img').addClass('star5');
     }
 }
 
@@ -3349,23 +3376,23 @@ $(document).on('change', '#通常攻撃レベルInput', 天賦レベルInputOnCh
 $(document).on('change', '#元素スキルレベルInput', 天賦レベルInputOnChange);
 $(document).on('change', '#元素爆発レベルInput', 天賦レベルInputOnChange);
 // キャラクター画像 クリック処理
-$(document).on('click', '#character-button', () => {
+$(document).on('click', '#character-button', function () {
     toggleShowHide('#character-select');
 });
 
 // おすすめセット
 $(document).on('change', '#おすすめセットInput', おすすめセットInputOnChange);
 // おすすめセット クリック処理
-$(document).on('click', '#recomend-button', () => {
+$(document).on('click', '#recomend-button', function () {
     toggleShowHide('#おすすめセットInput');
 });
 
 // 天賦画像 クリック処理
-$(document).on('click', '#talent2-button', () => {
-//    toggleShowHide('#talent2-detail');
+$(document).on('click', '#talent2-button', function () {
+    //    toggleShowHide('#talent2-detail');
 });
-$(document).on('click', '#talent3-button', () => {
-//    toggleShowHide('#talent3-detail');
+$(document).on('click', '#talent3-button', function () {
+    //    toggleShowHide('#talent3-detail');
 });
 
 // 武器選択
@@ -3382,7 +3409,7 @@ $(document).on('change', '#武器Input', 武器InputOnChange);
 $(document).on('change', '#武器レベルInput', 武器レベルInputOnChange);
 $(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
 // 武器画像 クリック処理
-$(document).on('click', '#weapon-button', () => {
+$(document).on('click', '#weapon-button', function () {
     toggleShowHide('#weapon-detail-and-select');
     if ($('#artifact-area').is(':visible')) {
         $('#artifact-area').hide();
@@ -3437,13 +3464,13 @@ $(document).on('change', '#聖遺物サブ効果直接入力Toggle', 聖遺物�
 $(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
 $(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
 // 聖遺物画像 クリック処理
-$(document).on('click', '#artifactset1-button', () => {
+$(document).on('click', '#artifactset1-button', function () {
     toggleShowHide('#artifact-area');
     if ($('#weapon-detail-and-select').is(':visible')) {
         $('#weapon-detail-and-select').hide();
     }
 });
-$(document).on('click', '#artifactset2-button', () => {
+$(document).on('click', '#artifactset2-button', function () {
     toggleShowHide('#artifact-area');
     if ($('#weapon-detail-and-select').is(':visible')) {
         $('#weapon-detail-and-select').hide();
@@ -3676,6 +3703,302 @@ const elementalReactionOnChange = function () {
 }
 $(document).on('change', 'input[name="元素反応Input"]', elementalReactionOnChange);
 
+// inputとselectのフォーカス時点の値を保存しておきます
+const ELEMENT_VALUE_AT_FOCUS_MAP = new Map();
+$(document).on('focus', 'input,select', function () {
+    let value = this.value;
+    if (this instanceof HTMLInputElement) {
+        if (['checkbox', 'radio'].includes(this.type)) {
+            value = this.checked;
+        }
+    }
+    ELEMENT_VALUE_AT_FOCUS_MAP.set(this.id, value);
+});
+
+
+
+// 聖遺物詳細画面のスクリーンショットから取込
+$(document).on('click', '#artifact-detail-ocr-button', function () {
+    document.getElementById('artifact-detail-image').click();
+});
+
+var artifactDetailText = null;
+
+function setArtifactDetail(text) {
+    artifactDetailText = text;
+
+    text = text.replace(/[,\s]/g, '');
+    text = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+    text = text.replace(/[①②③④⑤⑥⑦⑧⑨]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - ('①'.charCodeAt(0) - '1'.charCodeAt(0)));
+    });
+    console.log(text);
+
+    let subStatusObj = {};
+    ['HP上限', '攻撃力', '防御力', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率'].forEach(statusName => {
+        let re = new RegExp(statusName + '\\+([0-9\\.]+)');
+        let reRet = re.exec(text);
+        if (reRet) {
+            subStatusObj[statusName] = reRet[1];
+        } else {
+            subStatusObj[statusName] = 0;
+        }
+    });
+    console.log('subStatus', subStatusObj);
+
+    $('#聖遺物メイン効果1Input').val(null);
+    $('#聖遺物メイン効果2Input').val(null);
+    $('#聖遺物メイン効果3Input').val(null);
+    if (!$('#聖遺物メイン効果4Input').val().endsWith('ダメージバフ')) {
+        $('#聖遺物メイン効果4Input').val(null);
+    }
+    $('#聖遺物メイン効果5Input').val(null);
+
+    $('#聖遺物優先するサブ効果1Input').val(null);
+    $('#聖遺物優先するサブ効果2Input').val(null);
+    $('#聖遺物優先するサブ効果3Input').val(null);
+
+    $('#聖遺物サブ効果HPPInput').val(0);
+    $('#聖遺物サブ効果攻撃力PInput').val(0);
+    $('#聖遺物サブ効果防御力PInput').val(0);
+    $('#聖遺物サブ効果HPInput').val(subStatusObj['HP上限']);
+    $('#聖遺物サブ効果攻撃力Input').val(subStatusObj['攻撃力']);
+    $('#聖遺物サブ効果防御力Input').val(subStatusObj['防御力']);
+    $('#聖遺物サブ効果元素熟知Input').val(subStatusObj['元素熟知']);
+    $('#聖遺物サブ効果会心率Input').val(subStatusObj['会心率']);
+    $('#聖遺物サブ効果会心ダメージInput').val(subStatusObj['会心ダメージ']);
+    $('#聖遺物サブ効果元素チャージ効率Input').val(subStatusObj['元素チャージ効率']);
+
+    $('#loading').hide();
+    inputOnChangeStatusUpdate();
+}
+
+function resizePinnedImage(e) {
+    const file = e.target.files[0];
+    if (!file.type.match('image.*')) { return; }
+    resize(file);
+    e.currentTarget.files = null;
+    e.currentTarget.value = null;
+    enable構成保存Button();
+};
+
+const { createWorker } = Tesseract;
+
+function resize(file) {
+    imageToCanvas(file).then(function (canvas) {
+        $('#loading').show();
+
+        (async function () {
+            const worker = createWorker({
+                langPath: 'tessdata/4.0.0_fast',
+                logger: m => console.debug(m)
+            });
+            await worker.load();
+            await worker.loadLanguage('jpn');
+            await worker.initialize('jpn');
+            //await worker.setParameters({
+            //    tessedit_char_blacklist: '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳',
+            //});
+            //await worker.setParameters({
+            //    tessedit_char_whitelist: '0123456789+,.%HP上限攻撃力防御元素熟知会心率ダメージチャ効',
+            //});
+            const { data: { text } } = await worker.recognize(canvas);
+            setArtifactDetail(text);
+            await worker.terminate();
+        })();
+    });
+}
+
+function imageToCanvas(imageFile) {
+    return new Promise(function (resolve, reject) {
+        readImage(imageFile).then(function (src) {
+            loadImage(src).then(function (image) {
+                const canvas = document.getElementById('artifactDetailCanvas');
+                const ctx = canvas.getContext('2d');
+                const scale = 2;
+                canvas.width = image.width * scale;
+                canvas.height = image.height * scale;
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                let imgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                for (let y = 0; y < imgPixels.height; y++) {
+                    for (let x = 0; x < imgPixels.width; x++) {
+                        let i = (y * 4) * imgPixels.width + x * 4;
+                        let avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+                        imgPixels.data[i] = 255 - (avg < 64 ? 0 : imgPixels.data[i]);
+                        imgPixels.data[i + 1] = 255 - (avg < 64 ? 0 : imgPixels.data[i + 1]);
+                        imgPixels.data[i + 2] = 255 - (avg < 64 ? 0 : imgPixels.data[i + 2]);
+                    }
+                }
+                ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+                resolve(canvas);
+            }).catch(function (error) {
+                reject(error);
+            });
+        }).catch(function (error) {
+            reject(error);
+        });
+    })
+}
+
+function readImage(image) {
+    return new Promise(function (resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); }
+        reader.onerror = function (e) { reject(e); }
+        reader.readAsDataURL(image);
+    });
+}
+
+function loadImage(src) {
+    return new Promise(function (resolve, reject) {
+        const img = new Image();
+        img.onload = function () { resolve(img); }
+        img.onerror = function (e) { reject(e); }
+        img.src = src;
+    });
+}
+
+$(document).on('change', '#artifact-detail-image', resizePinnedImage);
+
+const toggle聖遺物詳細計算停止 = function () {
+    if (this.checked) {
+        $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
+        $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', true);
+    } else {
+        $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', false);
+        $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', false);
+    }
+}
+
+$(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳細計算停止);
+
+// キャラクター所持状況
+$(document).on('click', '#my-character-list', function () {
+    // 初回表示時にリストを作成します
+    if ($('#my-character-list + div').find('li').length == 0) {
+        buildキャラクター所持状況List();
+    }
+    toggleShowHide(this, '#my-character-list + div');
+});
+$(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
+
+// 武器所持状況
+$(document).on('click', '#my-weapon-list', function () {
+    // 初回表示時にリストを作成します
+    if ($('#my-weapon-list + div').find('li').length == 0) {
+        build武器所持状況List();
+    }
+    toggleShowHide(this, '#my-weapon-list + div')
+});
+$(document).on('click', '#my-weapon-save-button', save武器所持状況);
+
+// ローカルストレージ
+$(document).on('click', '#ローカルストレージクリアInput', toggleローカルストレージクリア);
+$(document).on('click', '#ローカルストレージクリアButton', clearローカルストレージ);
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// DEBUG
+function detailToHtml(obj) {
+    let myArr = [];
+    Object.keys(obj).forEach(key => {
+        if (obj[key]) myArr.push(key + '[' + obj[key] + ']');
+    });
+    return myArr.join(',');
+}
+
+// デバッグ情報を出力します
+const setDebugInfo = function () {
+    $('#debugInfo').empty();
+    ステータス変更系詳細ArrMapVar.forEach((value, key) => {
+        value.forEach(entry => {
+            $('<p>', {
+                text: key + ':' + detailToHtml(entry)
+            }).appendTo('#debugInfo');
+        });
+    });
+    $('<hr>').appendTo('#debugInfo');
+    天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
+        value.forEach(entry => {
+            $('<p>', {
+                text: key + ':' + detailToHtml(entry)
+            }).appendTo('#debugInfo');
+        });
+    });
+    $('<hr>').appendTo('#debugInfo');
+    その他_基礎ダメージ詳細ArrMapVar.forEach((value, key) => {
+        value.forEach(entry => {
+            $('<p>', {
+                text: key + ':' + detailToHtml(entry)
+            }).appendTo('#debugInfo');
+        });
+    });
+    $('<hr>').appendTo('#debugInfo');
+    $('#オプションBox input').each((index, element) => {
+        $('<p>', {
+            text: element.id + '=' + element.checked
+        }).appendTo('#debugInfo');
+    });
+    $('#オプションBox select').each((index, element) => {
+        $('<p>', {
+            text: element.id + '=[' + element.selectedIndex + ']=' + element.value
+        }).appendTo('#debugInfo');
+    });
+    // オプション条件MapVar.forEach((value, key) => {
+    //     if (value) {
+    //         if ($.isArray(value)) {
+    //             value.forEach(entry => {
+    //                 $('<p>', {
+    //                     text: key + ':' + entry
+    //                 }).appendTo('#debugInfo');
+    //             });
+    //         } else {
+    //             $('<p>', {
+    //                 text: key + ':' + value
+    //             }).appendTo('#debugInfo');
+    //         }
+    //     } else {
+    //         $('<p>', {
+    //             text: key
+    //         }).appendTo('#debugInfo');
+    //     }
+    // });
+    $('<hr>').appendTo('#debugInfo');
+    オプション排他MapVar.forEach((value, key) => {
+        if (value) {
+            if ($.isArray(value)) {
+                value.forEach(entry => {
+                    $('<p>', {
+                        text: key + ':' + entry
+                    }).appendTo('#debugInfo');
+                });
+            } else {
+                $('<p>', {
+                    text: key + ':' + value
+                }).appendTo('#debugInfo');
+            }
+        } else {
+            $('<p>', {
+                text: key
+            }).appendTo('#debugInfo');
+        }
+    });
+    $('<hr>').appendTo('#debugInfo');
+    Object.keys(ステータス詳細ObjVar).forEach(key => {
+        if (ステータス詳細ObjVar[key] != 9999) {
+            $('<p>', {
+                text: key + '=' + ステータス詳細ObjVar[key]
+            }).appendTo('#debugInfo');
+        }
+    });
+    $('<hr>').appendTo('#debugInfo');
+    $('<p>', {
+        text: artifactDetailText
+    }).appendTo('#debugInfo');
+}
 
 // MAIN
 $(document).ready(function () {
@@ -3718,7 +4041,7 @@ $(document).ready(function () {
             characterSelected(select);
 
             loadキャラクター所持状況();
-            buildキャラクター所持状況List();
+            load武器所持状況();
         }),
         fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {
             武器MasterVar["片手剣"] = jsonObj;
@@ -3840,295 +4163,9 @@ $(document).ready(function () {
             $('#デバフオプションBox').empty();
             appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, 'デバフ', false);
         })
-    ]).then(() => {
+    ]).then(function () {
         キャラクターInputOnChange();
     });
 });
 
 initキャラクター構成関連要素();
-
-// 聖遺物詳細画面のスクリーンショットから取込
-$(document).on('click', '#artifact-detail-ocr-button', function () {
-    document.getElementById('artifact-detail-image').click();
-});
-
-var artifactDetailText = null;
-
-function setArtifactDetail(text) {
-    artifactDetailText = text;
-
-    text = text.replace(/[,\s]/g, '');
-    text = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
-        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-    });
-    text = text.replace(/[①②③④⑤⑥⑦⑧⑨]/g, function (s) {
-        return String.fromCharCode(s.charCodeAt(0) - ('①'.charCodeAt(0) - '1'.charCodeAt(0)));
-    });
-    console.log(text);
-
-    let subStatusObj = {};
-    ['HP上限', '攻撃力', '防御力', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率'].forEach(statusName => {
-        let re = new RegExp(statusName + '\\+([0-9\\.]+)');
-        let reRet = re.exec(text);
-        if (reRet) {
-            subStatusObj[statusName] = reRet[1];
-        } else {
-            subStatusObj[statusName] = 0;
-        }
-    });
-    console.log('subStatus', subStatusObj);
-
-    $('#聖遺物メイン効果1Input').val(null);
-    $('#聖遺物メイン効果2Input').val(null);
-    $('#聖遺物メイン効果3Input').val(null);
-    if (!$('#聖遺物メイン効果4Input').val().endsWith('ダメージバフ')) {
-        $('#聖遺物メイン効果4Input').val(null);
-    }
-    $('#聖遺物メイン効果5Input').val(null);
-
-    $('#聖遺物優先するサブ効果1Input').val(null);
-    $('#聖遺物優先するサブ効果2Input').val(null);
-    $('#聖遺物優先するサブ効果3Input').val(null);
-
-    $('#聖遺物サブ効果HPPInput').val(0);
-    $('#聖遺物サブ効果攻撃力PInput').val(0);
-    $('#聖遺物サブ効果防御力PInput').val(0);
-    $('#聖遺物サブ効果HPInput').val(subStatusObj['HP上限']);
-    $('#聖遺物サブ効果攻撃力Input').val(subStatusObj['攻撃力']);
-    $('#聖遺物サブ効果防御力Input').val(subStatusObj['防御力']);
-    $('#聖遺物サブ効果元素熟知Input').val(subStatusObj['元素熟知']);
-    $('#聖遺物サブ効果会心率Input').val(subStatusObj['会心率']);
-    $('#聖遺物サブ効果会心ダメージInput').val(subStatusObj['会心ダメージ']);
-    $('#聖遺物サブ効果元素チャージ効率Input').val(subStatusObj['元素チャージ効率']);
-
-    $('#loading').hide();
-    inputOnChangeStatusUpdate();
-}
-
-function resizePinnedImage(e) {
-    const file = e.target.files[0];
-    if (!file.type.match('image.*')) { return; }
-    resize(file);
-    e.currentTarget.files = null;
-    e.currentTarget.value = null;
-    enable構成保存Button();
-};
-
-const { createWorker } = Tesseract;
-
-function resize(file) {
-    imageToCanvas(file).then(function (canvas) {
-        $('#loading').show();
-
-        (async () => {
-            const worker = createWorker({
-                langPath: 'tessdata/4.0.0_fast',
-                logger: m => console.debug(m)
-            });
-            await worker.load();
-            await worker.loadLanguage('jpn');
-            await worker.initialize('jpn');
-            //await worker.setParameters({
-            //    tessedit_char_blacklist: '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳',
-            //});
-            //await worker.setParameters({
-            //    tessedit_char_whitelist: '0123456789+,.%HP上限攻撃力防御元素熟知会心率ダメージチャ効',
-            //});
-            const { data: { text } } = await worker.recognize(canvas);
-            setArtifactDetail(text);
-            await worker.terminate();
-        })();
-    });
-}
-
-function imageToCanvas(imageFile) {
-    return new Promise(function (resolve, reject) {
-        readImage(imageFile).then(function (src) {
-            loadImage(src).then(function (image) {
-                const canvas = document.getElementById('artifactDetailCanvas');
-                const ctx = canvas.getContext('2d');
-                const scale = 2;
-                canvas.width = image.width * scale;
-                canvas.height = image.height * scale;
-                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-                let imgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                for (let y = 0; y < imgPixels.height; y++) {
-                    for (let x = 0; x < imgPixels.width; x++) {
-                        let i = (y * 4) * imgPixels.width + x * 4;
-                        let avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-                        imgPixels.data[i] = 255 - (avg < 64 ? 0 : imgPixels.data[i]);
-                        imgPixels.data[i + 1] = 255 - (avg < 64 ? 0 : imgPixels.data[i + 1]);
-                        imgPixels.data[i + 2] = 255 - (avg < 64 ? 0 : imgPixels.data[i + 2]);
-                    }
-                }
-                ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
-                resolve(canvas);
-            }).catch(function (error) {
-                reject(error);
-            });
-        }).catch(function (error) {
-            reject(error);
-        });
-    })
-}
-
-function readImage(image) {
-    return new Promise(function (resolve, reject) {
-        const reader = new FileReader();
-        reader.onload = function () { resolve(reader.result); }
-        reader.onerror = function (e) { reject(e); }
-        reader.readAsDataURL(image);
-    });
-}
-
-function loadImage(src) {
-    return new Promise(function (resolve, reject) {
-        const img = new Image();
-        img.onload = function () { resolve(img); }
-        img.onerror = function (e) { reject(e); }
-        img.src = src;
-    });
-}
-
-$(document).on('change', '#artifact-detail-image', resizePinnedImage);
-
-const toggle聖遺物詳細計算停止 = function () {
-    if (this.checked) {
-        $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
-        $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', true);
-    } else {
-        $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', false);
-        $('select[name="聖遺物優先するサブ効果倍率Input"]').prop('disabled', false);
-    }
-}
-
-$(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳細計算停止);
-
-// キャラクター所持状況/ローカルストレージ
-$(document).on('click', '#キャラクター所持状況保存Button', saveキャラクター所持状況);
-$(document).on('click', '#ローカルストレージクリアInput', toggleローカルストレージクリア);
-$(document).on('click', '#ローカルストレージクリアButton', clearローカルストレージ);
-
-// inputとselectのフォーカス時点の値を保存しておきます
-const ELEMENT_VALUE_AT_FOCUS_MAP = new Map();
-$(document).on('focus', 'input,select', function () {
-    let value = this.value;
-    if (this instanceof HTMLInputElement) {
-        if (['checkbox', 'radio'].includes(this.type)) {
-            value = this.checked;
-        }
-    }
-    ELEMENT_VALUE_AT_FOCUS_MAP.set(this.id, value);
-});
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// DEBUG
-function detailToHtml(obj) {
-    let myArr = [];
-    Object.keys(obj).forEach(key => {
-        if (obj[key]) myArr.push(key + '[' + obj[key] + ']');
-    });
-    return myArr.join(',');
-}
-
-// デバッグ情報を出力します
-const setDebugInfo = function () {
-    $('#debugInfo').empty();
-    ステータス変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(entry => {
-            $('<p>', {
-                text: key + ':' + detailToHtml(entry)
-            }).appendTo('#debugInfo');
-        });
-    });
-    $('<hr>').appendTo('#debugInfo');
-    天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(entry => {
-            $('<p>', {
-                text: key + ':' + detailToHtml(entry)
-            }).appendTo('#debugInfo');
-        });
-    });
-    $('<hr>').appendTo('#debugInfo');
-    その他_基礎ダメージ詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(entry => {
-            $('<p>', {
-                text: key + ':' + detailToHtml(entry)
-            }).appendTo('#debugInfo');
-        });
-    });
-    $('<hr>').appendTo('#debugInfo');
-    $('#オプションBox input').each((index, element) => {
-        $('<p>', {
-            text: element.id + '=' + element.checked
-        }).appendTo('#debugInfo');
-    });
-    $('#オプションBox select').each((index, element) => {
-        $('<p>', {
-            text: element.id + '=[' + element.selectedIndex + ']=' + element.value
-        }).appendTo('#debugInfo');
-    });
-    // オプション条件MapVar.forEach((value, key) => {
-    //     if (value) {
-    //         if ($.isArray(value)) {
-    //             value.forEach(entry => {
-    //                 $('<p>', {
-    //                     text: key + ':' + entry
-    //                 }).appendTo('#debugInfo');
-    //             });
-    //         } else {
-    //             $('<p>', {
-    //                 text: key + ':' + value
-    //             }).appendTo('#debugInfo');
-    //         }
-    //     } else {
-    //         $('<p>', {
-    //             text: key
-    //         }).appendTo('#debugInfo');
-    //     }
-    // });
-    $('<hr>').appendTo('#debugInfo');
-    オプション排他MapVar.forEach((value, key) => {
-        if (value) {
-            if ($.isArray(value)) {
-                value.forEach(entry => {
-                    $('<p>', {
-                        text: key + ':' + entry
-                    }).appendTo('#debugInfo');
-                });
-            } else {
-                $('<p>', {
-                    text: key + ':' + value
-                }).appendTo('#debugInfo');
-            }
-        } else {
-            $('<p>', {
-                text: key
-            }).appendTo('#debugInfo');
-        }
-    });
-    $('<hr>').appendTo('#debugInfo');
-    Object.keys(ステータス詳細ObjVar).forEach(key => {
-        if (ステータス詳細ObjVar[key] != 9999) {
-            $('<p>', {
-                text: key + '=' + ステータス詳細ObjVar[key]
-            }).appendTo('#debugInfo');
-        }
-    });
-    $('<hr>').appendTo('#debugInfo');
-    $('<p>', {
-        text: artifactDetailText
-    }).appendTo('#debugInfo');
-}
-
-//
-const toggleShowHide = function (selector) {
-    if ($(selector).is(':visible')) {
-        $(selector).hide();
-    } else {
-        $(selector).show();
-    }
-}
-
