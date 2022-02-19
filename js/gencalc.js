@@ -3404,6 +3404,8 @@ function build武器選択リスト() {
 // キャラクター選択
 const selectCharacter = function () {
     $('#character-select').hide();
+    $('[name="detail-box"]').prop('checked', false);
+    $('.select-group1').removeClass('selected');
     characterSelected(this.alt);
 }
 function characterSelected(name) {
@@ -3461,7 +3463,7 @@ $(document).on('click', '#talent3-button', function () {
 
 // 武器選択
 const selectWeapon = function () {
-    $('#weapon-detail-and-select').prop('checked', false);
+    // $('#weapon-detail-and-select').prop('checked', false);
     weaponSelected(this.alt);
 }
 function weaponSelected(name) {
@@ -3534,10 +3536,10 @@ $(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
 // 聖遺物画像 クリック処理
 var 選択中聖遺物セット番号Var = null;
 const selectArtifactSet = function () {
-    const selector = '#artifactset-detail';
-    $(selector).prop('checked', false);
+    // const selector = '#artifactset-detail';
+    // $(selector).prop('checked', false);
 
-    $('.select-group1').removeClass('selected');
+    // $('.select-group1').removeClass('selected');
 
     $('#聖遺物セット効果' + 選択中聖遺物セット番号Var + 'Input').val(this.alt);
     聖遺物セットInputOnChange();
