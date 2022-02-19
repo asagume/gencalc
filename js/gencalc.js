@@ -3258,7 +3258,7 @@ function setupキャラクター説明() {
 }
 
 // 
-function setupキャラクター選択リスト(opt_elementType = null) {
+function buildキャラクター選択リスト(opt_elementType = null) {
     document.querySelector('#キャラクター選択').innerHTML = '';
     let ulElem = document.getElementById('キャラクター選択');
     Object.keys(キャラクターMasterVar).forEach(name => {
@@ -3269,11 +3269,7 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         if (opt_elementType && myMasterObj['元素'] != opt_elementType) {
             return;
         }
-        let liBackgroundImage = 'url(images/star' + myMasterObj['レアリティ'] + '-bg.png)';
-
         let liElem = document.createElement('li');
-        liElem.style.backgroundSize = 'contain';
-        liElem.style.backgroundImage = liBackgroundImage;
         ulElem.appendChild(liElem);
 
         let splittedUrl = myMasterObj['import'].split('/');
@@ -3281,6 +3277,7 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         let srcUrl = 'images/characters/face/' + fileName;
 
         let imgElem = document.createElement('img');
+        imgElem.className = 'star' + myMasterObj['レアリティ'];
         imgElem.src = srcUrl;
         imgElem.alt = name;
         imgElem.width = 80;
@@ -3294,6 +3291,10 @@ function setupキャラクター選択リスト(opt_elementType = null) {
         img2Elem.width = 24;
         img2Elem.height = 24;
         liElem.appendChild(img2Elem);
+
+        let divElem = document.createElement('div');
+        divElem.innerHTML = name;
+        liElem.appendChild(divElem);
 
         imgElem.onclick = selectCharacter;
     });
@@ -3310,7 +3311,7 @@ $(document).on('click', '[name="element-type-input"]', function () {
             }
         });
     }
-    setupキャラクター選択リスト(elementType);
+    buildキャラクター選択リスト(elementType);
 });
 
 // 武器変更イベント
@@ -3346,19 +3347,20 @@ function build武器選択リスト() {
             }
             let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
 
-            let liBackgroundImage = 'url(images/star' + myMasterObj['レアリティ'] + '-bg.png)';
-
             let liElem = document.createElement('li');
-            liElem.style.backgroundSize = 'contain';
-            liElem.style.backgroundImage = liBackgroundImage;
             ulElem.appendChild(liElem);
+
             let imgElem = document.createElement('img');
-            //imgElem.className = 'star' + myMasterObj['レアリティ'];
+            imgElem.className = 'star' + myMasterObj['レアリティ'];
             imgElem.src = srcUrl;
             imgElem.alt = name;
             imgElem.width = 60;
             imgElem.height = 60;
             liElem.appendChild(imgElem);
+
+            let divElem = document.createElement('div');
+            divElem.innerHTML = name;
+            liElem.appendChild(divElem);
 
             imgElem.onclick = selectWeapon;
         });
@@ -3384,6 +3386,13 @@ $(document).on('change', '#元素スキルレベルInput', 天賦レベルInputO
 $(document).on('change', '#元素爆発レベルInput', 天賦レベルInputOnChange);
 // キャラクター画像 クリック処理
 $(document).on('click', '#character-button', function () {
+    const selector = '#character-select';
+    let b = $(selector).is(':visible');
+    if (!b) {
+        if ($(selector).find('li').length == 0) {
+            buildキャラクター選択リスト();
+        }
+    }
     toggleShowHide('#character-select');
 });
 
@@ -3523,41 +3532,43 @@ function build聖遺物セットリスト() {
         imgElem.height = 60;
         liElem.appendChild(imgElem);
 
+        let divElem = document.createElement('div');
+        divElem.innerHTML = name;
+        liElem.appendChild(divElem);
+
         imgElem.onclick = selectArtifactSet;
     });
 }
 $(document).on('click', '#artifactset1-button', function () {
     const selector = '#artifactset-detail';
-    if ($(this).hasClass('selected')) {
-        $(selector).prop('checked', false);
-        $(this).removeClass('selected');
-    } else {
-        $(selector).prop('checked', true);
-        $(this).addClass('selected');
+    let b = $(this).hasClass('selected');
+    $('.select-group1').removeClass('selected');
+    if (!b) {
         選択中聖遺物セット番号Var = 1;
         build聖遺物セットリスト();
+        $(this).addClass('selected');
     }
-    $('#artifactset2-button').removeClass('selected');
+    $(selector).prop('checked', !b);
 });
 $(document).on('click', '#artifactset2-button', function () {
     const selector = '#artifactset-detail';
-    if ($(this).hasClass('selected')) {
-        $(selector).prop('checked', false);
-        $(this).removeClass('selected');
-    } else {
-        $(selector).prop('checked', true);
-        $(this).addClass('selected');
+    let b = $(this).hasClass('selected');
+    $('.select-group1').removeClass('selected');
+    if (!b) {
         選択中聖遺物セット番号Var = 2;
         build聖遺物セットリスト();
+        $(this).addClass('selected');
     }
-    $('#artifactset1-button').removeClass('selected');
+    $(selector).prop('checked', !b);
 });
 $(document).on('click', '#artifactstatus-button', function () {
     const selector = '#artifactstatus-detail';
-    let b = $(selector).prop('checked');
-    $(selector).prop('checked', !b);
-
+    let b = $(this).prop('checked');
     $('.select-group1').removeClass('selected');
+    if (!b) {
+        $(this).addClass('selected');
+    }
+    $(selector).prop('checked', !b);
 });
 
 
@@ -4114,8 +4125,6 @@ $(document).ready(function () {
     Promise.all([
         fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
             キャラクターMasterVar = jsonObj;
-
-            setupキャラクター選択リスト();
 
             appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
 

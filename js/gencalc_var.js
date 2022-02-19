@@ -226,11 +226,10 @@ const ELEMENT_IMG_SRC_MAP = new Map([
 ]);
 
 function buildキャラクター所持状況List() {
-    $('#キャラクター所持状況List').empty();
-
     let ulElem = document.getElementById('キャラクター所持状況List');
-    Object.keys(キャラクターMasterVar).forEach(key => {
-        let myMasterObj = キャラクターMasterVar[key];
+    ulElem.innerHTML = '';
+    Object.keys(キャラクターMasterVar).forEach(name => {
+        let myMasterObj = キャラクターMasterVar[name];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }
@@ -240,19 +239,16 @@ function buildキャラクター所持状況List() {
         let srcUrl = 'images/characters/face/' + fileName;
 
         let liElem = document.createElement('li');
+        liElem.id = name + '_所持状況Input';
         ulElem.appendChild(liElem);
 
-        let divElem = document.createElement('div');
-        divElem.id = key + '_所持状況Input';
-        liElem.appendChild(divElem);
-
         let imgElem = document.createElement('img');
-        imgElem.className ='star' + myMasterObj['レアリティ'];
+        imgElem.className = 'star' + myMasterObj['レアリティ'];
         imgElem.src = srcUrl;
-        imgElem.alt = key;
+        imgElem.alt = name;
         imgElem.width = 80;
         imgElem.height = 80;
-        divElem.appendChild(imgElem);
+        liElem.appendChild(imgElem);
 
         let img2Elem = document.createElement('img');
         img2Elem.className = 'element';
@@ -260,35 +256,40 @@ function buildキャラクター所持状況List() {
         img2Elem.alt = myMasterObj['元素'];
         img2Elem.width = 24;
         img2Elem.height = 24;
-        divElem.appendChild(img2Elem);
+        liElem.appendChild(img2Elem);
 
         let pElem = document.createElement('p');
-        if (key in キャラクター所持状況ObjVar) {
-            pElem.textContent = キャラクター所持状況ObjVar[key];
+        if (name in キャラクター所持状況ObjVar) {
+            pElem.textContent = キャラクター所持状況ObjVar[name];
         }
-        divElem.appendChild(pElem);
+        liElem.appendChild(pElem);
 
         if (!pElem.textContent) {
             imgElem.classList.add('darken');
             img2Elem.classList.add('darken');
         }
+
+        let divElem = document.createElement('div');
+        divElem.innerHTML = name;
+        liElem.appendChild(divElem);
     });
 
-    $(document).on('click', '#キャラクター所持状況List li div', キャラクター所持状況OnClick);
+    $(document).on('click', '#キャラクター所持状況List li', キャラクター所持状況OnClick);
 }
 
 const キャラクター所持状況OnClick = function () {
-    let val = $('#' + selectorEscape(this.id) + ' p').text();
+    const selector = '#' + selectorEscape(this.id);
+    let val = $(selector + ' p').text();
     if (val) {
         if (++val > 6) {
             val = null;
-            $('#' + selectorEscape(this.id) + ' img').addClass('darken');
+            $(selector + ' img').addClass('darken');
         }
     } else {
         val = 0;
-        $('#' + selectorEscape(this.id) + ' img').removeClass('darken');
+        $(selector + ' img').removeClass('darken');
     }
-    $('#' + selectorEscape(this.id) + ' p').text(val);
+    $(selector + ' p').text(val);
 
     キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
 
@@ -324,8 +325,8 @@ function build武器所持状況List() {
         $('#' + listElemId).empty();
 
         let ulElem = document.getElementById(listElemId);
-        Object.keys(武器MasterVar[weaponType]).forEach(key => {
-            let myMasterObj = 武器MasterVar[weaponType][key];
+        Object.keys(武器MasterVar[weaponType]).forEach(name => {
+            let myMasterObj = 武器MasterVar[weaponType][name];
             if ('disabled' in myMasterObj && myMasterObj['disabled']) {
                 return;
             }
@@ -333,29 +334,30 @@ function build武器所持状況List() {
             let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
 
             let liElem = document.createElement('li');
+            ulElem.id = name + '_所持状況Input';
             ulElem.appendChild(liElem);
-
-            let divElem = document.createElement('div');
-            divElem.id = key + '_所持状況Input';
-            liElem.appendChild(divElem);
 
             let imgElem = document.createElement('img');
             imgElem.classList.add('star' + myMasterObj['レアリティ']);
             imgElem.src = srcUrl;
-            imgElem.alt = key;
+            imgElem.alt = name;
             imgElem.width = 80;
             imgElem.height = 80;
-            divElem.appendChild(imgElem);
+            liElem.appendChild(imgElem);
 
             let pElem = document.createElement('p');
-            if (key in 武器所持状況ObjVar) {
-                pElem.textContent = 武器所持状況ObjVar[key];
+            if (name in 武器所持状況ObjVar) {
+                pElem.textContent = 武器所持状況ObjVar[name];
             }
-            divElem.appendChild(pElem);
+            liElem.appendChild(pElem);
 
             if (!pElem.textContent) {
                 imgElem.classList.add('darken');
             }
+
+            let divElem = document.createElement('div');
+            divElem.innerHTML = name;
+            liElem.appendChild(divElem);
         });
 
         $('#' + listElemId + ' li div').off('click').on('click', 武器所持状況OnClick);

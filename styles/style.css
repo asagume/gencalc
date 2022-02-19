@@ -193,6 +193,23 @@ td {
     border-width: 0.2rem;
 }
 
+.horizontal-list ul li div {
+    display: none;
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+    z-index: 9999;
+    text-shadow: 1px 1px 2px black;
+    white-space: nowrap;
+    background-color: black;
+    padding: 0.5rem 1.5rem;
+    border-radius: 3rem;
+}
+
+.horizontal-list ul li:hover div {
+    display: block;
+}
+
 .horizontal-list ul li img.element {
     position: absolute;
     top: 0.2rem;
@@ -336,9 +353,13 @@ legend {
     display: none;
 }
 
-[name="element-type-input"]+label {
+[name="element-type-input"]:checked+label {
     display: inline;
     height: 35px;
+}
+
+[name="element-type-input"]:checked+label img {
+    border: 1px solid gray;
 }
 
 #character-select {
@@ -938,22 +959,36 @@ th.category {
 .my-list li {
     position: relative;
     display: inline-block;
-}
-
-.my-list li div {
     border-style: double;
     border-width: 0.2rem;
 }
 
-.my-list li div img {
+.my-list li div {
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+    display: none;
+    z-index: 9999;
+    text-shadow: 1px 1px 2px black;
+    white-space: nowrap;
+    background-color: black;
+    padding: 0.5rem 1.5rem;
+    border-radius: 3rem;
+}
+
+.my-list li:hover div {
+    display: block;
+}
+
+.my-list li img {
     vertical-align: top;
 }
 
-.my-list li div img.darken {
+.my-list li img.darken {
     opacity: 0.5;
 }
 
-.my-list li div p {
+.my-list li p {
     position: absolute;
     top: 3px;
     right: 7px;
@@ -964,7 +999,7 @@ th.category {
     margin: 0;
 }
 
-#キャラクター所持状況List li div img.element {
+#キャラクター所持状況List li img.element {
     position: absolute;
     top: 4px;
     left: 4px;
