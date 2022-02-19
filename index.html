@@ -254,9 +254,7 @@
                         <table class="talent-detail" style="display: none;">
                             <tr>
                                 <td rowspan="3">
-                                    <img width="120" height="120"
-                                        src="images/characters/aero_5_sword_Traveller/ElementalSkill.png" alt="元素スキル"
-                                        id="elemental-skill-img">
+                                    <img width="120" height="120" src="" alt="元素スキル" id="elemental-skill-img">
                                 </td>
                                 <td colspan="2" id="elemental-skill-name">名前</td>
                             </tr>
@@ -279,9 +277,7 @@
                         <table class="talent-detail" style="display: none;">
                             <tr>
                                 <td rowspan="4">
-                                    <img width="120" height="120"
-                                        src="images/characters/aero_5_sword_Traveller/ElementalBurst.png" alt="元素爆発"
-                                        id="detail-elemental-burst-img">
+                                    <img width="120" height="120" src="" alt="元素爆発" id="elemental-burst-img">
                                 </td>
                                 <td colspan="2" id="elemental-burst-name">名前</td>
                             </tr>
@@ -360,31 +356,23 @@
                     <input type="radio" class="tab-button" id="artifactstatus-detail" name="detail-box">
                     <div class="tab-content">
                         <fieldset>
-                            <legend>聖遺物 セット/メイン効果</legend>
+                            <legend>聖遺物 メイン効果</legend>
                             <section class="complex-4-2">
-                                <article class="input-item" style="width: 12%">
+                                <article class="input-item">
                                     <label for="聖遺物メイン効果1Input">生の花</label>
                                     <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
                                         <option></option>
-                                        <option value="5_HP" selected>★5</option>
-                                        <option value="4_HP">★4</option>
+                                        <option value="5_HP" selected>★5 HP</option>
+                                        <option value="4_HP">★4 HP</option>
                                     </select>
                                 </article>
-                                <article class="input-item" style="width: 12%">
+                                <article class="input-item">
                                     <label for="聖遺物メイン効果2Input">死の羽</label>
                                     <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
                                         <option></option>
-                                        <option value="5_攻撃力" selected>★5</option>
-                                        <option value="4_攻撃力">★4</option>
+                                        <option value="5_攻撃力" selected>★5 攻撃力</option>
+                                        <option value="4_攻撃力">★4 攻撃力</option>
                                     </select>
-                                </article>
-                                <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
-                                    <label for="聖遺物セット効果1Input">セット効果1</label>
-                                    <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
-                                </article>
-                                <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
-                                    <label for="聖遺物セット効果2Input">セット効果2</label>
-                                    <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
                                 </article>
                             </section>
 
@@ -1429,10 +1417,14 @@
         <div style="display: none;">
             <select id="キャラクターInput"></select>
             <select id="武器Input"></select>
+            <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
+            <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
+
             <fieldset>
                 <legend>デバッグ情報</legend>
                 <div id="debugInfo"></div>
             </fieldset>
+
             <canvas id="artifactDetailCanvas"></canvas>
         </div>
     </div>
