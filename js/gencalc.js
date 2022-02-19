@@ -3565,7 +3565,7 @@ $(document).on('click', '#artifactset2-button', function () {
 });
 $(document).on('click', '#artifactstatus-button', function () {
     const selector = '#artifactstatus-detail';
-    let b = $(this).prop('checked');
+    let b = $(selector).prop('checked');
     $('.select-group1').removeClass('selected');
     if (!b) {
         $(this).addClass('selected');
