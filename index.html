@@ -82,7 +82,7 @@
                     <tr>
                         <td colspan="2" rowspan="4">
                             <button type="button" class="image-button" id="character-button">
-                                <img width="150" height="150" src="images/characters/face/aero_5_sword_Traveller.png">
+                                <img width="150" height="150" src="" alt="キャラクター">
                             </button>
                         </td>
                         <td rowspan="5" style="width: 1rem;"></td>
@@ -139,13 +139,13 @@
                     <tr>
                         <td colspan="2" rowspan="2">
                             <button type="button" class="image-button" id="weapon-button">
-                                <img width="120" height="120" src="images/weapons/sword/1_DullBlade.png" alt="武器">
+                                <img width="120" height="120" src="" alt="武器">
                             </button>
                         </td>
                         <td rowspan="3" style="width: 1rem;"></td>
                         <td>
                             <button type="button" class="image-button" id="talent1-button">
-                                <img width="60" height="60" src="images/characters/NormalAttack_sword.png" alt="通常攻撃">
+                                <img width="60" height="60" src="" alt="通常攻撃">
                             </button>
                             <select id="通常攻撃レベルInput">
                                 <option value="1">Lv.1</option>
@@ -163,8 +163,7 @@
                         </td>
                         <td>
                             <button type="button" class="image-button" id="talent2-button">
-                                <img width="60" height="60"
-                                    src="images/characters/aero_5_sword_Traveller/ElementalSkill.png" alt="元素スキル">
+                                <img width="60" height="60" src="" alt="元素スキル">
                             </button>
                             <select id="元素スキルレベルInput">
                                 <option value="1">Lv.1</option>
@@ -184,8 +183,7 @@
                         </td>
                         <td>
                             <button type="button" class="image-button" id="talent3-button">
-                                <img width="60" height="60"
-                                    src="images/characters/aero_5_sword_Traveller/ElementalBurst.png" alt="元素爆発">
+                                <img width="60" height="60" src="" alt="元素爆発">
                             </button>
                             <select id="元素爆発レベルInput">
                                 <option value="1">Lv.1</option>
@@ -206,13 +204,13 @@
                     </tr>
                     <tr>
                         <td rowspan="2">
-                            <button type="button" class="image-button" id="artifactset1-button">
-                                <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット1">
+                            <button type="button" class="image-button select-group1" id="artifactset1-button">
+                                <img width="60" height="60" src="" alt="聖遺物セット1">
                             </button>
                         </td>
                         <td rowspan="2">
-                            <button type="button" class="image-button" id="artifactset2-button">
-                                <img width="60" height="60" src="images/artifacts/3_Adventurer.png" alt="聖遺物セット2">
+                            <button type="button" class="image-button select-group1" id="artifactset2-button">
+                                <img width="60" height="60" src="" alt="聖遺物セット2">
                             </button>
                         </td>
                         <td rowspan="2">
@@ -246,388 +244,436 @@
             </div>
 
             <div class="pane4">
-                <table class="talent-detail" id="talent2-detail">
-                    <tr>
-                        <td rowspan="3">
-                            <img width="120" height="120"
-                                src="images/characters/aero_5_sword_Traveller/ElementalSkill.png" alt="元素スキル"
-                                id="elemental-skill-img">
-                        </td>
-                        <td colspan="2" id="elemental-skill-name">名前</td>
-                    </tr>
-                    <tr>
-                        <th>クールタイム</th>
-                        <td id="elemental-skill-cd"></td>
-                    </tr>
-                    <tr>
-                        <th>継続時間</th>
-                        <td id="elemental-skill-duration"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="description" id="elemental-skill-desc"></td>
-                    </tr>
-                </table>
+                <div class="tab-area">
+                    <input type="radio" class="tab-button" id="talent1-detail" name="detail-box">
+                    <div class="tab-content">
+                    </div>
 
-                <table class="talent-detail" id="talent3-detail">
-                    <tr>
-                        <td rowspan="4">
-                            <img width="120" height="120"
-                                src="images/characters/aero_5_sword_Traveller/ElementalBurst.png" alt="元素爆発"
-                                id="detail-elemental-burst-img">
-                        </td>
-                        <td colspan="2" id="elemental-burst-name">名前</td>
-                    </tr>
-                    <tr>
-                        <th>元素エネルギー</th>
-                        <td id="elemental-burst-energy-cost"></td>
-                    </tr>
-                    <tr>
-                        <th>クールタイム</th>
-                        <td id="elemental-burst-cd"></td>
-                    </tr>
-                    <tr>
-                        <th>継続時間</th>
-                        <td id="elemental-burst-duration"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="description" id="elemental-burst-desc"></td>
-                    </tr>
-                </table>
+                    <input type="radio" class="tab-button" id="talent2-detail" name="detail-box">
+                    <div class="tab-content">
+                        <table class="talent-detail" style="display: none;">
+                            <tr>
+                                <td rowspan="3">
+                                    <img width="120" height="120"
+                                        src="images/characters/aero_5_sword_Traveller/ElementalSkill.png" alt="元素スキル"
+                                        id="elemental-skill-img">
+                                </td>
+                                <td colspan="2" id="elemental-skill-name">名前</td>
+                            </tr>
+                            <tr>
+                                <th>クールタイム</th>
+                                <td id="elemental-skill-cd"></td>
+                            </tr>
+                            <tr>
+                                <th>継続時間</th>
+                                <td id="elemental-skill-duration"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="description" id="elemental-skill-desc"></td>
+                            </tr>
+                        </table>
+                    </div>
 
-                <div id="weapon-detail-and-select">
-                    <table>
-                        <tr>
-                            <th colspan="2" id="weapon-name" style="width: 50%;">blank</th>
-                            <th>基礎攻撃力</th>
-                            <td id="weapon-base-attack" style="border: 1px solid gray;"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="2" id="weapon-rarity"></th>
-                            <th id="weapon-secondary-stat">blank</th>
-                            <td id="weapon-secondary-stat-value" style="border: 1px solid gray;">blank</td>
-                        </tr>
-                        <tr>
-                            <th colspan="4" id="weapon-ability-name"></th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <div id="weapon-ability-desc"></div>
-                            </td>
-                        </tr>
-                    </table>
+                    <input type="radio" class="tab-button" id="talent3-detail" name="detail-box">
+                    <div class="tab-content">
+                        <table class="talent-detail" style="display: none;">
+                            <tr>
+                                <td rowspan="4">
+                                    <img width="120" height="120"
+                                        src="images/characters/aero_5_sword_Traveller/ElementalBurst.png" alt="元素爆発"
+                                        id="detail-elemental-burst-img">
+                                </td>
+                                <td colspan="2" id="elemental-burst-name">名前</td>
+                            </tr>
+                            <tr>
+                                <th>元素エネルギー</th>
+                                <td id="elemental-burst-energy-cost"></td>
+                            </tr>
+                            <tr>
+                                <th>クールタイム</th>
+                                <td id="elemental-burst-cd"></td>
+                            </tr>
+                            <tr>
+                                <th>継続時間</th>
+                                <td id="elemental-burst-duration"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="description" id="elemental-burst-desc"></td>
+                            </tr>
+                        </table>
+                    </div>
 
-                    <div class="horizontal-list">
-                        <ul id="weapon-list"></ul>
+                    <input type="radio" class="tab-button" id="weapon-detail-and-select" name="detail-box">
+                    <div class="tab-content">
+                        <div>
+                            <table>
+                                <tr>
+                                    <th colspan="2" id="weapon-name" style="width: 50%;">blank</th>
+                                    <th>基礎攻撃力</th>
+                                    <td id="weapon-base-attack" style="border: 1px solid gray;"></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" id="weapon-rarity"></th>
+                                    <th id="weapon-secondary-stat">blank</th>
+                                    <td id="weapon-secondary-stat-value" style="border: 1px solid gray;">blank</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" id="weapon-ability-name"></th>
+                                </tr>
+                                <tr>
+                                    <td class="description" colspan="4" id="weapon-ability-desc">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="horizontal-list">
+                                <ul id="weapon-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="radio" class="tab-button" id="artifactset-detail" name="detail-box">
+                    <div class="tab-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th id="artifactset1-name">blank</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td class="description" id="artifactset1-desc">blank</td>
+                            </tr>
+                            <thead>
+                                <tr>
+                                    <th id="artifactset2-name">blank</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td class="description" id="artifactset2-desc">blank</td>
+                            </tr>
+                        </table>
+                        <div class="horizontal-list">
+                            <ul id="artifactset-list"></ul>
+                        </div>
+                    </div>
+
+                    <input type="radio" class="tab-button" id="artifactstatus-detail" name="detail-box">
+                    <div class="tab-content">
+                        <fieldset>
+                            <legend>聖遺物 セット/メイン効果</legend>
+                            <section class="complex-4-2">
+                                <article class="input-item" style="width: 12%">
+                                    <label for="聖遺物メイン効果1Input">生の花</label>
+                                    <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
+                                        <option></option>
+                                        <option value="5_HP" selected>★5</option>
+                                        <option value="4_HP">★4</option>
+                                    </select>
+                                </article>
+                                <article class="input-item" style="width: 12%">
+                                    <label for="聖遺物メイン効果2Input">死の羽</label>
+                                    <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
+                                        <option></option>
+                                        <option value="5_攻撃力" selected>★5</option>
+                                        <option value="4_攻撃力">★4</option>
+                                    </select>
+                                </article>
+                                <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
+                                    <label for="聖遺物セット効果1Input">セット効果1</label>
+                                    <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
+                                </article>
+                                <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
+                                    <label for="聖遺物セット効果2Input">セット効果2</label>
+                                    <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
+                                </article>
+                            </section>
+
+                            <section class="columns-3">
+                                <article class="input-item">
+                                    <label for="聖遺物メイン効果3Input">時の砂・メイン効果</label>
+                                    <select id="聖遺物メイン効果3Input" name="聖遺物メイン効果Input">
+                                        <option></option>
+                                        <option value="5_元素チャージ効率">★5 元素チャージ効率</option>
+                                        <option value="5_HP%">★5 HP%</option>
+                                        <option value="5_攻撃力%">★5 攻撃力%</option>
+                                        <option value="5_防御力%">★5 防御力%</option>
+                                        <option value="5_元素熟知">★5 元素熟知</option>
+                                        <option value="4_元素チャージ効率">★4 元素チャージ効率</option>
+                                        <option value="4_HP%">★4 HP%</option>
+                                        <option value="4_攻撃力%">★4 攻撃力%</option>
+                                        <option value="4_防御力%">★4 防御力%</option>
+                                        <option value="4_元素熟知">★4 元素熟知</option>
+                                    </select>
+                                </article>
+                                <article class="input-item">
+                                    <label for="聖遺物メイン効果4Input">空の杯・メイン効果</label>
+                                    <select id="聖遺物メイン効果4Input" name="聖遺物メイン効果Input">
+                                        <option></option>
+                                        <option value="5_炎元素ダメージバフ">★5 炎元素ダメージバフ</option>
+                                        <option value="5_水元素ダメージバフ">★5 水元素ダメージバフ</option>
+                                        <option value="5_風元素ダメージバフ">★5 風元素ダメージバフ</option>
+                                        <option value="5_雷元素ダメージバフ">★5 雷元素ダメージバフ</option>
+                                        <option value="5_氷元素ダメージバフ">★5 氷元素ダメージバフ</option>
+                                        <option value="5_岩元素ダメージバフ">★5 岩元素ダメージバフ</option>
+                                        <option value="5_物理ダメージバフ">★5 物理ダメージバフ</option>
+                                        <option value="5_HP%">★5 HP%</option>
+                                        <option value="5_攻撃力%">★5 攻撃力%</option>
+                                        <option value="5_防御力%">★5 防御力%</option>
+                                        <option value="5_元素熟知">★5 元素熟知</option>
+                                        <option value="4_炎元素ダメージバフ">★4 炎元素ダメージバフ</option>
+                                        <option value="4_水元素ダメージバフ">★4 水元素ダメージバフ</option>
+                                        <option value="4_風元素ダメージバフ">★4 風元素ダメージバフ</option>
+                                        <option value="4_雷元素ダメージバフ">★4 雷元素ダメージバフ</option>
+                                        <option value="4_氷元素ダメージバフ">★4 氷元素ダメージバフ</option>
+                                        <option value="4_岩元素ダメージバフ">★4 岩元素ダメージバフ</option>
+                                        <option value="4_物理ダメージバフ">★4 物理ダメージバフ</option>
+                                        <option value="4_HP%">★4 HP%</option>
+                                        <option value="4_攻撃力%">★4 攻撃力%</option>
+                                        <option value="4_防御力%">★4 防御力%</option>
+                                        <option value="4_元素熟知">★4 元素熟知</option>
+                                    </select>
+                                </article>
+                                <article class="input-item">
+                                    <label for="聖遺物メイン効果5Input">理の冠・メイン効果</label>
+                                    <select id="聖遺物メイン効果5Input" name="聖遺物メイン効果Input">
+                                        <option></option>
+                                        <option value="5_会心率">★5 会心率</option>
+                                        <option value="5_会心ダメージ">★5 会心ダメージ</option>
+                                        <option value="5_与える治療効果">★5 与える治療効果</option>
+                                        <option value="5_HP%">★5 HP%</option>
+                                        <option value="5_攻撃力%">★5 攻撃力%</option>
+                                        <option value="5_防御力%">★5 防御力%</option>
+                                        <option value="5_元素熟知">★5 元素熟知</option>
+                                        <option value="4_会心率">★4 会心率</option>
+                                        <option value="4_会心ダメージ">★4 会心ダメージ</option>
+                                        <option value="4_与える治療効果">★4 与える治療効果</option>
+                                        <option value="4_HP%">★4 HP%</option>
+                                        <option value="4_攻撃力%">★4 攻撃力%</option>
+                                        <option value="4_防御力%">★4 防御力%</option>
+                                        <option value="4_元素熟知">★4 元素熟知</option>
+                                    </select>
+                                </article>
+                            </section>
+                        </fieldset>
+
+                        <fieldset id="artifactsub-detail">
+                            <legend>聖遺物 サブ効果</legend>
+                            <table class="status">
+                                <tr>
+                                    <th>HP</th>
+                                    <td>
+                                        <input type="number" min="0" id="聖遺物サブ効果HPInput" name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果HPValue"></td>
+                                    <th>HP%</th>
+                                    <td>
+                                        <input type="number" min="0" step="0.1" id="聖遺物サブ効果HPPInput"
+                                            name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果HPPValue"></td>
+                                </tr>
+                                <tr>
+                                    <th>攻撃力</th>
+                                    <td>
+                                        <input type="number" min="0" id="聖遺物サブ効果攻撃力Input" name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果攻撃力Value"></td>
+                                    <th>攻撃力%</th>
+                                    <td>
+                                        <input type="number" min="0" step="0.1" id="聖遺物サブ効果攻撃力PInput"
+                                            name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果攻撃力PValue"></td>
+                                </tr>
+                                <tr>
+                                    <th>防御力</th>
+                                    <td>
+                                        <input type="number" min="0" id="聖遺物サブ効果防御力Input" name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果防御力Value"></td>
+                                    <th>防御力%</th>
+                                    <td>
+                                        <input type="number" min="0" step="0.1" id="聖遺物サブ効果防御力PInput"
+                                            name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果防御力PValue"></td>
+                                </tr>
+                                <tr>
+                                    <th>元素熟知</th>
+                                    <td>
+                                        <input type="number" min="0" id="聖遺物サブ効果元素熟知Input" name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果元素熟知Value"></td>
+                                </tr>
+                                <tr>
+                                    <th>会心率</th>
+                                    <td>
+                                        <input type="number" min="0" step="0.1" id="聖遺物サブ効果会心率Input"
+                                            name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果会心率Value"></td>
+                                </tr>
+                                <tr>
+                                    <th>会心ダメージ</th>
+                                    <td>
+                                        <input type="number" min="0" step="0.1" id="聖遺物サブ効果会心ダメージInput"
+                                            name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果会心ダメージValue"></td>
+                                    <td colspan="3" style="border: none;">
+                                        <input type="checkbox" id="聖遺物サブ効果直接入力Toggle">
+                                        <label for="聖遺物サブ効果直接入力Toggle">直接入力モード</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>元素チャージ効率</th>
+                                    <td>
+                                        <input type="number" min="0" step="0.1" id="聖遺物サブ効果元素チャージ効率Input"
+                                            name="聖遺物サブ効果Input" />
+                                    </td>
+                                    <td id="聖遺物サブ効果元素チャージ効率Value"></td>
+                                    <td colspan="3" style="border: none;">
+                                        <button type="button" id="artifact-detail-ocr-button">聖遺物詳細画面OCR</button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <hr>
+
+                            <table id="artifactsub-detail-priority">
+                                <tr>
+                                    <th>優先するサブ効果</th>
+                                    <th>上昇値の目安</th>
+                                    <th>初期+強化</th>
+                                    <th style="text-align: right; color: olive;">合計 <span id="回数Display"></span> 回</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果1Input" name="聖遺物優先するサブ効果Input">
+                                            <option></option>
+                                            <option>HP%</option>
+                                            <option>攻撃力%</option>
+                                            <option>防御力%</option>
+                                            <option>元素熟知</option>
+                                            <option>会心率</option>
+                                            <option>会心ダメージ</option>
+                                            <option>元素チャージ効率</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果1上昇値Input" name="聖遺物優先するサブ効果上昇値Input"></select>
+                                    </td>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果1上昇回数Input" name="聖遺物優先するサブ効果上昇回数Input">
+                                            <option value="0">×0回</option>
+                                            <option value="4">×4回</option>
+                                            <option value="5">×5回</option>
+                                            <option value="6">×6回</option>
+                                            <option value="7">×7回</option>
+                                            <option value="8" selected>×8回</option>
+                                            <option value="9">×9回</option>
+                                            <option value="10">×10回</option>
+                                            <option value="11">×11回</option>
+                                            <option value="12">×12回</option>
+                                            <option value="13">×13回</option>
+                                            <option value="14">×14回</option>
+                                            <option value="15">×15回</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <input type="checkbox" id="厳選目安Toggle">
+                                        <label for="厳選目安Toggle">一括変更</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果2Input" name="聖遺物優先するサブ効果Input">
+                                            <option></option>
+                                            <option>HP%</option>
+                                            <option>攻撃力%</option>
+                                            <option>防御力%</option>
+                                            <option>元素熟知</option>
+                                            <option>会心率</option>
+                                            <option>会心ダメージ</option>
+                                            <option>元素チャージ効率</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果2上昇値Input" name="聖遺物優先するサブ効果上昇値Input"></select>
+                                    </td>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果2上昇回数Input" name="聖遺物優先するサブ効果上昇回数Input">
+                                            <option value="0">×0回</option>
+                                            <option value="4">×4回</option>
+                                            <option value="5" selected>×5回</option>
+                                            <option value="6">×6回</option>
+                                            <option value="7">×7回</option>
+                                            <option value="8">×8回</option>
+                                            <option value="9">×9回</option>
+                                            <option value="10">×10回</option>
+                                            <option value="11">×11回</option>
+                                            <option value="12">×12回</option>
+                                            <option value="13">×13回</option>
+                                            <option value="14">×14回</option>
+                                            <option value="15">×15回</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="厳選目安Input" disabled>
+                                            <option selected></option>
+                                            <option value="1">厳選初心者</option>
+                                            <option value="2">厳選1ヶ月</option>
+                                            <option value="3">厳選3ヶ月</option>
+                                            <option value="4">日々石割り</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果3Input" name="聖遺物優先するサブ効果Input">
+                                            <option></option>
+                                            <option>HP%</option>
+                                            <option>攻撃力%</option>
+                                            <option>防御力%</option>
+                                            <option>元素熟知</option>
+                                            <option>会心率</option>
+                                            <option>会心ダメージ</option>
+                                            <option>元素チャージ効率</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果3上昇値Input" name="聖遺物優先するサブ効果上昇値Input"></select>
+                                    </td>
+                                    <td>
+                                        <select id="聖遺物優先するサブ効果3上昇回数Input" name="聖遺物優先するサブ効果上昇回数Input">
+                                            <option value="0">×0回</option>
+                                            <option value="4">×4回</option>
+                                            <option value="5" selected>×5回</option>
+                                            <option value="6">×6回</option>
+                                            <option value="7">×7回</option>
+                                            <option value="8">×8回</option>
+                                            <option value="9">×9回</option>
+                                            <option value="10">×10回</option>
+                                            <option value="11">×11回</option>
+                                            <option value="12">×12回</option>
+                                            <option value="13">×13回</option>
+                                            <option value="14">×14回</option>
+                                            <option value="15">×15回</option>
+                                        </select>
+                                    </td>
+                                    <td style="font-size: smaller; text-align: left; color: olive; width: 30%">
+                                        選択外のサブ効果は均等割り振り
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
                     </div>
                 </div>
             </div>
 
             <div class="pane5">
                 <div id="artifact-area">
-                    <fieldset>
-                        <legend>聖遺物 セット/メイン効果</legend>
-                        <section class="complex-4-2">
-                            <article class="input-item" style="width: 12%">
-                                <label for="聖遺物メイン効果1Input">生の花</label>
-                                <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
-                                    <option></option>
-                                    <option value="5_HP" selected>★5</option>
-                                    <option value="4_HP">★4</option>
-                                </select>
-                            </article>
-                            <article class="input-item" style="width: 12%">
-                                <label for="聖遺物メイン効果2Input">死の羽</label>
-                                <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
-                                    <option></option>
-                                    <option value="5_攻撃力" selected>★5</option>
-                                    <option value="4_攻撃力">★4</option>
-                                </select>
-                            </article>
-                            <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
-                                <label for="聖遺物セット効果1Input">セット効果1</label>
-                                <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
-                            </article>
-                            <article class="input-item" style="width: calc(76% / 2 - 1.8rem)">
-                                <label for="聖遺物セット効果2Input">セット効果2</label>
-                                <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
-                            </article>
-                        </section>
 
-                        <section class="columns-3">
-                            <article class="input-item">
-                                <label for="聖遺物メイン効果3Input">時の砂・メイン効果</label>
-                                <select id="聖遺物メイン効果3Input" name="聖遺物メイン効果Input">
-                                    <option></option>
-                                    <option value="5_元素チャージ効率">★5 元素チャージ効率</option>
-                                    <option value="5_HP%">★5 HP%</option>
-                                    <option value="5_攻撃力%">★5 攻撃力%</option>
-                                    <option value="5_防御力%">★5 防御力%</option>
-                                    <option value="5_元素熟知">★5 元素熟知</option>
-                                    <option value="4_元素チャージ効率">★4 元素チャージ効率</option>
-                                    <option value="4_HP%">★4 HP%</option>
-                                    <option value="4_攻撃力%">★4 攻撃力%</option>
-                                    <option value="4_防御力%">★4 防御力%</option>
-                                    <option value="4_元素熟知">★4 元素熟知</option>
-                                </select>
-                            </article>
-                            <article class="input-item">
-                                <label for="聖遺物メイン効果4Input">空の杯・メイン効果</label>
-                                <select id="聖遺物メイン効果4Input" name="聖遺物メイン効果Input">
-                                    <option></option>
-                                    <option value="5_炎元素ダメージバフ">★5 炎元素ダメージバフ</option>
-                                    <option value="5_水元素ダメージバフ">★5 水元素ダメージバフ</option>
-                                    <option value="5_風元素ダメージバフ">★5 風元素ダメージバフ</option>
-                                    <option value="5_雷元素ダメージバフ">★5 雷元素ダメージバフ</option>
-                                    <option value="5_氷元素ダメージバフ">★5 氷元素ダメージバフ</option>
-                                    <option value="5_岩元素ダメージバフ">★5 岩元素ダメージバフ</option>
-                                    <option value="5_物理ダメージバフ">★5 物理ダメージバフ</option>
-                                    <option value="5_HP%">★5 HP%</option>
-                                    <option value="5_攻撃力%">★5 攻撃力%</option>
-                                    <option value="5_防御力%">★5 防御力%</option>
-                                    <option value="5_元素熟知">★5 元素熟知</option>
-                                    <option value="4_炎元素ダメージバフ">★4 炎元素ダメージバフ</option>
-                                    <option value="4_水元素ダメージバフ">★4 水元素ダメージバフ</option>
-                                    <option value="4_風元素ダメージバフ">★4 風元素ダメージバフ</option>
-                                    <option value="4_雷元素ダメージバフ">★4 雷元素ダメージバフ</option>
-                                    <option value="4_氷元素ダメージバフ">★4 氷元素ダメージバフ</option>
-                                    <option value="4_岩元素ダメージバフ">★4 岩元素ダメージバフ</option>
-                                    <option value="4_物理ダメージバフ">★4 物理ダメージバフ</option>
-                                    <option value="4_HP%">★4 HP%</option>
-                                    <option value="4_攻撃力%">★4 攻撃力%</option>
-                                    <option value="4_防御力%">★4 防御力%</option>
-                                    <option value="4_元素熟知">★4 元素熟知</option>
-                                </select>
-                            </article>
-                            <article class="input-item">
-                                <label for="聖遺物メイン効果5Input">理の冠・メイン効果</label>
-                                <select id="聖遺物メイン効果5Input" name="聖遺物メイン効果Input">
-                                    <option></option>
-                                    <option value="5_会心率">★5 会心率</option>
-                                    <option value="5_会心ダメージ">★5 会心ダメージ</option>
-                                    <option value="5_与える治療効果">★5 与える治療効果</option>
-                                    <option value="5_HP%">★5 HP%</option>
-                                    <option value="5_攻撃力%">★5 攻撃力%</option>
-                                    <option value="5_防御力%">★5 防御力%</option>
-                                    <option value="5_元素熟知">★5 元素熟知</option>
-                                    <option value="4_会心率">★4 会心率</option>
-                                    <option value="4_会心ダメージ">★4 会心ダメージ</option>
-                                    <option value="4_与える治療効果">★4 与える治療効果</option>
-                                    <option value="4_HP%">★4 HP%</option>
-                                    <option value="4_攻撃力%">★4 攻撃力%</option>
-                                    <option value="4_防御力%">★4 防御力%</option>
-                                    <option value="4_元素熟知">★4 元素熟知</option>
-                                </select>
-                            </article>
-                        </section>
-                    </fieldset>
-
-                    <fieldset id="artifactsub-detail">
-                        <legend>聖遺物 サブ効果</legend>
-                        <table class="status">
-                            <tr>
-                                <th>HP</th>
-                                <td>
-                                    <input type="number" min="0" id="聖遺物サブ効果HPInput" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果HPValue"></td>
-                                <th>HP%</th>
-                                <td>
-                                    <input type="number" min="0" step="0.1" id="聖遺物サブ効果HPPInput" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果HPPValue"></td>
-                            </tr>
-                            <tr>
-                                <th>攻撃力</th>
-                                <td>
-                                    <input type="number" min="0" id="聖遺物サブ効果攻撃力Input" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果攻撃力Value"></td>
-                                <th>攻撃力%</th>
-                                <td>
-                                    <input type="number" min="0" step="0.1" id="聖遺物サブ効果攻撃力PInput" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果攻撃力PValue"></td>
-                            </tr>
-                            <tr>
-                                <th>防御力</th>
-                                <td>
-                                    <input type="number" min="0" id="聖遺物サブ効果防御力Input" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果防御力Value"></td>
-                                <th>防御力%</th>
-                                <td>
-                                    <input type="number" min="0" step="0.1" id="聖遺物サブ効果防御力PInput" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果防御力PValue"></td>
-                            </tr>
-                            <tr>
-                                <th>元素熟知</th>
-                                <td>
-                                    <input type="number" min="0" id="聖遺物サブ効果元素熟知Input" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果元素熟知Value"></td>
-                            </tr>
-                            <tr>
-                                <th>会心率</th>
-                                <td>
-                                    <input type="number" min="0" step="0.1" id="聖遺物サブ効果会心率Input" name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果会心率Value"></td>
-                            </tr>
-                            <tr>
-                                <th>会心ダメージ</th>
-                                <td>
-                                    <input type="number" min="0" step="0.1" id="聖遺物サブ効果会心ダメージInput"
-                                        name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果会心ダメージValue"></td>
-                                <td colspan="3" style="border: none;">
-                                    <input type="checkbox" id="聖遺物サブ効果直接入力Toggle">
-                                    <label for="聖遺物サブ効果直接入力Toggle">直接入力モード</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>元素チャージ効率</th>
-                                <td>
-                                    <input type="number" min="0" step="0.1" id="聖遺物サブ効果元素チャージ効率Input"
-                                        name="聖遺物サブ効果Input" />
-                                </td>
-                                <td id="聖遺物サブ効果元素チャージ効率Value"></td>
-                                <td colspan="3" style="border: none;">
-                                    <button type="button" id="artifact-detail-ocr-button">聖遺物詳細画面OCR</button>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <hr>
-
-                        <table id="artifactsub-detail-priority">
-                            <tr>
-                                <th>優先するサブ効果</th>
-                                <th>上昇値の目安</th>
-                                <th>初期+強化</th>
-                                <th style="text-align: right; color: olive;">合計 <span id="回数Display"></span> 回</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果1Input" name="聖遺物優先するサブ効果Input">
-                                        <option></option>
-                                        <option>HP%</option>
-                                        <option>攻撃力%</option>
-                                        <option>防御力%</option>
-                                        <option>元素熟知</option>
-                                        <option>会心率</option>
-                                        <option>会心ダメージ</option>
-                                        <option>元素チャージ効率</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果1上昇値Input" name="聖遺物優先するサブ効果上昇値Input"></select>
-                                </td>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果1上昇回数Input" name="聖遺物優先するサブ効果上昇回数Input">
-                                        <option value="0">×0回</option>
-                                        <option value="4">×4回</option>
-                                        <option value="5">×5回</option>
-                                        <option value="6">×6回</option>
-                                        <option value="7">×7回</option>
-                                        <option value="8" selected>×8回</option>
-                                        <option value="9">×9回</option>
-                                        <option value="10">×10回</option>
-                                        <option value="11">×11回</option>
-                                        <option value="12">×12回</option>
-                                        <option value="13">×13回</option>
-                                        <option value="14">×14回</option>
-                                        <option value="15">×15回</option>
-                                    </select>
-                                </td>
-                                <td style="text-align: right;">
-                                    <input type="checkbox" id="厳選目安Toggle">
-                                    <label for="厳選目安Toggle">一括変更</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果2Input" name="聖遺物優先するサブ効果Input">
-                                        <option></option>
-                                        <option>HP%</option>
-                                        <option>攻撃力%</option>
-                                        <option>防御力%</option>
-                                        <option>元素熟知</option>
-                                        <option>会心率</option>
-                                        <option>会心ダメージ</option>
-                                        <option>元素チャージ効率</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果2上昇値Input" name="聖遺物優先するサブ効果上昇値Input"></select>
-                                </td>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果2上昇回数Input" name="聖遺物優先するサブ効果上昇回数Input">
-                                        <option value="0">×0回</option>
-                                        <option value="4">×4回</option>
-                                        <option value="5" selected>×5回</option>
-                                        <option value="6">×6回</option>
-                                        <option value="7">×7回</option>
-                                        <option value="8">×8回</option>
-                                        <option value="9">×9回</option>
-                                        <option value="10">×10回</option>
-                                        <option value="11">×11回</option>
-                                        <option value="12">×12回</option>
-                                        <option value="13">×13回</option>
-                                        <option value="14">×14回</option>
-                                        <option value="15">×15回</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select id="厳選目安Input" disabled>
-                                        <option selected></option>
-                                        <option value="1">厳選初心者</option>
-                                        <option value="2">厳選1ヶ月</option>
-                                        <option value="3">厳選3ヶ月</option>
-                                        <option value="4">日々石割り</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果3Input" name="聖遺物優先するサブ効果Input">
-                                        <option></option>
-                                        <option>HP%</option>
-                                        <option>攻撃力%</option>
-                                        <option>防御力%</option>
-                                        <option>元素熟知</option>
-                                        <option>会心率</option>
-                                        <option>会心ダメージ</option>
-                                        <option>元素チャージ効率</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果3上昇値Input" name="聖遺物優先するサブ効果上昇値Input"></select>
-                                </td>
-                                <td>
-                                    <select id="聖遺物優先するサブ効果3上昇回数Input" name="聖遺物優先するサブ効果上昇回数Input">
-                                        <option value="0">×0回</option>
-                                        <option value="4">×4回</option>
-                                        <option value="5" selected>×5回</option>
-                                        <option value="6">×6回</option>
-                                        <option value="7">×7回</option>
-                                        <option value="8">×8回</option>
-                                        <option value="9">×9回</option>
-                                        <option value="10">×10回</option>
-                                        <option value="11">×11回</option>
-                                        <option value="12">×12回</option>
-                                        <option value="13">×13回</option>
-                                        <option value="14">×14回</option>
-                                        <option value="15">×15回</option>
-                                    </select>
-                                </td>
-                                <td style="font-size: smaller; text-align: left; color: olive; width: 30%">
-                                    選択外のサブ効果は均等割り振り
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
                 </div>
             </div>
 
@@ -1250,32 +1296,6 @@
             <div class="pane7">
                 <hr>
 
-                <table id="artifact-set-detail" style="display: none;">
-                    <tr>
-                        <th colspan="2" id="artifactset1-name">blank</th>
-                    </tr>
-                    <tr>
-                        <td rowspan="1" style="width: 75px;">
-                            <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
-                                id="artifactset1-img">
-                        </td>
-                        <td>
-                            <div id="artifactset1-desc">blank</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" id="artifactset2-name">blank</th>
-                    </tr>
-                    <tr>
-                        <td rowspan="1" style="width: 75px;">
-                            <img width="75" height="75" src="images/artifacts/3_Adventurer.png" alt="冒険者"
-                                id="artifactset2-img">
-                        </td>
-                        <td>
-                            <div id="artifactset2-desc">blank</div>
-                        </td>
-                    </tr>
-                </table>
             </div>
 
             <div class="bottom-pane">

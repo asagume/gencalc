@@ -1715,7 +1715,7 @@ function calculateStatusObj(statusObj) {
     statusObj['元素チャージ効率'] += statusObj['聖遺物サブ効果元素チャージ効率'];
 
     // ステータス調整の入力値を計上します
-    $('[name="ステータス調整Input"]').each(function(index, element) {
+    $('[name="ステータス調整Input"]').each(function (index, element) {
         let statusName = element.id.replace('Input', '');
         statusObj[statusName] = Number(element.value);
     });
@@ -3224,8 +3224,6 @@ const キャラクターInputOnChange = function () {
         }
         appendOptionElements(選択可能武器セットObjVar, '#武器Input');
 
-        setup武器選択リスト();
-
         setupおすすめセット();
 
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
@@ -3334,7 +3332,7 @@ function setupWeaponImg(url, name) {
     }
 }
 
-function setup武器選択リスト() {
+function build武器選択リスト() {
     document.querySelector('#weapon-list').innerHTML = '';
     let ulElem = document.getElementById('weapon-list');
     Object.keys(武器MasterVar).forEach(kind => {
@@ -3397,16 +3395,31 @@ $(document).on('click', '#recomend-button', function () {
 });
 
 // 天賦画像 クリック処理
+$(document).on('click', '#talent1-button', function () {
+    const selector = '#talent1-detail';
+    let b = $(selector).prop('checked');
+    $(selector).prop('checked', !b);
+
+    $('.select-group1').removeClass('selected');
+});
 $(document).on('click', '#talent2-button', function () {
-    //    toggleShowHide('#talent2-detail');
+    const selector = '#talent2-detail';
+    let b = $(selector).prop('checked');
+    $(selector).prop('checked', !b);
+
+    $('.select-group1').removeClass('selected');
 });
 $(document).on('click', '#talent3-button', function () {
-    //    toggleShowHide('#talent3-detail');
+    const selector = '#talent3-detail';
+    let b = $(selector).prop('checked');
+    $(selector).prop('checked', !b);
+
+    $('.select-group1').removeClass('selected');
 });
 
 // 武器選択
 const selectWeapon = function () {
-    $('#weapon-detail-and-select').hide();
+    $('#weapon-detail-and-select').prop('checked', false);
     weaponSelected(this.alt);
 }
 function weaponSelected(name) {
@@ -3419,10 +3432,14 @@ $(document).on('change', '#武器レベルInput', 武器レベルInputOnChange);
 $(document).on('change', '#精錬ランクInput', 精錬ランクInputOnChange);
 // 武器画像 クリック処理
 $(document).on('click', '#weapon-button', function () {
-    toggleShowHide('#weapon-detail-and-select');
-    if ($('#artifact-area').is(':visible')) {
-        $('#artifact-area').hide();
+    const selector = '#weapon-detail-and-select';
+    let b = $(selector).prop('checked');
+    if (!b) {
+        build武器選択リスト();
     }
+    $(selector).prop('checked', !b);
+
+    $('.select-group1').removeClass('selected');
 });
 
 // 聖遺物
@@ -3473,17 +3490,74 @@ $(document).on('change', '#聖遺物サブ効果直接入力Toggle', 聖遺物�
 $(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
 $(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
 // 聖遺物画像 クリック処理
-$(document).on('click', '#artifactset1-button', function () {
-    toggleShowHide('#artifact-area');
-    if ($('#weapon-detail-and-select').is(':visible')) {
-        $('#weapon-detail-and-select').hide();
+var 選択中聖遺物セット番号Var = null;
+const selectArtifactSet = function () {
+    const selector = '#artifactset-detail';
+    $(selector).prop('checked', false);
+
+    $('.select-group1').removeClass('selected');
+
+    $('#聖遺物セット効果' + 選択中聖遺物セット番号Var + 'Input').val(this.alt);
+    聖遺物セットInputOnChange();
+}
+function build聖遺物セットリスト() {
+    const listId = 'artifactset-list';
+    if ($('#' + listId).find('li').length > 0) {
+        return;
     }
+    let ulElem = document.getElementById(listId);
+    Object.keys(聖遺物セット効果MasterVar).forEach(name => {
+        let myMasterObj = 聖遺物セット効果MasterVar[name];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
+        let srcUrl = myMasterObj['image'];
+
+        let liElem = document.createElement('li');
+        ulElem.appendChild(liElem);
+        let imgElem = document.createElement('img');
+        imgElem.className = 'star' + myMasterObj['レアリティ'];
+        imgElem.src = srcUrl;
+        imgElem.alt = name;
+        imgElem.width = 60;
+        imgElem.height = 60;
+        liElem.appendChild(imgElem);
+
+        imgElem.onclick = selectArtifactSet;
+    });
+}
+$(document).on('click', '#artifactset1-button', function () {
+    const selector = '#artifactset-detail';
+    if ($(this).hasClass('selected')) {
+        $(selector).prop('checked', false);
+        $(this).removeClass('selected');
+    } else {
+        $(selector).prop('checked', true);
+        $(this).addClass('selected');
+        選択中聖遺物セット番号Var = 1;
+        build聖遺物セットリスト();
+    }
+    $('#artifactset2-button').removeClass('selected');
 });
 $(document).on('click', '#artifactset2-button', function () {
-    toggleShowHide('#artifact-area');
-    if ($('#weapon-detail-and-select').is(':visible')) {
-        $('#weapon-detail-and-select').hide();
+    const selector = '#artifactset-detail';
+    if ($(this).hasClass('selected')) {
+        $(selector).prop('checked', false);
+        $(this).removeClass('selected');
+    } else {
+        $(selector).prop('checked', true);
+        $(this).addClass('selected');
+        選択中聖遺物セット番号Var = 2;
+        build聖遺物セットリスト();
     }
+    $('#artifactset1-button').removeClass('selected');
+});
+$(document).on('click', '#artifactstatus-button', function () {
+    const selector = '#artifactstatus-detail';
+    let b = $(selector).prop('checked');
+    $(selector).prop('checked', !b);
+
+    $('.select-group1').removeClass('selected');
 });
 
 
