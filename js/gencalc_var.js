@@ -371,7 +371,7 @@ function build武器所持状況List() {
             liElem.appendChild(divElem);
         });
 
-        $('#' + listElemId + ' li div').off('click').on('click', 武器所持状況OnClick);
+        $('#' + listElemId + ' li').off('click').on('click', 武器所持状況OnClick);
     });
 }
 
