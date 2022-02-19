@@ -344,7 +344,7 @@ function build武器所持状況List() {
             let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
 
             let liElem = document.createElement('li');
-            ulElem.id = name + '_所持状況Input';
+            liElem.id = name + '_所持状況Input';
             ulElem.appendChild(liElem);
 
             let imgElem = document.createElement('img');
@@ -371,7 +371,7 @@ function build武器所持状況List() {
             liElem.appendChild(divElem);
         });
 
-        $('#' + listElemId + ' li').off('click').on('click', 武器所持状況OnClick);
+        $(document).on('click', '#' + listElemId + ' li', 武器所持状況OnClick);
     });
 }
 
