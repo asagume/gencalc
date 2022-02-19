@@ -456,9 +456,16 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                 }
             } else {
                 let my対象カテゴリArr = valueObj['対象'].split('.');
-                if (my対象カテゴリArr[0] != detailObj['種類']) {
+                let my種類 = detailObj['種類'];
+                if (detailObj['ダメージバフ']) {
+                    if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['ダメージバフ'].replace('バフ', ''))) {
+                        my種類 = detailObj['ダメージバフ'].replace('バフ', '');
+                    }
+                }
+                if (my対象カテゴリArr[0] != my種類) {
                     return;
-                } if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
+                }
+                if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
                     return;
                 }
             }
@@ -508,6 +515,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     // 一時的にステータスを書き換えます。
     Object.keys(myステータス補正).forEach(statusName => {
         statusObj[statusName] += myステータス補正[statusName];
+        console.debug('ステータス補正', statusName, myステータス補正[statusName]);
     });
 
     let my計算Result;
@@ -1556,6 +1564,26 @@ const inputOnChangeResultUpdate = function (statusObj) {
         }
         myダメージ計算['通常攻撃'].push(calculateDamageFromDetail(statusObj, detailObj, 通常攻撃_元素Var));
     });
+    let my合計ダメージArr = null;
+    let my段数 = 0;
+    myダメージ計算['通常攻撃'].forEach(arr => {
+        if (arr[0].endsWith('段ダメージ')) {
+            if (my合計ダメージArr == null) {
+                my合計ダメージArr = JSON.parse(JSON.stringify(arr));
+            } else {
+                for (i = 2; i < my合計ダメージArr.length; i++) {
+                    if (arr[i]) {
+                        my合計ダメージArr[i] += arr[i];
+                    }
+                }
+            }
+            my段数++;
+        }
+    });
+    if (my段数 > 0) {
+        my合計ダメージArr[0] = '合計ダメージ';
+        myダメージ計算['通常攻撃'].splice(my段数, 0, my合計ダメージArr);
+    }
     console.debug('通常攻撃 summary');
     console.debug(myダメージ計算['通常攻撃']);
 
@@ -2973,39 +3001,39 @@ const キャラクターInputOnChange = function () {
         setupCharacterImg(url);
         setupTalentButton(url, 選択中キャラクターデータVar);
 
-        ['通常攻撃', '特殊通常攻撃'].forEach(category => {
-            if (category in 選択中キャラクターデータVar) {
-                if ('詳細' in 選択中キャラクターデータVar[category]) {
-                    if ($.isArray(選択中キャラクターデータVar[category]['詳細'])) {
-                        let my段数 = 0;
-                        let myNew数値 = '';
-                        let my元素 = null;
-                        選択中キャラクターデータVar[category]['詳細'].forEach(detailObj => {
-                            if (detailObj['名前'].endsWith('段ダメージ')) {
-                                my段数 = detailObj['名前'].replace('段ダメージ', '');
-                                if (myNew数値) {
-                                    myNew数値 += '+';
-                                }
-                                myNew数値 += '通常攻撃#' + detailObj['名前'];
-                                if ('元素' in detailObj) {
-                                    my元素 = detailObj['元素'];
-                                }
-                            }
-                        });
-                        if (myNew数値) {
-                            let myNewObj = {
-                                名前: '合計ダメージ',
-                                種類: '他所基準ダメージ',
-                                数値: myNew数値,
-                                元素: my元素
-                            }
-                            my段数 = Number(my段数);
-                            選択中キャラクターデータVar[category]['詳細'].splice(my段数, 0, myNewObj);
-                        }
-                    }
-                }
-            }
-        });
+        // ['通常攻撃', '特殊通常攻撃'].forEach(category => {
+        //     if (category in 選択中キャラクターデータVar) {
+        //         if ('詳細' in 選択中キャラクターデータVar[category]) {
+        //             if ($.isArray(選択中キャラクターデータVar[category]['詳細'])) {
+        //                 let my段数 = 0;
+        //                 let myNew数値 = '';
+        //                 let my元素 = null;
+        //                 選択中キャラクターデータVar[category]['詳細'].forEach(detailObj => {
+        //                     if (detailObj['名前'].endsWith('段ダメージ')) {
+        //                         my段数 = detailObj['名前'].replace('段ダメージ', '');
+        //                         if (myNew数値) {
+        //                             myNew数値 += '+';
+        //                         }
+        //                         myNew数値 += '通常攻撃#' + detailObj['名前'];
+        //                         if ('元素' in detailObj) {
+        //                             my元素 = detailObj['元素'];
+        //                         }
+        //                     }
+        //                 });
+        //                 if (myNew数値) {
+        //                     let myNewObj = {
+        //                         名前: '合計ダメージ',
+        //                         種類: '他所基準ダメージ',
+        //                         数値: myNew数値,
+        //                         元素: my元素
+        //                     }
+        //                     my段数 = Number(my段数);
+        //                     選択中キャラクターデータVar[category]['詳細'].splice(my段数, 0, myNewObj);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
 
         console.debug('選択中キャラクターデータVar');
         console.debug(選択中キャラクターデータVar);
