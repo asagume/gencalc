@@ -665,7 +665,7 @@ article select {
     background: #ccc;
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: 4%;
     transform: translateY(-50%);
 }
 
