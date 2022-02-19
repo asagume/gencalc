@@ -154,7 +154,7 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
             result = maxValue;
         }
     }
-    result = Math.floor(result * 100) / 100;
+//    result = Math.floor(result * 100) / 100;
     return result;
 }
 
