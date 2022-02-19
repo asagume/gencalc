@@ -3798,15 +3798,6 @@ $(document).on('click', '#元素スキルダメージResult', resultTableOnClick
 $(document).on('click', '#元素爆発ダメージResult', resultTableOnClickToggle);
 $(document).on('click', '#その他ダメージResult', resultTableOnClickToggle);
 
-const DAMAGE_RESULT_TABLE_ID_ARR = [
-    '通常攻撃ダメージResult',
-    '重撃ダメージResult',
-    '落下攻撃ダメージResult',
-    '元素スキルダメージResult',
-    '元素爆発ダメージResult',
-    'その他ダメージResult'
-];
-
 const elementalReactionOnChange = function () {
     let elementalReaction = $('input[name="元素反応Input"]:checked').val();
     DAMAGE_RESULT_TABLE_ID_ARR.forEach(tableId => {

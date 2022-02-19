@@ -1,3 +1,12 @@
+const DAMAGE_RESULT_TABLE_ID_ARR = [
+    '通常攻撃ダメージResult',
+    '重撃ダメージResult',
+    '落下攻撃ダメージResult',
+    '元素スキルダメージResult',
+    '元素爆発ダメージResult',
+    'その他ダメージResult'
+];
+
 // マスターデータ
 var キャラクターMasterVar;
 var 武器MasterVar = {

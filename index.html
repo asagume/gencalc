@@ -1454,6 +1454,9 @@
 
             if (window.innerWidth > 768) {
                 DAMAGE_RESULT_TABLE_ID_ARR.forEach(entry => {
+                    if (entry.startsWith('落下攻撃ダメージ')) {
+                        return;
+                    }
                     resultTableVisibilityMap.set(entry, true);
                 });
                 elementalReactionOnChange();
