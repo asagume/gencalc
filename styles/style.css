@@ -334,6 +334,7 @@ legend {
     display: none;
     width: 100%;
     line-height: normal;
+    margin-top: 1rem;
     padding-top: 1rem;
 }
 
@@ -573,7 +574,7 @@ article select {
 /* PANE4 */
 .pane4 {
     grid-area: pane4;
-    margin: 1rem 0.2rem;
+    margin: 0 0.2rem 1rem;
 }
 
 .talent-detail {
