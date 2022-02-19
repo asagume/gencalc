@@ -199,7 +199,7 @@ td {
     top: -4rem;
     left: 0.5rem;
     z-index: 9999;
-    text-shadow: 1px 1px 2px black;
+    text-shadow: 0px 1px 2px black;
     white-space: nowrap;
     background-color: black;
     padding: 0.5rem 1.5rem;
@@ -317,9 +317,8 @@ legend {
     border: 1px solid gray;
 }
 
-/* text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown; */
 .tab-button:checked+label {
-    text-shadow: 1px 1px 1px black;
+    text-shadow: 0px 1px 2px black;
     background: linear-gradient(to top, #dcc751, #bba116);
 }
 
@@ -429,6 +428,7 @@ td input[type="text"] {
     position: relative;
     width: 100%;
     height: 62px;
+    text-shadow: 0px 1px 2px black;
 }
 
 #artifactstatus-button .left-icon {
@@ -533,7 +533,6 @@ article select {
 
 #artifactsub-detail th {
     margin-top: 1rem;
-    font-size: 2rem;
 }
 
 #artifactsub-detail legend {
@@ -769,7 +768,7 @@ article select {
     height: 3.5rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(to top, #dcc751, #bba116);
-    text-shadow: 1px 1px 1px black;
+    text-shadow: 0px 1px 2px black;
     border-radius: 0.5rem;
     border-color: #999;
     border-style: solid;
@@ -808,19 +807,19 @@ label.elemental-reaction {
     padding: 0.3rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(to top, #3d3d3b, #141414);
-    text-shadow: 0.1rem 0.1rem 0.1rem rgb(40, 80, 80), -0.1rem -0.1rem 0.1rem rgb(40, 80, 80);
+    text-shadow: 0px 1px 2px black;
     border: 1px solid gray;
     border-radius: 5px;
 }
 
 input[name="元素反応Input"]+label {
     background: linear-gradient(to top, #ad5b18, #55290b);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
+    text-shadow: 0px 1px 2px black;
 }
 
 input[name="元素反応Input"]:checked+label {
     background: linear-gradient(to top, #ecc862, #978310);
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 0.2rem brown, 0 0 0.2rem brown;
+    text-shadow: 0px 1px 2px black;
 }
 
 table.result {
@@ -834,7 +833,7 @@ table.result {
 th.category {
     width: 12rem;
     font-weight: bold;
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    text-shadow: 0px 1px 2px black;
     padding-left: 0.5rem;
 }
 
@@ -969,7 +968,7 @@ th.category {
     left: 0.5rem;
     display: none;
     z-index: 9999;
-    text-shadow: 1px 1px 2px black;
+    text-shadow: 0px 1px 2px black;
     white-space: nowrap;
     background-color: black;
     padding: 0.5rem 1.5rem;
@@ -995,7 +994,7 @@ th.category {
     background: transparent;
     color: blanchedalmond;
     font-size: 24px;
-    text-shadow: 0.1rem 0.1rem 0.2rem black, 0 0 1rem brown, 0 0 0.2rem brown;
+    text-shadow: 0px 1px 2px black;
     margin: 0;
 }
 
