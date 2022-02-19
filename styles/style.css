@@ -193,23 +193,6 @@ td {
     border-width: 0.2rem;
 }
 
-.horizontal-list ul li div {
-    display: none;
-    position: absolute;
-    top: -4rem;
-    left: 0.5rem;
-    z-index: 9999;
-    text-shadow: 0px 1px 2px black;
-    white-space: nowrap;
-    background-color: black;
-    padding: 0.5rem 1.5rem;
-    border-radius: 3rem;
-}
-
-.horizontal-list ul li:hover div {
-    display: block;
-}
-
 .horizontal-list ul li img.element {
     position: absolute;
     top: 0.2rem;
@@ -275,6 +258,23 @@ input[type="checkbox"]:disabled+label {
 
 .disabled {
     color: gray;
+}
+
+.tooltip {
+    position: absolute;
+    top: -4rem;
+    left: 0.5rem;
+    display: none;
+    z-index: 9999;
+    text-shadow: 0px 1px 2px black;
+    white-space: nowrap;
+    background-color: black;
+    padding: 0.5rem 1.5rem;
+    border-radius: 3rem;
+}
+
+:hover>.tooltip {
+    display: block;
 }
 
 fieldset {
@@ -393,6 +393,7 @@ legend {
 }
 
 .image-button {
+    position: relative;
     width: 100%;
     padding: 0;
     border-radius: 15px;
@@ -960,23 +961,6 @@ th.category {
     display: inline-block;
     border-style: double;
     border-width: 0.2rem;
-}
-
-.my-list li div {
-    position: absolute;
-    top: -4rem;
-    left: 0.5rem;
-    display: none;
-    z-index: 9999;
-    text-shadow: 0px 1px 2px black;
-    white-space: nowrap;
-    background-color: black;
-    padding: 0.5rem 1.5rem;
-    border-radius: 3rem;
-}
-
-.my-list li:hover div {
-    display: block;
 }
 
 .my-list li img {

@@ -270,6 +270,7 @@ function buildキャラクター所持状況List() {
         }
 
         let divElem = document.createElement('div');
+        divElem.className = 'tooltip';
         divElem.innerHTML = name;
         liElem.appendChild(divElem);
     });
@@ -356,6 +357,7 @@ function build武器所持状況List() {
             }
 
             let divElem = document.createElement('div');
+            divElem.className = 'tooltip';
             divElem.innerHTML = name;
             liElem.appendChild(divElem);
         });

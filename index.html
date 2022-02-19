@@ -83,10 +83,11 @@
                         <td colspan="2" rowspan="4">
                             <button type="button" class="image-button" id="character-button">
                                 <img width="150" height="150" src="" alt="キャラクター">
+                                <div class="tooltip" id="character-button-tt">キャラクター</div>
                             </button>
                         </td>
                         <td rowspan="5" style="width: 1rem;"></td>
-                        <td colspan="2" id="character-name" style="vertical-align: bottom;">旅人(風)</td>
+                        <td colspan="2" id="character-name" style="vertical-align: bottom;"></td>
                     </tr>
                     <tr>
                         <td>
@@ -140,12 +141,14 @@
                         <td colspan="2" rowspan="2">
                             <button type="button" class="image-button" id="weapon-button">
                                 <img width="120" height="120" src="" alt="武器">
+                                <div class="tooltip" id="weapon-button-tt">武器</div>
                             </button>
                         </td>
                         <td rowspan="3" style="width: 1rem;"></td>
                         <td>
                             <button type="button" class="image-button" id="talent1-button">
                                 <img width="60" height="60" src="" alt="通常攻撃">
+                                <div class="tooltip" id="talent1-button-tt">通常攻撃</div>
                             </button>
                             <select id="通常攻撃レベルInput">
                                 <option value="1">Lv.1</option>
@@ -164,6 +167,7 @@
                         <td>
                             <button type="button" class="image-button" id="talent2-button">
                                 <img width="60" height="60" src="" alt="元素スキル">
+                                <div class="tooltip" id="talent2-button-tt">元素スキル</div>
                             </button>
                             <select id="元素スキルレベルInput">
                                 <option value="1">Lv.1</option>
@@ -184,6 +188,7 @@
                         <td>
                             <button type="button" class="image-button" id="talent3-button">
                                 <img width="60" height="60" src="" alt="元素爆発">
+                                <div class="tooltip" id="talent3-button-tt">元素爆発</div>
                             </button>
                             <select id="元素爆発レベルInput">
                                 <option value="1">Lv.1</option>
@@ -205,12 +210,14 @@
                     <tr>
                         <td rowspan="2">
                             <button type="button" class="image-button select-group1" id="artifactset1-button">
-                                <img width="60" height="60" src="" alt="聖遺物セット1">
+                                <img width="60" height="60" src="" alt="聖遺物セット効果1">
+                                <div class="tooltip" id="artifactset1-button-tt">聖遺物セット効果1</div>
                             </button>
                         </td>
                         <td rowspan="2">
                             <button type="button" class="image-button select-group1" id="artifactset2-button">
-                                <img width="60" height="60" src="" alt="聖遺物セット2">
+                                <img width="60" height="60" src="" alt="聖遺物セット効果2">
+                                <div class="tooltip" id="artifactset2-button-tt">聖遺物セット効果2</div>
                             </button>
                         </td>
                         <td rowspan="2">
@@ -219,6 +226,7 @@
                                 <img width="32" height="32" src="images/artifact.png" class="right-icon">
                                 <p>SCORE</p>
                                 <p id="artifact-score"></p>
+                                <div class="tooltip" id="artifactset2-button-tt">聖遺物ステータス</div>
                             </button>
                         </td>
                     </tr>

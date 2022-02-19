@@ -3293,6 +3293,7 @@ function buildキャラクター選択リスト(opt_elementType = null) {
         liElem.appendChild(img2Elem);
 
         let divElem = document.createElement('div');
+        divElem.className = 'tooltip';
         divElem.innerHTML = name;
         liElem.appendChild(divElem);
 
@@ -3359,6 +3360,7 @@ function build武器選択リスト() {
             liElem.appendChild(imgElem);
 
             let divElem = document.createElement('div');
+            divElem.className = 'tooltip';
             divElem.innerHTML = name;
             liElem.appendChild(divElem);
 
@@ -3533,6 +3535,7 @@ function build聖遺物セットリスト() {
         liElem.appendChild(imgElem);
 
         let divElem = document.createElement('div');
+        divElem.className = 'tooltip';
         divElem.innerHTML = name;
         liElem.appendChild(divElem);
 
