@@ -196,7 +196,7 @@ td {
 .horizontal-list ul li div {
     display: none;
     position: absolute;
-    bottom: -4rem;
+    top: -4rem;
     left: 0.5rem;
     z-index: 9999;
     text-shadow: 1px 1px 2px black;
@@ -965,7 +965,7 @@ th.category {
 
 .my-list li div {
     position: absolute;
-    bottom: -4rem;
+    top: -4rem;
     left: 0.5rem;
     display: none;
     z-index: 9999;
