@@ -1031,15 +1031,6 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
     }
 }
 
-const ELEMENT_TD_CLASS_MAP = new Map([
-    ['炎', 'pyro'],
-    ['水', 'hydro'],
-    ['風', 'aero'],
-    ['雷', 'electro'],
-    ['氷', 'cryo'],
-    ['岩', 'geo']
-]);
-
 // ダメージ計算結果テーブルを表示します
 const displayResultTable = function (tableId, categoryName, damageResultArr) {
     let tableElem = document.getElementById(tableId);
@@ -2239,7 +2230,7 @@ function setup聖遺物セット効果説明() {
             $('#artifactset1-img').attr('src', 'images/artifacts/3_Adventurer.png');
         }
         $('#artifactset1-img').attr('alt', myInput1Value);
-        $('#artifactset1-desc').html(get説明Html(聖遺物セット効果MasterVar[myInput1Value]['2セット効果']));
+        $('#artifactset1-desc').html(makeHtml(聖遺物セット効果MasterVar[myInput1Value]['2セット効果']));
     }
     let myInput2Value = $('#聖遺物セット効果2Input').val();
     let mySet2Name = myInput2Value;
@@ -2256,11 +2247,11 @@ function setup聖遺物セット効果説明() {
         if (myInput1Value == myInput2Value) {
             mySet2Name += ' 4セット効果';
             if ('4セット効果' in 聖遺物セット効果MasterVar[myInput2Value]) {
-                $('#artifactset2-desc').html(get説明Html(聖遺物セット効果MasterVar[myInput2Value]['4セット効果']));
+                $('#artifactset2-desc').html(makeHtml(聖遺物セット効果MasterVar[myInput2Value]['4セット効果']));
             }
         } else {
             mySet2Name += ' 2セット効果';
-            $('#artifactset2-desc').html(get説明Html(聖遺物セット効果MasterVar[myInput2Value]['2セット効果']));
+            $('#artifactset2-desc').html(makeHtml(聖遺物セット効果MasterVar[myInput2Value]['2セット効果']));
         }
     }
     $('#artifactset1-name').html(mySet1Name);
@@ -2593,74 +2584,187 @@ const appendOptionElements = function (data, selector) {
 };
 
 // 天賦説明設定
-function setupキャラクター天賦画像説明() {
-    let url = キャラクターMasterVar[$('#キャラクターInput').val()]['import'];
-    // 画像と説明
-    $('#elemental-skill-img').prop('alt', '');
-    $('#elemental-skill-duration').html('-');
-    $('#elemental-skill-cd').html('-');
-    $('#elemental-skill-energy').html('-');
-    $('#elemental-skill-desc').html('');
+function build天賦詳細レベル変動() {
+    $('#elemental-skill-stat').html('');
+    $('#elemental-burst-stat').html('');
     if ('元素スキル' in 選択中キャラクターデータVar) {
-        if ('名前' in 選択中キャラクターデータVar['元素スキル']) {
-            $('#elemental-skill-img').prop('alt', 選択中キャラクターデータVar['元素スキル']['名前']);
-        }
-        if ('継続時間' in 選択中キャラクターデータVar['元素スキル']) {
-            let value = 選択中キャラクターデータVar['元素スキル']['継続時間'];
-            if ('元素スキル' in ステータス詳細ObjVar['ダメージ計算']) {
-                if ('継続時間' in ステータス詳細ObjVar['ダメージ計算']['元素スキル']) {
-                    value = ステータス詳細ObjVar['ダメージ計算']['元素スキル']['継続時間'];
+        const obj = 選択中キャラクターデータVar['元素スキル'];
+        if ('詳細' in obj) {
+            const re = new RegExp('\\d+\\.\\d+', 'g');
+            let innerHtml = '';
+            obj['詳細'].forEach(valueObj => {
+                if ('名前' in valueObj) {
+                    innerHtml += '<tr>';
+                    innerHtml += '<th>';
+                    innerHtml += valueObj['名前'];
+                    innerHtml += '</th>';
+                    innerHtml += '<td>';
+                    if ('数値' in valueObj) {
+                        let my数値;
+                        if ($.isPlainObject(valueObj['数値'])) {
+                            my数値 = valueObj['数値'][$('#元素スキルレベルInput').val()];
+                        } else {
+                            my数値 = valueObj['数値'];
+                        }
+                        if (my数値 instanceof String || typeof (my数値) == 'string') {
+                            innerHtml += my数値.replace(re, (match) => {
+                                return String(Math.round(Number(match) * 10) / 10);
+                            });
+                        } else {
+                            innerHtml += my数値;
+                        }
+                    }
+                    innerHtml += '</td>';
+                    innerHtml += '</tr>';
                 }
+            });
+            if (innerHtml) {
+                innerHtml = '<table>' + innerHtml + '</table>';
+            }
+            $('#elemental-skill-stat').html(innerHtml);
+        }
+    }
+    if ('元素爆発' in 選択中キャラクターデータVar) {
+        const obj = 選択中キャラクターデータVar['元素爆発'];
+        if ('詳細' in obj) {
+            const re = new RegExp('\\d+\\.\\d+', 'g');
+            let innerHtml = '';
+            obj['詳細'].forEach(valueObj => {
+                if ('名前' in valueObj) {
+                    innerHtml += '<tr>';
+                    innerHtml += '<th>';
+                    innerHtml += valueObj['名前'];
+                    innerHtml += '</th>';
+                    innerHtml += '<td>';
+                    if ('数値' in valueObj) {
+                        let my数値;
+                        if ($.isPlainObject(valueObj['数値'])) {
+                            my数値 = valueObj['数値'][$('#元素爆発レベルInput').val()];
+                        } else {
+                            my数値 = valueObj['数値'];
+                        }
+                        if (my数値 instanceof String || typeof (my数値) == 'string') {
+                            innerHtml += my数値.replace(re, (match) => {
+                                return String(Math.round(Number(match) * 10) / 10);
+                            });
+                        } else {
+                            innerHtml += my数値;
+                        }
+                    }
+                    innerHtml += '</td>';
+                    innerHtml += '</tr>';
+                }
+            });
+            if (innerHtml) {
+                innerHtml = '<table>' + innerHtml + '</table>';
+            }
+            $('#elemental-burst-stat').html(innerHtml);
+        }
+    }
+}
+
+function build天賦詳細() {
+    let url = キャラクターMasterVar[$('#キャラクターInput').val()]['import'];
+    let urlArr = url.split('/');
+    let dirName = urlArr[urlArr.length - 1].replace('.json', '');
+
+    $('#elemental-skill-name').html('');
+    $('#elemental-skill-img').prop('src', 'images/characters/' + dirName + '/ElementalSkill.png');
+    $('#elemental-skill-img').prop('alt', '');
+    $('#elemental-skill-duration').html('');
+    $('#elemental-skill-cd').html('');
+    $('#elemental-skill-particle').html('');
+    $('#elemental-skill-desc').html('');
+
+    $('#elemental-burst-name').html('');
+    $('#elemental-burst-img').prop('src', 'images/characters/' + dirName + '/ElementalBurst.png');
+    $('#elemental-burst-img').prop('alt', '');
+    $('#elemental-burst-duration').html('');
+    $('#elemental-burst-cd').html('');
+    $('#elemental-burst-energy-cost').html('');
+    $('#elemental-burst-desc').html('');
+
+    if ('元素スキル' in 選択中キャラクターデータVar) {
+        const obj = 選択中キャラクターデータVar['元素スキル'];
+        let resultObj = {};
+        if ('元素スキル' in ステータス詳細ObjVar['ダメージ計算']) {
+            resultObj = ステータス詳細ObjVar['ダメージ計算']['元素スキル'];
+        }
+        if ('名前' in obj) {
+            $('#elemental-skill-name').html(obj['名前']);
+            $('#elemental-skill-img').prop('alt', obj['名前']);
+        }
+        if ('継続時間' in obj) {
+            let value = obj['継続時間'];
+            if ('継続時間' in resultObj) {
+                value = resultObj['継続時間'];
+            }
+            if ($.isNumeric(value)) {
+                value = value.toFixed(1) + '秒';
             }
             $('#elemental-skill-duration').html(value);
         }
-        if ('クールタイム' in 選択中キャラクターデータVar['元素スキル']) {
-            let value = 選択中キャラクターデータVar['元素スキル']['クールタイム'];
-            if ('元素スキル' in ステータス詳細ObjVar['ダメージ計算']) {
-                if ('クールタイム' in ステータス詳細ObjVar['ダメージ計算']['元素スキル']) {
-                    value = ステータス詳細ObjVar['ダメージ計算']['元素スキル']['クールタイム'];
-                }
+        if ('クールタイム' in obj) {
+            let value = obj['クールタイム'];
+            if ('クールタイム' in resultObj) {
+                value = resultObj;
+            }
+            if ($.isNumeric(value)) {
+                value = value.toFixed(1) + '秒';
             }
             $('#elemental-skill-cd').html(value);
         }
-        if ('説明' in 選択中キャラクターデータVar['元素スキル']) {
-            $('#elemental-skill-desc').html(get説明Html(選択中キャラクターデータVar['元素スキル']));
+        if ('粒子生成数' in obj) {
+            let my粒子生成数 = obj['粒子生成数'];
+            if ($.isNumeric(my粒子生成数)) {
+                my粒子生成数 = my粒子生成数 + '個';
+            }
+            $('#elemental-skill-particle').html(makeHtml(my粒子生成数));
+        }
+        if ('説明' in obj) {
+            $('#elemental-skill-desc').html(makeHtml(obj));
         }
     }
-    $('#elemental-burst-img').prop('alt', '');
-    $('#elemental-burst-duration').html('-');
-    $('#elemental-burst-cd').html('-');
-    $('#elemental-burst-energy-cost').html('-');
-    $('#elemental-burst-desc').html('');
+
     if ('元素爆発' in 選択中キャラクターデータVar) {
-        if ('名前' in 選択中キャラクターデータVar['元素爆発']) {
-            $('#elemental-burst-img').prop('alt', 選択中キャラクターデータVar['元素爆発']['名前']);
+        const obj = 選択中キャラクターデータVar['元素爆発'];
+        let resultObj = {};
+        if ('元素爆発' in ステータス詳細ObjVar['ダメージ計算']) {
+            resultObj = ステータス詳細ObjVar['ダメージ計算']['元素爆発'];
         }
-        if ('継続時間' in 選択中キャラクターデータVar['元素爆発']) {
-            $('#elemental-burst-duration').html(ステータス詳細ObjVar['ダメージ計算']['元素爆発']['継続時間']);
+        if ('名前' in obj) {
+            $('#elemental-burst-name').html(obj['名前']);
+            $('#elemental-burst-img').prop('alt', obj['名前']);
         }
-        if ('クールタイム' in 選択中キャラクターデータVar['元素爆発']) {
-            let value = 選択中キャラクターデータVar['元素爆発']['クールタイム'];
-            if ('元素爆発' in ステータス詳細ObjVar['ダメージ計算']) {
-                if ('クールタイム' in ステータス詳細ObjVar['ダメージ計算']['元素爆発']) {
-                    value = ステータス詳細ObjVar['ダメージ計算']['元素爆発']['クールタイム'];
-                }
+        if ('継続時間' in obj) {
+            let value = obj['継続時間'];
+            if ('継続時間' in resultObj) {
+                value = resultObj['継続時間'];
+            }
+            if ($.isNumeric(value)) {
+                value = value.toFixed(1) + '秒';
+            }
+            $('#elemental-burst-duration').html(value);
+        }
+        if ('クールタイム' in obj) {
+            let value = obj['クールタイム'];
+            if ('クールタイム' in resultObj) {
+                value = resultObj;
+            }
+            if ($.isNumeric(value)) {
+                value = value.toFixed(1) + '秒';
             }
             $('#elemental-burst-cd').html(value);
         }
-        if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) {
-            let value = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
-            if ('元素爆発' in ステータス詳細ObjVar['ダメージ計算']) {
-                if ('元素エネルギー' in ステータス詳細ObjVar['ダメージ計算']['元素爆発']) {
-                    value = ステータス詳細ObjVar['ダメージ計算']['元素爆発']['元素エネルギー'];
-                }
-            }
-            $('#elemental-burst-energy-cost').html(value);
+        if ('元素エネルギー' in obj) {
+            $('#elemental-burst-energy-cost').html(obj['元素エネルギー']);
         }
-        if ('説明' in 選択中キャラクターデータVar['元素爆発']) {
-            $('#elemental-burst-desc').html(get説明Html(選択中キャラクターデータVar['元素爆発']));
+        if ('説明' in obj) {
+            $('#elemental-burst-desc').html(makeHtml(obj));
         }
     }
+
+    build天賦詳細レベル変動();
 }
 
 // 武器説明設定
@@ -2883,6 +2987,7 @@ const おすすめセットInputOnChange = function () {
 const 天賦レベルInputOnChange = function () {
     setupBaseDamageDetailDataCharacter();
     inputOnChangeOptionUpdate();
+    build天賦詳細レベル変動();
 };
 
 // 命ノ星座 変更イベント
@@ -2911,15 +3016,44 @@ function get説明(obj) {
     return result;
 }
 
-function get説明Html(obj) {
+function makeHtml(obj) {
     let result = '';
-    if ('説明' in obj) {
-        if ($.isArray(obj['説明'])) {
-            result += obj['説明'].join('<br>');
-        } else if (obj['説明'] instanceof String || typeof (obj['説明']) == 'string') {
-            result = obj['説明'];
+    let desc;
+    if ($.isPlainObject(obj)) {
+        if (!('説明' in obj)) {
+            return '';
         }
+        desc = obj['説明'];
+    } else {
+        desc = obj;
     }
+
+    if ($.isArray(desc)) {
+        desc.forEach(line => {
+            if (line.startsWith('「') && line.endsWith('」')) {
+                result += '<span class="em">' + line + '</span>';
+            } else {
+                result += line;
+            }
+            result += '<br>';
+        });
+    } else if (desc instanceof String || typeof (desc) == 'string') {
+        result = desc;
+    }
+
+    ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
+        const elementRe = new RegExp(key + '(元素)?(範囲)?ダメージ', 'g');
+        result = result.replace(elementRe, '<span class="' + value + '">$&</span>');
+    });
+    const emStrongRe = new RegExp('(\\*\\*\\*|___)([^\\*_]+?)(\\*\\*\\*|___)', 'g');
+    result = result.replace(emStrongRe, '<span class="em-strong">$2</span>');
+    const strongRe = new RegExp('(\\*\\*|__)([^\\*_]+?)(\\*\\*|__)', 'g');
+    result = result.replace(strongRe, '<span class="strong">$2</span>');
+    const emRe = new RegExp('(\\*|_)([^\\*_]+?)(\\*|_)', 'g');
+    result = result.replace(emRe, '<span class="em">$2</span>');
+
+    result = result.replace('\n', '<br>');
+
     return result;
 }
 
@@ -3199,7 +3333,7 @@ const キャラクターInputOnChange = function () {
                 infoHtml += '第' + key + '重 ' + 選択中キャラクターデータVar['命ノ星座'][key]['名前'];
                 infoHtml += '</dt>';
                 infoHtml += '<dd>';
-                infoHtml += get説明Html(選択中キャラクターデータVar['命ノ星座'][key]);
+                infoHtml += makeHtml(選択中キャラクターデータVar['命ノ星座'][key]);
                 infoHtml += '</dd>';
             });
             infoHtml += '</dl>';
@@ -3226,7 +3360,7 @@ const キャラクターInputOnChange = function () {
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
         setupキャラクター説明();
-        setupキャラクター天賦画像説明();
+        build天賦詳細();
 
         inputOnChangeEnemyUpdate(ステータス詳細ObjVar); // 敵
         if (おすすめセットArrVar.length > 0) {

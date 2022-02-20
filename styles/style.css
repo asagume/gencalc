@@ -578,23 +578,37 @@ article select {
 }
 
 .talent-detail {
-    margin: 1rem;
-    padding: 1rem;
-    text-align: left;
+    width: calc(100% - 3rem);
+    margin: 1rem auto;
     border: 1px solid gray;
     border-radius: 1rem;
 }
 
 .talent-detail th {
     min-width: 10rem;
-    padding: auto 1rem;
     text-align: left;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .talent-detail td {
     min-width: 10rem;
-    padding: auto 1rem;
+    text-align: right;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid gray;
+}
+
+.talent-detail .description {
+    padding: 1rem;
     text-align: left;
+}
+
+.talent-detail .stat {
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+    border: none;
 }
 
 .description {
@@ -602,6 +616,20 @@ article select {
     text-align: left;
 }
 
+span.em {
+    font-style: italic;
+    color: #978310;
+}
+
+span.strong {
+    font-weight: bold;
+    color: #e7d56f;
+}
+
+span.em-strong {
+    font-style: italic;
+    font-weight: bold;
+}
 
 /* PANE5*/
 .pane5 {

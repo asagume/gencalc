@@ -225,6 +225,15 @@ const toggleローカルストレージクリア = function () {
 
 var キャラクター所持状況ObjVar = {}
 
+const ELEMENT_TD_CLASS_MAP = new Map([
+    ['炎', 'pyro'],
+    ['水', 'hydro'],
+    ['風', 'aero'],
+    ['雷', 'electro'],
+    ['氷', 'cryo'],
+    ['岩', 'geo']
+]);
+
 const ELEMENT_IMG_SRC_MAP = new Map([
     ['炎', 'images/element_pyro.png'],
     ['水', 'images/element_hydro.png'],
