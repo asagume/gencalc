@@ -181,19 +181,23 @@ td {
     padding-inline-end: 0;
 }
 
-.horizontal-list ul li {
+.horizontal-list li {
     position: relative;
     display: inline-block;
     margin: 0;
 }
 
-.horizontal-list ul li img {
+.horizontal-list li.selected {
+    background-color: yellow;
+}
+
+.horizontal-list li img {
     vertical-align: top;
     border-style: double;
     border-width: 0.2rem;
 }
 
-.horizontal-list ul li img.element {
+.horizontal-list li img.element {
     position: absolute;
     top: 0.2rem;
     left: 0.2rem;
