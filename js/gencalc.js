@@ -3073,8 +3073,12 @@ function makeHtml(obj) {
     }
 
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
-        const elementRe = new RegExp(key + '(元素)?(範囲)?ダメージ', 'g');
-        result = result.replace(elementRe, '<span class="' + value + '">$&</span>');
+        const elementRe1 = new RegExp(key + '(元素)?(範囲)?ダメージ', 'g');
+        const elementRe2 = new RegExp(key + '元素付与', 'g');
+        const elementRe3 = new RegExp(key + '元素付着', 'g');
+        result = result.replace(elementRe1, '<span class="' + value + '">$&</span>');
+        result = result.replace(elementRe2, '<span class="' + value + '">$&</span>');
+        result = result.replace(elementRe3, '<span class="' + value + '">$&</span>');
     });
     // ***強調*** em-strong
     const emStrongRe = new RegExp('(\\*\\*\\*|___)([^\\*_]+?)(\\*\\*\\*|___)', 'g');
