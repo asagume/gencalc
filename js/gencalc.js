@@ -3074,12 +3074,23 @@ function makeHtml(obj) {
 
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
         const elementRe1 = new RegExp(key + '(元素)?(範囲)?ダメージ', 'g');
-        const elementRe2 = new RegExp(key + '元素付与', 'g');
-        const elementRe3 = new RegExp(key + '元素付着', 'g');
+        const elementRe2 = new RegExp(key + '元素耐性', 'g');
+        const elementRe3 = new RegExp(key + '元素付与', 'g');
+        const elementRe4 = new RegExp(key + '元素付着', 'g');
         result = result.replace(elementRe1, '<span class="' + value + '">$&</span>');
         result = result.replace(elementRe2, '<span class="' + value + '">$&</span>');
         result = result.replace(elementRe3, '<span class="' + value + '">$&</span>');
+        result = result.replace(elementRe4, '<span class="' + value + '">$&</span>');
     });
+    // 湿潤
+    const wetRe = /湿潤/g;
+    result = result.replace(wetRe, '<span class="hydro">$&</span>');
+    // 感電
+    const shockRe = /感電/g;
+    result = result.replace(shockRe, '<span class="electro">$&</span>');
+    // 岩元素創造物
+    const geoConstructRe = /岩元素創造物/g;
+    result = result.replace(geoConstructRe, '<span class="geo">$&</span>');
     // ***強調*** em-strong
     const emStrongRe = new RegExp('(\\*\\*\\*|___)([^\\*_]+?)(\\*\\*\\*|___)', 'g');
     result = result.replace(emStrongRe, '<span class="em-strong">$2</span>');
