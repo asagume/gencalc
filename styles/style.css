@@ -468,6 +468,14 @@ td input[type="text"] {
     margin: auto;
 }
 
+.right-icon+span {
+    display: block;
+}
+
+.right-icon+span+span {
+    display: block;
+}
+
 #artifactstatus-button p {
     position: absolute;
     top: calc(50% - 2.5rem);
@@ -486,20 +494,6 @@ p#artifact-score {
 
 button {
     color: blanchedalmond;
-}
-
-section {
-    vertical-align: baseline;
-}
-
-article {
-    display: inline-block;
-    vertical-align: bottom;
-}
-
-article select {
-    width: 100%;
-    text-align: center;
 }
 
 #weapon-detail-and-select {
@@ -546,6 +540,10 @@ article select {
 .columns-3 .input-item {
     display: inline-block;
     width: calc(100% / 3 - 1rem);
+}
+
+.input-item select {
+    width: 100%;
 }
 
 .columns-3 label {
@@ -687,7 +685,7 @@ span.em-strong {
     margin: 0;
 }
 
-.status thead {
+tr.rowheader {
     text-align: center;
 }
 
@@ -696,10 +694,9 @@ span.em-strong {
     border-spacing: 0;
 }
 
-.status thead th {
+.rowheader th {
     background-color: #141414;
     vertical-align: middle;
-    font-size: 2.2rem;
 }
 
 .toggle-switch {
@@ -802,6 +799,10 @@ span.em-strong {
     display: block;
     text-align: left;
     padding-left: 1rem;
+}
+
+#enemy .input-item {
+    display: inline-block;
 }
 
 /* RESULT PANE */

@@ -20,7 +20,7 @@
     <link href="styles/base-style.css" rel="stylesheet" />
     <link href="styles/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
     <script src="js/gencalc_var.js"></script>
     <script src="js/gencalc_core.js"></script>
     <script src="js/gencalc.js"></script>
@@ -82,8 +82,10 @@
                     <tr>
                         <td colspan="2" rowspan="4">
                             <button type="button" class="image-button" id="character-button">
-                                <img width="150" height="150" src="" alt="キャラクター">
-                                <div class="tooltip" id="character-button-tt">キャラクター</div>
+                                <img width="150" height="150"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="キャラクター">
+                                <span class="tooltip" id="character-button-tt">キャラクター</span>
                             </button>
                         </td>
                         <td rowspan="5" style="width: 1rem;"></td>
@@ -140,15 +142,19 @@
                     <tr>
                         <td colspan="2" rowspan="2">
                             <button type="button" class="image-button" id="weapon-button">
-                                <img width="120" height="120" src="" alt="武器">
-                                <div class="tooltip" id="weapon-button-tt">武器</div>
+                                <img width="120" height="120"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="武器">
+                                <span class="tooltip" id="weapon-button-tt">武器</span>
                             </button>
                         </td>
                         <td rowspan="3" style="width: 1rem;"></td>
                         <td>
                             <button type="button" class="image-button" id="talent1-button">
-                                <img width="60" height="60" src="" alt="通常攻撃">
-                                <div class="tooltip" id="talent1-button-tt">通常攻撃</div>
+                                <img width="60" height="60"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="通常攻撃">
+                                <span class="tooltip" id="talent1-button-tt">通常攻撃</span>
                             </button>
                             <select id="通常攻撃レベルInput">
                                 <option value="1">Lv.1</option>
@@ -166,8 +172,10 @@
                         </td>
                         <td>
                             <button type="button" class="image-button" id="talent2-button">
-                                <img width="60" height="60" src="" alt="元素スキル">
-                                <div class="tooltip" id="talent2-button-tt">元素スキル</div>
+                                <img width="60" height="60"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="元素スキル">
+                                <span class="tooltip" id="talent2-button-tt">元素スキル</span>
                             </button>
                             <select id="元素スキルレベルInput">
                                 <option value="1">Lv.1</option>
@@ -187,8 +195,10 @@
                         </td>
                         <td>
                             <button type="button" class="image-button" id="talent3-button">
-                                <img width="60" height="60" src="" alt="元素爆発">
-                                <div class="tooltip" id="talent3-button-tt">元素爆発</div>
+                                <img width="60" height="60"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="元素爆発">
+                                <span class="tooltip" id="talent3-button-tt">元素爆発</span>
                             </button>
                             <select id="元素爆発レベルInput">
                                 <option value="1">Lv.1</option>
@@ -210,20 +220,24 @@
                     <tr>
                         <td rowspan="2">
                             <button type="button" class="image-button select-group1" id="artifactset1-button">
-                                <img width="60" height="60" src="" alt="聖遺物セット効果1">
+                                <img width="60" height="60"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="聖遺物セット効果1">
                             </button>
                         </td>
                         <td rowspan="2">
                             <button type="button" class="image-button select-group1" id="artifactset2-button">
-                                <img width="60" height="60" src="" alt="聖遺物セット効果2">
+                                <img width="60" height="60"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    alt="聖遺物セット効果2">
                             </button>
                         </td>
                         <td rowspan="2">
                             <button type="button" class="image-button select-group1" id="artifactstatus-button">
-                                <img width="32" height="32" src="images/artifact.png" class="left-icon">
-                                <img width="32" height="32" src="images/artifact.png" class="right-icon">
-                                <p>SCORE</p>
-                                <p id="artifact-score"></p>
+                                <img class="left-icon" width="32" height="32" src="images/artifact.png" alt="聖遺物ステータス">
+                                <img class="right-icon" width="32" height="32" src="images/artifact.png" alt="聖遺物ステータス">
+                                <span>SCORE</span>
+                                <span id="artifact-score"></span>
                             </button>
                         </td>
                     </tr>
@@ -255,7 +269,9 @@
                         <table class="talent-detail">
                             <tr>
                                 <th style="width: 102px;">
-                                    <img width="100" height="100" src="" alt="通常攻撃" id="talent1-img">
+                                    <img width="100" height="100"
+                                        src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                        alt="通常攻撃" id="talent1-img">
                                 </th>
                                 <th id="talent1-name">名前</th>
                             </tr>
@@ -273,7 +289,9 @@
                         <table class="talent-detail">
                             <tr>
                                 <th rowspan="3" style="width: 102px;">
-                                    <img width="100" height="100" src="" alt="元素スキル" id="talent2-img">
+                                    <img width="100" height="100"
+                                        src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                        alt="元素スキル" id="talent2-img">
                                 </th>
                                 <th colspan="2" id="talent2-name">名前</th>
                             </tr>
@@ -299,7 +317,9 @@
                         <table class="talent-detail">
                             <tr>
                                 <th rowspan="4" style="width: 102px;">
-                                    <img width="100" height="100" src="" alt="元素爆発" id="talent3-img">
+                                    <img width="100" height="100"
+                                        src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                        alt="元素爆発" id="talent3-img">
                                 </th>
                                 <th colspan="2" id="talent3-name">名前</th>
                             </tr>
@@ -356,19 +376,15 @@
                     <input type="radio" class="tab-button" id="artifactset-detail" name="detail-box">
                     <div class="tab-content">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th id="artifactset1-name">blank</th>
-                                </tr>
-                            </thead>
+                            <tr class="rowheader">
+                                <th id="artifactset1-name">blank</th>
+                            </tr>
                             <tr>
                                 <td class="description" id="artifactset1-desc">blank</td>
                             </tr>
-                            <thead>
-                                <tr>
-                                    <th id="artifactset2-name">blank</th>
-                                </tr>
-                            </thead>
+                            <tr class="rowheader">
+                                <th id="artifactset2-name">blank</th>
+                            </tr>
                             <tr>
                                 <td class="description" id="artifactset2-desc">blank</td>
                             </tr>
@@ -382,30 +398,30 @@
                     <div class="tab-content">
                         <fieldset>
                             <legend>聖遺物 メイン効果</legend>
-                            <section class="complex-4-2">
-                                <article class="input-item">
+                            <div class="complex-4-2">
+                                <div class="input-item">
                                     <label for="聖遺物メイン効果1Input">生の花</label>
                                     <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
-                                        <option></option>
+                                        <option> </option>
                                         <option value="5_HP" selected>★5 HP</option>
                                         <option value="4_HP">★4 HP</option>
                                     </select>
-                                </article>
-                                <article class="input-item">
+                                </div>
+                                <div class="input-item">
                                     <label for="聖遺物メイン効果2Input">死の羽</label>
                                     <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
-                                        <option></option>
+                                        <option> </option>
                                         <option value="5_攻撃力" selected>★5 攻撃力</option>
                                         <option value="4_攻撃力">★4 攻撃力</option>
                                     </select>
-                                </article>
-                            </section>
+                                </div>
+                            </div>
 
-                            <section class="columns-3">
-                                <article class="input-item">
+                            <div class="columns-3">
+                                <div class="input-item">
                                     <label for="聖遺物メイン効果3Input">時の砂・メイン効果</label>
                                     <select id="聖遺物メイン効果3Input" name="聖遺物メイン効果Input">
-                                        <option></option>
+                                        <option> </option>
                                         <option value="5_元素チャージ効率">★5 元素チャージ効率</option>
                                         <option value="5_HP%">★5 HP%</option>
                                         <option value="5_攻撃力%">★5 攻撃力%</option>
@@ -417,11 +433,11 @@
                                         <option value="4_防御力%">★4 防御力%</option>
                                         <option value="4_元素熟知">★4 元素熟知</option>
                                     </select>
-                                </article>
-                                <article class="input-item">
+                                </div>
+                                <div class="input-item">
                                     <label for="聖遺物メイン効果4Input">空の杯・メイン効果</label>
                                     <select id="聖遺物メイン効果4Input" name="聖遺物メイン効果Input">
-                                        <option></option>
+                                        <option> </option>
                                         <option value="5_炎元素ダメージバフ">★5 炎元素ダメージバフ</option>
                                         <option value="5_水元素ダメージバフ">★5 水元素ダメージバフ</option>
                                         <option value="5_風元素ダメージバフ">★5 風元素ダメージバフ</option>
@@ -445,11 +461,11 @@
                                         <option value="4_防御力%">★4 防御力%</option>
                                         <option value="4_元素熟知">★4 元素熟知</option>
                                     </select>
-                                </article>
-                                <article class="input-item">
+                                </div>
+                                <div class="input-item">
                                     <label for="聖遺物メイン効果5Input">理の冠・メイン効果</label>
                                     <select id="聖遺物メイン効果5Input" name="聖遺物メイン効果Input">
-                                        <option></option>
+                                        <option> </option>
                                         <option value="5_会心率">★5 会心率</option>
                                         <option value="5_会心ダメージ">★5 会心ダメージ</option>
                                         <option value="5_与える治療効果">★5 与える治療効果</option>
@@ -465,8 +481,8 @@
                                         <option value="4_防御力%">★4 防御力%</option>
                                         <option value="4_元素熟知">★4 元素熟知</option>
                                     </select>
-                                </article>
-                            </section>
+                                </div>
+                            </div>
                         </fieldset>
 
                         <fieldset id="artifactsub-detail">
@@ -563,7 +579,7 @@
                                 <tr>
                                     <td>
                                         <select id="聖遺物優先するサブ効果1Input" name="聖遺物優先するサブ効果Input">
-                                            <option></option>
+                                            <option> </option>
                                             <option>HP%</option>
                                             <option>攻撃力%</option>
                                             <option>防御力%</option>
@@ -601,7 +617,7 @@
                                 <tr>
                                     <td>
                                         <select id="聖遺物優先するサブ効果2Input" name="聖遺物優先するサブ効果Input">
-                                            <option></option>
+                                            <option> </option>
                                             <option>HP%</option>
                                             <option>攻撃力%</option>
                                             <option>防御力%</option>
@@ -644,7 +660,7 @@
                                 <tr style="vertical-align: top;">
                                     <td>
                                         <select id="聖遺物優先するサブ効果3Input" name="聖遺物優先するサブ効果Input">
-                                            <option></option>
+                                            <option> </option>
                                             <option>HP%</option>
                                             <option>攻撃力%</option>
                                             <option>防御力%</option>
@@ -690,7 +706,7 @@
                 <button type="button" class="open-close" id="condition-open-close">バフ/デバフ</button>
 
                 <div id="option-area">
-                    <section class="option-box" id="オプションBox"></section>
+                    <div class="option-box" id="オプションBox"></div>
                 </div>
 
                 <div id="status-area">
@@ -703,11 +719,9 @@
                                 <tr>
                                     <td style="width: 50%; vertical-align: top;">
                                         <table class="status">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="3">基本/高級ステータス</th>
-                                                </tr>
-                                            </thead>
+                                            <tr class="rowheader">
+                                                <th colspan="3">基本/高級ステータス</th>
+                                            </tr>
                                             <tr>
                                                 <th>HP上限</th>
                                                 <td><input type="number" value="0" id="HP上限Input" name="ステータスInput">
@@ -790,12 +804,10 @@
                                     </td>
                                     <td style="width: 50%;">
                                         <table class="status">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="3" class="toggle-switch" id="ダメージバフ1RowGroup">
-                                                        元素ステータス・ダメージ</th>
-                                                </tr>
-                                            </thead>
+                                            <tr class="rowheader">
+                                                <th colspan="3" class="toggle-switch" id="ダメージバフ1RowGroup">
+                                                    元素ステータス・ダメージ</th>
+                                            </tr>
                                             <tr>
                                                 <th>炎元素</th>
                                                 <td><input type="number" value="0" step="0.1" id="炎元素ダメージバフInput"
@@ -844,12 +856,10 @@
                                                         name="ダメージバフ1Input"></td>
                                                 <td id="物理ダメージバフValue"></td>
                                             </tr>
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="3" class="toggle-switch" id="ダメージバフ2RowGroup">ダメージバフ
-                                                    </th>
-                                                </tr>
-                                            </thead>
+                                            <tr class="rowheader">
+                                                <th colspan="3" class="toggle-switch" id="ダメージバフ2RowGroup">ダメージバフ
+                                                </th>
+                                            </tr>
                                             <tr>
                                                 <th>通常攻撃</th>
                                                 <td><input type="number" value="0" step="0.1" id="通常攻撃ダメージバフInput"
@@ -886,12 +896,10 @@
                                                         name="ダメージバフ2Input"></td>
                                                 <td id="与えるダメージValue"></td>
                                             </tr>
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="3" class="toggle-switch" id="ダメージアップRowGroup">ダメージアップ
-                                                    </th>
-                                                </tr>
-                                            </thead>
+                                            <tr class="rowheader">
+                                                <th colspan="3" class="toggle-switch" id="ダメージアップRowGroup">ダメージアップ
+                                                </th>
+                                            </tr>
                                             <tr>
                                                 <th>通常攻撃</th>
                                                 <td><input type="number" value="0" step="0.1" id="通常攻撃ダメージアップInput"
@@ -978,12 +986,10 @@
                                                 </td>
                                                 <td id="物理ダメージアップValue"></td>
                                             </tr>
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="3" class="toggle-switch" id="元素反応ボーナスRowGroup">元素反応バフ
-                                                    </th>
-                                                </tr>
-                                            </thead>
+                                            <tr class="rowheader">
+                                                <th colspan="3" class="toggle-switch" id="元素反応ボーナスRowGroup">元素反応バフ
+                                                </th>
+                                            </tr>
                                             <tr>
                                                 <th>蒸発</th>
                                                 <td><input type="number" value="0" step="1" id="蒸発反応ボーナスInput"
@@ -1044,7 +1050,7 @@
                         <div class="tab-content">
                             <table class="status">
                                 <thead>
-                                    <tr>
+                                    <tr class="rowheader">
                                         <th colspan="3" style="width: 50%;">元素ステータス・耐性</th>
                                         <th colspan="3" style="width: 50%;">その他</th>
                                     </tr>
@@ -1117,19 +1123,19 @@
                             name="status-table-group" />
                         <label for="status-table3">敵</label>
                         <div class="tab-content">
-                            <section id="enemy">
-                                <article class="input-item">
+                            <div class="input-item-group" id="enemy">
+                                <div class="input-item">
                                     <select id="敵Input"></select>
-                                </article>
-                                <article class="input-item">
+                                </div>
+                                <div class="input-item">
                                     <label for="敵レベルInput">敵Lv.</label>
                                     <input type="number" min="1" value="90" id="敵レベルInput" />
-                                </article>
-                            </section>
+                                </div>
+                            </div>
 
                             <table class="status" style="margin-top: 1rem;">
                                 <thead>
-                                    <tr>
+                                    <tr class="rowheader">
                                         <th colspan="3" style="width: 50%;">耐性</th>
                                         <th colspan="3" style="width: 50%;">その他</th>
                                     </tr>
@@ -1197,7 +1203,7 @@
                             name="buffdebuff-condition-group" checked />
                         <label for="buffdebuff-condition1">元素共鳴</label>
                         <div class="tab-content" style="padding-top: 1rem;">
-                            <section class="option-box">
+                            <div class="option-box">
                                 <div style="display: inline-block;">
                                     <input type="checkbox" value="炎元素共鳴" id="炎元素共鳴Input" name="元素共鳴Input" />
                                     <label for="炎元素共鳴Input">熱誠の炎</label>
@@ -1226,7 +1232,7 @@
                                     <input type="checkbox" value="元素共鳴なし" id="元素共鳴なしInput" />
                                     <label for="元素共鳴なしInput">交錯の護り</label>
                                 </div>
-                            </section>
+                            </div>
 
                             <div class="description" id="元素共鳴効果説明Box"></div>
                         </div>
@@ -1235,14 +1241,14 @@
                             name="buffdebuff-condition-group" />
                         <label for="buffdebuff-condition2">バフ</label>
                         <div class="tab-content">
-                            <section class="option-box column1-option" id="バフオプションBox"></section>
+                            <div class="option-box column1-option" id="バフオプションBox"></div>
                         </div>
 
                         <input type="radio" class="tab-button input-set1" id="buffdebuff-condition3"
                             name="buffdebuff-condition-group" />
                         <label for="buffdebuff-condition3">デバフ</label>
                         <div class="tab-content">
-                            <section class="option-box column1-option" id="デバフオプションBox"></section>
+                            <div class="option-box column1-option" id="デバフオプションBox"></div>
                         </div>
 
                         <input type="radio" class="tab-button input-set1" id="buffdebuff-condition4"
@@ -1269,7 +1275,7 @@
             </div>
 
             <div class="result-pane">
-                <div style="height: 100rem;">
+                <div style="height: 120rem;">
                     <input type="radio" value="noreaction" id="元素反応なしInput" name="元素反応Input" checked />
                     <label class="elemental-reaction" for="元素反応なしInput">反応なし</label>
                     <input type="radio" value="vaporize" id="元素反応蒸発Input" name="元素反応Input" />
