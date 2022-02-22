@@ -3142,7 +3142,7 @@ function setupTalentButton(url, characterData) {
             $('#talent1-button').removeClass(value + '-bg');
         }
     });
-    $('#talent1-button .tooltip').html(通常攻撃名称Var);
+    // $('#talent1-button .tooltip').html(通常攻撃名称Var);
 
     // 元素スキル
     $('#talent2-button img').attr('src', 'images/characters/' + dirName + '/ElementalSkill.png');
@@ -3154,7 +3154,7 @@ function setupTalentButton(url, characterData) {
             $('#talent2-button').removeClass(value + '-bg');
         }
     });
-    $('#talent2-button .tooltip').html(元素スキル名称Var);
+    // $('#talent2-button .tooltip').html(元素スキル名称Var);
 
     // 元素爆発
     $('#talent3-button img').attr('src', 'images/characters/' + dirName + '/ElementalBurst.png');
@@ -3166,7 +3166,7 @@ function setupTalentButton(url, characterData) {
             $('#talent3-button').removeClass(value + '-bg');
         }
     });
-    $('#talent3-button .tooltip').html(元素爆発名称Var);
+    // $('#talent3-button .tooltip').html(元素爆発名称Var);
 }
 const キャラクターInputOnChange = function () {
     キャラクター名前Var = $('#キャラクターInput').val();
