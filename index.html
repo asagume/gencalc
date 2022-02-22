@@ -134,7 +134,8 @@
                 </table>
 
                 <input type="file" id="artifact-detail-image" style="display: none;">
-                <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48"></div>
+                <div id="loading"><img src="images/icon_loader_f_ww_01_s1.gif" width="48" height="48" alt="processing">
+                </div>
 
                 <select id="おすすめセットInput"></select>
 
@@ -349,20 +350,20 @@
                         <div>
                             <table>
                                 <tr>
-                                    <th colspan="2" id="weapon-name" style="width: 50%;">blank</th>
+                                    <th id="weapon-name" style="width: 50%;">blank</th>
                                     <th>基礎攻撃力</th>
                                     <td id="weapon-base-attack" style="border: 1px solid gray;"></td>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" id="weapon-rarity"></th>
+                                    <th id="weapon-rarity"></th>
                                     <th id="weapon-secondary-stat">blank</th>
                                     <td id="weapon-secondary-stat-value" style="border: 1px solid gray;">blank</td>
                                 </tr>
                                 <tr>
-                                    <th colspan="4" id="weapon-ability-name"></th>
+                                    <th colspan="3" id="weapon-ability-name"></th>
                                 </tr>
                                 <tr>
-                                    <td class="description" colspan="4" id="weapon-ability-desc">
+                                    <td class="description" colspan="3" id="weapon-ability-desc">
                                     </td>
                                 </tr>
                             </table>
@@ -402,7 +403,7 @@
                                 <div class="input-item">
                                     <label for="聖遺物メイン効果1Input">生の花</label>
                                     <select id="聖遺物メイン効果1Input" name="聖遺物メイン効果Input">
-                                        <option> </option>
+                                        <option label=" "></option>
                                         <option value="5_HP" selected>★5 HP</option>
                                         <option value="4_HP">★4 HP</option>
                                     </select>
@@ -410,7 +411,7 @@
                                 <div class="input-item">
                                     <label for="聖遺物メイン効果2Input">死の羽</label>
                                     <select id="聖遺物メイン効果2Input" name="聖遺物メイン効果Input">
-                                        <option> </option>
+                                        <option label=" "></option>
                                         <option value="5_攻撃力" selected>★5 攻撃力</option>
                                         <option value="4_攻撃力">★4 攻撃力</option>
                                     </select>
@@ -421,7 +422,7 @@
                                 <div class="input-item">
                                     <label for="聖遺物メイン効果3Input">時の砂・メイン効果</label>
                                     <select id="聖遺物メイン効果3Input" name="聖遺物メイン効果Input">
-                                        <option> </option>
+                                        <option label=" "></option>
                                         <option value="5_元素チャージ効率">★5 元素チャージ効率</option>
                                         <option value="5_HP%">★5 HP%</option>
                                         <option value="5_攻撃力%">★5 攻撃力%</option>
@@ -437,7 +438,7 @@
                                 <div class="input-item">
                                     <label for="聖遺物メイン効果4Input">空の杯・メイン効果</label>
                                     <select id="聖遺物メイン効果4Input" name="聖遺物メイン効果Input">
-                                        <option> </option>
+                                        <option label=" "></option>
                                         <option value="5_炎元素ダメージバフ">★5 炎元素ダメージバフ</option>
                                         <option value="5_水元素ダメージバフ">★5 水元素ダメージバフ</option>
                                         <option value="5_風元素ダメージバフ">★5 風元素ダメージバフ</option>
@@ -465,7 +466,7 @@
                                 <div class="input-item">
                                     <label for="聖遺物メイン効果5Input">理の冠・メイン効果</label>
                                     <select id="聖遺物メイン効果5Input" name="聖遺物メイン効果Input">
-                                        <option> </option>
+                                        <option label=" "></option>
                                         <option value="5_会心率">★5 会心率</option>
                                         <option value="5_会心ダメージ">★5 会心ダメージ</option>
                                         <option value="5_与える治療効果">★5 与える治療効果</option>
@@ -579,7 +580,7 @@
                                 <tr>
                                     <td>
                                         <select id="聖遺物優先するサブ効果1Input" name="聖遺物優先するサブ効果Input">
-                                            <option> </option>
+                                            <option label=" "></option>
                                             <option>HP%</option>
                                             <option>攻撃力%</option>
                                             <option>防御力%</option>
@@ -617,7 +618,7 @@
                                 <tr>
                                     <td>
                                         <select id="聖遺物優先するサブ効果2Input" name="聖遺物優先するサブ効果Input">
-                                            <option> </option>
+                                            <option label=" "></option>
                                             <option>HP%</option>
                                             <option>攻撃力%</option>
                                             <option>防御力%</option>
@@ -649,7 +650,7 @@
                                     </td>
                                     <td>
                                         <select id="厳選目安Input" disabled>
-                                            <option selected></option>
+                                            <option label=" " selected></option>
                                             <option value="1">厳選初心者</option>
                                             <option value="2">厳選1ヶ月</option>
                                             <option value="3">厳選3ヶ月</option>
@@ -660,7 +661,7 @@
                                 <tr style="vertical-align: top;">
                                     <td>
                                         <select id="聖遺物優先するサブ効果3Input" name="聖遺物優先するサブ効果Input">
-                                            <option> </option>
+                                            <option label=" "></option>
                                             <option>HP%</option>
                                             <option>攻撃力%</option>
                                             <option>防御力%</option>
@@ -1297,8 +1298,10 @@
 
                     <table class="result">
                         <thead>
-                            <th class="category">被ダメージ</th>
-                            <th class="damage-taken" id="被ダメージResult"></th>
+                            <tr>
+                                <th class="category">被ダメージ</th>
+                                <th class="damage-taken" id="被ダメージResult"></th>
+                            </tr>
                         </thead>
                     </table>
 
