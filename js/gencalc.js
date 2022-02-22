@@ -4190,7 +4190,10 @@ function detailToHtml(obj) {
 }
 
 // デバッグ情報を出力します
+const debugMode = false;
 const setDebugInfo = function () {
+    if (!debugMode) return;
+
     $('#debugInfo').empty();
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
         value.forEach(entry => {
