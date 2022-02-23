@@ -4163,10 +4163,12 @@ function setArtifactDetail(text) {
     $('#聖遺物メイン効果1Input').val(null);
     $('#聖遺物メイン効果2Input').val(null);
     $('#聖遺物メイン効果3Input').val(null);
-    if (!$('#聖遺物メイン効果4Input').val().endsWith('ダメージバフ')) {
+    if (!$('#聖遺物メイン効果4Input').val().endsWith('バフ')) {
         $('#聖遺物メイン効果4Input').val(null);
     }
-    $('#聖遺物メイン効果5Input').val(null);
+    if (!$('#聖遺物メイン効果5Input').val().endsWith('バフ')) {
+        $('#聖遺物メイン効果5Input').val(null);
+    }
 
     $('#聖遺物優先するサブ効果1Input').val(null);
     $('#聖遺物優先するサブ効果2Input').val(null);
