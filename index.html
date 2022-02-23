@@ -31,7 +31,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="height: calc(100% - 2rem); margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.1.3</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.1.4</legend>
                     <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
                     <p>
                         <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
@@ -88,7 +88,9 @@
                             </button>
                         </td>
                         <td rowspan="5" style="width: 1rem;"></td>
-                        <td colspan="2" id="character-name" style="vertical-align: bottom;"></td>
+                        <td colspan="2" style="position: relative;">
+                            <span id="character-name"></span><span id="character-profile-i">ℹ️</span>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -259,6 +261,37 @@
             </div>
 
             <div class="pane4">
+                <div class="tab-area">
+                    <input type="radio" class="tab-button" id="character-profile" name="detail-box">
+                    <div class="tab-content">
+                        <table class="character-profile-detail">
+                            <tr class="rowheader">
+                                <th colspan="2">命ノ星座</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="stat" id="constellations"></td>
+                            </tr>
+                        </table>
+                        <table class="character-profile-detail">
+                            <tr class="rowheader">
+                                <th colspan="2">固有天賦</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="stat" id="passive-talents"></td>
+                            </tr>
+                        </table>
+
+                        <table class="character-profile-detail">
+                            <tr class="rowheader">
+                                <th colspan="2">戦闘天賦</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="stat" id="attack-talents-etc"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="tab-area">
                     <input type="radio" class="tab-button" id="talent1-detail" name="detail-box">
                     <div class="tab-content">

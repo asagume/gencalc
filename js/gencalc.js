@@ -1399,18 +1399,33 @@ const setupBaseDamageDetailDataCharacter = function () {
         console.debug(特殊元素爆発_基礎ダメージ詳細MapVar);
     }
 
-    // その他天賦を解析します。Array
-    if ('その他天賦' in 選択中キャラクターデータVar) {
-        選択中キャラクターデータVar['その他天賦'].forEach(element => {
+    // その他戦闘天賦、固有天賦を解析します。Array
+    if ('その他戦闘天賦' in 選択中キャラクターデータVar) {
+        選択中キャラクターデータVar['その他戦闘天賦'].forEach(element => {
             myTalentDataObj = element;
             let resultArr = makeTalentDetailArray(myTalentDataObj, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
             if (resultArr.length > 0) {
                 その他_基礎ダメージ詳細ArrMapVar.set('キャラクター', resultArr);
-                console.debug('その他_基礎ダメージ詳細ArrMapVar.get(キャラクター)');
-                console.debug(その他_基礎ダメージ詳細ArrMapVar.get('キャラクター'));
             }
         })
     };
+    if ('固有天賦' in 選択中キャラクターデータVar) {
+        選択中キャラクターデータVar['固有天賦'].forEach(element => {
+            myTalentDataObj = element;
+            let resultArr = makeTalentDetailArray(myTalentDataObj, null, null, null, ステータス変更系詳細ArrMapVar, 天賦性能変更系詳細ArrMapVar, 'キャラクター');
+            if (resultArr.length > 0) {
+                if (その他_基礎ダメージ詳細ArrMapVar.has('キャラクター')) {
+                    let newData = その他_基礎ダメージ詳細ArrMapVar.get('キャラクター');
+                    newData = newData.concat(resultArr);
+                    その他_基礎ダメージ詳細ArrMapVar.set('キャラクター', newData);
+                } else {
+                    その他_基礎ダメージ詳細ArrMapVar.set('キャラクター', resultArr);
+                }
+            }
+        })
+    };
+    console.debug('その他_基礎ダメージ詳細ArrMapVar.get(キャラクター)');
+    console.debug(その他_基礎ダメージ詳細ArrMapVar.get('キャラクター'));
 
     // 命ノ星座を解析します。Object
     if ('命ノ星座' in 選択中キャラクターデータVar) {
@@ -3082,12 +3097,27 @@ function makeHtml(obj) {
         result = result.replace(elementRe3, '<span class="' + value + '">$&</span>');
         result = result.replace(elementRe4, '<span class="' + value + '">$&</span>');
     });
+    // 過負荷
+    const overloadRe = /過負荷/g;
+    result = result.replace(overloadRe, '<span class="pyro">$&</span>');
+    // 燃焼
+    const burningRe = /燃焼/g;
+    result = result.replace(burningRe, '<span class="pyro">$&</span>');
     // 湿潤
     const wetRe = /湿潤/g;
     result = result.replace(wetRe, '<span class="hydro">$&</span>');
     // 感電
-    const shockRe = /感電/g;
-    result = result.replace(shockRe, '<span class="electro">$&</span>');
+    const electroChargedRe = /感電/g;
+    result = result.replace(electroChargedRe, '<span class="electro">$&</span>');
+    // 超電導
+    const superconductRe = /超電導/g;
+    result = result.replace(superconductRe, '<span class="cryo">$&</span>');
+    // 凍結
+    const frozenRe = /凍結/g;
+    result = result.replace(frozenRe, '<span class="cryo">$&</span>');
+    // 拡散
+    const swirlRe = /拡散/g;
+    result = result.replace(swirlRe, '<span class="aero">$&</span>');
     // 岩元素創造物
     const geoConstructRe = /岩元素創造物/g;
     result = result.replace(geoConstructRe, '<span class="geo">$&</span>');
@@ -3417,6 +3447,7 @@ const キャラクターInputOnChange = function () {
             武器InputOnChange();    // 武器
         }
 
+        buildキャラクタープロフィール();
         build天賦詳細();
     });
 };
@@ -3552,6 +3583,99 @@ function build武器選択リスト() {
     });
 }
 
+function buildキャラクタープロフィール() {
+    // 命ノ星座
+    const constellationsElem = document.getElementById('constellations');
+    constellationsElem.innerHTML = '';
+    if ('命ノ星座' in 選択中キャラクターデータVar) {
+        let tableElem = document.createElement('table');
+
+        let my重 = 1;
+
+        Object.keys(選択中キャラクターデータVar['命ノ星座']).forEach(key => {
+            let tr1Elem = document.createElement('tr');
+            tableElem.appendChild(tr1Elem);
+
+            let thElem = document.createElement('th');
+            thElem.innerHTML = '第' + my重 + '重 ' + 選択中キャラクターデータVar['命ノ星座'][key]['名前'];
+            tr1Elem.appendChild(thElem);
+
+            let tr2Elem = document.createElement('tr');
+            tableElem.appendChild(tr2Elem);
+
+            let tdElem = document.createElement('td');
+            tdElem.innerHTML = makeHtml(選択中キャラクターデータVar['命ノ星座'][key]['説明']);
+            tr2Elem.appendChild(tdElem);
+
+            my重++;
+        });
+
+        constellationsElem.appendChild(tableElem);
+    }
+
+    // 固有天賦
+    const passiveTalentsElem = document.getElementById('passive-talents');
+    passiveTalentsElem.innerHTML = '';
+    if ('固有天賦' in 選択中キャラクターデータVar) {
+        let tableElem = document.createElement('table');
+
+        選択中キャラクターデータVar['固有天賦'].forEach(valueObj => {
+            let tr1Elem = document.createElement('tr');
+            tableElem.appendChild(tr1Elem);
+
+            let thElem = document.createElement('th');
+            if ('名前' in valueObj) {
+                thElem.innerHTML = valueObj['名前'];
+            }
+            tr1Elem.appendChild(thElem);
+
+            let tr2Elem = document.createElement('tr');
+            tableElem.appendChild(tr2Elem);
+
+            let tdElem = document.createElement('td');
+            if ('説明' in valueObj) {
+                tdElem.innerHTML = makeHtml(valueObj['説明']);
+            }
+            tr2Elem.appendChild(tdElem);
+        });
+
+        passiveTalentsElem.appendChild(tableElem);
+    }
+
+    const attackTalentsEtcElem = document.getElementById('attack-talents-etc');
+    attackTalentsEtcElem.innerHTML = '';
+    if ('その他戦闘天賦' in 選択中キャラクターデータVar) {
+        let tableElem = document.createElement('table');
+
+        選択中キャラクターデータVar['その他戦闘天賦'].forEach(valueObj => {
+            let tr1Elem = document.createElement('tr');
+            tableElem.appendChild(tr1Elem);
+
+            let thElem = document.createElement('th');
+            if ('名前' in valueObj) {
+                thElem.innerHTML = valueObj['名前'];
+            }
+            tr1Elem.appendChild(thElem);
+
+            let tr2Elem = document.createElement('tr');
+            tableElem.appendChild(tr2Elem);
+
+            let tdElem = document.createElement('td');
+            if ('説明' in valueObj) {
+                tdElem.innerHTML = makeHtml(valueObj['説明']);
+            }
+            tr2Elem.appendChild(tdElem);
+        });
+
+        attackTalentsEtcElem.appendChild(tableElem);
+
+        $(attackTalentsEtcElem).parents('table').show();
+    } else {
+        $(attackTalentsEtcElem).parents('table').hide();
+    }
+
+}
+
 
 // キャラクター選択
 const selectCharacter = function () {
@@ -3589,6 +3713,15 @@ $(document).on('change', '#おすすめセットInput', おすすめセットInp
 // おすすめセット クリック処理
 $(document).on('click', '#recomend-button', function () {
     toggleShowHide(this, '#おすすめセットInput');
+});
+
+// ℹ️ クリック処理
+$(document).on('click', '#character-profile-i', function () {
+    const selector = '#character-profile';
+    let b = $(selector).prop('checked');
+    $(selector).prop('checked', !b);
+
+    $('.select-group1').removeClass('selected');
 });
 
 // 天賦画像 クリック処理

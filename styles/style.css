@@ -423,9 +423,18 @@ legend {
     background: linear-gradient(to top, #dcc751, #bba116);
 }
 
+.face-box tr {
+    text-align: left;
+    vertical-align: middle;
+}
+
 #character-name {
     font-size: 2.6rem;
-    text-align: left;
+}
+
+#character-name+span {
+    position: absolute;
+    right: 0;
 }
 
 td select {
@@ -594,11 +603,18 @@ button {
     margin: 0 0.2rem 1rem;
 }
 
-.talent-detail {
+.character-profile-detail, .talent-detail {
     width: calc(100% - 3rem);
     margin: 1rem auto;
     border: 1px solid gray;
     border-radius: 1rem;
+}
+
+.character-profile-detail th {
+    min-width: 10rem;
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .talent-detail th {
@@ -606,6 +622,18 @@ button {
     text-align: left;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+.rowheader th {
+    text-align: center;
+}
+
+.character-profile-detail td {
+    min-width: 10rem;
+    text-align: left;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid gray;
 }
 
 .talent-detail td {
@@ -621,7 +649,7 @@ button {
     text-align: left;
 }
 
-.talent-detail .stat {
+.character-profile-detail .stat, .talent-detail .stat {
     text-align: left;
     padding-left: 0;
     padding-right: 0;
