@@ -31,7 +31,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="height: calc(100% - 2rem); margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.1.4</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.1.5</legend>
                     <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
                     <p>
                         <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
@@ -1339,7 +1339,42 @@
 
             <div class="pane7">
                 <hr>
+                <h2>げんかるく</h2>
+                <fieldset style="text-align: center; margin: 1rem; padding: 1rem;">
+                    <legend>構成保存の対象範囲</legend>
+                    <button type="button">キャラクター</button>
+                    <button type="button">武器</button>
+                    <button type="button">聖遺物セット効果</button>
+                    <button type="button">聖遺物メイン効果</button>
+                    <button type="button">聖遺物サブ効果</button>
+                    <button type="button">オプション条件</button>
+                </fieldset>
 
+                <fieldset>
+                    <legend>聖遺物詳細画面OCR</legend>
+                    <div style="text-align: left;">
+                        キャラクター＞聖遺物＞聖遺物詳細のスクリーンショットから聖遺物のステータスを設定する機能です。
+                        読み取り精度はいまひとつなので、実行後に目視にて確認、修正願います。
+                        本機能はすべてブラウザ内で処理されます。外部へのデータ送信などはありません。
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>被ダメージ表示</legend>
+                    <div style="text-align: left;">
+                        基礎ダメージ10000に対する被ダメージ(推定値)を表示します。<br>
+                        基礎ダメージはざっくり防御力0の場合の被ダメージです。
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>おまけ</legend>
+                    <input type="checkbox" id="全武器解放Config">
+                    <label for="全武器解放Config">全ての武器が選択可能になる</label>
+                    <div style="color: chocolate; font-size: smaller;">
+                        キャラクター再選択後に有効になります
+                    </div>
+                </fieldset>
             </div>
 
             <div class="bottom-pane">
@@ -1411,27 +1446,6 @@
 
                         <p>バグを探しましょう！</p>
 
-                        <fieldset>
-                            <legend>構成保存の範囲について</legend>
-                            <ul>
-                                <li>キャラ/武器</li>
-                                <li>聖遺物</li>
-                                <li>オプション条件</li>
-                            </ul>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>聖遺物詳細画面OCRについて</legend>
-                            ゲームの聖遺物＞聖遺物詳細画面のスクリーンショットから聖遺物のステータスを設定する機能です。
-                            読み取り精度はいまひとつなので、実行後に目視にて確認、修正願います。
-                            本機能はすべてブラウザ内で処理されます。外部へのデータ送信などはありません。
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>被ダメージ表示について</legend>
-                            基礎ダメージ10000に対する被ダメージ(推定値)を表示します。<br>
-                            基礎ダメージはざっくり防御力0の場合の被ダメージです。
-                        </fieldset>
                     </div>
 
                     <input type="radio" class="tab-button others-set" id="other-box2" name="others-group" />
@@ -1450,11 +1464,6 @@
                                 </p>
                             </div>
                         </fieldset>
-                        <input type="checkbox" id="全武器解放Config" />
-                        <label for="全武器解放Config">全ての武器が選択可能になる</label>
-                        <div class="description" style="color: chocolate; font-size: smaller">
-                            <p>キャラクター再選択後に有効になります</p>
-                        </div>
                     </div>
 
                     <input type="radio" class="tab-button others-set" id="other-box3" name="others-group" />
