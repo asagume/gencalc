@@ -427,6 +427,20 @@ const save武器所持状況 = function () {
 var キャラクター構成ObjVar = null;
 
 // おすすめセットをセットアップします
+function makeArtifactSetAbbrev(name) {
+    const abbrRe = /[\p{sc=Hiragana}\p{sc=Katakana}ー]+/ug;
+    let abbr = name.replace(abbrRe, '');
+    if (abbr.length > 2) {
+        abbr = name.split(abbrRe).sort((a, b) => {
+            return b.length - a.length;
+        })[0];
+    }
+    if (abbr.length > 3) {
+        abbr = abbr.substring(0, 2);
+    }
+    return abbr;
+}
+
 function setupおすすめセット(opt_saveName = null) {
     おすすめセットArrVar = [];
     if (!opt_saveName) {
@@ -454,8 +468,8 @@ function setupおすすめセット(opt_saveName = null) {
     });
 
     if ('おすすめセット' in 選択中キャラクターデータVar) {
-        Object.keys(選択中キャラクターデータVar['おすすめセット']).forEach(key => {
-            let myおすすめセット = 選択中キャラクターデータVar['おすすめセット'][key];
+        選択中キャラクターデータVar['おすすめセット'].forEach(obj => {
+            let myおすすめセット = obj;
             let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
             let artifactRarerity4Num = 0;
             if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {
@@ -474,7 +488,42 @@ function setupおすすめセット(opt_saveName = null) {
                     }
                 }
             }
-            おすすめセットArrVar.push([key, myおすすめセット, false]);
+
+            let setName = myおすすめセット['武器'];
+            setName += ' ';
+            if (myおすすめセット['聖遺物セット効果1'] == myおすすめセット['聖遺物セット効果2']) {
+                setName += myおすすめセット['聖遺物セット効果1'];
+            } else {
+                setName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果1']);
+                setName += '/';
+                setName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果2']);
+            }
+            setName += ' [';
+            for (i = 3; i <= 5; i++) {
+                const statusName = myおすすめセット['聖遺物メイン効果' + i].split('_')[1];
+                switch (statusName) {
+                    case 'HP%':
+                        setName += 'HP';
+                        break;
+                    case '元素熟知':
+                        setName += '熟';
+                        break;
+                    case '元素チャージ効率':
+                        setName += 'ﾁｬ';
+                        break;
+                    case '会心率':
+                        setName += '率';
+                        break;
+                    case '会心ダメージ':
+                        setName += 'ダ';
+                        break;
+                    default:
+                        setName += statusName.substring(0, 1);
+                        break;
+                }
+            }
+            setName += ']';
+            おすすめセットArrVar.push([setName, myおすすめセット, false]);
         });
     }
     let selector = '#おすすめセットInput';

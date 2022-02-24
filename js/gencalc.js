@@ -4218,6 +4218,17 @@ function resize(file) {
             //await worker.setParameters({
             //    tessedit_char_whitelist: '0123456789+,.%HP上限攻撃力防御元素熟知会心率ダメージチャ効',
             //});
+            // 基本ステータス
+            // 元素熟知が高いほど、強力な元素の力を発動できる。
+            // 蒸発、溶解反応によるダメージ+10.7%。
+            // 過負荷、超電導、感電、氷砕き拡散反応によるダメージ+43.5%。
+            // 結晶反応が結晶シールドを生成し、ダメージ吸収量+17.1%。
+            // スタミナ上限
+            // 高級ステータス
+            // 元素ステータス
+            await worker.setParameters({
+                preserve_interword_spaces: '1'
+            });
             const { data: { text } } = await worker.recognize(canvas);
             setArtifactDetail(text);
             await worker.terminate();
