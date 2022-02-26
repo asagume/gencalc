@@ -146,13 +146,8 @@ function isUseReference(formulaArr) {
 
 // ダメージ計算を行います
 const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
-function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, opt_精度 = 0) {
-    let my精度補正 = '1';
-    for (let i = 0; i < opt_精度; i++) {
-        my精度補正 += '0';
-    }
-    my精度補正 = Number(my精度補正);
-    let my非会心Result = Math.floor(calculateFormulaArray(statusObj, formula) * my精度補正) / my精度補正;
+function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
+    let my非会心Result = calculateFormulaArray(statusObj, formula);
     console.debug("%o => %o", formula, my非会心Result);
 
     // 計算済みの値を参照する場合は、バフと防御、耐性補正の計算を省略します
@@ -182,17 +177,13 @@ function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc,
     if (別枠乗算) {    // 別枠乗算 for 宵宮
         my非会心Result *= 別枠乗算 / 100;
     }
-    my非会心Result = Math.round(my非会心Result * my精度補正) / my精度補正;
     my期待値Result = my非会心Result;
     let my会心率 = Math.min(100, Math.max(0, statusObj['会心率']));    // 0≦会心率≦100
     let my会心ダメージ = statusObj['会心ダメージ'];
     if (is会心Calc) {
         if (my会心率 > 0) {
             my会心Result = my非会心Result * (100 + my会心ダメージ) / 100;
-            my会心Result = Math.round(my会心Result * my精度補正) / my精度補正;
             my期待値Result = (my会心Result * my会心率 / 100) + (my非会心Result * (100 - my会心率) / 100);
-            my期待値Result = Math.round(my期待値Result * my精度補正) / my精度補正;
-            my非会心Result = Math.round(my非会心Result * my精度補正) / my精度補正;
         }
     }
     console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
@@ -540,19 +531,6 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
             is耐性補正Calc = false;
             my元素 = null;
             break;
-        case '表示':    // for ベネット 九条裟羅 攻撃力上昇
-            is会心Calc = false;
-            is防御補正Calc = false;
-            is耐性補正Calc = false;
-            my元素 = null;
-            break;
-        case '表示_1':    // for 行秋 ダメージ軽減
-            is会心Calc = false;
-            is防御補正Calc = false;
-            is耐性補正Calc = false;
-            my元素 = null;
-            my精度 = 1;
-            break;
         case '他所基準ダメージ':
             is防御補正Calc = false;
             is耐性補正Calc = false;
@@ -566,22 +544,33 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
         case '付加元素ダメージ':    // for 風キャラ
             my元素 = '炎';
         default:
-            myバフArr.push('与えるダメージ');
-            if (detailObj['ダメージバフ'] != null) {
-                myバフArr.push(detailObj['ダメージバフ']);
-            } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-                myバフArr.push(detailObj['種類'] + 'バフ');
-            }
-            if (my元素 != null) {
-                myバフArr.push(my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ');
+            if (detailObj['種類'].startsWith('表示') || detailObj['種類'].startsWith('非表示')) {
+                is会心Calc = false;
+                is防御補正Calc = false;
+                is耐性補正Calc = false;
+                my元素 = null;
+                let 種類SplitArr = detailObj['種類'].split('_');
+                if (種類SplitArr.length > 1) {
+                    my精度 = Number(種類SplitArr[1]);
+                }
+            } else {
+                myバフArr.push('与えるダメージ');
+                if (detailObj['ダメージバフ'] != null) {
+                    myバフArr.push(detailObj['ダメージバフ']);
+                } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+                    myバフArr.push(detailObj['種類'] + 'バフ');
+                }
+                if (my元素 != null) {
+                    myバフArr.push(my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ');
+                }
             }
             break;
     }
-    my計算Result = calculateDamageFromDetailSub(statusObj, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
+    my計算Result = calculateDamageFromDetailSub(statusObj, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
     console.debug(my計算Result);
 
     my天賦性能変更詳細Arr.forEach(valueObj => {
-        let myResultWork = calculateDamageFromDetailSub(statusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, my精度);
+        let myResultWork = calculateDamageFromDetailSub(statusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
         if (valueObj['種類'].endsWith('ダメージアップ')) {
             if (detailObj['名前'] == 'ダメージアップ') {    // for 申鶴
                 return;
@@ -610,7 +599,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
 
     if (statusObj[detailObj['種類'] + 'アップ'] > 0) {
         if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0, my精度);
+            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
                 myResultWork[1] *= myHIT数;
@@ -632,7 +621,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     }
     if (my元素 + '元素ダメージアップ' in statusObj && statusObj[my元素 + '元素ダメージアップ'] > 0) {
         if (is防御補正Calc && is耐性補正Calc) {
-            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0, my精度);
+            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
                 myResultWork[1] *= myHIT数;
@@ -662,32 +651,33 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     let my計算Result_溶解 = [null, null, null];
     if (detailObj['種類'] == 'シールド') {
         if (my計算Result[0] == '岩') {  // 岩元素シールド for ノエル 鍾離
-            my計算Result[1] = Math.round(my計算Result[1] * 1.5);
-            my計算Result[3] = Math.round(my計算Result[3] * 1.5);
+            my計算Result[1] = my計算Result[1] * 1.5;
+            my計算Result[3] = my計算Result[3] * 1.5;
         }
     } else if (my計算Result[0]) {
         let my元素熟知 = statusObj['元素熟知'];
         let my蒸発倍率 = calculate蒸発倍率(statusObj, my計算Result[0], my元素熟知);
         if (my蒸発倍率 > 0) {
-            my計算Result_蒸発[0] = Math.round(my計算Result[1] * my蒸発倍率);
+            my計算Result_蒸発[0] = my計算Result[1] * my蒸発倍率;
             if (my計算Result[2] != null) {
-                my計算Result_蒸発[1] = Math.round(my計算Result[2] * my蒸発倍率);
+                my計算Result_蒸発[1] = my計算Result[2] * my蒸発倍率;
             }
             if (my計算Result[3] != null) {
-                my計算Result_蒸発[2] = Math.round(my計算Result[3] * my蒸発倍率);
+                my計算Result_蒸発[2] = my計算Result[3] * my蒸発倍率;
             }
         }
         let my溶解倍率 = calculate溶解倍率(statusObj, my計算Result[0], my元素熟知);
         if (my溶解倍率 > 0) {
-            my計算Result_溶解[0] = Math.round(my計算Result[1] * my溶解倍率);
+            my計算Result_溶解[0] = my計算Result[1] * my溶解倍率;
             if (my計算Result[2] != null) {
-                my計算Result_溶解[1] = Math.round(my計算Result[2] * my溶解倍率);
+                my計算Result_溶解[1] = my計算Result[2] * my溶解倍率;
             }
             if (my計算Result[3] != null) {
-                my計算Result_溶解[2] = Math.round(my計算Result[3] * my溶解倍率);
+                my計算Result_溶解[2] = my計算Result[3] * my溶解倍率;
             }
         }
     }
+
     let resultArr = [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]];
     resultArr.push(my計算Result_蒸発[0]);
     resultArr.push(my計算Result_蒸発[1]);
@@ -695,6 +685,17 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     resultArr.push(my計算Result_溶解[0]);
     resultArr.push(my計算Result_溶解[1]);
     resultArr.push(my計算Result_溶解[2]);
+
+    for (i = 2; i < resultArr.length; i++) {
+        if (resultArr[i] && $.isNumeric(resultArr[i])) {
+            if (my精度) {
+                resultArr[i] = Number(resultArr[i].toFixed(my精度));
+            } else {
+                resultArr[i] = Number(resultArr[i].toFixed(0));
+            }
+        }
+    }
+
     return resultArr;
 }
 
@@ -1131,6 +1132,8 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
     trElem10.appendChild(thElem10);
 
     damageResultArr.forEach(valueArr => {
+        if (valueArr[0].startsWith('非表示_')) return;
+
         let tdClassName = null;
         if (valueArr[1] && ELEMENT_TD_CLASS_MAP.has(valueArr[1])) {
             tdClassName = ELEMENT_TD_CLASS_MAP.get(valueArr[1]);
