@@ -517,6 +517,9 @@ function setupおすすめセット(opt_saveName = null) {
                     case '会心ダメージ':
                         setName += 'ダ';
                         break;
+                    case '与える治療効果':
+                        setName += '治';
+                        break;
                     default:
                         setName += statusName.substring(0, 1);
                         break;
