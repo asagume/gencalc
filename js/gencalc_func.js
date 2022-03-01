@@ -3170,6 +3170,7 @@ function setupCharacterImg(url) {
         $('#character-button img').addClass('star5');
     }
 }
+
 function setupTalentButton(url, characterData) {
     let urlArr = url.split('/');
     let dirName = urlArr[urlArr.length - 1].replace('.json', '');
@@ -3209,6 +3210,7 @@ function setupTalentButton(url, characterData) {
     });
     // $('#talent3-button .tooltip').html(元素爆発名称Var);
 }
+
 const キャラクターInputOnChange = function () {
     キャラクター名前Var = $('#キャラクターInput').val();
 
@@ -3415,21 +3417,6 @@ const キャラクターInputOnChange = function () {
         $('#元素スキルレベルInput').val(my元素スキルレベル);
         $('#元素爆発レベルInput').val(my元素爆発レベル);
 
-        if ('命ノ星座' in 選択中キャラクターデータVar) {
-            let infoHtml = "";
-            infoHtml += '<dl>';
-            Object.keys(選択中キャラクターデータVar['命ノ星座']).forEach(key => {
-                infoHtml += '<dt>';
-                infoHtml += '第' + key + '重 ' + 選択中キャラクターデータVar['命ノ星座'][key]['名前'];
-                infoHtml += '</dt>';
-                infoHtml += '<dd>';
-                infoHtml += makeHtml(選択中キャラクターデータVar['命ノ星座'][key]);
-                infoHtml += '</dd>';
-            });
-            infoHtml += '</dl>';
-            // $('#命ノ星座Dialog').html(infoHtml);
-        }
-
         if ($('#全武器解放Config').prop('checked')) {
             選択可能武器セットObjVar = {};
             Object.keys(武器MasterVar).forEach(key => {
@@ -3506,6 +3493,7 @@ function buildキャラクター選択リスト(opt_elementType = null) {
         imgElem.onclick = selectCharacter;
     });
 }
+
 function emSelectedItemInList(listSelector, name) {
     $(listSelector + ' li').removeClass('selected');
     $(listSelector + ' li').each((index, element) => {
