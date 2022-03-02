@@ -427,6 +427,11 @@ async function loadマスターデータAndSetup() {
             ARTIFACT_SUB_NAME_VALUE_ARR_MAP.set(statusName, subMap);
             console.debug(statusName, new Date(), ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName));
         });
+        if (選択中キャラクターデータVar) {
+            if ($('#おすすめセットInput option').length == 選択中キャラクターデータVar['おすすめセット'].length) {
+                inputOnChangeArtifactSubUpdate();
+            }
+        }
     }, false);
 
     worker.postMessage(my上昇回数Arr);
