@@ -409,7 +409,7 @@ $(document).ready(function () {
                 makeConditionExclusionMapFromStr(detailObj['条件'], バフオプション条件Map, バフオプション排他Map);
             });
             $('#バフオプションBox').empty();
-            appendInputForOptionElement('バフオプションBox', バフオプション条件Map, 'バフ', false);
+            appendInputForOptionElement('バフオプションBox', バフオプション条件Map, バフオプション排他Map, 'バフ', false);
         }),
         fetch("data/DebuffMaster.json").then(response => response.json()).then(jsonObj => {
             デバフMasterVar = jsonObj;
@@ -433,8 +433,34 @@ $(document).ready(function () {
                 makeConditionExclusionMapFromStr(detailObj['条件'], デバフオプション条件Map, デバフオプション排他Map);
             });
             $('#デバフオプションBox').empty();
-            appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, 'デバフ', false);
-        })
+            appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, デバフオプション排他Map, 'デバフ', false);
+        }),
+        fetch("data/TeamMaster.json").then(response => response.json()).then(jsonObj => {
+            チームMasterVar = jsonObj;
+            Object.keys(チームMasterVar).forEach(key => {
+                let myMasterObj = チームMasterVar[key];
+                if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                    return;
+                }
+                let myサポーター = key.split('_')[0];
+                let my条件 = '*' + myサポーター + '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+                myMasterObj['詳細'].forEach(detailObj => {
+                    if ('条件' in detailObj) {
+                        detailObj['条件'] = '*' + myサポーター + '*' + detailObj['条件'];
+                    } else {
+                        detailObj['条件'] = my条件;
+                    }
+                });
+                チーム詳細ArrVar = チーム詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+            });
+            console.log(チーム詳細ArrVar);
+            チームオプション条件Map.clear();
+            チーム詳細ArrVar.forEach(detailObj => {
+                makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
+            });
+            $('#チームオプションBox').empty();
+            // appendInputForOptionElement('チームオプションBox', チームオプション条件Map, チームオプション排他Map, 'チーム', false);
+        }),
     ]).then(function () {
         キャラクターInputOnChange();
     });

@@ -1,5 +1,5 @@
 // キャラクター構成TEMPLATE
-const CHARACTER_BUILD_OBJ_TEMPLATE = {
+const キャラクター構成ObjTEMPLATE = {
     キャラクター: null,
     レベル: null,
     命ノ星座: null,
@@ -16,6 +16,16 @@ const CHARACTER_BUILD_OBJ_TEMPLATE = {
     聖遺物メイン効果3: null,
     聖遺物メイン効果4: null,
     聖遺物メイン効果5: null,
+    聖遺物サブ効果HP: null,
+    聖遺物サブ効果攻撃力: null,
+    聖遺物サブ効果防御力: null,
+    聖遺物サブ効果元素熟知: null,
+    聖遺物サブ効果会心率: null,
+    聖遺物サブ効果会心ダメージ: null,
+    聖遺物サブ効果元素チャージ効率: null,
+    聖遺物サブ効果HPP: null,
+    聖遺物サブ効果攻撃力P: null,
+    聖遺物サブ効果防御力P: null,
     聖遺物優先するサブ効果1: null,
     聖遺物優先するサブ効果1上昇値: null,
     聖遺物優先するサブ効果1上昇回数: null,
@@ -24,24 +34,14 @@ const CHARACTER_BUILD_OBJ_TEMPLATE = {
     聖遺物優先するサブ効果2上昇回数: null,
     聖遺物優先するサブ効果3: null,
     聖遺物優先するサブ効果3上昇値: null,
-    聖遺物優先するサブ効果3上昇回数: null,
-    聖遺物サブ効果HPP: null,
-    聖遺物サブ効果攻撃力P: null,
-    聖遺物サブ効果防御力P: null,
-    聖遺物サブ効果元素熟知: null,
-    聖遺物サブ効果会心率: null,
-    聖遺物サブ効果会心ダメージ: null,
-    聖遺物サブ効果元素チャージ効率: null,
-    聖遺物サブ効果HP: null,
-    聖遺物サブ効果攻撃力: null,
-    聖遺物サブ効果防御力: null
+    聖遺物優先するサブ効果3上昇回数: null
 };
 
 function makeValidConditionValueArrFromInputObj(inputObj) {
-    return Object.keys(inputObj).filter(value => !(value in CHARACTER_BUILD_OBJ_TEMPLATE) && inputObj[value]).map(value => {
-        if (typeof inputObj[value] === 'boolean') {
+    return Object.keys(inputObj).filter(value => !(value in キャラクター構成ObjTEMPLATE) && inputObj[value]).map(value => {
+        if (typeof inputObj[value] === 'boolean') { // checkbox
             return value;
-        } else {
+        } else {    // select
             return value + '@' + inputObj[value];
         }
     });
@@ -1025,7 +1025,7 @@ async function teamTestOne(inputObj) {
 
 function teamTest() {
     Object.keys(localStorage).filter(s => s.startsWith('構成_')).forEach(key => {
-        const my構成 =  JSON.parse(localStorage[key]);
+        const my構成 = JSON.parse(localStorage[key]);
         teamTestOne(my構成);
     });
 }

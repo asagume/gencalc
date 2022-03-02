@@ -24,6 +24,7 @@ var 敵MasterVar;
 var 元素反応MasterVar;
 var バフMasterVar;
 var デバフMasterVar;
+var チームMasterVar;
 
 // 選択中のデータを保持します
 var 選択中キャラクターデータVar;
@@ -70,6 +71,9 @@ var バフオプション排他Map = new Map();
 var デバフ詳細ArrVar = [];
 var デバフオプション条件Map = new Map();
 var デバフオプション排他Map = new Map();
+var チーム詳細ArrVar = [];
+var チームオプション条件Map = new Map();
+var チームオプション排他Map = new Map();
 
 // オプションBox用
 // checkboxとselectの描画用の情報を保持します

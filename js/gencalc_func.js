@@ -305,7 +305,7 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
 }
 
 // オプションBox用 input[type=checkbox]およびselect要素を追加します
-const appendInputForOptionElement = function (parentElemId, optionMap, name, opt_checked = true) {
+const appendInputForOptionElement = function (parentElemId, optionMap, exclusionMap, name, opt_checked = true) {
     optionMap.forEach((value, key) => {
         if (value) return;
 
@@ -316,8 +316,8 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
         elem.type = 'checkbox';
         if (opt_checked) {  // チェック指定ありの場合でも、自身の排他条件のうちcheckedのものが存在すればチェックしません
             let myChecked = true;
-            if (オプション排他MapVar.has(key)) {
-                オプション排他MapVar.get(key).forEach(entry => {
+            if (exclusionMap.has(key)) {
+                exclusionMap.get(key).forEach(entry => {
                     if ($('#' + selectorEscape(entry) + 'Option').prop('checked')) {
                         myChecked = false;
                     }
@@ -359,8 +359,8 @@ const appendInputForOptionElement = function (parentElemId, optionMap, name, opt
         });
         if (opt_checked) {
             let mySelected = true;
-            if (オプション排他MapVar.has(key)) {
-                オプション排他MapVar.get(key).forEach(entry => {
+            if (exclusionMap.has(key)) {
+                exclusionMap.get(key).forEach(entry => {
                     if ($('#' + selectorEscape(entry) + 'Option').prop('selectedIndex') > 0) {
                         mySelected = false;
                     }
@@ -2171,7 +2171,7 @@ const inputOnChangeOptionUpdate = function () {
 
     // オプションを作り直します
     $('#オプションBox').empty();
-    appendInputForOptionElement('オプションBox', オプション条件MapVar, 'オプション');
+    appendInputForOptionElement('オプションBox', オプション条件MapVar, オプション排他MapVar,  'オプション');
     // オプションの状態を復元します
     オプションElementIdValue記憶Map.forEach((value, key) => {
         let elem = document.getElementById(key);
