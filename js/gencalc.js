@@ -270,6 +270,168 @@ function setupAllEvent() {
     $(document).on('click', '#ローカルストレージクリアButton', clearローカルストレージ);
 }
 
+async function loadマスターデータAndSetup() {
+    const responses = await Promise.all([
+        'data/CharacterMaster.json',
+        'data/SwordMaster.json',
+        'data/ClaymoreMaster.json',
+        'data/PolearmMaster.json',
+        'data/BowMaster.json',
+        'data/CatalystMaster.json',
+        'data/ArtifactSetMaster.json',
+        'data/ArtifactMainMaster.json',
+        'data/ArtifactSubMaster.json',
+        'data/EnemyMaster.json',
+        'data/ElementalResonanceMaster.json',
+        'data/ElementalReactionMaster.json',
+        'data/BuffMaster.json',
+        'data/DebuffMaster.json',
+        'data/TeamMaster.json'
+    ].map(url => fetch(url).then(resp => resp.json())));
+
+    キャラクターMasterVar = responses[0];
+    武器MasterVar['片手剣'] = responses[1];
+    武器MasterVar['両手剣'] = responses[2];
+    武器MasterVar['長柄武器'] = responses[3];
+    武器MasterVar['弓'] = responses[4];
+    武器MasterVar['法器'] = responses[5];
+    聖遺物セット効果MasterVar = responses[6];
+    聖遺物メイン効果MasterVar = responses[7];
+    聖遺物サブ効果MasterVar = responses[8];
+    敵MasterVar = responses[9];
+    元素共鳴MasterVar = responses[10];
+    元素反応MasterVar = responses[11];
+    バフMasterVar = responses[12];
+    デバフMasterVar = responses[13];
+    チームMasterVar = responses[14];
+
+    appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
+
+    appendOptionElements(聖遺物セット効果MasterVar, ["#聖遺物セット効果1Input", "#聖遺物セット効果2Input"]);
+
+    $('[name="聖遺物セット効果Input"]').prop('disabled', true);
+    $('[name="聖遺物メイン効果Input"]').prop('disabled', true);
+    $('[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
+    $('[name="聖遺物優先するサブ効果上昇値Input"]').prop('disabled', true);
+    $('[name="聖遺物優先するサブ効果上昇回数Input"]').prop('disabled', true);
+    $('[name="聖遺物セット効果Input"]').prop('disabled', false);
+    $('[name="聖遺物メイン効果Input"]').prop('disabled', false);
+    $('[name="聖遺物優先するサブ効果Input"]').prop('disabled', false);
+    $('[name="聖遺物優先するサブ効果上昇値Input"]').prop('disabled', false);
+    $('[name="聖遺物優先するサブ効果上昇回数Input"]').prop('disabled', false);
+
+    appendOptionElements(敵MasterVar, "#敵Input");
+
+    Object.keys(バフMasterVar).forEach(key => {
+        let myMasterObj = バフMasterVar[key];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
+        let my条件 = '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+        myMasterObj['詳細'].forEach(detailObj => {
+            if ('条件' in detailObj) {
+                detailObj['条件'] = '*' + detailObj['条件'];
+            } else {
+                detailObj['条件'] = my条件;
+            }
+        });
+        バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+    });
+    バフオプション条件Map.clear();
+    バフ詳細ArrVar.forEach(detailObj => {
+        makeConditionExclusionMapFromStr(detailObj['条件'], バフオプション条件Map, バフオプション排他Map);
+    });
+    $('#バフオプションBox').empty();
+    appendInputForOptionElement('バフオプションBox', バフオプション条件Map, バフオプション排他Map, 'バフ', false);
+
+    Object.keys(デバフMasterVar).forEach(key => {
+        let myMasterObj = デバフMasterVar[key];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
+        let my条件 = '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+        myMasterObj['詳細'].forEach(detailObj => {
+            if ('条件' in detailObj) {
+                detailObj['条件'] = '*' + detailObj['条件'];
+            } else {
+                detailObj['条件'] = my条件;
+            }
+        });
+        デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+    });
+    デバフオプション条件Map.clear();
+    デバフ詳細ArrVar.forEach(detailObj => {
+        makeConditionExclusionMapFromStr(detailObj['条件'], デバフオプション条件Map, デバフオプション排他Map);
+    });
+    $('#デバフオプションBox').empty();
+    appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, デバフオプション排他Map, 'デバフ', false);
+
+    Object.keys(チームMasterVar).forEach(key => {
+        let myMasterObj = チームMasterVar[key];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
+        let myサポーター = key.split('_')[0];
+        let my条件 = '*' + myサポーター + '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+        myMasterObj['詳細'].forEach(detailObj => {
+            if ('条件' in detailObj) {
+                detailObj['条件'] = '*' + myサポーター + '*' + detailObj['条件'];
+            } else {
+                detailObj['条件'] = my条件;
+            }
+        });
+        チーム詳細ArrVar = チーム詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+    });
+    console.log(チーム詳細ArrVar);
+    チームオプション条件Map.clear();
+    チーム詳細ArrVar.forEach(detailObj => {
+        makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
+    });
+    $('#チームオプションBox').empty();
+    // appendInputForOptionElement('チームオプションBox', チームオプション条件Map, チームオプション排他Map, 'チーム', false);
+
+    let select = null;
+    Object.keys(キャラクターMasterVar).forEach(key => {
+        if (!select) {
+            select = key;
+        } else if ('selected' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['selected']) {
+            select = key;
+        }
+    });
+    characterSelected(select);
+
+    // 聖遺物サブ効果の小計の組み合わせを計算します
+    // かなり高コストな処理です
+    let my上昇回数Arr = [];
+    $('#聖遺物優先するサブ効果1上昇回数Input option').each((index, element) => {
+        my上昇回数Arr.push(Number(element.value));
+    });
+
+    const worker = new Worker('js/calculate_sub.js');
+
+    worker.addEventListener('message', function (e) {
+        const ARTIFACT_SUB_PATTERN_ARR_MAP = e.data;
+        Object.keys(聖遺物サブ効果MasterVar).forEach(statusName => {
+            let subMap = new Map();
+            ARTIFACT_SUB_PATTERN_ARR_MAP.forEach((arrArr, key) => {
+                let resultArr = [];
+                for (arr of arrArr) {
+                    let result = 0;
+                    for (let i = 0; i < arr.length; i++) {
+                        result += 聖遺物サブ効果MasterVar[statusName][i] * arr[i];
+                    }
+                    resultArr.push(result.toFixed(1));
+                }
+                subMap.set(key, resultArr);
+            });
+            ARTIFACT_SUB_NAME_VALUE_ARR_MAP.set(statusName, subMap);
+            console.debug(statusName, new Date(), ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName));
+        });
+    }, false);
+
+    worker.postMessage(my上昇回数Arr);
+}
+
 // MAIN
 $(document).ready(function () {
     setupAllEvent();
@@ -299,171 +461,8 @@ $(document).ready(function () {
         聖遺物サブ効果直接入力モードToggleOnChange();
     }
 
-    Promise.all([
-        fetch("data/CharacterMaster.json").then(response => response.json()).then(jsonObj => {
-            キャラクターMasterVar = jsonObj;
+    loadキャラクター所持状況();
+    load武器所持状況();
 
-            appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
-
-            let select = null;
-            Object.keys(キャラクターMasterVar).forEach(key => {
-                if (!select) select = key;
-                else if ('selected' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['selected']) select = key;
-            });
-            characterSelected(select);
-
-            loadキャラクター所持状況();
-            load武器所持状況();
-        }),
-        fetch("data/SwordMaster.json").then(response => response.json()).then(jsonObj => {
-            武器MasterVar["片手剣"] = jsonObj;
-        }),
-        fetch("data/ClaymoreMaster.json").then(response => response.json()).then(jsonObj => {
-            武器MasterVar["両手剣"] = jsonObj;
-        }),
-        fetch("data/PolearmMaster.json").then(response => response.json()).then(jsonObj => {
-            武器MasterVar["長柄武器"] = jsonObj;
-        }),
-        fetch("data/BowMaster.json").then(response => response.json()).then(jsonObj => {
-            武器MasterVar["弓"] = jsonObj;
-        }),
-        fetch("data/CatalystMaster.json").then(response => response.json()).then(jsonObj => {
-            武器MasterVar["法器"] = jsonObj;
-        }),
-        fetch("data/ArtifactMainMaster.json").then(response => response.json()).then(jsonObj => {
-            聖遺物メイン効果MasterVar = jsonObj;
-        }),
-        fetch("data/ArtifactSubMaster.json").then(response => response.json()).then(jsonObj => {
-            聖遺物サブ効果MasterVar = jsonObj;
-            // 聖遺物サブ効果の小計の組み合わせを計算します
-            // かなり高コストな処理です
-            $('[name="聖遺物セット効果Input"]').prop('disabled', true);
-            $('[name="聖遺物メイン効果Input"]').prop('disabled', true);
-            $('[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
-            $('[name="聖遺物優先するサブ効果上昇値Input"]').prop('disabled', true);
-            $('[name="聖遺物優先するサブ効果上昇回数Input"]').prop('disabled', true);
-            $('#聖遺物優先するサブ効果1上昇回数Input option').each((index, element) => {
-                let n = element.value;
-                if (n == 0) {
-                    ARTIFACT_SUB_PATTERN_ARR_MAP.set(n, [[0, 0, 0, 0]]);
-                } else {
-                    ARTIFACT_SUB_PATTERN_ARR_MAP.set(n, resolvePartitionPattern(n, 4));
-                }
-                console.debug(n, new Date(), ARTIFACT_SUB_PATTERN_ARR_MAP.get(n));
-            });
-            Object.keys(聖遺物サブ効果MasterVar).forEach(statusName => {
-                let subMap = new Map();
-                ARTIFACT_SUB_PATTERN_ARR_MAP.forEach((arrArr, key) => {
-                    let resultArr = [];
-                    for (arr of arrArr) {
-                        let result = 0;
-                        for (let i = 0; i < arr.length; i++) {
-                            result += 聖遺物サブ効果MasterVar[statusName][i] * arr[i];
-                        }
-                        resultArr.push(result.toFixed(1));
-                    }
-                    subMap.set(key, resultArr);
-                });
-                ARTIFACT_SUB_NAME_VALUE_ARR_MAP.set(statusName, subMap);
-                console.debug(statusName, new Date(), ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName));
-            });
-            $('[name="聖遺物セット効果Input"]').prop('disabled', false);
-            $('[name="聖遺物メイン効果Input"]').prop('disabled', false);
-            $('[name="聖遺物優先するサブ効果Input"]').prop('disabled', false);
-            $('[name="聖遺物優先するサブ効果上昇値Input"]').prop('disabled', false);
-            $('[name="聖遺物優先するサブ効果上昇回数Input"]').prop('disabled', false);
-        }),
-        fetch("data/ArtifactSetMaster.json").then(response => response.json()).then(jsonObj => {
-            聖遺物セット効果MasterVar = jsonObj;
-            appendOptionElements(聖遺物セット効果MasterVar, ["#聖遺物セット効果1Input", "#聖遺物セット効果2Input"]);
-        }),
-        fetch("data/ElementalResonanceMaster.json").then(response => response.json()).then(jsonObj => {
-            元素共鳴MasterVar = jsonObj;
-        }),
-        fetch("data/EnemyMaster.json").then(response => response.json()).then(jsonObj => {
-            敵MasterVar = jsonObj;
-            appendOptionElements(敵MasterVar, "#敵Input");
-        }),
-        fetch("data/ElementalReactionMaster.json").then(response => response.json()).then(jsonObj => {
-            元素反応MasterVar = jsonObj;
-        }),
-        fetch("data/BuffMaster.json").then(response => response.json()).then(jsonObj => {
-            バフMasterVar = jsonObj;
-            Object.keys(バフMasterVar).forEach(key => {
-                let myMasterObj = バフMasterVar[key];
-                if ('disabled' in myMasterObj && myMasterObj['disabled']) {
-                    return;
-                }
-                let my条件 = '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
-                myMasterObj['詳細'].forEach(detailObj => {
-                    if ('条件' in detailObj) {
-                        detailObj['条件'] = '*' + detailObj['条件'];
-                    } else {
-                        detailObj['条件'] = my条件;
-                    }
-                });
-                バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
-            });
-            バフオプション条件Map.clear();
-            バフ詳細ArrVar.forEach(detailObj => {
-                makeConditionExclusionMapFromStr(detailObj['条件'], バフオプション条件Map, バフオプション排他Map);
-            });
-            $('#バフオプションBox').empty();
-            appendInputForOptionElement('バフオプションBox', バフオプション条件Map, バフオプション排他Map, 'バフ', false);
-        }),
-        fetch("data/DebuffMaster.json").then(response => response.json()).then(jsonObj => {
-            デバフMasterVar = jsonObj;
-            Object.keys(デバフMasterVar).forEach(key => {
-                let myMasterObj = デバフMasterVar[key];
-                if ('disabled' in myMasterObj && myMasterObj['disabled']) {
-                    return;
-                }
-                let my条件 = '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
-                myMasterObj['詳細'].forEach(detailObj => {
-                    if ('条件' in detailObj) {
-                        detailObj['条件'] = '*' + detailObj['条件'];
-                    } else {
-                        detailObj['条件'] = my条件;
-                    }
-                });
-                デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
-            });
-            デバフオプション条件Map.clear();
-            デバフ詳細ArrVar.forEach(detailObj => {
-                makeConditionExclusionMapFromStr(detailObj['条件'], デバフオプション条件Map, デバフオプション排他Map);
-            });
-            $('#デバフオプションBox').empty();
-            appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, デバフオプション排他Map, 'デバフ', false);
-        }),
-        fetch("data/TeamMaster.json").then(response => response.json()).then(jsonObj => {
-            チームMasterVar = jsonObj;
-            Object.keys(チームMasterVar).forEach(key => {
-                let myMasterObj = チームMasterVar[key];
-                if ('disabled' in myMasterObj && myMasterObj['disabled']) {
-                    return;
-                }
-                let myサポーター = key.split('_')[0];
-                let my条件 = '*' + myサポーター + '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
-                myMasterObj['詳細'].forEach(detailObj => {
-                    if ('条件' in detailObj) {
-                        detailObj['条件'] = '*' + myサポーター + '*' + detailObj['条件'];
-                    } else {
-                        detailObj['条件'] = my条件;
-                    }
-                });
-                チーム詳細ArrVar = チーム詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
-            });
-            console.log(チーム詳細ArrVar);
-            チームオプション条件Map.clear();
-            チーム詳細ArrVar.forEach(detailObj => {
-                makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
-            });
-            $('#チームオプションBox').empty();
-            // appendInputForOptionElement('チームオプションBox', チームオプション条件Map, チームオプション排他Map, 'チーム', false);
-        }),
-    ]).then(function () {
-        キャラクターInputOnChange();
-    });
+    loadマスターデータAndSetup();
 });
-
-
