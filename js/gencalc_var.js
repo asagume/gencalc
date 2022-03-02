@@ -763,8 +763,8 @@ function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end 
 
 function searchArtifactSubApproximation(statusName, times, targetValue) {
     if (ARTIFACT_SUB_NAME_VALUE_ARR_MAP.has(statusName) &&
-        ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).has(String(times))) {
-        const arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(String(times));
+        ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).has(times)) {
+        const arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(times);
         for (let i = 0; i < arr.length; i++) {
             if (targetValue <= arr[i]) {
                 return arr[i];
