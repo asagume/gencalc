@@ -742,24 +742,7 @@ function initキャラクター構成関連要素() {
     $(document).on('click', '#保存構成削除Button', clearキャラクター構成);
 }
 
-// 聖遺物サブ効果
-const ARTIFACT_SUB_PATTERN_ARR_MAP = new Map();
 const ARTIFACT_SUB_NAME_VALUE_ARR_MAP = new Map();
-
-// 組み合わせ
-function resolvePartitionPattern(n, p) {
-    if (p == 0) return [];
-    if (p == 1) return [[n]];
-    let ans = [];
-    for (let x0 = 0; x0 <= n; x0++) {
-        resolvePartitionPattern(n - x0, p - 1).forEach(sub => {
-            if (sub.length > 0) {
-                ans.push([x0].concat(sub));
-            }
-        });
-    }
-    return ans;
-}
 
 function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end = null) {
     if (opt_start == null) opt_start = 0;
@@ -779,10 +762,14 @@ function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end 
 }
 
 function searchArtifactSubApproximation(statusName, times, targetValue) {
-    let arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(String(times));
-    for (let i = 0; i < arr.length; i++) {
-        if (targetValue <= arr[i]) {
-            return arr[i];
+    if (ARTIFACT_SUB_NAME_VALUE_ARR_MAP.has(statusName) &&
+        ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).has(String(times))) {
+        const arr = ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).get(String(times));
+        for (let i = 0; i < arr.length; i++) {
+            if (targetValue <= arr[i]) {
+                return arr[i];
+            }
         }
     }
+    return targetValue;
 }
