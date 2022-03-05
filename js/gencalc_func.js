@@ -1956,8 +1956,10 @@ function calculateStatusObj(statusObj) {
     }
 
     // チームオプションを計上します
+    $('#チームオプションステータス変化').html('');
     let validTeamConditionValueArr = makeValidConditionValueArr('#チームオプションBox');
     if (validTeamConditionValueArr.length > 0) {
+        const teamStatusObj = {};
         チーム詳細ArrVar.forEach(detailObj => {
             if (detailObj['対象']) return;
             let number = checkConditionMatches(detailObj['条件'], validTeamConditionValueArr);
@@ -1970,13 +1972,43 @@ function calculateStatusObj(statusObj) {
             }
             let myサポーター = detailObj['条件'].split('*')[1];
             try {
-                const teamStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
-                const value = calculateFormulaArray(teamStatusObj, myNew数値);
-                calculateStatus(statusObj, detailObj['種類'], [value]);
+                const supporterStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
+                const value = calculateFormulaArray(supporterStatusObj, myNew数値);
+                calculateStatus(teamStatusObj, detailObj['種類'], [value]);
             } catch (e) {
                 // nop
             }
         });
+        let html = '';
+        Object.keys(teamStatusObj).forEach(key => {
+            if (!(key in statusObj)) {
+                statusObj[key] = 0;
+            }
+            statusObj[key] += teamStatusObj[key];
+
+            let postfix = '';
+            html += '<p>';
+            if (key.startsWith('敵')) {
+                html += key.replace(/^敵/, '敵の');
+                postfix = '%';
+            } else if (key.endsWith('バフ')) {
+                html += key.replace(/バフ$/, '');
+                postfix = '%';
+            } else if (key.endsWith('乗算')) {
+                html += key.replace(/乗算$/, '');
+                postfix = '%';
+            } else if (key.indexOf('ダメージ会心') != -1) {
+                html += key.replace(/ダメージ会心/, 'ダメージの会心');
+                postfix = '%';
+            } else {
+                html += key;
+            }
+            if (teamStatusObj[key] >= 0) {
+                html += '+';
+            }
+            html += teamStatusObj[key] + postfix + '</p>';
+        });
+        $('#チームオプションステータス変化').html(html);
     }
 
     // ステータス補正を計上します

@@ -900,6 +900,11 @@ tr.rowheader {
     vertical-align: middle;
 }
 
+#チームオプションステータス変化 p {
+    display: inline-block;
+    margin: 0.5rem 1rem;
+}
+
 /* RESULT PANE */
 .result-pane {
     grid-area: result-pane;
