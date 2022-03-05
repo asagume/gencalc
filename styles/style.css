@@ -893,6 +893,8 @@ tr.rowheader {
 #チームオプションBox div label {
     display: inline-block;
     border: none;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 #チームオプションBox div div {
