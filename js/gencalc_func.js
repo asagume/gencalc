@@ -310,7 +310,7 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
 }
 
 // オプションBox用 input[type=checkbox]およびselect要素を追加します
-const appendInputForOptionElement = function (parentElemId, optionMap, exclusionMap, name, opt_checked = true) {
+const appendInputForOptionElement = function (parentElemId, optionMap, exclusionMap, name, opt_checked = true, opt_onchange = オプションInputOnChange) {
     optionMap.forEach((value, key) => {
         if (value) return;
 
@@ -342,7 +342,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
         labelElem.textContent = key.replace(/^.*\*/, '');
         elem.after(labelElem);
 
-        elem.onchange = オプションInputOnChange;
+        elem.onchange = opt_onchange;
     });
     optionMap.forEach((value, key) => {
         if (!value) return;
@@ -379,7 +379,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
         labelElem.textContent = key.replace(/^.*\*/, '');
         elem.before(labelElem);
 
-        elem.onchange = オプションInputOnChange;
+        elem.onchange = opt_onchange;
         applyOptionVariable(ステータス詳細ObjVar, elem);
     });
 }
@@ -2307,7 +2307,7 @@ function applyOptionVariable(statusObj, elem) {
 }
 
 // オプション 変更イベント
-const オプションInputOnChange = function () {
+const オプションInputOnChangeSub = function () {
     if ((this instanceof HTMLInputElement && this.checked) || (this instanceof HTMLSelectElement && this)) {
         let conditionName = this.id.replace('Option', '');
         オプション排他MapVar.forEach((value, key) => {
@@ -2326,6 +2326,10 @@ const オプションInputOnChange = function () {
     オプションElementIdValue記憶Map.set(this.id, this instanceof HTMLInputElement ? this.checked : this.selectedIndex);    // チェック状態または選択要素のインデックスを保持します
     applyOptionVariable(ステータス詳細ObjVar, this);
     inputOnChangeStatusUpdate();
+};
+
+const オプションInputOnChange = function () {
+    オプションInputOnChangeSub();
 
     build天賦詳細レベル変動();
 
@@ -3655,7 +3659,7 @@ function buildチームオプション() {
         divElem.id = 'チームオプションBox' + myサポーター;
         liElem.appendChild(divElem);
 
-        appendInputForOptionElement(divElem.id, value, new Map(), 'チームオプションName' + myサポーター, false);
+        appendInputForOptionElement(divElem.id, value, new Map(), 'チームオプションName' + myサポーター, false, オプションInputOnChangeSub);
     });
 }
 
