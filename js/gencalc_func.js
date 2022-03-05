@@ -62,7 +62,12 @@ function checkConditionMatchesSub(conditionStr, validConditionValueArr) {
         if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
             return 1;   // マッチ 等倍
         }
-    } else if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
+    } else if (myCondArr.length == 1) {
+        if (validConditionValueArr.filter(s => s.startsWith(conditionStr + '@')).length > 0) {
+            return 1;   // マッチ 等倍
+        }
+        return 0;   // アンマッチ
+    } else if (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1) {
         return 0;   // アンマッチ
     }
     const re = new RegExp('[^0-9]*([0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
@@ -1961,11 +1966,12 @@ function calculateStatusObj(statusObj) {
                 myNew数値 = myNew数値.concat(['*', number]);
             }
             let myサポーター = detailObj['条件'].split('*')[1];
-            const saveName = '構成_' + myサポーター;
-            const teamStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
-            if (teamStatusObj) {
-                let value = calculateFormulaArray(teamStatusObj, myNew数値);
+            try {
+                const teamStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
+                const value = calculateFormulaArray(teamStatusObj, myNew数値);
                 calculateStatus(statusObj, detailObj['種類'], [value]);
+            } catch (e) {
+                // nop
             }
         });
     }
@@ -3574,7 +3580,17 @@ function buildチームオプション() {
         myサポーター = key.split('*')[1];
 
         if (myサポーター == 選択中キャラクターデータVar['名前']) return;
-        if (localStorage['構成_' + myサポーター] == null) return;
+        if (key.substring(1).replace('*', '_') in チームMasterVar) {
+            let isNeedSaveData = false;
+            チームMasterVar[key.substring(1).replace('*', '_')]['詳細'].forEach(detailObj => {
+                if (!$.isNumeric(detailObj['数値'])) {
+                    isNeedSaveData = true;
+                }
+            });
+            if (isNeedSaveData && localStorage['構成_' + myサポーター] == null) return;
+        } else {
+            if (localStorage['構成_' + myサポーター] == null) return;
+        }
 
         if (!myサポーターオプション条件Map.has(myサポーター)) {
             myサポーターオプション条件Map.set(myサポーター, new Map());
