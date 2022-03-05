@@ -113,6 +113,15 @@ function setupAllEvent() {
     $(document).on('change', '#聖遺物サブ効果直接入力Toggle', 聖遺物サブ効果直接入力モードToggleOnChange);
     $(document).on('change', '#厳選目安Toggle', 厳選目安ToggleOnChange);
     $(document).on('change', '#厳選目安Input', 厳選目安InputOnChange);
+    $(document).on('change', '#聖遺物サブ効果初期化Toggle', buttonToggleCheckboxOnChange);
+    $(document).on('click', '#聖遺物サブ効果初期化Button', function () {
+        ["聖遺物サブ効果"].forEach(name => {
+            $('[name="' + name + 'Input"]').val(0);
+        });
+        this.disabled = true;
+        $('#聖遺物サブ効果初期化Toggle').prop('checked', false);
+        inputOnChangeStatusUpdate();
+    });
 
     // 聖遺物画像/スコア クリックイベント
     $(document).on('click', '#artifactset1-button', function () {
@@ -242,7 +251,7 @@ function setupAllEvent() {
         document.getElementById('artifact-detail-image').click();
     });
 
-    // 止血中
+    // 聖遺物サブ効果の自動計算を止める
     $(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳細計算停止);
 
     // キャラクター所持状況

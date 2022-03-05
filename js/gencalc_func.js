@@ -4213,7 +4213,7 @@ const setDebugInfo = function () {
     }).appendTo('#debugInfo');
 }
 
-// 止血中
+// 聖遺物サブ効果の自動計算を止める
 const toggle聖遺物詳細計算停止 = function () {
     if (this.checked) {
         $('select[name="聖遺物優先するサブ効果Input"]').prop('disabled', true);
