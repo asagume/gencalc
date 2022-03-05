@@ -823,6 +823,9 @@ function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc,
     my期待値Result = my非会心Result;
     let my会心率 = Math.min(100, Math.max(0, statusObj['会心率']));    // 0≦会心率≦100
     let my会心ダメージ = statusObj['会心ダメージ'];
+    if ((元素 + '元素ダメージ会心ダメージ') in statusObj) {
+        my会心ダメージ += statusObj[元素 + '元素ダメージ会心ダメージ'];
+    }
     if (is会心Calc) {
         if (my会心率 > 0) {
             my会心Result = my非会心Result * (100 + my会心ダメージ) / 100;

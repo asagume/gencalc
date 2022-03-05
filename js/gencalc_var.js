@@ -177,7 +177,13 @@ const ステータス詳細ObjTemplate = {
     聖遺物サブ効果元素熟知: 0,
     聖遺物サブ効果会心率: 0,
     聖遺物サブ効果会心ダメージ: 0,
-    聖遺物サブ効果元素チャージ効率: 0
+    聖遺物サブ効果元素チャージ効率: 0,
+    炎元素ダメージ会心ダメージ: 0,
+    水元素ダメージ会心ダメージ: 0,
+    風元素ダメージ会心ダメージ: 0,
+    雷元素ダメージ会心ダメージ: 0,
+    氷元素ダメージ会心ダメージ: 0,
+    岩元素ダメージ会心ダメージ: 0
 };
 
 // マスターデータの詳細[].種類からステータス詳細ObjVarのプロパティへの変換表です
@@ -610,7 +616,7 @@ const saveキャラクター構成 = function () {
     $('#保存構成削除Button').prop('disabled', false);
     $('#構成名称Input').prop('disabled', true);
 
-    makeTeamStatusObjEx(key).then(value => {});
+    makeTeamStatusObjEx(key).then(value => { });
 
     setupおすすめセット(saveName);
 }
