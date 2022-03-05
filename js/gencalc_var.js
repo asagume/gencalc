@@ -610,6 +610,8 @@ const saveキャラクター構成 = function () {
     $('#保存構成削除Button').prop('disabled', false);
     $('#構成名称Input').prop('disabled', true);
 
+    makeTeamStatusObjEx(key).then(value => {});
+
     setupおすすめセット(saveName);
 }
 
@@ -625,6 +627,13 @@ const clearキャラクター構成 = function () {
     if (localStorage[key]) {
         localStorage.removeItem(key);
     }
+
+    チームInputObjMap.delete(key);
+    チームConditionMapMap.delete(key);
+    チームExclusionMapMap.delete(key);
+    チームDamageDetailObjMap.delete(key);
+    チームChangeDetailObjMap.delete(key);
+    チームStatusObjMap.delete(key);
 
     setupおすすめセット();
 }
