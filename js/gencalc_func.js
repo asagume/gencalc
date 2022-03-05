@@ -9,7 +9,7 @@ const WEAPON_TYPE_IMG_FILE_ALIST = {
     長柄武器: 'NormalAttack_polearm.png',
     弓: 'NormalAttack_bow.png',
     法器: 'NormalAttack_catalyst.png'
-}
+};
 
 const resultTableVisibilityMap = new Map();
 
@@ -334,7 +334,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
 
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
-        labelElem.textContent = key.replace(/^\*/, '');
+        labelElem.textContent = key.replace(/^.*\*/, '');
         elem.after(labelElem);
 
         elem.onchange = オプションInputOnChange;
@@ -371,7 +371,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
 
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
-        labelElem.textContent = key.replace(/^\*/, '');
+        labelElem.textContent = key.replace(/^.*\*/, '');
         elem.before(labelElem);
 
         elem.onchange = オプションInputOnChange;
@@ -1895,53 +1895,80 @@ function calculateStatusObj(statusObj) {
 
     // バフオプションを計上します
     let validBuffConditionValueArr = makeValidConditionValueArr('#バフオプションBox');
-    バフ詳細ArrVar.forEach(detailObj => {
-        let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
-        if (Array.from(オプション条件MapVar.keys()).includes(key)) {
-            return;
-        }
-        let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
-        if (number == 0) {
-            return;
-        }
-        if (detailObj['種類'].endsWith('元素付与')) {
-            let my元素 = detailObj['種類'].replace('元素付与', '');
-            通常攻撃_元素Var = my元素;
-            重撃_元素Var = my元素;
-            落下攻撃_元素Var = my元素;
-            return;
-        }
-        let myNew数値 = detailObj['数値'];
-        if (number != 1) {
-            myNew数値 = myNew数値.concat(['*', number]);
-        }
-        calculateStatus(statusObj, detailObj['種類'], myNew数値);
-    });
+    if (validBuffConditionValueArr.length > 0) {
+        バフ詳細ArrVar.forEach(detailObj => {
+            let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
+            if (Array.from(オプション条件MapVar.keys()).includes(key)) {
+                return;
+            }
+            let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
+            if (number == 0) {
+                return;
+            }
+            if (detailObj['種類'].endsWith('元素付与')) {
+                let my元素 = detailObj['種類'].replace('元素付与', '');
+                通常攻撃_元素Var = my元素;
+                重撃_元素Var = my元素;
+                落下攻撃_元素Var = my元素;
+                return;
+            }
+            let myNew数値 = detailObj['数値'];
+            if (number != 1) {
+                myNew数値 = myNew数値.concat(['*', number]);
+            }
+            calculateStatus(statusObj, detailObj['種類'], myNew数値);
+        });
+    }
 
     // デバフオプションを計上します
     let validDebuffConditionValueArr = makeValidConditionValueArr('#デバフオプションBox');
-    デバフ詳細ArrVar.forEach(detailObj => {
-        let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
-        if (Array.from(オプション条件MapVar.keys()).includes(key)) {
-            return;
-        }
-        let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
-        if (number == 0) {
-            return;
-        }
-        if (detailObj['種類'].endsWith('元素付与')) {
-            let my元素 = detailObj['種類'].replace('元素付与', '');
-            通常攻撃_元素Var = my元素;
-            重撃_元素Var = my元素;
-            落下攻撃_元素Var = my元素;
-            return;
-        }
-        let myNew数値 = detailObj['数値'];
-        if (number != 1) {
-            myNew数値 = myNew数値.concat(['*', number]);
-        }
-        calculateStatus(statusObj, detailObj['種類'], myNew数値);
-    });
+    if (validDebuffConditionValueArr.length > 0) {
+        デバフ詳細ArrVar.forEach(detailObj => {
+            let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
+            if (Array.from(オプション条件MapVar.keys()).includes(key)) {
+                return;
+            }
+            let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
+            if (number == 0) {
+                return;
+            }
+            if (detailObj['種類'].endsWith('元素付与')) {
+                let my元素 = detailObj['種類'].replace('元素付与', '');
+                通常攻撃_元素Var = my元素;
+                重撃_元素Var = my元素;
+                落下攻撃_元素Var = my元素;
+                return;
+            }
+            let myNew数値 = detailObj['数値'];
+            if (number != 1) {
+                myNew数値 = myNew数値.concat(['*', number]);
+            }
+            calculateStatus(statusObj, detailObj['種類'], myNew数値);
+        });
+    }
+
+    // チームオプションを計上します
+    let validTeamConditionValueArr = makeValidConditionValueArr('#チームオプションBox');
+    if (validTeamConditionValueArr.length > 0) {
+        チーム詳細ArrVar.forEach(detailObj => {
+            if (detailObj['対象']) return;
+            let number = checkConditionMatches(detailObj['条件'], validTeamConditionValueArr);
+            if (number == 0) {
+                return;
+            }
+            let myNew数値 = detailObj['数値'];
+            if (number != 1) {
+                myNew数値 = myNew数値.concat(['*', number]);
+            }
+            let myサポーター = detailObj['条件'].split('*')[1];
+            const saveName = '構成_' + myサポーター;
+            const teamStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
+            if (teamStatusObj) {
+                let value = calculateFormulaArray(teamStatusObj, myNew数値);
+                calculateStatus(statusObj, detailObj['種類'], [value]);
+            }
+        });
+    }
 
     // ステータス補正を計上します
     Array.from(document.getElementsByName('ステータスInput')).forEach(elem => {
@@ -2171,7 +2198,7 @@ const inputOnChangeOptionUpdate = function () {
 
     // オプションを作り直します
     $('#オプションBox').empty();
-    appendInputForOptionElement('オプションBox', オプション条件MapVar, オプション排他MapVar,  'オプション');
+    appendInputForOptionElement('オプションBox', オプション条件MapVar, オプション排他MapVar, 'オプション');
     // オプションの状態を復元します
     オプションElementIdValue記憶Map.forEach((value, key) => {
         let elem = document.getElementById(key);
@@ -2790,7 +2817,7 @@ function build天賦詳細レベル変動() {
 }
 
 function build天賦詳細() {
-    const characterData = キャラクターMasterVar[$('#キャラクターInput').val()];
+    const characterData = キャラクターリストMasterVar[$('#キャラクターInput').val()];
     const url = characterData['import'];
     let urlArr = url.split('/');
     let dirName = urlArr[urlArr.length - 1].replace('.json', '');
@@ -2970,12 +2997,14 @@ const 武器レベルInputOnChange = function () {
 
 // 武器 変更イベント
 const 武器InputOnChange = function () {
-    const name = $('#武器Input').val();
-    const url = 選択可能武器セットObjVar[name]['import'];
+    const my名前 = $('#武器Input').val();
+    const url = 選択可能武器セットObjVar[my名前]['import'];
 
-    setupWeaponImg(url, name);
+    setupWeaponImg(url, my名前);
 
     fetch(url).then(response => response.json()).then(data => {
+        武器MasterMap.set(my名前, data);
+
         選択中武器データVar = data;
         console.debug('選択中武器データVar');
         console.debug(選択中武器データVar);
@@ -2998,8 +3027,8 @@ const 武器InputOnChange = function () {
             }
         }
         if (my精錬ランク == 0) {
-            if (name in 武器所持状況ObjVar && 武器所持状況ObjVar[name]) {
-                my精錬ランク = 武器所持状況ObjVar[name];
+            if (my名前 in 武器所持状況ObjVar && 武器所持状況ObjVar[my名前]) {
+                my精錬ランク = 武器所持状況ObjVar[my名前];
             } else if ('精錬ランク' in 選択中武器データVar) {
                 my精錬ランク = 選択中武器データVar['精錬ランク'];
             }
@@ -3282,16 +3311,18 @@ function setupTalentButton(url, characterData) {
 }
 
 const キャラクターInputOnChange = function () {
-    キャラクター名前Var = $('#キャラクターInput').val();
+    const my名前 = $('#キャラクターInput').val();
 
-    let myMasterObj = キャラクターMasterVar[キャラクター名前Var];
+    let myMasterObj = キャラクターリストMasterVar[my名前];
 
     let elementSrcUrl = 'images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
     let imgElem = '<img width="18" height="18" src="' + elementSrcUrl + '" alt="' + myMasterObj['元素'] + '">';
-    $('#character-name').html(imgElem + キャラクター名前Var);
+    $('#character-name').html(imgElem + my名前);
 
     const url = myMasterObj['import'];
     fetch(url).then(response => response.json()).then(data => {
+        キャラクターMasterMap.set(my名前, data);
+
         選択中キャラクターデータVar = data;
 
         console.debug('選択中キャラクターデータVar');
@@ -3453,8 +3484,8 @@ const キャラクターInputOnChange = function () {
         }
 
         let my命ノ星座 = 0;
-        if (キャラクター名前Var in キャラクター所持状況ObjVar) {
-            my命ノ星座 = キャラクター所持状況ObjVar[キャラクター名前Var];
+        if (my名前 in キャラクター所持状況ObjVar) {
+            my命ノ星座 = キャラクター所持状況ObjVar[my名前];
             if (my命ノ星座 == null) {
                 my命ノ星座 = 0;
             }
@@ -3489,13 +3520,13 @@ const キャラクターInputOnChange = function () {
 
         if ($('#全武器解放Config').prop('checked')) {
             選択可能武器セットObjVar = {};
-            Object.keys(武器MasterVar).forEach(key => {
-                Object.keys(武器MasterVar[key]).forEach(key2 => {
-                    選択可能武器セットObjVar[key2] = 武器MasterVar[key][key2];
+            Object.keys(武器リストMasterVar).forEach(key => {
+                Object.keys(武器リストMasterVar[key]).forEach(key2 => {
+                    選択可能武器セットObjVar[key2] = 武器リストMasterVar[key][key2];
                 });
             });
         } else {
-            選択可能武器セットObjVar = 武器MasterVar[キャラクター武器Var];
+            選択可能武器セットObjVar = 武器リストMasterVar[キャラクター武器Var];
         }
         appendOptionElements(選択可能武器セットObjVar, '#武器Input');
 
@@ -3517,15 +3548,72 @@ const キャラクターInputOnChange = function () {
 
         buildキャラクタープロフィール();
         build天賦詳細();
+
+        buildチームオプション();
     });
 };
+
+//
+function buildチームオプション() {
+    let saveName;
+
+    // for 雷罰悪曜の眼
+    saveName = '構成_雷電将軍';
+    if (チームStatusObjMap.has(saveName)) {
+        チームStatusObjMap.get(saveName)['元素エネルギー'] = ステータス詳細ObjVar['元素エネルギー'];
+        setupDamageResultEx(チームStatusObjMap.get(saveName), チームInputObjMap.get(saveName), チームDamageDetailObjMap.get(saveName), チームChangeDetailObjMap.get(saveName));
+    }
+
+    const ulElem = document.getElementById('チームオプションBox');
+    ulElem.innerHTML = '';
+
+    let myサポーター;
+
+    const myサポーターオプション条件Map = new Map();
+    チームオプション条件Map.forEach((value, key) => {
+        myサポーター = key.split('*')[1];
+
+        if (myサポーター == 選択中キャラクターデータVar['名前']) return;
+        if (localStorage['構成_' + myサポーター] == null) return;
+
+        if (!myサポーターオプション条件Map.has(myサポーター)) {
+            myサポーターオプション条件Map.set(myサポーター, new Map());
+        }
+        myサポーターオプション条件Map.get(myサポーター).set(key, value);
+    });
+
+    myサポーターオプション条件Map.forEach((value, key) => {
+        myサポーター = key;
+
+        const liElem = document.createElement('li');
+        ulElem.appendChild(liElem);
+
+        const inputElem = document.createElement('input');
+        inputElem.className = 'hidden';
+        inputElem.id = 'チームオプション' + myサポーター;
+        inputElem.type = 'checkbox';
+        liElem.appendChild(inputElem);
+
+        const labelElem = document.createElement('label');
+        labelElem.className = 'button-label';
+        labelElem.innerHTML = myサポーター;
+        labelElem.htmlFor = inputElem.id;
+        liElem.appendChild(labelElem);
+
+        const divElem = document.createElement('div');
+        divElem.id = 'チームオプションBox' + myサポーター;
+        liElem.appendChild(divElem);
+
+        appendInputForOptionElement(divElem.id, value, new Map(), 'チームオプションName' + myサポーター, false);
+    });
+}
 
 // 
 function buildキャラクター選択リスト(opt_elementType = null) {
     document.querySelector('#キャラクター選択').innerHTML = '';
     let ulElem = document.getElementById('キャラクター選択');
-    Object.keys(キャラクターMasterVar).forEach(name => {
-        let myMasterObj = キャラクターMasterVar[name];
+    Object.keys(キャラクターリストMasterVar).forEach(name => {
+        let myMasterObj = キャラクターリストMasterVar[name];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }
@@ -3605,9 +3693,9 @@ function setupWeaponImg(url, name) {
 function build武器選択リスト() {
     document.querySelector('#weapon-list').innerHTML = '';
     let ulElem = document.getElementById('weapon-list');
-    Object.keys(武器MasterVar).forEach(kind => {
-        Object.keys(武器MasterVar[kind]).forEach(name => {
-            let myMasterObj = 武器MasterVar[kind][name];
+    Object.keys(武器リストMasterVar).forEach(kind => {
+        Object.keys(武器リストMasterVar[kind]).forEach(name => {
+            let myMasterObj = 武器リストMasterVar[kind][name];
             if ('disabled' in myMasterObj && myMasterObj['disabled']) {
                 return;
             }

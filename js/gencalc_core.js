@@ -29,18 +29,19 @@ function setInputValue(selector, value) {
 
 // Mapのvalue(Array)にvalueを追加(push)します
 function pushToMapValueArray(map, key, value) {
-    if (map.has(key)) {
-        if (value != null) {
-            if (!map.get(key).includes(value)) {
-                map.get(key).push(value);
-            }
+    if (value == null) {
+        if (!map.has(key)) {
+            map.set(key, null);
+        }
+    } else if (map.has(key)) {
+        let oldValue = map.get(key);
+        if (oldValue == null) {
+            map.set(key, [value]);
+        } else if (!oldValue.includes(value)) {
+            map.get(key).push(value);
         }
     } else {
-        if (value == null) {
-            map.set(key, null);
-        } else {
-            map.set(key, [value]);
-        }
+        map.set(key, [value]);
     }
 }
 
@@ -154,7 +155,7 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
             result = maxValue;
         }
     }
-//    result = Math.floor(result * 100) / 100;
+    //    result = Math.floor(result * 100) / 100;
     return result;
 }
 

@@ -8,8 +8,8 @@ const DAMAGE_RESULT_TABLE_ID_ARR = [
 ];
 
 // マスターデータ
-var キャラクターMasterVar;
-var 武器MasterVar = {
+var キャラクターリストMasterVar;
+var 武器リストMasterVar = {
     片手剣: null,
     両手剣: null,
     長柄武器: null,
@@ -26,6 +26,9 @@ var バフMasterVar;
 var デバフMasterVar;
 var チームMasterVar;
 
+const キャラクターMasterMap = new Map();
+const 武器MasterMap = new Map();
+
 // 選択中のデータを保持します
 var 選択中キャラクターデータVar;
 var 選択中武器データVar;
@@ -35,7 +38,6 @@ var 選択中敵データVar;
 
 var 選択可能武器セットObjVar = {};
 
-var キャラクター名前Var;
 var キャラクター元素Var;
 var キャラクター武器Var;
 var 通常攻撃名称Var;
@@ -250,8 +252,8 @@ const ELEMENT_IMG_SRC_MAP = new Map([
 function buildキャラクター所持状況List() {
     let ulElem = document.getElementById('キャラクター所持状況List');
     ulElem.innerHTML = '';
-    Object.keys(キャラクターMasterVar).forEach(name => {
-        let myMasterObj = キャラクターMasterVar[name];
+    Object.keys(キャラクターリストMasterVar).forEach(name => {
+        let myMasterObj = キャラクターリストMasterVar[name];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }
@@ -343,13 +345,13 @@ const saveキャラクター所持状況 = function () {
 var 武器所持状況ObjVar = {}
 
 function build武器所持状況List() {
-    Object.keys(武器MasterVar).forEach(weaponType => {
+    Object.keys(武器リストMasterVar).forEach(weaponType => {
         const listElemId = weaponType + '所持状況List';
         $('#' + listElemId).empty();
 
         let ulElem = document.getElementById(listElemId);
-        Object.keys(武器MasterVar[weaponType]).forEach(name => {
-            let myMasterObj = 武器MasterVar[weaponType][name];
+        Object.keys(武器リストMasterVar[weaponType]).forEach(name => {
+            let myMasterObj = 武器リストMasterVar[weaponType][name];
             if ('disabled' in myMasterObj && myMasterObj['disabled']) {
                 return;
             }
@@ -545,7 +547,7 @@ function setupおすすめセット(opt_saveName = null) {
 }
 
 const saveキャラクター構成 = function () {
-    if (!($('#武器Input').val() in 武器MasterVar[選択中キャラクターデータVar['武器']])) return;
+    if (!($('#武器Input').val() in 武器リストMasterVar[選択中キャラクターデータVar['武器']])) return;
 
     let myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;

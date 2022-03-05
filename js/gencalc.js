@@ -289,12 +289,12 @@ async function loadマスターデータAndSetup() {
         'data/TeamMaster.json'
     ].map(url => fetch(url).then(resp => resp.json())));
 
-    キャラクターMasterVar = responses[0];
-    武器MasterVar['片手剣'] = responses[1];
-    武器MasterVar['両手剣'] = responses[2];
-    武器MasterVar['長柄武器'] = responses[3];
-    武器MasterVar['弓'] = responses[4];
-    武器MasterVar['法器'] = responses[5];
+    キャラクターリストMasterVar = responses[0];
+    武器リストMasterVar['片手剣'] = responses[1];
+    武器リストMasterVar['両手剣'] = responses[2];
+    武器リストMasterVar['長柄武器'] = responses[3];
+    武器リストMasterVar['弓'] = responses[4];
+    武器リストMasterVar['法器'] = responses[5];
     聖遺物セット効果MasterVar = responses[6];
     聖遺物メイン効果MasterVar = responses[7];
     聖遺物サブ効果MasterVar = responses[8];
@@ -305,7 +305,7 @@ async function loadマスターデータAndSetup() {
     デバフMasterVar = responses[13];
     チームMasterVar = responses[14];
 
-    appendOptionElements(キャラクターMasterVar, "#キャラクターInput");
+    appendOptionElements(キャラクターリストMasterVar, "#キャラクターInput");
 
     appendOptionElements(聖遺物セット効果MasterVar, ["#聖遺物セット効果1Input", "#聖遺物セット効果2Input"]);
 
@@ -337,7 +337,6 @@ async function loadマスターデータAndSetup() {
         });
         バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
-    バフオプション条件Map.clear();
     バフ詳細ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], バフオプション条件Map, バフオプション排他Map);
     });
@@ -359,46 +358,45 @@ async function loadマスターデータAndSetup() {
         });
         デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
-    デバフオプション条件Map.clear();
     デバフ詳細ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], デバフオプション条件Map, デバフオプション排他Map);
     });
     $('#デバフオプションBox').empty();
     appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, デバフオプション排他Map, 'デバフ', false);
 
+    let myサポーター;
     Object.keys(チームMasterVar).forEach(key => {
         let myMasterObj = チームMasterVar[key];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }
-        let myサポーター = key.split('_')[0];
-        let my条件 = '*' + myサポーター + '*' + ('名前' in myMasterObj ? myMasterObj['名前'] : key);
+        myサポーター = key.split('_')[0];
         myMasterObj['詳細'].forEach(detailObj => {
             if ('条件' in detailObj) {
                 detailObj['条件'] = '*' + myサポーター + '*' + detailObj['条件'];
             } else {
-                detailObj['条件'] = my条件;
+                detailObj['条件'] = '*' + myサポーター + '*' + myMasterObj['名前'];
             }
         });
         チーム詳細ArrVar = チーム詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
     console.log(チーム詳細ArrVar);
-    チームオプション条件Map.clear();
     チーム詳細ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
     });
-    $('#チームオプションBox').empty();
-    // appendInputForOptionElement('チームオプションBox', チームオプション条件Map, チームオプション排他Map, 'チーム', false);
 
     let select = null;
-    Object.keys(キャラクターMasterVar).forEach(key => {
+    Object.keys(キャラクターリストMasterVar).forEach(key => {
         if (!select) {
             select = key;
-        } else if ('selected' in キャラクターMasterVar[key] && キャラクターMasterVar[key]['selected']) {
+        } else if ('selected' in キャラクターリストMasterVar[key] && キャラクターリストMasterVar[key]['selected']) {
             select = key;
         }
     });
     characterSelected(select);
+
+    // 保存構成のダメージ計算を行います
+    await Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s)));
 
     // 聖遺物サブ効果の小計の組み合わせを計算します
     // かなり高コストな処理です

@@ -37,13 +37,21 @@ const キャラクター構成ObjTEMPLATE = {
     聖遺物優先するサブ効果3上昇回数: null
 };
 
-function makeValidConditionValueArrFromInputObj(inputObj) {
-    return Object.keys(inputObj).filter(value => !(value in キャラクター構成ObjTEMPLATE) && inputObj[value]).map(value => {
-        if (typeof inputObj[value] === 'boolean') { // checkbox
-            return value;
-        } else {    // select
-            return value + '@' + inputObj[value];
+const チームInputObjMap = new Map();
+const チームDamageDetailObjMap = new Map();
+const チームChangeDetailObjMap = new Map();
+const チームStatusObjMap = new Map();
+const チームConditionMapMap = new Map();
+const チームExclusionMapMap = new Map();
+
+
+function makeValidConditionValueArrFromInputObj(inputObj, conditionMap) {
+    return Object.keys(inputObj).filter(s => conditionMap.has(s) && inputObj[s]).map(s => {
+        if (conditionMap.get(s) == null) { // checkbox
+            return s;
         }
+        let result = s + '@' + conditionMap.get(s)[inputObj[s] - 1];
+        return result;
     });
 }
 
@@ -380,7 +388,8 @@ function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj,
         statusObj[toKey] += Number(inputObj[inputKey]);
     });
 
-    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj);
+    const conditionMap = チームConditionMapMap.get(inputObj['saveName']);
+    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj, conditionMap);
 
     const myPriority1KindArr = ['元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
 
@@ -970,7 +979,8 @@ function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailO
     statusObj['ダメージ計算']['元素スキル'] = [];
     statusObj['ダメージ計算']['元素爆発'] = [];
 
-    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj);
+    const conditionMap = チームConditionMapMap.get(inputObj['saveName']);
+    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj, conditionMap);
 
     damageDetailObj['元素スキル'].forEach(detailObj => {
         if (detailObj['条件']) {
@@ -991,23 +1001,45 @@ function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailO
     });
 }
 
-async function teamTestOne(inputObj) {
+async function makeTeamStatusObjEx(saveName) {
+    const inputObj = JSON.parse(localStorage[saveName]);
+    inputObj['saveName'] = saveName;
+
     const responses = await Promise.all([
-        キャラクターMasterVar[inputObj['キャラクター']]['import'],
-        武器MasterVar[キャラクターMasterVar[inputObj['キャラクター']]['武器']][inputObj['武器']]['import']
+        キャラクターリストMasterVar[inputObj['キャラクター']]['import'],
+        武器リストMasterVar[キャラクターリストMasterVar[inputObj['キャラクター']]['武器']][inputObj['武器']]['import']
     ].map(url => fetch(url).then(resp => resp.json())));
 
     const characterMasterObj = responses[0];
     const weaponMasterObj = responses[1];
 
-    console.log(characterMasterObj['名前'], weaponMasterObj['名前']);
+    console.debug(characterMasterObj['名前'], weaponMasterObj['名前']);
 
-    damageDetailObj = {};
-    changeDetailObj = {};
+    キャラクターMasterMap.set(characterMasterObj['名前'], characterMasterObj);
+    武器MasterMap.set(weaponMasterObj['名前'], weaponMasterObj);
+
+    let damageDetailObj = {};
+    let changeDetailObj = {};
 
     setupDamageDetailDataCharacterEx(damageDetailObj, changeDetailObj, inputObj, characterMasterObj);
     setupDamageDetailDataWeaponEx(changeDetailObj, inputObj, weaponMasterObj);
     setupDamageDetailDataArtifactSetEx(changeDetailObj, inputObj);
+
+    let conditionMap = new Map();
+    let exclusionMap = new Map();
+
+    Object.keys(changeDetailObj).forEach(key1 => {
+        Object.keys(changeDetailObj[key1]).forEach(key2 => {
+            changeDetailObj[key1][key2].forEach(detailObj => {
+                if (detailObj['条件']) {
+                    makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+                }
+            });
+        });
+    });
+
+    チームConditionMapMap.set(saveName, conditionMap);
+    チームExclusionMapMap.set(saveName, exclusionMap);
 
     let statusObj = JSON.parse(JSON.stringify(ステータス詳細ObjTemplate));
 
@@ -1015,17 +1047,16 @@ async function teamTestOne(inputObj) {
 
     setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj, changeDetailObj);
 
-    console.log(statusObj);
+    console.debug(statusObj);
 
     setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailObj);
 
-    console.log(statusObj['ダメージ計算']);
+    console.debug(statusObj['ダメージ計算']);
 
-}
+    チームInputObjMap.set(saveName, inputObj);
+    チームDamageDetailObjMap.set(saveName, damageDetailObj);
+    チームChangeDetailObjMap.set(saveName, changeDetailObj);
+    チームStatusObjMap.set(saveName, statusObj);
 
-function teamTest() {
-    Object.keys(localStorage).filter(s => s.startsWith('構成_')).forEach(key => {
-        const my構成 = JSON.parse(localStorage[key]);
-        teamTestOne(my構成);
-    });
+    return statusObj;
 }
