@@ -415,10 +415,11 @@ async function loadマスターデータAndSetup() {
     // 保存構成のダメージ計算を行います
     $('#buffdebuff-condition2').prop('disabled', true);
     buildチームオプション();
-    Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s))).then((values) => {
-        $('#buffdebuff-condition2').prop('disabled', false);
-        console.info('チームオプション loaded.');
-    });
+    Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s).catch(error => console.error(error.message))))
+        .then((values) => {
+            $('#buffdebuff-condition2').prop('disabled', false);
+            console.info('チームオプション loaded.');
+        });
 
     // 聖遺物サブ効果の小計の組み合わせを計算します
     // かなり高コストな処理です
