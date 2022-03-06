@@ -68,7 +68,11 @@ function setArtifactDetail(text) {
         let re = new RegExp(statusName + '\\+([0-9\\.]+)');
         let reRet = re.exec(text);
         if (reRet) {
-            subStatusObj[statusName] = reRet[1];
+            if (['HP上限', '攻撃力', '防御力', '元素熟知'].includes(statusName)) {
+                subStatusObj[statusName] = Number(reRet[1].replace('.', ''));
+            } else {
+                subStatusObj[statusName] = Number(reRet[1]);
+            }
         } else {
             subStatusObj[statusName] = 0;
         }
@@ -92,10 +96,10 @@ function setArtifactDetail(text) {
     $('#聖遺物サブ効果HPPInput').val(0);
     $('#聖遺物サブ効果攻撃力PInput').val(0);
     $('#聖遺物サブ効果防御力PInput').val(0);
-    $('#聖遺物サブ効果HPInput').val(subStatusObj['HP上限'].replace('.', ''));
-    $('#聖遺物サブ効果攻撃力Input').val(subStatusObj['攻撃力'].replace('.', ''));
-    $('#聖遺物サブ効果防御力Input').val(subStatusObj['防御力'].replace('.', ''));
-    $('#聖遺物サブ効果元素熟知Input').val(subStatusObj['元素熟知'].replace('.', ''));
+    $('#聖遺物サブ効果HPInput').val(subStatusObj['HP上限']);
+    $('#聖遺物サブ効果攻撃力Input').val(subStatusObj['攻撃力']);
+    $('#聖遺物サブ効果防御力Input').val(subStatusObj['防御力']);
+    $('#聖遺物サブ効果元素熟知Input').val(subStatusObj['元素熟知']);
     $('#聖遺物サブ効果会心率Input').val(subStatusObj['会心率']);
     $('#聖遺物サブ効果会心ダメージInput').val(subStatusObj['会心ダメージ']);
     $('#聖遺物サブ効果元素チャージ効率Input').val(subStatusObj['元素チャージ効率']);
