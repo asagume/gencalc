@@ -1968,56 +1968,71 @@ function calculateStatusObj(statusObj) {
             if (number == 0) {
                 return;
             }
-            let myNew数値 = detailObj['数値'];
-            if (number != 1) {
-                myNew数値 = myNew数値.concat(['*', number]);
-            }
-            let myサポーター = detailObj['条件'].split('*')[1];
-            try {
-                const supporterStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
-                const value = calculateFormulaArray(supporterStatusObj, myNew数値, detailObj['最大値']);
-                calculateStatus(teamStatusObj, detailObj['種類'], [value]);
-            } catch (e) {
-                // nop
+            if (detailObj['数値']) {
+                let myNew数値 = detailObj['数値'];
+                if (number != 1) {
+                    myNew数値 = myNew数値.concat(['*', number]);
+                }
+                let myサポーター = detailObj['条件'].split('*')[1];
+                try {
+                    const supporterStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
+                    const value = calculateFormulaArray(supporterStatusObj, myNew数値, detailObj['最大値']);
+                    calculateStatus(teamStatusObj, detailObj['種類'], [value]);
+                } catch (e) {
+                    // nop
+                }
+            } else if (detailObj['種類'].indexOf('元素付与') != -1) {
+                teamStatusObj['元素付与'] = detailObj['種類'].substring(0, 1);
+            } else {
+                console.error(detailObj);
             }
         });
         let html = '';
         Object.keys(teamStatusObj).forEach(key => {
-            if (!(key in statusObj)) {
-                statusObj[key] = 0;
+            if ($.isNumeric(teamStatusObj[key])) {
+                if (!(key in statusObj)) {
+                    statusObj[key] = 0;
+                }
+                statusObj[key] += teamStatusObj[key];
+            } else {
+                statusObj[key] = teamStatusObj[key];
             }
-            statusObj[key] += teamStatusObj[key];
 
             let postfix = '';
             html += '<p>';
-            if (key.startsWith('敵')) {
-                html += key.replace(/^敵/, '敵の');
-                postfix = '%';
-            } else if (key.endsWith('バフ')) {
-                html += key.replace(/バフ$/, '');
-                postfix = '%';
-            } else if (key.endsWith('乗算')) {
-                html += key.replace(/乗算$/, '');
-                postfix = '%';
-            } else if (key.indexOf('ダメージ会心') != -1) {
-                html += key.replace(/ダメージ会心/, 'ダメージの会心');
-                postfix = '%';
-            } else if ([
-                '会心率',
-                '会心ダメージ',
-                '与える治療効果',
-                '受ける治療効果',
-                '元素チャージ効率',
-                '与えるダメージ'].includes(key)) {
-                html += key;
-                postfix = '%';
+            if (['元素付与'].includes(key)) {
+                html += teamStatusObj[key] + key;
             } else {
-                html += key;
+                if (key.startsWith('敵')) {
+                    html += key.replace(/^敵/, '敵の');
+                    postfix = '%';
+                } else if (key.endsWith('バフ')) {
+                    html += key.replace(/バフ$/, '');
+                    postfix = '%';
+                } else if (key.endsWith('乗算')) {
+                    html += key.replace(/乗算$/, '');
+                    postfix = '%';
+                } else if (key.indexOf('ダメージ会心') != -1) {
+                    html += key.replace(/ダメージ会心/, 'ダメージの会心');
+                    postfix = '%';
+                } else if ([
+                    '会心率',
+                    '会心ダメージ',
+                    '与える治療効果',
+                    '受ける治療効果',
+                    '元素チャージ効率',
+                    '与えるダメージ'].includes(key)) {
+                    html += key;
+                    postfix = '%';
+                } else {
+                    html += key;
+                }
+                if (teamStatusObj[key] >= 0) {
+                    html += '+';
+                }
+                html += teamStatusObj[key] + postfix;
             }
-            if (teamStatusObj[key] >= 0) {
-                html += '+';
-            }
-            html += teamStatusObj[key] + postfix + '</p>';
+            html += '</p>';
         });
         $('#チームオプションステータス変化').html(html);
     }
@@ -3658,7 +3673,8 @@ function buildチームオプション() {
 }
 
 function showチームオプション(supporterName, optionName) {
-    $('#チームオプション' + supporterName).parent().children().prop('disabled', false);
+
+    $('#' + selectorEscape('チームオプション' + supporterName)).parent().children().prop('disabled', false);
     if (optionName) {
         const target = optionName + 'Option';
         $('#' + selectorEscape(target)).parent().children().prop('disabled', false);
@@ -3726,7 +3742,7 @@ function setupチームオプション() {
         if (optionName in チームMasterVar) {
             let isNeedSaveData = false;
             チームMasterVar[optionName]['詳細'].forEach(detailObj => {
-                if (!$.isNumeric(detailObj['数値'])) {
+                if (detailObj['数値'] && !$.isNumeric(detailObj['数値'])) {
                     isNeedSaveData = true;
                 }
             });
