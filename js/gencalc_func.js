@@ -4331,3 +4331,36 @@ const toggle聖遺物詳細計算停止 = function () {
     }
 }
 
+//
+function UTF8toBinary(str) {
+    return new Promise(function (resolve, reject) {
+        var file = new Blob([str], { 'type': 'text/plain' });
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            resolve(new Uint8Array(reader.result));
+        }
+        reader.onerror = function (event) {
+            reject('文字列をUint8Arrayに変換できませんでした。');
+        }
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+// Twitter
+const shareByTwitter = function () {
+    const shareData = makeSaveData();
+    let text = '';
+    const saveName = $('#構成名称Input').val();
+    if (saveName) {
+        text += saveName;
+    } else {
+        text += 'あなたの' + shareData['キャラクター'];
+    }
+    text += ' (' + shareData['キャラクター'] + ') in げんかるく\n';
+
+    UTF8toBinary(JSON.stringify(shareData)).then(bin => {
+        const encoded = btoa(bin);
+        const url = 'https://asagume.github.io/gencalc/' + '?allin=' +  encoded;
+        openTwitter(text, url);
+    });
+}

@@ -552,17 +552,9 @@ function setupおすすめセット(opt_saveName = null) {
     }
 }
 
-const saveキャラクター構成 = function () {
-    if (!($('#武器Input').val() in 武器リストMasterVar[選択中キャラクターデータVar['武器']])) return;
-
-    let myキャラクター = $('#キャラクターInput').val();
-    let key = '構成_' + myキャラクター;
-    let saveName = $('#構成名称Input').val().trim();
-    if (saveName && saveName != 'あなたの' + myキャラクター) {
-        key += '_' + saveName;
-    }
+function makeSaveData() {
     キャラクター構成ObjVar = {
-        キャラクター: myキャラクター,
+        キャラクター: $('#キャラクターInput').val(),
         レベル: $('#レベルInput').val(),
         命ノ星座: $('#命ノ星座Input').val(),
         通常攻撃レベル: $('#通常攻撃レベルInput').val(),
@@ -604,11 +596,26 @@ const saveキャラクター構成 = function () {
         let value = elem.checked;
         キャラクター構成ObjVar[key] = value;
     });
+    
     $('#オプションBox select').each((index, elem) => {
         let key = elem.id.replace('Option', '');
         let value = elem.selectedIndex;
         キャラクター構成ObjVar[key] = value;
     });
+
+    return キャラクター構成ObjVar;
+}
+
+const saveキャラクター構成 = function () {
+    if (!($('#武器Input').val() in 武器リストMasterVar[選択中キャラクターデータVar['武器']])) return;
+
+    const myキャラクター = $('#キャラクターInput').val();
+    let key = '構成_' + myキャラクター;
+    const saveName = $('#構成名称Input').val().trim();
+    if (saveName && saveName != 'あなたの' + myキャラクター) {
+        key += '_' + saveName;
+    }
+    キャラクター構成ObjVar = makeSaveData();
 
     localStorage.setItem(key, JSON.stringify(キャラクター構成ObjVar));
 

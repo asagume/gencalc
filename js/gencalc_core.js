@@ -251,5 +251,26 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
 //    return res / 100;
 //}
 
-// 
+// Twitter
+// text ツイートの本文
+// url URLのシェア
+// hashtags ハッシュタグ
+// via アカウント関連付け @viaさんから
+function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
+    const baseUrl = 'https://twitter.com/intent/tweet?';
+    const params = [];
+    params.push(['text', text]);
+    params.push(['url', url]);
+    if (opt_hashtags) {
+        params.push(['hashtags'], opt_hashtags);
+    }
+    if (opt_via) {
+        params.push(['via'], opt_via);
+    }
+    const query = new URLSearchParams(params).toString();
+    const shareUrl = `${baseUrl}${query}`;
+    console.log(params);
+    console.log(shareUrl);
+    window.open(shareUrl);
+}
 

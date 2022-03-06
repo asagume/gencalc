@@ -254,6 +254,9 @@ function setupAllEvent() {
     // 聖遺物サブ効果の自動計算を止める
     $(document).on('click', '#聖遺物詳細計算停止Config', toggle聖遺物詳細計算停止);
 
+    // Twitterで共有する
+    $(document).on('click', '#shareByTwitter', shareByTwitter);
+
     // キャラクター所持状況
     $(document).on('click', '#my-character-list', function () {
         // 初回表示時にリストを作成します

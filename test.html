@@ -6,18 +6,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Test</title>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <reference path="JQuery.d.ts"></reference>
 </head>
 
 <body>
 
     <script>
-        const TEST_ARR = [
-            7.8,
-            7,
-            6.2,
-            5.4
-        ];
         function makeBruteForceSet(resultSet, arr1, arr2, depth) {
             if (depth <= 1) {
                 arr1.forEach(value => {
@@ -45,13 +38,45 @@
             return Array.from(knownElements);
         }
 
-        let resultSet = new Set();
-        let resultMap = makeBruteForceSet(resultSet, TEST_ARR, TEST_ARR, 6);
-        console.log(resultMap);
-        console.log(resultSet);
-        let resultArr = Array.from(resultSet.values());
-        resultArr.sort();
-        console.log(resultArr);
+        function execMakeBruteForceSet() {
+            const TEST_ARR = [
+                7.8,
+                7,
+                6.2,
+                5.4
+            ];
+            let resultSet = new Set();
+            let resultMap = makeBruteForceSet(resultSet, TEST_ARR, TEST_ARR, 6);
+            console.log(resultMap);
+            console.log(resultSet);
+            let resultArr = Array.from(resultSet.values());
+            resultArr.sort();
+            console.log(resultArr);
+        }
+
+        // execMakeBruteForceSet();
+
+        // text ツイートの本文
+        // url URLのシェア
+        // hashtags ハッシュタグ
+        // via アカウント関連付け @viaさんから
+        function openTwitter(text, url, hashtags, via) {
+            const baseUrl = 'https://twitter.com/intent/tweet?';
+            const params = [];
+            params.push(['text', text]);
+            params.push(['url', url]);
+            if (hashtags) {
+                params.push(['hashtags'], hashtags);
+            }
+            if (via) {
+                params.push(['via'], via);
+            }
+            const query = new URLSearchParams(params).toString();
+            const shareUrl = `${baseUrl}${query}`;
+            window.open(shareUrl);
+        }
+
+        openTwitter('てすと\nてすと\nてすと\n', location.href, null, null);
 
     </script>
 </body>
