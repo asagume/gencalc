@@ -1975,7 +1975,7 @@ function calculateStatusObj(statusObj) {
             let myサポーター = detailObj['条件'].split('*')[1];
             try {
                 const supporterStatusObj = チームStatusObjMap.get('構成_' + myサポーター);
-                const value = calculateFormulaArray(supporterStatusObj, myNew数値);
+                const value = calculateFormulaArray(supporterStatusObj, myNew数値, detailObj['最大値']);
                 calculateStatus(teamStatusObj, detailObj['種類'], [value]);
             } catch (e) {
                 // nop
@@ -2001,6 +2001,15 @@ function calculateStatusObj(statusObj) {
                 postfix = '%';
             } else if (key.indexOf('ダメージ会心') != -1) {
                 html += key.replace(/ダメージ会心/, 'ダメージの会心');
+                postfix = '%';
+            } else if ([
+                '会心率',
+                '会心ダメージ',
+                '与える治療効果',
+                '受ける治療効果',
+                '元素チャージ効率',
+                '与えるダメージ'].includes(key)) {
+                html += key;
                 postfix = '%';
             } else {
                 html += key;
