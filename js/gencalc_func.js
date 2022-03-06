@@ -3674,9 +3674,25 @@ function showチームオプション(supporterName, optionName) {
 function hideチームオプション(supporterName, optionName) {
     if (optionName) {
         const target = '*' + supporterName + '*' + optionName + 'Option';
-        $('#' + selectorEscape(target)).parent().children().prop('disabled', true);
+        const elem = document.getElementById(target);
+
+        if (elem instanceof HTMLInputElement) {
+            $(elem).prop('checked', false);
+        } else {
+            $(elem).val('');
+        }
+
+        $(elem).parent().children().prop('disabled', true);
     } else {
-        $('#チームオプション' + supporterName).parent().children().prop('disabled', true);
+        const target = 'チームオプション' + supporterName;
+        const elem = document.getElementById(target);
+
+        $(elem).parent().children().prop('checked', false);
+        $(elem).parent().children().find('input').prop('checked', false);
+        $(elem).parent().children().find('select').val('');
+
+        $(elem).parent().children().prop('disabled', true);
+        $(elem).parent().children().find('input,select').prop('disabled', true);
     }
 }
 
