@@ -315,6 +315,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
         if (value) return;
 
         let divElem = document.createElement('div');
+        divElem.className = 'checkbox-option';
         $('#' + selectorEscape(parentElemId)).append(divElem);
 
         let elem = document.createElement('input');
@@ -348,6 +349,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
         if (!value) return;
 
         let divElem = document.createElement('div');
+        divElem.className = 'select-option';
         $('#' + selectorEscape(parentElemId)).append(divElem);
 
         let elem = document.createElement('select');
@@ -377,7 +379,7 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
         let labelElem = document.createElement('label');
         labelElem.htmlFor = elem.id;
         labelElem.textContent = key.replace(/^.*\*/, '');
-        elem.before(labelElem);
+        elem.after(labelElem);
 
         elem.onchange = opt_onchange;
         applyOptionVariable(ステータス詳細ObjVar, elem);
@@ -3594,21 +3596,12 @@ const キャラクターInputOnChange = function () {
         buildキャラクタープロフィール();
         build天賦詳細();
 
-        buildチームオプション();
+        setupチームオプション();
     });
 };
 
 //
 function buildチームオプション() {
-    let saveName;
-
-    // for 雷罰悪曜の眼
-    saveName = '構成_雷電将軍';
-    if (チームStatusObjMap.has(saveName)) {
-        チームStatusObjMap.get(saveName)['元素エネルギー'] = ステータス詳細ObjVar['元素エネルギー'];
-        setupDamageResultEx(チームStatusObjMap.get(saveName), チームInputObjMap.get(saveName), チームDamageDetailObjMap.get(saveName), チームChangeDetailObjMap.get(saveName));
-    }
-
     const ulElem = document.getElementById('チームオプションBox');
     ulElem.innerHTML = '';
 
@@ -3618,18 +3611,23 @@ function buildチームオプション() {
     チームオプション条件Map.forEach((value, key) => {
         myサポーター = key.split('*')[1];
 
-        if (myサポーター == 選択中キャラクターデータVar['名前']) return;
-        if (key.substring(1).replace('*', '_') in チームMasterVar) {
-            let isNeedSaveData = false;
-            チームMasterVar[key.substring(1).replace('*', '_')]['詳細'].forEach(detailObj => {
-                if (!$.isNumeric(detailObj['数値'])) {
-                    isNeedSaveData = true;
-                }
-            });
-            if (isNeedSaveData && localStorage['構成_' + myサポーター] == null) return;
-        } else {
-            if (localStorage['構成_' + myサポーター] == null) return;
+        if (!(myサポーター in キャラクターリストMasterVar)) {
+            console.error(key);
+            return;
         }
+
+        // if (myサポーター == 選択中キャラクターデータVar['名前']) return;
+        // if (key.substring(1).replace('*', '_') in チームMasterVar) {
+        //     let isNeedSaveData = false;
+        //     チームMasterVar[key.substring(1).replace('*', '_')]['詳細'].forEach(detailObj => {
+        //         if (!$.isNumeric(detailObj['数値'])) {
+        //             isNeedSaveData = true;
+        //         }
+        //     });
+        //     if (isNeedSaveData && localStorage['構成_' + myサポーター] == null) return;
+        // } else {
+        //     if (localStorage['構成_' + myサポーター] == null) return;
+        // }
 
         if (!myサポーターオプション条件Map.has(myサポーター)) {
             myサポーターオプション条件Map.set(myサポーター, new Map());
@@ -3660,6 +3658,75 @@ function buildチームオプション() {
         liElem.appendChild(divElem);
 
         appendInputForOptionElement(divElem.id, value, new Map(), 'チームオプションName' + myサポーター, false, オプションInputOnChangeSub);
+    });
+
+    setupチームオプション();
+}
+
+function showチームオプション(supporterName, optionName) {
+    $('#チームオプション' + supporterName).parent().children().prop('disabled', false);
+    if (optionName) {
+        const target = optionName + 'Option';
+        $('#' + selectorEscape(target)).parent().children().prop('disabled', false);
+    }
+}
+
+function hideチームオプション(supporterName, optionName) {
+    if (optionName) {
+        const target = '*' + supporterName + '*' + optionName + 'Option';
+        $('#' + selectorEscape(target)).parent().children().prop('disabled', true);
+    } else {
+        $('#チームオプション' + supporterName).parent().children().prop('disabled', true);
+    }
+}
+
+function setupチームオプション() {
+    let saveName;
+
+    // for 雷罰悪曜の眼
+    saveName = '構成_雷電将軍';
+    if (チームStatusObjMap.has(saveName)) {
+        チームStatusObjMap.get(saveName)['元素エネルギー'] = ステータス詳細ObjVar['元素エネルギー'];
+        setupDamageResultEx(チームStatusObjMap.get(saveName), チームInputObjMap.get(saveName), チームDamageDetailObjMap.get(saveName), チームChangeDetailObjMap.get(saveName));
+    }
+
+    const myサポーターオプション条件Map = new Map();
+    チームオプション条件Map.forEach((value, key) => {
+        const myサポーター = key.split('*')[1];
+
+        if (myサポーター == 選択中キャラクターデータVar['名前']) {
+            hideチームオプション(myサポーター, null);
+            return;
+        }
+        const optionName = key.substring(1).replace('*', '_');
+        if (optionName in チームMasterVar) {
+            let isNeedSaveData = false;
+            チームMasterVar[optionName]['詳細'].forEach(detailObj => {
+                if (!$.isNumeric(detailObj['数値'])) {
+                    isNeedSaveData = true;
+                }
+            });
+            if (isNeedSaveData && localStorage['構成_' + myサポーター] == null) {
+                hideチームオプション(myサポーター, optionName.split('_')[1]);
+                return;
+            }
+        } else {
+            if (localStorage['構成_' + myサポーター] == null) {
+                hideチームオプション(myサポーター, null);
+                return;
+            }
+        }
+
+        if (!myサポーターオプション条件Map.has(myサポーター)) {
+            myサポーターオプション条件Map.set(myサポーター, new Map());
+        }
+        myサポーターオプション条件Map.get(myサポーター).set(key, value);
+    });
+
+    myサポーターオプション条件Map.forEach((value1, key1) => {
+        value1.forEach((value2, key2) => {
+            showチームオプション(key1, key2);
+        });
     });
 }
 

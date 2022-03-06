@@ -404,6 +404,8 @@ async function loadマスターデータAndSetup() {
     });
     characterSelected(select);
 
+    buildチームオプション();
+
     // 保存構成のダメージ計算を行います
     await Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s)));
 
