@@ -64,18 +64,22 @@ function setArtifactDetail(text) {
     console.log(text);
 
     let subStatusObj = {};
-    ['HP上限', '攻撃力', '防御力', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率'].forEach(statusName => {
+    ['HP上限', '攻撃力', '防御力', '元素.知', '会心率', '会心ダメージ', '元素チャージ効率'].forEach(statusName => {
+        let toKey = statusName;
+        if (statusName == '元素.知') {
+            toKey = '元素熟知';
+        }
         let re = new RegExp(statusName + '\\+([0-9\\.]+)');
         let reRet = re.exec(text);
         if (reRet) {
-            if (['HP上限', '攻撃力', '防御力', '元素熟知'].includes(statusName)) {
-                subStatusObj[statusName] = Number(reRet[1].replace('.', ''));
+            if (['HP上限', '攻撃力', '防御力', '元素熟知'].includes(toKey)) {
+                subStatusObj[toKey] = Number(reRet[1].replace('.', ''));
             } else {
-                subStatusObj[statusName] = Number(reRet[1]);
+                subStatusObj[toKey] = Number(reRet[1]);
             }
-            console.log(statusName, subStatusObj[statusName]);
+            console.log(toKey, subStatusObj[toKey]);
         } else {
-            subStatusObj[statusName] = 0;
+            subStatusObj[toKey] = 0;
         }
     });
 
