@@ -73,11 +73,11 @@ function setArtifactDetail(text) {
             } else {
                 subStatusObj[statusName] = Number(reRet[1]);
             }
+            console.log(statusName, subStatusObj[statusName]);
         } else {
             subStatusObj[statusName] = 0;
         }
     });
-    console.log('subStatus', subStatusObj);
 
     $('#聖遺物メイン効果1Input').val(null);
     $('#聖遺物メイン効果2Input').val(null);
