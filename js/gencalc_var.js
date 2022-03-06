@@ -235,7 +235,45 @@ const toggleローカルストレージクリア = function () {
     $('#ローカルストレージクリアButton').prop('disabled', !checked);
 }
 
-var キャラクター所持状況ObjVar = {}
+var キャラクター所持状況ObjVar = {};
+
+const キャラクター構成ObjTEMPLATE = {
+    キャラクター: null,
+    レベル: null,
+    命ノ星座: 0,
+    通常攻撃レベル: 0,
+    元素スキルレベル: 0,
+    元素爆発レベル: 0,
+    武器: null,
+    武器レベル: 0,
+    精錬ランク: 0,
+    聖遺物セット効果1: null,
+    聖遺物セット効果2: null,
+    聖遺物メイン効果1: null,
+    聖遺物メイン効果2: null,
+    聖遺物メイン効果3: null,
+    聖遺物メイン効果4: null,
+    聖遺物メイン効果5: null,
+    聖遺物サブ効果HP: 0,
+    聖遺物サブ効果攻撃力: 0,
+    聖遺物サブ効果防御力: 0,
+    聖遺物サブ効果元素熟知: 0,
+    聖遺物サブ効果会心率: 0,
+    聖遺物サブ効果会心ダメージ: 0,
+    聖遺物サブ効果元素チャージ効率: 0,
+    聖遺物サブ効果HPP: 0,
+    聖遺物サブ効果攻撃力P: 0,
+    聖遺物サブ効果防御力P: 0,
+    聖遺物優先するサブ効果1: null,
+    聖遺物優先するサブ効果1上昇値: 0,
+    聖遺物優先するサブ効果1上昇回数: 0,
+    聖遺物優先するサブ効果2: null,
+    聖遺物優先するサブ効果2上昇値: 0,
+    聖遺物優先するサブ効果2上昇回数: 0,
+    聖遺物優先するサブ効果3: null,
+    聖遺物優先するサブ効果3上昇値: 0,
+    聖遺物優先するサブ効果3上昇回数: 0
+};
 
 const ELEMENT_TD_CLASS_MAP = new Map([
     ['炎', 'pyro'],
@@ -553,50 +591,22 @@ function setupおすすめセット(opt_saveName = null) {
 }
 
 function makeSaveData() {
-    キャラクター構成ObjVar = {
-        キャラクター: $('#キャラクターInput').val(),
-        レベル: $('#レベルInput').val(),
-        命ノ星座: $('#命ノ星座Input').val(),
-        通常攻撃レベル: $('#通常攻撃レベルInput').val(),
-        元素スキルレベル: $('#元素スキルレベルInput').val(),
-        元素爆発レベル: $('#元素爆発レベルInput').val(),
-        武器: $('#武器Input').val(),
-        武器レベル: $('#武器レベルInput').val(),
-        精錬ランク: $('#精錬ランクInput').val(),
-        聖遺物セット効果1: $('#聖遺物セット効果1Input').val(),
-        聖遺物セット効果2: $('#聖遺物セット効果2Input').val(),
-        聖遺物メイン効果1: $('#聖遺物メイン効果1Input').val(),
-        聖遺物メイン効果2: $('#聖遺物メイン効果2Input').val(),
-        聖遺物メイン効果3: $('#聖遺物メイン効果3Input').val(),
-        聖遺物メイン効果4: $('#聖遺物メイン効果4Input').val(),
-        聖遺物メイン効果5: $('#聖遺物メイン効果5Input').val(),
-        聖遺物優先するサブ効果1: $('#聖遺物優先するサブ効果1Input').val(),
-        聖遺物優先するサブ効果1上昇値: $('#聖遺物優先するサブ効果1上昇値Input').val(),
-        聖遺物優先するサブ効果1上昇回数: $('#聖遺物優先するサブ効果1上昇回数Input').val(),
-        聖遺物優先するサブ効果2: $('#聖遺物優先するサブ効果2Input').val(),
-        聖遺物優先するサブ効果2上昇値: $('#聖遺物優先するサブ効果2上昇値Input').val(),
-        聖遺物優先するサブ効果2上昇回数: $('#聖遺物優先するサブ効果2上昇回数Input').val(),
-        聖遺物優先するサブ効果3: $('#聖遺物優先するサブ効果3Input').val(),
-        聖遺物優先するサブ効果3上昇値: $('#聖遺物優先するサブ効果3上昇値Input').val(),
-        聖遺物優先するサブ効果3上昇回数: $('#聖遺物優先するサブ効果3上昇回数Input').val(),
-        聖遺物サブ効果HPP: $('#聖遺物サブ効果HPPInput').val(),
-        聖遺物サブ効果攻撃力P: $('#聖遺物サブ効果攻撃力PInput').val(),
-        聖遺物サブ効果防御力P: $('#聖遺物サブ効果防御力PInput').val(),
-        聖遺物サブ効果元素熟知: $('#聖遺物サブ効果元素熟知Input').val(),
-        聖遺物サブ効果会心率: $('#聖遺物サブ効果会心率Input').val(),
-        聖遺物サブ効果会心ダメージ: $('#聖遺物サブ効果会心ダメージInput').val(),
-        聖遺物サブ効果元素チャージ効率: $('#聖遺物サブ効果元素チャージ効率Input').val(),
-        聖遺物サブ効果HP: $('#聖遺物サブ効果HPInput').val(),
-        聖遺物サブ効果攻撃力: $('#聖遺物サブ効果攻撃力Input').val(),
-        聖遺物サブ効果防御力: $('#聖遺物サブ効果防御力Input').val()
-    };
+    キャラクター構成ObjVar = JSON.parse(JSON.stringify(キャラクター構成ObjTEMPLATE));
+
+    Object.keys(キャラクター構成ObjVar).forEach(key => {
+        if (キャラクター構成ObjVar[key] == null) {
+            キャラクター構成ObjVar[key] = $('#' + selectorEscape(key) + 'Input').val();
+        } else {
+            キャラクター構成ObjVar[key] = Number($('#' + selectorEscape(key) + 'Input').val());
+        }
+    });
 
     $('#オプションBox input[type="checkbox"]').each((index, elem) => {
         let key = elem.id.replace('Option', '');
         let value = elem.checked;
         キャラクター構成ObjVar[key] = value;
     });
-    
+
     $('#オプションBox select').each((index, elem) => {
         let key = elem.id.replace('Option', '');
         let value = elem.selectedIndex;
@@ -796,4 +806,66 @@ function searchArtifactSubApproximation(statusName, times, targetValue) {
         }
     }
     return targetValue;
+}
+
+const basename = path => path.split('/').pop().split('.').shift();
+
+const ARTIFACT_STAT_JA_EN_MAP = new Map([
+    ['HP', 'HP'],
+    ['攻撃力', 'ATK'],
+    ['防御力', 'DEF'],
+    ['元素熟知', 'Elemental Mastery'],
+    ['会心率', 'CRIT Rate'],
+    ['会心ダメージ', 'CRIT DMG'],
+    ['元素チャージ効率', 'Energy Recharge'],
+    ['炎元素ダメージバフ', 'Pyro Elemental DMG Bonus'],
+    ['水元素ダメージバフ', 'Hydro Elemental DMG Bonus'],
+    ['風元素ダメージバフ', 'Aero Elemental DMG Bonus'],
+    ['雷元素ダメージバフ', 'Electro Elemental DMG Bonus'],
+    ['草元素ダメージバフ', 'Dendro Elemental DMG Bonus'],
+    ['氷元素ダメージバフ', 'Cryo Elemental DMG Bonus'],
+    ['岩元素ダメージバフ', 'Geo Elemental DMG Bonus'],
+    ['物理ダメージバフ', 'Physical Elemental DMG Bonus'],
+    ['与える治療効果', 'Healing Bonus'],
+    ['HP%', 'HP%'],
+    ['攻撃力%', 'ATK%'],
+    ['防御力%', 'DEF%']
+]);
+
+function makeShareData(saveData) {
+    const キャラクター = saveData['キャラクター'];
+
+
+    let shareDataArr = [];
+    Object.keys(saveData).forEach(key => {
+        if (key in キャラクター構成ObjTEMPLATE) {
+            let value = saveData[key];
+            let myBasename;
+            switch (key) {
+                case 'キャラクター':
+                    myBasename = basename(キャラクターリストMasterVar[value]['import']);
+                    value = myBasename.split('_')[myBasename.split('_').length - 1];
+                    break;
+                case '武器':
+                    myBasename = basename(武器リストMasterVar[キャラクターリストMasterVar[キャラクター]['武器']][value]['import']);
+                    value = myBasename.split('_')[myBasename.split('_').length - 1];
+                    break;
+                case '聖遺物セット効果1':
+                case '聖遺物セット効果2':
+                    myBasename = basename(聖遺物セット効果MasterVar[value]['image']);
+                    value = myBasename.split('_')[myBasename.split('_').length - 1];
+                    break;
+                case '聖遺物メイン効果1':
+                case '聖遺物メイン効果2':
+                case '聖遺物メイン効果3':
+                case '聖遺物メイン効果4':
+                case '聖遺物メイン効果5':
+                    break;
+            }
+            shareDataArr.push(value);
+        } else {
+            shareDataArr.push(key + '=' + saveData[key]);
+        }
+    });
+    return shareDataArr.join(',');
 }

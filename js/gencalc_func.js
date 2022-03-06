@@ -4349,18 +4349,23 @@ function UTF8toBinary(str) {
 
 // Twitter
 const shareByTwitter = function () {
-    const shareData = makeSaveData();
+    const saveData = makeSaveData();
+    const shareData = makeShareData(saveData);
+    console.log(shareData.length);
+    console.log(shareData);
+
     let text = '';
     const saveName = $('#構成名称Input').val();
     if (saveName) {
         text += saveName;
     } else {
-        text += 'あなたの' + shareData['キャラクター'];
+        text += 'あなたの' + saveData['キャラクター'];
     }
-    text += ' (' + shareData['キャラクター'] + ') in げんかるく\n';
+    text += ' (' + saveData['キャラクター'] + ') in げんかるく\n';
 
     UTF8toBinary(JSON.stringify(shareData)).then(bin => {
         const encoded = btoa(bin);
+        console.log(encoded.length);
         const url = 'https://asagume.github.io/gencalc/' + '?allin=' +  encoded;
         openTwitter(text, url);
     });
