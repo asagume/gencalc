@@ -390,7 +390,6 @@ async function loadマスターデータAndSetup() {
         });
         チーム詳細ArrVar = チーム詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
-    console.log(チーム詳細ArrVar);
     チーム詳細ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
     });
@@ -416,8 +415,9 @@ async function loadマスターデータAndSetup() {
     // 保存構成のダメージ計算を行います
     $('#buffdebuff-condition2').prop('disabled', true);
     buildチームオプション();
-    Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s))).then(() => {
+    Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s))).then((values) => {
         $('#buffdebuff-condition2').prop('disabled', false);
+        console.info('チームオプション loaded.');
     });
 
     // 聖遺物サブ効果の小計の組み合わせを計算します

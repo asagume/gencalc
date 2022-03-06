@@ -45,6 +45,7 @@
     "神里綾華": {
         "レアリティ": 5,
         "元素": "氷",
+        "武器": "片手剣",
         "import": "data/characters/cryo_5_sword_KamisatoAyaka.json"
     },
     "楓原万葉": {

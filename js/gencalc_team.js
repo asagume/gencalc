@@ -175,7 +175,7 @@ const setupDamageDetailDataCharacterEx = function (damageDetailObj, changeDetail
 
     // その他戦闘天賦を解析します。Array
     if ('その他戦闘天賦' in characterMasterObj) {
-        選択中キャラクターデータVar['その他戦闘天賦'].forEach(entry => {
+        characterMasterObj['その他戦闘天賦'].forEach(entry => {
             my天賦詳細Obj = entry;
             makeTalentDetailArray(
                 my天賦詳細Obj,
@@ -367,14 +367,22 @@ function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj,
             return;
         }
         const splittedKey = inputObj[inputKey].split('_'); // レアリティ_メイン効果
-        const key = splittedKey[1];
+        let key;
+        let rarerity;
+        if (splittedKey.length > 1) {
+            key = splittedKey[1];
+            rarerity = splittedKey[0];
+        } else {
+            key = splittedKey[0];
+            rarerity = '5';
+        }
         let toKey = key;
         if (key == 'HP') {
             toKey = 'HP上限';
         } else if (key.endsWith('%')) {
             toKey = key.replace('%', '乗算');
         }
-        statusObj[toKey] += 聖遺物メイン効果MasterVar[splittedKey[0]][key];
+        statusObj[toKey] += 聖遺物メイン効果MasterVar[rarerity][key];
     });
 
     Object.keys(inputObj).filter(s => s.startsWith('聖遺物サブ効果')).forEach(inputKey => {
@@ -1003,11 +1011,27 @@ function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailO
 
 async function makeTeamStatusObjEx(saveName) {
     const inputObj = JSON.parse(localStorage[saveName]);
+    if (!inputObj) {
+        console.error(saveName);
+        return {};
+    }
     inputObj['saveName'] = saveName;
 
+    const myキャラクター = inputObj['キャラクター'];
+    const my武器 = inputObj['武器'];
+
+    if (!(myキャラクター in キャラクターリストMasterVar)) {
+        console.error(saveName);
+        return {};
+    }
+    if (!(my武器 in 武器リストMasterVar[キャラクターリストMasterVar[myキャラクター]['武器']])) {
+        console.error(saveName);
+        return {};
+    }
+
     const responses = await Promise.all([
-        キャラクターリストMasterVar[inputObj['キャラクター']]['import'],
-        武器リストMasterVar[キャラクターリストMasterVar[inputObj['キャラクター']]['武器']][inputObj['武器']]['import']
+        キャラクターリストMasterVar[myキャラクター]['import'],
+        武器リストMasterVar[キャラクターリストMasterVar[myキャラクター]['武器']][my武器]['import']
     ].map(url => fetch(url).then(resp => resp.json())));
 
     const characterMasterObj = responses[0];
