@@ -373,6 +373,7 @@ async function loadマスターデータAndSetup() {
     $('#デバフオプションBox').empty();
     appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, デバフオプション排他Map, 'デバフ', false);
 
+    // チームオプション
     let myサポーター;
     Object.keys(チームMasterVar).forEach(key => {
         let myMasterObj = チームMasterVar[key];
@@ -394,6 +395,14 @@ async function loadマスターデータAndSetup() {
         makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
     });
 
+    $(document).on('change', '#チームオプション初期化Toggle', buttonToggleCheckboxOnChange);
+    $(document).on('click', '#チームオプション初期化Button', function () {
+        clearチームオプション();
+        this.disabled = true;
+        $('#チームオプション初期化Toggle').prop('checked', false);
+        inputOnChangeStatusUpdate();
+    });
+
     let select = null;
     Object.keys(キャラクターリストMasterVar).forEach(key => {
         if (!select) {
@@ -404,10 +413,10 @@ async function loadマスターデータAndSetup() {
     });
     characterSelected(select);
 
-    buildチームオプション();
-
     // 保存構成のダメージ計算を行います
     await Promise.all(Object.keys(localStorage).filter(s => s.startsWith('構成_')).map(s => makeTeamStatusObjEx(s)));
+
+    buildチームオプション();
 
     // 聖遺物サブ効果の小計の組み合わせを計算します
     // かなり高コストな処理です

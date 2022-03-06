@@ -3696,6 +3696,20 @@ function hideチームオプション(supporterName, optionName) {
     }
 }
 
+function clearチームオプション() {
+    チームオプション条件Map.forEach((value, key) => {
+        const id = key + 'Option';
+        const elem = document.getElementById(id);
+        if (elem) {
+            if (elem instanceof HTMLInputElement) {
+                $(elem).prop('checked', false);
+            } else {
+                $(elem).val('');
+            }
+        }
+    });
+}
+
 function setupチームオプション() {
     let saveName;
 
