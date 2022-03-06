@@ -1857,6 +1857,7 @@ function calculateStatusObj(statusObj) {
 
     // 聖遺物スコアを計算します
     let my攻撃力P小計 = statusObj['聖遺物サブ効果攻撃力P'];
+    my攻撃力P小計 += statusObj['聖遺物サブ効果攻撃力'] / statusObj['基礎攻撃力'];
     if (!$('#聖遺物メイン効果3Input').val()) { // 時の砂未設定の場合、攻撃力%と見做します
         if (my攻撃力P小計 >= 聖遺物メイン効果MasterVar["5"]['攻撃力%']) {
             my攻撃力P小計 -= 聖遺物メイン効果MasterVar["5"]['攻撃力%'];
