@@ -3616,19 +3616,6 @@ function buildチームオプション() {
             return;
         }
 
-        // if (myサポーター == 選択中キャラクターデータVar['名前']) return;
-        // if (key.substring(1).replace('*', '_') in チームMasterVar) {
-        //     let isNeedSaveData = false;
-        //     チームMasterVar[key.substring(1).replace('*', '_')]['詳細'].forEach(detailObj => {
-        //         if (!$.isNumeric(detailObj['数値'])) {
-        //             isNeedSaveData = true;
-        //         }
-        //     });
-        //     if (isNeedSaveData && localStorage['構成_' + myサポーター] == null) return;
-        // } else {
-        //     if (localStorage['構成_' + myサポーター] == null) return;
-        // }
-
         if (!myサポーターオプション条件Map.has(myサポーター)) {
             myサポーターオプション条件Map.set(myサポーター, new Map());
         }
@@ -3659,8 +3646,6 @@ function buildチームオプション() {
 
         appendInputForOptionElement(divElem.id, value, new Map(), 'チームオプションName' + myサポーター, false, オプションInputOnChangeSub);
     });
-
-    setupチームオプション();
 }
 
 function showチームオプション(supporterName, optionName) {
