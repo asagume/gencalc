@@ -832,6 +832,28 @@ const ARTIFACT_STAT_JA_EN_MAP = new Map([
     ['防御力%', 'DEF%']
 ]);
 
+const ARTIFACT_STAT_JA_EN_ABBREV_MAP = new Map([
+    ['HP', 'HP'],
+    ['攻撃力', 'ATK'],
+    ['防御力', 'DEF'],
+    ['元素熟知', 'EM'],
+    ['会心率', 'CR'],
+    ['会心ダメージ', 'CD'],
+    ['元素チャージ効率', 'ER'],
+    ['炎元素ダメージバフ', 'Pyro'],
+    ['水元素ダメージバフ', 'Hydro'],
+    ['風元素ダメージバフ', 'Aero'],
+    ['雷元素ダメージバフ', 'Electro'],
+    ['草元素ダメージバフ', 'Dendro'],
+    ['氷元素ダメージバフ', 'Cryo'],
+    ['岩元素ダメージバフ', 'Geo'],
+    ['物理ダメージバフ', 'Physical'],
+    ['与える治療効果', 'Healing'],
+    ['HP%', 'HP%'],
+    ['攻撃力%', 'ATK%'],
+    ['防御力%', 'DEF%']
+]);
+
 function makeShareData(saveData) {
     const キャラクター = saveData['キャラクター'];
 
@@ -860,6 +882,12 @@ function makeShareData(saveData) {
                 case '聖遺物メイン効果3':
                 case '聖遺物メイン効果4':
                 case '聖遺物メイン効果5':
+                    value = value.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value.split('_')[1]);
+                    break;
+                case '聖遺物優先するサブ効果1':
+                case '聖遺物優先するサブ効果2':
+                case '聖遺物優先するサブ効果3':
+                    value = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value);
                     break;
             }
             shareDataArr.push(value);
