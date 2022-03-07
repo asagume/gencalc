@@ -684,36 +684,40 @@ function makeShareData(saveData) {
 
     let shareDataArr = [];
     キャラクター構成PROPERTY_MAP.forEach((value, key) => {
-        value = saveData[key];
+        newValue = saveData[key];
         let myBasename;
         switch (key) {
             case 'キャラクター':
-                myBasename = basename(キャラクターリストMasterVar[value]['import']);
-                value = myBasename.split('_')[myBasename.split('_').length - 1];
+                myBasename = basename(キャラクターリストMasterVar[newValue]['import']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
                 break;
             case '武器':
-                myBasename = basename(武器リストMasterVar[キャラクターリストMasterVar[キャラクター]['武器']][value]['import']);
-                value = myBasename.split('_')[myBasename.split('_').length - 1];
+                myBasename = basename(武器リストMasterVar[キャラクターリストMasterVar[キャラクター]['武器']][newValue]['import']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
                 break;
             case '聖遺物セット効果1':
             case '聖遺物セット効果2':
-                myBasename = basename(聖遺物セット効果MasterVar[value]['image']);
-                value = myBasename.split('_')[myBasename.split('_').length - 1];
+                myBasename = basename(聖遺物セット効果MasterVar[newValue]['image']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
                 break;
             case '聖遺物メイン効果1':
             case '聖遺物メイン効果2':
             case '聖遺物メイン効果3':
             case '聖遺物メイン効果4':
             case '聖遺物メイン効果5':
-                value = value.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value.split('_')[1]);
+                if (newValue) {
+                    newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue.split('_')[1]);
+                }
                 break;
             case '聖遺物優先するサブ効果1':
             case '聖遺物優先するサブ効果2':
             case '聖遺物優先するサブ効果3':
-                value = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value);
+                if (newValue) {
+                    newValue = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue);
+                }
                 break;
         }
-        shareDataArr.push(value);
+        shareDataArr.push(newValue);
     });
     Object.keys(saveData).forEach(key => {
         if (!キャラクター構成PROPERTY_MAP.has(key)) {
