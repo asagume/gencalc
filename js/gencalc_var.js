@@ -779,12 +779,16 @@ function makeSaveDataFromShareData(shareData) {
                 case '聖遺物メイン効果3':
                 case '聖遺物メイン効果4':
                 case '聖遺物メイン効果5':
-                    newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
+                    if (newValue) {
+                        newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
+                    }
                     break;
                 case '聖遺物優先するサブ効果1':
                 case '聖遺物優先するサブ効果2':
                 case '聖遺物優先するサブ効果3':
-                    newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
+                    if (newValue) {
+                        newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
+                    }
                     break;
             }
             if (value == null) {
