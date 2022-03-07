@@ -405,14 +405,30 @@ async function loadマスターデータAndSetup() {
         inputOnChangeStatusUpdate();
     });
 
-    let select = null;
-    Object.keys(キャラクターリストMasterVar).forEach(key => {
-        if (!select) {
-            select = key;
-        } else if ('selected' in キャラクターリストMasterVar[key] && キャラクターリストMasterVar[key]['selected']) {
-            select = key;
+    // クエリストリングから
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('allin')) {
+        const allin = searchParams.get('allin');
+        console.log('allin', allin);
+        const saveDataUri = makeSaveDataFromShareData(searchParams.get('allin'));
+        console.log(saveDataUri);
+        if (saveDataUri) {
+            URIキャラクター構成ObjVar = saveDataUri;
         }
-    });
+    }
+
+    let select = null;
+    if (URIキャラクター構成ObjVar) {
+        select = URIキャラクター構成ObjVar['キャラクター'];
+    } else {
+        Object.keys(キャラクターリストMasterVar).forEach(key => {
+            if (!select) {
+                select = key;
+            } else if ('selected' in キャラクターリストMasterVar[key] && キャラクターリストMasterVar[key]['selected']) {
+                select = key;
+            }
+        });
+    }
     characterSelected(select);
 
     // 保存構成のダメージ計算を行います

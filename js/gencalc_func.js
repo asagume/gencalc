@@ -4361,12 +4361,20 @@ const shareByTwitter = function () {
     } else {
         text += 'あなたの' + saveData['キャラクター'];
     }
-    text += ' (' + saveData['キャラクター'] + ') in げんかるく\n';
+    text += ' (' + saveData['キャラクター'] + ')\n';
+    text += 'げんかるく\n';
 
-    UTF8toBinary(JSON.stringify(shareData)).then(bin => {
-        const encoded = btoa(bin);
-        console.log(encoded.length);
-        const url = 'https://asagume.github.io/gencalc/' + '?allin=' +  encoded;
-        openTwitter(text, url);
-    });
+    const encoded = encodeURI(shareData);
+    console.log(encoded.length);
+    console.log(encoded);
+    const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
+    openTwitter(text, url);
+
+    // UTF8toBinary(JSON.stringify(shareData)).then(bin => {
+    //     const encoded = btoa(bin);
+    //     // console.log(encoded.length);
+    //     // console.log(encoded);
+    //     const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
+    //     openTwitter(text, url);
+    // });
 }

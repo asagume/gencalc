@@ -186,6 +186,44 @@ const ステータス詳細ObjTemplate = {
     岩元素ダメージ会心ダメージ: 0
 };
 
+const キャラクター構成PROPERTY_MAP = new Map([
+    ['キャラクター', null],
+    ['レベル', null],
+    ['命ノ星座', 0],
+    ['通常攻撃レベル', 0],
+    ['元素スキルレベル', 0],
+    ['元素爆発レベル', 0],
+    ['武器', null],
+    ['武器レベル', 0],
+    ['精錬ランク', 0],
+    ['聖遺物セット効果1', null],
+    ['聖遺物セット効果2', null],
+    ['聖遺物メイン効果1', null],
+    ['聖遺物メイン効果2', null],
+    ['聖遺物メイン効果3', null],
+    ['聖遺物メイン効果4', null],
+    ['聖遺物メイン効果5', null],
+    ['聖遺物サブ効果HP', 0],
+    ['聖遺物サブ効果攻撃力', 0],
+    ['聖遺物サブ効果防御力', 0],
+    ['聖遺物サブ効果元素熟知', 0],
+    ['聖遺物サブ効果会心率', 0],
+    ['聖遺物サブ効果会心ダメージ', 0],
+    ['聖遺物サブ効果元素チャージ効率', 0],
+    ['聖遺物サブ効果HPP', 0],
+    ['聖遺物サブ効果攻撃力P', 0],
+    ['聖遺物サブ効果防御力P', 0],
+    ['聖遺物優先するサブ効果1', null],
+    ['聖遺物優先するサブ効果1上昇値', 0],
+    ['聖遺物優先するサブ効果1上昇回数', 0],
+    ['聖遺物優先するサブ効果2', null],
+    ['聖遺物優先するサブ効果2上昇値', 0],
+    ['聖遺物優先するサブ効果2上昇回数', 0],
+    ['聖遺物優先するサブ効果3', null],
+    ['聖遺物優先するサブ効果3上昇値', 0],
+    ['聖遺物優先するサブ効果3上昇回数', 0]
+]);
+
 // マスターデータの詳細[].種類からステータス詳細ObjVarのプロパティへの変換表です
 const KIND_TO_PROPERTY_MAP = new Map([
     ['HP', 'HP上限'],
@@ -194,6 +232,24 @@ const KIND_TO_PROPERTY_MAP = new Map([
     ['攻撃力%', '攻撃力乗算'],
     ['防御力', '防御力'],
     ['防御力%', '防御力乗算']
+]);
+
+const ELEMENT_TD_CLASS_MAP = new Map([
+    ['炎', 'pyro'],
+    ['水', 'hydro'],
+    ['風', 'aero'],
+    ['雷', 'electro'],
+    ['氷', 'cryo'],
+    ['岩', 'geo']
+]);
+
+const ELEMENT_IMG_SRC_MAP = new Map([
+    ['炎', 'images/element_pyro.png'],
+    ['水', 'images/element_hydro.png'],
+    ['風', 'images/element_aero.png'],
+    ['雷', 'images/element_electro.png'],
+    ['氷', 'images/element_cryo.png'],
+    ['岩', 'images/element_geo.png']
 ]);
 
 // ステータス詳細ObjVarを初期化します
@@ -224,257 +280,11 @@ function initステータス詳細ObjVar(statusObj) {
     }
 }
 
-const clearローカルストレージ = function () {
-    localStorage.clear();
-    $('#ローカルストレージクリアInput').prop('checked', false);
-    toggleローカルストレージクリア();
-}
-
-const toggleローカルストレージクリア = function () {
-    let checked = $('#ローカルストレージクリアInput').prop('checked');
-    $('#ローカルストレージクリアButton').prop('disabled', !checked);
-}
-
-var キャラクター所持状況ObjVar = {};
-
-const キャラクター構成ObjTEMPLATE = {
-    キャラクター: null,
-    レベル: null,
-    命ノ星座: 0,
-    通常攻撃レベル: 0,
-    元素スキルレベル: 0,
-    元素爆発レベル: 0,
-    武器: null,
-    武器レベル: 0,
-    精錬ランク: 0,
-    聖遺物セット効果1: null,
-    聖遺物セット効果2: null,
-    聖遺物メイン効果1: null,
-    聖遺物メイン効果2: null,
-    聖遺物メイン効果3: null,
-    聖遺物メイン効果4: null,
-    聖遺物メイン効果5: null,
-    聖遺物サブ効果HP: 0,
-    聖遺物サブ効果攻撃力: 0,
-    聖遺物サブ効果防御力: 0,
-    聖遺物サブ効果元素熟知: 0,
-    聖遺物サブ効果会心率: 0,
-    聖遺物サブ効果会心ダメージ: 0,
-    聖遺物サブ効果元素チャージ効率: 0,
-    聖遺物サブ効果HPP: 0,
-    聖遺物サブ効果攻撃力P: 0,
-    聖遺物サブ効果防御力P: 0,
-    聖遺物優先するサブ効果1: null,
-    聖遺物優先するサブ効果1上昇値: 0,
-    聖遺物優先するサブ効果1上昇回数: 0,
-    聖遺物優先するサブ効果2: null,
-    聖遺物優先するサブ効果2上昇値: 0,
-    聖遺物優先するサブ効果2上昇回数: 0,
-    聖遺物優先するサブ効果3: null,
-    聖遺物優先するサブ効果3上昇値: 0,
-    聖遺物優先するサブ効果3上昇回数: 0
-};
-
-const ELEMENT_TD_CLASS_MAP = new Map([
-    ['炎', 'pyro'],
-    ['水', 'hydro'],
-    ['風', 'aero'],
-    ['雷', 'electro'],
-    ['氷', 'cryo'],
-    ['岩', 'geo']
-]);
-
-const ELEMENT_IMG_SRC_MAP = new Map([
-    ['炎', 'images/element_pyro.png'],
-    ['水', 'images/element_hydro.png'],
-    ['風', 'images/element_aero.png'],
-    ['雷', 'images/element_electro.png'],
-    ['氷', 'images/element_cryo.png'],
-    ['岩', 'images/element_geo.png']
-]);
-
-function buildキャラクター所持状況List() {
-    let ulElem = document.getElementById('キャラクター所持状況List');
-    ulElem.innerHTML = '';
-    Object.keys(キャラクターリストMasterVar).forEach(name => {
-        let myMasterObj = キャラクターリストMasterVar[name];
-        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
-            return;
-        }
-
-        let splittedUrl = myMasterObj['import'].split('/');
-        let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-        let srcUrl = 'images/characters/face/' + fileName;
-
-        let liElem = document.createElement('li');
-        liElem.id = name + '_所持状況Input';
-        ulElem.appendChild(liElem);
-
-        let imgElem = document.createElement('img');
-        imgElem.className = 'star' + myMasterObj['レアリティ'];
-        imgElem.src = srcUrl;
-        imgElem.alt = name;
-        imgElem.width = 80;
-        imgElem.height = 80;
-        liElem.appendChild(imgElem);
-
-        let img2Elem = document.createElement('img');
-        img2Elem.className = 'element';
-        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
-        img2Elem.alt = myMasterObj['元素'];
-        img2Elem.width = 24;
-        img2Elem.height = 24;
-        liElem.appendChild(img2Elem);
-
-        let pElem = document.createElement('p');
-        if (name in キャラクター所持状況ObjVar) {
-            pElem.textContent = キャラクター所持状況ObjVar[name];
-        }
-        liElem.appendChild(pElem);
-
-        if (!pElem.textContent) {
-            imgElem.classList.add('darken');
-            img2Elem.classList.add('darken');
-        }
-
-        let divElem = document.createElement('div');
-        divElem.className = 'tooltip';
-        divElem.innerHTML = name;
-        liElem.appendChild(divElem);
-    });
-
-    $(document).on('click', '#キャラクター所持状況List li', キャラクター所持状況OnClick);
-}
-
-const キャラクター所持状況OnClick = function () {
-    const selector = '#' + selectorEscape(this.id);
-    let val = $(selector + ' p').text();
-    if (val) {
-        if (++val > 6) {
-            val = null;
-            $(selector + ' img').addClass('darken');
-        }
-    } else {
-        val = 0;
-        $(selector + ' img').removeClass('darken');
-    }
-    $(selector + ' p').text(val);
-
-    キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
-
-    $('#キャラクター所持状況保存Button').prop('disabled', false);
-}
-
-const loadキャラクター所持状況 = function () {
-    if (localStorage['キャラクター所持状況']) {
-        try {
-            キャラクター所持状況ObjVar = JSON.parse(localStorage['キャラクター所持状況']);
-        } catch (error) {
-            キャラクター所持状況ObjVar = {};
-        }
-    } else {
-        キャラクター所持状況ObjVar = {};
-    }
-    $('#キャラクター所持状況Button').prop('disabled', true);
-}
-
-const saveキャラクター所持状況 = function () {
-    localStorage['キャラクター所持状況'] = JSON.stringify(キャラクター所持状況ObjVar);
-    $('#キャラクター所持状況保存Button').prop('disabled', true);
-    $('#ローカルストレージクリアInput').prop('checked', false);
-    toggleローカルストレージクリア();
-}
-
-// 武器所持状況リスト
-var 武器所持状況ObjVar = {}
-
-function build武器所持状況List() {
-    Object.keys(武器リストMasterVar).forEach(weaponType => {
-        const listElemId = weaponType + '所持状況List';
-        $('#' + listElemId).empty();
-
-        let ulElem = document.getElementById(listElemId);
-        Object.keys(武器リストMasterVar[weaponType]).forEach(name => {
-            let myMasterObj = 武器リストMasterVar[weaponType][name];
-            if ('disabled' in myMasterObj && myMasterObj['disabled']) {
-                return;
-            }
-
-            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
-
-            let liElem = document.createElement('li');
-            liElem.id = name + '_所持状況Input';
-            ulElem.appendChild(liElem);
-
-            let imgElem = document.createElement('img');
-            imgElem.classList.add('star' + myMasterObj['レアリティ']);
-            imgElem.src = srcUrl;
-            imgElem.alt = name;
-            imgElem.width = 80;
-            imgElem.height = 80;
-            liElem.appendChild(imgElem);
-
-            let pElem = document.createElement('p');
-            if (name in 武器所持状況ObjVar) {
-                pElem.textContent = 武器所持状況ObjVar[name];
-            }
-            liElem.appendChild(pElem);
-
-            if (!pElem.textContent) {
-                imgElem.classList.add('darken');
-            }
-
-            let divElem = document.createElement('div');
-            divElem.className = 'tooltip';
-            divElem.innerHTML = name;
-            liElem.appendChild(divElem);
-        });
-
-        $(document).on('click', '#' + listElemId + ' li', 武器所持状況OnClick);
-    });
-}
-
-const 武器所持状況OnClick = function () {
-    let val = $('#' + selectorEscape(this.id) + ' p').text();
-    if (val) {
-        if (++val > 5) {
-            val = null;
-            $('#' + selectorEscape(this.id) + ' img').addClass('darken');
-        }
-    } else {
-        val = 1;
-        $('#' + selectorEscape(this.id) + ' img').removeClass('darken');
-    }
-    $('#' + selectorEscape(this.id) + ' p').text(val);
-
-    武器所持状況ObjVar[this.id.split('_')[0]] = val;
-
-    $('#my-weapon-save-button').prop('disabled', false);
-}
-
-const load武器所持状況 = function () {
-    if (localStorage['武器所持状況']) {
-        try {
-            武器所持状況ObjVar = JSON.parse(localStorage['武器所持状況']);
-        } catch (error) {
-            武器所持状況ObjVar = {};
-        }
-    } else {
-        武器所持状況ObjVar = {};
-    }
-    $('#my-weapon-save-button').prop('disabled', true);
-}
-
-const save武器所持状況 = function () {
-    localStorage['武器所持状況'] = JSON.stringify(武器所持状況ObjVar);
-    $('#my-weapon-save-button').prop('disabled', true);
-    $('#ローカルストレージクリアInput').prop('checked', false);
-    toggleローカルストレージクリア();
-}
 
 //////////////////////
 //////////////////////
 var キャラクター構成ObjVar = null;
+var URIキャラクター構成ObjVar = null;
 
 // おすすめセットをセットアップします
 function makeArtifactSetAbbrev(name) {
@@ -497,20 +307,26 @@ function setupおすすめセット(opt_saveName = null) {
         loadキャラクター構成();
     }
 
-    const myCharacter = $('#キャラクターInput').val();
+    const myキャラクター = $('#キャラクターInput').val();
+
+    if (URIキャラクター構成ObjVar) {
+        if (myキャラクター == URIキャラクター構成ObjVar['キャラクター']) {
+            おすすめセットArrVar.push(['IMPORTED DATA', URIキャラクター構成ObjVar, true]);
+        }
+    }
 
     let storageKeyArr = [];
     Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('構成_' + myCharacter)) {
+        if (key.startsWith('構成_' + myキャラクター)) {
             storageKeyArr.push(key);
         }
     });
     storageKeyArr.sort();
-    const re = new RegExp('^構成_' + myCharacter + '_');
+    const re = new RegExp('^構成_' + myキャラクター + '_');
     storageKeyArr.forEach(key => {
         let setName;
-        if (key == '構成_' + myCharacter) {
-            setName = 'あなたの' + myCharacter;
+        if (key == '構成_' + myキャラクター) {
+            setName = 'あなたの' + myキャラクター;
         } else {
             setName = key.replace(re, '');
         }
@@ -591,7 +407,10 @@ function setupおすすめセット(opt_saveName = null) {
 }
 
 function makeSaveData() {
-    キャラクター構成ObjVar = JSON.parse(JSON.stringify(キャラクター構成ObjTEMPLATE));
+    キャラクター構成ObjVar = {};
+    キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+        キャラクター構成ObjVar[key] = value;
+    });
 
     Object.keys(キャラクター構成ObjVar).forEach(key => {
         if (キャラクター構成ObjVar[key] == null) {
@@ -836,10 +655,10 @@ const ARTIFACT_STAT_JA_EN_ABBREV_MAP = new Map([
     ['HP', 'HP'],
     ['攻撃力', 'ATK'],
     ['防御力', 'DEF'],
-    ['元素熟知', 'EM'],
-    ['会心率', 'CR'],
-    ['会心ダメージ', 'CD'],
-    ['元素チャージ効率', 'ER'],
+    ['元素熟知', 'ElementalMastery'],
+    ['会心率', 'CritRate'],
+    ['会心ダメージ', 'CritDMG'],
+    ['元素チャージ効率', 'EnergyRecharge'],
     ['炎元素ダメージバフ', 'Pyro'],
     ['水元素ダメージバフ', 'Hydro'],
     ['風元素ダメージバフ', 'Aero'],
@@ -849,51 +668,350 @@ const ARTIFACT_STAT_JA_EN_ABBREV_MAP = new Map([
     ['岩元素ダメージバフ', 'Geo'],
     ['物理ダメージバフ', 'Physical'],
     ['与える治療効果', 'Healing'],
-    ['HP%', 'HP%'],
-    ['攻撃力%', 'ATK%'],
-    ['防御力%', 'DEF%']
+    ['HP%', 'HPp'],
+    ['攻撃力%', 'ATKp'],
+    ['防御力%', 'DEFp']
 ]);
+
+const ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP = new Map();
+ARTIFACT_STAT_JA_EN_ABBREV_MAP.forEach((value, key) => {
+    ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.set(value, key);
+});
+
 
 function makeShareData(saveData) {
     const キャラクター = saveData['キャラクター'];
 
-
     let shareDataArr = [];
+    キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+        value = saveData[key];
+        let myBasename;
+        switch (key) {
+            case 'キャラクター':
+                myBasename = basename(キャラクターリストMasterVar[value]['import']);
+                value = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '武器':
+                myBasename = basename(武器リストMasterVar[キャラクターリストMasterVar[キャラクター]['武器']][value]['import']);
+                value = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '聖遺物セット効果1':
+            case '聖遺物セット効果2':
+                myBasename = basename(聖遺物セット効果MasterVar[value]['image']);
+                value = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '聖遺物メイン効果1':
+            case '聖遺物メイン効果2':
+            case '聖遺物メイン効果3':
+            case '聖遺物メイン効果4':
+            case '聖遺物メイン効果5':
+                value = value.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value.split('_')[1]);
+                break;
+            case '聖遺物優先するサブ効果1':
+            case '聖遺物優先するサブ効果2':
+            case '聖遺物優先するサブ効果3':
+                value = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value);
+                break;
+        }
+        shareDataArr.push(value);
+    });
     Object.keys(saveData).forEach(key => {
-        if (key in キャラクター構成ObjTEMPLATE) {
-            let value = saveData[key];
-            let myBasename;
+        if (!キャラクター構成PROPERTY_MAP.has(key)) {
+            shareDataArr.push(key + '=' + saveData[key]);
+        }
+    });
+
+    return shareDataArr.join(',');
+}
+
+function makeSaveDataFromShareData(shareData) {
+    const saveData = {};
+
+    try {
+        const shareDataArr = shareData.split(',');
+
+        let myキャラクター;
+
+        let i = 0;
+        キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+            let newValue = shareDataArr[i];
             switch (key) {
                 case 'キャラクター':
-                    myBasename = basename(キャラクターリストMasterVar[value]['import']);
-                    value = myBasename.split('_')[myBasename.split('_').length - 1];
+                    Object.keys(キャラクターリストMasterVar).forEach(key2 => {
+                        if ('import' in キャラクターリストMasterVar[key2]) {
+                            const myBasename = basename(キャラクターリストMasterVar[key2]['import']);
+                            const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                            if (newValue == myAbbrev) {
+                                myキャラクター = key2;
+                                newValue = myキャラクター;
+                            }
+                        }
+                    });
                     break;
                 case '武器':
-                    myBasename = basename(武器リストMasterVar[キャラクターリストMasterVar[キャラクター]['武器']][value]['import']);
-                    value = myBasename.split('_')[myBasename.split('_').length - 1];
+                    if (myキャラクター) {
+                        const my武器タイプ = キャラクターリストMasterVar[myキャラクター]['武器'];
+                        Object.keys(武器リストMasterVar[my武器タイプ]).forEach(key2 => {
+                            if ('import' in 武器リストMasterVar[my武器タイプ][key2]) {
+                                const myBasename = basename(武器リストMasterVar[my武器タイプ][key2]['import']);
+                                const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                                if (newValue == myAbbrev) {
+                                    newValue = key2;
+                                }
+                            }
+                        });
+                    }
                     break;
                 case '聖遺物セット効果1':
                 case '聖遺物セット効果2':
-                    myBasename = basename(聖遺物セット効果MasterVar[value]['image']);
-                    value = myBasename.split('_')[myBasename.split('_').length - 1];
+                    Object.keys(聖遺物セット効果MasterVar).forEach(key2 => {
+                        if ('image' in 聖遺物セット効果MasterVar[key2]) {
+                            const myBasename = basename(聖遺物セット効果MasterVar[key2]['image']);
+                            const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                            if (newValue == myAbbrev) {
+                                newValue = key2;
+                            }
+                        }
+                    });
                     break;
                 case '聖遺物メイン効果1':
                 case '聖遺物メイン効果2':
                 case '聖遺物メイン効果3':
                 case '聖遺物メイン効果4':
                 case '聖遺物メイン効果5':
-                    value = value.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value.split('_')[1]);
+                    newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
                     break;
                 case '聖遺物優先するサブ効果1':
                 case '聖遺物優先するサブ効果2':
                 case '聖遺物優先するサブ効果3':
-                    value = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(value);
+                    newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
                     break;
             }
-            shareDataArr.push(value);
-        } else {
-            shareDataArr.push(key + '=' + saveData[key]);
+            if (value == null) {
+                saveData[key] = newValue;
+            } else {
+                saveData[key] = Number(newValue);
+            }
+            i++;
+        });
+
+        for (; i < shareDataArr.length; i++) {
+            const keyAndValue = shareDataArr[i];
+            let key;
+            let value;
+            if (keyAndValue.indexOf('=') != 1) {
+                const splitted = keyAndValue.split('=');
+                key = splitted[0];
+                value = splitted[1];
+
+                saveData[key] = value;
+            }
         }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+
+    return saveData;
+}
+
+
+// --------
+// キャラクター所持状況リスト
+// --------
+var キャラクター所持状況ObjVar = {};
+
+function buildキャラクター所持状況List() {
+    let ulElem = document.getElementById('キャラクター所持状況List');
+    ulElem.innerHTML = '';
+    Object.keys(キャラクターリストMasterVar).forEach(name => {
+        let myMasterObj = キャラクターリストMasterVar[name];
+        if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+            return;
+        }
+
+        let splittedUrl = myMasterObj['import'].split('/');
+        let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
+        let srcUrl = 'images/characters/face/' + fileName;
+
+        let liElem = document.createElement('li');
+        liElem.id = name + '_所持状況Input';
+        ulElem.appendChild(liElem);
+
+        let imgElem = document.createElement('img');
+        imgElem.className = 'star' + myMasterObj['レアリティ'];
+        imgElem.src = srcUrl;
+        imgElem.alt = name;
+        imgElem.width = 80;
+        imgElem.height = 80;
+        liElem.appendChild(imgElem);
+
+        let img2Elem = document.createElement('img');
+        img2Elem.className = 'element';
+        img2Elem.src = ELEMENT_IMG_SRC_MAP.get(myMasterObj['元素']);
+        img2Elem.alt = myMasterObj['元素'];
+        img2Elem.width = 24;
+        img2Elem.height = 24;
+        liElem.appendChild(img2Elem);
+
+        let pElem = document.createElement('p');
+        if (name in キャラクター所持状況ObjVar) {
+            pElem.textContent = キャラクター所持状況ObjVar[name];
+        }
+        liElem.appendChild(pElem);
+
+        if (!pElem.textContent) {
+            imgElem.classList.add('darken');
+            img2Elem.classList.add('darken');
+        }
+
+        let divElem = document.createElement('div');
+        divElem.className = 'tooltip';
+        divElem.innerHTML = name;
+        liElem.appendChild(divElem);
     });
-    return shareDataArr.join(',');
+
+    $(document).on('click', '#キャラクター所持状況List li', キャラクター所持状況OnClick);
+}
+
+const キャラクター所持状況OnClick = function () {
+    const selector = '#' + selectorEscape(this.id);
+    let val = $(selector + ' p').text();
+    if (val) {
+        if (++val > 6) {
+            val = null;
+            $(selector + ' img').addClass('darken');
+        }
+    } else {
+        val = 0;
+        $(selector + ' img').removeClass('darken');
+    }
+    $(selector + ' p').text(val);
+
+    キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
+
+    $('#キャラクター所持状況保存Button').prop('disabled', false);
+}
+
+const loadキャラクター所持状況 = function () {
+    if (localStorage['キャラクター所持状況']) {
+        try {
+            キャラクター所持状況ObjVar = JSON.parse(localStorage['キャラクター所持状況']);
+        } catch (error) {
+            キャラクター所持状況ObjVar = {};
+        }
+    } else {
+        キャラクター所持状況ObjVar = {};
+    }
+    $('#キャラクター所持状況Button').prop('disabled', true);
+}
+
+const saveキャラクター所持状況 = function () {
+    localStorage['キャラクター所持状況'] = JSON.stringify(キャラクター所持状況ObjVar);
+    $('#キャラクター所持状況保存Button').prop('disabled', true);
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
+}
+
+// --------
+// 武器所持状況リスト
+// --------
+var 武器所持状況ObjVar = {}
+
+function build武器所持状況List() {
+    Object.keys(武器リストMasterVar).forEach(weaponType => {
+        const listElemId = weaponType + '所持状況List';
+        $('#' + listElemId).empty();
+
+        let ulElem = document.getElementById(listElemId);
+        Object.keys(武器リストMasterVar[weaponType]).forEach(name => {
+            let myMasterObj = 武器リストMasterVar[weaponType][name];
+            if ('disabled' in myMasterObj && myMasterObj['disabled']) {
+                return;
+            }
+
+            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
+
+            let liElem = document.createElement('li');
+            liElem.id = name + '_所持状況Input';
+            ulElem.appendChild(liElem);
+
+            let imgElem = document.createElement('img');
+            imgElem.classList.add('star' + myMasterObj['レアリティ']);
+            imgElem.src = srcUrl;
+            imgElem.alt = name;
+            imgElem.width = 80;
+            imgElem.height = 80;
+            liElem.appendChild(imgElem);
+
+            let pElem = document.createElement('p');
+            if (name in 武器所持状況ObjVar) {
+                pElem.textContent = 武器所持状況ObjVar[name];
+            }
+            liElem.appendChild(pElem);
+
+            if (!pElem.textContent) {
+                imgElem.classList.add('darken');
+            }
+
+            let divElem = document.createElement('div');
+            divElem.className = 'tooltip';
+            divElem.innerHTML = name;
+            liElem.appendChild(divElem);
+        });
+
+        $(document).on('click', '#' + listElemId + ' li', 武器所持状況OnClick);
+    });
+}
+
+const 武器所持状況OnClick = function () {
+    let val = $('#' + selectorEscape(this.id) + ' p').text();
+    if (val) {
+        if (++val > 5) {
+            val = null;
+            $('#' + selectorEscape(this.id) + ' img').addClass('darken');
+        }
+    } else {
+        val = 1;
+        $('#' + selectorEscape(this.id) + ' img').removeClass('darken');
+    }
+    $('#' + selectorEscape(this.id) + ' p').text(val);
+
+    武器所持状況ObjVar[this.id.split('_')[0]] = val;
+
+    $('#my-weapon-save-button').prop('disabled', false);
+}
+
+const load武器所持状況 = function () {
+    if (localStorage['武器所持状況']) {
+        try {
+            武器所持状況ObjVar = JSON.parse(localStorage['武器所持状況']);
+        } catch (error) {
+            武器所持状況ObjVar = {};
+        }
+    } else {
+        武器所持状況ObjVar = {};
+    }
+    $('#my-weapon-save-button').prop('disabled', true);
+}
+
+const save武器所持状況 = function () {
+    localStorage['武器所持状況'] = JSON.stringify(武器所持状況ObjVar);
+    $('#my-weapon-save-button').prop('disabled', true);
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
+}
+
+// --------
+// ローカルストレージ
+// --------
+const clearローカルストレージ = function () {
+    localStorage.clear();
+    $('#ローカルストレージクリアInput').prop('checked', false);
+    toggleローカルストレージクリア();
+}
+
+const toggleローカルストレージクリア = function () {
+    let checked = $('#ローカルストレージクリアInput').prop('checked');
+    $('#ローカルストレージクリアButton').prop('disabled', !checked);
 }
