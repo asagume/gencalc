@@ -792,9 +792,17 @@ function makeSaveDataFromShareData(shareData) {
                     break;
             }
             if (value == null) {
-                saveData[key] = newValue;
+                if (newValue) {
+                    saveData[key] = newValue;
+                } else {
+                    saveData[key] = '';
+                }
             } else {
-                saveData[key] = Number(newValue);
+                if (newValue) {
+                    saveData[key] = Number(newValue);
+                } else {
+                    saveData[key] = 0;
+                }
             }
             i++;
         });
