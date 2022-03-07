@@ -3610,13 +3610,8 @@ const キャラクターInputOnChange = function () {
         ELEMENT_VALUE_AT_FOCUS_MAP.clear();
 
         inputOnChangeEnemyUpdate(ステータス詳細ObjVar); // 敵
-        if (おすすめセットArrVar.length > 0) {
-            おすすめセットInputOnChange();
-        } else {    // 基本的におすすめセットを用意するので、こちらのルートはまず通らないはず
-            setupBaseDamageDetailDataCharacter();   // キャラクター
-            setupBaseDamageDetailDataArtifactSet(); // 聖遺物セット効果
-            武器InputOnChange();    // 武器
-        }
+
+        おすすめセットInputOnChange();
 
         buildキャラクタープロフィール();
         build天賦詳細();

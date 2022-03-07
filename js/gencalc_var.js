@@ -303,15 +303,18 @@ function makeArtifactSetAbbrev(name) {
 
 function setupおすすめセット(opt_saveName = null) {
     おすすめセットArrVar = [];
-    if (!opt_saveName) {
-        loadキャラクター構成();
-    }
+    // if (!opt_saveName) {
+    //     loadキャラクター構成();
+    // }
 
     const myキャラクター = $('#キャラクターInput').val();
 
+    let isSavable = null;
+
     if (URIキャラクター構成ObjVar) {
         if (myキャラクター == URIキャラクター構成ObjVar['キャラクター']) {
-            おすすめセットArrVar.push(['IMPORTED DATA', URIキャラクター構成ObjVar, true]);
+            おすすめセットArrVar.push(['IMPORTED DATA', URIキャラクター構成ObjVar, false]);
+            isSavable = true;
         }
     }
 
@@ -319,6 +322,9 @@ function setupおすすめセット(opt_saveName = null) {
     Object.keys(localStorage).forEach(key => {
         if (key.startsWith('構成_' + myキャラクター)) {
             storageKeyArr.push(key);
+            if (isSavable == null) {
+                isSavable = false;
+            }
         }
     });
     storageKeyArr.sort();
@@ -400,6 +406,16 @@ function setupおすすめセット(opt_saveName = null) {
     おすすめセットArrVar.forEach(entry => {
         appendOptionElement(entry[0], entry[1], selector);
     });
+
+    if (isSavable === false) {
+        $('#構成保存Button').prop('disabled', true);
+        $('#保存構成削除Button').prop('disabled', false);
+        $('#構成名称Input').prop('disabled', true);
+    } else {
+        $('#構成保存Button').prop('disabled', false);
+        $('#保存構成削除Button').prop('disabled', true);
+        $('#構成名称Input').prop('disabled', false);
+    }
 
     if (opt_saveName) {
         $(selector).val(opt_saveName);
