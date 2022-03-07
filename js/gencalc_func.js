@@ -3152,9 +3152,11 @@ const おすすめセットInputOnChange = function () {
     const selectedSet = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')];
     if (selectedSet[2]) {
         $('#構成名称Input').val(selectedSet[0]);
+        $('#構成保存Button').prop('disabled', true);
         $('#保存構成削除Button').prop('disabled', false);
     } else {
         $('#構成名称Input').val('');
+        $('#構成保存Button').prop('disabled', false);
         $('#保存構成削除Button').prop('disabled', true);
     }
 
