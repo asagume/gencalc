@@ -1806,6 +1806,49 @@ function compareFunction(a, b) {
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
 }
 
+function makeステータス変化Html(changeStatusObj) {
+    let html = '';
+    Object.keys(changeStatusObj).forEach(key => {
+        let postfix = '';
+        html += '<p>';
+        if (['元素付与'].includes(key)) {
+            html += changeStatusObj[key] + key;
+        } else {
+            if (key.startsWith('敵')) {
+                html += key.replace(/^敵/, '敵の');
+                postfix = '%';
+            } else if (key.endsWith('バフ')) {
+                html += key.replace(/バフ$/, '');
+                postfix = '%';
+            } else if (key.endsWith('乗算')) {
+                html += key.replace(/乗算$/, '');
+                postfix = '%';
+            } else if (key.indexOf('ダメージ会心') != -1) {
+                html += key.replace(/ダメージ会心/, 'ダメージの会心');
+                postfix = '%';
+            } else if ([
+                '会心率',
+                '会心ダメージ',
+                '与える治療効果',
+                '受ける治療効果',
+                '元素チャージ効率',
+                'シールド強化',
+                '与えるダメージ'].includes(key)) {
+                html += key;
+                postfix = '%';
+            } else {
+                html += key;
+            }
+            if (changeStatusObj[key] >= 0) {
+                html += '+';
+            }
+            html += changeStatusObj[key] + postfix;
+        }
+        html += '</p>';
+    });
+    return html;
+}
+
 function calculateStatusObj(statusObj) {
     // キャラクターのサブステータスを計上します
     let myレベル = $('#レベルInput').val();
@@ -1904,60 +1947,6 @@ function calculateStatusObj(statusObj) {
         }
     });
 
-    // バフオプションを計上します
-    let validBuffConditionValueArr = makeValidConditionValueArr('#バフオプションBox');
-    if (validBuffConditionValueArr.length > 0) {
-        バフ詳細ArrVar.forEach(detailObj => {
-            let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
-            if (Array.from(オプション条件MapVar.keys()).includes(key)) {
-                return;
-            }
-            let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
-            if (number == 0) {
-                return;
-            }
-            if (detailObj['種類'].endsWith('元素付与')) {
-                let my元素 = detailObj['種類'].replace('元素付与', '');
-                通常攻撃_元素Var = my元素;
-                重撃_元素Var = my元素;
-                落下攻撃_元素Var = my元素;
-                return;
-            }
-            let myNew数値 = detailObj['数値'];
-            if (number != 1) {
-                myNew数値 = myNew数値.concat(['*', number]);
-            }
-            calculateStatus(statusObj, detailObj['種類'], myNew数値);
-        });
-    }
-
-    // デバフオプションを計上します
-    let validDebuffConditionValueArr = makeValidConditionValueArr('#デバフオプションBox');
-    if (validDebuffConditionValueArr.length > 0) {
-        デバフ詳細ArrVar.forEach(detailObj => {
-            let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
-            if (Array.from(オプション条件MapVar.keys()).includes(key)) {
-                return;
-            }
-            let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
-            if (number == 0) {
-                return;
-            }
-            if (detailObj['種類'].endsWith('元素付与')) {
-                let my元素 = detailObj['種類'].replace('元素付与', '');
-                通常攻撃_元素Var = my元素;
-                重撃_元素Var = my元素;
-                落下攻撃_元素Var = my元素;
-                return;
-            }
-            let myNew数値 = detailObj['数値'];
-            if (number != 1) {
-                myNew数値 = myNew数値.concat(['*', number]);
-            }
-            calculateStatus(statusObj, detailObj['種類'], myNew数値);
-        });
-    }
-
     // チームオプションを計上します
     $('#チームオプションステータス変化').html('');
     let validTeamConditionValueArr = makeValidConditionValueArr('#チームオプションBox');
@@ -1988,7 +1977,6 @@ function calculateStatusObj(statusObj) {
                 console.error(detailObj);
             }
         });
-        let html = '';
         Object.keys(teamStatusObj).forEach(key => {
             if ($.isNumeric(teamStatusObj[key])) {
                 if (!(key in statusObj)) {
@@ -1998,45 +1986,82 @@ function calculateStatusObj(statusObj) {
             } else {
                 statusObj[key] = teamStatusObj[key];
             }
-
-            let postfix = '';
-            html += '<p>';
-            if (['元素付与'].includes(key)) {
-                html += teamStatusObj[key] + key;
-            } else {
-                if (key.startsWith('敵')) {
-                    html += key.replace(/^敵/, '敵の');
-                    postfix = '%';
-                } else if (key.endsWith('バフ')) {
-                    html += key.replace(/バフ$/, '');
-                    postfix = '%';
-                } else if (key.endsWith('乗算')) {
-                    html += key.replace(/乗算$/, '');
-                    postfix = '%';
-                } else if (key.indexOf('ダメージ会心') != -1) {
-                    html += key.replace(/ダメージ会心/, 'ダメージの会心');
-                    postfix = '%';
-                } else if ([
-                    '会心率',
-                    '会心ダメージ',
-                    '与える治療効果',
-                    '受ける治療効果',
-                    '元素チャージ効率',
-                    '与えるダメージ'].includes(key)) {
-                    html += key;
-                    postfix = '%';
-                } else {
-                    html += key;
-                }
-                if (teamStatusObj[key] >= 0) {
-                    html += '+';
-                }
-                html += teamStatusObj[key] + postfix;
-            }
-            html += '</p>';
         });
+        const html = makeステータス変化Html(teamStatusObj);
         $('#チームオプションステータス変化').html(html);
     }
+
+    // その他オプションを計上します
+    const miscStatusObj = {};
+    $('#その他オプションステータス変化').html('');
+
+    // その他オプション・聖遺物を計上します
+    let validBuffConditionValueArr = makeValidConditionValueArr('#その他オプション1Box');
+    if (validBuffConditionValueArr.length > 0) {
+        バフ詳細ArrVar.forEach(detailObj => {
+            let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
+            if (Array.from(オプション条件MapVar.keys()).includes(key)) {
+                return;
+            }
+            let number = checkConditionMatches(detailObj['条件'], validBuffConditionValueArr);
+            if (number == 0) {
+                return;
+            }
+            if (detailObj['種類'].endsWith('元素付与')) {
+                let my元素 = detailObj['種類'].replace('元素付与', '');
+                通常攻撃_元素Var = my元素;
+                重撃_元素Var = my元素;
+                落下攻撃_元素Var = my元素;
+                return;
+            }
+            let myNew数値 = detailObj['数値'];
+            if (number != 1) {
+                myNew数値 = myNew数値.concat(['*', number]);
+            }
+            calculateStatus(miscStatusObj, detailObj['種類'], myNew数値);
+        });
+    }
+
+    // その他オプション2を計上します
+    let validDebuffConditionValueArr = makeValidConditionValueArr('#その他オプション2Box');
+    if (validDebuffConditionValueArr.length > 0) {
+        デバフ詳細ArrVar.forEach(detailObj => {
+            let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
+            if (Array.from(オプション条件MapVar.keys()).includes(key)) {
+                return;
+            }
+            let number = checkConditionMatches(detailObj['条件'], validDebuffConditionValueArr);
+            if (number == 0) {
+                return;
+            }
+            if (detailObj['種類'].endsWith('元素付与')) {
+                let my元素 = detailObj['種類'].replace('元素付与', '');
+                通常攻撃_元素Var = my元素;
+                重撃_元素Var = my元素;
+                落下攻撃_元素Var = my元素;
+                return;
+            }
+            let myNew数値 = detailObj['数値'];
+            if (number != 1) {
+                myNew数値 = myNew数値.concat(['*', number]);
+            }
+            calculateStatus(miscStatusObj, detailObj['種類'], myNew数値);
+        });
+    }
+
+    Object.keys(miscStatusObj).forEach(key => {
+        if ($.isNumeric(miscStatusObj[key])) {
+            if (!(key in statusObj)) {
+                statusObj[key] = 0;
+            }
+            statusObj[key] += miscStatusObj[key];
+        } else {
+            statusObj[key] = miscStatusObj[key];
+        }
+    });
+
+    const miscHtml = makeステータス変化Html(miscStatusObj);
+    $('#その他オプションステータス変化').html(miscHtml);
 
     // ステータス補正を計上します
     Array.from(document.getElementsByName('ステータスInput')).forEach(elem => {
@@ -2243,7 +2268,7 @@ const inputOnChangeOptionUpdate = function () {
         makeConditionExclusionMapFromStr(entry['条件'], オプション条件MapVar, オプション排他MapVar);
     });
 
-    Array.from(バフオプション条件Map.keys()).forEach(key => {
+    Array.from(その他オプション1条件Map.keys()).forEach(key => {
         let selector = '#' + selectorEscape(key + 'Option');
         if (Array.from(オプション条件MapVar.keys()).includes(key.replace(/^\*/, ''))) {
             $(selector).prop('disabled', true);
@@ -2253,7 +2278,7 @@ const inputOnChangeOptionUpdate = function () {
             $(selector).prev('label').removeClass('disabled');
         }
     });
-    Array.from(デバフオプション条件Map.keys()).forEach(key => {
+    Array.from(その他オプション2条件Map.keys()).forEach(key => {
         let selector = '#' + selectorEscape(key + 'Option');
         if (Array.from(オプション条件MapVar.keys()).includes(key.replace(/^\*/, ''))) {
             $(selector).prop('disabled', true);
@@ -3704,8 +3729,8 @@ function hideチームオプション(supporterName, optionName) {
     }
 }
 
-function clearチームオプション() {
-    チームオプション条件Map.forEach((value, key) => {
+function clearオプション(optionConditionMap) {
+    optionConditionMap.forEach((value, key) => {
         const id = key + 'Option';
         const elem = document.getElementById(id);
         if (elem) {
@@ -3716,6 +3741,15 @@ function clearチームオプション() {
             }
         }
     });
+}
+
+function clearチームオプション() {
+    clearオプション(チームオプション条件Map);
+}
+
+function clearその他オプション() {
+    clearオプション(その他オプション1条件Map);
+    clearオプション(その他オプション2条件Map);
 }
 
 function setupチームオプション() {

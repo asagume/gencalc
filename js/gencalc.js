@@ -296,9 +296,9 @@ async function loadマスターデータAndSetup() {
         'data/EnemyMaster.json',
         'data/ElementalResonanceMaster.json',
         'data/ElementalReactionMaster.json',
-        'data/BuffMaster.json',
-        'data/DebuffMaster.json',
-        'data/TeamMaster.json'
+        'data/OptionMaster1.json',
+        'data/OptionMaster2.json',
+        'data/TeamOptionMaster.json'
     ].map(url => fetch(url).then(resp => resp.json())));
 
     キャラクターリストMasterVar = responses[0];
@@ -313,8 +313,8 @@ async function loadマスターデータAndSetup() {
     敵MasterVar = responses[9];
     元素共鳴MasterVar = responses[10];
     元素反応MasterVar = responses[11];
-    バフMasterVar = responses[12];
-    デバフMasterVar = responses[13];
+    オプション1MasterVar = responses[12];
+    オプション2MasterVar = responses[13];
     チームMasterVar = responses[14];
 
     appendOptionElements(キャラクターリストMasterVar, "#キャラクターInput");
@@ -334,8 +334,8 @@ async function loadマスターデータAndSetup() {
 
     appendOptionElements(敵MasterVar, "#敵Input");
 
-    Object.keys(バフMasterVar).forEach(key => {
-        let myMasterObj = バフMasterVar[key];
+    Object.keys(オプション1MasterVar).forEach(key => {
+        let myMasterObj = オプション1MasterVar[key];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }
@@ -350,13 +350,13 @@ async function loadマスターデータAndSetup() {
         バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
     バフ詳細ArrVar.forEach(detailObj => {
-        makeConditionExclusionMapFromStr(detailObj['条件'], バフオプション条件Map, バフオプション排他Map);
+        makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション1条件Map, その他オプション1排他Map);
     });
-    $('#バフオプションBox').empty();
-    appendInputForOptionElement('バフオプションBox', バフオプション条件Map, バフオプション排他Map, 'バフ', false);
+    $('#その他オプション1Box').empty();
+    appendInputForOptionElement('その他オプション1Box', その他オプション1条件Map, その他オプション1排他Map, 'バフ', false);
 
-    Object.keys(デバフMasterVar).forEach(key => {
-        let myMasterObj = デバフMasterVar[key];
+    Object.keys(オプション2MasterVar).forEach(key => {
+        let myMasterObj = オプション2MasterVar[key];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }
@@ -371,10 +371,10 @@ async function loadマスターデータAndSetup() {
         デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
     デバフ詳細ArrVar.forEach(detailObj => {
-        makeConditionExclusionMapFromStr(detailObj['条件'], デバフオプション条件Map, デバフオプション排他Map);
+        makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション2条件Map, その他オプション2排他Map);
     });
-    $('#デバフオプションBox').empty();
-    appendInputForOptionElement('デバフオプションBox', デバフオプション条件Map, デバフオプション排他Map, 'デバフ', false);
+    $('#その他オプション2Box').empty();
+    appendInputForOptionElement('その他オプション2Box', その他オプション2条件Map, その他オプション2排他Map, 'デバフ', false);
 
     // チームオプション
     let myサポーター;
@@ -402,6 +402,14 @@ async function loadマスターデータAndSetup() {
         clearチームオプション();
         this.disabled = true;
         $('#チームオプション初期化Toggle').prop('checked', false);
+        inputOnChangeStatusUpdate();
+    });
+
+    $(document).on('change', '#その他オプション初期化Toggle', buttonToggleCheckboxOnChange);
+    $(document).on('click', '#その他オプション初期化Button', function () {
+        clearその他オプション();
+        this.disabled = true;
+        $('#その他オプション初期化Toggle').prop('checked', false);
         inputOnChangeStatusUpdate();
     });
 

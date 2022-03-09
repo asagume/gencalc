@@ -22,8 +22,8 @@ var 聖遺物セット効果MasterVar;
 var 元素共鳴MasterVar;
 var 敵MasterVar;
 var 元素反応MasterVar;
-var バフMasterVar;
-var デバフMasterVar;
+var オプション1MasterVar;
+var オプション2MasterVar;
 var チームMasterVar;
 
 const キャラクターMasterMap = new Map();
@@ -68,11 +68,11 @@ var 天賦性能変更系詳細ArrMapVar = new Map();
 
 // バフ/デバフBox用
 var バフ詳細ArrVar = [];
-var バフオプション条件Map = new Map();
-var バフオプション排他Map = new Map();
+var その他オプション1条件Map = new Map();
+var その他オプション1排他Map = new Map();
 var デバフ詳細ArrVar = [];
-var デバフオプション条件Map = new Map();
-var デバフオプション排他Map = new Map();
+var その他オプション2条件Map = new Map();
+var その他オプション2排他Map = new Map();
 var チーム詳細ArrVar = [];
 var チームオプション条件Map = new Map();
 var チームオプション排他Map = new Map();

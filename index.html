@@ -34,7 +34,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.2.1</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.2.2</legend>
                     <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
                     <p>
                         <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
@@ -1288,8 +1288,16 @@
                             name="buffdebuff-condition-group" />
                         <label for="buffdebuff-condition3">その他</label>
                         <div class="tab-content">
-                            <div class="option-box column1-option" id="バフオプションBox"></div>
-                            <div class="option-box column1-option" id="デバフオプションBox"></div>
+                            <div class="option-box column1-option" id="その他オプション1Box"></div>
+                            <div class="option-box column1-option" id="その他オプション2Box"></div>
+
+                            <div id="その他オプションステータス変化"></div>
+
+                            <div style="text-align: right;">
+                                <input type="checkbox" id="その他オプション初期化Toggle">
+                                <label for="その他オプション初期化Toggle">全クリア</label>
+                                <button type="button" id="その他オプション初期化Button" disabled>実行</button>
+                            </div>
                         </div>
 
                         <input type="radio" class="tab-button input-set1" id="buffdebuff-condition4"
