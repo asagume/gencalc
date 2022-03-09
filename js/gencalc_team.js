@@ -383,11 +383,11 @@ function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj,
                 }
             }
             if (myPriority1KindArr.includes(detailObj['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
-                myPriority1KindFormulaArr.push([detailObj['種類'], myNew数値, detailObj['最大値']]);
+                myPriority1KindFormulaArr.push([detailObj['種類'], myNew数値, detailObj['上限']]);
             } else if (detailObj['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
-                myPriority2KindFormulaArr.push([detailObj['種類'], myNew数値, detailObj['最大値']]);
+                myPriority2KindFormulaArr.push([detailObj['種類'], myNew数値, detailObj['上限']]);
             } else {
-                myKindFormulaArr.push([detailObj['種類'], myNew数値, detailObj['最大値']]);
+                myKindFormulaArr.push([detailObj['種類'], myNew数値, detailObj['上限']]);
             }
         });
     });
@@ -516,7 +516,7 @@ function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetai
     //                                             myNew数値 = myNew数値.concat(['*', number]);
     //                                         }
     //                                         let workObj = JSON.parse(JSON.stringify(statusObj));    //　力技
-    //                                         calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['最大値']);
+    //                                         calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
     //                                         Object.keys(workObj).forEach(statusName => {
     //                                             if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == statusObj[statusName]) return;
     //                                             if (!(statusName in myステータス補正)) {
@@ -540,7 +540,7 @@ function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetai
     //                                         myNew数値 = myNew数値.concat(['*', number]);
     //                                     }
     //                                     let workObj = JSON.parse(JSON.stringify(statusObj));    //　力技
-    //                                     calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['最大値']);
+    //                                     calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
     //                                     Object.keys(workObj).forEach(statusName => {
     //                                         if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == statusObj[statusName]) return;
     //                                         if (!(statusName in myステータス補正)) {
@@ -622,7 +622,7 @@ function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetai
                     my元素 = entry['種類'].replace('元素付与', '');
                 }
             } else if (entry['種類'] == '防御無視') {   // 防御無視は先んじて適用します for 雷電将軍
-                let myValue = calculateFormulaArray(statusObj, entry['数値'], entry['最大値']);
+                let myValue = calculateFormulaArray(statusObj, entry['数値'], entry['上限']);
                 my防御無視 += myValue;
             } else if (entry['種類'] == '固有変数') {
                 // nop
@@ -689,7 +689,7 @@ function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetai
 
     myステータス変更系詳細Arr.forEach(entry => {
         if (!entry['数値']) return;
-        let myValue = calculateFormulaArray(statusObj, entry['数値'], entry['最大値']);
+        let myValue = calculateFormulaArray(statusObj, entry['数値'], entry['上限']);
         if (entry['種類'] in statusObj) {
             if (entry['種類'] in myステータス補正) {
                 myステータス補正[entry['種類']] += myValue;
