@@ -1826,6 +1826,12 @@ function makeステータス変化Html(changeStatusObj) {
             } else if (key.indexOf('ダメージ会心') != -1) {
                 html += key.replace(/ダメージ会心/, 'ダメージの会心');
                 postfix = '%';
+            } else if (key.endsWith('クールタイム')) {
+                html += key.replace(/クールタイム$/, 'のクールタイム');
+                postfix = '%';
+            } else if (key.endsWith('速度')) {
+                html += key;
+                postfix = '%';
             } else if ([
                 '会心率',
                 '会心ダメージ',
@@ -1973,6 +1979,15 @@ function calculateStatusObj(statusObj) {
                 }
             } else if (detailObj['種類'].indexOf('元素付与') != -1) {
                 teamStatusObj['元素付与'] = detailObj['種類'].substring(0, 1);
+                switch (選択中キャラクターデータVar['武器']) {
+                    case '片手剣':
+                    case '両手剣':
+                    case '長柄武器':
+                        通常攻撃_元素Var = teamStatusObj['元素付与'];
+                        重撃_元素Var = teamStatusObj['元素付与'];
+                        落下攻撃_元素Var = teamStatusObj['元素付与'];
+                        break;
+                }
             } else {
                 console.error(detailObj);
             }
