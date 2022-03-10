@@ -1953,6 +1953,14 @@ function calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponM
 function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMasterObj) {
     calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponMasterObj);
 
+    // ステータス補正の入力値を計上します
+    Object.keys(inputObj).filter(s => $.isNumeric(inputObj[s]) && inputObj[s]).forEach(inputKey => {
+        if (['レベル'].includes(inputKey)) return;
+        if (inputKey in statusObj) {
+            statusObj[inputKey] += inputObj[inputKey];
+        }
+    });
+
     // ステータス調整の入力値を計上します
     Object.keys(inputObj).filter(s => s.startsWith('ステータス調整')).forEach(inputKey => {
         const key = inputKey.replace('ステータス調整', '');
