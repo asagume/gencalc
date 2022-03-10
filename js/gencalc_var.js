@@ -544,7 +544,12 @@ const loadキャラクター構成 = function () {
         }
 
         Object.keys(キャラクター構成ObjVar).forEach(objKey => {
-            $('#' + selectorEscape(objKey) + 'Input').val(キャラクター構成ObjVar[objKey]);
+            const element = document.getElementById(objKey + 'Input');
+            if (element instanceof HTMLInputElement && element.type == 'number') {
+                $(element).val(Number(キャラクター構成ObjVar[objKey]));
+            } else {
+                $(element).val(String(キャラクター構成ObjVar[objKey]));
+            }
         });
 
         $('#構成保存Button').prop('disabled', true);

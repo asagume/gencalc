@@ -2239,6 +2239,7 @@ const inputOnChangeStatusUpdateSub = function (statusObj) {
     };
     // キャラクター、武器、聖遺物
     キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+        if (key.startsWith('聖遺物優先するサブ効果')) return;
         const val = $('#' + selectorEscape(key + 'Input')).val();
         if (value == null) {
             inputObj[key] = val;
@@ -3363,6 +3364,9 @@ const おすすめセットInputOnChange = function () {
     // 聖遺物優先するサブ効果上昇値
     聖遺物優先するサブ効果上昇値ValueMap.forEach((value, key) => {
         let elem = document.getElementById(key.replace('上昇値', ''));
+        if (value != null) {
+            value = value.toFixed(1);
+        }
         inputOnChangeArtifactPrioritySubUpdate(elem, value);
     });
     // キャラクター
