@@ -67,15 +67,15 @@ var ステータス変更系詳細ArrMapVar = new Map();
 var 天賦性能変更系詳細ArrMapVar = new Map();
 
 // バフ/デバフBox用
-var バフ詳細ArrVar = [];
-var その他オプション1条件Map = new Map();
-var その他オプション1排他Map = new Map();
-var デバフ詳細ArrVar = [];
-var その他オプション2条件Map = new Map();
-var その他オプション2排他Map = new Map();
-var チーム詳細ArrVar = [];
-var チームオプション条件Map = new Map();
-var チームオプション排他Map = new Map();
+var その他オプション1ArrVar = [];
+const その他オプション1条件Map = new Map();
+const その他オプション1排他Map = new Map();
+var その他オプション2ArrVar = [];
+const その他オプション2条件Map = new Map();
+const その他オプション2排他Map = new Map();
+var チームオプション詳細ArrVar = [];
+const チームオプション条件Map = new Map();
+const チームオプション排他Map = new Map();
 
 // オプションBox用
 // checkboxとselectの描画用の情報を保持します

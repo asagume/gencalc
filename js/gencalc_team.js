@@ -6,16 +6,6 @@ const チームConditionMapMap = new Map();
 const チームExclusionMapMap = new Map();
 
 
-function makeValidConditionValueArrFromInputObj(inputObj, conditionMap) {
-    return Object.keys(inputObj).filter(s => conditionMap.has(s) && inputObj[s]).map(s => {
-        if (conditionMap.get(s) == null) { // checkbox
-            return s;
-        }
-        let result = s + '@' + conditionMap.get(s)[inputObj[s] - 1];
-        return result;
-    });
-}
-
 // 条件適用可能かチェックします
 // {条件名}
 // {条件名}@{条件値}
@@ -292,73 +282,10 @@ function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_
 }
 
 function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj, changeDetailObj) {
-    const myレベル = inputObj['レベル'];
-    const my武器レベル = inputObj['武器レベル'];
-
-    if ('元素エネルギー' in characterMasterObj['元素爆発']) {
-        statusObj['元素エネルギー'] = characterMasterObj['元素爆発']['元素エネルギー'];
-    }
-
-    if ('固有変数' in characterMasterObj) {
-        Object.keys(characterMasterObj['固有変数']).forEach(key => {
-            statusObj[key] = characterMasterObj['固有変数'][key];
-        });
-    }
-
-    Object.keys(characterMasterObj['ステータス']).forEach(key => {
-        let toKey = key;
-        if (key.endsWith('%')) {
-            toKey = key.replace('%', '乗算');
-        }
-        statusObj[toKey] += characterMasterObj['ステータス'][key][myレベル];
-    });
-
-    Object.keys(weaponMasterObj['ステータス']).forEach(key => {
-        let toKey = key;
-        if (key == 'HP') {
-            toKey = 'HP上限';
-        } else if (key.endsWith('%')) {
-            toKey = key.replace('%', '乗算');
-        }
-        statusObj[toKey] += weaponMasterObj['ステータス'][key][my武器レベル];
-    });
-
-    Object.keys(inputObj).filter(s => s.startsWith('聖遺物メイン効果')).forEach(inputKey => {
-        if (!inputObj[inputKey]) {
-            return;
-        }
-        const splittedKey = inputObj[inputKey].split('_'); // レアリティ_メイン効果
-        let key;
-        let rarerity;
-        if (splittedKey.length > 1) {
-            key = splittedKey[1];
-            rarerity = splittedKey[0];
-        } else {
-            key = splittedKey[0];
-            rarerity = '5';
-        }
-        let toKey = key;
-        if (key == 'HP') {
-            toKey = 'HP上限';
-        } else if (key.endsWith('%')) {
-            toKey = key.replace('%', '乗算');
-        }
-        statusObj[toKey] += 聖遺物メイン効果MasterVar[rarerity][key];
-    });
-
-    Object.keys(inputObj).filter(s => s.startsWith('聖遺物サブ効果')).forEach(inputKey => {
-        const key = inputKey.replace('聖遺物サブ効果', '');
-        let toKey = key;
-        if (key == 'HP') {
-            toKey = 'HP上限';
-        } else if (key.endsWith('P')) { // HPP, 攻撃力P, 防御力P
-            toKey = key.replace(/P$/, '乗算');
-        }
-        statusObj[toKey] += Number(inputObj[inputKey]);
-    });
+    calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponMasterObj);
 
     const conditionMap = チームConditionMapMap.get(inputObj['saveName']);
-    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj, conditionMap);
+    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], conditionMap);
 
     const myPriority1KindArr = ['元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
 
@@ -949,7 +876,7 @@ function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailO
     statusObj['ダメージ計算']['元素爆発'] = [];
 
     const conditionMap = チームConditionMapMap.get(inputObj['saveName']);
-    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj, conditionMap);
+    const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], conditionMap);
 
     damageDetailObj['元素スキル'].forEach(detailObj => {
         if (detailObj['条件']) {
@@ -971,11 +898,22 @@ function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailO
 }
 
 async function makeTeamStatusObjEx(saveName) {
-    const inputObj = JSON.parse(localStorage[saveName]);
-    if (!inputObj) {
+    const savedObj = JSON.parse(localStorage[saveName]);
+    if (!savedObj) {
         console.error(saveName);
         return {};
     }
+
+    const inputObj = {
+        オプション: {}
+    };
+    Object.keys(savedObj).forEach(key => {
+        if (キャラクター構成PROPERTY_MAP.has(key)) {
+            inputObj[key] = キャラクター構成PROPERTY_MAP.get(key) == null ? savedObj[key] : Number(savedObj[key]);
+        } else {
+            inputObj['オプション'][key] = savedObj[key];
+        }
+    });
     inputObj['saveName'] = saveName;
 
     const myキャラクター = inputObj['キャラクター'];

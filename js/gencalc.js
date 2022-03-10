@@ -347,9 +347,9 @@ async function loadマスターデータAndSetup() {
                 detailObj['条件'] = my条件;
             }
         });
-        バフ詳細ArrVar = バフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+        その他オプション1ArrVar = その他オプション1ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
-    バフ詳細ArrVar.forEach(detailObj => {
+    その他オプション1ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション1条件Map, その他オプション1排他Map);
     });
     $('#その他オプション1Box').empty();
@@ -368,9 +368,9 @@ async function loadマスターデータAndSetup() {
                 detailObj['条件'] = my条件;
             }
         });
-        デバフ詳細ArrVar = デバフ詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+        その他オプション2ArrVar = その他オプション2ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
-    デバフ詳細ArrVar.forEach(detailObj => {
+    その他オプション2ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション2条件Map, その他オプション2排他Map);
     });
     $('#その他オプション2Box').empty();
@@ -391,9 +391,9 @@ async function loadマスターデータAndSetup() {
                 detailObj['条件'] = '*' + myサポーター + '*' + myMasterObj['名前'];
             }
         });
-        チーム詳細ArrVar = チーム詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
+        チームオプション詳細ArrVar = チームオプション詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
-    チーム詳細ArrVar.forEach(detailObj => {
+    チームオプション詳細ArrVar.forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
     });
 
