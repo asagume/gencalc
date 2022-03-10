@@ -315,7 +315,7 @@ async function loadマスターデータAndSetup() {
     元素反応MasterVar = responses[11];
     オプション1MasterVar = responses[12];
     オプション2MasterVar = responses[13];
-    チームMasterVar = responses[14];
+    チームオプションMasterVar = responses[14];
 
     appendOptionElements(キャラクターリストMasterVar, "#キャラクターInput");
 
@@ -350,10 +350,10 @@ async function loadマスターデータAndSetup() {
         その他オプション1ArrVar = その他オプション1ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
     その他オプション1ArrVar.forEach(detailObj => {
-        makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション1条件Map, その他オプション1排他Map);
+        makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション1条件MapVar, その他オプション1排他MapVar);
     });
     $('#その他オプション1Box').empty();
-    appendInputForOptionElement('その他オプション1Box', その他オプション1条件Map, その他オプション1排他Map, 'バフ', false);
+    appendInputForOptionElement('その他オプション1Box', その他オプション1条件MapVar, その他オプション1排他MapVar, 'バフ', false);
 
     Object.keys(オプション2MasterVar).forEach(key => {
         let myMasterObj = オプション2MasterVar[key];
@@ -371,15 +371,15 @@ async function loadマスターデータAndSetup() {
         その他オプション2ArrVar = その他オプション2ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
     その他オプション2ArrVar.forEach(detailObj => {
-        makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション2条件Map, その他オプション2排他Map);
+        makeConditionExclusionMapFromStr(detailObj['条件'], その他オプション2条件MapVar, その他オプション2排他MapVar);
     });
     $('#その他オプション2Box').empty();
-    appendInputForOptionElement('その他オプション2Box', その他オプション2条件Map, その他オプション2排他Map, 'デバフ', false);
+    appendInputForOptionElement('その他オプション2Box', その他オプション2条件MapVar, その他オプション2排他MapVar, 'デバフ', false);
 
     // チームオプション
     let myサポーター;
-    Object.keys(チームMasterVar).forEach(key => {
-        let myMasterObj = チームMasterVar[key];
+    Object.keys(チームオプションMasterVar).forEach(key => {
+        let myMasterObj = チームオプションMasterVar[key];
         if ('disabled' in myMasterObj && myMasterObj['disabled']) {
             return;
         }

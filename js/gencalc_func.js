@@ -2037,7 +2037,7 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     $('#その他オプションステータス変化').html('');
 
     // その他オプション・聖遺物を計上します
-    const validMisc1ConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], その他オプション1条件Map);
+    const validMisc1ConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], その他オプション1条件MapVar);
     if (validMisc1ConditionValueArr.length > 0) {
         その他オプション1ArrVar.forEach(detailObj => {
             let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
@@ -2064,7 +2064,7 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     }
 
     // その他オプション2を計上します
-    const validMisc2ConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], その他オプション2条件Map);
+    const validMisc2ConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], その他オプション2条件MapVar);
     if (validMisc2ConditionValueArr.length > 0) {
         その他オプション2ArrVar.forEach(detailObj => {
             let key = detailObj['条件'].split('@')[0].replace(/^\*/, '');
@@ -2302,7 +2302,7 @@ const inputOnChangeStatusUpdateSub = function (statusObj) {
         }
     });
     // その他オプション1Box
-    その他オプション1条件Map.forEach((value, key) => {
+    その他オプション1条件MapVar.forEach((value, key) => {
         const selector = '#' + selectorEscape(key) + 'Option';
         if ($(selector).length) {
             if ($(selector).get()[0] instanceof HTMLInputElement) { // checkbox
@@ -2313,7 +2313,7 @@ const inputOnChangeStatusUpdateSub = function (statusObj) {
         }
     });
     // その他オプション2Box
-    その他オプション2条件Map.forEach((value, key) => {
+    その他オプション2条件MapVar.forEach((value, key) => {
         const selector = '#' + selectorEscape(key) + 'Option';
         if ($(selector).length) {
             if ($(selector).get()[0] instanceof HTMLInputElement) { // checkbox
@@ -2392,7 +2392,7 @@ const inputOnChangeOptionUpdate = function () {
         makeConditionExclusionMapFromStr(entry['条件'], オプション条件MapVar, オプション排他MapVar);
     });
 
-    Array.from(その他オプション1条件Map.keys()).forEach(key => {
+    Array.from(その他オプション1条件MapVar.keys()).forEach(key => {
         let selector = '#' + selectorEscape(key + 'Option');
         if (Array.from(オプション条件MapVar.keys()).includes(key.replace(/^\*/, ''))) {
             $(selector).prop('disabled', true);
@@ -2402,7 +2402,7 @@ const inputOnChangeOptionUpdate = function () {
             $(selector).prev('label').removeClass('disabled');
         }
     });
-    Array.from(その他オプション2条件Map.keys()).forEach(key => {
+    Array.from(その他オプション2条件MapVar.keys()).forEach(key => {
         let selector = '#' + selectorEscape(key + 'Option');
         if (Array.from(オプション条件MapVar.keys()).includes(key.replace(/^\*/, ''))) {
             $(selector).prop('disabled', true);
@@ -3872,8 +3872,8 @@ function clearチームオプション() {
 }
 
 function clearその他オプション() {
-    clearオプション(その他オプション1条件Map);
-    clearオプション(その他オプション2条件Map);
+    clearオプション(その他オプション1条件MapVar);
+    clearオプション(その他オプション2条件MapVar);
 }
 
 function setupチームオプション() {
@@ -3895,9 +3895,9 @@ function setupチームオプション() {
             return;
         }
         const optionName = key.substring(1).replace('*', '_');
-        if (optionName in チームMasterVar) {
+        if (optionName in チームオプションMasterVar) {
             let isNeedSaveData = false;
-            チームMasterVar[optionName]['詳細'].forEach(detailObj => {
+            チームオプションMasterVar[optionName]['詳細'].forEach(detailObj => {
                 if (detailObj['数値'] && !$.isNumeric(detailObj['数値'])) {
                     isNeedSaveData = true;
                 }

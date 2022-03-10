@@ -24,7 +24,7 @@ var 敵MasterVar;
 var 元素反応MasterVar;
 var オプション1MasterVar;
 var オプション2MasterVar;
-var チームMasterVar;
+var チームオプションMasterVar;
 
 const キャラクターMasterMap = new Map();
 const 武器MasterMap = new Map();
@@ -68,11 +68,11 @@ var 天賦性能変更系詳細ArrMapVar = new Map();
 
 // バフ/デバフBox用
 var その他オプション1ArrVar = [];
-const その他オプション1条件Map = new Map();
-const その他オプション1排他Map = new Map();
+const その他オプション1条件MapVar = new Map();
+const その他オプション1排他MapVar = new Map();
 var その他オプション2ArrVar = [];
-const その他オプション2条件Map = new Map();
-const その他オプション2排他Map = new Map();
+const その他オプション2条件MapVar = new Map();
+const その他オプション2排他MapVar = new Map();
 var チームオプション詳細ArrVar = [];
 const チームオプション条件Map = new Map();
 const チームオプション排他Map = new Map();
