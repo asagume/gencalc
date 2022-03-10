@@ -1956,6 +1956,7 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     // ステータス補正の入力値を計上します
     Object.keys(inputObj).filter(s => $.isNumeric(inputObj[s]) && inputObj[s]).forEach(inputKey => {
         if (['レベル'].includes(inputKey)) return;
+        if (inputKey.startsWith('聖遺物サブ効果')) return;
         if (inputKey in statusObj) {
             statusObj[inputKey] += inputObj[inputKey];
         }
@@ -2858,6 +2859,8 @@ function inputOnChangeArtifactPrioritySubUpdate(element, opt_value = null) {
     if (!statusName) {
         return;
     }
+    const valueIndexMap = new Map();
+    let index = 0;
     let master = 聖遺物サブ効果MasterVar[statusName];
     const postfixArr = ['(最高)', '(高め)', '(低め)', '(最低)'];
     for (let j = 0; j < master.length; j++) {
@@ -2865,6 +2868,7 @@ function inputOnChangeArtifactPrioritySubUpdate(element, opt_value = null) {
             text: master[j] + postfixArr[j],
             value: master[j]
         }).appendTo(unitSelector);
+        valueIndexMap.set(index++, master[j]);
         if (j < master.length - 1) {
             for (let k = 1; k <= 3; k++) {
                 let value = (master[j] - (master[j] - master[j + 1]) * k / 4).toFixed(1);
@@ -2872,14 +2876,18 @@ function inputOnChangeArtifactPrioritySubUpdate(element, opt_value = null) {
                     text: value,
                     value: value
                 }).appendTo(unitSelector);
+                valueIndexMap.set(index++, value);
             }
         }
     }
     if (opt_value != null) {
-        $(unitSelector).val(opt_value);
-    } else {
-        $(unitSelector).prop('selectedIndex', selectedIndex);
+        valueIndexMap.forEach((value, key) => {
+            if (Number(value) >= Number(opt_value)) {
+                selectedIndex = key;
+            }
+        });
     }
+    $(unitSelector).prop('selectedIndex', selectedIndex);
 }
 
 function inputOnChangeArtifactPrioritySubUpdateAll() {
@@ -3364,9 +3372,6 @@ const おすすめセットInputOnChange = function () {
     // 聖遺物優先するサブ効果上昇値
     聖遺物優先するサブ効果上昇値ValueMap.forEach((value, key) => {
         let elem = document.getElementById(key.replace('上昇値', ''));
-        if (value != null) {
-            value = Number(value).toFixed(1);
-        }
         inputOnChangeArtifactPrioritySubUpdate(elem, value);
     });
     // キャラクター
