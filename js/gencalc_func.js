@@ -3364,8 +3364,8 @@ const おすすめセットInputOnChange = function () {
     // 聖遺物優先するサブ効果上昇値
     聖遺物優先するサブ効果上昇値ValueMap.forEach((value, key) => {
         let elem = document.getElementById(key.replace('上昇値', ''));
-        if (value != null && $.isNumeric(value)) {
-            value = value.toFixed(1);
+        if (value != null) {
+            value = Number(value).toFixed(1);
         }
         inputOnChangeArtifactPrioritySubUpdate(elem, value);
     });
