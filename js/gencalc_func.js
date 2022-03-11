@@ -1079,7 +1079,7 @@ function ステータス条件追加(resultObj, condition, statusObj) {
 
 /**
  * 
- * @param {Object} statusObj 
+ * @param {Object} statusObj ステータス詳細
  * @param {Object} detailObj 
  * @param {string} opt_element 
  * @returns 
@@ -2659,7 +2659,7 @@ const inputOnChangeOptionUpdate = function () {
 /**
  * オプションElementから対応する固有変数を更新します
  * 
- * @param {Object} statusObj 
+ * @param {Object} statusObj ステータス詳細
  * @param {HTMLElement} elem 
  * @returns 
  */
@@ -2715,7 +2715,7 @@ const オプションInputOnChange = function () {
 /**
  * 敵 変更イベント
  * 
- * @param {Object} statusObj 
+ * @param {Object} statusObj ステータス詳細
  * @returns 
  */
 function inputOnChangeEnemyUpdate(statusObj) {
@@ -3234,7 +3234,7 @@ function build天賦詳細レベル変動() {
 }
 
 function build天賦詳細() {
-    const characterData = キャラクターリストMasterVar[$('#キャラクターInput').val().toString()].toString();
+    const characterData = キャラクターリストMasterVar[$('#キャラクターInput').val().toString()];
     const url = characterData['import'];
     let urlArr = url.split('/');
     let dirName = urlArr[urlArr.length - 1].replace('.json', '');

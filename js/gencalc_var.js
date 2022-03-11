@@ -1,3 +1,5 @@
+// @ts-check
+
 const DAMAGE_RESULT_TABLE_ID_ARR = [
     '通常攻撃ダメージResult',
     '重撃ダメージResult',
@@ -9,7 +11,8 @@ const DAMAGE_RESULT_TABLE_ID_ARR = [
 
 // マスターデータ
 var キャラクターリストMasterVar;
-var 武器リストMasterVar = {
+
+ var 武器リストMasterVar = {
     片手剣: null,
     両手剣: null,
     長柄武器: null,
@@ -252,7 +255,11 @@ const ELEMENT_IMG_SRC_MAP = new Map([
     ['岩', 'images/element_geo.png']
 ]);
 
-// ステータス詳細ObjVarを初期化します
+/**
+ * ステータス詳細を初期化します
+ * 
+ * @param {Object} statusObj ステータス詳細
+ */
 function initステータス詳細ObjVar(statusObj) {
     Object.keys(ステータス詳細ObjTemplate).forEach(propName => {
         statusObj[propName] = ステータス詳細ObjTemplate[propName];
@@ -287,6 +294,12 @@ var キャラクター構成ObjVar = null;
 var URIキャラクター構成ObjVar = null;
 
 // おすすめセットをセットアップします
+/**
+ * 聖遺物セット名の略称を作成します
+ * 
+ * @param {string} name 聖遺物セット名
+ * @returns {string} 聖遺物セット名の略称
+ */
 function makeArtifactSetAbbrev(name) {
     const abbrRe = /[\p{sc=Hiragana}\p{sc=Katakana}ー]+/ug;
     let abbr = name.replace(abbrRe, '');
@@ -301,6 +314,11 @@ function makeArtifactSetAbbrev(name) {
     return abbr;
 }
 
+/**
+ * おすすめセットのリストを組み立てます
+ * 
+ * @param {string} opt_saveName 保存構成名
+ */
 function setupおすすめセット(opt_saveName = null) {
     おすすめセットArrVar = [];
     // if (!opt_saveName) {
@@ -371,7 +389,7 @@ function setupおすすめセット(opt_saveName = null) {
                 setName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果2']);
             }
             setName += ' [';
-            for (i = 3; i <= 5; i++) {
+            for (let i = 3; i <= 5; i++) {
                 const statusName = myおすすめセット['聖遺物メイン効果' + i].split('_')[1];
                 switch (statusName) {
                     case 'HP%':
@@ -437,14 +455,14 @@ function makeSaveData() {
     });
 
     $('#オプションBox input[type="checkbox"]').each((index, elem) => {
-        let key = elem.id.replace('Option', '');
-        let value = elem.checked;
+        const key = elem.id.replace('Option', '');
+        const value = $(elem).prop('checked');
         キャラクター構成ObjVar[key] = value;
     });
 
     $('#オプションBox select').each((index, elem) => {
-        let key = elem.id.replace('Option', '');
-        let value = elem.selectedIndex;
+        const key = elem.id.replace('Option', '');
+        const value = $(elem).prop('selectedIndex');
         キャラクター構成ObjVar[key] = value;
     });
 
@@ -576,6 +594,10 @@ const loadキャラクター構成 = function () {
     }
 }
 
+/**
+ * 
+ * @param {HTMLElement} elem HTML要素
+ */
 function changeキャラクター構成(elem) {
     if (!$('#構成保存Button').prop('disabled')) return;
     if (キャラクター構成ObjVar) {
@@ -620,12 +642,13 @@ function initキャラクター構成関連要素() {
 const ARTIFACT_SUB_NAME_VALUE_ARR_MAP = new Map();
 
 /**
+ * 聖遺物サブ効果の目標値にもっとも近い数値を求めます
  * 
- * @param {number} targetValue 
+ * @param {number} targetValue 目標値
  * @param {number []} arr 
  * @param {number} opt_start 
  * @param {number} opt_end 
- * @returns {number}
+ * @returns {number} 目標値にもっとも近い数値
  */
 function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end = null) {
     if (opt_start == null) opt_start = 0;
@@ -644,6 +667,14 @@ function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end 
     return searchApproximationFromArr(targetValue, arr, newStart, newEnd);
 }
 
+/**
+ * 聖遺物サブ効果の目標値にもっとも近い数値を求めます
+ * 
+ * @param {string} statusName サブ効果名
+ * @param {number} times 上昇回数
+ * @param {number} targetValue 目標値
+ * @returns 目標値にもっとも近い数値
+ */
 function searchArtifactSubApproximation(statusName, times, targetValue) {
     if (ARTIFACT_SUB_NAME_VALUE_ARR_MAP.has(statusName) &&
         ARTIFACT_SUB_NAME_VALUE_ARR_MAP.get(statusName).has(times)) {

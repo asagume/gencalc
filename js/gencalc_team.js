@@ -105,7 +105,7 @@ function checkConditionMatchesSubEx(inputObj, conditionStr, validConditionValueA
  * 
  * @param {Object} damageDetailObj 
  * @param {Object} changeDetailObj 
- * @param {Object} inputObj 
+ * @param {Object} inputObj 入力条件詳細
  * @param {Object} characterMasterObj キャラクターマスター
  */
 const setupDamageDetailDataCharacterEx = function (damageDetailObj, changeDetailObj, inputObj, characterMasterObj) {
@@ -212,8 +212,8 @@ const setupDamageDetailDataCharacterEx = function (damageDetailObj, changeDetail
  * 武器データより
  * 
  * @param {Object} changeDetailObj 
- * @param {Object} inputObj 
- * @param {Object} weaponMasterObj 
+ * @param {Object} inputObj 入力条件詳細
+ * @param {Object} weaponMasterObj 武器マスター
  */
 const setupDamageDetailDataWeaponEx = function (changeDetailObj, inputObj, weaponMasterObj) {
     const my精錬ランク = inputObj['精錬ランク'];
@@ -242,7 +242,7 @@ const setupDamageDetailDataWeaponEx = function (changeDetailObj, inputObj, weapo
  * 聖遺物セットデータより
  * 
  * @param {Object} changeDetailObj 
- * @param {Object} inputObj 
+ * @param {Object} inputObj 入力条件詳細
  */
 const setupDamageDetailDataArtifactSetEx = function (changeDetailObj, inputObj) {
     changeDetailObj['聖遺物セット'] = {
@@ -275,11 +275,11 @@ const setupDamageDetailDataArtifactSetEx = function (changeDetailObj, inputObj) 
 
 /**
  * 
- * @param {Object} statusObj 
+ * @param {Object} statusObj ステータス詳細
  * @param {Object} characterMasterObj 
- * @param {string} kind 
- * @param {number | string | Array} formulaArr 
- * @param {number | string | Array} opt_max 
+ * @param {string} kind 種類
+ * @param {number | string | Array} formulaArr 計算式
+ * @param {number | string | Array} opt_max 上限
  * @returns 
  */
 function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_max = null) {
@@ -336,8 +336,8 @@ function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_
 
 /**
  * 
- * @param {Object} statusObj 
- * @param {Object} inputObj 
+ * @param {Object} statusObj ステータス詳細
+ * @param {Object} inputObj 入力条件詳細
  * @param {Object} characterMasterObj 
  * @param {Object} weaponMasterObj 
  * @param {Object} changeDetailObj 
@@ -420,14 +420,15 @@ function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj,
 }
 
 /**
+ * ダメージを計算します
  * 
- * @param {Object} statusObj 
- * @param {Object} inputObj 
- * @param {Object} detailObj 
- * @param {Object} changeDetailObj 
- * @param {string []} validConditionValueArr 
- * @param {string} opt_element 
- * @returns {Array}
+ * @param {Object} statusObj ステータス詳細
+ * @param {Object} inputObj 入力条件詳細
+ * @param {Object} detailObj 天賦詳細
+ * @param {Object} changeDetailObj オプション詳細
+ * @param {string []} validConditionValueArr 有効な条件のリスト
+ * @param {string} opt_element 元素
+ * @returns {Array} ダメージ計算結果
  */
 function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetailObj, validConditionValueArr, opt_element = null) {
     console.debug(detailObj['種類'], detailObj['名前']);
@@ -943,8 +944,8 @@ function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetai
 
 /**
  * 
- * @param {Object} statusObj 
- * @param {Object} inputObj 
+ * @param {Object} statusObj ステータス詳細
+ * @param {Object} inputObj 入力条件詳細
  * @param {Object} damageDetailObj 
  * @param {Object} changeDetailObj 
  */
