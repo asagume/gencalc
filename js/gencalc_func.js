@@ -374,7 +374,16 @@ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, e
     }
 }
 
-// オプションBox用 input[type=checkbox]およびselect要素を追加します
+/**
+ * オプションBox用 input[type=checkbox]およびselect要素を追加します
+ * 
+ * @param {string} parentElemId 親要素ID
+ * @param {Map} optionMap オプション条件Map
+ * @param {Map} exclusionMap オプション排他Map
+ * @param {string} name オプショングループ名
+ * @param {boolean} opt_checked 初期値有無
+ * @param {*} opt_onchange 
+ */
 const appendInputForOptionElement = function (parentElemId, optionMap, exclusionMap, name, opt_checked = true, opt_onchange = オプションInputOnChange) {
     optionMap.forEach((value, key) => {
         if (value) return;
@@ -2164,7 +2173,7 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
 
     // チームオプションを計上します
     $('#チームオプションステータス変化').html('');
-    const validTeamConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], チームオプション条件Map);
+    const validTeamConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], チームオプション条件MapVar);
     if (validTeamConditionValueArr.length > 0) {
         const teamStatusObj = {};
         チームオプション詳細ArrVar.forEach(detailObj => {
@@ -2483,7 +2492,7 @@ const inputOnChangeStatusUpdateSub = function (statusObj) {
         }
     });
     // チームオプションBox
-    チームオプション条件Map.forEach((value, key) => {
+    チームオプション条件MapVar.forEach((value, key) => {
         const selector = '#' + selectorEscape(key) + 'Option';
         if ($(selector).length) {
             if ($(selector).get()[0] instanceof HTMLInputElement) { // checkbox
@@ -2660,8 +2669,7 @@ const inputOnChangeOptionUpdate = function () {
  * オプションElementから対応する固有変数を更新します
  * 
  * @param {Object} statusObj ステータス詳細
- * @param {HTMLElement} elem 
- * @returns 
+ * @param {HTMLElement} elem HTML要素
  */
 function applyOptionVariable(statusObj, elem) {
     if (!選択中キャラクターデータVar) return;
@@ -2682,7 +2690,9 @@ function applyOptionVariable(statusObj, elem) {
     }
 }
 
-// オプション 変更イベント
+/**
+ * オプション 変更イベント Sub
+ */
 const オプションInputOnChangeSub = function () {
     if ((this instanceof HTMLInputElement && this.checked) || (this instanceof HTMLSelectElement && this.value)) {
         let conditionName = this.id.replace('Option', '');
@@ -2704,6 +2714,9 @@ const オプションInputOnChangeSub = function () {
     inputOnChangeStatusUpdate();
 };
 
+/**
+ * オプション 変更イベント
+ */
 const オプションInputOnChange = function () {
     オプションInputOnChangeSub();
 
@@ -2716,7 +2729,6 @@ const オプションInputOnChange = function () {
  * 敵 変更イベント
  * 
  * @param {Object} statusObj ステータス詳細
- * @returns 
  */
 function inputOnChangeEnemyUpdate(statusObj) {
     let my敵 = $('#敵Input').val().toString();
@@ -2728,6 +2740,9 @@ function inputOnChangeEnemyUpdate(statusObj) {
     statusObj['敵防御力'] = 0;
 }
 
+/**
+ * 敵 変更イベント
+ */
 const 敵InputOnChange = function () {
     inputOnChangeEnemyUpdate(ステータス詳細ObjVar);
     inputOnChangeStatusUpdate();
@@ -3979,7 +3994,7 @@ function buildチームオプション() {
     let myサポーター;
 
     const myサポーターオプション条件Map = new Map();
-    チームオプション条件Map.forEach((value, key) => {
+    チームオプション条件MapVar.forEach((value, key) => {
         myサポーター = key.split('*')[1];
 
         if (!(myサポーター in キャラクターリストMasterVar)) {
@@ -4080,7 +4095,7 @@ function clearオプション(optionConditionMap) {
 }
 
 function clearチームオプション() {
-    clearオプション(チームオプション条件Map);
+    clearオプション(チームオプション条件MapVar);
 }
 
 function clearその他オプション() {
@@ -4099,7 +4114,7 @@ function setupチームオプション() {
     }
 
     const myサポーターオプション条件Map = new Map();
-    チームオプション条件Map.forEach((value, key) => {
+    チームオプション条件MapVar.forEach((value, key) => {
         const myサポーター = key.split('*')[1];
 
         if (myサポーター == 選択中キャラクターデータVar['名前']) {

@@ -401,7 +401,7 @@ async function loadマスターデータAndSetup() {
         チームオプション詳細ArrVar = チームオプション詳細ArrVar.concat(makeTalentDetailArray(myMasterObj, null, null, null, null, null, null));
     });
     チームオプション詳細ArrVar.forEach(detailObj => {
-        makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件Map, チームオプション排他Map);
+        makeConditionExclusionMapFromStr(detailObj['条件'], チームオプション条件MapVar, チームオプション排他MapVar);
     });
 
     $(document).on('change', '#チームオプション初期化Toggle', buttonToggleCheckboxOnChange);
@@ -410,6 +410,10 @@ async function loadマスターデータAndSetup() {
         this.disabled = true;
         $('#チームオプション初期化Toggle').prop('checked', false);
         inputOnChangeStatusUpdate();
+    });
+
+    $(document).on('click', '#チームオプション全閉Button', function () {
+        $('#チームオプションBox input.hidden').prop('checked', false);
     });
 
     $(document).on('change', '#その他オプション初期化Toggle', buttonToggleCheckboxOnChange);

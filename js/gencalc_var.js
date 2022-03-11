@@ -77,8 +77,8 @@ var その他オプション2ArrVar = [];
 const その他オプション2条件MapVar = new Map();
 const その他オプション2排他MapVar = new Map();
 var チームオプション詳細ArrVar = [];
-const チームオプション条件Map = new Map();
-const チームオプション排他Map = new Map();
+const チームオプション条件MapVar = new Map();
+const チームオプション排他MapVar = new Map();
 
 // オプションBox用
 // checkboxとselectの描画用の情報を保持します
