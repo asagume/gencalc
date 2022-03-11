@@ -73,7 +73,7 @@ function checkConditionMatchesSubEx(inputObj, conditionStr, validConditionValueA
  * @param {string []} validConditionValueArr 有効な条件値の配列
  * @returns {number} 0:アンマッチ/1以上:マッチ(=倍率)
  */
- const checkConditionMatchesEx = function (inputObj, conditionStr, validConditionValueArr) {
+const checkConditionMatchesEx = function (inputObj, conditionStr, validConditionValueArr) {
     let myCondStr = conditionStr.split('^')[0];
 
     if (myCondStr.indexOf('|') != -1) {  // |はOR条件です
@@ -344,6 +344,10 @@ function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_
  */
 function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj, changeDetailObj) {
     calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponMasterObj);
+
+    if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) { // for 雷罰悪曜の眼
+        statusObj['元素エネルギー'] = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
+    }
 
     const conditionMap = チームConditionMapMap.get(inputObj['saveName']);
     const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], conditionMap);
