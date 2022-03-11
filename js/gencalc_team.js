@@ -1,3 +1,8 @@
+// @ts-check
+
+/// <reference path="./gencalc_core.js"/>
+/// <reference path="./gencalc_var.js"/>
+
 const チームInputObjMap = new Map();
 const チームDamageDetailObjMap = new Map();
 const チームChangeDetailObjMap = new Map();
@@ -6,12 +11,19 @@ const チームConditionMapMap = new Map();
 const チームExclusionMapMap = new Map();
 
 
-// 条件適用可能かチェックします
-// {条件名}
-// {条件名}@{条件値}
-// {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
-// {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
-// {上記}^{排他条件名}
+/**
+ * 指定の条件が適用可能かチェックします Sub
+ * {条件名}
+ * {条件名}@{条件値}
+ * {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
+ * {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
+ * {上記}^{排他条件名}
+ * 
+ * @param {Object} inputObj 入力条件詳細
+ * @param {string} conditionStr チェックしたい条件
+ * @param {string []} validConditionValueArr 有効な条件値の配列
+ * @returns {number} 0:アンマッチ/1以上:マッチ(=倍率)
+ */
 function checkConditionMatchesSubEx(inputObj, conditionStr, validConditionValueArr) {
     let myCondArr = conditionStr.split('@');
     if (myCondArr[0] == '命ノ星座') {
@@ -47,7 +59,21 @@ function checkConditionMatchesSubEx(inputObj, conditionStr, validConditionValueA
     }
     return 0;   // アンマッチ
 }
-const checkConditionMatchesEx = function (inputObj, conditionStr, validConditionValueArr) {
+
+/**
+ * 指定の条件が適用可能かチェックします Sub
+ * {条件名}
+ * {条件名}@{条件値}
+ * {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
+ * {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
+ * {上記}^{排他条件名}
+ * 
+ * @param {Object} inputObj 入力条件詳細
+ * @param {string} conditionStr チェックしたい条件
+ * @param {string []} validConditionValueArr 有効な条件値の配列
+ * @returns {number} 0:アンマッチ/1以上:マッチ(=倍率)
+ */
+ const checkConditionMatchesEx = function (inputObj, conditionStr, validConditionValueArr) {
     let myCondStr = conditionStr.split('^')[0];
 
     if (myCondStr.indexOf('|') != -1) {  // |はOR条件です
@@ -75,6 +101,13 @@ const checkConditionMatchesEx = function (inputObj, conditionStr, validCondition
     return result;
 }
 
+/**
+ * 
+ * @param {Object} damageDetailObj 
+ * @param {Object} changeDetailObj 
+ * @param {Object} inputObj 
+ * @param {Object} characterMasterObj キャラクターマスター
+ */
 const setupDamageDetailDataCharacterEx = function (damageDetailObj, changeDetailObj, inputObj, characterMasterObj) {
     const my元素スキルレベル = inputObj['元素スキルレベル'];
     const my元素爆発レベル = inputObj['元素爆発レベル'];
@@ -175,7 +208,13 @@ const setupDamageDetailDataCharacterEx = function (damageDetailObj, changeDetail
     console.debug(changeDetailObj['キャラクター']['天賦性能']);
 }
 
-// 武器データより
+/**
+ * 武器データより
+ * 
+ * @param {Object} changeDetailObj 
+ * @param {Object} inputObj 
+ * @param {Object} weaponMasterObj 
+ */
 const setupDamageDetailDataWeaponEx = function (changeDetailObj, inputObj, weaponMasterObj) {
     const my精錬ランク = inputObj['精錬ランク'];
 
@@ -199,7 +238,12 @@ const setupDamageDetailDataWeaponEx = function (changeDetailObj, inputObj, weapo
     console.debug(changeDetailObj['武器']['ステータス']);
 }
 
-// 聖遺物セットデータより
+/**
+ * 聖遺物セットデータより
+ * 
+ * @param {Object} changeDetailObj 
+ * @param {Object} inputObj 
+ */
 const setupDamageDetailDataArtifactSetEx = function (changeDetailObj, inputObj) {
     changeDetailObj['聖遺物セット'] = {
         ステータス: [],
@@ -229,6 +273,15 @@ const setupDamageDetailDataArtifactSetEx = function (changeDetailObj, inputObj) 
     console.debug(changeDetailObj['聖遺物セット']['ステータス']);
 }
 
+/**
+ * 
+ * @param {Object} statusObj 
+ * @param {Object} characterMasterObj 
+ * @param {string} kind 
+ * @param {number | string | Array} formulaArr 
+ * @param {number | string | Array} opt_max 
+ * @returns 
+ */
 function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_max = null) {
     let result = calculateFormulaArray(statusObj, formulaArr, opt_max);
     let statusName = kind;
@@ -281,6 +334,14 @@ function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_
     console.debug(calculateStatusEx.name, null, kind, formulaArr, '=>', result);
 }
 
+/**
+ * 
+ * @param {Object} statusObj 
+ * @param {Object} inputObj 
+ * @param {Object} characterMasterObj 
+ * @param {Object} weaponMasterObj 
+ * @param {Object} changeDetailObj 
+ */
 function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj, changeDetailObj) {
     calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponMasterObj);
 
@@ -358,6 +419,16 @@ function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj,
     });
 }
 
+/**
+ * 
+ * @param {Object} statusObj 
+ * @param {Object} inputObj 
+ * @param {Object} detailObj 
+ * @param {Object} changeDetailObj 
+ * @param {string []} validConditionValueArr 
+ * @param {string} opt_element 
+ * @returns {Array}
+ */
 function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetailObj, validConditionValueArr, opt_element = null) {
     console.debug(detailObj['種類'], detailObj['名前']);
 
@@ -870,6 +941,13 @@ function calculateDamageFromDetailEx(statusObj, inputObj, detailObj, changeDetai
     return resultArr;
 }
 
+/**
+ * 
+ * @param {Object} statusObj 
+ * @param {Object} inputObj 
+ * @param {Object} damageDetailObj 
+ * @param {Object} changeDetailObj 
+ */
 function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailObj) {
     statusObj['ダメージ計算'] = {};
     statusObj['ダメージ計算']['元素スキル'] = [];
@@ -897,6 +975,11 @@ function setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailO
     });
 }
 
+/**
+ * 
+ * @param {string} saveName 
+ * @returns {Promise<Object>}
+ */
 async function makeTeamStatusObjEx(saveName) {
     const savedObj = JSON.parse(localStorage[saveName]);
     if (!savedObj) {

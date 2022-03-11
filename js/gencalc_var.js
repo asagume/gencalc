@@ -452,11 +452,12 @@ function makeSaveData() {
 }
 
 const saveキャラクター構成 = function () {
-    if (!($('#武器Input').val() in 武器リストMasterVar[選択中キャラクターデータVar['武器']])) return;
+    const my武器 = $('#武器Input').val().toString();
+    if (!(my武器 in 武器リストMasterVar[選択中キャラクターデータVar['武器']])) return;
 
     const myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;
-    const saveName = $('#構成名称Input').val().trim();
+    const saveName = $('#構成名称Input').val().toString().trim();
     if (saveName && saveName != 'あなたの' + myキャラクター) {
         key += '_' + saveName;
     }
@@ -618,10 +619,18 @@ function initキャラクター構成関連要素() {
 
 const ARTIFACT_SUB_NAME_VALUE_ARR_MAP = new Map();
 
+/**
+ * 
+ * @param {number} targetValue 
+ * @param {number []} arr 
+ * @param {number} opt_start 
+ * @param {number} opt_end 
+ * @returns {number}
+ */
 function searchApproximationFromArr(targetValue, arr, opt_start = null, opt_end = null) {
     if (opt_start == null) opt_start = 0;
     if (opt_end == null) opt_end = arr.length;
-    let index = ((opt_end - opt_start) / 2).toFixed(0);
+    let index = Number(((opt_end - opt_start) / 2).toFixed(0));
     if (targetValue <= arr[index] && (index + 1 >= opt_end || targetValue < arr[index - 1])) {
         return arr[index];
     }
@@ -705,7 +714,7 @@ function makeShareData(saveData) {
 
     let shareDataArr = [];
     キャラクター構成PROPERTY_MAP.forEach((value, key) => {
-        newValue = saveData[key];
+        let newValue = saveData[key];
         let myBasename;
         switch (key) {
             case 'キャラクター':
@@ -913,7 +922,7 @@ function buildキャラクター所持状況List() {
 
 const キャラクター所持状況OnClick = function () {
     const selector = '#' + selectorEscape(this.id);
-    let val = $(selector + ' p').text();
+    let val = Number($(selector + ' p').text());
     if (val) {
         if (++val > 6) {
             val = null;
@@ -1002,7 +1011,8 @@ function build武器所持状況List() {
 }
 
 const 武器所持状況OnClick = function () {
-    let val = $('#' + selectorEscape(this.id) + ' p').text();
+    const selector = '#' + selectorEscape(this.id);
+    let val = Number($(selector + ' p').text());
     if (val) {
         if (++val > 5) {
             val = null;

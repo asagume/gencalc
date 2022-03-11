@@ -1,3 +1,10 @@
+// @ts-check
+
+/// <reference path="./gencalc_core.js"/>
+/// <reference path="./gencalc_var.js"/>
+/// <reference path="./gencalc_team.js"/>
+/// <reference path="./gencalc_func.js"/>
+
 function setupAllEvent() {
     // 全般
     $(document).on('focus', 'input,select', function () {
@@ -38,7 +45,7 @@ function setupAllEvent() {
             elementType = $('#' + this.id + '+label img').prop('alt');
             Array.from(document.getElementsByName('element-type-input')).forEach(e => {
                 if (e != this) {
-                    e.checked = false;
+                    $(e).prop('checked', false);
                 }
             });
         }
@@ -452,7 +459,7 @@ async function loadマスターデータAndSetup() {
     // かなり高コストな処理です
     let my上昇回数Arr = [];
     $('#聖遺物優先するサブ効果1上昇回数Input option').each((index, element) => {
-        my上昇回数Arr.push(Number(element.value));
+        my上昇回数Arr.push(Number($(element).val()));
     });
 
     const worker = new Worker('js/calculate_sub.js');
@@ -463,7 +470,7 @@ async function loadマスターデータAndSetup() {
             let subMap = new Map();
             ARTIFACT_SUB_PATTERN_ARR_MAP.forEach((arrArr, key) => {
                 let resultArr = [];
-                for (arr of arrArr) {
+                for (let arr of arrArr) {
                     let result = 0;
                     for (let i = 0; i < arr.length; i++) {
                         result += 聖遺物サブ効果MasterVar[statusName][i] * arr[i];

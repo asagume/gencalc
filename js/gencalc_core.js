@@ -1,13 +1,24 @@
-// セレクターに使用できない文字をエスケープします
+// @ts-check
+
+/**
+ * セレクターに使用できない文字をエスケープします
+ * 
+ * @param {string} val 
+ * @returns {string}
+ */
 function selectorEscape(val) {
     return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
 }
 
-// 加算関数です
+/**
+ * 加算関数です
+ * 
+ * @param {number} value1 
+ * @param {number} value2 
+ * @param {number} opt_max 
+ * @returns {number}
+ */
 const addDecimal = function (value1, value2, opt_max = null) {
-    let decimalDigits1 = String(value1).length - String(value1).lastIndexOf('.');
-    let decimalDigits2 = String(value2).length - String(value2).lastIndexOf('.');
-    let decimalDigits = Math.max([decimalDigits1, decimalDigits2]);
     let result = Math.floor((value1 * 100 + value2 * 100) / 10) / 10;
     if (opt_max != null) {
         result = Math.min(result, opt_max);
@@ -15,9 +26,14 @@ const addDecimal = function (value1, value2, opt_max = null) {
     return result;
 }
 
-// 代入先のstep属性に併せて丸めた数値をセットします
+/**
+ * 代入先のstep属性に併せて丸めた数値をセットします
+ * 
+ * @param {string} selector 
+ * @param {number} value 
+ */
 function setInputValue(selector, value) {
-    let step = $(selector).attr('step');
+    let step = $(selector).prop('step');
     let newValue = value;
     if (step && Number(step) < 1) {
         newValue = Number(value.toFixed(1));
@@ -27,7 +43,13 @@ function setInputValue(selector, value) {
     $(selector).val(newValue);
 }
 
-// Mapのvalue(Array)にvalueを追加(push)します
+/**
+ * Mapのvalue(Array)にvalueを追加(push)します
+ * 
+ * @param {Map} map 
+ * @param {string} key 
+ * @param {string} value 
+ */
 function pushToMapValueArray(map, key, value) {
     if (value == null) {
         if (!map.has(key)) {
@@ -45,23 +67,33 @@ function pushToMapValueArray(map, key, value) {
     }
 }
 
-// オブジェクトのプロパティ値を同名の要素にセットします
+/**
+ * オブジェクトのプロパティ値を同名の要素にセットします
+ * 
+ * @param {Object} obj 
+ * @param {string} prefix 
+ * @param {string} postfix 
+ */
 function setObjectPropertiesToElements(obj, prefix, postfix) {
     Object.keys(obj).forEach(propName => {
         let inputElem = document.getElementById(prefix + propName + postfix);
         if (inputElem) {
             let value = obj[propName];
-            let step = inputElem.step;
+            let step = $(inputElem).prop('step');
             if (step && Number(step) < 1) {
                 value = value.toFixed(1);
             } else {
                 value = Math.round(value);
             }
-            inputElem.value = value;
+            $(inputElem).val(value);
         }
     });
 }
 
+/**
+ * 
+ * @param {Object} obj 
+ */
 function setObjectPropertiesToTableTd(obj) {
     Object.keys(obj).forEach(propName => {
         let valueElem = document.getElementById(propName + 'Value');
@@ -69,7 +101,7 @@ function setObjectPropertiesToTableTd(obj) {
             let value = obj[propName];
             let inputElem = document.getElementById(propName + 'Input');
             if (inputElem) {
-                if (inputElem.step && Number(inputElem.step) < 1) {
+                if ($(inputElem).prop('step') && Number($(inputElem).prop('step')) < 1) {
                     value = Math.round(value * 10) / 10;
                 } else {
                     value = Math.round(value);
@@ -80,10 +112,17 @@ function setObjectPropertiesToTableTd(obj) {
     });
 }
 
-// 計算式を計算します
+/**
+ * 計算式を計算します
+ * 
+ * @param {Object} statusObj ステータス詳細
+ * @param {number | string | Array} formulaArr 計算式
+ * @param {number | string | Array} opt_max 上限
+ * @returns {number} 計算結果
+ */
 const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
     let result = 0;
-    if (!$.isArray(formulaArr)) {
+    if (!Array.isArray(formulaArr)) {
         if ($.isNumeric(formulaArr)) {
             result = Number(formulaArr);
         } else {
@@ -102,7 +141,7 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
                 return;
             } else if ($.isNumeric(entry)) {
                 subResult = Number(entry);
-            } else if ($.isArray(entry)) {
+            } else if (Array.isArray(entry)) {
                 subResult = calculateFormulaArray(statusObj, entry);
             } else {
                 if (entry in statusObj) {
@@ -159,8 +198,14 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
     return result;
 }
 
-// 文字列を解析して、計算式Arrayを作成します
-// 数値|数値%|数値%文字列|文字列
+/**
+ * 文字列を解析して、計算式Arrayを作成します Sub
+ * 数値|数値%|数値%文字列|文字列
+ * 
+ * @param {string} str 計算式文字列
+ * @param {string} defaultItem デフォルト種類
+ * @returns {Array} 計算式
+ */
 function analyzeFormulaStrSub(str, defaultItem = null) {
     let resultArr = [];
     if ($.isNumeric(str)) {
@@ -182,6 +227,14 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
     return resultArr;
 }
 
+/**
+ * 文字列を解析して、計算式Arrayを作成します
+ * 数値|数値%|数値%文字列|文字列
+ * 
+ * @param {string} str 計算式文字列
+ * @param {string} defaultItem デフォルト種類
+ * @returns {Array} 計算式
+ */
 const analyzeFormulaStr = function (str, defaultItem = null) {
     let resultArr = [];
     let re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
@@ -204,73 +257,75 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
     return resultArr;
 }
 
-// const analyzeFormulaStr_ = function (str, defaultItem = null) {
-//     let resultArr = [];
-//     let re = new RegExp('([0-9\\.]+%[^0-9\\.%\\+\\-\\*/]+|[0-9\\.]+%|\\-?[0-9\\.]+|[^0-9\\.%\\+\\-\\*/]+)([\\+\\-\\*/]?)(.*)');
-//     let workStr = str;
-//     while (true) {
-//         let reRet = re.exec(workStr);
-//         if (!reRet) {
-//             resultArr.push(workStr);
-//             break;
-//         }
-//         resultArr.push(analyzeFormulaStrSub(reRet[1], defaultItem));
-//         if (reRet[2]) {
-//             resultArr.push(reRet[2]);
-//             if (reRet[3]) {
-//                 workStr = reRet[3];
-//                 continue;
-//             } else {
-//                 console.error(str, defaultItem);
-//             }
-//         } else if (reRet[3]) {
-//             console.error(str, defaultItem);
-//         }
-//         break;
-//     }
-//     return resultArr;
-// }
-
-// 防御補正を計算します
-//function calcurate防御補正(level, enemyLevel, opt_def = 0, opt_ignoreDef = 0) {
-//    let calcIgnoreDef = opt_ignoreDef / 100;
-//    let calcDef = opt_def / 100;
-//    let result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
-//    return result;
-//}
-
-// 耐性補正を計算します
-//function calculate耐性補正(res) {
-//    if (res < 0) {
-//        res = 100 - res / 2;
-//    } else if (res < 75) {
-//        res = 100 - res;
-//    } else {
-//        res = 100 / (4 * res + 100)
-//    }
-//    return res / 100;
-//}
-
-// Twitter
-// text ツイートの本文
-// url URLのシェア
-// hashtags ハッシュタグ
-// via アカウント関連付け @viaさんから
+/**
+ * Twitterに投稿します
+ * 
+ * @param {string} text ツイートの本文
+ * @param {string} url URLのシェア
+ * @param {string} opt_hashtags ハッシュタグ
+ * @param {string} opt_via アカウント関連付け @viaさんから
+ */
 function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
     const baseUrl = 'https://twitter.com/intent/tweet?';
-    const params = [];
-    params.push(['text', text]);
-    params.push(['url', url]);
+    const params = new URLSearchParams();
+    params.append('text', text);
+    params.append('url', url);
     if (opt_hashtags) {
-        params.push(['hashtags'], opt_hashtags);
+        params.append('hashtags', opt_hashtags);
     }
     if (opt_via) {
-        params.push(['via'], opt_via);
+        params.append('via', opt_via);
     }
-    const query = new URLSearchParams(params).toString();
+    const query = params.toString();
     const shareUrl = `${baseUrl}${query}`;
     console.log(params);
     console.log(shareUrl);
     window.open(shareUrl);
 }
+
+/**
+ * セレクターにオプション要素を追加します
+ * 
+ * @param {string} key キー（オプション要素のvalue）
+ * @param {Object} valueObj 値詳細 
+ * @param {string} selector セレクタ
+ */
+const appendOptionElement = function (key, valueObj, selector) {
+    if ('disabled' in valueObj && valueObj['disabled']) return;   // とりあえず無効レコードは追加しません
+    let myText = key;
+    if ('レアリティ' in valueObj) {
+        myText = '★' + valueObj['レアリティ'] + ' ' + key;
+    }
+    $('<option>', {
+        text: myText,
+        value: key,
+        disabled: ('disabled' in valueObj) && valueObj['disabled'],
+        selected: ('selected' in valueObj) && valueObj['selected']
+    }).appendTo(selector);
+};
+
+/**
+ * セレクターにオプション要素を生成します
+ * 
+ * @param {Object} data 詳細
+ * @param {string | string []} selector セレクター
+ */
+const appendOptionElements = function (data, selector) {
+    if (Array.isArray(selector)) {
+        selector.forEach(entry => {
+            $(entry).empty();
+        });
+    } else {
+        $(selector).empty();
+    }
+    Object.keys(data).forEach(key => {
+        if (Array.isArray(selector)) {
+            selector.forEach(entry => {
+                appendOptionElement(key, data[key], entry);
+            });
+        } else {
+            appendOptionElement(key, data[key], selector);
+        }
+    });
+};
 
