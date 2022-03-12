@@ -436,6 +436,7 @@ function setupおすすめセット(opt_saveName = null) {
     }
 
     if (opt_saveName) {
+        $('#構成名称Input').val(opt_saveName);
         $(selector).val(opt_saveName);
     }
 }
