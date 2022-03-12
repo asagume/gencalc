@@ -345,10 +345,6 @@ function calculateStatusEx(statusObj, characterMasterObj, kind, formulaArr, opt_
 function setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj, changeDetailObj) {
     calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponMasterObj);
 
-    if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) { // for 雷罰悪曜の眼
-        statusObj['元素エネルギー'] = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
-    }
-
     const conditionMap = チームConditionMapMap.get(inputObj['saveName']);
     const validConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], conditionMap);
 
