@@ -54,12 +54,27 @@ function imageToCanvas(imageFile) {
 function setArtifactDetail(text) {
     artifactDetailText = text;
 
+    console.log(text);
     text = text.replace(/[,\s]/g, '');
     text = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
         return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
     });
     text = text.replace(/[①②③④⑤⑥⑦⑧⑨]/g, function (s) {
         return String.fromCharCode(s.charCodeAt(0) - ('①'.charCodeAt(0) - '1'.charCodeAt(0)));
+    });
+    [
+        ['⑪', '11'],
+        ['⑫', '12'],
+        ['⑬', '13'],
+        ['⑭', '14'],
+        ['⑮', '15'],
+        ['⑯', '16'],
+        ['⑰', '17'],
+        ['⑱', '18'],
+        ['⑲', '19'],
+        ['⑳', '20']
+    ].forEach(entry => {
+        text = text.replace(new RegExp(entry[0], 'g'), entry[1]);
     });
     console.log(text);
 
