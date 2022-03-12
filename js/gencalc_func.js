@@ -1585,12 +1585,13 @@ function calculateDamageResult(inputObj, statusObj, validConditionValueArr) {
         }
         myダメージ計算['通常攻撃'].push(calculateDamageFromDetail(statusObj, detailObj, 通常攻撃_元素Var));
     });
-    let my合計ダメージArr = [];
+    let my合計ダメージArr = null;
     let my段数 = 0;
     myダメージ計算['通常攻撃'].forEach(arr => {
         if (arr[0].endsWith('段ダメージ')) {
             if (my合計ダメージArr == null) {
                 my合計ダメージArr = JSON.parse(JSON.stringify(arr));
+                my合計ダメージArr[0] = '合計ダメージ';
             } else {
                 for (let i = 2; i < my合計ダメージArr.length; i++) {
                     if (arr[i]) {
@@ -1602,7 +1603,6 @@ function calculateDamageResult(inputObj, statusObj, validConditionValueArr) {
         }
     });
     if (my段数 > 0) {
-        my合計ダメージArr[0] = '合計ダメージ';
         myダメージ計算['通常攻撃'].splice(my段数, 0, my合計ダメージArr);
     }
     console.debug('通常攻撃 summary');
