@@ -2049,7 +2049,11 @@ function calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponM
 
     if ('固有変数' in characterMasterObj) {
         Object.keys(characterMasterObj['固有変数']).forEach(key => {
-            statusObj[key] = characterMasterObj['固有変数'][key];
+            if (key in inputObj['オプション']) {
+                statusObj[key] = inputObj['オプション'][key];
+            } else {
+                statusObj[key] = characterMasterObj['固有変数'][key];
+            }
         });
     }
 
