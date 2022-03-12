@@ -425,7 +425,7 @@ function setupおすすめセット(opt_saveName = null) {
         appendOptionElement(entry[0], entry[1], selector);
     });
 
-    if (isSavable === false) {
+    if (opt_saveName || isSavable === false) {
         $('#構成保存Button').prop('disabled', true);
         $('#保存構成削除Button').prop('disabled', false);
         $('#構成名称Input').prop('disabled', true);
