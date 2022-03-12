@@ -2868,6 +2868,7 @@ const inputOnChangeArtifactSubUpdate = function () {
         '聖遺物優先するサブ効果3Input'
     ].forEach(elemId => {
         const elem = document.getElementById(elemId);
+        if (!($(elem).val())) return;
         const priorityStatus = $(elem).val().toString();
         if (priorityStatus) {
             if (middlePriorityArr.indexOf(priorityStatus) != -1) {
@@ -2912,18 +2913,19 @@ const inputOnChangeArtifactSubUpdate = function () {
     let my優先するサブ効果Arr = [];
     let my優先するサブ効果回数合計 = 0;
     Array.from(document.getElementsByName('聖遺物優先するサブ効果Input')).forEach(elem => {
-        let propName = $(elem).val().toString();
+        let propName = $(elem).val();
         if (propName) {
+            propName = propName.toString();
             const 上昇値Elem = document.getElementById(elem.id.replace('Input', '上昇値Input'));
             const 上昇回数Elem = document.getElementById(elem.id.replace('Input', '上昇回数Input'));
             const 上昇値 = Number($(上昇値Elem).val());
             const 上昇回数 = Number($(上昇回数Elem).val());
             const targetValue = 上昇値 * 上昇回数;
-            let resultValue = searchArtifactSubApproximation(propName, 上昇回数, targetValue);
-            propName = propName.replace('%', 'P');
-            workObj[propName] += resultValue * (100 - myレアリティ補正) / 100;
-            if (!my優先するサブ効果Arr.includes($(elem).val().toString())) {
-                my優先するサブ効果Arr.push($(elem).val().toString());
+            const resultValue = searchArtifactSubApproximation(propName, 上昇回数, targetValue);
+            const toKey = propName.replace('%', 'P');
+            workObj[toKey] += resultValue * (100 - myレアリティ補正) / 100;
+            if (!my優先するサブ効果Arr.includes(propName)) {
+                my優先するサブ効果Arr.push(propName);
             }
             my優先するサブ効果回数合計 += 上昇回数;
         }

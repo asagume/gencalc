@@ -12,7 +12,7 @@ const DAMAGE_RESULT_TABLE_ID_ARR = [
 // マスターデータ
 var キャラクターリストMasterVar;
 
- var 武器リストMasterVar = {
+var 武器リストMasterVar = {
     片手剣: null,
     両手剣: null,
     長柄武器: null,
@@ -475,9 +475,14 @@ const saveキャラクター構成 = function () {
 
     const myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;
-    const saveName = $('#構成名称Input').val().toString().trim();
-    if (saveName && saveName != 'あなたの' + myキャラクター) {
-        key += '_' + saveName;
+    let saveName = $('#構成名称Input').val();
+    if (saveName) {
+        saveName = saveName.toString().trim()
+        if (saveName && saveName != 'あなたの' + myキャラクター) {
+            key += '_' + saveName;
+        }
+    } else {
+        saveName = 'あなたの' + myキャラクター;
     }
     キャラクター構成ObjVar = makeSaveData();
 
