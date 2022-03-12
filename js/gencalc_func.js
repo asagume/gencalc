@@ -4111,7 +4111,9 @@ function setupチームオプション() {
     // for 雷罰悪曜の眼
     saveName = '構成_雷電将軍';
     if (チームStatusObjMap.has(saveName)) {
-        チームStatusObjMap.get(saveName)['元素エネルギー'] = ステータス詳細ObjVar['元素エネルギー'];
+        if ('元素エネルギー'in 選択中キャラクターデータVar['元素爆発']) {
+            チームStatusObjMap.get(saveName)['元素エネルギー'] = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
+        }
         setupDamageResultEx(チームStatusObjMap.get(saveName), チームInputObjMap.get(saveName), チームDamageDetailObjMap.get(saveName), チームChangeDetailObjMap.get(saveName));
     }
 
