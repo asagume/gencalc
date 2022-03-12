@@ -473,7 +473,7 @@ const setupBaseDamageDetailDataCharacter = function () {
     // 通常攻撃を解析します。Object
     let my天賦レベル = my通常攻撃レベル;
     let myデフォルト種類 = '通常攻撃ダメージ';
-    let myデフォルト元素 = getNormalAttackDefaultElement();
+    let myデフォルト元素 = null;
     let my天賦詳細Obj = 選択中キャラクターデータVar['通常攻撃'];
     通常攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(
         my天賦詳細Obj,
@@ -519,7 +519,7 @@ const setupBaseDamageDetailDataCharacter = function () {
     // 重撃を解析します。Object
     my天賦レベル = my通常攻撃レベル;
     myデフォルト種類 = '重撃ダメージ';
-    myデフォルト元素 = getNormalAttackDefaultElement();
+    myデフォルト元素 = null;
     my天賦詳細Obj = 選択中キャラクターデータVar['重撃'];
     重撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(
         my天賦詳細Obj,
@@ -564,7 +564,7 @@ const setupBaseDamageDetailDataCharacter = function () {
     // 落下攻撃を解析します。Object
     my天賦レベル = my通常攻撃レベル;
     myデフォルト種類 = '落下攻撃ダメージ';
-    myデフォルト元素 = getNormalAttackDefaultElement();
+    myデフォルト元素 = null;
     my天賦詳細Obj = 選択中キャラクターデータVar['落下攻撃'];
     落下攻撃_基礎ダメージ詳細ArrVar = makeTalentDetailArray(
         my天賦詳細Obj,
@@ -3493,13 +3493,6 @@ const 武器InputOnChange = function () {
     });
 };
 
-/**
- * @returns {string} 通常攻撃元素
- */
-function getNormalAttackDefaultElement() {
-    return キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
-}
-
 // おすすめセット 変更イベント
 const おすすめセットInputOnChange = function () {
     // 非表示
@@ -3773,6 +3766,10 @@ const キャラクターInputOnChange = function () {
         通常攻撃名称Var = 選択中キャラクターデータVar['通常攻撃']['名前'];
         元素スキル名称Var = 選択中キャラクターデータVar['元素スキル']['名前'];
         元素爆発名称Var = 選択中キャラクターデータVar['元素爆発']['名前'];
+
+        通常攻撃_元素Var = キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
+        重撃_元素Var = キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
+        落下攻撃_元素Var = キャラクター武器Var == '法器' ? キャラクター元素Var : '物理';
 
         if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) {
             ステータス詳細ObjVar['元素エネルギー'] = Number(選択中キャラクターデータVar['元素爆発']['元素エネルギー']);
@@ -4111,7 +4108,7 @@ function setupチームオプション() {
     // for 雷罰悪曜の眼
     saveName = '構成_雷電将軍';
     if (チームStatusObjMap.has(saveName)) {
-        if ('元素エネルギー'in 選択中キャラクターデータVar['元素爆発']) {
+        if ('元素エネルギー' in 選択中キャラクターデータVar['元素爆発']) {
             チームStatusObjMap.get(saveName)['元素エネルギー'] = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
         }
         setupDamageResultEx(チームStatusObjMap.get(saveName), チームInputObjMap.get(saveName), チームDamageDetailObjMap.get(saveName), チームChangeDetailObjMap.get(saveName));
