@@ -1054,6 +1054,14 @@ async function makeTeamStatusObjEx(saveName) {
 
     setupStatusEx(statusObj, inputObj, characterMasterObj, weaponMasterObj, changeDetailObj);
 
+    if (選択中キャラクターデータVar) {
+        if (['雷電将軍'].includes(inputObj['キャラクター'])) {
+            if ('元素エネルギー'in 選択中キャラクターデータVar['元素爆発']) {
+                statusObj['元素エネルギー'] = 選択中キャラクターデータVar['元素爆発']['元素エネルギー'];
+            }
+        }
+    }
+
     console.debug(statusObj);
 
     setupDamageResultEx(statusObj, inputObj, damageDetailObj, changeDetailObj);
