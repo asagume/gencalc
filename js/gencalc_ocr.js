@@ -1,7 +1,15 @@
+// @ts-check
+
+// @ts-ignore
 const { createWorker } = Tesseract;
 
 var artifactDetailText = null;
 
+/**
+ * 
+ * @param {File} image 
+ * @returns {Promise<string | ArrayBuffer>}
+ */
 function readImage(image) {
     return new Promise(function (resolve, reject) {
         const reader = new FileReader();
@@ -11,20 +19,30 @@ function readImage(image) {
     });
 }
 
+/**
+ * 
+ * @param {string | ArrayBuffer} src 
+ * @returns {Promise<HTMLImageElement>}
+ */
 function loadImage(src) {
     return new Promise(function (resolve, reject) {
         const img = new Image();
         img.onload = function () { resolve(img); }
         img.onerror = function (e) { reject(e); }
-        img.src = src;
+        img.src = src.toString();
     });
 }
 
+/**
+ * 
+ * @param {File} imageFile 
+ * @returns {Promise}
+ */
 function imageToCanvas(imageFile) {
     return new Promise(function (resolve, reject) {
         readImage(imageFile).then(function (src) {
             loadImage(src).then(function (image) {
-                const canvas = document.getElementById('artifactDetailCanvas');
+                const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('artifactDetailCanvas'));
                 const ctx = canvas.getContext('2d');
                 const scale = 2;
                 canvas.width = image.width * scale;
@@ -101,10 +119,10 @@ function setArtifactDetail(text) {
     $('#聖遺物メイン効果1Input').val(null);
     $('#聖遺物メイン効果2Input').val(null);
     $('#聖遺物メイン効果3Input').val(null);
-    if (!$('#聖遺物メイン効果4Input').val().endsWith('バフ')) {
+    if (!$('#聖遺物メイン効果4Input').val().toString().endsWith('バフ')) {
         $('#聖遺物メイン効果4Input').val(null);
     }
-    if (!$('#聖遺物メイン効果5Input').val().endsWith('バフ')) {
+    if (!$('#聖遺物メイン効果5Input').val().toString().endsWith('バフ')) {
         $('#聖遺物メイン効果5Input').val(null);
     }
 
@@ -127,6 +145,10 @@ function setArtifactDetail(text) {
     inputOnChangeStatusUpdate();
 }
 
+/**
+ * 
+ * @param {File} file 
+ */
 function resize(file) {
     imageToCanvas(file).then(function (canvas) {
         $('#loading').show();
@@ -163,11 +185,16 @@ function resize(file) {
     });
 }
 
+/**
+ * 
+ * @param {Event} e イベント
+ */
 function resizePinnedImage(e) {
-    const file = e.target.files[0];
+    const target = /** @type {HTMLInputElement} */ (e.currentTarget);
+    const file = target.files[0];
     if (!file.type.match('image.*')) { return; }
     resize(file);
-    e.currentTarget.files = null;
-    e.currentTarget.value = null;
+    target.files = null;
+    target.value = null;
     enable構成保存Button();
 }
