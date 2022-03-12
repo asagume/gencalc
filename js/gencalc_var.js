@@ -476,9 +476,9 @@ const saveキャラクター構成 = function () {
     const myキャラクター = $('#キャラクターInput').val();
     let key = '構成_' + myキャラクター;
     let saveName = $('#構成名称Input').val();
-    if (saveName) {
+    if (saveName && saveName.toString().trim()) {
         saveName = saveName.toString().trim()
-        if (saveName && saveName != 'あなたの' + myキャラクター) {
+        if (saveName != 'あなたの' + myキャラクター) {
             key += '_' + saveName;
         }
     } else {
