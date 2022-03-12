@@ -2537,8 +2537,6 @@ const inputOnChangeStatusUpdateSub = function (statusObj) {
             statusObj['敵' + propName] = Number(選択中敵データVar[propName]);
         }
     });
-    statusObj['敵レベル'] = inputObj['敵レベル'];
-    statusObj['敵防御力'] = inputObj['敵防御力'];
 
     calculateStatusObj(statusObj, inputObj, 選択中キャラクターデータVar, 選択中武器データVar);
 
