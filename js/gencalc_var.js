@@ -959,19 +959,22 @@ function buildキャラクター所持状況List() {
 
 const キャラクター所持状況OnClick = function () {
     const selector = '#' + selectorEscape(this.id);
-    let val = Number($(selector + ' p').text());
-    if (val) {
+    let text = $(selector + ' p').text();
+    if (text) {
+        let val = Number(text);
         if (++val > 6) {
-            val = null;
+            text = null;
             $(selector + ' img').addClass('darken');
+        } else {
+            text = val.toString();
         }
     } else {
-        val = 0;
+        text = '0';
         $(selector + ' img').removeClass('darken');
     }
-    $(selector + ' p').text(val);
+    $(selector + ' p').text(text);
 
-    キャラクター所持状況ObjVar[this.id.split('_')[0]] = val;
+    キャラクター所持状況ObjVar[this.id.split('_')[0]] = text;
 
     $('#キャラクター所持状況保存Button').prop('disabled', false);
 }
@@ -1049,19 +1052,22 @@ function build武器所持状況List() {
 
 const 武器所持状況OnClick = function () {
     const selector = '#' + selectorEscape(this.id);
-    let val = Number($(selector + ' p').text());
-    if (val) {
+    let text = $(selector + ' p').text();
+    if (text) {
+        let val = Number(text);
         if (++val > 5) {
-            val = null;
+            text = null;
             $('#' + selectorEscape(this.id) + ' img').addClass('darken');
+        } else {
+            text = val.toString();
         }
     } else {
-        val = 1;
+        text = '1';
         $('#' + selectorEscape(this.id) + ' img').removeClass('darken');
     }
-    $('#' + selectorEscape(this.id) + ' p').text(val);
+    $('#' + selectorEscape(this.id) + ' p').text(text);
 
-    武器所持状況ObjVar[this.id.split('_')[0]] = val;
+    武器所持状況ObjVar[this.id.split('_')[0]] = text;
 
     $('#my-weapon-save-button').prop('disabled', false);
 }
