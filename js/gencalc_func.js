@@ -187,6 +187,13 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
     if ('詳細' in talentDataObj) {
         talentDataObj['詳細'].forEach(detailObj => {
             let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
+            let my対象 = null;
+            if (my種類.indexOf('.') != -1) {
+                my対象 = my種類.substring(my種類.indexOf('.') + 1);
+                my種類 = my種類.substring(0, my種類.indexOf('.'));
+            } else if ('対象' in detailObj) {
+                my対象 = detailObj['対象'];
+            }
             let my数値 = null;
             if ('数値' in detailObj) {
                 my数値 = detailObj['数値'];
@@ -197,7 +204,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 } else {
                     console.error(talentDataObj, level, defaultKind, defaultElement, inputCategory);
                 }
-                if (my種類.endsWith('ダメージ')) {
+                if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
                     my数値 = analyzeFormulaStr(my数値, '攻撃力');
                 } else {
                     my数値 = analyzeFormulaStr(my数値, my種類);
@@ -224,7 +231,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
                 数値: my数値,
                 条件: my条件,
-                対象: '対象' in detailObj ? detailObj['対象'] : null,
+                対象: my対象,
                 上限: my上限,
                 HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
                 ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
@@ -233,11 +240,13 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
             }
             if (statusChangeArr != null) {
-                if (resultObj['種類'] in ステータス詳細ObjVar
+                if (resultObj['種類'] in ステータス詳細ObjTemplate
                     || resultObj['種類'].endsWith('%')
                     || new RegExp('[自全].+バフ').exec(resultObj['種類'])
                     || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
-                    || resultObj['種類'] == '別枠乗算') { // ex,HP上限,攻撃力%
+                    || resultObj['種類'] == '別枠乗算'
+                    || ['継続時間', 'クールタイム'].includes(my種類)
+                ) {
                     resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                     statusChangeArr.push(resultObj);
                     return;
@@ -2162,17 +2171,19 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     });
 
     statusObj['ダメージ計算'] = {};
-    let my元素スキルObj = characterMasterObj['元素スキル'];
+
+    const my元素スキルObj = characterMasterObj['元素スキル'];
     statusObj['元素スキル'] = {
-        継続時間: '継続時間' in my元素スキルObj ? my元素スキルObj['継続時間'] : '-',
-        クールタイム: 'クールタイム' in my元素スキルObj ? my元素スキルObj['クールタイム'] : '-',
-        元素粒子生成: '元素粒子生成' in my元素スキルObj ? my元素スキルObj['元素粒子生成'] : '-'
+        継続時間: '継続時間' in my元素スキルObj ? my元素スキルObj['継続時間'] : null,
+        クールタイム: 'クールタイム' in my元素スキルObj ? my元素スキルObj['クールタイム'] : null,
+        元素粒子生成: '元素粒子生成' in my元素スキルObj ? my元素スキルObj['元素粒子生成'] : null
     };
-    let my元素爆発Obj = characterMasterObj['元素爆発'];
+
+    const my元素爆発Obj = characterMasterObj['元素爆発'];
     statusObj['元素爆発'] = {
-        継続時間: '継続時間' in my元素爆発Obj ? my元素爆発Obj['継続時間'] : '-',
-        クールタイム: 'クールタイム' in my元素爆発Obj ? my元素爆発Obj['クールタイム'] : '?',
-        元素エネルギー: '元素エネルギー' in my元素爆発Obj ? my元素爆発Obj['元素エネルギー'] : '?'
+        継続時間: '継続時間' in my元素爆発Obj ? my元素爆発Obj['継続時間'] : null,
+        クールタイム: 'クールタイム' in my元素爆発Obj ? my元素爆発Obj['クールタイム'] : null,
+        元素エネルギー: '元素エネルギー' in my元素爆発Obj ? my元素爆発Obj['元素エネルギー'] : null
     };
 
     // チームオプションを計上します
@@ -2313,7 +2324,15 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     let myKindFormulaArr = [];
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
         value.forEach(valueObj => {
-            if (valueObj['対象']) return;  // 対象指定ありのものはスキップします
+            if (valueObj['対象']) {
+                let workArr = valueObj['対象'].split('.');
+                if (['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'].includes(workArr[0])) {
+                    if (workArr.length > 1) {
+                        // TODO
+                    }
+                }
+                return;  // 対象指定ありのものはスキップします
+            }
             let myNew数値 = valueObj['数値'];
             if (valueObj['条件']) {
                 let number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
@@ -3295,26 +3314,50 @@ function build天賦詳細() {
         if ('元素スキル' in ステータス詳細ObjVar['ダメージ計算']) {
             resultObj = ステータス詳細ObjVar['ダメージ計算']['元素スキル'];
         }
-        if ('継続時間' in obj) {
-            let value = obj['継続時間'];
-            if ('継続時間' in resultObj) {
-                value = resultObj['継続時間'];
+
+        let talent2DurationHtml = '';
+        Object.keys(obj).filter(s => s.endsWith('継続時間')).forEach(key => {
+            if (key in obj) {
+                let value = obj[key];
+                if ($.isNumeric(value)) {
+                    value = value.toFixed(1) + '秒';
+                } else if ($.isPlainObject(value)) {
+                    // TODO
+                    value = '';
+                }
+                talent2DurationHtml += key.replace(/の?継続時間/, '') + value + '<br>';
             }
-            if ($.isNumeric(value)) {
-                value = value.toFixed(1) + '秒';
-            }
-            $('#talent2-duration').html(value);
+        });
+        $('#talent2-duration').html(talent2DurationHtml);
+        if (talent2DurationHtml) {
+            $('#talent2-duration').prev().show();
+            $('#talent2-duration').show();
+        } else {
+            $('#talent2-duration').prev().hide();
+            $('#talent2-duration').hide();
         }
-        if ('クールタイム' in obj) {
-            let value = obj['クールタイム'];
-            if ('クールタイム' in resultObj) {
-                value = resultObj;
+
+        let talent2CdHtml = '';
+        Object.keys(obj).filter(s => s.endsWith('クールタイム')).forEach(key => {
+            if (key in obj) {
+                let value = obj[key];
+                if ($.isNumeric(value)) {
+                    value = value.toFixed(1) + '秒';
+                }
+                talent2CdHtml += key.replace(/の?クールタイム/, '') + value + '<br>';
             }
-            if ($.isNumeric(value)) {
-                value = value.toFixed(1) + '秒';
-            }
-            $('#talent2-cd').html(value);
+        });
+        $('#talent2-cd').html(talent2CdHtml);
+        if ('使用回数' in obj) {
+            $('#talent2-charge').html(obj['使用回数'] + '回');
+            $('#talent2-charge').prev().show();
+            $('#talent2-charge').show();
+        } else {
+            $('#talent2-charge').html('');
+            $('#talent2-charge').prev().hide();
+            $('#talent2-charge').hide();
         }
+
         // if ('粒子生成数' in obj) {
         //     let my粒子生成数 = obj['粒子生成数'];
         //     if ($.isNumeric(my粒子生成数)) {
@@ -3322,6 +3365,7 @@ function build天賦詳細() {
         //     }
         //     $('#talent2-particle').html(makeHtml(my粒子生成数));
         // }
+
         if ('説明' in obj) {
             $('#talent2-desc').html(makeHtml(obj));
         }
@@ -3333,29 +3377,45 @@ function build天賦詳細() {
         if ('元素爆発' in ステータス詳細ObjVar['ダメージ計算']) {
             resultObj = ステータス詳細ObjVar['ダメージ計算']['元素爆発'];
         }
-        if ('継続時間' in obj) {
-            let value = obj['継続時間'];
-            if ('継続時間' in resultObj) {
-                value = resultObj['継続時間'];
+
+        let talent3DurationHtml = '';
+        Object.keys(obj).filter(s => s.endsWith('継続時間')).forEach(key => {
+            if (key in obj) {
+                let value = obj[key];
+                if ($.isNumeric(value)) {
+                    value = value.toFixed(1) + '秒';
+                } else if ($.isPlainObject(value)) {
+                    // TODO
+                    value = '';
+                }
+                talent3DurationHtml += key.replace(/の?継続時間/, '') + value + '<br>';
             }
-            if ($.isNumeric(value)) {
-                value = value.toFixed(1) + '秒';
-            }
-            $('#talent3-duration').html(value);
+        });
+        $('#talent3-duration').html(talent3DurationHtml);
+        if (talent3DurationHtml) {
+            $('#talent3-duration').prev().show();
+            $('#talent3-duration').show();
+        } else {
+            $('#talent3-duration').prev().hide();
+            $('#talent3-duration').hide();
         }
-        if ('クールタイム' in obj) {
-            let value = obj['クールタイム'];
-            if ('クールタイム' in resultObj) {
-                value = resultObj;
+
+        let talent3CdHtml = '';
+        Object.keys(obj).filter(s => s.endsWith('クールタイム')).forEach(key => {
+            if (key in obj) {
+                let value = obj[key];
+                if ($.isNumeric(value)) {
+                    value = value.toFixed(1) + '秒';
+                }
+                talent3CdHtml += key.replace(/の?クールタイム/, '') + value + '<br>';
             }
-            if ($.isNumeric(value)) {
-                value = value.toFixed(1) + '秒';
-            }
-            $('#talent3-cd').html(value);
-        }
+        });
+        $('#talent3-cd').html(talent3CdHtml);
+
         if ('元素エネルギー' in obj) {
             $('#talent3-energy-cost').html(obj['元素エネルギー']);
         }
+
         if ('説明' in obj) {
             $('#talent3-desc').html(makeHtml(obj));
         }

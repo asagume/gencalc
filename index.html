@@ -34,7 +34,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.2.2</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.2.3</legend>
                     <p><a href="ArtifactSetList.html">聖遺物セット効果一覧</a></p>
                     <p>
                         <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
@@ -320,7 +320,7 @@
                     <div class="tab-content">
                         <table class="talent-detail">
                             <tr>
-                                <th rowspan="3" style="width: 102px;">
+                                <th rowspan="4" style="width: 102px;">
                                     <img width="100" height="100"
                                         src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
                                         alt="元素スキル" id="talent2-img">
@@ -334,6 +334,10 @@
                             <tr>
                                 <th>クールタイム</th>
                                 <td id="talent2-cd"></td>
+                            </tr>
+                            <tr>
+                                <th>使用回数</th>
+                                <td id="talent2-charge"></td>
                             </tr>
                             <tr>
                                 <td colspan="3" class="description" id="talent2-desc"></td>
@@ -1526,13 +1530,10 @@
             <select id="聖遺物セット効果1Input" name="聖遺物セット効果Input"></select>
             <select id="聖遺物セット効果2Input" name="聖遺物セット効果Input"></select>
 
-            <fieldset>
-                <legend>デバッグ情報</legend>
-                <div id="debugInfo"></div>
-            </fieldset>
-
             <canvas id="artifactDetailCanvas"></canvas>
         </div>
+
+        <div id="debugInfo"></div>
     </div>
 
     <script>
