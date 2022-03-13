@@ -4815,7 +4815,7 @@ function detailToHtml(obj) {
 }
 
 // デバッグ情報を出力します
-const debugMode = true;
+const debugMode = false;
 const setDebugInfo = function () {
     if (!debugMode) return;
     const debugInfo = '#debugInfo';
