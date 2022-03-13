@@ -3315,7 +3315,7 @@ function build天賦詳細() {
             resultObj = ステータス詳細ObjVar['ダメージ計算']['元素スキル'];
         }
 
-        let talent2DurationHtml = '';
+        let durationHtml = '';
         Object.keys(obj).filter(s => s.endsWith('継続時間')).forEach(key => {
             if (key in obj) {
                 let value = obj[key];
@@ -3325,11 +3325,11 @@ function build天賦詳細() {
                     // TODO
                     value = '';
                 }
-                talent2DurationHtml += key.replace(/の?継続時間/, '') + value + '<br>';
+                durationHtml += key.replace(/の?継続時間/, '') + value + '<br>';
             }
         });
-        $('#talent2-duration').html(talent2DurationHtml);
-        if (talent2DurationHtml) {
+        $('#talent2-duration').html(durationHtml);
+        if (durationHtml) {
             $('#talent2-duration').prev().show();
             $('#talent2-duration').show();
         } else {
@@ -3337,17 +3337,39 @@ function build天賦詳細() {
             $('#talent2-duration').hide();
         }
 
-        let talent2CdHtml = '';
+        let triggerQuotaHtml = '';
+        Object.keys(obj).filter(s => s.endsWith('発動回数')).forEach(key => {
+            if (key in obj) {
+                let value = obj[key];
+                if ($.isNumeric(value)) {
+                    value = value + '回';
+                } else if ($.isPlainObject(value)) {
+                    // TODO
+                    value = '';
+                }
+                triggerQuotaHtml += key.replace(/の?発動回数/, '') + value + '<br>';
+            }
+        });
+        $('#talent2-trigger-quota').html(triggerQuotaHtml);
+        if (triggerQuotaHtml) {
+            $('#talent2-trigger-quota').prev().show();
+            $('#talent2-trigger-quota').show();
+        } else {
+            $('#talent2-trigger-quota').prev().hide();
+            $('#talent2-trigger-quota').hide();
+        }
+
+        let cdHtml = '';
         Object.keys(obj).filter(s => s.endsWith('クールタイム')).forEach(key => {
             if (key in obj) {
                 let value = obj[key];
                 if ($.isNumeric(value)) {
                     value = value.toFixed(1) + '秒';
                 }
-                talent2CdHtml += key.replace(/の?クールタイム/, '') + value + '<br>';
+                cdHtml += key.replace(/の?クールタイム/, '') + value + '<br>';
             }
         });
-        $('#talent2-cd').html(talent2CdHtml);
+        $('#talent2-cd').html(cdHtml);
         if ('使用回数' in obj) {
             $('#talent2-charge').html(obj['使用回数'] + '回');
             $('#talent2-charge').prev().show();
@@ -3378,7 +3400,7 @@ function build天賦詳細() {
             resultObj = ステータス詳細ObjVar['ダメージ計算']['元素爆発'];
         }
 
-        let talent3DurationHtml = '';
+        let durationHtml = '';
         Object.keys(obj).filter(s => s.endsWith('継続時間')).forEach(key => {
             if (key in obj) {
                 let value = obj[key];
@@ -3388,11 +3410,11 @@ function build天賦詳細() {
                     // TODO
                     value = '';
                 }
-                talent3DurationHtml += key.replace(/の?継続時間/, '') + value + '<br>';
+                durationHtml += key.replace(/の?継続時間/, '') + value + '<br>';
             }
         });
-        $('#talent3-duration').html(talent3DurationHtml);
-        if (talent3DurationHtml) {
+        $('#talent3-duration').html(durationHtml);
+        if (durationHtml) {
             $('#talent3-duration').prev().show();
             $('#talent3-duration').show();
         } else {
@@ -3400,17 +3422,39 @@ function build天賦詳細() {
             $('#talent3-duration').hide();
         }
 
-        let talent3CdHtml = '';
+        let triggerQuotaHtml = '';
+        Object.keys(obj).filter(s => s.endsWith('発動回数')).forEach(key => {
+            if (key in obj) {
+                let value = obj[key];
+                if ($.isNumeric(value)) {
+                    value = value + '回';
+                } else if ($.isPlainObject(value)) {
+                    // TODO
+                    value = '';
+                }
+                triggerQuotaHtml += key.replace(/の?発動回数/, '') + value + '<br>';
+            }
+        });
+        $('#talent3-trigger-quota').html(triggerQuotaHtml);
+        if (triggerQuotaHtml) {
+            $('#talent3-trigger-quota').prev().show();
+            $('#talent3-trigger-quota').show();
+        } else {
+            $('#talent3-trigger-quota').prev().hide();
+            $('#talent3-trigger-quota').hide();
+        }
+
+        let cdHtml = '';
         Object.keys(obj).filter(s => s.endsWith('クールタイム')).forEach(key => {
             if (key in obj) {
                 let value = obj[key];
                 if ($.isNumeric(value)) {
                     value = value.toFixed(1) + '秒';
                 }
-                talent3CdHtml += key.replace(/の?クールタイム/, '') + value + '<br>';
+                cdHtml += key.replace(/の?クールタイム/, '') + value + '<br>';
             }
         });
-        $('#talent3-cd').html(talent3CdHtml);
+        $('#talent3-cd').html(cdHtml);
 
         if ('元素エネルギー' in obj) {
             $('#talent3-energy-cost').html(obj['元素エネルギー']);
