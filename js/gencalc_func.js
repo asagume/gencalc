@@ -2783,10 +2783,15 @@ function applyOptionVariable(statusObj, elem) {
 
 /**
  * オプション 変更イベント Sub
+ * 
+ * @param {HTMLInputElement|HTMLSelectElement} opt_elem 
  */
-const オプションInputOnChangeSub = function () {
-    if ((this instanceof HTMLInputElement && this.checked) || (this instanceof HTMLSelectElement && this.value)) {
-        let conditionName = this.id.replace('Option', '');
+const オプションInputOnChangeSub = function (opt_elem = null) {
+    if (!opt_elem) {
+        opt_elem = this;
+    }
+    if ((opt_elem instanceof HTMLInputElement && opt_elem.checked) || (opt_elem instanceof HTMLSelectElement && opt_elem.value)) {
+        let conditionName = opt_elem.id.replace('Option', '');
         オプション排他MapVar.forEach((value, key) => {
             if (key != conditionName) return;
             value.forEach(entry => {
@@ -2800,8 +2805,8 @@ const オプションInputOnChangeSub = function () {
         });
     }
 
-    オプションElementIdValue記憶Map.set(this.id, this instanceof HTMLInputElement ? this.checked : this.selectedIndex);    // チェック状態または選択要素のインデックスを保持します
-    applyOptionVariable(ステータス詳細ObjVar, this);
+    オプションElementIdValue記憶Map.set(opt_elem.id, opt_elem instanceof HTMLInputElement ? opt_elem.checked : opt_elem.selectedIndex);    // チェック状態または選択要素のインデックスを保持します
+    applyOptionVariable(ステータス詳細ObjVar, opt_elem);
     inputOnChangeStatusUpdate();
 };
 
@@ -2809,7 +2814,7 @@ const オプションInputOnChangeSub = function () {
  * オプション 変更イベント
  */
 const オプションInputOnChange = function () {
-    オプションInputOnChangeSub();
+    オプションInputOnChangeSub(this);
 
     build天賦詳細レベル変動();
 
