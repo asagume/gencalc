@@ -1111,7 +1111,7 @@ function ステータス条件取消(resultObj, condition, statusObj) {
  * @param {string} condition 条件文字列
  * @param {Object} statusObj ステータス詳細
  */
- function ステータス条件追加(resultObj, condition, statusObj) {
+function ステータス条件追加(resultObj, condition, statusObj) {
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
         value.forEach(valueObj => {
             if (valueObj['対象'] || !valueObj['数値']) return;
@@ -1411,6 +1411,33 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
             }
         }
     });
+
+    // for 来歆の余響 「ダメージを与えた0.05秒後にクリアされる」
+    if (detailObj['種類'] == '通常攻撃ダメージ') {
+        let myCondition = null;
+        if (validConditionValueArr.includes('[来歆の余響4]幽谷祭祀')) {
+            myCondition = '[来歆の余響4]幽谷祭祀';
+        } else if (validConditionValueArr.includes('[来歆の余響4]期待値')) {
+            myCondition = '[来歆の余響4]期待値';
+        }
+        if (myCondition && detailObj['HIT数'] > 1) {
+            ステータス変更系詳細ArrMapVar.get('聖遺物セット').forEach(valueObj => {
+                if (!valueObj['条件']) return;
+                if (!valueObj['数値']) return;
+                if (checkConditionMatches(valueObj['条件'], [myCondition]) > 0) {
+                    let myValue = calculateFormulaArray(statusObj, valueObj['数値'], valueObj['上限']);
+                    if (!(valueObj['種類'] in myステータス補正)) {
+                        myステータス補正[valueObj['種類']] = 0;
+                    }
+                    myステータス補正[valueObj['種類']] -= myValue * (detailObj['HIT数'] - 1) / detailObj['HIT数'];
+                }
+            });
+            const description = '1段でダメージが複数回発生する通常攻撃については、来歆の余響4セット効果の幽谷祭祀のダメージアップは1回分のみ計上する';
+            if (!statusObj['キャラクター注釈'].includes(description)) {
+                statusObj['キャラクター注釈'].push(description);
+            }
+        }
+    }
 
     // 一時的にステータスを書き換えます。
     Object.keys(myステータス補正).forEach(statusName => {
@@ -1979,7 +2006,7 @@ const inputOnChangeResultUpdate = function (statusObj) {
 
     statusObj['キャラクター注釈'] = [];
     if (選択中キャラクターデータVar['元素'] == '風') {
-        statusObj['キャラクター注釈'].push('拡散、元素変化、付加元素ダメージは炎元素との接触と仮定して計算しています');
+        statusObj['キャラクター注釈'].push('拡散、元素変化、付加元素ダメージは炎元素との接触と仮定して計算する');
     }
 
     calculateDamageResult(null, statusObj, validConditionValueArr);
