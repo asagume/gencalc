@@ -440,11 +440,19 @@ async function loadマスターデータAndSetup() {
     if (URIキャラクター構成ObjVar) {
         select = URIキャラクター構成ObjVar['キャラクター'];
     } else {
+        const today = new Date();
+        let curDiff = Number.MAX_SAFE_INTEGER;
         Object.keys(キャラクターリストMasterVar).forEach(key => {
-            if (!select) {
-                select = key;
-            } else if ('selected' in キャラクターリストMasterVar[key] && キャラクターリストMasterVar[key]['selected']) {
-                select = key;
+            if ('誕生日' in キャラクターリストMasterVar[key]) {
+                const birthdayStrArr = キャラクターリストMasterVar[key]['誕生日'].split('/');
+                let birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
+                const diff = today.getTime() - birthday.getTime();
+                console.log(today, birthday,  diff, key);
+                if (diff < 0) return;
+                if (diff < curDiff) {
+                    curDiff = diff;
+                    select = key;
+                }
             }
         });
     }
