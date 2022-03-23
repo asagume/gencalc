@@ -115,8 +115,12 @@
                     if (characterMasterObj[name]['誕生日'] == ((month + 1) + '/' + day)) {
                         tdElem.innerHTML = '';
 
+                        const splittedUrl = characterMasterObj[name]['import'].split('/');
+                        const fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
+                        const srcUrl = 'images/characters/face/' + fileName;
+
                         const imgElem = document.createElement('img');
-                        imgElem.src = characterMasterObj[name]['image'];
+                        imgElem.src = srcUrl;
                         imgElem.alt = name;
                         tdElem.appendChild(imgElem);
                     }
