@@ -367,6 +367,11 @@ legend {
     grid-area: pane1;
 }
 
+.pane1 p a {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 /* PANE2  */
 .pane2 {
     grid-area: pane2;
