@@ -1,4 +1,8 @@
 {
+    "波乱月白経津": {
+        "レアリティ": 5,
+        "import": "data/weapons/sword/5_HaranGeppakuFutsu.json"
+    },
     "霧切の廻光": {
         "レアリティ": 5,
         "import": "data/weapons/sword/5_MistsplitterReforged.json"
