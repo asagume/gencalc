@@ -3307,7 +3307,11 @@ function makeTalentStatTableTr(obj, level) {
                     }
                     if (my数値 instanceof String || typeof (my数値) == 'string') {
                         innerHtml += my数値.replace(re, (match) => {
-                            return (Math.round(Number(match) * 10) / 10).toFixed(1);
+                            if (Number(match) >= 10) {
+                                return (Math.round(Number(match) * 10) / 10).toFixed(1);
+                            } else {
+                                return (Math.round(Number(match) * 100) / 100).toFixed(2);
+                            }
                         });
                     } else {
                         innerHtml += my数値;

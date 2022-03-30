@@ -1,7 +1,7 @@
 {
     "来歆の余響": {
         "レアリティ": 5,
-        "image": "images/artifacts/3_Adventurer.png",
+        "image": "images/artifacts/5_EchoesofAnOffering.png",
         "2セット効果": {
             "説明": "攻撃力+18%",
             "詳細": [
@@ -34,7 +34,7 @@
     },
     "辰砂往生録": {
         "レアリティ": 5,
-        "image": "images/artifacts/3_Adventurer.png",
+        "image": "images/artifacts/5_VermillionHereafter.png",
         "2セット効果": {
             "説明": "攻撃力+18%",
             "詳細": [
