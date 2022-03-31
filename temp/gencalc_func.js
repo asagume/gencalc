@@ -1108,13 +1108,17 @@ function ステータス条件取消(resultObj, condition, statusObj, validCondi
             multiplier = checkConditionMatches(valueObj['条件'], validConditionValueArr);
             if (multiplier > 0) {
                 let workObj = JSON.parse(JSON.stringify(statusObj));    //　力技
-                calculateStatus(workObj, valueObj['種類'], valueObj['数値'], valueObj['上限']);
+                let myNew数値 = valueObj['数値'];
+                if (multiplier != 1) {
+                    myNew数値 = myNew数値.concat(['*', multiplier]);
+                }
+                calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
                 Object.keys(workObj).forEach(statusName => {
                     if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == statusObj[statusName]) return;
                     if (!(statusName in resultObj)) {
                         resultObj[statusName] = 0;
                     }
-                    resultObj[statusName] -= (workObj[statusName] - statusObj[statusName]) * multiplier;
+                    resultObj[statusName] -= workObj[statusName] - statusObj[statusName];
                 });
             }
         });
