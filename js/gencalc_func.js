@@ -1085,14 +1085,34 @@ function calculateStatus(statusObj, kind, formulaArr, opt_max = null) {
  * @param {Object} resultObj リザルト詳細
  * @param {string} condition 条件文字列
  * @param {Object} statusObj ステータス詳細
+ * @param {Array<string>} validConditionValueArr 有効な条件
  */
-function ステータス条件取消(resultObj, condition, statusObj) {
+function ステータス条件取消(resultObj, condition, statusObj, validConditionValueArr) {
     ステータス変更系詳細ArrMapVar.forEach((value, key) => {
         value.forEach(valueObj => {
-            if (valueObj['対象'] || !valueObj['数値']) return;
-            if (valueObj['条件'] == condition) {
+            if (valueObj['対象'] || !valueObj['数値'] || !valueObj['条件']) return;
+
+            let isTarget = false;
+            const orSplitted = valueObj['条件'].split('|');
+            orSplitted.forEach(orValue => {
+                const andSplitted = orValue.split('&');
+                andSplitted.forEach(andValue => {
+                    if (andValue == condition || andValue.startsWith(condition + '@')) {
+                        isTarget = true;
+                    }
+                });
+            });
+            if (!isTarget) return;
+
+            let multiplier = 1;
+            multiplier = checkConditionMatches(valueObj['条件'], validConditionValueArr);
+            if (multiplier > 0) {
                 let workObj = JSON.parse(JSON.stringify(statusObj));    //　力技
-                calculateStatus(workObj, valueObj['種類'], valueObj['数値'], valueObj['上限']);
+                let myNew数値 = valueObj['数値'];
+                if (multiplier != 1) {
+                    myNew数値 = myNew数値.concat(['*', multiplier]);
+                }
+                calculateStatus(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
                 Object.keys(workObj).forEach(statusName => {
                     if (!$.isNumeric(workObj[statusName]) || workObj[statusName] == statusObj[statusName]) return;
                     if (!(statusName in resultObj)) {
@@ -1158,9 +1178,10 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
             if ($.isPlainObject(condition)) {
                 let optionElem = document.getElementById(condition['名前'] + 'Option');
                 if (!optionElem) return;
-                if (validConditionValueArr.includes(condition['名前'])) {
-                    ステータス条件取消(myステータス補正, condition['名前'], statusObj);
-                    validConditionValueArr = validConditionValueArr.filter(p => p != condition);
+                const number = checkConditionMatches(condition['名前'], validConditionValueArr);
+                if (number > 0) {
+                    ステータス条件取消(myステータス補正, condition['名前'], statusObj, validConditionValueArr);
+                    validConditionValueArr = validConditionValueArr.filter(p => p != condition && !p.startsWith(condition + '@'));
                 }
                 if ('説明' in condition) {
                     if ($.isArray(condition['説明'])) {
@@ -1176,8 +1197,8 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                     }
                 }
             } else if (validConditionValueArr.includes(condition)) {
-                ステータス条件取消(myステータス補正, condition, statusObj);
-                validConditionValueArr = validConditionValueArr.filter(p => p != condition);
+                ステータス条件取消(myステータス補正, condition, statusObj, validConditionValueArr);
+                validConditionValueArr = validConditionValueArr.filter(p => p != condition && !p.startsWith(condition + '@'));
             }
         });
     }
