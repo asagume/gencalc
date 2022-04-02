@@ -79,8 +79,20 @@
         "レアリティ": 4,
         "import": "data/weapons/sword/4_FavoniusSword.json"
     },
+    "飛天御剣": {
+        "レアリティ": 3,
+        "import": "data/weapons/sword/3_SkyriderSword.json"
+    },
+    "チ虎魚の刀": {
+        "レアリティ": 3,
+        "import": "data/weapons/sword/3_FilletBlade.json"
+    },
     "黎明の神剣": {
         "レアリティ": 3,
         "import": "data/weapons/sword/3_HarbingerofDawn.json"
+    },
+    "冷刃": {
+        "レアリティ": 3,
+        "import": "data/weapons/sword/3_CoolSteel.json"
     }
 }
