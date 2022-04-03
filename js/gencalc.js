@@ -49,7 +49,32 @@ function setupAllEvent() {
                 }
             });
         }
-        buildキャラクター選択リスト(elementType);
+        let weaponType = null;
+        Array.from(document.getElementsByName('weapon-type-input')).forEach(e => {
+            if ($(e).prop('checked')) {
+                weaponType = $('#' + e.id + '+label img').prop('alt');
+            }
+        });
+        buildキャラクター選択リスト(elementType, weaponType);
+        emSelectedItemInList('#キャラクター選択', $('#キャラクターInput').val());
+    });
+    $(document).on('click', '[name="weapon-type-input"]', function () {
+        let weaponType = null;
+        if (this.checked) {
+            weaponType = $('#' + this.id + '+label img').prop('alt');
+            Array.from(document.getElementsByName('weapon-type-input')).forEach(e => {
+                if (e != this) {
+                    $(e).prop('checked', false);
+                }
+            });
+        }
+        let elementType = null;
+        Array.from(document.getElementsByName('element-type-input')).forEach(e => {
+            if ($(e).prop('checked')) {
+                elementType = $('#' + e.id + '+label img').prop('alt');
+            }
+        });
+        buildキャラクター選択リスト(elementType, weaponType);
         emSelectedItemInList('#キャラクター選択', $('#キャラクターInput').val());
     });
 
@@ -447,7 +472,7 @@ async function loadマスターデータAndSetup() {
                 const birthdayStrArr = キャラクターリストMasterVar[key]['誕生日'].split('/');
                 let birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
                 const diff = today.getTime() - birthday.getTime();
-                console.log(today, birthday,  diff, key);
+                console.log(today, birthday, diff, key);
                 if (diff < 0) return;
                 if (diff < curDiff) {
                     curDiff = diff;

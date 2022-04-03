@@ -4448,8 +4448,9 @@ function setupチームオプション() {
  * キャラクター選択リストを生成します
  * 
  * @param {string} opt_elementType 元素
+ * @param {string} opt_weaponType 武器
  */
-function buildキャラクター選択リスト(opt_elementType = null) {
+function buildキャラクター選択リスト(opt_elementType = null, opt_weaponType = null) {
     document.querySelector('#キャラクター選択').innerHTML = '';
     let ulElem = document.getElementById('キャラクター選択');
     Object.keys(キャラクターリストMasterVar).forEach(name => {
@@ -4458,6 +4459,9 @@ function buildキャラクター選択リスト(opt_elementType = null) {
             return;
         }
         if (opt_elementType && myMasterObj['元素'] != opt_elementType) {
+            return;
+        }
+        if (opt_weaponType && myMasterObj['武器'] != opt_weaponType) {
             return;
         }
         let liElem = document.createElement('li');

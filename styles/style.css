@@ -391,6 +391,19 @@ legend {
     border: 1px solid gray;
 }
 
+[name="weapon-type-input"] {
+    display: none;
+}
+
+[name="weapon-type-input"]:checked+label {
+    display: inline;
+    height: 35px;
+}
+
+[name="weapon-type-input"]:checked+label img {
+    border: 1px solid gray;
+}
+
 #character-select {
     display: none;
 }
