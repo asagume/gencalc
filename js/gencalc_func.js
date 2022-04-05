@@ -1450,7 +1450,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                     if (!(valueObj['種類'] in myステータス補正)) {
                         myステータス補正[valueObj['種類']] = 0;
                     }
-                    myステータス補正[valueObj['種類']] -= myValue * (detailObj['HIT数'] - 1) / detailObj['HIT数'];
+                    myステータス補正[valueObj['種類']] -= myValue * (detailObj['HIT数'] - Math.max(1, Math.floor(detailObj['HIT数'] / 2))) / detailObj['HIT数'];
                 }
             });
             const description = '1段でダメージが複数回発生する通常攻撃については、来歆の余響4セット効果の幽谷祭祀のダメージアップは1回分のみ計上する';
