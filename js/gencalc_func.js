@@ -3331,7 +3331,7 @@ function makeTalentStatTableTr(obj, level) {
                             if (Number(match) >= 10) {
                                 return (Math.round(Number(match) * 10) / 10).toFixed(1);
                             } else {
-                                return (Math.round(Number(match) * 100) / 100).toFixed(2);
+                                return (Math.round(Number(match) * 100) / 100).toFixed(2).replace(/\.0+$/, '');
                             }
                         });
                     } else {
@@ -3425,10 +3425,14 @@ function build天賦詳細レベル変動() {
             let value = obj[key];
             if (key in apartObj && apartObj[key]) {
                 value = apartObj[key];
-                if (key in obj && $.isNumeric(obj[key]) && obj[key] == apartObj[key]) {
-                    value = value.toFixed(1) + '秒';
+                if (key in obj && $.isNumeric(obj[key])) {
+                    if (obj[key] == apartObj[key]) {
+                        value = value.toFixed(1) + '秒';
+                    } else {
+                        value = '<span class="strong">' + value.toFixed(1) + '秒</span>';
+                    }
                 } else {
-                    value = '<span class="strong">' + value.toFixed(1) + '秒</span>';
+                    value = value + '秒';
                 }
             } else if ($.isNumeric(value)) {
                 value = obj[key];
