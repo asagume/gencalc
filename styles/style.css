@@ -928,6 +928,10 @@ div.select-option select+label {
     width: 324px;
 }
 
+#チームオプションBox label.selected {
+    background-color: #947f0a;
+}
+
 #チームオプションステータス変化 p {
     display: inline-block;
     margin: 0.5rem 1rem;

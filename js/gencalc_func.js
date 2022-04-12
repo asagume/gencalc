@@ -2305,6 +2305,16 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     // チームオプションを計上します
     $('#チームオプションステータス変化').html('');
     const validTeamConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], チームオプション条件MapVar);
+    const サポーターSet = new Set(チームオプション詳細ArrVar.map(detailObj => detailObj['条件'].split('*')[1]));
+    サポーターSet.forEach(name => {
+        const labelElem = $('#チームオプション' + selectorEscape(name) + '+label').get()[0];
+        if (labelElem) {
+            labelElem.classList.remove('selected');
+            if (validTeamConditionValueArr.filter(s => s.startsWith('*' + name + '*')).length > 0) {
+                labelElem.classList.add('selected');
+            }
+        }
+    });
     if (validTeamConditionValueArr.length > 0) {
         const teamStatusObj = {};
         チームオプション詳細ArrVar.forEach(detailObj => {
