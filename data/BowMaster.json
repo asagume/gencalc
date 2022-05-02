@@ -74,5 +74,25 @@
     "西風猟弓": {
         "レアリティ": 4,
         "import": "data/weapons/bow/4_FavoniusWarbow.json"
+    },
+    "文使い": {
+        "レアリティ": 3,
+        "import": "data/weapons/bow/3_Messenger.json"
+    },
+    "弾弓": {
+        "レアリティ": 3,
+        "import": "data/weapons/bow/3_SlingShot.json"
+    },
+    "リカーブボウ": {
+        "レアリティ": 3,
+        "import": "data/weapons/bow/3_RecurveBow.json"
+    },
+    "シャープシューターの誓い": {
+        "レアリティ": 3,
+        "import": "data/weapons/bow/3_SharpShootersOath.json"
+    },
+    "鴉羽の弓": {
+        "レアリティ": 3,
+        "import": "data/weapons/bow/3_RavenBow.json"
     }
 }

@@ -1337,7 +1337,8 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                     let my対象カテゴリArr = valueObj['対象'].split('.');
                     if (my対象カテゴリArr[0] != detailObj['種類']) {
                         return;
-                    } if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
+                    }
+                    if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
                         return;
                     }
                 }
