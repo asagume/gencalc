@@ -89,7 +89,7 @@
     },
     "シャープシューターの誓い": {
         "レアリティ": 3,
-        "import": "data/weapons/bow/3_SharpShootersOath.json"
+        "import": "data/weapons/bow/3_SharpshootersOath.json"
     },
     "鴉羽の弓": {
         "レアリティ": 3,
