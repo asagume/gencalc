@@ -67,17 +67,33 @@
             オプション2MasterVar = responses[13];
             チームオプションMasterVar = responses[14];
 
-            let html = '';
-
+            const LINK_ARR_MAP = new Map();
             Object.keys(localStorage).filter(s => s.startsWith('構成_')).forEach(key => {
                 const name = key.replace(/^構成_/, '');
                 const value = JSON.parse(localStorage[key]);
                 const encoded = encodeURI(makeShareData(value));
                 const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
 
-                html += ((name in キャラクターリストMasterVar) ? 'あなたの' + name : name) + '<br>\n';
-                html += '<a href="' + url + '">' + url + '</a><br>\n';
-                html += '<br>\n'
+                let myHtml = '';
+                myHtml += ((name in キャラクターリストMasterVar) ? 'あなたの' + name : name) + '<br>\n';
+                myHtml += '<a href="' + url + '">' + url + '</a><br>\n';
+                myHtml += '<br>\n'
+
+                let newArr = [];
+                if(LINK_ARR_MAP.has(value['キャラクター'])) {
+                    newArr = LINK_ARR_MAP.get(value['キャラクター']);
+                }
+                newArr.push(myHtml);
+                LINK_ARR_MAP.set(value['キャラクター'], newArr);
+            });
+
+            let html = '';
+            Object.keys(キャラクターリストMasterVar).forEach(key => {
+                if (LINK_ARR_MAP.has(key)) {
+                    LINK_ARR_MAP.get(key).forEach(value => {
+                        html += value;
+                    });
+                }
             });
 
             $('#savedata-list').html(html);
