@@ -35,7 +35,7 @@
         <div class="base-container">
             <div class="pane1">
                 <fieldset style="margin: 1rem; position: relative;">
-                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.3.7</legend>
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.2.3.8</legend>
                     <p>
                         <a href="ArtifactSetList.html">聖遺物セット効果一覧</a>
                         <a href="BirthdayCalendar.html">誕生日カレンダー</a>
@@ -289,6 +289,27 @@
                 <div class="tab-area">
                     <input type="radio" class="tab-button" id="character-profile" name="detail-box">
                     <div class="tab-content">
+                        <table class="character-profile-detail">
+                            <tr class="rowheader">
+                                <th colspan="2">ステータス</th>
+                            </tr>
+                            <tr>
+                                <td class="stat-name">基礎HP</td>
+                                <td class="stat-value" id="base-hp-value"></td>
+                            </tr>
+                            <tr>
+                                <td class="stat-name">基礎攻撃力</td>
+                                <td class="stat-value" id="base-atk-value"></td>
+                            </tr>
+                            <tr>
+                                <td class="stat-name">基礎防御力</td>
+                                <td class="stat-value" id="base-def-value"></td>
+                            </tr>
+                            <tr>
+                                <td class="stat-name" id="stat2-name"></td>
+                                <td class="stat-value" id="stat2-value"></td>
+                            </tr>
+                        </table>
                         <table class="character-profile-detail">
                             <tr class="rowheader">
                                 <th colspan="2">命ノ星座</th>

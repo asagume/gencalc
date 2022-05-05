@@ -3902,6 +3902,7 @@ const 命ノ星座InputOnChange = function () {
 
 // レベル 変更イベント
 const レベルInputOnChange = function () {
+    buildキャラクタープロフィールレベル変動();
     inputOnChangeOptionUpdate();
 };
 
@@ -4591,6 +4592,9 @@ function build武器選択リスト() {
  * キャラクタープロフィールを生成します
  */
 function buildキャラクタープロフィール() {
+    // ステータス
+    buildキャラクタープロフィールレベル変動();
+
     // 命ノ星座
     const constellationsElem = document.getElementById('constellations');
     constellationsElem.innerHTML = '';
@@ -4680,7 +4684,31 @@ function buildキャラクタープロフィール() {
     } else {
         $(attackTalentsEtcElem).parents('table').hide();
     }
+}
 
+function buildキャラクタープロフィールレベル変動() {
+    const myLevel = String($('#レベルInput').val());
+    // 基礎HP
+    const baseHpElem = document.getElementById('base-hp-value');
+    baseHpElem.innerHTML = 選択中キャラクターデータVar['ステータス']['基礎HP'][myLevel];
+    // 基礎攻撃力
+    const baseAtkElem = document.getElementById('base-atk-value');
+    baseAtkElem.innerHTML = 選択中キャラクターデータVar['ステータス']['基礎攻撃力'][myLevel];
+    // 基礎防御力
+    const baseDefElem = document.getElementById('base-def-value');
+    baseDefElem.innerHTML = 選択中キャラクターデータVar['ステータス']['基礎防御力'][myLevel];
+    // 第2ステータス
+    const stat2NameElem = document.getElementById('stat2-name');
+    const stat2ValueElem = document.getElementById('stat2-value');
+    Object.keys(選択中キャラクターデータVar['ステータス']).forEach(key => {
+        if (!['基礎HP', '基礎攻撃力', '基礎防御力'].includes(key)) {
+            stat2NameElem.innerHTML = key.replace(/%$/, '');
+            stat2ValueElem.innerHTML = 選択中キャラクターデータVar['ステータス'][key][myLevel];
+            if (key.endsWith('%') || ['会心率', '会心ダメージ', '元素チャージ効率'].includes(key) || key.endsWith('ダメージバフ')) {
+                stat2ValueElem.innerHTML += '%';
+            }
+        }
+    });
 }
 
 // キャラクター選択
