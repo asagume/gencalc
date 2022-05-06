@@ -2547,8 +2547,14 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
  * @param {Object} statusObj ステータス詳細
  */
 function calculateArtifactScore(statusObj) {
+    let my攻撃力小計 = statusObj['聖遺物サブ効果攻撃力'];
+    if (!$('#聖遺物メイン効果2Input').val()) { // 死の羽未設定の場合
+        if (my攻撃力小計 >= 聖遺物メイン効果MasterVar['5']['攻撃力']) {
+            my攻撃力小計 -= 聖遺物メイン効果MasterVar['5']['攻撃力'];
+        }
+    }
     let my攻撃力P小計 = statusObj['聖遺物サブ効果攻撃力P'];
-    my攻撃力P小計 += statusObj['聖遺物サブ効果攻撃力'] / statusObj['基礎攻撃力'];
+    my攻撃力P小計 += my攻撃力小計 / statusObj['基礎攻撃力'];
     if (!$('#聖遺物メイン効果3Input').val()) { // 時の砂未設定の場合
         if (statusObj['聖遺物サブ効果元素チャージ効率'] < 聖遺物メイン効果MasterVar['5']['元素チャージ効率']) { // 攻撃力%とみなします
             if (my攻撃力P小計 >= 聖遺物メイン効果MasterVar['5']['攻撃力%']) {
