@@ -11,7 +11,7 @@
         "元素": "雷",
         "武器": "法器",
         "誕生日": "6/27",
-        "import": "data/characters/electro_5_catalyst_Yaemiko.json"
+        "import": "data/characters/electro_5_catalyst_YaeMiko.json"
     },
     "申鶴": {
         "レアリティ": 5,
@@ -255,7 +255,7 @@
         "元素": "炎",
         "武器": "片手剣",
         "誕生日": "2/29",
-        "import": "data/characters/pyro_4_sword_Benette.json"
+        "import": "data/characters/pyro_4_sword_Bennett.json"
     },
     "フィッシュル": {
         "レアリティ": 4,
@@ -331,18 +331,18 @@
         "レアリティ": 5,
         "元素": "雷",
         "武器": "片手剣",
-        "import": "data/characters/electro_5_sword_Traveller.json"
+        "import": "data/characters/electro_5_sword_Traveler.json"
     },
     "旅人(岩)": {
         "レアリティ": 5,
         "元素": "岩",
         "武器": "片手剣",
-        "import": "data/characters/geo_5_sword_Traveller.json"
+        "import": "data/characters/geo_5_sword_Traveler.json"
     },
     "旅人(風)": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "片手剣",
-        "import": "data/characters/aero_5_sword_Traveller.json"
+        "import": "data/characters/aero_5_sword_Traveler.json"
     }
 }
