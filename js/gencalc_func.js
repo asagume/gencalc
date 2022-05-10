@@ -836,15 +836,12 @@ function calculate固定値系元素反応ダメージ(statusObj, element, eleme
     if (!element || element == '物理' || !(elementalReaction in 元素反応MasterVar[element])) {
         return 0;
     }
-    let level = Number($('#レベルInput').val().toString().replace('+', ''));
-    let dmgBuff = statusObj[elementalReaction + '反応ボーナス'];
+    const level = Number($('#レベルInput').val().toString().replace('+', ''));
+    const dmgBuff = statusObj[elementalReaction + '反応ボーナス'];
+    const dmgElement = 元素反応MasterVar[element][elementalReaction]['元素']
     let result = 元素反応MasterVar[element][elementalReaction]['数値'][level];
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
-    if (elementalReaction == '拡散') {
-        result *= calculate元素耐性補正(statusObj, '炎');
-    } else {
-        result *= calculate元素耐性補正(statusObj, element);
-    }
+    result *= calculate元素耐性補正(statusObj, dmgElement);
     return result;
 }
 
