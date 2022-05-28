@@ -66,7 +66,7 @@
         "元素": "風",
         "武器": "片手剣",
         "誕生日": "10/29",
-        "import": "data/characters/aero_5_sword_KaedeharaKazuha.json"
+        "import": "data/characters/anemo_5_sword_KaedeharaKazuha.json"
     },
     "エウルア": {
         "レアリティ": 5,
@@ -87,7 +87,7 @@
         "元素": "風",
         "武器": "長柄武器",
         "誕生日": "4/17",
-        "import": "data/characters/aero_5_polearm_Xiao.json"
+        "import": "data/characters/anemo_5_polearm_Xiao.json"
     },
     "甘雨": {
         "レアリティ": 5,
@@ -129,7 +129,7 @@
         "元素": "風",
         "武器": "弓",
         "誕生日": "6/16",
-        "import": "data/characters/aero_5_bow_Venti.json"
+        "import": "data/characters/anemo_5_bow_Venti.json"
     },
     "刻晴": {
         "レアリティ": 5,
@@ -164,7 +164,7 @@
         "元素": "風",
         "武器": "片手剣",
         "誕生日": "3/14",
-        "import": "data/characters/aero_5_sword_Jean.json"
+        "import": "data/characters/anemo_5_sword_Jean.json"
     },
     "雲菫": {
         "レアリティ": 4,
@@ -199,7 +199,7 @@
         "元素": "風",
         "武器": "両手剣",
         "誕生日": "10/19",
-        "import": "data/characters/aero_4_claymore_Sayu.json"
+        "import": "data/characters/anemo_4_claymore_Sayu.json"
     },
     "煙緋": {
         "レアリティ": 4,
@@ -234,7 +234,7 @@
         "元素": "風",
         "武器": "法器",
         "誕生日": "11/26",
-        "import": "data/characters/aero_4_catalyst_Sucrose.json"
+        "import": "data/characters/anemo_4_catalyst_Sucrose.json"
     },
     "重雲": {
         "レアリティ": 4,
@@ -343,6 +343,6 @@
         "レアリティ": 5,
         "元素": "風",
         "武器": "片手剣",
-        "import": "data/characters/aero_5_sword_Traveler.json"
+        "import": "data/characters/anemo_5_sword_Traveler.json"
     }
 }

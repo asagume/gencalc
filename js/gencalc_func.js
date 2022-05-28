@@ -3986,7 +3986,7 @@ function makeHtml(obj) {
     result = result.replace(frozenRe, '<span class="cryo">$&</span>');
     // 拡散
     const swirlRe = /拡散/g;
-    result = result.replace(swirlRe, '<span class="aero">$&</span>');
+    result = result.replace(swirlRe, '<span class="anemo">$&</span>');
     // 岩元素創造物
     const geoConstructRe = /岩元素創造物/g;
     result = result.replace(geoConstructRe, '<span class="geo">$&</span>');

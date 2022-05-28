@@ -1,4 +1,8 @@
 {
+    "若水": {
+        "レアリティ": 5,
+        "import": "data/weapons/bow/5_AquaSimulacra.json"
+    },
     "冬極の白星": {
         "レアリティ": 5,
         "import": "data/weapons/bow/5_PolarStar.json"
@@ -18,6 +22,10 @@
     "天空の翼": {
         "レアリティ": 5,
         "import": "data/weapons/bow/5_SkywardHarp.json"
+    },
+    "落霞": {
+        "レアリティ": 4,
+        "import": "data/weapons/bow/4_FadingTwilight.json"
     },
     "曚雲の月": {
         "レアリティ": 4,

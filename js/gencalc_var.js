@@ -240,7 +240,7 @@ const KIND_TO_PROPERTY_MAP = new Map([
 const ELEMENT_TD_CLASS_MAP = new Map([
     ['炎', 'pyro'],
     ['水', 'hydro'],
-    ['風', 'aero'],
+    ['風', 'anemo'],
     ['雷', 'electro'],
     ['氷', 'cryo'],
     ['岩', 'geo']
@@ -249,7 +249,7 @@ const ELEMENT_TD_CLASS_MAP = new Map([
 const ELEMENT_IMG_SRC_MAP = new Map([
     ['炎', 'images/element_pyro.png'],
     ['水', 'images/element_hydro.png'],
-    ['風', 'images/element_aero.png'],
+    ['風', 'images/element_anemo.png'],
     ['雷', 'images/element_electro.png'],
     ['氷', 'images/element_cryo.png'],
     ['岩', 'images/element_geo.png']
@@ -706,7 +706,7 @@ const ARTIFACT_STAT_JA_EN_MAP = new Map([
     ['元素チャージ効率', 'Energy Recharge'],
     ['炎元素ダメージバフ', 'Pyro Elemental DMG Bonus'],
     ['水元素ダメージバフ', 'Hydro Elemental DMG Bonus'],
-    ['風元素ダメージバフ', 'Aero Elemental DMG Bonus'],
+    ['風元素ダメージバフ', 'anemo Elemental DMG Bonus'],
     ['雷元素ダメージバフ', 'Electro Elemental DMG Bonus'],
     ['草元素ダメージバフ', 'Dendro Elemental DMG Bonus'],
     ['氷元素ダメージバフ', 'Cryo Elemental DMG Bonus'],
@@ -728,7 +728,7 @@ const ARTIFACT_STAT_JA_EN_ABBREV_MAP = new Map([
     ['元素チャージ効率', 'EnergyRecharge'],
     ['炎元素ダメージバフ', 'Pyro'],
     ['水元素ダメージバフ', 'Hydro'],
-    ['風元素ダメージバフ', 'Aero'],
+    ['風元素ダメージバフ', 'anemo'],
     ['雷元素ダメージバフ', 'Electro'],
     ['草元素ダメージバフ', 'Dendro'],
     ['氷元素ダメージバフ', 'Cryo'],
