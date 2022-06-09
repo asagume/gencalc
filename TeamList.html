@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - チームリスト</title>
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="js/gencalc_var.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        #main {
+            padding: 2rem;
+        }
+
+        #team-list {
+            text-align: left;
+        }
+
+        .team {
+            text-align: left;
+        }
+
+        /* .team ol {
+            max-width: 100%;
+            display: block;
+            list-style: decimal;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .team li {
+            position: relative;
+            display: inline-block;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
+
+        <div id="team-list-area">
+            <h2>チーム一覧</h2>
+            <ol class="team">
+                <li><img height="80" width="80" src="images/characters/face/hydro_5_bow_Yelan.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/geo_4_bow_Gorou.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/geo_5_sword_Albedo.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/geo_4_claymore_Noelle.png" alt=""> </li>
+            </ol>
+            <ol class="team">
+                <li><img height="80" width="80" src="images/characters/face/electro_5_polearm_RaidenShogun.png" alt="">
+                </li>
+                <li><img height="80" width="80" src="images/characters/face/hydro_4_sword_Xingqiu.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/pyro_4_sword_Bennett.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/pyro_4_polearm_Xiangling.png" alt=""> </li>
+            </ol>
+            <ol class="team">
+                <li><img height="80" width="80" src="images/characters/face/geo_5_polearm_Zhongli.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/hydro_4_sword_Xingqiu.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/geo_5_sword_Albedo.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/pyro_5_polearm_HuTao.png" alt=""> </li>
+            </ol>
+            <ol class="team">
+                <li><img height="80" width="80" src="images/characters/face/geo_5_polearm_Zhongli.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/hydro_4_sword_Xingqiu.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/hydro_5_bow_Yelan.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/pyro_5_polearm_HuTao.png" alt=""> </li>
+            </ol>
+            <ol class="team">
+                <li><img height="80" width="80" src="images/characters/face/cryo_5_polearm_Shenhe.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/anemo_5_sword_KaedeharaKazuha.png" alt="">
+                </li>
+                <li><img height="80" width="80" src="images/characters/face/hydro_5_catalyst_SangonomiyaKokomi.png"
+                        alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/cryo_5_sword_KamisatoAyaka.png" alt="">
+                </li>
+            </ol>
+            <ol class="team">
+                <li><img height="80" width="80" src="images/characters/face/cryo_4_bow_Diona.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/hydro_5_sword_KamisatoAyato.png" alt="">
+                </li>
+                <li><img height="80" width="80" src="images/characters/face/cryo_5_bow_Ganyu.png" alt=""> </li>
+                <li><img height="80" width="80" src="images/characters/face/anemo_5_bow_Venti.png" alt=""> </li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        var testdata = {
+            "character": [
+                "夜蘭", "ゴロー", "アルベド", "ノエル"
+            ],
+            "action": [
+                "夜蘭       E.HOLD",
+                "ゴロー     Q",
+                "アルベド   E",
+                "夜蘭       Q N1",
+                "ノエル     Q E N3D",
+                "夜蘭       E.PRESS N1",
+                "ゴロー     E.PRESS",
+                "ノエル     N3D N3D N3D N4",
+            ]
+        }
+        async function init() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json',
+                'data/SwordMaster.json',
+                'data/ClaymoreMaster.json',
+                'data/PolearmMaster.json',
+                'data/BowMaster.json',
+                'data/CatalystMaster.json',
+                'data/ArtifactSetMaster.json',
+                'data/ArtifactMainMaster.json',
+                'data/ArtifactSubMaster.json',
+                'data/EnemyMaster.json',
+                'data/ElementalResonanceMaster.json',
+                'data/ElementalReactionMaster.json',
+                'data/OptionMaster1.json',
+                'data/OptionMaster2.json',
+                'data/TeamOptionMaster.json'
+            ].map(url => fetch(url).then(resp => resp.json())));
+
+            キャラクターリストMasterVar = responses[0];
+            武器リストMasterVar['片手剣'] = responses[1];
+            武器リストMasterVar['両手剣'] = responses[2];
+            武器リストMasterVar['長柄武器'] = responses[3];
+            武器リストMasterVar['弓'] = responses[4];
+            武器リストMasterVar['法器'] = responses[5];
+            聖遺物セット効果MasterVar = responses[6];
+            聖遺物メイン効果MasterVar = responses[7];
+            聖遺物サブ効果MasterVar = responses[8];
+            敵MasterVar = responses[9];
+            元素共鳴MasterVar = responses[10];
+            元素反応MasterVar = responses[11];
+            オプション1MasterVar = responses[12];
+            オプション2MasterVar = responses[13];
+            チームオプションMasterVar = responses[14];
+
+            const teamListAreaElem = document.getElementById('team-list-area');
+
+            let actionDetail = [new Map(), new Map(), new Map(), new Map()];
+            let i = 0;
+            testdata.action.forEach(action => {
+                const actionSplitted = action.split(new RegExp('[ \t]+'));
+                console.debug(actionSplitted);
+                for (let j = 0; j < testdata.character.length; j++) {
+                    if (actionSplitted[0] != testdata.character[j]) {
+                        continue;
+                    }
+                    let actionEntry = actionDetail[j];
+                    for (let k = 1; k < actionSplitted.length; k++) {
+                        actionEntry.set(i++, actionSplitted[k]);
+                    }
+                }
+            });
+
+            console.debug(actionDetail);
+
+            const olElem = document.createElement('ol');
+            olElem.className = 'team';
+            for (let j = 0; j < testdata.character.length; j++) {
+                const character = testdata.character[j];
+                const liElem = document.createElement('li');
+                const imgElem = document.createElement('img');
+                const importVal = キャラクターリストMasterVar[character].import;
+                imgElem.src = importVal.replace('data/characters/', 'images/characters/face/').replace('.json', '.png');
+                imgElem.alt = character;
+                liElem.appendChild(imgElem);
+                const divElem = document.createElement('div');
+                actionDetail[j].forEach((value, key) => {
+                    switch (value) {
+                        case 'E':
+                        case 'E.PRESS':
+                        case 'E.HOLD':
+                            break;
+                        case 'Q':
+                            break;
+                        default:
+                            if (value.startsWith('N')) {
+
+                            }
+                            break;
+                    }
+                    divElem.innerHTML += key + ',' + value;
+                });
+                liElem.appendChild(divElem);
+                olElem.appendChild(liElem);
+            }
+            teamListAreaElem.appendChild(olElem);
+        };
+
+        window.onload = () => {
+            init();
+        };
+    </script>
+</body>
+
+</html>
