@@ -27,11 +27,7 @@
             color: blanchedalmond;
         }
 
-        #team-list {
-            text-align: left;
-        }
-
-        .team {
+        #rotation-list-area {
             text-align: left;
         }
 
@@ -58,7 +54,7 @@
 
         .actions div.action {
             position: absolute;
-            border-radius: 50%;
+            border-radius: 40%;
             bottom: -96px;
             text-align: center;
         }
@@ -86,10 +82,21 @@
             <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
         </fieldset>
 
-        <div id="rotaion-list-area">
+        <label for="rotation-input">Rotation Text:</label>
+        <textarea id="rotation-input" name="rotation-input" rows="8" cols="120" autocapitalize="words">
+        </textarea>
+
+        <div id="rotation-list-area">
             <ul>
                 <li>
-
+                    <pre>
+                        Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E N3D > Yelan EN > Gorou EN > Noelle 2N3D
+                    </pre>
+                </li>
+                <li>
+                    <pre>
+                        雷電将軍 E > 行秋 QE > ベネット EQ > 香菱 EQ > ベネット EN > 雷電将軍 Q 4N4C
+                    </pre>
                 </li>
             </ul>
         </div>
@@ -179,9 +186,9 @@
                         // D ダッシュ
                         // J ジャンプ
                         // W 歩く
-                        if ('NCEQ'.indexOf(a.toUpperCase()) != -1) {
+                        if ('NEQ'.indexOf(a.toUpperCase()) != -1) {
                             subArr.push(a.toUpperCase());
-                        } else if ('DJW'.indexOf(a.toUpperCase()) != -1) {
+                        } else if ('CDJW'.indexOf(a.toUpperCase()) != -1) {
                             if (subArr[subArr.length - 1].startsWith('N')) {
                                 subArr[subArr.length - 1] = subArr[subArr.length - 1] + a;
                             } else {
@@ -249,6 +256,23 @@
             草: '',
             氷: '#63beb4',
             岩: '#df8f37'
+        };
+
+        const TIME_UNIT = 48;
+        const ACTION_TIME = {
+            C: 1.5 * TIME_UNIT,
+            E: 1 * TIME_UNIT,
+            Q: 1.5 * TIME_UNIT,
+            D: 0.2 * TIME_UNIT,
+            J: 0.3 * TIME_UNIT,
+            W: 0.3 * TIME_UNIT
+        };
+        const NORMAL_ATTACK_TIME = {
+            片手剣: 0.4 * TIME_UNIT,
+            両手剣: 0.9 * TIME_UNIT,
+            長柄武器: 0.4 * TIME_UNIT,
+            弓: 0.4 * TIME_UNIT,
+            法器: 0.75 * TIME_UNIT
         };
 
         function createElementAction(character, start, action, actionTime) {
@@ -343,79 +367,70 @@
             });
 
             console.log(characterMatchMap);
-
-            var testdata = 'Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E N3D > Yelan EN > Gorou EN > Noelle 2N3D';
-            let analyzedMap = analyzeKqmNotation(testdata);
-            console.log(analyzedMap);
-
-            const resultAreaElem = document.getElementById('rotaion-result-area');
-
-            const TIME_UNIT = 48;
-            const ACTION_TIME = {
-                C: 1.5 * TIME_UNIT,
-                E: 1 * TIME_UNIT,
-                Q: 1.5 * TIME_UNIT,
-                D: 0.2 * TIME_UNIT,
-                J: 0.3 * TIME_UNIT,
-                W: 0.3 * TIME_UNIT
-            };
-            const NORMAL_ATTACK_TIME = {
-                片手剣: 0.5 * TIME_UNIT,
-                両手剣: 0.9 * TIME_UNIT,
-                長柄武器: 0.5 * TIME_UNIT,
-                弓: 0.5 * TIME_UNIT,
-                法器: 0.75 * TIME_UNIT
-            };
-
-            const actionTimeMap = new Map();
-            analyzedMap.forEach((value, key) => {
-                value.forEach(action => {
-                    let actionTime = 0;
-                    if (action[1] in ACTION_TIME) {
-                        actionTime = ACTION_TIME[action[1]];
-                    } else {
-                        const nRe = new RegExp(/^N(\d*)([DJW]*)/);
-                        let nRet = nRe.exec(action[1]);
-                        if (nRet) {
-
-                            if (nRet[1]) {
-                                actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * Number(nRet[1]);
-                            } else {
-                                actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']];
-                            }
-                            if (nRet[2]) {
-                                actionTime += 0.2 * TIME_UNIT * nRet[2].length;
-                            }
-                        }
-                    }
-                    console.log(action, actionTime, typeof actionTime);
-                    actionTimeMap.set(action[0], actionTime);
-                });
-            });
-
-            const startMap = new Map();
-            actionTimeMap.forEach((value, key) => {
-                let newValue = 0;
-                for (let i = 1; i < key; i++) {
-                    newValue += Number(actionTimeMap.get(i));
-                }
-                startMap.set(key, newValue);
-            });
-
-            let start = 0;
-            analyzedMap.forEach((value, key) => {
-                const characterLineElem = createElementCharacterLine(key);
-                resultAreaElem.appendChild(characterLineElem);
-                value.forEach(action => {
-                    const elem = createElementAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
-                    $(characterLineElem).find('.actions').append(elem);
-                });
-            });
         };
 
         window.onload = () => {
             init();
         };
+
+        const rotationInputOnChange = function () {
+            if ($(this).val()) {
+                const resultAreaElem = document.getElementById('rotaion-result-area');
+                $(resultAreaElem).html('');
+
+                let analyzedMap = analyzeKqmNotation($(this).val());
+                console.log(analyzedMap);
+
+                const actionTimeMap = new Map();
+                analyzedMap.forEach((value, key) => {
+                    value.forEach(action => {
+                        let actionTime = 0;
+                        if (action[1] in ACTION_TIME) {
+                            actionTime = ACTION_TIME[action[1]];
+                        } else {
+                            const nRe = new RegExp(/^N(\d*)([CDJW]*)/);
+                            let nRet = nRe.exec(action[1]);
+                            if (nRet) {
+                                if (nRet[1]) {
+                                    actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * Number(nRet[1]);
+                                } else {
+                                    actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']];
+                                }
+                                if (nRet[2]) {
+                                    if (nRet[2].indexOf('C') != -1) {
+                                        actionTime += NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * 2;
+                                    }
+                                    actionTime += 0.2 * TIME_UNIT * nRet[2].length;
+                                }
+                            }
+                        }
+                        console.log(action, actionTime, typeof actionTime);
+                        actionTimeMap.set(action[0], actionTime);
+                    });
+                });
+
+                const startMap = new Map();
+                actionTimeMap.forEach((value, key) => {
+                    let newValue = 0;
+                    for (let i = 1; i < key; i++) {
+                        newValue += Number(actionTimeMap.get(i));
+                    }
+                    startMap.set(key, newValue);
+                });
+
+                let start = 0;
+                analyzedMap.forEach((value, key) => {
+                    const characterLineElem = createElementCharacterLine(key);
+                    resultAreaElem.appendChild(characterLineElem);
+                    value.forEach(action => {
+                        const elem = createElementAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
+                        $(characterLineElem).find('.actions').append(elem);
+                    });
+                });
+            }
+        };
+
+        $(document).on('change', '#rotation-input', rotationInputOnChange);
     </script>
 </body>
 
