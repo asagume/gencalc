@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんろーて - Genshin Impact Rotation Visualizer</title>
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        body {
+            color: blanchedalmond;
+            background-color: black;
+        }
+
+        #main {
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            padding: 2rem;
+        }
+
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
+        }
+
+        #team-list {
+            text-align: left;
+        }
+
+        .team {
+            text-align: left;
+        }
+
+        div.character-line {
+            position: relative;
+            max-width: 100%;
+            text-align: left;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: 10px solid;
+        }
+
+        div.character-line img.face {
+            width: 80px;
+            height: 80px;
+            vertical-align: top;
+        }
+
+        div.character-line div.actions {
+            position: absolute;
+            left: 80px;
+            top: 0;
+        }
+
+        .actions div.action {
+            position: absolute;
+            border-radius: 50%;
+            bottom: -96px;
+            text-align: center;
+        }
+
+        div.action img.action {
+            width: 48px;
+            /* height: 64px; */
+            vertical-align: top;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        div.action p {
+            font-size: 3rem;
+            color: black;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <fieldset style="margin: 1rem; position: relative;">
+            <legend>げんろーて - Genshin Impact Rotation Visualizer</legend>
+            <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
+        </fieldset>
+
+        <div id="rotaion-list-area">
+            <ul>
+                <li>
+
+                </li>
+            </ul>
+        </div>
+
+        <div id="rotaion-result-area">
+        </div>
+    </div>
+
+    <script>
+        var CharacterMaster;
+        var WeaponMaster = [];
+        var ArtifactSetMaster;
+        var ArtifactMainMaster;
+        var ArtifactSubMaster;
+        var EnemyMaster;
+        var ElementalResonanceMaster;
+        var ElementalReactionMaster;
+        var OptionMaster1;
+        var OptionMaster2;
+        var TeamOptionMaster;
+        var characterMatchMap = new Map();
+
+        const KQM_SPLIT_RE1 = new RegExp(/\s+>\s+/);
+
+        function analyzeCharacterName(str) {
+            let result;
+            const str2 = str.toLowerCase();
+            for (let entry of characterMatchMap.entries()) {
+                entry[1].forEach(v => {
+                    if (str2.startsWith(v.toLowerCase())) {
+                        result = entry[0];
+                    }
+                });
+                if (result) {
+                    break;
+                };
+            }
+            return result;
+        }
+
+        function analyzeKqmNotation(kqm) {
+            let result = new Map();
+
+            kqm = kqm.trim();
+            let start = 1;
+            const kqmSplitted = kqm.split(KQM_SPLIT_RE1);
+            console.log(kqmSplitted);
+            kqmSplitted.forEach(e1 => {
+                const character = analyzeCharacterName(e1);
+                if (!result.has(character)) {
+                    result.set(character, []);
+                }
+
+                let nameArr = characterMatchMap.get(character).filter(s => e1.toLowerCase().startsWith(s.toLowerCase()));
+                let n = 1;
+                if (nameArr) {
+                    nameArr.forEach(name => {
+                        let nTemp = name.split(' ').length;
+                        if (n < nTemp) {
+                            n = nTemp;
+                        }
+                    });
+                }
+                let actions = e1.split(' ');
+                for (let i = 0; i < n; i++) {
+                    actions.shift();
+                }
+
+                actions.forEach(action => {
+                    let subArr = [];
+                    let repeatTimesStr = '';
+                    const actionChars = action.split('');
+                    for (let i = 0; i < actionChars.length; i++) {
+                        if (!$.isNumeric(actionChars[i])) {
+                            break;
+                        }
+                        repeatTimesStr = repeatTimesStr + actionChars[i];
+                    }
+                    for (let i = 0; i < repeatTimesStr.length; i++) {
+                        actionChars.shift();
+                    }
+                    actionChars.forEach(a => {
+                        // N 通常攻撃
+                        // C 重撃
+                        // E 元素スキル
+                        // Q 元素爆発
+                        // D ダッシュ
+                        // J ジャンプ
+                        // W 歩く
+                        if ('NCEQ'.indexOf(a.toUpperCase()) != -1) {
+                            subArr.push(a.toUpperCase());
+                        } else if ('DJW'.indexOf(a.toUpperCase()) != -1) {
+                            if (subArr[subArr.length - 1].startsWith('N')) {
+                                subArr[subArr.length - 1] = subArr[subArr.length - 1] + a;
+                            } else {
+                                subArr.push(a.toUpperCase());
+                            }
+                        } else if ($.isNumeric(a)) {
+                            if (subArr[subArr.length - 1] == 'N') {
+                                subArr[subArr.length - 1] = subArr[subArr.length - 1] + a;
+                            }
+                        }
+                    });
+                    let repeatTimes = 1;
+                    if (repeatTimesStr) {
+                        repeatTimes = Number(repeatTimesStr);
+                    }
+                    for (let i = 0; i < repeatTimes; i++) {
+                        subArr.forEach(a => {
+                            result.get(character).push([start++, a]);
+                        });
+                    }
+                });
+
+            });
+
+            return result;
+        }
+
+        function createElementCharacterLine(character) {
+            const divElem = document.createElement('div');
+            divElem.className = 'character-line';
+            divElem.style.borderBottomColor = ELEMENT_COLOR[CharacterMaster[character]['元素']];
+            divElem.style.borderImage = 'linear-gradient(135deg,' + ELEMENT_COLOR[CharacterMaster[character]['元素']] + ',#555555)';
+            divElem.style.borderImageSlice = '1';
+
+            const imgElem = document.createElement('img');
+            imgElem.className = 'face';
+            const importVal = CharacterMaster[character]['import'];
+            imgElem.src = importVal.replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+            imgElem.alt = characterMatchMap.get(character)[1];
+            const backgroundImageUrl = 'images/star' + CharacterMaster[character]['レアリティ'] + '-bg.png';
+            imgElem.style.backgroundImage = 'url(' + backgroundImageUrl + ')';
+            imgElem.style.backgroundSize = 'contain';
+            divElem.appendChild(imgElem);
+
+            const actionsDivElem = document.createElement('div');
+            actionsDivElem.className = 'actions';
+            divElem.appendChild(actionsDivElem);
+
+            return divElem;
+        }
+
+        const NORMAL_ATTACK_SRC = {
+            片手剣: 'images/characters/NormalAttack_sword.png',
+            両手剣: 'images/characters/NormalAttack_claymore.png',
+            長柄武器: 'images/characters/NormalAttack_polearm.png',
+            弓: 'images/characters/NormalAttack_bow.png',
+            法器: 'images/characters/NormalAttack_catalyst.png'
+        };
+
+        const ELEMENT_COLOR = {
+            炎: '#d2655a',
+            水: '#559cc9',
+            風: '#3aaf7a',
+            雷: '#b681df',
+            草: '',
+            氷: '#63beb4',
+            岩: '#df8f37'
+        };
+
+        function createElementAction(character, start, action, actionTime) {
+            const divElem = document.createElement('div');
+            divElem.className = 'action';
+            divElem.style.width = actionTime + 'px';
+            divElem.style.left = start + 'px';
+            divElem.style.backgroundColor = ELEMENT_COLOR[CharacterMaster[character]['元素']];
+
+            const importVal = CharacterMaster[character]['import'];
+            const imgDir = importVal.replace(/^data\/characters/, 'images/characters').replace(/.json$/, '/');
+            let src;
+            if (action.startsWith('N') || action == 'C') {
+                src = NORMAL_ATTACK_SRC[CharacterMaster[character]['武器']];
+            } else if (action == 'E') {
+                src = imgDir + 'ElementalSkill.png';
+            } else if (action == 'Q') {
+                src = imgDir + 'ElementalBurst.png';
+            }
+            if (src) {
+                const imgElem = document.createElement('img');
+                imgElem.className = 'action';
+                imgElem.src = src;
+                imgElem.alt = action;
+                if (actionTime < 64) {
+                    imgElem.style.width = actionTime + 'px';
+                    // imgElem.style.height = actionTime + 'px';
+                }
+                divElem.appendChild(imgElem);
+
+                const pElem = document.createElement('p');
+                pElem.innerHTML = action;
+                divElem.appendChild(pElem);
+            }
+
+            return divElem;
+        }
+
+
+        async function init() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json',
+                'data/SwordMaster.json',
+                'data/ClaymoreMaster.json',
+                'data/PolearmMaster.json',
+                'data/BowMaster.json',
+                'data/CatalystMaster.json',
+                'data/ArtifactSetMaster.json',
+                'data/ArtifactMainMaster.json',
+                'data/ArtifactSubMaster.json',
+                'data/EnemyMaster.json',
+                'data/ElementalResonanceMaster.json',
+                'data/ElementalReactionMaster.json',
+                'data/OptionMaster1.json',
+                'data/OptionMaster2.json',
+                'data/TeamOptionMaster.json'
+            ].map(url => fetch(url).then(resp => resp.json())));
+
+            CharacterMaster = responses[0];
+            WeaponMaster['片手剣'] = responses[1];
+            WeaponMaster['両手剣'] = responses[2];
+            WeaponMaster['長柄武器'] = responses[3];
+            WeaponMaster['弓'] = responses[4];
+            WeaponMaster['法器'] = responses[5];
+            ArtifactSetMaster = responses[6];
+            ArtifactMainMaster = responses[7];
+            ArtifactSubMaster = responses[8];
+            EnemyMaster = responses[9];
+            ElementalResonanceMaster = responses[10];
+            ElementalReactionMaster = responses[11];
+            OptionMaster1 = responses[12];
+            OptionMaster2 = responses[13];
+            TeamOptionMaster = responses[14];
+
+            Object.keys(CharacterMaster).forEach(key => {
+                const importVal = CharacterMaster[key]['import'];
+                const splitted = importVal.split('_');
+                const mapValue = [];
+                mapValue.push(key);
+                const name1 = splitted[splitted.length - 1].replace('.json', '');
+                mapValue.push(name1);
+                const name2 = name1.split(/(?=[A-Z])/).join(' ');
+                if (name2 != name1) {
+                    mapValue.push(name2);
+                }
+                if (name2.indexOf(' ') != -1) {
+                    const nameSplitted = name2.split(' ');
+                    mapValue.push(nameSplitted[0]);
+                    mapValue.push(nameSplitted[1]);
+                }
+                characterMatchMap.set(key, mapValue);
+            });
+
+            console.log(characterMatchMap);
+
+            var testdata = 'Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E N3D > Yelan EN > Gorou EN > Noelle 2N3D';
+            let analyzedMap = analyzeKqmNotation(testdata);
+            console.log(analyzedMap);
+
+            const resultAreaElem = document.getElementById('rotaion-result-area');
+
+            const TIME_UNIT = 48;
+            const ACTION_TIME = {
+                C: 1.5 * TIME_UNIT,
+                E: 1 * TIME_UNIT,
+                Q: 1.5 * TIME_UNIT,
+                D: 0.2 * TIME_UNIT,
+                J: 0.3 * TIME_UNIT,
+                W: 0.3 * TIME_UNIT
+            };
+            const NORMAL_ATTACK_TIME = {
+                片手剣: 0.5 * TIME_UNIT,
+                両手剣: 0.9 * TIME_UNIT,
+                長柄武器: 0.5 * TIME_UNIT,
+                弓: 0.5 * TIME_UNIT,
+                法器: 0.75 * TIME_UNIT
+            };
+
+            const actionTimeMap = new Map();
+            analyzedMap.forEach((value, key) => {
+                value.forEach(action => {
+                    let actionTime = 0;
+                    if (action[1] in ACTION_TIME) {
+                        actionTime = ACTION_TIME[action[1]];
+                    } else {
+                        const nRe = new RegExp(/^N(\d*)([DJW]*)/);
+                        let nRet = nRe.exec(action[1]);
+                        if (nRet) {
+
+                            if (nRet[1]) {
+                                actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * Number(nRet[1]);
+                            } else {
+                                actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']];
+                            }
+                            if (nRet[2]) {
+                                actionTime += 0.2 * TIME_UNIT * nRet[2].length;
+                            }
+                        }
+                    }
+                    console.log(action, actionTime, typeof actionTime);
+                    actionTimeMap.set(action[0], actionTime);
+                });
+            });
+
+            const startMap = new Map();
+            actionTimeMap.forEach((value, key) => {
+                let newValue = 0;
+                for (let i = 1; i < key; i++) {
+                    newValue += Number(actionTimeMap.get(i));
+                }
+                startMap.set(key, newValue);
+            });
+
+            let start = 0;
+            analyzedMap.forEach((value, key) => {
+                const characterLineElem = createElementCharacterLine(key);
+                resultAreaElem.appendChild(characterLineElem);
+                value.forEach(action => {
+                    const elem = createElementAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
+                    $(characterLineElem).find('.actions').append(elem);
+                });
+            });
+        };
+
+        window.onload = () => {
+            init();
+        };
+    </script>
+</body>
+
+</html>
