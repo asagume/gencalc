@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - </title>
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        #main {
+            width: 100%;
+        }
+
+        #team-list-area {
+            text-align: left;
+        }
+
+        .team {
+            position: relative;
+        }
+
+        .character div {
+            position: absolute;
+        }
+
+        img.face {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background-color: transparent;
+        }
+
+        div.actions {
+            display: inline-block;
+            position: relative;
+        }
+
+        div.action {
+            position: absolute;
+            border: none;
+            border-radius: 0px;
+            height: 60px;
+        }
+
+        img.action {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: transparent;
+        }
+
+        div.action p {
+            position: absolute;
+            padding: 0px;
+            margin-block-start: 0px;
+            margin-block-end: 0px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="team-list-area"></div>
+
+    <script>
+        // Q or E -> (Q|E)
+        var KQM_TEST = 'Gorou Q> Albedo E> Noelle Q N3D or N3E 3N3D';
+
+        const KQM_SPLIT_RE1 = new RegExp(/\s*>\s*/);
+        const KQM_SPLIT_RE2 = new RegExp(/\s+/);
+        const KQM_RE1 = new RegExp(/^(\d*)(.+)/);
+
+        function analyzeKqmNotation(kqm) {
+            let result = [];
+
+            let characters = [];
+            let start = 0;
+
+            kqm = kqm.toUpperCase().trim();
+            kqm = kqm.replace(/\s+OR\s+/, '|'); // A or B
+            const splitted1 = kqm.split(KQM_SPLIT_RE1);
+
+            splitted1.forEach(e => {
+                const splitted2 = e.split(KQM_SPLIT_RE2);
+                const character = splitted2[0];
+                if (characters.indexOf(character) == -1) {
+                    characters.push(character);
+                    const map = new Map();
+                    map.set(null, character);
+                    result.push(map);
+                }
+                let index = characters.indexOf(character);
+
+                let actionArr = [];
+                for (let i = 1; i < splitted2.length; i++) {
+                    const splitted3 = splitted2[i].split('');
+                    for (let j = 0; j < splitted3.length; j++) {
+                        const e = splitted3[j];
+                        const lastIndex = actionArr.length - 1;
+                        if ($.isNumeric(e)) {
+                            if (lastIndex >= 0) {
+                                if (actionArr[lastIndex] == 'N') {
+                                    actionArr[lastIndex] = actionArr[lastIndex] + e;
+                                    continue;
+                                }
+                            }
+                        } else if (e == '|') {
+                            if (lastIndex >= 0) {
+                                if ((j + 1) < splitted3.length) {
+                                    actionArr[lastIndex] = actionArr[lastIndex] + e + splitted3[++j];
+                                    continue;
+                                }
+                            }
+                        }
+                        actionArr.push(e);
+                    }
+                }
+
+                console.log(actionArr);
+            });
+
+            return result;
+        }
+
+        console.log(analyzeKqmNotation(KQM_TEST));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // testDataJson = {
+        //     characters: [
+        //         "夜蘭", "ゴロー", "アルベド", "ノエル"
+        //     ],
+        //     actions: [
+        //         "夜蘭       E.HOLD",
+        //         "ゴロー     Q N1",
+        //         "アルベド   E.PRESS",
+        //         "夜蘭       Q N1",
+        //         "ノエル     Q N3 E N3D",
+        //         "夜蘭       E.PRESS",
+        //         "ゴロー     E.PRESS N1",
+        //         "ノエル     N3D N3D N3D",
+        //     ],
+        //     comments: [
+        //     ]
+        // };
+        // testDataJson2 = {
+        //     characters: [
+        //         "鍾離", "行秋", "アルベド", "胡桃"
+        //     ],
+        //     actions: [
+        //         "鍾離       Q E",
+        //         "行秋       Q E",
+        //         "アルベド   E.PRESS Q",
+        //         "胡桃       E N1CA N1CA N1CA N1CA N1CA N1CA N1CA N1CA Q"
+        //     ],
+        //     comments: [
+        //         "胡桃C0のスタミナが不足します。"
+        //     ]
+        // };
+        // testDataJson3 = {
+        //     characters: [
+        //         "雷電将軍", "行秋", "ベネット", "香菱"
+        //     ],
+        //     actions: [
+        //         "雷電将軍   E",
+        //         "行秋       Q E E",
+        //         "ベネット   Q E.1",
+        //         "香菱       Q E",
+        //         "雷電将軍   Q N3CA N3CA N3CA N1CA"
+        //     ],
+        //     comments: [
+        //     ]
+        // };
+
+        // var キャラクターリストMasterVar;
+        // var 武器リストMasterVar = [];
+        // var 聖遺物セット効果MasterVar;
+        // var 聖遺物メイン効果MasterVar;
+        // var 聖遺物サブ効果MasterVar;
+        // var 敵MasterVar;
+        // var 元素共鳴MasterVar;
+        // var 元素反応MasterVar;
+        // var オプション1MasterVar;
+        // var オプション2MasterVar;
+        // var チームオプションMasterVar;
+
+        // function getFaceImgSrc(character) {
+        //     if (character in キャラクターリストMasterVar) {
+        //         const jsonUrl = キャラクターリストMasterVar[character].import;
+        //         let url = jsonUrl.replace('data/characters/', 'images/characters/face/').replace('.json', '.png');
+        //         return url;
+        //     }
+        //     return null;
+        // }
+
+        // const NORMAL_ATATCK_IMG_SRC = {
+        //     片手剣: 'images/characters/NormalAttack_sword.png',
+        //     両手剣: 'images/characters/NormalAttack_claymore.png',
+        //     長柄武器: 'images/characters/NormalAttack_polearm.png',
+        //     弓: 'images/characters/NormalAttack_bow.png',
+        //     法器: 'images/characters/NormalAttack_catalyst.png',
+        // };
+
+        // const ELEMENT_COLOR = {
+        //     炎: '#d2655a',
+        //     水: '#559cc9',
+        //     風: '#3aaf7a',
+        //     雷: '#b681df;',
+        //     草: '',
+        //     氷: '#63beb4',
+        //     岩: '#df8f37',
+        // };
+
+        // const NORMAL_ATTACK_DURATION = {
+        //     片手剣: 30,
+        //     両手剣: 60,
+        //     長柄武器: 30,
+        //     弓: 30,
+        //     法器: 60,
+        // };
+
+        // function createElementAction(character, action, duration, cd, startx, width) {
+        //     console.debug(character, action, duration, cd, startx);
+        //     if (!(character in キャラクターリストMasterVar)) {
+        //         return null;
+        //     }
+        //     const master = キャラクターリストMasterVar[character];
+        //     const jsonUrl = master.import;
+        //     let src;
+        //     let alt;
+        //     let isEPress = false;
+        //     let isEHold = false;
+        //     switch (action) {
+        //         case 'E.HOLD':  // 元素スキル 長押し
+        //             isEHold = true;
+        //         case 'E.PRESS': // 元素スキル 一回押し
+        //             if (!isEHold) {
+        //                 isEPress = true;
+        //             }
+        //         case 'E':       // 元素スキル
+        //             src = master.import.replace('data/', 'images/').replace('.json', '/ElementalSkill.png');
+        //             break;
+        //         case 'Q':       // 元素爆発
+        //             src = master.import.replace('data/', 'images/').replace('.json', '/ElementalBurst.png');
+        //             break;
+        //         case 'D':       // ダッシュ
+        //             break;
+        //         case 'J':       // ジャンプ
+        //             break;
+        //         case 'CA':      // 重撃
+        //             break;
+        //         default:
+        //             if (action.startsWith('N')) {
+        //                 src = NORMAL_ATATCK_IMG_SRC[master['武器']];
+        //             }
+        //             break;
+        //     }
+        //     const divElem = document.createElement('div');
+        //     divElem.className = 'action';
+        //     divElem.style.left = startx + 'px';
+        //     divElem.style.backgroundColor = ELEMENT_COLOR[master['元素']];
+        //     divElem.style.width = width + 'px';
+
+        //     const imgElem = document.createElement('img');
+        //     imgElem.className = 'action';
+        //     imgElem.src = src;
+        //     imgElem.alt = character + ' ' + action;
+        //     imgElem.style.backgroundColor = ELEMENT_COLOR[master['元素']];
+        //     divElem.appendChild(imgElem);
+
+        //     if (action.startsWith('N')) {
+        //         // let n = 1;
+        //         // const re = /\D+(\d+)\D*/;
+        //         // const result = re.exec(action);
+        //         // if (result) {
+        //         //     n = Number(result[1]);
+        //         // }
+        //         const pElem = document.createElement('p');
+        //         pElem.innerHTML = action;
+        //         divElem.appendChild(pElem);
+        //     }
+
+        //     return divElem;
+        // }
+
+        // async function init() {
+        //     const responses = await Promise.all([
+        //         'data/CharacterMaster.json',
+        //         'data/SwordMaster.json',
+        //         'data/ClaymoreMaster.json',
+        //         'data/PolearmMaster.json',
+        //         'data/BowMaster.json',
+        //         'data/CatalystMaster.json',
+        //         'data/ArtifactSetMaster.json',
+        //         'data/ArtifactMainMaster.json',
+        //         'data/ArtifactSubMaster.json',
+        //         'data/EnemyMaster.json',
+        //         'data/ElementalResonanceMaster.json',
+        //         'data/ElementalReactionMaster.json',
+        //         'data/OptionMaster1.json',
+        //         'data/OptionMaster2.json',
+        //         'data/TeamOptionMaster.json'
+        //     ].map(url => fetch(url).then(resp => resp.json())));
+
+        //     キャラクターリストMasterVar = responses[0];
+        //     武器リストMasterVar['片手剣'] = responses[1];
+        //     武器リストMasterVar['両手剣'] = responses[2];
+        //     武器リストMasterVar['長柄武器'] = responses[3];
+        //     武器リストMasterVar['弓'] = responses[4];
+        //     武器リストMasterVar['法器'] = responses[5];
+        //     聖遺物セット効果MasterVar = responses[6];
+        //     聖遺物メイン効果MasterVar = responses[7];
+        //     聖遺物サブ効果MasterVar = responses[8];
+        //     敵MasterVar = responses[9];
+        //     元素共鳴MasterVar = responses[10];
+        //     元素反応MasterVar = responses[11];
+        //     オプション1MasterVar = responses[12];
+        //     オプション2MasterVar = responses[13];
+        //     チームオプションMasterVar = responses[14];
+
+        //     const teamListAreaElem = document.getElementById('team-list-area');
+
+        //     const teamDivElem = document.createElement('div');
+        //     teamDivElem.className = 'team';
+        //     teamListAreaElem.appendChild(teamDivElem);
+
+        //     let teamCharacterElems = [];
+
+        //     for (let i = 0; i < testDataJson.characters.length; i++) {
+        //         const character = testDataJson.characters[i];
+
+        //         const teamCharacterDivElem = document.createElement('div');
+        //         teamCharacterDivElem.className = 'character';
+
+        //         const faceImgElem = document.createElement('img');
+        //         faceImgElem.className = 'face';
+        //         //faceImgElem.src = getFaceImgSrc(character);
+        //         faceImgElem.src = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+        //         faceImgElem.alt = character;
+        //         teamCharacterDivElem.appendChild(faceImgElem);
+
+        //         const actionsDivElem = document.createElement('div');
+        //         actionsDivElem.className = 'actions';
+        //         teamCharacterDivElem.appendChild(actionsDivElem);
+
+        //         teamDivElem.appendChild(teamCharacterDivElem);
+
+        //         teamCharacterElems.push(teamCharacterDivElem);
+        //     }
+
+        //     console.debug(teamCharacterElems);
+
+        //     let actionMapArr = [];
+        //     for (let i = 0; i < testDataJson.characters.length; i++) {
+        //         actionMapArr.push(new Map());
+        //     }
+
+        //     let startx = 0;
+        //     for (let i = 0; i < testDataJson.actions.length; i++) {
+        //         const splitted = testDataJson.actions[i].split(new RegExp('[ \t]+'));
+        //         const character = splitted[0];
+        //         if (!(character in キャラクターリストMasterVar)) continue;
+        //         const weaponType = キャラクターリストMasterVar[character]['武器'];
+        //         const rarity = Number(キャラクターリストMasterVar[character]['レアリティ']);
+        //         let index = testDataJson.characters.indexOf(character);
+        //         let actionMap = actionMapArr[index];
+        //         for (let j = 1; j < splitted.length; j++) {
+        //             const action = splitted[j];
+        //             let d = 0;
+        //             switch (action) {
+        //                 case 'E':
+        //                 case 'E.PRESS':
+        //                     d = 60;
+        //                     break;
+        //                 case 'E.HOLD':
+        //                     d = 120;
+        //                     break;
+        //                 case 'Q':
+        //                     switch (rarity) {
+        //                         case 4:
+        //                             d = 90;
+        //                             break;
+        //                         case 5:
+        //                             d = 120;
+        //                             break;
+        //                     }
+        //                     break;
+        //                 default:
+        //                     if (action.startsWith('N')) {
+        //                         const re = /\D+(\d+)\D*/;
+        //                         const result = re.exec(action);
+        //                         if (result) {
+        //                             d = NORMAL_ATTACK_DURATION[weaponType] * Number(result[1]);
+        //                         } else {
+        //                             d = NORMAL_ATTACK_DURATION[weaponType];
+        //                         }
+        //                     }
+        //                     break;
+        //             }
+        //             actionMap.set(startx, [action, d]);
+        //             startx += d;
+        //         }
+        //     }
+
+        //     console.debug(actionMapArr);
+
+        //     for (let i = 0; i < actionMapArr.length; i++) {
+        //         actionMapArr[i].forEach((value, key) => {
+        //             const actionElem = createElementAction(testDataJson.characters[i], value[0], null, null, key, value[1]);
+        //             if (actionElem) {
+        //                 if (teamCharacterElems[i] instanceof HTMLElement) {
+        //                     $(teamCharacterElems[i]).find('div.actions').append(actionElem);
+        //                 }
+        //             }
+        //         });
+        //     }
+        // };
+
+        // window.onload = () => {
+        //     init();
+        // };
+
+    </script>
+</body>
+
+</html>
