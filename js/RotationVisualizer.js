@@ -87,10 +87,10 @@ function analyzeKqmNotation(kqm) {
         });
         e1 = e1.substring(characterStr.length + 1);
         console.log(characterStr, character, e1);
-        if (!character) {
-            return;
+        if (!character) return;
+        if (!result.has(character)) {
+            result.set(character, []);
         }
-        result.set(character, []);
 
         let work = e1;
         while (work) {
@@ -216,6 +216,7 @@ const NORMAL_ATTACK_TIME = {
 };
 
 function createElementAction(character, start, action, actionTime) {
+    console.log(character, start, action, actionTime);
     const divElem = document.createElement('div');
     divElem.className = 'action';
     divElem.style.width = actionTime + 'px';
@@ -288,7 +289,7 @@ function displayTeamCompact(data) {
 
 function getFaceSrcUrl(master) {
     return master['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
-} 
+}
 
 function getFaceBackgroundImageUrl(master) {
     return 'images/star' + master['レアリティ'] + '-bg.png';
@@ -298,9 +299,10 @@ const DATA_COMPACT_HTML_TEMPLATE = `<div class="data-compact" id="data-compact-$
 <p class="name">$1</p>
 $3
 <div class="description">$4</div>
-<button type="button" id="data-compact-edit-$1">EDIT</button>
-<button type="button" id="data-compact-reset-$1" disabled>RESET</button>
-<button type="button" id="data-compact-save-$1" disabled>SAVE</button>
+<button type="button" class="data-compact-edit" id="data-compact-edit-$1">EDIT</button>
+<button type="button" class="data-compact-reset" id="data-compact-reset-$1" disabled>RESET</button>
+<button type="button" class="data-compact-save" id="data-compact-save-$1" disabled>SAVE</button>
+<button type="button" class="data-compact-remove" id="data-compact-remove-$1">REMOVE</button>
 </div>`;
 const DATA_COMPACT_IMG_HTML_TEMPLATE = `<img class="face" src="$1" alt="$2" style="background-image: url($3); background-size: contain;">`;
 
@@ -318,7 +320,7 @@ function displayDataCompact(dataObj, parent) {
     analyzedMap.forEach((value, key) => {
         const myMaster = CharacterMaster[key];
         if (!myMaster) return;
-        let imgHtmlSub =  DATA_COMPACT_IMG_HTML_TEMPLATE;
+        let imgHtmlSub = DATA_COMPACT_IMG_HTML_TEMPLATE;
         imgHtmlSub = imgHtmlSub.replace(/\$1/g, getFaceSrcUrl(myMaster));
         imgHtmlSub = imgHtmlSub.replace(/\$2/g, key);
         imgHtmlSub = imgHtmlSub.replace(/\$3/g, getFaceBackgroundImageUrl(myMaster));
@@ -327,7 +329,6 @@ function displayDataCompact(dataObj, parent) {
     html = html.replace(/\$3/g, imgHtml);
     html = html.replace(/\$4/g, '');
 
-    console.log(parent, html);
     parent.insertAdjacentHTML('beforeend', html);
 }
 
@@ -435,6 +436,7 @@ const rotationTextareaOnChange = function () {
         const actionTimeMap = new Map();
         analyzedMap.forEach((value, key) => {
             value.forEach(action => {
+                if (action[1].startsWith('/*') && action[1].endsWith('*/')) return;
                 let actionTime = 0;
                 if (action[1] in ACTION_TIME) {
                     actionTime = ACTION_TIME[action[1]];
@@ -464,12 +466,13 @@ const rotationTextareaOnChange = function () {
         actionTimeMap.forEach((value, key) => {
             let newValue = 0;
             for (let i = 1; i < key; i++) {
-                newValue += Number(actionTimeMap.get(i));
+                if (actionTimeMap.has(i)) {
+                    newValue += Number(actionTimeMap.get(i));
+                }
             }
             startMap.set(key, newValue);
         });
 
-        let start = 0;
         analyzedMap.forEach((value, key) => {
             const characterLineElem = createElementCharacterLine(key);
             resultAreaElem.appendChild(characterLineElem);
