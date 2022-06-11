@@ -287,12 +287,106 @@ function displayTeamCompact(data) {
     }
 }
 
+function getElementColor(master) {
+    return ELEMENT_COLOR[master['元素']];
+}
+
 function getFaceSrcUrl(master) {
     return master['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
 }
 
 function getFaceBackgroundImageUrl(master) {
     return 'images/star' + master['レアリティ'] + '-bg.png';
+}
+
+const DATA_HTML_TEMPLATE = `<div class="data" id="data-$1">
+<p class="name">$1</p>
+$3
+<div class="description">$4</div>
+<button type="button" class="data-compact-edit" id="data-compact-edit-$1">EDIT</button>
+<button type="button" class="data-compact-reset" id="data-compact-reset-$1" disabled>RESET</button>
+<button type="button" class="data-compact-save" id="data-compact-save-$1" disabled>SAVE</button>
+<button type="button" class="data-compact-remove" id="data-compact-remove-$1">REMOVE</button>
+</div>`;
+const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$1_$2" style="border-bottom-color: $3; border-image: linear-gradient(135deg, $3, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
+<img class="face" src="$4" alt="$2" style="background-image: url($5); background-size: contain;">
+<div class="actions"></div>
+</div>`;
+
+/**
+ * 
+ * @param {object} dataObj 
+ * @param {HTMLElement} parent 
+ */
+function displayData(dataObj, parent, opt_editable = false) {
+    const analyzedMap = analyzeKqmNotation(dataObj['data']);
+
+    let html = DATA_HTML_TEMPLATE;
+    html = html.replace(/\$1/g, dataObj['name']);
+    let imgHtml = '';
+    analyzedMap.forEach((value, key) => {
+        const myMaster = CharacterMaster[key];
+        if (!myMaster) return;
+        let htmlSub = DATA_LINE_HTML_TEMPLATE;
+        htmlSub = htmlSub.replace(/\$1/g, dataObj['name']);
+        htmlSub = htmlSub.replace(/\$2/g, key);
+        htmlSub = htmlSub.replace(/\$3/g, getElementColor(myMaster));
+        htmlSub = htmlSub.replace(/\$4/g, getFaceSrcUrl(myMaster));
+        htmlSub = htmlSub.replace(/\$5/g, getFaceBackgroundImageUrl(myMaster));
+        imgHtml += htmlSub + '\n';
+    });
+    html = html.replace(/\$3/g, imgHtml);
+    const description = dataObj['description'] ? dataObj['description'] : '';
+    html = html.replace(/\$4/g, description);
+
+    parent.insertAdjacentHTML('beforeend', html);
+
+    const actionTimeMap = new Map();
+    analyzedMap.forEach((value, key) => {
+        value.forEach(action => {
+            if (action[1].startsWith('/*') && action[1].endsWith('*/')) return;
+            let actionTime = 0;
+            if (action[1] in ACTION_TIME) {
+                actionTime = ACTION_TIME[action[1]];
+            } else {
+                const nRe = new RegExp(/^N(\d*)([CDJW]*)/);
+                let nRet = nRe.exec(action[1]);
+                if (nRet) {
+                    if (nRet[1]) {
+                        actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * Number(nRet[1]);
+                    } else {
+                        actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']];
+                    }
+                    if (nRet[2]) {
+                        if (nRet[2].indexOf('C') != -1) {
+                            actionTime += NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * 2;
+                        }
+                        actionTime += 0.2 * TIME_UNIT * nRet[2].length;
+                    }
+                }
+            }
+            console.log(action, actionTime, typeof actionTime);
+            actionTimeMap.set(action[0], actionTime);
+        });
+    });
+
+    const startMap = new Map();
+    actionTimeMap.forEach((value, key) => {
+        let newValue = 0;
+        for (let i = 1; i < key; i++) {
+            if (actionTimeMap.has(i)) {
+                newValue += Number(actionTimeMap.get(i));
+            }
+        }
+        startMap.set(key, newValue);
+    });
+
+    analyzedMap.forEach((value, key) => {
+        value.forEach(action => {
+            const elem = createElementAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
+            $('#' + selectorEscape('character-line-' + dataObj['name'] + '_' + key)).find('.actions').append(elem);
+        });
+    });
 }
 
 const DATA_COMPACT_HTML_TEMPLATE = `<div class="data-compact" id="data-compact-$1">
@@ -327,7 +421,8 @@ function displayDataCompact(dataObj, parent) {
         imgHtml += imgHtmlSub + '\n';
     });
     html = html.replace(/\$3/g, imgHtml);
-    html = html.replace(/\$4/g, '');
+    const description = dataObj['description'] ? dataObj['description'] : '';
+    html = html.replace(/\$4/g, description);
 
     parent.insertAdjacentHTML('beforeend', html);
 }
@@ -359,7 +454,7 @@ function loadSavedData() {
     });
 
     savedDataArr.forEach(savedData => {
-        displayDataCompact(savedData, saveDataAreaElem);
+        displayData(savedData, saveDataAreaElem);
     });
 }
 
@@ -494,6 +589,7 @@ const saveButtonOnClick = function () {
     console.log(suffix);
     const name = String($('#' + selectorEscape('name-' + suffix)).val()).trim();
     const data = String($('#' + selectorEscape('rotation-' + suffix)).val()).trim();
+    const description = String($('#' + selectorEscape('description-' + suffix)).val()).trim();
     if (name && data) {
         const key = SAVE_DATA_KEY_PREFIX + name;
         let valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
@@ -505,7 +601,7 @@ const saveButtonOnClick = function () {
         let sortOrder = 0;
         valueObj['name'] = name;
         valueObj['data'] = data;
-        valueObj['description'] = null;
+        valueObj['description'] = description;
         valueObj['sortOrder'] = sortOrder;
         valueObj['updated_at'] = null;
         localStorage.setItem(key, JSON.stringify(valueObj));

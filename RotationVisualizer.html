@@ -18,7 +18,16 @@
 
         #main {
             background: linear-gradient(to top, #3d3d3b, #141414);
-            padding: 2rem;
+            font-size: 2.2rem;
+        }
+
+        h2 {
+            max-width: 60rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+            border: 1px solid gray;
+            border-radius: 20px;
         }
 
         a:link {
@@ -27,6 +36,31 @@
 
         a:visited {
             color: blanchedalmond;
+        }
+
+        input {
+            font-size: 3rem;
+        }
+
+        textarea {
+            font-size: 3rem;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flex label {
+            order: 0;
+        }
+
+        .flex textarea {
+            order: 1;
+        }
+
+        textarea+label {
+            display: block;
         }
 
         #rotation-list-area {
@@ -94,9 +128,32 @@
             <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
         </fieldset>
 
-        <label for="rotation-new">Rotation Text:</label>
-        <textarea id="rotation-new" name="rotation-new" rows="8" cols="100" autocapitalize="words">
-        </textarea>
+        <div style="display: inline-block; text-align: left; vertical-align: top; margin-bottom: 10px;">
+            <div class="flex">
+                <textarea id="rotation-new" name="rotation-new" rows="8" cols="65" autocapitalize="words"></textarea>
+                <label for="rotation-new">ROTAION</label>
+            </div>
+        </div>
+
+        <div style="display: inline-block; text-align: left; vertical-align: top;">
+            <label for="name-new">NAME:</label>
+            <input type="text" id="name-new" minlength="1" maxlength="32" size="32">
+            <button type="button" id="save-new">SAVE</button>
+            <div class="flex">
+                <textarea id="description-new" name="description-new" rows="6" cols="65"
+                    autocapitalize="words"></textarea>
+                <label for="description-new">DESCRIPTION</label>
+            </div>
+        </div>
+
+
+        <div id="rotaion-result-area" style="min-height: 440px;"> </div>
+
+        <h2>SAVE DATA</h2>
+        <div id="save-data-area"> </div>
+
+        <h2>SAMPLES</h2>
+        <div id="sample-data-area"> </div>
 
         <div id="rotation-list-area">
             <ul>
@@ -111,22 +168,6 @@
                     </pre>
                 </li>
             </ul>
-        </div>
-
-        <label for="name-new">NAME:</label>
-        <input type="text" id="name-new" minlength="1" maxlength="32" size="32">
-
-        <button type="button" id="save-new">SAVE</button>
-
-        <div id="rotaion-result-area" style="min-height: 440px;">
-        </div>
-
-        <h2>SAVE DATA</h2>
-        <div id="save-data-area">
-        </div>
-
-        <h2>SAMPLES</h2>
-        <div id="sample-data-area">
         </div>
     </div>
 
