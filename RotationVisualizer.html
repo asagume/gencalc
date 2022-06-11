@@ -7,6 +7,7 @@
     <title>げんろーて - Genshin Impact Rotation Visualizer</title>
     <link href="styles/base-style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <reference path="JQuery.d.ts"></reference>
     <style type="text/css">
         body {
@@ -82,8 +83,8 @@
             <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
         </fieldset>
 
-        <label for="rotation-input">Rotation Text:</label>
-        <textarea id="rotation-input" name="rotation-input" rows="8" cols="120" autocapitalize="words">
+        <label for="rotation-new">Rotation Text:</label>
+        <textarea id="rotation-new" name="rotation-new" rows="8" cols="100" autocapitalize="words">
         </textarea>
 
         <div id="rotation-list-area">
@@ -101,11 +102,41 @@
             </ul>
         </div>
 
-        <div id="rotaion-result-area">
+        <label for="name-new">NAME:</label>
+        <input type="text" id="name-new" minlength="1" maxlength="32" size="32">
+
+        <button type="button" id="save-new">SAVE</button>
+
+        <div id="rotaion-result-area" style="min-height: 440px;">
+        </div>
+
+        <h2>SAVE DATA</h2>
+        <div id="save-data-area">
+        </div>
+
+        <h2>SAMPLES</h2>
+        <div id="sample-data-area">
         </div>
     </div>
 
     <script>
+        function selectorEscape(val) {
+            return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
+        }
+
+        const FACE_HTML_TEMPLATE = `<img src="$1" class="face" style="background-image:url($2); background-size:contain;">`;
+
+        const TEAM_COMPACT_HTML = `<table>
+            <tr>
+                <td colspan="2">$1</td>
+            </tr>
+            <tr>
+                <td>$2</td>
+                <td>$3</td>
+            </tr>
+        </table>
+        `;
+
         var CharacterMaster;
         var WeaponMaster = [];
         var ArtifactSetMaster;
@@ -140,11 +171,18 @@
         function analyzeKqmNotation(kqm) {
             let result = new Map();
 
-            kqm = kqm.trim();
+            kqm = kqm.replace(/\/\*(.*)\*\//g, function (match, p1) {
+                return '/* ' + p1.trim().replace('>', '&gt;') + ' */';
+            });
+            kqm = kqm.trim().replace(/\n/g, ' > ');
+
             let start = 1;
             const kqmSplitted = kqm.split(KQM_SPLIT_RE1);
             console.log(kqmSplitted);
             kqmSplitted.forEach(e1 => {
+                if (e1.startsWith('/*')) {
+                    e1 = e1.replace(/^\/\*.+?\*\//, '');
+                }
                 const character = analyzeCharacterName(e1);
                 if (!result.has(character)) {
                     result.set(character, []);
@@ -223,12 +261,15 @@
             divElem.style.borderImage = 'linear-gradient(135deg,' + ELEMENT_COLOR[CharacterMaster[character]['元素']] + ',#555555)';
             divElem.style.borderImageSlice = '1';
 
+            const importVal = CharacterMaster[character]['import'];
+            const src = importVal.replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+            const backgroundImageUrl = 'images/star' + CharacterMaster[character]['レアリティ'] + '-bg.png';
+            const imgHtml = FACE_HTML_TEMPLATE.replace('$1', src).replace('$2', backgroundImageUrl);
+
             const imgElem = document.createElement('img');
             imgElem.className = 'face';
-            const importVal = CharacterMaster[character]['import'];
             imgElem.src = importVal.replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
             imgElem.alt = characterMatchMap.get(character)[1];
-            const backgroundImageUrl = 'images/star' + CharacterMaster[character]['レアリティ'] + '-bg.png';
             imgElem.style.backgroundImage = 'url(' + backgroundImageUrl + ')';
             imgElem.style.backgroundSize = 'contain';
             divElem.appendChild(imgElem);
@@ -311,6 +352,40 @@
             return divElem;
         }
 
+        TEAM_NOTAION_TEMPLATE = {
+            id: '',
+            name: '',
+            data: '',
+            description: '',
+            sort_order: 0,
+            updated_at: null
+        }
+
+        function displayTeam(data, opt_editable = false) {
+            const divElem = document.createElement('div');
+            divElem.className = 'team';
+            divElem.id = data['id'];
+        }
+
+        function displayTeamCompact(data) {
+            const divElem = document.createElement('div');
+            if ('name' in data) {
+                const nameElem = document.createElement('p');
+                p.innerHTML = name;
+                divElem.appendChild(nameElem);
+            }
+            if ('data' in data) {
+                const faceElemArr = [];
+                const analyzedMap = analyzeKqmNotation(data['data']);
+                analyzedMap.forEach((value, key) => {
+                    faceElemArr.push(create)
+                });
+
+            }
+            if ('description' in data) {
+
+            }
+        }
 
         async function init() {
             const responses = await Promise.all([
@@ -369,11 +444,7 @@
             console.log(characterMatchMap);
         };
 
-        window.onload = () => {
-            init();
-        };
-
-        const rotationInputOnChange = function () {
+        const rotationTextareaOnChange = function () {
             if ($(this).val()) {
                 const resultAreaElem = document.getElementById('rotaion-result-area');
                 $(resultAreaElem).html('');
@@ -430,7 +501,26 @@
             }
         };
 
-        $(document).on('change', '#rotation-input', rotationInputOnChange);
+        const saveButtonOnClick = function () {
+            const id = $(this).attr('id');
+            const suffix = id.substring(id.indexOf('-') + 1);
+            const key = String($(selectorEscape('#name-' + suffix)).val()).trim();
+            const value = String($(selectorEscape('#rotation-' + suffix)).val()).trim();
+            if (!key || !value) {
+                return;
+            }
+            $(selectorEscape('#name-' + suffix)).val(key);
+            $(selectorEscape('#rotation-' + suffix)).val(value);
+            localStorage.setItem(key, value);
+        };
+
+        window.onload = () => {
+            init();
+
+            $(document).on('change', '#rotation-new', rotationTextareaOnChange);
+            $(document).on('click', '#save-new', saveButtonOnClick);
+        };
+
     </script>
 </body>
 
