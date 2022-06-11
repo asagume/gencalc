@@ -118,6 +118,56 @@
             height: 80px;
             vertical-align: top;
         }
+
+        div.data {
+            text-align: left;
+        }
+
+        div.data .data-control {
+            position: relative;
+        }
+
+        div.data .data-control p.name {
+            display: inline-block;
+            width: 64rem;
+            margin: 0.5rem 2rem;
+            font-size: 3rem;
+            font-weight: bold;
+            border-bottom: solid 2px gold;
+        }
+
+        .data-control button {
+            width: 80px;
+        }
+
+        .data-control button.data-remove {
+            position: absolute;
+            right: 0px;
+        }
+
+        .rotation-area {
+            display: inline-block;
+            text-align: left;
+            vertical-align: top;
+            margin-bottom: 10px;
+        }
+
+        .description-area {
+            display: inline-block;
+            text-align: left;
+            vertical-align: top;
+            margin-bottom: 10px;
+        }
+
+        fieldset.description {
+            margin: 3rem 1rem;
+            padding-bottom: 0.5rem;
+            padding-inline-start: 0.2rem;
+            padding-inline-end: 0.2rem;
+            padding-block-start: 0.2rem;
+            padding-block-end: 0.2rem;
+            border-radius: 1rem;
+        }
     </style>
 </head>
 
@@ -176,7 +226,7 @@
             init();
 
             $(document).on('change', '#rotation-new', rotationTextareaOnChange);
-            $(document).on('click', '#save-new', saveButtonOnClick);
+            $(document).on('click', '#save-new', saveButtonNewOnClick);
         };
     </script>
 </body>

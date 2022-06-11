@@ -215,6 +215,22 @@ const NORMAL_ATTACK_TIME = {
     法器: 0.75 * TIME_UNIT
 };
 
+const NORMAL_ATTACK_TIME_ARR = {
+    片手剣: [0, 0, 0, 0, 4, 5, 6],
+    両手剣: [0, 0, 0, 0, 225, 270],
+    長柄武器: [0, 0, 0, 0, 4, 5, 6],
+    弓: [0, 0, 0, 0, 4, 5, 6],
+    法器: [0, 1, 0, 3, 4]
+}
+
+/**
+ * 
+ * @param {string} character 
+ * @param {number} start 
+ * @param {string} action 
+ * @param {number} actionTime 
+ * @returns {HTMLElement}
+ */
 function createElementAction(character, start, action, actionTime) {
     console.log(character, start, action, actionTime);
     const divElem = document.createElement('div');
@@ -243,11 +259,11 @@ function createElementAction(character, start, action, actionTime) {
             // imgElem.style.height = actionTime + 'px';
         }
         divElem.appendChild(imgElem);
-
-        const pElem = document.createElement('p');
-        pElem.innerHTML = action;
-        divElem.appendChild(pElem);
     }
+
+    const pElem = document.createElement('p');
+    pElem.innerHTML = action;
+    divElem.appendChild(pElem);
 
     return divElem;
 }
@@ -300,13 +316,28 @@ function getFaceBackgroundImageUrl(master) {
 }
 
 const DATA_HTML_TEMPLATE = `<div class="data" id="data-$1">
-<p class="name">$1</p>
-$3
-<div class="description">$4</div>
-<button type="button" class="data-compact-edit" id="data-compact-edit-$1">EDIT</button>
-<button type="button" class="data-compact-reset" id="data-compact-reset-$1" disabled>RESET</button>
-<button type="button" class="data-compact-save" id="data-compact-save-$1" disabled>SAVE</button>
-<button type="button" class="data-compact-remove" id="data-compact-remove-$1">REMOVE</button>
+    <div class="data-control">
+        <p class="name" id="label-name-$1">$1</p>
+        <input type="text" id="name-$1" minlength="1" maxlength="32" size="32" value="$1" style="display: none;">
+        <button type="button" class="data-edit" id="edit-$1">EDIT</button>
+        <button type="button" class="data-cancel" id="cancel-$1" style="display: none;">CANCEL</button>
+        <button type="button" class="data-save" id="save-$1" style="display: none;">SAVE</button>
+        <button type="button" class="data-remove" id="remove-$1">REMOVE</button>
+    </div>
+    <div class="rotation-area" id="rotation-area-$1" style="display: none;">
+        <div class="flex">
+            <textarea id="rotation-$1" name="rotation-$1" rows="8" cols="65" autocapitalize="words">$2</textarea>
+            <label for="rotation-$1">ROTAION</label>
+        </div>
+    </div>
+    <div class="description-area" id="description-area-$1" style="display: none;">
+        <div class="flex">
+            <textarea id="description-$1" name="description-$1" rows="8" cols="65">$3</textarea>
+            <label for="description-$1">DESCRIPTION</label>
+        </div>
+    </div>
+$4
+    <fieldset class="description">$3</fieldset>
 </div>`;
 const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$1_$2" style="border-bottom-color: $3; border-image: linear-gradient(135deg, $3, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
 <img class="face" src="$4" alt="$2" style="background-image: url($5); background-size: contain;">
@@ -315,14 +346,120 @@ const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-
 
 /**
  * 
- * @param {object} dataObj 
- * @param {HTMLElement} parent 
+ * @param {string} name 
  */
+function getSavedData(name) {
+    return JSON.parse(localStorage[SAVE_DATA_KEY_PREFIX + name]);
+}
+
+/**
+ * EDITボタンがクリックされました.
+ */
+const editButtonOnClick = function () {
+    const name = $(this).attr('id').replace('edit-', '');
+    $('#label-name-' + selectorEscape(name)).hide();
+    $('#name-' + selectorEscape(name)).show();
+    $('#edit-' + selectorEscape(name)).hide();
+    $('#cancel-' + selectorEscape(name)).show();
+    $('#save-' + selectorEscape(name)).show();
+    $('#rotation-area-' + selectorEscape(name)).show();
+    $('#description-area-' + selectorEscape(name)).show();
+}
+
+/**
+ * CANCELボタンがクリックされました.
+ */
+const cancelButtonOnClick = function () {
+    const name = $(this).attr('id').replace('cancel-', '');
+    const savedData = getSavedData(name);
+    if (savedData) {
+        $('#name-' + selectorEscape(name)).val(savedData['name']);
+        $('#rotation-area-' + selectorEscape(name)).val(savedData['data']);
+        $('#description-area-' + selectorEscape(name)).val(savedData['description']);
+    }
+    $('#label-name-' + selectorEscape(name)).show();
+    $('#name-' + selectorEscape(name)).hide();
+    $('#edit-' + selectorEscape(name)).show();
+    $('#cancel-' + selectorEscape(name)).hide();
+    $('#save-' + selectorEscape(name)).hide();
+    $('#rotation-area-' + selectorEscape(name)).hide();
+    $('#description-area-' + selectorEscape(name)).hide();
+}
+
+/**
+ * SAVEボタンがクリックされました.
+ * 
+ * @param {string} suffix 
+ */
+function saveButtonOnClick(suffix) {
+    const name = String($('#' + selectorEscape('name-' + suffix)).val()).trim();
+    const data = String($('#' + selectorEscape('rotation-' + suffix)).val()).trim();
+    const description = String($('#' + selectorEscape('description-' + suffix)).val()).trim();
+    if (name && data) {
+        if (name != suffix) {
+            localStorage.removeItem(SAVE_DATA_KEY_PREFIX + suffix);
+        }
+        const key = SAVE_DATA_KEY_PREFIX + name;
+        let valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+        if (localStorage[key]) {
+            valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+        } else {
+            valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+        }
+        let sortOrder = 0;
+        valueObj['name'] = name;
+        valueObj['data'] = data;
+        valueObj['description'] = description;
+        valueObj['sortOrder'] = sortOrder;
+        valueObj['updated_at'] = null;
+        localStorage.setItem(key, JSON.stringify(valueObj));
+    }
+}
+
+const saveButtonNewOnClick = function () {
+    const id = $(this).attr('id');
+    const suffix = id.substring(id.indexOf('-') + 1);
+
+    saveButtonOnClick(suffix)
+};
+
+function redrawData(dataObj, element) {
+
+}
+
+const saveButtonSavedDataOnClick = function () {
+    const id = $(this).attr('id');
+    const suffix = id.substring(id.indexOf('-') + 1);
+
+    const name = $('#name-' + selectorEscape(suffix)).val();
+
+    saveButtonOnClick(suffix);
+
+    const dataObj = getSavedData(name);
+    if (dataObj) {
+
+    }
+
+    $('#label-name-' + selectorEscape(suffix)).show();
+    $('#name-' + selectorEscape(suffix)).hide();
+    $('#edit-' + selectorEscape(suffix)).show();
+    $('#cancel-' + selectorEscape(suffix)).hide();
+    $('#save-' + selectorEscape(suffix)).hide();
+    $('#rotation-area-' + selectorEscape(suffix)).hide();
+    $('#description-area-' + selectorEscape(suffix)).hide();
+};
+
+/**
+* 
+* @param {object} dataObj 
+* @param {HTMLElement} parent 
+*/
 function displayData(dataObj, parent, opt_editable = false) {
     const analyzedMap = analyzeKqmNotation(dataObj['data']);
 
     let html = DATA_HTML_TEMPLATE;
     html = html.replace(/\$1/g, dataObj['name']);
+    html = html.replace(/\$2/g, dataObj['data']);
     let imgHtml = '';
     analyzedMap.forEach((value, key) => {
         const myMaster = CharacterMaster[key];
@@ -335,9 +472,9 @@ function displayData(dataObj, parent, opt_editable = false) {
         htmlSub = htmlSub.replace(/\$5/g, getFaceBackgroundImageUrl(myMaster));
         imgHtml += htmlSub + '\n';
     });
-    html = html.replace(/\$3/g, imgHtml);
     const description = dataObj['description'] ? dataObj['description'] : '';
-    html = html.replace(/\$4/g, description);
+    html = html.replace(/\$3/g, description);
+    html = html.replace(/\$4/g, imgHtml);
 
     parent.insertAdjacentHTML('beforeend', html);
 
@@ -387,6 +524,10 @@ function displayData(dataObj, parent, opt_editable = false) {
             $('#' + selectorEscape('character-line-' + dataObj['name'] + '_' + key)).find('.actions').append(elem);
         });
     });
+
+    $(document).on('click', '#edit-' + selectorEscape(dataObj['name']), editButtonOnClick);
+    $(document).on('click', '#cancel-' + selectorEscape(dataObj['name']), cancelButtonOnClick);
+    $(document).on('click', '#save-' + selectorEscape(dataObj['name']), saveButtonSavedDataOnClick);
 }
 
 const DATA_COMPACT_HTML_TEMPLATE = `<div class="data-compact" id="data-compact-$1">
@@ -458,6 +599,9 @@ function loadSavedData() {
     });
 }
 
+/**
+ * init.
+ */
 async function init() {
     const responses = await Promise.all([
         'data/CharacterMaster.json',
@@ -579,31 +723,3 @@ const rotationTextareaOnChange = function () {
     }
 };
 
-/**
- * SAVEボタンがクリックされました.
- * 
- */
-const saveButtonOnClick = function () {
-    const id = $(this).attr('id');
-    const suffix = id.substring(id.indexOf('-') + 1);
-    console.log(suffix);
-    const name = String($('#' + selectorEscape('name-' + suffix)).val()).trim();
-    const data = String($('#' + selectorEscape('rotation-' + suffix)).val()).trim();
-    const description = String($('#' + selectorEscape('description-' + suffix)).val()).trim();
-    if (name && data) {
-        const key = SAVE_DATA_KEY_PREFIX + name;
-        let valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
-        if (localStorage[key]) {
-            valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
-        } else {
-            valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
-        }
-        let sortOrder = 0;
-        valueObj['name'] = name;
-        valueObj['data'] = data;
-        valueObj['description'] = description;
-        valueObj['sortOrder'] = sortOrder;
-        valueObj['updated_at'] = null;
-        localStorage.setItem(key, JSON.stringify(valueObj));
-    }
-};
