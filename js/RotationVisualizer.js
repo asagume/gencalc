@@ -2,19 +2,6 @@ function selectorEscape(val) {
     return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
 }
 
-const FACE_HTML_TEMPLATE = `<img src="$1" class="face" style="background-image:url($2); background-size:contain;">`;
-
-const TEAM_COMPACT_HTML = `<table>
-    <tr>
-        <td colspan="2">$1</td>
-    </tr>
-    <tr>
-        <td>$2</td>
-        <td>$3</td>
-    </tr>
-</table>
-`;
-
 var CharacterMaster;
 var WeaponMaster = [];
 var ArtifactSetMaster;
@@ -27,6 +14,15 @@ var OptionMaster1;
 var OptionMaster2;
 var TeamOptionMaster;
 var characterMatchMap = new Map();
+
+const SAVE_DATA_TEMPLATE = {
+    id: '',
+    name: '',
+    data: '',
+    description: '',
+    sort_order: 0,
+    updated_at: null
+}
 
 /**
  * 文字列の先頭からキャラクター名を抽出します.
@@ -67,6 +63,7 @@ function analyzeKqmNotation(kqm) {
         return '/* ' + p1.trim().replace('>', '&gt;') + ' */';
     });
     kqm = kqm.trim().replace(/\n/g, ' > ');
+    if (!kqm) return result;
 
     let start = 1;
     const kqmSplitted = kqm.split(KQM_SPLIT_RE1);
@@ -309,15 +306,6 @@ function makeHtmlAction(character, start, action, actionTime) {
     return html;
 }
 
-SAVE_DATA_TEMPLATE = {
-    id: '',
-    name: '',
-    data: '',
-    description: '',
-    sort_order: 0,
-    updated_at: null
-}
-
 function displayTeam(data, opt_editable = false) {
     const divElem = document.createElement('div');
     divElem.className = 'team';
@@ -355,43 +343,6 @@ function getFaceSrcUrl(master) {
 function getFaceBackgroundImageUrl(master) {
     return 'images/star' + master['レアリティ'] + '-bg.png';
 }
-
-const DATA_HTML_TEMPLATE = `<div class="data" id="data-$name">
-    <div class="data-control">
-        <p class="name" id="label-name-$name">$name</p>
-        <input type="text" id="name-$name" minlength="1" maxlength="32" size="32" value="$name" style="display: none;">
-        <button type="button" class="data-edit" id="edit-$name">EDIT</button>
-        <button type="button" class="data-cancel" id="cancel-$name" style="display: none;">CANCEL</button>
-        <button type="button" class="data-save" id="save-$name" style="display: none;">SAVE</button>
-        <button type="button" class="data-remove" id="remove-$name">REMOVE</button>
-    </div>
-    <div class="rotation-area" id="rotation-area-$name" style="display: none;">
-        <div class="flex">
-            <textarea id="rotation-$name" name="rotation-$name" rows="8" cols="65" autocapitalize="words">
-            $rotation
-            </textarea>
-            <label for="rotation-$name">ROTAION</label>
-        </div>
-    </div>
-    <div class="description-area" id="description-area-$name" style="display: none;">
-        <div class="flex">
-            <textarea id="description-$1" name="description-$name" rows="8" cols="65">
-            $description
-            </textarea>
-            <label for="description-$name">DESCRIPTION</label>
-        </div>
-    </div>
-    <div class="visual-area">
-$dataLines
-    </div>
-    <fieldset class="description">$description</fieldset>
-</div>`;
-const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$name_$character">
-    <img class="face" src="$src" alt="$character" style="background-image: url($starBg); background-size: contain;">
-    <div class="actions" style="border-bottom-color: $elementColor; border-image: linear-gradient(135deg, $elementColor, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
-$actions
-    </div>
-</div>`;
 
 /**
  * 
@@ -498,16 +449,94 @@ const saveButtonSavedDataOnClick = function () {
     $('#description-area-' + selectorEscape(suffix)).hide();
 };
 
+const saveButtonNewDataOnClick = function () {
+    const id = $(this).attr('id');
+    const suffix = id.substring(id.indexOf('-') + 1);
+
+    const name = $('#name-' + selectorEscape(suffix)).val();
+
+    saveButtonOnClick(suffix);
+
+    const dataObj = getSavedData(name);
+    if (dataObj) {
+
+    }
+
+    $('#name-' + selectorEscape(suffix)).show();
+    $('#save-' + selectorEscape(suffix)).hide();
+    $('#rotation-area-' + selectorEscape(suffix)).show();
+    $('#description-area-' + selectorEscape(suffix)).show();
+};
+
 /**
-* 
-* @param {object} dataObj 
-* @param {HTMLElement} parent 
-*/
-function displayData(dataObj, parent, opt_editable = false) {
+ * 
+ */
+ const rotationTextareaOnChange = function () {
+    let rotationVal = $(this).val();
+    rotationVal.trim();
+    if (rotationVal) {
+        const id = $(this).attr('id');
+        const suffix = id.substring(id.indexOf('-') + 1);
+    
+        const dataObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+        dataObj['data'] = rotationVal;
+
+        const visualAreaHtml = makeHtmlVisualArea(dataObj);
+        const parent = $('#data-' + selectorEscape(suffix) + ' .visual-area').get()[0];
+        parent.insertAdjacentHTML('beforeend', visualAreaHtml);
+    }
+};
+
+const DATA_HTML_TEMPLATE = `<div class="data" id="data-$name">
+    <div class="data-control">
+        <p class="name" id="label-name-$name" style="$displayStyle">$name</p>
+        <input type="text" id="name-$name" minlength="1" maxlength="32" size="32" value="$name" style="$inputStyle">
+        <button type="button" class="data-edit" id="edit-$name" style="$editStyle">EDIT</button>
+        <button type="button" class="data-cancel" id="cancel-$name" style="$cancelStyle">CANCEL</button>
+        <button type="button" class="data-save" id="save-$name" style="$saveStyle">SAVE</button>
+        <button type="button" class="data-remove" id="remove-$name" style="$removeStyle">REMOVE</button>
+    </div>
+    <div class="rotation-area" id="rotation-area-$name" style="$inputStyle">
+        <div class="flex">
+            <textarea id="rotation-$name" name="rotation-$name" rows="8" cols="65" autocapitalize="words">
+            $rotation
+            </textarea>
+            <label for="rotation-$name">ROTAION</label>
+        </div>
+    </div>
+    <div class="description-area" id="description-area-$name" style="$inputStyle">
+        <div class="flex">
+            <textarea id="description-$1" name="description-$name" rows="8" cols="65">
+            $description
+            </textarea>
+            <label for="description-$name">DESCRIPTION</label>
+        </div>
+    </div>
+    <div class="visual-area">
+$dataLines
+    </div>
+    <fieldset class="description" style="$displayStyle">$description</fieldset>
+</div>`;
+const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$name_$character">
+    <img class="face" src="$src" alt="$character" style="background-image: url($starBg); background-size: contain;">
+    <div class="actions" style="border-bottom-color: $elementColor; border-image: linear-gradient(135deg, $elementColor, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
+$actions
+    </div>
+</div>`;
+
+/**
+ * 
+ * @param {*} dataObj 
+ */
+function makeHtmlVisualArea(dataObj) {
+    let html = '';
+
     const analyzedMap = analyzeKqmNotation(dataObj['data']);
 
     const actionTimeMap = new Map();
     analyzedMap.forEach((value, key) => {
+        const myMaster = CharacterMaster[key];
+        if (!myMaster) return;
         value.forEach(action => {
             if (action[1].startsWith('/*') && action[1].endsWith('*/')) return;
             let actionTime = 0;
@@ -518,13 +547,13 @@ function displayData(dataObj, parent, opt_editable = false) {
                 let nRet = nRe.exec(action[1]);
                 if (nRet) {
                     if (nRet[1]) {
-                        actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * Number(nRet[1]);
+                        actionTime = NORMAL_ATTACK_TIME[myMaster['武器']] * Number(nRet[1]);
                     } else {
-                        actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']];
+                        actionTime = NORMAL_ATTACK_TIME[myMaster['武器']];
                     }
                     if (nRet[2]) {
                         if (nRet[2].indexOf('C') != -1) {
-                            actionTime += NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * 2;
+                            actionTime += NORMAL_ATTACK_TIME[myMaster['武器']] * 2;
                         }
                         actionTime += 0.2 * TIME_UNIT * nRet[2].length;
                     }
@@ -546,11 +575,6 @@ function displayData(dataObj, parent, opt_editable = false) {
         startMap.set(key, newValue);
     });
 
-    let html = DATA_HTML_TEMPLATE;
-    html = html.replace(/\$name/g, dataObj['name']);
-    html = html.replace(/\$rotation/g, dataObj['data']);
-
-    let dataLines = '';
     analyzedMap.forEach((value, key) => {
         const myMaster = CharacterMaster[key];
         if (!myMaster) return;
@@ -567,8 +591,40 @@ function displayData(dataObj, parent, opt_editable = false) {
         });
         htmlSub = htmlSub.replace(/\$actions/g, actionHtml);
 
-        dataLines += htmlSub;
+        html += htmlSub;
     });
+
+    return html;
+}
+
+function displayData(dataObj, parent, opt_mode = 0) {
+    let html = DATA_HTML_TEMPLATE;
+    html = html.replace(/\$name/g, dataObj['name']);
+    let displayStyle = '';
+    let inputStyle = '';
+    let editStyle = '';
+    let cancelStyle = '';
+    let saveStyle = '';
+    let removeStyle = '';
+    if (opt_mode == 0) {    // SAVE DATA
+        inputStyle = 'display: none;';
+        cancelStyle = 'display: none;';
+        saveStyle = 'display: none;';
+    } if (opt_mode == 1) {  // NEW DATA
+        displayStyle = 'display: none;';
+        editStyle = 'display: none;';
+        cancelStyle = 'display: none;';
+        removeStyle = 'display: none;';
+    }
+    html = html.replace(/\$inputStyle/g, inputStyle);
+    html = html.replace(/\$displayStyle/g, displayStyle);
+    html = html.replace(/\$editStyle/g, editStyle);
+    html = html.replace(/\$cancelStyle/g, cancelStyle);
+    html = html.replace(/\$saveStyle/g, saveStyle);
+    html = html.replace(/\$removeStyle/g, removeStyle);
+    html = html.replace(/\$rotation/g, dataObj['data']);
+
+    const dataLines = makeHtmlVisualArea(dataObj);
     html = html.replace(/\$dataLines/g, dataLines);
 
     const description = dataObj['description'] ? dataObj['description'] : '';
@@ -576,9 +632,16 @@ function displayData(dataObj, parent, opt_editable = false) {
 
     parent.insertAdjacentHTML('beforeend', html);
 
-    $(document).on('click', '#edit-' + selectorEscape(dataObj['name']), editButtonOnClick);
-    $(document).on('click', '#cancel-' + selectorEscape(dataObj['name']), cancelButtonOnClick);
-    $(document).on('click', '#save-' + selectorEscape(dataObj['name']), saveButtonSavedDataOnClick);
+    if (opt_mode == 0) {
+        $(document).on('click', '#edit-' + selectorEscape(dataObj['name']), editButtonOnClick);
+        $(document).on('click', '#cancel-' + selectorEscape(dataObj['name']), cancelButtonOnClick);
+        $(document).on('click', '#save-' + selectorEscape(dataObj['name']), saveButtonSavedDataOnClick);
+        $(document).on('click', '#rotation-' + selectorEscape(dataObj['name']), rotationTextareaOnChange);
+    } else if (opt_mode == 1) {
+        $(document).on('click', '#save-' + selectorEscape(dataObj['name']), saveButtonNewDataOnClick);
+        $(document).on('click', '#rotation-' + selectorEscape(dataObj['name']), rotationTextareaOnChange);
+    }
+
 }
 
 const DATA_COMPACT_HTML_TEMPLATE = `<div class="data-compact" id="data-compact-$1">
@@ -617,6 +680,8 @@ function displayDataCompact(dataObj, parent) {
     html = html.replace(/\$4/g, description);
 
     parent.insertAdjacentHTML('beforeend', html);
+
+
 }
 
 const SAVE_DATA_KEY_PREFIX = 'genteam-';
@@ -713,68 +778,13 @@ async function init() {
 
     console.log(characterMatchMap);
 
+    // new-data-area
+    const newDataAreaElem = $('#new-data-area').get()[0];
+    newDataAreaElem.innerHTML = '';
+    newData = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+    displayData(newData, newDataAreaElem, 1);
+
+    // save-data-area
     loadSavedData();
-};
-
-/**
- * 
- */
-const rotationTextareaOnChange = function () {
-    if ($(this).val()) {
-        const resultAreaElem = document.getElementById('rotaion-result-area');
-        $(resultAreaElem).html('');
-
-        let analyzedMap = analyzeKqmNotation($(this).val());
-        console.log(analyzedMap);
-
-        const actionTimeMap = new Map();
-        analyzedMap.forEach((value, key) => {
-            value.forEach(action => {
-                if (action[1].startsWith('/*') && action[1].endsWith('*/')) return;
-                let actionTime = 0;
-                if (action[1] in ACTION_TIME) {
-                    actionTime = ACTION_TIME[action[1]];
-                } else {
-                    const nRe = new RegExp(/^N(\d*)([CDJW]*)/);
-                    let nRet = nRe.exec(action[1]);
-                    if (nRet) {
-                        if (nRet[1]) {
-                            actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * Number(nRet[1]);
-                        } else {
-                            actionTime = NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']];
-                        }
-                        if (nRet[2]) {
-                            if (nRet[2].indexOf('C') != -1) {
-                                actionTime += NORMAL_ATTACK_TIME[CharacterMaster[key]['武器']] * 2;
-                            }
-                            actionTime += 0.2 * TIME_UNIT * nRet[2].length;
-                        }
-                    }
-                }
-                console.log(action, actionTime, typeof actionTime);
-                actionTimeMap.set(action[0], actionTime);
-            });
-        });
-
-        const startMap = new Map();
-        actionTimeMap.forEach((value, key) => {
-            let newValue = 0;
-            for (let i = 1; i < key; i++) {
-                if (actionTimeMap.has(i)) {
-                    newValue += Number(actionTimeMap.get(i));
-                }
-            }
-            startMap.set(key, newValue);
-        });
-
-        analyzedMap.forEach((value, key) => {
-            const characterLineElem = createElementCharacterLine(key);
-            resultAreaElem.appendChild(characterLineElem);
-            value.forEach(action => {
-                const elem = createElementAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
-                $(characterLineElem).find('.actions').append(elem);
-            });
-        });
-    }
 };
 

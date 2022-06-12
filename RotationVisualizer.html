@@ -20,47 +20,14 @@
             <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
         </fieldset>
 
-        <div style="display: inline-block; text-align: left; vertical-align: top; margin-bottom: 10px;">
-            <div class="flex">
-                <textarea id="rotation-new" name="rotation-new" rows="8" cols="65" autocapitalize="words"></textarea>
-                <label for="rotation-new">ROTAION</label>
-            </div>
-        </div>
+        <h2>NEW ROTATION</h2>
+        <ol class="data-area" id="new-data-area"></ol>
 
-        <div style="display: inline-block; text-align: left; vertical-align: top;">
-            <label for="name-new">NAME:</label>
-            <input type="text" id="name-new" minlength="1" maxlength="32" size="32">
-            <button type="button" id="save-new">SAVE</button>
-            <div class="flex">
-                <textarea id="description-new" name="description-new" rows="6" cols="65"
-                    autocapitalize="words"></textarea>
-                <label for="description-new">DESCRIPTION</label>
-            </div>
-        </div>
-
-
-        <div class="data-area" id="rotaion-result-area" style="min-height: 440px;"> </div>
-
-        <h2>SAVE DATA</h2>
+        <h2>YOUR ROTATIONS</h2>
         <ol class="data-area" id="save-data-area"></ol>
 
-        <h2>SAMPLE</h2>
+        <h2>SAMPLE ROTATIONS</h2>
         <ol class="data-area" id="sample-data-area"></ol>
-
-        <div id="rotation-list-area">
-            <ul>
-                <li>
-                    <pre>
-                        Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E N3D > Yelan EN > Gorou EN > Noelle 2N3D
-                    </pre>
-                </li>
-                <li>
-                    <pre>
-                        雷電将軍 E > 行秋 QE > ベネット EQ > 香菱 EQ > ベネット EN > 雷電将軍 Q 4N4C
-                    </pre>
-                </li>
-            </ul>
-        </div>
     </div>
 
     <script>

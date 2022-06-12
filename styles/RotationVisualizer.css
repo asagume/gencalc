@@ -55,14 +55,12 @@ div.visual-area {
 
 .data-area fieldset {
     padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 textarea+label {
     display: block;
-}
-
-#rotation-list-area {
-    text-align: left;
 }
 
 div.character-line {
@@ -159,7 +157,7 @@ div.data .data-control p.name {
 }
 
 fieldset.description {
-    margin: 3rem 0;
+    margin: 3rem 1rem;
     /* padding-bottom: 0.5rem;
     padding-inline-start: 0.2rem;
     padding-inline-end: 0.2rem;
