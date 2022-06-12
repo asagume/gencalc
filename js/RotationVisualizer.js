@@ -24,22 +24,34 @@ const SAVE_DATA_TEMPLATE = {
     updated_at: null
 }
 
+/** 漢字が含まれるか判定する正規表現 */
+const CONTAIN_KANJI_RE = /([\u{3005}\u{3007}\u{303b}\u{3400}-\u{9FFF}\u{F900}-\u{FAFF}\u{20000}-\u{2FFFF}][\u{E0100}-\u{E01EF}\u{FE00}-\u{FE02}]?)/mu;
+
 /**
  * 文字列の先頭からキャラクター名を抽出します.
  * 
  * @param {string} str 
- * @returns {string} キャラクター名部分文字列
+ * @returns {Array} [キャラクター名, キャラクター名部分文字列]
  */
 function analyzeCharacterNameStr(str) {
     let result;
     const str2 = str.toLowerCase();
     for (let entry of characterMatchMap.entries()) {
         entry[1].forEach(v => {
+            if (CONTAIN_KANJI_RE.test(v)) {
+                const splitted = str2.split(/[ \t]+/);
+                if (splitted[0].length >= 2) {
+                    if (v.startsWith(splitted[0]) || v.endsWith(splitted[0])) {
+                        result = [entry[1][0], splitted[0]];
+                        return;
+                    }
+                }
+            }
             if (str2.startsWith(v.toLowerCase())) {
                 if (!result) {
-                    result = v;
-                } else if (result.length < v.length) {
-                    result = v;
+                    result = [entry[1][0], v];
+                } else if (result[1].length < v.length) {
+                    result = [entry[1][0], v];
                 }
             }
         });
@@ -67,7 +79,8 @@ function analyzeKqmNotation(kqm) {
 
     let start = 1;
     const kqmSplitted = kqm.split(KQM_SPLIT_RE1);
-    console.log(kqmSplitted);
+    console.debug(kqmSplitted);
+
     kqmSplitted.forEach(e1 => {
         // 行頭のコメントは除去します
         if (e1.startsWith('/*')) {
@@ -75,16 +88,11 @@ function analyzeKqmNotation(kqm) {
         }
 
         // キャラクターを特定します
-        const characterStr = analyzeCharacterNameStr(e1);
-        let character;
-        characterMatchMap.forEach((value, key) => {
-            if (value.includes(characterStr)) {
-                character = key;
-            }
-        });
-        e1 = e1.substring(characterStr.length + 1);
-        console.log(characterStr, character, e1);
-        if (!character) return;
+        const characterTuple = analyzeCharacterNameStr(e1);
+        if (!characterTuple) return;
+        const character = characterTuple[0];
+        e1 = e1.substring(characterTuple[1].length + 1);
+        console.debug(characterTuple, e1);
         if (!result.has(character)) {
             result.set(character, []);
         }
@@ -115,12 +123,13 @@ function analyzeKqmNotation(kqm) {
                 actionChars.forEach(a => {
                     // N 通常攻撃
                     // C 重撃
+                    // P 落下攻撃
                     // E 元素スキル
                     // Q 元素爆発
                     // D ダッシュ
                     // J ジャンプ
                     // W 歩き
-                    if ('NEQ'.indexOf(a.toUpperCase()) != -1) { // 通常攻撃 元素スキル 元素爆発
+                    if ('NPEQ'.indexOf(a.toUpperCase()) != -1) { // 通常攻撃 落下攻撃 元素スキル 元素爆発
                         subArr.push(a.toUpperCase());
                     } else if ('CDJW'.indexOf(a.toUpperCase()) != -1) { // 重撃 ダッシュ ジャンプ 歩き
                         if (subArr.length > 0 && subArr[subArr.length - 1].startsWith('N')) {
@@ -147,34 +156,8 @@ function analyzeKqmNotation(kqm) {
         }
     });
 
+    console.debug('analyzeKqmNotation', '=>', result);
     return result;
-}
-
-function createElementCharacterLine(character) {
-    const divElem = document.createElement('div');
-    divElem.className = 'character-line';
-    divElem.style.borderBottomColor = ELEMENT_COLOR[CharacterMaster[character]['元素']];
-    divElem.style.borderImage = 'linear-gradient(135deg,' + ELEMENT_COLOR[CharacterMaster[character]['元素']] + ',#555555)';
-    divElem.style.borderImageSlice = '1';
-
-    const importVal = CharacterMaster[character]['import'];
-    const src = importVal.replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
-    const backgroundImageUrl = 'images/star' + CharacterMaster[character]['レアリティ'] + '-bg.png';
-    const imgHtml = FACE_HTML_TEMPLATE.replace('$1', src).replace('$2', backgroundImageUrl);
-
-    const imgElem = document.createElement('img');
-    imgElem.className = 'face';
-    imgElem.src = importVal.replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
-    imgElem.alt = characterMatchMap.get(character)[1];
-    imgElem.style.backgroundImage = 'url(' + backgroundImageUrl + ')';
-    imgElem.style.backgroundSize = 'contain';
-    divElem.appendChild(imgElem);
-
-    const actionsDivElem = document.createElement('div');
-    actionsDivElem.className = 'actions';
-    divElem.appendChild(actionsDivElem);
-
-    return divElem;
 }
 
 const NORMAL_ATTACK_SRC = {
@@ -220,51 +203,6 @@ const NORMAL_ATTACK_TIME_ARR = {
     法器: [0, 1, 0, 3, 4]
 }
 
-/**
- * 
- * @param {string} character 
- * @param {number} start 
- * @param {string} action 
- * @param {number} actionTime 
- * @returns {HTMLElement}
- */
-function createElementAction(character, start, action, actionTime) {
-    console.debug(character, start, action, actionTime);
-    const divElem = document.createElement('div');
-    divElem.className = 'action';
-    divElem.style.width = actionTime + 'px';
-    divElem.style.left = start + 'px';
-    divElem.style.backgroundColor = ELEMENT_COLOR[CharacterMaster[character]['元素']];
-
-    const importVal = CharacterMaster[character]['import'];
-    const imgDir = importVal.replace(/^data\/characters/, 'images/characters').replace(/.json$/, '/');
-    let src;
-    if (action.startsWith('N') || action == 'C') {
-        src = NORMAL_ATTACK_SRC[CharacterMaster[character]['武器']];
-    } else if (action == 'E') {
-        src = imgDir + 'ElementalSkill.png';
-    } else if (action == 'Q') {
-        src = imgDir + 'ElementalBurst.png';
-    }
-    if (src) {
-        const imgElem = document.createElement('img');
-        imgElem.className = 'action';
-        imgElem.src = src;
-        imgElem.alt = action;
-        if (actionTime < 64) {
-            imgElem.style.width = actionTime + 'px';
-            // imgElem.style.height = actionTime + 'px';
-        }
-        divElem.appendChild(imgElem);
-    }
-
-    const pElem = document.createElement('p');
-    pElem.innerHTML = action;
-    divElem.appendChild(pElem);
-
-    return divElem;
-}
-
 const ACTION_HTML_TEMPLATE = `<div class="action" style="width: $width; left: $left; background-color: $backgroundColor;">
 $imgHtml
 <p>$action</p>
@@ -304,32 +242,6 @@ function makeHtmlAction(character, start, action, actionTime) {
     html = html.replace(/\$action/, action);
 
     return html;
-}
-
-function displayTeam(data, opt_editable = false) {
-    const divElem = document.createElement('div');
-    divElem.className = 'team';
-    divElem.id = data['id'];
-}
-
-function displayTeamCompact(data) {
-    const divElem = document.createElement('div');
-    if ('name' in data) {
-        const nameElem = document.createElement('p');
-        p.innerHTML = name;
-        divElem.appendChild(nameElem);
-    }
-    if ('data' in data) {
-        const faceElemArr = [];
-        const analyzedMap = analyzeKqmNotation(data['data']);
-        analyzedMap.forEach((value, key) => {
-            faceElemArr.push(create)
-        });
-
-    }
-    if ('description' in data) {
-
-    }
 }
 
 function getElementColor(master) {
@@ -471,19 +383,21 @@ const saveButtonNewDataOnClick = function () {
 /**
  * 
  */
- const rotationTextareaOnChange = function () {
+const rotationTextareaOnChange = function () {
+    const id = $(this).attr('id');
+    const suffix = id.substring(id.indexOf('-') + 1);
+    const visualAreaJq = $('#data-' + selectorEscape(suffix) + ' .visual-area');
+    visualAreaJq.html('');
+    const visualAreaElem = visualAreaJq.get()[0];
+
     let rotationVal = $(this).val();
     rotationVal.trim();
     if (rotationVal) {
-        const id = $(this).attr('id');
-        const suffix = id.substring(id.indexOf('-') + 1);
-    
         const dataObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
         dataObj['data'] = rotationVal;
 
         const visualAreaHtml = makeHtmlVisualArea(dataObj);
-        const parent = $('#data-' + selectorEscape(suffix) + ' .visual-area').get()[0];
-        parent.insertAdjacentHTML('beforeend', visualAreaHtml);
+        visualAreaElem.insertAdjacentHTML('beforeend', visualAreaHtml);
     }
 };
 
@@ -559,7 +473,6 @@ function makeHtmlVisualArea(dataObj) {
                     }
                 }
             }
-            console.debug(action, actionTime, typeof actionTime);
             actionTimeMap.set(action[0], actionTime);
         });
     });
@@ -574,6 +487,7 @@ function makeHtmlVisualArea(dataObj) {
         }
         startMap.set(key, newValue);
     });
+    console.debug('startMap', startMap);
 
     analyzedMap.forEach((value, key) => {
         const myMaster = CharacterMaster[key];

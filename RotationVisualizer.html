@@ -27,15 +27,29 @@
         <ol class="data-area" id="save-data-area"></ol>
 
         <h2>SAMPLE ROTATIONS</h2>
+        <table class="notation-guide" style="margin-left: auto; margin-right: auto;">
+            <tr>
+                <th>N</th><td>通常攻撃 Normal Attack</td>
+                <th>C</th><td>重撃 Charged Attack</td>
+                <th>P</th><td>落下攻撃 Plunge Attack</td>
+            </tr>
+            <tr>
+                <th>E</th><td>元素スキル Elemental Skill</td>
+                <th>Q</th><td>元素爆発 Elemental Burst</td>
+            </tr>
+            <tr>
+                <th>W</th><td>歩き Walk</td>
+                <th>D</th><td>ダッシュ Dash</td>
+                <th>J</th><td>ジャンプ Jump</td>
+            </tr>
+        </table>
+
         <ol class="data-area" id="sample-data-area"></ol>
     </div>
 
     <script>
         window.onload = () => {
             init();
-
-            $(document).on('change', '#rotation-new', rotationTextareaOnChange);
-            $(document).on('click', '#save-new', saveButtonNewOnClick);
         };
     </script>
 </body>
