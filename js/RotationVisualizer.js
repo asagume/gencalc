@@ -232,7 +232,7 @@ const NORMAL_ATTACK_TIME_ARR = {
  * @returns {HTMLElement}
  */
 function createElementAction(character, start, action, actionTime) {
-    console.log(character, start, action, actionTime);
+    console.debug(character, start, action, actionTime);
     const divElem = document.createElement('div');
     divElem.className = 'action';
     divElem.style.width = actionTime + 'px';
@@ -266,6 +266,47 @@ function createElementAction(character, start, action, actionTime) {
     divElem.appendChild(pElem);
 
     return divElem;
+}
+
+const ACTION_HTML_TEMPLATE = `<div class="action" style="width: $width; left: $left; background-color: $backgroundColor;">
+$imgHtml
+<p>$action</p>
+</div>`;
+
+function makeHtmlAction(character, start, action, actionTime) {
+    console.debug(character, start, action, actionTime);
+
+    let html = ACTION_HTML_TEMPLATE;
+    html = html.replace(/\$width/, actionTime + 'px');
+    html = html.replace(/\$left/, start + 'px');
+    html = html.replace(/\$backgroundColor/, ELEMENT_COLOR[CharacterMaster[character]['元素']]);
+
+    let imgHtml = '';
+    const importVal = CharacterMaster[character]['import'];
+    const imgDir = importVal.replace(/^data\/characters/, 'images/characters').replace(/.json$/, '/');
+    let src;
+    if (action.startsWith('N') || action == 'C') {
+        src = NORMAL_ATTACK_SRC[CharacterMaster[character]['武器']];
+    } else if (action == 'E') {
+        src = imgDir + 'ElementalSkill.png';
+    } else if (action == 'Q') {
+        src = imgDir + 'ElementalBurst.png';
+    }
+    if (src) {
+        imgHtml = `<img class="action" src="$src" alt="$action" style="$style">`;
+        imgHtml = imgHtml.replace(/\$src/, src);
+        imgHtml = imgHtml.replace(/\$action/, action);
+        let style = '';
+        if (actionTime < 64) {
+            style = 'width: ' + Math.trunc(actionTime) + 'px;';
+        }
+        imgHtml = imgHtml.replace(/\$style/, style);
+    }
+    html = html.replace(/\$imgHtml/, imgHtml);
+
+    html = html.replace(/\$action/, action);
+
+    return html;
 }
 
 SAVE_DATA_TEMPLATE = {
@@ -315,33 +356,41 @@ function getFaceBackgroundImageUrl(master) {
     return 'images/star' + master['レアリティ'] + '-bg.png';
 }
 
-const DATA_HTML_TEMPLATE = `<div class="data" id="data-$1">
+const DATA_HTML_TEMPLATE = `<div class="data" id="data-$name">
     <div class="data-control">
-        <p class="name" id="label-name-$1">$1</p>
-        <input type="text" id="name-$1" minlength="1" maxlength="32" size="32" value="$1" style="display: none;">
-        <button type="button" class="data-edit" id="edit-$1">EDIT</button>
-        <button type="button" class="data-cancel" id="cancel-$1" style="display: none;">CANCEL</button>
-        <button type="button" class="data-save" id="save-$1" style="display: none;">SAVE</button>
-        <button type="button" class="data-remove" id="remove-$1">REMOVE</button>
+        <p class="name" id="label-name-$name">$name</p>
+        <input type="text" id="name-$name" minlength="1" maxlength="32" size="32" value="$name" style="display: none;">
+        <button type="button" class="data-edit" id="edit-$name">EDIT</button>
+        <button type="button" class="data-cancel" id="cancel-$name" style="display: none;">CANCEL</button>
+        <button type="button" class="data-save" id="save-$name" style="display: none;">SAVE</button>
+        <button type="button" class="data-remove" id="remove-$name">REMOVE</button>
     </div>
-    <div class="rotation-area" id="rotation-area-$1" style="display: none;">
+    <div class="rotation-area" id="rotation-area-$name" style="display: none;">
         <div class="flex">
-            <textarea id="rotation-$1" name="rotation-$1" rows="8" cols="65" autocapitalize="words">$2</textarea>
-            <label for="rotation-$1">ROTAION</label>
+            <textarea id="rotation-$name" name="rotation-$name" rows="8" cols="65" autocapitalize="words">
+            $rotation
+            </textarea>
+            <label for="rotation-$name">ROTAION</label>
         </div>
     </div>
-    <div class="description-area" id="description-area-$1" style="display: none;">
+    <div class="description-area" id="description-area-$name" style="display: none;">
         <div class="flex">
-            <textarea id="description-$1" name="description-$1" rows="8" cols="65">$3</textarea>
-            <label for="description-$1">DESCRIPTION</label>
+            <textarea id="description-$1" name="description-$name" rows="8" cols="65">
+            $description
+            </textarea>
+            <label for="description-$name">DESCRIPTION</label>
         </div>
     </div>
-$4
-    <fieldset class="description">$3</fieldset>
+    <div class="visual-area">
+$dataLines
+    </div>
+    <fieldset class="description">$description</fieldset>
 </div>`;
-const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$1_$2" style="border-bottom-color: $3; border-image: linear-gradient(135deg, $3, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
-<img class="face" src="$4" alt="$2" style="background-image: url($5); background-size: contain;">
-<div class="actions"></div>
+const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$name_$character">
+    <img class="face" src="$src" alt="$character" style="background-image: url($starBg); background-size: contain;">
+    <div class="actions" style="border-bottom-color: $elementColor; border-image: linear-gradient(135deg, $elementColor, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
+$actions
+    </div>
 </div>`;
 
 /**
@@ -457,27 +506,6 @@ const saveButtonSavedDataOnClick = function () {
 function displayData(dataObj, parent, opt_editable = false) {
     const analyzedMap = analyzeKqmNotation(dataObj['data']);
 
-    let html = DATA_HTML_TEMPLATE;
-    html = html.replace(/\$1/g, dataObj['name']);
-    html = html.replace(/\$2/g, dataObj['data']);
-    let imgHtml = '';
-    analyzedMap.forEach((value, key) => {
-        const myMaster = CharacterMaster[key];
-        if (!myMaster) return;
-        let htmlSub = DATA_LINE_HTML_TEMPLATE;
-        htmlSub = htmlSub.replace(/\$1/g, dataObj['name']);
-        htmlSub = htmlSub.replace(/\$2/g, key);
-        htmlSub = htmlSub.replace(/\$3/g, getElementColor(myMaster));
-        htmlSub = htmlSub.replace(/\$4/g, getFaceSrcUrl(myMaster));
-        htmlSub = htmlSub.replace(/\$5/g, getFaceBackgroundImageUrl(myMaster));
-        imgHtml += htmlSub + '\n';
-    });
-    const description = dataObj['description'] ? dataObj['description'] : '';
-    html = html.replace(/\$3/g, description);
-    html = html.replace(/\$4/g, imgHtml);
-
-    parent.insertAdjacentHTML('beforeend', html);
-
     const actionTimeMap = new Map();
     analyzedMap.forEach((value, key) => {
         value.forEach(action => {
@@ -502,7 +530,7 @@ function displayData(dataObj, parent, opt_editable = false) {
                     }
                 }
             }
-            console.log(action, actionTime, typeof actionTime);
+            console.debug(action, actionTime, typeof actionTime);
             actionTimeMap.set(action[0], actionTime);
         });
     });
@@ -518,12 +546,35 @@ function displayData(dataObj, parent, opt_editable = false) {
         startMap.set(key, newValue);
     });
 
+    let html = DATA_HTML_TEMPLATE;
+    html = html.replace(/\$name/g, dataObj['name']);
+    html = html.replace(/\$rotation/g, dataObj['data']);
+
+    let dataLines = '';
     analyzedMap.forEach((value, key) => {
+        const myMaster = CharacterMaster[key];
+        if (!myMaster) return;
+        let htmlSub = DATA_LINE_HTML_TEMPLATE;
+        htmlSub = htmlSub.replace(/\$name/g, dataObj['name']);
+        htmlSub = htmlSub.replace(/\$character/g, key);
+        htmlSub = htmlSub.replace(/\$src/g, getFaceSrcUrl(myMaster));
+        htmlSub = htmlSub.replace(/\$starBg/g, getFaceBackgroundImageUrl(myMaster));
+        htmlSub = htmlSub.replace(/\$elementColor/g, getElementColor(myMaster));
+
+        let actionHtml = '';
         value.forEach(action => {
-            const elem = createElementAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
-            $('#' + selectorEscape('character-line-' + dataObj['name'] + '_' + key)).find('.actions').append(elem);
+            actionHtml += makeHtmlAction(key, startMap.get(action[0]), action[1], actionTimeMap.get(action[0]));
         });
+        htmlSub = htmlSub.replace(/\$actions/g, actionHtml);
+
+        dataLines += htmlSub;
     });
+    html = html.replace(/\$dataLines/g, dataLines);
+
+    const description = dataObj['description'] ? dataObj['description'] : '';
+    html = html.replace(/\$description/g, description);
+
+    parent.insertAdjacentHTML('beforeend', html);
 
     $(document).on('click', '#edit-' + selectorEscape(dataObj['name']), editButtonOnClick);
     $(document).on('click', '#cancel-' + selectorEscape(dataObj['name']), cancelButtonOnClick);
@@ -594,8 +645,12 @@ function loadSavedData() {
         localStorage[SAVE_DATA_KEY_PREFIX + savedData['name']] = JSON.stringify(savedData);
     });
 
+    let saveId = 1;
     savedDataArr.forEach(savedData => {
-        displayData(savedData, saveDataAreaElem);
+        const liElem = document.createElement('li');
+        liElem.id = 'save-data-' + (saveId++);
+        displayData(savedData, liElem);
+        saveDataAreaElem.appendChild(liElem);
     });
 }
 

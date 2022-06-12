@@ -6,169 +6,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>げんろーて - Genshin Impact Rotation Visualizer</title>
     <link href="styles/base-style.css" rel="stylesheet" />
+    <link href="styles/RotationVisualizer.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="js/RotationVisualizer.js"></script>
     <reference path="JQuery.d.ts"></reference>
-    <style type="text/css">
-        body {
-            color: blanchedalmond;
-            background-color: black;
-        }
-
-        #main {
-            background: linear-gradient(to top, #3d3d3b, #141414);
-            font-size: 2.2rem;
-        }
-
-        h2 {
-            max-width: 60rem;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 1rem;
-            border: 1px solid gray;
-            border-radius: 20px;
-        }
-
-        a:link {
-            color: blanchedalmond;
-        }
-
-        a:visited {
-            color: blanchedalmond;
-        }
-
-        input {
-            font-size: 3rem;
-        }
-
-        textarea {
-            font-size: 3rem;
-        }
-
-        .flex {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .flex label {
-            order: 0;
-        }
-
-        .flex textarea {
-            order: 1;
-        }
-
-        textarea+label {
-            display: block;
-        }
-
-        #rotation-list-area {
-            text-align: left;
-        }
-
-        div.character-line {
-            position: relative;
-            max-width: 100%;
-            text-align: left;
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: 10px solid;
-        }
-
-        div.character-line img.face {
-            width: 80px;
-            height: 80px;
-            vertical-align: top;
-        }
-
-        div.character-line div.actions {
-            position: absolute;
-            left: 80px;
-            top: 0;
-        }
-
-        .actions div.action {
-            position: absolute;
-            border-radius: 40%;
-            bottom: -96px;
-            text-align: center;
-        }
-
-        div.action img.action {
-            width: 48px;
-            /* height: 64px; */
-            vertical-align: top;
-            margin-top: auto;
-            margin-bottom: auto;
-        }
-
-        div.action p {
-            font-size: 3rem;
-            color: black;
-            margin: 0;
-        }
-
-        div.data-compact {
-            text-align: left;
-        }
-
-        div.data-compact img.face {
-            width: 80px;
-            height: 80px;
-            vertical-align: top;
-        }
-
-        div.data {
-            text-align: left;
-        }
-
-        div.data .data-control {
-            position: relative;
-        }
-
-        div.data .data-control p.name {
-            display: inline-block;
-            width: 64rem;
-            margin: 0.5rem 2rem;
-            font-size: 3rem;
-            font-weight: bold;
-            border-bottom: solid 2px gold;
-        }
-
-        .data-control button {
-            width: 80px;
-        }
-
-        .data-control button.data-remove {
-            position: absolute;
-            right: 0px;
-        }
-
-        .rotation-area {
-            display: inline-block;
-            text-align: left;
-            vertical-align: top;
-            margin-bottom: 10px;
-        }
-
-        .description-area {
-            display: inline-block;
-            text-align: left;
-            vertical-align: top;
-            margin-bottom: 10px;
-        }
-
-        fieldset.description {
-            margin: 3rem 1rem;
-            padding-bottom: 0.5rem;
-            padding-inline-start: 0.2rem;
-            padding-inline-end: 0.2rem;
-            padding-block-start: 0.2rem;
-            padding-block-end: 0.2rem;
-            border-radius: 1rem;
-        }
-    </style>
 </head>
 
 <body>
@@ -197,13 +39,13 @@
         </div>
 
 
-        <div id="rotaion-result-area" style="min-height: 440px;"> </div>
+        <div class="data-area" id="rotaion-result-area" style="min-height: 440px;"> </div>
 
         <h2>SAVE DATA</h2>
-        <div id="save-data-area"> </div>
+        <ol class="data-area" id="save-data-area"></ol>
 
-        <h2>SAMPLES</h2>
-        <div id="sample-data-area"> </div>
+        <h2>SAMPLE</h2>
+        <ol class="data-area" id="sample-data-area"></ol>
 
         <div id="rotation-list-area">
             <ul>
