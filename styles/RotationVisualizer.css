@@ -77,10 +77,16 @@ div.character-line img.face {
     vertical-align: top;
 }
 
+div.character-line .info {
+    position: absolute;
+    left: 80px;
+    bottom: 0;
+}
+
 div.character-line div.actions {
     position: absolute;
-    width: 90%;
-    left: 80px;
+    width: calc(100% - 80px - 48px - 10px);
+    left: calc(80px + 48px);
     bottom: 0;
     border-bottom: 10px solid;
 }
@@ -93,7 +99,7 @@ div.character-line div.actions {
 }
 
 div.action img.action {
-    width: 48px;
+    width: 32px;
     /* height: 64px; */
     vertical-align: top;
     margin-top: auto;
@@ -101,7 +107,7 @@ div.action img.action {
 }
 
 div.action p {
-    font-size: 3rem;
+    font-size: 2rem;
     color: black;
     margin: 0;
 }

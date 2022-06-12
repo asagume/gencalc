@@ -15,7 +15,7 @@ var OptionMaster2;
 var TeamOptionMaster;
 var characterMatchMap = new Map();
 
-const SAVE_DATA_TEMPLATE = {
+const DATA_OBJ_TEMPLATE = {
     id: '',
     name: '',
     data: '',
@@ -178,7 +178,7 @@ const ELEMENT_COLOR = {
     岩: '#df8f37'
 };
 
-const TIME_UNIT = 48;
+const TIME_UNIT = 32;
 const ACTION_TIME = {
     C: 1.5 * TIME_UNIT,
     E: 1 * TIME_UNIT,
@@ -232,7 +232,7 @@ function makeHtmlAction(character, start, action, actionTime) {
         imgHtml = imgHtml.replace(/\$src/, src);
         imgHtml = imgHtml.replace(/\$action/, action);
         let style = '';
-        if (actionTime < 64) {
+        if (actionTime < TIME_UNIT) {
             style = 'width: ' + Math.trunc(actionTime) + 'px;';
         }
         imgHtml = imgHtml.replace(/\$style/, style);
@@ -312,11 +312,11 @@ function saveButtonOnClick(suffix) {
             localStorage.removeItem(SAVE_DATA_KEY_PREFIX + suffix);
         }
         const key = SAVE_DATA_KEY_PREFIX + name;
-        let valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+        let valueObj = JSON.parse(JSON.stringify(DATA_OBJ_TEMPLATE));
         if (localStorage[key]) {
-            valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+            valueObj = JSON.parse(JSON.stringify(DATA_OBJ_TEMPLATE));
         } else {
-            valueObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+            valueObj = JSON.parse(JSON.stringify(DATA_OBJ_TEMPLATE));
         }
         let sortOrder = 0;
         valueObj['name'] = name;
@@ -393,7 +393,7 @@ const rotationTextareaOnChange = function () {
     let rotationVal = $(this).val();
     rotationVal.trim();
     if (rotationVal) {
-        const dataObj = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+        const dataObj = JSON.parse(JSON.stringify(DATA_OBJ_TEMPLATE));
         dataObj['data'] = rotationVal;
 
         const visualAreaHtml = makeHtmlVisualArea(dataObj);
@@ -431,8 +431,10 @@ $dataLines
     </div>
     <fieldset class="description" style="$displayStyle">$description</fieldset>
 </div>`;
+
 const DATA_LINE_HTML_TEMPLATE = `<div class="character-line" id="character-line-$name_$character">
     <img class="face" src="$src" alt="$character" style="background-image: url($starBg); background-size: contain;">
+    <div class="info">$info</div>
     <div class="actions" style="border-bottom-color: $elementColor; border-image: linear-gradient(135deg, $elementColor, rgb(85, 85, 85)) 1 / 1 / 0 stretch;">
 $actions
     </div>
@@ -448,6 +450,7 @@ function makeHtmlVisualArea(dataObj) {
     const analyzedMap = analyzeKqmNotation(dataObj['data']);
 
     const actionTimeMap = new Map();
+    const actionTimeSumMap = new Map();
     analyzedMap.forEach((value, key) => {
         const myMaster = CharacterMaster[key];
         if (!myMaster) return;
@@ -474,6 +477,11 @@ function makeHtmlVisualArea(dataObj) {
                 }
             }
             actionTimeMap.set(action[0], actionTime);
+            if (actionTimeSumMap.has(key)) {
+                actionTimeSumMap.set(key, actionTimeSumMap.get(key) + actionTime);
+            } else {
+                actionTimeSumMap.set(key, actionTime);
+            }
         });
     });
 
@@ -489,6 +497,11 @@ function makeHtmlVisualArea(dataObj) {
     });
     console.debug('startMap', startMap);
 
+    let sumOfAllActions = 0;
+    actionTimeSumMap.forEach((value, key) => {
+        sumOfAllActions += value;
+    });
+
     analyzedMap.forEach((value, key) => {
         const myMaster = CharacterMaster[key];
         if (!myMaster) return;
@@ -498,6 +511,9 @@ function makeHtmlVisualArea(dataObj) {
         htmlSub = htmlSub.replace(/\$src/g, getFaceSrcUrl(myMaster));
         htmlSub = htmlSub.replace(/\$starBg/g, getFaceBackgroundImageUrl(myMaster));
         htmlSub = htmlSub.replace(/\$elementColor/g, getElementColor(myMaster));
+
+        const onFiledRate = Math.trunc(actionTimeSumMap.get(key) / sumOfAllActions * 1000) / 10 + '%';
+        htmlSub = htmlSub.replace(/\$info/g, onFiledRate);
 
         let actionHtml = '';
         value.forEach(action => {
@@ -695,7 +711,7 @@ async function init() {
     // new-data-area
     const newDataAreaElem = $('#new-data-area').get()[0];
     newDataAreaElem.innerHTML = '';
-    newData = JSON.parse(JSON.stringify(SAVE_DATA_TEMPLATE));
+    newData = JSON.parse(JSON.stringify(DATA_OBJ_TEMPLATE));
     displayData(newData, newDataAreaElem, 1);
 
     // save-data-area
