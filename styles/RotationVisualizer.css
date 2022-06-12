@@ -79,29 +79,31 @@ div.character-line img.face {
 
 div.character-line .info {
     position: absolute;
-    left: 80px;
+    left: 20px;
     bottom: 0;
 }
 
 div.character-line div.actions {
     position: absolute;
-    width: calc(100% - 80px - 48px - 10px);
-    left: calc(80px + 48px);
+    width: calc(100% - 80px - 20px - 10px);
+    left: calc(80px);
     bottom: 0;
-    border-bottom: 10px solid;
+    border-bottom: 3rem solid;
 }
 
 .actions div.action {
     position: absolute;
     border-radius: 40%;
-    bottom: -12px;
+    bottom: -3rem;
     text-align: center;
 }
 
 div.action img.action {
-    width: 32px;
-    /* height: 64px; */
+    position: absolute;
+    bottom: 3rem;
+    width: 36px;
     vertical-align: top;
+    border-radius: 50%;
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -110,6 +112,7 @@ div.action p {
     font-size: 2rem;
     color: black;
     margin: 0;
+    width: 36px;
 }
 
 div.data-compact {

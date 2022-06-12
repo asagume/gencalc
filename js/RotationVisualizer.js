@@ -203,7 +203,11 @@ const NORMAL_ATTACK_TIME_ARR = {
     法器: [0, 1, 0, 3, 4]
 }
 
-const ACTION_HTML_TEMPLATE = `<div class="action" style="width: $width; left: $left; background-color: $backgroundColor;">
+// const ACTION_HTML_TEMPLATE = `<div class="action" style="width: $width; left: $left; background-color: $backgroundColor;">
+// $imgHtml
+// <p>$action</p>
+// </div>`;
+const ACTION_HTML_TEMPLATE = `<div class="action" style="left: $left;">
 $imgHtml
 <p>$action</p>
 </div>`;
@@ -212,9 +216,9 @@ function makeHtmlAction(character, start, action, actionTime) {
     console.debug(character, start, action, actionTime);
 
     let html = ACTION_HTML_TEMPLATE;
-    html = html.replace(/\$width/, actionTime + 'px');
-    html = html.replace(/\$left/, start + 'px');
-    html = html.replace(/\$backgroundColor/, ELEMENT_COLOR[CharacterMaster[character]['元素']]);
+    //html = html.replace(/\$width/, actionTime + 'px');
+    html = html.replace(/\$left/, Math.trunc(start) + 'px');
+    //html = html.replace(/\$backgroundColor/, ELEMENT_COLOR[CharacterMaster[character]['元素']]);
 
     let imgHtml = '';
     const importVal = CharacterMaster[character]['import'];
@@ -228,14 +232,28 @@ function makeHtmlAction(character, start, action, actionTime) {
         src = imgDir + 'ElementalBurst.png';
     }
     if (src) {
-        imgHtml = `<img class="action" src="$src" alt="$action" style="$style">`;
-        imgHtml = imgHtml.replace(/\$src/, src);
-        imgHtml = imgHtml.replace(/\$action/, action);
-        let style = '';
-        if (actionTime < TIME_UNIT) {
-            style = 'width: ' + Math.trunc(actionTime) + 'px;';
+        let repeatTimes = 1;
+        if (action.startsWith('N') && action.length > 1) {
+            if ($.isNumeric(action.substring(1, 2))) {
+                const n = Number(action.substring(1, 2));
+                repeatTimes = n;
+            }
         }
-        imgHtml = imgHtml.replace(/\$style/, style);
+        let left = 0;
+        for (let i = 0; i < repeatTimes; i++) {
+            subHtml = `<img class="action" src="$src" alt="$action" style="$style">`;
+            subHtml = subHtml.replace(/\$src/, src);
+            subHtml = subHtml.replace(/\$action/, action);
+            let style = 'left: $left; background-color: $backgroundColor;';
+            style = style.replace(/\$left/, left + 'px');
+            left += Math.trunc(actionTime / repeatTimes);
+            style = style.replace(/\$backgroundColor/, ELEMENT_COLOR[CharacterMaster[character]['元素']]);
+            if (['E', 'Q'].includes(action)) {
+                style += ' border: solid 2px;';
+            }
+            subHtml = subHtml.replace(/\$style/, style);
+            imgHtml += subHtml;
+        }
     }
     html = html.replace(/\$imgHtml/, imgHtml);
 
