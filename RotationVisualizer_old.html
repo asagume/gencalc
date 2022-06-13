@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんろーて - Genshin Impact Rotation Visualizer</title>
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <link href="styles/RotationVisualizer.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="js/RotationVisualizer.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+</head>
+
+<body>
+    <div id="main">
+        <fieldset style="margin: 1rem; position: relative;">
+            <legend>げんろーて - Genshin Impact Rotation Visualizer</legend>
+            <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
+        </fieldset>
+
+        <h2>NEW ROTATION</h2>
+        <ol class="data-area" id="new-data-area"></ol>
+
+        <h2>YOUR ROTATIONS</h2>
+        <ol class="data-area" id="save-data-area"></ol>
+
+        <h2>SAMPLE ROTATIONS</h2>
+        <table class="notation-guide" style="margin-left: auto; margin-right: auto;">
+            <tr>
+                <th>N</th><td>通常攻撃 Normal Attack</td>
+                <th>C</th><td>重撃 Charged Attack</td>
+                <th>P</th><td>落下攻撃 Plunge Attack</td>
+            </tr>
+            <tr>
+                <th>E</th><td>元素スキル Elemental Skill</td>
+                <th>Q</th><td>元素爆発 Elemental Burst</td>
+            </tr>
+            <tr>
+                <th>W</th><td>歩き Walk</td>
+                <th>D</th><td>ダッシュ Dash</td>
+                <th>J</th><td>ジャンプ Jump</td>
+            </tr>
+        </table>
+
+        <ol class="data-area" id="sample-data-area"></ol>
+    </div>
+
+    <script>
+        window.onload = () => {
+            init();
+        };
+    </script>
+</body>
+
+</html>
