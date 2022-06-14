@@ -10,24 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="js/RotationVisualiser.js"></script>
     <style>
-        li.data {
-            text-align: left;
-        }
-
-        li.data div {
-            display: inline-block;
-            vertical-align: top;
-            min-width: 360px;
-        }
-
-        div.action {
-            min-width: 360px;
-        }
-
-        img {
-            width: 32px;
-            height: 32px
-        }
     </style>
 </head>
 
@@ -81,7 +63,7 @@
         <h2>SAMPLE ROTATIONS</h2>
         <ol class="sample-data-area" id="sampleDataArea">
             <template v-for="(item, index) in list">
-                <li class="data" :key="index">
+                <li class="data">
                     {{item.name}} <br>
                     <template v-if="item.isCompact">
                         <button type="button">↓</button>
@@ -95,21 +77,22 @@
                     </template>
                     <template v-else>
                         <button type="button">↑</button>
-                        <div>
+                        <div class="characters">
                             <template v-for="character in item.rotation4v.list">
-                                <img :src="character.imgSrc" :alt="character.name"
-                                    :style="'background-image: url(' + character.starBgUrl +');'">
-                                <div class="actions">
-                                    <template v-for="action in character.actions">
-                                        <div class="action"
-                                            :style="'left: ' + action.x + 'px; width: ' + action.width + 'px;'">
-                                            <template v-for="icon in action.icons">
-                                                <img :src="icon.imgSrc"
-                                                    :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px;'">
-                                            </template>
-                                            <p> {{action.name}} </p>
-                                        </div>
-                                    </template>
+                                <div class="character">
+                                    <img class="character" :src="character.imgSrc" :alt="character.name"
+                                        :style="'background-image: url(' + character.starBgUrl +');'">
+                                    <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
+                                        <template v-for="action in character.actions">
+                                            <div class="action" :style="'left: ' + action.x + 'px;'">
+                                                <template v-for="icon in action.icons">
+                                                    <img :src="icon.imgSrc"
+                                                        :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px;'">
+                                                </template>
+                                                <p> {{action.name}} </p>
+                                            </div>
+                                        </template>
+                                    </div>
                                 </div>
                             </template>
                         </div>

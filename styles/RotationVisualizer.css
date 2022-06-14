@@ -25,7 +25,71 @@ a:visited {
     color: blanchedalmond;
 }
 
-input {
+img {
+    vertical-align: top;
+}
+
+li.data {
+    text-align: left;
+}
+
+li.data div.characters {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+li.data div.character {
+    position: relative;
+    min-width: 360px;
+    height: 100px;
+}
+
+li.data img.character {
+    position: absolute;
+    left: 0px;
+    background-size: contain;
+    width: 90px;
+    height: 90px;
+}
+
+li.data div.actions {
+    position: absolute;
+    left: 90px;
+    bottom: 10px;
+    width: 100%;
+    border: solid 15px;
+}
+
+li.data div.actions div.action {
+    position: absolute;
+    bottom: -10px;
+    min-width: 45px;
+    min-height: calc(45px + 20px);
+}
+
+li.data div.actions div.action img {
+    position: absolute;
+    top: 0;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: solid 2px;
+}
+
+li.data div.actions div.action p {
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%);
+    bottom: 0;
+    font-size: 15px;
+    color: black;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+/* input {
     font-size: 3rem;
 }
 
@@ -162,14 +226,4 @@ div.data .data-control p.name {
     text-align: left;
     vertical-align: top;
     margin-bottom: 10px;
-}
-
-fieldset.description {
-    margin: 3rem 1rem;
-    /* padding-bottom: 0.5rem;
-    padding-inline-start: 0.2rem;
-    padding-inline-end: 0.2rem;
-    padding-block-start: 0.2rem;
-    padding-block-end: 0.2rem; */
-    border-radius: 1rem;
 }
