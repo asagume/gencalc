@@ -31,26 +31,25 @@
                 placeholder="INPUT YOUR ROTATION"></textarea>
             <textarea v-model="description" class="description" name="description" cols="60" rows="8"
                 placeholder="INPUT DESCRIPTION"></textarea>
-            <ol>
-                <template v-for="character in rotation4v.list">
-                    <li class="character-rotation">
-                        <img :src="character.imgSrc" :alt="character.name"
+            <div class="characters">
+                <template v-for="(character, index) in rotation4v.list">
+                    <div class="character">
+                        <img class="character" :src="character.imgSrc" :alt="character.name"
                             :style="'background-image: url(' + character.starBgUrl +');'">
-                        <div class="character-actions-area">
+                        <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                             <template v-for="action in character.actions">
-                                <div class="character-action"
-                                    :style="'left: ' + action.x + 'px; top: ' + action.y + 'px;'">
+                                <div class="action" :style="'left: ' + action.x + 'px;'">
                                     <template v-for="icon in action.icons">
                                         <img :src="icon.imgSrc" :alt="icon.name"
-                                            :style="'left: ' + (action.x + icon.x) + 'px; top: ' + (action.y + icon.y) + 'px;'">
+                                            :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px;'">
                                     </template>
-                                    <p>{{actions.name}}</p>
+                                    <p> {{action.name}} </p>
                                 </div>
                             </template>
                         </div>
-                    </li>
+                    </div>
                 </template>
-            </ol>
+            </div>
         </div>
 
         <h2>YOUR ROTATIONS</h2>
@@ -86,7 +85,7 @@
                                         <template v-for="action in character.actions">
                                             <div class="action" :style="'left: ' + action.x + 'px;'">
                                                 <template v-for="icon in action.icons">
-                                                    <img :src="icon.imgSrc"
+                                                    <img :src="icon.imgSrc" :alt="icon.name"
                                                         :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px;'">
                                                 </template>
                                                 <p> {{action.name}} </p>
