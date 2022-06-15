@@ -152,8 +152,8 @@
                                                 <template v-for="icon in action.icons">
                                                     <img v-if="icon.imgSrc" class="icon" :src="icon.imgSrc"
                                                         :alt="icon.name"
-                                                        :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px;'">
-                                                    <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
+                                                        :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px; width: ' + icon.width + 'px; z-index: ' + icon.z + ';'">
+                                                    <div v-else class="noicon" :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; z-index: ' + icon.z + ';'">
                                                         <p class="noicon"> {{icon.name}} </p>
                                                     </div>
                                                 </template>

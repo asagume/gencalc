@@ -218,7 +218,7 @@ function analyzeKqmNotation(kqm) {
 
             actionGroupObj = {
                 actionGroupNo: actionGroupNo,
-                groupName: str2,
+                groupName: str2.toUpperCase(),
                 actionList: []
             }
 
@@ -571,7 +571,6 @@ function makeRotation4v(rotationStr) {
             preCharacter = character;
         }
 
-        let z = 0;
         const actionGroupObj = entry[1];
         if ('actionList' in actionGroupObj) {
             const actionObj4v = {
@@ -581,6 +580,7 @@ function makeRotation4v(rotationStr) {
             }
             let nextIconX = 0;
             actionGroupObj['actionList'].forEach(actionObj => {
+                let z = 99;
                 let iconName = null;
                 if (['N', 'C', 'P'].includes(actionObj['action'])) {    // 通常攻撃 重撃 落下攻撃
                     if (rotationMaster) {
@@ -596,7 +596,7 @@ function makeRotation4v(rotationStr) {
                                     name: iconName,
                                     imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
                                     x: nextIconX + nX - x0,
-                                    z: z++
+                                    z: z--
                                 })
                             }
                             nextIconX += nX;
@@ -605,7 +605,7 @@ function makeRotation4v(rotationStr) {
                                 name: iconName,
                                 imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
                                 x: nextIconX,
-                                z: z++
+                                z: z--
                             })
                             nextIconX += getTimeNumber(actionObj['time']);
                         }
@@ -614,7 +614,7 @@ function makeRotation4v(rotationStr) {
                             name: iconName,
                             imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
                             x: nextIconX,
-                            z: z++
+                            z: z--
                         })
                         nextIconX += getTimeNumber(actionObj['time']);
                     }
@@ -622,31 +622,37 @@ function makeRotation4v(rotationStr) {
                     if (rotationMaster) {
                         iconName = rotationMaster['元素スキル']['名前'];
                     }
+                    width = actionObj['time'];
                     actionObj4v.icons.push({
                         name: iconName,
                         imgSrc: getElementalSkillImgSrc(characterMaster),
                         x: nextIconX,
-                        z: z++
+                        z: z--,
+                        width: width
                     })
                     nextIconX += getTimeNumber(actionObj['time']);
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
                     if (rotationMaster) {
                         iconName = rotationMaster['元素爆発']['名前'];
                     }
+                    width = actionObj['time'];
                     actionObj4v.icons.push({
                         name: iconName,
                         imgSrc: getElementalBurstImgSrc(characterMaster),
                         x: nextIconX,
-                        z: z++
+                        z: z--,
+                        width: width
                     })
-                    nextIconX += getTimeNumber(actionObj['time']);
+                    nextIconX += width;
                 } else if (['W', 'D', 'J'].includes(actionObj['action'])) {    // 歩き ダッシュ ジャンプ
+                    width = actionObj['time'];
                     actionObj4v.icons.push({
                         name: actionObj['action'],
                         x: nextIconX,
-                        z: z++
+                        z: z--,
+                        width: width
                     })
-                    nextIconX += REFERENCE_FRAMES[actionObj['action']];
+                    nextIconX += width;
                 }
             })
             nextGroupX += nextIconX;
