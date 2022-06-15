@@ -26,10 +26,30 @@ var CharacterNameMatchMap;
 // D ダッシュ
 // J ジャンプ
 const actioinVariationMap = new Map([
-    ['N', ['HOLD']],
-    ['C', ['AIM', 'FULL']],
-    ['P', ['HIGH', 'LOW']],
-    ['E', ['PRESS', 'HOLD', 'TAP', 'HOLDLEVEL1', 'HOLDLEVEL2']]
+    ['N', new Map([
+        ['HOLD', '長押し']
+    ])],
+    ['C', new Map([
+        ['AIMSHOT', '狙い撃ち'],
+        ['AIM', '狙い撃ち'],
+        ['FULLYCHARGEDAIMSHOT', 'フルチャージ狙い撃ち'],
+        ['FULLYCHARGED', 'フルチャージ狙い撃ち'],
+        ['FULLY', 'フルチャージ狙い撃ち'],
+        ['FULL', 'フルチャージ狙い撃ち'],
+    ])],
+    ['P', new Map([
+        ['HIGH', '上空落下'],
+        ['LOW', '低空落下']
+    ])],
+    ['E', new Map([
+        ['PRESS', '一回押し'],
+        ['HOLD', '長押し'],
+        ['TAP', '一回押し'],
+        ['CHARGELEVEL1', '1段チャージ'],
+        ['CHARGELEVEL2', '2段チャージ'],
+        ['CHARGE1', '1段チャージ'],
+        ['CHARGE2', '2段チャージ']
+    ])],
 ])
 
 /** 漢字が含まれるか判定する正規表現 */
@@ -38,7 +58,7 @@ const CONTAIN_KANJI_RE = /([\u{3005}\u{3007}\u{303b}\u{3400}-\u{9FFF}\u{F900}-\u
 const KQM_SPLIT_RE1 = new RegExp(/\s+>\s+/);
 const KQM_SPLIT_RE2 = new RegExp(/(\/\*.*\*\/|\S+\.\S+|\S+)/);
 
-const X_SCALE = 48; // px per second (1sencod = 60frames)
+const X_SCALE = 30; // px per second (1sencod = 60frames)
 
 const ELEMENT_COLOR = {
     炎: '#d2655a',
@@ -107,6 +127,14 @@ function analyzeCharacterNameStr(str) {
     return result;
 }
 
+function makeActionRegExp() {
+    const cStr = 'C(' + Array.from(actioinVariationMap.get('C').keys()).map(s => '\\.' + s).join('|') + ')?';
+    const pStr = 'P(' + Array.from(actioinVariationMap.get('P').keys()).map(s => '\\.' + s).join('|') + ')?';
+    const eStr = 'E(' + Array.from(actioinVariationMap.get('E').keys()).map(s => '\\.' + s).join('|') + ')?';
+    const str = '^(\\d*)(N(\\.HOLD|\\d*)|' + cStr + '|' + pStr + '|' + eStr + '|Q|W|D|J)(\\((\\d*\\.?\\d*)([sf]?)\\))?';
+    return new RegExp(str, 'i');
+}
+
 /**
  * KQM記法を解析します.
  * 
@@ -123,14 +151,13 @@ function analyzeKqmNotation(kqm) {
     if (!kqm) return result;
 
     const kqmSplitted = kqm.split(KQM_SPLIT_RE1);
-    console.debug(kqmSplitted);
 
-    let preCharacter;
     let actionGroupNo = 0;
+
+    const actionRe = makeActionRegExp();
 
     kqmSplitted.forEach(str => {
         str = str.trim();
-
         // 行頭のコメントは除去します
         if (str.startsWith('/*')) {
             str = str.replace(/^\/\*.+?\*\//, '').trim();
@@ -145,9 +172,6 @@ function analyzeKqmNotation(kqm) {
         // console.debug(characterTuple, str);
         if (!result.has(character)) {
             result.set(character, []);
-        }
-        if (character != preCharacter) {
-            preCharacter = character;
         }
 
         const step1StrArr = [];
@@ -176,24 +200,18 @@ function analyzeKqmNotation(kqm) {
             }
         })
 
-        const actionRe = new RegExp(/^(\d*)(N(\.HOLD|\d*)|C(\.HOLD|\.AIM|\.FULL)?|P(\.HIGH|\.LOW)?|E(\.PRESS|\.HOLD|\.TAP|\.HOLDLEVEL1|\.HOLDLEVEL2)?|Q|W|D|J)(\((\d*\.?\d*)([sf]?)\))?/i);
-
         let actionGroupObj = {};
         step2StrArr.forEach(str2 => {
             actionGroupNo++;
 
             if (str2.startsWith('/*') && str2.endsWith('*/')) { // コメント
-                let comment = str2.replace(/^\/\*\s*/, '').replace(/\s*\*\/$/, '');
-                if (actionGroupObj) {
-                    if ('comment' in actionGroupObj) {
-                        comment = actionGroupObj['comment'] + ',' + comment;
-                    }
-                    actionGroupObj['comment'] = comment;
-                } else {
+                const comment = str2.replace(/^\/\*\s*/, '').replace(/\s*\*\/$/, '');
+                if (comment) {
                     actionGroupObj = {
                         actionGroupNo: actionGroupNo,
-                        comment: comment
-                    };
+                        comment: comment,
+                    }
+                    result.get(character).push(actionGroupObj);
                 }
                 return;
             }
@@ -211,7 +229,6 @@ function analyzeKqmNotation(kqm) {
             while (workStr) {
                 const retActionRe = actionRe.exec(workStr);
                 if (!retActionRe) break;
-                console.debug(workStr, retActionRe);
                 workStr = workStr.substring(retActionRe[0].length);
 
                 for (let i = 1; i < retActionRe.length; i++) {
@@ -228,38 +245,54 @@ function analyzeKqmNotation(kqm) {
                 if (retActionRe[8]) {
                     actionTime = Number(retActionRe[8]);
                     if (!retActionRe[9] || retActionRe[9] == 's') {
-                        actionTime *= 60;
+                        actionTime *= 60;   // second -> frame
                     }
                 }
 
                 if (retActionRe[2].startsWith('N')) { // 通常攻撃
                     let numberOfNormalAttack = 1;
-                    if (retActionRe[3] && !Number.isNaN(retActionRe[3])) {
-                        numberOfNormalAttack = Number(retActionRe[3]);
+                    let myType = null;
+                    if (retActionRe[3]) {
+                        if (Number.isNaN(retActionRe[3])) {
+                            myType = actioinVariationMap.get('N').get(retActionRe[3].substring(1));
+                        } else {
+                            numberOfNormalAttack = Number(retActionRe[3]);
+                        }
                     }
                     subList.push({
                         action: retActionRe[2].substring(0, 1),
                         numberOfNormalAttack: numberOfNormalAttack,
-                        type: Number.isNaN(retActionRe[3]) ? retActionRe[3] : null,
+                        type: myType,
                         time: actionTime
                     })
-
                 } else if (retActionRe[2].startsWith('C')) { // 重撃
+                    let myType = null;
+                    if (retActionRe[4]) {
+                        myType = actioinVariationMap.get('C').get(retActionRe[4].substring(1));
+                    }
                     subList.push({
                         action: retActionRe[2].substring(0, 1),
-                        type: retActionRe[4],
+                        type: myType,
                         time: actionTime
                     })
                 } else if (retActionRe[2].startsWith('P')) { // 落下攻撃
+                    let myType = null;
+                    if (retActionRe[5]) {
+                        myType = actioinVariationMap.get('P').get(retActionRe[5].substring(1));
+                    }
                     subList.push({
                         action: retActionRe[2].substring(0, 1),
-                        type: retActionRe[5],
+                        type: myType,
                         time: actionTime
                     })
                 } else if (retActionRe[2].startsWith('E')) { // 元素スキル
+                    let myType = null;
+                    if (retActionRe[6]) {
+                        myType = actioinVariationMap.get('E').get(retActionRe[6].substring(1));
+                    }
                     subList.push({
                         action: retActionRe[2].substring(0, 1),
-                        type: retActionRe[6],
+                        type: myType,
                         time: actionTime
                     })
                 } else if (retActionRe[2].startsWith('Q')) { // 元素爆発
@@ -279,7 +312,7 @@ function analyzeKqmNotation(kqm) {
                 actionGroupObj.actionList = actionGroupObj.actionList.concat(subList);
             }
 
-            if (actionGroupObj.actionList.length > 0 && !actionGroupObj.comment) {
+            if (actionGroupObj.actionList.length > 0) {
                 result.get(character).push(actionGroupObj);
             }
         })
@@ -331,7 +364,7 @@ function getTimeNumber(time, opt_default) {
         result = time[time.length - 1];
     }
     if (isString(result)) {
-        const splited = result.split(/\D+/)
+        const splited = result.split(/\s*\D+\s*/)
         result = splited[splited.length - 1];
     }
     if (Number.isNaN(result)) {
@@ -340,16 +373,126 @@ function getTimeNumber(time, opt_default) {
     return Number(result);
 }
 
+function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
+    let time;
+    let timeArr;
+    if (rotationMaster) {
+        switch (action) {
+            case 'N':   // 通常攻撃
+                time = 0;
+                for (let i = 0; i < n; i++) {
+                    timeArr = rotationMaster['通常攻撃']['Frames']['通常攻撃'][i];
+                    if (Array.isArray(timeArr) && timeArr.length == 2) {
+                        time += timeArr[1];
+                    } else {
+                        time = -9999;
+                    }
+                }
+                timeArr = rotationMaster['通常攻撃']['Frames']['通常攻撃'][n];
+                if (Array.isArray(timeArr) && timeArr.length == 2) {
+                    if (opt_nextAction && opt_nextAction != 'N') {
+                        time += timeArr[0];
+                    } else {
+                        time += timeArr[1];
+                    }
+                } else {
+                    time = -9999;
+                }
+                break;
+            case 'C':   // 重撃
+                switch (rotationMaster['武器']) {
+                    case '片手剣':
+                    case '長柄武器':
+                    case '法器':
+                        timeArr = rotationMaster['通常攻撃']['Frames']['重撃'];
+                        if (Array.isArray(timeArr) && timeArr.length == 2) {
+                            if (opt_nextAction && opt_nextAction != 'N') {
+                                time = timeArr[0];
+                            } else {
+                                time = timeArr[1];
+                            }
+                        }
+                        break;
+                    case '両手剣':
+                        break;
+                    case '弓':
+                        break;
+                }
+            case 'P':   // 落下攻撃
+                if (!type) {
+                    type = '低空落下';
+                }
+            case 'E':   // 元素スキル
+                if (!type) {
+                    type = '一回押し';
+                }
+                if (type in rotationMaster['元素スキル']['Frames']) {
+                    timeArr = rotationMaster['元素スキル']['Frames'][type];
+                    if (Array.isArray(timeArr) && timeArr.length == 2) {
+                        if (opt_nextAction) {
+                            time = timeArr[0];
+                        } else {
+                            time = timeArr[1];
+                        }
+                    } else {
+                        time = -9999;
+                    }
+                }
+                break;
+            case 'Q':   // 元素爆発
+                timeArr = rotationMaster['元素スキル']['Frames'];
+                if (Array.isArray(timeArr) && timeArr.length == 2) {
+                    if (opt_nextAction) {
+                        time = timeArr[0];
+                    } else {
+                        time = timeArr[1];
+                    }
+                } else {
+                    time = -9999;
+                }
+                break;
+        }
+    }
+    switch (action) {
+        case 'W':   // 歩き
+            time = 12;
+            break;
+        case 'D':   // ダッシュ
+            time = 12;
+            break;
+        case 'J':   // ジャンプ
+            time = 24;
+            break;
+    }
+    if (Number.isNaN(time) || time <= 0) {
+        switch (action) {
+            case 'N':
+                time = 30 + 30 * n;
+                break;
+            case 'E':
+                time = 60;
+                break;
+            case 'Q':
+                time = 120;
+                break;
+            default:
+                time = 90;
+                break;
+        }
+    }
+    console.debug(rotationMaster['名前'], action, n, type, opt_nextAction, '=>', time);
+    return time;
+}
+
+
 function makeRotation4v(rotationStr) {
-    const result = { list: [] };
+    const result = { width: 0, list: [] };
 
     if (!rotationStr) return result;
     rotationStr = rotationStr.trim();
     if (!rotationStr) return result;
 
     const analyzedMap = analyzeKqmNotation(rotationStr);
-
-    const ccAddX = 12;  // キャラクター変更に要するフレーム数
 
     analyzedMap.forEach((value, key) => {
         const character = key;
@@ -358,100 +501,42 @@ function makeRotation4v(rotationStr) {
 
         value.forEach(actionGroupObj => {
             if ('actionList' in actionGroupObj) {
-                actionGroupObj['actionList'].forEach(actionObj => {
+                for (let i = 0; i < actionGroupObj['actionList'].length; i++) {
+                    const actionObj = actionGroupObj['actionList'][i];
                     if (actionObj['time']) return;
                     let frames;
+                    let nextAction = null;
+                    if (i + 1 < actionGroupObj['actionList'].length) {
+                        nextAction = actionGroupObj['actionList'][i + 1]['action'];
+                    }
                     switch (actionObj['action']) {
                         case 'N':   // 通常攻撃
-                            if (actionObj['numberOfNormalAttack']) {
-                                let timeArr = [];
-                                if (rotationMaster) {
-                                    for (let i = 0; i < actionObj['numberOfNormalAttack']; i++) {
-                                        let x = getTimeNumber(rotationMaster['通常攻撃']['Frames']['通常攻撃'][i], 30);
-                                        timeArr.push(x);
-                                    }
-                                } else {
-                                    let x0 = 60;
-                                    for (let i = 0; i < actionObj['numberOfNormalAttack']; i++) {
-                                        timeArr.push(x0 + 30 * i);
-                                    }
-                                }
-                                actionObj['time'] = timeArr;
-                            } else {
-                                actionObj['time'] = 60; // 1s
+                            let timeArr = [];
+                            for (let j = 0; j < actionObj['numberOfNormalAttack'] - 1; j++) {
+                                frames = getActionTime(rotationMaster, actionObj['action'], j, null, 'N');
+                                timeArr.push(frames);
                             }
+                            frames = getActionTime(rotationMaster, actionObj['action'], actionObj['numberOfNormalAttack'] - 1, null, nextAction);
+                            timeArr.push(frames);
+                            actionObj['time'] = timeArr;
                             break;
                         case 'C':   // 重撃
-                            actionObj['time'] = 60; // 1s
-                            break;
                         case 'P':   // 落下攻撃
-                            actionObj['time'] = 60; // 1s
-                            break;
                         case 'E':   // 元素スキル
-                            frames = 60;
-                            if (rotationMaster) {
-                                switch (actionObj['type']) {
-                                    case 'HOLD':
-                                        if ('Hold' in rotationMaster['元素スキル']['Frames']) {
-                                            frames = rotationMaster['元素スキル']['Frames']['Hold'];
-                                        }
-                                        break;
-                                    case 'CHARGELEVEL1':
-                                        if ('Charge Level 1' in rotationMaster['元素スキル']['Frames']) {
-                                            frames = rotationMaster['元素スキル']['Frames']['Charge Level 1'];
-                                        }
-                                        break;
-                                    case 'CHARGELEVEL2':
-                                        if ('Charge Level 2' in rotationMaster['元素スキル']['Frames']) {
-                                            frames = rotationMaster['元素スキル']['Frames']['Charge Level 2'];
-                                        }
-                                        break;
-                                    case 'PRESS':
-                                    case 'TAP':
-                                    default:
-                                        if ('Press' in rotationMaster['元素スキル']['Frames']) {
-                                            frames = rotationMaster['元素スキル']['Frames']['Press'];
-                                        }
-                                        if ('Tap' in rotationMaster['元素スキル']['Frames']) {
-                                            frames = rotationMaster['元素スキル']['Frames']['Tap'];
-                                        }
-                                        break;
-                                }
-                            }
-                            actionObj['time'] = getTimeNumber(frames, 60);
-                            break;
                         case 'Q':   // 元素爆発
-                            frames = 100;
-                            if (rotationMaster) {
-                                if (rotationMaster['元素爆発']['Frames']['Cast Frames']) {
-                                    frames = rotationMaster['元素爆発']['Frames']['Cast Frames'];
-                                }
-                            }
-                            if (frames) {
-                                if (Array.isArray(frames)) {
-                                    frames = frames[frames.length - 1]; // last item
-                                }
-                                if (isNaN(frames)) {
-                                    frames = 100;   // FIXME
-                                }
-                            }
-                            actionObj['time'] = getTimeNumber(frames, 100);
-                            break;
                         case 'W':   // 歩き
-                            actionObj['time'] = 12; // 0.2s
-                            break;
                         case 'D':   // ダッシュ
-                            actionObj['time'] = 12; // 0.2s
-                            break;
                         case 'J':   // ジャンプ
-                            actionObj['time'] = 30; // 0.5s
+                            frames = getActionTime(rotationMaster, actionObj['action'], null, actionObj['type'], nextAction);
+                            actionObj['time'] = frames;
                             break;
                     }
-                })
+                }
             }
         })
     })
 
+    // 行動順に並べます
     const analyzedDataOrderByGroupNo = [];
     analyzedMap.forEach((value, key) => {
         value.forEach(actionGroupObj => {
@@ -462,6 +547,7 @@ function makeRotation4v(rotationStr) {
 
     const characterMap = new Map();
 
+    let preCharacter;
     let nextGroupX = 0;
     analyzedDataOrderByGroupNo.forEach(entry => {
         const character = entry[0];
@@ -478,39 +564,57 @@ function makeRotation4v(rotationStr) {
             })
         }
 
+        if (character != preCharacter) {
+            if (preCharacter) {
+                nextGroupX += 12;   // キャラクター切り替え時間を加算します
+            }
+            preCharacter = character;
+        }
+
+        let z = 0;
         const actionGroupObj = entry[1];
         if ('actionList' in actionGroupObj) {
             const actionObj4v = {
                 name: actionGroupObj['groupName'],
-                x: 0,
+                x: nextGroupX,
                 icons: []
             }
             let nextIconX = 0;
             actionGroupObj['actionList'].forEach(actionObj => {
                 let iconName = null;
-                let imgSrc;
                 if (['N', 'C', 'P'].includes(actionObj['action'])) {    // 通常攻撃 重撃 落下攻撃
                     if (rotationMaster) {
                         iconName = rotationMaster['通常攻撃']['名前'];
                     }
-                    imgSrc = NORMAL_ATTACK_IMG_SRC[characterMaster['武器']];
-                    if (Array.isArray(actionObj['time'])) {
-                        const subX = nextIconX;
-                        let x = subX;
-                        for (let i = 0; i < actionObj['numberOfNormalAttack']; i++) {
+                    if (actionObj['action'] == 'N') {
+                        if (Array.isArray(actionObj['time'])) {
+                            const x0 = getTimeNumber(actionObj['time'][0]);
+                            let nX = x0;
+                            for (let i = 0; i < actionObj['numberOfNormalAttack']; i++) {
+                                nX = getTimeNumber(actionObj['time'][i]);
+                                actionObj4v.icons.push({
+                                    name: iconName,
+                                    imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
+                                    x: nextIconX + nX - x0,
+                                    z: z++
+                                })
+                            }
+                            nextIconX += nX;
+                        } else {
                             actionObj4v.icons.push({
                                 name: iconName,
                                 imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
-                                x: x
+                                x: nextIconX,
+                                z: z++
                             })
-                            x = subX + getTimeNumber(actionObj['time'][i]);
+                            nextIconX += getTimeNumber(actionObj['time']);
                         }
-                        nextIconX += x;
                     } else {
                         actionObj4v.icons.push({
                             name: iconName,
                             imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
-                            x: nextIconX
+                            x: nextIconX,
+                            z: z++
                         })
                         nextIconX += getTimeNumber(actionObj['time']);
                     }
@@ -521,7 +625,8 @@ function makeRotation4v(rotationStr) {
                     actionObj4v.icons.push({
                         name: iconName,
                         imgSrc: getElementalSkillImgSrc(characterMaster),
-                        x: nextIconX
+                        x: nextIconX,
+                        z: z++
                     })
                     nextIconX += getTimeNumber(actionObj['time']);
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
@@ -531,26 +636,27 @@ function makeRotation4v(rotationStr) {
                     actionObj4v.icons.push({
                         name: iconName,
                         imgSrc: getElementalBurstImgSrc(characterMaster),
-                        x: nextIconX
+                        x: nextIconX,
+                        z: z++
                     })
                     nextIconX += getTimeNumber(actionObj['time']);
-                } else if (actionObj['action'] == 'W') {    // 歩き
-                    iconName = 'WALK';
-                    nextIconX += 12;
-                } else if (actionObj['action'] == 'D') {    // ダッシュ
-                    iconName = 'DASH';
-                    nextIconX += 12;
-                } else if (actionObj['action'] == 'J') {    // ジャンプ
-                    iconName = 'JUMP';
-                    nextIconX += 24;
+                } else if (['W', 'D', 'J'].includes(actionObj['action'])) {    // 歩き ダッシュ ジャンプ
+                    actionObj4v.icons.push({
+                        name: actionObj['action'],
+                        x: nextIconX,
+                        z: z++
+                    })
+                    nextIconX += REFERENCE_FRAMES[actionObj['action']];
                 }
-                nextGroupX += nextIconX;
             })
-            actionObj4v.x = nextGroupX;
-            console.log(nextGroupX);
+            nextGroupX += nextIconX;
+
             characterMap.get(character)['actions'].push(actionObj4v);
+            console.log(character, actionObj4v.x, actionObj4v.name);
         }
     })
+
+    result.width = 100 + nextGroupX;
 
     characterMap.forEach((value, key) => {
         value['actions'].forEach(actionObj4v => {
@@ -577,13 +683,11 @@ function buildNewDataArea() {
     newData = new Vue({
         el: '#data_',
         data: {
-            idSuffix: null,
             name: '',
             rotation: null,
             description: null,
-            sortOrder: null,
-            editable: true,
             rotation4v: {
+                width: 360,
                 list: undefined
             }
         },
@@ -599,18 +703,55 @@ function buildNewDataArea() {
                 if (this.rotation) {
                     this.rotation = String(this.rotation).trim();
                 }
-                if (this.description) {
-                    this.description = String(this.description).trim();
+                if (!this.name) {
+                    this.$refs.name.focus();
+                    return;
                 }
-                if (!this.name || !this.rotation) return;
-                //saveData(this);
+                if (!this.rotation) {
+                    this.$refs.rotation.focus();
+                    return;
+                }
+                saveData(this);
             }
-        },
+        }
     })
 }
 
+var saveDataArea;
+var savedDataList = [];
 function buildSaveDataArea() {
+    Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX)).forEach(key => {
+        const dataObj = JSON.parse(localStorage[key]);
+        savedDataList.push(dataObj);
+    })
+    savedDataList.sort((a, b) => a.sortOrder - b.sortOrder)
 
+    let index = 0;
+    const list = [];
+    savedDataList.forEach(dataObj => {
+        const newDataObj = JSON.parse(JSON.stringify(dataObj));
+        newDataObj['index'] = index++;
+        newDataObj['rotation4v'] = makeRotation4v(newDataObj['rotation']);
+        newDataObj['isCompact'] = false;
+        newDataObj['isEditable'] = false;
+        list.push(newDataObj);
+    })
+
+    saveDataArea = new Vue({
+        el: '#saveDataArea',
+        data: {
+            list: list
+        },
+        methods: {
+            rotationOnInput: function (event) {
+                const index = event.target.index;
+                this.list[index].rotation = event.target.value;
+                this.list[index].rotation4v = makeRotation4v(this.list[index].rotation);
+            },
+            saveButtonOnClick: function (event) {
+            }
+        }
+    })
 }
 
 var sampleDataArea;
@@ -688,27 +829,26 @@ const SAVE_DATA_TEMPLATE = {
     sortOrder: null,
 };
 
-// function saveData(data) {
-//     console.debug('saveData', '=>', data);
-//     if (!data.name || !data.rotation) return;
-//     const key = SAVE_DATA_KEY_PREFIX + data.name;
-//     let sortOrder;
-//     const savedData = localStorage[key];
-//     if (savedData) {
-//         const savedDataObj = JSON.parse(savedData);
-//         sortOrder = savedDataObj.sortOrder;
-//     } else {
-//         sortOrder = Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX)).reduce((a, b) => Math.max(a, b)) + 1;
-//     }
-//     const dataObj = {
-//         name: data.name,
-//         rotation: data.rotation,
-//         description: data.description,
-//         sortOrder: sortOrder
-//     };
-//     localStorage.setItem(key, JSON.stringify(dataObj));
-// };
-
+function saveData(data) {
+    console.debug('saveData', '=>', data);
+    if (!data.name || !data.rotation) return;
+    const key = SAVE_DATA_KEY_PREFIX + data.name;
+    let sortOrder;
+    const savedData = localStorage[key];
+    if (savedData) {
+        const savedDataObj = JSON.parse(savedData);
+        sortOrder = savedDataObj.sortOrder;
+    } else {
+        sortOrder = Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX)).reduce((a, b) => Math.max(a, b)) + 1;
+    }
+    const dataObj = {
+        name: data.name,
+        rotation: data.rotation,
+        description: data.description,
+        sortOrder: sortOrder
+    }
+    localStorage.setItem(key, JSON.stringify(dataObj));
+}
 
 // const savedDataList = [];
 // Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX)).forEach(key => {

@@ -25,27 +25,24 @@ a:visited {
     color: blanchedalmond;
 }
 
-img {
-    vertical-align: top;
-}
-
 li.data {
     text-align: left;
 }
 
-li.data div.characters {
+div.characters {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-}
-
-li.data div.character {
-    position: relative;
     min-width: 360px;
-    height: 100px;
 }
 
-li.data img.character {
+div.character {
+    position: relative;
+    height: 90px;
+    width: 100%;
+}
+
+div.character img.character {
     position: absolute;
     left: 0px;
     background-size: contain;
@@ -53,22 +50,22 @@ li.data img.character {
     height: 90px;
 }
 
-li.data div.actions {
+div.character div.actions {
     position: absolute;
     left: 90px;
-    bottom: 10px;
-    width: 100%;
-    border: solid 15px;
+    bottom: 0px;
+    width: calc(100% - 90px);
+    border-bottom: solid 15px;
 }
 
-li.data div.actions div.action {
+div.actions div.action {
     position: absolute;
     bottom: -10px;
     min-width: 45px;
     min-height: calc(45px + 20px);
 }
 
-li.data div.actions div.action img {
+img.icon {
     position: absolute;
     top: 0;
     width: 45px;
@@ -77,16 +74,45 @@ li.data div.actions div.action img {
     border: solid 2px;
 }
 
-li.data div.actions div.action p {
+div.noicon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 25px;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    opacity: 80%;
+    border: solid 2px;
+    transform: rotate(45deg);
+}
+
+div.noicon p.noicon {
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    transform: rotate(-45deg);
+}
+
+div.actions div.action p.name {
     position: absolute;
     left: 50%;
     right: 50%;
     transform: translate(-50%);
-    bottom: 0;
+    bottom: -10px;
     font-size: 15px;
-    color: black;
+    font-weight: bold;
+    color: darkred;
     margin-block-start: 0;
     margin-block-end: 0;
+}
+
+div.actions div.comment {
+    position: absolute;
+    top: -20px;
 }
 
 /* input {

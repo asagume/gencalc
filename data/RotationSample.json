@@ -1,12 +1,7 @@
 [
-  {
-    "name": "紅葉の庭",
-    "rotation": "Yelan E > Gorou Q > Albedo E.HOLD(2s) > Yelan QN > Noelle Q N3E 4N3D",
-    "description": "説明"
-  },
-  {
-    "name": "紅葉の庭",
-    "rotation": "Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E 4N3D",
-    "description": ""
-  }
+    {
+        "name": "紅葉の庭",
+        "rotation": "Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E 4N3D",
+        "description": "説明"
+    }
 ]
