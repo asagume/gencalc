@@ -54,6 +54,20 @@ const actioinVariationMap = new Map([
     ])],
 ])
 
+const displayNameMap = new Map([
+    ['狙い撃ち', ''],
+    ['フルチャージ狙い撃ち', '<div class="maru">F</div>'],
+    ['1段チャージ狙い撃ち', '<div class="maru">1</div>'],
+    ['2段チャージ狙い撃ち', '<div class="maru">2</div>'],
+    ['一回押し', ''],
+    ['長押し', '<div class="maru">H</div>'],
+    ['上空落下', '<div class="maru">H</div>'],
+    ['低空落下', ''],
+    ['1段チャージ', '<div class="maru">1</div>'],
+    ['2段チャージ', '<div class="maru">2</div>']
+])
+
+
 /** 漢字が含まれるか判定する正規表現 */
 const CONTAIN_KANJI_RE = /([\u{3005}\u{3007}\u{303b}\u{3400}-\u{9FFF}\u{F900}-\u{FAFF}\u{20000}-\u{2FFFF}][\u{E0100}-\u{E01EF}\u{FE00}-\u{FE02}]?)/mu;
 
@@ -556,8 +570,11 @@ function makeRotation4v(rotationStr) {
         if (!characterMap.has(character)) {
             characterMap.set(character, {
                 name: character,
+                elementName: characterMaster['元素'],
+                star: characterMaster['レアリティ'],
                 imgSrc: getCharacterImgSrc(characterMaster),
                 starBgUrl: getCharacterBackgroundImageUrl(characterMaster),
+                elementImgSrc: getCharacterElementImgSrc(characterMaster),
                 elementColor: getElementColor(characterMaster),
                 actions: []
             })
@@ -572,8 +589,9 @@ function makeRotation4v(rotationStr) {
 
         const actionGroupObj = entry[1];
         if ('actionList' in actionGroupObj) {
+            let groupName = actionGroupObj['groupName'];
             const actionObj4v = {
-                name: actionGroupObj['groupName'],
+                name: groupName,
                 x: nextGroupX,
                 icons: [],
                 comment: 'comment' in actionGroupObj ? actionGroupObj['comment'] : null
@@ -582,6 +600,9 @@ function makeRotation4v(rotationStr) {
             actionGroupObj['actionList'].forEach(actionObj => {
                 let width;
                 let iconName = null;
+                let duration = null;
+                let cd = null;
+                let energyCost = null;
                 if (['N', 'C', 'P'].includes(actionObj['action'])) {    // 通常攻撃 重撃 落下攻撃
                     if (rotationMaster) {
                         iconName = rotationMaster['通常攻撃']['名前'];
@@ -617,27 +638,37 @@ function makeRotation4v(rotationStr) {
                         nextIconX += width;
                     }
                 } else if (actionObj['action'] == 'E') {    // 元素スキル
-                    if (rotationMaster) {
-                        iconName = rotationMaster['元素スキル']['名前'];
+                    if (rotationMaster && '元素スキル' in rotationMaster) {
+                        iconName = '名前' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['名前'] : null;
+                        duration = '継続時間' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['継続時間'] : null;
+                        cd = 'クールタイム' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['クールタイム'] : null;
                     }
                     width = actionObj['time'];
                     actionObj4v.icons.push({
                         name: iconName,
                         imgSrc: getElementalSkillImgSrc(characterMaster),
                         x: nextIconX,
-                        width: width
+                        width: width,
+                        duration: duration,
+                        cd: cd,
                     })
                     nextIconX += width;
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
-                    if (rotationMaster) {
-                        iconName = rotationMaster['元素爆発']['名前'];
+                    if (rotationMaster && '元素爆発' in rotationMaster) {
+                        iconName = '名前' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['名前'] : null;
+                        duration = '継続時間' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['継続時間'] : null;
+                        cd = 'クールタイム' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['クールタイム'] : null;
+                        energyCost = '元素エネルギー' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['元素エネルギー'] : null;
                     }
                     width = actionObj['time'];
                     actionObj4v.icons.push({
                         name: iconName,
                         imgSrc: getElementalBurstImgSrc(characterMaster),
                         x: nextIconX,
-                        width: width
+                        width: width,
+                        duration: duration,
+                        cd: cd,
+                        enegyCost: energyCost
                     })
                     nextIconX += width;
                 } else if (['W', 'D', 'J'].includes(actionObj['action'])) {    // 歩き ダッシュ ジャンプ
@@ -681,8 +712,16 @@ function makeRotation4v(rotationStr) {
                         iconObj['x'] = getScaledX(iconObj['x']);
                     }
                     if ('width' in iconObj) {
-                        let width = getScaledX(iconObj['width']);
-                        iconObj['width'] = width > (45 - 23) ? width : (45 - 23);
+                        let value = getScaledX(iconObj['width']);
+                        iconObj['width'] = value > (45 - 23) ? value : (45 - 23);
+                    }
+                    if ('duration' in iconObj) {
+                        let value = getScaledX(iconObj['duration']) * 60;
+                        iconObj['durationDisplay'] = value > (45 - 23) ? value : (45 - 23);
+                    }
+                    if ('cd' in iconObj) {
+                        let value = getScaledX(iconObj['cd']) * 60;
+                        iconObj['cdDisplay'] = value > (45 - 23) ? value : (45 - 23);
                     }
                 })
             }
@@ -954,30 +993,3 @@ function saveData(data, opt_index = null) {
 
     return dataObj;
 }
-
-// const savedDataList = [];
-// Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX)).forEach(key => {
-//     const dataObj = JSON.parse(localStorage[key]);
-//     dataObj['editable'] = false;
-//     savedDataList.push(dataObj);
-// })
-// savedDataList.sort((a, b) => a.sortOrder - b.sortOrder)
-
-// var saveDataArea = new Vue({
-//     el: '#saveDataArea',
-//     data: {
-//         list: savedDataList
-//     }
-// })
-
-// const sampleDataList = JSON.parse(JSON.stringify(SampleMaster));
-// sampleDataList.forEach(e => {
-//     e['rotation4v'] = makeRotation4v(e);
-// })
-
-// var sampleDataArea = new Vue({
-//     el: '#sampleDataArea',
-//     data: {
-//         list: sampleDataList
-//     }
-// })

@@ -177,12 +177,6 @@ li.data {
     margin-bottom: 2rem;
 }
 
-img.character {
-    background-size: contain;
-    width: 90px;
-    height: 90px;
-}
-
 div.description {
     text-align: left;
     vertical-align: top;
@@ -210,9 +204,27 @@ div.character {
     width: 100%;
 }
 
-div.character img.character {
+img.character {
     position: absolute;
     left: 0px;
+    width: 90px;
+    height: 90px;
+    background-size: contain;
+    z-index: 10;
+}
+
+img.element {
+    width: 25px;
+    height: 25px;
+    top: 4px;
+    left: 4px;
+    z-index: 100;
+}
+
+.view-container-compact .characters div.character {
+    display: inline-block;
+    position: relative;
+    width: 90px;
 }
 
 div.character div.actions {

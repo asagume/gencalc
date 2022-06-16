@@ -106,7 +106,8 @@
                                 <span class="material-symbols-outlined"> arrow_downward </span> </button>
                         </div>
                         <textarea v-show="item.isEditable" :value="item.rotation" @input="rotationOnInput"
-                            class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION" tabindex="2"></textarea>
+                            class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION"
+                            tabindex="2"></textarea>
                         <textarea v-show="item.isEditable" v-model="item.description" class="description" cols="55"
                             rows="8" placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
                     </div>
@@ -182,8 +183,14 @@
                     <template v-if="item.isCompact">
                         <div class="view-container-compact">
                             <div class="characters">
-                                <img v-for="character in item.rotation4v.list" class="character" :src="character.imgSrc"
-                                    :alt="character.name" :style="'background-image: url(' + character.starBgUrl +');'">
+                                <template v-for="character in item.rotation4v.list">
+                                    <div class="character">
+                                        <img class="character" :src="character.imgSrc" :alt="character.name"
+                                            :style="'background-image: url(' + character.starBgUrl +');'">
+                                        <img class="element" :src="character.elementImgSrc"
+                                            :alt="character.elementName">
+                                    </div>
+                                </template>
                             </div>
                             <div class="description"> {{item.description}} </div>
                         </div>
@@ -200,6 +207,12 @@
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
                                                         :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                    </div>
+                                                    <div class="duration"
+                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.durationDisplay + 'px;'">
+                                                    </div>
+                                                    <div class="cd"
+                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.cdDisplay + 'px;'">
                                                     </div>
                                                     <img class="icon" :src="icon.imgSrc" :alt="icon.name"
                                                         :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
