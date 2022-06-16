@@ -25,8 +25,63 @@ a:visited {
     color: blanchedalmond;
 }
 
+.toggle-switch {
+    position: relative;
+}
+
+.toggle-switch::before, .toggle-switch::after {
+    content: '';
+    width: 1.5rem;
+    height: 2px;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    transform: translateY(-50%);
+}
+
+.toggle-switch::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.toggle-switch.opened::after {
+    transform: translateY(-50%) rotate(0);
+}
+
+.toggle-switch+div, .toggle-switch+ol {
+    display: none;
+}
+
+.toggle-switch.opened+div, .toggle-switch.opened+ol {
+    display: initial;
+}
+
 li.data {
     text-align: left;
+}
+
+div.controller button {
+    display: inline-block;
+}
+
+img.character {
+    background-size: contain;
+    width: 90px;
+    height: 90px;
+}
+
+div.description {
+    text-align: left;
+    vertical-align: top;
+    min-width: 360px;
+    min-height: 80px;
+    padding: 5px;
+    border-radius: 15px;
+    border: double 3px;
+}
+
+div.compact div {
+    display: inline-block;
 }
 
 div.characters {
@@ -45,16 +100,14 @@ div.character {
 div.character img.character {
     position: absolute;
     left: 0px;
-    background-size: contain;
-    width: 90px;
-    height: 90px;
 }
 
 div.character div.actions {
     position: absolute;
     left: 90px;
-    bottom: 0px;
+    top: 0px;
     width: calc(100% - 90px);
+    height: 75px;
     border-bottom: solid 15px;
 }
 
@@ -65,13 +118,21 @@ div.actions div.action {
     min-height: calc(45px + 20px);
 }
 
+div.icon {
+    position: absolute;
+    top: 5px;
+    height: 49px;
+    z-index: 0
+}
+
 img.icon {
     position: absolute;
-    top: 0;
+    top: 5px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
     border: solid 2px;
+    z-index: 1;
 }
 
 div.noicon {
@@ -86,6 +147,7 @@ div.noicon {
     opacity: 80%;
     border: solid 2px;
     transform: rotate(45deg);
+    z-index: 2;
 }
 
 div.noicon p.noicon {
@@ -99,9 +161,7 @@ div.noicon p.noicon {
 
 div.actions div.action p.name {
     position: absolute;
-    left: 50%;
-    right: 50%;
-    transform: translate(-50%);
+    left: 19px;
     bottom: -10px;
     font-size: 15px;
     font-weight: bold;
@@ -112,7 +172,9 @@ div.actions div.action p.name {
 
 div.actions div.comment {
     position: absolute;
-    top: -20px;
+    top: 0;
+    color: gold;
+    vertical-align: top;
 }
 
 /* input {

@@ -17,6 +17,8 @@ var RotationSample;
 /** キャラクター名候補Map <キャラクター名, [候補]> */
 var CharacterNameMatchMap;
 
+const DUMMY_IMG_SRC = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+
 // N 通常攻撃 | N1..N6 通常攻撃1..6段 | N.HOLD 通常攻撃長押し
 // C 重撃/狙い撃ち | C.FULL フルチャージ狙い撃ち
 // P 落下攻撃 | P.HIGH 上空落下攻撃 | P.LOW 低空落下攻撃
@@ -144,7 +146,7 @@ function makeActionRegExp() {
 function analyzeKqmNotation(kqm) {
     let result = new Map();
 
-    kqm = kqm.replace(/\/\*(.*)\*\//g, function (match, p1) {
+    kqm = kqm.replace(/\/\*(.*?)\*\//g, function (match, p1) {
         return '/* ' + p1.trim().replace('>', '&gt;') + ' */';
     });
     kqm = kqm.trim().replace(/\n/g, ' > ');
@@ -250,18 +252,18 @@ function analyzeKqmNotation(kqm) {
                 }
 
                 if (retActionRe[2].startsWith('N')) { // 通常攻撃
-                    let numberOfNormalAttack = 1;
+                    let numberOfAttack = 1;
                     let myType = null;
                     if (retActionRe[3]) {
                         if (Number.isNaN(retActionRe[3])) {
                             myType = actioinVariationMap.get('N').get(retActionRe[3].substring(1));
                         } else {
-                            numberOfNormalAttack = Number(retActionRe[3]);
+                            numberOfAttack = Number(retActionRe[3]);
                         }
                     }
                     subList.push({
                         action: retActionRe[2].substring(0, 1),
-                        numberOfNormalAttack: numberOfNormalAttack,
+                        numberOfAttack: numberOfAttack,
                         type: myType,
                         time: actionTime
                     })
@@ -312,9 +314,7 @@ function analyzeKqmNotation(kqm) {
                 actionGroupObj.actionList = actionGroupObj.actionList.concat(subList);
             }
 
-            if (actionGroupObj.actionList.length > 0) {
-                result.get(character).push(actionGroupObj);
-            }
+            result.get(character).push(actionGroupObj);
         })
     })
 
@@ -484,7 +484,6 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
     return time;
 }
 
-
 function makeRotation4v(rotationStr) {
     const result = { width: 0, list: [] };
 
@@ -503,7 +502,7 @@ function makeRotation4v(rotationStr) {
             if ('actionList' in actionGroupObj) {
                 for (let i = 0; i < actionGroupObj['actionList'].length; i++) {
                     const actionObj = actionGroupObj['actionList'][i];
-                    if (actionObj['time']) return;
+                    if (actionObj['time'] && !('comment' in actionObj)) return;
                     let frames;
                     let nextAction = null;
                     if (i + 1 < actionGroupObj['actionList'].length) {
@@ -512,11 +511,11 @@ function makeRotation4v(rotationStr) {
                     switch (actionObj['action']) {
                         case 'N':   // 通常攻撃
                             let timeArr = [];
-                            for (let j = 0; j < actionObj['numberOfNormalAttack'] - 1; j++) {
+                            for (let j = 0; j < actionObj['numberOfAttack'] - 1; j++) {
                                 frames = getActionTime(rotationMaster, actionObj['action'], j, null, 'N');
                                 timeArr.push(frames);
                             }
-                            frames = getActionTime(rotationMaster, actionObj['action'], actionObj['numberOfNormalAttack'] - 1, null, nextAction);
+                            frames = getActionTime(rotationMaster, actionObj['action'], actionObj['numberOfAttack'] - 1, null, nextAction);
                             timeArr.push(frames);
                             actionObj['time'] = timeArr;
                             break;
@@ -576,11 +575,12 @@ function makeRotation4v(rotationStr) {
             const actionObj4v = {
                 name: actionGroupObj['groupName'],
                 x: nextGroupX,
-                icons: []
+                icons: [],
+                comment: 'comment' in actionGroupObj ? actionGroupObj['comment'] : null
             }
             let nextIconX = 0;
             actionGroupObj['actionList'].forEach(actionObj => {
-                let z = 99;
+                let width;
                 let iconName = null;
                 if (['N', 'C', 'P'].includes(actionObj['action'])) {    // 通常攻撃 重撃 落下攻撃
                     if (rotationMaster) {
@@ -588,35 +588,33 @@ function makeRotation4v(rotationStr) {
                     }
                     if (actionObj['action'] == 'N') {
                         if (Array.isArray(actionObj['time'])) {
-                            const x0 = getTimeNumber(actionObj['time'][0]);
-                            let nX = x0;
-                            for (let i = 0; i < actionObj['numberOfNormalAttack']; i++) {
-                                nX = getTimeNumber(actionObj['time'][i]);
-                                actionObj4v.icons.push({
-                                    name: iconName,
-                                    imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
-                                    x: nextIconX + nX - x0,
-                                    z: z--
-                                })
-                            }
-                            nextIconX += nX;
-                        } else {
+                            let width = actionObj['time'][actionObj['time'].length - 1];
                             actionObj4v.icons.push({
                                 name: iconName,
                                 imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
                                 x: nextIconX,
-                                z: z--
+                                width: width
                             })
-                            nextIconX += getTimeNumber(actionObj['time']);
+                            nextIconX += width;
+                        } else {
+                            width = actionObj['time'];
+                            actionObj4v.icons.push({
+                                name: iconName,
+                                imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
+                                x: nextIconX,
+                                width: width
+                            })
+                            nextIconX += width;
                         }
                     } else {
+                        width = actionObj['time'];
                         actionObj4v.icons.push({
                             name: iconName,
                             imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
                             x: nextIconX,
-                            z: z--
+                            width: width
                         })
-                        nextIconX += getTimeNumber(actionObj['time']);
+                        nextIconX += width;
                     }
                 } else if (actionObj['action'] == 'E') {    // 元素スキル
                     if (rotationMaster) {
@@ -627,10 +625,9 @@ function makeRotation4v(rotationStr) {
                         name: iconName,
                         imgSrc: getElementalSkillImgSrc(characterMaster),
                         x: nextIconX,
-                        z: z--,
                         width: width
                     })
-                    nextIconX += getTimeNumber(actionObj['time']);
+                    nextIconX += width;
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
                     if (rotationMaster) {
                         iconName = rotationMaster['元素爆発']['名前'];
@@ -640,7 +637,6 @@ function makeRotation4v(rotationStr) {
                         name: iconName,
                         imgSrc: getElementalBurstImgSrc(characterMaster),
                         x: nextIconX,
-                        z: z--,
                         width: width
                     })
                     nextIconX += width;
@@ -649,7 +645,6 @@ function makeRotation4v(rotationStr) {
                     actionObj4v.icons.push({
                         name: actionObj['action'],
                         x: nextIconX,
-                        z: z--,
                         width: width
                     })
                     nextIconX += width;
@@ -657,6 +652,17 @@ function makeRotation4v(rotationStr) {
             })
             nextGroupX += nextIconX;
 
+            characterMap.get(character)['actions'].push(actionObj4v);
+            console.log(character, actionObj4v.x, actionObj4v.name);
+        } else if ('comment' in actionGroupObj) {
+            if (nextGroupX > 0) {
+                nextGroupX -= 12;
+            }
+            const actionObj4v = {
+                name: actionGroupObj['groupName'],
+                x: nextGroupX,
+                comment: 'comment' in actionGroupObj ? actionGroupObj['comment'] : null
+            }
             characterMap.get(character)['actions'].push(actionObj4v);
             console.log(character, actionObj4v.x, actionObj4v.name);
         }
@@ -674,6 +680,10 @@ function makeRotation4v(rotationStr) {
                     if ('x' in iconObj) {
                         iconObj['x'] = getScaledX(iconObj['x']);
                     }
+                    if ('width' in iconObj) {
+                        let width = getScaledX(iconObj['width']);
+                        iconObj['width'] = width > (45 - 23) ? width : (45 - 23);
+                    }
                 })
             }
         })
@@ -689,6 +699,7 @@ function buildNewDataArea() {
     newData = new Vue({
         el: '#data_',
         data: {
+            isDisplay: true,
             name: '',
             rotation: null,
             description: null,
@@ -709,14 +720,6 @@ function buildNewDataArea() {
                 if (this.rotation) {
                     this.rotation = String(this.rotation).trim();
                 }
-                if (!this.name) {
-                    this.$refs.name.focus();
-                    return;
-                }
-                if (!this.rotation) {
-                    this.$refs.rotation.focus();
-                    return;
-                }
                 saveData(this);
             }
         }
@@ -735,12 +738,13 @@ function buildSaveDataArea() {
     let index = 0;
     const list = [];
     savedDataList.forEach(dataObj => {
-        const newDataObj = JSON.parse(JSON.stringify(dataObj));
-        newDataObj['index'] = index++;
-        newDataObj['rotation4v'] = makeRotation4v(newDataObj['rotation']);
-        newDataObj['isCompact'] = false;
-        newDataObj['isEditable'] = false;
-        list.push(newDataObj);
+        const parsedDataObj = JSON.parse(JSON.stringify(dataObj));
+        parsedDataObj.index = index++;
+        parsedDataObj.rotation = parsedDataObj['rotation'];
+        parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
+        parsedDataObj.isCompact = true;
+        parsedDataObj.isEditable = false;
+        list.push(parsedDataObj);
     })
 
     saveDataArea = new Vue({
@@ -749,12 +753,66 @@ function buildSaveDataArea() {
             list: list
         },
         methods: {
-            rotationOnInput: function (event) {
-                const index = event.target.index;
+            rotationOnInput: function (index, event) {
                 this.list[index].rotation = event.target.value;
                 this.list[index].rotation4v = makeRotation4v(this.list[index].rotation);
             },
-            saveButtonOnClick: function (event) {
+            cancelButtonOnClick: function (index, event) {
+                const dataObj = savedDataList[index];
+                this.list[index].name = dataObj.name;
+                this.list[index].rotation = dataObj.rotation;
+                this.list[index].rotation4v = makeRotation4v(newDataObj['rotation']);
+                this.list[index].isEditable = false;
+            },
+            saveButtonOnClick: function (index, event) {
+                if (this.list[index].name) {
+                    this.list[index].name = String(this.list[index].name).trim();
+                }
+                if (this.list[index].rotation) {
+                    this.list[index].rotation = String(this.list[index].rotation).trim();
+                }
+                this.list[index].isEditable = false;
+                const dataObj = JSON.parse(JSON.stringify(this.list[index]));
+                saveData(dataObj, index);
+                savedDataList[index] = dataObj;
+            },
+            removeButtonOnClick: function (index, event) {
+                list.splice(index, 1);
+                savedDataList.splice(index, 1);
+            },
+            upButtonOnClick: function (index, event) {
+                if (index <= 0) return;
+
+                const item0 = list[index - 1];
+                const item1 = list[index];
+                item0.index = index;
+                item1.index = index - 1;
+                list.splice(index - 1, 2, item1, item0);
+
+                const savedItem1 = savedDataList[index - 1];
+                const savedItem2 = savedDataList[index];
+                savedItem1.index = index;
+                savedItem2.index = index - 1;
+                savedDataList.splice(index - 1, 2, savedItem2, savedItem1);
+                saveData(savedItem1);
+                saveData(savedItem2);
+            },
+            downButtonOnClick: function (index, event) {
+                if (index >= (list.length - 1)) return;
+
+                const item1 = list[index];
+                const item2 = list[index + 1];
+                item1.index = index + 1;
+                item2.index = index;
+                list.splice(index, 2, item2, item1);
+
+                const savedItem1 = savedDataList[index];
+                const savedItem2 = savedDataList[index + 1];
+                savedItem1.index = index + 1;
+                savedItem2.index = index;
+                savedDataList.splice(index, 2, savedItem2, savedItem1);
+                saveData(savedItem1);
+                saveData(savedItem2);
             }
         }
     })
@@ -764,15 +822,16 @@ var sampleDataArea;
 function buildSampleDataArea() {
     if (!RotationSample) return;
 
+    let index = 0;
     const list = [];
-    let sortOrder = 1;
     RotationSample.forEach(dataObj => {
-        const newDataObj = JSON.parse(JSON.stringify(dataObj));
-        newDataObj['sortOrder'] = sortOrder++;
-        newDataObj['rotation4v'] = makeRotation4v(newDataObj['rotation']);
-        newDataObj['isCompact'] = false;
-        newDataObj['isEditable'] = false;
-        list.push(newDataObj);
+        const parsedDataObj = JSON.parse(JSON.stringify(dataObj));
+        parsedDataObj.index = index++;
+        parsedDataObj.rotation = parsedDataObj['rotation'];
+        parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
+        parsedDataObj.isCompact = true;
+        parsedDataObj.isEditable = false;
+        list.push(parsedDataObj);
     })
 
     sampleDataArea = new Vue({
@@ -825,6 +884,15 @@ async function init() {
     buildSaveDataArea();
     // SAMPLE ROTATIONS
     buildSampleDataArea();
+
+    // H2 TOGGLE-SWITCH
+    document.querySelectorAll('h2.toggle-switch').forEach(s => s.addEventListener('click', function () {
+        if (this.classList.contains('opened')) {
+            this.classList.remove('opened');
+        } else {
+            this.classList.add('opened');
+        }
+    }))
 }
 
 const SAVE_DATA_KEY_PREFIX = 'genrota_';
@@ -835,18 +903,27 @@ const SAVE_DATA_TEMPLATE = {
     sortOrder: null,
 };
 
-function saveData(data) {
+function saveData(data, opt_index = null) {
     console.debug('saveData', '=>', data);
     if (!data.name || !data.rotation) return;
-    const key = SAVE_DATA_KEY_PREFIX + data.name;
+
+    const savedKeys = Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX));
+
+    let savedKey;
+    if (opt_index != null) {
+        savedKey = savedKeys.filter(s => JSON.parse(localStorage[s]).sortOrder == opt_index)[0];
+    } else if (localStorage[SAVE_DATA_KEY_PREFIX + data.name]) {
+        savedKey = SAVE_DATA_KEY_PREFIX + data.name;
+    }
     let sortOrder;
-    const savedData = localStorage[key];
-    if (savedData) {
-        const savedDataObj = JSON.parse(savedData);
+    if (savedKey) {
+        const savedDataObj = JSON.parse(localStorage[savedKey]);
         sortOrder = savedDataObj.sortOrder;
     } else {
-        sortOrder = Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX)).reduce((a, b) => Math.max(a, b)) + 1;
+        sortOrder = savedKeys.length;
     }
+
+    const key = SAVE_DATA_KEY_PREFIX + data.name;
     const dataObj = {
         name: data.name,
         rotation: data.rotation,
@@ -854,6 +931,10 @@ function saveData(data) {
         sortOrder: sortOrder
     }
     localStorage.setItem(key, JSON.stringify(dataObj));
+
+    if (key != savedKey) {
+        localStorage.removeItem(savedKey);
+    }
 }
 
 // const savedDataList = [];

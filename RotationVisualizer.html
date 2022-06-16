@@ -20,116 +20,75 @@
             <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
         </fieldset>
 
-        <h2>NEW ROTATION</h2>
+        <h2 class="toggle-switch opened">NEW ROTATION</h2>
         <div class="rotation-data" id="data_">
-            <div>
-                <input ref="name" v-model="name" class="name" type="text" name="name" size="40" minlength="1"
-                    maxlength="40" placeholder="INPUT YOUR ROTATION NAME">
+            <div class="controller">
                 <button type="button" @click="saveButtonOnClick">SAVE</button>
             </div>
-            <textarea ref="rotation" :value="rotation" @input="rotationOnInput" class="rotation" name="rotation"
-                cols="60" rows="8" placeholder="INPUT YOUR ROTATION"></textarea>
-            <textarea ref="description" v-model="description" class="description" name="description" cols="60" rows="8"
+            <div>
+                <input ref="name" v-model="name" class="name" type="text" size="40" minlength="1" maxlength="40"
+                    placeholder="INPUT YOUR ROTATION NAME">
+            </div>
+            <textarea ref="rotation" :value="rotation" @input="rotationOnInput" class="rotation" cols="60" rows="8"
+                placeholder="INPUT YOUR ROTATION"></textarea>
+            <textarea ref="description" v-model="description" class="description" cols="60" rows="8"
                 placeholder="INPUT DESCRIPTION"></textarea>
             <div class="characters" :style="'width: ' + rotation4v.width + 'px;'">
-                <template v-for="character in rotation4v.list">
-                    <div class="character">
-                        <img class="character" :src="character.imgSrc" :alt="character.name"
-                            :style="'background-image: url(' + character.starBgUrl +');'">
-                        <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
-                            <template v-for="action in character.actions">
-                                <div v-if="action.comment !== null" class="action" :style="'left: ' + action.x + 'px;'">
-                                    <template v-for="icon in action.icons">
-                                        <img v-if="icon.imgSrc" class="icon" :src="icon.imgSrc" :alt="icon.name"
-                                            :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px; z-index: '+ icon.z + ';'">
-                                        <div v-else class="noicon" :style="'left: ' + icon.x + 'px; z-index: '+ icon.z + ';'">
-                                            <p class="noicon"> {{icon.name}} </p>
+                <div v-for="character in rotation4v.list" class="character">
+                    <img class="character" :src="character.imgSrc" :alt="character.name"
+                        :style="'background-image: url(' + character.starBgUrl +');'">
+                    <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
+                        <template v-for="action in character.actions">
+                            <div class="action" :style="'left: ' + action.x + 'px;'">
+                                <template v-for="icon in action.icons">
+                                    <template v-if="icon.imgSrc">
+                                        <div class="icon"
+                                            :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
                                         </div>
+                                        <img class="icon" :src="icon.imgSrc" :alt="icon.name"
+                                            :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
                                     </template>
-                                    <p class="name"> {{action.name}} </p>
-                                </div>
-                                <div v-else class="comment" :style="'left: ' + action.x + 'px;'">
-                                    <p> {{action.comment}} </p>
-                                </div>
-                            </template>
-                        </div>
+                                    <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
+                                        <p class="noicon"> {{icon.name}} </p>
+                                    </div>
+                                </template>
+                                <p class="name"> {{action.name}} </p>
+                            </div>
+                            <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
+                                {{action.comment}}
+                            </div>
+                        </template>
                     </div>
-                </template>
+                </div>
             </div>
         </div>
 
-        <h2>YOUR ROTATIONS</h2>
+        <h2 class="toggle-switch opened">YOUR ROTATIONS</h2>
         <ol class="your-data-area" id="saveDataArea">
             <template v-for="(item, index) in list">
                 <li class="data">
+                    {{item.name}} <br>
                     <template v-if="item.isEditable">
-                        <button @click="item.isCompact = !item.isCompact">Compact</button>
+                        <div class="controller">
+                            <button type="button" @click="cancelButtonOnClick(index, $event)">CANCEL</button>
+                            <button type="button" @click="saveButtonOnClick(index, $event)">SAVE</button>
+                        </div>
                         <div>
-                            <input ref="name" v-model="item.name" :key="index" class="name" type="text" name="name"
-                                size="40" minlength="1" maxlength="40" placeholder="INPUT YOUR ROTATION NAME">
+                            <input ref="name" v-model="item.name" :key="index" class="name" type="text" size="40"
+                                minlength="1" maxlength="40" placeholder="INPUT YOUR ROTATION NAME">
                             <button type="button" @click="saveButtonOnClick">SAVE</button>
                         </div>
                         <textarea ref="rotation" :value="item.rotation" :key="index" @input="rotationOnInput"
-                            class="rotation" name="rotation" cols="60" rows="8"
-                            placeholder="INPUT YOUR ROTATION"></textarea>
+                            class="rotation" cols="60" rows="8" placeholder="INPUT YOUR ROTATION"></textarea>
                         <textarea ref="description" v-model="item.description" :key="index" class="description"
-                            name="description" cols="60" rows="8" placeholder="INPUT DESCRIPTION"></textarea>
+                            cols="60" rows="8" placeholder="INPUT DESCRIPTION"></textarea>
                     </template>
-                    <template v-else>
-                        {{item.name}} <br>
-                        <template v-if="item.isCompact">
-                            <button type="button">↓</button>
-                            <div>
-                                <template v-for="character in item.rotation4v.list">
-                                    <img :src="character.imgSrc" :alt="character.name"
-                                        :style="'background-image: url(' + character.starBgUrl +');'">
-                                </template>
-                            </div>
-                            <div class="description"> {{item.description}} </div>
-                        </template>
-                        <template v-else>
-                            <button type="button">↑</button>
-                            <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
-                                <template v-for="character in item.rotation4v.list">
-                                    <div class="character">
-                                        <img class="character" :src="character.imgSrc" :alt="character.name"
-                                            :style="'background-image: url(' + character.starBgUrl +');'">
-                                        <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
-                                            <template v-for="action in character.actions">
-                                                <div v-if="action.comment !== null" class="action"
-                                                    :style="'left: ' + action.x + 'px;'">
-                                                    <template v-for="icon in action.icons">
-                                                        <img v-if="icon.imgSrc" class="icon" :src="icon.imgSrc"
-                                                            :alt="icon.name"
-                                                            :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px;'">
-                                                        <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
-                                                            <p class="noicon"> {{icon.name}} </p>
-                                                        </div>
-                                                    </template>
-                                                    <p class="name"> {{action.name}} </p>
-                                                </div>
-                                                <div v-else class="comment" :style="'left: ' + action.x + 'px;'">
-                                                    <p> {{action.comment}} </p>
-                                                </div>
-                                            </template>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="description"> {{item.description}} </div>
-                        </template>
-                    </template>
-                </li>
-            </template>
-        </ol>
-
-        <h2>SAMPLE ROTATIONS</h2>
-        <ol class="sample-data-area" id="sampleDataArea">
-            <template v-for="(item, index) in list">
-                <li class="data">
-                    {{item.name}} <br>
                     <template v-if="item.isCompact">
-                        <button type="button">↓</button>
+                        <div class="controller">
+                            <button type="button" @click="item.isCompact = !item.isCompact">↓</button>
+                            <button type="button" @click="upButtonOnClick(index)">UP</button>
+                            <button type="button" @click="downButtonOnClick(index)">DOWN</button>
+                        </div>
                         <div>
                             <template v-for="character in item.rotation4v.list">
                                 <img :src="character.imgSrc" :alt="character.name"
@@ -139,34 +98,96 @@
                         <div class="description"> {{item.description}} </div>
                     </template>
                     <template v-else>
-                        <button type="button">↑</button>
-                        <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
-                            <template v-for="character in item.rotation4v.list">
-                                <div class="character">
-                                    <img class="character" :src="character.imgSrc" :alt="character.name"
-                                        :style="'background-image: url(' + character.starBgUrl +');'">
-                                    <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
-                                        <template v-for="action in character.actions">
-                                            <div v-if="action.comment !== null" class="action"
-                                                :style="'left: ' + action.x + 'px;'">
-                                                <template v-for="icon in action.icons">
-                                                    <img v-if="icon.imgSrc" class="icon" :src="icon.imgSrc"
-                                                        :alt="icon.name"
-                                                        :style="'background-color: ' + character.elementColor + '; left: ' + icon.x + 'px; width: ' + icon.width + 'px; z-index: ' + icon.z + ';'">
-                                                    <div v-else class="noicon" :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; z-index: ' + icon.z + ';'">
-                                                        <p class="noicon"> {{icon.name}} </p>
-                                                    </div>
-                                                </template>
-                                                <p class="name"> {{action.name}} </p>
-                                            </div>
-                                            <div v-else class="comment" :style="'left: ' + action.x + 'px;'">
-                                                <p> {{action.comment}} </p>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                            </template>
+                        <div class="controller">
+                            <button type="button" @click="item.isCompact = !item.isCompact">↑</button>
+                            <button type="button" @click="item.isEditable = true">EDIT</button>
+                            <button type="button" @click="removeButtonOnClick(index)">REMOVE</button>
                         </div>
+                        <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
+                            <div v-for="character in item.rotation4v.list" class="character">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                                <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
+                                    <template v-for="action in character.actions">
+                                        <div class="action" :style="'left: ' + action.x + 'px;'">
+                                            <template v-for="icon in action.icons">
+                                                <template v-if="icon.imgSrc">
+                                                    <div class="icon"
+                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                    </div>
+                                                    <img class="icon" :src="icon.imgSrc" :alt="icon.name"
+                                                        :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                                </template>
+                                                <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
+                                                    <p class="noicon"> {{icon.name}} </p>
+                                                </div>
+                                            </template>
+                                            <p class="name"> {{action.name}} </p>
+                                        </div>
+                                        <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
+                                            {{action.comment}}
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="description"> {{item.description}} </div>
+                    </template>
+                </li>
+            </template>
+        </ol>
+
+        <h2 class="toggle-switch">SAMPLE ROTATIONS</h2>
+        <ol class="sample-data-area" id="sampleDataArea">
+            <template v-for="(item, index) in list">
+                <li class="data">
+                    {{item.name}} <br>
+                    <template v-if="item.isCompact">
+                        <div class="controller">
+                            <button type="button" @click="item.isCompact = !item.isCompact">↓</button>
+                        </div>
+                        <div class="compact">
+                            <template v-for="character in item.rotation4v.list">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                            </template>
+                            <div class="description"> {{item.description}} </div>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="controller">
+                            <button type="button" @click="item.isCompact = !item.isCompact">↑</button>
+                        </div>
+                        <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
+                            <div v-for="character in item.rotation4v.list" class="character">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                                <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
+                                    <template v-for="action in character.actions">
+                                        <div class="action" :style="'left: ' + action.x + 'px;'">
+                                            <template v-for="icon in action.icons">
+                                                <template v-if="icon.imgSrc">
+                                                    <div class="icon"
+                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                    </div>
+                                                    <img class="icon" :src="icon.imgSrc" :alt="icon.name"
+                                                        :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                                </template>
+                                                <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
+                                                    <p class="noicon"> {{icon.name}} </p>
+                                                </div>
+                                            </template>
+                                            <p class="name"> {{action.name}} </p>
+                                        </div>
+                                        <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
+                                            {{action.comment}}
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <textarea ref="rotation" v-model="item.rotation" class="rotation" cols="60" rows="8"
+                            readonly></textarea>
                         <div class="description"> {{item.description}} </div>
                     </template>
                 </li>
