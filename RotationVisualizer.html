@@ -33,14 +33,14 @@
             <div class="input-container">
                 <div class="name-and-controller">
                     <input ref="name" v-model="name" class="name" type="text" size="30" minlength="1" maxlength="40"
-                        placeholder="INPUT YOUR ROTATION NAME">
+                        placeholder="INPUT YOUR ROTATION NAME" tabindex="1">
                     <button type="button" @click="saveButtonOnClick">
                         <span class="material-symbols-outlined"> save </span> </button>
                 </div>
                 <textarea ref="rotation" :value="rotation" @input="rotationOnInput" class="rotation" cols="55" rows="8"
-                    placeholder="INPUT YOUR ROTATION"></textarea>
+                    placeholder="INPUT YOUR ROTATION" tabindex="2"></textarea>
                 <textarea ref="description" v-model="description" class="description" cols="55" rows="8"
-                    placeholder="INPUT DESCRIPTION"></textarea>
+                    placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
             </div>
             <div class="characters" :style="'width: ' + rotation4v.width + 'px;'">
                 <div v-for="character in rotation4v.list" class="character">
@@ -79,7 +79,7 @@
                     <div class="input-container">
                         <div class="name-and-controller">
                             <input v-model="item.name" class="name" type="text" size="30" minlength="1" maxlength="40"
-                                :readonly="!item.isEditable" placeholder="INPUT YOUR ROTATION NAME">
+                                :readonly="!item.isEditable" placeholder="INPUT YOUR ROTATION NAME" tabindex="1">
 
                             <button v-show="item.isEditable" type="button" @click="cancelButtonOnClick(index, $event)">
                                 <span class="material-symbols-outlined"> cancel </span> </button>
@@ -106,9 +106,9 @@
                                 <span class="material-symbols-outlined"> arrow_downward </span> </button>
                         </div>
                         <textarea v-show="item.isEditable" :value="item.rotation" @input="rotationOnInput"
-                            class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION"></textarea>
+                            class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION" tabindex="2"></textarea>
                         <textarea v-show="item.isEditable" v-model="item.description" class="description" cols="55"
-                            rows="8" placeholder="INPUT DESCRIPTION"></textarea>
+                            rows="8" placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
                     </div>
                     <template v-if="item.isCompact">
                         <div class="view-container-compact">
