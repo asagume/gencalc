@@ -95,8 +95,10 @@
                             <button v-show="!item.isCompact && !item.isEditable" type="button"
                                 @click="item.isEditable = true">
                                 <span class="material-symbols-outlined"> edit </span> </button>
+                            <input v-show="!item.isCompact && !item.isEditable" v-model="item.isDeletable"
+                                type="checkbox">
                             <button v-show="!item.isCompact && !item.isEditable" type="button"
-                                @click="removeButtonOnClick(index)">
+                                @click="removeButtonOnClick(index)" :disabled="!item.isDeletable">
                                 <span class="material-symbols-outlined"> delete </span> </button>
                             <button v-show="item.isCompact" type="button" @click="upButtonOnClick(index)">
                                 <span class="material-symbols-outlined"> arrow_upward </span> </button>

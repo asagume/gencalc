@@ -720,7 +720,18 @@ function buildNewDataArea() {
                 if (this.rotation) {
                     this.rotation = String(this.rotation).trim();
                 }
-                saveData(this);
+                const dataObj = saveData(this);
+                if (dataObj) {
+                    if (savedDataList.filter(s => s.name == dataObj.name).length == 0) {
+                        savedDataList.push(dataObj);
+                        dataObj.index = dataObj.sortOrder;
+                        dataObj.rotation4v = makeRotation4v(dataObj['rotation']);
+                        dataObj.isCompact = true;
+                        dataObj.isEditable = false;
+                        dataObj.isDeletable = false;
+                        saveDataArea.list.push(dataObj);
+                    }
+                }
             }
         }
     })
@@ -744,6 +755,7 @@ function buildSaveDataArea() {
         parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
         parsedDataObj.isCompact = true;
         parsedDataObj.isEditable = false;
+        parsedDataObj.isDeletable = false;
         list.push(parsedDataObj);
     })
 
@@ -778,7 +790,11 @@ function buildSaveDataArea() {
             },
             removeButtonOnClick: function (index, event) {
                 list.splice(index, 1);
+                const dataObj = savedDataList[index];
                 savedDataList.splice(index, 1);
+                const key = SAVE_DATA_KEY_PREFIX + dataObj.name;
+                localStorage.removeItem(key);
+                console.log(key, 'deleted');
             },
             upButtonOnClick: function (index, event) {
                 if (index <= 0) return;
@@ -905,7 +921,7 @@ const SAVE_DATA_TEMPLATE = {
 
 function saveData(data, opt_index = null) {
     console.debug('saveData', '=>', data);
-    if (!data.name || !data.rotation) return;
+    if (!data.name || !data.rotation) return null;
 
     const savedKeys = Object.keys(localStorage).filter(s => s.startsWith(SAVE_DATA_KEY_PREFIX));
 
@@ -935,6 +951,8 @@ function saveData(data, opt_index = null) {
     if (key != savedKey) {
         localStorage.removeItem(savedKey);
     }
+
+    return dataObj;
 }
 
 // const savedDataList = [];
