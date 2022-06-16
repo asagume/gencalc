@@ -1,5 +1,10 @@
 [
     {
+        "name": "EULA Glacial Illumination",
+        "rotation": "Eula E.PRESS Q N4 E.HOLD N4",
+        "description": "光臨の剣 基本コンボ"
+    },
+    {
         "name": "紅葉の庭",
         "rotation": "Yelan /*200%*/ > Gorou /*250%*/ > Albedo /*100%*/ > Noelle /*140%*/ > Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E 4N3D",
         "description": "説明"

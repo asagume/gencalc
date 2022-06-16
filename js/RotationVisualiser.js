@@ -761,7 +761,7 @@ function buildSaveDataArea() {
                 const dataObj = savedDataList[index];
                 this.list[index].name = dataObj.name;
                 this.list[index].rotation = dataObj.rotation;
-                this.list[index].rotation4v = makeRotation4v(newDataObj['rotation']);
+                this.list[index].rotation4v = makeRotation4v(dataObj['rotation']);
                 this.list[index].isEditable = false;
             },
             saveButtonOnClick: function (index, event) {

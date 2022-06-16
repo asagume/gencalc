@@ -5,11 +5,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>げんろーて - Genshin Impact Rotation Visualizer</title>
-    <link href="styles/base-style.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="styles/RotationVisualizer.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="js/RotationVisualiser.js"></script>
     <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 30
+        }
     </style>
 </head>
 
@@ -22,17 +30,18 @@
 
         <h2 class="toggle-switch opened">NEW ROTATION</h2>
         <div class="rotation-data" id="data_">
-            <div class="controller">
-                <button type="button" @click="saveButtonOnClick">SAVE</button>
+            <div class="input-container">
+                <div class="name-and-controller">
+                    <input ref="name" v-model="name" class="name" type="text" size="30" minlength="1" maxlength="40"
+                        placeholder="INPUT YOUR ROTATION NAME">
+                    <button type="button" @click="saveButtonOnClick">
+                        <span class="material-symbols-outlined"> save </span> </button>
+                </div>
+                <textarea ref="rotation" :value="rotation" @input="rotationOnInput" class="rotation" cols="55" rows="8"
+                    placeholder="INPUT YOUR ROTATION"></textarea>
+                <textarea ref="description" v-model="description" class="description" cols="55" rows="8"
+                    placeholder="INPUT DESCRIPTION"></textarea>
             </div>
-            <div>
-                <input ref="name" v-model="name" class="name" type="text" size="40" minlength="1" maxlength="40"
-                    placeholder="INPUT YOUR ROTATION NAME">
-            </div>
-            <textarea ref="rotation" :value="rotation" @input="rotationOnInput" class="rotation" cols="60" rows="8"
-                placeholder="INPUT YOUR ROTATION"></textarea>
-            <textarea ref="description" v-model="description" class="description" cols="60" rows="8"
-                placeholder="INPUT DESCRIPTION"></textarea>
             <div class="characters" :style="'width: ' + rotation4v.width + 'px;'">
                 <div v-for="character in rotation4v.list" class="character">
                     <img class="character" :src="character.imgSrc" :alt="character.name"
@@ -67,42 +76,48 @@
         <ol class="your-data-area" id="saveDataArea">
             <template v-for="(item, index) in list">
                 <li class="data">
-                    {{item.name}} <br>
-                    <template v-if="item.isEditable">
-                        <div class="controller">
-                            <button type="button" @click="cancelButtonOnClick(index, $event)">CANCEL</button>
-                            <button type="button" @click="saveButtonOnClick(index, $event)">SAVE</button>
+                    <div class="input-container">
+                        <div class="name-and-controller">
+                            <input v-model="item.name" class="name" type="text" size="30" minlength="1" maxlength="40"
+                                :readonly="!item.isEditable" placeholder="INPUT YOUR ROTATION NAME">
+
+                            <button v-show="item.isEditable" type="button" @click="cancelButtonOnClick(index, $event)">
+                                <span class="material-symbols-outlined"> cancel </span> </button>
+                            <button v-show="item.isEditable" type="button" @click="saveButtonOnClick(index, $event)">
+                                <span class="material-symbols-outlined"> save </span> </button>
+                            <button v-show="item.isEditable" type="button" @click="removeButtonOnClick(index)">
+                                <span class="material-symbols-outlined"> delete </span> </button>
+                            <button v-show="item.isCompact" type="button" @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_more </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_less </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isEditable = true">
+                                <span class="material-symbols-outlined"> edit </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="removeButtonOnClick(index)">
+                                <span class="material-symbols-outlined"> delete </span> </button>
+                            <button v-show="item.isCompact" type="button" @click="upButtonOnClick(index)">
+                                <span class="material-symbols-outlined"> arrow_upward </span> </button>
+                            <button v-show="item.isCompact" type="button" @click="downButtonOnClick(index)">
+                                <span class="material-symbols-outlined"> arrow_downward </span> </button>
                         </div>
-                        <div>
-                            <input ref="name" v-model="item.name" :key="index" class="name" type="text" size="40"
-                                minlength="1" maxlength="40" placeholder="INPUT YOUR ROTATION NAME">
-                            <button type="button" @click="saveButtonOnClick">SAVE</button>
-                        </div>
-                        <textarea ref="rotation" :value="item.rotation" :key="index" @input="rotationOnInput"
-                            class="rotation" cols="60" rows="8" placeholder="INPUT YOUR ROTATION"></textarea>
-                        <textarea ref="description" v-model="item.description" :key="index" class="description"
-                            cols="60" rows="8" placeholder="INPUT DESCRIPTION"></textarea>
-                    </template>
+                        <textarea v-show="item.isEditable" :value="item.rotation" @input="rotationOnInput"
+                            class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION"></textarea>
+                        <textarea v-show="item.isEditable" v-model="item.description" class="description" cols="55"
+                            rows="8" placeholder="INPUT DESCRIPTION"></textarea>
+                    </div>
                     <template v-if="item.isCompact">
-                        <div class="controller">
-                            <button type="button" @click="item.isCompact = !item.isCompact">↓</button>
-                            <button type="button" @click="upButtonOnClick(index)">UP</button>
-                            <button type="button" @click="downButtonOnClick(index)">DOWN</button>
+                        <div class="view-container-compact">
+                            <div class="characters">
+                                <img v-for="character in item.rotation4v.list" class="character" :src="character.imgSrc"
+                                    :alt="character.name" :style="'background-image: url(' + character.starBgUrl +');'">
+                            </div>
+                            <div class="description"> {{item.description}} </div>
                         </div>
-                        <div>
-                            <template v-for="character in item.rotation4v.list">
-                                <img :src="character.imgSrc" :alt="character.name"
-                                    :style="'background-image: url(' + character.starBgUrl +');'">
-                            </template>
-                        </div>
-                        <div class="description"> {{item.description}} </div>
                     </template>
                     <template v-else>
-                        <div class="controller">
-                            <button type="button" @click="item.isCompact = !item.isCompact">↑</button>
-                            <button type="button" @click="item.isEditable = true">EDIT</button>
-                            <button type="button" @click="removeButtonOnClick(index)">REMOVE</button>
-                        </div>
                         <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
@@ -141,23 +156,37 @@
         <ol class="sample-data-area" id="sampleDataArea">
             <template v-for="(item, index) in list">
                 <li class="data">
-                    {{item.name}} <br>
-                    <template v-if="item.isCompact">
-                        <div class="controller">
-                            <button type="button" @click="item.isCompact = !item.isCompact">↓</button>
+                    <div class="input-container">
+                        <div class="name-and-controller">
+                            <input v-model="item.name" class="name" type="text" size="30" minlength="1" maxlength="40"
+                                :readonly="!item.isEditable" placeholder="INPUT YOUR ROTATION NAME">
+
+                            <button v-show="item.isCompact" type="button" @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_more </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_less </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isEditable = true">
+                                <span class="material-symbols-outlined"> visibility </span> </button>
+                            <button v-show="!item.isCompact && item.isEditable" type="button"
+                                @click="item.isEditable = false">
+                                <span class="material-symbols-outlined"> visibility_off </span> </button>
                         </div>
-                        <div class="compact">
-                            <template v-for="character in item.rotation4v.list">
-                                <img class="character" :src="character.imgSrc" :alt="character.name"
-                                    :style="'background-image: url(' + character.starBgUrl +');'">
-                            </template>
+                        <textarea v-if="item.isEditable" v-model="item.rotation" class="rotation" cols="55" rows="8"
+                            readonly></textarea>
+                        <div v-if="item.isEditable" class="description"> {{item.description}} </div>
+                    </div>
+                    <template v-if="item.isCompact">
+                        <div class="view-container-compact">
+                            <div class="characters">
+                                <img v-for="character in item.rotation4v.list" class="character" :src="character.imgSrc"
+                                    :alt="character.name" :style="'background-image: url(' + character.starBgUrl +');'">
+                            </div>
                             <div class="description"> {{item.description}} </div>
                         </div>
                     </template>
                     <template v-else>
-                        <div class="controller">
-                            <button type="button" @click="item.isCompact = !item.isCompact">↑</button>
-                        </div>
                         <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
@@ -186,13 +215,13 @@
                                 </div>
                             </div>
                         </div>
-                        <textarea ref="rotation" v-model="item.rotation" class="rotation" cols="60" rows="8"
-                            readonly></textarea>
                         <div class="description"> {{item.description}} </div>
                     </template>
                 </li>
             </template>
         </ol>
+
+        <hr>
     </div>
 
     <script>
