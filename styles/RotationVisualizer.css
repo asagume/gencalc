@@ -134,6 +134,10 @@ a:visited {
     grid-area: description;
 }
 
+.view-container-compact {
+    margin-bottom: 1rem;
+}
+
 .view-container-compact .characters {
     grid-area: characters;
     border-bottom: double 3px;
@@ -198,7 +202,6 @@ div.characters {
     overflow-y: hidden;
     white-space: nowrap;
     min-width: 360px;
-    margin-bottom: 1rem;
 }
 
 div.character {
