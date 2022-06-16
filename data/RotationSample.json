@@ -6,7 +6,7 @@
     },
     {
         "name": "紅葉の庭",
-        "rotation": "Yelan /*200%*/ > Gorou /*250%*/ > Albedo /*100%*/ > Noelle /*140%*/ > Yelan E > Gorou Q > Albedo E > Yelan QN > Noelle Q N3E 4N3D",
+        "rotation": "Yelan /*200%*/\nGorou /*250%*/\nAlbedo /*100%*/\nNoelle /*140%*/\nYelan E\nGorou Q\nAlbedo E\nYelan QN\nNoelle Q N3E 4N3D",
         "description": "説明"
     }
 ]

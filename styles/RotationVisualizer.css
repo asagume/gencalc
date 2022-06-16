@@ -221,7 +221,7 @@ div.character div.actions {
     top: 0px;
     width: calc(100% - 90px);
     height: 75px;
-    border-bottom: solid 15px;
+    border-bottom: solid 17px;
 }
 
 div.actions div.action {
