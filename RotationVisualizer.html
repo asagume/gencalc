@@ -154,7 +154,7 @@
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(135deg,' + character.elementColor + ',transparent);'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
                                                         :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
@@ -247,7 +247,7 @@
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(135deg,' + character.elementColor + ',transparent);'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
                                                         :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">

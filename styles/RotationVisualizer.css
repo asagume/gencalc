@@ -281,21 +281,22 @@ div.icon {
 
 img.icon {
     position: absolute;
-    top: 7px;
+    top: 5px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
+    border: 2px solid transparent;
     z-index: 1;
 }
 
 img.icon.E {
     top: 5px;
-    border: 2px solid aliceblue;
+    border: 2px solid silver;
 }
 
 img.icon.Q {
     top: 5px;
-    border: 2px solid yellow;
+    border: 2px solid gold;
 }
 
 div.noicon {
@@ -337,30 +338,29 @@ div.duration {
     position: absolute;
     top: 5px;
     height: 49px;
-    opacity: 75%;
 }
 
 div.cd {
     position: absolute;
-    top: 5px;
-    height: 49px;
+    top: 0px;
+    height: 54px;
     border-right: 5px dotted;
 }
 
 div.duration.E {
-    background: linear-gradient(to top, violet, aliceblue);
+    background: linear-gradient(to top, transparent, silver);
 }
 
 div.duration.Q {
-    background: linear-gradient(to top, violet, yellow);
+    background: linear-gradient(to top, transparent,  gold);
 }
 
 div.cd.E {
-    border-color: aliceblue;
+    border-color: silver;
 }
 
 div.cd.Q {
-    border-color: yellow;
+    border-color: gold;
 }
 
 div.actions div.comment {
