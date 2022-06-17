@@ -95,6 +95,15 @@ a:visited {
     color: blanchedalmond;
 }
 
+fieldset {
+    padding: 1rem;
+}
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 .maru {
     position: relative;
     height: 11px;
