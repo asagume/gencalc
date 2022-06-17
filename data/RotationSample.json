@@ -6,7 +6,17 @@
     },
     {
         "name": "紅葉の庭",
-        "rotation": "Yelan /*200%*/\nGorou /*250%*/\nAlbedo /*100%*/\nNoelle /*140%*/\nYelan E\nGorou Q\nAlbedo E\nYelan QN\nNoelle Q N3E 4N3D",
+        "rotation": "Yelan /*200%*/\nGorou /*250%*/\nAlbedo /*100%*/\nNoelle /*140%*/\nYelan E.HOLD\nGorou Q\nAlbedo E\nYelan QN\nNoelle Q N3E 4N3D",
+        "description": "説明"
+    },
+    {
+        "name": "紅葉の庭 こっちのが早い…",
+        "rotation": "夜蘭 E.HOLD > アルベド E > 行秋 EQE > 夜蘭 QN > ノエル Q N3E 4N3D",
+        "description": "説明"
+    },
+    {
+        "name": "深境螺旋 蒸発",
+        "rotation": "鍾離 E.HOLD > 行秋 EQE > 胡桃 E 8N1C Q > ノエル /* ? */",
         "description": "説明"
     }
 ]

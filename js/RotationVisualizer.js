@@ -680,7 +680,9 @@ function makeRotation4v(rotationStr) {
                 actionObj4v.icons.push(iconObj);
 
                 groupNameDisplay += actionObj['action'];
-                groupNameDisplay += actionObj.numberOfAttack > 1 ? actionObj.numberOfAttack : '';
+                if (actionObj['action'] == 'N' && actionObj.numberOfAttack) {
+                    groupNameDisplay += actionObj.numberOfAttack;
+                }
                 if (actionObj['type'] && displayTypeNameMap.has(actionObj['type'])) {
                     groupNameDisplay += displayTypeNameMap.get(actionObj['type']);
                 }
