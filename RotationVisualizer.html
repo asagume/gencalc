@@ -42,7 +42,7 @@
                 <textarea ref="description" v-model="description" class="description" cols="55" rows="8"
                     placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
             </div>
-            <div class="characters" :style="'width: ' + rotation4v.width + 'px;'">
+            <div class="characters">
                 <div v-for="character in rotation4v.list" class="character">
                     <img class="character" :src="character.imgSrc" :alt="character.name"
                         :style="'background-image: url(' + character.starBgUrl +');'">
@@ -142,7 +142,7 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
+                        <div class="characters">
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
                                     :style="'background-image: url(' + character.starBgUrl +');'">
@@ -234,7 +234,7 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div class="characters" :style="'width: ' + item.rotation4v.width + 'px;'">
+                        <div class="characters">
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
                                     :style="'background-image: url(' + character.starBgUrl +');'">
