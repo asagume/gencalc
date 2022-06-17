@@ -46,22 +46,37 @@
                 <div v-for="character in rotation4v.list" class="character">
                     <img class="character" :src="character.imgSrc" :alt="character.name"
                         :style="'background-image: url(' + character.starBgUrl +');'">
+                    <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                     <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                         <template v-for="action in character.actions">
                             <div class="action" :style="'left: ' + action.x + 'px;'">
                                 <template v-for="icon in action.icons">
                                     <template v-if="icon.imgSrc">
                                         <div class="icon"
-                                            :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                            :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
                                         </div>
-                                        <img class="icon" :src="icon.imgSrc" :alt="icon.name"
+                                        <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
+                                            :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
+                                        </div>
+                                        <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
+                                            :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.cdDisplay - 23) + 'px;'">
+                                        </div>
+                                        <img :class="'icon ' + icon.code" :src="icon.imgSrc" :alt="icon.name"
                                             :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                        <div v-if="icon.name" class="tooltip">
+                                            {{icon.name}} <br>
+                                            <span v-if="icon.duration">duration: {{icon.duration}}
+                                                <br></span>
+                                            <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
+                                            <span v-if="icon.energyCost">energy cost: {{icon.energyCost}}
+                                                <br></span>
+                                        </div>
                                     </template>
                                     <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
-                                        <p class="noicon"> {{icon.name}} </p>
+                                        <p class="noicon"> {{icon.code}} </p>
                                     </div>
                                 </template>
-                                <p class="name"> {{action.name}} </p>
+                                <p v-if="action.groupNameDisplay" class="name" v-html="action.groupNameDisplay"></p>
                             </div>
                             <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
                                 {{action.comment}}
@@ -114,8 +129,14 @@
                     <template v-if="item.isCompact">
                         <div class="view-container-compact">
                             <div class="characters">
-                                <img v-for="character in item.rotation4v.list" class="character" :src="character.imgSrc"
-                                    :alt="character.name" :style="'background-image: url(' + character.starBgUrl +');'">
+                                <template v-for="character in item.rotation4v.list">
+                                    <div class="character">
+                                        <img class="character" :src="character.imgSrc" :alt="character.name"
+                                            :style="'background-image: url(' + character.starBgUrl +');'">
+                                        <img class="element" :src="character.elementImgSrc"
+                                            :alt="character.elementName">
+                                    </div>
+                                </template>
                             </div>
                             <div class="description"> {{item.description}} </div>
                         </div>
@@ -125,22 +146,39 @@
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
                                     :style="'background-image: url(' + character.starBgUrl +');'">
+                                <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                                 <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                                     <template v-for="action in character.actions">
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
-                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
                                                     </div>
-                                                    <img class="icon" :src="icon.imgSrc" :alt="icon.name"
+                                                    <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
+                                                    </div>
+                                                    <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.cdDisplay - 23) + 'px;'">
+                                                    </div>
+                                                    <img :class="'icon ' + icon.code" :src="icon.imgSrc"
+                                                        :alt="icon.name"
                                                         :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                                    <div v-if="icon.name" class="tooltip">
+                                                        {{icon.name}} <br>
+                                                        <span v-if="icon.duration">duration: {{icon.duration}}
+                                                            <br></span>
+                                                        <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
+                                                        <span v-if="icon.energyCost">energy cost: {{icon.energyCost}}
+                                                            <br></span>
+                                                    </div>
                                                 </template>
                                                 <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
-                                                    <p class="noicon"> {{icon.name}} </p>
+                                                    <p class="noicon"> {{icon.code}} </p>
                                                 </div>
                                             </template>
-                                            <p class="name"> {{action.name}} </p>
+                                            <p v-if="action.groupNameDisplay" class="name"
+                                                v-html="action.groupNameDisplay"></p>
                                         </div>
                                         <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
                                             {{action.comment}}
@@ -200,28 +238,39 @@
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
                                     :style="'background-image: url(' + character.starBgUrl +');'">
+                                <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                                 <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                                     <template v-for="action in character.actions">
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
-                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.width + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
                                                     </div>
-                                                    <div class="duration"
-                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.durationDisplay + 'px;'">
+                                                    <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
                                                     </div>
-                                                    <div class="cd"
-                                                        :style="'left:calc(23px + ' + icon.x + 'px); width:' + icon.cdDisplay + 'px;'">
+                                                    <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
+                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.cdDisplay - 23) + 'px;'">
                                                     </div>
-                                                    <img class="icon" :src="icon.imgSrc" :alt="icon.name"
+                                                    <img :class="'icon ' + icon.code" :src="icon.imgSrc"
+                                                        :alt="icon.name"
                                                         :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                                    <div v-if="icon.name" class="tooltip">
+                                                        {{icon.name}} <br>
+                                                        <span v-if="icon.duration">duration: {{icon.duration}}
+                                                            <br></span>
+                                                        <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
+                                                        <span v-if="icon.energyCost">energy cost: {{icon.energyCost}}
+                                                            <br></span>
+                                                    </div>
                                                 </template>
                                                 <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
-                                                    <p class="noicon"> {{icon.name}} </p>
+                                                    <p class="noicon"> {{icon.code}} </p>
                                                 </div>
                                             </template>
-                                            <p class="name"> {{action.name}} </p>
+                                            <p v-if="action.groupNameDisplay" class="name"
+                                                v-html="action.groupNameDisplay"></p>
                                         </div>
                                         <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
                                             {{action.comment}}

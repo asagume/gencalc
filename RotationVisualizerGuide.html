@@ -8,11 +8,13 @@
     <link href="styles/base-style.css" rel="stylesheet" />
     <link href="styles/RotationVisualizer.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="js/RotationVisualiser.js"></script>
     <style>
         table {
             margin-left: auto;
             margin-right: auto;
             border: solid 2px;
+            width: calc(max(360px, 80%));
         }
 
         tr {
@@ -56,40 +58,60 @@
                 </ul>
             </div>
         </div>
+
+        <h2>ACTION</h2>
+        <table id="actionList">
+            <template v-for="[k1, v1] in Array.from(map)">
+                <tr>
+                    <td :rowspan="v1.size + 1"> {{ k1 }} </td>
+                    <td :rowspan="v1.size + 1">
+                        <span v-if="k1 == 'N'"> 通常攻撃 / Normal Attack </span>
+                        <span v-if="k1 == 'C'"> 重撃 / Charged Attack </span>
+                        <span v-if="k1 == 'P'"> 落下攻撃 / Plunge </span>
+                        <span v-if="k1 == 'E'"> 元素スキル / Elemental SKill </span>
+                        <span v-if="k1 == 'Q'"> 元素爆発 / Elemental Burst </span>
+                    </td>
+                </tr>
+                <tr v-for="[k2, v2] in Array.from(v1)">
+                    <td> {{ k1 }}.{{ k2 }} </td>
+                    <td> {{ v2 }} </td>
+                </tr>
+            </template>
+            <tr>
+                <td>Q</td>
+                <td>元素爆発/ Elemental Burst</td>
+            </tr>
+            <tr>
+                <td>W</td>
+                <td>歩き / Walk</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>ダッシュ / Dash</td>
+            </tr>
+            <tr>
+                <td>J</td>
+                <td>ジャンプ / Jump</td>
+            </tr>
+        </table>
     </div>
 
     <script>
+        var charNameList;
+        var actionList;
+
         async function onLoad() {
             const responses = await Promise.all([
                 'data/CharacterMaster.json'
             ].map(url => fetch(url).then(resp => resp.json())));
 
-            const CHARACTER_MASTER = responses[0];
+            CharacterMaster = responses[0];
 
-            const characterMatchMap = new Map();
-            Object.keys(CHARACTER_MASTER).forEach(key => {
-                const importVal = CHARACTER_MASTER[key]['import'];
-                const splitted = importVal.split('_');
-                const mapValue = [];
-                mapValue.push(key);
-                const name1 = splitted[splitted.length - 1].replace('.json', '');
-                mapValue.push(name1);
-                const name2 = name1.split(/(?=[A-Z])/).join(' ');
-                if (name2 != name1) {
-                    mapValue.push(name2);
-                }
-                if (name2.indexOf(' ') != -1) {
-                    const nameSplitted = name2.split(' ');
-                    mapValue.push(nameSplitted[0]);
-                    mapValue.push(nameSplitted[1]);
-                }
-                characterMatchMap.set(key, mapValue);
-            })
-            console.log(characterMatchMap);
+            CharacterNameMatchMap = createCharacterNameMatchMap();
 
             let nameArrFlat = [];
             const nameArr = [];
-            characterMatchMap.forEach((value, key) => {
+            CharacterNameMatchMap.forEach((value, key) => {
                 const newValue = [];
                 value.forEach(v => {
                     if (!nameArrFlat.includes(v)) {
@@ -100,10 +122,19 @@
                 nameArrFlat = nameArrFlat.concat(newValue)
             })
 
-            var charNameList = new Vue({
+            charNameList = new Vue({
                 el: '#charNameList',
                 data: {
                     list: nameArr
+                }
+            })
+
+            console.log('actioinVariationMap', actioinVariationMap);
+
+            actionList = new Vue({
+                el: '#actionList',
+                data: {
+                    map: actioinVariationMap
                 }
             })
         }
