@@ -955,6 +955,23 @@ function createCharacterNameMatchMap() {
     return result;
 }
 
+var FileButtonArea;
+function buildFileButton() {
+    FileButtonArea = new Vue({
+        el: '#file-button-area',
+        methods: {
+            SavedDataDownloadOnClick: function () {
+                let json = JSON.stringify(savedDataList, null, 2);
+                let blob = new Blob(json.split(''), { type: 'application/json' });
+                let aElem = document.createElement('a');
+                aElem.href = URL.createObjectURL(blob);
+                aElem.download = 'your-rotations.json';
+                aElem.click();
+            }
+        }
+    })
+}
+
 async function init() {
     const responses = await Promise.all([
         'data/CharacterMaster.json',
@@ -974,6 +991,9 @@ async function init() {
     buildSaveDataArea();
     // SAMPLE ROTATIONS
     buildSampleDataArea();
+
+    // DOWNLOAD and UPLOAD
+    buildFileButton();
 
     // H2 TOGGLE-SWITCH
     document.querySelectorAll('h2.toggle-switch').forEach(s => s.addEventListener('click', function () {
@@ -1028,3 +1048,6 @@ function saveData(data, opt_index = null) {
 
     return dataObj;
 }
+
+
+

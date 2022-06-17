@@ -95,6 +95,10 @@ a:visited {
     color: blanchedalmond;
 }
 
+button:enabled:hover {
+    background-color: antiquewhite;
+}
+
 fieldset {
     padding: 1rem;
 }
@@ -399,4 +403,18 @@ div.actions div.comment {
     grid-area: description;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+#file-button-area {
+    width: 100%;
+    text-align: right;
+}
+
+button.file {
+    text-align: center;
+    margin: 10px;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: 5px double;
+    min-width: 20rem;
 }

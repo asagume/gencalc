@@ -122,9 +122,9 @@
                             <button v-show="item.isCompact" type="button" @click="downButtonOnClick(index)">
                                 <span class="material-symbols-outlined"> arrow_downward </span> </button>
                         </div>
-                        <textarea v-show="item.isEditable" :value="item.rotation" @input="rotationOnInput(index, $event)"
-                            class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION"
-                            tabindex="2"></textarea>
+                        <textarea v-show="item.isEditable" :value="item.rotation"
+                            @input="rotationOnInput(index, $event)" class="rotation" cols="55" rows="8"
+                            placeholder="INPUT YOUR ROTATION" tabindex="2"></textarea>
                         <textarea v-show="item.isEditable" v-model="item.description" class="description" cols="55"
                             rows="8" placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
                     </div>
@@ -195,6 +195,10 @@
                 </li>
             </template>
         </ol>
+        <div id="file-button-area">
+            <button class="file" @click="SavedDataDownloadOnClick"> DOWNLOAD </button>
+            <button class="file" disabled> UPLOAD </button>
+        </div>
 
         <h2 class="toggle-switch">SAMPLE ROTATIONS</h2>
         <ol class="sample-data-area" id="sampleDataArea">
