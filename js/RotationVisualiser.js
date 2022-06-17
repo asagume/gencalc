@@ -38,6 +38,10 @@ const actioinVariationMap = new Map([
         ['FULLYCHARGED', 'フルチャージ狙い撃ち'],
         ['FULLY', 'フルチャージ狙い撃ち'],
         ['FULL', 'フルチャージ狙い撃ち'],
+        ['CHARGE1', '1段チャージ狙い撃ち'],
+        ['CHARGE2', '2段チャージ狙い撃ち'],
+        ['1', '1段チャージ狙い撃ち'],
+        ['2', '2段チャージ狙い撃ち'],
     ])],
     ['P', new Map([
         ['HIGH', '上空落下'],
@@ -50,23 +54,24 @@ const actioinVariationMap = new Map([
         ['CHARGELEVEL1', '1段チャージ'],
         ['CHARGELEVEL2', '2段チャージ'],
         ['CHARGE1', '1段チャージ'],
-        ['CHARGE2', '2段チャージ']
+        ['CHARGE2', '2段チャージ'],
+        ['1', '1段チャージ'],
+        ['2', '2段チャージ']
     ])],
 ])
 
-const displayNameMap = new Map([
+const displayTypeNameMap = new Map([
     ['狙い撃ち', ''],
-    ['フルチャージ狙い撃ち', '<div class="maru">F</div>'],
-    ['1段チャージ狙い撃ち', '<div class="maru">1</div>'],
-    ['2段チャージ狙い撃ち', '<div class="maru">2</div>'],
+    ['フルチャージ狙い撃ち', '<div class="maru"><p>F</p></div>'],
+    ['1段チャージ狙い撃ち', '<div class="maru"><p>1</p></div>'],
+    ['2段チャージ狙い撃ち', '<div class="maru"><p>2</p></div>'],
     ['一回押し', ''],
-    ['長押し', '<div class="maru">H</div>'],
-    ['上空落下', '<div class="maru">H</div>'],
+    ['長押し', '<div class="maru"><p>H</p></div>'],
+    ['上空落下', '<div class="maru"><p>H</p></div>'],
     ['低空落下', ''],
-    ['1段チャージ', '<div class="maru">1</div>'],
-    ['2段チャージ', '<div class="maru">2</div>']
+    ['1段チャージ', '<div class="maru"><p>1</p></div>'],
+    ['2段チャージ', '<div class="maru"><p>2</p></div>']
 ])
-
 
 /** 漢字が含まれるか判定する正規表現 */
 const CONTAIN_KANJI_RE = /([\u{3005}\u{3007}\u{303b}\u{3400}-\u{9FFF}\u{F900}-\u{FAFF}\u{20000}-\u{2FFFF}][\u{E0100}-\u{E01EF}\u{FE00}-\u{FE02}]?)/mu;
@@ -126,16 +131,16 @@ function analyzeCharacterNameStr(str) {
                 const splitted = str2.split(/[ \t]+/);
                 if (splitted[0].length >= 2) {
                     if (v.startsWith(splitted[0]) || v.endsWith(splitted[0])) {
-                        result = [entry[1][0], splitted[0]];
+                        result = [entry[0], splitted[0]];
                         return;
                     }
                 }
             }
             if (str2.startsWith(v.toLowerCase())) {
                 if (!result) {
-                    result = [entry[1][0], v];
+                    result = [entry[0], v];
                 } else if (result[1].length < v.length) {
-                    result = [entry[1][0], v];
+                    result = [entry[0], v];
                 }
             }
         });
@@ -494,7 +499,7 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                 break;
         }
     }
-    console.debug(rotationMaster['名前'], action, n, type, opt_nextAction, '=>', time);
+    console.debug(rotationMaster ? rotationMaster['名前'] : null, action, n, type, opt_nextAction, '=>', time);
     return time;
 }
 
@@ -590,6 +595,7 @@ function makeRotation4v(rotationStr) {
         const actionGroupObj = entry[1];
         if ('actionList' in actionGroupObj) {
             let groupName = actionGroupObj['groupName'];
+            let groupNameDisplay = '';
             const actionObj4v = {
                 name: groupName,
                 x: nextGroupX,
@@ -599,89 +605,89 @@ function makeRotation4v(rotationStr) {
             let nextIconX = 0;
             actionGroupObj['actionList'].forEach(actionObj => {
                 let width;
-                let iconName = null;
-                let duration = null;
-                let cd = null;
-                let energyCost = null;
+                const iconObj = {
+                    code: actionObj['action'],
+                    x: nextIconX
+                }
                 if (['N', 'C', 'P'].includes(actionObj['action'])) {    // 通常攻撃 重撃 落下攻撃
                     if (rotationMaster) {
-                        iconName = rotationMaster['通常攻撃']['名前'];
+                        iconObj['name'] = rotationMaster['通常攻撃']['名前'];
                     }
                     if (actionObj['action'] == 'N') {
                         if (Array.isArray(actionObj['time'])) {
-                            let width = actionObj['time'][actionObj['time'].length - 1];
-                            actionObj4v.icons.push({
-                                name: iconName,
-                                imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
-                                x: nextIconX,
-                                width: width
-                            })
-                            nextIconX += width;
+                            width = actionObj['time'][actionObj['time'].length - 1];
                         } else {
                             width = actionObj['time'];
-                            actionObj4v.icons.push({
-                                name: iconName,
-                                imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
-                                x: nextIconX,
-                                width: width
-                            })
-                            nextIconX += width;
                         }
                     } else {
                         width = actionObj['time'];
-                        actionObj4v.icons.push({
-                            name: iconName,
-                            imgSrc: NORMAL_ATTACK_IMG_SRC[characterMaster['武器']],
-                            x: nextIconX,
-                            width: width
-                        })
-                        nextIconX += width;
                     }
+                    iconObj['imgSrc'] = NORMAL_ATTACK_IMG_SRC[characterMaster['武器']];
+                    iconObj['width'] = width;
+                    nextIconX += width;
                 } else if (actionObj['action'] == 'E') {    // 元素スキル
                     if (rotationMaster && '元素スキル' in rotationMaster) {
-                        iconName = '名前' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['名前'] : null;
-                        duration = '継続時間' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['継続時間'] : null;
-                        cd = 'クールタイム' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['クールタイム'] : null;
+                        iconObj['name'] = '名前' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['名前'] : null;
+                        let cd;
+                        let duration;
+                        Object.keys(rotationMaster['元素スキル']).filter(key => key.endsWith('クールタイム')).forEach(key => {
+                            if (actionObj['type']) {
+                                if (key.startsWith(actionObj['type'])) {
+                                    cd = rotationMaster['元素スキル'][key];
+                                }
+                            } else if (key == 'クールタイム') {
+                                cd = rotationMaster['元素スキル'][key];
+                            }
+                        });
+                        if (cd !== undefined) {
+                            iconObj['cd'] = cd;
+                        }
+                        Object.keys(rotationMaster['元素スキル']).filter(key => key.endsWith('継続時間')).forEach(key => {
+                            if (actionObj['type']) {
+                                if (key.startsWith(actionObj['type'])) {
+                                    duration = rotationMaster['元素スキル'][key];
+                                }
+                            } else if (key == '継続時間') {
+                                duration = rotationMaster['元素スキル'][key];
+                            }
+                        });
+                        if (duration !== undefined) {
+                            iconObj['duration'] = duration;
+                        }
                     }
                     width = actionObj['time'];
-                    actionObj4v.icons.push({
-                        name: iconName,
-                        imgSrc: getElementalSkillImgSrc(characterMaster),
-                        x: nextIconX,
-                        width: width,
-                        duration: duration,
-                        cd: cd,
-                    })
+                    iconObj['imgSrc'] = getElementalSkillImgSrc(characterMaster);
+                    iconObj['width'] = width;
                     nextIconX += width;
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
                     if (rotationMaster && '元素爆発' in rotationMaster) {
-                        iconName = '名前' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['名前'] : null;
-                        duration = '継続時間' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['継続時間'] : null;
-                        cd = 'クールタイム' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['クールタイム'] : null;
-                        energyCost = '元素エネルギー' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['元素エネルギー'] : null;
+                        iconObj['name'] = '名前' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['名前'] : null;
+                        if ('継続時間' in rotationMaster['元素爆発']) {
+                            iconObj['duration'] = rotationMaster['元素爆発']['継続時間'];
+                        }
+                        iconObj['cd'] = rotationMaster['元素爆発']['クールタイム'];
+                        iconObj['energyCost'] = rotationMaster['元素爆発']['元素エネルギー'];
                     }
                     width = actionObj['time'];
-                    actionObj4v.icons.push({
-                        name: iconName,
-                        imgSrc: getElementalBurstImgSrc(characterMaster),
-                        x: nextIconX,
-                        width: width,
-                        duration: duration,
-                        cd: cd,
-                        enegyCost: energyCost
-                    })
+                    iconObj['imgSrc'] = getElementalBurstImgSrc(characterMaster);
+                    iconObj['width'] = width;
                     nextIconX += width;
                 } else if (['W', 'D', 'J'].includes(actionObj['action'])) {    // 歩き ダッシュ ジャンプ
                     width = actionObj['time'];
-                    actionObj4v.icons.push({
-                        name: actionObj['action'],
-                        x: nextIconX,
-                        width: width
-                    })
+                    iconObj['width'] = width;
                     nextIconX += width;
+                }
+                actionObj4v.icons.push(iconObj);
+
+                groupNameDisplay += actionObj['action'];
+                groupNameDisplay += actionObj.numberOfAttack > 1 ? actionObj.numberOfAttack : '';
+                if (actionObj['type'] && displayTypeNameMap.has(actionObj['type'])) {
+                    groupNameDisplay += displayTypeNameMap.get(actionObj['type']);
                 }
             })
             nextGroupX += nextIconX;
+
+            actionObj4v['groupNameDisplay'] = groupNameDisplay;
 
             characterMap.get(character)['actions'].push(actionObj4v);
             console.log(character, actionObj4v.x, actionObj4v.name);
@@ -699,7 +705,7 @@ function makeRotation4v(rotationStr) {
         }
     })
 
-    result.width = 100 + nextGroupX;
+    result.width = 90 + getScaledX(nextGroupX) + 45;
 
     characterMap.forEach((value, key) => {
         value['actions'].forEach(actionObj4v => {
@@ -708,21 +714,16 @@ function makeRotation4v(rotationStr) {
             }
             if ('icons' in actionObj4v) {
                 actionObj4v['icons'].forEach(iconObj => {
-                    if ('x' in iconObj) {
-                        iconObj['x'] = getScaledX(iconObj['x']);
-                    }
-                    if ('width' in iconObj) {
-                        let value = getScaledX(iconObj['width']);
-                        iconObj['width'] = value > (45 - 23) ? value : (45 - 23);
-                    }
-                    if ('duration' in iconObj) {
-                        let value = getScaledX(iconObj['duration']) * 60;
-                        iconObj['durationDisplay'] = value > (45 - 23) ? value : (45 - 23);
-                    }
-                    if ('cd' in iconObj) {
-                        let value = getScaledX(iconObj['cd']) * 60;
-                        iconObj['cdDisplay'] = value > (45 - 23) ? value : (45 - 23);
-                    }
+                    ['x', 'width'].forEach(propKey => {
+                        if (propKey in iconObj) {
+                            iconObj[propKey] = getScaledX(iconObj[propKey]);
+                        }
+                    });
+                    ['duration', 'cd'].forEach(propKey => {
+                        if (propKey in iconObj) {
+                            iconObj[propKey + 'Display'] = getScaledX(iconObj[propKey] * 60);
+                        }
+                    });
                 })
             }
         })
@@ -917,6 +918,9 @@ function createCharacterNameMatchMap() {
         }
         result.set(key, mapValue);
     });
+    result.set('旅人(雷)', ['雷旅人', '雷空', '雷蛍', 'TravelerElectro', 'AetherElectro', 'LumineElectro']);
+    result.set('旅人(岩)', ['岩旅人', '岩空', '岩蛍', 'TravelerGeo', 'AetherGeo', 'LumineGeo']);
+    result.set('旅人(風)', ['風旅人', '風空', '風蛍', 'TravelerAnemo', 'AetherAnemo', 'LumineAnemo']);
     return result;
 }
 
