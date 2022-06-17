@@ -1,5 +1,9 @@
 /* 2 Columns */
 @media all and (min-width: 769px) {
+    #main {
+        max-width: 1280px;
+    }
+
     html {
         font-size: calc(100vw / 72 / 2);
     }
@@ -68,6 +72,7 @@ body {
 #main {
     background: linear-gradient(to top, #3d3d3b, #141414);
     font-size: 2.2rem;
+    margin: 0 auto;
 }
 
 h2 {
@@ -92,13 +97,13 @@ a:visited {
 
 .maru {
     position: relative;
-    height: 13px;
-    width: 13px;
-    font-size: 11px;
+    height: 11px;
+    width: 11px;
+    font-size: 10px;
     display: inline-block;
     vertical-align: middle;
-    border-radius: 50%;
-    border: 1px solid red;
+    border-radius: 25%;
+    border: 2px solid brown;
 }
 
 .maru p {
@@ -143,7 +148,6 @@ a:visited {
     display: block;
 }
 
-
 .input-container .name-and-controller {
     grid-area: name-and-controller;
 }
@@ -180,6 +184,12 @@ div.input-container {
 input {
     margin: 5px;
     font-size: 2.2rem;
+}
+
+input:read-only {
+    color: blanchedalmond;
+    border: none;
+    background-color: transparent;
 }
 
 textarea {
@@ -271,20 +281,21 @@ div.icon {
 
 img.icon {
     position: absolute;
-    top: 5px;
+    top: 7px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: 2px solid darkgrey;
     z-index: 1;
 }
 
 img.icon.E {
-    border-color: yellow;
+    top: 5px;
+    border: 2px solid aliceblue;
 }
 
 img.icon.Q {
-    border-color: white;
+    top: 5px;
+    border: 2px solid yellow;
 }
 
 div.noicon {
@@ -333,15 +344,15 @@ div.cd {
     position: absolute;
     top: 5px;
     height: 49px;
-    border-right: 5px dashed;
+    border-right: 5px dotted;
 }
 
 div.duration.E {
-    background: linear-gradient(to top, violet, yellow);
+    background: linear-gradient(to top, violet, aliceblue);
 }
 
 div.duration.Q {
-    background: linear-gradient(to top, violet, white);
+    background: linear-gradient(to top, violet, yellow);
 }
 
 div.cd.E {
@@ -349,14 +360,15 @@ div.cd.E {
 }
 
 div.cd.Q {
-    border-color: lavender;
+    border-color: yellow;
 }
 
 div.actions div.comment {
     position: absolute;
-    top: 0;
+    top: 2px;
     color: gold;
     vertical-align: top;
+    font-size: 15px;
 }
 
 .tooltip {

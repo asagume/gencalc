@@ -164,7 +164,8 @@
                                                     <img :class="'icon ' + icon.code" :src="icon.imgSrc"
                                                         :alt="icon.name"
                                                         :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
-                                                    <div v-if="icon.name" class="tooltip">
+                                                    <div v-if="icon.name && ['E', 'Q'].includes(icon.code)"
+                                                        class="tooltip">
                                                         {{icon.name}} <br>
                                                         <span v-if="icon.duration">duration: {{icon.duration}}
                                                             <br></span>
@@ -200,7 +201,7 @@
                     <div class="input-container">
                         <div class="name-and-controller">
                             <input v-model="item.name" class="name" type="text" size="30" minlength="1" maxlength="40"
-                                :readonly="!item.isEditable" placeholder="INPUT YOUR ROTATION NAME">
+                                readonly placeholder="INPUT YOUR ROTATION NAME">
 
                             <button v-show="item.isCompact" type="button" @click="item.isCompact = !item.isCompact">
                                 <span class="material-symbols-outlined"> expand_more </span> </button>
@@ -256,7 +257,8 @@
                                                     <img :class="'icon ' + icon.code" :src="icon.imgSrc"
                                                         :alt="icon.name"
                                                         :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
-                                                    <div v-if="icon.name" class="tooltip">
+                                                    <div v-if="icon.name && ['E', 'Q'].includes(icon.code)"
+                                                        class="tooltip">
                                                         {{icon.name}} <br>
                                                         <span v-if="icon.duration">duration: {{icon.duration}}
                                                             <br></span>
