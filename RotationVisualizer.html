@@ -56,7 +56,7 @@
                             <div class="action" :style="'left: ' + action.x + 'px;'">
                                 <template v-for="icon in action.icons">
                                     <template v-if="icon.imgSrc">
-                                        <div class="icon"
+                                        <div :class="'icon ' + icon.code"
                                             :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
                                         </div>
                                         <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
@@ -154,7 +154,7 @@
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
-                                                    <div class="icon"
+                                                    <div :class="'icon ' + icon.code"
                                                         :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
@@ -251,7 +251,7 @@
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
-                                                    <div class="icon"
+                                                    <div :class="'icon ' + icon.code"
                                                         :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
