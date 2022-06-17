@@ -54,13 +54,13 @@
                                 <template v-for="icon in action.icons">
                                     <template v-if="icon.imgSrc">
                                         <div class="icon"
-                                            :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(to right,' + character.elementColor + ',#444444);'">
+                                            :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
                                         </div>
                                         <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
-                                            :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
+                                            :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
                                         </div>
                                         <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
-                                            :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.cdDisplay - 23) + 'px;'">
+                                            :style="'left: ' + icon.x + 'px; width:' + icon.cdDisplay + 'px;'">
                                         </div>
                                         <img :class="'icon ' + icon.code" :src="icon.imgSrc" :alt="icon.name"
                                             :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
@@ -101,8 +101,6 @@
                                 <span class="material-symbols-outlined"> cancel </span> </button>
                             <button v-show="item.isEditable" type="button" @click="saveButtonOnClick(index, $event)">
                                 <span class="material-symbols-outlined"> save </span> </button>
-                            <button v-show="item.isEditable" type="button" @click="removeButtonOnClick(index)">
-                                <span class="material-symbols-outlined"> delete </span> </button>
                             <button v-show="item.isCompact" type="button" @click="item.isCompact = !item.isCompact">
                                 <span class="material-symbols-outlined"> expand_more </span> </button>
                             <button v-show="!item.isCompact && !item.isEditable" type="button"
@@ -121,7 +119,7 @@
                             <button v-show="item.isCompact" type="button" @click="downButtonOnClick(index)">
                                 <span class="material-symbols-outlined"> arrow_downward </span> </button>
                         </div>
-                        <textarea v-show="item.isEditable" :value="item.rotation" @input="rotationOnInput"
+                        <textarea v-show="item.isEditable" :value="item.rotation" @input="rotationOnInput(index, $event)"
                             class="rotation" cols="55" rows="8" placeholder="INPUT YOUR ROTATION"
                             tabindex="2"></textarea>
                         <textarea v-show="item.isEditable" v-model="item.description" class="description" cols="55"
@@ -154,13 +152,13 @@
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(135deg,' + character.elementColor + ',transparent);'">
+                                                        :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
                                                     </div>
                                                     <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.cdDisplay - 23) + 'px;'">
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.cdDisplay + 'px;'">
                                                     </div>
                                                     <img :class="'icon ' + icon.code" :src="icon.imgSrc"
                                                         :alt="icon.name"
@@ -247,13 +245,13 @@
                                             <template v-for="icon in action.icons">
                                                 <template v-if="icon.imgSrc">
                                                     <div class="icon"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.width - 23) + 'px; background:linear-gradient(135deg,' + character.elementColor + ',transparent);'">
+                                                        :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.durationDisplay - 23) + 'px;'">
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
                                                     </div>
                                                     <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
-                                                        :style="'left: ' + (icon.x + 23) + 'px; width:' + Math.max(0, icon.cdDisplay - 23) + 'px;'">
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.cdDisplay + 'px;'">
                                                     </div>
                                                     <img :class="'icon ' + icon.code" :src="icon.imgSrc"
                                                         :alt="icon.name"

@@ -148,31 +148,6 @@ a:visited {
     display: block;
 }
 
-.input-container .name-and-controller {
-    grid-area: name-and-controller;
-}
-
-.input-container .rotation {
-    grid-area: rotation;
-}
-
-.input-container .description {
-    grid-area: description;
-}
-
-.view-container-compact {
-    margin-bottom: 1rem;
-}
-
-.view-container-compact .characters {
-    grid-area: characters;
-    border-bottom: double 3px;
-}
-
-.view-container-compact .description {
-    grid-area: description;
-}
-
 div.rotation-data {
     text-align: center;
 }
@@ -212,11 +187,13 @@ li.data {
 div.description {
     text-align: left;
     vertical-align: top;
-    min-width: 360px;
-    min-height: 80px;
+    min-height: 90px;
     padding: 5px;
     border-radius: 15px;
     border: 3px double;
+    font-size: 15px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 div.characters {
@@ -275,7 +252,9 @@ div.actions div.action {
 div.icon {
     position: absolute;
     top: 5px;
+    min-width: 49px;
     height: 49px;
+    border-radius: 24px;
     z-index: 0
 }
 
@@ -338,6 +317,7 @@ div.duration {
     position: absolute;
     top: 5px;
     height: 49px;
+    border-radius: 24px;
 }
 
 div.cd {
@@ -383,4 +363,31 @@ div.actions div.comment {
 
 :hover>.tooltip {
     display: block;
+}
+
+.input-container .name-and-controller {
+    grid-area: name-and-controller;
+}
+
+.input-container .rotation {
+    grid-area: rotation;
+}
+
+.input-container .description {
+    grid-area: description;
+}
+
+.view-container-compact {
+    margin-bottom: 1rem;
+}
+
+.view-container-compact .characters {
+    grid-area: characters;
+    border-bottom: double 3px;
+}
+
+.view-container-compact .description {
+    grid-area: description;
+    margin-top: 0;
+    margin-bottom: 0;
 }
