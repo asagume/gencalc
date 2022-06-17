@@ -196,7 +196,7 @@ function analyzeKqmNotation(kqm) {
         }
 
         const step1StrArr = [];
-        const commentRe = new RegExp(/(.*?)(\/*.*\*\/)/g);
+        const commentRe = new RegExp(/(.*?)(\/\*.*?\*\/)/g);
         let workStr = str;
         while (workStr) {
             const retCommentRe = commentRe.exec(str);
