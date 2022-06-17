@@ -43,7 +43,7 @@
     .input-container {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr 1fr;
         grid-template-areas:
             "name-and-controller"
             "rotation"
@@ -75,7 +75,7 @@ h2 {
     margin-top: 4rem;
     margin-left: auto;
     margin-right: auto;
-    padding: 1rem;
+    padding: 0.8rem;
     border: 1px solid gray;
     border-radius: 20px;
     text-align: center;
@@ -88,6 +88,28 @@ a:link {
 
 a:visited {
     color: blanchedalmond;
+}
+
+.maru {
+    position: relative;
+    height: 13px;
+    width: 13px;
+    font-size: 11px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    border: 1px solid red;
+}
+
+.maru p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding: 0;
 }
 
 .toggle-switch {
@@ -184,11 +206,7 @@ div.description {
     min-height: 80px;
     padding: 5px;
     border-radius: 15px;
-    border: double 3px;
-}
-
-div.compact div {
-    display: inline-block;
+    border: 3px double;
 }
 
 div.characters {
@@ -205,17 +223,18 @@ div.character {
 }
 
 img.character {
-    position: absolute;
-    left: 0px;
     width: 90px;
     height: 90px;
     background-size: contain;
+    position: absolute;
+    left: 0px;
     z-index: 10;
 }
 
 img.element {
     width: 25px;
     height: 25px;
+    position: absolute;
     top: 4px;
     left: 4px;
     z-index: 100;
@@ -233,7 +252,7 @@ div.character div.actions {
     top: 0px;
     width: calc(100% - 90px);
     height: 75px;
-    border-bottom: solid 17px;
+    border-bottom: 17px solid;
 }
 
 div.actions div.action {
@@ -256,8 +275,16 @@ img.icon {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: solid 2px;
+    border: 2px solid darkgrey;
     z-index: 1;
+}
+
+img.icon.E {
+    border-color: yellow;
+}
+
+img.icon.Q {
+    border-color: white;
 }
 
 div.noicon {
@@ -270,7 +297,7 @@ div.noicon {
     height: 20px;
     background-color: black;
     opacity: 80%;
-    border: solid 2px;
+    border: 2px solid;
     transform: rotate(45deg);
     z-index: 2;
 }
@@ -295,9 +322,53 @@ div.actions div.action p.name {
     margin-block-end: 0;
 }
 
+div.duration {
+    position: absolute;
+    top: 5px;
+    height: 49px;
+    opacity: 75%;
+}
+
+div.cd {
+    position: absolute;
+    top: 5px;
+    height: 49px;
+    border-right: 5px dashed;
+}
+
+div.duration.E {
+    background: linear-gradient(to top, violet, yellow);
+}
+
+div.duration.Q {
+    background: linear-gradient(to top, violet, white);
+}
+
+div.cd.E {
+    border-color: aliceblue;
+}
+
+div.cd.Q {
+    border-color: lavender;
+}
+
 div.actions div.comment {
     position: absolute;
     top: 0;
     color: gold;
     vertical-align: top;
+}
+
+.tooltip {
+    position: absolute;
+    left: 30px;
+    display: none;
+    background-color: gray;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 9999;
+}
+
+:hover>.tooltip {
+    display: block;
 }
