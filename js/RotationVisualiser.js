@@ -705,32 +705,57 @@ function makeRotation4v(rotationStr) {
         }
     })
 
-    result.width = 90 + getScaledX(nextGroupX) + 45;
-
+    let width = 0;
     characterMap.forEach((value, key) => {
         value['actions'].forEach(actionObj4v => {
             if ('x' in actionObj4v) {
                 actionObj4v['x'] = getScaledX(actionObj4v['x']);
+                if (width < actionObj4v['x']) {
+                    width = actionObj4v['x'];
+                }
             }
             if ('icons' in actionObj4v) {
                 actionObj4v['icons'].forEach(iconObj => {
+                    let workWidth;
                     ['x', 'width'].forEach(propKey => {
                         if (propKey in iconObj) {
                             iconObj[propKey] = getScaledX(iconObj[propKey]);
                         }
                     });
+                    workWidth = actionObj4v['x'] + iconObj['x'];
+                    if ('width' in iconObj) {
+                        workWidth += iconObj['width'];
+                    }
+                    if (width < workWidth) {
+                        width = workWidth;
+                    }
                     ['duration', 'cd'].forEach(propKey => {
                         if (propKey in iconObj) {
                             iconObj[propKey + 'Display'] = getScaledX(iconObj[propKey] * 60);
                         }
                     });
+                    workWidth = actionObj4v['x'] + iconObj['x'];
+                    if ('duration' in iconObj) {
+                        workWidth += iconObj['durationDisplay'];
+                    }
+                    if (width < workWidth) {
+                        width = workWidth;
+                    }
+                    workWidth = actionObj4v['x'] + iconObj['x'];
+                    if ('cd' in iconObj) {
+                        workWidth += iconObj['cdDisplay'];
+                    }
+                    if (width < workWidth) {
+                        width = workWidth;
+                    }
                 })
             }
         })
         result.list.push(value);
     })
 
-    console.log('makeRotation4v', result.list);
+    result.width = 90 + 49 + width;
+    console.log('makeRotation4v', result.width, result.list);
     return result;
 }
 
