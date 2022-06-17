@@ -689,6 +689,10 @@ function makeRotation4v(rotationStr) {
             })
             nextGroupX += nextIconX;
 
+            console.log(groupName);
+            if (groupName.indexOf('.') == -1) {
+                groupNameDisplay = groupName;
+            }
             actionObj4v['groupNameDisplay'] = groupNameDisplay;
 
             characterMap.get(character)['actions'].push(actionObj4v);
