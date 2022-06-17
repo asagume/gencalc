@@ -110,8 +110,8 @@ p {
 
 .maru {
     position: relative;
-    height: 11px;
-    width: 11px;
+    height: 9px;
+    width: 9px;
     font-size: 10px;
     display: inline-block;
     vertical-align: middle;
@@ -283,12 +283,12 @@ img.icon {
 
 img.icon.E {
     top: 5px;
-    border: 2px solid silver;
+    border: 2px solid burlywoodenrod;
 }
 
 img.icon.Q {
     top: 5px;
-    border: 2px solid gold;
+    border: 2px solid burlywood;
 }
 
 div.noicon {
@@ -319,7 +319,7 @@ div.actions div.action p.name {
     position: absolute;
     left: 19px;
     bottom: -10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     color: darkred;
     margin-block-start: 0;
@@ -328,9 +328,9 @@ div.actions div.action p.name {
 
 div.duration {
     position: absolute;
-    top: 5px;
-    height: 49px;
-    border-radius: 24px;
+    top: 28px;
+    height: 26px;
+    border-radius: 26px;
 }
 
 div.cd {
@@ -341,19 +341,19 @@ div.cd {
 }
 
 div.duration.E {
-    background: linear-gradient(to top, transparent, silver);
+    background: linear-gradient(to top, transparent, seashell);
 }
 
 div.duration.Q {
-    background: linear-gradient(to top, transparent,  gold);
+    background: linear-gradient(to top, transparent,  burlywood);
 }
 
 div.cd.E {
-    border-color: silver;
+    border-color: seashell;
 }
 
 div.cd.Q {
-    border-color: gold;
+    border-color: burlywood;
 }
 
 div.actions div.comment {
