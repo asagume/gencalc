@@ -75,6 +75,18 @@ body {
     margin: 0 auto;
 }
 
+#main {
+    font-family: 'Yusei Magic', sans-serif;
+}
+
+input {
+    font-family: monospace;
+}
+
+input:read-only {
+    font-family: 'Yusei Magic', sans-serif;
+}
+
 h2 {
     max-width: 60rem;
     margin-top: 4rem;
@@ -252,12 +264,12 @@ div.character div.actions {
     top: 0px;
     width: calc(100% - 90px);
     height: 75px;
-    border-bottom: 17px solid;
+    border-bottom: 18px solid;
 }
 
 div.actions div.action {
     position: absolute;
-    bottom: -10px;
+    bottom: -8px;
     min-width: 45px;
     min-height: calc(45px + 20px);
 }
