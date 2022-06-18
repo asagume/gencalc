@@ -53,6 +53,7 @@
                 <div v-for="character in rotation4v.list" class="character">
                     <img class="character" :src="character.imgSrc" :alt="character.name"
                         :style="'background-image: url(' + character.starBgUrl +');'">
+                    <div class="tooltip"> {{character.name}} </div>
                     <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                     <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                         <template v-for="action in character.actions">
@@ -120,9 +121,11 @@
                             <button v-show="!item.isCompact && !item.isEditable" type="button"
                                 @click="removeButtonOnClick(index)" :disabled="!item.isDeletable">
                                 <span class="material-symbols-outlined"> delete </span> </button>
-                            <button v-show="item.isCompact" type="button" @click="upButtonOnClick(index)" :disabled="index == 0">
+                            <button v-show="item.isCompact" type="button" @click="upButtonOnClick(index)"
+                                :disabled="index == 0">
                                 <span class="material-symbols-outlined"> arrow_upward </span> </button>
-                            <button v-show="item.isCompact" type="button" @click="downButtonOnClick(index)" :disabled="index == (list.length - 1)">
+                            <button v-show="item.isCompact" type="button" @click="downButtonOnClick(index)"
+                                :disabled="index == (list.length - 1)">
                                 <span class="material-symbols-outlined"> arrow_downward </span> </button>
                         </div>
                         <textarea v-show="item.isEditable" :value="item.rotation"
@@ -138,6 +141,7 @@
                                     <div class="character">
                                         <img class="character" :src="character.imgSrc" :alt="character.name"
                                             :style="'background-image: url(' + character.starBgUrl +');'">
+                                        <div class="tooltip"> {{character.name}} </div>
                                         <img class="element" :src="character.elementImgSrc"
                                             :alt="character.elementName">
                                     </div>
@@ -151,6 +155,7 @@
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
                                     :style="'background-image: url(' + character.starBgUrl +');'">
+                                <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                                 <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                                     <template v-for="action in character.actions">
@@ -235,6 +240,7 @@
                                     <div class="character">
                                         <img class="character" :src="character.imgSrc" :alt="character.name"
                                             :style="'background-image: url(' + character.starBgUrl +');'">
+                                        <div class="tooltip"> {{character.name}} </div>
                                         <img class="element" :src="character.elementImgSrc"
                                             :alt="character.elementName">
                                     </div>
@@ -248,6 +254,7 @@
                             <div v-for="character in item.rotation4v.list" class="character">
                                 <img class="character" :src="character.imgSrc" :alt="character.name"
                                     :style="'background-image: url(' + character.starBgUrl +');'">
+                                <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                                 <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                                     <template v-for="action in character.actions">

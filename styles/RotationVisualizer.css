@@ -122,8 +122,8 @@ p {
 
 .maru {
     position: relative;
-    height: 9px;
-    width: 9px;
+    width: 10px;
+    height: 12px;
     font-size: 10px;
     display: inline-block;
     vertical-align: middle;
@@ -135,7 +135,7 @@ p {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -55%);
     margin: 0;
     margin-block-start: 0;
     margin-block-end: 0;
@@ -263,8 +263,8 @@ div.character div.actions {
     left: 90px;
     top: 0px;
     width: calc(100% - 90px);
-    height: 75px;
-    border-bottom: 18px solid;
+    height: 70px;
+    border-bottom: 20px solid;
 }
 
 div.actions div.action {
@@ -276,7 +276,7 @@ div.actions div.action {
 
 div.icon {
     position: absolute;
-    top: 5px;
+    top: 10px;
     min-width: 49px;
     height: 49px;
     border-radius: 24px;
@@ -284,26 +284,26 @@ div.icon {
 }
 
 div.icon.N {
-    top: 15px;
+    top: 20px;
     min-width: 39px;
     height: 39px;
 }
 
 div.icon.C, div.icon.P {
-    top: 10px;
+    top: 15px;
     min-width: 44px;
     height: 44px;
 }
 
 div.icon.E {
-    top: 10px;
+    top: 15px;
     min-width: 44px;
     height: 44px;
 }
 
 img.icon {
     position: absolute;
-    top: 5px;
+    top: 10px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -312,21 +312,21 @@ img.icon {
 }
 
 img.icon.N {
-    top: 15px;
+    top: 20px;
     width: 35px;
     height: 35px;
     border-color: lightgray;
 }
 
 img.icon.C, img.icon.P {
-    top: 10px;
+    top: 15px;
     width: 40px;
     height: 40px;
     border-color: lightgray;
 }
 
 img.icon.E {
-    top: 10px;
+    top: 15px;
     width: 40px;
     height: 40px;
     border-color: seashell;
@@ -341,14 +341,14 @@ div.noicon {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 30px;
+    top: 35px;
     min-width: 20px;
     height: 20px;
     background-color: linen;
     opacity: 80%;
     border: 2px solid;
     transform: rotate(45deg);
-    z-index: 2;
+    z-index: 100;
 }
 
 div.noicon p.noicon {
@@ -369,20 +369,22 @@ div.actions div.action p.name {
     color: darkred;
     margin-block-start: 0;
     margin-block-end: 0;
+    z-index: 100;
 }
 
 div.duration {
     position: absolute;
-    top: 28px;
-    height: 26px;
+    top: 57px;
+    height: 20px;
     border-radius: 26px;
 }
 
 div.cd {
     position: absolute;
     top: 0px;
-    height: 54px;
+    height: 59px;
     border-right: 5px dotted;
+    z-index: 10;
 }
 
 div.duration.E {
