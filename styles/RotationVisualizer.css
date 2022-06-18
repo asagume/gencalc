@@ -289,6 +289,12 @@ div.icon.N {
     height: 39px;
 }
 
+div.icon.C, div.icon.P {
+    top: 10px;
+    min-width: 44px;
+    height: 44px;
+}
+
 div.icon.E {
     top: 10px;
     min-width: 44px;
@@ -309,6 +315,13 @@ img.icon.N {
     top: 15px;
     width: 35px;
     height: 35px;
+    border-color: lightgray;
+}
+
+img.icon.C, img.icon.P {
+    top: 10px;
+    width: 40px;
+    height: 40px;
     border-color: lightgray;
 }
 
