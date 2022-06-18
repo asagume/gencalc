@@ -1,12 +1,7 @@
 [
     {
-        "name": "EULA Glacial Illumination",
-        "rotation": "Eula E.PRESS Q N4 E.HOLD N4",
-        "description": "光臨の剣 基本コンボ"
-    },
-    {
-        "name": "紅葉の庭",
-        "rotation": "Yelan /*200%*/\nGorou /*250%*/\nAlbedo /*100%*/\nNoelle /*140%*/\nYelan E.HOLD\nGorou Q\nAlbedo E\nYelan QN\nNoelle Q N3E 4N3D",
+        "name": "with Gorobed",
+        "rotation": "Yelan /*200%*/\nGorou /*250%*/\nAlbedo /*100%*/\nNoelle /*140%*/\nYelan E.HOLD\nGorou Q\nAlbedo E\nYelan QN\nNoelle Q N3 > Yelan EN > Gorou EN > Noelle 4N3D",
         "description": "説明"
     },
     {

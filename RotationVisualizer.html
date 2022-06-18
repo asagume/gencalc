@@ -55,6 +55,7 @@
                         :style="'background-image: url(' + character.starBgUrl +');'">
                     <div class="tooltip"> {{character.name}} </div>
                     <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                    <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
                     <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                         <template v-for="action in character.actions">
                             <div class="action" :style="'left: ' + action.x + 'px;'">
@@ -157,6 +158,7 @@
                                     :style="'background-image: url(' + character.starBgUrl +');'">
                                 <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                                <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
                                 <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                                     <template v-for="action in character.actions">
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
@@ -256,6 +258,7 @@
                                     :style="'background-image: url(' + character.starBgUrl +');'">
                                 <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                                <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
                                 <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                                     <template v-for="action in character.actions">
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
@@ -281,6 +284,12 @@
                                                         <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
                                                         <span v-if="icon.energyCost">energy cost: {{icon.energyCost}}
                                                             <br></span>
+                                                    </div>
+                                                    <div v-if="icon.code == 'N'" class="attr N" :style="'left: ' + icon.x + 'px;'">
+                                                        <p> {{icon.numberOfAttack}} </p>
+                                                    </div>
+                                                    <div v-if="['C', 'P'].includes(icon.code)" :class="'attr ' + icon.code" :style="'left: ' + icon.x + 'px;'">
+                                                        <p> {{icon.code}} </p>
                                                     </div>
                                                 </template>
                                                 <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">

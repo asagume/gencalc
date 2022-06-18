@@ -581,13 +581,21 @@ function makeRotation4v(rotationStr) {
                 starBgUrl: getCharacterBackgroundImageUrl(characterMaster),
                 elementImgSrc: getCharacterElementImgSrc(characterMaster),
                 elementColor: getElementColor(characterMaster),
-                actions: []
+                actions: [],
+                timeOnField: 0,
+                timeOnFieldRatio: 0
             })
         }
 
         if (character != preCharacter) {
             if (preCharacter) {
-                nextGroupX += 12;   // キャラクター切り替え時間を加算します
+                const lastActionObj4v = characterMap.get(preCharacter)['actions'].slice(-1)[0];
+                if ('width' in lastActionObj4v) {
+                    if (lastActionObj4v['width'] < 60) {
+                        lastActionObj4v['width'] = 60;  // キャラクター交代クールタイム1s
+                    }
+                }
+                nextGroupX += 12;   // キャラクター交代時間を加算します
             }
             preCharacter = character;
         }
@@ -599,6 +607,7 @@ function makeRotation4v(rotationStr) {
             const actionObj4v = {
                 name: groupName,
                 x: nextGroupX,
+                width: 0,
                 icons: [],
                 comment: 'comment' in actionGroupObj ? actionGroupObj['comment'] : null
             }
@@ -638,7 +647,10 @@ function makeRotation4v(rotationStr) {
                             } else if (key == 'クールタイム') {
                                 cd = rotationMaster['元素スキル'][key];
                             }
-                        });
+                        })
+                        if (!cd && 'クールタイム' in rotationMaster['元素スキル']) {
+                            cd = rotationMaster['元素スキル']['クールタイム'];
+                        }
                         if (cd !== undefined) {
                             iconObj['cd'] = cd;
                         }
@@ -681,6 +693,7 @@ function makeRotation4v(rotationStr) {
 
                 groupNameDisplay += actionObj['action'];
                 if (actionObj['action'] == 'N' && actionObj.numberOfAttack) {
+                    iconObj['numberOfAttack'] = actionObj.numberOfAttack;
                     groupNameDisplay += actionObj.numberOfAttack;
                 }
                 if (actionObj['type'] && displayTypeNameMap.has(actionObj['type'])) {
@@ -688,6 +701,8 @@ function makeRotation4v(rotationStr) {
                 }
             })
             nextGroupX += nextIconX;
+
+            actionObj4v.width = nextIconX;
 
             console.log(groupName);
             if (groupName.indexOf('.') == -1) {
@@ -704,12 +719,30 @@ function makeRotation4v(rotationStr) {
             const actionObj4v = {
                 name: actionGroupObj['groupName'],
                 x: nextGroupX,
+                width: 0,
                 comment: 'comment' in actionGroupObj ? actionGroupObj['comment'] : null
             }
             characterMap.get(character)['actions'].push(actionObj4v);
             console.log(character, actionObj4v.x, actionObj4v.name);
         }
     })
+
+    let totalTimeOnField = 0;
+    characterMap.forEach((value, key) => {
+        value['actions'].forEach(actionObj4v => {
+            if ('width' in actionObj4v) {
+                value['timeOnField'] += actionObj4v.width;
+                totalTimeOnField += actionObj4v.width;
+            }
+        })
+    })
+    if (totalTimeOnField) {
+        console.debug('totalTimeOnField', totalTimeOnField)
+        characterMap.forEach((value, key) => {
+            console.debug(key, 'timeOnField', value['timeOnField'])
+            value['timeOnFieldRatio'] = value['timeOnField'] / totalTimeOnField;
+        })
+    }
 
     let width = 0;
     characterMap.forEach((value, key) => {

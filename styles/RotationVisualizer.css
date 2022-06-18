@@ -258,6 +258,14 @@ img.element {
     width: 90px;
 }
 
+div.character p.ratio {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    z-index: 110;
+    color: chartreuse;
+}
+
 div.character div.actions {
     position: absolute;
     left: 90px;
@@ -334,6 +342,32 @@ img.icon.E {
 
 img.icon.Q {
     border-color: khaki;
+}
+
+div.attr {
+    position: absolute;
+    height: 20px;
+}
+
+div.attr p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    color: darkred;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+div.attr.N {
+    top: 20px;
+    width: 35px;
+}
+
+div.attr.C, div.attr.P {
+    top: 15px;
+    width: 40px;
 }
 
 div.noicon {
