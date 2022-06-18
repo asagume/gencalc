@@ -1,17 +1,17 @@
 [
     {
-        "name": "with Gorobed",
-        "rotation": "Yelan /*200%*/\nGorou /*250%*/\nAlbedo /*100%*/\nNoelle /*140%*/\nYelan E.HOLD\nGorou Q\nAlbedo E\nYelan QN\nNoelle Q N3 > Yelan EN > Gorou EN > Noelle 4N3D",
-        "description": "説明"
+        "name": "岩単",
+        "rotation": "鍾離 E.HOLD > ゴロー /*先生こっちです*/ Q > アルベド E > ゴロー E > ノエル /*騎士の風格に気を付けます*/ EQ 3N3D > ゴロー E > ノエル 2N3D",
+        "description": "岩単編成。ダメージ源はノエルとアルベド。シールド付きと陽華を壊す敵は不得手。ゴローの出す元素粒子はノエルで受け取る。交代キャラへのゴローの強化効果の反映には遅延があるので落ち着いて操作する。"
     },
     {
-        "name": "紅葉の庭 こっちのが早い…",
-        "rotation": "夜蘭 E.HOLD > アルベド E > 行秋 EQE > 夜蘭 QN > ノエル Q N3E 4N3D",
-        "description": "説明"
+        "name": "Triple Geo + Yelan",
+        "rotation": "Yelan E.HOLD\nGorou Q /*先生こっちです*/\nAlbedo E\nYelan Q /*糸よ、交錯せよ*/ N1 \nNoelle Q /*戦場のお掃除の時間です*/ N3\nYelan EN\nGorou EN\nNoelle 4N3D",
+        "description": "防御力依存の岩元素キャラクター3人と元素付着役1人の編成。元素付着役は元素エネルギーを自力で賄えること。ノックバックが気にならない状況であればノエルの通常攻撃は4段目まで振り切ってよい。"
     },
     {
-        "name": "深境螺旋 蒸発",
-        "rotation": "鍾離 E.HOLD > 行秋 EQE > 胡桃 E 9N2CJ /*ﾑﾘ*/ Q > ノエル /* ? */",
-        "description": "説明"
+        "name": "Two Geo",
+        "rotation": "アルベド E > 行秋 EQN > 夜蘭 EQN > ノエル Q 6N3D",
+        "description": "フィッシュル+北斗、ベネット+香菱などでもよい。"
     }
 ]

@@ -477,10 +477,10 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
             time = 12;
             break;
         case 'D':   // ダッシュ
-            time = 12;
+            time = 20;
             break;
         case 'J':   // ジャンプ
-            time = 24;
+            time = 30;
             break;
     }
     if (Number.isNaN(time) || time <= 0) {

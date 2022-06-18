@@ -264,6 +264,7 @@ div.character p.ratio {
     top: 70px;
     z-index: 110;
     color: chartreuse;
+    font-size: 15px;
 }
 
 div.character div.actions {
@@ -453,6 +454,7 @@ div.actions div.comment {
     border-radius: 10px;
     padding: 10px;
     z-index: 9999;
+    font-size: 15px;
 }
 
 :hover>.tooltip {
