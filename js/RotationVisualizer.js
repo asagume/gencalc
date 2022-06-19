@@ -746,6 +746,8 @@ function makeRotation4v(rotationStr) {
 
     let width = 0;
     characterMap.forEach((value, key) => {
+        value.width = getScaledX(totalTimeOnField);
+
         value['actions'].forEach(actionObj4v => {
             if ('x' in actionObj4v) {
                 actionObj4v['x'] = getScaledX(actionObj4v['x']);

@@ -259,7 +259,7 @@
                                 <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                                 <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
-                                <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
+                                <div class="actions" :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
                                     <template v-for="action in character.actions">
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
                                             <template v-for="icon in action.icons">

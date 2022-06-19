@@ -120,6 +120,10 @@ p {
     margin-block-end: 0;
 }
 
+ol {
+    padding-inline-start: 15px;
+}
+
 .maru {
     position: relative;
     width: 10px;
@@ -212,7 +216,7 @@ li.data {
 div.description {
     text-align: left;
     vertical-align: top;
-    min-height: 90px;
+    min-height: 85px;
     padding: 5px;
     border-radius: 15px;
     border: 3px double;
@@ -224,18 +228,18 @@ div.characters {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    min-width: 360px;
+    min-width: 340px;
 }
 
 div.character {
     position: relative;
-    height: 90px;
+    height: 85px;
     width: 100%;
 }
 
 img.character {
-    width: 90px;
-    height: 90px;
+    width: 85px;
+    height: 85px;
     background-size: contain;
     position: absolute;
     left: 0px;
@@ -254,13 +258,13 @@ img.element {
 .view-container-compact .characters div.character {
     display: inline-block;
     position: relative;
-    width: 90px;
+    width: 85px;
 }
 
 div.character p.ratio {
     position: absolute;
     left: 0;
-    top: 70px;
+    top: 65px;
     z-index: 110;
     color: chartreuse;
     font-size: 15px;
@@ -268,10 +272,10 @@ div.character p.ratio {
 
 div.character div.actions {
     position: absolute;
-    left: 90px;
+    left: 85px;
     top: 0px;
-    width: calc(100% - 90px);
-    height: 70px;
+    width: calc(100% - 85px);
+    height: 65px;
     border-bottom: 20px solid;
 }
 
@@ -439,10 +443,10 @@ div.cd.Q {
 
 div.actions div.comment {
     position: absolute;
-    top: 2px;
+    top: 0;
     color: gold;
     vertical-align: top;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .tooltip {
