@@ -275,76 +275,57 @@ div.character div.actions {
     left: 85px;
     top: 0px;
     width: calc(100% - 85px);
-    height: 65px;
-    border-bottom: 20px solid;
+    height: 85px;
 }
 
 div.actions div.action {
     position: absolute;
-    bottom: -8px;
-    min-width: 45px;
-    min-height: calc(45px + 20px);
+    top: 10px;
+    min-width: 40px;
+    height: 75px;
 }
 
 div.icon {
     position: absolute;
-    top: 10px;
-    min-width: 49px;
-    height: 49px;
-    border-radius: 24px;
+    width: 34px;
+    height: 34px;
+    border-radius: 22px;
     z-index: 0
 }
 
-div.icon.N {
-    top: 20px;
-    min-width: 39px;
-    height: 39px;
-}
-
-div.icon.C, div.icon.P {
-    top: 15px;
-    min-width: 44px;
-    height: 44px;
+div.icon.N, div.icon.C, div.icon.P {
+    top: 25px;
 }
 
 div.icon.E {
-    top: 15px;
-    min-width: 44px;
-    height: 44px;
+    top: 40px;
+}
+
+div.icon.Q {
+    top: 10px;
 }
 
 img.icon {
     position: absolute;
-    top: 10px;
-    width: 45px;
-    height: 45px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     border: 2px solid transparent;
     z-index: 1;
 }
 
-img.icon.N {
-    top: 20px;
-    width: 35px;
-    height: 35px;
-    border-color: lightgray;
-}
-
-img.icon.C, img.icon.P {
-    top: 15px;
-    width: 40px;
-    height: 40px;
+img.icon.N, img.icon.C, img.icon.P {
+    top: 25px;
     border-color: lightgray;
 }
 
 img.icon.E {
-    top: 15px;
-    width: 40px;
-    height: 40px;
+    top: 40px;
     border-color: seashell;
 }
 
 img.icon.Q {
+    top: 10px;
     border-color: khaki;
 }
 
@@ -412,9 +393,8 @@ div.actions div.action p.name {
 
 div.duration {
     position: absolute;
-    top: 57px;
-    height: 20px;
-    border-radius: 26px;
+    height: 34px;
+    border-radius: 17px;
 }
 
 div.cd {
@@ -426,10 +406,12 @@ div.cd {
 }
 
 div.duration.E {
+    top: 40px;
     background: linear-gradient(to top, transparent, seashell);
 }
 
 div.duration.Q {
+    top: 10px;
     background: linear-gradient(to top, transparent,  khaki);
 }
 
