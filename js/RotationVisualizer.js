@@ -265,7 +265,7 @@ function analyzeKqmNotation(kqm) {
                 let actionTime = null;
                 if (retActionRe[8]) {
                     actionTime = Number(retActionRe[8]);
-                    if (!retActionRe[9] || retActionRe[9] == 's') {
+                    if (!retActionRe[9] || retActionRe[9].toLowerCase() == 's') {
                         actionTime *= 60;   // second -> frame
                     }
                 }
@@ -951,6 +951,7 @@ function buildSampleDataArea() {
         parsedDataObj.index = index++;
         parsedDataObj.rotation = parsedDataObj['rotation'];
         parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
+        parsedDataObj.description = parsedDataObj.description.replace(new RegExp(/\n/g), '<br>')
         parsedDataObj.isCompact = true;
         parsedDataObj.isEditable = false;
         list.push(parsedDataObj);
