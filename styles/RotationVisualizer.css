@@ -275,7 +275,8 @@ div.character div.actions {
     left: 85px;
     top: 0px;
     width: calc(100% - 85px);
-    height: 85px;
+    height: 65px;
+    border-bottom: 20px solid;
 }
 
 div.actions div.action {
@@ -287,51 +288,41 @@ div.actions div.action {
 
 div.icon {
     position: absolute;
-    width: 34px;
-    height: 34px;
+    top: 13px;
+    width: 40px;
+    height: 40px;
     border-radius: 22px;
+    border: 2px solid transparent;
     z-index: 0
-}
-
-div.icon.N, div.icon.C, div.icon.P {
-    top: 25px;
-}
-
-div.icon.E {
-    top: 40px;
-}
-
-div.icon.Q {
-    top: 10px;
 }
 
 img.icon {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    top: 13px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 2px solid transparent;
     z-index: 1;
 }
 
-img.icon.N, img.icon.C, img.icon.P {
-    top: 25px;
+img.icon.N, img.icon.C, img.icon.P  {
     border-color: lightgray;
 }
 
 img.icon.E {
-    top: 40px;
     border-color: seashell;
 }
 
 img.icon.Q {
-    top: 10px;
     border-color: khaki;
 }
 
 div.attr {
     position: absolute;
-    height: 20px;
+    top: 13px;
+    width: 40px;
+    height: 40px;
 }
 
 div.attr p {
@@ -341,18 +332,10 @@ div.attr p {
     transform: translate(-50%, -50%);
     z-index: 200;
     color: darkred;
-    font-size: 15px;
+    font-size: 20px;
+    color: yellow;
+    text-shadow: #141414 0 0 2px;
     font-weight: bold;
-}
-
-div.attr.N {
-    top: 20px;
-    width: 35px;
-}
-
-div.attr.C, div.attr.P {
-    top: 15px;
-    width: 40px;
 }
 
 div.noicon {
@@ -382,7 +365,7 @@ div.noicon p.noicon {
 div.actions div.action p.name {
     position: absolute;
     left: 19px;
-    bottom: -10px;
+    bottom: 0;
     font-size: 14px;
     font-weight: bold;
     color: darkred;
@@ -393,26 +376,30 @@ div.actions div.action p.name {
 
 div.duration {
     position: absolute;
-    height: 34px;
-    border-radius: 17px;
+    top: 13px;
+    height: 40px;
+    border-right: 10px double;
+    border-bottom: 2px solid;
+    border-radius: 22px;
 }
 
 div.cd {
     position: absolute;
-    top: 0px;
-    height: 59px;
-    border-right: 5px dotted;
-    z-index: 10;
+    top: 13px;
+    height: 40px;
+    border-right: 10px dotted;
+    border-bottom: 2px solid;
+    border-radius: 22px;
 }
 
 div.duration.E {
-    top: 40px;
-    background: linear-gradient(to top, transparent, seashell);
+    border-color: seashell;
+    /* background: linear-gradient(to top, transparent, seashell); */
 }
 
 div.duration.Q {
-    top: 10px;
-    background: linear-gradient(to top, transparent,  khaki);
+    border-color: khaki;
+    /* background: linear-gradient(to top, transparent,  khaki); */
 }
 
 div.cd.E {

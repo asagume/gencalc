@@ -259,13 +259,14 @@
                                 <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
                                 <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
-                                <div class="actions" :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
+                                <div class="actions"
+                                    :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
                                     <template v-for="action in character.actions">
                                         <div class="action" :style="'left: ' + action.x + 'px;'">
-                                            <template v-for="icon in action.icons">
+                                            <template v-for="(icon, index2) in action.icons">
                                                 <template v-if="icon.imgSrc">
-                                                    <div :class="'icon ' + icon.code"
-                                                        :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
+                                                    <div class="icon"
+                                                        :style="'left: ' + icon.x + 'px; width: ' + Math.max(40, icon.width) + 'px; background-color: ' + character.elementColor + ';'">
                                                     </div>
                                                     <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
                                                         :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
@@ -275,24 +276,29 @@
                                                     </div>
                                                     <img :class="'icon ' + icon.code" :src="icon.imgSrc"
                                                         :alt="icon.name"
-                                                        :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                                        :style="'left:' + (icon.x + Math.max(0, icon.width - 40)) + 'px; background-color: ' + character.elementColor + ';'">
                                                     <div v-if="icon.name && ['E', 'Q'].includes(icon.code)"
                                                         class="tooltip">
                                                         {{icon.name}} <br>
                                                         <span v-if="icon.duration">duration: {{icon.duration}}
                                                             <br></span>
                                                         <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
-                                                        <span v-if="icon.energyCost">energy cost: {{icon.energyCost}}
+                                                        <span v-if="icon.energyCost">energy cost:
+                                                            {{icon.energyCost}}
                                                             <br></span>
                                                     </div>
-                                                    <div v-if="icon.code == 'N'" class="attr N" :style="'left: ' + icon.x + 'px;'">
+                                                    <div v-if="icon.code == 'N'" class="attr N"
+                                                        :style="'left: ' + (icon.x + Math.max(0, icon.width - 40)) + 'px;'">
                                                         <p> {{icon.numberOfAttack}} </p>
                                                     </div>
-                                                    <div v-if="['C', 'P'].includes(icon.code)" :class="'attr ' + icon.code" :style="'left: ' + icon.x + 'px;'">
+                                                    <div v-if="['C', 'P'].includes(icon.code)"
+                                                        :class="'attr ' + icon.code"
+                                                        :style="'left: ' + (icon.x + Math.max(0, icon.width - 40)) + 'px;'">
                                                         <p> {{icon.code}} </p>
                                                     </div>
                                                 </template>
-                                                <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
+                                                <div v-else class="noicon"
+                                                    :style="'left: ' + Math.max(0, icon.x - 5) + 'px;'">
                                                     <p class="noicon"> {{icon.code}} </p>
                                                 </div>
                                             </template>
