@@ -435,12 +435,28 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                     case '両手剣':
                         break;
                     case '弓':
+                        if ('フルチャージ狙い撃ち' in rotationMaster['通常攻撃']['Frames']) {
+                            timeArr = rotationMaster['通常攻撃']['Frames']['フルチャージ狙い撃ち'];
+                        }
+                        if (type && type in rotationMaster['通常攻撃']['Frames']) {
+                            timeArr = rotationMaster['元素スキル']['Frames'][type];
+                        }
+                        if (Array.isArray(timeArr) && timeArr.length == 2) {
+                            if (opt_nextAction) {
+                                time = timeArr[0];
+                            } else {
+                                time = timeArr[1];
+                            }
+                        } else {
+                            time = -9999;
+                        }
                         break;
                 }
             case 'P':   // 落下攻撃
                 if (!type) {
                     type = '低空落下';
                 }
+                time = -9999;
             case 'E':   // 元素スキル
                 if (!type) {
                     type = '一回押し';
@@ -488,6 +504,10 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
             case 'N':
                 time = 30 + 30 * n;
                 break;
+            case 'C':
+                time = 90;
+            case 'P':
+                time = 60;
             case 'E':
                 time = 60;
                 break;
