@@ -472,4 +472,5 @@ button.file {
     border-radius: 20px;
     border: 5px double;
     min-width: 20rem;
+    font-size: 12px;
 }
