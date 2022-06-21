@@ -173,6 +173,13 @@
         "誕生日": "3/14",
         "import": "data/characters/anemo_5_sword_Jean.json"
     },
+    "久岐忍": {
+        "レアリティ": 4,
+        "元素": "雷",
+        "武器": "片手剣",
+        "誕生日": "7/27",
+        "import": "data/characters/electro_4_sword_KukiShinobu.json"
+    },
     "雲菫": {
         "レアリティ": 4,
         "元素": "岩",

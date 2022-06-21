@@ -5,11 +5,11 @@ import json
 import os.path
 import re
 
-SOURCE_PATH = 'E:/Github/HoYoWiki/RawData'
+SOURCE_PATH = './RawData'
 FILTER = '[24]_*.json'
-OUTPUT_PATH = 'E:/Github/HoYoWiki/JsonData'
-GENCALC_PATH = 'E:/Github/HoYoWiki/gencalc'
-GENCALC_ORIG_PATH = 'E:/Github/gencalc/data/characters'
+OUTPUT_PATH = './JsonData'
+GENCALC_PATH = '../GencalcData'
+GENCALC_ORIG_PATH = '../data/characters'
 
 VISION_MAP = {
     '炎': 'pyro',
