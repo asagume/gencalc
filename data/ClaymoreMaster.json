@@ -74,5 +74,9 @@
     "西風大剣": {
         "レアリティ": 4,
         "import": "data/weapons/claymore/4_FavoniusGreatsword.json"
+    },
+    "龍血を浴びた剣": {
+        "レアリティ": 3,
+        "import": "data/weapons/claymore/3_BloodtainedGreatsword.json"
     }
 }

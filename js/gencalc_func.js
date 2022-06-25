@@ -452,11 +452,15 @@ const appendInputForOptionElement = function (parentElemId, optionMap, exclusion
         elem.id = key + 'Option';
         elem.name = name;
         divElem.append(elem);
-        let optionElem = document.createElement('option');
+        let optionElem;
+        optionElem = document.createElement('option');
+        if (value[0].startsWith('required_')) {
+            optionElem.disabled = true;
+        }
         elem.appendChild(optionElem);
         value.forEach(v => {
             optionElem = document.createElement('option');
-            optionElem.text = v;
+            optionElem.text = v.replace(/^required_/, '');
             optionElem.value = v;
             elem.appendChild(optionElem);
         });
@@ -4399,8 +4403,12 @@ function clearオプション(optionConditionMap) {
         if (elem) {
             if (elem instanceof HTMLInputElement) {
                 $(elem).prop('checked', false);
-            } else {
-                $(elem).val('');
+            } else if (elem instanceof HTMLSelectElement) {
+                let index = 0;
+                if ($(elem).find('option')[0].disabled) {
+                    index = 1;
+                }
+                $(elem).prop('selectedIndex', index);
             }
         }
     });
