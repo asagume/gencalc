@@ -845,16 +845,21 @@ function buildNewDataArea() {
                 if (this.rotation) {
                     this.rotation = String(this.rotation).trim();
                 }
-                const dataObj = saveData(this);
-                if (dataObj) {
-                    if (savedDataList.filter(s => s.name == dataObj.name).length == 0) {
-                        savedDataList.push(dataObj);
-                        dataObj.index = dataObj.sortOrder;
-                        dataObj.rotation4v = makeRotation4v(dataObj['rotation']);
-                        dataObj.isCompact = true;
-                        dataObj.isEditable = false;
-                        dataObj.isDeletable = false;
-                        saveDataArea.list.push(dataObj);
+                const saveDataObj = saveData(this);
+                if (saveDataObj) {
+                    if (savedDataList.filter(s => s.name == saveDataObj.name).length == 0) {
+                        savedDataList.push(saveDataObj);
+                        saveDataObj.index = saveDataObj.sortOrder;
+                        saveDataObj.rotation4v = makeRotation4v(saveDataObj['rotation']);
+                        saveDataObj.isCompact = true;
+                        saveDataObj.isEditable = false;
+                        saveDataObj.isDeletable = false;
+                        saveDataArea.list.push(saveDataObj);
+                    } else {
+                        savedDataList.filter(s => s.name == saveDataObj.name).forEach(dataObj => {
+                            dataObj.rotation = saveDataObj.rotation;
+                            dataObj.description = saveDataObj.description;
+                        })
                     }
                 }
             }
