@@ -10,6 +10,7 @@ function isString(value) {
 
 /** キャラクターマスター */
 var CharacterMaster;
+var CharacterMasterMap;
 /** ローテーションマスター */
 var RotationMaster;
 /** サンプルデータ */
@@ -393,7 +394,7 @@ function getTimeNumber(time, opt_default) {
 }
 
 function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
-    let time;
+    let time = -9999;
     let timeArr;
     if (rotationMaster) {
         switch (action) {
@@ -407,6 +408,9 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                         time = -9999;
                     }
                 }
+                if (time == 0) {
+                    time = -9999;
+                }
                 timeArr = rotationMaster['通常攻撃']['Frames']['通常攻撃'][n];
                 if (Array.isArray(timeArr) && timeArr.length == 2) {
                     if (opt_nextAction && opt_nextAction != 'N') {
@@ -414,11 +418,10 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                     } else {
                         time += timeArr[1];
                     }
-                } else {
-                    time = -9999;
                 }
                 break;
             case 'C':   // 重撃
+                time = -9999;
                 switch (rotationMaster['武器']) {
                     case '片手剣':
                     case '長柄武器':
@@ -447,8 +450,6 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                             } else {
                                 time = timeArr[1];
                             }
-                        } else {
-                            time = -9999;
                         }
                         break;
                 }
@@ -458,6 +459,7 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                 }
                 time = -9999;
             case 'E':   // 元素スキル
+                time = -9999;
                 if (!type) {
                     type = '一回押し';
                 }
@@ -469,12 +471,11 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                         } else {
                             time = timeArr[1];
                         }
-                    } else {
-                        time = -9999;
                     }
                 }
                 break;
             case 'Q':   // 元素爆発
+                time = -9999;
                 timeArr = rotationMaster['元素スキル']['Frames'];
                 if (Array.isArray(timeArr) && timeArr.length == 2) {
                     if (opt_nextAction) {
@@ -482,8 +483,6 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                     } else {
                         time = timeArr[1];
                     }
-                } else {
-                    time = -9999;
                 }
                 break;
         }
@@ -534,7 +533,7 @@ function makeRotation4v(rotationStr) {
 
     analyzedMap.forEach((value, key) => {
         const character = key;
-        const characterMaster = CharacterMaster[character];
+        const characterMasterDetail = CharacterMasterMap.get(character);
         const rotationMaster = RotationMaster[character];
 
         value.forEach(actionGroupObj => {
@@ -590,7 +589,7 @@ function makeRotation4v(rotationStr) {
     analyzedDataOrderByGroupNo.forEach(entry => {
         const character = entry[0];
         const characterMaster = CharacterMaster[character];
-        const rotationMaster = RotationMaster[character];
+        const characterMasterDetail = CharacterMasterMap.get(character);
 
         if (!characterMap.has(character)) {
             characterMap.set(character, {
@@ -639,8 +638,8 @@ function makeRotation4v(rotationStr) {
                     x: nextIconX
                 }
                 if (['N', 'C', 'P'].includes(actionObj['action'])) {    // 通常攻撃 重撃 落下攻撃
-                    if (rotationMaster) {
-                        iconObj['name'] = rotationMaster['通常攻撃']['名前'];
+                    if (characterMasterDetail) {
+                        iconObj['name'] = characterMasterDetail['通常攻撃']['名前'];
                     }
                     if (actionObj['action'] == 'N') {
                         if (Array.isArray(actionObj['time'])) {
@@ -655,32 +654,32 @@ function makeRotation4v(rotationStr) {
                     iconObj['width'] = width;
                     nextIconX += width;
                 } else if (actionObj['action'] == 'E') {    // 元素スキル
-                    if (rotationMaster && '元素スキル' in rotationMaster) {
-                        iconObj['name'] = '名前' in rotationMaster['元素スキル'] ? rotationMaster['元素スキル']['名前'] : null;
+                    if (characterMasterDetail) {
+                        iconObj['name'] = characterMasterDetail['元素スキル']['名前'];
                         let cd;
                         let duration;
-                        Object.keys(rotationMaster['元素スキル']).filter(key => key.endsWith('クールタイム')).forEach(key => {
+                        Object.keys(characterMasterDetail['元素スキル']).filter(key => key.endsWith('クールタイム')).forEach(key => {
                             if (actionObj['type']) {
                                 if (key.startsWith(actionObj['type'])) {
-                                    cd = rotationMaster['元素スキル'][key];
+                                    cd = characterMasterDetail['元素スキル'][key];
                                 }
                             } else if (key == 'クールタイム') {
-                                cd = rotationMaster['元素スキル'][key];
+                                cd = characterMasterDetail['元素スキル'][key];
                             }
                         })
-                        if (!cd && 'クールタイム' in rotationMaster['元素スキル']) {
-                            cd = rotationMaster['元素スキル']['クールタイム'];
+                        if (!cd && 'クールタイム' in characterMasterDetail['元素スキル']) {
+                            cd = characterMasterDetail['元素スキル']['クールタイム'];
                         }
                         if (cd !== undefined) {
                             iconObj['cd'] = cd;
                         }
-                        Object.keys(rotationMaster['元素スキル']).filter(key => key.endsWith('継続時間')).forEach(key => {
+                        Object.keys(characterMasterDetail['元素スキル']).filter(key => key.endsWith('継続時間')).forEach(key => {
                             if (actionObj['type']) {
                                 if (key.startsWith(actionObj['type'])) {
-                                    duration = rotationMaster['元素スキル'][key];
+                                    duration = characterMasterDetail['元素スキル'][key];
                                 }
                             } else if (key == '継続時間') {
-                                duration = rotationMaster['元素スキル'][key];
+                                duration = characterMasterDetail['元素スキル'][key];
                             }
                         });
                         if (duration !== undefined) {
@@ -692,13 +691,13 @@ function makeRotation4v(rotationStr) {
                     iconObj['width'] = width;
                     nextIconX += width;
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
-                    if (rotationMaster && '元素爆発' in rotationMaster) {
-                        iconObj['name'] = '名前' in rotationMaster['元素爆発'] ? rotationMaster['元素爆発']['名前'] : null;
-                        if ('継続時間' in rotationMaster['元素爆発']) {
-                            iconObj['duration'] = rotationMaster['元素爆発']['継続時間'];
+                    if (characterMasterDetail) {
+                        iconObj['name'] = characterMasterDetail['元素爆発']['名前'];
+                        if ('継続時間' in characterMasterDetail['元素爆発']) {
+                            iconObj['duration'] = characterMasterDetail['元素爆発']['継続時間'];
                         }
-                        iconObj['cd'] = rotationMaster['元素爆発']['クールタイム'];
-                        iconObj['energyCost'] = rotationMaster['元素爆発']['元素エネルギー'];
+                        iconObj['cd'] = characterMasterDetail['元素爆発']['クールタイム'];
+                        iconObj['energyCost'] = characterMasterDetail['元素爆発']['元素エネルギー'];
                     }
                     width = actionObj['time'];
                     iconObj['imgSrc'] = getElementalBurstImgSrc(characterMaster);
@@ -724,7 +723,7 @@ function makeRotation4v(rotationStr) {
 
             actionObj4v.width = nextIconX;
 
-            console.log(groupName);
+            console.log(groupName, nextIconX);
             if (groupName.indexOf('.') == -1) {
                 groupNameDisplay = groupName;
             }
@@ -1040,6 +1039,12 @@ async function init() {
     RotationSample = responses[2];
 
     CharacterNameMatchMap = createCharacterNameMatchMap();
+
+    CharacterMasterMap = new Map();
+    await Promise.all(Object.keys(CharacterMaster).map(key => fetch(CharacterMaster[key]['import'])
+        .then(resp => resp.json()).then(json => {
+            CharacterMasterMap.set(key, json)
+        })));
 
     // NEW ROTATION
     buildNewDataArea();
