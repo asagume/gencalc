@@ -55,7 +55,7 @@
                         :style="'background-image: url(' + character.starBgUrl +');'">
                     <div class="tooltip"> {{character.name}} </div>
                     <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
-                    <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
+                    <p class="ratio"> {{Math.round(character.timeOnFieldRatio * 100)}}% </p>
                     <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
                         <template v-for="action in character.actions">
                             <div class="action" :style="'left: ' + action.x + 'px;'">
@@ -158,7 +158,7 @@
                                     :style="'background-image: url(' + character.starBgUrl +');'">
                                 <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
-                                <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
+                                <p class="ratio"> {{Math.round(character.timeOnFieldRatio * 100)}}% </p>
                                 <div class="actions"
                                     :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
                                     <template v-for="action in character.actions">
@@ -270,7 +270,7 @@
                                     :style="'background-image: url(' + character.starBgUrl +');'">
                                 <div class="tooltip"> {{character.name}} </div>
                                 <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
-                                <p class="ratio"> {{Math.trunc(character.timeOnFieldRatio * 100)}}% </p>
+                                <p class="ratio"> {{Math.round(character.timeOnFieldRatio * 100)}}% </p>
                                 <div class="actions"
                                     :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
                                     <template v-for="action in character.actions">
