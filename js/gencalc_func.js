@@ -2047,10 +2047,14 @@ const inputOnChangeResultUpdate = function (statusObj) {
         }
     });
     let my被ダメージHtml = '';
+    let my耐久スコアHtml = '';
     resArrArr.forEach(arr => {
         my被ダメージHtml += ' <span class="' + ELEMENT_TD_CLASS_MAP.get(arr[0].toString()) + '">' + arr[1] + '</span>';
+        let score = Math.round(statusObj['HP上限'] * 10000 / Number(arr[1]));
+        my耐久スコアHtml += ' <span class="' + ELEMENT_TD_CLASS_MAP.get(arr[0].toString()) + '">' + score + '</span>';
     });
     $('#被ダメージResult').html(my被ダメージHtml);
+    $('#耐久Score').html(my耐久スコアHtml);
 
     displayResultTable('通常攻撃ダメージResult', '通常攻撃', myダメージ計算['通常攻撃']);
     displayResultTable('重撃ダメージResult', '重撃', myダメージ計算['重撃']);

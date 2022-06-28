@@ -17,6 +17,7 @@
     <meta name="description" content="原神@HoYoverseのダメージ計算を行うシミュレーターです。" />
     <meta name="keywords" content="原神,ダメージ,計算,武器,聖遺物" />
     <link href="favicon.ico" rel="shortcut icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
     <link href="styles/normalize.css" rel="stylesheet" />
     <link href="styles/base-style.css" rel="stylesheet" />
     <link href="styles/style.css" rel="stylesheet" />
@@ -28,6 +29,11 @@
     <script src="js/gencalc_team.js"></script>
     <script src="js/gencalc_ocr.js"></script>
     <script src="js/gencalc.js"></script>
+    <style type="text/css">
+        /* body {
+            font-family: 'Yusei Magic', sans-serif;
+        } */
+    </style>
 </head>
 
 <body>
@@ -998,7 +1004,7 @@
                                                 <td id="与えるダメージValue"></td>
                                             </tr>
                                             <tr class="rowheader">
-                                                <th colspan="3" class="toggle-switch" id="ダメージアップRowGroup">ダメージアップ
+                                                <th colspan="3" class="toggle-switch" id="ダメージアップRowGroup">実数ダメージ加算
                                                 </th>
                                             </tr>
                                             <tr>
@@ -1423,6 +1429,10 @@
                             <tr>
                                 <th class="category">被ダメージ</th>
                                 <th class="damage-taken" id="被ダメージResult"></th>
+                            </tr>
+                            <tr>
+                                <th class="category">耐久スコア</th>
+                                <th class="damage-taken" id="耐久Score"></th>
                             </tr>
                         </thead>
                     </table>
