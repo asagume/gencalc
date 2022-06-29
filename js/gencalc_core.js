@@ -1,5 +1,9 @@
 // @ts-check
 
+function isString (value) {
+    return typeof value === 'string' || value instanceof String;
+}
+
 /**
  * セレクターに使用できない文字をエスケープします
  * 

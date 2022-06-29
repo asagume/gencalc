@@ -199,7 +199,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 my数値 = detailObj['数値'];
                 if ($.isPlainObject(my数値) && level != null && level in my数値) { // キャラクター|武器のサブステータス
                     my数値 = my数値[level];
-                } else if ($.isNumeric(my数値) || $.type(my数値) == 'string') {
+                } else if (isFinite(my数値) || isString(my数値)) {
                     // nop
                 } else {
                     console.error(talentDataObj, level, defaultKind, defaultElement, inputCategory);
@@ -716,6 +716,25 @@ const setupBaseDamageDetailDataCharacter = function () {
         }
     }
 
+    if (キャラクター元素Var == '風') {
+        ['炎元素', '水元素', '雷元素', '氷元素'].forEach(cond => {
+            天賦性能変更系詳細ArrMapVar.get('キャラクター').push({
+                名前: null,
+                種類: '固有変数',
+                元素: null,
+                数値: null,
+                条件: '拡散@' + cond,
+                対象: null,
+                上限: null,
+                HIT数: null,
+                ダメージバフ: null,
+                元素付与無効: null,
+                除外条件: null,
+                適用条件: null
+            });
+        })
+    }
+
     console.debug('ステータス変更系詳細ArrMapVar.get(キャラクター)');
     console.debug(ステータス変更系詳細ArrMapVar.get('キャラクター'));
     console.debug('天賦性能変更系詳細ArrMapVar.get(キャラクター)');
@@ -842,7 +861,12 @@ function calculate固定値系元素反応ダメージ(statusObj, element, eleme
     }
     const level = Number($('#レベルInput').val().toString().replace('+', ''));
     const dmgBuff = statusObj[elementalReaction + '反応ボーナス'];
-    const dmgElement = 元素反応MasterVar[element][elementalReaction]['元素']
+    let dmgElement = 元素反応MasterVar[element][elementalReaction]['元素'];
+    if (elementalReaction == '拡散') {
+        if ($('#拡散Option').val()) {
+            dmgElement = String($('#拡散Option').val()).replace(/元素$/, '');
+        }
+    }
     let result = 元素反応MasterVar[element][elementalReaction]['数値'][level];
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
     result *= calculate元素耐性補正(statusObj, dmgElement);
@@ -2000,6 +2024,14 @@ const inputOnChangeResultUpdate = function (statusObj) {
     let my拡散ダメージ = calculate固定値系元素反応ダメージ(statusObj, キャラクター元素Var, my元素熟知, '拡散');
     if (my拡散ダメージ) {
         $('#元素反応拡散Label').text('拡散' + Math.round(my拡散ダメージ));
+        let clazz = ELEMENT_TD_CLASS_MAP.get(String($('#拡散Option').val()).replace(/元素$/, ''));
+        if (!clazz) {
+            clazz = 'pyro';
+        }
+        ['pyro', 'hydro', 'electro', 'dendro', 'cryo'].filter(s => s != clazz).forEach(entry => {
+            $('#元素反応拡散Label').removeClass(entry);
+        });
+        $('#元素反応拡散Label').addClass(clazz);
         $('#元素反応拡散Label').show();
     } else {
         $('#元素反応拡散Label').hide();
@@ -2028,9 +2060,6 @@ const inputOnChangeResultUpdate = function (statusObj) {
     myダメージ計算['被ダメージ'] = [];
 
     statusObj['キャラクター注釈'] = [];
-    if (選択中キャラクターデータVar['元素'] == '風') {
-        statusObj['キャラクター注釈'].push('拡散、元素変化、付加元素ダメージは炎元素との接触と仮定して計算する');
-    }
 
     calculateDamageResult(null, statusObj, validConditionValueArr);
 
@@ -4105,10 +4134,15 @@ const キャラクターInputOnChange = function () {
         オプションElementIdValue記憶Map.clear();
         if ('オプション初期値' in 選択中キャラクターデータVar) {
             Object.keys(選択中キャラクターデータVar['オプション初期値']).forEach(key => {
-                let elemId = key + 'Option';
-                let value = 選択中キャラクターデータVar['オプション初期値'][key];
+                const elemId = key + 'Option';
+                const value = 選択中キャラクターデータVar['オプション初期値'][key];
                 オプションElementIdValue記憶Map.set(elemId, value);
             });
+        }
+        if (キャラクター元素Var == '風') {
+            const elemId = '拡散' + 'Option';
+            const value = 1;    // 炎元素
+            オプションElementIdValue記憶Map.set(elemId, value);
         }
 
         // 命ノ星座selectの範囲(option)設定を行います for アーロイ
