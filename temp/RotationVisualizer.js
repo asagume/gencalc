@@ -15,6 +15,8 @@ var CharacterMasterMap;
 var RotationMaster;
 /** サンプルデータ */
 var RotationSample;
+/** 元素粒子マスター */
+var ParticleMaster;
 /** キャラクター名候補Map <キャラクター名, [候補]> */
 var CharacterNameMatchMap;
 
@@ -656,6 +658,7 @@ function makeRotation4v(rotationStr) {
                 } else if (actionObj['action'] == 'E') {    // 元素スキル
                     if (characterMasterDetail) {
                         iconObj['name'] = characterMasterDetail['元素スキル']['名前'];
+                        iconObj['type'] = actionObj['type'];
                         let cd;
                         let duration;
                         Object.keys(characterMasterDetail['元素スキル']).filter(key => key.endsWith('クールタイム')).forEach(key => {
@@ -819,6 +822,265 @@ function makeRotation4v(rotationStr) {
     return result;
 }
 
+function initErEstomator(vm) {
+    const DEFAULT_WINDFALL = false; // 追い風が吹く なし
+    const DEFAULT_CORRECTION = 0;   // エネルギー補正値 0
+
+    let isChanged = false;
+    for (let i = 0; i < vm.rotation4v.list.length; i++) {
+        if (i < vm.erEstimator.list.length) {
+            if (vm.rotation4v.list[i].name != vm.erEstimator.list[i].name) {
+                vm.erEstimator.list[i].name = vm.rotation4v.list[i].name;
+                vm.erEstimator.list[i].windfall = DEFAULT_WINDFALL;
+                vm.erEstimator.list[i].correction = DEFAULT_CORRECTION;
+                isChanged = true;
+            }
+        } else {
+            vm.erEstimator.list.push({
+                name: vm.rotation4v.list[i].name,
+                windfall: DEFAULT_WINDFALL,
+                correction: DEFAULT_CORRECTION
+            });
+            isChanged = true;
+        }
+    }
+    if (vm.rotation4v.list.length < vm.erEstimator.list.length) {
+        vm.erEstimator.list.length = vm.rotation4v.list.length;
+        isChanged = true;
+    }
+    if (isChanged) {
+        estimateEnergyRecharge(vm);
+    }
+}
+
+function estimateEnergyRecharge(vm) {
+    const erEstimator = vm.erEstimator;
+    const rotation4v = vm.rotation4v;
+
+    const particleTimelineArr = [];
+    const evenlyParticleObj = {};
+    particleTimelineArr.length = erEstimator.rotationTime;
+    for (let time = 0; time < particleTimelineArr.length; time++) {
+        particleTimelineArr[time] = [];
+    }
+
+    rotation4v.list.forEach(character => {
+        const name = character.name;
+        character.actions.forEach(action => {
+            if (!action.icons) return;
+            action.icons.forEach(icon => {
+                const curX = action.x + icon.x;
+                const curTime = Math.trunc(curX / X_SCALE);
+                if (curTime >= erEstimator.rotationTime) return;
+                const timelineArr = particleTimelineArr[curTime].filter(s => s.name == name);
+                let timelineObj;
+                if (timelineArr.length > 0) {
+                    timelineObj = timelineArr[0];
+                } else {
+                    timelineObj = {
+                        x: curX,
+                        name: name,
+                        elementalSkill: []
+                    };
+                    particleTimelineArr[curTime].push(timelineObj);
+                }
+                if (icon.code == 'E') {
+                    timelineObj.elementalSkill.push(icon.type);
+                }
+            })
+        })
+    });
+
+    for (let time = 0; time < particleTimelineArr.length; time++) {
+        particleTimelineArr[time].sort((a, b) => a.x - b.x);
+        if (particleTimelineArr[time].length == 0) {
+            if (time > 0 && particleTimelineArr[time - 1].length > 0) {
+                const copyObj = JSON.parse(JSON.stringify(particleTimelineArr[time - 1][particleTimelineArr[time - 1].length - 1]));
+                copyObj.elementalSkill = [];
+                particleTimelineArr[time].push(copyObj);
+            }
+        }
+    }
+
+    const evenlyParticleMap = new Map();
+
+    // 元素スキルによる元素粒子
+    particleTimelineArr.forEach(timelineArr => {
+        timelineArr.forEach(timelineObj => {
+            if (timelineObj.elementalSkill.length == 0) return;
+            const myCharacterMaster = CharacterMasterMap.get(timelineObj.name);
+            const myParticleMaster = ParticleMaster[timelineObj.name];
+            const particleObj = {};
+            particleObj[myCharacterMaster['元素']] = 0;
+            timelineObj.elementalSkill.forEach(type => {
+                let my生成数;
+                let my生成間隔;
+                let myクールタイム;
+                let my継続時間;
+                if (type) {
+                    Object.keys(myParticleMaster).filter(s => s.startsWith(type)).forEach(key => {
+                        if (key.endsWith('生成数')) {
+                            my生成数 = myParticleMaster[key];
+                        }
+                        if (key.endsWith('生成間隔')) {
+                            my生成間隔 = myParticleMaster[key];
+                        }
+                        if (key.endsWith('クールタイム')) {
+                            myクールタイム = myParticleMaster[key];
+                        }
+                        if (key.endsWith('継続時間')) {
+                            my継続時間 = myParticleMaster[key];
+                        }
+                    });
+                }
+                if (!my生成数) {
+                    my生成数 = myParticleMaster['生成数'] ? myParticleMaster['生成数'] : 0;
+                }
+                if (!my生成間隔) {
+                    my生成間隔 = myParticleMaster['生成間隔'];
+                }
+                if (!myクールタイム) {
+                    myクールタイム = myParticleMaster['クールタイム'];
+                }
+                if (!my継続時間) {
+                    my継続時間 = myParticleMaster['継続時間'] ? myParticleMaster['継続時間'] : 0;
+                }
+
+                if (my生成間隔) {
+                    const evenlyParticleObj = {};
+                    evenlyParticleObj[myCharacterMaster['元素']] = my生成数 / my生成間隔 * particleTimelineArr.length;
+                    evenlyParticleMap.set(timelineObj.name, evenlyParticleObj);
+                } else {
+                    particleObj[myCharacterMaster['元素']] += my生成数;
+                }
+            });
+            timelineObj.particles = particleObj;
+        })
+    });
+
+    evenlyParticleMap.forEach((value, key) => {
+        Object.keys(value).forEach(key2 => {
+            evenlyParticleObj[key2] = value[key2];
+        })
+    });
+
+    // 西風シリーズ 追い風が吹く
+    erEstimator.list.forEach(character => {
+        if (character.windfall) {
+            let preWindfallTime = -100;
+            for (let i = 0; i < particleTimelineArr.length; i++) {
+                const timelineArr = particleTimelineArr[i];
+                timelineArr.filter(s => s.name == character.name).forEach(timelineObj => {
+                    if (i >= (preWindfallTime + 6)) {
+                        preWindfallTime = i;
+                        let particleObj = {};
+                        if ('particles' in timelineObj) {
+                            particleObj = timelineObj.particles;
+                        } else {
+                            timelineObj.particles = particleObj;
+                        }
+                        particleObj['無色'] = 3;
+                    }
+                })
+            }
+        }
+    });
+
+    const particleTimelineArr2 = [];
+    for (let i = 0; i < particleTimelineArr.length; i++) {
+        const timelineArr = particleTimelineArr[i];
+        const timelineObj2 = {};
+        timelineObj2.particle = {};
+        timelineObj2.character = {};
+        timelineArr.forEach(timelineObj => {
+            if ('particles' in timelineObj) {
+                Object.keys(timelineObj.particles).forEach(key => {
+                    if (key in timelineObj2.particle) {
+                        timelineObj2.particle[key] += timelineObj.particles[key];
+                    } else {
+                        timelineObj2.particle[key] = timelineObj.particles[key];
+                    }
+                });
+                timelineObj2.character[timelineObj.name] = 1;
+            }
+        });
+        if (Object.keys(timelineObj2.character).length > 0) {
+            const name = Object.keys(timelineObj2.character)[0];
+            if ((i + 1) < particleTimelineArr.length) {
+                let otherNameArr = particleTimelineArr[i + 1].filter(s => s.name != name);
+                if (otherNameArr.length > 0) {
+                    timelineObj2.character[name] = 0;
+                    timelineObj2.character[otherNameArr[0].name] = 1;
+                } else if ((i + 2) < particleTimelineArr.length) {
+                    let otherNameArr = particleTimelineArr[i + 2].filter(s => s.name != name);
+                    if (otherNameArr.length > 0) {
+                        timelineObj2.character[name] = 0.5;
+                        timelineObj2.character[otherNameArr[0].name] = 0.5;
+                    }
+                }
+            }
+        }
+        particleTimelineArr2.push(timelineObj2);
+    }
+
+    console.debug(particleTimelineArr);
+    console.debug(particleTimelineArr2);
+    console.debug(evenlyParticleObj);
+
+    const characterEnergyMap = new Map();
+    erEstimator.list.forEach(character => {
+        characterEnergyMap.set(character.name, 0);
+    });
+    for (let i = 0; i < erEstimator.list.length; i++) {
+        const character = erEstimator.list[i];
+        const myCharacterMaster = CharacterMasterMap.get(character.name);
+        particleTimelineArr2.forEach(timelineObj => {
+            Object.keys(timelineObj.particle).forEach(key => {
+                let workEnergy = timelineObj.particle[key];
+                if (key == myCharacterMaster['元素']) {
+                    workEnergy *= 3;
+                } else if (key == '無色') {
+                    workEnergy *= 2;
+                }
+                if (character.name in timelineObj.character) {
+                    workEnergy = (workEnergy * timelineObj.character[character.name]) + (workEnergy * 0.6 * (1 - timelineObj.character[character.name]));
+                } else {
+                    workEnergy *= 0.6;
+                }
+                const energy = characterEnergyMap.get(character.name);
+                characterEnergyMap.set(character.name, energy + workEnergy);
+            });
+        });
+
+        // 出場時間に応じて均等に割り振ります
+        Object.keys(evenlyParticleObj).forEach(key => {
+            let workEnergy = evenlyParticleObj[key];
+            if (key == myCharacterMaster['元素']) {
+                workEnergy *= 3;
+            } else if (key == '無色') {
+                workEnergy *= 2;
+            }
+            const timeOnFieldRatio = rotation4v.list[i].timeOnFieldRatio;
+            workEnergy = (workEnergy * timeOnFieldRatio) + (workEnergy * 0.6 * (1 - timeOnFieldRatio));
+            const energy = characterEnergyMap.get(character.name);
+            characterEnergyMap.set(character.name, energy + workEnergy);
+        });
+    }
+
+    console.debug(characterEnergyMap);
+
+    for (let i = 0; i < erEstimator.list.length; i++) {
+        const character = erEstimator.list[i];
+        const myCharacterMaster = CharacterMasterMap.get(character.name);
+        const energyCost = myCharacterMaster['元素爆発']['元素エネルギー'] - character.correction;
+        if (energyCost) {
+            vm.$set(character, 'energyRecharge', Math.floor(energyCost / characterEnergyMap.get(character.name) * 100));
+        }
+    }
+
+    console.debug(erEstimator);
+}
+
 var newData;
 function buildNewDataArea() {
     newData = new Vue({
@@ -833,15 +1095,16 @@ function buildNewDataArea() {
                 width: 360,
                 list: undefined
             },
-            energyRecharge: [NaN, NaN, NaN, NaN],
-            rotationTime: 20,
-            favoniusCount: [0, 0, 0, 0],
-            selfCollection: [100, 100, 100, 100]
+            erEstimator: {
+                rotationTime: 20,
+                list: [{}, {}, {}, {}]
+            }
         },
         methods: {
             rotationOnInput: function (event) {
                 this.rotation = event.target.value;
                 this.rotation4v = makeRotation4v(this.rotation);
+                initErEstomator(this);
             },
             saveButtonOnClick: function () {
                 if (this.name) {
@@ -867,6 +1130,9 @@ function buildNewDataArea() {
                         })
                     }
                 }
+            },
+            erEstimatorOnChange: function () {
+                estimateEnergyRecharge(this);
             }
         }
     })
@@ -1027,7 +1293,7 @@ function buildFileButton() {
     FileButtonArea = new Vue({
         el: '#file-button-area',
         methods: {
-            SavedDataDownloadOnClick: function () {
+            savedDataDownloadOnClick: function () {
                 let json = JSON.stringify(savedDataList, null, 2);
                 let blob = new Blob(json.split(''), { type: 'application/json' });
                 let aElem = document.createElement('a');
@@ -1043,12 +1309,14 @@ async function init() {
     const responses = await Promise.all([
         'data/CharacterMaster.json',
         'data/RotationMaster.json',
-        'data/RotationSample.json'
+        'data/RotationSample.json',
+        'data/ParticleMaster.json'
     ].map(url => fetch(url).then(resp => resp.json())));
 
     CharacterMaster = responses[0];
     RotationMaster = responses[1];
     RotationSample = responses[2];
+    ParticleMaster = responses[3];
 
     CharacterNameMatchMap = createCharacterNameMatchMap();
 
