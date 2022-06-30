@@ -144,8 +144,8 @@
                             <button v-show="!item.isCompact && !item.isEditable" type="button"
                                 @click="item.isEditable = true">
                                 <span class="material-symbols-outlined"> edit </span> </button>
-                            <button v-show="!item.isCompact && item.isCalculatable" type="button"
-                                @click="item.isCalculatable = true">
+                            <button v-show="!item.isCompact" type="button"
+                                @click="item.isCalculatable = !item.isCalculatable">
                                 <span class="material-symbols-outlined"> calculate </span> </button>
                             <input v-show="!item.isCompact && !item.isEditable" v-model="item.isDeletable"
                                 type="checkbox">
@@ -244,10 +244,30 @@
                         </div>
                         <div class="description" v-html="item.description"></div>
                         <template v-if="item.isCalculatable">
-                            <label>
-                                Rotation Time:
-                                <input type="number">
-                            </label>
+                            <h3>Energy Recharge Estimator</h3>
+                            <div style="text-align: left;">
+                                <label>Time:
+                                    <input v-model="item.erEstimator.rotationTime" @change="erEstimatorOnChange(index)"
+                                        type="number" min="0">s
+                                </label>
+                            </div>
+                            <div v-for="(character, index2) in item.rotation4v.list" class="character">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                                <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                                <div style="position: absolute; left: 90px; text-align: left;">
+                                    <label>
+                                        <input v-model="item.erEstimator.list[index2].windfall"
+                                            @change="erEstimatorOnChange(index)" type="checkbox">
+                                        Windfall </label>
+                                    <br>
+                                    <label>Energy Correction:
+                                        <input v-model="item.erEstimator.list[index2].correction"
+                                            @change="erEstimatorOnChange(index)" type="number" step="1">
+                                    </label>
+                                    {{item.erEstimator.list[index2].energyRecharge}}%
+                                </div>
+                            </div>
                         </template>
                     </template>
                 </li>

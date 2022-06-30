@@ -822,40 +822,42 @@ function makeRotation4v(rotationStr) {
     return result;
 }
 
-function initErEstomator(vm) {
+function initErEstomator(vm, opt_index = undefined) {
     const DEFAULT_WINDFALL = false; // 追い風が吹く なし
     const DEFAULT_CORRECTION = 0;   // エネルギー補正値 0
 
+    const data = opt_index !== undefined ? vm.list[opt_index] : vm;
+
     let isChanged = false;
-    for (let i = 0; i < vm.rotation4v.list.length; i++) {
-        if (i < vm.erEstimator.list.length) {
-            if (vm.rotation4v.list[i].name != vm.erEstimator.list[i].name) {
-                vm.erEstimator.list[i].name = vm.rotation4v.list[i].name;
-                vm.erEstimator.list[i].windfall = DEFAULT_WINDFALL;
-                vm.erEstimator.list[i].correction = DEFAULT_CORRECTION;
+    for (let i = 0; i < data.rotation4v.list.length; i++) {
+        if (i < data.erEstimator.list.length) {
+            if (data.rotation4v.list[i].name != data.erEstimator.list[i].name) {
+                data.erEstimator.list[i].name = data.rotation4v.list[i].name;
+                data.erEstimator.list[i].windfall = DEFAULT_WINDFALL;
+                data.erEstimator.list[i].correction = DEFAULT_CORRECTION;
                 isChanged = true;
             }
         } else {
-            vm.erEstimator.list.push({
-                name: vm.rotation4v.list[i].name,
+            data.erEstimator.list.push({
+                name: data.rotation4v.list[i].name,
                 windfall: DEFAULT_WINDFALL,
                 correction: DEFAULT_CORRECTION
             });
             isChanged = true;
         }
     }
-    if (vm.rotation4v.list.length < vm.erEstimator.list.length) {
-        vm.erEstimator.list.length = vm.rotation4v.list.length;
+    if (data.rotation4v.list.length < data.erEstimator.list.length) {
+        data.erEstimator.list.length = data.rotation4v.list.length;
         isChanged = true;
     }
     if (isChanged) {
-        estimateEnergyRecharge(vm);
+        estimateEnergyRecharge(vm, opt_index);
     }
 }
 
-function estimateEnergyRecharge(vm) {
-    const erEstimator = vm.erEstimator;
-    const rotation4v = vm.rotation4v;
+function estimateEnergyRecharge(vm, opt_index = undefined) {
+    const erEstimator = opt_index !== undefined ? vm.list[opt_index].erEstimator : vm.erEstimator;
+    const rotation4v = opt_index !== undefined ? vm.list[opt_index].rotation4v : vm.rotation4v;
 
     const particleTimelineArr = [];
     const evenlyParticleObj = {};
@@ -1097,7 +1099,7 @@ function buildNewDataArea() {
             },
             erEstimator: {
                 rotationTime: 20,
-                list: [{}, {}, {}, {}]
+                list: []
             }
         },
         methods: {
@@ -1154,12 +1156,16 @@ function buildSaveDataArea() {
         parsedDataObj.index = index++;
         parsedDataObj.rotation = parsedDataObj['rotation'];
         parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
-        parsedDataObj.energyRecharge = [NaN, NaN, NaN, NaN];
+        parsedDataObj.erEstimator = {
+            rotationTime: 20,
+            list: []
+        };
         parsedDataObj.isCompact = true;
         parsedDataObj.isEditable = false;
         parsedDataObj.isDeletable = false;
+        parsedDataObj.isCalculatable = false;
         list.push(parsedDataObj);
-    })
+    });
 
     saveDataArea = new Vue({
         el: '#saveDataArea',
@@ -1170,6 +1176,7 @@ function buildSaveDataArea() {
             rotationOnInput: function (index, event) {
                 this.list[index].rotation = event.target.value;
                 this.list[index].rotation4v = makeRotation4v(this.list[index].rotation);
+                initErEstomator(this, index);
             },
             cancelButtonOnClick: function (index, event) {
                 const dataObj = savedDataList[index];
@@ -1231,9 +1238,16 @@ function buildSaveDataArea() {
                 savedDataList.splice(index, 2, savedItem2, savedItem1);
                 saveData(savedItem1);
                 saveData(savedItem2);
+            },
+            erEstimatorOnChange: function (index) {
+                estimateEnergyRecharge(this, index);
             }
         }
-    })
+    });
+
+    for (let i = 0; i < saveDataArea.list.length; i++) {
+        initErEstomator(saveDataArea, i);
+    }
 }
 
 var sampleDataArea;
