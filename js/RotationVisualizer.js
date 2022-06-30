@@ -1156,10 +1156,12 @@ function buildSaveDataArea() {
         parsedDataObj.index = index++;
         parsedDataObj.rotation = parsedDataObj['rotation'];
         parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
-        parsedDataObj.erEstimator = {
-            rotationTime: 20,
-            list: []
-        };
+        if (!('erEstimator' in parsedDataObj)) {
+            parsedDataObj.erEstimator = {
+                rotationTime: 20,
+                list: []
+            };
+        }
         parsedDataObj.isCompact = true;
         parsedDataObj.isEditable = false;
         parsedDataObj.isDeletable = false;
