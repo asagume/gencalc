@@ -68,52 +68,86 @@
                 let level1Cd = null;
                 let level2Cd = null;
 
-                if ('クールタイム' in myParticleMaster) {
-                    cd = myParticleMaster['クールタイム'];
-                } else if ('基本クールタイム' in myParticleMaster) {
-                    cd = myParticleMaster['基本クールタイム'];
-                } else if ('一回押しクールタイム' in myParticleMaster) {
-                    cd = myParticleMaster['一回押しクールタイム'];
-                } else if ('クールタイム' in myCharacterMaster['元素スキル']) {
-                    cd = myCharacterMaster['元素スキル']['クールタイム'];
-                } else if ('基本クールタイム' in myCharacterMaster['元素スキル']) { // for 旅人(風)
-                    cd = myCharacterMaster['元素スキル']['基本クールタイム'];
-                } else if ('一回押しクールタイム' in myCharacterMaster['元素スキル']) {
-                    cd = myCharacterMaster['元素スキル']['一回押しクールタイム'];
-                }
+                let duration = null;
+                let holdDuration = null;
+                let level1Duration = null;
+                let level2Duration = null;
+
+                [myCharacterMaster['元素スキル'], myParticleMaster].forEach(obj => {
+                    ['クールタイム', '基本クールタイム', '一回押しクールタイム'].forEach(key => {
+                        if (key in obj) {
+                            cd = obj[key];
+                        }
+                    })
+                })
                 if (cd) {
                     displayCd += cd;
                 }
 
-                if ('長押しクールタイム' in myParticleMaster) {
-                    holdCd = myParticleMaster['長押しクールタイム'];
-                } else if ('長押しクールタイム' in myCharacterMaster['元素スキル']) {
-                    holdCd = myCharacterMaster['元素スキル']['長押しクールタイム'];
-                }
+                [myCharacterMaster['元素スキル'], myParticleMaster].forEach(obj => {
+                    ['長押しクールタイム'].forEach(key => {
+                        if (key in obj) {
+                            holdCd = obj[key];
+                        }
+                    })
+                })
                 if (holdCd) {
                     displayCd += '/';
                     displayCd += holdCd;
                 }
 
-                if ('1段チャージクールタイム' in myParticleMaster) {
-                    level1Cd = myParticleMaster['1段チャージクールタイム'];
-                } else if ('1段チャージクールタイム' in myCharacterMaster['元素スキル']) {
-                    level1Cd = myCharacterMaster['元素スキル']['1段チャージクールタイム'];
-                }
+                [myCharacterMaster['元素スキル'], myParticleMaster].forEach(obj => {
+                    ['1段チャージクールタイム'].forEach(key => {
+                        if (key in obj) {
+                            holdCd = obj[key];
+                        }
+                    })
+                })
                 if (level1Cd) {
                     displayCd += '/';
                     displayCd += level1Cd;
                 }
 
-                if ('2段チャージクールタイム' in myParticleMaster) {
-                    level2Cd = myParticleMaster['2段チャージクールタイム'];
-                } else if ('2段チャージクールタイム' in myCharacterMaster['元素スキル']) {
-                    level2Cd = myCharacterMaster['元素スキル']['2段チャージクールタイム'];
-                }
+                [myCharacterMaster['元素スキル'], myParticleMaster].forEach(obj => {
+                    ['2段チャージクールタイム'].forEach(key => {
+                        if (key in obj) {
+                            holdCd = obj[key];
+                        }
+                    })
+                })
                 if (level2Cd) {
                     displayCd += '/';
                     displayCd += level2Cd;
                 }
+
+                [myCharacterMaster['元素スキル'], myParticleMaster].forEach(obj => {
+                    ['継続時間', '一回押し継続時間'].forEach(key => {
+                        if (key in obj) {
+                            duration = obj[key];
+                        }
+                    })
+                });
+                [myCharacterMaster['元素スキル'], myParticleMaster].forEach(obj => {
+                    ['長押し継続時間'].forEach(key => {
+                        if (key in obj) {
+                            holdDuration = obj[key];
+                        }
+                    })
+                });
+                [myCharacterMaster['元素スキル'], myParticleMaster].filter(s => s).forEach(obj => {
+                    ['1段チャージ継続時間'].forEach(key => {
+                        if (key in obj) {
+                            level1Duration = obj[key];
+                        }
+                    })
+                });
+                [myCharacterMaster['元素スキル'], myParticleMaster].filter(s => s).forEach(obj => {
+                    ['2段チャージ継続時間'].forEach(key => {
+                        if (key in obj) {
+                            level2Duration = obj[key];
+                        }
+                    })
+                });
 
                 let displayParticles = '';
                 let particlesPerMinute = 0;
@@ -157,8 +191,13 @@
                 if (Number.isFinite(cd) && Number.isFinite(my生成数)) {
                     let wk生成数 = my生成数;
                     if (my生成間隔 && Number.isFinite(my生成間隔)) {
-                        wk生成数 /= my生成間隔;
-                        wk生成数 *= cd;
+                        if (duration) {
+                            if (duration >= cd) {
+                                wk生成数 *= cd / my生成間隔;
+                            } else {
+                                wk生成数 *= duration / my生成間隔;
+                            }
+                        }
                     }
                     particlesPerMinuteArr.push(wk生成数 * 60 / cd);
                 }
@@ -171,7 +210,7 @@
                 if (Number.isFinite(level2Cd) && Number.isFinite(my2段チャージ生成数)) {
                     particlesPerMinuteArr.push(my2段チャージ生成数 * 60 / level2Cd);
                 }
-                particlesPerMinute = Math.max(...particlesPerMinuteArr);
+                particlesPerMinute = Math.round(100 * Math.max(...particlesPerMinuteArr)) / 100;
 
                 rows.push({
                     name: name,

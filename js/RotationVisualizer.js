@@ -22,6 +22,11 @@ var CharacterNameMatchMap;
 
 const DUMMY_IMG_SRC = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 
+const DEFAULT_ROTATION_TIME = 20;
+const DEFAULT_ENERGY_BY_ENEMY = 0;
+const DEFAULT_WINDFALL = false; // 追い風が吹く なし
+const DEFAULT_CORRECTION = 0;   // エネルギー補正値 0
+
 // N 通常攻撃 | N1..N6 通常攻撃1..6段 | N.HOLD 通常攻撃長押し
 // C 重撃/狙い撃ち | C.FULL フルチャージ狙い撃ち
 // P 落下攻撃 | P.HIGH 上空落下攻撃 | P.LOW 低空落下攻撃
@@ -823,9 +828,6 @@ function makeRotation4v(rotationStr) {
 }
 
 function initErEstomator(vm, opt_index = undefined) {
-    const DEFAULT_WINDFALL = false; // 追い風が吹く なし
-    const DEFAULT_CORRECTION = 0;   // エネルギー補正値 0
-
     const data = opt_index !== undefined ? vm.list[opt_index] : vm;
 
     let isChanged = false;
@@ -1033,26 +1035,29 @@ function estimateEnergyRecharge(vm, opt_index = undefined) {
     erEstimator.list.forEach(character => {
         characterEnergyMap.set(character.name, 0);
     });
-    for (let i = 0; i < erEstimator.list.length; i++) {
-        const character = erEstimator.list[i];
-        const myCharacterMaster = CharacterMasterMap.get(character.name);
-        particleTimelineArr2.forEach(timelineObj => {
-            Object.keys(timelineObj.particle).forEach(key => {
+    particleTimelineArr2.forEach(timelineObj => {
+        Object.keys(timelineObj.particle).forEach(key => {
+            characterEnergyMap.keys().forEach(name => {
+                const myCharacterMaster = CharacterMasterMap.get(name);
                 let workEnergy = timelineObj.particle[key];
                 if (key == myCharacterMaster['元素']) {
                     workEnergy *= 3;
                 } else if (key == '無色') {
                     workEnergy *= 2;
                 }
-                if (character.name in timelineObj.character) {
-                    workEnergy = (workEnergy * timelineObj.character[character.name]) + (workEnergy * 0.6 * (1 - timelineObj.character[character.name]));
+                if (name in timelineObj.character) {
+                    workEnergy = (workEnergy * timelineObj.character[name]) + (workEnergy * 0.6 * (1 - timelineObj.character[name]));
                 } else {
                     workEnergy *= 0.6;
                 }
-                const energy = characterEnergyMap.get(character.name);
-                characterEnergyMap.set(character.name, energy + workEnergy);
+                const energy = characterEnergyMap.get(name);
+                characterEnergyMap.set(name, energy + workEnergy);
             });
         });
+    });
+    for (let i = 0; i < erEstimator.list.length; i++) {
+        const character = erEstimator.list[i];
+        const myCharacterMaster = CharacterMasterMap.get(character.name);
 
         // 出場時間に応じて均等に割り振ります
         Object.keys(evenlyParticleObj).forEach(key => {
@@ -1098,7 +1103,8 @@ function buildNewDataArea() {
                 list: undefined
             },
             erEstimator: {
-                rotationTime: 20,
+                rotationTime: DEFAULT_ROTATION_TIME,
+                energyByEnemy: DEFAULT_ROTATION_TIME,
                 list: []
             }
         },
@@ -1158,9 +1164,16 @@ function buildSaveDataArea() {
         parsedDataObj.rotation4v = makeRotation4v(parsedDataObj['rotation']);
         if (!('erEstimator' in parsedDataObj)) {
             parsedDataObj.erEstimator = {
-                rotationTime: 20,
+                rotationTime: DEFAULT_ROTATION_TIME,
+                energyByEnemy: DEFAULT_ENERGY_BY_ENEMY,
                 list: []
             };
+        }
+        if (!parsedDataObj.erEstimator.rotationTime) {
+            parsedDataObj.erEstimator.rotationTime = DEFAULT_ROTATION_TIME;
+        }
+        if (!parsedDataObj.erEstimator.energyByEnemy) {
+            parsedDataObj.erEstimator.energyByEnemy = DEFAULT_ENERGY_BY_ENEMY;
         }
         parsedDataObj.isCompact = true;
         parsedDataObj.isEditable = false;
