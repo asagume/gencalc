@@ -1036,42 +1036,45 @@ function estimateEnergyRecharge(vm, opt_index = undefined) {
         characterEnergyMap.set(character.name, 0);
     });
     particleTimelineArr2.forEach(timelineObj => {
-        Object.keys(timelineObj.particle).forEach(key => {
-            characterEnergyMap.keys().forEach(name => {
-                const myCharacterMaster = CharacterMasterMap.get(name);
-                let workEnergy = timelineObj.particle[key];
-                if (key == myCharacterMaster['元素']) {
+        Object.keys(timelineObj.particle).forEach(prop => {
+            characterEnergyMap.forEach((value, key) => {
+                const myCharacterMaster = CharacterMasterMap.get(key);
+                let workEnergy = timelineObj.particle[prop];
+                if (prop == myCharacterMaster['元素']) {
                     workEnergy *= 3;
                 } else if (key == '無色') {
                     workEnergy *= 2;
                 }
-                if (name in timelineObj.character) {
-                    workEnergy = (workEnergy * timelineObj.character[name]) + (workEnergy * 0.6 * (1 - timelineObj.character[name]));
+                if (key in timelineObj.character) {
+                    workEnergy = (workEnergy * timelineObj.character[key]) + (workEnergy * 0.6 * (1 - timelineObj.character[key]));
                 } else {
                     workEnergy *= 0.6;
                 }
-                const energy = characterEnergyMap.get(name);
-                characterEnergyMap.set(name, energy + workEnergy);
+                characterEnergyMap.set(key, value + workEnergy);
             });
         });
     });
     for (let i = 0; i < erEstimator.list.length; i++) {
         const character = erEstimator.list[i];
         const myCharacterMaster = CharacterMasterMap.get(character.name);
+        const timeOnFieldRatio = rotation4v.list[i].timeOnFieldRatio;
+        let workEnergy;
 
         // 出場時間に応じて均等に割り振ります
         Object.keys(evenlyParticleObj).forEach(key => {
-            let workEnergy = evenlyParticleObj[key];
+            workEnergy = evenlyParticleObj[key];
             if (key == myCharacterMaster['元素']) {
                 workEnergy *= 3;
             } else if (key == '無色') {
                 workEnergy *= 2;
             }
-            const timeOnFieldRatio = rotation4v.list[i].timeOnFieldRatio;
             workEnergy = (workEnergy * timeOnFieldRatio) + (workEnergy * 0.6 * (1 - timeOnFieldRatio));
-            const energy = characterEnergyMap.get(character.name);
-            characterEnergyMap.set(character.name, energy + workEnergy);
+            characterEnergyMap.set(character.name, characterEnergyMap.get(character.name) + workEnergy);
         });
+
+        workEnergy = erEstimator.energyFromEnemy;
+        workEnergy = (workEnergy * timeOnFieldRatio) + (workEnergy * 0.6 * (1 - timeOnFieldRatio));
+        characterEnergyMap.set(character.name, characterEnergyMap.get(character.name) + workEnergy);
     }
 
     console.debug(characterEnergyMap);
@@ -1104,7 +1107,7 @@ function buildNewDataArea() {
             },
             erEstimator: {
                 rotationTime: DEFAULT_ROTATION_TIME,
-                energyByEnemy: DEFAULT_ROTATION_TIME,
+                energyFromEnemy: DEFAULT_ROTATION_TIME,
                 list: []
             }
         },
@@ -1165,15 +1168,15 @@ function buildSaveDataArea() {
         if (!('erEstimator' in parsedDataObj)) {
             parsedDataObj.erEstimator = {
                 rotationTime: DEFAULT_ROTATION_TIME,
-                energyByEnemy: DEFAULT_ENERGY_BY_ENEMY,
+                energyFromEnemy: DEFAULT_ENERGY_BY_ENEMY,
                 list: []
             };
         }
         if (!parsedDataObj.erEstimator.rotationTime) {
             parsedDataObj.erEstimator.rotationTime = DEFAULT_ROTATION_TIME;
         }
-        if (!parsedDataObj.erEstimator.energyByEnemy) {
-            parsedDataObj.erEstimator.energyByEnemy = DEFAULT_ENERGY_BY_ENEMY;
+        if (!parsedDataObj.erEstimator.energyFromEnemy) {
+            parsedDataObj.erEstimator.energyFromEnemy = DEFAULT_ENERGY_BY_ENEMY;
         }
         parsedDataObj.isCompact = true;
         parsedDataObj.isEditable = false;

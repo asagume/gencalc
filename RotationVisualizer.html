@@ -99,8 +99,12 @@
             <template v-if="isCalculatable">
                 <h3>Energy Recharge Estimator</h3>
                 <div style="text-align: left;">
-                    <label>Time:
-                        <input v-model="erEstimator.rotationTime" @change="erEstimatorOnChange" type="number" min="0">s
+                    <label>Rotation time:
+                        <input v-model="erEstimator.rotationTime" @change="erEstimatorOnChange" type="number" min="0">
+                    </label>
+                    <label>Energy from enemy drops:
+                        <input v-model="erEstimator.energyFromEnemy" @change="erEstimatorOnChange" type="number"
+                            min="0">
                     </label>
                 </div>
                 <div v-for="(character, index) in rotation4v.list" class="character">
@@ -246,9 +250,13 @@
                         <template v-if="item.isCalculatable">
                             <h3>Energy Recharge Estimator</h3>
                             <div style="text-align: left;">
-                                <label>Time:
+                                <label>Rotation time:
                                     <input v-model="item.erEstimator.rotationTime" @change="erEstimatorOnChange(index)"
-                                        type="number" min="0">s
+                                        type="number" min="0">
+                                </label>
+                                <label>Energy from enemy drops:
+                                    <input v-model="item.erEstimator.energyFromEnemy"
+                                        @change="erEstimatorOnChange(index)" type="number" min="0">
                                 </label>
                             </div>
                             <div v-for="(character, index2) in item.rotation4v.list" class="character">
