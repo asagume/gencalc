@@ -1581,7 +1581,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     });
 
     if (statusObj[detailObj['種類'] + 'アップ'] > 0) {
-        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類']) && !detailObj['名前'].startsWith('非表示_狼の魂基礎')) {  // レザー
             let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
