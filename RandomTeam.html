@@ -13,6 +13,21 @@
     <link href="styles/base-style.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <style>
+        body {
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2rem;
+        }
+
+        #main {
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+        }
+
+        #main {
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
         ul.team {
             width: 100%;
             margin-left: auto;
@@ -51,7 +66,10 @@
 
 <body>
     <div id="main">
-        <div id="random-team">
+        <div id="random-team-1">
+            <h2>TEAM-1 &emsp;
+                <button type="button" @click="redraw"><span class="material-symbols-outlined"> Refresh </span></button>
+            </h2>
             <ul class="team">
                 <li class="character" v-for="(item, index) in list">
                     <img class="character" :src="item.url" :alt="item.name"
@@ -59,7 +77,19 @@
                     <img class="vision" :src="item.visionUrl" :alt="item.vision">
                 </li>
             </ul>
-            <button type="button" @click="redraw"><span class="material-symbols-outlined"> Refresh </span></button>
+        </div>
+
+        <div id="random-team-2">
+            <h2>TEAM-2 &emsp;
+                <button type="button" @click="redraw"><span class="material-symbols-outlined"> Refresh </span></button>
+            </h2>
+            <ul class="team">
+                <li class="character" v-for="(item, index) in list">
+                    <img class="character" :src="item.url" :alt="item.name"
+                        :style="'background-image: url(' + item.rarityBgUrl +')'">
+                    <img class="vision" :src="item.visionUrl" :alt="item.vision">
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -78,15 +108,22 @@
         var キャラクター所持状況ObjVar = {};
         var キャラクター所持数 = 0;
 
-        function buildRandomTeamList() {
+        function buildRandomTeamList(excludeList) {
+            const excludeNames = [];
+            if (excludeList) {
+                for (entry of excludeList) {
+                    excludeNames.push(entry.name);
+                }
+            }
             const randomTeamIndexSet = new Set();
             while (randomTeamIndexSet.size < 4) {
                 const newIndex = Math.floor(Math.random() * CharacterImageList.length);
                 const name = CharacterImageList[newIndex].name;
-                if (キャラクター所持数 > 9) {
+                if ((キャラクター所持数 - excludeNames.length) > 9) {
                     if (name in キャラクター所持状況ObjVar) {
                         if (キャラクター所持状況ObjVar[name] == null) continue;
                     }
+                    if (excludeNames.includes(name)) continue;
                 }
                 if (name.startsWith('旅人')) {
                     let isPresent = false;
@@ -138,14 +175,31 @@
             }
             キャラクター所持数 = Array.from(Object.keys(キャラクター所持状況ObjVar), key => キャラクター所持状況ObjVar[key]).filter(s => s != null).length;
 
-            const randomTeam = new Vue({
-                el: '#random-team',
+            const randomTeam1 = new Vue({
+                el: '#random-team-1',
                 data: {
-                    list: buildRandomTeamList()
+                    list: buildRandomTeamList(),
+                    isAllowDuplication: true
                 },
                 methods: {
                     redraw: function () {
-                        this.list.splice(0, this.list.length, ...buildRandomTeamList());
+                        const excludeList = this.isAllowDuplication ? null : randomTeam2.list;
+                        this.list.splice(0, this.list.length, ...buildRandomTeamList(excludeList));
+                        console.log(this.list);
+                    }
+                }
+            });
+
+            const randomTeam2 = new Vue({
+                el: '#random-team-2',
+                data: {
+                    list: buildRandomTeamList(randomTeam1.list),
+                    isAllowDuplication: false
+                },
+                methods: {
+                    redraw: function () {
+                        const excludeList = this.isAllowDuplication ? null : randomTeam1.list;
+                        this.list.splice(0, this.list.length, ...buildRandomTeamList(excludeList));
                         console.log(this.list);
                     }
                 }
