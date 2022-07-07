@@ -13,6 +13,26 @@
     <link href="styles/base-style.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <style>
+        @media all and (min-width: 769px) {
+            html {
+                font-size: 8px;
+            }
+
+            body {
+                font-size: 8px;
+            }
+        }
+
+        @media all and (max-width: 768px) {
+            html {
+                font-size: calc(100vw / 72);
+            }
+
+            body {
+                font-size: calc(100vw / 72);
+            }
+        }
+
         body {
             color: blanchedalmond;
             background-color: black;
@@ -39,7 +59,7 @@
             max-width: 640px;
             margin-left: auto;
             margin-right: auto;
-            font-size: x-large;
+            font-size: 3rem;
             background-color: blanchedalmond;
             color: black;
             padding: 0;
@@ -48,7 +68,6 @@
 
         table.calendar caption {
             color: blanchedalmond;
-            font-size: xx-large;
         }
 
         table.calendar thead {
@@ -60,7 +79,6 @@
             position: relative;
             width: calc(100% / 7);
             padding: 0;
-            font-size: xx-large;
         }
 
         .sunday {
