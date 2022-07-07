@@ -119,6 +119,7 @@
             水: 'images/element_hydro.png',
             風: 'images/element_anemo.png',
             雷: 'images/element_electro.png',
+            草: 'images/element_dendro.png',
             氷: 'images/element_cryo.png',
             岩: 'images/element_geo.png'
         };
@@ -140,9 +141,7 @@
                 const newIndex = Math.floor(Math.random() * CharacterImageList.length);
                 const name = CharacterImageList[newIndex].name;
                 if ((キャラクター所持数 - excludeNames.length) > 9) {
-                    if (name in キャラクター所持状況ObjVar) {
-                        if (キャラクター所持状況ObjVar[name] == null) continue;
-                    }
+                    if (!(name in キャラクター所持状況ObjVar)) continue;
                     if (name.startsWith('旅人')) {
                         if (excludeNames.filter(s => s.startsWith('旅人')).length > 0) continue;
                     } else {
