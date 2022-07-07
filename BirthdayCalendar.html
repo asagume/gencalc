@@ -2,159 +2,305 @@
 <html lang="ja">
 
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLF3R2FB5T"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-BLF3R2FB5T');
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>げんかるく - 誕生日カレンダー</title>
+    <title>Birthday Calendar - Genshin Impact</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
     <link href="styles/base-style.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <reference path="JQuery.d.ts"></reference>
-    <style type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
         body {
-            font-family: 'Yusei Magic', sans-serif;
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2rem;
         }
 
         #main {
-            width: 100%;
+            max-width: 1280px;
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
         }
 
-        table {
-            margin: auto;
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
+        }
+
+        table.calendar {
+            width: 100%;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: x-large;
+            background-color: blanchedalmond;
+            color: black;
+            padding: 0;
             margin-bottom: 4rem;
         }
 
-        caption {
-            color: orangered;
-            font-size: larger;
-            font-weight: bold;
+        table.calendar caption {
+            color: blanchedalmond;
+            font-size: xx-large;
         }
 
-        table th {
-            background-color: khaki;
+        table.calendar thead {
+            background-color: white;
+            border-width: 0;
         }
 
-        table tbody tr.odd {
-            background-color: #FFFFFF;
-        }
-
-        table tbody tr.even {
-            background-color: #EEEEEE;
-        }
-
-        td {
-            width: 50px;
-            height: 50px;
-            margin: 0;
+        table.calendar tr td {
+            position: relative;
+            width: calc(100% / 7);
             padding: 0;
-            text-align: center;
+            font-size: xx-large;
         }
 
-        td img {
-            width: 50px;
-            height: 50px;
+        .sunday {
+            color: red;
+        }
+
+        .saturday {
+            color: blue;
+        }
+
+        table.calendar tr td img {
+            width: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        table.calendar tr td p {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -100%);
         }
     </style>
 </head>
 
 <body>
     <div id="main">
-        <p style="text-align: left; margin-left: 1rem;"><a href="/gencalc/">げんかるく</a> </p>
-
-        <div id="calendar-area">
+        <div style="text-align: left;">
+            <p><a href="./index.html">Back to GENCALC</a></p>
         </div>
+
+        <h1>原神キャラクター 誕生日カレンダー</h1>
+
+        <div id="year">
+            <h2>
+                <button type="button" @click="previous"><span class="material-symbols-outlined"> navigate_before
+                    </span></button>
+                &emsp;
+                {{year}}
+                &emsp;
+                <button type="button" @click="next"><span class="material-symbols-outlined"> navigate_next
+                    </span></button>
+            </h2>
+        </div>
+
+        <div id="birthday-calendar">
+            <template v-for="(month, index) in calendar">
+                <table class="calendar" :id="'month-' + index">
+                    <caption>{{index + 1}}月
+                        {{[ 'January',
+                        'February',
+                        'March',
+                        'April',
+                        'May',
+                        'June',
+                        'July',
+                        'August',
+                        'October',
+                        'September',
+                        'November',
+                        'December'][index] }}
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="sunday">SUN</th>
+                            <th>MON</th>
+                            <th>TUE</th>
+                            <th>WED</th>
+                            <th>THU</th>
+                            <th>FRI</th>
+                            <th class="saturday">SAT</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="week in month">
+                        <td :class="'day ' + (day == 0 ? 'sunday': day == 6 ? 'saturday' : '')"
+                            v-for="(date, day) in week">
+                            <template v-if="date.name">
+                                <img :src="date.url" :alt="date.name">
+                            </template>
+                            <template v-else>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                    :alt="date.day">
+                                <p>{{date.day}}</p>
+                            </template>
+                        </td>
+                    </tr>
+                </table>
+            </template>
+        </div>
+
+        <hr>
     </div>
 
     <script>
-        const MONTH_NAME_ARR = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const DAY_OF_WEEK_NAME_ARR = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const VISION_IMG_SRC = {
+            炎: 'images/element_pyro.png',
+            水: 'images/element_hydro.png',
+            風: 'images/element_anemo.png',
+            雷: 'images/element_electro.png',
+            草: 'images/element_dendro.png',
+            氷: 'images/element_cryo.png',
+            岩: 'images/element_geo.png'
+        };
 
-        function buildCalendar(elemId, year, month, characterMasterObj) {
-            const areaElem = document.getElementById(elemId);
+        var キャラクターMaster = {};
+        var CharacterImageList = [];
 
-            const tableElem = document.createElement('table');
-            tableElem.id = 'calendar-' + year + '-' + (month + 1);
-            areaElem.appendChild(tableElem);
-
-            const captionElem = document.createElement('caption');
-            captionElem.innerHTML = MONTH_NAME_ARR[month];
-            tableElem.appendChild(captionElem);
-
-            let trElem = document.createElement('tr');
-            tableElem.appendChild(trElem);
-
-            for (let day = 0; day < 7; day++) {
-                const thElem = document.createElement('th');
-                thElem.innerHTML = DAY_OF_WEEK_NAME_ARR[day];
-                trElem.appendChild(thElem);
-            }
-
-            const calDate = new Date(year, month, 1, 0, 0, 0, 0);
-
-            trElem = document.createElement('tr');
-            tableElem.appendChild(trElem);
-
-            for (let day = 0; day < calDate.getDay(); day++) {
-                const tdElem = document.createElement('td');
-                tdElem.innerHTML = '';
-                trElem.appendChild(tdElem);
-            }
-
-            const lastDayOfMonth = new Date(calDate.getFullYear(), calDate.getMonth() + 1, 0, 0, 0, 0, 0);
-            for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-                const dayOfWeek = new Date(curDate.getFullYear(), month, day, 0, 0, 0, 0);
-                if (day == 1) {
-                    // nop
-                } else if (dayOfWeek.getDay() == 0) {
-                    trElem = document.createElement('tr');
-                    tableElem.appendChild(trElem);
+        function buildRandomTeamList(excludeList) {
+            const excludeNames = [];
+            if (excludeList) {
+                for (entry of excludeList) {
+                    excludeNames.push(entry.name);
                 }
-                const tdElem = document.createElement('td');
-
-                tdElem.innerHTML = day;
-
-                Object.keys(characterMasterObj).forEach(name => {
-                    if (!('誕生日' in characterMasterObj[name])) return;
-                    if (characterMasterObj[name]['誕生日'] == ((month + 1) + '/' + day)) {
-                        tdElem.innerHTML = '';
-
-                        const splittedUrl = characterMasterObj[name]['import'].split('/');
-                        const fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-                        const srcUrl = 'images/characters/face/' + fileName;
-
-                        const imgElem = document.createElement('img');
-                        imgElem.src = srcUrl;
-                        imgElem.alt = name;
-                        tdElem.appendChild(imgElem);
-                    }
-                });
-
-                trElem.appendChild(tdElem);
             }
+            const randomTeamIndexSet = new Set();
+            while (randomTeamIndexSet.size < 4) {
+                const newIndex = Math.floor(Math.random() * CharacterImageList.length);
+                const name = CharacterImageList[newIndex].name;
+                if ((キャラクター所持数 - excludeNames.length) > 9) {
+                    if (name in キャラクター所持状況ObjVar) {
+                        if (キャラクター所持状況ObjVar[name] == null) continue;
+                    }
+                    if (excludeNames.includes(name)) continue;
+                }
+                if (name.startsWith('旅人')) {
+                    let isPresent = false;
+                    for (entry of randomTeamIndexSet) {
+                        if (CharacterImageList[entry].name.startsWith('旅人')) {
+                            isPresent = true;
+                            break;
+                        }
+                    }
+                    if (isPresent) continue;
+                }
+                randomTeamIndexSet.add(newIndex);
+            }
+
+            const result = [];
+            for (entry of randomTeamIndexSet) {
+                result.push(CharacterImageList[entry]);
+            }
+            console.debug('buildRandomTeamList', result);
+            return result;
         }
 
-        const curDate = new Date();
-        const curYear = curDate.getFullYear();
-        const curMonth = curDate.getMonth() + 1;
-
-        const url = 'data/CharacterMaster.json';
-        fetch(url).then(resp => resp.json()).then(json => {
-            for (let month = 0; month < 12; month++) {
-                buildCalendar('calendar-area', curDate.getFullYear(), month, json);
+        function getDayList(year, month) {
+            const weeks = [];
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0, 0, 0, 0, 0);
+            let week = [];
+            for (let dayOfWeek = 0; dayOfWeek < firstDayOfMonth.getDay(); dayOfWeek++) {
+                week.push({});
             }
+            for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+                if (week.length == 7) {
+                    weeks.push(week);
+                    week = [];
+                }
+                const dayObj = {
+                    day: day
+                };
+                for (let characterUrl of CharacterImageList) {
+                    if (characterUrl['birthday']) {
+                        const splitted = characterUrl['birthday'].split('/');
+                        if (month == (splitted[0] - 1) && day == splitted[1]) {
+                            dayObj['name'] = characterUrl.name;
+                            dayObj['rarity'] = characterUrl.rarity;
+                            dayObj['vision'] = characterUrl.vision;
+                            dayObj['weapon'] = characterUrl.weapon;
+                            dayObj['url'] = characterUrl.url;
+                            dayObj['rarityBgUrl'] = characterUrl.rarityBgUrl;
+                            dayObj['visionUrl'] = characterUrl.visionUrl;
+                        }
+                    }
+                }
+                week.push(dayObj);
+            }
+            weeks.push(week);
 
-            const curCalendarTableElem = document.getElementById('calendar-' + curYear + '-' + curMonth);
-            curCalendarTableElem.scrollIntoView({ block: 'center' });
-        });
+            return weeks;
+        }
+
+        function getMonthList(year) {
+            const result = [];
+            for (let month = 0; month < 12; month++) {
+                result.push(getDayList(year, month));
+            }
+            return result;
+        }
+
+        async function onLoad() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json'
+            ].map(s => fetch(s).then(resp => resp.json())));
+
+            キャラクターMaster = responses[0];
+
+            Object.keys(キャラクターMaster).forEach(name => {
+                const characterUrl = キャラクターMaster[name]['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+                CharacterImageList.push({
+                    name: name,
+                    rarity: キャラクターMaster[name]['レアリティ'],
+                    vision: キャラクターMaster[name]['元素'],
+                    weapon: キャラクターMaster[name]['武器'],
+                    url: characterUrl,
+                    rarityBgUrl: 'images/star' + キャラクターMaster[name]['レアリティ'] + '-bg.png',
+                    visionUrl: VISION_IMG_SRC[キャラクターMaster[name]['元素']],
+                    birthday: キャラクターMaster[name]['誕生日']
+                });
+            });
+
+            const year = new Vue({
+                el: '#year',
+                data: {
+                    year: new Date().getFullYear()
+                },
+                methods: {
+                    previous: function () {
+                        this.year--;
+                        birthdayCalendar.calendar.splice(0, birthdayCalendar.calendar.length, ...getMonthList(this.year));
+                    },
+                    next: function () {
+                        this.year++;
+                        birthdayCalendar.calendar.splice(0, birthdayCalendar.calendar.length, ...getMonthList(this.year));
+                    }
+                }
+            });
+
+            const birthdayCalendar = new Vue({
+                el: '#birthday-calendar',
+                data: {
+                    calendar: getMonthList(year.year)
+                }
+            });
+
+            const tableId = 'month-' + new Date().getMonth();
+            document.getElementById(tableId).scrollIntoView();
+        }
+
+        onLoad();
     </script>
 </body>
 

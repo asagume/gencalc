@@ -1024,6 +1024,10 @@ th.category {
     padding-left: 0.5rem;
 }
 
+table.result td.value {
+    white-space: nowrap;
+}
+
 .damage-taken {
     text-align: left;
     padding-left: 1rem;

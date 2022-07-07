@@ -20,16 +20,23 @@
         }
 
         #main {
+            max-width: 1280px;
             background: linear-gradient(to top, #3d3d3b, #141414);
             margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
         }
 
-        #main {
-            font-family: 'Yusei Magic', sans-serif;
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
         }
 
         ul.team {
             width: 100%;
+            max-width: 640px;
             margin-left: auto;
             margin-right: auto;
             display: block;
@@ -50,7 +57,8 @@
         }
 
         img.character {
-            max-width: 100%;
+            width: 100%;
+            max-width: 256px;
             background-size: contain;
         }
 
@@ -66,6 +74,12 @@
 
 <body>
     <div id="main">
+        <div style="text-align: left;">
+            <p><a href="./index.html">Back to GENCALC</a></p>
+        </div>
+
+        <h1>原神 ランダムチーム編成メーカー</h1>
+
         <div id="random-team-1">
             <h2>TEAM-1 &emsp;
                 <button type="button" @click="redraw"><span class="material-symbols-outlined"> Refresh </span></button>
@@ -90,6 +104,12 @@
                     <img class="vision" :src="item.visionUrl" :alt="item.vision">
                 </li>
             </ul>
+        </div>
+
+        <hr>
+
+        <div style="padding-bottom: 4rem;">
+            <p>とくにいみはないです</p>
         </div>
     </div>
 
@@ -123,7 +143,11 @@
                     if (name in キャラクター所持状況ObjVar) {
                         if (キャラクター所持状況ObjVar[name] == null) continue;
                     }
-                    if (excludeNames.includes(name)) continue;
+                    if (name.startsWith('旅人')) {
+                        if (excludeNames.filter(s => s.startsWith('旅人')).length > 0) continue;
+                    } else {
+                        if (excludeNames.includes(name)) continue;
+                    }
                 }
                 if (name.startsWith('旅人')) {
                     let isPresent = false;

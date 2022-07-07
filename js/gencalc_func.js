@@ -1581,7 +1581,9 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
     });
 
     if (statusObj[detailObj['種類'] + 'アップ'] > 0) {
-        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類']) && !detailObj['名前'].startsWith('非表示_狼の魂基礎')) {  // レザー
+        if (detailObj['名前'].startsWith('非表示_狼の魂基礎')) {    // レザー
+            // nop
+        } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
             let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
@@ -1712,6 +1714,7 @@ function calculateDamageResult(inputObj, statusObj, validConditionValueArr) {
     let my合計ダメージArr = null;
     let my段数 = 0;
     myダメージ計算['通常攻撃'].forEach(arr => {
+        if (arr[0].startsWith('非表示_')) return;
         if (arr[0].endsWith('段ダメージ')) {
             if (my合計ダメージArr == null) {
                 my合計ダメージArr = JSON.parse(JSON.stringify(arr));
@@ -1942,41 +1945,68 @@ const displayResultTable = function (tableId, categoryName, damageResultArr) {
         trElem1.appendChild(thElem1);
         let tdElem2 = document.createElement('td');
         tdElem2.textContent = valueArr[2];
-        tdElem2.className = tdClassName;
+        tdElem2.classList.add('value');
+        if (tdClassName) {
+            tdElem2.classList.add(tdClassName);
+        }
         trElem2.appendChild(tdElem2);
         let tdElem3 = document.createElement('td');
         tdElem3.textContent = valueArr[3];
-        tdElem3.className = tdClassName;
+        tdElem3.classList.add('value');
+        if (tdClassName) {
+            tdElem3.classList.add(tdClassName);
+        }
         trElem3.appendChild(tdElem3);
         let tdElem4 = document.createElement('td');
         tdElem4.textContent = valueArr[4];
-        tdElem4.className = tdClassName;
+        tdElem4.classList.add('value');
+        if (tdClassName) {
+            tdElem4.classList.add(tdClassName);
+        }
         trElem4.appendChild(tdElem4);
         // 蒸発ダメージ
         let tdElem5 = document.createElement('td');
         tdElem5.textContent = valueArr[5] != null ? valueArr[5] : valueArr[2];
-        tdElem5.className = tdClassName;
+        tdElem5.classList.add('value');
+        if (tdClassName) {
+            tdElem5.classList.add(tdClassName);
+        }
         trElem5.appendChild(tdElem5);
         let tdElem6 = document.createElement('td');
         tdElem6.textContent = valueArr[6] != null ? valueArr[6] : valueArr[3];
-        tdElem6.className = tdClassName;
+        tdElem6.classList.add('value');
+        if (tdClassName) {
+            tdElem6.classList.add(tdClassName);
+        }
         trElem6.appendChild(tdElem6);
         let tdElem7 = document.createElement('td');
         tdElem7.textContent = valueArr[7] != null ? valueArr[7] : valueArr[4];
-        tdElem7.className = tdClassName;
+        tdElem7.classList.add('value');
+        if (tdClassName) {
+            tdElem7.classList.add(tdClassName);
+        }
         trElem7.appendChild(tdElem7);
         // 溶解ダメージ
         let tdElem8 = document.createElement('td');
         tdElem8.textContent = valueArr[8] != null ? valueArr[8] : valueArr[2];
-        tdElem8.className = tdClassName;
+        tdElem8.classList.add('value');
+        if (tdClassName) {
+            tdElem8.classList.add(tdClassName);
+        }
         trElem8.appendChild(tdElem8);
         let tdElem9 = document.createElement('td');
         tdElem9.textContent = valueArr[9] != null ? valueArr[9] : valueArr[3];
-        tdElem9.className = tdClassName;
+        tdElem9.classList.add('value');
+        if (tdClassName) {
+            tdElem9.classList.add(tdClassName);
+        }
         trElem9.appendChild(tdElem9);
         let tdElem10 = document.createElement('td');
         tdElem10.textContent = valueArr[10] != null ? valueArr[10] : valueArr[4];
-        tdElem10.className = tdClassName;
+        tdElem10.classList.add('value');
+        if (tdClassName) {
+            tdElem10.classList.add(tdClassName);
+        }
         trElem10.appendChild(tdElem10);
     });
 }
