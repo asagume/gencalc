@@ -242,6 +242,7 @@ const ELEMENT_TD_CLASS_MAP = new Map([
     ['水', 'hydro'],
     ['風', 'anemo'],
     ['雷', 'electro'],
+    ['草', 'dendro'],
     ['氷', 'cryo'],
     ['岩', 'geo']
 ]);
@@ -251,6 +252,7 @@ const ELEMENT_IMG_SRC_MAP = new Map([
     ['水', 'images/element_hydro.png'],
     ['風', 'images/element_anemo.png'],
     ['雷', 'images/element_electro.png'],
+    ['草', 'images/element_dendro.png'],
     ['氷', 'images/element_cryo.png'],
     ['岩', 'images/element_geo.png']
 ]);
