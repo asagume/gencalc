@@ -848,7 +848,11 @@
     "NONE": {
         "レアリティ": 5,
         "image": "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7",
-        "2セット効果": {},
-        "4セット効果": {}
+        "2セット効果": {
+            "説明": ""
+        },
+        "4セット効果": {
+            "説明": ""
+        }
     }
 }
