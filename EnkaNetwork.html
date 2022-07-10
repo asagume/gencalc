@@ -150,23 +150,50 @@
     <script>
         const AVATAR_ID_OBJ = {
             10000002: '神里綾華',
+            10000003: 'ジン',
+            10000005: '旅人(雷)',
+            10000006: 'リサ',
+            10000014: 'バーバラ',
+            10000015: 'ガイア',
+            10000016: 'ディルック',
+            10000020: 'レザー',
+            10000021: 'アンバー',
             10000022: 'ウェンティ',
             10000023: '香菱',
+            10000024: '北斗',
             10000025: '行秋',
+            10000027: '凝光',
             10000029: 'クレー',
             10000030: '鍾離',
             10000031: 'フィッシュル',
+            10000032: 'ベネット',
             10000034: 'ノエル',
+            10000035: '七七',
+            10000036: '重雲',
             10000037: '甘雨',
             10000038: 'アルベド',
+            10000039: 'ディオナ',
+            10000041: 'モナ',
+            10000042: '刻晴',
+            10000043: 'スクロース',
+            10000044: '辛炎',
+            10000045: 'ロサリア',
             10000046: '胡桃',
             10000047: '楓原万葉',
+            10000048: '煙緋',
+            10000050: 'トーマ',
             10000051: 'エウルア',
             10000052: '雷電将軍',
+            10000053: '早柚',
             10000054: '珊瑚宮心海',
+            10000055: 'ゴロー',
+            10000056: '九条裟羅',
             10000058: '八重神子',
             10000060: '夜蘭',
+            10000062: 'アーロイ',
+            10000063: '申鶴',
             10000064: '雲菫',
+            10000065: '久岐忍',
             10000066: '神里綾人'
         };
 
@@ -220,6 +247,7 @@
 
         var キャラクターMaster = {};
         var 武器Master = {};
+        var 聖遺物セット効果Master = {};
         var CharacterImageList = [];
 
         var uidVue;
@@ -423,7 +451,8 @@
                 'data/ClaymoreMaster.json',
                 'data/PolearmMaster.json',
                 'data/BowMaster.json',
-                'data/CatalystMaster.json'
+                'data/CatalystMaster.json',
+                'data/ArtifactSetMaster.json'
             ].map(s => fetch(s).then(resp => resp.json())));
 
             キャラクターMaster = responses[0];
@@ -434,6 +463,7 @@
                 弓: responses[4],
                 法器: responses[5]
             };
+            聖遺物セット効果Master = responses[6];
 
             Object.keys(キャラクターMaster).forEach(name => {
                 const characterUrl = キャラクターMaster[name]['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
@@ -456,6 +486,7 @@
                 },
                 methods: {
                     submit: function () {
+                        if (!this.uid && !this.match(/^[0-9]{9}$/)) return;
                         fetch('https://enka.shinshin.moe/u/' + this.uid).then(resp => resp.text()).then(text => {
                             const parser = new DOMParser();
                             const doc = parser.parseFromString(text, 'text/html');
