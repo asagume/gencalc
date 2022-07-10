@@ -298,8 +298,8 @@
                         }
                         break;
                     case 'レベル':
-                        // TODO 端数を切り上げる 突破レベルを反映する
-                        workObj[key] = characterInfo.level;
+                        // TODO 突破レベルを反映する
+                        workObj[key] = Math.ceil(characterInfo.level / 10) * 10;
                         break;
                     case '命ノ星座':
                         workObj[key] = characterInfo.constellation;
@@ -319,14 +319,14 @@
                         if (characterInfo.avatarId in AVATAR_ID_OBJ) {
                             // TODO itemIdからセットする
                             const name = AVATAR_ID_OBJ[characterInfo.avatarId];
-                            const DummyWeaponObj = {
+                            const DUMMY_WEAPON_OBJ = {
                                 片手剣: '西風剣',
                                 両手剣: '西風大剣',
                                 長柄武器: '西風長槍',
                                 弓: '西風猟弓',
                                 法器: '西風秘典'
                             };
-                            const weapon = DummyWeaponObj[キャラクターMaster[name]['武器']];
+                            const weapon = DUMMY_WEAPON_OBJ[キャラクターMaster[name]['武器']];
                             const myBasename = basename(武器Master[キャラクターMaster[name]['武器']][weapon]['import']);
                             workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
                         }
@@ -351,30 +351,23 @@
                         break;
                 }
             });
+            const GOBLET_MAINSTAT_OBJ = {
+                FIGHT_PROP_FIRE_ADD_HURT: 'Pyro',
+                FIGHT_PROP_WATER_ADD_HURT: 'Hydro',
+                FIGHT_PROP_WIND_ADD_HURT: 'Anemo',
+                FIGHT_PROP_ELEC_ADD_HURT: 'Electro',
+                // Dendro
+                FIGHT_PROP_ICE_ADD_HURT: 'Cryo',
+                FIGHT_PROP_ROCK_ADD_HURT: 'Geo',
+                FIGHT_PROP_PHYSICAL_ADD_HURT: 'Physical'
+            };
             Object.keys(characterInfo.reliq.stat).forEach(key => {
                 if (key in STAT_PROP_OBJ) {
                     workObj[STAT_PROP_OBJ[key]] = Math.round(characterInfo.reliq.stat[key] * 10) / 10;
-                } else {
-                    switch (key) {
-                        case 'FIGHT_PROP_FIRE_ADD_HURT':
-                            workObj['聖遺物メイン効果4'] = 'Pyro';
-                            break;
-                        case 'FIGHT_PROP_WATER_ADD_HURT':
-                            workObj['聖遺物メイン効果4'] = 'Hydro';
-                            break;
-                        // TODO 風
-                        case 'FIGHT_PROP_ICE_ADD_HURT':
-                            workObj['聖遺物メイン効果4'] = 'Cryo';
-                            break;
-                        // TODO 雷
-                        case 'FIGHT_PROP_ROCK_ADD_HURT':
-                            workObj['聖遺物メイン効果4'] = 'Geo';
-                            break;
-                        case 'FIGHT_PROP_PHYSICAL_ADD_HURT':
-                            workObj['聖遺物メイン効果4'] = 'Physical';
-                            break;
-                        // TODO 与える治療効果
-                    }
+                } else if (key in GOBLET_MAINSTAT_OBJ) {
+                    workObj['聖遺物メイン効果4'] = GOBLET_MAINSTAT_OBJ[key];
+                } else if (key == 'FIGHT_PROP_HEAL_ADD') {
+                    workObj['聖遺物メイン効果5'] = 'Healing';
                 }
             });
             const workArr = [];
