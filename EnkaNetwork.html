@@ -375,9 +375,17 @@
                 if (key in STAT_PROP_OBJ) {
                     workObj[STAT_PROP_OBJ[key]] = Math.round(characterInfo.reliq.stat[key] * 10) / 10;
                 } else if (key in GOBLET_MAINSTAT_OBJ) {
-                    workObj['聖遺物メイン効果4'] = GOBLET_MAINSTAT_OBJ[key];
+                    if (characterInfo.reliq.stat[key] > 34.8) {
+                        workObj['聖遺物メイン効果4'] = '5_' + GOBLET_MAINSTAT_OBJ[key];
+                    } else {
+                        workObj['聖遺物メイン効果4'] = '4_' + GOBLET_MAINSTAT_OBJ[key];
+                    }
                 } else if (key == 'FIGHT_PROP_HEAL_ADD') {
-                    workObj['聖遺物メイン効果5'] = 'Healing';
+                    if (characterInfo.reliq.stat[key] > 26.8) {
+                        workObj['聖遺物メイン効果5'] = '5_Healing';
+                    } else {
+                        workObj['聖遺物メイン効果5'] = '4_Healing';
+                    }
                 }
             });
             const workArr = [];
