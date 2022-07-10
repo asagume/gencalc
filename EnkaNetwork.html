@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Enka.Network Importer - Gencalc</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        @media all and (min-width: 769px) {
+            html {
+                font-size: 8px;
+            }
+
+            body {
+                font-size: 8px;
+            }
+        }
+
+        @media all and (max-width: 768px) {
+            html {
+                font-size: calc(100vw / 72);
+            }
+
+            body {
+                font-size: calc(100vw / 72);
+            }
+        }
+
+        body {
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2rem;
+        }
+
+        #main {
+            max-width: 1280px;
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
+        }
+
+        table.calendar {
+            width: 100%;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 3rem;
+            background-color: blanchedalmond;
+            color: black;
+            padding: 0;
+            margin-bottom: 4rem;
+        }
+
+        table.calendar caption {
+            color: blanchedalmond;
+        }
+
+        table.calendar thead {
+            background-color: white;
+            border-width: 0;
+        }
+
+        table.calendar tr td {
+            position: relative;
+            width: calc(100% / 7);
+            padding: 0;
+        }
+
+        .sunday {
+            color: red;
+        }
+
+        .saturday {
+            color: blue;
+        }
+
+        table.calendar tr td img {
+            width: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        table.calendar tr td p {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div style="text-align: left;">
+            <p><a href="./index.html">Back to GENCALC</a></p>
+
+            <p><a href="https://enka.shinshin.moe/">Enka.Network</a></p>
+        </div>
+
+        <h1>Enka.Network Importer</h1>
+
+        <div id="uid">
+            <form @submit.prevent="submit">
+                <label>
+                    UID:
+                    <input v-model="uid" type="text" placeholder="ENTER UID" pattern="[0-9]{9}">
+                </label>
+                <button type="submit">SUBMIT</button>
+            </form>
+        </div>
+
+        <div id="enka-network">
+            <template v-if="u">
+                <dl>
+                    <dt>UID</dt>
+                    <dt>{{ u.uid }}</dt>
+                    <dt>LEVEL</dt>
+                    <dt>{{ u.playerInfo.level }}</dt>
+                    <dt>NICKNAME</dt>
+                    <dt>{{ u.playerInfo.nickname }}</dt>
+                </dl>
+
+                <ol>
+                    <li v-for="(characterInfo, index) in characterInfoList">
+                        {{characterInfo}}
+                        <p><a :href="'./?allin=' + characterInfo.share">GENCALC</a></p>
+                    </li>
+                </ol>
+            </template>
+        </div>
+
+        <hr>
+    </div>
+
+    <script>
+        const AVATAR_ID_OBJ = {
+            10000002: '神里綾華',
+            10000030: '鍾離',
+            10000034: 'ノエル',
+            10000037: '甘雨',
+            10000046: '胡桃',
+            10000051: 'エウルア',
+            10000052: '雷電将軍',
+            10000060: '夜蘭'
+        };
+
+        const キャラクター構成PROPERTY_MAP = new Map([
+            ['キャラクター', null],
+            ['レベル', null],
+            ['命ノ星座', 0],
+            ['通常攻撃レベル', 0],
+            ['元素スキルレベル', 0],
+            ['元素爆発レベル', 0],
+            ['武器', null],
+            ['武器レベル', 0],
+            ['精錬ランク', 0],
+            ['聖遺物セット効果1', null],
+            ['聖遺物セット効果2', null],
+            ['聖遺物メイン効果1', null],
+            ['聖遺物メイン効果2', null],
+            ['聖遺物メイン効果3', null],
+            ['聖遺物メイン効果4', null],
+            ['聖遺物メイン効果5', null],
+            ['聖遺物サブ効果HP', 0],
+            ['聖遺物サブ効果攻撃力', 0],
+            ['聖遺物サブ効果防御力', 0],
+            ['聖遺物サブ効果元素熟知', 0],
+            ['聖遺物サブ効果会心率', 0],
+            ['聖遺物サブ効果会心ダメージ', 0],
+            ['聖遺物サブ効果元素チャージ効率', 0],
+            ['聖遺物サブ効果HPP', 0],
+            ['聖遺物サブ効果攻撃力P', 0],
+            ['聖遺物サブ効果防御力P', 0],
+            ['聖遺物優先するサブ効果1', null],
+            ['聖遺物優先するサブ効果1上昇値', 0],
+            ['聖遺物優先するサブ効果1上昇回数', 0],
+            ['聖遺物優先するサブ効果2', null],
+            ['聖遺物優先するサブ効果2上昇値', 0],
+            ['聖遺物優先するサブ効果2上昇回数', 0],
+            ['聖遺物優先するサブ効果3', null],
+            ['聖遺物優先するサブ効果3上昇値', 0],
+            ['聖遺物優先するサブ効果3上昇回数', 0]
+        ]);
+
+        const VISION_IMG_SRC = {
+            炎: 'images/element_pyro.png',
+            水: 'images/element_hydro.png',
+            風: 'images/element_anemo.png',
+            雷: 'images/element_electro.png',
+            草: 'images/element_dendro.png',
+            氷: 'images/element_cryo.png',
+            岩: 'images/element_geo.png'
+        };
+
+        var キャラクターMaster = {};
+        var 武器Master = {};
+        var CharacterImageList = [];
+
+        var uidVue;
+        var enkaNetworkVue;
+
+        function makeAvatarInfo(u, index) {
+            const result = {};
+            result['avatarId'] = u.playerInfo.showAvatarInfoList[index].avatarId;
+            result['icon'] = u.playerInfo.showAvatarInfoList[index].icon;
+            result['level'] = u.playerInfo.showAvatarInfoList[index].level;
+
+            if ('talentIdList' in u.avatarInfoList[index]) {
+                result['constellation'] = u.avatarInfoList[index].talentIdList.length;
+            } else {
+                result['constellation'] = 0;
+            }
+
+            const reliq = {
+                itemIds: []
+            };
+            const reliqStat = {};
+            const weapon = {};
+            for (let equip of u.avatarInfoList[index].equipList) {
+                if (equip.flat.itemType == 'ITEM_RELIQUARY') {   // 聖遺物
+                    reliq['itemIds'].push(equip.itemId);
+
+                    // メイン効果
+                    if (equip.flat.reliquaryMainstat.mainPropId in reliqStat) {
+                        reliqStat[equip.flat.reliquaryMainstat.mainPropId] += equip.flat.reliquaryMainstat.statValue;
+                    } else {
+                        reliqStat[equip.flat.reliquaryMainstat.mainPropId] = equip.flat.reliquaryMainstat.statValue;
+                    }
+
+                    // サブ効果
+                    for (let reliquarySubstat of equip.flat.reliquarySubstats) {
+                        if (reliquarySubstat.appendPropId in reliqStat) {
+                            reliqStat[reliquarySubstat.appendPropId] += reliquarySubstat.statValue;
+                        } else {
+                            reliqStat[reliquarySubstat.appendPropId] = reliquarySubstat.statValue;
+                        }
+                    }
+                } else if (equip.flat.itemType == 'ITEM_WEAPON') {    // 武器
+                    weapon['itemId'] = equip.itemId;
+                    Object.keys(equip.weapon.affixMap).forEach(key => {
+                        weapon['affix'] = equip.weapon.affixMap[key];
+                    });
+                    weapon['level'] = equip.weapon.level;
+                }
+            }
+
+            result['reliq'] = reliq;
+            result['reliq']['stat'] = reliqStat;
+            result['weapon'] = weapon;
+            result['skillLevelList'] = [];
+            Object.keys(u.avatarInfoList[index].skillLevelMap).forEach(key => {
+                result['skillLevelList'].push(u.avatarInfoList[index].skillLevelMap[key]);
+            });
+            result['share'] = makeShareData(result);
+
+            return result;
+        }
+
+        const STAT_PROP_OBJ = {
+            FIGHT_PROP_HP: '聖遺物サブ効果HP',
+            FIGHT_PROP_ATTACK: '聖遺物サブ効果攻撃力',
+            FIGHT_PROP_DEFENSE: '聖遺物サブ効果防御力',
+            FIGHT_PROP_ELEMENT_MASTERY: '聖遺物サブ効果元素熟知',
+            FIGHT_PROP_CRITICAL: '聖遺物サブ効果会心率',
+            FIGHT_PROP_CRITICAL_HURT: '聖遺物サブ効果会心ダメージ',
+            FIGHT_PROP_CHARGE_EFFICIENCY: '聖遺物サブ効果元素チャージ効率',
+            FIGHT_PROP_HP_PERCENT: '聖遺物サブ効果HPP',
+            FIGHT_PROP_ATTACK_PERCENT: '聖遺物サブ効果攻撃力P',
+            FIGHT_PROP_DEFENSE_PERCENT: '聖遺物サブ効果防御力P',
+        };
+
+        const basename = path => path.split('/').pop().split('.').shift();
+
+        function makeShareData(characterInfo) {
+            const workObj = {};
+            キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+                switch (key) {
+                    case 'キャラクター':
+                        if (characterInfo.avatarId in AVATAR_ID_OBJ) {
+                            const name = AVATAR_ID_OBJ[characterInfo.avatarId];
+                            const myBasename = basename(キャラクターMaster[name]['import']);
+                            workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                        }
+                        break;
+                    case 'レベル':
+                        // TODO 端数を切り上げる 突破レベルを反映する
+                        workObj[key] = characterInfo.level;
+                        break;
+                    case '命ノ星座':
+                        workObj[key] = characterInfo.constellation;
+                        break;
+                    case '通常攻撃レベル':
+                        workObj[key] = characterInfo.skillLevelList[0];
+                        break;
+                    case '元素スキルレベル':
+                        // TODO 命ノ星座を反映する
+                        workObj[key] = characterInfo.skillLevelList[1];
+                        break;
+                    case '元素爆発レベル':
+                        // TODO 命ノ星座を反映する
+                        workObj[key] = characterInfo.skillLevelList[2];
+                        break;
+                    case '武器':
+                        if (characterInfo.avatarId in AVATAR_ID_OBJ) {
+                            // TODO itemIdからセットする
+                            const name = AVATAR_ID_OBJ[characterInfo.avatarId];
+                            const DummyWeaponObj = {
+                                片手剣: '西風剣',
+                                両手剣: '西風大剣',
+                                長柄武器: '西風長槍',
+                                弓: '西風猟弓',
+                                法器: '西風秘典'
+                            };
+                            const weapon = DummyWeaponObj[キャラクターMaster[name]['武器']];
+                            const myBasename = basename(武器Master[キャラクターMaster[name]['武器']][weapon]['import']);
+                            workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                        }
+                        break;
+                    case '武器レベル':
+                        workObj[key] = characterInfo.weapon.level;
+                        break;
+                    case '精錬ランク':
+                        // TODO 探す
+                        workObj[key] = 1;
+                        break;
+                    case '聖遺物セット効果1':
+                        // TODO itemIdからセットする
+                        workObj[key] = 'GradiatorsFinale';
+                        break;
+                    case '聖遺物セット効果2':
+                        // TODO itemIdからセットする
+                        workObj[key] = 'GradiatorsFinale';
+                        break;
+                    default:
+                        workObj[key] = value;
+                        break;
+                }
+            });
+            Object.keys(characterInfo.reliq.stat).forEach(key => {
+                if (key in STAT_PROP_OBJ) {
+                    workObj[STAT_PROP_OBJ[key]] = Math.round(characterInfo.reliq.stat[key] * 10) / 10;
+                } else {
+                    switch (key) {
+                        case 'FIGHT_PROP_FIRE_ADD_HURT':
+                            workObj['聖遺物メイン効果4'] = 'Pyro';
+                            break;
+                        case 'FIGHT_PROP_WATER_ADD_HURT':
+                            workObj['聖遺物メイン効果4'] = 'Hydro';
+                            break;
+                        // TODO 風
+                        case 'FIGHT_PROP_ICE_ADD_HURT':
+                            workObj['聖遺物メイン効果4'] = 'Cryo';
+                            break;
+                        // TODO 雷
+                        case 'FIGHT_PROP_ROCK_ADD_HURT':
+                            workObj['聖遺物メイン効果4'] = 'Geo';
+                            break;
+                        case 'FIGHT_PROP_PHYSICAL_ADD_HURT':
+                            workObj['聖遺物メイン効果4'] = 'Physical';
+                            break;
+                        // TODO 与える治療効果
+                    }
+                }
+            });
+            const workArr = [];
+            Object.keys(workObj).forEach(key => {
+                workArr.push(workObj[key]);
+            });
+            return workArr.join(',');
+        }
+
+        async function onLoad() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json',
+                'data/SwordMaster.json',
+                'data/ClaymoreMaster.json',
+                'data/PolearmMaster.json',
+                'data/BowMaster.json',
+                'data/CatalystMaster.json'
+            ].map(s => fetch(s).then(resp => resp.json())));
+
+            キャラクターMaster = responses[0];
+            武器Master = {
+                片手剣: responses[1],
+                両手剣: responses[2],
+                長柄武器: responses[3],
+                弓: responses[4],
+                法器: responses[5]
+            };
+
+            Object.keys(キャラクターMaster).forEach(name => {
+                const characterUrl = キャラクターMaster[name]['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+                CharacterImageList.push({
+                    name: name,
+                    rarity: キャラクターMaster[name]['レアリティ'],
+                    vision: キャラクターMaster[name]['元素'],
+                    weapon: キャラクターMaster[name]['武器'],
+                    url: characterUrl,
+                    rarityBgUrl: 'images/star' + キャラクターMaster[name]['レアリティ'] + '-bg.png',
+                    visionUrl: VISION_IMG_SRC[キャラクターMaster[name]['元素']],
+                    birthday: キャラクターMaster[name]['誕生日']
+                });
+            });
+
+            uidVue = new Vue({
+                el: "#uid",
+                data: {
+                    uid: ''
+                },
+                methods: {
+                    submit: function () {
+                        fetch('https://enka.shinshin.moe/u/' + this.uid).then(resp => resp.text()).then(text => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(text, 'text/html');
+                            console.log(doc, doc.scripts);
+                            const json = JSON.parse(doc.scripts[3].innerHTML);
+                            console.log(json);
+
+                            enkaNetworkVue.u = json;
+
+                            const characterInfoList = [];
+                            for (let i = 0; i < enkaNetworkVue.u.playerInfo.showAvatarInfoList.length; i++) {
+                                characterInfoList.push(makeAvatarInfo(enkaNetworkVue.u, i));
+                            }
+                            enkaNetworkVue.characterInfoList.splice(0, enkaNetworkVue.characterInfoList.length, ...characterInfoList);
+                        });
+                    }
+                }
+            });
+
+            enkaNetworkVue = new Vue({
+                el: '#enka-network',
+                data: {
+                    u: null,
+                    characterInfoList: []
+                }
+            });
+        }
+
+        onLoad();
+    </script>
+</body>
+
+</html>
