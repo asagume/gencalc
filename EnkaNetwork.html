@@ -281,6 +281,16 @@
             Object.keys(u.avatarInfoList[index].skillLevelMap).forEach(key => {
                 result['skillLevelList'].push(u.avatarInfoList[index].skillLevelMap[key]);
             });
+            if ('proudSkillExtraLevelMap' in u.avatarInfoList[index]) {
+                Object.keys(u.avatarInfoList[index].proudSkillExtraLevelMap).forEach(key => {
+                    if (key.endsWith('2')) {    // 元素スキル？
+                        result['skillLevelList'][1] += u.avatarInfoList[index].proudSkillExtraLevelMap[key];
+                    } else if (key.endsWith('9')) { // 元素爆発？
+                        result['skillLevelList'][2] += u.avatarInfoList[index].proudSkillExtraLevelMap[key];
+                    }
+                });
+            }
+
             result['share'] = makeShareData(result);
 
             return result;
@@ -332,11 +342,9 @@
                         workObj[key] = characterInfo.skillLevelList[0];
                         break;
                     case '元素スキルレベル':
-                        // TODO 命ノ星座を反映する
                         workObj[key] = characterInfo.skillLevelList[1];
                         break;
                     case '元素爆発レベル':
-                        // TODO 命ノ星座を反映する
                         workObj[key] = characterInfo.skillLevelList[2];
                         break;
                     case '武器':
@@ -356,7 +364,7 @@
                         }
                         break;
                     case '武器レベル':
-                        workObj[key] = characterInfo.weapon.level;
+                        workObj[key] = Math.ceil(characterInfo.weapon.level / 10) * 10;
                         break;
                     case '精錬ランク':
                         workObj[key] = characterInfo.weapon.affix + 1;
