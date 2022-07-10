@@ -231,6 +231,10 @@
             result['icon'] = u.playerInfo.showAvatarInfoList[index].icon;
             result['level'] = u.playerInfo.showAvatarInfoList[index].level;
 
+            if ('1002' in u.avatarInfoList[index].propMap) {    // 暫定
+                result['ascension'] = u.avatarInfoList[index].propMap['1002'];
+            }
+
             if ('talentIdList' in u.avatarInfoList[index]) {
                 result['constellation'] = u.avatarInfoList[index].talentIdList.length;
             } else {
@@ -309,8 +313,17 @@
                         }
                         break;
                     case 'レベル':
-                        // TODO 突破レベルを反映する
                         workObj[key] = Math.ceil(characterInfo.level / 10) * 10;
+                        if ('ascension' in characterInfo) {
+                            if ((workObj[key] == 80 && characterInfo.ascension == '6')
+                                && (workObj[key] == 70 && characterInfo.ascension == '5')
+                                && (workObj[key] == 60 && characterInfo.ascension == '4')
+                                && (workObj[key] == 50 && characterInfo.ascension == '3')
+                                && (workObj[key] == 40 && characterInfo.ascension == '2')
+                                && (workObj[key] == 20 && characterInfo.ascension == '1')) {
+                                workObj[key] += '+';
+                            }
+                        }
                         break;
                     case '命ノ星座':
                         workObj[key] = characterInfo.constellation;
