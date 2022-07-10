@@ -346,8 +346,7 @@
                         workObj[key] = characterInfo.weapon.level;
                         break;
                     case '精錬ランク':
-                        // TODO 探す
-                        workObj[key] = 1;
+                        workObj[key] = characterInfo.weapon.affix + 1;
                         break;
                     case '聖遺物セット効果1':
                         // TODO itemIdからセットする
