@@ -1,0 +1,586 @@
+[
+  {
+    "id": 9854,
+    "name": "魂香の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/59697d550a5eb52058a646709263c97a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9754,
+    "name": "生霊の華",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/204a1761dc8a818a5352a08266e022a9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9654,
+    "name": "海染の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/92738c75cb6fe22ffa85c3dd29828ba6.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9554,
+    "name": "栄花の期",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a66f957c8c13e9902167c99b909d0981.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9454,
+    "name": "威厳の鍔",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f3a20dfe5466750f47048dccf5adc2d3.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9354,
+    "name": "羈絆の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a58110ddc2e233c1b21c747374366f02.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9254,
+    "name": "無垢の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1ece253542b84956f68440c826bd296a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9154,
+    "name": "偉勲の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f48d88d9ba39469d5f159c09114f0089.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9054,
+    "name": "金メッキのコサージュ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/681ff6de436daec1dd2442b4c0108edc.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8954,
+    "name": "夏祭りの花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/237f175947917573f01e66482860aafa.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8854,
+    "name": "盤石芽生の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9b81ddc136b6e9f932498fe03e1a2e4a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8254,
+    "name": "血染めの鉄の心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/233a573a0a6e229dc1f35cdfd8298047.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8154,
+    "name": "旧貴族の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/38cc89f9fffda07ae006b76ae722a57c.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8054,
+    "name": "魔女の炎の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/594316c0653d9af17063018781a2d814.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7954,
+    "name": "雷鳥の憐み",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f580ea9619167eb69a79356f63edf5ef.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7754,
+    "name": "楽団の朝の光",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0935f439c94247bfd9348f3ec3049705.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7654,
+    "name": "野花の記憶の草原",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0a97447d8e4c8c38c022c981772a4ca5.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7554,
+    "name": "剣闘士の未練",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e6b2bfbfec98066820839931154b6721.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7454,
+    "name": "彼方にある少女の心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/696b96f3dc0aa70f3eaed42cbf9572d8.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7354,
+    "name": "火渡りの堅実",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/69df933bab1e63d3af44b47272a7ca8d.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7254,
+    "name": "雷討ちの心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/abb1ffd8914a7d2a7e69a7eeaa7e3e4b.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7154,
+    "name": "吹雪の中の思い",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7ff200ebdbef0233e8d4bf49ec65a8fe.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9844,
+    "name": "魂香の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/59697d550a5eb52058a646709263c97a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9744,
+    "name": "生霊の華",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/204a1761dc8a818a5352a08266e022a9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9644,
+    "name": "海染の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/92738c75cb6fe22ffa85c3dd29828ba6.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9544,
+    "name": "栄花の期",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a66f957c8c13e9902167c99b909d0981.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9444,
+    "name": "威厳の鍔",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f3a20dfe5466750f47048dccf5adc2d3.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9344,
+    "name": "羈絆の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a58110ddc2e233c1b21c747374366f02.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9244,
+    "name": "無垢の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1ece253542b84956f68440c826bd296a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9144,
+    "name": "偉勲の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f48d88d9ba39469d5f159c09114f0089.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9044,
+    "name": "金メッキのコサージュ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/681ff6de436daec1dd2442b4c0108edc.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8944,
+    "name": "夏祭りの花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/237f175947917573f01e66482860aafa.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8844,
+    "name": "盤石芽生の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9b81ddc136b6e9f932498fe03e1a2e4a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8244,
+    "name": "血染めの鉄の心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/233a573a0a6e229dc1f35cdfd8298047.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8144,
+    "name": "旧貴族の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/38cc89f9fffda07ae006b76ae722a57c.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8044,
+    "name": "魔女の炎の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/594316c0653d9af17063018781a2d814.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7944,
+    "name": "雷鳥の憐み",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f580ea9619167eb69a79356f63edf5ef.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7744,
+    "name": "楽団の朝の光",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0935f439c94247bfd9348f3ec3049705.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7644,
+    "name": "野花の記憶の草原",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0a97447d8e4c8c38c022c981772a4ca5.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7544,
+    "name": "剣闘士の未練",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e6b2bfbfec98066820839931154b6721.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7444,
+    "name": "彼方にある少女の心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/696b96f3dc0aa70f3eaed42cbf9572d8.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7344,
+    "name": "火渡りの堅実",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/69df933bab1e63d3af44b47272a7ca8d.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7244,
+    "name": "雷討ちの心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/abb1ffd8914a7d2a7e69a7eeaa7e3e4b.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7144,
+    "name": "吹雪の中の思い",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7ff200ebdbef0233e8d4bf49ec65a8fe.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6244,
+    "name": "学者のしおり",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/544bd28e2600bacae5afa928441f2e90.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5944,
+    "name": "亡命者の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/442e0b3575f133a0c2c8c98205510bb9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5844,
+    "name": "博徒の花飾り",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/dc248d7b412cd94fe35099be91c6f054.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5744,
+    "name": "教官の花飾り",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c5060cf47300689481617df7b95f11ea.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5644,
+    "name": "武人の赤い花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1183f10e472a104978f736d6e35acdf4.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5544,
+    "name": "狂戦士の薔薇",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/25cffd4bd37d78883f94efe09ace7148.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5444,
+    "name": "奇跡の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/617b493679e274fa4a1949d32256f36a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5344,
+    "name": "守護の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c1e213a158817b3b259dcbd4b37597d7.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5244,
+    "name": "勇士の勲章",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c17161205ed35f1b4d0ff210654e0152.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5144,
+    "name": "故人の心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9f521ee631d95ef5cf22ca7b77ec2e37.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6334,
+    "name": "医者のアネモネ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0ec556e8328ae79fe2ea91dfadec52d9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6234,
+    "name": "学者のしおり",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/544bd28e2600bacae5afa928441f2e90.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6134,
+    "name": "幸運のクローバー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/81ec8e594a1c7a9b134e92b3ffcbec81.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6034,
+    "name": "冒険者の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/63ef70cd98cb33294541cfca72dc1217.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5934,
+    "name": "亡命者の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/442e0b3575f133a0c2c8c98205510bb9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5834,
+    "name": "博徒の花飾り",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/dc248d7b412cd94fe35099be91c6f054.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5734,
+    "name": "教官の花飾り",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c5060cf47300689481617df7b95f11ea.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5634,
+    "name": "武人の赤い花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1183f10e472a104978f736d6e35acdf4.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5534,
+    "name": "狂戦士の薔薇",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/25cffd4bd37d78883f94efe09ace7148.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5434,
+    "name": "奇跡の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/617b493679e274fa4a1949d32256f36a.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5334,
+    "name": "守護の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c1e213a158817b3b259dcbd4b37597d7.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5234,
+    "name": "勇士の勲章",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c17161205ed35f1b4d0ff210654e0152.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5134,
+    "name": "故人の心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9f521ee631d95ef5cf22ca7b77ec2e37.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6324,
+    "name": "医者のアネモネ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0ec556e8328ae79fe2ea91dfadec52d9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6124,
+    "name": "幸運のクローバー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/81ec8e594a1c7a9b134e92b3ffcbec81.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6024,
+    "name": "冒険者の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/63ef70cd98cb33294541cfca72dc1217.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6314,
+    "name": "医者のアネモネ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0ec556e8328ae79fe2ea91dfadec52d9.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6114,
+    "name": "幸運のクローバー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/81ec8e594a1c7a9b134e92b3ffcbec81.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6014,
+    "name": "冒険者の花",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/63ef70cd98cb33294541cfca72dc1217.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 1,
+    "max_level": 4
+  }
+]

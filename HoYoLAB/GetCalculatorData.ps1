@@ -1,4 +1,4 @@
-$Cookie = "_MHYUUID=9060a588-f241-480e-bebb-c46fc02c1c9f; _ga=GA1.2.380098274.1657515373; _gid=GA1.2.1308835568.1657515373; mi18nLang=ja-jp; _gat_gtag_UA_168360861_3=1; ltoken=JTwotZW80lEODK8IO3Alv2o7UN5M4KNlaStbOW1p; ltuid=7891322; cookie_token=Lum3QTNC8c7pujy4ouZkRY6ak3Zu0orQ3HRvQEtc; account_id=7891322"
+$Cookie = ""
 
 $OutputDir = "..\data"
 $AvatarListOutFile = "HoyoAvatarMaster.json"
@@ -77,12 +77,40 @@ while ($true) {
         break;
     }
 
-    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
+    # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+    $ContentObj = ConvertFrom-Json -InputObject $Response.Content
 
     if ($ContentObj.data.list.Length -eq 0) {
         break;
     }
+
+    foreach ($entry in $ContentObj.data.list) {
+        if ($entry.name -eq "旅人") {
+            switch ($entry.element_attr_id) {
+                1 {
+                    $entry.name += "(炎)"
+                }
+                2 {
+                    $entry.name += "(風)"
+                }
+                3 {
+                    $entry.name += "(岩)"
+                }
+                4 {
+                    $entry.name += "(草)"
+                }
+                5 {
+                    $entry.name += "(雷)"
+                }
+                6 {
+                    $entry.name += "(水)"
+                }
+                7 {
+                    $entry.name += "(氷)"
+                }
+            }
+        }
+    }   
 
     $AvatarList = $AvatarList + $ContentObj.data.list
 }
@@ -122,8 +150,8 @@ while ($true) {
         break;
     }
 
-    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
+    # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+    $ContentObj = ConvertFrom-Json -InputObject $Response.Content
 
     if ($ContentObj.data.list.Length -eq 0) {
         break;
@@ -157,24 +185,27 @@ $Cookie -split ';' | ForEach-Object {
     $MySession.Cookies.Add($Uri, $MyCookie)
 } 
 
-while ($true) {
-    $Body.page ++
-    $BodyJson = $Body | ConvertTo-Json
+for ($reliquary_cat_id = 1; $reliquary_cat_id -lt 5; $reliquary_cat_id++) {    
+    while ($true) {
+        $Body.reliquary_cat_id = $reliquary_cat_id
+        $Body.page ++
+        $BodyJson = $Body | ConvertTo-Json
 
-    $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json;charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
+        $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json;charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
 
-    if ($Response.StatusCode -ne 200) {
-        break;
+        if ($Response.StatusCode -ne 200) {
+            break;
+        }
+
+        # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+        $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+
+        if ($ContentObj.data.list.Length -eq 0) {
+            break;
+        }
+
+        $ArtifactList = $ArtifactList + $ContentObj.data.list
     }
-
-    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
-
-    if ($ContentObj.data.list.Length -eq 0) {
-        break;
-    }
-
-    $ArtifactList = $ArtifactList + $ContentObj.data.list
 }
 
 $ArtifactList | ConvertTo-Json -Depth 100 | Out-File -FilePath (Join-Path $OutputDir -ChildPath $ArtifactListOutFile) -Encoding utf8
