@@ -347,6 +347,46 @@
         function makeShareData(characterInfo) {
             const workObj = {};
             let characterName;
+
+            let set_effect1 = null;
+            let set_effect2 = null;
+            const artifactSetObj = {};
+            for (let itemId of characterInfo.reliq.itemIds) {
+                itemId = Math.trunc(itemId / 10)
+                let arr = HoyoArtifactMaster.filter(s => s.id == itemId);
+                if (arr.length == 0) continue;
+                const artifactName = arr[0].name;
+                let artifactSetName;
+                Object.keys(聖遺物セット効果Master).forEach(key => {
+                    if ('artifact_list' in 聖遺物セット効果Master[key]) {
+                        if (聖遺物セット効果Master[key]['artifact_list'].includes(artifactName)) {
+                            artifactSetName = key;
+                        }
+                    }
+                });
+                if (artifactSetName) {
+                    if (artifactSetName in artifactSetObj) {
+                        artifactSetObj[artifactSetName]++;
+                    } else {
+                        artifactSetObj[artifactSetName] = 1;
+                    }
+                }
+            }
+            console.log(artifactSetObj);
+            Object.keys(artifactSetObj).forEach(key => {
+                if (artifactSetObj[key] >= 4) {
+                    set_effect1 = key;
+                    set_effect2 = key;
+                }
+                if (artifactSetObj[key] >= 2) {
+                    if (set_effect1) {
+                        set_effect2 = key;
+                    } else {
+                        set_effect1 = key;
+                    }
+                }
+            });
+
             キャラクター構成PROPERTY_MAP.forEach((value, key) => {
                 switch (key) {
                     case 'キャラクター':
@@ -407,12 +447,16 @@
                         workObj[key] = characterInfo.weapon.affix + 1;
                         break;
                     case '聖遺物セット効果1':
-                        // TODO itemIdからセットする
-                        workObj[key] = 'GradiatorsFinale';
+                        if (set_effect1) {
+                            const myBasename = basename(聖遺物セット効果Master[set_effect1]['image']);
+                            workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                        }
                         break;
                     case '聖遺物セット効果2':
-                        // TODO itemIdからセットする
-                        workObj[key] = 'GradiatorsFinale';
+                        if (set_effect2) {
+                            const myBasename = basename(聖遺物セット効果Master[set_effect2]['image']);
+                            workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                        }
                         break;
                     default:
                         workObj[key] = value;
