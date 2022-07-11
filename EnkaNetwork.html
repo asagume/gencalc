@@ -248,6 +248,9 @@
         var キャラクターMaster = {};
         var 武器Master = {};
         var 聖遺物セット効果Master = {};
+        var HoyoAvatarMaster = [];
+        var HoyoWeaponMaster = [];
+        var HoyoArtifactMaster = [];
         var CharacterImageList = [];
 
         var uidVue;
@@ -341,13 +344,21 @@
 
         function makeShareData(characterInfo) {
             const workObj = {};
+            let characterName;
             キャラクター構成PROPERTY_MAP.forEach((value, key) => {
                 switch (key) {
                     case 'キャラクター':
-                        if (characterInfo.avatarId in AVATAR_ID_OBJ) {
-                            const name = AVATAR_ID_OBJ[characterInfo.avatarId];
-                            const myBasename = basename(キャラクターMaster[name]['import']);
-                            workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                        {
+                            const filtered = HoyoAvatarMaster.filter(s => s.id == characterInfo.avatarId);
+                            if (filtered.length == 1) {
+                                characterName = filtered[0].name;
+                            } else if (filtered.length > 1) {
+
+                            }
+                            if (characterName) {
+                                const myBasename = basename(キャラクターMaster[characterName]['import']);
+                                workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                            }
                         }
                         break;
                     case 'レベル':
@@ -376,18 +387,10 @@
                         workObj[key] = characterInfo.skillLevelList[2];
                         break;
                     case '武器':
-                        if (characterInfo.avatarId in AVATAR_ID_OBJ) {
-                            // TODO itemIdからセットする
-                            const name = AVATAR_ID_OBJ[characterInfo.avatarId];
-                            const DUMMY_WEAPON_OBJ = {
-                                片手剣: '西風剣',
-                                両手剣: '西風大剣',
-                                長柄武器: '西風長槍',
-                                弓: '西風猟弓',
-                                法器: '西風秘典'
-                            };
-                            const weapon = DUMMY_WEAPON_OBJ[キャラクターMaster[name]['武器']];
-                            const myBasename = basename(武器Master[キャラクターMaster[name]['武器']][weapon]['import']);
+                        if (characterName) {
+                            const filtered = HoyoWeaponMaster.filter(s => s.id == characterInfo.weapon.itemId);
+                            const weapon = filtered[0].name;
+                            const myBasename = basename(武器Master[キャラクターMaster[characterName]['武器']][weapon]['import']);
                             workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
                         }
                         break;
@@ -452,7 +455,10 @@
                 'data/PolearmMaster.json',
                 'data/BowMaster.json',
                 'data/CatalystMaster.json',
-                'data/ArtifactSetMaster.json'
+                'data/ArtifactSetMaster.json',
+                'data/HoyoAvatarMaster.json',
+                'data/HoyoWeaponMaster.json',
+                'data/HoyoArtifactMaster.json'
             ].map(s => fetch(s).then(resp => resp.json())));
 
             キャラクターMaster = responses[0];
@@ -464,6 +470,9 @@
                 法器: responses[5]
             };
             聖遺物セット効果Master = responses[6];
+            HoyoAvatarMaster = responses[7];
+            HoyoWeaponMaster = responses[8];
+            HoyoArtifactMaster = responses[9];
 
             Object.keys(キャラクターMaster).forEach(name => {
                 const characterUrl = キャラクターMaster[name]['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
