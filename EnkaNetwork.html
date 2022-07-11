@@ -258,7 +258,7 @@
 
         function makeAvatarInfo(u, index) {
             const result = {};
-            result['avatarId'] = u.playerInfo.showAvatarInfoList[index].avatarId;
+            result['avatarId'] = u.avatarInfoList[index].avatarId;
             result['icon'] = u.playerInfo.showAvatarInfoList[index].icon;
             result['level'] = u.playerInfo.showAvatarInfoList[index].level;
 
@@ -298,9 +298,11 @@
                     }
                 } else if (equip.flat.itemType == 'ITEM_WEAPON') {    // 武器
                     weapon['itemId'] = equip.itemId;
-                    Object.keys(equip.weapon.affixMap).forEach(key => {
-                        weapon['affix'] = equip.weapon.affixMap[key];
-                    });
+                    if ('affixMap' in equip.weapon) {
+                        Object.keys(equip.weapon.affixMap).forEach(key => {
+                            weapon['affix'] = equip.weapon.affixMap[key];
+                        });
+                    }
                     weapon['level'] = equip.weapon.level;
                 }
             }
@@ -389,9 +391,13 @@
                     case '武器':
                         if (characterName) {
                             const filtered = HoyoWeaponMaster.filter(s => s.id == characterInfo.weapon.itemId);
-                            const weapon = filtered[0].name;
-                            const myBasename = basename(武器Master[キャラクターMaster[characterName]['武器']][weapon]['import']);
-                            workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                            if (filtered.length > 0) {
+                                const weapon = filtered[0].name;
+                                if (weapon in 武器Master[キャラクターMaster[characterName]['武器']]) {
+                                    const myBasename = basename(武器Master[キャラクターMaster[characterName]['武器']][weapon]['import']);
+                                    workObj[key] = myBasename.split('_')[myBasename.split('_').length - 1];
+                                }
+                            }
                         }
                         break;
                     case '武器レベル':
