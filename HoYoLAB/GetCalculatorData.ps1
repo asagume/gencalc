@@ -186,6 +186,7 @@ $Cookie -split ';' | ForEach-Object {
 } 
 
 for ($reliquary_cat_id = 1; $reliquary_cat_id -lt 5; $reliquary_cat_id++) {    
+    $Body.page = 0
     while ($true) {
         $Body.reliquary_cat_id = $reliquary_cat_id
         $Body.page ++
