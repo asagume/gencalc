@@ -401,13 +401,11 @@
                     }
                 }
             }
-            console.log(artifactSetObj);
             Object.keys(artifactSetObj).forEach(key => {
                 if (artifactSetObj[key] >= 4) {
                     set_effect1 = key;
                     set_effect2 = key;
-                }
-                if (artifactSetObj[key] >= 2) {
+                } else if (artifactSetObj[key] >= 2) {
                     if (set_effect1) {
                         set_effect2 = key;
                     } else {

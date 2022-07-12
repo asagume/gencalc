@@ -1,3 +1,4 @@
+# 育成計算機のlistリクエストヘッダーのCookieの値を入力してください
 $Cookie = ""
 
 $OutputDir = "..\data"
@@ -185,7 +186,7 @@ $Cookie -split ';' | ForEach-Object {
     $MySession.Cookies.Add($Uri, $MyCookie)
 } 
 
-for ($reliquary_cat_id = 1; $reliquary_cat_id -lt 5; $reliquary_cat_id++) {    
+for ($reliquary_cat_id = 1; $reliquary_cat_id -le 5; $reliquary_cat_id++) {    
     $Body.page = 0
     while ($true) {
         $Body.reliquary_cat_id = $reliquary_cat_id
