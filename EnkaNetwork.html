@@ -54,65 +54,77 @@
             color: blanchedalmond;
         }
 
-        table.calendar {
+        input {
+            font-size: 3rem;
+            font-family: monospace;
+        }
+
+        button {
+            vertical-align: bottom;
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table th {
+            text-align: right;
+            color: orange;
+        }
+
+        table td {
+            text-align: left;
+        }
+
+        ul {
             width: 100%;
             max-width: 640px;
             margin-left: auto;
             margin-right: auto;
-            font-size: 3rem;
-            background-color: blanchedalmond;
-            color: black;
-            padding: 0;
-            margin-bottom: 4rem;
+            display: block;
+            list-style: none;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            padding-inline-start: 0;
+            padding-inline-end: 0;
         }
 
-        table.calendar caption {
-            color: blanchedalmond;
-        }
-
-        table.calendar thead {
-            background-color: white;
-            border-width: 0;
-        }
-
-        table.calendar tr td {
+        ul li.character {
             position: relative;
-            width: calc(100% / 7);
-            padding: 0;
+            display: inline-block;
+            width: calc(100% / 4);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .sunday {
-            color: red;
-        }
-
-        .saturday {
-            color: blue;
-        }
-
-        table.calendar tr td img {
+        img.character {
             width: 100%;
-            object-fit: contain;
-            border-radius: 50%;
+            max-width: 256px;
+            background-size: contain;
         }
 
-        table.calendar tr td p {
+        img.vision {
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -100%);
+            left: 4%;
+            top: 4%;
+            max-width: 25%;
+            max-height: 25%;
         }
     </style>
 </head>
 
 <body>
     <div id="main">
-        <div style="text-align: left;">
-            <p><a href="./index.html">Back to GENCALC</a></p>
+        <div style="text-align: left; position: relative; width: 100%; min-height: 6rem;">
+            <p style="position: absolute; left: 0; top: 0;"><a href="./">Back to GENCALC</a></p>
 
-            <p><a href="https://enka.shinshin.moe/">Enka.Network</a></p>
+            <p style="position: absolute; right: 0; top: 0;"><a href="https://enka.shinshin.moe/">Enka.Network</a></p>
         </div>
 
-        <h1>Enka.Network Importer</h1>
+        <h2>DATA IMPORTER <span style="font-size: smaller;">powered by</span> Enka.Network</h2>
 
         <div id="uid">
             <form @submit.prevent="submit">
@@ -120,83 +132,69 @@
                     UID:
                     <input v-model="uid" type="text" placeholder="ENTER UID" pattern="[0-9]{9}">
                 </label>
-                <button type="submit">SUBMIT</button>
+                <button type="submit" :disabled="timer > 0">
+                    <span class="material-symbols-outlined"> send </span></button>
+                <span class="time">&emsp; {{ timer }}</span>
             </form>
         </div>
 
+        <hr>
+
         <div id="enka-network">
             <template v-if="u">
-                <dl>
-                    <dt>UID</dt>
-                    <dt>{{ u.uid }}</dt>
-                    <dt>LEVEL</dt>
-                    <dt>{{ u.playerInfo.level }}</dt>
-                    <dt>NICKNAME</dt>
-                    <dt>{{ u.playerInfo.nickname }}</dt>
-                </dl>
+                <table style="margin-bottom: 4rem;">
+                    <tr>
+                        <th>UID:</th>
+                        <td>{{ u.uid }}</td>
+                    </tr>
+                    <tr>
+                        <th>NICKNAME:</th>
+                        <td>{{ u.playerInfo.nickname }}</td>
+                    </tr>
+                </table>
 
-                <ol>
-                    <li v-for="(characterInfo, index) in characterInfoList">
-                        {{characterInfo}}
-                        <p><a :href="'./?allin=' + characterInfo.share">GENCALC</a></p>
+                <ul>
+                    <li class="character" v-for="(characterInfo, index) in characterInfoList">
+                        <template v-if="characterInfo.character">
+                            <img class="character" :src="characterInfo.character.url"
+                                :alt="characterInfo.character.name"
+                                :style="'background-image: url(' + characterInfo.character.rarityBgUrl +')'">
+                            <img class="vision" :src="characterInfo.character.visionUrl"
+                                :alt="characterInfo.character.vision">
+                        </template>
+                        <div v-if="false">
+                            {{characterInfo}}
+                        </div>
+                        <div>
+                            <button @click="locate(index)"
+                                :disabled="!characterInfo['キャラクター構成']['キャラクター'] || !characterInfo['キャラクター構成']['武器']">
+                                OPEN GENCALC</button>
+                        </div>
                     </li>
-                </ol>
+                </ul>
             </template>
         </div>
 
         <hr>
+
+        <div style="padding: 2rem;">
+            《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
+            <ol style="text-align: left;">
+                <li>UIDを入力後、<span class="material-symbols-outlined"> send </span>をクリックしてください</li>
+            </ol>
+            <hr>
+            <p>下記の制約があります。</p>
+            <ol style="text-align: left;">
+                <li>不可：旅人</li>
+                <li>不可：げんかるくに実装されていないキャラクター</li>
+                <li>不可：げんかるくに実装されていない武器を装備しているデータ</li>
+                <li>制限：げんかるくに実装されていない聖遺物セット効果はセット効果なし（NONE）に置き換えられる</li>
+                <li>制限：キャラクターおよび武器のレベルはげんかるくに実装されている範囲の値に置き換えられる</li>
+            </ol>
+        </div>
     </div>
 
     <script>
-        const AVATAR_ID_OBJ = {
-            10000002: '神里綾華',
-            10000003: 'ジン',
-            10000005: '旅人(雷)',
-            10000006: 'リサ',
-            10000014: 'バーバラ',
-            10000015: 'ガイア',
-            10000016: 'ディルック',
-            10000020: 'レザー',
-            10000021: 'アンバー',
-            10000022: 'ウェンティ',
-            10000023: '香菱',
-            10000024: '北斗',
-            10000025: '行秋',
-            10000027: '凝光',
-            10000029: 'クレー',
-            10000030: '鍾離',
-            10000031: 'フィッシュル',
-            10000032: 'ベネット',
-            10000034: 'ノエル',
-            10000035: '七七',
-            10000036: '重雲',
-            10000037: '甘雨',
-            10000038: 'アルベド',
-            10000039: 'ディオナ',
-            10000041: 'モナ',
-            10000042: '刻晴',
-            10000043: 'スクロース',
-            10000044: '辛炎',
-            10000045: 'ロサリア',
-            10000046: '胡桃',
-            10000047: '楓原万葉',
-            10000048: '煙緋',
-            10000050: 'トーマ',
-            10000051: 'エウルア',
-            10000052: '雷電将軍',
-            10000053: '早柚',
-            10000054: '珊瑚宮心海',
-            10000055: 'ゴロー',
-            10000056: '九条裟羅',
-            10000058: '八重神子',
-            10000060: '夜蘭',
-            10000062: 'アーロイ',
-            10000063: '申鶴',
-            10000064: '雲菫',
-            10000065: '久岐忍',
-            10000066: '神里綾人'
-        };
-
         const キャラクター構成PROPERTY_MAP = new Map([
             ['キャラクター', null],
             ['レベル', null],
@@ -245,6 +243,17 @@
             岩: 'images/element_geo.png'
         };
 
+        const GOBLET_MAINSTAT_OBJ = {
+            FIGHT_PROP_FIRE_ADD_HURT: 'Pyro',
+            FIGHT_PROP_WATER_ADD_HURT: 'Hydro',
+            FIGHT_PROP_WIND_ADD_HURT: 'Anemo',
+            FIGHT_PROP_ELEC_ADD_HURT: 'Electro',
+            // Dendro
+            FIGHT_PROP_ICE_ADD_HURT: 'Cryo',
+            FIGHT_PROP_ROCK_ADD_HURT: 'Geo',
+            FIGHT_PROP_PHYSICAL_ADD_HURT: 'Physical'
+        };
+
         var キャラクターMaster = {};
         var 武器Master = {};
         var 聖遺物セット効果Master = {};
@@ -256,16 +265,17 @@
         var uidVue;
         var enkaNetworkVue;
 
-        function makeAvatarInfo(u, index) {
+        function makeCharacterInfo(u, index) {
             const result = {};
             result['avatarId'] = u.avatarInfoList[index].avatarId;
             result['icon'] = u.playerInfo.showAvatarInfoList[index].icon;
             result['level'] = u.playerInfo.showAvatarInfoList[index].level;
 
-            if ('1002' in u.avatarInfoList[index].propMap) {    // 暫定
+            if ('1002' in u.avatarInfoList[index].propMap) {    // 突破レベル？
                 result['ascension'] = u.avatarInfoList[index].propMap['1002'];
             }
 
+            // 命ノ星座？
             if ('talentIdList' in u.avatarInfoList[index]) {
                 result['constellation'] = u.avatarInfoList[index].talentIdList.length;
             } else {
@@ -300,7 +310,7 @@
                     weapon['itemId'] = equip.itemId;
                     if ('affixMap' in equip.weapon) {
                         Object.keys(equip.weapon.affixMap).forEach(key => {
-                            weapon['affix'] = equip.weapon.affixMap[key];
+                            weapon['affix'] = equip.weapon.affixMap[key];   // 精錬ランク？
                         });
                     }
                     weapon['level'] = equip.weapon.level;
@@ -324,7 +334,26 @@
                 });
             }
 
-            result['share'] = makeShareData(result);
+            const workObj = makeShareData(result);
+            const workArr = [];
+            Object.keys(workObj).forEach(key => {
+                workArr.push(workObj[key]);
+            });
+            result['キャラクター構成'] = workObj;
+            result['share'] = workArr.join(',');
+
+            const avatarArr = HoyoAvatarMaster.filter(s => s.id == result['avatarId']);
+            if (avatarArr.length == 1) {
+                result['name'] = avatarArr[0].name;
+            }
+
+            result['character'] = null;
+            if (result['name']) {
+                const characterArr = CharacterImageList.filter(s => s.name == result['name']);
+                if (characterArr.length > 0) {
+                    result['character'] = characterArr[0];
+                }
+            }
 
             return result;
         }
@@ -388,6 +417,7 @@
             });
 
             キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+                workObj[key] = value;
                 switch (key) {
                     case 'キャラクター':
                         {
@@ -405,6 +435,11 @@
                         break;
                     case 'レベル':
                         workObj[key] = Math.ceil(characterInfo.level / 10) * 10;
+                        if (workObj[key] < 20) {
+                            workObj[key] = 20;
+                        } else if (workObj[key] < 40) {
+                            workObj[key] = 40;
+                        }
                         if ('ascension' in characterInfo) {
                             if ((workObj[key] == 80 && characterInfo.ascension == '6')
                                 && (workObj[key] == 70 && characterInfo.ascension == '5')
@@ -442,6 +477,9 @@
                         break;
                     case '武器レベル':
                         workObj[key] = Math.ceil(characterInfo.weapon.level / 10) * 10;
+                        if (workObj[key] < 80) {
+                            workObj[key] = 80;
+                        }
                         break;
                     case '精錬ランク':
                         workObj[key] = characterInfo.weapon.affix + 1;
@@ -459,20 +497,10 @@
                         }
                         break;
                     default:
-                        workObj[key] = value;
                         break;
                 }
             });
-            const GOBLET_MAINSTAT_OBJ = {
-                FIGHT_PROP_FIRE_ADD_HURT: 'Pyro',
-                FIGHT_PROP_WATER_ADD_HURT: 'Hydro',
-                FIGHT_PROP_WIND_ADD_HURT: 'Anemo',
-                FIGHT_PROP_ELEC_ADD_HURT: 'Electro',
-                // Dendro
-                FIGHT_PROP_ICE_ADD_HURT: 'Cryo',
-                FIGHT_PROP_ROCK_ADD_HURT: 'Geo',
-                FIGHT_PROP_PHYSICAL_ADD_HURT: 'Physical'
-            };
+
             Object.keys(characterInfo.reliq.stat).forEach(key => {
                 if (key in STAT_PROP_OBJ) {
                     workObj[STAT_PROP_OBJ[key]] = Math.round(characterInfo.reliq.stat[key] * 10) / 10;
@@ -490,11 +518,8 @@
                     }
                 }
             });
-            const workArr = [];
-            Object.keys(workObj).forEach(key => {
-                workArr.push(workObj[key]);
-            });
-            return workArr.join(',');
+
+            return workObj;
         }
 
         async function onLoad() {
@@ -541,7 +566,9 @@
             uidVue = new Vue({
                 el: "#uid",
                 data: {
-                    uid: ''
+                    uid: '',
+                    timer: 0,
+                    timerObj: null
                 },
                 methods: {
                     submit: function () {
@@ -557,10 +584,21 @@
 
                             const characterInfoList = [];
                             for (let i = 0; i < enkaNetworkVue.u.playerInfo.showAvatarInfoList.length; i++) {
-                                characterInfoList.push(makeAvatarInfo(enkaNetworkVue.u, i));
+                                characterInfoList.push(makeCharacterInfo(enkaNetworkVue.u, i));
                             }
                             enkaNetworkVue.characterInfoList.splice(0, enkaNetworkVue.characterInfoList.length, ...characterInfoList);
+
+                            this.timer = json.ttl;
+                            const self = this;
+                            this.timerObj = setInterval(function () { self.count() }, 1000);
                         });
+                    },
+                    count: function () {
+                        if (this.timer > 0) {
+                            this.timer--;
+                        } else {
+                            clearInterval(this.timerObj);
+                        }
                     }
                 }
             });
@@ -570,6 +608,11 @@
                 data: {
                     u: null,
                     characterInfoList: []
+                },
+                methods: {
+                    locate: function (index) {
+                        window.open('./?allin=' + this.characterInfoList[index].share, '_blank');
+                    }
                 }
             });
         }

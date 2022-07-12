@@ -766,8 +766,12 @@ function makeShareData(saveData) {
                 break;
             case '聖遺物セット効果1':
             case '聖遺物セット効果2':
-                myBasename = basename(聖遺物セット効果MasterVar[newValue]['image']);
-                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                if (newValue == 'NONE') {
+                    newValue = '';  // 聖遺物セット効果なし
+                } else {
+                    myBasename = basename(聖遺物セット効果MasterVar[newValue]['image']);
+                    newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                }
                 break;
             case '聖遺物メイン効果1':
             case '聖遺物メイン効果2':
@@ -837,15 +841,19 @@ function makeSaveDataFromShareData(shareData) {
                     break;
                 case '聖遺物セット効果1':
                 case '聖遺物セット効果2':
-                    Object.keys(聖遺物セット効果MasterVar).forEach(key2 => {
-                        if ('image' in 聖遺物セット効果MasterVar[key2]) {
-                            const myBasename = basename(聖遺物セット効果MasterVar[key2]['image']);
-                            const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
-                            if (newValue == myAbbrev) {
-                                newValue = key2;
+                    if (newValue) {
+                        Object.keys(聖遺物セット効果MasterVar).forEach(key2 => {
+                            if ('image' in 聖遺物セット効果MasterVar[key2]) {
+                                const myBasename = basename(聖遺物セット効果MasterVar[key2]['image']);
+                                const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                                if (newValue == myAbbrev) {
+                                    newValue = key2;
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        newValue = 'NONE';  // 聖遺物セット効果なし
+                    }
                     break;
                 case '聖遺物メイン効果1':
                 case '聖遺物メイン効果2':
