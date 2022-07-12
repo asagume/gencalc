@@ -64,7 +64,21 @@
             font-family: 'Yusei Magic', sans-serif;
         }
 
-        ol {
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table th {
+            text-align: right;
+            color: orange;
+        }
+
+        table td {
+            text-align: left;
+        }
+
+        ul {
             width: 100%;
             max-width: 640px;
             margin-left: auto;
@@ -77,11 +91,13 @@
             padding-inline-end: 0;
         }
 
-        li.character {
+        ul li.character {
             position: relative;
             display: inline-block;
             width: calc(100% / 4);
-            padding-bottom: 2rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
         }
 
         img.character {
@@ -122,18 +138,22 @@
             </form>
         </div>
 
+        <hr>
+
         <div id="enka-network">
             <template v-if="u">
-                <dl>
-                    <dt>UID</dt>
-                    <dt>{{ u.uid }}</dt>
-                    <dt>LEVEL</dt>
-                    <dt>{{ u.playerInfo.level }}</dt>
-                    <dt>NICKNAME</dt>
-                    <dt>{{ u.playerInfo.nickname }}</dt>
-                </dl>
+                <table style="margin-bottom: 4rem;">
+                    <tr>
+                        <th>UID:</th>
+                        <td>{{ u.uid }}</td>
+                    </tr>
+                    <tr>
+                        <th>NICKNAME:</th>
+                        <td>{{ u.playerInfo.nickname }}</td>
+                    </tr>
+                </table>
 
-                <ol>
+                <ul>
                     <li class="character" v-for="(characterInfo, index) in characterInfoList">
                         <template v-if="characterInfo.character">
                             <img class="character" :src="characterInfo.character.url"
@@ -147,14 +167,31 @@
                         </div>
                         <div>
                             <button @click="locate(index)"
-                                :disabled="!characterInfo['キャラクター構成']['キャラクター'] || !characterInfo['キャラクター構成']['武器']">GENCALC</button>
+                                :disabled="!characterInfo['キャラクター構成']['キャラクター'] || !characterInfo['キャラクター構成']['武器']">
+                                OPEN GENCALC</button>
                         </div>
                     </li>
-                </ol>
+                </ul>
             </template>
         </div>
 
         <hr>
+
+        <div style="padding: 2rem;">
+            《Enka.Network》経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
+            <ol style="text-align: left;">
+                <li>UIDを入力後、<span class="material-symbols-outlined"> send </span>をクリックしてください</li>
+            </ol>
+            <hr>
+            <p>下記の制約があります。</p>
+            <ol style="text-align: left;">
+                <li>不可：旅人</li>
+                <li>不可：げんかるくに実装されていないキャラクター</li>
+                <li>不可：げんかるくに実装されていない武器を装備しているデータ</li>
+                <li>制限：げんかるくに実装されていない聖遺物セット効果はセット効果なし（NONE）に置き換えられる</li>
+                <li>制限：キャラクターおよび武器のレベルはげんかるくに実装されているレベルの範囲に置き換えられる</li>
+            </ol>
+        </div>
     </div>
 
     <script>
