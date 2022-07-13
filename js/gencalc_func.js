@@ -3836,32 +3836,52 @@ const 武器InputOnChange = function () {
             });
         }
 
+        // 精錬できない武器への対応 
+        let isUnrefinable = false;
+        if ('unrefinable' in 選択中武器データVar) {
+            isUnrefinable = 選択中武器データVar['unrefinable'];
+        }
+        $('#精錬ランクInput option').each((index, elem) => {
+            elem.hidden = false;
+        });
+        if (isUnrefinable) {
+            $('#精錬ランクInput option').each((index, elem) => {
+                if (index > 0) {
+                    elem.hidden = true;
+                }
+            });
+        }
+
         let my精錬ランク = 0;
-        if (おすすめセットArrVar.length > 0) {
-            let myObj = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
-            if ('精錬ランク' in myObj && myObj['武器'] == 選択中武器データVar['名前']) {
-                my精錬ランク = myObj['精錬ランク'];
+        if (isUnrefinable) {
+            my精錬ランク = 1;
+        } else {
+            if (おすすめセットArrVar.length > 0) {
+                let myObj = おすすめセットArrVar[$('#おすすめセットInput').prop('selectedIndex')][1];
+                if ('精錬ランク' in myObj && myObj['武器'] == 選択中武器データVar['名前']) {
+                    my精錬ランク = myObj['精錬ランク'];
+                }
             }
-        }
-        if (my精錬ランク == 0) {
-            if (my名前 in 武器所持状況ObjVar && 武器所持状況ObjVar[my名前]) {
-                my精錬ランク = 武器所持状況ObjVar[my名前];
-            } else if ('精錬ランク' in 選択中武器データVar) {
-                my精錬ランク = 選択中武器データVar['精錬ランク'];
+            if (my精錬ランク == 0) {
+                if (my名前 in 武器所持状況ObjVar && 武器所持状況ObjVar[my名前]) {
+                    my精錬ランク = 武器所持状況ObjVar[my名前];
+                } else if ('精錬ランク' in 選択中武器データVar) {
+                    my精錬ランク = 選択中武器データVar['精錬ランク'];
+                }
             }
-        }
-        if (my精錬ランク == 0) {
-            if ('レアリティ' in 選択中武器データVar) {
-                switch (選択中武器データVar['レアリティ']) {
-                    case 5:
-                        my精錬ランク = 1;
-                        break;
-                    case 4:
-                        my精錬ランク = 3;
-                        break;
-                    case 3:
-                        my精錬ランク = 5;
-                        break;
+            if (my精錬ランク == 0) {
+                if ('レアリティ' in 選択中武器データVar) {
+                    switch (選択中武器データVar['レアリティ']) {
+                        case 5:
+                            my精錬ランク = 1;
+                            break;
+                        case 4:
+                            my精錬ランク = 3;
+                            break;
+                        case 3:
+                            my精錬ランク = 5;
+                            break;
+                    }
                 }
             }
         }

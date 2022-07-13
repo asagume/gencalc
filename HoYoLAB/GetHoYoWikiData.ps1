@@ -14,11 +14,11 @@ $DownloadPath = ".\RawData"
 # th-th タイ語
 # vi-vn ベトナム語
 
-#$page_ids = @()
-$page_ids = @(1..51)
-$page_ids += 2252   # 夜蘭
-$page_ids += 2256   # 久岐忍
-$page_ids = @(2000..2999)
+$page_ids = @()
+#$page_ids += @(1..51)
+#$page_ids += 2252   # 夜蘭
+#$page_ids += 2256   # 久岐忍
+$page_ids += 2263   # 鹿野院平蔵
 
 foreach ($i in $page_ids) {
     $uri = "https://sg-wiki-api-static.hoyolab.com/hoyowiki/wapi/entry_page?entry_page_id=" + $i

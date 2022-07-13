@@ -8,7 +8,7 @@ import re
 SOURCE_PATH = './RawData'
 FILTER = '[24]_*.json'
 OUTPUT_PATH = './JsonData'
-GENCALC_PATH = '../GencalcData'
+GENCALC_PATH = '../data/characters'
 GENCALC_ORIG_PATH = '../data/characters'
 
 VISION_MAP = {
