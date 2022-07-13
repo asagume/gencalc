@@ -4348,9 +4348,9 @@ const キャラクターInputOnChange = function () {
             for (let i = Number(my命ノ星座); i > 0; i--) {
                 if ((i == 3 || i == 5) && i in 選択中キャラクターデータVar['命ノ星座']) {
                     let my説明 = get説明(選択中キャラクターデータVar['命ノ星座'][i]);
-                    if (my説明.startsWith(元素スキル名称Var)) {
+                    if (my説明.indexOf(元素スキル名称Var) != -1) {
                         my元素スキルレベル = 11;
-                    } else if (my説明.startsWith(元素爆発名称Var)) {
+                    } else if (my説明.indexOf(元素爆発名称Var) != -1) {
                         my元素爆発レベル = 11;
                     }
                 }
