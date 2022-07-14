@@ -164,6 +164,7 @@ for filepath in files:
                             if talentKind == '通常攻撃':
                                 talentJson['名前'] = entry['title']
                                 talentJson['説明'] = entry['desc']
+                                talentJson['icon_url'] = entry['icon_url'],
                             if attribute['key'] == 'Level':
                                 continue
                             if '詳細' not in talentJson:
@@ -220,6 +221,7 @@ for filepath in files:
                         dstJson['固有天賦'].append({
                             '名前': entry['title'],
                             '説明': entry['desc'],
+                            'icon_url': entry['icon_url'],
                             '詳細': []
                         })
 
@@ -230,6 +232,7 @@ for filepath in files:
                         talentJson = {
                             '名前': entry['title'],
                             '説明': entry['desc'],
+                            'icon_url': entry['icon_url'],
                             '詳細': []
                         }
                         dstJson['その他戦闘天賦'].append(talentJson)
@@ -242,6 +245,7 @@ for filepath in files:
                         talentJson = dstJson[talentKind]
                         talentJson['名前'] = entry['title']
                         talentJson['説明'] = entry['desc']
+                        talentJson['icon_url'] = entry['icon_url']
                         if '詳細' not in talentJson:
                             talentJson['詳細'] = []
                         for attribute in entry['attributes']:
@@ -284,11 +288,13 @@ for filepath in files:
                 constellation = 0
                 for entry in component['data']['list']:
                     constellation += 1
-                    dstJson['命ノ星座'][constellation] = {
-                        '名前': entry['name'],
-                        '説明': entry['desc'],
-                        '詳細': []
-                    }
+                    if constellation not in dstJson['命ノ星座']:
+                        dstJson['命ノ星座'][constellation] = {}
+                    dstJson['命ノ星座'][constellation]['名前']= entry['name'];
+                    dstJson['命ノ星座'][constellation]['説明']= entry['desc'];
+                    dstJson['命ノ星座'][constellation]['icon_url']= entry['icon_url'];
+                    if '詳細' not in dstJson['命ノ星座'][constellation]:
+                        dstJson['命ノ星座'][constellation]['詳細']= [];
 
                 print(component)
 
