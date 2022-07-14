@@ -1,16 +1,16 @@
-$destFolder = ".\RawData"
-
-$pwd = (Get-Location).ToString()
-
+$destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 
 $pageIds = @()
 # キャラクター
-#$pageIds += @(1..51)
-#$pageIds += 2252   # 夜蘭
-#$pageIds += 2256   # 久岐忍
-#$pageIds += 2263   # 鹿野院平蔵
+# $pageIds += @(1..51)
+# $pageIds += 2252   # 夜蘭
+# $pageIds += 2256   # 久岐忍
+# $pageIds += 2263   # 鹿野院平蔵
 # 武器
-$pageIds += 1930    # 『漁獲』
+$pageIds += @(1930..2060)
+$pageIds += 2254   # 若水
+$pageIds += 2255   # 落霞
+$pageIds += 2264   # 籠釣瓶一心
 # 聖遺物
 
 $categoryMap = @{
@@ -35,9 +35,9 @@ foreach ($pageId in $pageIds) {
 
         $tempFile = New-TemporaryFile
 
-        Invoke-WebRequest -URI $uri -Headers $headers -OutFile $tempFile -Verbose
+        Invoke-WebRequest -URI $uri -Headers $headers -OutFile $tempFile
         $rawContent = Get-Content -Path $tempFile -Encoding UTF8
-        $contentHashTable = (New-Object System.Web.Script.Serialization.JavaScriptSerializer).Deserialize($rawContent, [System.Collections.HashTable])
+        $contentHashTable = ConvertFrom-Json $rawContent
         if ($contentHashTable.retcode -ne 0) {
             continue
         }
@@ -46,8 +46,8 @@ foreach ($pageId in $pageIds) {
 
         foreach ($module in $contentMLang[$xRpcLanguage].modules) {
             foreach ($component in $module.components) {
-                if ($component.ContainsKey("data")) {
-                    $component.data = (New-Object System.Web.Script.Serialization.JavaScriptSerializer).Deserialize($component.data, [System.Collections.HashTable])
+                if ($component.data) {
+                    $component.data = ConvertFrom-Json $component.data
                 }
             }
         }
@@ -55,21 +55,21 @@ foreach ($pageId in $pageIds) {
         Remove-Item -Path $tempFile
     } 
 
-    $nameEn = $contentMLang["en-us"].name
+    $nameEn = $contentMLang."en-us".name
     $writableName = $nameEn -replace "[`"<>`|:`*`?`\/ ]", ""
-    $menuId = $contentMLang["en-us"].menu_id
+    $menuId = $contentMLang."en-us".menu_id
 
     $jsonFilePath = ""
 
     if ($menuId -eq 2) {
         # キャラクター
-        foreach ($value in $contentMLang["en-us"]["filter_values"]["character_rarity"]["values"]) {
+        foreach ($value in $contentMLang."en-us"."filter_values"."character_rarity"."values") {
             $rarity = $value -replace "[^0-9]", ""
         }
-        foreach ($value in $contentMLang["en-us"]["filter_values"]["character_vision"]["values"]) {
+        foreach ($value in $contentMLang."en-us"."filter_values"."character_vision"."values") {
             $vision = $value.ToLower()
         }
-        foreach ($value in $contentMLang["en-us"]["filter_values"]["character_weapon"]["values"]) {
+        foreach ($value in $contentMLang."en-us"."filter_values"."character_weapon"."values") {
             $weapon = $value.ToLower()
         }
 
@@ -82,8 +82,8 @@ foreach ($pageId in $pageIds) {
         $jsonFilePath = $basename + ".json"
         $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
 
-        if ($contentMLang["en-us"]["icon_url"]) {
-            $imageUrl = $contentMLang["en-us"]["icon_url"]
+        if ($contentMLang."en-us"."icon_url") {
+            $imageUrl = $contentMLang."en-us"."icon_url"
             $imageFile = $basename + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\face")
             if (-not (Test-Path $outDirPath)) {
@@ -92,19 +92,19 @@ foreach ($pageId in $pageIds) {
             Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
         }
 
-        if ($contentMLang["en-us"]["header_img_url"]) {
+        if ($contentMLang."en-us"."header_img_url") {
         }
 
         $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\" + $basename)
         if (-not (Test-Path $outDirPath)) {
             New-Item -Path $outDirPath -ItemType Directory -Force
         }
-        foreach ($module in $contentMLang["en-us"].modules) {
+        foreach ($module in $contentMLang."en-us".modules) {
             foreach ($component in $module.components) {
-                if ($component.ContainsKey("data")) {
-                    if ($component.data.ContainsKey("list")) {
+                if ($component.data) {
+                    if ($component.data.list) {
                         foreach ($entry in $component.data.list) {
-                            if ($entry.ContainsKey("icon_url")) {
+                            if ($entry.icon_url) {
                                 $workArr = $entry.icon_url -split "/"
                                 Invoke-WebRequest -URI $entry.icon_url -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $workArr[$workArr.Length - 1]) -Verbose
                             }                        
@@ -116,10 +116,10 @@ foreach ($pageId in $pageIds) {
     }
     elseif ($menuId -eq 4) {
         # 武器
-        foreach ($value in $contentMLang["en-us"]["filter_values"]["weapon_type"]["values"]) {
+        foreach ($value in $contentMLang."en-us"."filter_values"."weapon_type"."values") {
             $type = $value.ToLower()
         }
-        foreach ($value in $contentMLang["en-us"]["filter_values"]["weapon_rarity"]["values"]) {
+        foreach ($value in $contentMLang."en-us"."filter_values"."weapon_rarity"."values") {
             $rarity = $value -replace "[^0-9]", ""
         }
 
@@ -130,8 +130,8 @@ foreach ($pageId in $pageIds) {
         $jsonFilePath = $rarity + "_" + $writableName + ".json"
         $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
 
-        if ($contentMLang["en-us"]["icon_url"]) {
-            $imageUrl = $contentMLang["en-us"]["icon_url"]
+        if ($contentMLang."en-us"."icon_url") {
+            $imageUrl = $contentMLang."en-us"."icon_url"
             $imageFile = $rarity + "_" + $writableName + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\" + $type)
             if (-not (Test-Path $outDirPath)) {
@@ -149,6 +149,6 @@ foreach ($pageId in $pageIds) {
         $jsonFilePath
 
         $UTF8NoBomEnc = New-Object System.Text.UTF8Encoding $False
-        [System.IO.File]::WriteAllLines($jsonFilePath, (ConvertTo-Json -InputObject $contentMLang["ja-jp"] -Depth 100), $UTF8NoBomEnc)        
+        [System.IO.File]::WriteAllLines($jsonFilePath, (ConvertTo-Json -InputObject $contentMLang."ja-jp" -Depth 100), $UTF8NoBomEnc)        
     }
 }
