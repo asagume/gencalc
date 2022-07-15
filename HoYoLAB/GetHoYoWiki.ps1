@@ -3,14 +3,14 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 $pageIds = @()
 # キャラクター
 # $pageIds += @(1..51)
-# $pageIds += 2252   # 夜蘭
-# $pageIds += 2256   # 久岐忍
-# $pageIds += 2263   # 鹿野院平蔵
+$pageIds += 2252   # 夜蘭
+$pageIds += 2256   # 久岐忍
+$pageIds += 2263   # 鹿野院平蔵
 # 武器
-$pageIds += @(1930..2060)
-$pageIds += 2254   # 若水
-$pageIds += 2255   # 落霞
-$pageIds += 2264   # 籠釣瓶一心
+#$pageIds += @(1930..2060)
+#$pageIds += 2254   # 若水
+#$pageIds += 2255   # 落霞
+#$pageIds += 2264   # 籠釣瓶一心
 # 聖遺物
 
 $categoryMap = @{
@@ -107,7 +107,7 @@ foreach ($pageId in $pageIds) {
                             if ($entry.icon_url) {
                                 $workArr = $entry.icon_url -split "/"
                                 Invoke-WebRequest -URI $entry.icon_url -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $workArr[$workArr.Length - 1]) -Verbose
-                            }                        
+                            }
                         }
                     }
                 }
