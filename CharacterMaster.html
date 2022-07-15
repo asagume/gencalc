@@ -64,7 +64,7 @@
         <h1>キャラクターマスター</h1>
 
         <div id="character-master-list">
-            <vue-good-table :columns="columns" :rows="rows" :line-numbers="true" styleClass="vgt-table striped"
+            <vue-good-table :columns="columns" :rows="rows" :line-numbers="true" styleclass="vgt-table striped"
                 @on-row-dblclick="onRowDoubleClick">
                 <template slot="table-row" slot-scope="props">
                     <span v-if="props.column.label == 'NAME'">
@@ -76,7 +76,7 @@
                         {{props.row.name}}
                     </span>
                     <span v-else-if="props.column.label == 'STAR'">
-                        <img class="star" v-for="dummy in new Array(props.row.rarity)" src="images/star.png"></img>
+                        <img class="star" v-for="dummy in new Array(props.row.rarity)" src="images/star.png">
                     </span>
                     <span v-else>
                         {{props.formattedRow[props.column.field]}}
