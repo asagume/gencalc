@@ -27,9 +27,78 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
     <style type="text/css">
-        /* body {
+        body {
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2rem;
             font-family: 'Yusei Magic', sans-serif;
-        } */
+        }
+
+        #main {
+            max-width: 1280px;
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
+        }
+
+        div.filter input[type="radio"] {
+            display: none;
+        }
+
+        div.filter img.filter {
+            width: 48px;
+            height: 48px;
+            border: 3px solid transparent;
+        }
+
+        div.filter img.filter.selected {
+            border: 3px solid white;
+            border-radius: 50%;
+        }
+
+        #character-select ul {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            list-style: none;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            padding-inline-start: 0;
+            padding-inline-end: 0;
+        }
+
+        #character-select ul li {
+            display: inline-block;
+            position: relative;
+        }
+
+        #character-select ul li img.character {
+            width: 96px;
+            height: 96px;
+            background-size: contain;
+        }
+
+        #character-select ul li img.vision {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            left: 2px;
+            top: 2px;
+        }
+
+        #character-input img.character {
+            max-width: calc(100% / 3);
+        }
+
         tr {
             border: 1px solid;
         }
@@ -75,21 +144,21 @@
 
             <div class="pane2">
                 <div id="character-select" v-if="isVisible">
-                    <div>
-                        <label v-for="item in filters.characterVision.list"
-                            :class="filters.characterVision.selected == item.name ? 'selected' : ''">
+                    <div class="filter">
+                        <label v-for="item in filters.characterVision.list">
                             <input type="radio" :value="item.name" name="filter-character-vision"
                                 @click="filterOnClick(filters.characterVision, $event)">
-                            <img class="filter-vision" :src="item.url" :alt="item.name">
+                            <img :class="'filter' + (filters.characterVision.selected == item.name ? ' selected' : '')"
+                                :src="item.url" :alt="item.name">
                         </label>
                     </div>
 
-                    <div>
-                        <label v-for="item in filters.characterWeapon.list"
-                            :class="filters.characterWeapon.selected == item.name ? 'selected' : ''">
+                    <div class="filter">
+                        <label v-for="item in filters.characterWeapon.list">
                             <input type="radio" :value="item.name" name="filter-character-weapon"
                                 @click="filterOnClick(filters.characterWeapon, $event)">
-                            <img class="filter-weapon" :src="item.url" :alt="item.name">
+                            <img :class="'filter' + (filters.characterWeapon.selected == item.name ? ' selected' : '')"
+                                :src="item.url" :alt="item.name">
                         </label>
                     </div>
 
@@ -97,7 +166,9 @@
                         <li v-for="item in list"
                             v-if="(filters.characterVision.selected ? filters.characterVision.selected == item.vision : true) && (filters.characterWeapon.selected ? filters.characterWeapon.selected == item.weapon : true)"
                             :class="selected == item.name ? 'selected' : ''">
-                            <img class="character" :src="item.iconUrl" :alt="item.name" @click="onClick">
+                            <img class="character" :src="item.iconUrl" :alt="item.name" @click="onClick"
+                                :style="'background-image: url(' + item.starBgUrl +')'">
+                            <img class="vision" :src="item.visionIconUrl" :alt="item.vision">
                         </li>
                     </ul>
                 </div>
@@ -107,11 +178,10 @@
                 <div id="character-input">
                     <table>
                         <tr>
-                            <td colspan="2" rowspan="3">
-                                <img class="character" :src="iconUrl" :alt="name"
+                            <td colspan="3" rowspan="3">
+                                <img class="character" :src="url" :alt="name"
                                     @click="characterSelectVue.isVisible=true">
                             </td>
-                            <td rowspan="5"></td>
                             <td colspan="2"> {{name}} &emsp;
                                 <span class="material-symbols-outlined"> info </span>
                             </td>
@@ -150,17 +220,33 @@
                                         v-if="index <= constellationOption.max" :value="item"> C{{item}} </option>
                                 </select>
                             </td>
+                            <td colspan="2">
+                                <button type="button">RECOMMEND</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <select :value="recommend"></select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td colspan="3" rowspan="2">
+                                <img :src="weaponUrl" :alt="weapon">
+                            </td>
                             <td>
-                                <select>
-                                </select>
+                                <img class="talent" :src="normalAttackUrl" :alt="normalAttackName">
+                            </td>
+                            <td>
+                                <img class="talent" :src="elementalSKillUrl" :alt="elementalSKillName">
+                            </td>
+                            <td>
+                                <img class="talent" :src="elementalBurstUrl" :alt="elementalBurstName">
                             </td>
                         </tr>
                     </table>
                 </div>
-
-                <select v-model="recommend">
-                    <option v-for="item in recommendOption.list" value="item"> {{item}} </option>
-                </select>
 
             </div>
 
@@ -223,17 +309,30 @@
             法器: 'images/characters/NormalAttack_catalyst.png',
         };
 
-        async function onLoad() {
-            const responses = await Promise.all([
-                'data/CharacterMaster.json'
-            ].map(s => fetch(s).then(resp => resp.json())));
+        const STAR_BACKGROUND_URL = {
+            1: 'images/star1-bg.png',
+            2: 'images/star2-bg.png',
+            3: 'images/star3-bg.png',
+            4: 'images/star4-bg.png',
+            5: 'images/star5-bg.png'
+        };
 
-            キャラクターMaster = responses[0];
+        var characterSelectVue;
+        var characterInputVue;
 
-            var filterCharacterVisions = Object.keys(VISION_IMG_SRC).map(function (key) { return { name: key, url: VISION_IMG_SRC[key] } });
-            var filterCharacterWeapons = Object.keys(WEAPON_IMG_SRC).map(function (key) { return { name: key, url: WEAPON_IMG_SRC[key] } });
+        var キャラクター所持状況Var = {};
+        if (localStorage['キャラクター所持状況']) {
+            キャラクター所持状況Var = JSON.parse(localStorage['キャラクター所持状況']);
+        }
 
-            var characterSelectList = Object.keys(キャラクターMaster).map(function (key) {
+        function setupCharacterSelect() {
+            const filterCharacterVisions = Object.keys(VISION_IMG_SRC).map(function (key) {
+                return { name: key, url: VISION_IMG_SRC[key] }
+            });
+            const filterCharacterWeapons = Object.keys(WEAPON_IMG_SRC).map(function (key) {
+                return { name: key, url: WEAPON_IMG_SRC[key] }
+            });
+            const characterSelectList = Object.keys(キャラクターMaster).map(function (key) {
                 const importUrl = キャラクターMaster[key]['import'];
                 let iconUrl = 'images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png')
                 return {
@@ -241,13 +340,13 @@
                     rarity: キャラクターMaster[key]['レアリティ'],
                     vision: キャラクターMaster[key]['元素'],
                     weapon: キャラクターMaster[key]['武器'],
-                    iconUrl: iconUrl
+                    iconUrl: iconUrl,
+                    visionIconUrl: VISION_IMG_SRC[キャラクターMaster[key]['元素']],
+                    starBgUrl: STAR_BACKGROUND_URL[キャラクターMaster[key]['レアリティ']]
                 }
             });
-            console.log(characterSelectList);
 
-
-            var characterSelectVue = new Vue({
+            characterSelectVue = new Vue({
                 el: '#character-select',
                 data: {
                     isVisible: true,
@@ -281,11 +380,46 @@
                     }
                 }
             });
+        }
 
-            var characterVue = new Vue({
+        function characterOnchange(name) {
+            characterInputVue.name = name;
+
+            fetch(キャラクターMaster[name]['import']).then(resp => resp.json()).then(json => {
+                characterInputVue.master = json;
+
+                characterInputVue.ascension = 6;
+                characterInputVue.level = 90;
+                if (name in キャラクター所持状況Var) {
+                    characterInputVue.constellation = キャラクター所持状況Var[name];
+                } else {
+                    characterInputVue.constellation = 0;
+                }
+            });
+
+
+        }
+
+        function setupCharacterInput() {
+            characterInputVue = new Vue({
                 el: '#character-input',
                 data: {
                     name: null,
+                    master: {
+                        icon_url: null,
+                        通常攻撃: {
+                            名前: null,
+                            icon_url: null
+                        },
+                        元素スキル: {
+                            名前: null,
+                            icon_url: null
+                        },
+                        元素爆発: {
+                            名前: null,
+                            icon_url: null
+                        }
+                    },
                     ascension: 6,
                     level: 90,
                     constellation: 0,
@@ -296,7 +430,7 @@
                         list: [1, 2, 3, 4, 5, 6]
                     },
                     levelOption: {
-                        list: [1, 20, 40, 50, 60, 70, 80, 90]
+                        list: [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
                     },
                     constellationOption: {
                         list: [0, 1, 2, 3, 4, 5, 6],
@@ -315,8 +449,9 @@
                     },
                     rarity: null,
                     vision: null,
-                    iconUrl: null,
-                    visionUrl: null,
+                    normalAttackName: null,
+                    elementalSkillName: null,
+                    elementalBurstName: null,
                     weapon: null,
                     weaponOption: {
                         list: []
@@ -330,7 +465,15 @@
                     recommendOption: {
                         list: []
                     },
-                    saveName: null
+                    saveName: null,
+                    url: null,
+                    visionUrl: null,
+                    normalAttackUrl: null,
+                    elementalSkillUrl: null,
+                    elementalBurstUrl: null,
+                    weaponUrl: null,
+                    artifactSet1Url: null,
+                    artifactSet2Url: null
                 },
                 methods: {
                     ascensionOnChange: function () {
@@ -361,6 +504,38 @@
                     }
                 }
             });
+        }
+
+        var キャラクターMaster;
+        var 武器Master;
+        var 聖遺物セットMaster;
+
+
+
+        async function onLoad() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json',
+                'data/SwordMaster.json',
+                'data/ClaymoreMaster.json',
+                'data/PolearmMaster.json',
+                'data/BowMaster.json',
+                'data/CatalystMaster.json',
+                'data/ArtifactSetMaster.json',
+                'data/ArtifactMainMaster.json',
+                'data/ArtifactSubMaster.json'
+            ].map(s => fetch(s).then(resp => resp.json())));
+
+            キャラクターMaster = responses[0];
+            武器Master = {
+                片手剣: responses[1],
+                両手剣: responses[2],
+                長柄武器: responses[3],
+                弓: responses[4],
+                法器: responses[5]
+            };
+
+            setupCharacterSelect();
+            setupCharacterInput();
 
         }
 

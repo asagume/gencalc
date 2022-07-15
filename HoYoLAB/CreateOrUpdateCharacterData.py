@@ -78,11 +78,12 @@ def normalizeFormulaValue(value):
     value = value.replace(' ', '').replace('×', '*')
     value = re.sub('^.*につき', '', value)
     value = re.sub('秒$', '', value)
-    if value.isdecimal():
-        return int(value)
     try:
-        return float(value)
-    except:
+        if value.isdecimal():
+            return int(value)
+        else:
+            return float(value)
+    except Exception as ex:
         return value
 
 
@@ -110,12 +111,15 @@ for filepath in files:
     filename = os.path.basename(filepath)
     basename, ext = os.path.splitext(filename)
 
+    if basename.endswith('Traveler'):
+        continue
+
     dstFilepath = os.path.join(DST_PATH, filename)
     if os.path.exists(dstFilepath):
         srcStat = os.stat(filepath)
         dstStat = os.stat(dstFilepath)
-        if srcStat.st_mtime < dstStat.st_mtime:
-            dstFilepath = None
+        # if srcStat.st_mtime < dstStat.st_mtime:
+        #     dstFilepath = None
 
     dstJson = copy.deepcopy(templateJson)
     try:
@@ -267,7 +271,7 @@ for filepath in files:
                             if talentName == workJson['名前']:
                                 talentJson = workJson
                                 break
-                        if workJson is None:
+                        if talentJson is None:
                             talentJson = {
                                 '名前': talentName,
                                 '説明': None,
@@ -292,7 +296,7 @@ for filepath in files:
                             if talentName == workJson['名前']:
                                 talentJson = workJson
                                 break
-                        if workJson is None:
+                        if talentJson is None:
                             talentJson = {
                                 '名前': talentName,
                                 '説明': None,
@@ -321,6 +325,8 @@ for filepath in files:
                             '/' + basename + '/' + iconFilename
                         if '詳細' not in talentJson:
                             talentJson['詳細'] = []
+                        else:
+                            continue
                         for attribute in entry['attributes']:
                             if attribute['key'] == 'Level':
                                 continue
@@ -332,7 +338,7 @@ for filepath in files:
                             detailName = attribute['key']
                             detailJson = None
                             for workJson in talentJson['詳細']:
-                                if detailName == workJson['名前']:
+                                if '名前' in workJson and detailName == workJson['名前']:
                                     detailJson = workJson
                                     break
                             if detailJson is None:
@@ -342,26 +348,25 @@ for filepath in files:
                                     '数値': {}
                                 }
                                 talentJson['詳細'].append(detailJson)
+                            detailJson['数値'] = {}
                             level = 0
-                            for value in attribute['values']:
-                                hitCount = 1
-                                for index, item in enumerate(attribute['values']):
-                                    newValue = normalizeFormulaValue(item)
-                                    detailJson['数値'][str(index + 1)] = newValue
-                                    if str(newValue).find('*') != -1:
-                                        splitted = str(newValue).split('*')
-                                        hitCount = normalizeFormulaValue(
-                                            splitted[len(splitted) - 1])
-                                    elif str(newValue).find('+') != -1:
-                                        hitCount = item.count('+') + 1
-                                    if attribute['key'].find('回復量') != -1:
-                                        detailJson['種類'] = 'HP回復'
-                                    elif attribute['key'].find('吸収量') != -1:
-                                        detailJson['種類'] = 'シールド吸収量'
-                                    elif attribute['key'].find('HP継承') != -1:
-                                        detailJson['種類'] = 'HP継承'
-                                    elif hitCount > 1:
-                                        detailJson['HIT数'] = hitCount
+                            hitCount = 1
+                            for index, item in enumerate(attribute['values']):
+                                newValue = normalizeFormulaValue(item)
+                                detailJson['数値'][str(index + 1)] = newValue
+                                if str(newValue).find('*') != -1:
+                                    splitted = str(newValue).split('*')
+                                    hitCount = normalizeFormulaValue(splitted[len(splitted) - 1])   
+                                elif str(newValue).find('+') != -1:
+                                    hitCount = item.count('+') + 1
+                                if attribute['key'].find('回復量') != -1:
+                                    detailJson['種類'] = 'HP回復'
+                                elif attribute['key'].find('吸収量') != -1:
+                                    detailJson['種類'] = 'シールド吸収量'
+                                elif attribute['key'].find('HP継承') != -1:
+                                    detailJson['種類'] = 'HP継承'
+                                elif hitCount > 1:
+                                    detailJson['HIT数'] = hitCount
 
             elif module['name'] == '命ノ星座' and component['component_id'] == 'summaryList':
                 # 命ノ星座

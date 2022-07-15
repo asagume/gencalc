@@ -63,14 +63,21 @@ foreach ($pageId in $pageIds) {
 
     if ($menuId -eq 2) {
         # キャラクター
+        $rarity = null
         foreach ($value in $contentMLang."en-us"."filter_values"."character_rarity"."values") {
             $rarity = $value -replace "[^0-9]", ""
         }
+        $vision = null
         foreach ($value in $contentMLang."en-us"."filter_values"."character_vision"."values") {
             $vision = $value.ToLower()
         }
+        $weapon = null
         foreach ($value in $contentMLang."en-us"."filter_values"."character_weapon"."values") {
             $weapon = $value.ToLower()
+        }
+
+        if ($vision == null) {
+            continue
         }
 
         $basename = $vision + "_" + $rarity + "_" + $weapon + "_" + $writableName
