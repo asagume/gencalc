@@ -21,11 +21,11 @@
     },
     "和璞鳶": {
         "レアリティ": 5,
-        "import": "data/weapons/polearm/5_PrimordialJadeWingedSpear.json"
+        "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
     },
     "斬波のひれ長": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm/4_WavebreakersFin.json"
+        "import": "data/weapons/polearm/4_Wavebreaker'sFin.json"
     },
     "「漁獲」": {
         "レアリティ": 4,
@@ -69,7 +69,7 @@
     },
     "匣中滅龍": {
         "レアリティ": 4,
-        "import": "data/weapons/polearm/4_DragonsBane.json"
+        "import": "data/weapons/polearm/4_Dragon'sBane.json"
     },
     "黒纓槍": {
         "レアリティ": 3,

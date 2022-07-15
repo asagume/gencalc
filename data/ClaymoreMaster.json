@@ -13,7 +13,7 @@
     },
     "狼の末路": {
         "レアリティ": 5,
-        "import": "data/weapons/claymore/5_WolfsGravestone.json"
+        "import": "data/weapons/claymore/5_Wolf'sGravestone.json"
     },
     "天空の傲": {
         "レアリティ": 5,
@@ -25,7 +25,7 @@
     },
     "銜玉の海皇": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore/4_LuxuriousSeaLord.json"
+        "import": "data/weapons/claymore/4_LuxuriousSea-Lord.json"
     },
     "桂木斬長正": {
         "レアリティ": 4,
@@ -37,7 +37,7 @@
     },
     "雪葬の星銀": {
         "レアリティ": 4,
-        "import": "data/weapons/claymore/4_SnowTombedStarsilver.json"
+        "import": "data/weapons/claymore/4_Snow-TombedStarsilver.json"
     },
     "螭龍の剣": {
         "レアリティ": 4,
@@ -77,6 +77,6 @@
     },
     "龍血を浴びた剣": {
         "レアリティ": 3,
-        "import": "data/weapons/claymore/3_BloodtainedGreatsword.json"
+        "import": "data/weapons/claymore/3_BloodtaintedGreatsword.json"
     }
 }

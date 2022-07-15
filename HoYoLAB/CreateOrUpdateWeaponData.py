@@ -9,7 +9,7 @@ import re
 
 SRC_PATH = './RawData/data/weapons'
 ORG_PATH = '../data/weapons'
-DST_PATH = './Output/data/weapons'
+DST_PATH = '../data/weapons'
 ICON_URL_PATH = 'images/weapons'
 
 os.chdir(os.path.dirname(__file__))
@@ -32,7 +32,7 @@ templateJson = {
 
 
 def normalizeStatName(statName):
-    if statName.endswith('ダメージ'):
+    if statName.endswith('元素ダメージ') or statName.endswith('物理ダメージ'):
         statName = statName + 'バフ'
     else:
         statName = statName.replace('パーセンテージ', '%')
@@ -80,8 +80,8 @@ for filepath in files:
     if os.path.exists(dstFilepath):
         srcStat = os.stat(filepath)
         dstStat = os.stat(dstFilepath)
-        if srcStat.st_mtime < dstStat.st_mtime:
-            dstFilepath = None
+        # if srcStat.st_mtime < dstStat.st_mtime:
+        #     dstFilepath = None
 
     dstJson = copy.deepcopy(templateJson)
     try:
@@ -107,7 +107,10 @@ for filepath in files:
     dstJson['ステータス'] = copy.deepcopy(templateJson['ステータス'])
     for value in srcJson['filter_values']['weapon_property']['values']:
         weaponProperty = normalizeStatName(value)
-        dstJson['ステータス'][weaponProperty] = {}
+        if len(weaponProperty) > 0:
+            dstJson['ステータス'][weaponProperty] = {}
+        else:
+            weaponProperty = None
 
     for module in srcJson['modules']:
         for component in module['components']:
@@ -115,7 +118,7 @@ for filepath in files:
                 for entry in component['data']['list']:
                     # dstJson['baseInfo'][entry['key']
                     #                     ] = ','.join(entry['value'])
-                    if entry['key'] not in ['名称', '入手方法', '種類', 'サブステータス', '精錬素材']:
+                    if entry['key'] not in ['名称', '入手方法', '種類', 'サブステータス', '精錬素材', '鍛造素材']:
                         dstJson['武器スキル']['名前'] = entry['key']
                         dstJson['武器スキル']['説明'] = ','.join(entry['value'])
 
@@ -127,14 +130,16 @@ for filepath in files:
                     if entry['combatList'][1]['values'][0] != '-':
                         dstJson['ステータス']['基礎攻撃力'][level] = normalizeStatValue(
                             entry['combatList'][1]['values'][0])
-                        dstJson['ステータス'][weaponProperty][level] = normalizeStatValue(
-                            entry['combatList'][1]['values'][2])
+                        if weaponProperty is not None:
+                            dstJson['ステータス'][weaponProperty][level] = normalizeStatValue(
+                                entry['combatList'][1]['values'][2])
                     # 突破後
                     if entry['combatList'][1]['values'][1] != '-':
                         dstJson['ステータス']['基礎攻撃力'][level + '+'] = normalizeStatValue(
                             entry['combatList'][1]['values'][1])
-                        dstJson['ステータス'][weaponProperty][level + '+'] = normalizeStatValue(
-                            entry['combatList'][1]['values'][2])
+                        if weaponProperty is not None:
+                            dstJson['ステータス'][weaponProperty][level + '+'] = normalizeStatValue(
+                                entry['combatList'][1]['values'][2])
 
     dstJson = suppressNull(dstJson)
 

@@ -17,7 +17,7 @@
     },
     "アモスの弓": {
         "レアリティ": 5,
-        "import": "data/weapons/bow/5_AmosBow.json"
+        "import": "data/weapons/bow/5_Amos'Bow.json"
     },
     "天空の翼": {
         "レアリティ": 5,
@@ -29,7 +29,7 @@
     },
     "曚雲の月": {
         "レアリティ": 4,
-        "import": "data/weapons/bow/4_MouunsMoon.json"
+        "import": "data/weapons/bow/4_Mouun'sMoon.json"
     },
     "破魔の弓": {
         "レアリティ": 4,
@@ -97,7 +97,7 @@
     },
     "シャープシューターの誓い": {
         "レアリティ": 3,
-        "import": "data/weapons/bow/3_SharpshootersOath.json"
+        "import": "data/weapons/bow/3_Sharpshooter'sOath.json"
     },
     "鴉羽の弓": {
         "レアリティ": 3,

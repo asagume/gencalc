@@ -13,7 +13,7 @@
     },
     "磐岩結緑": {
         "レアリティ": 5,
-        "import": "data/weapons/sword/5_PrimodialJadeCutter.json"
+        "import": "data/weapons/sword/5_PrimordialJadeCutter.json"
     },
     "斬山の刃": {
         "レアリティ": 5,
@@ -45,7 +45,7 @@
     },
     "腐植の剣": {
         "レアリティ": 4,
-        "import": "data/weapons/sword/4_SwordofDescension.json"
+        "import": "data/weapons/sword/4_FesteringDesire.json"
     },
     "黒剣": {
         "レアリティ": 4,
@@ -65,7 +65,7 @@
     },
     "匣中龍吟": {
         "レアリティ": 4,
-        "import": "data/weapons/sword/4_LionsRoar.json"
+        "import": "data/weapons/sword/4_Lion'sRoar.json"
     },
     "旧貴族長剣": {
         "レアリティ": 4,
