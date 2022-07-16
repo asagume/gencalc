@@ -362,6 +362,11 @@ function setupおすすめセット(opt_saveName = null) {
     if ('おすすめセット' in 選択中キャラクターデータVar) {
         選択中キャラクターデータVar['おすすめセット'].forEach(obj => {
             let myおすすめセット = obj;
+            ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach(statName => {
+                if (!(statName in obj)) {
+                    obj[statName] = null;
+                }
+            });
             let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
             let artifactRarerity4Num = 0;
             if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {

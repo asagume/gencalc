@@ -3,9 +3,10 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 $pageIds = @()
 # キャラクター
 # $pageIds += @(1..51)
-$pageIds += 2252   # 夜蘭
-$pageIds += 2256   # 久岐忍
-$pageIds += 2263   # 鹿野院平蔵
+$pageIds += 19
+#$pageIds += 2252   # 夜蘭
+#$pageIds += 2256   # 久岐忍
+#$pageIds += 2263   # 鹿野院平蔵
 # 武器
 #$pageIds += @(1930..2060)
 #$pageIds += 2254   # 若水
@@ -63,20 +64,20 @@ foreach ($pageId in $pageIds) {
 
     if ($menuId -eq 2) {
         # キャラクター
-        $rarity = null
+        $rarity = $null
         foreach ($value in $contentMLang."en-us"."filter_values"."character_rarity"."values") {
             $rarity = $value -replace "[^0-9]", ""
         }
-        $vision = null
+        $vision = $null
         foreach ($value in $contentMLang."en-us"."filter_values"."character_vision"."values") {
             $vision = $value.ToLower()
         }
-        $weapon = null
+        $weapon = $null
         foreach ($value in $contentMLang."en-us"."filter_values"."character_weapon"."values") {
             $weapon = $value.ToLower()
         }
 
-        if ($vision == null) {
+        if ($null -eq $vision) {
             continue
         }
 

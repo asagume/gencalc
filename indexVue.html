@@ -236,13 +236,13 @@
                                 <img :src="weaponUrl" :alt="weapon">
                             </td>
                             <td>
-                                <img class="talent" :src="normalAttackUrl" :alt="normalAttackName">
+                                <img class="talent" :src="master['通常攻撃']['icon_url']" :alt="master['通常攻撃']['名前']">
                             </td>
                             <td>
-                                <img class="talent" :src="elementalSKillUrl" :alt="elementalSKillName">
+                                <img class="talent" :src="master['元素スキル']['icon_url']" :alt="master['元素スキル']['名前']">
                             </td>
                             <td>
-                                <img class="talent" :src="elementalBurstUrl" :alt="elementalBurstName">
+                                <img class="talent" :src="master['元素爆発']['icon_url']" :alt="master['元素爆発']['名前']">
                             </td>
                         </tr>
                     </table>
@@ -367,6 +367,7 @@
                     onClick: function (event) {
                         if (event.target.alt != this.selected) {
                             this.selected = event.target.alt;
+                            characterOnChange(this.selected)
                         }
                         this.isVisible = false;
                     },
@@ -382,7 +383,7 @@
             });
         }
 
-        function characterOnchange(name) {
+        function characterOnChange(name) {
             characterInputVue.name = name;
 
             fetch(キャラクターMaster[name]['import']).then(resp => resp.json()).then(json => {

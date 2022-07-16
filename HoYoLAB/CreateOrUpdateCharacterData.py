@@ -9,7 +9,7 @@ import re
 
 SRC_PATH = './RawData/data/characters'
 ORG_PATH = '../data/characters'
-DST_PATH = './Output/data/characters'
+DST_PATH = '../data/characters'
 ICON_URL_PATH = 'images/characters'
 
 os.chdir(os.path.dirname(__file__))
@@ -61,6 +61,8 @@ def normalizeStatName(statName):
         statName = statName + 'バフ'
     else:
         statName = statName.replace('パーセンテージ', '%')
+        if statName in ['HP', '攻撃力', '防御力']:
+            statName += '%'
     return statName
 
 
@@ -111,8 +113,8 @@ for filepath in files:
     filename = os.path.basename(filepath)
     basename, ext = os.path.splitext(filename)
 
-    if basename.endswith('Traveler'):
-        continue
+    # if basename.endswith('Traveler'):
+    #     continue
 
     dstFilepath = os.path.join(DST_PATH, filename)
     if os.path.exists(dstFilepath):
@@ -193,6 +195,8 @@ for filepath in files:
                                 continue
                             if '詳細' not in talentJson:
                                 talentJson['詳細'] = []
+                            else:
+                                continue
                             if attribute['key'].endswith('スタミナ消費') or attribute['key'].endswith('継続時間'):
                                 for value in attribute['values']:
                                     talentJson[attribute['key']
@@ -250,6 +254,8 @@ for filepath in files:
                             for value in attribute['values']:
                                 hitCount = 1
                                 for index, item in enumerate(attribute['values']):
+                                    if item.find('♂') != -1:
+                                        item = re.match('♂:\s*(.+)\<', item)[1]
                                     newValue = normalizeFormulaValue(item)
                                     detailJson['数値'][str(index + 1)] = newValue
                                     if str(newValue).find('*') != -1:
