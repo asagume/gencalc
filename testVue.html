@@ -284,13 +284,41 @@
                     </template>
                     <template v-else-if="activeTab === '3'">
                         <div>
+                            {{getDisplayName('敵')}}
                             <select v-model="敵">
                                 <option v-for="item in 敵List">{{}}</option>
                             </select>
+                            {{getDisplayName('Level')}}
                             <input v-model="敵レベル" type="number">
                         </div>
                         <table class="status">
-
+                            <tr v-for="stat in Object.keys(敵ステータス)">
+                                <th> {{stat}} </th>
+                                <td v-show="isEditable">
+                                    <input type="number" v-model="敵ステータス補正[stat]">
+                                </td>
+                                <td>
+                                    {{敵ステータス[stat] + 敵ステータス補正[stat]}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="isEditable">
+                                        {{getDisplayName('補正値入力モード')}}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="補正値0初期化Enabled">
+                                        {{getDisplayName('補正値0初期化')}}
+                                    </label>
+                                    <button type="button" style="width: 10rem"
+                                        :disabled="!補正値0初期化Enabled">{{getDisplayName('実行')}}</button>
+                                </td>
+                            </tr>
                         </table>
                     </template>
                 </div>
@@ -549,7 +577,10 @@
                     補正値0初期化Enabled: false,
                     敵: null,
                     敵List: [],
-                    敵レベル: 90
+                    敵レベル: 90,
+                    敵ステータス: JSON.parse(JSON.stringify(元素ステータス_耐性TEMPLATE)),
+                    敵ステータス補正: {},
+                    敵防御力: 0
                 }
             },
             created() {
@@ -561,6 +592,9 @@
                 });
                 Object.keys(this.ステータス).forEach(key => {
                     this.isステータスOpened[key] = false; // close
+                });
+                Object.keys(this.敵ステータス).forEach(stat => {
+                    this.敵ステータス補正[stat] = 0;
                 });
             },
             computed: {
