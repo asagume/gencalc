@@ -24,88 +24,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
     <link href="styles/normalize.css" rel="stylesheet" />
     <link href="styles/base-style.css" rel="stylesheet" />
+    <link href="styles/new-styles.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
     <style type="text/css">
-        body {
-            color: blanchedalmond;
-            background-color: black;
-            font-size: 2rem;
-            font-family: 'Yusei Magic', sans-serif;
-        }
-
-        #main {
-            max-width: 1280px;
-            background: linear-gradient(to top, #3d3d3b, #141414);
-            margin: 0 auto;
-            font-family: 'Yusei Magic', sans-serif;
-        }
-
-        a:link {
-            color: blanchedalmond;
-        }
-
-        a:visited {
-            color: blanchedalmond;
-        }
-
-        div.filter input[type="radio"] {
-            display: none;
-        }
-
-        div.filter img.filter {
-            width: 48px;
-            height: 48px;
-            border: 3px solid transparent;
-        }
-
-        div.filter img.filter.selected {
-            border: 3px solid white;
-            border-radius: 50%;
-        }
-
-        #character-select ul {
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-            list-style: none;
-            margin-block-start: 0;
-            margin-block-end: 0;
-            padding-inline-start: 0;
-            padding-inline-end: 0;
-        }
-
-        #character-select ul li {
-            display: inline-block;
-            position: relative;
-        }
-
-        #character-select ul li img.character {
-            width: 96px;
-            height: 96px;
-            background-size: contain;
-        }
-
-        #character-select ul li img.vision {
-            width: 30px;
-            height: 30px;
-            position: absolute;
-            left: 2px;
-            top: 2px;
-        }
-
-        #character-input img.character {
-            max-width: calc(100% / 3);
-        }
-
-        tr {
-            border: 1px solid;
-        }
-
-        td {
-            border: 1px solid;
-        }
     </style>
 </head>
 
@@ -178,29 +100,39 @@
                 <div id="character-input">
                     <table>
                         <tr>
-                            <td colspan="3" rowspan="3">
-                                <img class="character" :src="url" :alt="name"
+                            <td colspan="3" rowspan="3" style="width: 180px; position: relative;">
+                                <img class="character" :src="characterMaster['icon_url']" :alt="name"
+                                    :style="'background-image: url(' + STAR_BACKGROUND_URL[characterMaster['レアリティ']] +')'"
                                     @click="characterSelectVue.isVisible=true">
+                                <img class="vision" :src="VISION_IMG_SRC[characterMaster['元素']]"
+                                    :alt="characterMaster['元素']">
                             </td>
-                            <td colspan="2"> {{name}} &emsp;
-                                <span class="material-symbols-outlined"> info </span>
+                            <td class="title" colspan="3" style="position: relative;">
+                                {{characterMaster['名前']}}
+                                <span class="material-symbols-outlined" style="position: absolute; right: 0;"> info
+                                </span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <button @click="saveOnClick">
+                                <button type="button" @click="saveOnClick">
+                                    Save<br>
                                     <span class="material-symbols-outlined"> save </span>
                                 </button>
                             </td>
                             <td>
-                                <button @click="removeOnClick">
+                                &emsp;
+                            </td>
+                            <td>
+                                <button type="button" @click="removeOnClick">
+                                    Remove<br>
                                     <span class="material-symbols-outlined"> delete </span>
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                <input type="text">
+                            <td colspan="3" style="padding-left: 1rem; padding-right: 1rem;">
+                                <input type="text" v-model="saveName">
                             </td>
                         </tr>
                         <tr>
@@ -220,29 +152,92 @@
                                         v-if="index <= constellationOption.max" :value="item"> C{{item}} </option>
                                 </select>
                             </td>
-                            <td colspan="2">
-                                <button type="button">RECOMMEND</button>
+                            <td colspan="3">
+                                <label class="button">
+                                    <input type="checkbox" v-model="recommendOption.isOpen">
+                                    &emsp; おすすめセット &emsp;
+                                </label>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="5">
+                        <tr v-if="recommendOption.isOpen">
+                            <td colspan="6">
                                 <select :value="recommend"></select>
                             </td>
                         </tr>
                     </table>
                     <table>
                         <tr>
-                            <td colspan="3" rowspan="2">
-                                <img :src="weaponUrl" :alt="weapon">
+                            <td colspan="3" rowspan="3" style="width: 180px;">
+                                <img class="weapon" :src="weaponMaster['icon_url']" :alt="weaponMaster['名前']"
+                                    :style="'background-image: url(' + STAR_BACKGROUND_URL[weaponMaster['レアリティ']] +')'">
                             </td>
                             <td>
-                                <img class="talent" :src="master['通常攻撃']['icon_url']" :alt="master['通常攻撃']['名前']">
+                                <img :class="'talent ' + BG_COLOR_CLASS[characterMaster['元素']]"
+                                    :src="characterMaster['通常攻撃']['icon_url']" :alt="characterMaster['通常攻撃']['名前']">
                             </td>
                             <td>
-                                <img class="talent" :src="master['元素スキル']['icon_url']" :alt="master['元素スキル']['名前']">
+                                <img :class="'talent ' + BG_COLOR_CLASS[characterMaster['元素']]"
+                                    :src="characterMaster['元素スキル']['icon_url']" :alt="characterMaster['元素スキル']['名前']">
                             </td>
                             <td>
-                                <img class="talent" :src="master['元素爆発']['icon_url']" :alt="master['元素爆発']['名前']">
+                                <img :class="'talent ' + BG_COLOR_CLASS[characterMaster['元素']]"
+                                    :src="characterMaster['元素爆発']['icon_url']" :alt="characterMaster['元素爆発']['名前']">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select v-model="normalAttackLevel">
+                                    <option v-for="item in normalAttackLevelOption.list" :value="item"> Lv.{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select v-model="elementalSkillLevel">
+                                    <option v-for="item in elementalSkillLevelOption.list"
+                                        v-if="item <= elementalSkillLevelOption.max" :value="item"> Lv.{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select v-model="elementalBurstLevel">
+                                    <option v-for="item in elementalBurstLevelOption.list"
+                                        v-if="item <= elementalBurstLevelOption.max" :value="item"> Lv.{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">
+                                <label>
+                                    <input type="radio" value="artifact-set1" name="artifact-input">
+                                    <img class="artifact-set" :src="artifactSet1Master['icon_url']">
+                                </label>
+                            </td>
+                            <td rowspan="2">
+                                <input type="radio" value="artifact-set2" name="artifact-input">
+                                <img class="artifact-set" :src="artifactSet2Master['icon_url']">
+                            </td>
+                            <td rowspan="2">
+                                <input type="radio" value="artifact-stat" name="artifact-input">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select>
+                                    <option v-for="item in weaponAscensionOption.list" :value="item"> A{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option v-for="item in weaponLevelOption.list" :value="item"> Lv.{{item}} </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option v-for="item in weaponRefineOption.list" :value="item"> R{{item}} </option>
+                                </select>
                             </td>
                         </tr>
                     </table>
@@ -301,6 +296,26 @@
             岩: 'images/element_geo.png'
         };
 
+        const COLOR_CLASS = {
+            炎: 'pyro',
+            水: 'hydro',
+            風: 'anemo',
+            雷: 'electro',
+            草: 'dendro',
+            氷: 'cryo',
+            岩: 'geo'
+        };
+
+        const BG_COLOR_CLASS = {
+            炎: 'pyro-bg',
+            水: 'hydro-bg',
+            風: 'anemo-bg',
+            雷: 'electro-bg',
+            草: 'dendro-bg',
+            氷: 'cryo-bg',
+            岩: 'geo-bg'
+        };
+
         const WEAPON_IMG_SRC = {
             片手剣: 'images/characters/NormalAttack_sword.png',
             両手剣: 'images/characters/NormalAttack_claymore.png',
@@ -317,6 +332,8 @@
             5: 'images/star5-bg.png'
         };
 
+        const IMG_DUMMY_SRC = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+
         var characterSelectVue;
         var characterInputVue;
 
@@ -332,17 +349,17 @@
             const filterCharacterWeapons = Object.keys(WEAPON_IMG_SRC).map(function (key) {
                 return { name: key, url: WEAPON_IMG_SRC[key] }
             });
-            const characterSelectList = Object.keys(キャラクターMaster).map(function (key) {
-                const importUrl = キャラクターMaster[key]['import'];
+            const characterSelectList = Object.keys(キャラクターMasterVar).map(function (key) {
+                const importUrl = キャラクターMasterVar[key]['import'];
                 let iconUrl = 'images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png')
                 return {
                     name: key,
-                    rarity: キャラクターMaster[key]['レアリティ'],
-                    vision: キャラクターMaster[key]['元素'],
-                    weapon: キャラクターMaster[key]['武器'],
+                    rarity: キャラクターMasterVar[key]['レアリティ'],
+                    vision: キャラクターMasterVar[key]['元素'],
+                    weapon: キャラクターMasterVar[key]['武器'],
                     iconUrl: iconUrl,
-                    visionIconUrl: VISION_IMG_SRC[キャラクターMaster[key]['元素']],
-                    starBgUrl: STAR_BACKGROUND_URL[キャラクターMaster[key]['レアリティ']]
+                    visionIconUrl: VISION_IMG_SRC[キャラクターMasterVar[key]['元素']],
+                    starBgUrl: STAR_BACKGROUND_URL[キャラクターMasterVar[key]['レアリティ']]
                 }
             });
 
@@ -386,8 +403,8 @@
         function characterOnChange(name) {
             characterInputVue.name = name;
 
-            fetch(キャラクターMaster[name]['import']).then(resp => resp.json()).then(json => {
-                characterInputVue.master = json;
+            fetch(キャラクターMasterVar[name]['import']).then(resp => resp.json()).then(json => {
+                characterInputVue.characterMaster = json;
 
                 characterInputVue.ascension = 6;
                 characterInputVue.level = 90;
@@ -396,9 +413,25 @@
                 } else {
                     characterInputVue.constellation = 0;
                 }
+
+                recommendOnChange(characterInputVue.characterMaster['おすすめセット'][0]);
             });
+        }
 
+        function recommendOnChange(recommend) {
+            weaponOnChange(recommend['武器']);
+        }
 
+        function weaponOnChange(name) {
+            const characterMaster = characterInputVue.characterMaster;
+            const weaponType = characterMaster['武器'];
+            const url = 武器MasterVar[weaponType][name]['import'];
+            fetch(url).then(resp => resp.json()).then(json => {
+                characterInputVue.weaponMaster = json;
+
+                characterInputVue.weaponAscension = 6;
+                characterInputVue.weaponLevel = 90;
+            });
         }
 
         function setupCharacterInput() {
@@ -406,20 +439,36 @@
                 el: '#character-input',
                 data: {
                     name: null,
-                    master: {
-                        icon_url: null,
+                    characterMaster: {
+                        名前: null,
+                        レアリティ: 5,
+                        元素: '炎',
+                        icon_url: IMG_DUMMY_SRC,
                         通常攻撃: {
                             名前: null,
-                            icon_url: null
+                            icon_url: IMG_DUMMY_SRC
                         },
                         元素スキル: {
                             名前: null,
-                            icon_url: null
+                            icon_url: IMG_DUMMY_SRC
                         },
                         元素爆発: {
                             名前: null,
-                            icon_url: null
+                            icon_url: IMG_DUMMY_SRC
                         }
+                    },
+                    weaponMaster: {
+                        名前: null,
+                        レアリティ: 5,
+                        icon_url: IMG_DUMMY_SRC
+                    },
+                    artifactSet1Master: {
+                        名前: null,
+                        icon_url: IMG_DUMMY_SRC
+                    },
+                    artifactSet2Master: {
+                        名前: null,
+                        icon_url: IMG_DUMMY_SRC
                     },
                     ascension: 6,
                     level: 90,
@@ -427,6 +476,9 @@
                     normalAttackLevel: 8,
                     elementalSkillLevel: 8,
                     elementalBurstLevel: 8,
+                    weaponAscension: 6,
+                    weaponLevel: 6,
+                    weaponRefine: 1,
                     ascensionOption: {
                         list: [1, 2, 3, 4, 5, 6]
                     },
@@ -448,14 +500,18 @@
                         list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
                         max: 13
                     },
-                    rarity: null,
-                    vision: null,
-                    normalAttackName: null,
-                    elementalSkillName: null,
-                    elementalBurstName: null,
                     weapon: null,
                     weaponOption: {
                         list: []
+                    },
+                    weaponAscensionOption: {
+                        list: [1, 2, 3, 4, 5, 6]
+                    },
+                    weaponLevelOption: {
+                        list: [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
+                    },
+                    weaponRefineOption: {
+                        list: [1, 2, 3, 4, 5]
                     },
                     artifactSet1: null,
                     artifactSet2: null,
@@ -464,17 +520,10 @@
                     },
                     recommend: null,
                     recommendOption: {
+                        isOpen: false,
                         list: []
                     },
-                    saveName: null,
-                    url: null,
-                    visionUrl: null,
-                    normalAttackUrl: null,
-                    elementalSkillUrl: null,
-                    elementalBurstUrl: null,
-                    weaponUrl: null,
-                    artifactSet1Url: null,
-                    artifactSet2Url: null
+                    saveName: null
                 },
                 methods: {
                     ascensionOnChange: function () {
@@ -507,9 +556,9 @@
             });
         }
 
-        var キャラクターMaster;
-        var 武器Master;
-        var 聖遺物セットMaster;
+        var キャラクターMasterVar;
+        var 武器MasterVar;
+        var 聖遺物セットMasterVar;
 
 
 
@@ -526,8 +575,8 @@
                 'data/ArtifactSubMaster.json'
             ].map(s => fetch(s).then(resp => resp.json())));
 
-            キャラクターMaster = responses[0];
-            武器Master = {
+            キャラクターMasterVar = responses[0];
+            武器MasterVar = {
                 片手剣: responses[1],
                 両手剣: responses[2],
                 長柄武器: responses[3],
