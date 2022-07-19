@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TEST PAGE</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        @media all and (min-width: 769px) {
+            html {
+                font-size: 8px;
+            }
+
+            body {
+                font-size: 8px;
+            }
+        }
+
+        @media all and (max-width: 768px) {
+            html {
+                font-size: calc(100vw / 72);
+            }
+
+            body {
+                font-size: calc(100vw / 72);
+            }
+        }
+
+        body {
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2rem;
+        }
+
+        #main {
+            max-width: 1280px;
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 100%;
+        }
+
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
+        }
+
+        input[type="number"] {
+            border-radius: 0.6rem;
+            font-size: 2rem;
+            text-align: right;
+        }
+
+        input.hidden {
+            display: none;
+        }
+
+        label.open-close {
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        label.open-close input[type="checkbox"]+span {
+            display: inline-block;
+        }
+
+        label.open-close input[type="checkbox"]+span::before,
+        label.open-close input[type="checkbox"]+span::after {
+            content: '';
+            width: 1.5rem;
+            height: 2px;
+            background: #ccc;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        label.open-close input[type="checkbox"]+span::after {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        label.open-close input[type="checkbox"]:checked+span::after {
+            transform: translateY(-50%) rotate(0);
+        }
+
+        .pyro {
+            color: #d2655a;
+        }
+
+        .hydro {
+            color: #559cc9;
+        }
+
+        .anemo {
+            color: #3aaf7a;
+        }
+
+        .electro {
+            color: #b681df;
+        }
+
+        .cryo {
+            color: #63beb4;
+        }
+
+        .geo {
+            color: #df8f37;
+        }
+
+        .pyro-bg {
+            background-color: #d2655a;
+        }
+
+        .hydro-bg {
+            background-color: #559cc9;
+        }
+
+        .anemo-bg {
+            background-color: #3aaf7a;
+        }
+
+        .electro-bg {
+            background-color: #b681df;
+        }
+
+        .cryo-bg {
+            background-color: #63beb4;
+        }
+
+        .geo-bg {
+            background-color: #df8f37;
+        }
+
+        table.status {
+            width: 100%;
+            table-layout: fixed;
+            vertical-align: top;
+        }
+
+        table.status td {
+            vertical-align: top;
+        }
+
+        table.status-part th[colspan="2"] {
+            text-align: center;
+        }
+
+        table.status-part th {
+            min-width: 10rem;
+            text-align: right;
+        }
+
+        table.status-part td {
+            min-width: 10rem;
+            text-align: right;
+        }
+
+        table.result {
+            width: 100%;
+            border: 2px solid gray;
+        }
+
+        table.result th {
+            border: 2px solid gray;
+        }
+
+        table.result th:first-child {
+            width: 14rem;
+            color: brown;
+        }
+
+        table.result thead th:first-child {
+            color: gold;
+        }
+
+        table.result td {
+            border: 2px solid gray;
+        }
+
+        .elemental-reaction {
+            width: 100%;
+        }
+
+        .elemental-reaction label {
+            display: inline-block;
+            width: calc(100% / 4 - 8px);
+            border: 2px solid gray;
+            margin: 2px;
+            border-radius: 10px;
+        }
+
+        .elemental-reaction input[type="radio"] {
+            display: none;
+        }
+
+        .elemental-reaction input[type="radio"]:checked+label {
+            border-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="lang-selector">
+            <select v-model="lang" @change="onChange()">
+                <option v-for="item in list" :value="item">{{item}}</option>
+            </select>
+        </div>
+
+        <div id="status-input">
+            <table class="status">
+                <tr>
+                    <td>
+                        <table class="status-part">
+                            <template v-for="category in ['基本ステータス', '高級ステータス']">
+                                <tr>
+                                    <th colspan="2">
+                                        {{category}}
+                                    </th>
+                                </tr>
+                                <tr v-for="stat in Object.keys(ステータス[category])">
+                                    <th> {{stat}} </th>
+                                    <td v-if="isEditable">
+                                        <input type="number" v-model="ステータス[category][stat]">
+                                    </td>
+                                    <td v-else> {{ステータス[category][stat]}} </td>
+                                </tr>
+                            </template>
+                            <tr>
+                                <td colspan="2">
+                                    <label>
+                                        <input type="checkbox" v-model="isEditable">
+                                        {{getDisplayName('補正値入力モード')}}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>
+                                        <input type="checkbox" v-model="補正値0初期化Enabled">
+                                        {{getDisplayName('補正値0初期化')}}
+                                    </label>
+                                    <button type="button" :disabled="!補正値0初期化Enabled">{{getDisplayName('実行')}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="status-part">
+                            <template v-for="category in ['元素ステータス_ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
+                                <tr>
+                                    <th colspan="2">
+                                        <label :for="category + '-opened'" class="open-close">
+                                            <input :id="category + '-opened'" class="hidden" type="checkbox"
+                                                v-model="isステータスOpened[category]">
+                                            <span></span>
+                                            {{category}}
+                                        </label>
+                                    </th>
+                                </tr>
+                                <tr v-for="stat in statList(category)">
+                                    <th> {{stat}} </th>
+                                    <td v-if="isEditable">
+                                        <input type="number" v-model="ステータス[category][stat]">
+                                    </td>
+                                    <td v-else> {{ステータス[category][stat]}} </td>
+                                </tr>
+                            </template>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="calculation-result">
+            <div class="elemental-reaction">
+                <input id="増幅反応-なし" type="radio" v-model="増幅反応" value="なし" name="増幅反応-name">
+                <label for="増幅反応-なし">
+                    反応なし
+                </label>
+                <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name">
+                <label for="増幅反応-蒸発" v-if="元素反応.蒸発倍率" :class="getClassByElement(元素)">
+                    {{getDisplayName('蒸発')}} * {{Math.round(元素反応.蒸発倍率 * 100) / 100}}
+                </label>
+                <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name">
+                <label for="増幅反応-溶解" v-if="元素反応.溶解倍率" :class="getClassByElement(元素)">
+                    {{getDisplayName('溶解')}} * {{Math.round(元素反応.溶解倍率 * 100) / 100}}
+                </label>
+                <label v-if="元素反応.過負荷ダメージ" class="pyro">
+                    {{getDisplayName('過負荷')}} {{Math.round(元素反応.過負荷ダメージ)}}
+                </label>
+                <label v-if="元素反応.感電ダメージ" class="electro">
+                    {{getDisplayName('感電')}} {{Math.round(元素反応.感電ダメージ)}}
+                </label>
+                <label v-if="元素反応.超電導ダメージ" class="cryo">
+                    {{getDisplayName('超電導')}} {{Math.round(元素反応.超電導ダメージ)}}
+                </label>
+                <label v-if="元素反応.拡散ダメージ" :class="getClassByElement(元素反応.拡散元素)">
+                    {{getDisplayName('拡散')}} {{Math.round(元素反応.拡散ダメージ)}}
+                </label>
+                <label v-if="元素反応.結晶吸収量" :class="etClassByElement(元素反応.結晶元素)">
+                    {{getDisplayName('結晶')}} {{Math.round(元素反応.結晶吸収量)}}
+                </label>
+                <label v-if="元素反応.燃焼ダメージ" class="pyro">
+                    {{getDisplayName('燃焼')}} {{Math.round(元素反応.燃焼ダメージ)}}
+                </label>
+                <label v-if="元素反応.開花ダメージ">
+                    {{getDisplayName('開花')}} {{Math.round(元素反応.開花ダメージ)}}
+                </label>
+                <label v-if="元素反応.激化ダメージ">
+                    {{getDisplayName('激化')}} {{Math.round(元素反応.激化ダメージ)}}
+                </label>
+            </div>
+
+            <table v-for="category in categoryList" class="result">
+                <thead>
+                    <tr class="title" @click="is計算結果Opened[category] = !is計算結果Opened[category]">
+                        <th>{{getDisplayName(category)}}</th>
+                        <th v-for="item in 計算結果[category]">{{getDisplayName(item[0])}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{{getDisplayName('期待値')}}</th>
+                        <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                            {{item[2] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[2] * 元素反応.蒸発倍率) :
+                            増幅反応 == '溶解' ? Math.round(item[2] * 元素反応.溶解倍率) : item[2] : item[2] : '-'}}
+                        </td>
+                    </tr>
+                    <tr v-if="is計算結果Opened[category]">
+                        <th>{{getDisplayName('会心')}}</th>
+                        <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                            {{item[3] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[3] * 元素反応.蒸発倍率) :
+                            増幅反応 == '溶解' ? Math.round(item[3] * 元素反応.溶解倍率) : item[3] : item[3] : '-'}}
+                        </td>
+                    </tr>
+                    <tr v-if="is計算結果Opened[category]">
+                        <th>{{getDisplayName('非会心')}}</th>
+                        <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                            {{item[4] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[4] * 元素反応.蒸発倍率) :
+                            増幅反応 == '溶解' ? Math.round(item[4] * 元素反応.溶解倍率) : item[4] : item[4] : '-'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            const ALLOW_LIST_LANG = ['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn'];
+
+            const SearchParams = new URLSearchParams(window.location.search);
+
+            // 言語コードをセットします
+            function setLang(opt_lang = 'ja-jp') {
+                let lang = opt_lang.toLowerCase();
+                if (SearchParams.has('lang')) {
+                    let work = SearchParams.get('lang').toLowerCase();
+                    if (ALLOW_LIST_LANG.includes(work)) {
+                        lang = work;
+                    }
+                }
+                document.getElementsByTagName('html')[0].setAttribute('lang', lang);
+            }
+
+            function getLang() {
+                return document.getElementsByTagName('html')[0].getAttribute('lang');
+            }
+
+            const LangSelector = {
+                data() {
+                    return {
+                        lang: null,
+                        list: ALLOW_LIST_LANG
+                    }
+                },
+                mounted() {
+                    this.lang = getLang();
+                },
+                methods: {
+                    onChange() {
+                        const workParams = new Map();
+                        workParams.set('lang', this.lang);
+                        SearchParams.forEach((value, key) => {
+                            if (key != 'lang') {
+                                workParams.set(key, value);
+                            }
+                        });
+                        const workParamsArr = [];
+                        workParams.forEach((value, key) => {
+                            workParamsArr.push(key + '=' + encodeURI(value));
+                        });
+                        location.href = location.href.split('?')[0] + '?' + workParamsArr.join('&');
+                    }
+                }
+            };
+            var LangSelectorVm;
+
+            const 基礎ステータスTEMPLATE = {
+                基礎HP: 0,
+                基礎攻撃力: 0,
+                基礎防御力: 0
+            };
+
+            const 基本ステータスTEMPLATE = {
+                HP上限: 0,
+                攻撃力: 0,
+                防御力: 0,
+                元素熟知: 0
+            };
+
+            const 高級ステータスTEMPLATE = {
+                会心率: 5,
+                会心ダメージ: 50,
+                与える治療効果: 0,
+                受ける治療効果: 0,
+                元素チャージ効率: 100,
+                シールド強化: 0
+            };
+
+            const 元素ステータス_ダメージTEMPLATE = {
+                炎元素: 0,
+                水元素: 0,
+                風元素: 0,
+                雷元素: 0,
+                草元素: 0,
+                氷元素: 0,
+                岩元素: 0,
+                物理: 0
+            };
+
+            const 元素ステータス_耐性TEMPLATE = {
+                炎元素: 0,
+                水元素: 0,
+                風元素: 0,
+                雷元素: 0,
+                草元素: 0,
+                氷元素: 0,
+                岩元素: 0,
+                物理: 0
+            };
+
+            const ダメージバフTEMPLATE = {
+                通常攻撃: 0,
+                重撃: 0,
+                落下攻撃: 0,
+                元素スキル: 0,
+                元素爆発: 0,
+                与えるダメージ: 0
+            };
+
+            const 実数ダメージ加算TEMPLATE = {
+                通常攻撃: 0,
+                重撃: 0,
+                落下攻撃: 0,
+                元素スキル: 0,
+                元素爆発: 0,
+                炎元素: 0,
+                水元素: 0,
+                風元素: 0,
+                雷元素: 0,
+                草元素: 0,
+                氷元素: 0,
+                岩元素: 0,
+                物理: 0
+            };
+
+            const 元素反応バフTEMPLATE = {
+                蒸発: 0,
+                溶解: 0,
+                過負荷: 0,
+                感電: 0,
+                凍結: 0,
+                超電導: 0,
+                拡散: 0,
+                結晶: 0,
+                燃焼: 0,
+                開花: 0,
+                激化: 0
+            };
+
+            const StatusInput = {
+                data() {
+                    return {
+                        isEditable: true,
+                        ステータス: {
+                            基礎ステータス: JSON.parse(JSON.stringify(基礎ステータスTEMPLATE)),
+                            基本ステータス: JSON.parse(JSON.stringify(基本ステータスTEMPLATE)),
+                            高級ステータス: JSON.parse(JSON.stringify(高級ステータスTEMPLATE)),
+                            元素ステータス_ダメージ: JSON.parse(JSON.stringify(元素ステータス_ダメージTEMPLATE)),
+                            元素ステータス_耐性: JSON.parse(JSON.stringify(元素ステータス_耐性TEMPLATE)),
+                            ダメージバフ: JSON.parse(JSON.stringify(ダメージバフTEMPLATE)),
+                            実数ダメージ加算: JSON.parse(JSON.stringify(実数ダメージ加算TEMPLATE)),
+                            元素反応バフ: JSON.parse(JSON.stringify(元素反応バフTEMPLATE))
+                        },
+                        isステータスOpened: {},
+                        補正値0初期化Enabled: false
+                    }
+                },
+                created() {
+                    Object.keys(this.ステータス).forEach(key => {
+                        this.isステータスOpened[key] = false; // close
+                    });
+                },
+                computed: {
+                    isCategoryDisp: function (category) {
+                        let result = false;
+                        Object.keys(this.ステータス[category]).forEach(stat => {
+                            if (this.ステータス[category][stat]) {
+                                result = true;
+                            }
+                        });
+                        return result;
+                    }
+                },
+                methods: {
+                    statList: function (category) {
+                        return Object.keys(this.ステータス[category]).filter(s => this.isステータスOpened[category] || this.ステータス[category][s]);
+                    },
+                    getDisplayName(name) {
+                        return name;
+                    }
+                }
+            };
+            var StatusInputVm;
+
+            const ELEMENT_TO_CLASS = {
+                炎: 'pyro',
+                水: 'hydro',
+                風: 'anemo',
+                雷: 'electro',
+                草: 'dendro',
+                氷: 'cryo',
+                岩: 'geo'
+            };
+
+            const 元素反応TEMPLATE = {
+                蒸発倍率: 1.5,
+                溶解倍率: 2,
+                過負荷ダメージ: 0,
+                感電ダメージ: 0,
+                超電導ダメージ: 0,
+                拡散ダメージ: 0,
+                拡散元素: '炎',
+                結晶吸収量: 0,
+                結晶元素: '炎',
+                燃焼ダメージ: 0,
+                激化ダメージ: 0,
+                開花ダメージ: 0
+            };
+
+            const 計算結果TEMPLATE = {
+                通常攻撃: [],
+                重撃: [],
+                落下攻撃: [],
+                元素スキル: [],
+                元素爆発: [],
+                その他: []
+            };
+
+            const CalculationResult = {
+                data() {
+                    return {
+                        元素: '雷',
+                        元素反応: JSON.parse(JSON.stringify(元素反応TEMPLATE)),
+                        計算結果: JSON.parse(JSON.stringify(計算結果TEMPLATE)),
+                        増幅反応: 'なし',
+                        is計算結果Opened: {}
+                    }
+                },
+                created() {
+                    Object.keys(this.計算結果).forEach(key => {
+                        this.is計算結果Opened[key] = true; // open
+                    });
+                },
+                beforeMount() {
+                    this.元素 = '水';
+                    this.元素反応['蒸発倍率'] = 2;
+                    this.元素反応['溶解倍率'] = 0;
+                    this.元素反応['過負荷ダメージ'] = 0;
+                    this.元素反応['感電ダメージ'] = 2000;
+                    this.元素反応['超電導ダメージ'] = 0;
+
+                    this.計算結果['通常攻撃'] = [
+                        ['1段目ダメージ', '物理', 1500, 2000, 1000],
+                        ['2段目ダメージ', '物理', 1500, null, 1000],
+                        ['3段目ダメージ', '物理', 1500, 2000, null],
+                        ['4段目ダメージ', '水', 1500, 2000, 1000]
+                    ];
+                    this.計算結果['元素スキル'] = [
+                        ['スキルダメージ', '水', 1500, 2000, 1000]
+                    ];
+                },
+                mounted() {
+                },
+                computed: {
+                    categoryList: function () {
+                        return Object.keys(this.計算結果).filter(s => this.計算結果[s].length);
+                    }
+                },
+                methods: {
+                    getClassByElement(element) {
+                        return ELEMENT_TO_CLASS[element];
+                    },
+                    getDisplayName(name) {
+                        return name;
+                    }
+                }
+            };
+
+            async function onLoad() {
+                setLang();
+
+                LangSelectorVm = Vue.createApp(LangSelector).mount('#lang-selector');
+                CalculationResultVm = Vue.createApp(CalculationResult).mount('#calculation-result');
+                StatusInputVm = Vue.createApp(StatusInput).mount('#status-input');
+            }
+
+            onLoad();
+        </script>
+</body>
+
+</html>
