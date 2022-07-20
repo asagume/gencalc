@@ -215,13 +215,13 @@ async function initialSetupCharacterInput(name) {
                     {
                         名前: 'NONE',
                         master: {
-                            'icon_url': DUMMY_IMG_SRC
+                            'image': DUMMY_IMG_SRC
                         }
                     },
                     {
                         名前: 'NONE',
                         master: {
-                            'icon_url': DUMMY_IMG_SRC
+                            'image': DUMMY_IMG_SRC
                         }
                     }
                 ],
@@ -256,7 +256,7 @@ async function initialSetupCharacterInput(name) {
                 return getElementImgSrc(this.master);
             },
             ascensionRange: function () {
-                const max = 突破レベルレベルARR.length;
+                const max = 突破レベルレベルARR.length + 1;
                 return Array.from({ length: max }, (_, i) => i);
             },
             levelRange: function () {
@@ -279,7 +279,7 @@ async function initialSetupCharacterInput(name) {
                 return Array.from({ length: max }, (_, i) => i + 1);
             },
             weaponAscensionRange: function () {
-                const max = this.武器突破レベルOption.max;
+                const max = this.武器突破レベルOption.max + 1;
                 return Array.from({ length: max }, (_, i) => i);
             },
             weaponLevelRange: function () {
@@ -303,11 +303,36 @@ async function initialSetupCharacterInput(name) {
                     this.レベル = max;
                 }
             },
+            weaponAscensionOnChange: function () {
+                const min = this.weaponLevelRange[0];
+                const max = this.weaponLevelRange[this.weaponLevelRange.length - 1];
+                if (this.武器レベル < min) {
+                    this.武器レベル = min;
+                } else if (this.武器レベル > max) {
+                    this.武器レベル = max;
+                }
+            },
             weaponOnClick: function () {
-
+                console.log(this);
+                WeaponSelectVm.isVisible = !WeaponSelectVm.isVisible;
+                if (WeaponSelectVm.isVisible) {
+                    ArtifactSetSelectVm.isVisible = false;
+                }
             },
             artifactSetOnClick: function (index) {
-
+                if (ArtifactSetSelectVm.isVisible) {
+                    if (ArtifactSetSelectVm.index == index) {
+                        ArtifactSetSelectVm.isVisible = false;
+                    } else {
+                        ArtifactSetSelectVm.index = index;
+                    }
+                } else {
+                    ArtifactSetSelectVm.isVisible = true;
+                    ArtifactSetSelectVm.index = index;
+                }
+                if (ArtifactSetSelectVm.isVisible) {
+                    WeaponSelectVm.isVisible = false;
+                }
             },
             artifactDetailOnClick: function () {
 
@@ -383,7 +408,8 @@ function initialSetupArtifactSetSelect() {
         data() {
             return {
                 isVisible: false,
-                selected: null,
+                index: null,
+                selected: [null, null],
                 list: null
             }
         },
@@ -406,8 +432,11 @@ function initialSetupArtifactSetSelect() {
             },
             onClick: function (event) {
                 if (event.target.alt != this.selected) {
-                    this.selected = event.target.alt;
-
+                    const name = event.target.alt;
+                    console.log(this.index, name);
+                    this.selected[this.index] = name;
+                    CharacterInputVm['聖遺物セット効果'][this.index]['名前'] = name;
+                    CharacterInputVm['聖遺物セット効果'][this.index].master = 聖遺物セット効果MasterVar[name];
                 }
                 this.isVisible = false;
             }

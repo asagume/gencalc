@@ -207,13 +207,13 @@
                         <tr>
                             <td rowspan="2">
                                 <label @click="artifactSetOnClick(0)">
-                                    <img class="artifact-set" :src="聖遺物セット効果[0].master['icon_url']"
+                                    <img class="artifact-set" :src="聖遺物セット効果[0].master['image']"
                                         :alt="聖遺物セット効果[0]['名前']">
                                 </label>
                             </td>
                             <td rowspan="2">
                                 <label @click="artifactSetOnClick(1)">
-                                    <img class="artifact-set" :src="聖遺物セット効果[1].master['icon_url']"
+                                    <img class="artifact-set" :src="聖遺物セット効果[1].master['image']"
                                         :alt="聖遺物セット効果[1]['名前']">
                                 </label>
                             </td>
@@ -225,18 +225,18 @@
                         </tr>
                         <tr>
                             <td>
-                                <select>
+                                <select v-model="武器突破レベル" @change="weaponAscensionOnChange">
                                     <option v-for="item in weaponAscensionRange" :value="item"> A{{item}}
                                     </option>
                                 </select>
                             </td>
                             <td>
-                                <select>
+                                <select v-model="武器レベル">
                                     <option v-for="item in weaponLevelRange" :value="item"> Lv.{{item}} </option>
                                 </select>
                             </td>
                             <td>
-                                <select>
+                                <select v-model="武器精錬ランク">
                                     <option v-for="item in weaponRefineRange" :value="item"> R{{item}} </option>
                                 </select>
                             </td>
@@ -249,7 +249,7 @@
             <div class="pane4">
 
                 <div id="weapon-select">
-                    <table>
+                    <table v-if="isVisible">
                         <tr>
                             <th colspan="2"></th>
                         </tr>
@@ -258,13 +258,12 @@
                         </tr>
                     </table>
 
-                    <ul class="select-list">
+                    <ul class="select-list" v-if="isVisible">
                         <li v-for="item in list">
                             <label class="with-tooltip">
-                                <input class="hidden" type="radio" :value="item.name" name="weapon-select-name"
-                                    @click="onClick($event)">
                                 <img class="weapon" :src="iconUrl(item)" :alt="item.name"
-                                    :style="'background-image: url(' + starBackgroundUrl(item) +')'">
+                                    :style="'background-image: url(' + starBackgroundUrl(item) +')'"
+                                    @click="onClick($event)">
                             </label>
                             <div class="tooltip">{{item.name}}</div>
                         </li>
@@ -272,7 +271,7 @@
                 </div>
 
                 <div id="artifact-set-select">
-                    <table>
+                    <table v-if="isVisible">
                         <tr>
                             <th colspan="2"></th>
                         </tr>
@@ -281,13 +280,12 @@
                         </tr>
                     </table>
 
-                    <ul class="select-list">
+                    <ul class="select-list" v-if="isVisible">
                         <li v-for="item in list">
                             <label class="with-tooltip">
-                                <input class="hidden" type="radio" :value="item.name" name="artifact-set-select-name"
-                                    @click="onClick($event)">
                                 <img class="artifact-set" :src="iconUrl(item)" :alt="item.name"
-                                    :style="'background-image: url(' + starBackgroundUrl(item) +')'">
+                                    :style="'background-image: url(' + starBackgroundUrl(item) +')'"
+                                    @click="onClick($event)">
                             </label>
                             <div class="tooltip">{{item.name}}</div>
                         </li>
