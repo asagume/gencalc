@@ -108,6 +108,7 @@ select,
 textarea {
     font-family: inherit;
     font-size: 100%;
+    border-radius: 5px;
 }
 
 .pane1 {
@@ -156,6 +157,10 @@ a:visited {
 
 .hidden {
     display: none;
+}
+
+table th, table td {
+    padding: 0;
 }
 
 button {
@@ -339,10 +344,9 @@ div.filter img.filter.selected {
 }
 
 #character-input img.talent {
-    width: 60px;
-    height: 60px;
+    width: 100%;
     border-radius: 50%;
-    border: 3px solid transparent;
+    border: none;
 }
 
 #character-input input[type="radio"] {
@@ -350,10 +354,9 @@ div.filter img.filter.selected {
 }
 
 #character-input img.artifact-set {
-    width: 60px;
-    height: 60px;
+    width: calc(100% - 4px);
     border-radius: 50%;
-    border: 3px solid gray;
+    border: 2px solid gray;
 }
 
 td input[type="number"] {
@@ -413,6 +416,7 @@ table.status {
     table-layout: fixed;
     border-spacing: 0;
     border: 2px solid gray;
+    border-radius: 10px;
 }
 
 table.status th,
