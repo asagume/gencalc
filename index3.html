@@ -86,8 +86,9 @@
                     </div>
                     <ul>
                         <li v-for="item in filteredList" :class="selected == item.name ? 'selected' : ''">
-                            <img class="character" :src="iconUrl(item)" :alt="item.name" @click="onClick"
+                            <img class="character with-tooltip" :src="iconUrl(item)" :alt="item.name" @click="onClick"
                                 :style="'background-image: url(' + starBackgroundUrl(item) +')'">
+                            <div class="tooltip">{{item.name}}</div>
                             <img class="vision" :src="elementImgSrc(item)" :alt="item.vision">
                         </li>
                     </ul>
@@ -259,12 +260,13 @@
 
                     <ul class="select-list">
                         <li v-for="item in list">
-                            <label>
+                            <label class="with-tooltip">
                                 <input class="hidden" type="radio" :value="item.name" name="weapon-select-name"
                                     @click="onClick($event)">
-                                <img :src="item.url" :alt="item.name"
-                                    :style="'background-image: url(' + item.starBgUrl +')'">
+                                <img class="weapon" :src="iconUrl(item)" :alt="item.name"
+                                    :style="'background-image: url(' + starBackgroundUrl(item) +')'">
                             </label>
+                            <div class="tooltip">{{item.name}}</div>
                         </li>
                     </ul>
                 </div>
@@ -279,8 +281,17 @@
                         </tr>
                     </table>
 
-
-
+                    <ul class="select-list">
+                        <li v-for="item in list">
+                            <label class="with-tooltip">
+                                <input class="hidden" type="radio" :value="item.name" name="artifact-set-select-name"
+                                    @click="onClick($event)">
+                                <img class="artifact-set" :src="iconUrl(item)" :alt="item.name"
+                                    :style="'background-image: url(' + starBackgroundUrl(item) +')'">
+                            </label>
+                            <div class="tooltip">{{item.name}}</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 

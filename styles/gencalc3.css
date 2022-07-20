@@ -210,6 +210,21 @@ button {
     background-color: #df8f37;
 }
 
+.with-tooltip+.tooltip {
+    position: absolute;
+    top: -0.5rem;
+    left: 2rem;
+    white-space: nowrap;
+    z-index: 100;
+    color: #e8d14e;
+    text-shadow: 0px 1px 5px black;
+    display: none;
+}
+
+.with-tooltip:hover+.tooltip {
+    display: block;
+}
+
 td button, td label.button {
     width: 100%;
 }
@@ -230,7 +245,9 @@ div.filter img.filter.selected {
     border-radius: 50%;
 }
 
-#character-select ul {
+#character-select ul,
+#weapon-select ul,
+#artifact-set-select ul {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -242,7 +259,9 @@ div.filter img.filter.selected {
     padding-inline-end: 0;
 }
 
-#character-select ul li {
+#character-select ul li,
+#weapon-select ul li,
+#artifact-set-select ul li {
     display: inline-block;
     position: relative;
 }
@@ -259,6 +278,13 @@ div.filter img.filter.selected {
     position: absolute;
     left: 2px;
     top: 2px;
+}
+
+#weapon-select ul li img,
+#artifact-set-select ul li img {
+    width: 64px;
+    height: 64px;
+    background-size: contain;
 }
 
 #character-input {

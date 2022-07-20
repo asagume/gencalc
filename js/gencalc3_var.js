@@ -18,6 +18,10 @@ var キャラクター所持状況Var = {};
 var CharacterSelectVm;
 /** キャラクター情報入力 */
 var CharacterInputVm;
+/** 武器選択 */
+var WeaponSelectVm;
+/** 聖遺物セット効果選択 */
+var ArtifactSetSelectVm;
 /** ステータス情報入力 */
 var StatusInputVm;
 var EnemyInputVm;

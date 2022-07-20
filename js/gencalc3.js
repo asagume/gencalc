@@ -41,6 +41,8 @@ async function onLoad(searchParams) {
 
     initialSetupCharacterSelect();
     initialSetupCharacterInput();
+    initialSetupWeaponSelect('弓');
+    initialSetupArtifactSetSelect();
     initialSetupStatusInput();
     initialSetupEnemyInput();
     initialSetupCalcurationResult();
@@ -334,7 +336,84 @@ async function initialSetupCharacterInput(name) {
 }
 
 async function initialSetupWeaponInput(type, name) {
+}
 
+async function initialSetupWeaponSelect(type) {
+    const WeaponSelect = {
+        data() {
+            return {
+                isVisible: false,
+                selected: null,
+                type: type,
+                list: null
+            }
+        },
+        created() {
+            this.list = Object.keys(武器MasterVar[type]).map(function (key) {
+                return {
+                    name: key,
+                    master: 武器MasterVar[type][key]
+                }
+            });
+        },
+        computed: {
+        },
+        methods: {
+            iconUrl: function (item) {
+                const importUrl = item.master.import;
+                return importUrl.replace('data/', 'images/').replace('.json', '.png');
+            },
+            starBackgroundUrl: function (item) {
+                return getStarBackgroundUrl(item.master);
+            },
+            onClick: function (event) {
+                if (event.target.alt != this.selected) {
+                    this.selected = event.target.alt;
+                    setupWeaponInput(this.type, this.selected);
+                }
+                this.isVisible = false;
+            }
+        }
+    }
+    WeaponSelectVm = Vue.createApp(WeaponSelect).mount('#weapon-select');
+}
+
+function initialSetupArtifactSetSelect() {
+    const ArtifactSetSelect = {
+        data() {
+            return {
+                isVisible: false,
+                selected: null,
+                list: null
+            }
+        },
+        created() {
+            this.list = Object.keys(聖遺物セット効果MasterVar).map(function (key) {
+                return {
+                    name: key,
+                    master: 聖遺物セット効果MasterVar[key]
+                }
+            });
+        },
+        computed: {
+        },
+        methods: {
+            iconUrl: function (item) {
+                return item.master.image;
+            },
+            starBackgroundUrl: function (item) {
+                return getStarBackgroundUrl(item.master);
+            },
+            onClick: function (event) {
+                if (event.target.alt != this.selected) {
+                    this.selected = event.target.alt;
+
+                }
+                this.isVisible = false;
+            }
+        }
+    }
+    ArtifactSetSelectVm = Vue.createApp(ArtifactSetSelect).mount('#artifact-set-select');
 }
 
 function initialSetupArtifactInput() {
