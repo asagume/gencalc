@@ -7,7 +7,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto 405px auto minmax(500px, auto) auto auto;
+        grid-template-rows: auto auto 440px auto minmax(500px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1 pane1"
             "pane2 pane2 pane2"
@@ -317,6 +317,7 @@ div.filter img.filter.selected {
 #character-input table td.title {
     font-size: 3rem;
     text-align: left;
+    text-shadow: 0 0 2px black;
 }
 
 #character-input table td select, #character-input table td input, #character-input table td label {

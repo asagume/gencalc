@@ -243,6 +243,9 @@ async function initialSetupCharacterInput(name) {
             setupCharacterInput(character);
         },
         computed: {
+            colorClass: function () {
+                return getColorClass(this.master);
+            },
             bgColorClass: function () {
                 return getBgColorClass(this.master);
             },
@@ -816,7 +819,17 @@ function makeArtifactSetAbbrev(name) {
  * @param {string} name 武器名
  */
 async function setupWeaponInput(type, name) {
-
+    const myWeaponMaster = await fetch(武器MasterVar[type][name]['import']).then(resp => resp.json());
+    CharacterInputVm.weapon = name;
+    CharacterInputVm.weaponMaster = myWeaponMaster;
+    if (myWeaponMaster['レアリティ'] < 3) {
+        CharacterInputVm['武器突破レベルOption'].max = 4;
+        if (CharacterInputVm['武器突破レベル'] > 4) {
+            CharacterInputVm['武器突破レベル'] = 4;
+        }
+    } else {
+        CharacterInputVm['武器突破レベルOption'].max = 6;
+    }
 }
 
 async function setupArtifactSetInput(name) {

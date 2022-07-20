@@ -105,7 +105,7 @@
                                     @click="characterOnClick">
                                 <img class="vision" :src="elementImgSrc" :alt="master['元素']">
                             </td>
-                            <td class="title" colspan="3" style="position: relative;">
+                            <td :class="'title ' + colorClass" colspan="3" style="position: relative;">
                                 {{master['名前']}}
                                 <span class="material-symbols-outlined" style="position: absolute; right: 0;"
                                     @click="characterInfoOnClick"> info </span>
@@ -218,7 +218,7 @@
                                 </label>
                             </td>
                             <td rowspan="2">
-                                <label @click="artfactDetailOnClick">
+                                <label @click="artifactDetailOnClick">
 
                                 </label>
                             </td>
