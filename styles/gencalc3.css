@@ -392,6 +392,16 @@ label.open-close input[type="checkbox"]:checked+span::after {
     transform: translateY(-50%) rotate(0);
 }
 
+#weapon-select table, #artifact-set-select table {
+    width: 100%;
+}
+
+#weapon-select table th, #artifact-set-select table th {
+    font-weight: normal;
+    color: #df8f37;
+    background-color: #333;
+}
+
 table.status {
     width: 98%;
     margin-left: auto;

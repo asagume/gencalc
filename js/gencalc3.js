@@ -369,6 +369,7 @@ async function initialSetupWeaponSelect(type) {
             return {
                 isVisible: false,
                 selected: null,
+                master: null,
                 type: type,
                 list: null
             }
@@ -409,7 +410,7 @@ function initialSetupArtifactSetSelect() {
             return {
                 isVisible: false,
                 index: null,
-                selected: [null, null],
+                selected: ['NONE', 'NONE'],
                 list: null
             }
         },
@@ -429,6 +430,35 @@ function initialSetupArtifactSetSelect() {
             },
             starBackgroundUrl: function (item) {
                 return getStarBackgroundUrl(item.master);
+            },
+            descriptionTitle: function (index) {
+                const name0 = this.selected[0];
+                const name1 = this.selected[1];
+                if (index == 0) {
+                    return name0 + ' 2セット効果';
+                } else if (name0 == name1) {
+                    return name0 + ' 4セット効果';
+                } else {
+                    return name1 + ' 2セット効果';
+                }
+            },
+            description: function (index) {
+                const name0 = this.selected[0];
+                const name1 = this.selected[1];
+                if (index == 0) {
+                    if (!name0) return null;
+                } else {
+                    if (!name1) return null;
+                }
+                const myMaster0 = 聖遺物セット効果MasterVar[this.selected[0]];
+                const myMaster1 = 聖遺物セット効果MasterVar[this.selected[1]];
+                if (index == 0) {
+                    return ('2セット効果' in myMaster0) ? myMaster0['2セット効果']['説明'] : null;
+                } else if (name0 == name1) {
+                    return ('4セット効果' in myMaster0) ? myMaster0['4セット効果']['説明'] : null;
+                } else {
+                    return ('2セット効果' in myMaster1) ? myMaster1['2セット効果']['説明'] : null;
+                }
             },
             onClick: function (event) {
                 if (event.target.alt != this.selected) {

@@ -251,6 +251,17 @@
                 <div id="weapon-select">
                     <table v-if="isVisible">
                         <tr>
+                            <th colspan="2">{{selected}}</th>
+                        </tr>
+                        <tr>
+                            <th>基礎攻撃力</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                        <tr>
                             <th colspan="2"></th>
                         </tr>
                         <tr>
@@ -273,10 +284,16 @@
                 <div id="artifact-set-select">
                     <table v-if="isVisible">
                         <tr>
-                            <th colspan="2"></th>
+                            <th>{{descriptionTitle(0)}}</th>
                         </tr>
                         <tr>
-                            <td colspan="2"></td>
+                            <td>{{description(0)}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{descriptionTitle(1)}}</th>
+                        </tr>
+                        <tr>
+                            <td>{{description(1)}}</td>
                         </tr>
                     </table>
 
