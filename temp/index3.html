@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLF3R2FB5T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BLF3R2FB5T');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - 原神ダメージシミュレーター</title>
+    <meta name="description" content="原神@HoYoverseのダメージ計算を行うシミュレーターです。" />
+    <meta name="keywords" content="原神,ダメージ,計算,武器,聖遺物" />
+    <link href="favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/normalize.css" rel="stylesheet" />
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <link href="styles/gencalc3.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
+    <script src="js/gencalc3_var.js"></script>
+    <script src="js/gencalc3.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div class="base-container">
+            <div class="pane1">
+                <fieldset style="margin: 1rem; min-height: 15rem; position: relative;">
+                    <legend>げんかるく - 原神ダメージシミュレーター Ver.3.0.0</legend>
+                    <p>
+                        <a href="ArtifactSetList.html">聖遺物セット効果一覧</a>
+                        <a href="BirthdayCalendar.html">誕生日カレンダー</a>
+                    </p>
+                    <p>
+                        <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
+                        <a href="WeaponList.html?kind=Claymore">両手剣一覧</a>
+                        <a href="WeaponList.html?kind=Polearm">長柄武器一覧</a>
+                        <a href="WeaponList.html?kind=Bow">弓一覧</a>
+                        <a href="WeaponList.html?kind=Catalyst">法器一覧</a>
+                    </p>
+                    <p>
+                        <a href="RandomTeam.html">ランダムチーム編成メーカー</a>
+                    </p>
+                    <div style="position: absolute; right: 1rem; top: 0">
+                        <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank"
+                            rel="noopener noreferrer">バグ報告・要望</a>
+                    </div>
+                    <div style="position: absolute; left: 1rem; top: 0">
+                        <a href="history.html">更新履歴</a>
+                    </div>
+                    <div style="position: absolute; left: 1rem; bottom: 0;">
+                        <a href="RotationVisualizer.html">げんろーて</a>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="pane2" id="character-select">
+                <div v-if="isVisible">
+                    <div class="filter">
+                        <label v-for="item in filters.vision.list">
+                            <input class="hidden" type="radio" :value="item.name" name="filter-character-vision"
+                                @click="filterOnClick(filters.vision, $event)">
+                            <img :class="'filter' + (filters.vision.selected == item.name ? ' selected' : '')"
+                                :src="item.url" :alt="item.name">
+                        </label>
+                    </div>
+                    <div class="filter">
+                        <label v-for="item in filters.weapon.list">
+                            <input class="hidden" type="radio" :value="item.name" name="filter-character-weapon"
+                                @click="filterOnClick(filters.weapon, $event)">
+                            <img :class="'filter' + (filters.weapon.selected == item.name ? ' selected' : '')"
+                                :src="item.url" :alt="item.name">
+                        </label>
+                    </div>
+                    <ul>
+                        <li v-for="item in list"
+                            v-if="(filters.vision.selected ? filters.vision.selected == item.vision : true) && (filters.weapon.selected ? filters.weapon.selected == item.weapon : true)"
+                            :class="selected == item.name ? 'selected' : ''">
+                            <img class="character" :src="iconUrl(item)" :alt="item.name" @click="onClick"
+                                :style="'background-image: url(' + starBackgroundUrl(item) +')'">
+                            <img class="vision" :src="elementImgSrc(item)" :alt="item.vision">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pane3">
+                <div id="character-input">
+                    <table>
+                        <tr>
+                            <td colspan="3" rowspan="3" style="width: 180px; position: relative;">
+                                <img class="character" :src="master['icon_url']" :alt="name"
+                                    :style="'background-image: url(' + starBackgroundUrl +')'"
+                                    @click="characterOnClick">
+                                <img class="vision" :src="elementImgSrc" :alt="master['元素']">
+                            </td>
+                            <td class="title" colspan="3" style="position: relative;">
+                                {{master['名前']}}
+                                <span class="material-symbols-outlined" style="position: absolute; right: 0;"
+                                    @click="characterInfoOnClick"> info </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" @click="saveOnClick">
+                                    Save<br>
+                                    <span class="material-symbols-outlined"> save </span>
+                                </button>
+                            </td>
+                            <td>
+                                &emsp;
+                            </td>
+                            <td>
+                                <button type="button" @click="removeOnClick">
+                                    Remove<br>
+                                    <span class="material-symbols-outlined"> delete </span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-left: 1rem; padding-right: 1rem;">
+                                <input type="text" v-model="saveName" maxlength="20">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select v-model="突破レベル" @change="ascensionOnChange">
+                                    <option v-for="item in ascensionRange" :value="item"> A{{item}} </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select v-model="レベル">
+                                    <option v-for="item in levelRange" :value="item"> Lv.{{item}} </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select v-model="命ノ星座">
+                                    <option v-for="item in constellationRange" :value="item"> C{{item}} </option>
+                                </select>
+                            </td>
+                            <td colspan="3">
+                                <label class="button">
+                                    <input class="hidden" type="checkbox" v-model="おすすめセットOption.isOpen">
+                                    &emsp; おすすめセット &emsp;
+                                </label>
+                            </td>
+                        </tr>
+                        <tr v-if="おすすめセットOption.isOpen">
+                            <td colspan="6">
+                                <select :value="おすすめセット">
+                                    <option v-for="item in おすすめセットOption.list" :value="item[0]">{{item[0]}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td colspan="3" rowspan="3" style="width: 180px;">
+                                <img class="weapon" :src="weaponMaster['icon_url']" :alt="weaponMaster['名前']"
+                                    :style="'background-image: url(' + weaponStarBackgroundUrl +')'"
+                                    @click="weaponOnClick">
+                            </td>
+                            <td>
+                                <img :class="'talent ' + bgColorClass" :src="master['通常攻撃']['icon_url']"
+                                    :alt="master['通常攻撃']['名前']" @click="normalAttackOnClick">
+                            </td>
+                            <td>
+                                <img :class="'talent ' + bgColorClass" :src="master['元素スキル']['icon_url']"
+                                    :alt="master['元素スキル']['名前']" @click="elementalSkillOnClick">
+                            </td>
+                            <td>
+                                <img :class="'talent ' + bgColorClass" :src="master['元素爆発']['icon_url']"
+                                    :alt="master['元素爆発']['名前']" @click="elementalBurstOnClick">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select v-model="通常攻撃レベル">
+                                    <option v-for="item in normalAttackLevelRange" :value="item"> Lv.{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select v-model="元素スキルレベル">
+                                    <option v-for="item in elementalSkillLevelRange" :value="item"> Lv.{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select v-model="元素爆発レベル">
+                                    <option v-for="item in elementalBurstLevelRange" :value="item"> Lv.{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">
+                                <label @click="artifactSetOnClick(0)">
+                                    <img class="artifact-set" :src="聖遺物セット効果[0].master['icon_url']"
+                                        :alt="聖遺物セット効果[0]['名前']">
+                                </label>
+                            </td>
+                            <td rowspan="2">
+                                <label @click="artifactSetOnClick(1)">
+                                    <img class="artifact-set" :src="聖遺物セット効果[1].master['icon_url']"
+                                        :alt="聖遺物セット効果[1]['名前']">
+                                </label>
+                            </td>
+                            <td rowspan="2">
+                                <label @click="artfactDetailOnClick">
+
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select>
+                                    <option v-for="item in weaponAscensionRange" :value="item"> A{{item}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option v-for="item in weaponLevelRange" :value="item"> Lv.{{item}} </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option v-for="item in weaponRefineRange" :value="item"> R{{item}} </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="pane4">
+
+                <div id="weapon-select">
+                    <table>
+                        <tr>
+                            <th colspan="2"></th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                    </table>
+
+                    <ul class="select-list">
+                        <li v-for="item in list">
+                            <label>
+                                <input class="hidden" type="radio" :value="item.name" name="weapon-select-name"
+                                    @click="onClick($event)">
+                                <img :src="item.url" :alt="item.name"
+                                    :style="'background-image: url(' + item.starBgUrl +')'">
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="artifact-set-select">
+                    <table>
+                        <tr>
+                            <th colspan="2"></th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                    </table>
+
+
+
+                </div>
+            </div>
+
+            <div class="pane6">
+                <div id="status-input">
+                    <div class="tab-switch">
+                        <input id="status-tab-1" type="radio" v-model="activeTab" value="1" name="status-tab">
+                        <label for="status-tab-1" class="tab-switch">
+                            {{getDisplayName('ステータス1')}}
+                        </label>
+                        <input id="status-tab-2" type="radio" v-model="activeTab" value="2" name="status-tab">
+                        <label for="status-tab-2" class="tab-switch">
+                            {{getDisplayName('ステータス2')}}
+                        </label>
+                        <input id="status-tab-3" type="radio" v-model="activeTab" value="3" name="status-tab">
+                        <label for="status-tab-3" class="tab-switch">
+                            {{getDisplayName('敵')}}
+                        </label>
+                    </div>
+
+                    <template v-if="activeTab === '1'">
+                        <table class="status">
+                            <template v-for="category in ['基本ステータス']">
+                                <tr>
+                                    <th :colspan="isEditable ? 3 : 2">
+                                        {{category}}
+                                    </th>
+                                </tr>
+                                <tr v-for="stat in Object.keys(ステータス[category])">
+                                    <th> {{stat}} </th>
+                                    <td v-show="isEditable">
+                                        <input type="number" v-model="ステータス補正[category][stat]">
+                                    </td>
+                                    <td>
+                                        {{ステータス[category][stat] + ステータス補正[category][stat]}}
+                                    </td>
+                                </tr>
+                            </template>
+                            <template v-for="category in ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
+                                <tr>
+                                    <th :colspan="isEditable ? 3 : 2">
+                                        <label :for="category + '-opened'" class="open-close">
+                                            <input :id="category + '-opened'" class="hidden" type="checkbox"
+                                                v-model="isステータスOpened[category]">
+                                            <span></span>
+                                            {{category}}
+                                        </label>
+                                    </th>
+                                </tr>
+                                <tr v-for="stat in statList(category)">
+                                    <th> {{stat}} </th>
+                                    <td v-show="isEditable">
+                                        <input type="number" v-model="ステータス補正[category][stat]">
+                                    </td>
+                                    <td>
+                                        {{ステータス[category][stat] + ステータス補正[category][stat]}}
+                                    </td>
+                                </tr>
+                            </template>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="isEditable">
+                                        {{getDisplayName('補正値入力モード')}}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="補正値0初期化Enabled">
+                                        {{getDisplayName('補正値0初期化')}}
+                                    </label>
+                                    <button type="button" style="width: 10rem"
+                                        :disabled="!補正値0初期化Enabled">{{getDisplayName('実行')}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </template>
+                    <template v-else-if="activeTab === '2'">
+                        <table class="status">
+                            <template v-for="category in ['元素ステータス・耐性', 'その他']">
+                                <tr>
+                                    <th :colspan="isEditable ? 3 : 2">
+                                        <label :for="category + '-opened'" class="open-close">
+                                            <input :id="category + '-opened'" class="hidden" type="checkbox"
+                                                v-model="isステータスOpened[category]">
+                                            <span></span>
+                                            {{category}}
+                                        </label>
+                                    </th>
+                                </tr>
+                                <tr v-for="stat in statList(category)">
+                                    <th> {{stat}} </th>
+                                    <td v-show="isEditable">
+                                        <input type="number" v-model="ステータス補正[category][stat]">
+                                    </td>
+                                    <td>
+                                        {{ステータス[category][stat] + ステータス補正[category][stat]}}
+                                    </td>
+                                </tr>
+                            </template>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="isEditable">
+                                        {{getDisplayName('補正値入力モード')}}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="補正値0初期化Enabled">
+                                        {{getDisplayName('補正値0初期化')}}
+                                    </label>
+                                    <button type="button" style="width: 10rem"
+                                        :disabled="!補正値0初期化Enabled">{{getDisplayName('実行')}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </template>
+                    <template v-else-if="activeTab === '3'">
+                        <div>
+                            {{getDisplayName('敵')}}
+                            <select v-model="敵">
+                                <option v-for="item in 敵List">{{}}</option>
+                            </select>
+                            {{getDisplayName('Level')}}
+                            <input v-model="敵レベル" type="number">
+                        </div>
+                        <table class="status">
+                            <tr v-for="stat in Object.keys(敵ステータス)">
+                                <th> {{stat}} </th>
+                                <td v-show="isEditable">
+                                    <input type="number" v-model="敵ステータス補正[stat]">
+                                </td>
+                                <td>
+                                    {{敵ステータス[stat] + 敵ステータス補正[stat]}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="isEditable">
+                                        {{getDisplayName('補正値入力モード')}}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :colspan="isEditable ? 3 : 2">
+                                    <label>
+                                        <input type="checkbox" v-model="補正値0初期化Enabled">
+                                        {{getDisplayName('補正値0初期化')}}
+                                    </label>
+                                    <button type="button" style="width: 10rem"
+                                        :disabled="!補正値0初期化Enabled">{{getDisplayName('実行')}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </template>
+                </div>
+            </div>
+
+            <div class="result-pane" id="calculation-result">
+                <div class="elemental-reaction">
+                    <input id="増幅反応-なし" type="radio" v-model="増幅反応" value="なし" name="増幅反応-name">
+                    <label for="増幅反応-なし">
+                        反応なし
+                    </label>
+                    <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name">
+                    <label for="増幅反応-蒸発" v-if="元素反応.蒸発倍率" :class="getClassByElement(元素)">
+                        {{getDisplayName('蒸発')}} * {{Math.round(元素反応.蒸発倍率 * 100) / 100}}
+                    </label>
+                    <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name">
+                    <label for="増幅反応-溶解" v-if="元素反応.溶解倍率" :class="getClassByElement(元素)">
+                        {{getDisplayName('溶解')}} * {{Math.round(元素反応.溶解倍率 * 100) / 100}}
+                    </label>
+                    <label v-if="元素反応.過負荷ダメージ" class="pyro">
+                        {{getDisplayName('過負荷')}} {{Math.round(元素反応.過負荷ダメージ)}}
+                    </label>
+                    <label v-if="元素反応.感電ダメージ" class="electro">
+                        {{getDisplayName('感電')}} {{Math.round(元素反応.感電ダメージ)}}
+                    </label>
+                    <label v-if="元素反応.超電導ダメージ" class="cryo">
+                        {{getDisplayName('超電導')}} {{Math.round(元素反応.超電導ダメージ)}}
+                    </label>
+                    <label v-if="元素反応.拡散ダメージ" :class="getClassByElement(元素反応.拡散元素)">
+                        {{getDisplayName('拡散')}} {{Math.round(元素反応.拡散ダメージ)}}
+                    </label>
+                    <label v-if="元素反応.結晶吸収量" :class="etClassByElement(元素反応.結晶元素)">
+                        {{getDisplayName('結晶')}} {{Math.round(元素反応.結晶吸収量)}}
+                    </label>
+                    <label v-if="元素反応.燃焼ダメージ" class="pyro">
+                        {{getDisplayName('燃焼')}} {{Math.round(元素反応.燃焼ダメージ)}}
+                    </label>
+                    <label v-if="元素反応.開花ダメージ">
+                        {{getDisplayName('開花')}} {{Math.round(元素反応.開花ダメージ)}}
+                    </label>
+                    <label v-if="元素反応.激化ダメージ">
+                        {{getDisplayName('激化')}} {{Math.round(元素反応.激化ダメージ)}}
+                    </label>
+                </div>
+
+                <table v-for="category in categoryList" class="result">
+                    <thead>
+                        <tr class="title" @click="is計算結果Opened[category] = !is計算結果Opened[category]">
+                            <th>{{getDisplayName(category)}}</th>
+                            <th v-for="item in 計算結果[category]">{{getDisplayName(item[0])}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>{{getDisplayName('期待値')}}</th>
+                            <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                                {{item[2] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[2] *
+                                元素反応.蒸発倍率) :
+                                増幅反応 == '溶解' ? Math.round(item[2] * 元素反応.溶解倍率) : item[2] : item[2] : '-'}}
+                            </td>
+                        </tr>
+                        <tr v-if="is計算結果Opened[category]">
+                            <th>{{getDisplayName('会心')}}</th>
+                            <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                                {{item[3] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[3] *
+                                元素反応.蒸発倍率) :
+                                増幅反応 == '溶解' ? Math.round(item[3] * 元素反応.溶解倍率) : item[3] : item[3] : '-'}}
+                            </td>
+                        </tr>
+                        <tr v-if="is計算結果Opened[category]">
+                            <th>{{getDisplayName('非会心')}}</th>
+                            <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                                {{item[4] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[4] *
+                                元素反応.蒸発倍率) :
+                                増幅反応 == '溶解' ? Math.round(item[4] * 元素反応.溶解倍率) : item[4] : item[4] : '-'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pane7">
+            </div>
+
+            <div class="bottom-pane">
+                <div id="character-own-list">
+                    <h2></h2>
+                    <ul class="character-list">
+                        <li v-for="item in list"></li>
+                    </ul>
+                </div>
+
+                <div id="weapon-own-list">
+                    <h2></h2>
+                    <div class="filter">
+                    </div>
+                    <ul class="weapon-list">
+                        <li v-for="item in list"></li>
+                    </ul>
+                </div>
+
+                <div id="local-storage-control">
+
+                </div>
+            </div>
+
+            <footer class="footer">
+                <hr>
+                <p>© 2021 asagume</p>
+                <p>
+                    本サイト内の画像はHoYoverse/COGNOSPHEREの著作物です。Copyright © COGNOSPHERE. All Rights Reserved.
+                </p>
+            </footer>
+        </div>
+
+        <div style="display: none;">
+            <canvas id="artifactDetailCanvas"></canvas>
+        </div>
+
+        <div id="debugInfo"></div>
+    </div>
+
+    <script>
+        console.log('screen.width', screen.width);
+        console.log('window.innerWidth', window.innerWidth);
+        console.log('window.devicePixelRatio', window.devicePixelRatio);
+
+        // var characterSelectVue;
+        // var characterInputVue;
+
+        // function recommendOnChange(recommend) {
+        //     weaponOnChange(recommend['武器']);
+        // }
+
+        // function weaponOnChange(name) {
+        //     const master = characterInputVue.master;
+        //     const weaponType = master['武器'];
+        //     const url = 武器MasterVar[weaponType][name]['import'];
+        //     fetch(url).then(resp => resp.json()).then(json => {
+        //         characterInputVue.weaponMaster = json;
+
+        //         characterInputVue.weaponAscension = 6;
+        //         characterInputVue.weaponLevel = 90;
+        //     });
+        // }
+
+
+        onLoad();
+
+    </script>
+</body>
+
+</html>
