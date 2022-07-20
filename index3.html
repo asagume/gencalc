@@ -341,7 +341,7 @@
                                         <input type="number" v-model="ステータス補正[category][stat]">
                                     </td>
                                     <td>
-                                        {{ステータス[category][stat] + ステータス補正[category][stat]}}
+                                        {{ステータス[category][stat]}}
                                     </td>
                                 </tr>
                             </template>
@@ -362,7 +362,7 @@
                                         <input type="number" v-model="ステータス補正[category][stat]">
                                     </td>
                                     <td>
-                                        {{ステータス[category][stat] + ステータス補正[category][stat]}}
+                                        {{ステータス[category][stat]}}{{category != '実数ダメージ加算' ? '%' : ''}}
                                     </td>
                                 </tr>
                             </template>
@@ -405,7 +405,7 @@
                                         <input type="number" v-model="ステータス補正[category][stat]">
                                     </td>
                                     <td>
-                                        {{ステータス[category][stat] + ステータス補正[category][stat]}}
+                                        {{ステータス[category][stat]}}{{stat != '防御力' ? '%' : ''}}
                                     </td>
                                 </tr>
                             </template>
@@ -445,7 +445,7 @@
                                     <input type="number" v-model="敵ステータス補正[stat]">
                                 </td>
                                 <td>
-                                    {{敵ステータス[stat] + 敵ステータス補正[stat]}}
+                                    {{敵ステータス[stat]}}%
                                 </td>
                             </tr>
                             <tr>

@@ -488,7 +488,7 @@ function initialSetupStatusInput(characterMaster) {
         data() {
             return {
                 activeTab: '1',
-                isEditable: true,
+                isEditable: false,
                 ステータス: {
                     '基礎ステータス': JSON.parse(JSON.stringify(基礎ステータスTEMPLATE)),
                     '基本ステータス': JSON.parse(JSON.stringify(基本ステータスTEMPLATE)),
