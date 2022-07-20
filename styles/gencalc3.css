@@ -302,7 +302,6 @@ div.filter img.filter.selected {
 }
 
 #character-input table tr {
-    vertical-align: top;
     border: none;
 }
 
@@ -363,6 +362,11 @@ td input[type="number"] {
     text-align: right;
 }
 
+#character-input table td input[type="text"].save-name {
+    width: calc(100% - 2rem);
+    font-size: larger;
+}
+
 label.open-close {
     padding-left: 2rem;
     position: relative;
@@ -407,7 +411,6 @@ table.status {
     margin-left: auto;
     margin-right: auto;
     table-layout: fixed;
-    vertical-align: top;
     border-spacing: 0;
     border: 2px solid gray;
 }
