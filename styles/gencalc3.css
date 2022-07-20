@@ -430,6 +430,16 @@ table.status td {
 }
 
 table.status th {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+table.status th {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+table.status th {
     color: #df8f37;
 }
 
