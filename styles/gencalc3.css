@@ -214,23 +214,19 @@ td button, td label.button {
     width: 100%;
 }
 
-td label.button {
-    width: 100%;
-}
-
 label.button {
     border: 2px solid gray;
-    border-radius: 10%;
+    border-radius: 15px;
 }
 
 div.filter img.filter {
     width: 48px;
     height: 48px;
-    border: 3px solid transparent;
+    border: 2px solid transparent;
 }
 
 div.filter img.filter.selected {
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 50%;
 }
 
@@ -335,19 +331,10 @@ div.filter img.filter.selected {
     border: 3px solid gray;
 }
 
-input[type="number"] {
+td input[type="number"] {
     border-radius: 0.6rem;
     font-size: 2rem;
     text-align: right;
-}
-
-label.tab-switch {
-    display: inline-block;
-    width: calc(100% / 4 - 8px);
-    border: 2px solid gray;
-    border-radius: 1rem;
-    padding: 0.5rem;
-    margin: 0.5rem;
 }
 
 label.open-close {
@@ -380,15 +367,17 @@ label.open-close input[type="checkbox"]:checked+span::after {
 }
 
 table.status {
-    width: 100%;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
     table-layout: fixed;
     vertical-align: top;
     border-spacing: 0;
     border: 2px solid gray;
 }
 
-table th,
-table td {
+table.status th,
+table.status td {
     min-width: 10rem;
     text-align: right;
     white-space: nowrap;
@@ -397,10 +386,15 @@ table td {
     font-weight: normal;
 }
 
+table.status th {
+    color: #df8f37;
+}
+
 table.status th[colspan="2"],
 table.status th[colspan="3"] {
     text-align: center;
     background-color: #333;
+    color: #e8d14e;
 }
 
 table.status td[colspan="2"],
@@ -433,6 +427,8 @@ table.result thead th:first-child {
     border: 2px solid gray;
     margin: 2px;
     border-radius: 10px;
+    padding: 0.5rem;
+    margin: 0.5rem;
 }
 
 .tab-switch input[type="radio"],

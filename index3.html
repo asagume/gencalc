@@ -85,9 +85,7 @@
                         </label>
                     </div>
                     <ul>
-                        <li v-for="item in list"
-                            v-if="(filters.vision.selected ? filters.vision.selected == item.vision : true) && (filters.weapon.selected ? filters.weapon.selected == item.weapon : true)"
-                            :class="selected == item.name ? 'selected' : ''">
+                        <li v-for="item in filteredList" :class="selected == item.name ? 'selected' : ''">
                             <img class="character" :src="iconUrl(item)" :alt="item.name" @click="onClick"
                                 :style="'background-image: url(' + starBackgroundUrl(item) +')'">
                             <img class="vision" :src="elementImgSrc(item)" :alt="item.vision">
