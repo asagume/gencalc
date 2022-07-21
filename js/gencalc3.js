@@ -1005,6 +1005,8 @@ async function setupCharacterInput(name) {
         myLevelStr += '+';
     }
 
+    const damegeDetailObj = makeDamageDetailObjCharacter(CharacterInputVm);
+
     // StatusInputVm.基礎ステータス['基礎HP'] = myCharacterMaster.ステータス['基礎HP'][myLevelStr];
     // StatusInputVm.基礎ステータス['基礎攻撃力'] = myCharacterMaster.ステータス['基礎攻撃力'][myLevelStr];
     // StatusInputVm.基礎ステータス['基礎防御力'] = myCharacterMaster.ステータス['基礎防御力'][myLevelStr];

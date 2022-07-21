@@ -192,26 +192,198 @@ function getLevelStr(ascension, level) {
     return level + 突破レベルレベルARR[ascension][0] == level ? '+' : '';
 }
 
-function setupBaseDamageDetailDataCharacter(characterInput) {
+function makeDamageDetailObjCharacter(characterInput) {
     const characterMaster = characterInput.master;
 
+    const result = {};
 
+    let myTalentDetail;
+    let myTalentLevel;
+    let myDefaultKind;
+    let myDefaultElement;
+    let myInputCategory = 'キャラクター';
 
-    let myDefaultCategory = '';
-    let myDefaultElement = null;
+    const myステータス変更系詳細Arr = [];
+    const my天賦性能変更系詳細Arr = [];
 
+    // 通常攻撃 重撃 落下攻撃
+    myTalentLevel = characterInput['通常攻撃レベル'];
+    myDefaultElement = null;
+    ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
+        myTalentDetail = characterMaster[category];
+        myDefaultKind = category + 'ダメージ';
+        result[category] = makeTalentDetailArray(myTalentDetail, myTalentLevel, myDefaultKind, myDefaultElement, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory);
+    });
 
     ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
+        let workCategory = '特殊' + category;
+        if (workCategory in characterMaster) {
+            myTalentDetail = characterMaster[workCategory];
+            if ('種類' in myTalentDetail) {
+                myDefaultKind = myTalentDetail['種類'];
+                switch (myDefaultKind) {
+                    case '元素スキルダメージ':
+                        myTalentLevel = characterInput['元素スキルレベル'];
+                        break;
+                    case '元素爆発ダメージ':
+                        myTalentLevel = characterInput['元素爆発レベル'];
+                        break;
+                }
+            }
+            if ('元素' in myTalentDetail) {
+                myDefaultElement = myTalentDetail['元素'];
+            }
+            const workMap = new Map();
+            const myCondition = myTalentDetail['条件'];
+            workMap.set(myCondition, makeTalentDetailArray(myTalentDetail, myTalentLevel, myDefaultKind, myDefaultElement, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory));
+            result[workCategory] = workMap;
+        }
     });
 
-    ['元素スキル'].forEach(category => {
+    // 元素スキル
+    myTalentLevel = characterInput['元素スキルレベル'];
+    myDefaultKind = '元素スキルダメージ';
+    myDefaultElement = characterMaster['元素'];
+    result['元素スキル'] = makeTalentDetailArray(characterMaster['元素スキル'], myTalentLevel, myDefaultKind, myDefaultElement, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory);
 
-    });
+    // 元素爆発
+    myTalentLevel = characterInput['元素爆発レベル'];
+    myDefaultKind = '元素爆発ダメージ';
+    myDefaultElement = characterMaster['元素'];
+    result['元素爆発'] = makeTalentDetailArray(characterMaster['元素爆発'], myTalentLevel, myDefaultKind, myDefaultElement, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory);
 
-    ['元素爆発'].forEach(category => {
+    console.debug(result);
+    return result;
+}
 
-    });
+/**
+ * 
+ * @param {Object} talentDataObj 
+ * @param {string} level 天賦レベル
+ * @param {string} defaultKind デフォルト種類
+ * @param {string} defaultElement デフォルト元素
+ * @param {*} statusChangeArr 
+ * @param {*} talentChangeArr 
+ * @param {string} inputCategory 
+ * @returns {Array}
+ */
+const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defaultElement, statusChangeArr, talentChangeArr, inputCategory) {
+    let resultArr = [];
+    if ('詳細' in talentDataObj) {
+        talentDataObj['詳細'].forEach(detailObj => {
+            let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
+            let my対象 = null;
+            if (my種類.indexOf('.') != -1) {
+                my対象 = my種類.substring(my種類.indexOf('.') + 1);
+                my種類 = my種類.substring(0, my種類.indexOf('.'));
+            } else if ('対象' in detailObj) {
+                my対象 = detailObj['対象'];
+            }
+            let my数値 = null;
+            if ('数値' in detailObj) {
+                my数値 = detailObj['数値'];
+                if (isFinite(my数値) || isString(my数値)) {
+                    // nop
+                } else if (typeof my数値 === 'object' && level && level in my数値) { // キャラクター|武器のサブステータス
+                    my数値 = my数値[level];
+                } else {
+                    console.error(talentDataObj, level, defaultKind, defaultElement);
+                }
+                if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
+                    my数値 = analyzeFormulaStr(my数値, '攻撃力');
+                } else {
+                    my数値 = analyzeFormulaStr(my数値, my種類);
+                }
+            }
+            let my条件 = null;
+            if ('条件' in detailObj) {
+                my条件 = detailObj['条件'];
+                if (typeof my条件 === 'object' && level && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
+                    my条件 = my条件[level];
+                }
+            }
+            let my上限 = null;
+            if ('上限' in detailObj) {
+                my上限 = detailObj['上限'];
+                if (typeof my上限 === 'object' && level && level in my上限) {   // 草薙の稲光
+                    my上限 = my上限[level];
+                }
+                my上限 = analyzeFormulaStr(my上限);
+            }
+            let resultObj = {
+                名前: detailObj['名前'],
+                種類: my種類,
+                元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
+                数値: my数値,
+                条件: my条件,
+                対象: my対象,
+                上限: my上限,
+                HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
+                ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
+                元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
+                除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
+                適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
+            }
+            if (statusChangeArr != null) {
+                if (resultObj['種類'] in 詳細_種類TEMPLATE
+                    || resultObj['種類'].endsWith('%')
+                    || new RegExp('[自全].+バフ').exec(resultObj['種類'])
+                    || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
+                    || resultObj['種類'] == '別枠乗算'
+                    || ['継続時間', '発動回数', 'クールタイム', '使用回数'].includes(my種類)
+                ) {
+                    resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+                    statusChangeArr.push(resultObj);
+                    return;
+                }
+            }
+            if (talentChangeArr != null) {
+                if (resultObj['種類'].endsWith('強化')
+                    || resultObj['種類'].endsWith('付与')
+                    || resultObj['種類'].endsWith('アップ')
+                    || resultObj['種類'] == '防御無視' ||
+                    resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
+                    resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+                    talentChangeArr.push(resultObj);
+                    return;
+                }
+            }
+            resultArr.push(resultObj);
+        });
+    } else {
+        console.error(talentDataObj, level, defaultKind, defaultElement);
+    }
+    return resultArr;
+}
 
+/**
+ * 
+ * @param {Object} talentDataObj 
+ * @param {string} level 
+ * @param {string} defaultKind 
+ * @param {string} defaultElement 
+ * @param {*} statusChangeArr 
+ * @param {*} talentChangeArr 
+ * @param {string} inputCategory 
+ * @returns {Array}
+ */
+const makeSpecialTalentDetailArray = function (talentDataObj, level, defaultKind, defaultElement, statusChangeArr, talentChangeArr, inputCategory) {
+    if ('種類' in talentDataObj) {
+        switch (talentDataObj['種類']) {
+            case '元素スキルダメージ':
+                level = $('#元素スキルレベルInput').val().toString();
+                defaultKind = talentDataObj['種類'];
+                break;
+            case '元素爆発ダメージ':
+                level = $('#元素爆発レベルInput').val().toString();
+                defaultKind = talentDataObj['種類'];
+                break;
+        }
+    }
+    if ('元素' in talentDataObj) {
+        defaultElement = talentDataObj['元素'];
+    }
+    return makeTalentDetailArray(talentDataObj, level, defaultKind, defaultElement, statusChangeArr, talentChangeArr, inputCategory);
 }
 
 /**
