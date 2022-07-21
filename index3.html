@@ -695,33 +695,33 @@
                     <thead>
                         <tr class="title" @click="is計算結果Opened[category] = !is計算結果Opened[category]">
                             <th>{{displayName(category)}}</th>
-                            <th v-for="item in 計算結果[category]">{{displayName(item[0])}}</th>
+                            <th>{{displayName('期待値')}}</th>
+                            <th>{{displayName('会心')}}</th>
+                            <th>{{displayName('非会心')}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>{{displayName('期待値')}}</th>
-                            <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                        <tr v-for="item in 計算結果[category]">
+                            <th>{{displayName(item[0])}}</th>
+                            <td :class="getClassByElement(item[1])">
                                 {{item[2] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[2] *
                                 元素反応.蒸発倍率) :
                                 増幅反応 == '溶解' ? Math.round(item[2] * 元素反応.溶解倍率) : item[2] : item[2] : '-'}}
                             </td>
-                        </tr>
-                        <tr v-if="is計算結果Opened[category]">
-                            <th>{{displayName('会心')}}</th>
-                            <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                            <td :class="getClassByElement(item[1])">
                                 {{item[3] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[3] *
                                 元素反応.蒸発倍率) :
                                 増幅反応 == '溶解' ? Math.round(item[3] * 元素反応.溶解倍率) : item[3] : item[3] : '-'}}
                             </td>
-                        </tr>
-                        <tr v-if="is計算結果Opened[category]">
-                            <th>{{displayName('非会心')}}</th>
-                            <td v-for="item in 計算結果[category]" :class="getClassByElement(item[1])">
+                            <td :class="getClassByElement(item[1])">
                                 {{item[4] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[4] *
                                 元素反応.蒸発倍率) :
                                 増幅反応 == '溶解' ? Math.round(item[4] * 元素反応.溶解倍率) : item[4] : item[4] : '-'}}
                             </td>
+                        </tr>
+                        <tr v-if="is計算結果Opened[category]">
+                        </tr>
+                        <tr v-if="is計算結果Opened[category]">
                         </tr>
                     </tbody>
                 </table>
