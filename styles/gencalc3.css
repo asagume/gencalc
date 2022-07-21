@@ -219,7 +219,7 @@ h2 {
     margin-left: auto;
     margin-right: auto;
     width: 90%;
-    color: rgb(231, 225, 61);
+    color: #e8d14e;
     text-shadow: 0 0 5px black;
     border: 4px double gray;
     border-radius: 20px;
@@ -257,7 +257,7 @@ label.button {
 
 label.checkbox {
     margin-right: 1rem;
-    white-space: nowrap;    
+    white-space: nowrap;
 }
 
 div.filter img.filter {
@@ -574,4 +574,5 @@ table.result thead th:first-child {
 .tab-switch input[type="radio"]:checked+label,
 .elemental-reaction input[type="radio"]:checked+label {
     border-color: white;
+    color: #e8d14e;
 }
