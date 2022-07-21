@@ -246,6 +246,9 @@ async function initialSetupCharacterInput(name) {
             weaponRefineRange: function () {
                 const max = this.武器精錬ランクOption.max;
                 return Array.from({ length: max }, (_, i) => i + 1);
+            },
+            artifactScore: function () {
+                return 0;
             }
         },
         methods: {
@@ -541,6 +544,7 @@ function initialSetupOptionInput(opt_characterMaster = null) {
         data() {
             return {
                 isVisible: true,
+                activeTab: 1,
                 elementalResonanceMaster: 元素共鳴MasterVar,
                 元素共鳴: {},
                 元素共鳴詳細: {},
@@ -591,6 +595,9 @@ function initialSetupOptionInput(opt_characterMaster = null) {
             displayName: function (name) {
                 return getDisplayName(name);
             },
+            name: function (item) {
+                return this.elementalResonanceMaster[item]['名前'];
+            },
             elementalResonanceOnChange: function (key, event) {
                 if (event.target.checked) {
                     if (Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]).length > 2) {
@@ -603,6 +610,8 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
                 if (arr.length > index) {
                     return this.elementalResonanceMaster[arr[index]]['名前'];
+                } else if (arr.length == 0 && index == 0) {
+                    return this.elementalResonanceMaster['元素共鳴なし']['名前'];
                 }
                 return '';
             },
@@ -610,6 +619,8 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
                 if (arr.length > index) {
                     return this.elementalResonanceMaster[arr[index]]['説明'];
+                } else if (arr.length == 0 && index == 0) {
+                    return this.elementalResonanceMaster['元素共鳴なし']['説明'];
                 }
                 return '';
             },

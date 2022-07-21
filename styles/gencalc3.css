@@ -215,6 +215,22 @@ button {
     background-color: #df8f37;
 }
 
+h2 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    color: rgb(231, 225, 61);
+    text-shadow: 0 0 5px black;
+    border: 4px double gray;
+    border-radius: 20px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+fieldset {
+    border-radius: 10px;
+}
+
 .with-tooltip+.tooltip {
     position: absolute;
     top: -0.5rem;
@@ -239,6 +255,11 @@ label.button {
     border-radius: 15px;
 }
 
+label.checkbox {
+    margin-right: 1rem;
+    white-space: nowrap;    
+}
+
 div.filter img.filter {
     width: 48px;
     height: 48px;
@@ -251,7 +272,7 @@ div.filter img.filter.selected {
 }
 
 ul.character-list,
-ul.weapon-list ul,
+ul.weapon-list,
 #artifact-set-select ul {
     width: 100%;
     margin-left: auto;
@@ -394,6 +415,25 @@ td input[type="number"] {
 #character-input table td input[type="text"].save-name {
     width: calc(100% - 2rem);
     font-size: larger;
+}
+
+.artifact-detail-button {
+    position: relative;
+    background-color: transparent;
+}
+
+.left-icon, .right-icon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+}
+
+.left-icon {
+    left: 2px;
+}
+
+.right-icon {
+    right: 2px;
 }
 
 #artifact-detail-input fieldset label {

@@ -220,10 +220,12 @@
                                         :src="聖遺物セット効果[1].master.image" :alt="聖遺物セット効果[1]['名前']">
                                 </label>
                             </td>
-                            <td rowspan="2">
-                                <label @click="artifactDetailOnClick">
-
-                                </label>
+                            <td rowspan="2" @click="artifactDetailOnClick">
+                                <button type="button" class="artifact-detail-button">
+                                    <img class="left-icon" src="images/artifact.png" alt="聖遺物詳細">
+                                    <img class="right-icon" src="images/artifact.png" alt="聖遺物詳細">
+                                    {{artifactScore}}
+                                </button>
                             </td>
                         </tr>
                         <tr>
@@ -386,7 +388,19 @@
             </div>
 
             <div class="pane6">
-                <div id="condition-input">
+                <div id="input-select" style="margin-bottom: 15px;">
+                    <label>
+                        {{displayName('オプション条件')}}
+                    </label>
+                    <label>
+                        {{displayName('ステータス')}}
+                    </label>
+                    <label>
+                        {{displayName('バフ/デバフ')}}
+                    </label>
+                </div>
+
+                <div id="condition-input" style="margin-bottom: 20px;">
                     <fieldset>
                         <legend>{{displayName('オプション条件')}}</legend>
                         <label v-for="item in inputList">
@@ -402,7 +416,7 @@
                     </fieldset>
                 </div>
 
-                <div id="status-input">
+                <div id="status-input" style="margin-bottom: 20px;">
                     <div class="tab-switch">
                         <input id="status-tab-1" type="radio" v-model="activeTab" value="1" name="status-tab">
                         <label for="status-tab-1" class="tab-switch">
@@ -572,14 +586,28 @@
                     </template>
                 </div>
 
-                <div id="option-input">
+                <fieldset id="option-input">
+                    <div class="tab-switch" style="margin-bottom: 15px;">
+                        <input id="option-tab-1" type="radio" v-model="activeTab" value="1" name="option-input">
+                        <label for="option-tab-1" class="tab-switch">
+                            {{displayName('元素共鳴')}}
+                        </label>
+                        <input id="option-tab-2" type="radio" v-model="activeTab" value="2" name="option-input">
+                        <label for="option-tab-2" class="tab-switch">
+                            {{displayName('キャラ')}}
+                        </label>
+                        <input id="option-tab-3" type="radio" v-model="activeTab" value="3" name="option-input">
+                        <label for="option-tab-3" class="tab-switch">
+                            {{displayName('その他')}}
+                        </label>
+                    </div>
 
-                    <div>
+                    <div v-show="activeTab == '1'">
                         <template v-for="item in elementalResonanceList">
-                            <label>
+                            <label class="checkbox">
                                 <input type="checkbox" v-model="元素共鳴[item]"
                                     @change="elementalResonanceOnChange(item, $event)">
-                                {{displayName(item)}}
+                                {{displayName(name(item))}}
                             </label>
                         </template>
 
@@ -595,7 +623,7 @@
                         </table>
                     </div>
 
-                    <div>
+                    <div v-show="activeTab == '2'">
                         <template v-for="character in teamOptionCharacterList">
                             <fieldset class="team-option" :disabled="teamOptionCharacterDisabled(character)">
                                 <legend>{{displayName(character)}}</legend>
@@ -607,18 +635,20 @@
                         </template>
                     </div>
 
-                    <div>
-                        <label v-for="item in option1List">
-                            {{displayName(item)}}
-                        </label>
-                    </div>
+                    <div v-show="activeTab == '3'">
+                        <div>
+                            <label v-for="item in option1List">
+                                {{displayName(item)}}
+                            </label>
+                        </div>
 
-                    <div>
-                        <label v-for="item in option2List">
-                            {{displayName(item)}}
-                        </label>
+                        <div>
+                            <label v-for="item in option2List">
+                                {{displayName(item)}}
+                            </label>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
 
             <div class="result-pane" id="calculation-result">
