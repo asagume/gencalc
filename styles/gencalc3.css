@@ -96,7 +96,6 @@ body {
 }
 
 #main {
-    max-width: 1280px;
     background: linear-gradient(to top, #3d3d3b, #141414);
     margin: 0 auto;
     font-family: 'Yusei Magic', sans-serif;
@@ -229,6 +228,10 @@ h2 {
 
 fieldset {
     border-radius: 10px;
+    padding-block-start: 0;
+    padding-block-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
 }
 
 .with-tooltip+.tooltip {
@@ -388,6 +391,7 @@ ul.weapon-list,
 
 #character-input img.talent {
     width: 100%;
+    max-width: 90px;
     border-radius: 50%;
     border: none;
 }
@@ -398,6 +402,7 @@ ul.weapon-list,
 
 #character-input img.artifact-set {
     width: calc(100% - 4px);
+    max-width: 90px;
     border-radius: 50%;
     border: 2px solid gray;
 }
@@ -440,16 +445,20 @@ td input[type="number"] {
     display: inline-block;
 }
 
-#artifact-detail-input fieldset label select {
-    width: 20rem;
-}
-
 label.column-2 {
     width: calc(100% / 2 - 8px);
 }
 
+label.column-2 select {
+    width: 16rem;
+}
+
 label.column-3 {
-    width: calc(100% / 3 - 8px);
+    width: calc(100% / 3 - 4px);
+}
+
+label.column-3 select {
+    width: 100%;
 }
 
 label.open-close {
