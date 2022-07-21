@@ -2,6 +2,9 @@ async function onLoad(searchParams) {
     if (localStorage['キャラクター所持状況']) {
         キャラクター所持状況Var = JSON.parse(localStorage['キャラクター所持状況']);
     }
+    if (localStorage['武器所持状況']) {
+        武器所持状況Var = JSON.parse(localStorage['武器所持状況']);
+    }
 
     const responses = await Promise.all([
         'data/CharacterMaster.json',
@@ -43,44 +46,13 @@ async function onLoad(searchParams) {
     initialSetupCharacterInput();
     initialSetupWeaponSelect('弓');
     initialSetupArtifactSetSelect();
+    initialSetupArtifactDetailInput();
+    initialSetupConditionInput();
+    initialSetupOptionInput();
     initialSetupStatusInput();
-    initialSetupEnemyInput();
     initialSetupCalcurationResult();
-}
-
-function getCharacterByBirthday() {
-    let result = null;
-    const today = new Date();
-    let curDiff = Number.MAX_SAFE_INTEGER;
-    Object.keys(キャラクターMasterVar).forEach(key => {
-        if ('誕生日' in キャラクターMasterVar[key]) {
-            const birthdayStrArr = キャラクターMasterVar[key]['誕生日'].split('/');
-            let birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
-            const diff = today.getTime() - birthday.getTime();
-            if (diff < 0) return;
-            if (diff < curDiff) {
-                curDiff = diff;
-                result = key;
-            }
-        }
-    });
-    return result;
-}
-
-function getStarBackgroundUrl(master) {
-    return STAR_BACKGROUND_URL[master['レアリティ']];
-}
-
-function getElementImgSrc(master) {
-    return ELEMENT_IMG_SRC[master['元素']];
-}
-
-function getColorClass(master) {
-    return ELEMENT_COLOR_CLASS[master['元素']];
-}
-
-function getBgColorClass(master) {
-    return ELEMENT_BG_COLOR_CLASS[master['元素']];
+    initialSetupCharacterOwnList();
+    initialSetupWeaponOwnList();
 }
 
 function initialSetupCharacterSelect() {
@@ -124,6 +96,9 @@ function initialSetupCharacterSelect() {
             }
         },
         methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
                 return 'images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png');
@@ -133,6 +108,12 @@ function initialSetupCharacterSelect() {
             },
             elementImgSrc: function (item) {
                 return getElementImgSrc(item.master);
+            },
+            classSelected: function (item) {
+                if (item.name == this.selected) {
+                    return 'selected';
+                }
+                return '';
             },
             onClick: function (event) {
                 if (event.target.alt != this.selected) {
@@ -159,25 +140,7 @@ async function initialSetupCharacterInput(name) {
         data() {
             return {
                 name: null,
-                master: {
-                    名前: 'アンバー',
-                    icon_url: DUMMY_IMG_SRC,
-                    レアリティ: 4,
-                    武器: '弓',
-                    元素: '炎',
-                    通常攻撃: {
-                        名前: null,
-                        icon_url: DUMMY_IMG_SRC
-                    },
-                    元素スキル: {
-                        名前: null,
-                        icon_url: DUMMY_IMG_SRC
-                    },
-                    元素爆発: {
-                        名前: null,
-                        icon_url: DUMMY_IMG_SRC
-                    }
-                },
+                master: CHARACTER_MASTER_DUMMY,
                 突破レベル: 6,
                 レベル: 90,
                 命ノ星座: 0,
@@ -197,11 +160,7 @@ async function initialSetupCharacterInput(name) {
                     max: 13
                 },
                 weapon: null,
-                weaponMaster: {
-                    名前: '西風猟弓',
-                    icon_url: DUMMY_IMG_SRC,
-                    レアリティ: 4
-                },
+                weaponMaster: WEAPON_MASTER_DUMMY,
                 武器突破レベル: 6,
                 武器突破レベルOption: {
                     max: 6
@@ -214,15 +173,11 @@ async function initialSetupCharacterInput(name) {
                 聖遺物セット効果: [
                     {
                         名前: 'NONE',
-                        master: {
-                            'image': DUMMY_IMG_SRC
-                        }
+                        master: ARTIFACT_SET_MASTER_DUMMY
                     },
                     {
                         名前: 'NONE',
-                        master: {
-                            'image': DUMMY_IMG_SRC
-                        }
+                        master: ARTIFACT_SET_MASTER_DUMMY
                     }
                 ],
                 おすすめセット: null,
@@ -294,6 +249,9 @@ async function initialSetupCharacterInput(name) {
             }
         },
         methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
             characterOnClick: function () {
                 CharacterSelectVm.isVisible = !CharacterSelectVm.isVisible;
             },
@@ -337,6 +295,12 @@ async function initialSetupCharacterInput(name) {
                     WeaponSelectVm.isVisible = false;
                 }
             },
+            classArtifactSetSelected: function (index) {
+                if (ArtifactSetSelectVm && ArtifactSetSelectVm.isVisible && index == ArtifactSetSelectVm.index) {
+                    return 'selected';
+                }
+                return '';
+            },
             artifactDetailOnClick: function () {
 
             },
@@ -358,12 +322,58 @@ async function initialSetupCharacterInput(name) {
             removeOnClick: function () {
                 if (!saveName) return;
             }
+        },
+        watch: {
+            name: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                },
+                deep: true
+            },
+            突破レベル: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            レベル: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            命ノ星座: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            weapon: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            武器突破レベル: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            武器レベル: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            武器精錬ランク: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                }
+            },
+            聖遺物セット効果: {
+                handler: function (newVal, oldVal) {
+                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                },
+                deep: true
+            }
         }
     }
     CharacterInputVm = Vue.createApp(CharacterInput).mount('#character-input');
-}
-
-async function initialSetupWeaponInput(type, name) {
 }
 
 async function initialSetupWeaponSelect(type) {
@@ -388,6 +398,9 @@ async function initialSetupWeaponSelect(type) {
         computed: {
         },
         methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
                 return importUrl.replace('data/', 'images/').replace('.json', '.png');
@@ -425,14 +438,21 @@ function initialSetupArtifactSetSelect() {
                 }
             });
         },
-        computed: {
-        },
         methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
             iconUrl: function (item) {
                 return item.master.image;
             },
             starBackgroundUrl: function (item) {
                 return getStarBackgroundUrl(item.master);
+            },
+            selectedClass: function (item) {
+                if (item.name && selected.includes(item.name)) {
+                    return 'selected';
+                }
+                return '';
             },
             descriptionTitle: function (index) {
                 const name0 = this.selected[0];
@@ -463,13 +483,11 @@ function initialSetupArtifactSetSelect() {
                     return ('2セット効果' in myMaster1) ? myMaster1['2セット効果']['説明'] : null;
                 }
             },
-            onClick: function (event) {
-                if (event.target.alt != this.selected) {
-                    const name = event.target.alt;
-                    console.log(this.index, name);
-                    this.selected[this.index] = name;
-                    CharacterInputVm['聖遺物セット効果'][this.index]['名前'] = name;
-                    CharacterInputVm['聖遺物セット効果'][this.index].master = 聖遺物セット効果MasterVar[name];
+            onClick: function (item) {
+                if (item.name != this.selected[this.index]) {
+                    this.selected[this.index] = item.name;
+                    CharacterInputVm['聖遺物セット効果'][this.index]['名前'] = item.name;
+                    CharacterInputVm['聖遺物セット効果'][this.index].master = item.master;
                 }
                 this.isVisible = false;
             }
@@ -478,12 +496,135 @@ function initialSetupArtifactSetSelect() {
     ArtifactSetSelectVm = Vue.createApp(ArtifactSetSelect).mount('#artifact-set-select');
 }
 
-function initialSetupArtifactInput() {
-
+function initialSetupArtifactDetailInput() {
+    const ArtifactDetailInput = {
+        data() {
+            return {
+                isVisible: true,
+                isEditable: true,
+                聖遺物メイン効果: [null, null, null, null, null],
+                聖遺物サブ効果: 聖遺物サブ効果TEMPLATE,
+                聖遺物サブ効果補正: 聖遺物サブ効果TEMPLATE
+            }
+        },
+        computed: {
+            subStatList: function () {
+                return Object.keys(聖遺物サブ効果TEMPLATE);
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            mainStatList: function (index) {
+                return [
+                    聖遺物メイン効果_生の花ARR,
+                    聖遺物メイン効果_死の羽ARR,
+                    聖遺物メイン効果_時の砂ARR,
+                    聖遺物メイン効果_空の杯ARR,
+                    聖遺物メイン効果_理の冠ARR
+                ][index];
+            },
+            percentage: function (name) {
+                return ['HP', '攻撃力', '防御力', '元素熟知'].includes(name) ? '' : '%';
+            }
+        }
+    }
+    ArtifactDetailInputVm = Vue.createApp(ArtifactDetailInput).mount('#artifact-detail-input');
 }
 
-function initialSetupOptionInput(characterMaster) {
+function initialSetupConditionInput(opt_characterMaster = null) {
+}
 
+function initialSetupOptionInput(opt_characterMaster = null) {
+    const OptionInput = {
+        data() {
+            return {
+                isVisible: true,
+                elementalResonanceMaster: 元素共鳴MasterVar,
+                元素共鳴: {},
+                元素共鳴詳細: {},
+                teamOptionMaster: チームオプションMasterVar,
+                チームオプション: {},
+                チームオプション詳細: {},
+                option1Master: オプション1MasterVar,
+                オプション1: {},
+                オプション1詳細: {},
+                option2Master: オプション2MasterVar,
+                オプション2: {},
+                オプション2詳細: {}
+            }
+        },
+        created() {
+            Object.keys(this.elementalResonanceMaster).forEach(key => {
+                this.元素共鳴[key] = false;
+                this.元素共鳴詳細[key] = null;
+            });
+            Object.keys(this.teamOptionMaster).forEach(key => {
+                this.チームオプション[key] = null;
+                this.チームオプション詳細[key] = null;
+            });
+            Object.keys(this.option1Master).forEach(key => {
+                this.オプション1[key] = null;
+                this.オプション1詳細[key] = null;
+            });
+            Object.keys(this.option2Master).forEach(key => {
+                this.オプション2[key] = null;
+                this.オプション2詳細[key] = null;
+            });
+        },
+        computed: {
+            elementalResonanceList: function () {
+                return Object.keys(this.elementalResonanceMaster).filter(s => s.endsWith('共鳴'));
+            },
+            teamOptionCharacterList: function () {
+                return Array.from(new Set(Object.keys(this.teamOptionMaster).map(s => s.split('_')[0])));
+            },
+            option1List: function () {
+                return Object.keys(this.option1Master);
+            },
+            option2List: function () {
+                return Object.keys(this.option2Master);
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            elementalResonanceOnChange: function (key, event) {
+                if (event.target.checked) {
+                    if (Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]).length > 2) {
+                        event.target.checked = false;
+                        this.元素共鳴[key] = false;
+                    }
+                }
+            },
+            elementalResonanceName: function (index) {
+                const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
+                if (arr.length > index) {
+                    return this.elementalResonanceMaster[arr[index]]['名前'];
+                }
+                return '';
+            },
+            elementalResonanceDescription: function (index) {
+                const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
+                if (arr.length > index) {
+                    return this.elementalResonanceMaster[arr[index]]['説明'];
+                }
+                return '';
+            },
+            teamOptionList: function (character) {
+                return Object.keys(this.teamOptionMaster).filter(s => s.startsWith(character + '_')).map(s => s.replace(character + '_', ''));
+            },
+            teamOptionCharacterDisabled(character) {
+                return character == CharacterInputVm.name;
+            },
+            teamOptionDisabled(character, name) {
+                return false;
+            }
+        }
+    }
+    OptionInputVm = Vue.createApp(OptionInput).mount('#option-input');
 }
 
 function initialSetupStatusInput(characterMaster) {
@@ -492,17 +633,7 @@ function initialSetupStatusInput(characterMaster) {
             return {
                 activeTab: '1',
                 isEditable: false,
-                ステータス: {
-                    '基礎ステータス': JSON.parse(JSON.stringify(基礎ステータスTEMPLATE)),
-                    '基本ステータス': JSON.parse(JSON.stringify(基本ステータスTEMPLATE)),
-                    '高級ステータス': JSON.parse(JSON.stringify(高級ステータスTEMPLATE)),
-                    '元素ステータス・ダメージ': JSON.parse(JSON.stringify(元素ステータス_ダメージTEMPLATE)),
-                    '元素ステータス・耐性': JSON.parse(JSON.stringify(元素ステータス_耐性TEMPLATE)),
-                    'ダメージバフ': JSON.parse(JSON.stringify(ダメージバフTEMPLATE)),
-                    '実数ダメージ加算': JSON.parse(JSON.stringify(実数ダメージ加算TEMPLATE)),
-                    '元素反応バフ': JSON.parse(JSON.stringify(元素反応バフTEMPLATE)),
-                    'その他': JSON.parse(JSON.stringify(ステータスその他TEMPLATE))
-                },
+                ステータス: JSON.parse(JSON.stringify(ステータスTEMPLATE)),
                 ステータス補正: {},
                 isステータスOpened: {},
                 補正値0初期化Enabled: false,
@@ -511,7 +642,8 @@ function initialSetupStatusInput(characterMaster) {
                 敵レベル: 90,
                 敵ステータス: JSON.parse(JSON.stringify(元素ステータス_耐性TEMPLATE)),
                 敵ステータス補正: {},
-                敵防御力: 0
+                敵防御力: 0,
+                is敵ステータスOpened: false
             }
         },
         created() {
@@ -524,35 +656,46 @@ function initialSetupStatusInput(characterMaster) {
             Object.keys(this.ステータス).forEach(key => {
                 this.isステータスOpened[key] = false; // close
             });
+            this.敵List = Object.keys(敵MasterVar).map(name => {
+                return {
+                    name: name,
+                    master: 敵MasterVar[name]
+                }
+            });
+            this.敵 = this.敵List[0].name;
+            const myEnemyMaster = this.敵List[0].master;
+            Object.keys(myEnemyMaster).forEach(stat => {
+                this.敵ステータス[stat.replace('耐性', '')] = myEnemyMaster[stat];
+            });
             Object.keys(this.敵ステータス).forEach(stat => {
                 this.敵ステータス補正[stat] = 0;
             });
         },
         computed: {
-            isCategoryDisp: function (category) {
-                let result = false;
-                Object.keys(this.ステータス[category]).forEach(stat => {
-                    if (this.ステータス[category][stat]) {
-                        result = true;
-                    }
-                });
-                return result;
+            enemyStatList: function () {
+                return Object.keys(this.敵ステータス).filter(s => this.is敵ステータスOpened || this.敵ステータス[s]);
             }
         },
         methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
             statList: function (category) {
                 return Object.keys(this.ステータス[category]).filter(s => this.isステータスOpened[category] || this.ステータス[category][s]);
             },
-            getDisplayName(name) {
-                return name;
+            enemyListOnChange: function () {
+                const master = 敵MasterVar[this.敵];
+                Object.keys(master).forEach(stat => {
+                    this.敵ステータス[stat.replace('耐性', '')] = master[stat];
+                });
+                Object.keys(this.敵ステータス補正).forEach(stat => {
+                    this.敵ステータス[stat] += this.敵ステータス補正[stat];
+                });
             }
+
         }
     };
     StatusInputVm = Vue.createApp(StatusInput).mount('#status-input');
-}
-
-function initialSetupEnemyInput() {
-
 }
 
 function initialSetupCalcurationResult() {
@@ -597,17 +740,159 @@ function initialSetupCalcurationResult() {
             }
         },
         methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
             getClassByElement(element) {
                 return ELEMENT_COLOR_CLASS[element];
-            },
-            getDisplayName(name) {
-                name = name.replace(/ダメージ$/, '');
-                name = name.replace(/の$/, '');
-                return name;
             }
         }
     };
     CalculationResultVm = Vue.createApp(CalculationResult).mount('#calculation-result');
+}
+
+function initialSetupCharacterOwnList() {
+    const CharacterOwnList = {
+        data() {
+            return {
+                isVisible: false,
+                list: [],
+                命ノ星座: キャラクター所持状況Var,
+                isChanged: false
+            }
+        },
+        created() {
+            this.list = Object.keys(キャラクターMasterVar).map(function (key) {
+                return {
+                    name: key,
+                    master: キャラクターMasterVar[key]
+                }
+            });
+            Object.keys(キャラクターMasterVar).forEach(key => {
+                if (!(key in this.命ノ星座)) {
+                    this.命ノ星座[key] = null;
+                }
+            });
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            iconUrl: function (item) {
+                const importUrl = item.master.import;
+                return 'images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png');
+            },
+            starBackgroundUrl: function (item) {
+                return getStarBackgroundUrl(item.master);
+            },
+            elementImgSrc: function (item) {
+                return getElementImgSrc(item.master);
+            },
+            classSelected: function (item) {
+                if (item.name == this.selected) {
+                    return 'selected';
+                }
+                return '';
+            },
+            onClick: function (item) {
+                if (this.命ノ星座[item.name] == null) {
+                    this.命ノ星座[item.name] = 0;
+                } else if (this.命ノ星座[item.name] > 6) {
+                    this.命ノ星座[item.name] = null;
+                } else {
+                    this.命ノ星座[item.name]++;
+                }
+                this.isChanged = true;
+            },
+            saveOnClick: function () {
+                const obj = {};
+                Object.keys(this.命ノ星座).filter(s => this.命ノ星座[s] != null).forEach(key => {
+                    obj[key] = this.命ノ星座[key];
+                });
+                localStorage.setItem('キャラクター所持状況', JSON.stringify(obj));
+                this.isChanged = false;
+            }
+        }
+    }
+    CharacterOwnListVm = Vue.createApp(CharacterOwnList).mount('#character-own-list');
+}
+
+function initialSetupWeaponOwnList() {
+    const WeaponOwnList = {
+        data() {
+            return {
+                isVisible: false,
+                list: null,
+                精錬ランク: 武器所持状況Var,
+                filters: {
+                    weapon: {
+                        selected: '片手剣',
+                        list: null
+                    }
+                },
+                isChanged: false
+            }
+        },
+        created() {
+            this.list = {};
+            Object.keys(武器MasterVar).forEach(category => {
+                this.list[category] = Object.keys(武器MasterVar[category]).map(function (key) {
+                    return {
+                        name: key,
+                        master: 武器MasterVar[category][key]
+                    }
+                });
+                Object.keys(武器MasterVar[category]).forEach(key => {
+                    if (!(key in this.精錬ランク)) {
+                        this.精錬ランク[key] = null;
+                    }
+                });
+            });
+            this.filters.weapon.list = Object.keys(WEAPON_IMG_SRC).map(function (key) {
+                return { name: key, url: WEAPON_IMG_SRC[key] }
+            });
+        },
+        computed: {
+            filteredList: function () {
+                console.log(this.list[this.filters.weapon.selected]);
+                return this.list[this.filters.weapon.selected];
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            iconUrl: function (item) {
+                const importUrl = item.master.import;
+                return importUrl.replace('data/', 'images/').replace('.json', '.png');
+            },
+            starBackgroundUrl: function (item) {
+                return getStarBackgroundUrl(item.master);
+            },
+            onClick: function (item) {
+                if (this.精錬ランク[item.name] == null) {
+                    this.精錬ランク[item.name] = 1;
+                } else if (this.精錬ランク[item.name] > 0 && item.master['レアリティ'] <= 2) {
+                    this.精錬ランク[item.name] = null;
+                } else if (this.精錬ランク[item.name] >= 5) {
+                    this.精錬ランク[item.name] = null;
+                } else {
+                    this.精錬ランク[item.name]++;
+                }
+                this.isChanged = true;
+            },
+            saveOnClick: function () {
+                const obj = {};
+                Object.keys(this.精錬ランク).filter(s => this.精錬ランク[s] != null).forEach(key => {
+                    obj[key] = this.精錬ランク[key];
+                });
+                console.log(obj);
+                localStorage.setItem('武器所持状況', JSON.stringify(obj));
+                this.isChanged = false;
+            }
+        }
+    }
+    WeaponOwnListVm = Vue.createApp(WeaponOwnList).mount('#weapon-own-list');
 }
 
 /**
@@ -627,21 +912,34 @@ async function setupCharacterInput(name) {
     const myVision = myCharacterMaster['元素'];
     const myWeaponType = myCharacterMaster['武器'];
 
+    const myRecommendationList = makeRecommendationList(myCharacterMaster);
+    const myRecommendation = myRecommendationList[0];
+
+    CharacterSelectVm.selected = name;
+    CharacterInputVm.おすすめセットOption.list = myRecommendationList;
+    CharacterInputVm.おすすめセット = myRecommendation[0];
+
     let myAscension = 6;        // 突破レベル
     let myLevel = 90;           // レベル
     let myConstellation = 0;    // 命ノ星座
-    if (name in キャラクター所持状況Var) {
-        myConstellation = キャラクター所持状況Var[name];
+
+    if ('レベル' in myRecommendation[1]) {
+        myLevel = Number(myRecommendation[1]['レベル'].replace('+', ''));
+        for (myAscension = 0; myAscension < 突破レベルレベルARR.length; myAscension++) {
+            const max = 突破レベルレベルARR[myAscension][突破レベルレベルARR[myAscension].length - 1];
+            if (myLevel <= max) {
+                break;
+            }
+        }
+        if (myRecommendation[1]['レベル'].endsWith('+')) {
+            myAscension++;
+        }
     }
 
-    CharacterInputVm.おすすめセットOption.list = makeRecommendationList(myCharacterMaster);
-
-
-    let myRecommend = myCharacterMaster.おすすめセット;
-
-    const savedKeyArr = Object.keys(localStorage).filter(s => s.startsWith('構成_' + name));
-    if (savedKeyArr.length > 0) {
-
+    if ('命ノ星座' in myRecommendation[1]) {
+        myConstellation = myRecommendation[1]['命ノ星座'];
+    } else if (name in キャラクター所持状況Var) {
+        myConstellation = キャラクター所持状況Var[name];
     }
 
     if ('命ノ星座' in myCharacterMaster) {
@@ -663,6 +961,7 @@ async function setupCharacterInput(name) {
         CharacterInputVm.元素スキルレベルOption.max = maxSkillLevel;
         CharacterInputVm.元素爆発レベルOption.max = maxBurstLevel;
     } else {
+        CharacterInputVm.命ノ星座Option.max = 0;
         CharacterInputVm.元素スキルレベルOption.max = 10;
         CharacterInputVm.元素爆発レベルOption.max = 10;
     }
@@ -672,6 +971,20 @@ async function setupCharacterInput(name) {
     CharacterInputVm.突破レベル = myAscension;
     CharacterInputVm.レベル = myLevel;
     CharacterInputVm.命ノ星座 = myConstellation;
+
+    let myWeapon;
+    let myArtifactSet = [];
+
+    if ('武器' in myRecommendation[1]) {
+        myWeapon = myRecommendation[1]['武器'];
+    }
+    if ('聖遺物セット効果1' in myRecommendation[1]) {
+        const myWeapon = myRecommendation[1]['武器'];
+    }
+    if ('聖遺物セット効果1' in myRecommendation[1]) {
+        const myWeapon = myRecommendation[1]['武器'];
+    }
+
 
     let myLevelStr = myLevel;
     if (突破レベルレベルARR[myAscension][0] == myLevel) {
@@ -689,128 +1002,6 @@ async function setupCharacterInput(name) {
     //     }
     // });
 
-}
-
-function makeRecommendationList(characterMaster) {
-    const result = [];
-
-    const myCharacterName = characterMaster['名前'];
-    let isSavable = null;
-
-    // if (URIキャラクター構成ObjVar) {
-    //     if (myCharacterName == URIキャラクター構成ObjVar['キャラクター']) {
-    //         おすすめセットArrVar.push(['IMPORTED DATA', URIキャラクター構成ObjVar, false]);
-    //         isSavable = true;
-    //     }
-    // }
-
-    let storageKeyArr = [];
-    Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('構成_' + myCharacterName)) {
-            storageKeyArr.push(key);
-            if (isSavable == null) {
-                isSavable = false;
-            }
-        }
-    });
-    storageKeyArr.sort();
-    const re = new RegExp('^構成_' + myCharacterName + '_');
-    storageKeyArr.forEach(key => {
-        let setName;
-        if (key == '構成_' + myCharacterName) {
-            setName = 'あなたの' + myCharacterName;
-        } else {
-            setName = key.replace(re, '');
-        }
-        result.push([setName, JSON.parse(localStorage[key]), true]);
-    });
-
-    characterMaster['おすすめセット'].forEach(obj => {
-        let myおすすめセット = obj;
-        ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach(statName => {
-            if (!(statName in obj)) {
-                obj[statName] = null;
-            }
-        });
-        let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
-        let artifactRarerity4Num = 0;
-        if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {
-            artifactRarerity4Num++;
-        }
-        if (聖遺物セット効果MasterVar[myおすすめセット['聖遺物セット効果2']]['レアリティ'] == 4) {
-            artifactRarerity4Num++;
-        }
-        for (let i = 0; i < 2; i++) {
-            let name = '聖遺物メイン効果' + (i + 1);
-            if (!(name in myおすすめセット)) {
-                if (i == 0) {
-                    myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
-                } else if (i == 1) {
-                    myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
-                }
-            }
-        }
-
-        let setName = myおすすめセット['武器'];
-        setName += ' ';
-        if (myおすすめセット['聖遺物セット効果1'] == myおすすめセット['聖遺物セット効果2']) {
-            setName += myおすすめセット['聖遺物セット効果1'];
-        } else {
-            setName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果1']);
-            setName += '/';
-            setName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果2']);
-        }
-        setName += ' [';
-        for (let i = 3; i <= 5; i++) {
-            const statusName = myおすすめセット['聖遺物メイン効果' + i].split('_')[1];
-            switch (statusName) {
-                case 'HP%':
-                    setName += 'HP';
-                    break;
-                case '元素熟知':
-                    setName += '熟';
-                    break;
-                case '元素チャージ効率':
-                    setName += 'ﾁｬ';
-                    break;
-                case '会心率':
-                    setName += '率';
-                    break;
-                case '会心ダメージ':
-                    setName += 'ダ';
-                    break;
-                case '与える治療効果':
-                    setName += '治';
-                    break;
-                default:
-                    setName += statusName.substring(0, 1);
-                    break;
-            }
-        }
-        setName += ']';
-        result.push([setName, myおすすめセット, false]);
-    });
-    return result;
-}
-
-/**
- * 聖遺物セット名の略称を作成します
- * 
- * @param {string} name 聖遺物セット名
- * @returns {string} 聖遺物セット名の略称
- */
-function makeArtifactSetAbbrev(name) {
-    const abbrRe = /[\p{sc=Hiragana}\p{sc=Katakana}ー]+/ug;
-    let abbr = name.replace(abbrRe, '');
-    if (abbr.length > 2) {
-        abbr = name.split(abbrRe).sort((a, b) => {
-            return b.length - a.length;
-        })[0];
-    }
-    if (abbr.length > 3) {
-        abbr = abbr.substring(0, 2);
-    }
-    return abbr;
 }
 
 /**
@@ -832,71 +1023,10 @@ async function setupWeaponInput(type, name) {
     }
 }
 
-async function setupArtifactSetInput(name) {
-    const ArtifactSetInput = {
-        data() {
-            return {
-                set: [
-                    {
-                        名前: 'NONE',
-                        master: null,
-                        セット効果: null
-                    },
-                    {
-                        名前: 'NONE',
-                        master: null,
-                        セット効果: null
-                    }
-                ]
-            }
-        },
-        created() {
-            this.set[0].master = 聖遺物セット効果MasterVar[this.set[0]['名前']];
-            this.set[1].master = 聖遺物セット効果MasterVar[this.set[1]['名前']];
-            if ('2セット効果' in this.set[0].master) {
-                set[0]['セット効果'] = this.set[0].master['2セット効果']
-            }
-            if (this.set[0]['名前'] == this.set[1]['名前']) {
-                if ('4セット効果' in this.set[1].master) {
-                    set[1]['セット効果'] = this.set[1].master['4セット効果']['説明']
-                }
-            } else {
-                if ('2セット効果' in this.set[1].master) {
-                    set[1]['セット効果'] = this.set[1].master['2セット効果']['説明']
-                }
-            }
-        },
-        methods: {
-            onChange: function (set) {
-
-            }
-        }
-    };
-
+function updateStatusInputStatus(statusObj) {
+    StatusInputVm.ステータス = statusObj;
 }
 
 function setupEnemyInput(name) {
-    const EnemyInput = {
-        data() {
-            return {
-                名前: name,
-                レベル: 90,
-                ステータス: null,
-                ステータス補正: null,
-                防御力: 0,
-                list: []
-            }
-        },
-        created() {
-            this.list = Object.keys(敵MasterVar).map(name => {
-                return {
-                    名前: name,
-                    ステータス: 敵MasterVar[name]
-                }
-            });
-            this.ステータス = JSON.parse(JSON.stringify(敵MasterVar[name]));
-            this.ステータス補正 = JSON.parse(JSON.stringify(元素ステータス_耐性TEMPLATE));
-        }
-    };
-    EnemyInputVm = Vue.createApp(EnemyInput).mount('#enemy-input');
 }
+

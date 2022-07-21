@@ -13,6 +13,7 @@ var オプション2MasterVar;
 const キャラクター詳細MasterMapVar = new Map();
 
 var キャラクター所持状況Var = {};
+var 武器所持状況Var = {};
 
 /** キャラクター選択 */
 var CharacterSelectVm;
@@ -22,8 +23,15 @@ var CharacterInputVm;
 var WeaponSelectVm;
 /** 聖遺物セット効果選択 */
 var ArtifactSetSelectVm;
+/** 聖遺物メイン/サブ効果入力 */
+var ArtifactDetailInputVm;
+/** 条件入力 */
+var ConditionInputVm;
+/** オプション入力 */
+var OptionInputVm;
 /** ステータス情報入力 */
 var StatusInputVm;
+/** 敵情報入力 */
 var EnemyInputVm;
 /** 計算結果 */
 var CalculationResultVm;
@@ -80,7 +88,7 @@ const STAR_BACKGROUND_URL = {
     5: 'images/star5-bg.png'
 };
 
-const DUMMY_IMG_SRC = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 
 const 基礎ステータスTEMPLATE = {
     基礎HP: 0,
@@ -169,7 +177,98 @@ const ステータスその他TEMPLATE = {
     ダメージ軽減: 0,
     'HP%': 0,
     '攻撃力%': 0,
-    '防御力%': 0
+    '防御力%': 0,
+    'HP+': 0,
+    '攻撃力+': 0,
+    '防御力+': 0
+};
+
+const 聖遺物メイン効果_生の花ARR = [
+    '5_HP', '4_HP'
+];
+
+const 聖遺物メイン効果_死の羽ARR = [
+    '5_攻撃力', '4_攻撃力'
+];
+
+const 聖遺物メイン効果_時の砂ARR = [
+    '5_元素チャージ効率',
+    '5_HP%',
+    '5_攻撃力%',
+    '5_防御力%',
+    '5_元素熟知',
+    '4_元素チャージ効率',
+    '4_HP%',
+    '4_攻撃力%',
+    '4_防御力%',
+    '4_元素熟知'
+];
+
+const 聖遺物メイン効果_空の杯ARR = [
+    '5_炎元素ダメージバフ',
+    '5_水元素ダメージバフ',
+    '5_風元素ダメージバフ',
+    '5_雷元素ダメージバフ',
+    '5_氷元素ダメージバフ',
+    '5_岩元素ダメージバフ',
+    '5_物理ダメージバフ',
+    '5_HP%',
+    '5_攻撃力%',
+    '5_防御力%',
+    '5_元素熟知',
+    '4_炎元素ダメージバフ',
+    '4_水元素ダメージバフ',
+    '4_風元素ダメージバフ',
+    '4_雷元素ダメージバフ',
+    '4_氷元素ダメージバフ',
+    '4_岩元素ダメージバフ',
+    '4_物理ダメージバフ',
+    '4_HP%',
+    '4_攻撃力%',
+    '4_防御力%',
+    '4_元素熟知'
+];
+
+const 聖遺物メイン効果_理の冠ARR = [
+    '5_会心率',
+    '5_会心ダメージ',
+    '5_HP%',
+    '5_攻撃力%',
+    '5_防御力%',
+    '5_元素熟知',
+    '5_与える治療効果',
+    '4_会心率',
+    '4_会心ダメージ',
+    '4_HP%',
+    '4_攻撃力%',
+    '4_防御力%',
+    '4_元素熟知',
+    '4_与える治療効果'
+];
+
+const 聖遺物サブ効果TEMPLATE = {
+    'HP': 0,
+    '攻撃力': 0,
+    '防御力': 0,
+    '元素熟知': 0,
+    '会心率': 0,
+    '会心ダメージ': 0,
+    '元素チャージ効率': 0,
+    'HP%': 0,
+    '攻撃力%': 0,
+    '防御力%': 0,
+};
+
+const ステータスTEMPLATE = {
+    '基礎ステータス': 基礎ステータスTEMPLATE,
+    '基本ステータス': 基本ステータスTEMPLATE,
+    '高級ステータス': 高級ステータスTEMPLATE,
+    '元素ステータス・ダメージ': 元素ステータス_ダメージTEMPLATE,
+    '元素ステータス・耐性': 元素ステータス_耐性TEMPLATE,
+    'ダメージバフ': ダメージバフTEMPLATE,
+    '実数ダメージ加算': 実数ダメージ加算TEMPLATE,
+    '元素反応バフ': 元素反応バフTEMPLATE,
+    'その他': ステータスその他TEMPLATE
 };
 
 const 元素反応TEMPLATE = {
@@ -205,3 +304,38 @@ const 突破レベルレベルARR = [
     Array.from({ length: 11 }, (_, i) => i + 70),
     Array.from({ length: 11 }, (_, i) => i + 80),
 ];
+
+const CHARACTER_MASTER_DUMMY = {
+    名前: null,
+    icon_url: IMG_SRC_DUMMY,
+    レアリティ: 4,
+    武器: null,
+    元素: null,
+    ステータス: {},
+    通常攻撃: {
+        名前: null,
+        icon_url: IMG_SRC_DUMMY
+    },
+    元素スキル: {
+        名前: null,
+        icon_url: IMG_SRC_DUMMY
+    },
+    元素爆発: {
+        名前: null,
+        icon_url: IMG_SRC_DUMMY
+    }
+
+};
+
+const WEAPON_MASTER_DUMMY = {
+    名前: null,
+    icon_url: IMG_SRC_DUMMY,
+    レアリティ: 4,
+    ステータス: {}
+};
+
+const ARTIFACT_SET_MASTER_DUMMY = {
+    名前: null,
+    image: IMG_SRC_DUMMY
+};
+

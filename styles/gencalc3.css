@@ -7,7 +7,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto 440px auto minmax(500px, auto) auto auto;
+        grid-template-rows: auto auto 480px auto minmax(500px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1 pane1"
             "pane2 pane2 pane2"
@@ -31,7 +31,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto 400px auto minmax(400px, auto) auto auto;
+        grid-template-rows: auto auto 480px auto minmax(400px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1"
             "pane2 pane2"
@@ -246,12 +246,12 @@ div.filter img.filter {
 }
 
 div.filter img.filter.selected {
-    border: 2px solid white;
+    border: 2px solid whitesmoke;
     border-radius: 50%;
 }
 
-#character-select ul,
-#weapon-select ul,
+ul.character-list,
+ul.weapon-list ul,
 #artifact-set-select ul {
     width: 100%;
     margin-left: auto;
@@ -264,20 +264,20 @@ div.filter img.filter.selected {
     padding-inline-end: 0;
 }
 
-#character-select ul li,
-#weapon-select ul li,
-#artifact-set-select ul li {
+.character-list li,
+.weapon-list li,
+#artifact-set-select li {
     display: inline-block;
     position: relative;
 }
 
-#character-select ul li img.character {
+.character-list li img.character {
     width: 96px;
     height: 96px;
     background-size: contain;
 }
 
-#character-select ul li img.vision {
+.character-list li img.vision {
     width: 30px;
     height: 30px;
     position: absolute;
@@ -285,11 +285,32 @@ div.filter img.filter.selected {
     top: 2px;
 }
 
-#weapon-select ul li img,
-#artifact-set-select ul li img {
+.character-list li p.constellation,
+.weapon-list li p.refine {
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    margin: 0;
+    text-shadow: 0 0 5px black;
+}
+
+.weapon-list li img,
+#artifact-set-select li img {
     width: 64px;
     height: 64px;
     background-size: contain;
+}
+
+#weapon-own-list .weapon-list li img {
+    width: 96px;
+    height: 96px;
+}
+
+.character-list li img.selected,
+.weapon-list li img.selected,
+#artifact-set-select li img.selected {
+    background-color: whitesmoke;
 }
 
 #character-input {
@@ -360,6 +381,10 @@ div.filter img.filter.selected {
     border: 2px solid gray;
 }
 
+#character-input img.artifact-set.selected {
+    background-color: whitesmoke;
+}
+
 td input[type="number"] {
     border-radius: 0.6rem;
     font-size: 2rem;
@@ -369,6 +394,22 @@ td input[type="number"] {
 #character-input table td input[type="text"].save-name {
     width: calc(100% - 2rem);
     font-size: larger;
+}
+
+#artifact-detail-input fieldset label {
+    display: inline-block;
+}
+
+#artifact-detail-input fieldset label select {
+    width: 20rem;
+}
+
+label.column-2 {
+    width: calc(100% / 2 - 8px);
+}
+
+label.column-3 {
+    width: calc(100% / 3 - 8px);
 }
 
 label.open-close {
