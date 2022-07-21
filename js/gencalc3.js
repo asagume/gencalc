@@ -941,6 +941,9 @@ async function setupCharacterInput(name) {
     } else if (name in キャラクター所持状況Var) {
         myConstellation = キャラクター所持状況Var[name];
     }
+    if (!myConstellation) {
+        myConstellation = 0;
+    }
 
     if ('命ノ星座' in myCharacterMaster) {
         let maxSkillLevel = 10;
