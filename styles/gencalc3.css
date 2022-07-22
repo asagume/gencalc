@@ -232,6 +232,8 @@ fieldset {
     padding-block-end: 0;
     padding-inline-start: 0;
     padding-inline-end: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .with-tooltip+.tooltip {
