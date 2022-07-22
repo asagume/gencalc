@@ -508,8 +508,8 @@ function initialSetupArtifactDetailInput() {
                 isEditable: false,
                 聖遺物メイン効果: [null, null, null, null, null],
                 聖遺物優先するサブ効果: [null, null, null],
-                聖遺物優先するサブ効果上昇量: [0, 0, 0],
-                聖遺物優先するサブ効果上昇回数: [0, 0, 0],
+                聖遺物優先するサブ効果上昇量: [4, 4, 4],
+                聖遺物優先するサブ効果上昇回数: [5, 5, 5],
                 聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
                 聖遺物ステータス補正: 聖遺物ステータスTEMPLATE,
                 isステータスOpened: false,
@@ -542,6 +542,21 @@ function initialSetupArtifactDetailInput() {
                     聖遺物メイン効果_空の杯ARRAY,
                     聖遺物メイン効果_理の冠ARRAY
                 ][index];
+            },
+            subStatUpList: function (index) {
+                const stat = this.聖遺物優先するサブ効果[index];
+                if (!stat) return [];
+                const master = 聖遺物サブ効果MasterVar[stat];
+                const result = [];
+                for (let i = 0; i < master.length; i++) {
+                    result.push(master[i]);
+                    if (i < master.length - 1) {
+                        let newValue = master[i] + (master[i + 1] - master[i]) / 2;
+                        newValue = Math.round(newValue * 100) / 100;
+                        result.push(newValue);
+                    }
+                }
+                return result;
             }
         },
         watch: {
