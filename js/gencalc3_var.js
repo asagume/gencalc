@@ -11,6 +11,7 @@ var オプション1MasterVar;
 var オプション2MasterVar;
 
 const キャラクター個別MasterMapVar = new Map();
+const 武器個別MasterMapVar = new Map();
 
 const キャラクターダメージ詳細ObjMapVar = new Map();
 const 武器ダメージ詳細ObjMapVar = new Map();

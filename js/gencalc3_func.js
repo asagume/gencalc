@@ -486,6 +486,7 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     });
 
     // 武器のステータスを計上します
+    console.log(weaponMaster);
     Object.keys(weaponMaster['ステータス']).forEach(stat => {
         result[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], characterInput['突破レベル'], characterInput['レベル']);
     });
@@ -513,15 +514,15 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     }
 
     result['HP上限'] += result['基礎HP'];
-    result['HP上限'] += result['基礎HP'] * result['HP%'];
+    result['HP上限'] += result['基礎HP'] * result['HP%'] / 100;
     result['HP上限'] += result['HP+'];
 
     result['防御力'] += result['基礎防御力'];
-    result['防御力'] += result['基礎防御力'] * result['防御力%'];
+    result['防御力'] += result['基礎防御力'] * result['防御力%'] / 100;
     result['防御力'] += result['防御力+'];
 
     result['攻撃力'] += result['基礎攻撃力'];
-    result['攻撃力'] += result['基礎攻撃力'] * result['攻撃力%'];
+    result['攻撃力'] += result['基礎攻撃力'] * result['攻撃力%'] / 100;
     result['攻撃力'] += result['攻撃力+'];
 
     console.log(result);
@@ -537,6 +538,7 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
  * @returns {number}
  */
 function getStatValueByLevel(statObj, ascension, level) {
+    if (!statObj) return 0;
     const myLevelStr = getLevelStr(ascension, level);
     if (myLevelStr in statObj) {
         return statObj[myLevelStr];

@@ -927,19 +927,19 @@ function initialSetupWeaponOwnList() {
  * @param {string} name キャラクター名
  */
 async function setupCharacterInput(name) {
-    let myCharacterMaster = null;
+    let characterMaster = null;
     if (!キャラクター個別MasterMapVar.has(name)) {
         const url = キャラクターMasterVar[name]['import'];
         const json = await fetch(url).then(resp => resp.json());
         キャラクター個別MasterMapVar.set(name, json);
     }
-    myCharacterMaster = キャラクター個別MasterMapVar.get(name);
+    characterMaster = キャラクター個別MasterMapVar.get(name);
 
-    const myRarity = myCharacterMaster['レアリティ'];
-    const myVision = myCharacterMaster['元素'];
-    const myWeaponType = myCharacterMaster['武器'];
+    const myRarity = characterMaster['レアリティ'];
+    const myVision = characterMaster['元素'];
+    const myWeaponType = characterMaster['武器'];
 
-    const myRecommendationList = makeRecommendationList(myCharacterMaster);
+    const myRecommendationList = makeRecommendationList(characterMaster);
     const myRecommendation = myRecommendationList[0];
 
     CharacterSelectVm.selected = name;
@@ -972,18 +972,18 @@ async function setupCharacterInput(name) {
         myConstellation = 0;
     }
 
-    if ('命ノ星座' in myCharacterMaster) {
+    if ('命ノ星座' in characterMaster) {
         let maxSkillLevel = 10;
         let maxBurstLevel = 10;
-        let mySkillName = myCharacterMaster.元素スキル.名前;
-        let myBurstName = myCharacterMaster.元素爆発.名前;
-        Object.keys(myCharacterMaster.命ノ星座).forEach(key => {
+        let mySkillName = characterMaster.元素スキル.名前;
+        let myBurstName = characterMaster.元素爆発.名前;
+        Object.keys(characterMaster.命ノ星座).forEach(key => {
             if (myConstellation < Number(key)) return;
-            if ('名前' in myCharacterMaster.命ノ星座[key]) {
-                if (myCharacterMaster.命ノ星座[key]['名前'].indexOf(mySkillName) != -1) {
+            if ('名前' in characterMaster.命ノ星座[key]) {
+                if (characterMaster.命ノ星座[key]['名前'].indexOf(mySkillName) != -1) {
                     maxSkillLevel = 13;
                 }
-                if (myCharacterMaster.命ノ星座[key]['名前'].indexOf(myBurstName) != -1) {
+                if (characterMaster.命ノ星座[key]['名前'].indexOf(myBurstName) != -1) {
                     maxBurstLevel = 13;
                 }
             }
@@ -997,24 +997,36 @@ async function setupCharacterInput(name) {
     }
 
     CharacterInputVm.name = name;
-    CharacterInputVm.master = myCharacterMaster;
+    CharacterInputVm.master = characterMaster;
     CharacterInputVm.突破レベル = myAscension;
     CharacterInputVm.レベル = myLevel;
     CharacterInputVm.命ノ星座 = myConstellation;
 
-    let myWeapon;
-    let myArtifactSet = [];
-
     if ('武器' in myRecommendation[1]) {
-        myWeapon = myRecommendation[1]['武器'];
-    }
-    if ('聖遺物セット効果1' in myRecommendation[1]) {
         const myWeapon = myRecommendation[1]['武器'];
+        CharacterInputVm.weapon = myWeapon;
+        let myWeaponMaster;
+        if (武器個別MasterMapVar.has(myWeapon)) {
+            myWeaponMaster = 武器個別MasterMapVar.get(myWeapon);
+        } else {
+            myWeaponMaster = await fetch(武器MasterVar[characterMaster['武器']][myWeapon]['import']).then(resp => resp.json());
+            武器個別MasterMapVar.set(myWeapon, myWeaponMaster);
+        }
+        CharacterInputVm.weaponMaster = myWeaponMaster;
     }
-    if ('聖遺物セット効果1' in myRecommendation[1]) {
-        const myWeapon = myRecommendation[1]['武器'];
-    }
-
+    ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
+        const artifactSet = myRecommendation[1][key];
+        CharacterInputVm['聖遺物セット効果'][index]['名前'] = artifactSet;
+        if (artifactSet && artifactSet in 聖遺物セット効果MasterVar) {
+            CharacterInputVm['聖遺物セット効果'][index].master = 聖遺物セット効果MasterVar[artifactSet];
+        } else {
+            CharacterInputVm['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
+        }
+    });
+    ['聖遺物メイン効果1', '聖遺物メイン効果2', '聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
+        const mainStat = myRecommendation[1][key];
+        ArtifactDetailInputVm['聖遺物メイン効果'][index] = mainStat.replace(/バフ$/, '');
+    });
 
     let myLevelStr = myLevel;
     if (突破レベルレベルARRAY[myAscension][0] == myLevel) {
