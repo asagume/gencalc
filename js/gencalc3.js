@@ -504,23 +504,34 @@ function initialSetupArtifactDetailInput() {
         data() {
             return {
                 isVisible: true,
-                isEditable: true,
+                isEditable: false,
                 聖遺物メイン効果: [null, null, null, null, null],
-                聖遺物サブ効果: [null, null, null],
-                聖遺物サブ効果上昇量: [0, 0, 0],
-                聖遺物サブ効果上昇回数: [0, 0, 0],
+                聖遺物優先するサブ効果: [null, null, null],
+                聖遺物優先するサブ効果上昇量: [0, 0, 0],
+                聖遺物優先するサブ効果上昇回数: [0, 0, 0],
                 聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
-                聖遺物ステータス補正: 聖遺物ステータスTEMPLATE
+                聖遺物ステータス補正: 聖遺物ステータスTEMPLATE,
+                isステータスOpened: false,
+                補正値0初期化Enabled: false
             }
         },
         computed: {
-            subStatList: function () {
-                return Object.keys(聖遺物ステータスTEMPLATE);
+            priorityStatList: function () {
+                return 聖遺物優先するサブ効果ARRAY;
+            },
+            statList: function () {
+                return Object.keys(聖遺物ステータスTEMPLATE).filter(s => this.isステータスOpened || this.聖遺物ステータス[s]);
             }
+        },
+        created() {
+
         },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
+            },
+            displayNumber: function (name, value) {
+                return getDisplayNumber(name, value);
             },
             mainStatList: function (index) {
                 return [
@@ -530,25 +541,43 @@ function initialSetupArtifactDetailInput() {
                     聖遺物メイン効果_空の杯ARRAY,
                     聖遺物メイン効果_理の冠ARRAY
                 ][index];
+            }
+        },
+        watch: {
+            聖遺物メイン効果: {
+                handler: function (newVal, oldVal) {
+                    calculateArtifactStat(this);
+                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
             },
-            percentage: function (name) {
-                return ['HP', '攻撃力', '防御力', '元素熟知'].includes(name) ? '' : '%';
+            聖遺物優先するサブ効果: {
+                handler: function (newVal, oldVal) {
+                    calculateArtifactStat(this);
+                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
             },
-            mainStatOnChange: function () {
-                calculateArtifactStat(this);
-                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+            聖遺物優先するサブ効果上昇量: {
+                handler: function (newVal, oldVal) {
+                    calculateArtifactStat(this);
+                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
             },
-            subStatOnChange: function () {
-                calculateArtifactStat(this);
-                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+            聖遺物優先するサブ効果上昇回数: {
+                handler: function (newVal, oldVal) {
+                    calculateArtifactStat(this);
+                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
             },
-            subStatQuantityOnChange: function () {
-                calculateArtifactStat(this);
-                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
-            },
-            statAdjustmentOnChange: function () {
-                calculateArtifactStat(this);
-                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+            聖遺物ステータス補正: {
+                handler: function (newVal, oldVal) {
+                    calculateArtifactStat(this);
+                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
             }
         }
     }
@@ -671,9 +700,9 @@ function initialSetupStatusInput(characterMaster) {
                 敵List: [],
                 敵レベル: 90,
                 敵ステータス: JSON.parse(JSON.stringify(敵ステータスTEMPLATE)),
-                    敵ステータス補正: {},
-                    敵防御力: 0,
-                    is敵ステータスOpened: false
+                敵ステータス補正: {},
+                敵防御力: 0,
+                is敵ステータスOpened: false
             }
         },
         created() {
@@ -692,7 +721,7 @@ function initialSetupStatusInput(characterMaster) {
             this.敵 = this.敵List[0].name;
             const myEnemyMaster = this.敵List[0].master;
             Object.keys(myEnemyMaster).forEach(stat => {
-                this.敵ステータス[stat.replace('耐性', '')] = myEnemyMaster[stat];
+                this.敵ステータス[stat] = myEnemyMaster[stat];
             });
             Object.keys(this.敵ステータス).forEach(stat => {
                 this.敵ステータス補正[stat] = 0;
@@ -707,6 +736,9 @@ function initialSetupStatusInput(characterMaster) {
             displayName: function (name) {
                 return getDisplayName(name);
             },
+            displayNumber: function (name, value) {
+                return getDisplayNumber(name, value);
+            },
             statList: function (category) {
                 return ステータスARRAY_MAP.get(category).filter(s => this.isステータスOpened[category] || this.ステータス[s]);
             },
@@ -719,7 +751,6 @@ function initialSetupStatusInput(characterMaster) {
                     this.敵ステータス[stat] += this.敵ステータス補正[stat];
                 });
             }
-
         }
     };
     StatusInputVm = Vue.createApp(StatusInput).mount('#status-input');
@@ -963,9 +994,7 @@ async function setupCharacterInput(name) {
         }
     }
 
-    if ('命ノ星座' in myRecommendation[1]) {
-        myConstellation = myRecommendation[1]['命ノ星座'];
-    } else if (name in キャラクター所持状況Var) {
+    if (name in キャラクター所持状況Var) {
         myConstellation = キャラクター所持状況Var[name];
     }
     if (!myConstellation) {
@@ -1002,31 +1031,7 @@ async function setupCharacterInput(name) {
     CharacterInputVm.レベル = myLevel;
     CharacterInputVm.命ノ星座 = myConstellation;
 
-    if ('武器' in myRecommendation[1]) {
-        const myWeapon = myRecommendation[1]['武器'];
-        CharacterInputVm.weapon = myWeapon;
-        let myWeaponMaster;
-        if (武器個別MasterMapVar.has(myWeapon)) {
-            myWeaponMaster = 武器個別MasterMapVar.get(myWeapon);
-        } else {
-            myWeaponMaster = await fetch(武器MasterVar[characterMaster['武器']][myWeapon]['import']).then(resp => resp.json());
-            武器個別MasterMapVar.set(myWeapon, myWeaponMaster);
-        }
-        CharacterInputVm.weaponMaster = myWeaponMaster;
-    }
-    ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
-        const artifactSet = myRecommendation[1][key];
-        CharacterInputVm['聖遺物セット効果'][index]['名前'] = artifactSet;
-        if (artifactSet && artifactSet in 聖遺物セット効果MasterVar) {
-            CharacterInputVm['聖遺物セット効果'][index].master = 聖遺物セット効果MasterVar[artifactSet];
-        } else {
-            CharacterInputVm['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
-        }
-    });
-    ['聖遺物メイン効果1', '聖遺物メイン効果2', '聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
-        const mainStat = myRecommendation[1][key];
-        ArtifactDetailInputVm['聖遺物メイン効果'][index] = mainStat;
-    });
+    loadRecommendation(myRecommendation[1], CharacterInputVm, ArtifactDetailInputVm, StatusInputVm);
 
     let myLevelStr = myLevel;
     if (突破レベルレベルARRAY[myAscension][0] == myLevel) {

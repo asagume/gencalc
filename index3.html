@@ -315,41 +315,76 @@
                 </div>
 
                 <div id="artifact-detail-input">
-                    <fieldset>
+                    <fieldset style="margin-bottom: 10px;">
                         <legend> {{displayName('聖遺物メイン効果')}} </legend>
                         <label class="column-2"> {{displayName('生の花')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]" @change="mainStatOnChange">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(0)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-2"> {{displayName('死の羽')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]" @change="mainStatOnChange">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(1)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('時の砂')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]" @change="mainStatOnChange">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(2)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('空の杯')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]" @change="mainStatOnChange">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(3)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('理の冠')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]" @change="mainStatOnChange">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(4)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                     </fieldset>
+                    <table class="status" style="margin-bottom: 10px;">
+                        <tr>
+                            <th :colspan="isEditable ? 3 : 2">
+                                <label class="open-close">
+                                    <input class="hidden" type="checkbox" v-model="isステータスOpened">
+                                    <span></span>
+                                    {{displayName('聖遺物ステータス')}}
+                                </label>
+                            </th>
+                        </tr>
+                        <tr v-for="item in statList">
+                            <th>{{displayName(item)}}</th>
+                            <td v-show="isEditable">
+                                <input type="number" v-model="聖遺物ステータス補正[item]">
+                            </td>
+                            <td> {{displayNumber(item, 聖遺物ステータス[item])}} </td>
+                        </tr>
+                        <tr>
+                            <td :colspan="isEditable ? 3 : 2">
+                                <label>
+                                    <input type="checkbox" v-model="isEditable">
+                                    {{displayName('補正値入力モード')}}
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td :colspan="isEditable ? 3 : 2">
+                                <label>
+                                    <input type="checkbox" v-model="補正値0初期化Enabled">
+                                    {{displayName('補正値0初期化')}}
+                                </label>
+                                <button type="button" style="width: 10rem"
+                                    :disabled="!補正値0初期化Enabled">{{displayName('実行')}}</button>
+                            </td>
+                        </tr>
+                    </table>
                     <fieldset>
-                        <legend> {{displayName('聖遺物サブ効果')}} </legend>
                         <table>
                             <tr>
                                 <th>{{displayName('サブ効果')}}</th>
@@ -358,7 +393,10 @@
                             </tr>
                             <tr v-for="item in [0,1,2]">
                                 <td>
-                                    <select></select>
+                                    <select v-model="聖遺物優先するサブ効果[item]">
+                                        <option v-for="subitem in priorityStatList" :value="subitem">
+                                            {{displayName(subitem)}} </option>
+                                    </select>
                                 </td>
                                 <td>
                                     <select>
@@ -371,16 +409,6 @@
                                             :value="subitem">{{subitem}}</option>
                                     </select>
                                 </td>
-                            </tr>
-                        </table>
-
-                        <table class="status">
-                            <tr v-for="item in subStatList">
-                                <th>{{displayName(item)}}</th>
-                                <td>
-                                    <input type="number" v-model="聖遺物ステータス補正[item]" @change="statAdjustmentOnChange">
-                                </td>
-                                <td> {{聖遺物ステータス[item]}}{{percentage(item)}} </td>
                             </tr>
                         </table>
                     </fieldset>
@@ -491,7 +519,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{ステータス[stat]}} </td>
+                                    <td> {{displayNumber(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
                             <template v-for="category in ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
@@ -510,7 +538,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{ステータス[stat]}}{{category != '実数ダメージ加算' ? '%' : ''}} </td>
+                                    <td> {{displayNumber(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
                             <tr>
@@ -550,7 +578,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{ステータス[stat]}}{{stat != '防御力' ? '%' : ''}} </td>
+                                    <td> {{displayNumber(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
                             <tr>
@@ -598,7 +626,7 @@
                                 <td v-show="isEditable">
                                     <input type="number" v-model="敵ステータス補正[stat]">
                                 </td>
-                                <td> {{敵ステータス[stat]}}% </td>
+                                <td> {{displayNumber(stat, 敵ステータス[stat])}} </td>
                             </tr>
                             <tr>
                                 <th :colspan="isEditable ? 3 : 2">{{displayName('その他')}}</th>
@@ -608,7 +636,7 @@
                                 <td v-show="isEditable">
                                     <input type="number" v-model="敵防御力">
                                 </td>
-                                <td> {{敵防御力}} </td>
+                                <td> {{displayNumber('防御力', 敵防御力)}} </td>
                             </tr>
                             <tr>
                                 <td :colspan="isEditable ? 3 : 2">

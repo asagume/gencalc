@@ -1,13 +1,30 @@
 function getDisplayName(name) {
-    if (元素ステータス_ダメージARRAY.includes(name)) {
+    if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
         name = name.replace(/バフ$/, '');
     } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
         name = name.replace(/バフ$/, '');
     }
-
     return name;
 }
 
+function getDisplayNumber(name, value) {
+    const percentage = appendPercentage(name);
+    if (percentage) {
+        return (Math.round(value * 10) / 10) + percentage;
+    }
+    return Math.round(value);
+}
+
+function appendPercentage(name) {
+    if (['HP上限', 'HP', '攻撃力', '防御力', '元素熟知'].includes(name)) {
+        return '';
+    } else if (name.endsWith('アップ')) {
+        return '';
+    } else if (name.endsWith('+')) {
+        return '';
+    }
+    return '%';
+}
 /**
  * 直近に誕生日を迎えたキャラクターを取得します.
  *
@@ -168,6 +185,54 @@ function makeArtifactSetAbbrev(name) {
         abbr = abbr.substring(0, 2);
     }
     return abbr;
+}
+
+async function loadRecommendation(recommendation, characterInput, artifactDetailInput, statusInput) {
+    const characterMaster = characterInput.master;
+    if ('レベル' in recommendation) {
+
+    }
+    ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
+        if (key in recommendation) {
+            characterInput[key] = recommendation[key];
+        }
+    });
+    if ('武器' in recommendation) {
+        const myWeapon = recommendation['武器'];
+        characterInput.weapon = myWeapon;
+        let myWeaponMaster;
+        if (武器個別MasterMapVar.has(myWeapon)) {
+            myWeaponMaster = 武器個別MasterMapVar.get(myWeapon);
+        } else {
+            myWeaponMaster = await fetch(武器MasterVar[characterMaster['武器']][myWeapon]['import']).then(resp => resp.json());
+            武器個別MasterMapVar.set(myWeapon, myWeaponMaster);
+        }
+        characterInput.weaponMaster = myWeaponMaster;
+    }
+    if ('武器レベル' in recommendation) {
+        //TODO
+    }
+    if ('精錬ランク' in recommendation) {
+        characterInput['武器精錬ランク'] = recommendation['精錬ランク'];
+    }
+
+    ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
+        const artifactSet = recommendation[key];
+        characterInput['聖遺物セット効果'][index]['名前'] = artifactSet;
+        if (artifactSet && artifactSet in 聖遺物セット効果MasterVar) {
+            characterInput['聖遺物セット効果'][index].master = 聖遺物セット効果MasterVar[artifactSet];
+        } else {
+            characterInput['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
+        }
+    });
+    ['聖遺物メイン効果1', '聖遺物メイン効果2', '聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
+        const mainStat = recommendation[key];
+        artifactDetailInput['聖遺物メイン効果'][index] = mainStat;
+    });
+    ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
+        const mainStat = recommendation[key];
+        artifactDetailInput['聖遺物優先するサブ効果'][index] = mainStat;
+    });
 }
 
 /**
@@ -431,11 +496,11 @@ function calculateArtifactStat(artifactDetailInput) {
         result[stat] += 聖遺物メイン効果MasterVar[rarity][stat];
     });
     for (let i = 0; i < 3; i++) {
-        const subStat = artifactDetailInput['聖遺物サブ効果'][i];
+        const subStat = artifactDetailInput['聖遺物優先するサブ効果'][i];
         if (!subStat) continue;
-        const subStatValue1 = artifactDetailInput['聖遺物サブ効果上昇量'][i];
+        const subStatValue1 = artifactDetailInput['聖遺物優先するサブ効果上昇量'][i];
         if (!subStatValue1) continue;
-        const subStatValue2 = artifactDetailInput['聖遺物サブ効果上昇回数'][i];
+        const subStatValue2 = artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i];
         if (!subStatValue2) continue;
         result[subStat] += subStatValue1 * subStatValue2;
     }
@@ -490,7 +555,7 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     // 武器のステータスを計上します
     console.log(weaponMaster);
     Object.keys(weaponMaster['ステータス']).forEach(stat => {
-        result[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], characterInput['突破レベル'], characterInput['レベル']);
+        result[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], characterInput['武器突破レベル'], characterInput['武器レベル']);
     });
 
     // 聖遺物のステータスを計上します
