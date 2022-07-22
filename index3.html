@@ -318,31 +318,31 @@
                     <fieldset>
                         <legend> {{displayName('聖遺物メイン効果')}} </legend>
                         <label class="column-2"> {{displayName('生の花')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]" @change="mainStatOnChange">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(0)" :value="item">{{item}}</option>
                             </select>
                         </label>
                         <label class="column-2"> {{displayName('死の羽')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]" @change="mainStatOnChange">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(1)" :value="item">{{item}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('時の砂')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]" @change="mainStatOnChange">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(2)" :value="item">{{item}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('空の杯')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]" @change="mainStatOnChange">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(3)" :value="item">{{item}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('理の冠')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]" @change="mainStatOnChange">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(4)" :value="item">{{item}}</option>
                             </select>
@@ -374,17 +374,62 @@
                             </tr>
                         </table>
 
-                        <hr>
                         <table class="status">
                             <tr v-for="item in subStatList">
                                 <th>{{displayName(item)}}</th>
                                 <td>
-                                    <input type="number" v-model="聖遺物サブ効果補正[item]">
+                                    <input type="number" v-model="聖遺物ステータス補正[item]" @change="statAdjustmentOnChange">
                                 </td>
-                                <td> {{聖遺物サブ効果[item]}}{{percentage(item)}} </td>
+                                <td> {{聖遺物ステータス[item]}}{{percentage(item)}} </td>
                             </tr>
                         </table>
                     </fieldset>
+                </div>
+
+                <div id="character-information">
+                    <table>
+                        <tr v-for="key in Object.keys(master['ステータス'])">
+                            <th>{{displayName(key)}}</th>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <table v-for="category in ['通常攻撃', '元素スキル', '元素爆発']">
+                        <tr>
+                            <th></th>
+                            <th>{{displayName(master[category]['名前'])}}</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{displayName(master[category]['説明'])}}</td>
+                        </tr>
+                        <template v-if="master[category]['詳細']">
+                            <tr v-for="item in master[category]['詳細']">
+                                <th>
+                                    <span v-if="item['名前']">{{displayName(item['名前'])}}</span>
+                                </th>
+                                <td>
+                                    {{displayFormula(item['数値'])}}
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
+                    <table v-if="'その他戦闘天賦' in master">
+                        <tr v-for="item in master['その他戦闘天賦']">
+                            <th>{{displayName(item['名前'])}}</th>
+                            <td>{{displayName(item['説明'])}}</td>
+                        </tr>
+                    </table>
+                    <table v-if="'固有天賦' in master">
+                        <tr v-for="item in master['固有天賦']">
+                            <th>{{displayName(item['名前'])}}</th>
+                            <td>{{displayName(item['説明'])}}</td>
+                        </tr>
+                    </table>
+                    <table v-if="'命ノ星座' in master">
+                        <tr v-for="key in Object.keys(master['命ノ星座'])">
+                            <th>{{key}}</th>
+                            <td>{{displayName(master['命ノ星座'][key]['説明'])}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
@@ -441,12 +486,12 @@
                                         {{displayName(category)}}
                                     </th>
                                 </tr>
-                                <tr v-for="stat in Object.keys(ステータス[category])">
+                                <tr v-for="stat in statList(category)">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="ステータス補正[category][stat]">
+                                        <input type="number" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{ステータス[category][stat]}} </td>
+                                    <td> {{ステータス[stat]}} </td>
                                 </tr>
                             </template>
                             <template v-for="category in ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
@@ -463,9 +508,9 @@
                                 <tr v-for="stat in statList(category)">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="ステータス補正[category][stat]">
+                                        <input type="number" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{ステータス[category][stat]}}{{category != '実数ダメージ加算' ? '%' : ''}} </td>
+                                    <td> {{ステータス[stat]}}{{category != '実数ダメージ加算' ? '%' : ''}} </td>
                                 </tr>
                             </template>
                             <tr>
@@ -503,9 +548,9 @@
                                 <tr v-for="stat in statList(category)">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="ステータス補正[category][stat]">
+                                        <input type="number" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{ステータス[category][stat]}}{{stat != '防御力' ? '%' : ''}} </td>
+                                    <td> {{ステータス[stat]}}{{stat != '防御力' ? '%' : ''}} </td>
                                 </tr>
                             </template>
                             <tr>

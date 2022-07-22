@@ -53,6 +53,10 @@ async function onLoad(searchParams) {
     initialSetupCalcurationResult();
     initialSetupCharacterOwnList();
     initialSetupWeaponOwnList();
+
+    Pane4Group.add(WeaponSelectVm);
+    Pane4Group.add(ArtifactSetSelectVm);
+    Pane4Group.add(ArtifactDetailInputVm);
 }
 
 function initialSetupCharacterSelect() {
@@ -214,11 +218,11 @@ async function initialSetupCharacterInput(name) {
                 return getElementImgSrc(this.master);
             },
             ascensionRange: function () {
-                const max = 突破レベルレベルARR.length + 1;
+                const max = 突破レベルレベルARRAY.length + 1;
                 return Array.from({ length: max }, (_, i) => i);
             },
             levelRange: function () {
-                return 突破レベルレベルARR[this.突破レベル];
+                return 突破レベルレベルARRAY[this.突破レベル];
             },
             constellationRange: function () {
                 const max = this.命ノ星座Option.max + 1;
@@ -241,7 +245,7 @@ async function initialSetupCharacterInput(name) {
                 return Array.from({ length: max }, (_, i) => i);
             },
             weaponLevelRange: function () {
-                return 突破レベルレベルARR[this.武器突破レベル];
+                return 突破レベルレベルARRAY[this.武器突破レベル];
             },
             weaponRefineRange: function () {
                 const max = this.武器精錬ランクOption.max;
@@ -277,11 +281,7 @@ async function initialSetupCharacterInput(name) {
                 }
             },
             weaponOnClick: function () {
-                console.log(this);
-                WeaponSelectVm.isVisible = !WeaponSelectVm.isVisible;
-                if (WeaponSelectVm.isVisible) {
-                    ArtifactSetSelectVm.isVisible = false;
-                }
+                switchActiveEntry(Pane4Group, WeaponSelectVm);
             },
             artifactSetOnClick: function (index) {
                 if (ArtifactSetSelectVm.isVisible) {
@@ -305,7 +305,7 @@ async function initialSetupCharacterInput(name) {
                 return '';
             },
             artifactDetailOnClick: function () {
-
+                switchActiveEntry(Pane4Group, ArtifactDetailInputVm);
             },
             normalAttackOnClick: function () {
 
@@ -329,48 +329,48 @@ async function initialSetupCharacterInput(name) {
         watch: {
             name: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 },
                 deep: true
             },
             突破レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             命ノ星座: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             weapon: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             武器突破レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             武器レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             武器精錬ランク: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 }
             },
             聖遺物セット効果: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, StatusInputVm ? StatusInputVm.ステータス補正 : null));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
                 },
                 deep: true
             }
@@ -506,13 +506,16 @@ function initialSetupArtifactDetailInput() {
                 isVisible: true,
                 isEditable: true,
                 聖遺物メイン効果: [null, null, null, null, null],
-                聖遺物サブ効果: 聖遺物サブ効果TEMPLATE,
-                聖遺物サブ効果補正: 聖遺物サブ効果TEMPLATE
+                聖遺物サブ効果: [null, null, null],
+                聖遺物サブ効果上昇量: [0, 0, 0],
+                聖遺物サブ効果上昇回数: [0, 0, 0],
+                聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+                聖遺物ステータス補正: 聖遺物ステータスTEMPLATE
             }
         },
         computed: {
             subStatList: function () {
-                return Object.keys(聖遺物サブ効果TEMPLATE);
+                return Object.keys(聖遺物ステータスTEMPLATE);
             }
         },
         methods: {
@@ -521,15 +524,31 @@ function initialSetupArtifactDetailInput() {
             },
             mainStatList: function (index) {
                 return [
-                    聖遺物メイン効果_生の花ARR,
-                    聖遺物メイン効果_死の羽ARR,
-                    聖遺物メイン効果_時の砂ARR,
-                    聖遺物メイン効果_空の杯ARR,
-                    聖遺物メイン効果_理の冠ARR
+                    聖遺物メイン効果_生の花ARRAY,
+                    聖遺物メイン効果_死の羽ARRAY,
+                    聖遺物メイン効果_時の砂ARRAY,
+                    聖遺物メイン効果_空の杯ARRAY,
+                    聖遺物メイン効果_理の冠ARRAY
                 ][index];
             },
             percentage: function (name) {
                 return ['HP', '攻撃力', '防御力', '元素熟知'].includes(name) ? '' : '%';
+            },
+            mainStatOnChange: function () {
+                calculateArtifactStat(this);
+                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+            },
+            subStatOnChange: function () {
+                calculateArtifactStat(this);
+                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+            },
+            subStatQuantityOnChange: function () {
+                calculateArtifactStat(this);
+                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+            },
+            statAdjustmentOnChange: function () {
+                calculateArtifactStat(this);
+                updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
             }
         }
     }
@@ -644,27 +663,24 @@ function initialSetupStatusInput(characterMaster) {
             return {
                 activeTab: '1',
                 isEditable: false,
-                ステータス: JSON.parse(JSON.stringify(ステータスTEMPLATE)),
+                ステータス: ステータスTEMPLATE(),
                 ステータス補正: {},
                 isステータスOpened: {},
                 補正値0初期化Enabled: false,
                 敵: null,
                 敵List: [],
                 敵レベル: 90,
-                敵ステータス: JSON.parse(JSON.stringify(元素ステータス_耐性TEMPLATE)),
+                敵ステータス: 敵ステータスTEMPLATE(),
                 敵ステータス補正: {},
                 敵防御力: 0,
                 is敵ステータスOpened: false
             }
         },
         created() {
-            Object.keys(this.ステータス).forEach(category => {
-                this.ステータス補正[category] = {};
-                Object.keys(this.ステータス[category]).forEach(stat => {
-                    this.ステータス補正[category][stat] = 0;
-                });
+            Object.keys(this.ステータス).forEach(stat => {
+                this.ステータス補正[stat] = 0;
             });
-            Object.keys(this.ステータス).forEach(key => {
+            ステータスARRAY_MAP.forEach((value, key) => {
                 this.isステータスOpened[key] = false; // close
             });
             this.敵List = Object.keys(敵MasterVar).map(name => {
@@ -692,7 +708,7 @@ function initialSetupStatusInput(characterMaster) {
                 return getDisplayName(name);
             },
             statList: function (category) {
-                return Object.keys(this.ステータス[category]).filter(s => this.isステータスOpened[category] || this.ステータス[category][s]);
+                return ステータスARRAY_MAP.get(category).filter(s => this.isステータスOpened[category] || this.ステータス[s]);
             },
             enemyListOnChange: function () {
                 const master = 敵MasterVar[this.敵];
@@ -912,12 +928,12 @@ function initialSetupWeaponOwnList() {
  */
 async function setupCharacterInput(name) {
     let myCharacterMaster = null;
-    if (!キャラクター詳細MasterMapVar.has(name)) {
+    if (!キャラクター個別MasterMapVar.has(name)) {
         const url = キャラクターMasterVar[name]['import'];
         const json = await fetch(url).then(resp => resp.json());
-        キャラクター詳細MasterMapVar.set(name, json);
+        キャラクター個別MasterMapVar.set(name, json);
     }
-    myCharacterMaster = キャラクター詳細MasterMapVar.get(name);
+    myCharacterMaster = キャラクター個別MasterMapVar.get(name);
 
     const myRarity = myCharacterMaster['レアリティ'];
     const myVision = myCharacterMaster['元素'];
@@ -936,8 +952,8 @@ async function setupCharacterInput(name) {
 
     if ('レベル' in myRecommendation[1]) {
         myLevel = Number(myRecommendation[1]['レベル'].replace('+', ''));
-        for (myAscension = 0; myAscension < 突破レベルレベルARR.length; myAscension++) {
-            const max = 突破レベルレベルARR[myAscension][突破レベルレベルARR[myAscension].length - 1];
+        for (myAscension = 0; myAscension < 突破レベルレベルARRAY.length; myAscension++) {
+            const max = 突破レベルレベルARRAY[myAscension][突破レベルレベルARRAY[myAscension].length - 1];
             if (myLevel <= max) {
                 break;
             }
@@ -1001,7 +1017,7 @@ async function setupCharacterInput(name) {
 
 
     let myLevelStr = myLevel;
-    if (突破レベルレベルARR[myAscension][0] == myLevel) {
+    if (突破レベルレベルARRAY[myAscension][0] == myLevel) {
         myLevelStr += '+';
     }
 
@@ -1041,6 +1057,7 @@ async function setupWeaponInput(type, name) {
 
 function updateStatusInputStatus(statusObj) {
     StatusInputVm.ステータス = statusObj;
+    console.log(statusObj);
 }
 
 function setupEnemyInput(name) {
