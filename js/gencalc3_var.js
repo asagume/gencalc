@@ -217,6 +217,7 @@ function makeEnemyStatusTemplate() {
             statusObj[stat] = 0;
         });
     });
+    statusObj['防御力'] = 0;
     return statusObj;
 };
 const 敵ステータスTEMPLATE = makeEnemyStatusTemplate();
@@ -305,8 +306,8 @@ const 聖遺物ステータスTEMPLATE = {
 };
 
 const 元素反応TEMPLATE = {
-    蒸発倍率: 1.5,
-    溶解倍率: 2,
+    蒸発倍率: 0,
+    溶解倍率: 0,
     過負荷ダメージ: 0,
     感電ダメージ: 0,
     超電導ダメージ: 0,

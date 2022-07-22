@@ -132,8 +132,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3" style="text-align: center;">
-                                <input class="save-name" type="text" v-model="saveName" maxlength="20">
+                            <td colspan="3" style="text-align: left;">
+                                <label>
+                                    build name:
+                                    <input class="save-name" type="text" v-model="saveName" maxlength="20">
+                                </label>
                             </td>
                         </tr>
                         <tr>
@@ -636,9 +639,9 @@
                             <tr>
                                 <th> {{displayName('防御力')}} </th>
                                 <td v-show="isEditable">
-                                    <input type="number" v-model="敵防御力">
+                                    <input type="number" v-model="敵ステータス補正['防御力']">
                                 </td>
-                                <td> {{displayNumber('防御力', 敵防御力)}} </td>
+                                <td> {{displayNumber('防御力', 敵ステータス['防御力'])}} </td>
                             </tr>
                             <tr>
                                 <td :colspan="isEditable ? 3 : 2">

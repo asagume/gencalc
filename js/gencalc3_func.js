@@ -533,6 +533,16 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     const characterMaster = characterInput.master;
     const weaponMaster = characterInput.weaponMaster;
 
+    result['突破レベル'] = characterInput.突破レベル;
+    result['レベル'] = characterInput.レベル;
+    result['命ノ星座'] = characterInput.命ノ星座;
+    result['武器突破レベル'] = characterInput.突破レベル;
+    result['武器レベル'] = characterInput.レベル;
+    result['武器精錬ランク'] = characterInput.武器精錬ランク;
+    if ('元素爆発' in characterMaster && '元素エネルギー' in characterMaster['元素爆発']) {
+        result['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
+    }
+
     // ステータス補正を計上します
     if (statusInput && 'ステータス補正' in statusInput) {
         const statusAdjustment = statusInput['ステータス補正'];
@@ -592,6 +602,7 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     result['攻撃力'] += result['基礎攻撃力'] * result['攻撃力%'] / 100;
     result['攻撃力'] += result['攻撃力+'];
 
+    console.debug(result);
     return result;
 }
 
@@ -623,12 +634,55 @@ function getPropertyValueByLevel(statObj, ascension) {
 }
 
 function switchActiveEntry(group, active, opt_invisible = true) {
-    group.filter(s => s !== active).forEach(entry => {
-        entry.isVisible = false;
+    group.forEach(entry => {
+        if (entry != active) entry.isVisible = false;
     });
     if (opt_invisible) {
         active.isVisible = !active.isVisible;
     } else {
         active.isVisible = true;
     }
+}
+
+function calculateResult(characterInput, conditionInput, optionInput, statusInput, calculationResult) {
+    const characterMaster = characterInput.master;
+
+    const talentDetailArrObj = キャラクターダメージ詳細ObjMapVar.get(characterMaster.名前);
+
+    const reactionResult = JSON.parse(JSON.stringify(元素反応TEMPLATE));
+    const reactionMaster = 元素反応MasterVar[characterMaster['元素']];
+    Object.keys(reactionMaster).forEach(reaction => {
+        const reactionObj = reactionMaster[reaction];
+        let resultValue = 0;
+        switch (reactionObj['種類']) {
+            case '乗算':
+                resultValue = calculate乗算系元素反応倍率(reaction, characterMaster['元素'], statusInput['ステータス']);
+                break;
+            case '固定':
+                resultValue = calculate固定値系元素反応ダメージ(reaction, characterMaster['元素'], statusInput['ステータス'], statusInput['敵ステータス']);
+                break;
+        }
+        Object.keys(reactionResult).forEach(key => {
+            if (key.startsWith(reaction)) {
+                reactionResult[key] = resultValue;
+            }
+        });
+    });
+    console.debug(reactionResult);
+    calculationResult['元素反応'] = reactionResult;
+
+    ['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'].forEach(category => {
+        calculationResult['計算結果'][category] = [];
+        const talentDetailArr = talentDetailArrObj[category];
+        talentDetailArr.forEach(talentDetail => {
+            const resultArr = [];
+            resultArr.push(talentDetail.名前);
+            resultArr.push(talentDetail.元素);
+            resultArr.push(0);  // 期待値
+            resultArr.push(0);  // 会心
+            resultArr.push(0);  // 非会心
+            calculationResult['計算結果'][category].push(resultArr);
+        });
+    });
+    console.log(calculationResult);
 }

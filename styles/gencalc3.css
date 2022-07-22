@@ -164,6 +164,8 @@ table th, table td {
 
 button {
     vertical-align: middle;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .pyro {
@@ -583,14 +585,14 @@ table.result td {
 
 
 table.result th:first-child {
-    width: 20rem;
+    width: 24rem;
     text-align: right;
     color: #df8f37;
     white-space: nowrap;
 }
 
 table.result thead th {
-    color: brown;
+    color: palevioletred;
     background-color: #333;
 }
 

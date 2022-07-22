@@ -415,7 +415,7 @@ async function initialSetupWeaponSelect(type) {
             onClick: function (event) {
                 if (event.target.alt != this.selected) {
                     this.selected = event.target.alt;
-                    setupWeaponInput(this.type, this.selected);
+                    setupWeaponInput(this.type, this.selected, CharacterInputVm);
                 }
                 this.isVisible = false;
             }
@@ -728,6 +728,7 @@ function initialSetupStatusInput(characterMaster) {
             ステータスARRAY_MAP.forEach((value, key) => {
                 this.isステータスOpened[key] = false; // close
             });
+            this.isステータスOpened['基本ステータス'] = true;
             this.敵List = Object.keys(敵MasterVar).map(name => {
                 return {
                     name: name,
@@ -1083,22 +1084,29 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
  * @param {string} type 武器タイプ
  * @param {string} name 武器名
  */
-async function setupWeaponInput(type, name) {
+async function setupWeaponInput(type, name, characterInput) {
     const myWeaponMaster = await fetch(武器MasterVar[type][name]['import']).then(resp => resp.json());
-    CharacterInputVm.weapon = name;
-    CharacterInputVm.weaponMaster = myWeaponMaster;
+    characterInput.weapon = name;
+    characterInput.weaponMaster = myWeaponMaster;
     if (myWeaponMaster['レアリティ'] < 3) {
-        CharacterInputVm['武器突破レベルOption'].max = 4;
-        if (CharacterInputVm['武器突破レベル'] > 4) {
-            CharacterInputVm['武器突破レベル'] = 4;
+        characterInput['武器突破レベルOption'].max = 4;
+        if (characterInput['武器突破レベル'] > 4) {
+            characterInput['武器突破レベル'] = 4;
         }
     } else {
-        CharacterInputVm['武器突破レベルOption'].max = 6;
+        characterInput['武器突破レベルOption'].max = 6;
+    }
+    if (name in 武器所持状況ObjVar && 武器所持状況ObjVar[name]) {
+        characterInput['武器精錬ランク'] = 武器所持状況ObjVar[name];
     }
 }
 
 function updateStatusInputStatus(statusObj) {
-    StatusInputVm.ステータス = statusObj;
+    Object.keys(statusObj).forEach(stat => {
+        if (stat in StatusInputVm.ステータス && StatusInputVm.ステータス[stat] == statusObj[stat]) return;
+        StatusInputVm.ステータス[stat] = statusObj[stat];
+    });
+    calculateResult(CharacterInputVm, ConditionInputVm, OptionInputVm, StatusInputVm, CalculationResultVm);
 }
 
 function setupEnemyInput(name) {
