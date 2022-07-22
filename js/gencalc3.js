@@ -43,14 +43,14 @@ async function onLoad(searchParams) {
     オプション2MasterVar = responses[14];
 
     initialSetupCharacterSelect();
-    initialSetupCharacterInput();
-    initialSetupWeaponSelect('弓');
-    initialSetupArtifactSetSelect();
-    initialSetupArtifactDetailInput();
-    initialSetupConditionInput();
-    initialSetupOptionInput();
-    initialSetupStatusInput();
     initialSetupCalcurationResult();
+    initialSetupStatusInput();
+    initialSetupOptionInput();
+    initialSetupConditionInput();
+    initialSetupArtifactDetailInput();
+    initialSetupArtifactSetSelect();
+    initialSetupWeaponSelect('弓');
+    initialSetupCharacterInput();
     initialSetupCharacterOwnList();
     initialSetupWeaponOwnList();
 
@@ -122,7 +122,7 @@ function initialSetupCharacterSelect() {
             onClick: function (event) {
                 if (event.target.alt != this.selected) {
                     this.selected = event.target.alt;
-                    setupCharacterInput(this.selected);
+                    setupCharacterInput(this.selected, CharacterInputVm, ArtifactDetailInputVm, StatusInputVm);
                 }
                 this.isVisible = false;
             },
@@ -199,7 +199,8 @@ async function initialSetupCharacterInput(name) {
         },
         mounted() {
             const character = getCharacterByBirthday();
-            setupCharacterInput(character);
+            setupCharacterInput(character, this, ArtifactDetailInputVm, StatusInputVm);
+            CharacterSelectVm.selected = character;
         },
         computed: {
             colorClass: function () {
@@ -676,7 +677,7 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 return Object.keys(this.teamOptionMaster).filter(s => s.startsWith(character + '_')).map(s => s.replace(character + '_', ''));
             },
             teamOptionCharacterDisabled(character) {
-                return character == CharacterInputVm.name;
+                return CharacterInputVm && character == CharacterInputVm.name;
             },
             teamOptionDisabled(character, name) {
                 return false;
@@ -912,7 +913,6 @@ function initialSetupWeaponOwnList() {
         },
         computed: {
             filteredList: function () {
-                console.log(this.list[this.filters.weapon.selected]);
                 return this.list[this.filters.weapon.selected];
             }
         },
@@ -944,7 +944,6 @@ function initialSetupWeaponOwnList() {
                 Object.keys(this.精錬ランク).filter(s => this.精錬ランク[s] != null).forEach(key => {
                     obj[key] = this.精錬ランク[key];
                 });
-                console.log(obj);
                 localStorage.setItem('武器所持状況', JSON.stringify(obj));
                 this.isChanged = false;
             }
@@ -957,7 +956,7 @@ function initialSetupWeaponOwnList() {
  * 
  * @param {string} name キャラクター名
  */
-async function setupCharacterInput(name) {
+async function setupCharacterInput(name, characterInput, artifactDetailInput, statusInput) {
     let characterMaster = null;
     if (!キャラクター個別MasterMapVar.has(name)) {
         const url = キャラクターMasterVar[name]['import'];
@@ -966,6 +965,16 @@ async function setupCharacterInput(name) {
     }
     characterMaster = キャラクター個別MasterMapVar.get(name);
 
+    if ('固有変数' in characterMaster) {
+        Object.keys(characterMaster['固有変数']).forEach(key => {
+            statusInput[key] = characterMaster['固有変数'][key];
+        });
+    }
+
+    if ('オプション初期値' in characterMaster) {
+
+    }
+
     const myRarity = characterMaster['レアリティ'];
     const myVision = characterMaster['元素'];
     const myWeaponType = characterMaster['武器'];
@@ -973,9 +982,8 @@ async function setupCharacterInput(name) {
     const myRecommendationList = makeRecommendationList(characterMaster);
     const myRecommendation = myRecommendationList[0];
 
-    CharacterSelectVm.selected = name;
-    CharacterInputVm.おすすめセットOption.list = myRecommendationList;
-    CharacterInputVm.おすすめセット = myRecommendation[0];
+    characterInput.おすすめセットOption.list = myRecommendationList;
+    characterInput.おすすめセット = myRecommendation[0];
 
     let myAscension = 6;        // 突破レベル
     let myLevel = 90;           // レベル
@@ -1017,31 +1025,31 @@ async function setupCharacterInput(name) {
                 }
             }
         });
-        CharacterInputVm.元素スキルレベルOption.max = maxSkillLevel;
-        CharacterInputVm.元素爆発レベルOption.max = maxBurstLevel;
+        characterInput.元素スキルレベルOption.max = maxSkillLevel;
+        characterInput.元素爆発レベルOption.max = maxBurstLevel;
     } else {
-        CharacterInputVm.命ノ星座Option.max = 0;
-        CharacterInputVm.元素スキルレベルOption.max = 10;
-        CharacterInputVm.元素爆発レベルOption.max = 10;
+        characterInput.命ノ星座Option.max = 0;
+        characterInput.元素スキルレベルOption.max = 10;
+        characterInput.元素爆発レベルOption.max = 10;
     }
 
-    CharacterInputVm.name = name;
-    CharacterInputVm.master = characterMaster;
-    CharacterInputVm.突破レベル = myAscension;
-    CharacterInputVm.レベル = myLevel;
-    CharacterInputVm.命ノ星座 = myConstellation;
+    characterInput.name = name;
+    characterInput.master = characterMaster;
+    characterInput.突破レベル = myAscension;
+    characterInput.レベル = myLevel;
+    characterInput.命ノ星座 = myConstellation;
 
-    loadRecommendation(myRecommendation[1], CharacterInputVm, ArtifactDetailInputVm, StatusInputVm);
+    loadRecommendation(myRecommendation[1], characterInput, artifactDetailInput, statusInput);
 
     let myLevelStr = myLevel;
     if (突破レベルレベルARRAY[myAscension][0] == myLevel) {
         myLevelStr += '+';
     }
 
-    calculateArtifactStat(ArtifactDetailInputVm);
-    calculateStatus(CharacterInputVm, ArtifactDetailInputVm, StatusInputVm);
+    calculateArtifactStat(artifactDetailInput);
+    calculateStatus(characterInput, artifactDetailInput, statusInput);
 
-    const damegeDetailObj = makeDamageDetailObjCharacter(CharacterInputVm);
+    const damegeDetailObj = makeDamageDetailObjCharacter(characterInput);
 
     // StatusInputVm.基礎ステータス['基礎HP'] = myCharacterMaster.ステータス['基礎HP'][myLevelStr];
     // StatusInputVm.基礎ステータス['基礎攻撃力'] = myCharacterMaster.ステータス['基礎攻撃力'][myLevelStr];
@@ -1053,7 +1061,6 @@ async function setupCharacterInput(name) {
     //         StatusInputVm[key][myPropertyName] = myCharacterMaster.ステータス[myPropertyName][myLevelStr];
     //     }
     // });
-
 }
 
 /**
@@ -1077,7 +1084,6 @@ async function setupWeaponInput(type, name) {
 
 function updateStatusInputStatus(statusObj) {
     StatusInputVm.ステータス = statusObj;
-    console.log(statusObj);
 }
 
 function setupEnemyInput(name) {

@@ -337,7 +337,7 @@ function makeDamageDetailObjCharacter(characterInput) {
         Object.keys(characterMaster['命ノ星座']).forEach(key => {
             myTalentDetail = characterMaster['命ノ星座'][key];
             if ('詳細' in myTalentDetail) {
-                Object.keys(myTalentDetail['詳細']).forEach(detailObj => {
+                myTalentDetail['詳細'].forEach(detailObj => {
                     if ('条件' in detailObj && detailObj['条件']) {
                         if (detailObj['条件'].indexOf('命ノ星座') == -1) {
                             detailObj['条件'] += '&命ノ星座@' + key;
@@ -379,7 +379,7 @@ function makeDamageDetailObjCharacter(characterInput) {
     result['ステータス変更系詳細'] = myステータス変更系詳細Arr;
     result['天賦性能変更系詳細'] = my天賦性能変更系詳細Arr;
 
-    console.debug(result);
+    console.debug('makeDamageDetailObjCharacter', result);
     キャラクターダメージ詳細ObjMapVar.set(characterMaster['名前'], result);
 
     return result;
@@ -484,6 +484,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
 }
 
 function calculateArtifactStat(artifactDetailInput) {
+    if (!artifactDetailInput) return;
     const result = JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE));
 
     artifactDetailInput['聖遺物メイン効果'].filter(s => s).forEach(mainStat => {
@@ -533,7 +534,7 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     const weaponMaster = characterInput.weaponMaster;
 
     // ステータス補正を計上します
-    if ('ステータス補正' in statusInput) {
+    if (statusInput && 'ステータス補正' in statusInput) {
         const statusAdjustment = statusInput['ステータス補正'];
         Object.keys(statusAdjustment).forEach(stat => {
             if (!(stat in result)) return;
@@ -553,7 +554,6 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     });
 
     // 武器のステータスを計上します
-    console.log(weaponMaster);
     Object.keys(weaponMaster['ステータス']).forEach(stat => {
         result[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], characterInput['武器突破レベル'], characterInput['武器レベル']);
     });
@@ -592,7 +592,6 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
     result['攻撃力'] += result['基礎攻撃力'] * result['攻撃力%'] / 100;
     result['攻撃力'] += result['攻撃力+'];
 
-    console.log(result);
     return result;
 }
 
