@@ -1,4 +1,10 @@
 function getDisplayName(name) {
+    if (元素ステータス_ダメージARRAY.includes(name)) {
+        name = name.replace(/バフ$/, '');
+    } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
+        name = name.replace(/バフ$/, '');
+    }
+
     return name;
 }
 
@@ -383,7 +389,7 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
                 適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
             }
             if (statusChangeArr != null) {
-                if (resultObj['種類'] in 詳細_種類TEMPLATE
+                if (resultObj['種類'] in ステータスTEMPLATE
                     || resultObj['種類'].endsWith('%')
                     || new RegExp('[自全].+バフ').exec(resultObj['種類'])
                     || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
@@ -422,11 +428,7 @@ function calculateArtifactStat(artifactDetailInput) {
         if (!(stat in result)) {
             result[stat] = 0;
         }
-        if (stat in 聖遺物メイン効果MasterVar[rarity]) {
-            result[stat] += 聖遺物メイン効果MasterVar[rarity][stat];
-        } else {
-            result[stat] += 聖遺物メイン効果MasterVar[rarity][stat + 'バフ'];
-        }
+        result[stat] += 聖遺物メイン効果MasterVar[rarity][stat];
     });
     for (let i = 0; i < 3; i++) {
         const subStat = artifactDetailInput['聖遺物サブ効果'][i];
@@ -460,7 +462,7 @@ function calculateArtifactStat(artifactDetailInput) {
  * @returns {object}
  */
 function calculateStatus(characterInput, artifactDetailInput, statusInput) {
-    const result = ステータスTEMPLATE();
+    const result = JSON.parse(JSON.stringify(ステータスTEMPLATE));
 
     const characterMaster = characterInput.master;
     const weaponMaster = characterInput.weaponMaster;

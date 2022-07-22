@@ -663,17 +663,17 @@ function initialSetupStatusInput(characterMaster) {
             return {
                 activeTab: '1',
                 isEditable: false,
-                ステータス: ステータスTEMPLATE(),
+                ステータス: JSON.parse(JSON.stringify(ステータスTEMPLATE)),
                 ステータス補正: {},
                 isステータスOpened: {},
                 補正値0初期化Enabled: false,
                 敵: null,
                 敵List: [],
                 敵レベル: 90,
-                敵ステータス: 敵ステータスTEMPLATE(),
-                敵ステータス補正: {},
-                敵防御力: 0,
-                is敵ステータスOpened: false
+                敵ステータス: JSON.parse(JSON.stringify(敵ステータスTEMPLATE)),
+                    敵ステータス補正: {},
+                    敵防御力: 0,
+                    is敵ステータスOpened: false
             }
         },
         created() {
@@ -1025,13 +1025,16 @@ async function setupCharacterInput(name) {
     });
     ['聖遺物メイン効果1', '聖遺物メイン効果2', '聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
         const mainStat = myRecommendation[1][key];
-        ArtifactDetailInputVm['聖遺物メイン効果'][index] = mainStat.replace(/バフ$/, '');
+        ArtifactDetailInputVm['聖遺物メイン効果'][index] = mainStat;
     });
 
     let myLevelStr = myLevel;
     if (突破レベルレベルARRAY[myAscension][0] == myLevel) {
         myLevelStr += '+';
     }
+
+    calculateArtifactStat(ArtifactDetailInputVm);
+    calculateStatus(CharacterInputVm, ArtifactDetailInputVm, StatusInputVm);
 
     const damegeDetailObj = makeDamageDetailObjCharacter(CharacterInputVm);
 

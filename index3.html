@@ -320,31 +320,31 @@
                         <label class="column-2"> {{displayName('生の花')}}
                             <select class="artifact-detail" v-model="聖遺物メイン効果[0]" @change="mainStatOnChange">
                                 <option value=""></option>
-                                <option v-for="item in mainStatList(0)" :value="item">{{item}}</option>
+                                <option v-for="item in mainStatList(0)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-2"> {{displayName('死の羽')}}
                             <select class="artifact-detail" v-model="聖遺物メイン効果[1]" @change="mainStatOnChange">
                                 <option value=""></option>
-                                <option v-for="item in mainStatList(1)" :value="item">{{item}}</option>
+                                <option v-for="item in mainStatList(1)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('時の砂')}} <br>
                             <select class="artifact-detail" v-model="聖遺物メイン効果[2]" @change="mainStatOnChange">
                                 <option value=""></option>
-                                <option v-for="item in mainStatList(2)" :value="item">{{item}}</option>
+                                <option v-for="item in mainStatList(2)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('空の杯')}} <br>
                             <select class="artifact-detail" v-model="聖遺物メイン効果[3]" @change="mainStatOnChange">
                                 <option value=""></option>
-                                <option v-for="item in mainStatList(3)" :value="item">{{item}}</option>
+                                <option v-for="item in mainStatList(3)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('理の冠')}} <br>
                             <select class="artifact-detail" v-model="聖遺物メイン効果[4]" @change="mainStatOnChange">
                                 <option value=""></option>
-                                <option v-for="item in mainStatList(4)" :value="item">{{item}}</option>
+                                <option v-for="item in mainStatList(4)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                     </fieldset>
@@ -362,7 +362,7 @@
                                 </td>
                                 <td>
                                     <select>
-                                        <option v-for="subitem in []" :value="subitem">{{subitem}}</option>
+                                        <option v-for="subitem in []" :value="subitem">{{displayName(subitem)}}</option>
                                     </select>
                                 </td>
                                 <td>
