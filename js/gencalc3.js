@@ -530,12 +530,15 @@ function initialSetupArtifactDetailInput() {
                 isEditable: false,
                 聖遺物メイン効果: [null, null, null, null, null],
                 聖遺物優先するサブ効果: [null, null, null],
-                聖遺物優先するサブ効果上昇値: [4, 4, 4],
-                聖遺物優先するサブ効果上昇回数: [5, 5, 5],
+                聖遺物優先するサブ効果上昇値: [0, 0, 0],
+                聖遺物優先するサブ効果上昇回数: [8, 5, 5],
+                subStatUpLists: [[], [], []],
+                subStatUpIndices: [6, 6, 6],
                 gensen: '厳選1ヶ月',
                 gensenList: [null, '厳選初心者', '厳選1ヶ月', '厳選3ヶ月', '日々石割'],
+                厳選目安一括変更Enabled: false,
                 聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
-                聖遺物ステータス補正: 聖遺物ステータスTEMPLATE,
+                聖遺物ステータス補正: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
                 isステータスOpened: false,
                 補正値0初期化Enabled: false
             }
@@ -546,10 +549,15 @@ function initialSetupArtifactDetailInput() {
             },
             statList: function () {
                 return Object.keys(聖遺物ステータスTEMPLATE).filter(s => this.isステータスOpened || this.聖遺物ステータス[s]);
+            },
+            totalCount: function () {
+                const priorityCount = this.聖遺物優先するサブ効果上昇回数.reduce((sum, e) => sum + e);
+                let noPriorityCount = Math.min(45, 40 + Math.round(Math.max(0, (priorityCount - 12) / 4)));
+                noPriorityCount -= Math.min(45, priorityCount)
+                return priorityCount + noPriorityCount;
             }
         },
-        created() {
-
+        mounted() {
         },
         methods: {
             displayName: function (name) {
@@ -582,6 +590,9 @@ function initialSetupArtifactDetailInput() {
                 }
                 return result;
             },
+            subStatOnChange: function (index, selectedIndex) {
+                this.subStatUpIndices[index] = selectedIndex;
+            },
             gensenOnChange: function () {
                 if (!this.gensen) return;
                 const 上昇値Arr = [[], [6, 6, 6], [6, 6, 6], [5, 5, 5], [4, 4, 4]];
@@ -589,6 +600,7 @@ function initialSetupArtifactDetailInput() {
                 const gensenIndex = this.gensenList.indexOf(this.gensen);
                 for (let i = 0; i < 上昇回数Arr[gensenIndex].length; i++) {
                     this.聖遺物優先するサブ効果上昇値[i] = this.subStatUpList(i)[上昇値Arr[gensenIndex][i]];
+                    this.subStatUpIndices[i] = 上昇値Arr[gensenIndex][i];
                     this.聖遺物優先するサブ効果上昇回数[i] = 上昇回数Arr[gensenIndex][i];
                 }
             }
@@ -603,6 +615,25 @@ function initialSetupArtifactDetailInput() {
             },
             聖遺物優先するサブ効果: {
                 handler: function (newVal, oldVal) {
+                    for (let i = 0; i < this.subStatUpLists.length; i++) {
+                        const result = [];
+                        const stat = this.聖遺物優先するサブ効果[i];
+                        if (stat in 聖遺物サブ効果MasterVar) {
+                            const master = 聖遺物サブ効果MasterVar[stat];
+                            for (let i = 0; i < master.length; i++) {
+                                result.push(master[i]);
+                                if (i < master.length - 1) {
+                                    let newValue = master[i] + (master[i + 1] - master[i]) / 2;
+                                    newValue = Math.round(newValue * 100) / 100;
+                                    result.push(newValue);
+                                }
+                            }
+                        }
+                        this.subStatUpLists.splice(i, 1, result);
+                        if (result.length > 0 && this.subStatUpIndices[i] != -1) {
+                            this.聖遺物優先するサブ効果上昇値[i] = result[this.subStatUpIndices[i]];
+                        }
+                    }
                     calculateArtifactStat(this);
                     updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
@@ -915,6 +946,7 @@ function initialSetupStatusInput(characterMaster) {
                 });
             },
             resetStatusAdjustment: function (adjustmentInput, opt_categoryArr = null) {
+                this.補正値0初期化Enabled = false;
                 if (opt_categoryArr) {
                     opt_categoryArr.forEach(category => {
                         ステータスARRAY_MAP.get(category).forEach(stat => {
@@ -1247,19 +1279,6 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
 
     calculateArtifactStat(artifactDetailInput);
     calculateStatus(characterInput, artifactDetailInput, statusInput);
-
-    const damegeDetailObj = makeDamageDetailObjCharacter(characterInput);
-
-    // StatusInputVm.基礎ステータス['基礎HP'] = myCharacterMaster.ステータス['基礎HP'][myLevelStr];
-    // StatusInputVm.基礎ステータス['基礎攻撃力'] = myCharacterMaster.ステータス['基礎攻撃力'][myLevelStr];
-    // StatusInputVm.基礎ステータス['基礎防御力'] = myCharacterMaster.ステータス['基礎防御力'][myLevelStr];
-
-    // const myPropertyName = Object.keys(myCharacterMaster.ステータス).filter(s => !s.startsWith('基礎'))[0];
-    // ['高級ステータス', 'その他ステータス'].forEach(key => {
-    //     if (myPropertyName in StatusInputVm[key]) {
-    //         StatusInputVm[key][myPropertyName] = myCharacterMaster.ステータス[myPropertyName][myLevelStr];
-    //     }
-    // });
 }
 
 /**
@@ -1279,9 +1298,11 @@ async function setupWeaponInput(type, name, characterInput) {
     } else {
         characterInput['武器突破レベルOption'].max = 6;
     }
-    if (name in 武器所持状況ObjVar && 武器所持状況ObjVar[name]) {
-        characterInput['武器精錬ランク'] = 武器所持状況ObjVar[name];
+    if (name in 武器所持状況Var && 武器所持状況Var[name]) {
+        characterInput['武器精錬ランク'] = 武器所持状況Var[name];
     }
+
+    makeDamageDetailObjWeapon(characterInput);
 }
 
 function updateStatusInputStatus(statusObj) {

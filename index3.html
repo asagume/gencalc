@@ -388,40 +388,90 @@
                         </tr>
                     </table>
                     <fieldset>
-                        <table>
+                        <table class="artifact-priority-stat">
                             <tr>
-                                <th>{{displayName('サブ効果')}}</th>
-                                <th>{{displayName('上昇値')}}</th>
-                                <th>{{displayName('回数')}}</th>
+                                <th>{{displayName('優先するサブ効果')}}</th>
+                                <th>{{displayName('上昇値の目安')}}</th>
+                                <th>{{displayName('初期+強化')}}</th>
+                                <td>{{displayName('合計')}}{{totalCount}}{{displayName('回')}}</td>
                             </tr>
-                            <tr v-for="item in [0,1,2]">
+                            <tr>
                                 <td>
-                                    <select v-model="聖遺物優先するサブ効果[item]">
+                                    <select v-model="聖遺物優先するサブ効果[0]">
                                         <option v-for="subitem in priorityStatList" :value="subitem">
                                             {{displayName(subitem)}} </option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇値[item]">
-                                        <option v-for="subitem in subStatUpList(item)" :value="subitem">
+                                    <select v-model="聖遺物優先するサブ効果上昇値[0]"
+                                        @change="subStatOnChange(item, $event.target.selectedIndex)">
+                                        <option v-for="subitem in subStatUpLists[0]" :value="subitem">
                                             {{displayName(subitem)}}
                                         </option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇回数[item]">
-                                        <option v-for="subitem in [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
+                                    <select v-model="聖遺物優先するサブ効果上昇回数[0]">
+                                        <option v-for="subitem in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
                                             :value="subitem">{{subitem}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" v-model="厳選目安一括変更Enabled">
+                                        {{displayName('一括変更')}}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select v-model="聖遺物優先するサブ効果[1]">
+                                        <option v-for="subitem in priorityStatList" :value="subitem">
+                                            {{displayName(subitem)}} </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select v-model="聖遺物優先するサブ効果上昇値[1]"
+                                        @change="subStatOnChange(1, $event.target.selectedIndex)">
+                                        <option v-for="subitem in subStatUpLists[1]" :value="subitem">
+                                            {{displayName(subitem)}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select v-model="聖遺物優先するサブ効果上昇回数[1]">
+                                        <option v-for="subitem in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
+                                            :value="subitem">{{subitem}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select v-model="gensen" @change="gensenOnChange">
+                                        <option v-for="item in gensenList" :value="item">{{displayName(item)}}</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    {{displayName('厳選目安')}}
-                                    <select v-model="gensen" @change="gensenOnChange">
-                                        <option v-for="item in gensenList" :value="item">{{displayName(item)}}</option>
+                                    <select v-model="聖遺物優先するサブ効果[2]">
+                                        <option v-for="subitem in priorityStatList" :value="subitem">
+                                            {{displayName(subitem)}} </option>
                                     </select>
                                 </td>
+                                <td>
+                                    <select v-model="聖遺物優先するサブ効果上昇値[i2]"
+                                        @change="subStatOnChange(2, $event.target.selectedIndex)">
+                                        <option v-for="subitem in subStatUpLists[2]" :value="subitem">
+                                            {{displayName(subitem)}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select v-model="聖遺物優先するサブ効果上昇回数[2]">
+                                        <option v-for="subitem in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
+                                            :value="subitem">{{subitem}}</option>
+                                    </select>
+                                </td>
+                                <td></td>
                             </tr>
                         </table>
                     </fieldset>
@@ -501,7 +551,8 @@
                             {{displayName(item.name)}}
                             <select v-model="conditions[item.name]" @change="onChange(item)">
                                 <option v-if="!item.require" value=""></option>
-                                <option v-for="subitem in item.list" :value="subitem">{{displayOption(subitem)}}</option>
+                                <option v-for="subitem in item.list" :value="subitem">{{displayOption(subitem)}}
+                                </option>
                             </select>
                         </label>
                     </fieldset>

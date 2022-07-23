@@ -502,13 +502,28 @@ label.open-close input[type="checkbox"]:checked+span::after {
     background-color: #333;
 }
 
+table.artifact-priority-stat {
+    width: 100%;
+    table-layout: auto;
+}
+
+table.artifact-priority-stat th {
+    font-size: smaller;
+    font-weight: normal;
+    color: #df8f37;
+}
+
+table.artifact-priority-stat td select {
+    width: 100%;
+}
+
 label.condition {
     margin-left: 1rem;
     margin-right: 1rem;
 }
 
 label.condition input[type="checkbox"]:checked+span {
-    color: #e8d14e;
+    color: palevioletred;
 }
 
 table.status {
@@ -620,7 +635,7 @@ table.result thead th:first-child {
     border: 2px solid gray;
     border-radius: 10px;
     padding: 0.5rem;
-    margin: 5px 1px; 
+    margin: 5px 1px;
     text-shadow: 0 0 3px black;
 }
 

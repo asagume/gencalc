@@ -2,6 +2,16 @@ function isString(value) {
     return typeof value === 'string' || value instanceof String;
 }
 
+function isNumber(value) {
+    const myType = Object.prototype.toString.call(value);
+    return myType === '[object number]' && !isNaN(value);
+}
+
+function isPlainObject(value) {
+    const myType = Object.prototype.toString.call(value);
+    return myType === '[object Object]';
+}
+
 /**
  * Mapのvalue(Array)にvalueを追加(push)します
  * 
@@ -53,7 +63,7 @@ const addDecimal = function (value1, value2, opt_max = null) {
 const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
     let result = 0;
     if (!Array.isArray(formulaArr)) {
-        if (!isNaN(formulaArr)) {
+        if (isNumber(formulaArr)) {
             result = Number(formulaArr);
         } else {
             if (formulaArr in statusObj) {
@@ -69,7 +79,7 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
             if (['+', '-', '*', '/'].includes(entry)) {
                 operator = entry;
                 return;
-            } else if (!isNaN(entry)) {
+            } else if (isNumber(entry)) {
                 subResult = Number(entry);
             } else if (Array.isArray(entry)) {
                 subResult = calculateFormulaArray(statusObj, entry);
@@ -138,7 +148,7 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
  */
 function analyzeFormulaStrSub(str, defaultItem = null) {
     let resultArr = [];
-    if (!isNaN(str)) {
+    if (isNumber(str)) {
         resultArr.push(Number(str));
     } else {
         let strArr = str.split('%');
@@ -751,7 +761,7 @@ function calculateDamageFromDetailSub(statusObj, enemyStatusObj, formula, buffAr
  */
 function isUseReference(formulaArr) {
     if (!Array.isArray(formulaArr)) {
-        if (!isNaN(formulaArr)) {
+        if (isNumber(formulaArr)) {
             return false;
         }
         return String(formulaArr).indexOf('#') != -1;
@@ -760,7 +770,7 @@ function isUseReference(formulaArr) {
     formulaArr.forEach(entry => {
         if (['+', '-', '*', '/'].includes(entry)) {
             return;
-        } else if (!isNaN(entry)) {
+        } else if (isNumber(entry)) {
             return;
         } else if (Array.isArray(entry)) {
             if (isUseReference(entry)) {
