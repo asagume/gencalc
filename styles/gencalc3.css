@@ -526,6 +526,10 @@ label.condition input[type="checkbox"]:checked+span {
     color: palevioletred;
 }
 
+input[type="number"].level {
+    width: 12rem;
+}
+
 table.status {
     width: 98%;
     margin-left: auto;

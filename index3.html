@@ -369,15 +369,13 @@
                             <td> {{displayNumber(item, 聖遺物ステータス[item])}} </td>
                         </tr>
                         <tr>
-                            <td :colspan="isEditable ? 3 : 2">
+                            <td style="text-align: left; padding-left: 1rem;">
                                 <label>
                                     <input type="checkbox" v-model="isEditable">
                                     {{displayName('補正値入力モード')}}
                                 </label>
                             </td>
-                        </tr>
-                        <tr>
-                            <td :colspan="isEditable ? 3 : 2">
+                            <td :colspan="isEditable ? 2 : 1">
                                 <label>
                                     <input type="checkbox" v-model="補正値0初期化Enabled">
                                     {{displayName('補正値0初期化')}}
@@ -607,15 +605,13 @@
                                 </tr>
                             </template>
                             <tr>
-                                <td :colspan="isEditable ? 3 : 2">
+                                <td style="text-align: left; padding-left: 1rem;">
                                     <label>
                                         <input type="checkbox" v-model="isEditable">
                                         {{displayName('補正値入力モード')}}
                                     </label>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td :colspan="isEditable ? 3 : 2">
+                                <td :colspan="isEditable ? 2 : 1">
                                     <label>
                                         <input type="checkbox" v-model="補正値0初期化Enabled">
                                         {{displayName('補正値0初期化')}}
@@ -647,15 +643,13 @@
                                 </tr>
                             </template>
                             <tr>
-                                <td :colspan="isEditable ? 3 : 2">
+                                <td style="text-align: left; padding-left: 1rem;">
                                     <label>
                                         <input type="checkbox" v-model="isEditable">
                                         {{displayName('補正値入力モード')}}
                                     </label>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td :colspan="isEditable ? 3 : 2">
+                                <td :colspan="isEditable ? 2 : 1">
                                     <label>
                                         <input type="checkbox" v-model="補正値0初期化Enabled">
                                         {{displayName('補正値0初期化')}}
@@ -668,14 +662,19 @@
                         </table>
 
                         <div v-show="activeTab === '3'">
-                            <div>
-                                {{displayName('敵')}}
-                                <select v-model="enemy">
-                                    <option v-for="item in enemyList" :value="item">{{displayName(item.name)}}</option>
-                                </select>
+                            <div style="margin-top: 1rem; margin-bottom: 1rem;">
+                                <label>
+                                    {{displayName('敵')}}
+                                    <select class="enemy" v-model="enemy">
+                                        <option v-for="item in enemyList" :value="item">{{displayName(item.name)}}
+                                        </option>
+                                    </select>
+                                </label>
                                 &emsp;
-                                {{displayName('Level')}}
-                                <input v-model="敵ステータス['レベル']" type="number">
+                                <label>
+                                    {{displayName('Lv.')}}
+                                    <input class="level" type="number" v-model="敵ステータス['レベル']">
+                                </label>
                             </div>
                             <table class="status">
                                 <tr>
@@ -705,15 +704,13 @@
                                     <td> {{displayNumber('防御力', 敵ステータス['防御力'])}} </td>
                                 </tr>
                                 <tr>
-                                    <td :colspan="isEditable ? 3 : 2">
+                                    <td style="text-align: left; padding-left: 1rem;">
                                         <label>
                                             <input type="checkbox" v-model="isEditable">
                                             {{displayName('補正値入力モード')}}
                                         </label>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td :colspan="isEditable ? 3 : 2">
+                                    <td :colspan="isEditable ? 2 : 1">
                                         <label>
                                             <input type="checkbox" v-model="補正値0初期化Enabled">
                                             {{displayName('補正値0初期化')}}

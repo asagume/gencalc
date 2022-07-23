@@ -225,9 +225,16 @@ async function loadRecommendation(recommendation, characterInput, artifactDetail
             characterInput['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
         }
     });
-    ['聖遺物メイン効果1', '聖遺物メイン効果2', '聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
-        const mainStat = recommendation[key];
+    ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
+        let mainStat = recommendation[key];
+        if (!mainStat) {
+            mainStat = ['5_HP', '5_攻撃力'][index];
+        }
         artifactDetailInput['聖遺物メイン効果'][index] = mainStat;
+    });
+    ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
+        const mainStat = recommendation[key];
+        artifactDetailInput['聖遺物メイン効果'][index + 2] = mainStat;
     });
     ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
         const subStat = recommendation[key];
@@ -604,6 +611,16 @@ function calculateArtifactStat(artifactDetailInput) {
     if (!artifactDetailInput) return;
     const result = JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE));
 
+    if ('聖遺物ステータス補正' in artifactDetailInput) {
+        Object.keys(artifactDetailInput['聖遺物ステータス補正']).forEach(stat => {
+            if (stat in result) {
+                result[stat] += artifactDetailInput['聖遺物ステータス補正'][stat];
+            } else {
+                result[stat] = artifactDetailInput['聖遺物ステータス補正'][stat];
+            }
+        });
+    }
+
     artifactDetailInput['聖遺物メイン効果'].filter(s => s).forEach(mainStat => {
         const splitted = mainStat.split('_');
         const rarity = splitted[0];
@@ -624,14 +641,7 @@ function calculateArtifactStat(artifactDetailInput) {
     }
 
     if ('聖遺物ステータス' in artifactDetailInput) {
-        Object.keys(result).forEach(stat => {
-            if ('聖遺物ステータス補正' in artifactDetailInput) {
-                if (stat in artifactDetailInput['聖遺物ステータス補正']) {
-                    result[stat] += artifactDetailInput['聖遺物ステータス補正'][stat];
-                }
-            }
-            artifactDetailInput['聖遺物ステータス'][stat] = result[stat];
-        });
+        artifactDetailInput['聖遺物ステータス'] = result;
     }
 
     return result;
