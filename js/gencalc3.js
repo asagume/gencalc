@@ -144,7 +144,7 @@ function initialSetupCharacterSelect() {
             onClick: function (event) {
                 if (event.target.alt != this.selected) {
                     this.selected = event.target.alt;
-                    setupCharacterInput(this.selected, CharacterInputVm, ArtifactDetailInputVm, StatusInputVm);
+                    setupCharacterInput(this.selected, CharacterInputVm, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm);
                 }
                 this.isVisible = false;
             },
@@ -222,7 +222,7 @@ async function initialSetupCharacterInput(name) {
         },
         mounted() {
             const character = getCharacterByBirthday();
-            setupCharacterInput(character, this, ArtifactDetailInputVm, StatusInputVm);
+            setupCharacterInput(character, this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm);
             CharacterSelectVm.selected = character;
         },
         computed: {
@@ -710,16 +710,20 @@ function initialSetupConditionInput(opt_characterMaster = null) {
         data() {
             return {
                 isVisible: true,
-                conditions: {}
+                conditions: {},
+                character: null,
+                characterMaster: null
             }
         },
         computed: {
             inputList: function () {
-                if (!CharacterInputVm) return [];
+                if (!this.character || !this.characterMaster) return [];
                 const result = [];
-                const character = CharacterInputVm.name;
-                if (キャラクターダメージ詳細ObjMapVar.has(character)) {
-                    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(character);
+                [
+                    キャラクターダメージ詳細ObjMapVar.get(this.character),
+                    武器ダメージ詳細ObjMapVar.get(CharacterInputVm.weapon)
+                ].forEach(damageDetailObj => {
+                    if (!damageDetailObj) return;
                     damageDetailObj['条件'].forEach((value, key) => {
                         if (value != null) return;
                         result.push({
@@ -727,16 +731,17 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                             exclusions: damageDetailObj['排他'].has(key) ? damageDetailObj['排他'].get(key) : null
                         });
                     });
-                }
-                const characterMaster = CharacterInputVm.master;
+                });
                 result.forEach(condition => {
                     if (condition.name in this.conditions) return;
                     let value = true;
-                    if ('オプション初期値' in characterMaster) {
-                        if (condition.name in characterMaster['オプション初期値']) {
-                            value = characterMaster['オプション初期値'][condition.name];
+                    [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
+                        if ('オプション初期値' in master) {
+                            if (condition.name in master['オプション初期値']) {
+                                value = characterMaster['オプション初期値'][condition.name];
+                            }
                         }
-                    }
+                    });
                     if (value && condition.exclusions) {
                         condition.exclusions.forEach(exclusion => {
                             if (this.conditions[exclusion]) {
@@ -746,14 +751,17 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                     }
                     this.conditions[condition.name] = value;
                 });
+                console.log('inputList', result);
                 return result;
             },
             selectList: function () {
-                if (!CharacterInputVm) return [];
+                if (!this.character || !this.characterMaster) return [];
                 const result = [];
-                const character = CharacterInputVm.name;
-                if (キャラクターダメージ詳細ObjMapVar.has(character)) {
-                    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(character);
+                [
+                    キャラクターダメージ詳細ObjMapVar.get(this.character),
+                    武器ダメージ詳細ObjMapVar.get(CharacterInputVm.weapon)
+                ].forEach(damageDetailObj => {
+                    if (!damageDetailObj) return;
                     damageDetailObj['条件'].forEach((value, key) => {
                         if (value == null) return;
                         result.push({
@@ -763,18 +771,19 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                             exclusions: damageDetailObj['排他'].has(key) ? damageDetailObj['排他'].get(key) : null
                         });
                     });
-                }
-                const characterMaster = CharacterInputVm.master;
+                });
                 result.forEach(condition => {
                     if (condition.name in this.conditions) return;
                     let value = condition.list[condition.list.length - 1];
-                    if ('オプション初期値' in characterMaster) {
-                        if (condition.name in characterMaster['オプション初期値']) {
-                            let index = characterMaster['オプション初期値'][condition.name];
-                            if (!condition.require) index -= 1;
-                            value = condition.list[index];
+                    [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
+                        if ('オプション初期値' in master) {
+                            if (condition.name in master['オプション初期値']) {
+                                let index = master['オプション初期値'][condition.name];
+                                if (!condition.require) index -= 1;
+                                value = condition.list[index];
+                            }
                         }
-                    }
+                    });
                     if (value && condition.exclusions) {
                         condition.exclusions.forEach(exclusion => {
                             if (this.conditions[exclusion]) {
@@ -784,8 +793,17 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                     }
                     this.conditions[condition.name] = value;
                 });
+                console.debug('selectList', result);
                 return result;
             }
+        },
+        mounted() {
+            this.$nextTick(function () {
+                if (CharacterInputVm) {
+                    this.character = CharacterInputVm.name;
+                    this.characterMaster = CharacterInputVm.master;
+                }
+            });
         },
         methods: {
             displayName: function (name) {
@@ -1227,7 +1245,7 @@ function initialSetupWeaponOwnList() {
  * 
  * @param {string} name キャラクター名
  */
-async function setupCharacterInput(name, characterInput, artifactDetailInput, statusInput) {
+async function setupCharacterInput(name, characterInput, artifactDetailInput, conditionInput, optionInput, statusInput) {
     let characterMaster = null;
     if (!キャラクター個別MasterMapVar.has(name)) {
         const url = キャラクターMasterVar[name]['import'];
@@ -1310,10 +1328,17 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
     characterInput.レベル = level;
     characterInput.命ノ星座 = constellation;
 
-    loadRecommendation(myRecommendation[1], characterInput, artifactDetailInput, statusInput);
+    await loadRecommendation(myRecommendation[1], characterInput, artifactDetailInput, conditionInput, statusInput);
 
-    setupWeaponInput(weaponType, characterInput.weapon, CharacterInputVm);
+    await setupWeaponInput(weaponType, characterInput.weapon, CharacterInputVm);
 
+    if (!conditionInput) {  //　苦し紛れ
+        conditionInput = ConditionInputVm;
+    }
+    if (conditionInput) {
+        conditionInput.character = name;
+        conditionInput.characterMaster = characterMaster;
+    }
 
     calculateArtifactStat(artifactDetailInput);
     calculateStatus(characterInput, artifactDetailInput, statusInput);

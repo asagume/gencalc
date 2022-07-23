@@ -187,7 +187,7 @@ function makeArtifactSetAbbrev(name) {
     return abbr;
 }
 
-async function loadRecommendation(recommendation, characterInput, artifactDetailInput, statusInput) {
+async function loadRecommendation(recommendation, characterInput, artifactDetailInput, conditionInput, statusInput) {
     const characterMaster = characterInput.master;
     if ('レベル' in recommendation) {
 
@@ -269,6 +269,7 @@ function getLevelStr(ascension, level) {
 }
 
 function makeDamageDetailObjCharacter(characterInput) {
+    const name = characterInput.name;
     const characterMaster = characterInput.master;
 
     if (キャラクターダメージ詳細ObjMapVar.has(characterMaster['名前'])) {
@@ -414,8 +415,8 @@ function makeDamageDetailObjCharacter(characterInput) {
     result['条件'] = conditionMap;
     result['排他'] = exclusionMap;
 
-    console.debug(makeDamageDetailObjCharacter.name, result);
-    キャラクターダメージ詳細ObjMapVar.set(characterMaster['名前'], result);
+    キャラクターダメージ詳細ObjMapVar.set(name, result);
+    console.debug(makeDamageDetailObjCharacter.name, name, result);
 
     return result;
 }
@@ -463,8 +464,8 @@ function makeDamageDetailObjWeapon(characterInput) {
     result['条件'] = conditionMap;
     result['排他'] = exclusionMap;
 
-    console.debug(makeDamageDetailObjWeapon.name, result);
     武器ダメージ詳細ObjMapVar.set(name, result);
+    console.debug(makeDamageDetailObjWeapon.name, name, result);
 
     return result;
 }
