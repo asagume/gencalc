@@ -712,12 +712,10 @@ function initialSetupStatusInput(characterMaster) {
                 ステータス補正: {},
                 isステータスOpened: {},
                 補正値0初期化Enabled: false,
-                敵: null,
-                敵List: [],
-                敵レベル: 90,
+                enemy: null,
+                enemyList: [],
                 敵ステータス: JSON.parse(JSON.stringify(敵ステータスTEMPLATE)),
                 敵ステータス補正: {},
-                敵防御力: 0,
                 is敵ステータスOpened: false
             }
         },
@@ -728,25 +726,28 @@ function initialSetupStatusInput(characterMaster) {
             ステータスARRAY_MAP.forEach((value, key) => {
                 this.isステータスOpened[key] = false; // close
             });
+            this.敵ステータス['レベル'] = 90;
             this.isステータスOpened['基本ステータス'] = true;
-            this.敵List = Object.keys(敵MasterVar).map(name => {
+            this.enemyList = Object.keys(敵MasterVar).map(name => {
                 return {
                     name: name,
                     master: 敵MasterVar[name]
                 }
             });
-            this.敵 = this.敵List[0].name;
-            const myEnemyMaster = this.敵List[0].master;
-            Object.keys(myEnemyMaster).forEach(stat => {
-                this.敵ステータス[stat] = myEnemyMaster[stat];
+            this.enemy = this.enemyList[0];
+            Object.keys(this.enemy.master).forEach(stat => {
+                this.敵ステータス[stat] = this.enemy.master[stat];
             });
             Object.keys(this.敵ステータス).forEach(stat => {
                 this.敵ステータス補正[stat] = 0;
             });
         },
         computed: {
+            enemyMaster: function () {
+                return this.enemy.master;
+            },
             enemyStatList: function () {
-                return Object.keys(this.敵ステータス).filter(s => this.is敵ステータスOpened || this.敵ステータス[s]);
+                return 元素ステータス_耐性ARRAY.filter(s => this.is敵ステータスOpened || this.敵ステータス[s]);
             }
         },
         methods: {
@@ -759,14 +760,49 @@ function initialSetupStatusInput(characterMaster) {
             statList: function (category) {
                 return ステータスARRAY_MAP.get(category).filter(s => this.isステータスOpened[category] || this.ステータス[s]);
             },
-            enemyListOnChange: function () {
-                const master = 敵MasterVar[this.敵];
+            calculateEnemyStatus: function () {
+                const master = this.enemy.master;
                 Object.keys(master).forEach(stat => {
-                    this.敵ステータス[stat.replace('耐性', '')] = master[stat];
+                    this.敵ステータス[stat] = master[stat];
                 });
+                this.敵ステータス['防御力'] = 0;
                 Object.keys(this.敵ステータス補正).forEach(stat => {
                     this.敵ステータス[stat] += this.敵ステータス補正[stat];
                 });
+            },
+            resetStatusAdjustment: function (adjustmentInput, opt_categoryArr = null) {
+                if (opt_categoryArr) {
+                    opt_categoryArr.forEach(category => {
+                        ステータスARRAY_MAP.get(category).forEach(stat => {
+                            if (stat in adjustmentInput) {
+                                adjustmentInput[stat] = 0;
+                            }
+                        });
+                    });
+                } else {
+                    Object.keys(adjustmentInput).forEach(stat => {
+                        adjustmentInput[stat] = 0;
+                    })
+                }
+            }
+        },
+        watch: {
+            ステータス補正: {
+                handler: function (newVal, oldVal) {
+                    //TODO
+                },
+                deep: true
+            },
+            enemy: {
+                handler: function (newVal, oldVal) {
+                    this.calculateEnemyStatus();
+                }
+            },
+            敵ステータス補正: {
+                handler: function (newVal, oldVal) {
+                    this.calculateEnemyStatus();
+                },
+                deep: true
             }
         }
     };

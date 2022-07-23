@@ -560,8 +560,9 @@
                                         <input type="checkbox" v-model="補正値0初期化Enabled">
                                         {{displayName('補正値0初期化')}}
                                     </label>
-                                    <button type="button" style="width: 10rem"
-                                        :disabled="!補正値0初期化Enabled">{{displayName('実行')}}</button>
+                                    <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
+                                        @click="resetStatusAdjustment(ステータス補正, ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ'])">
+                                        {{displayName('実行')}}</button>
                                 </td>
                             </tr>
                         </table>
@@ -600,8 +601,9 @@
                                         <input type="checkbox" v-model="補正値0初期化Enabled">
                                         {{displayName('補正値0初期化')}}
                                     </label>
-                                    <button type="button" style="width: 10rem"
-                                        :disabled="!補正値0初期化Enabled">{{displayName('実行')}}</button>
+                                    <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
+                                        @click="resetStatusAdjustment(ステータス補正, ['元素ステータス・耐性', 'その他'])">
+                                        {{displayName('実行')}}</button>
                                 </td>
                             </tr>
                         </table>
@@ -609,12 +611,12 @@
                     <template v-else-if="activeTab === '3'">
                         <div>
                             {{displayName('敵')}}
-                            <select v-model="敵" @change="enemyListOnChange">
-                                <option v-for="item in 敵List" :value="item.name">{{item.name}}</option>
+                            <select v-model="enemy">
+                                <option v-for="item in enemyList" :value="item">{{displayName(item.name)}}</option>
                             </select>
                             &emsp;
                             {{displayName('Level')}}
-                            <input v-model="敵レベル" type="number">
+                            <input v-model="敵ステータス['レベル']" type="number">
                         </div>
                         <table class="status">
                             <tr>
@@ -657,8 +659,9 @@
                                         <input type="checkbox" v-model="補正値0初期化Enabled">
                                         {{displayName('補正値0初期化')}}
                                     </label>
-                                    <button type="button" style="width: 10rem"
-                                        :disabled="!補正値0初期化Enabled">{{displayName('実行')}}</button>
+                                    <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
+                                        @click="resetStatusAdjustment(敵ステータス補正)">
+                                        {{displayName('実行')}}</button>
                                 </td>
                             </tr>
                         </table>
