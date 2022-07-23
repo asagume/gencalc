@@ -640,6 +640,25 @@ function calculateArtifactStat(artifactDetailInput) {
         result[subStat] += subStatValue1 * subStatValue2;
     }
 
+    const prioritySubStatArr = [
+        '会心率',
+        '会心ダメージ',
+        '元素チャージ効率',
+        '元素熟知',
+        '攻撃力%',
+        'HP%',
+        '防御力%',
+        '攻撃力',
+        'HP',
+        '防御力'
+    ].filter(s => !artifactDetailInput['聖遺物優先するサブ効果'].includes(s));
+    let noPriorityCount = artifactDetailInput.totalCount;
+    noPriorityCount -= artifactDetailInput['聖遺物優先するサブ効果上昇回数'].reduce((sum, e) => sum + e);
+    for (let i = noPriorityCount; i > 0; i--) {
+        const subStat = prioritySubStatArr[i % prioritySubStatArr.length];
+        result[subStat] += 聖遺物サブ効果MasterVar[subStat][3];
+    }    
+
     if ('聖遺物ステータス' in artifactDetailInput) {
         artifactDetailInput['聖遺物ステータス'] = result;
     }

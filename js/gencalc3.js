@@ -276,6 +276,23 @@ async function initialSetupCharacterInput(name) {
             },
             artifactScore: function () {
                 return 0;
+            },
+            saveDisabled: function () {
+                if (this.saveName) {
+                    return false;
+                }
+                return true;
+            },
+            removeDisabled: function () {
+                if (!this.saveName) return true;
+                let tempKey = '構成_' + this.name;
+                if (this.saveName != ('あなたの' + this.name)) {
+                    tempKey += '_' + this.saveName;
+                }
+                if (tempKey in localStorage) {
+                    return false;
+                }
+                return true;
             }
         },
         methods: {
@@ -1091,7 +1108,7 @@ function initialSetupCharacterOwnList() {
             onClick: function (item) {
                 if (this.命ノ星座[item.name] == null) {
                     this.命ノ星座[item.name] = 0;
-                } else if (this.命ノ星座[item.name] > 6) {
+                } else if (this.命ノ星座[item.name] > 5) {
                     this.命ノ星座[item.name] = null;
                 } else {
                     this.命ノ星座[item.name]++;

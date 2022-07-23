@@ -116,7 +116,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <button type="button" @click="saveOnClick">
+                                <button type="button" :disabled="saveDisabled" @click="saveOnClick">
                                     Save<br>
                                     <span class="material-symbols-outlined"> save </span>
                                 </button>
@@ -125,7 +125,7 @@
                                 &emsp;
                             </td>
                             <td>
-                                <button type="button" @click="removeOnClick">
+                                <button type="button" :disabled="removeDisabled" @click="removeOnClick">
                                     Remove<br>
                                     <span class="material-symbols-outlined"> delete </span>
                                 </button>
