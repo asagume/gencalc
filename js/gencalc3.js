@@ -550,6 +550,9 @@ function initialSetupArtifactDetailInput() {
             statList: function () {
                 return Object.keys(聖遺物ステータスTEMPLATE).filter(s => this.isステータスOpened || this.聖遺物ステータス[s]);
             },
+            countList: function () {
+                return Array.from({ length: 16 }, (_, i) => i);
+            },
             totalCount: function () {
                 const priorityCount = this.聖遺物優先するサブ効果上昇回数.reduce((sum, e) => sum + e);
                 let noPriorityCount = Math.min(45, 40 + Math.round(Math.max(0, (priorityCount - 12) / 4)));
@@ -594,6 +597,7 @@ function initialSetupArtifactDetailInput() {
                 this.subStatUpIndices[index] = selectedIndex;
             },
             gensenOnChange: function () {
+                this.厳選目安一括変更Enabled = false;
                 if (!this.gensen) return;
                 const 上昇値Arr = [[], [6, 6, 6], [6, 6, 6], [5, 5, 5], [4, 4, 4]];
                 const 上昇回数Arr = [[], [4, 4, 4], [8, 5, 5], [11, 7, 7], [15, 10, 10]];
