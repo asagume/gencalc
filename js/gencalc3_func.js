@@ -240,7 +240,16 @@ async function loadRecommendation(recommendation, characterInput, artifactDetail
         const subStat = recommendation[key];
         artifactDetailInput['聖遺物優先するサブ効果'][index] = subStat;
     });
-
+    Object.keys(recommendation).filter(s => s.startsWith('聖遺物サブ効果')).forEach(key => {
+        let stat = key.replace(/^聖遺物サブ効果/, '');
+        if (stat in artifactDetailInput['聖遺物ステータス']) {
+            // nop
+        } else {
+            stat = stat.replace(/P$/, '');
+        }
+        artifactDetailInput['聖遺物ステータス'][stat] = recommendation[key];
+    });
+    
     makeDamageDetailObjCharacter(characterInput);
     makeDamageDetailObjWeapon(characterInput);
     makeDamageDetailObjArtifactSet(characterInput);
