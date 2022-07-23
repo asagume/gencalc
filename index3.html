@@ -355,15 +355,15 @@
                         <tr v-for="(item, index) in statList">
                             <th>{{displayName(item[0])}}</th>
                             <td>
-                                <input v-show="isEditable" type="number" min="0" v-model="聖遺物ステータス[item[0]]"
-                                    @change="changed">
+                                <input v-show="isEditable" type="number" min="0" :step="statStep(item[0])"
+                                    v-model="聖遺物ステータス[item[0]]" @change="changed">
                                 <span v-show="!isEditable"> {{displayNumber(item[0], 聖遺物ステータス[item[0]])}} </span>
                             </td>
                             <template v-if="item[1]">
                                 <th>{{displayName(item[1])}}</th>
                                 <td>
-                                    <input v-show="isEditable" type="number" min="0" v-model="聖遺物ステータス[item[1]]"
-                                        @change="changed">
+                                    <input v-show="isEditable" type="number" min="0" :step="statStep(item[1])"
+                                        v-model="聖遺物ステータス[item[1]]" @change="changed">
                                     <span v-show="!isEditable"> {{displayNumber(item[1], 聖遺物ステータス[item[1]])}} </span>
                                 </td>
                             </template>

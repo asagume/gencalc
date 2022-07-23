@@ -248,7 +248,7 @@ async function loadRecommendation(recommendation, characterInput, artifactDetail
         } else {
             stat = stat.replace(/P$/, '%');
         }
-        artifactDetailInput['聖遺物ステータス'][stat] = recommendation[key];
+        artifactDetailInput['聖遺物ステータス'][stat] = Math.round(recommendation[key] * 10) / 10;
         hasSubStat = true;
     });
     artifactDetailInput.isステータス計算無効 = hasSubStat;

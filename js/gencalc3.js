@@ -616,6 +616,12 @@ function initialSetupArtifactDetailInput() {
                 }
                 return result;
             },
+            statStep: function (name) {
+                if (appendPercentage(name)) {
+                    return 0.1;
+                }
+                return 0;
+            },
             mainChanged: function () {
                 this.isステータス計算無効 = false;
                 CharacterInputVm.isChanged = true;
