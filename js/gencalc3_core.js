@@ -9,7 +9,7 @@ function isString(value) {
  * @param {string} key 
  * @param {string} value 
  */
- function pushToMapValueArray(map, key, value) {
+function pushToMapValueArray(map, key, value) {
     if (value == null) {
         if (!map.has(key)) {
             map.set(key, null);
@@ -34,7 +34,7 @@ function isString(value) {
  * @param {number} opt_max 
  * @returns {number}
  */
- const addDecimal = function (value1, value2, opt_max = null) {
+const addDecimal = function (value1, value2, opt_max = null) {
     let result = Math.floor((value1 * 100 + value2 * 100) / 10) / 10;
     if (opt_max != null) {
         result = Math.min(result, opt_max);
@@ -772,6 +772,116 @@ function isUseReference(formulaArr) {
             }
         }
     });
+    return result;
+}
+
+/**
+ * 指定の条件が適用可能かチェックします
+ * {条件名}
+ * {条件名}@{条件値}
+ * {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
+ * {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
+ * {上記}^{排他条件名}
+ * 
+ * @param {string} conditionStr チェックしたい条件
+ * @param {string []} validConditionValueArr 有効な条件値の配列
+ * @returns {number} 0:アンマッチ/1以上:マッチ(=倍率)
+ */
+const checkConditionMatches = function (conditionStr, validConditionValueArr, constellation) {
+    let myCondStr = conditionStr.split('^')[0];
+
+    if (myCondStr.indexOf('|') != -1) {  // |はOR条件です
+        let myCondStrArr = myCondStr.split('|');
+        for (let i = 0; i < myCondStrArr.length; i++) {
+            let resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation);
+            if (resultSub == 1) {
+                return 1;   // マッチ
+            }
+        }
+        return 0;
+    }
+
+    let myCondStrArr = myCondStr.split('&');    // &はAND条件です
+    let result = 1;
+    for (let i = 0; i < myCondStrArr.length; i++) {
+        let resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation);
+        if (resultSub == 0) {
+            return 0;   // アンマッチ
+        }
+        if (resultSub != 1) {
+            result = resultSub;
+        }
+    }
+    return result;
+}
+
+/**
+ * 指定の条件が適用可能かチェックします Sub
+ * 
+ * @param {string} conditionStr チェックしたい条件
+ * @param {string []} validConditionValueArr 有効な条件値の配列
+ * @returns {number} 0:アンマッチ/1以上:マッチ(=倍率)
+ */
+function checkConditionMatchesSub(conditionStr, validConditionValueArr, constellation) {
+    let myCondArr = conditionStr.split('@');
+    if (myCondArr[0] == '命ノ星座') {
+        if (myCondArr.length == 2) {
+            const re = new RegExp('[^0-9]*([0-9\\.]+).*');
+            let reRet = re.exec(myCondArr[1]);
+            if (reRet) {
+                if (Number(reRet[1]) <= constellation) {
+                    return 1;
+                }
+            }
+        }
+        return 0;   // アンマッチ
+    }
+    if (validConditionValueArr.includes(conditionStr)) {
+        if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
+            return 1;   // マッチ 等倍
+        }
+    } else if (myCondArr.length == 1) {
+        if (validConditionValueArr.filter(s => s.startsWith(conditionStr + '@')).length > 0) {
+            return 1;   // マッチ 等倍
+        }
+        return 0;   // アンマッチ
+    } else if (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1) {
+        return 0;   // アンマッチ
+    }
+    const re = new RegExp('[^0-9]*([0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
+    for (let i = 0; i < validConditionValueArr.length; i++) {
+        if (validConditionValueArr[i].startsWith(myCondArr[0] + '@')) {
+            let workArr = validConditionValueArr[i].split('@');
+            let reRet = re.exec(workArr[1]);
+            if (reRet) {
+                return Number(reRet[1]);    // マッチ x倍
+            }
+            console.error(conditionStr, validConditionValueArr[i]);
+        }
+    }
+    return 0;   // アンマッチ
+}
+
+function makeValidConditionValueArr(conditionInput) {
+    if (!conditionInput) return [];
+    let result = [];
+    const inputList = conditionInput.inputList;
+    if (inputList) {
+        conditionInput.inputList.forEach(entry => {
+            if (conditionInput.conditions[entry.name]) {
+                result.push(entry.name);
+            }
+        });
+    }
+    const selectList = conditionInput.inputList;
+    if (selectList) {
+        conditionInput.selectList.forEach(entry => {
+            const value = conditionInput.conditions[entry.name];
+            if (value != null) {
+                result.push(entry.name + '@' + value);
+            }
+        });
+    }
     return result;
 }
 

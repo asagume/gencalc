@@ -381,10 +381,10 @@ function makeDamageDetailObjCharacter(characterInput) {
 
     const conditionMap = new Map();
     const exclusionMap = new Map();
-    myステータス変更系詳細Arr.filter(s => s['条件'])   .forEach(detailObj => {
+    myステータス変更系詳細Arr.filter(s => s['条件']).forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
     });
-    my天賦性能変更系詳細Arr.filter(s => s['条件'])   .forEach(detailObj => {
+    my天賦性能変更系詳細Arr.filter(s => s['条件']).forEach(detailObj => {
         makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
     });
     conditionMap.delete('命ノ星座');
@@ -544,7 +544,7 @@ function calculateArtifactStat(artifactDetailInput) {
  * @param {Map} conditionMap オプション条件Map
  * @param {Map} exclusionMap オプション排他Map
  */
- const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
+const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
     // 排他条件を抽出します
     let exclusionCond = null;
     let myCondStrArr = conditionStr.split('^');
@@ -575,7 +575,7 @@ function calculateArtifactStat(artifactDetailInput) {
  * @param {Map} exclusionMap 
  * @param {string} exclusion 
  */
- function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusionMap, exclusion) {
+function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusionMap, exclusion) {
     let myCondStrArr = conditionStr.split('@');
     let myName = myCondStrArr[0];
     if (myCondStrArr.length == 1) {
@@ -634,7 +634,7 @@ function calculateArtifactStat(artifactDetailInput) {
  * @param {object} statusInput 
  * @returns {object}
  */
-function calculateStatus(characterInput, artifactDetailInput, statusInput) {
+function calculateStatus(characterInput, artifactDetailInput, conditionInput, optionInput, statusInput) {
     const result = JSON.parse(JSON.stringify(ステータスTEMPLATE));
 
     const characterMaster = characterInput.master;
@@ -682,6 +682,22 @@ function calculateStatus(characterInput, artifactDetailInput, statusInput) {
             if (!(toStat in result)) return;
             result[toStat] += artifactDetailInput['聖遺物ステータス'][stat];
         });
+    }
+
+    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(characterInput.name);
+    if (damageDetailObj) {
+        const validConditionArr = makeValidConditionValueArr(conditionInput);
+        if (conditionInput) {
+            damageDetailObj['ステータス変更系詳細'].filter(s => s['条件']).forEach(detailObj => {
+                if (!checkConditionMatches(detailObj['条件'], validConditionArr, result['命ノ星座'])) return;
+                if (detailObj['種類'] in result) {
+                    const statValue = calculateFormulaArray(result, detailObj['数値'], detailObj['上限']);
+                    result[detailObj['種類']] += statValue;
+                } else {
+                    console.error(detailObj);
+                }
+            });
+        }
     }
 
     if ('2セット効果' in characterInput['聖遺物セット効果'][0].master) {

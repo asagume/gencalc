@@ -352,48 +352,48 @@ async function initialSetupCharacterInput(name) {
         watch: {
             name: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 },
                 deep: true
             },
             突破レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             命ノ星座: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             weapon: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             武器突破レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             武器レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             武器精錬ランク: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             聖遺物セット効果: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, StatusInputVm));
+                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 },
                 deep: true
             }
