@@ -234,8 +234,7 @@ fieldset {
     padding-block-end: 0;
     padding-inline-start: 0;
     padding-inline-end: 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 3px;
 }
 
 .with-tooltip+.tooltip {
@@ -501,6 +500,15 @@ label.open-close input[type="checkbox"]:checked+span::after {
     font-weight: normal;
     color: #df8f37;
     background-color: #333;
+}
+
+label.condition {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+label.condition input[type="checkbox"]:checked+span {
+    color: #e8d14e;
 }
 
 table.status {

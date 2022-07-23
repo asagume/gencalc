@@ -493,11 +493,11 @@
                 <div id="condition-input" style="margin-bottom: 20px;">
                     <fieldset v-show="isVisible">
                         <legend>{{displayName('オプション条件')}}</legend>
-                        <label v-for="item in inputList">
+                        <label class="condition" v-for="item in inputList">
                             <input type="checkbox" v-model="conditions[item.name]" @change="onChange(item)">
-                            {{displayName(item.name)}}
+                            <span>{{displayName(item.name)}}</span>
                         </label>
-                        <label v-for="item in selectList">
+                        <label class="condition" v-for="item in selectList">
                             {{displayName(item.name)}}
                             <select v-model="conditions[item.name]" @change="onChange(item)">
                                 <option v-if="!item.require" value=""></option>
