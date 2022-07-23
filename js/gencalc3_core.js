@@ -3,8 +3,7 @@ function isString(value) {
 }
 
 function isNumber(value) {
-    const myType = Object.prototype.toString.call(value);
-    return myType === '[object number]' && !isNaN(value);
+    return isFinite(value) && value != null;
 }
 
 function isPlainObject(value) {
