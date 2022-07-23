@@ -580,7 +580,7 @@
                                 <tr v-for="stat in statList(category)">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="ステータス補正[stat]">
+                                        <input type="number" :step="statStep(stat)" v-model="ステータス補正[stat]">
                                     </td>
                                     <td> {{displayNumber(stat, ステータス[stat])}} </td>
                                 </tr>
@@ -591,15 +591,14 @@
                                         <label :for="category + '-opened'" class="open-close">
                                             <input :id="category + '-opened'" class="hidden" type="checkbox"
                                                 v-model="isステータスOpened[category]">
-                                            <span></span>
-                                            {{displayName(category)}}
+                                            <span>{{displayName(category)}}</span>
                                         </label>
                                     </th>
                                 </tr>
                                 <tr v-for="stat in statList(category)">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="ステータス補正[stat]">
+                                        <input type="number" :step="statStep(stat)" v-model="ステータス補正[stat]">
                                     </td>
                                     <td> {{displayNumber(stat, ステータス[stat])}} </td>
                                 </tr>
@@ -637,7 +636,7 @@
                                 <tr v-for="stat in statList(category)">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="ステータス補正[stat]">
+                                        <input type="number" :step="statStep(stat)" v-model="ステータス補正[stat]">
                                     </td>
                                     <td> {{displayNumber(stat, ステータス[stat])}} </td>
                                 </tr>
@@ -673,7 +672,7 @@
                                 &emsp;
                                 <label>
                                     {{displayName('Lv.')}}
-                                    <input class="level" type="number" v-model="敵ステータス['レベル']">
+                                    <input class="level" type="number" min="0" v-model="敵ステータス['レベル']">
                                 </label>
                             </div>
                             <table class="status">
@@ -681,15 +680,14 @@
                                     <th :colspan="isEditable ? 3 : 2">
                                         <label class="open-close">
                                             <input class="hidden" type="checkbox" v-model="is敵ステータスOpened">
-                                            <span></span>
-                                            {{displayName('元素耐性')}}
+                                            <span>{{displayName('元素耐性')}}</span>
                                         </label>
                                     </th>
                                 </tr>
                                 <tr v-for="stat in enemyStatList">
                                     <th> {{displayName(stat)}} </th>
                                     <td v-show="isEditable">
-                                        <input type="number" v-model="敵ステータス補正[stat]">
+                                        <input type="number" :step="statStep(stat)" v-model="敵ステータス補正[stat]">
                                     </td>
                                     <td> {{displayNumber(stat, 敵ステータス[stat])}} </td>
                                 </tr>

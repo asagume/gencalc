@@ -25,6 +25,14 @@ function appendPercentage(name) {
     }
     return '%';
 }
+
+function getStatStep(name) {
+    if (appendPercentage(name)) {
+        return 0.1;
+    }
+    return 1;
+}
+
 /**
  * 直近に誕生日を迎えたキャラクターを取得します.
  *

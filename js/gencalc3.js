@@ -592,6 +592,9 @@ function initialSetupArtifactDetailInput() {
             displayNumber: function (name, value) {
                 return getDisplayNumber(name, value);
             },
+            statStep: function (name) {
+                return getStatStep(name);
+            },
             mainStatList: function (index) {
                 return [
                     聖遺物メイン効果_生の花ARRAY,
@@ -615,12 +618,6 @@ function initialSetupArtifactDetailInput() {
                     }
                 }
                 return result;
-            },
-            statStep: function (name) {
-                if (appendPercentage(name)) {
-                    return 0.1;
-                }
-                return 0;
             },
             mainChanged: function () {
                 this.isステータス計算無効 = false;
@@ -995,6 +992,9 @@ function initialSetupStatusInput(characterMaster) {
             },
             displayNumber: function (name, value) {
                 return getDisplayNumber(name, value);
+            },
+            statStep: function (name) {
+                return getStatStep(name);
             },
             statList: function (category) {
                 return ステータスARRAY_MAP.get(category).filter(s => this.isステータスOpened[category] || this.ステータス[s]);
