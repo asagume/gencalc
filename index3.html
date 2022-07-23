@@ -737,13 +737,14 @@
                         {{displayName('反応なし')}}
                     </label>
                     <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name">
-                    <label for="増幅反応-蒸発" v-if="元素反応.蒸発倍率" :class="getClassByElement(元素)">
+                    <label for="増幅反応-蒸発" v-if="元素反応.蒸発倍率" :class="classByElement(元素)">
                         {{displayName('蒸発')}} * {{Math.round(元素反応.蒸発倍率 * 100) / 100}}
                     </label>
                     <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name">
-                    <label for="増幅反応-溶解" v-if="元素反応.溶解倍率" :class="getClassByElement(元素)">
+                    <label for="増幅反応-溶解" v-if="元素反応.溶解倍率" :class="classByElement(元素)">
                         {{displayName('溶解')}} * {{Math.round(元素反応.溶解倍率 * 100) / 100}}
                     </label>
+                    <span></span>
                     <label v-if="元素反応.過負荷ダメージ" class="pyro">
                         {{displayName('過負荷')}} {{Math.round(元素反応.過負荷ダメージ)}}
                     </label>
@@ -753,10 +754,10 @@
                     <label v-if="元素反応.超電導ダメージ" class="cryo">
                         {{displayName('超電導')}} {{Math.round(元素反応.超電導ダメージ)}}
                     </label>
-                    <label v-if="元素反応.拡散ダメージ" :class="getClassByElement(元素反応.拡散元素)">
+                    <label v-if="元素反応.拡散ダメージ" :class="classByElement(元素反応.拡散元素)">
                         {{displayName('拡散')}} {{Math.round(元素反応.拡散ダメージ)}}
                     </label>
-                    <label v-if="元素反応.結晶吸収量" :class="etClassByElement(元素反応.結晶元素)">
+                    <label v-if="元素反応.結晶吸収量" :class="classByElement(元素反応.結晶元素)">
                         {{displayName('結晶')}} {{Math.round(元素反応.結晶吸収量)}}
                     </label>
                     <label v-if="元素反応.燃焼ダメージ" class="pyro">
@@ -780,27 +781,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in 計算結果[category]">
+                        <tr v-for="item in damageList(category)">
                             <th>{{displayName(item[0])}}</th>
-                            <td :class="getClassByElement(item[1])">
+                            <td :class="classByElement(item[1])">
                                 {{item[2] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[2] *
                                 元素反応.蒸発倍率) :
                                 増幅反応 == '溶解' ? Math.round(item[2] * 元素反応.溶解倍率) : item[2] : item[2] : '-'}}
                             </td>
-                            <td :class="getClassByElement(item[1])">
+                            <td :class="classByElement(item[1])">
                                 {{item[3] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[3] *
                                 元素反応.蒸発倍率) :
                                 増幅反応 == '溶解' ? Math.round(item[3] * 元素反応.溶解倍率) : item[3] : item[3] : '-'}}
                             </td>
-                            <td :class="getClassByElement(item[1])">
+                            <td :class="classByElement(item[1])">
                                 {{item[4] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[4] *
                                 元素反応.蒸発倍率) :
                                 増幅反応 == '溶解' ? Math.round(item[4] * 元素反応.溶解倍率) : item[4] : item[4] : '-'}}
                             </td>
-                        </tr>
-                        <tr v-if="is計算結果Opened[category]">
-                        </tr>
-                        <tr v-if="is計算結果Opened[category]">
                         </tr>
                     </tbody>
                 </table>

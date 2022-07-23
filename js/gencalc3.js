@@ -818,8 +818,11 @@ function initialSetupCalcurationResult() {
             displayName: function (name) {
                 return getDisplayName(name);
             },
-            getClassByElement(element) {
+            classByElement(element) {
                 return ELEMENT_COLOR_CLASS[element];
+            },
+            damageList: function (category) {
+                return this.計算結果[category].filter(s => !s[0].startsWith('非表示'));
             }
         }
     };

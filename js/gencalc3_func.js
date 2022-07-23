@@ -653,14 +653,19 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
     const reactionMaster = 元素反応MasterVar[characterMaster['元素']];
     Object.keys(reactionMaster).forEach(reaction => {
         const reactionObj = reactionMaster[reaction];
+        let element = reactionObj['元素'] ? reactionObj['元素'] : characterMaster['元素'];
         let resultValue = 0;
-        switch (reactionObj['種類']) {
-            case '乗算':
-                resultValue = calculate乗算系元素反応倍率(reaction, characterMaster['元素'], statusInput['ステータス']);
-                break;
-            case '固定':
-                resultValue = calculate固定値系元素反応ダメージ(reaction, characterMaster['元素'], statusInput['ステータス'], statusInput['敵ステータス']);
-                break;
+        if (reaction == '結晶') {
+            resultValue = calculate結晶シールド吸収量(element, statusInput['ステータス']);
+        } else {
+            switch (reactionObj['種類']) {
+                case '乗算':
+                    resultValue = calculate乗算系元素反応倍率(reaction, element, statusInput['ステータス']);
+                    break;
+                case '固定':
+                    resultValue = calculate固定値系元素反応ダメージ(reaction, element, statusInput['ステータス'], statusInput['敵ステータス']);
+                    break;
+            }
         }
         Object.keys(reactionResult).forEach(key => {
             if (key.startsWith(reaction)) {

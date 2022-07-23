@@ -395,7 +395,7 @@ ul.weapon-list,
 
 #character-input img.talent {
     width: 100%;
-    max-width: 90px;
+    max-width: 72px;
     border-radius: 50%;
     border: none;
 }
@@ -406,7 +406,7 @@ ul.weapon-list,
 
 #character-input img.artifact-set {
     width: calc(100% - 4px);
-    max-width: 90px;
+    max-width: 72px;
     border-radius: 50%;
     border: 2px solid gray;
 }
@@ -608,12 +608,12 @@ table.result thead th:first-child {
 .tab-switch label,
 .elemental-reaction label {
     display: inline-block;
-    width: calc(100% / 4 - 8px);
+    width: calc(100% / 4 - 6px - 1rem);
     border: 2px solid gray;
-    margin: 2px;
     border-radius: 10px;
     padding: 0.5rem;
-    margin: 0.5rem;
+    margin: 5px 1px; 
+    text-shadow: 0 0 3px black;
 }
 
 .tab-switch input[type="radio"],
@@ -621,8 +621,12 @@ table.result thead th:first-child {
     display: none;
 }
 
+.tab-switch input[type="radio"]+label,
+.elemental-reaction input[type="radio"]+label {
+    background: linear-gradient(to top, #ad5b18, #55290b);
+}
+
 .tab-switch input[type="radio"]:checked+label,
 .elemental-reaction input[type="radio"]:checked+label {
-    border-color: white;
-    color: #e8d14e;
+    background: linear-gradient(to top, #dcc751, #bba116);
 }

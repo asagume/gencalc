@@ -175,12 +175,13 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
 
 /**
  * 
- * @param {Object} statusObj ステータス詳細
- * @param {Object} detailObj 
+ * @param {object} detailObj 
+ * @param {object} statusObj キャラクターステータス
+ * @param {object} enemyStatusObj 敵ステータス
  * @param {string} opt_element 元素
  * @returns {Array}
  */
- function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
+ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionInput, conditionInput, opt_element = null) {
     console.debug(detailObj['種類'], detailObj['名前']);
 
     let myバフArr = [];
@@ -207,7 +208,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
                     validConditionValueArr = validConditionValueArr.filter(p => p != condition && !p.startsWith(condition + '@'));
                 }
                 if ('説明' in condition) {
-                    if ($.isArray(condition['説明'])) {
+                    if (Array.isArray(condition['説明'])) {
                         condition['説明'].forEach(description => {
                             if (!statusObj['キャラクター注釈'].includes(description)) {
                                 statusObj['キャラクター注釈'].push(description);
@@ -315,7 +316,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
                     }
                 }
                 if ('説明' in condition) {
-                    if ($.isArray(condition['説明'])) {
+                    if (Array.isArray(condition['説明'])) {
                         condition['説明'].forEach(description => {
                             if (!statusObj['キャラクター注釈'].includes(description)) {
                                 statusObj['キャラクター注釈'].push(description);
@@ -547,11 +548,11 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
             }
             break;
     }
-    my計算Result = calculateDamageFromDetailSub(statusObj, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
+    my計算Result = calculateDamageFromDetailSub(statusObj, enemyStatusObj, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
     console.debug(my計算Result);
 
     my天賦性能変更詳細Arr.forEach(valueObj => {
-        let myResultWork = calculateDamageFromDetailSub(statusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
+        let myResultWork = calculateDamageFromDetailSub(statusObj, enemyStatusObj, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算);
         if (valueObj['種類'].endsWith('ダメージアップ')) {
             if (detailObj['名前'] == 'ダメージアップ') {    // for 申鶴
                 return;
@@ -582,7 +583,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
         if (detailObj['名前'].startsWith('非表示_狼の魂基礎')) {    // レザー
             // nop
         } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
+            let myResultWork = calculateDamageFromDetailSub(statusObj, enemyStatusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
                 myResultWork[1] *= myHIT数;
@@ -604,7 +605,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
     }
     if (my元素 + '元素ダメージアップ' in statusObj && statusObj[my元素 + '元素ダメージアップ'] > 0) {
         if (is防御補正Calc && is耐性補正Calc) {
-            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
+            let myResultWork = calculateDamageFromDetailSub(statusObj, enemyStatusObj, statusObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
                 myResultWork[1] *= myHIT数;
@@ -630,55 +631,14 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
         statusObj[statusName] -= myステータス補正[statusName];
     });
 
-    let my計算Result_蒸発 = [null, null, null];
-    let my計算Result_溶解 = [null, null, null];
     if (detailObj['種類'] == 'シールド') {
         if (my計算Result[0] == '岩') {  // 岩元素シールド for ノエル 鍾離
             my計算Result[1] = my計算Result[1] * 1.5;
             my計算Result[3] = my計算Result[3] * 1.5;
         }
-    } else if (my計算Result[0]) {
-        let my元素熟知 = statusObj['元素熟知'];
-        let my蒸発倍率 = calculate蒸発倍率(statusObj, my計算Result[0], my元素熟知);
-        if (my蒸発倍率 > 0) {
-            my計算Result_蒸発[0] = my計算Result[1] * my蒸発倍率;
-            if (my計算Result[2] != null) {
-                my計算Result_蒸発[1] = my計算Result[2] * my蒸発倍率;
-            }
-            if (my計算Result[3] != null) {
-                my計算Result_蒸発[2] = my計算Result[3] * my蒸発倍率;
-            }
-        }
-        let my溶解倍率 = calculate溶解倍率(statusObj, my計算Result[0], my元素熟知);
-        if (my溶解倍率 > 0) {
-            my計算Result_溶解[0] = my計算Result[1] * my溶解倍率;
-            if (my計算Result[2] != null) {
-                my計算Result_溶解[1] = my計算Result[2] * my溶解倍率;
-            }
-            if (my計算Result[3] != null) {
-                my計算Result_溶解[2] = my計算Result[3] * my溶解倍率;
-            }
-        }
     }
 
-    let resultArr = [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]];
-    resultArr.push(my計算Result_蒸発[0]);
-    resultArr.push(my計算Result_蒸発[1]);
-    resultArr.push(my計算Result_蒸発[2]);
-    resultArr.push(my計算Result_溶解[0]);
-    resultArr.push(my計算Result_溶解[1]);
-    resultArr.push(my計算Result_溶解[2]);
-
-    for (let i = 2; i < resultArr.length; i++) {
-        if (resultArr[i] && $.isNumeric(resultArr[i])) {
-            if (my精度) {
-                resultArr[i] = Number(resultArr[i].toFixed(my精度));
-            } else {
-                resultArr[i] = Number(resultArr[i].toFixed(0));
-            }
-        }
-    }
-
+    const resultArr = [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]];
     return resultArr;
 }
 
@@ -696,7 +656,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {number} 別枠乗算 
  * @returns {[string, number, number, number]} ダメージ[元素, 期待値, 会心, 非会心]
  */
- function calculateDamageFromDetailSub(statusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
+ function calculateDamageFromDetailSub(statusObj, enemyStatusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
     let my非会心Result = calculateFormulaArray(statusObj, formula);
     console.debug("%o => %o", formula, my非会心Result);
 
@@ -719,10 +679,10 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
         my非会心Result *= (100 + myバフ) / 100;
     }
     if (is防御補正Calc) {
-        my非会心Result *= calculate防御補正(statusObj, 防御無視);
+        my非会心Result *= calculate防御補正(statusObj, enemyStatusObj, 防御無視);
     }
     if (is耐性補正Calc && 元素) {
-        my非会心Result *= calculate元素耐性補正(statusObj, 元素);
+        my非会心Result *= calculate元素耐性補正(元素, statusObj, enemyStatusObj);
     }
     if (別枠乗算) {    // 別枠乗算 for 宵宮
         my非会心Result *= 別枠乗算 / 100;
@@ -782,11 +742,11 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {number} opt_ignoreDef 防御無視
  * @returns {number} 防御補正
  */
- function calculate防御補正(statusObj, opt_ignoreDef = 0) { // 防御力,防御無視
-    let level = Number($('#レベルInput').val().toString().replace('+', ''));
-    let enemyLevel = statusObj['敵レベル'];
-    let calcIgnoreDef = opt_ignoreDef / 100;
-    let calcDef = statusObj['敵防御力'] / 100;
+ function calculate防御補正(statusObj, enemyStatusObj, opt_ignoreDef = 0) { // 防御力,防御無視
+    const level = statusObj['レベル'];
+    const enemyLevel = enemyStatusObj['レベル'];
+    const calcIgnoreDef = opt_ignoreDef / 100;
+    const calcDef = enemyStatusObj['防御力'] / 100;
     let result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
     result = Math.floor(result * 10000) / 10000;
     console.debug(calculate防御補正.name, level, enemyLevel, calcIgnoreDef, calcDef, '=>', result);
@@ -873,6 +833,7 @@ function calculate結晶シールド吸収量(element, statusObj) {
         return 0;
     }
     const level = statusObj['レベル'];
+    const elementalMastery = statusObj['元素熟知'];
     let result = 元素反応MasterVar[element]['結晶']['数値'][level];
     result *= 1 + 40 * elementalMastery / (9 * (elementalMastery + 1400));
     return result;
