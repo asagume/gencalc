@@ -494,13 +494,14 @@
                     <fieldset v-show="isVisible">
                         <legend>{{displayName('オプション条件')}}</legend>
                         <label v-for="item in inputList">
-                            <input type="checkbox">
+                            <input type="checkbox" v-model="conditions[item.name]" @change="onChange(item)">
                             {{displayName(item.name)}}
                         </label>
                         <label v-for="item in selectList">
                             {{displayName(item.name)}}
-                            <select>
-                                <option v-for="subitem in item.list" :value="subitem">{{subitem}}</option>
+                            <select v-model="conditions[item.name]" @change="onChange(item)">
+                                <option v-if="!item.require" value=""></option>
+                                <option v-for="subitem in item.list" :value="subitem">{{displayOption(subitem)}}</option>
                             </select>
                         </label>
                     </fieldset>

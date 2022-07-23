@@ -638,7 +638,8 @@ function initialSetupConditionInput(opt_characterMaster = null) {
     const ConditionInput = {
         data() {
             return {
-                isVisible: true
+                isVisible: true,
+                conditions: {}
             }
         },
         computed: {
@@ -651,10 +652,29 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                     damageDetailObj['条件'].forEach((value, key) => {
                         if (value != null) return;
                         result.push({
-                            name: key
+                            name: key,
+                            exclusions: damageDetailObj['排他'].has(key) ? damageDetailObj['排他'].get(key) : null
                         });
                     });
                 }
+                const characterMaster = CharacterInputVm.master;
+                result.forEach(condition => {
+                    if (condition.name in this.conditions) return;
+                    let value = true;
+                    if ('オプション初期値' in characterMaster) {
+                        if (condition.name in characterMaster['オプション初期値']) {
+                            value = characterMaster['オプション初期値'][condition.name];
+                        }
+                    }
+                    if (value && condition.exclusions) {
+                        condition.exclusions.forEach(exclusion => {
+                            if (this.conditions[exclusion]) {
+                                value = false;
+                            }
+                        });
+                    }
+                    this.conditions[condition.name] = value;
+                });
                 return result;
             },
             selectList: function () {
@@ -667,10 +687,32 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                         if (value == null) return;
                         result.push({
                             name: key,
-                            list: value
+                            list: value,
+                            require: value.filter(s => s.startsWith('required_')).length > 0,
+                            exclusions: damageDetailObj['排他'].has(key) ? damageDetailObj['排他'].get(key) : null
                         });
                     });
                 }
+                const characterMaster = CharacterInputVm.master;
+                result.forEach(condition => {
+                    if (condition.name in this.conditions) return;
+                    let value = condition.list[condition.list.length - 1];
+                    if ('オプション初期値' in characterMaster) {
+                        if (condition.name in characterMaster['オプション初期値']) {
+                            let index = characterMaster['オプション初期値'][condition.name];
+                            if (!condition.require) index -= 1;
+                            value = condition.list[index];
+                        }
+                    }
+                    if (value && condition.exclusions) {
+                        condition.exclusions.forEach(exclusion => {
+                            if (this.conditions[exclusion]) {
+                                value = null;
+                            }
+                        });
+                    }
+                    this.conditions[condition.name] = value;
+                });
                 return result;
             }
         },
@@ -678,6 +720,27 @@ function initialSetupConditionInput(opt_characterMaster = null) {
             displayName: function (name) {
                 return getDisplayName(name);
             },
+            displayOption: function (name) {
+                return name.replace(/^required_/, '');
+            },
+            onChange: function (item) {
+                if (!item.exclusions) return;
+                this.inputList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
+                    this.conditions[entry.name] = false;
+                });
+                this.selectList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
+                    this.conditions[entry.name] = null;
+                });
+            }
+        },
+        watch: {
+            conditions: {
+                handler: function (newVal, oldVal) {
+                    //TODO
+                    console.log('conditions', this.conditions);
+                },
+                deep: true
+            }
         }
     };
     ConditionInputVm = Vue.createApp(ConditionInput).mount('#condition-input');
@@ -939,7 +1002,7 @@ function initialSetupCalcurationResult() {
                 return ELEMENT_COLOR_CLASS[element];
             },
             damageList: function (category) {
-                return this.計算結果[category].filter(s => !s[0].startsWith('非表示'));
+                return this.計算結果[category].filter(s => s[0] && !s[0].startsWith('非表示'));
             }
         }
     };

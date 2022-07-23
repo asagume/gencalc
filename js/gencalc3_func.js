@@ -340,7 +340,7 @@ function makeDamageDetailObjCharacter(characterInput) {
                 myTalentDetail['詳細'].forEach(detailObj => {
                     if ('条件' in detailObj && detailObj['条件']) {
                         if (detailObj['条件'].indexOf('命ノ星座') == -1) {
-                            detailObj['条件'] += '&命ノ星座@' + key;
+                            detailObj['条件'] = '命ノ星座@' + key + '&' + detailObj['条件'];
                         }
                     } else {
                         detailObj['条件'] = '命ノ星座@' + key;
