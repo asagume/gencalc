@@ -45,12 +45,12 @@ async function onLoad(searchParams) {
     initialSetupCharacterSelect();
     initialSetupCalcurationResult();
     initialSetupStatusInput();
-    initialSetupOptionInput();
-    initialSetupConditionInput();
     initialSetupArtifactDetailInput();
     initialSetupArtifactSetSelect();
     initialSetupWeaponSelect('弓');
     initialSetupCharacterInput();
+    initialSetupOptionInput();
+    initialSetupConditionInput();
     initialSetupCharacterOwnList();
     initialSetupWeaponOwnList();
 
@@ -643,12 +643,35 @@ function initialSetupConditionInput(opt_characterMaster = null) {
         },
         computed: {
             inputList: function () {
-                //TODO
-                return [];
+                if (!CharacterInputVm) return [];
+                const result = [];
+                const character = CharacterInputVm.name;
+                if (キャラクターダメージ詳細ObjMapVar.has(character)) {
+                    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(character);
+                    damageDetailObj['条件'].forEach((value, key) => {
+                        if (value != null) return;
+                        result.push({
+                            name: key
+                        });
+                    });
+                }
+                return result;
             },
             selectList: function () {
-                //TODO
-                return [];
+                if (!CharacterInputVm) return [];
+                const result = [];
+                const character = CharacterInputVm.name;
+                if (キャラクターダメージ詳細ObjMapVar.has(character)) {
+                    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(character);
+                    damageDetailObj['条件'].forEach((value, key) => {
+                        if (value == null) return;
+                        result.push({
+                            name: key,
+                            list: value
+                        });
+                    });
+                }
+                return result;
             }
         },
         methods: {

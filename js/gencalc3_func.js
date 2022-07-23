@@ -379,7 +379,19 @@ function makeDamageDetailObjCharacter(characterInput) {
     result['ステータス変更系詳細'] = myステータス変更系詳細Arr;
     result['天賦性能変更系詳細'] = my天賦性能変更系詳細Arr;
 
-    console.debug('makeDamageDetailObjCharacter', result);
+    const conditionMap = new Map();
+    const exclusionMap = new Map();
+    myステータス変更系詳細Arr.filter(s => s['条件'])   .forEach(detailObj => {
+        makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+    });
+    my天賦性能変更系詳細Arr.filter(s => s['条件'])   .forEach(detailObj => {
+        makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+    });
+    conditionMap.delete('命ノ星座');
+    result['条件'] = conditionMap;
+    result['排他'] = exclusionMap;
+
+    console.debug(makeDamageDetailObjCharacter.name, result);
     キャラクターダメージ詳細ObjMapVar.set(characterMaster['名前'], result);
 
     return result;
@@ -521,6 +533,101 @@ function calculateArtifactStat(artifactDetailInput) {
 }
 
 /**
+ * 「条件」からオプション表示用の情報を作成します
+ * {条件名}
+ * {条件名}@{条件値}
+ * {条件名}@{条件値:START}-{条件値:END} ←この形式の場合条件値で倍率がかかります
+ * {条件名}@{条件値1},{条件値2},...     ←この形式の場合条件値で倍率がかかります
+ * {上記}^{排他条件名}
+ * 
+ * @param {string} conditionStr 条件文字列
+ * @param {Map} conditionMap オプション条件Map
+ * @param {Map} exclusionMap オプション排他Map
+ */
+ const makeConditionExclusionMapFromStr = function (conditionStr, conditionMap, exclusionMap) {
+    // 排他条件を抽出します
+    let exclusionCond = null;
+    let myCondStrArr = conditionStr.split('^');
+    if (myCondStrArr.length > 1) {
+        exclusionCond = myCondStrArr[1];
+    }
+    let myCondStr = myCondStrArr[0];
+    if (myCondStr.indexOf('|') != -1) {
+        // OR条件 for 申鶴
+        myCondStrArr = myCondStr.split('|');
+        myCondStrArr.forEach(myCondStr => {
+            makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
+        });
+    } else {
+        // AND条件
+        myCondStrArr = myCondStr.split('&');
+        myCondStrArr.forEach(myCondStr => {
+            makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
+        });
+    }
+}
+
+// 「条件」からオプション表示用の情報を作成します Sub
+/**
+ * 
+ * @param {string} conditionStr 
+ * @param {Map} conditionMap 
+ * @param {Map} exclusionMap 
+ * @param {string} exclusion 
+ */
+ function makeConditionExclusionMapFromStrSub(conditionStr, conditionMap, exclusionMap, exclusion) {
+    let myCondStrArr = conditionStr.split('@');
+    let myName = myCondStrArr[0];
+    if (myCondStrArr.length == 1) {
+        pushToMapValueArray(conditionMap, myName, null);
+    } else if (myCondStrArr.length == 2) {
+        if (myCondStrArr[1].indexOf('-') != -1) {
+            const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
+            const re2 = new RegExp('/([0-9\\.]+)(.*)');
+            let reRet = re.exec(myCondStrArr[1]);
+            if (reRet) {
+                let prefix = reRet[1];
+                let rangeStart = Number(reRet[2]);
+                let rangeEnd = Number(reRet[3]);
+                let step = rangeStart;
+                let postfix = reRet[4];
+                if (postfix) {
+                    let re2Ret = re2.exec(postfix);
+                    if (re2Ret) {
+                        step = Number(re2Ret[1]);
+                        postfix = re2Ret[2];
+                    }
+                }
+                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
+                    pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
+                }
+                pushToMapValueArray(conditionMap, myName, prefix + String(rangeEnd) + postfix);
+            } else {
+                pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
+            }
+        } else if (myCondStrArr[1].indexOf(',') != -1) {
+            const re = new RegExp('([^0-9\\.]*)([0-9\\.,]+)(.*)');
+            let reRet = re.exec(myCondStrArr[1]);
+            let prefix = reRet[1];
+            let condValurArr = reRet[2].split(',');
+            let postfix = reRet[3];
+            condValurArr.forEach(value => {
+                pushToMapValueArray(conditionMap, myName, prefix + value + postfix);
+            });
+        } else {
+            pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
+        }
+    } else {
+        console.error(conditionStr, conditionMap, exclusionMap);
+    }
+    if (exclusion) {
+        exclusion.split(',').forEach(e => {
+            pushToMapValueArray(exclusionMap, myName, e);
+        });
+    }
+}
+
+/**
  * ステータスを計算します.
  * 
  * @param {object} characterInput 
@@ -653,7 +760,7 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
     const reactionMaster = 元素反応MasterVar[characterMaster['元素']];
     Object.keys(reactionMaster).forEach(reaction => {
         const reactionObj = reactionMaster[reaction];
-        let element = reactionObj['元素'] ? reactionObj['元素'] : characterMaster['元素'];
+        let element = characterMaster['元素'];
         let resultValue = 0;
         if (reaction == '結晶') {
             resultValue = calculate結晶シールド吸収量(element, statusInput['ステータス']);

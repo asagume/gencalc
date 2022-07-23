@@ -3,6 +3,46 @@ function isString(value) {
 }
 
 /**
+ * Mapのvalue(Array)にvalueを追加(push)します
+ * 
+ * @param {Map} map 
+ * @param {string} key 
+ * @param {string} value 
+ */
+ function pushToMapValueArray(map, key, value) {
+    if (value == null) {
+        if (!map.has(key)) {
+            map.set(key, null);
+        }
+    } else if (map.has(key)) {
+        let oldValue = map.get(key);
+        if (oldValue == null) {
+            map.set(key, [value]);
+        } else if (!oldValue.includes(value)) {
+            map.get(key).push(value);
+        }
+    } else {
+        map.set(key, [value]);
+    }
+}
+
+/**
+ * 加算関数です
+ * 
+ * @param {number} value1 
+ * @param {number} value2 
+ * @param {number} opt_max 
+ * @returns {number}
+ */
+ const addDecimal = function (value1, value2, opt_max = null) {
+    let result = Math.floor((value1 * 100 + value2 * 100) / 10) / 10;
+    if (opt_max != null) {
+        result = Math.min(result, opt_max);
+    }
+    return result;
+}
+
+/**
  * 計算式を計算します
  * 
  * @param {Object} statusObj ステータス詳細
@@ -181,7 +221,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {string} opt_element 元素
  * @returns {Array}
  */
- function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionInput, conditionInput, opt_element = null) {
+function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionInput, conditionInput, opt_element = null) {
     console.debug(detailObj['種類'], detailObj['名前']);
 
     let myバフArr = [];
@@ -656,7 +696,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {number} 別枠乗算 
  * @returns {[string, number, number, number]} ダメージ[元素, 期待値, 会心, 非会心]
  */
- function calculateDamageFromDetailSub(statusObj, enemyStatusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
+function calculateDamageFromDetailSub(statusObj, enemyStatusObj, formula, buffArr, is会心Calc, is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算) {
     let my非会心Result = calculateFormulaArray(statusObj, formula);
     console.debug("%o => %o", formula, my非会心Result);
 
@@ -679,10 +719,10 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
         my非会心Result *= (100 + myバフ) / 100;
     }
     if (is防御補正Calc) {
-        my非会心Result *= calculate防御補正(statusObj, enemyStatusObj, 防御無視);
+        my非会心Result *= calculateEnemyDef(statusObj, enemyStatusObj, 防御無視);
     }
     if (is耐性補正Calc && 元素) {
-        my非会心Result *= calculate元素耐性補正(元素, statusObj, enemyStatusObj);
+        my非会心Result *= calculateEnemyRes(元素, statusObj, enemyStatusObj);
     }
     if (別枠乗算) {    // 別枠乗算 for 宵宮
         my非会心Result *= 別枠乗算 / 100;
@@ -709,7 +749,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {number | string | Array} formulaArr 計算式
  * @returns {boolean} 参照有無
  */
- function isUseReference(formulaArr) {
+function isUseReference(formulaArr) {
     if (!Array.isArray(formulaArr)) {
         if (!isNaN(formulaArr)) {
             return false;
@@ -742,14 +782,14 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {number} opt_ignoreDef 防御無視
  * @returns {number} 防御補正
  */
- function calculate防御補正(statusObj, enemyStatusObj, opt_ignoreDef = 0) { // 防御力,防御無視
+function calculateEnemyDef(statusObj, enemyStatusObj, opt_ignoreDef = 0) { // 防御力,防御無視
     const level = statusObj['レベル'];
     const enemyLevel = enemyStatusObj['レベル'];
     const calcIgnoreDef = opt_ignoreDef / 100;
     const calcDef = enemyStatusObj['防御力'] / 100;
     let result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
-    result = Math.floor(result * 10000) / 10000;
-    console.debug(calculate防御補正.name, level, enemyLevel, calcIgnoreDef, calcDef, '=>', result);
+
+    console.debug(calculateEnemyDef.name, level, enemyLevel, calcIgnoreDef, calcDef, '=>', result);
     return result;
 }
 
@@ -760,7 +800,7 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {string} element 元素
  * @returns {number} 元素耐性補正
  */
-function calculate元素耐性補正(element, statusObj, enemyStatusObj) {
+function calculateEnemyRes(element, statusObj, enemyStatusObj) {
     let result = enemyStatusObj[element + (element != '物理' ? '元素' : '') + '耐性'];
     if (result < 0) {
         result = 100 - result / 2;
@@ -769,8 +809,9 @@ function calculate元素耐性補正(element, statusObj, enemyStatusObj) {
     } else {
         result = 10000 / (4 * result + 100)
     }
-    result = Math.floor(result * 100) / 10000;
-    console.debug(calculate元素耐性補正.name, element, '=>', result);
+    result /= 100;
+
+    console.debug(calculateEnemyRes.name, element, '=>', result);
     return result;
 }
 
@@ -782,10 +823,8 @@ function calculate元素耐性補正(element, statusObj, enemyStatusObj) {
  * @param {object} statusObj キャラクターステータス
  * @returns {number} 蒸発 融解 倍率
  */
- function calculate乗算系元素反応倍率(reaction, element, statusObj) {
-    if (!element || element == '物理' || !(reaction in 元素反応MasterVar[element])) {
-        return 0;
-    }
+function calculate乗算系元素反応倍率(reaction, element, statusObj) {
+    if (!element || element == '物理') return 0;
     const elementalMastery = statusObj['元素熟知'];
     const dmgBuff = statusObj[reaction];
     let result = 元素反応MasterVar[element][reaction]['数値'];
@@ -803,21 +842,17 @@ function calculate元素耐性補正(element, statusObj, enemyStatusObj) {
  * @returns {number} 過負荷 感電 超電導 拡散ダメージ
  */
 function calculate固定値系元素反応ダメージ(reaction, element, statusObj, enemyStatusObj) {
-    if (!element || element == '物理' || !(reaction in 元素反応MasterVar[element])) {
-        return 0;
-    }
+    if (!element || element == '物理') return 0;
     const level = statusObj['レベル'];
     const elementalMastery = statusObj['元素熟知'];
     const dmgBuff = statusObj[reaction];
     let dmgElement = 元素反応MasterVar[element][reaction]['元素'];
     if (reaction == '拡散') {
-        if ($('#拡散Option').val()) {
-            dmgElement = String($('#拡散Option').val()).replace(/元素$/, '');
-        }
+        //TODO
     }
-    let result = 元素反応MasterVar[element][reaction]['数値'][level];
+    let result = getValueByLevel(level, 元素反応MasterVar[element][reaction]['数値']);
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
-    result *= calculate元素耐性補正(dmgElement, statusObj, enemyStatusObj);
+    result *= calculateEnemyRes(dmgElement, statusObj, enemyStatusObj);
     return result;
 }
 
@@ -829,14 +864,28 @@ function calculate固定値系元素反応ダメージ(reaction, element, status
  * @returns {number} 結晶吸収量
  */
 function calculate結晶シールド吸収量(element, statusObj) {
-    if (!element || element == '物理' || !('結晶' in 元素反応MasterVar[element])) {
-        return 0;
-    }
+    if (!element || element == '物理') return 0;
     const level = statusObj['レベル'];
     const elementalMastery = statusObj['元素熟知'];
-    let result = 元素反応MasterVar[element]['結晶']['数値'][level];
+    let result = getValueByLevel(level, 元素反応MasterVar[element]['結晶']['数値']);
     result *= 1 + 40 * elementalMastery / (9 * (elementalMastery + 1400));
     return result;
+}
+
+function getValueByLevel(level, valueObj) {
+    if (level in valueObj) {
+        return valueObj[level];
+    }
+    const levelArr = Object.keys(valueObj).map(s => Number(s));
+    let lowLevel;
+    let highLevel;
+    for (let i = 0; i < levelArr.length - 1; i++) {
+        if (levelArr[i] <= level && levelArr[i + 1] >= level) {
+            lowLevel = levelArr[i];
+            highLevel = levelArr[i + 1];
+        }
+    }
+    return valueObj[lowLevel] + (valueObj[highLevel] - valueObj[lowLevel]) * (level - lowLevel) / (highLevel - lowLevel);
 }
 
 /**

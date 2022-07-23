@@ -495,12 +495,12 @@
                         <legend>{{displayName('オプション条件')}}</legend>
                         <label v-for="item in inputList">
                             <input type="checkbox">
-                            {{displayName(item)}}
+                            {{displayName(item.name)}}
                         </label>
                         <label v-for="item in selectList">
-                            {{displayName(item)}}
+                            {{displayName(item.name)}}
                             <select>
-
+                                <option v-for="subitem in item.list" :value="subitem">{{subitem}}</option>
                             </select>
                         </label>
                     </fieldset>
