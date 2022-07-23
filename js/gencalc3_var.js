@@ -47,7 +47,9 @@ var CharacterOwnListVm;
 /** 武器所持状況 */
 var WeaponOwnListVm;
 
-var Pane4Group = new Set();
+const Pane4Group = new Set();
+
+var Pane6ToggleVm;
 
 const ALLOW_LIST_LANG = ['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn'];
 

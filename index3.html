@@ -391,7 +391,7 @@
                         <table>
                             <tr>
                                 <th>{{displayName('サブ効果')}}</th>
-                                <th>{{displayName('上昇量')}}</th>
+                                <th>{{displayName('上昇値')}}</th>
                                 <th>{{displayName('回数')}}</th>
                             </tr>
                             <tr v-for="item in [0,1,2]">
@@ -402,7 +402,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇量[item]">
+                                    <select v-model="聖遺物優先するサブ効果上昇値[item]">
                                         <option v-for="subitem in subStatUpList(item)" :value="subitem">
                                             {{displayName(subitem)}}
                                         </option>
@@ -410,8 +410,16 @@
                                 </td>
                                 <td>
                                     <select v-model="聖遺物優先するサブ効果上昇回数[item]">
-                                        <option v-for="subitem in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
+                                        <option v-for="subitem in [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
                                             :value="subitem">{{subitem}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{displayName('厳選目安')}}
+                                    <select v-model="gensen" @change="gensenOnChange">
+                                        <option v-for="item in gensenList" :value="item">{{displayName(item)}}</option>
                                     </select>
                                 </td>
                             </tr>
@@ -467,20 +475,23 @@
             </div>
 
             <div class="pane6">
-                <div id="input-select" style="margin-bottom: 15px;">
-                    <label>
+                <div id="pane6-toggle" style="margin-bottom: 15px;">
+                    <input id="pane6-toggle-1" type="checkbox" value="1" :checked="checked(1)" @click="onClick($event)">
+                    <label for="pane6-toggle-1">
                         {{displayName('オプション条件')}}
                     </label>
-                    <label>
+                    <input id="pane6-toggle-2" type="checkbox" value="2" :checked="checked(2)" @click="onClick($event)">
+                    <label for="pane6-toggle-2">
                         {{displayName('ステータス')}}
                     </label>
-                    <label>
+                    <input id="pane6-toggle-3" type="checkbox" value="3" :checked="checked(3)" @click="onClick($event)">
+                    <label for="pane6-toggle-3">
                         {{displayName('バフ/デバフ')}}
                     </label>
                 </div>
 
                 <div id="condition-input" style="margin-bottom: 20px;">
-                    <fieldset>
+                    <fieldset v-show="isVisible">
                         <legend>{{displayName('オプション条件')}}</legend>
                         <label v-for="item in inputList">
                             <input type="checkbox">
@@ -496,23 +507,23 @@
                 </div>
 
                 <div id="status-input" style="margin-bottom: 20px;">
-                    <div class="tab-switch">
-                        <input id="status-tab-1" type="radio" v-model="activeTab" value="1" name="status-tab">
-                        <label for="status-tab-1" class="tab-switch">
-                            {{displayName('ステータス1')}}
-                        </label>
-                        <input id="status-tab-2" type="radio" v-model="activeTab" value="2" name="status-tab">
-                        <label for="status-tab-2" class="tab-switch">
-                            {{displayName('ステータス2')}}
-                        </label>
-                        <input id="status-tab-3" type="radio" v-model="activeTab" value="3" name="status-tab">
-                        <label for="status-tab-3" class="tab-switch">
-                            {{displayName('敵')}}
-                        </label>
-                    </div>
+                    <div v-show="isVisible">
+                        <div class="tab-switch">
+                            <input id="status-tab-1" type="radio" v-model="activeTab" value="1" name="status-tab">
+                            <label for="status-tab-1" class="tab-switch">
+                                {{displayName('ステータス1')}}
+                            </label>
+                            <input id="status-tab-2" type="radio" v-model="activeTab" value="2" name="status-tab">
+                            <label for="status-tab-2" class="tab-switch">
+                                {{displayName('ステータス2')}}
+                            </label>
+                            <input id="status-tab-3" type="radio" v-model="activeTab" value="3" name="status-tab">
+                            <label for="status-tab-3" class="tab-switch">
+                                {{displayName('敵')}}
+                            </label>
+                        </div>
 
-                    <template v-if="activeTab === '1'">
-                        <table class="status">
+                        <table class="status" v-show="activeTab === '1'">
                             <template v-for="category in ['基本ステータス']">
                                 <tr>
                                     <th :colspan="isEditable ? 3 : 2">
@@ -566,9 +577,8 @@
                                 </td>
                             </tr>
                         </table>
-                    </template>
-                    <template v-else-if="activeTab === '2'">
-                        <table class="status">
+
+                        <table class="status" v-show="activeTab === '2'">
                             <template v-for="category in ['元素ステータス・耐性', 'その他']">
                                 <tr>
                                     <th :colspan="isEditable ? 3 : 2">
@@ -607,130 +617,133 @@
                                 </td>
                             </tr>
                         </table>
-                    </template>
-                    <template v-else-if="activeTab === '3'">
-                        <div>
-                            {{displayName('敵')}}
-                            <select v-model="enemy">
-                                <option v-for="item in enemyList" :value="item">{{displayName(item.name)}}</option>
-                            </select>
-                            &emsp;
-                            {{displayName('Level')}}
-                            <input v-model="敵ステータス['レベル']" type="number">
+
+                        <div v-show="activeTab === '3'">
+                            <div>
+                                {{displayName('敵')}}
+                                <select v-model="enemy">
+                                    <option v-for="item in enemyList" :value="item">{{displayName(item.name)}}</option>
+                                </select>
+                                &emsp;
+                                {{displayName('Level')}}
+                                <input v-model="敵ステータス['レベル']" type="number">
+                            </div>
+                            <table class="status">
+                                <tr>
+                                    <th :colspan="isEditable ? 3 : 2">
+                                        <label class="open-close">
+                                            <input class="hidden" type="checkbox" v-model="is敵ステータスOpened">
+                                            <span></span>
+                                            {{displayName('元素耐性')}}
+                                        </label>
+                                    </th>
+                                </tr>
+                                <tr v-for="stat in enemyStatList">
+                                    <th> {{displayName(stat)}} </th>
+                                    <td v-show="isEditable">
+                                        <input type="number" v-model="敵ステータス補正[stat]">
+                                    </td>
+                                    <td> {{displayNumber(stat, 敵ステータス[stat])}} </td>
+                                </tr>
+                                <tr>
+                                    <th :colspan="isEditable ? 3 : 2">{{displayName('その他')}}</th>
+                                </tr>
+                                <tr>
+                                    <th> {{displayName('防御力')}} </th>
+                                    <td v-show="isEditable">
+                                        <input type="number" v-model="敵ステータス補正['防御力']">
+                                    </td>
+                                    <td> {{displayNumber('防御力', 敵ステータス['防御力'])}} </td>
+                                </tr>
+                                <tr>
+                                    <td :colspan="isEditable ? 3 : 2">
+                                        <label>
+                                            <input type="checkbox" v-model="isEditable">
+                                            {{displayName('補正値入力モード')}}
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td :colspan="isEditable ? 3 : 2">
+                                        <label>
+                                            <input type="checkbox" v-model="補正値0初期化Enabled">
+                                            {{displayName('補正値0初期化')}}
+                                        </label>
+                                        <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
+                                            @click="resetStatusAdjustment(敵ステータス補正)">
+                                            {{displayName('実行')}}</button>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <table class="status">
-                            <tr>
-                                <th :colspan="isEditable ? 3 : 2">
-                                    <label class="open-close">
-                                        <input class="hidden" type="checkbox" v-model="is敵ステータスOpened">
-                                        <span></span>
-                                        {{displayName('元素耐性')}}
-                                    </label>
-                                </th>
-                            </tr>
-                            <tr v-for="stat in enemyStatList">
-                                <th> {{displayName(stat)}} </th>
-                                <td v-show="isEditable">
-                                    <input type="number" v-model="敵ステータス補正[stat]">
-                                </td>
-                                <td> {{displayNumber(stat, 敵ステータス[stat])}} </td>
-                            </tr>
-                            <tr>
-                                <th :colspan="isEditable ? 3 : 2">{{displayName('その他')}}</th>
-                            </tr>
-                            <tr>
-                                <th> {{displayName('防御力')}} </th>
-                                <td v-show="isEditable">
-                                    <input type="number" v-model="敵ステータス補正['防御力']">
-                                </td>
-                                <td> {{displayNumber('防御力', 敵ステータス['防御力'])}} </td>
-                            </tr>
-                            <tr>
-                                <td :colspan="isEditable ? 3 : 2">
-                                    <label>
-                                        <input type="checkbox" v-model="isEditable">
-                                        {{displayName('補正値入力モード')}}
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td :colspan="isEditable ? 3 : 2">
-                                    <label>
-                                        <input type="checkbox" v-model="補正値0初期化Enabled">
-                                        {{displayName('補正値0初期化')}}
-                                    </label>
-                                    <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
-                                        @click="resetStatusAdjustment(敵ステータス補正)">
-                                        {{displayName('実行')}}</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </template>
+                    </div>
                 </div>
 
-                <fieldset id="option-input">
-                    <div class="tab-switch" style="margin-bottom: 15px;">
-                        <input id="option-tab-1" type="radio" v-model="activeTab" value="1" name="option-input">
-                        <label for="option-tab-1" class="tab-switch">
-                            {{displayName('元素共鳴')}}
-                        </label>
-                        <input id="option-tab-2" type="radio" v-model="activeTab" value="2" name="option-input">
-                        <label for="option-tab-2" class="tab-switch">
-                            {{displayName('キャラ')}}
-                        </label>
-                        <input id="option-tab-3" type="radio" v-model="activeTab" value="3" name="option-input">
-                        <label for="option-tab-3" class="tab-switch">
-                            {{displayName('その他')}}
-                        </label>
-                    </div>
-
-                    <div v-show="activeTab == '1'">
-                        <template v-for="item in elementalResonanceList">
-                            <label class="checkbox">
-                                <input type="checkbox" v-model="元素共鳴[item]"
-                                    @change="elementalResonanceOnChange(item, $event)">
-                                {{displayName(name(item))}}
+                <div id="option-input">
+                    <fieldset v-show="isVisible">
+                        <div class="tab-switch" style="margin-bottom: 15px;">
+                            <input id="option-tab-1" type="radio" v-model="activeTab" value="1" name="option-input">
+                            <label for="option-tab-1" class="tab-switch">
+                                {{displayName('元素共鳴')}}
                             </label>
-                        </template>
+                            <input id="option-tab-2" type="radio" v-model="activeTab" value="2" name="option-input">
+                            <label for="option-tab-2" class="tab-switch">
+                                {{displayName('キャラ')}}
+                            </label>
+                            <input id="option-tab-3" type="radio" v-model="activeTab" value="3" name="option-input">
+                            <label for="option-tab-3" class="tab-switch">
+                                {{displayName('その他')}}
+                            </label>
+                        </div>
 
-                        <table class="description">
-                            <template v-for="index in [0,1]">
-                                <tr>
-                                    <th>{{elementalResonanceName(index)}}</th>
-                                </tr>
-                                <tr>
-                                    <td>{{elementalResonanceDescription(index)}}</td>
-                                </tr>
+                        <div v-show="activeTab == '1'">
+                            <template v-for="item in elementalResonanceList">
+                                <label class="checkbox">
+                                    <input type="checkbox" v-model="元素共鳴[item]"
+                                        @change="elementalResonanceOnChange(item, $event)">
+                                    {{displayName(name(item))}}
+                                </label>
                             </template>
-                        </table>
-                    </div>
 
-                    <div v-show="activeTab == '2'">
-                        <template v-for="character in teamOptionCharacterList">
-                            <fieldset class="team-option" :disabled="teamOptionCharacterDisabled(character)">
-                                <legend>{{displayName(character)}}</legend>
-                                <label v-for="item in teamOptionList(character)"
-                                    :disabled="teamOptionDisabled(character, item)">
+                            <table class="description">
+                                <template v-for="index in [0,1]">
+                                    <tr>
+                                        <th>{{elementalResonanceName(index)}}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{elementalResonanceDescription(index)}}</td>
+                                    </tr>
+                                </template>
+                            </table>
+                        </div>
+
+                        <div v-show="activeTab == '2'">
+                            <template v-for="character in teamOptionCharacterList">
+                                <fieldset class="team-option" :disabled="teamOptionCharacterDisabled(character)">
+                                    <legend>{{displayName(character)}}</legend>
+                                    <label v-for="item in teamOptionList(character)"
+                                        :disabled="teamOptionDisabled(character, item)">
+                                        {{displayName(item)}}
+                                    </label>
+                                </fieldset>
+                            </template>
+                        </div>
+
+                        <div v-show="activeTab == '3'">
+                            <div>
+                                <label v-for="item in option1List">
                                     {{displayName(item)}}
                                 </label>
-                            </fieldset>
-                        </template>
-                    </div>
+                            </div>
 
-                    <div v-show="activeTab == '3'">
-                        <div>
-                            <label v-for="item in option1List">
-                                {{displayName(item)}}
-                            </label>
+                            <div>
+                                <label v-for="item in option2List">
+                                    {{displayName(item)}}
+                                </label>
+                            </div>
                         </div>
-
-                        <div>
-                            <label v-for="item in option2List">
-                                {{displayName(item)}}
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
+                </div>
             </div>
 
             <div class="result-pane" id="calculation-result">

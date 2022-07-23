@@ -57,6 +57,28 @@ async function onLoad(searchParams) {
     Pane4Group.add(WeaponSelectVm);
     Pane4Group.add(ArtifactSetSelectVm);
     Pane4Group.add(ArtifactDetailInputVm);
+
+    const Pane6Toggle = {
+        data() {
+            return {
+                targets: [null, ConditionInputVm, StatusInputVm, OptionInputVm]
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            checked: function (index) {
+                return this.targets[index].isVisible;
+            },
+            onClick: function (event) {
+                const index = Number(event.target.value);
+                console.log(index);
+                this.targets[index].isVisible = !this.targets[index].isVisible;
+            }
+        }
+    };
+    Pane6ToggleVm = Vue.createApp(Pane6Toggle).mount('#pane6-toggle');
 }
 
 function initialSetupCharacterSelect() {
@@ -508,8 +530,10 @@ function initialSetupArtifactDetailInput() {
                 isEditable: false,
                 聖遺物メイン効果: [null, null, null, null, null],
                 聖遺物優先するサブ効果: [null, null, null],
-                聖遺物優先するサブ効果上昇量: [4, 4, 4],
+                聖遺物優先するサブ効果上昇値: [4, 4, 4],
                 聖遺物優先するサブ効果上昇回数: [5, 5, 5],
+                gensen: '厳選1ヶ月',
+                gensenList: [null, '厳選初心者', '厳選1ヶ月', '厳選3ヶ月', '日々石割'],
                 聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
                 聖遺物ステータス補正: 聖遺物ステータスTEMPLATE,
                 isステータスOpened: false,
@@ -557,6 +581,16 @@ function initialSetupArtifactDetailInput() {
                     }
                 }
                 return result;
+            },
+            gensenOnChange: function () {
+                if (!this.gensen) return;
+                const 上昇値Arr = [[], [6, 6, 6], [6, 6, 6], [5, 5, 5], [4, 4, 4]];
+                const 上昇回数Arr = [[], [4, 4, 4], [8, 5, 5], [11, 7, 7], [15, 10, 10]];
+                const gensenIndex = this.gensenList.indexOf(this.gensen);
+                for (let i = 0; i < 上昇回数Arr[gensenIndex].length; i++) {
+                    this.聖遺物優先するサブ効果上昇値[i] = this.subStatUpList(i)[上昇値Arr[gensenIndex][i]];
+                    this.聖遺物優先するサブ効果上昇回数[i] = 上昇回数Arr[gensenIndex][i];
+                }
             }
         },
         watch: {
@@ -601,6 +635,29 @@ function initialSetupArtifactDetailInput() {
 }
 
 function initialSetupConditionInput(opt_characterMaster = null) {
+    const ConditionInput = {
+        data() {
+            return {
+                isVisible: true
+            }
+        },
+        computed: {
+            inputList: function () {
+                //TODO
+                return [];
+            },
+            selectList: function () {
+                //TODO
+                return [];
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+        }
+    };
+    ConditionInputVm = Vue.createApp(ConditionInput).mount('#condition-input');
 }
 
 function initialSetupOptionInput(opt_characterMaster = null) {
@@ -706,6 +763,7 @@ function initialSetupStatusInput(characterMaster) {
     const StatusInput = {
         data() {
             return {
+                isVisible: true,
                 activeTab: '1',
                 isEditable: false,
                 ステータス: JSON.parse(JSON.stringify(ステータスTEMPLATE)),

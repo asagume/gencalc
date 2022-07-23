@@ -499,7 +499,7 @@ function calculateArtifactStat(artifactDetailInput) {
     for (let i = 0; i < 3; i++) {
         const subStat = artifactDetailInput['聖遺物優先するサブ効果'][i];
         if (!subStat) continue;
-        const subStatValue1 = artifactDetailInput['聖遺物優先するサブ効果上昇量'][i];
+        const subStatValue1 = artifactDetailInput['聖遺物優先するサブ効果上昇値'][i];
         if (!subStatValue1) continue;
         const subStatValue2 = artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i];
         if (!subStatValue2) continue;
