@@ -240,15 +240,18 @@ async function loadRecommendation(recommendation, characterInput, artifactDetail
         const subStat = recommendation[key];
         artifactDetailInput['聖遺物優先するサブ効果'][index] = subStat;
     });
+    let hasSubStat = false;
     Object.keys(recommendation).filter(s => s.startsWith('聖遺物サブ効果')).forEach(key => {
         let stat = key.replace(/^聖遺物サブ効果/, '');
-        if (stat in artifactDetailInput['聖遺物ステータス']) {
+        if (stat in 聖遺物ステータスTEMPLATE) {
             // nop
         } else {
-            stat = stat.replace(/P$/, '');
+            stat = stat.replace(/P$/, '%');
         }
         artifactDetailInput['聖遺物ステータス'][stat] = recommendation[key];
+        hasSubStat = true;
     });
+    artifactDetailInput.isステータス計算無効 = hasSubStat;
     
     makeDamageDetailObjCharacter(characterInput);
     makeDamageDetailObjWeapon(characterInput);
@@ -616,19 +619,9 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
     return resultArr;
 }
 
-function calculateArtifactStat(artifactDetailInput) {
+function calculateArtifactStat(artifactDetailInput, opt_priority = true) {
     if (!artifactDetailInput) return;
     const result = JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE));
-
-    if ('聖遺物ステータス補正' in artifactDetailInput) {
-        Object.keys(artifactDetailInput['聖遺物ステータス補正']).forEach(stat => {
-            if (stat in result) {
-                result[stat] += artifactDetailInput['聖遺物ステータス補正'][stat];
-            } else {
-                result[stat] = artifactDetailInput['聖遺物ステータス補正'][stat];
-            }
-        });
-    }
 
     artifactDetailInput['聖遺物メイン効果'].filter(s => s).forEach(mainStat => {
         const splitted = mainStat.split('_');
@@ -639,17 +632,30 @@ function calculateArtifactStat(artifactDetailInput) {
         }
         result[stat] += 聖遺物メイン効果MasterVar[rarity][stat];
     });
+
+    if (opt_priority) {
+        calculateArtifactSubStatByPriority(result, artifactDetailInput);
+    }
+
+    if ('聖遺物ステータス' in artifactDetailInput) {
+        artifactDetailInput['聖遺物ステータス'] = result;
+    }
+
+    return result;
+}
+
+function calculateArtifactSubStatByPriority(result, artifactDetailInput) {
     for (let i = 0; i < 3; i++) {
         const subStat = artifactDetailInput['聖遺物優先するサブ効果'][i];
         if (!subStat) continue;
-        const subStatValue1 = artifactDetailInput['聖遺物優先するサブ効果上昇値'][i];
-        if (!subStatValue1) continue;
-        const subStatValue2 = artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i];
-        if (!subStatValue2) continue;
-        result[subStat] += subStatValue1 * subStatValue2;
+        const subStatValue = artifactDetailInput['聖遺物優先するサブ効果上昇値'][i];
+        if (!subStatValue) continue;
+        const subStatCount = artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i];
+        if (!subStatCount) continue;
+        result[subStat] += subStatValue * subStatCount;
     }
 
-    const prioritySubStatArr = [
+    const PRIORITY_SUBSTAT_ARR = [
         '会心率',
         '会心ダメージ',
         '元素チャージ効率',
@@ -664,15 +670,9 @@ function calculateArtifactStat(artifactDetailInput) {
     let noPriorityCount = artifactDetailInput.totalCount;
     noPriorityCount -= artifactDetailInput['聖遺物優先するサブ効果上昇回数'].reduce((sum, e) => sum + e);
     for (let i = noPriorityCount; i > 0; i--) {
-        const subStat = prioritySubStatArr[i % prioritySubStatArr.length];
+        const subStat = PRIORITY_SUBSTAT_ARR[i % PRIORITY_SUBSTAT_ARR.length];
         result[subStat] += 聖遺物サブ効果MasterVar[subStat][3];
     }    
-
-    if ('聖遺物ステータス' in artifactDetailInput) {
-        artifactDetailInput['聖遺物ステータス'] = result;
-    }
-
-    return result;
 }
 
 /**

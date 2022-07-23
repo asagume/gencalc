@@ -135,7 +135,8 @@
                             <td colspan="3" style="text-align: left;">
                                 <label>
                                     build name:
-                                    <input class="save-name" type="text" v-model="saveName" maxlength="20">
+                                    <input class="save-name" type="text" v-model="saveName" maxlength="20"
+                                        @change="changed">
                                 </label>
                             </td>
                         </tr>
@@ -146,20 +147,19 @@
                                 </select>
                             </td>
                             <td>
-                                <select v-model="レベル">
+                                <select v-model="レベル" @change="changed">
                                     <option v-for="item in levelRange" :value="item"> Lv.{{item}} </option>
                                 </select>
                             </td>
                             <td>
-                                <select v-model="命ノ星座">
+                                <select v-model="命ノ星座" @change="changed">
                                     <option v-for="item in constellationRange" :value="item"> C{{item}} </option>
                                 </select>
                             </td>
                             <td colspan="3">
                                 <label class="button open-close">
                                     <input class="hidden" type="checkbox" v-model="おすすめセットOption.isOpen">
-                                    <span></span>
-                                    {{displayName('おすすめセット')}}
+                                    <span>{{displayName('おすすめセット')}}</span>
                                 </label>
                             </td>
                         </tr>
@@ -193,19 +193,19 @@
                         </tr>
                         <tr>
                             <td>
-                                <select v-model="通常攻撃レベル">
+                                <select v-model="通常攻撃レベル" @change="changed">
                                     <option v-for="item in normalAttackLevelRange" :value="item"> Lv.{{item}}
                                     </option>
                                 </select>
                             </td>
                             <td>
-                                <select v-model="元素スキルレベル">
+                                <select v-model="元素スキルレベル" @change="changed">
                                     <option v-for="item in elementalSkillLevelRange" :value="item"> Lv.{{item}}
                                     </option>
                                 </select>
                             </td>
                             <td>
-                                <select v-model="元素爆発レベル">
+                                <select v-model="元素爆発レベル" @change="changed">
                                     <option v-for="item in elementalBurstLevelRange" :value="item"> Lv.{{item}}
                                     </option>
                                 </select>
@@ -240,12 +240,12 @@
                                 </select>
                             </td>
                             <td>
-                                <select v-model="武器レベル">
+                                <select v-model="武器レベル" @change="changed">
                                     <option v-for="item in weaponLevelRange" :value="item"> Lv.{{item}} </option>
                                 </select>
                             </td>
                             <td>
-                                <select v-model="武器精錬ランク">
+                                <select v-model="武器精錬ランク" @change="changed">
                                     <option v-for="item in weaponRefineRange" :value="item"> R{{item}} </option>
                                 </select>
                             </td>
@@ -321,68 +321,68 @@
                     <fieldset style="margin-bottom: 10px;">
                         <legend> {{displayName('聖遺物メイン効果')}} </legend>
                         <label class="column-2"> {{displayName('生の花')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]" @change="mainChanged">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(0)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-2"> {{displayName('死の羽')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]" @change="mainChanged">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(1)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('時の砂')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]" @change="mainChanged">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(2)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('空の杯')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]" @change="mainChanged">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(3)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                         <label class="column-3"> {{displayName('理の冠')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]">
+                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]" @change="mainChanged">
                                 <option value=""></option>
                                 <option v-for="item in mainStatList(4)" :value="item">{{displayName(item)}}</option>
                             </select>
                         </label>
                     </fieldset>
                     <table class="status" style="margin-bottom: 10px;">
-                        <tr>
-                            <th :colspan="isEditable ? 3 : 2">
-                                <label class="open-close">
-                                    <input class="hidden" type="checkbox" v-model="isステータスOpened">
-                                    <span></span>
-                                    {{displayName('聖遺物ステータス')}}
-                                </label>
-                            </th>
-                        </tr>
-                        <tr v-for="item in statList">
-                            <th>{{displayName(item)}}</th>
-                            <td v-show="isEditable">
-                                <input type="number" v-model="聖遺物ステータス補正[item]">
+                        <tr v-for="(item, index) in statList">
+                            <th>{{displayName(item[0])}}</th>
+                            <td>
+                                <input v-show="isEditable" type="number" min="0" v-model="聖遺物ステータス[item[0]]"
+                                    @change="changed">
+                                <span v-show="!isEditable"> {{displayNumber(item[0], 聖遺物ステータス[item[0]])}} </span>
                             </td>
-                            <td> {{displayNumber(item, 聖遺物ステータス[item])}} </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left; padding-left: 1rem;">
-                                <label>
-                                    <input type="checkbox" v-model="isEditable">
-                                    {{displayName('補正値入力モード')}}
-                                </label>
-                            </td>
-                            <td :colspan="isEditable ? 2 : 1">
-                                <label>
-                                    <input type="checkbox" v-model="補正値0初期化Enabled">
-                                    {{displayName('補正値0初期化')}}
-                                </label>
-                                <button type="button" style="width: 10rem"
-                                    :disabled="!補正値0初期化Enabled">{{displayName('実行')}}</button>
-                            </td>
+                            <template v-if="item[1]">
+                                <th>{{displayName(item[1])}}</th>
+                                <td>
+                                    <input v-show="isEditable" type="number" min="0" v-model="聖遺物ステータス[item[1]]"
+                                        @change="changed">
+                                    <span v-show="!isEditable"> {{displayNumber(item[1], 聖遺物ステータス[item[1]])}} </span>
+                                </td>
+                            </template>
+                            <template v-else-if="index == 5">
+                                <td colspan="2">
+                                    <label>
+                                        <input type="checkbox" v-model="isEditable">
+                                        {{displayName('直接入力モード')}}
+                                    </label>
+                                </td>
+                            </template>
+                            <template v-else-if="index == 6">
+                                <td colspan="2">
+                                    <!-- OCR -->
+                                </td>
+                            </template>
+                            <template v-else>
+                                <td colspan="2"></td>
+                            </template>
                         </tr>
                     </table>
                     <fieldset>
@@ -395,7 +395,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select v-model="聖遺物優先するサブ効果[0]">
+                                    <select v-model="聖遺物優先するサブ効果[0]" @change="priorityChanged">
                                         <option v-for="subitem in priorityStatList" :value="subitem">
                                             {{displayName(subitem)}} </option>
                                     </select>
@@ -409,7 +409,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇回数[0]">
+                                    <select v-model="聖遺物優先するサブ効果上昇回数[0]" @change="priorityChanged">
                                         <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
                                     </select>
                                 </td>

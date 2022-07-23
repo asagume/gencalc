@@ -211,7 +211,8 @@ async function initialSetupCharacterInput(name) {
                     isOpen: false,
                     list: []
                 },
-                saveName: ''
+                saveName: '',
+                isChanged: false
             }
         },
         created() {
@@ -274,14 +275,15 @@ async function initialSetupCharacterInput(name) {
                 const max = this.武器精錬ランクOption.max;
                 return Array.from({ length: max }, (_, i) => i + 1);
             },
+            changed: function () {
+                this.isChanged = true;
+            },
             artifactScore: function () {
                 return 0;
             },
             saveDisabled: function () {
-                if (this.saveName) {
-                    return false;
-                }
-                return true;
+                if (!this.saveName) return true;
+                return !this.isChanged;
             },
             removeDisabled: function () {
                 if (!this.saveName) return true;
@@ -556,8 +558,7 @@ function initialSetupArtifactDetailInput() {
                 厳選目安一括変更Enabled: false,
                 聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
                 聖遺物ステータス補正: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
-                isステータスOpened: false,
-                補正値0初期化Enabled: false
+                isステータス計算無効: false
             }
         },
         computed: {
@@ -565,7 +566,12 @@ function initialSetupArtifactDetailInput() {
                 return 聖遺物優先するサブ効果ARRAY;
             },
             statList: function () {
-                return Object.keys(聖遺物ステータスTEMPLATE).filter(s => this.isステータスOpened || this.聖遺物ステータス[s]);
+                const result = [];
+                const arr = Object.keys(聖遺物ステータスTEMPLATE);
+                for (let i = 0; i < 7; i++) {
+                    result.push([arr[i], i < (arr.length - 7) ? arr[i + 7] : null]);
+                }
+                return result;
             },
             countList: function () {
                 return Array.from({ length: 16 }, (_, i) => i);
@@ -610,8 +616,20 @@ function initialSetupArtifactDetailInput() {
                 }
                 return result;
             },
+            mainChanged: function () {
+                this.isステータス計算無効 = false;
+                CharacterInputVm.isChanged = true;
+            },
+            changed: function () {
+                CharacterInputVm.isChanged = true;
+            },
+            priorityChanged: function () {
+                this.isステータス計算無効 = false;
+                CharacterInputVm.isChanged = true;
+            },
             subStatOnChange: function (index, selectedIndex) {
                 this.subStatUpIndices[index] = selectedIndex;
+                this.isステータス計算無効 = false;
             },
             gensenOnChange: function () {
                 this.厳選目安一括変更Enabled = false;
@@ -629,7 +647,9 @@ function initialSetupArtifactDetailInput() {
         watch: {
             聖遺物メイン効果: {
                 handler: function (newVal, oldVal) {
-                    calculateArtifactStat(this);
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
                     updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
@@ -655,28 +675,27 @@ function initialSetupArtifactDetailInput() {
                             this.聖遺物優先するサブ効果上昇値[i] = result[this.subStatUpIndices[i]];
                         }
                     }
-                    calculateArtifactStat(this);
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
                     updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
             },
             聖遺物優先するサブ効果上昇量: {
                 handler: function (newVal, oldVal) {
-                    calculateArtifactStat(this);
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
                     updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
             },
             聖遺物優先するサブ効果上昇回数: {
                 handler: function (newVal, oldVal) {
-                    calculateArtifactStat(this);
-                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
-                },
-                deep: true
-            },
-            聖遺物ステータス補正: {
-                handler: function (newVal, oldVal) {
-                    calculateArtifactStat(this);
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
                     updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
@@ -1227,9 +1246,9 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
 
     }
 
-    const myRarity = characterMaster['レアリティ'];
-    const myVision = characterMaster['元素'];
-    const myWeaponType = characterMaster['武器'];
+    const rarity = characterMaster['レアリティ'];
+    const vision = characterMaster['元素'];
+    const weaponType = characterMaster['武器'];
 
     const myRecommendationList = makeRecommendationList(characterMaster);
     const myRecommendation = myRecommendationList[0];
@@ -1237,28 +1256,28 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
     characterInput.おすすめセットOption.list = myRecommendationList;
     characterInput.おすすめセット = myRecommendation[0];
 
-    let myAscension = 6;        // 突破レベル
-    let myLevel = 90;           // レベル
-    let myConstellation = 0;    // 命ノ星座
+    let ascension = 6;        // 突破レベル
+    let level = 90;           // レベル
+    let constellation = 0;    // 命ノ星座
 
     if ('レベル' in myRecommendation[1]) {
-        myLevel = Number(myRecommendation[1]['レベル'].replace('+', ''));
-        for (myAscension = 0; myAscension < 突破レベルレベルARRAY.length; myAscension++) {
-            const max = 突破レベルレベルARRAY[myAscension][突破レベルレベルARRAY[myAscension].length - 1];
-            if (myLevel <= max) {
+        level = Number(myRecommendation[1]['レベル'].replace('+', ''));
+        for (ascension = 0; ascension < 突破レベルレベルARRAY.length; ascension++) {
+            const max = 突破レベルレベルARRAY[ascension][突破レベルレベルARRAY[ascension].length - 1];
+            if (level <= max) {
                 break;
             }
         }
         if (myRecommendation[1]['レベル'].endsWith('+')) {
-            myAscension++;
+            ascension++;
         }
     }
 
     if (name in キャラクター所持状況Var) {
-        myConstellation = キャラクター所持状況Var[name];
+        constellation = キャラクター所持状況Var[name];
     }
-    if (!myConstellation) {
-        myConstellation = 0;
+    if (!constellation) {
+        constellation = 0;
     }
 
     if ('命ノ星座' in characterMaster) {
@@ -1267,7 +1286,7 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
         let mySkillName = characterMaster.元素スキル.名前;
         let myBurstName = characterMaster.元素爆発.名前;
         Object.keys(characterMaster.命ノ星座).forEach(key => {
-            if (myConstellation < Number(key)) return;
+            if (constellation < Number(key)) return;
             if ('名前' in characterMaster.命ノ星座[key]) {
                 if (characterMaster.命ノ星座[key]['名前'].indexOf(mySkillName) != -1) {
                     maxSkillLevel = 13;
@@ -1287,16 +1306,14 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, st
 
     characterInput.name = name;
     characterInput.master = characterMaster;
-    characterInput.突破レベル = myAscension;
-    characterInput.レベル = myLevel;
-    characterInput.命ノ星座 = myConstellation;
+    characterInput.突破レベル = ascension;
+    characterInput.レベル = level;
+    characterInput.命ノ星座 = constellation;
 
     loadRecommendation(myRecommendation[1], characterInput, artifactDetailInput, statusInput);
 
-    let myLevelStr = myLevel;
-    if (突破レベルレベルARRAY[myAscension][0] == myLevel) {
-        myLevelStr += '+';
-    }
+    setupWeaponInput(weaponType, characterInput.weapon, CharacterInputVm);
+
 
     calculateArtifactStat(artifactDetailInput);
     calculateStatus(characterInput, artifactDetailInput, statusInput);
