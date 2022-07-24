@@ -62,8 +62,15 @@
                     <div style="position: absolute; left: 1rem; top: 0">
                         <a href="history.html">更新履歴</a>
                     </div>
-                    <div style="position: absolute; left: 1rem; bottom: 0;">
+                    <div style="position: absolute; left: 1rem; bottom: 1rem;">
                         <a href="RotationVisualizer.html">げんろーて</a>
+                    </div>
+
+                    <div id="language-select" style="position: absolute; right: 1rem; bottom: 1rem;">
+                        <span class="material-symbols-outlined"> language </span>
+                        <select v-model="selected" @change="onChange">
+                            <option v-for="item in list" :value="item.value">{{item.name}}</option>
+                        </select>
                     </div>
                 </fieldset>
             </div>
@@ -844,13 +851,16 @@
                         <tr v-for="item in damageList(category)">
                             <th>{{displayName(item[0])}}</th>
                             <td :class="classByElement(item[1])">
-                                {{displayDamageValue(item, 2, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 : null)}}
+                                {{displayDamageValue(item, 2, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 :
+                                null)}}
                             </td>
                             <td :class="classByElement(item[1])">
-                                {{displayDamageValue(item, 3, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 : null)}}
+                                {{displayDamageValue(item, 3, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 :
+                                null)}}
                             </td>
                             <td :class="classByElement(item[1])">
-                                {{displayDamageValue(item, 4, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 : null)}}
+                                {{displayDamageValue(item, 4, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 :
+                                null)}}
                             </td>
                         </tr>
                     </tbody>

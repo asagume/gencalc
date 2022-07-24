@@ -11,6 +11,7 @@ var 敵MasterVar;
 var チームオプションMasterVar;
 var オプション1MasterVar;
 var オプション2MasterVar;
+var 辞書MasterVar;
 
 const キャラクター個別MasterMapVar = new Map();
 const 武器個別MasterMapVar = new Map();
@@ -22,6 +23,8 @@ const 聖遺物セット効果ダメージ詳細ObjMapVar = new Map();
 var キャラクター所持状況Var = {};
 var 武器所持状況Var = {};
 
+/** 言語選択 */
+var LanguageSelectVm;
 /** キャラクター選択 */
 var CharacterSelectVm;
 /** キャラクター情報入力 */

@@ -28,7 +28,8 @@ async function onLoad(searchParams) {
         'data/ElementalResonanceMaster.json',
         'data/TeamOptionMaster.json',
         'data/OptionMaster1.json',
-        'data/OptionMaster2.json'
+        'data/OptionMaster2.json',
+        'data/Dictionary.json'
     ].map(s => fetch(s).then(resp => resp.json())));
 
     キャラクターMasterVar = responses[0];
@@ -48,6 +49,25 @@ async function onLoad(searchParams) {
     チームオプションMasterVar = responses[12];
     オプション1MasterVar = responses[13];
     オプション2MasterVar = responses[14];
+    辞書MasterVar = responses[15];
+
+    const LanguageSelect = {
+        data() {
+            return {
+                selected: 'ja',
+                list: [
+                    { name: '日本語', value: 'ja' },
+                    { name: 'English', value: 'en' }
+                ]
+            }
+        },
+        methods: {
+            onChange: function () {
+
+            }
+        }
+    };
+    LanguageSelectVm = Vue.createApp(LanguageSelect).mount('#language-select');
 
     initialSetupCharacterSelect();
     initialSetupCalcurationResult();
@@ -1355,6 +1375,7 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, co
 
     calculateArtifactStat(artifactDetailInput);
     calculateStatus(characterInput, artifactDetailInput, statusInput);
+    calculateResult(characterInput, conditionInput, optionInput, statusInput, CalculationResultVm);
 }
 
 /**

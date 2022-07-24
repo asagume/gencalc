@@ -16,6 +16,13 @@ function isPlainObject(value) {
 }
 
 function getDisplayName(name) {
+    if (LanguageSelectVm) {
+        if (name in 辞書MasterVar) {
+            if (辞書MasterVar[name][LanguageSelectVm.selected]) {
+                name = 辞書MasterVar[name][LanguageSelectVm.selected];
+            }
+        }
+    }
     if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
         name = name.replace(/バフ$/, '');
     } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
