@@ -19,8 +19,11 @@ LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ko-
 
 os.chdir(os.path.dirname(__file__))
 
-with open(ORG_PATH, 'r', encoding='utf_8_sig') as f:
-    orgJson = json.load(f)
+try:
+    with open(ORG_PATH, 'r', encoding='utf_8_sig') as f:
+        orgJson = json.load(f)
+except Exception as e:
+    orgJson = {}
 
 newDictMap = {}
 keywordDictMap = {}
@@ -68,7 +71,7 @@ for category in CATEGORY_DIRS:
                             for attribute in entry['attributes']:
                                 jaJpTalents.append(attribute['key'])
                         if entry['desc'] != None:
-                            for m in re.finditer(r'<span.*?>(.+?)</span>', entry['desc']):
+                            for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
                                 jaJpKeywords.append(m.group(1))
                 if component['component_id'] == 'summaryList':
                     for entry in component['data']['list']:
@@ -86,7 +89,7 @@ for category in CATEGORY_DIRS:
                                 for attribute in entry['attributes']:
                                     langWork.append(attribute['key'])
                             if entry['desc'] != None:
-                                for m in re.finditer(r'<span.*?>(.+?)</span>', entry['desc']):
+                                for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
                                     langKeywordWork.append(m.group(1))
                     if component['component_id'] == 'summaryList':
                         for entry in component['data']['list']:
