@@ -78,9 +78,14 @@ async function onLoad(searchParams) {
                 ]
             }
         },
+        mounted() {
+            if ('language' in localStorage) {
+                this.selected = localStorage.getItem('language');
+            }
+        },
         methods: {
             onChange: function () {
-
+                localStorage.setItem('language', this.selected);
             }
         }
     };
