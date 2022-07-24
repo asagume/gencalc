@@ -743,7 +743,7 @@ function calculateStatus(characterInput, artifactDetailInput, conditionInput, op
 
     result['突破レベル'] = ascension;
     result['レベル'] = level;
-    result['命ノ星座'] = constellation;
+    result['命ノ星座'] = Number(constellation);
     result['武器突破レベル'] = weaponAscension;
     result['武器レベル'] = weaponLevel;
     result['武器精錬ランク'] = weaponRefine;
@@ -826,7 +826,7 @@ function calculateStatus(characterInput, artifactDetailInput, conditionInput, op
     result['攻撃力'] += result['基礎攻撃力'] * result['攻撃力%'] / 100;
     result['攻撃力'] += result['攻撃力+'];
 
-    console.debug(result);
+    console.debug(calculateStatus.name, result);
     return result;
 }
 
@@ -908,7 +908,7 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
             let talentDetailArr = talentDetailArrObj[category];
             if (('特殊' + category) in talentDetailArrObj) {
                 const workObj = talentDetailArrObj['特殊' + category];
-                console.log(calculateResult.name,  workObj, validConditionValueArr);
+                console.log(calculateResult.name, workObj, validConditionValueArr);
                 if (checkConditionMatches(workObj['条件'], validConditionValueArr)) {
                     talentDetailArr = workObj['詳細'];
                 }
@@ -939,5 +939,5 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
         });
     }
 
-    console.log(calculationResult);
+    console.log(calculateResult.name, calculationResult);
 }
