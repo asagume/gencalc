@@ -837,7 +837,7 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                 return getDisplayName(name);
             },
             displayOption: function (name) {
-                return name.replace(/^required_/, '');
+                return getDisplayName(name.replace(/^required_/, ''));
             },
             onChange: function (item) {
                 if (!item.exclusions) return;

@@ -98,6 +98,30 @@
     "シールド強化": {
         "en": "Shield Strength"
     },
+    "炎元素": {
+        "en": "Pyro"
+    },
+    "水元素": {
+        "en": "Hydro"
+    },
+    "風元素": {
+        "en": "Anemo"
+    },
+    "雷元素": {
+        "en": "Electro"
+    },
+    "草元素": {
+        "en": "Dendro"
+    },
+    "氷元素": {
+        "en": "Cryo"
+    },
+    "岩元素": {
+        "en": "Geo"
+    },
+    "物理": {
+        "en": "Physical"
+    },
     "5_HP": {
         "en": "5_HP"
     },
