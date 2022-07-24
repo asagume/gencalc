@@ -98,7 +98,7 @@
                             <img :class="'character with-tooltip ' + classSelected(item)" :src="iconUrl(item)"
                                 :alt="item.name" @click="onClick"
                                 :style="'background-image: url(' + starBackgroundUrl(item) +')'">
-                            <div class="tooltip">{{item.name}}</div>
+                            <div class="tooltip">{{displayName(item.name)}}</div>
                             <img class="vision" :src="elementImgSrc(item)" :alt="item.vision">
                         </li>
                     </ul>
@@ -291,7 +291,7 @@
                                     :style="'background-image: url(' + starBackgroundUrl(item) +')'"
                                     @click="onClick($event)">
                             </label>
-                            <div class="tooltip">{{item.name}}</div>
+                            <div class="tooltip">{{displayName(item.name)}}</div>
                         </li>
                     </ul>
                 </div>
@@ -885,7 +885,7 @@
                                 <img class="character with-tooltip" :src="iconUrl(item)" :alt="item.name"
                                     :style="'background-image: url(' + starBackgroundUrl(item) +')'"
                                     @click="onClick(item)">
-                                <div class="tooltip">{{item.name}}</div>
+                                <div class="tooltip">{{displayName(item.name)}}</div>
                                 <img class="vision" :src="elementImgSrc(item)" :alt="item.vision">
                                 <p class="constellation">{{命ノ星座[item.name]}}</p>
                             </li>
@@ -917,7 +917,7 @@
                                 <img class="weapon with-tooltip" :src="iconUrl(item)" :alt="item.name"
                                     :style="'background-image: url(' + starBackgroundUrl(item) +')'"
                                     @click="onClick(item)">
-                                <div class="tooltip">{{item.name}}</div>
+                                <div class="tooltip">{{displayName(item.name)}}</div>
                                 <p class="refine">{{精錬ランク[item.name]}}</p>
                             </li>
                         </ul>

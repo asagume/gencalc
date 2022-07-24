@@ -15,7 +15,7 @@ DST_PATH = '../data/Dictionary.json'
 
 CATEGORY_DIRS = ['characters', 'weapons', 'artifacts']
 
-LANGUAGES = ['en-us']
+LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn"]
 
 os.chdir(os.path.dirname(__file__))
 
@@ -61,6 +61,13 @@ for category in CATEGORY_DIRS:
                 if component['component_id'] == 'talent':
                     for entry in component['data']['list']:
                         jaJpTalents.append(entry['title'])
+                        if entry['attributes'] != None:
+                            for attribute in entry['attributes']:
+                                jaJpTalents.append(attribute['key'])
+                if component['component_id'] == 'summaryList':
+                    for entry in component['data']['list']:
+                        jaJpTalents.append(entry['name'])
+
 
         for language in LANGUAGES:
             langWork = []
@@ -69,6 +76,12 @@ for category in CATEGORY_DIRS:
                     if component['component_id'] == 'talent':
                         for entry in component['data']['list']:
                             langWork.append(entry['title'])
+                            if entry['attributes'] != None:
+                                for attribute in entry['attributes']:
+                                    langWork.append(attribute['key'])
+                if component['component_id'] == 'summaryList':
+                    for entry in component['data']['list']:
+                        langWork.append(entry['name'])
             langTalents[language] = langWork
 
         for index, dictKey in enumerate(jaJpTalents):
@@ -79,6 +92,8 @@ for category in CATEGORY_DIRS:
 
 for k, v in newDictMap.items():
     if k not in orgJson:
+        orgJson[k] = v
+    else:
         orgJson[k] = v
 
 print(orgJson)

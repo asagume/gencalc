@@ -54,10 +54,21 @@ async function onLoad(searchParams) {
     const LanguageSelect = {
         data() {
             return {
-                selected: 'ja',
+                selected: 'ja-jp',
                 list: [
-                    { name: '日本語', value: 'ja' },
-                    { name: 'English', value: 'en' }
+                    { name: '日本語', value: 'ja-jp' },
+                    { name: 'English', value: 'en-us' },
+                    { name: '简体中文', value: 'zh-cn' },
+                    { name: '繁體中文', value: 'zh-tw' },
+                    { name: '한국어', value: 'ko-kr' },
+                    { name: 'Deutsch', value: 'de-de' },
+                    { name: 'Español', value: 'es-es' },
+                    { name: 'Français', value: 'fr-fr' },
+                    { name: 'Indonesia', value: 'id-id' },
+                    { name: 'Português', value: 'pt-pt' },
+                    { name: 'Pусский', value: 'ru-ru' },
+                    { name: 'ภาษาไทย', value: 'th-th' },
+                    { name: 'Tiếng Việt', value: 'vi-vn' }
                 ]
             }
         },

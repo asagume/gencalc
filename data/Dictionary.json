@@ -1,377 +1,2555 @@
 {
     "聖遺物メイン効果": {
-        "en": "Artifact Main-Stats"
+        "en-us": "Artifact Main-Stats"
     },
     "聖遺物サブ効果": {
-        "en": "Artifact Sub-Stats"
+        "en-us": "Artifact Sub-Stats"
     },
     "直接入力モード": {
-        "en": "Edit"
+        "en-us": "Edit"
     },
     "補正値入力モード": {
-        "en": "Edit"
+        "en-us": "Edit"
     },
     "生の花": {
-        "en": "Flower"
+        "en-us": "Flower"
     },
     "死の羽": {
-        "en": "Plume"
+        "en-us": "Plume"
     },
     "時の砂": {
-        "en": "Sands"
+        "en-us": "Sands"
     },
     "空の杯": {
-        "en": "Goblet"
+        "en-us": "Goblet"
     },
     "理の冠": {
-        "en": "Circlet"
+        "en-us": "Circlet"
     },
     "熱誠の炎": {
-        "en": "Fervent Flames"
+        "en-us": "Fervent Flames"
     },
     "治療の水": {
-        "en": "Soothing Water"
+        "en-us": "Soothing Water"
     },
     "迅速の風": {
-        "en": "Impetuous Winds"
+        "en-us": "Impetuous Winds"
     },
     "強権の雷": {
-        "en": "High Voltage"
+        "en-us": "High Voltage"
     },
     "粉砕の氷": {
-        "en": "Shattering Ice"
+        "en-us": "Shattering Ice"
     },
     "不動の岩": {
-        "en": "Enduring Rock"
+        "en-us": "Enduring Rock"
     },
     "交錯の護り": {
-        "en": "Protective Canopy"
+        "en-us": "Protective Canopy"
     },
     "ステータス1": {
-        "en": "CHARACTER 1"
+        "en-us": "CHARACTER 1"
     },
     "ステータス2": {
-        "en": "CHARACTER 2"
+        "en-us": "CHARACTER 2"
     },
     "敵": {
-        "en": "ENEMY"
+        "en-us": "ENEMY"
     },
     "元素共鳴": {
-        "en": "Resonance"
+        "en-us": "Resonance"
     },
     "キャラ": {
-        "en": "TEAM"
+        "en-us": "TEAM"
     },
     "基本ステータス": {
-        "en": "Base Stats"
+        "en-us": "Base Stats"
     },
     "高級ステータス": {
-        "en": "Advanced Stats"
+        "en-us": "Advanced Stats"
     },
     "元素ステータス・ダメージ": {
-        "en": "Elemental Type[Bonus]"
+        "en-us": "Elemental Type[Bonus]"
     },
     "元素ステータス・耐性": {
-        "en": "Elemental Type[RES]"
+        "en-us": "Elemental Type[RES]"
     },
     "その他": {
-        "en": "Misc"
+        "en-us": "Misc"
     },
     "基礎HP": {
-        "en": "Base HP"
+        "en-us": "Base HP"
     },
     "基礎攻撃力": {
-        "en": "Base ATK"
+        "en-us": "Base ATK"
     },
     "基礎防御力": {
-        "en": "Base DEF"
+        "en-us": "Base DEF"
     },
     "HP上限": {
-        "en": "Max HP"
+        "en-us": "Max HP"
     },
     "攻撃力": {
-        "en": "ATK"
+        "en-us": "ATK"
     },
     "防御力": {
-        "en": "DEF"
+        "en-us": "DEF"
     },
     "元素熟知": {
-        "en": "Elemental Mastery"
+        "en-us": "Elemental Mastery"
     },
     "HP%": {
-        "en": "HP%"
+        "en-us": "HP%"
     },
     "攻撃力%": {
-        "en": "ATK%"
+        "en-us": "ATK%"
     },
     "防御力%": {
-        "en": "DEF%"
+        "en-us": "DEF%"
     },
     "会心率": {
-        "en": "CRIT Rate"
+        "en-us": "CRIT Rate"
     },
     "会心ダメージ": {
-        "en": "CRIT DMG"
+        "en-us": "CRIT DMG"
     },
     "元素チャージ効率": {
-        "en": "Energy Recharge"
+        "en-us": "Energy Recharge"
     },
     "与える治療効果": {
-        "en": "Healing Bonus"
+        "en-us": "Healing Bonus"
     },
     "受ける治療効果": {
-        "en": "Incoming Healing Bonus"
+        "en-us": "Incoming Healing Bonus"
     },
     "シールド強化": {
-        "en": "Shield Strength"
+        "en-us": "Shield Strength"
     },
     "炎元素": {
-        "en": "Pyro"
+        "en-us": "Pyro"
     },
     "水元素": {
-        "en": "Hydro"
+        "en-us": "Hydro"
     },
     "風元素": {
-        "en": "Anemo"
+        "en-us": "Anemo"
     },
     "雷元素": {
-        "en": "Electro"
+        "en-us": "Electro"
     },
     "草元素": {
-        "en": "Dendro"
+        "en-us": "Dendro"
     },
     "氷元素": {
-        "en": "Cryo"
+        "en-us": "Cryo"
     },
     "岩元素": {
-        "en": "Geo"
+        "en-us": "Geo"
     },
     "物理": {
-        "en": "Physical"
+        "en-us": "Physical"
     },
     "5_HP": {
-        "en": "5_HP"
+        "en-us": "5_HP"
     },
     "5_攻撃力": {
-        "en": "5_ATK"
+        "en-us": "5_ATK"
     },
     "5_防御力": {
-        "en": "5_DEF"
+        "en-us": "5_DEF"
     },
     "5_元素熟知": {
-        "en": "5_Elemental Mastery"
+        "en-us": "5_Elemental Mastery"
     },
     "5_HP%": {
-        "en": "5_HP%"
+        "en-us": "5_HP%"
     },
     "5_攻撃力%": {
-        "en": "5_ATK%"
+        "en-us": "5_ATK%"
     },
     "5_防御力%": {
-        "en": "5_DEF%"
+        "en-us": "5_DEF%"
     },
     "5_会心率": {
-        "en": "5_CRIT Rate"
+        "en-us": "5_CRIT Rate"
     },
     "5_会心ダメージ": {
-        "en": "5_CRIT DMG"
+        "en-us": "5_CRIT DMG"
     },
     "5_元素チャージ効率": {
-        "en": "5_Energy Recharge"
+        "en-us": "5_Energy Recharge"
     },
     "5_与える治療効果": {
-        "en": "5_Healing Bonus"
+        "en-us": "5_Healing Bonus"
     },
     "5_炎元素ダメージバフ": {
-        "en": "5_Pyro DMG Bonus"
+        "en-us": "5_Pyro DMG Bonus"
     },
     "5_水元素ダメージバフ": {
-        "en": "5_Hydro DMG Bonus"
+        "en-us": "5_Hydro DMG Bonus"
     },
     "5_風元素ダメージバフ": {
-        "en": "5_Anemo DMG Bonus"
+        "en-us": "5_Anemo DMG Bonus"
     },
     "5_雷元素ダメージバフ": {
-        "en": "5_Electro DMG Bonus"
+        "en-us": "5_Electro DMG Bonus"
     },
     "5_草元素ダメージバフ": {
-        "en": "5_Dendro DMG Bonus"
+        "en-us": "5_Dendro DMG Bonus"
     },
     "5_氷元素ダメージバフ": {
-        "en": "5_Cryo DMG Bonus"
+        "en-us": "5_Cryo DMG Bonus"
     },
     "5_岩元素ダメージバフ": {
-        "en": "5_Geo DMG Bonus"
+        "en-us": "5_Geo DMG Bonus"
     },
     "5_物理ダメージバフ": {
-        "en": "5_Physical DMG Bonus"
+        "en-us": "5_Physical DMG Bonus"
     },
     "4_HP": {
-        "en": "4_HP"
+        "en-us": "4_HP"
     },
     "4_攻撃力": {
-        "en": "4_ATK"
+        "en-us": "4_ATK"
     },
     "4_防御力": {
-        "en": "4_DEF"
+        "en-us": "4_DEF"
     },
     "4_元素熟知": {
-        "en": "4_Elemental Mastery"
+        "en-us": "4_Elemental Mastery"
     },
     "4_HP%": {
-        "en": "4_HP%"
+        "en-us": "4_HP%"
     },
     "4_攻撃力%": {
-        "en": "4_ATK%"
+        "en-us": "4_ATK%"
     },
     "4_防御力%": {
-        "en": "4_DEF%"
+        "en-us": "4_DEF%"
     },
     "4_会心率": {
-        "en": "4_CRIT Rate"
+        "en-us": "4_CRIT Rate"
     },
     "4_会心ダメージ": {
-        "en": "4_CRIT DMG"
+        "en-us": "4_CRIT DMG"
     },
     "4_元素チャージ効率": {
-        "en": "4_Energy Recharge"
+        "en-us": "4_Energy Recharge"
     },
     "4_与える治療効果": {
-        "en": "4_Healing Bonus"
+        "en-us": "4_Healing Bonus"
     },
     "4_炎元素ダメージバフ": {
-        "en": "4_Pyro DMG Bonus"
+        "en-us": "4_Pyro DMG Bonus"
     },
     "4_水元素ダメージバフ": {
-        "en": "4_Hydro DMG Bonus"
+        "en-us": "4_Hydro DMG Bonus"
     },
     "4_風元素ダメージバフ": {
-        "en": "4_Anemo DMG Bonus"
+        "en-us": "4_Anemo DMG Bonus"
     },
     "4_雷元素ダメージバフ": {
-        "en": "4_Electro DMG Bonus"
+        "en-us": "4_Electro DMG Bonus"
     },
     "4_草元素ダメージバフ": {
-        "en": "4_Dendro DMG Bonus"
+        "en-us": "4_Dendro DMG Bonus"
     },
     "4_氷元素ダメージバフ": {
-        "en": "4_Cryo DMG Bonus"
+        "en-us": "4_Cryo DMG Bonus"
     },
     "4_岩元素ダメージバフ": {
-        "en": "4_Geo DMG Bonus"
+        "en-us": "4_Geo DMG Bonus"
     },
     "4_物理ダメージバフ": {
-        "en": "4_Physical DMG Bonus"
+        "en-us": "4_Physical DMG Bonus"
     },
     "期待値": {
-        "en": "Expect"
+        "en-us": "Expect"
     },
     "会心": {
-        "en": "CRIT"
+        "en-us": "CRIT"
     },
     "非会心": {
-        "en": "non-CRIT"
+        "en-us": "non-CRIT"
     },
     "通常攻撃": {
-        "en": "Normal Attack"
+        "en-us": "Normal Attack"
     },
     "重撃": {
-        "en": "Charged Attack"
+        "en-us": "Charged Attack"
     },
     "落下攻撃": {
-        "en": "Plunging Attack"
+        "en-us": "Plunging Attack"
     },
     "元素スキル": {
-        "en": "Elemental Skill"
+        "en-us": "Elemental Skill"
     },
     "元素爆発": {
-        "en": "Elemental Burst"
+        "en-us": "Elemental Burst"
     },
     "炎元素ダメージバフ": {
-        "en": "Pyro DMG Bonus"
+        "en-us": "Pyro DMG Bonus"
     },
     "水元素ダメージバフ": {
-        "en": "Hydro DMG Bonus"
+        "en-us": "Hydro DMG Bonus"
     },
     "風元素ダメージバフ": {
-        "en": "Anemo DMG Bonus"
+        "en-us": "Anemo DMG Bonus"
     },
     "雷元素ダメージバフ": {
-        "en": "Electro DMG Bonus"
+        "en-us": "Electro DMG Bonus"
     },
     "草元素ダメージバフ": {
-        "en": "Dendro DMG Bonus"
+        "en-us": "Dendro DMG Bonus"
     },
     "氷元素ダメージバフ": {
-        "en": "Cryo DMG Bonus"
+        "en-us": "Cryo DMG Bonus"
     },
     "岩元素ダメージバフ": {
-        "en": "Geo DMG Bonus"
+        "en-us": "Geo DMG Bonus"
     },
     "物理ダメージバフ": {
-        "en": "Physical DMG Bonus"
+        "en-us": "Physical DMG Bonus"
     },
     "炎元素耐性": {
-        "en": "Pyro RES"
+        "en-us": "Pyro RES"
     },
     "水元素耐性": {
-        "en": "Hydro RES"
+        "en-us": "Hydro RES"
     },
     "風元素耐性": {
-        "en": "Anemo RES"
+        "en-us": "Anemo RES"
     },
     "雷元素耐性": {
-        "en": "Electro RES"
+        "en-us": "Electro RES"
     },
     "草元素耐性": {
-        "en": "Dendro RES"
+        "en-us": "Dendro RES"
     },
     "氷元素耐性": {
-        "en": "Cryo RES"
+        "en-us": "Cryo RES"
     },
     "岩元素耐性": {
-        "en": "Geo RES"
+        "en-us": "Geo RES"
     },
     "物理耐性": {
-        "en": "Physical RES"
+        "en-us": "Physical RES"
     },
     "1段ダメージ": {
-        "en": "1-Hit DMG"
+        "en-us": "1-Hit DMG"
     },
     "2段ダメージ": {
-        "en": "2-Hit DMG"
+        "en-us": "2-Hit DMG"
     },
     "3段ダメージ": {
-        "en": "3-Hit DMG"
+        "en-us": "3-Hit DMG"
     },
     "4段ダメージ": {
-        "en": "4-Hit DMG"
+        "en-us": "4-Hit DMG"
     },
     "5段ダメージ": {
-        "en": "5-Hit DMG"
+        "en-us": "5-Hit DMG"
     },
     "6段ダメージ": {
-        "en": "6-Hit DMG"
+        "en-us": "6-Hit DMG"
     },
     "重撃ダメージ": {
-        "en": "Charged Attack DMG"
+        "en-us": "Charged Attack"
     },
     "狙い撃ち": {
-        "en": "Aimed Shot"
+        "en-us": "Aimed Shot"
     },
     "フルチャージ狙い撃ち": {
-        "en": "Fully-Charged Aimed Shot"
+        "en-us": "Fully-Charged Aimed Shot"
     },
     "落下期間のダメージ": {
-        "en": "Plunge DMG"
+        "en-us": "Plunge DMG"
     },
     "低空落下攻撃ダメージ": {
-        "en": "Low Plunge DMG"
+        "en-us": "Low Plunge DMG"
     },
     "高空落下攻撃ダメージ": {
-        "en": "High Plunge DMG"
+        "en-us": "High Plunge DMG"
     },
     "スキルダメージ": {
-        "en": "Skill DMG"
+        "en-us": "Skill DMG"
+    },
+    "鹿野院平蔵": {
+        "en-us": "Shikanoin Heizou"
+    },
+    "通常攻撃·不動流格闘術": {
+        "en-us": "Normal Attack: Fudou Style Martial Arts"
+    },
+    "戮心拳": {
+        "en-us": "Heartstopper Strike"
+    },
+    "廻風蹴": {
+        "en-us": "Windmuster Kick"
+    },
+    "反論稽古": {
+        "en-us": "Paradoxical Practice"
+    },
+    "因由勘破": {
+        "en-us": "Penetrative Reasoning"
+    },
+    "罪より前に": {
+        "en-us": "Pre-Existing Guilt"
+    },
+    "スクロース": {
+        "en-us": "Sucrose"
+    },
+    "通常攻撃·簡式風霊作成": {
+        "en-us": "Normal Attack: Wind Spirit Creation"
+    },
+    "風霊作成·六三〇八": {
+        "en-us": "Astable Anemohypostasis Creation - 6308"
+    },
+    "禁·風霊作成·七五同構弐型": {
+        "en-us": "Forbidden Creation - Isomer 75 / Type II"
+    },
+    "触媒置換術": {
+        "en-us": "Catalyst Conversion"
+    },
+    "小さな恵風": {
+        "en-us": "Mollis Favonius"
+    },
+    "不安定な発見": {
+        "en-us": "Astable Invention"
+    },
+    "早柚": {
+        "en-us": "Sayu"
+    },
+    "通常攻撃·忍刀·終末番": {
+        "en-us": "Normal Attack: Shuumatsuban Ninja Blade"
+    },
+    "嗚呼流·風隠急進": {
+        "en-us": "Yoohoo Art: Fuuin Dash"
+    },
+    "適任の人を探そう": {
+        "en-us": "Someone More Capable"
+    },
+    "仕事をサボるのだ": {
+        "en-us": "No Work Today!"
+    },
+    "嗚呼流·屏息秘伝": {
+        "en-us": "Yoohoo Art: Silencer's Secret"
+    },
+    "ウェンティ": {
+        "en-us": "Venti"
+    },
+    "通常攻撃·神代の射術": {
+        "en-us": "Normal Attack: Divine Marksmanship"
+    },
+    "高天の歌": {
+        "en-us": "Skyward Sonnet"
+    },
+    "風神の詩": {
+        "en-us": "Wind's Grand Ode"
+    },
+    "余風の抱擁": {
+        "en-us": "Embrace of Winds"
+    },
+    "暴風の目": {
+        "en-us": "Stormeye"
+    },
+    "恒風と共に": {
+        "en-us": "Windrider"
+    },
+    "魈": {
+        "en-us": "Xiao"
+    },
+    "通常攻撃·微塵突進": {
+        "en-us": "Normal Attack: Whirlwind Thrust"
+    },
+    "風輪両立": {
+        "en-us": "Lemniscatic Wind Cycling"
+    },
+    "靖妖儺舞": {
+        "en-us": "Bane of All Evil"
+    },
+    "降魔·平妖大聖": {
+        "en-us": "Conqueror of Evil: Tamer of Demons"
+    },
+    "壊劫·国土砕き": {
+        "en-us": "Dissolution Eon: Heaven Fall"
+    },
+    "神通·空中自在法": {
+        "en-us": "Transcension: Gravity Defier"
+    },
+    "ジン": {
+        "en-us": "Jean"
+    },
+    "通常攻撃·西風剣術": {
+        "en-us": "Normal Attack: Favonius Bladework"
+    },
+    "風圧剣": {
+        "en-us": "Gale Blade"
+    },
+    "蒲公英の風": {
+        "en-us": "Dandelion Breeze"
+    },
+    "風の赴くままに": {
+        "en-us": "Wind Companion"
+    },
+    "風の導くままに": {
+        "en-us": "Let the Wind Lead"
+    },
+    "導きの風": {
+        "en-us": "Guiding Breeze"
+    },
+    "楓原万葉": {
+        "en-us": "Kaedehara Kazuha"
+    },
+    "通常攻撃·我流剣術": {
+        "en-us": "Normal Attack: Garyuu Bladework"
+    },
+    "千早振る": {
+        "en-us": "Chihayaburu"
+    },
+    "万葉の一刀": {
+        "en-us": "Kazuha Slash"
+    },
+    "相聞剣法": {
+        "en-us": "Soumon Swordsmanship"
+    },
+    "風物の詩吟": {
+        "en-us": "Poetics of Fuubutsu"
+    },
+    "霞立つ松風": {
+        "en-us": "Cloud Strider"
+    },
+    "旅人": {
+        "en-us": "Traveler"
+    },
+    "通常攻撃·異邦の鉄風": {
+        "en-us": "Normal Attack: Foreign Ironwind"
+    },
+    "旋風の剣": {
+        "en-us": "Palm Vortex"
+    },
+    "激風の息": {
+        "en-us": "Gust Surge"
+    },
+    "空を裂く風": {
+        "en-us": "Slitting Wind"
+    },
+    "蘇生の風": {
+        "en-us": "Second Wind"
+    },
+    "ディオナ": {
+        "en-us": "Diona"
+    },
+    "通常攻撃·狩人の射術": {
+        "en-us": "Normal Attack: Kätzlein Style"
+    },
+    "フリーズキャッツクロー": {
+        "en-us": "Icy Paws"
+    },
+    "特製スピリッツ": {
+        "en-us": "Signature Mix"
+    },
+    "キャッツテールの裏メニュー": {
+        "en-us": "Cat's Tail Secret Menu"
+    },
+    "滑稽な酔態": {
+        "en-us": "Drunkards' Farce"
+    },
+    "おまけのおつまみ": {
+        "en-us": "Complimentary Bar Food"
+    },
+    "重雲": {
+        "en-us": "Chongyun"
+    },
+    "通常攻撃·滅邪四式": {
+        "en-us": "Normal Attack: Demonbane"
+    },
+    "霊刃·重華積霜": {
+        "en-us": "Spirit Blade: Chonghua's Layered Frost"
+    },
+    "霊刃·雲開星落": {
+        "en-us": "Spirit Blade: Cloud-Parting Star"
+    },
+    "吐納真定": {
+        "en-us": "Steady Breathing"
+    },
+    "追氷剣訣": {
+        "en-us": "Rimechaser Blade"
+    },
+    "雲遊山海": {
+        "en-us": "Gallant Journey"
+    },
+    "ロサリア": {
+        "en-us": "Rosaria"
+    },
+    "通常攻撃·教会槍術": {
+        "en-us": "Normal Attack: Spear of the Church"
+    },
+    "罪喰いの懺悔": {
+        "en-us": "Ravaging Confession"
+    },
+    "臨終の聖礼": {
+        "en-us": "Rites of Termination"
+    },
+    "懺悔に耳を傾ける幻影": {
+        "en-us": "Regina Probationum"
+    },
+    "陰から支える暗色": {
+        "en-us": "Shadow Samaritan"
+    },
+    "夜行": {
+        "en-us": "Night Walk"
+    },
+    "ガイア": {
+        "en-us": "Kaeya"
+    },
+    "通常攻撃·儀典の剣術": {
+        "en-us": "Normal Attack: Ceremonial Bladework"
+    },
+    "霜の襲撃": {
+        "en-us": "Frostgnaw"
+    },
+    "凛冽なる輪舞": {
+        "en-us": "Glacial Waltz"
+    },
+    "冷血の剣": {
+        "en-us": "Cold-Blooded Strike"
+    },
+    "氷淵の心": {
+        "en-us": "Glacial Heart"
+    },
+    "秘められた実力": {
+        "en-us": "Hidden Strength"
+    },
+    "アーロイ": {
+        "en-us": "Aloy"
+    },
+    "通常攻撃·ラピッドファイア": {
+        "en-us": "Normal Attack: Rapid Fire"
+    },
+    "凍てついた大地": {
+        "en-us": "Frozen Wilds"
+    },
+    "ドーンプロフェシー": {
+        "en-us": "Prophecies of Dawn"
+    },
+    "戦闘オーバーライド": {
+        "en-us": "Combat Override"
+    },
+    "強打": {
+        "en-us": "Strong Strike"
+    },
+    "まあまあ落ち着け": {
+        "en-us": "Easy Does It"
+    },
+    "甘雨": {
+        "en-us": "Ganyu"
+    },
+    "通常攻撃·流天射術": {
+        "en-us": "Normal Attack: Liutian Archery"
+    },
+    "山沢麟跡": {
+        "en-us": "Trail of the Qilin"
+    },
+    "降衆天華": {
+        "en-us": "Celestial Shower"
+    },
+    "唯一の心": {
+        "en-us": "Undivided Heart"
+    },
+    "天地安泰": {
+        "en-us": "Harmony between Heaven and Earth"
+    },
+    "弓蔵待命": {
+        "en-us": "Preserved for the Hunt"
+    },
+    "エウルア": {
+        "en-us": "Eula"
+    },
+    "通常攻撃·西風剣術·旧貴族": {
+        "en-us": "Normal Attack: Favonius Bladework - Edel"
+    },
+    "氷潮の渦": {
+        "en-us": "Icetide Vortex"
+    },
+    "氷浪の光剣": {
+        "en-us": "Glacial Illumination"
+    },
+    "氷の残剣": {
+        "en-us": "Roiling Rime"
+    },
+    "戦意の表れ": {
+        "en-us": "Wellspring of War-Lust"
+    },
+    "貴族の省察": {
+        "en-us": "Aristocratic Introspection"
+    },
+    "申鶴": {
+        "en-us": "Shenhe"
+    },
+    "通常攻撃·踏辰摂斗": {
+        "en-us": "Normal Attack: Dawnstar Piercer"
+    },
+    "仰霊威召将役呪": {
+        "en-us": "Spring Spirit Summoning"
+    },
+    "神女遣霊真訣": {
+        "en-us": "Divine Maiden's Deliverance"
+    },
+    "大洞弥羅尊法": {
+        "en-us": "Deific Embrace"
+    },
+    "縛霊通真法印": {
+        "en-us": "Spirit Communion Seal"
+    },
+    "往来通暁": {
+        "en-us": "Precise Comings and Goings"
+    },
+    "神里綾華": {
+        "en-us": "Kamisato Ayaka"
+    },
+    "通常攻撃·神里流·傾き": {
+        "en-us": "Normal Attack: Kamisato Art - Kabuki"
+    },
+    "神里流·氷華": {
+        "en-us": "Kamisato Art: Hyouka"
+    },
+    "神里流·霰歩": {
+        "en-us": "Kamisato Art: Senho"
+    },
+    "神里流·霜滅": {
+        "en-us": "Kamisato Art: Soumetsu"
+    },
+    "天つ罪·国つ罪の鎮詞": {
+        "en-us": "Amatsumi Kunitsumi Sanctification"
+    },
+    "寒空の宣命祝詞": {
+        "en-us": "Kanten Senmyou Blessing"
+    },
+    "鑑査の心得": {
+        "en-us": "Fruits of Shinsa"
+    },
+    "七七": {
+        "en-us": "Qiqi"
+    },
+    "通常攻撃·雲来古剣法": {
+        "en-us": "Normal Attack: Ancient Sword Art"
+    },
+    "仙法·寒病鬼差": {
+        "en-us": "Adeptus Art: Herald of Frost"
+    },
+    "仙法·救苦度厄": {
+        "en-us": "Adeptus Art: Preserver of Fortune"
+    },
+    "延命妙法": {
+        "en-us": "Life-Prolonging Methods"
+    },
+    "玉籤偶開": {
+        "en-us": "A Glimpse Into Arcanum"
+    },
+    "往事記憶": {
+        "en-us": "Former Life Memories"
+    },
+    "フィッシュル": {
+        "en-us": "Fischl"
+    },
+    "通常攻撃·罪滅ぼしの矢": {
+        "en-us": "Normal Attack: Bolts of Downfall"
+    },
+    "夜巡りの翼": {
+        "en-us": "Nightrider"
+    },
+    "夜の幻現": {
+        "en-us": "Midnight Phantasmagoria"
+    },
+    "星喰いの鴉": {
+        "en-us": "Stellar Predator"
+    },
+    "断罪の雷影": {
+        "en-us": "Undone Be Thy Sinful Hex"
+    },
+    "吾の裏庭": {
+        "en-us": "Mein Hausgarten"
+    },
+    "九条裟羅": {
+        "en-us": "Kujou Sara"
+    },
+    "通常攻撃·天狗伝弓術": {
+        "en-us": "Normal Attack: Tengu Bowmanship"
+    },
+    "烏天狗雷霆召呪": {
+        "en-us": "Tengu Stormcall"
+    },
+    "煌煌千道鎮式": {
+        "en-us": "Subjugation: Koukou Sendou"
+    },
+    "不動心": {
+        "en-us": "Immovable Will"
+    },
+    "御公儀": {
+        "en-us": "Decorum"
+    },
+    "検地": {
+        "en-us": "Land Survey"
+    },
+    "リサ": {
+        "en-us": "Lisa"
+    },
+    "通常攻撃·指先の雷": {
+        "en-us": "Normal Attack: Lightning Touch"
+    },
+    "蒼雷": {
+        "en-us": "Violet Arc"
+    },
+    "薔薇の雷光": {
+        "en-us": "Lightning Rose"
+    },
+    "感電余震": {
+        "en-us": "Induced Aftershock"
+    },
+    "静電気フィールド": {
+        "en-us": "Static Electricity Field"
+    },
+    "薬剤の知識": {
+        "en-us": "General Pharmaceutics"
+    },
+    "北斗": {
+        "en-us": "Beidou"
+    },
+    "通常攻撃·征浪": {
+        "en-us": "Normal Attack: Oceanborne"
+    },
+    "浪追い": {
+        "en-us": "Tidecaller"
+    },
+    "雷斫り": {
+        "en-us": "Stormbreaker"
+    },
+    "完全なる霊光": {
+        "en-us": "Retribution"
+    },
+    "満天の霹靂": {
+        "en-us": "Lightning Storm"
+    },
+    "怒濤踏み": {
+        "en-us": "Conqueror of Tides"
+    },
+    "レザー": {
+        "en-us": "Razor"
+    },
+    "通常攻撃·鋼の脊": {
+        "en-us": "Normal Attack: Steel Fang"
+    },
+    "鋭い爪と蒼雷": {
+        "en-us": "Claw and Thunder"
+    },
+    "雷牙": {
+        "en-us": "Lightning Fang"
+    },
+    "覚醒": {
+        "en-us": "Awakening"
+    },
+    "飢餓": {
+        "en-us": "Hunger"
+    },
+    "奔狼": {
+        "en-us": "Wolvensprint"
+    },
+    "久岐忍": {
+        "en-us": "Kuki Shinobu"
+    },
+    "通常攻撃·忍流飛刃斬り": {
+        "en-us": "Normal Attack: Shinobu's Shadowsword"
+    },
+    "越祓雷草の輪": {
+        "en-us": "Sanctifying Ring"
+    },
+    "御詠鳴神刈山祭": {
+        "en-us": "Gyoei Narukami Kariyama Rite"
+    },
+    "檻を破る志": {
+        "en-us": "Breaking Free"
+    },
+    "安心の処": {
+        "en-us": "Heart's Repose"
+    },
+    "永き刻の祈り": {
+        "en-us": "Protracted Prayers"
+    },
+    "八重神子": {
+        "en-us": "Yae Miko"
+    },
+    "通常攻撃·狐霊罪喰い式": {
+        "en-us": "Normal Attack: Spiritfox Sin-Eater"
+    },
+    "野干役呪·殺生櫻": {
+        "en-us": "Yakan Evocation: Sesshou Sakura"
+    },
+    "大密法·天狐顕現": {
+        "en-us": "Great Secret Art: Tenko Kenshin"
+    },
+    "神籬之御蔭": {
+        "en-us": "The Shrine's Sacred Shade"
+    },
+    "啓蟄之祝詞": {
+        "en-us": "Enlightened Blessing"
+    },
+    "野狐説禅": {
+        "en-us": "Meditations of a Yako"
+    },
+    "雷電将軍": {
+        "en-us": "Raiden Shogun"
+    },
+    "通常攻撃·源流": {
+        "en-us": "Normal Attack: Origin"
+    },
+    "神変·悪曜開眼": {
+        "en-us": "Transcendence: Baleful Omen"
+    },
+    "奥義·夢想真説": {
+        "en-us": "Secret Art: Musou Shinsetsu"
+    },
+    "千万の願望": {
+        "en-us": "Wishes Unnumbered"
+    },
+    "殊勝な御体": {
+        "en-us": "Enlightened One"
+    },
+    "天下名物狩り": {
+        "en-us": "All-Preserver"
+    },
+    "刻晴": {
+        "en-us": "Keqing"
+    },
+    "通常攻撃·雲来剣法": {
+        "en-us": "Normal Attack: Yunlai Swordsmanship"
+    },
+    "星辰帰位": {
+        "en-us": "Stellar Restoration"
+    },
+    "天街巡遊": {
+        "en-us": "Starward Sword"
+    },
+    "抵天の雷罰": {
+        "en-us": "Thundering Penance"
+    },
+    "玉衡の貴": {
+        "en-us": "Aristocratic Dignity"
+    },
+    "総務土地": {
+        "en-us": "Land's Overseer"
+    },
+    "通常攻撃·異邦の驚雷": {
+        "en-us": "Normal Attack: Foreign Thundershock"
+    },
+    "雷影剣": {
+        "en-us": "Lightning Blade"
+    },
+    "電光雷轟": {
+        "en-us": "Bellowing Thunder"
+    },
+    "転瞬の迅雷": {
+        "en-us": "Thunderflash"
+    },
+    "轟く雷鳴": {
+        "en-us": "Resounding Roar"
+    },
+    "ゴロー": {
+        "en-us": "Gorou"
+    },
+    "通常攻撃·獣牙裂扇矢": {
+        "en-us": "Normal Attack: Ripping Fang Fletching"
+    },
+    "犬坂の遠吠え方円陣": {
+        "en-us": "Inuzaka All-Round Defense"
+    },
+    "獣牙突撃陣形戦法": {
+        "en-us": "Juuga: Forward Unto Victory"
+    },
+    "風雨を恐れず": {
+        "en-us": "Heedless of the Wind and Weather"
+    },
+    "報恩の守護": {
+        "en-us": "A Favor Repaid"
+    },
+    "キラキラ発見術": {
+        "en-us": "Seeker of Shinies"
+    },
+    "凝光": {
+        "en-us": "Ningguang"
+    },
+    "通常攻撃·千金擲": {
+        "en-us": "Normal Attack: Sparkling Scatter"
+    },
+    "璇璣屏": {
+        "en-us": "Jade Screen"
+    },
+    "天権崩玉": {
+        "en-us": "Starshatter"
+    },
+    "物換星移": {
+        "en-us": "Backup Plan"
+    },
+    "備えあれば憂いなし": {
+        "en-us": "Strategic Reserve"
+    },
+    "奇石宝物録": {
+        "en-us": "Trove of Marvelous Treasures"
+    },
+    "ノエル": {
+        "en-us": "Noelle"
+    },
+    "通常攻撃·西風剣術·メイド": {
+        "en-us": "Normal Attack: Favonius Bladework - Maid"
+    },
+    "護心鎧": {
+        "en-us": "Breastplate"
+    },
+    "大掃除": {
+        "en-us": "Sweeping Time"
+    },
+    "誠心誠意": {
+        "en-us": "Devotion"
+    },
+    "きれいさっぱり": {
+        "en-us": "Nice and Clean"
+    },
+    "メイドの仕草": {
+        "en-us": "Maid's Knighthood"
+    },
+    "雲菫": {
+        "en-us": "Yun Jin"
+    },
+    "通常攻撃·拂雲出手": {
+        "en-us": "Normal Attack: Cloud-Grazing Strike"
+    },
+    "旋雲開相": {
+        "en-us": "Opening Flourish"
+    },
+    "破嶂の旌儀": {
+        "en-us": "Cliffbreaker's Banner"
+    },
+    "自我堅守": {
+        "en-us": "True to Oneself"
+    },
+    "独立嶄然": {
+        "en-us": "Breaking Conventions"
+    },
+    "清食養性": {
+        "en-us": "Light Nourishment"
+    },
+    "荒瀧一斗": {
+        "en-us": "Arataki Itto"
+    },
+    "通常攻撃·喧嘩屋伝説": {
+        "en-us": "Normal Attack: Fight Club Legend"
+    },
+    "魔殺絶技·岩牛発破！": {
+        "en-us": "Masatsu Zetsugi: Akaushi Burst!"
+    },
+    "最凶鬼王·一斗轟臨！！": {
+        "en-us": "Royal Descent: Behold, Itto the Evil!"
+    },
+    "荒瀧第一": {
+        "en-us": "Arataki Ichiban"
+    },
+    "赤鬼の血": {
+        "en-us": "Bloodline of the Crimson Oni"
+    },
+    "乾裂枝砕き": {
+        "en-us": "Woodchuck Chucked"
+    },
+    "鍾離": {
+        "en-us": "Zhongli"
+    },
+    "通常攻撃·岩雨": {
+        "en-us": "Normal Attack: Rain of Stone"
+    },
+    "地心": {
+        "en-us": "Dominus Lapidis"
+    },
+    "天星": {
+        "en-us": "Planet Befall"
+    },
+    "岩の宸断": {
+        "en-us": "Resonant Waves"
+    },
+    "贅沢な食饌": {
+        "en-us": "Dominance of Earth"
+    },
+    "結晶推命": {
+        "en-us": "Arcanum of Crystal"
+    },
+    "アルベド": {
+        "en-us": "Albedo"
+    },
+    "通常攻撃·西風剣術·白": {
+        "en-us": "Normal Attack: Favonius Bladework - Weiss"
+    },
+    "創生術·擬似陽華": {
+        "en-us": "Abiogenesis: Solar Isotoma"
+    },
+    "誕生式·大地の潮": {
+        "en-us": "Rite of Progeniture: Tectonic Tide"
+    },
+    "白亜色の気迫": {
+        "en-us": "Calcite Might"
+    },
+    "ホムンクルスの天智": {
+        "en-us": "Homuncular Nature"
+    },
+    "天才の気付き": {
+        "en-us": "Flash of Genius"
+    },
+    "通常攻撃·異邦の岩峰": {
+        "en-us": "Normal Attack: Foreign Rockblade"
+    },
+    "星落としの剣": {
+        "en-us": "Starfell Sword"
+    },
+    "岩潮幾重": {
+        "en-us": "Wake of Earth"
+    },
+    "破れた断崖": {
+        "en-us": "Shattered Darkrock"
+    },
+    "狂乱の岩崩れ": {
+        "en-us": "Frenzied Rockslide"
+    },
+    "バーバラ": {
+        "en-us": "Barbara"
+    },
+    "通常攻撃·水の囁き": {
+        "en-us": "Normal Attack: Whisper of Water"
+    },
+    "公演、開始♪": {
+        "en-us": "Let the Show Begin♪"
+    },
+    "シャイニングミラクル♪": {
+        "en-us": "Shining Miracle♪"
+    },
+    "輝く季節": {
+        "en-us": "Glorious Season"
+    },
+    "アンコール": {
+        "en-us": "Encore"
+    },
+    "気持ち♪注入": {
+        "en-us": "With My Whole Heart♪"
+    },
+    "行秋": {
+        "en-us": "Xingqiu"
+    },
+    "通常攻撃·古華剣法": {
+        "en-us": "Normal Attack: Guhua Style"
+    },
+    "古華剣·画雨籠山": {
+        "en-us": "Guhua Sword: Fatal Rainscreen"
+    },
+    "古華剣·裁雨留虹": {
+        "en-us": "Guhua Sword: Raincutter"
+    },
+    "水生みの要訣": {
+        "en-us": "Hydropathic"
+    },
+    "虚実の筆": {
+        "en-us": "Blades Amidst Raindrops"
+    },
+    "靈光突如": {
+        "en-us": "Flash of Genius"
+    },
+    "タルタリヤ": {
+        "en-us": "Tartaglia"
+    },
+    "通常攻撃·断雨": {
+        "en-us": "Normal Attack: Cutting Torrent"
+    },
+    "魔王の武装·荒波": {
+        "en-us": "Foul Legacy: Raging Tide"
+    },
+    "極悪技·尽滅閃": {
+        "en-us": "Havoc: Obliteration"
+    },
+    "無尽蔵": {
+        "en-us": "Never Ending"
+    },
+    "水形剣": {
+        "en-us": "Sword of Torrents"
+    },
+    "武芸マスター": {
+        "en-us": "Master of Weaponry"
+    },
+    "夜蘭": {
+        "en-us": "Yelan"
+    },
+    "通常攻撃·匿影隠曜の弓": {
+        "en-us": "Normal Attack: Stealthy Bowshot"
+    },
+    "絡み合う命の糸": {
+        "en-us": "Lingering Lifeline"
+    },
+    "深謀玲瓏賽": {
+        "en-us": "Depth-Clarion Dice"
+    },
+    "先後の決め手": {
+        "en-us": "Turn Control"
+    },
+    "気随気儘": {
+        "en-us": "Adapt With Ease"
+    },
+    "長考一手": {
+        "en-us": "Necessary Calculation"
+    },
+    "モナ": {
+        "en-us": "Mona"
+    },
+    "通常攻撃·因果点破": {
+        "en-us": "Normal Attack: Ripple of Fate"
+    },
+    "水中幻願": {
+        "en-us": "Mirror Reflection of Doom"
+    },
+    "虚実流動": {
+        "en-us": "Illusory Torrent"
+    },
+    "星命定軌": {
+        "en-us": "Stellaris Phantasm"
+    },
+    "「おばば、私を捕まえられますか～」": {
+        "en-us": "\"Come 'n' Get Me, Hag!\""
+    },
+    "「運命の流れに任せましょう！」": {
+        "en-us": "Waterborne Destiny"
+    },
+    "運行原理": {
+        "en-us": "Principium of Astrology"
+    },
+    "珊瑚宮心海": {
+        "en-us": "Sangonomiya Kokomi"
+    },
+    "通常攻撃·水の常形": {
+        "en-us": "Normal Attack: The Shape of Water"
+    },
+    "海月の誓い": {
+        "en-us": "Kurage's Oath"
+    },
+    "海人の羽衣": {
+        "en-us": "Nereid's Ascension"
+    },
+    "葛籠の中の玉櫛": {
+        "en-us": "Tamanooya's Casket"
+    },
+    "真珠の御唄": {
+        "en-us": "Song of Pearls"
+    },
+    "海祇の姬君": {
+        "en-us": "Princess of Watatsumi"
+    },
+    "神里綾人": {
+        "en-us": "Kamisato Ayato"
+    },
+    "通常攻撃·神里流·転": {
+        "en-us": "Normal Attack: Kamisato Art - Marobashi"
+    },
+    "神里流·鏡花": {
+        "en-us": "Kamisato Art: Kyouka"
+    },
+    "神里流·水囿": {
+        "en-us": "Kamisato Art: Suiyuu"
+    },
+    "神里流·峰を纏いし清滝": {
+        "en-us": "Kamisato Art: Mine Wo Matoishi Kiyotaki"
+    },
+    "神里流·満ちゆく破月": {
+        "en-us": "Kamisato Art: Michiyuku Hagetsu"
+    },
+    "神里流·日常茶飯": {
+        "en-us": "Kamisato Art: Daily Cooking"
+    },
+    "アンバー": {
+        "en-us": "Amber"
+    },
+    "通常攻撃·一流射手": {
+        "en-us": "Normal Attack: Sharpshooter"
+    },
+    "爆弾人形": {
+        "en-us": "Explosive Puppet"
+    },
+    "矢の雨": {
+        "en-us": "Fiery Rain"
+    },
+    "百発百中！": {
+        "en-us": "Every Arrow Finds Its Target"
+    },
+    "制圧射撃": {
+        "en-us": "Precise Shot"
+    },
+    "飛行チャンピオン": {
+        "en-us": "Gliding Champion"
+    },
+    "煙緋": {
+        "en-us": "Yanfei"
+    },
+    "通常攻撃·封蝋の印": {
+        "en-us": "Normal Attack: Seal of Approval"
+    },
+    "丹書契約": {
+        "en-us": "Signed Edict"
+    },
+    "契約成立": {
+        "en-us": "Done Deal"
+    },
+    "関連条約": {
+        "en-us": "Proviso"
+    },
+    "法獣の灼眼": {
+        "en-us": "Blazing Eye"
+    },
+    "法律百科": {
+        "en-us": "Encyclopedic Expertise"
+    },
+    "辛炎": {
+        "en-us": "Xinyan"
+    },
+    "通常攻撃·炎舞": {
+        "en-us": "Normal Attack: Dance on Fire"
+    },
+    "情熱の薙ぎ払い": {
+        "en-us": "Sweeping Fervor"
+    },
+    "反逆の弾き": {
+        "en-us": "Riff Revolution"
+    },
+    "「観客いなくても演奏するのだ…」": {
+        "en-us": "\"The Show Goes On, Even Without An Audience...\""
+    },
+    "「…これこそがロックだ！」": {
+        "en-us": "\"...Now That's Rock 'N' Roll!\""
+    },
+    "タフレシピ": {
+        "en-us": "A Rad Recipe"
+    },
+    "トーマ": {
+        "en-us": "Thoma"
+    },
+    "通常攻撃·瞬破槍勢": {
+        "en-us": "Normal Attack: Swiftshatter Spear"
+    },
+    "烈炎侍立": {
+        "en-us": "Blazing Blessing"
+    },
+    "真紅熾炎の大鎧": {
+        "en-us": "Crimson Ooyoroi"
+    },
+    "重装甲胄": {
+        "en-us": "Imbricated Armor"
+    },
+    "進撃の烈炎": {
+        "en-us": "Flaming Assault"
+    },
+    "懸鯛狩り": {
+        "en-us": "Snap and Swing"
+    },
+    "香菱": {
+        "en-us": "Xiangling"
+    },
+    "通常攻撃·料理技法": {
+        "en-us": "Normal Attack: Dough-Fu"
+    },
+    "グゥオパァー出撃": {
+        "en-us": "Guoba Attack"
+    },
+    "旋火輪": {
+        "en-us": "Pyronado"
+    },
+    "交差する炎": {
+        "en-us": "Crossfire"
+    },
+    "激辛唐辛子": {
+        "en-us": "Beware, It's Super Hot!"
+    },
+    "万民堂のシェフ": {
+        "en-us": "Chef de Cuisine"
+    },
+    "ベネット": {
+        "en-us": "Bennett"
+    },
+    "通常攻撃·好運の剣": {
+        "en-us": "Normal Attack: Strike of Fortune"
+    },
+    "溢れる情熱": {
+        "en-us": "Passion Overload"
+    },
+    "素晴らしい旅": {
+        "en-us": "Fantastic Voyage"
+    },
+    "情熱復活": {
+        "en-us": "Rekindle"
+    },
+    "恐れなき熱血": {
+        "en-us": "Fearnaught"
+    },
+    "多分安全": {
+        "en-us": "It Should Be Safe..."
+    },
+    "宵宮": {
+        "en-us": "Yoimiya"
+    },
+    "通常攻撃·打ち上げ花火": {
+        "en-us": "Normal Attack: Firework Flare-Up"
+    },
+    "焔硝の庭火舞い": {
+        "en-us": "Niwabi Fire-Dance"
+    },
+    "琉金の雲間草": {
+        "en-us": "Ryuukin Saxifrage"
+    },
+    "袖火百景図": {
+        "en-us": "Tricks of the Trouble-Maker"
+    },
+    "炎昼の風物詩": {
+        "en-us": "Summer Night's Dawn"
+    },
+    "炎色の配合法": {
+        "en-us": "Blazing Match"
+    },
+    "クレー": {
+        "en-us": "Klee"
+    },
+    "通常攻撃·バンバン": {
+        "en-us": "Normal Attack: Kaboom!"
+    },
+    "ボンボン爆弾": {
+        "en-us": "Jumpy Dumpty"
+    },
+    "ドッカン花火": {
+        "en-us": "Sparks 'n' Splash"
+    },
+    "こんこんプレゼント": {
+        "en-us": "Pounding Surprise"
+    },
+    "無限花火": {
+        "en-us": "Sparkling Burst"
+    },
+    "宝物揃い": {
+        "en-us": "All Of My Treasures!"
+    },
+    "ディルック": {
+        "en-us": "Diluc"
+    },
+    "通常攻撃·百煉の剣": {
+        "en-us": "Normal Attack: Tempered Sword"
+    },
+    "逆焔の刃": {
+        "en-us": "Searing Onslaught"
+    },
+    "黎明": {
+        "en-us": "Dawn"
+    },
+    "ノンストップ": {
+        "en-us": "Relentless"
+    },
+    "溶融の翼": {
+        "en-us": "Blessing of Phoenix"
+    },
+    "アカツキの伝統": {
+        "en-us": "Tradition of the Dawn Knight"
+    },
+    "胡桃": {
+        "en-us": "Hu Tao"
+    },
+    "通常攻撃·往生秘伝槍法": {
+        "en-us": "Normal Attack: Secret Spear of Wangsheng"
+    },
+    "蝶導来世": {
+        "en-us": "Guide to Afterlife"
+    },
+    "安神秘法": {
+        "en-us": "Spirit Soother"
+    },
+    "蝶隠の時": {
+        "en-us": "Flutter By"
+    },
+    "血のかまど": {
+        "en-us": "Sanguine Rouge"
+    },
+    "多々益善": {
+        "en-us": "The More the Merrier"
+    },
+    "狩猟弓": {
+        "en-us": "Hunter's Bow"
+    },
+    "歴戦の狩猟弓": {
+        "en-us": "Seasoned Hunter's Bow"
+    },
+    "文使い": {
+        "en-us": "Messenger"
+    },
+    "鴉羽の弓": {
+        "en-us": "Raven Bow"
+    },
+    "リカーブボウ": {
+        "en-us": "Recurve Bow"
+    },
+    "シャープシューターの誓い": {
+        "en-us": "Sharpshooter's Oath"
+    },
+    "弾弓": {
+        "en-us": "Slingshot"
+    },
+    "ダークアレイの狩人": {
+        "en-us": "Alley Hunter"
+    },
+    "黒岩の戦弓": {
+        "en-us": "Blackcliff Warbow"
+    },
+    "リングボウ": {
+        "en-us": "Compound Bow"
+    },
+    "落霞": {
+        "en-us": "Fading Twilight"
+    },
+    "西風猟弓": {
+        "en-us": "Favonius Warbow"
+    },
+    "破魔の弓": {
+        "en-us": "Hamayumi"
+    },
+    "幽夜のワルツ": {
+        "en-us": "Mitternachts Waltz"
+    },
+    "曚雲の月": {
+        "en-us": "Mouun's Moon"
+    },
+    "プレデター": {
+        "en-us": "Predator"
+    },
+    "澹月·試作": {
+        "en-us": "Prototype Crescent"
+    },
+    "旧貴族長弓": {
+        "en-us": "Royal Bow"
+    },
+    "弓蔵": {
+        "en-us": "Rust"
+    },
+    "祭礼の弓": {
+        "en-us": "Sacrificial Bow"
+    },
+    "絶弦": {
+        "en-us": "The Stringless"
+    },
+    "蒼翠の狩猟弓": {
+        "en-us": "The Viridescent Hunt"
+    },
+    "風花の頌歌": {
+        "en-us": "Windblume Ode"
+    },
+    "アモスの弓": {
+        "en-us": "Amos' Bow"
+    },
+    "若水": {
+        "en-us": "Aqua Simulacra"
+    },
+    "終焉を嘆く詩": {
+        "en-us": "Elegy for the End"
+    },
+    "冬極の白星": {
+        "en-us": "Polar Star"
+    },
+    "天空の翼": {
+        "en-us": "Skyward Harp"
+    },
+    "飛雷の鳴弦": {
+        "en-us": "Thundering Pulse"
+    },
+    "生徒ノート": {
+        "en-us": "Apprentice's Notes"
+    },
+    "ポケット魔導書": {
+        "en-us": "Pocket Grimoire"
+    },
+    "翡玉法珠": {
+        "en-us": "Emerald Orb"
+    },
+    "魔導緒論": {
+        "en-us": "Magic Guide"
+    },
+    "異世界旅行記": {
+        "en-us": "Otherworldly Story"
+    },
+    "龍殺しの英傑譚": {
+        "en-us": "Thrilling Tales of Dragon Slayers"
+    },
+    "特級の宝玉": {
+        "en-us": "Twin Nephrite"
+    },
+    "黒岩の緋玉": {
+        "en-us": "Blackcliff Agate"
+    },
+    "ドドコの物語": {
+        "en-us": "Dodoco Tales"
+    },
+    "昭心": {
+        "en-us": "Eye of Perception"
+    },
+    "西風秘典": {
+        "en-us": "Favonius Codex"
+    },
+    "冬忍びの実": {
+        "en-us": "Frostbearer"
+    },
+    "白辰の輪": {
+        "en-us": "Hakushin Ring"
+    },
+    "万国諸海の図譜": {
+        "en-us": "Mappa Mare"
+    },
+    "誓いの明瞳": {
+        "en-us": "Oathsworn Eye"
+    },
+    "金珀·試作": {
+        "en-us": "Prototype Amber"
+    },
+    "旧貴族秘法録": {
+        "en-us": "Royal Grimoire"
+    },
+    "祭礼の断片": {
+        "en-us": "Sacrificial Fragments"
+    },
+    "匣中日月": {
+        "en-us": "Solar Pearl"
+    },
+    "流浪楽章": {
+        "en-us": "The Widsith"
+    },
+    "ダークアレイの酒と詩": {
+        "en-us": "Wine and Song"
+    },
+    "不滅の月華": {
+        "en-us": "Everlasting Moonglow"
+    },
+    "神楽の真意": {
+        "en-us": "Kagura's Verity"
+    },
+    "四風原典": {
+        "en-us": "Lost Prayer to the Sacred Winds"
+    },
+    "浮世の錠": {
+        "en-us": "Memory of Dust"
+    },
+    "天空の巻": {
+        "en-us": "Skyward Atlas"
+    },
+    "訓練用大剣": {
+        "en-us": "Waster Greatsword"
+    },
+    "傭兵の重剣": {
+        "en-us": "Old Merc's Pal"
+    },
+    "龍血を浴びた剣": {
+        "en-us": "Bloodtainted Greatsword"
+    },
+    "理屈責め": {
+        "en-us": "Debate Club"
+    },
+    "鉄影段平": {
+        "en-us": "Ferrous Shadow"
+    },
+    "飛天大御剣": {
+        "en-us": "Skyrider Greatsword"
+    },
+    "白鉄の大剣": {
+        "en-us": "White Iron Greatsword"
+    },
+    "惡王丸": {
+        "en-us": "Akuoumaru"
+    },
+    "天目影打": {
+        "en-us": "Amenoma Kageuchi"
+    },
+    "黒岩の斬刀": {
+        "en-us": "Blackcliff Slasher"
+    },
+    "西風大剣": {
+        "en-us": "Favonius Greatsword"
+    },
+    "桂木斬長正": {
+        "en-us": "Katsuragikiri Nagamasa"
+    },
+    "千岩古剣": {
+        "en-us": "Lithic Blade"
+    },
+    "銜玉の海皇": {
+        "en-us": "Luxurious Sea-Lord"
+    },
+    "古華·試作": {
+        "en-us": "Prototype Archaic"
+    },
+    "雨裁": {
+        "en-us": "Rainslasher"
+    },
+    "旧貴族大剣": {
+        "en-us": "Royal Greatsword"
+    },
+    "祭礼の大剣": {
+        "en-us": "Sacrificial Greatsword"
+    },
+    "螭龍の剣": {
+        "en-us": "Serpent Spine"
+    },
+    "雪葬の星銀": {
+        "en-us": "Snow-Tombed Starsilver"
+    },
+    "鐘の剣": {
+        "en-us": "The Bell"
+    },
+    "白影の剣": {
+        "en-us": "Whiteblind"
+    },
+    "赤角石塵滅砕": {
+        "en-us": "Redhorn Stonethresher"
+    },
+    "天空の傲": {
+        "en-us": "Skyward Pride"
+    },
+    "松韻の響く頃": {
+        "en-us": "Song of Broken Pines"
+    },
+    "無工の剣": {
+        "en-us": "The Unforged"
+    },
+    "狼の末路": {
+        "en-us": "Wolf's Gravestone"
+    },
+    "新米の長槍": {
+        "en-us": "Beginner's Protector"
+    },
+    "鉄尖槍": {
+        "en-us": "Iron Point"
+    },
+    "黒纓槍": {
+        "en-us": "Black Tassel"
+    },
+    "鉾槍": {
+        "en-us": "Halberd"
+    },
+    "白纓槍": {
+        "en-us": "White Tassel"
+    },
+    "黒岩の突槍": {
+        "en-us": "Blackcliff Pole"
+    },
+    "流月の針": {
+        "en-us": "Crescent Pike"
+    },
+    "死闘の槍": {
+        "en-us": "Deathmatch"
+    },
+    "匣中滅龍": {
+        "en-us": "Dragon's Bane"
+    },
+    "ドラゴンスピア": {
+        "en-us": "Dragonspine Spear"
+    },
+    "西風長槍": {
+        "en-us": "Favonius Lance"
+    },
+    "喜多院十文字槍": {
+        "en-us": "Kitain Cross Spear"
+    },
+    "千岩長槍": {
+        "en-us": "Lithic Spear"
+    },
+    "星鎌·試作": {
+        "en-us": "Prototype Starglitter"
+    },
+    "旧貴族猟槍": {
+        "en-us": "Royal Spear"
+    },
+    "「漁獲」": {
+        "en-us": "\"The Catch\""
+    },
+    "斬波のひれ長": {
+        "en-us": "Wavebreaker's Fin"
+    },
+    "息災": {
+        "en-us": "Calamity Queller"
+    },
+    "草薙の稲光": {
+        "en-us": "Engulfing Lightning"
+    },
+    "和璞鳶": {
+        "en-us": "Primordial Jade Winged-Spear"
+    },
+    "天空の脊": {
+        "en-us": "Skyward Spine"
+    },
+    "護摩の杖": {
+        "en-us": "Staff of Homa"
+    },
+    "破天の槍": {
+        "en-us": "Vortex Vanquisher"
+    },
+    "無鋒の剣": {
+        "en-us": "Dull Blade"
+    },
+    "銀の剣": {
+        "en-us": "Silver Sword"
+    },
+    "冷刃": {
+        "en-us": "Cool Steel"
+    },
+    "暗鉄剣": {
+        "en-us": "Dark Iron Sword"
+    },
+    "チ虎魚の刀": {
+        "en-us": "Fillet Blade"
+    },
+    "黎明の神剣": {
+        "en-us": "Harbinger of Dawn"
+    },
+    "飛天御剣": {
+        "en-us": "Skyrider Sword"
+    },
+    "旅道の剣": {
+        "en-us": "Traveler's Handy Sword"
+    },
+    "黒岩の長剣": {
+        "en-us": "Blackcliff Longsword"
+    },
+    "シナバースピンドル": {
+        "en-us": "Cinnabar Spindle"
+    },
+    "西風剣": {
+        "en-us": "Favonius Sword"
+    },
+    "腐植の剣": {
+        "en-us": "Festering Desire"
+    },
+    "鉄蜂の刺し": {
+        "en-us": "Iron Sting"
+    },
+    "籠釣瓶一心": {
+        "en-us": "Kagotsurube Isshin"
+    },
+    "匣中龍吟": {
+        "en-us": "Lion's Roar"
+    },
+    "斬岩·試作": {
+        "en-us": "Prototype Rancour"
+    },
+    "旧貴族長剣": {
+        "en-us": "Royal Longsword"
+    },
+    "祭礼の剣": {
+        "en-us": "Sacrificial Sword"
+    },
+    "降臨の剣": {
+        "en-us": "Sword of Descension"
+    },
+    "ダークアレイの閃光": {
+        "en-us": "The Alley Flash"
+    },
+    "黒剣": {
+        "en-us": "The Black Sword"
+    },
+    "笛の剣": {
+        "en-us": "The Flute"
+    },
+    "風鷹剣": {
+        "en-us": "Aquila Favonia"
+    },
+    "蒼古なる自由への誓い": {
+        "en-us": "Freedom-Sworn"
+    },
+    "波乱月白経津": {
+        "en-us": "Haran Geppaku Futsu"
+    },
+    "霧切の廻光": {
+        "en-us": "Mistsplitter Reforged"
+    },
+    "磐岩結緑": {
+        "en-us": "Primordial Jade Cutter"
+    },
+    "天空の刃": {
+        "en-us": "Skyward Blade"
+    },
+    "斬山の刃": {
+        "en-us": "Summit Shaper"
+    },
+    "Level": {
+        "en-us": "Level"
+    },
+    "重撃スタミナ消費": {
+        "en-us": "Charged Attack Stamina Cost"
+    },
+    "低空/高空落下攻撃ダメージ": {
+        "en-us": "Low/High Plunge DMG"
+    },
+    "変格によるダメージアップ": {
+        "en-us": "Declension DMG Bonus"
+    },
+    "正論によるダメージアップ": {
+        "en-us": "Conviction DMG Bonus"
+    },
+    "変格継続時間": {
+        "en-us": "Declension Duration"
+    },
+    "クールタイム": {
+        "en-us": "CD"
+    },
+    "不動流·真空弾ダメージ": {
+        "en-us": "Fudou Style Vacuum Slugger DMG"
+    },
+    "廻風真眼ダメージ": {
+        "en-us": "Windmuster Iris DMG"
+    },
+    "元素エネルギー": {
+        "en-us": "Energy Cost"
+    },
+    "継続ダメージ": {
+        "en-us": "DoT"
+    },
+    "付加元素ダメージ": {
+        "en-us": "Additional Elemental DMG"
+    },
+    "継続時間": {
+        "en-us": "Duration"
+    },
+    "連続重撃ダメージ": {
+        "en-us": "Charged Attack Spinning DMG"
+    },
+    "重撃終了ダメージ": {
+        "en-us": "Charged Attack Final DMG"
+    },
+    "最大継続時間": {
+        "en-us": "Max Duration"
+    },
+    "風々輪ダメージ": {
+        "en-us": "Fuufuu Windwheel DMG"
+    },
+    "風々輪·旋舞蹴一回押しダメージ": {
+        "en-us": "Fuufuu Whirlwind Kick Tapping/Press DMG"
+    },
+    "風々輪·旋舞蹴長押しダメージ": {
+        "en-us": "Fuufuu Whirlwind Kick Hold DMG"
+    },
+    "風々輪追加元素ダメージ": {
+        "en-us": "Fuufuu Windwheel Elemental DMG"
+    },
+    "風々輪·旋舞蹴長押し追加元素ダメージ": {
+        "en-us": "Fuufuu Whirlwind Kick Elemental DMG"
+    },
+    "長押し最大継続時間": {
+        "en-us": "Max Duration (Hold)"
+    },
+    "スキル発動ダメージ": {
+        "en-us": "Skill Activation DMG"
+    },
+    "スキル発動回復量": {
+        "en-us": "Skill Activation Healing"
+    },
+    "むじむじだるまダメージ": {
+        "en-us": "Muji-Muji Daruma DMG"
+    },
+    "むじむじだるま回復量": {
+        "en-us": "Muji-Muji Daruma Healing"
+    },
+    "一回押しダメージ": {
+        "en-us": "Tapping/Press DMG"
+    },
+    "一回押しクールタイム": {
+        "en-us": "Tapping/Press CD"
+    },
+    "長押しダメージ": {
+        "en-us": "Hold DMG"
+    },
+    "長押しクールタイム": {
+        "en-us": "CD (hold)"
+    },
+    "通常攻撃/重撃/落下攻撃ダメージアップ": {
+        "en-us": "Normal/Charged/Plunging Attack DMG Bonus"
+    },
+    "HP減少": {
+        "en-us": "Life Drain"
+    },
+    "スタミナ消費": {
+        "en-us": "Stamina Consumption"
+    },
+    "爆発ダメージ": {
+        "en-us": "Explosion DMG"
+    },
+    "エリア出入りダメージ": {
+        "en-us": "Field Entering/Exiting DMG"
+    },
+    "エリア内の回復量": {
+        "en-us": "Field Activation Healing"
+    },
+    "継続回復": {
+        "en-us": "Continuous Regeneration Per Sec"
+    },
+    "一回押しスキルダメージ": {
+        "en-us": "Tapping/Press Skill DMG"
+    },
+    "長押しスキルダメージ": {
+        "en-us": "Hold Skill DMG"
+    },
+    "斬撃ダメージ": {
+        "en-us": "Slashing DMG"
+    },
+    "初期切裂ダメージ": {
+        "en-us": "Initial Cutting DMG"
+    },
+    "最大切裂ダメージ": {
+        "en-us": "Max Cutting DMG"
+    },
+    "初期爆風ダメージ": {
+        "en-us": "Initial Storm DMG"
+    },
+    "最大爆風ダメージ": {
+        "en-us": "Max Storm DMG"
+    },
+    "基本クールタイム": {
+        "en-us": "Base CD"
+    },
+    "最大チャージクールタイム": {
+        "en-us": "Max Charging CD"
+    },
+    "竜巻ダメージ": {
+        "en-us": "Tornado DMG"
+    },
+    "キャッツクローダメージ": {
+        "en-us": "Icy Paw DMG"
+    },
+    "シールド基礎吸収量": {
+        "en-us": "Shield Base Absorption"
+    },
+    "エリアの継続ダメージ": {
+        "en-us": "Continuous Field DMG"
+    },
+    "継続回復量": {
+        "en-us": "Continuous Regeneration"
+    },
+    "元素付与継続時間": {
+        "en-us": "Infusion Duration"
+    },
+    "エリア継続時間": {
+        "en-us": "Field Duration"
+    },
+    "氷槍継続ダメージ": {
+        "en-us": "Ice Lance DoT"
+    },
+    "氷の爆弾ダメージ": {
+        "en-us": "Freeze Bomb DMG"
+    },
+    "冷凍爆弾ダメージ": {
+        "en-us": "Chillwater Bomblets"
+    },
+    "攻撃力ダウン": {
+        "en-us": "ATK Decrease"
+    },
+    "攻撃力ダウン継続時間": {
+        "en-us": "ATK Decrease Duration"
+    },
+    "コイル通常攻撃ダメージアップ": {
+        "en-us": "Coil Normal Attack DMG Bonus"
+    },
+    "アイスラッシュ通常攻撃ダメージアップ": {
+        "en-us": "Rushing Ice Normal Attack DMG Bonus"
+    },
+    "アイスラッシュ継続時間": {
+        "en-us": "Rushing Ice Duration"
+    },
+    "1段チャージ狙い撃ち": {
+        "en-us": "Aimed Shot Charge Level 1"
+    },
+    "霜華の矢の命中ダメージ": {
+        "en-us": "Frostflake Arrow DMG"
+    },
+    "霜華の矢·霜華満開ダメージ": {
+        "en-us": "Frostflake Arrow Bloom DMG"
+    },
+    "HP継承": {
+        "en-us": "Inherited HP"
+    },
+    "氷柱ダメージ": {
+        "en-us": "Ice Shard DMG"
+    },
+    "氷渦の剣ダメージ": {
+        "en-us": "Icewhirl Brand DMG"
+    },
+    "防御力アップ": {
+        "en-us": "DEF Increase"
+    },
+    "冷酷な心継続時間": {
+        "en-us": "Grimheart Duration"
+    },
+    "物理耐性ダウン": {
+        "en-us": "Physical RES Decrease"
+    },
+    "氷元素耐性ダウン": {
+        "en-us": "Cryo RES Decrease"
+    },
+    "耐性ダウン時間": {
+        "en-us": "RES Decrease Duration"
+    },
+    "光臨の剣基礎ダメージ": {
+        "en-us": "Lightfall Sword Base DMG"
+    },
+    "エネルギー1重ごとのダメージ": {
+        "en-us": "DMG Per Stack"
+    },
+    "エネルギー数上限": {
+        "en-us": "Maximum Stacks"
+    },
+    "ダメージアップ": {
+        "en-us": "DMG Bonus"
+    },
+    "一回押し/長押し継続時間": {
+        "en-us": "Tap/Press/Hold Duration"
+    },
+    "一回押し/長押し発動回数": {
+        "en-us": "Tap/Press/Hold Trigger Quota"
+    },
+    "耐性ダウン": {
+        "en-us": "RES Decrease"
+    },
+    "発動スタミナ消費": {
+        "en-us": "Activation Stamina Consumption"
+    },
+    "継続スタミナ消費": {
+        "en-us": "Stamina Drain"
+    },
+    "咲きダメージ": {
+        "en-us": "Bloom DMG"
+    },
+    "命中による回復量": {
+        "en-us": "Regeneration on Hit"
+    },
+    "寒病鬼差ダメージ": {
+        "en-us": "Herald of Frost DMG"
+    },
+    "回復量": {
+        "en-us": "Regeneration"
+    },
+    "オズの攻撃ダメージ": {
+        "en-us": "Oz's ATK DMG"
+    },
+    "召喚ダメージ": {
+        "en-us": "Summoning DMG"
+    },
+    "オズの存在時間": {
+        "en-us": "Oz's Duration"
+    },
+    "落雷ダメージ": {
+        "en-us": "Falling Thunder DMG"
+    },
+    "天狗呪雷·伏 ダメージ": {
+        "en-us": "Tengu Juurai: Ambush DMG"
+    },
+    "攻撃力上昇率": {
+        "en-us": "ATK Bonus Ratio"
+    },
+    "攻撃力上昇継続時間": {
+        "en-us": "ATK Bonus Duration"
+    },
+    "天狗呪雷·金剛破 ダメージ": {
+        "en-us": "Tengu Juurai: Titanbreaker DMG"
+    },
+    "天狗呪雷·雷礫 ダメージ": {
+        "en-us": "Tengu Juurai: Stormcluster DMG"
+    },
+    "誘雷なしの長押しダメージ": {
+        "en-us": "Non-Conductive Hold DMG"
+    },
+    "誘雷1重の長押しダメージ": {
+        "en-us": "Stack 1 Conductive Hold DMG"
+    },
+    "誘雷2重の長押しダメージ": {
+        "en-us": "Stack 2 Conductive Hold DMG"
+    },
+    "誘雷3重の長押しダメージ": {
+        "en-us": "Stack 3 Conductive Hold DMG"
+    },
+    "放電ダメージ": {
+        "en-us": "Discharge DMG"
+    },
+    "シールド吸収量": {
+        "en-us": "Shield DMG Absorption"
+    },
+    "基礎ダメージ": {
+        "en-us": "Base DMG"
+    },
+    "被撃時ダメージアップ": {
+        "en-us": "DMG Bonus on Hit Taken"
+    },
+    "稲妻ダメージ": {
+        "en-us": "Lightning DMG"
+    },
+    "ダメージ軽減": {
+        "en-us": "DMG Reduction"
+    },
+    "雷の印によるチャージ効率アップ": {
+        "en-us": "Energy Recharge Bonus"
+    },
+    "雷の印吸収によるエネルギー回復": {
+        "en-us": "Energy Regenerated"
+    },
+    "雷の印の継続時間": {
+        "en-us": "Electro Sigil duration"
+    },
+    "狼の魂のダメージ": {
+        "en-us": "Soul Companion DMG"
+    },
+    "通常攻撃速度アップ": {
+        "en-us": "Normal ATK SPD Bonus"
+    },
+    "雷元素耐性アップ": {
+        "en-us": "Electro RES Bonus"
+    },
+    "越祓草輪治療量": {
+        "en-us": "Grass Ring of Sanctification Healing"
+    },
+    "越祓草輪ダメージ": {
+        "en-us": "Grass Ring of Sanctification DMG"
+    },
+    "スキル消費": {
+        "en-us": "Activation Cost"
+    },
+    "1回のダメージ": {
+        "en-us": "Single Instance DMG"
+    },
+    "合計ダメージ": {
+        "en-us": "Total DMG"
+    },
+    "殺生櫻ダメージ·階位壱": {
+        "en-us": "Sesshou Sakura DMG: Level 1"
+    },
+    "殺生櫻ダメージ·階位弐": {
+        "en-us": "Sesshou Sakura DMG: Level 2"
+    },
+    "殺生櫻ダメージ·階位参": {
+        "en-us": "Sesshou Sakura DMG: Level 3"
+    },
+    "殺生櫻ダメージ·階位肆": {
+        "en-us": "Sesshou Sakura DMG: Level 4"
+    },
+    "天狐雷霆ダメージ": {
+        "en-us": "Tenko Thunderbolt DMG"
+    },
+    "連携攻撃ダメージ": {
+        "en-us": "Coordinated ATK DMG"
+    },
+    "元素爆発ダメージアップ": {
+        "en-us": "Elemental Burst DMG Bonus"
+    },
+    "夢想の一太刀基礎ダメージ": {
+        "en-us": "Musou no Hitotachi Base DMG"
+    },
+    "願力アップ効果": {
+        "en-us": "Resolve Bonus"
+    },
+    "蓄積する願力の層数": {
+        "en-us": "Resolve Stacks Gained"
+    },
+    "夢想の一心エネルギー回復": {
+        "en-us": "Musou Isshin Energy Restoration"
+    },
+    "夢想の一心継続時間": {
+        "en-us": "Musou Isshin Duration"
+    },
+    "雷楔ダメージ": {
+        "en-us": "Lightning Stiletto DMG"
+    },
+    "暴雷連斬ダメージ": {
+        "en-us": "Thunderclap Slash DMG"
+    },
+    "連斬ダメージ": {
+        "en-us": "Consecutive Slash DMG"
+    },
+    "最後の一撃ダメージ": {
+        "en-us": "Last Attack DMG"
+    },
+    "元素エネルギー回復": {
+        "en-us": "Energy Regeneration"
+    },
+    "元素チャージ効率アップ": {
+        "en-us": "Energy Recharge Increase"
+    },
+    "豊穰の勾玉の存在時間": {
+        "en-us": "Abundance Amulet Duration"
+    },
+    "威光の落雷ダメージ": {
+        "en-us": "Falling Thunder DMG"
+    },
+    "岩元素ダメージアップ": {
+        "en-us": "Geo DMG Bonus"
+    },
+    "岩晶崩滅ダメージ": {
+        "en-us": "Crystal Collapse DMG"
+    },
+    "通常攻撃ダメージ": {
+        "en-us": "Normal Attack DMG"
+    },
+    "星璇ダメージ": {
+        "en-us": "DMG per Star Jade"
+    },
+    "宝石ダメージ": {
+        "en-us": "DMG Per Gem"
+    },
+    "吸収量": {
+        "en-us": "DMG Absorption"
+    },
+    "回復発動率": {
+        "en-us": "Healing Triggering Chance"
+    },
+    "攻撃力アップ": {
+        "en-us": "ATK Increase"
+    },
+    "1段チャージダメージ": {
+        "en-us": "Charge Level 1 DMG"
+    },
+    "2段チャージダメージ": {
+        "en-us": "Charge Level 2 DMG"
+    },
+    "発動回数": {
+        "en-us": "Trigger Quota"
+    },
+    "荒瀧逆袈裟連斬ダメージ": {
+        "en-us": "Arataki Kesagiri Combo Slash DMG"
+    },
+    "荒瀧逆袈裟とどめダメージ": {
+        "en-us": "Arataki Kesagiri Final Slash DMG"
+    },
+    "乱神の怪力継続時間": {
+        "en-us": "Superlative Superstrength Duration"
+    },
+    "左一文字斬りダメージ": {
+        "en-us": "Saichimonji Slash DMG"
+    },
+    "左一文字斬りスタミナ消費": {
+        "en-us": "Saichimonji Slash Stamina Cost"
+    },
+    "攻撃速度アップ": {
+        "en-us": "ATK SPD Bonus"
+    },
+    "岩柱ダメージ/共鳴ダメージ": {
+        "en-us": "Stone Stele/Resonance DMG"
+    },
+    "シールド追加吸収量": {
+        "en-us": "Additional Shield Absorption"
+    },
+    "シールド継続時間": {
+        "en-us": "Shield Duration"
+    },
+    "石化時間": {
+        "en-us": "Petrification Duration"
+    },
+    "刹那の花ダメージ": {
+        "en-us": "Transient Blossom DMG"
+    },
+    "スキルクールタイム": {
+        "en-us": "Skill CD"
+    },
+    "生滅の花ダメージ": {
+        "en-us": "Fatal Blossom DMG"
+    },
+    "荒星の継続時間": {
+        "en-us": "Meteorite Duration"
+    },
+    "地震波1回のダメージ": {
+        "en-us": "DMG Per Shockwave"
+    },
+    "岩の山の継続時間": {
+        "en-us": "Stonewall Duration"
+    },
+    "命中回復量": {
+        "en-us": "HP Regeneration Per Hit"
+    },
+    "水玉ダメージ": {
+        "en-us": "Droplet DMG"
+    },
+    "ダメージ軽減率": {
+        "en-us": "Damage Reduction Ratio"
+    },
+    "剣雨のダメージ": {
+        "en-us": "Sword Rain DMG"
+    },
+    "断流·閃 ダメージ": {
+        "en-us": "Riptide Flash DMG"
+    },
+    "断流·破 ダメージ": {
+        "en-us": "Riptide Burst DMG"
+    },
+    "断流継続時間": {
+        "en-us": "Riptide Duration"
+    },
+    "状態切替時に与えるダメージ": {
+        "en-us": "Stance Change DMG"
+    },
+    "断流·斬 ダメージ": {
+        "en-us": "Riptide Slash"
+    },
+    "継続時間終了後のクールタイム": {
+        "en-us": "Max CD"
+    },
+    "スキルダメージ·近接": {
+        "en-us": "Skill DMG: Melee"
+    },
+    "スキルダメージ·遠隔": {
+        "en-us": "Skill DMG: Ranged"
+    },
+    "断流·爆 ダメージ": {
+        "en-us": "Riptide Blast DMG"
+    },
+    "スキルによる元素エネルギー回復（遠隔）": {
+        "en-us": "Energy Return (Ranged)"
+    },
+    "打破の矢ダメージ": {
+        "en-us": "Breakthrough Barb DMG"
+    },
+    "玲瓏一擲ダメージ": {
+        "en-us": "Exquisite Throw DMG"
+    },
+    "爆裂ダメージ": {
+        "en-us": "Explosion DMG"
+    },
+    "泡影の継続時間": {
+        "en-us": "Illusory Bubble Duration"
+    },
+    "泡影破裂ダメージ": {
+        "en-us": "Illusory Bubble Explosion DMG"
+    },
+    "星異継続時間": {
+        "en-us": "Omen Duration"
+    },
+    "波紋ダメージ": {
+        "en-us": "Ripple DMG"
+    },
+    "存在時間": {
+        "en-us": "Duration"
+    },
+    "通常攻撃ダメージアップ": {
+        "en-us": "Normal Attack DMG Bonus"
+    },
+    "重撃ダメージアップ": {
+        "en-us": "Charged Attack DMG Bonus"
+    },
+    "化海月ダメージアップ": {
+        "en-us": "Bake-Kurage DMG Bonus"
+    },
+    "瞬水剣1段ダメージ": {
+        "en-us": "Shunsuiken 1-Hit DMG"
+    },
+    "瞬水剣2段ダメージ": {
+        "en-us": "Shunsuiken 2-Hit DMG"
+    },
+    "瞬水剣3段ダメージ": {
+        "en-us": "Shunsuiken 3-Hit DMG"
+    },
+    "滝廻鑑花継続時間": {
+        "en-us": "Takimeguri Kanka Duration"
+    },
+    "浪閃ダメージアップ": {
+        "en-us": "Namisen DMG Bonus"
+    },
+    "水の幻影ダメージ": {
+        "en-us": "Water Illusion DMG"
+    },
+    "水の幻影継続時間": {
+        "en-us": "Water Illusion Duration"
+    },
+    "水沫剣ダメージ": {
+        "en-us": "Bloomwater Blade DMG"
+    },
+    "矢の雨1回のダメージ": {
+        "en-us": "Fiery Rain DMG Per Wave"
+    },
+    "矢の雨の合計ダメージ": {
+        "en-us": "Total Fiery Rain DMG"
+    },
+    "丹火の印によるスタミナ消費減少": {
+        "en-us": "Scarlet Seal Stamina Consumption Decrease"
+    },
+    "丹火の印持続時間": {
+        "en-us": "Scarlet Seal Duration"
+    },
+    "丹火の印付与間隔": {
+        "en-us": "Scarlet Seal Grant Interval"
+    },
+    "振り回しダメージ": {
+        "en-us": "Swing DMG"
+    },
+    "Lv.1シールド吸収量": {
+        "en-us": "Shield Level 1 DMG Absorption"
+    },
+    "Lv.2シールド吸収量": {
+        "en-us": "Shield Level 2 DMG Absorption"
+    },
+    "Lv.3シールド吸収量": {
+        "en-us": "Shield Level 3 DMG Absorption"
+    },
+    "継続炎元素ダメージ": {
+        "en-us": "Pyro DoT"
+    },
+    "シールド吸収量上限": {
+        "en-us": "Max Shield DMG Absorption"
+    },
+    "熾炎崩滅ダメージ": {
+        "en-us": "Fiery Collapse DMG"
+    },
+    "熾炎の大鎧継続時間": {
+        "en-us": "Scorching Ooyoroi Duration"
+    },
+    "噴火ダメージ": {
+        "en-us": "Flame DMG"
+    },
+    "振り回しによる1段ダメージ": {
+        "en-us": "1-Hit Swing DMG"
+    },
+    "振り回しによる2段ダメージ": {
+        "en-us": "2-Hit Swing DMG"
+    },
+    "振り回しによる3段ダメージ": {
+        "en-us": "3-Hit Swing DMG"
+    },
+    "旋火輪ダメージ": {
+        "en-us": "Pyronado DMG"
+    },
+    "焔硝の矢ダメージ": {
+        "en-us": "Kindling Arrow DMG"
+    },
+    "熾焔の矢ダメージ": {
+        "en-us": "Blazing Arrow DMG"
+    },
+    "琉金の炎爆発ダメージ": {
+        "en-us": "Aurous Blaze Explosion DMG"
+    },
+    "ボンボン爆弾ダメージ": {
+        "en-us": "Jumpy Dumpty DMG"
+    },
+    "ブービートラップダメージ": {
+        "en-us": "Mine DMG"
+    },
+    "ブービートラップ継続時間": {
+        "en-us": "Mine Duration"
+    },
+    "ドッカン花火ダメージ": {
+        "en-us": "Sparks 'n' Splash DMG"
+    },
+    "血梅香ダメージ": {
+        "en-us": "Blood Blossom DMG"
+    },
+    "血梅香継続時間": {
+        "en-us": "Blood Blossom Duration"
+    },
+    "低HP時スキルダメージ": {
+        "en-us": "Low HP Skill DMG"
+    },
+    "スキル回復量": {
+        "en-us": "Skill HP Regeneration"
+    },
+    "低HP時スキル回復量": {
+        "en-us": "Low HP Skill Regeneration"
     }
 }

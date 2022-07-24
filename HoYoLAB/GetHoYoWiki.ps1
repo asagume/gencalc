@@ -21,8 +21,8 @@ $categoryMap = @{
     "5" = "artifacts"
 }
 
-# $xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
-$xRpcLanguages = @("en-us", "ja-jp")
+$xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
+# $xRpcLanguages = @("en-us", "ja-jp")
 
 foreach ($pageId in $pageIds) {
     $uri = "https://sg-wiki-api-static.hoyolab.com/hoyowiki/wapi/entry_page?entry_page_id=" + $pageId
