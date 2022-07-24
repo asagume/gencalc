@@ -3,16 +3,17 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 $pageIds = @()
 # キャラクター
 # $pageIds += @(1..51)
-$pageIds += 19
-#$pageIds += 2252   # 夜蘭
-#$pageIds += 2256   # 久岐忍
-#$pageIds += 2263   # 鹿野院平蔵
+# $pageIds += 2252   # 夜蘭
+# $pageIds += 2256   # 久岐忍
+# $pageIds += 2263   # 鹿野院平蔵
 # 武器
-#$pageIds += @(1930..2060)
-#$pageIds += 2254   # 若水
-#$pageIds += 2255   # 落霞
-#$pageIds += 2264   # 籠釣瓶一心
+$pageIds += @(1930..2060)
+$pageIds += 2254   # 若水
+$pageIds += 2255   # 落霞
+$pageIds += 2264   # 籠釣瓶一心
 # 聖遺物
+
+$doDownloadImg = $false
 
 $categoryMap = @{
     "2" = "characters"
@@ -61,6 +62,7 @@ foreach ($pageId in $pageIds) {
     $menuId = $contentMLang."en-us".menu_id
 
     $jsonFilePath = ""
+    $jsonFileName = ""
 
     if ($menuId -eq 2) {
         # キャラクター
@@ -87,10 +89,11 @@ foreach ($pageId in $pageIds) {
         if (-not (Test-Path $outDirPath)) {
             New-Item -Path $outDirPath -ItemType Directory -Force
         }
-        $jsonFilePath = $basename + ".json"
-        $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
+        # $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
+        $jsonFileName = $basename + ".json"
+        $jsonFilePath = $outDirPath
 
-        if ($contentMLang."en-us"."icon_url") {
+        if ($contentMLang."en-us"."icon_url" -and $doDownloadImg) {
             $imageUrl = $contentMLang."en-us"."icon_url"
             $imageFile = $basename + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\face")
@@ -109,7 +112,7 @@ foreach ($pageId in $pageIds) {
         }
         foreach ($module in $contentMLang."en-us".modules) {
             foreach ($component in $module.components) {
-                if ($component.data) {
+                if ($component.data -and $doDownloadImg) {
                     if ($component.data.list) {
                         foreach ($entry in $component.data.list) {
                             if ($entry.icon_url) {
@@ -135,10 +138,11 @@ foreach ($pageId in $pageIds) {
         if (-not (Test-Path $outDirPath)) {
             New-Item -Path $outDirPath -ItemType Directory -Force
         }
-        $jsonFilePath = $rarity + "_" + $writableName + ".json"
-        $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
+        # $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
+        $jsonFileName = $rarity + "_" + $writableName + ".json"
+        $jsonFilePath = $outDirPath
 
-        if ($contentMLang."en-us"."icon_url") {
+        if ($contentMLang."en-us"."icon_url" -and $doDownloadImg) {
             $imageUrl = $contentMLang."en-us"."icon_url"
             $imageFile = $rarity + "_" + $writableName + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\" + $type)
@@ -152,11 +156,18 @@ foreach ($pageId in $pageIds) {
         # 聖遺物
     }
 
-    if ($jsonFilePath -ne "") {
-        $jsonFilePath = [System.IO.Path]::GetFullPath($jsonFilePath)
-        $jsonFilePath
-
-        $UTF8NoBomEnc = New-Object System.Text.UTF8Encoding $False
-        [System.IO.File]::WriteAllLines($jsonFilePath, (ConvertTo-Json -InputObject $contentMLang."ja-jp" -Depth 100), $UTF8NoBomEnc)        
+    if ($jsonFileName -ne "") {
+        foreach ($xRpcLanguage in $xRpcLanguages) {
+            $outFilePath = Join-Path $jsonFilePath -ChildPath $xRpcLanguage
+            if (-not (Test-Path $outFilePath)) {
+                New-Item -Path $outFilePath -ItemType Directory -Force
+            }
+                $outFilePath = Join-Path $outFilePath -ChildPath $jsonFileName
+            $outFilePath = [System.IO.Path]::GetFullPath($outFilePath)
+            $outFilePath
+    
+            $UTF8NoBomEnc = New-Object System.Text.UTF8Encoding $False
+            [System.IO.File]::WriteAllLines($outFilePath, (ConvertTo-Json -InputObject $contentMLang.$xRpcLanguage -Depth 100), $UTF8NoBomEnc)        
+        }
     }
 }
