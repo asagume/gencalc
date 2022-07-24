@@ -238,11 +238,13 @@
                                 </label>
                                 <div class="tooltip">{{displayName(聖遺物セット効果[1]['名前'])}}</div>
                             </td>
-                            <td rowspan="2" @click="artifactDetailOnClick">
+                            <td rowspan="2">
                                 <button type="button" class="artifact-detail-button">
-                                    <img class="left-icon" src="images/artifact.png" alt="聖遺物詳細">
-                                    <img class="right-icon" src="images/artifact.png" alt="聖遺物詳細">
-                                    {{artifactScore}}
+                                    <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')"
+                                        @click="artifactDetailOnClick">
+                                    <img class="left-icon" src="images/artifact.png" alt="artifact">
+                                    <img class="right-icon" src="images/artifact.png" alt="artifact">
+                                    <div class="absolute-center">{{artifactScore}}</div>
                                 </button>
                             </td>
                         </tr>
@@ -342,158 +344,162 @@
                 </div>
 
                 <div id="artifact-detail-input">
-                    <fieldset style="margin-bottom: 10px;">
-                        <legend> {{displayName('聖遺物メイン効果')}} </legend>
-                        <label class="column-2"> {{displayName('生の花')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[0]" @change="mainChanged">
-                                <option value=""></option>
-                                <option v-for="item in mainStatList(0)" :value="item">{{displayName(item)}}</option>
-                            </select>
-                        </label>
-                        <label class="column-2"> {{displayName('死の羽')}}
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[1]" @change="mainChanged">
-                                <option value=""></option>
-                                <option v-for="item in mainStatList(1)" :value="item">{{displayName(item)}}</option>
-                            </select>
-                        </label>
-                        <label class="column-3"> {{displayName('時の砂')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[2]" @change="mainChanged">
-                                <option value=""></option>
-                                <option v-for="item in mainStatList(2)" :value="item">{{displayName(item)}}</option>
-                            </select>
-                        </label>
-                        <label class="column-3"> {{displayName('空の杯')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[3]" @change="mainChanged">
-                                <option value=""></option>
-                                <option v-for="item in mainStatList(3)" :value="item">{{displayName(item)}}</option>
-                            </select>
-                        </label>
-                        <label class="column-3"> {{displayName('理の冠')}} <br>
-                            <select class="artifact-detail" v-model="聖遺物メイン効果[4]" @change="mainChanged">
-                                <option value=""></option>
-                                <option v-for="item in mainStatList(4)" :value="item">{{displayName(item)}}</option>
-                            </select>
-                        </label>
-                    </fieldset>
-                    <table class="status" style="margin-bottom: 10px;">
-                        <tr v-for="(item, index) in statList">
-                            <th>{{displayName(item[0])}}</th>
-                            <td>
-                                <input v-show="isEditable" type="number" min="0" :step="statStep(item[0])"
-                                    v-model="聖遺物ステータス[item[0]]" @change="changed">
-                                <span v-show="!isEditable"> {{displayStatValue(item[0], 聖遺物ステータス[item[0]])}} </span>
-                            </td>
-                            <template v-if="item[1]">
-                                <th>{{displayName(item[1])}}</th>
+                    <div v-show="isVisible">
+                        <fieldset style="margin-bottom: 10px;">
+                            <legend> {{displayName('聖遺物メイン効果')}} </legend>
+                            <label class="column-2"> {{displayName('生の花')}}
+                                <select class="artifact-detail" v-model="聖遺物メイン効果[0]" @change="mainChanged">
+                                    <option value=""></option>
+                                    <option v-for="item in mainStatList(0)" :value="item">{{displayName(item)}}</option>
+                                </select>
+                            </label>
+                            <label class="column-2"> {{displayName('死の羽')}}
+                                <select class="artifact-detail" v-model="聖遺物メイン効果[1]" @change="mainChanged">
+                                    <option value=""></option>
+                                    <option v-for="item in mainStatList(1)" :value="item">{{displayName(item)}}</option>
+                                </select>
+                            </label>
+                            <label class="column-3"> {{displayName('時の砂')}} <br>
+                                <select class="artifact-detail" v-model="聖遺物メイン効果[2]" @change="mainChanged">
+                                    <option value=""></option>
+                                    <option v-for="item in mainStatList(2)" :value="item">{{displayName(item)}}</option>
+                                </select>
+                            </label>
+                            <label class="column-3"> {{displayName('空の杯')}} <br>
+                                <select class="artifact-detail" v-model="聖遺物メイン効果[3]" @change="mainChanged">
+                                    <option value=""></option>
+                                    <option v-for="item in mainStatList(3)" :value="item">{{displayName(item)}}</option>
+                                </select>
+                            </label>
+                            <label class="column-3"> {{displayName('理の冠')}} <br>
+                                <select class="artifact-detail" v-model="聖遺物メイン効果[4]" @change="mainChanged">
+                                    <option value=""></option>
+                                    <option v-for="item in mainStatList(4)" :value="item">{{displayName(item)}}</option>
+                                </select>
+                            </label>
+                        </fieldset>
+                        <table class="status" style="margin-bottom: 10px;">
+                            <tr v-for="(item, index) in statList">
+                                <th>{{displayName(item[0])}}</th>
                                 <td>
-                                    <input v-show="isEditable" type="number" min="0" :step="statStep(item[1])"
-                                        v-model="聖遺物ステータス[item[1]]" @change="changed">
-                                    <span v-show="!isEditable"> {{displayStatValue(item[1], 聖遺物ステータス[item[1]])}} </span>
+                                    <input v-show="isEditable" type="number" min="0" :step="statStep(item[0])"
+                                        v-model="聖遺物ステータス[item[0]]" @change="changed">
+                                    <span v-show="!isEditable"> {{displayStatValue(item[0], 聖遺物ステータス[item[0]])}} </span>
                                 </td>
-                            </template>
-                            <template v-else-if="index == 5">
-                                <td colspan="2">
-                                    <label>
-                                        <input type="checkbox" v-model="isEditable">
-                                        {{displayName('直接入力モード')}}
-                                    </label>
-                                </td>
-                            </template>
-                            <template v-else-if="index == 6">
-                                <td colspan="2">
-                                    <!-- OCR -->
-                                </td>
-                            </template>
-                            <template v-else>
-                                <td colspan="2"></td>
-                            </template>
-                        </tr>
-                    </table>
-                    <fieldset>
-                        <table class="artifact-priority-stat">
-                            <tr>
-                                <th>{{displayName('優先するサブ効果')}}</th>
-                                <th>{{displayName('上昇値の目安')}}</th>
-                                <th>{{displayName('初期+強化')}}</th>
-                                <th>{{displayName('合計')}}{{totalCount}}{{displayName('回')}}</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果[0]" @change="priorityChanged">
-                                        <option v-for="subitem in priorityStatList" :value="subitem">
-                                            {{displayName(subitem)}} </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇値[0]"
-                                        @change="subStatOnChange(item, $event.target.selectedIndex)">
-                                        <option v-for="subitem in subStatUpLists[0]" :value="subitem">
-                                            {{displayName(subitem)}}
-                                        </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇回数[0]" @change="priorityChanged">
-                                        <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
-                                    </select>
-                                </td>
-                                <td style="text-align: right;">
-                                    <label>
-                                        <input type="checkbox" v-model="厳選目安一括変更Enabled">
-                                        {{displayName('一括変更')}}
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果[1]">
-                                        <option v-for="subitem in priorityStatList" :value="subitem">
-                                            {{displayName(subitem)}} </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇値[1]"
-                                        @change="subStatOnChange(1, $event.target.selectedIndex)">
-                                        <option v-for="subitem in subStatUpLists[1]" :value="subitem">
-                                            {{displayName(subitem)}}
-                                        </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇回数[1]">
-                                        <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="gensen" :disabled="!厳選目安一括変更Enabled" @change="gensenOnChange">
-                                        <option v-for="item in gensenList" :value="item">{{displayName(item)}}</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果[2]">
-                                        <option v-for="subitem in priorityStatList" :value="subitem">
-                                            {{displayName(subitem)}} </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇値[2]"
-                                        @change="subStatOnChange(2, $event.target.selectedIndex)">
-                                        <option v-for="subitem in subStatUpLists[2]" :value="subitem">
-                                            {{displayName(subitem)}}
-                                        </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select v-model="聖遺物優先するサブ効果上昇回数[2]">
-                                        <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
-                                    </select>
-                                </td>
-                                <td></td>
+                                <template v-if="item[1]">
+                                    <th>{{displayName(item[1])}}</th>
+                                    <td>
+                                        <input v-show="isEditable" type="number" min="0" :step="statStep(item[1])"
+                                            v-model="聖遺物ステータス[item[1]]" @change="changed">
+                                        <span v-show="!isEditable"> {{displayStatValue(item[1], 聖遺物ステータス[item[1]])}}
+                                        </span>
+                                    </td>
+                                </template>
+                                <template v-else-if="index == 5">
+                                    <td colspan="2">
+                                        <label>
+                                            <input type="checkbox" v-model="isEditable">
+                                            {{displayName('直接入力モード')}}
+                                        </label>
+                                    </td>
+                                </template>
+                                <template v-else-if="index == 6">
+                                    <td colspan="2">
+                                        <!-- OCR -->
+                                    </td>
+                                </template>
+                                <template v-else>
+                                    <td colspan="2"></td>
+                                </template>
                             </tr>
                         </table>
-                    </fieldset>
+                        <fieldset>
+                            <table class="artifact-priority-stat">
+                                <tr>
+                                    <th>{{displayName('優先するサブ効果')}}</th>
+                                    <th>{{displayName('上昇値の目安')}}</th>
+                                    <th>{{displayName('初期+強化')}}</th>
+                                    <th>{{displayName('合計')}}{{totalCount}}{{displayName('回')}}</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果[0]" @change="priorityChanged">
+                                            <option v-for="subitem in priorityStatList" :value="subitem">
+                                                {{displayName(subitem)}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果上昇値[0]"
+                                            @change="subStatOnChange(item, $event.target.selectedIndex)">
+                                            <option v-for="subitem in subStatUpLists[0]" :value="subitem">
+                                                {{displayName(subitem)}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果上昇回数[0]" @change="priorityChanged">
+                                            <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <label>
+                                            <input type="checkbox" v-model="厳選目安一括変更Enabled">
+                                            {{displayName('一括変更')}}
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果[1]">
+                                            <option v-for="subitem in priorityStatList" :value="subitem">
+                                                {{displayName(subitem)}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果上昇値[1]"
+                                            @change="subStatOnChange(1, $event.target.selectedIndex)">
+                                            <option v-for="subitem in subStatUpLists[1]" :value="subitem">
+                                                {{displayName(subitem)}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果上昇回数[1]">
+                                            <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="gensen" :disabled="!厳選目安一括変更Enabled" @change="gensenOnChange">
+                                            <option v-for="item in gensenList" :value="item">{{displayName(item)}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果[2]">
+                                            <option v-for="subitem in priorityStatList" :value="subitem">
+                                                {{displayName(subitem)}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果上昇値[2]"
+                                            @change="subStatOnChange(2, $event.target.selectedIndex)">
+                                            <option v-for="subitem in subStatUpLists[2]" :value="subitem">
+                                                {{displayName(subitem)}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select v-model="聖遺物優先するサブ効果上昇回数[2]">
+                                            <option v-for="subitem in countList" :value="subitem">{{subitem}}</option>
+                                        </select>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
                 </div>
 
                 <div id="character-information">

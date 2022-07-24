@@ -435,20 +435,30 @@ td input[type="number"] {
 .artifact-detail-button {
     position: relative;
     background-color: transparent;
+    color: blanchedalmond;
 }
 
 .left-icon, .right-icon {
     position: absolute;
     width: 32px;
     height: 32px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .left-icon {
-    left: 2px;
+    left: 7px;
 }
 
 .right-icon {
-    right: 2px;
+    right: 7px;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #artifact-detail-input fieldset label {

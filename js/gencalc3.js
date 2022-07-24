@@ -255,6 +255,7 @@ async function initialSetupCharacterInput(name) {
                         master: ARTIFACT_SET_MASTER_DUMMY
                     }
                 ],
+                IMG_SRC_DUMMY: IMG_SRC_DUMMY,
                 おすすめセット: null,
                 おすすめセットOption: {
                     isOpen: false,
@@ -621,7 +622,7 @@ function initialSetupArtifactDetailInput() {
     const ArtifactDetailInput = {
         data() {
             return {
-                isVisible: true,
+                isVisible: false,
                 isEditable: false,
                 聖遺物メイン効果: [null, null, null, null, null],
                 聖遺物優先するサブ効果: [null, null, null],
