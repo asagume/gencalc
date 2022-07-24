@@ -237,6 +237,10 @@ fieldset {
     padding: 5px 3px;
 }
 
+img.star {
+    width: 2.4rem;
+}
+
 .icon {
     position: relative;
 }
@@ -504,6 +508,21 @@ label.open-close input[type="checkbox"]:checked+span::after {
     font-weight: normal;
     color: #df8f37;
     background-color: #333;
+}
+
+table.weapon-desc {
+    table-layout: fixed;
+    margin: 1rem 2px;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+
+table.weapon-desc img.weapon {
+    width: 100px;
+}
+
+table.weapon-desc td[colspan="3"] {
+    text-align: left;
 }
 
 table.artifact-priority-stat {

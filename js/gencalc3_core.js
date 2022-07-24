@@ -42,7 +42,7 @@ function getDisplayStatValue(name, value) {
 }
 
 function appendPercentage(name) {
-    if (['HP上限', 'HP', '攻撃力', '防御力', '元素熟知'].includes(name)) {
+    if (['基礎HP', '基礎攻撃力', '基礎防御力', 'HP上限', 'HP', '攻撃力', '防御力', '元素熟知'].includes(name)) {
         return '';
     } else if (name.endsWith('アップ')) {
         return '';

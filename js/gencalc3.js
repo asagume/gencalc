@@ -487,10 +487,40 @@ async function initialSetupWeaponSelect(type) {
             });
         },
         computed: {
+            baseATKValue: function () {
+                return 0;
+            },
+            propertyName: function () {
+                if (this.master && 'ステータス' in this.master) {
+                    const statArr = Object.keys(this.master['ステータス']).filter(s => !s.startsWith('基礎'));
+                    if (statArr.length > 0) {
+                        return statArr[0];
+                    }
+                }
+                return null;
+            },
+            propertyValue: function () {
+                return 0;
+            },
+            skillName: function () {
+                if (this.master && '武器スキル' in this.master && '名前' in this.master['武器スキル']) {
+                    return this.master['武器スキル']['名前'];
+                }
+                return null;
+            },
+            skillDesc: function () {
+                if (this.master && '武器スキル' in this.master && '説明' in this.master['武器スキル']) {
+                    return this.master['武器スキル']['説明'];
+                }
+                return null;
+            }
         },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
+            },
+            displayStatValue: function (name, value) {
+                return getDisplayStatValue(name, value);
             },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
@@ -1385,6 +1415,11 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, co
 
     await loadRecommendation(myRecommendation[1], characterInput, artifactDetailInput, conditionInput, statusInput);
 
+    if (WeaponSelectVm) {
+        WeaponSelectVm.weapon = characterInput.weapon;
+        WeaponSelectVm.type = weaponType;
+    }
+
     await setupWeaponInput(weaponType, characterInput.weapon, CharacterInputVm);
 
     if (!conditionInput) {  //　苦し紛れ
@@ -1403,13 +1438,16 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, co
 /**
  * 
  * @param {string} type 武器タイプ
- * @param {string} name 武器名
+ * @param {string} weapon 武器名
  */
-async function setupWeaponInput(type, name, characterInput) {
-    const myWeaponMaster = await fetch(武器MasterVar[type][name]['import']).then(resp => resp.json());
-    characterInput.weapon = name;
-    characterInput.weaponMaster = myWeaponMaster;
-    if (myWeaponMaster['レアリティ'] < 3) {
+async function setupWeaponInput(type, weapon, characterInput) {
+    const weaponMaster = await fetch(武器MasterVar[type][weapon]['import']).then(resp => resp.json());
+    WeaponSelectVm.type = type;
+    WeaponSelectVm.selected = weapon;
+    WeaponSelectVm.master = weaponMaster;
+    characterInput.weapon = weapon;
+    characterInput.weaponMaster = weaponMaster;
+    if (weaponMaster['レアリティ'] < 3) {
         characterInput['武器突破レベルOption'].max = 4;
         if (characterInput['武器突破レベル'] > 4) {
             characterInput['武器突破レベル'] = 4;
@@ -1417,8 +1455,8 @@ async function setupWeaponInput(type, name, characterInput) {
     } else {
         characterInput['武器突破レベルOption'].max = 6;
     }
-    if (name in 武器所持状況Var && 武器所持状況Var[name]) {
-        characterInput['武器精錬ランク'] = 武器所持状況Var[name];
+    if (weapon in 武器所持状況Var && 武器所持状況Var[weapon]) {
+        characterInput['武器精錬ランク'] = 武器所持状況Var[weapon];
     }
 
     makeDamageDetailObjWeapon(characterInput);

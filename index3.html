@@ -271,23 +271,33 @@
 
             <div class="pane4">
                 <div id="weapon-select">
-                    <table v-if="isVisible">
+                    <table class="weapon-desc" v-if="isVisible">
                         <tr>
-                            <th colspan="2">{{selected}}</th>
+                            <td rowspan="4">
+                                <img class="weapon" :src="master.icon_url" :alt="selected">
+                            </td>
+                            <th colspan="2" class="title">{{displayName(selected)}}</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <template v-for="item in Array.from({ length: master['レアリティ'] }, (_, i) => i)">
+                                    <img class="star" src="images/star.png" alt="star">
+                                </template>
+                            </td>
                         </tr>
                         <tr>
                             <th>{{displayName('基礎攻撃力')}}</th>
-                            <td></td>
+                            <td>{{displayStatValue('基礎攻撃力', baseATKValue)}}</td>
                         </tr>
                         <tr>
-                            <th></th>
-                            <td></td>
+                            <th>{{displayName(propertyName)}}</th>
+                            <td>{{propertyValue}}</td>
                         </tr>
                         <tr>
-                            <th colspan="2"></th>
+                            <th colspan="3">{{displayName(skillName)}}</th>
                         </tr>
                         <tr>
-                            <td colspan="2"></td>
+                            <td colspan="3" class="desc">{{displayName(skillDesc)}}</td>
                         </tr>
                     </table>
 
