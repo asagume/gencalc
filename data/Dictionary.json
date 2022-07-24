@@ -48,13 +48,19 @@
         "en": "Protective Canopy"
     },
     "ステータス1": {
-        "en": "STATUS 1"
+        "en": "CHARACTER 1"
     },
     "ステータス2": {
-        "en": "STATUS 2"
+        "en": "CHARACTER 2"
     },
     "敵": {
         "en": "ENEMY"
+    },
+    "元素共鳴": {
+        "en": "Resonance"
+    },
+    "キャラ": {
+        "en": "TEAM"
     },
     "基本ステータス": {
         "en": "Base Stats"
