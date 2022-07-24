@@ -236,7 +236,7 @@ function makeDamageDetailObjCharacter(characterInput) {
 
     // 通常攻撃 重撃 落下攻撃
     myTalentLevel = characterInput['通常攻撃レベル'];
-    myDefaultElement = null;
+    myDefaultElement = characterMaster['武器'] === '法器' ? characterMaster['元素'] : null;
     ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
         myTalentDetail = characterMaster[category];
         myDefaultKind = category + 'ダメージ';
@@ -347,8 +347,8 @@ function makeDamageDetailObjCharacter(characterInput) {
         });
     }
 
-    result['ステータス変更系詳細'] = myステータス変更系詳細Arr;
-    result['天賦性能変更系詳細'] = my天賦性能変更系詳細Arr;
+    result[CHANGE_KIND_STATUS] = myステータス変更系詳細Arr;
+    result[CHANGE_KIND_TALENT] = my天賦性能変更系詳細Arr;
 
     const conditionMap = new Map();
     const exclusionMap = new Map();
@@ -389,8 +389,8 @@ function makeDamageDetailObjWeapon(characterInput) {
         result['武器'] = makeTalentDetailArray(myTalentDetail, myLevel, null, null, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory);
     }
 
-    result['ステータス変更系詳細'] = myステータス変更系詳細Arr;
-    result['天賦性能変更系詳細'] = my天賦性能変更系詳細Arr;
+    result[CHANGE_KIND_STATUS] = myステータス変更系詳細Arr;
+    result[CHANGE_KIND_TALENT] = my天賦性能変更系詳細Arr;
 
     const conditionMap = new Map();
     const exclusionMap = new Map();
@@ -445,8 +445,8 @@ function makeDamageDetailObjArtifactSet(characterInput) {
             myTalentDetail = master[setEffect];
             workObj[setEffect] = makeTalentDetailArray(myTalentDetail, null, null, null, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory);
 
-            workObj['ステータス変更系詳細'] = myステータス変更系詳細Arr;
-            workObj['天賦性能変更系詳細'] = my天賦性能変更系詳細Arr;
+            workObj[CHANGE_KIND_STATUS] = myステータス変更系詳細Arr;
+            workObj[CHANGE_KIND_TALENT] = my天賦性能変更系詳細Arr;
 
             const conditionMap = new Map();
             const exclusionMap = new Map();
@@ -898,19 +898,42 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
     console.debug(reactionResult);
     calculationResult['元素反応'] = reactionResult;
 
+    const validConditionValueArr = makeValidConditionValueArr(conditionInput);
+
     const talentDetailArrObj = キャラクターダメージ詳細ObjMapVar.get(characterMaster.名前);
     if (talentDetailArrObj) {
-        ['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'].forEach(category => {
+        ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
+            calculationResult['計算結果'][category] = [];
+            if (!(category in talentDetailArrObj)) return;
+            let talentDetailArr = talentDetailArrObj[category];
+            if (('特殊' + category) in talentDetailArrObj) {
+                const workObj = talentDetailArrObj['特殊' + category];
+                console.log(calculateResult.name,  workObj, validConditionValueArr);
+                if (checkConditionMatches(workObj['条件'], validConditionValueArr)) {
+                    talentDetailArr = workObj['詳細'];
+                }
+            }
+            talentDetailArr.forEach(talentDetail => {
+                const resultArr = calculateDamageFromDetail(
+                    talentDetail,
+                    characterInput,
+                    conditionInput,
+                    optionInput,
+                    statusInput);
+                calculationResult['計算結果'][category].push(resultArr);
+            });
+        });
+        ['元素スキル', '元素爆発', 'その他'].forEach(category => {
             calculationResult['計算結果'][category] = [];
             if (!(category in talentDetailArrObj)) return;
             const talentDetailArr = talentDetailArrObj[category];
             talentDetailArr.forEach(talentDetail => {
                 const resultArr = calculateDamageFromDetail(
                     talentDetail,
-                    statusInput['ステータス'],
-                    statusInput['敵ステータス'],
+                    characterInput,
                     conditionInput,
-                    optionInput);
+                    optionInput,
+                    statusInput);
                 calculationResult['計算結果'][category].push(resultArr);
             });
         });

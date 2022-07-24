@@ -314,8 +314,8 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {string} opt_element 元素
  * @returns {Array}
  */
-function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditionInput, optionInput, opt_element = null) {
-    console.debug(calculateDamageFromDetail.name, detailObj, statusObj, enemyStatusObj, conditionInput, optionInput);
+function calculateDamageFromDetail(detailObj, characterInput, conditionInput, optionInput, statusInput, opt_element = null) {
+    console.debug(calculateDamageFromDetail.name, detailObj, characterInput, conditionInput, optionInput, statusInput, opt_element);
 
     let myバフArr = [];
     let is会心Calc = true;
@@ -328,13 +328,18 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditi
     let myステータス補正 = {};
     let my精度 = 0;
 
-    let validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
+    const statusObj = statusInput['ステータス'];
+    const enemyStatusObj = statusInput['敵ステータス'];
+
+    const myStatusChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_STATUS);
+    const myTalentChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_TALENT);
+
+    const validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
 
     if (detailObj['除外条件']) {
         detailObj['除外条件'].forEach(condition => {
             if (isPlainObject(condition)) {
-                let optionElem = document.getElementById(condition['名前'] + 'Option');
-                if (!optionElem) return;
+                if (!(condition['名前'] in conditionInput.conditions)) return;
                 const number = checkConditionMatches(condition['名前'], validConditionValueArr);
                 if (number > 0) {
                     ステータス条件取消(myステータス補正, condition['名前'], statusObj, validConditionValueArr);
@@ -363,14 +368,14 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditi
     if (detailObj['適用条件']) {
         detailObj['適用条件'].forEach(condition => {
             if (isPlainObject(condition)) {
-                let optionElem = document.getElementById(condition['名前'] + 'Option');
-                if (!optionElem) return;
+                if (!(condition['名前'] in conditionInput.conditions)) return;
                 if (condition['種類']) {
                     switch (condition['種類']) {
                         case 'selectedIndex':   // for 甘雨+アモスの弓
-                            if (!(optionElem instanceof HTMLSelectElement)) return;
-                            let curSelectedIndex = optionElem.selectedIndex;
-                            let curSelectedValue = optionElem.children[curSelectedIndex].textContent;
+                            const conditionObjArr = conditionInput.selectList.filter(s => s.name == condition['名前']);
+                            if (conditionObjArr.length == 0) return;
+                            let curSelectedIndex = 0;  //FIXME
+                            let curSelectedValue = conditionInput.conditions[condition['名前']];
                             let newSelectedIndex;
                             let newSelectedValue;
                             const re = new RegExp('([\\+\\-]?)(\\d+)');
@@ -473,10 +478,9 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditi
     let my天賦性能変更詳細Arr = [];
     let myステータス変更系詳細Arr = [];
 
-    if (damageDetailObj) {
-        console.debug(damageDetailObj['天賦性能変更系詳細']);
+    if (myTalentChangeDetailObjArr && myStatusChangeDetailObjArr) {
         // 対象指定ありのダメージ計算（主に加算）を適用したい
-        damageDetailObj['天賦性能変更系詳細'].forEach(valueObj => {
+        myTalentChangeDetailObjArr.forEach(valueObj => {
             let number = null;
             if (valueObj['条件']) {
                 number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
@@ -525,7 +529,7 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditi
         });
 
         // 対象指定ありのステータスアップを適用したい
-        damageDetailObj['ステータス変更系詳細'].forEach(valueObj => {
+        myStatusChangeDetailObjArr.forEach(valueObj => {
             if (!valueObj['対象']) {
                 return; // 対象指定なしのものは適用済みのためスキップします
             }
@@ -603,7 +607,7 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditi
             myCondition = '[来歆の余響4]期待値';
         }
         if (myCondition && detailObj['HIT数'] > 1) {
-            damageDetailObj['ステータス変更系詳細'].get('聖遺物セット').forEach(valueObj => {
+            damageDetailObj[CHANGE_KIND_STATUS].get('聖遺物セット').forEach(valueObj => {
                 if (!valueObj['条件']) return;
                 if (!valueObj['数値']) return;
                 if (checkConditionMatches(valueObj['条件'], [myCondition]) > 0) {
@@ -975,6 +979,61 @@ function makeValidConditionValueArr(conditionInput) {
             const value = conditionInput.conditions[entry.name];
             if (value != null) {
                 result.push(entry.name + '@' + value);
+            }
+        });
+    }
+    return result;
+}
+
+function getChangeDetailObjArr(characterInput, changeKind) {
+    let result = [];
+    if (!characterInput) return result;
+
+    const character = characterInput.name;
+    const weapon = characterInput.weapon;
+    const artifactSetArr = characterInput.聖遺物セット効果.filter(s => s.名前).map(s => s.名前);
+
+    if (キャラクターダメージ詳細ObjMapVar.has(character)) {
+        const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(character);
+        if (changeKind in damageDetailObj) {
+            result = result.concat(damageDetailObj[changeKind]);
+        }
+    }
+    if (武器ダメージ詳細ObjMapVar.has(weapon)) {
+        const damageDetailObj = 武器ダメージ詳細ObjMapVar.get(weapon);
+        if (changeKind in damageDetailObj) {
+            result = result.concat(damageDetailObj[changeKind]);
+        }
+    }
+    if (artifactSetArr.length == 2) {
+        if (聖遺物セット効果ダメージ詳細ObjMapVar.has(artifactSetArr[0])) {
+            const damageDetailObj = 聖遺物セット効果ダメージ詳細ObjMapVar.get(artifactSetArr[0]);
+            if (damageDetailObj['2セット効果'][changeKind]) {
+                result = result.concat(damageDetailObj['2セット効果'][changeKind]);
+            }
+        }
+        if (artifactSetArr[0] == artifactSetArr[1]) {
+            if (聖遺物セット効果ダメージ詳細ObjMapVar.has(artifactSetArr[1])) {
+                const damageDetailObj = 聖遺物セット効果ダメージ詳細ObjMapVar.get(artifactSetArr[1]);
+                if (damageDetailObj['4セット効果'][changeKind]) {
+                    result = result.concat(damageDetailObj['4セット効果'][changeKind]);
+                }
+            }
+        } else {
+            if (聖遺物セット効果ダメージ詳細ObjMapVar.has(artifactSetArr[1])) {
+                const damageDetailObj = 聖遺物セット効果ダメージ詳細ObjMapVar.get(artifactSetArr[1]);
+                if (damageDetailObj['2セット効果'][changeKind]) {
+                    result = result.concat(damageDetailObj['2セット効果'][changeKind]);
+                }
+            }
+        }
+    } else {
+        artifactSetArr.forEach(artifactSet => {
+            if (聖遺物セット効果ダメージ詳細ObjMapVar.has(artifactSet)) {
+                const damageDetailObj = 聖遺物セット効果ダメージ詳細ObjMapVar.get(weapon);
+                if (damageDetailObj['2セット効果'][changeKind]) {
+                    result = result.concat(damageDetailObj['2セット効果'][changeKind]);
+                }
             }
         });
     }

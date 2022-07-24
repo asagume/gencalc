@@ -53,6 +53,9 @@ const Pane4Group = new Set();
 
 var Pane6ToggleVm;
 
+const CHANGE_KIND_STATUS = 'ステータス変更系詳細';
+const CHANGE_KIND_TALENT = '天賦性能変更系詳細';
+
 const ALLOW_LIST_LANG = ['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn'];
 
 const ELEMENT_COLOR_CLASS = {
