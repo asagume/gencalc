@@ -203,7 +203,7 @@ async function loadRecommendation(recommendation, characterInput, artifactDetail
         hasSubStat = true;
     });
     artifactDetailInput.isステータス計算無効 = hasSubStat;
-    
+
     makeDamageDetailObjCharacter(characterInput);
     makeDamageDetailObjWeapon(characterInput);
     makeDamageDetailObjArtifactSet(characterInput);
@@ -620,7 +620,7 @@ function calculateArtifactSubStatByPriority(result, artifactDetailInput) {
     for (let i = noPriorityCount; i > 0; i--) {
         const subStat = PRIORITY_SUBSTAT_ARR[i % PRIORITY_SUBSTAT_ARR.length];
         result[subStat] += 聖遺物サブ効果MasterVar[subStat][3];
-    }    
+    }
 }
 
 /**
@@ -905,15 +905,12 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
             if (!(category in talentDetailArrObj)) return;
             const talentDetailArr = talentDetailArrObj[category];
             talentDetailArr.forEach(talentDetail => {
-                const resultArr = [];
-                resultArr.push(talentDetail.名前);
-                resultArr.push(talentDetail.元素);
-
-                let value = calculateFormulaArray(statusInput['ステータス'], talentDetail.数値);
-
-                resultArr.push(0);  // 期待値
-                resultArr.push(0);  // 会心
-                resultArr.push(value);  // 非会心
+                const resultArr = calculateDamageFromDetail(
+                    talentDetail,
+                    statusInput['ステータス'],
+                    statusInput['敵ステータス'],
+                    conditionInput,
+                    optionInput);
                 calculationResult['計算結果'][category].push(resultArr);
             });
         });

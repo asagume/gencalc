@@ -314,8 +314,8 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
  * @param {string} opt_element 元素
  * @returns {Array}
  */
-function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionInput, conditionInput, opt_element = null) {
-    console.debug(detailObj['種類'], detailObj['名前']);
+function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, conditionInput, optionInput, opt_element = null) {
+    console.debug(calculateDamageFromDetail.name, detailObj, statusObj, enemyStatusObj, conditionInput, optionInput);
 
     let myバフArr = [];
     let is会心Calc = true;
@@ -328,11 +328,11 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionI
     let myステータス補正 = {};
     let my精度 = 0;
 
-    let validConditionValueArr = makeValidConditionValueArr('#オプションBox');  // 有効な条件
+    let validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
 
     if (detailObj['除外条件']) {
         detailObj['除外条件'].forEach(condition => {
-            if ($.isPlainObject(condition)) {
+            if (isPlainObject(condition)) {
                 let optionElem = document.getElementById(condition['名前'] + 'Option');
                 if (!optionElem) return;
                 const number = checkConditionMatches(condition['名前'], validConditionValueArr);
@@ -362,7 +362,7 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionI
 
     if (detailObj['適用条件']) {
         detailObj['適用条件'].forEach(condition => {
-            if ($.isPlainObject(condition)) {
+            if (isPlainObject(condition)) {
                 let optionElem = document.getElementById(condition['名前'] + 'Option');
                 if (!optionElem) return;
                 if (condition['種類']) {
@@ -468,11 +468,15 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionI
         });
     }
 
+    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(conditionInput.character);
+
     let my天賦性能変更詳細Arr = [];
     let myステータス変更系詳細Arr = [];
-    // 対象指定ありのダメージ計算（主に加算）を適用したい
-    天賦性能変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(valueObj => {
+
+    if (damageDetailObj) {
+        console.debug(damageDetailObj['天賦性能変更系詳細']);
+        // 対象指定ありのダメージ計算（主に加算）を適用したい
+        damageDetailObj['天賦性能変更系詳細'].forEach(valueObj => {
             let number = null;
             if (valueObj['条件']) {
                 number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
@@ -519,13 +523,9 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionI
                 }
             }
         });
-    });
-    console.debug(detailObj['名前'] + ':my天賦性能変更詳細Arr');
-    console.debug(my天賦性能変更詳細Arr);
 
-    // 対象指定ありのステータスアップを適用したい
-    ステータス変更系詳細ArrMapVar.forEach((value, key) => {
-        value.forEach(valueObj => {
+        // 対象指定ありのステータスアップを適用したい
+        damageDetailObj['ステータス変更系詳細'].forEach(valueObj => {
             if (!valueObj['対象']) {
                 return; // 対象指定なしのものは適用済みのためスキップします
             }
@@ -563,7 +563,10 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionI
             }
             myステータス変更系詳細Arr.push(myNewValue);
         });
-    });
+    }
+
+    console.debug(detailObj['名前'] + ':my天賦性能変更詳細Arr');
+    console.debug(my天賦性能変更詳細Arr);
     console.debug(detailObj['名前'] + ':myステータス変更系詳細Arr');
     console.debug(myステータス変更系詳細Arr);
 
@@ -600,7 +603,7 @@ function calculateDamageFromDetail(detailObj, statusObj, enemyStatusObj, optionI
             myCondition = '[来歆の余響4]期待値';
         }
         if (myCondition && detailObj['HIT数'] > 1) {
-            ステータス変更系詳細ArrMapVar.get('聖遺物セット').forEach(valueObj => {
+            damageDetailObj['ステータス変更系詳細'].get('聖遺物セット').forEach(valueObj => {
                 if (!valueObj['条件']) return;
                 if (!valueObj['数値']) return;
                 if (checkConditionMatches(valueObj['条件'], [myCondition]) > 0) {
