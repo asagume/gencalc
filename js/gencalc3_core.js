@@ -16,6 +16,11 @@ function isPlainObject(value) {
 }
 
 function getDisplayName(name) {
+    if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
+        name = name.replace(/バフ$/, '');
+    } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
+        name = name.replace(/バフ$/, '');
+    }
     if (LanguageSelectVm && LanguageSelectVm.selected !== 'ja-jp') {
         if (name in 辞書MasterVar) {
             if (辞書MasterVar[name][LanguageSelectVm.selected]) {
@@ -24,11 +29,6 @@ function getDisplayName(name) {
                 name = 辞書MasterVar[name]['en-us'];
             }
         }
-    }
-    if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
-        name = name.replace(/バフ$/, '');
-    } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
-        name = name.replace(/バフ$/, '');
     }
     return name;
 }

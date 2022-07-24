@@ -1,340 +1,4 @@
 {
-    "聖遺物メイン効果": {
-        "en-us": "Artifact Main-Stats"
-    },
-    "聖遺物サブ効果": {
-        "en-us": "Artifact Sub-Stats"
-    },
-    "直接入力モード": {
-        "en-us": "Edit"
-    },
-    "補正値入力モード": {
-        "en-us": "Edit"
-    },
-    "生の花": {
-        "en-us": "Flower"
-    },
-    "死の羽": {
-        "en-us": "Plume"
-    },
-    "時の砂": {
-        "en-us": "Sands"
-    },
-    "空の杯": {
-        "en-us": "Goblet"
-    },
-    "理の冠": {
-        "en-us": "Circlet"
-    },
-    "熱誠の炎": {
-        "en-us": "Fervent Flames"
-    },
-    "治療の水": {
-        "en-us": "Soothing Water"
-    },
-    "迅速の風": {
-        "en-us": "Impetuous Winds"
-    },
-    "強権の雷": {
-        "en-us": "High Voltage"
-    },
-    "粉砕の氷": {
-        "en-us": "Shattering Ice"
-    },
-    "不動の岩": {
-        "en-us": "Enduring Rock"
-    },
-    "交錯の護り": {
-        "en-us": "Protective Canopy"
-    },
-    "ステータス1": {
-        "en-us": "CHARACTER 1"
-    },
-    "ステータス2": {
-        "en-us": "CHARACTER 2"
-    },
-    "敵": {
-        "en-us": "ENEMY"
-    },
-    "元素共鳴": {
-        "en-us": "Resonance"
-    },
-    "キャラ": {
-        "en-us": "TEAM"
-    },
-    "基本ステータス": {
-        "en-us": "Base Stats"
-    },
-    "高級ステータス": {
-        "en-us": "Advanced Stats"
-    },
-    "元素ステータス・ダメージ": {
-        "en-us": "Elemental Type[Bonus]"
-    },
-    "元素ステータス・耐性": {
-        "en-us": "Elemental Type[RES]"
-    },
-    "その他": {
-        "en-us": "Misc"
-    },
-    "基礎HP": {
-        "en-us": "Base HP"
-    },
-    "基礎攻撃力": {
-        "en-us": "Base ATK"
-    },
-    "基礎防御力": {
-        "en-us": "Base DEF"
-    },
-    "HP上限": {
-        "en-us": "Max HP"
-    },
-    "攻撃力": {
-        "en-us": "ATK"
-    },
-    "防御力": {
-        "en-us": "DEF"
-    },
-    "元素熟知": {
-        "en-us": "Elemental Mastery"
-    },
-    "HP%": {
-        "en-us": "HP%"
-    },
-    "攻撃力%": {
-        "en-us": "ATK%"
-    },
-    "防御力%": {
-        "en-us": "DEF%"
-    },
-    "会心率": {
-        "en-us": "CRIT Rate"
-    },
-    "会心ダメージ": {
-        "en-us": "CRIT DMG"
-    },
-    "元素チャージ効率": {
-        "en-us": "Energy Recharge"
-    },
-    "与える治療効果": {
-        "en-us": "Healing Bonus"
-    },
-    "受ける治療効果": {
-        "en-us": "Incoming Healing Bonus"
-    },
-    "シールド強化": {
-        "en-us": "Shield Strength"
-    },
-    "炎元素": {
-        "en-us": "Pyro"
-    },
-    "水元素": {
-        "en-us": "Hydro"
-    },
-    "風元素": {
-        "en-us": "Anemo"
-    },
-    "雷元素": {
-        "en-us": "Electro"
-    },
-    "草元素": {
-        "en-us": "Dendro"
-    },
-    "氷元素": {
-        "en-us": "Cryo"
-    },
-    "岩元素": {
-        "en-us": "Geo"
-    },
-    "物理": {
-        "en-us": "Physical"
-    },
-    "5_HP": {
-        "en-us": "5_HP"
-    },
-    "5_攻撃力": {
-        "en-us": "5_ATK"
-    },
-    "5_防御力": {
-        "en-us": "5_DEF"
-    },
-    "5_元素熟知": {
-        "en-us": "5_Elemental Mastery"
-    },
-    "5_HP%": {
-        "en-us": "5_HP%"
-    },
-    "5_攻撃力%": {
-        "en-us": "5_ATK%"
-    },
-    "5_防御力%": {
-        "en-us": "5_DEF%"
-    },
-    "5_会心率": {
-        "en-us": "5_CRIT Rate"
-    },
-    "5_会心ダメージ": {
-        "en-us": "5_CRIT DMG"
-    },
-    "5_元素チャージ効率": {
-        "en-us": "5_Energy Recharge"
-    },
-    "5_与える治療効果": {
-        "en-us": "5_Healing Bonus"
-    },
-    "5_炎元素ダメージバフ": {
-        "en-us": "5_Pyro DMG Bonus"
-    },
-    "5_水元素ダメージバフ": {
-        "en-us": "5_Hydro DMG Bonus"
-    },
-    "5_風元素ダメージバフ": {
-        "en-us": "5_Anemo DMG Bonus"
-    },
-    "5_雷元素ダメージバフ": {
-        "en-us": "5_Electro DMG Bonus"
-    },
-    "5_草元素ダメージバフ": {
-        "en-us": "5_Dendro DMG Bonus"
-    },
-    "5_氷元素ダメージバフ": {
-        "en-us": "5_Cryo DMG Bonus"
-    },
-    "5_岩元素ダメージバフ": {
-        "en-us": "5_Geo DMG Bonus"
-    },
-    "5_物理ダメージバフ": {
-        "en-us": "5_Physical DMG Bonus"
-    },
-    "4_HP": {
-        "en-us": "4_HP"
-    },
-    "4_攻撃力": {
-        "en-us": "4_ATK"
-    },
-    "4_防御力": {
-        "en-us": "4_DEF"
-    },
-    "4_元素熟知": {
-        "en-us": "4_Elemental Mastery"
-    },
-    "4_HP%": {
-        "en-us": "4_HP%"
-    },
-    "4_攻撃力%": {
-        "en-us": "4_ATK%"
-    },
-    "4_防御力%": {
-        "en-us": "4_DEF%"
-    },
-    "4_会心率": {
-        "en-us": "4_CRIT Rate"
-    },
-    "4_会心ダメージ": {
-        "en-us": "4_CRIT DMG"
-    },
-    "4_元素チャージ効率": {
-        "en-us": "4_Energy Recharge"
-    },
-    "4_与える治療効果": {
-        "en-us": "4_Healing Bonus"
-    },
-    "4_炎元素ダメージバフ": {
-        "en-us": "4_Pyro DMG Bonus"
-    },
-    "4_水元素ダメージバフ": {
-        "en-us": "4_Hydro DMG Bonus"
-    },
-    "4_風元素ダメージバフ": {
-        "en-us": "4_Anemo DMG Bonus"
-    },
-    "4_雷元素ダメージバフ": {
-        "en-us": "4_Electro DMG Bonus"
-    },
-    "4_草元素ダメージバフ": {
-        "en-us": "4_Dendro DMG Bonus"
-    },
-    "4_氷元素ダメージバフ": {
-        "en-us": "4_Cryo DMG Bonus"
-    },
-    "4_岩元素ダメージバフ": {
-        "en-us": "4_Geo DMG Bonus"
-    },
-    "4_物理ダメージバフ": {
-        "en-us": "4_Physical DMG Bonus"
-    },
-    "期待値": {
-        "en-us": "Expect"
-    },
-    "会心": {
-        "en-us": "CRIT"
-    },
-    "非会心": {
-        "en-us": "non-CRIT"
-    },
-    "通常攻撃": {
-        "en-us": "Normal Attack"
-    },
-    "重撃": {
-        "en-us": "Charged Attack"
-    },
-    "落下攻撃": {
-        "en-us": "Plunging Attack"
-    },
-    "元素スキル": {
-        "en-us": "Elemental Skill"
-    },
-    "元素爆発": {
-        "en-us": "Elemental Burst"
-    },
-    "炎元素ダメージバフ": {
-        "en-us": "Pyro DMG Bonus"
-    },
-    "水元素ダメージバフ": {
-        "en-us": "Hydro DMG Bonus"
-    },
-    "風元素ダメージバフ": {
-        "en-us": "Anemo DMG Bonus"
-    },
-    "雷元素ダメージバフ": {
-        "en-us": "Electro DMG Bonus"
-    },
-    "草元素ダメージバフ": {
-        "en-us": "Dendro DMG Bonus"
-    },
-    "氷元素ダメージバフ": {
-        "en-us": "Cryo DMG Bonus"
-    },
-    "岩元素ダメージバフ": {
-        "en-us": "Geo DMG Bonus"
-    },
-    "物理ダメージバフ": {
-        "en-us": "Physical DMG Bonus"
-    },
-    "炎元素耐性": {
-        "en-us": "Pyro RES"
-    },
-    "水元素耐性": {
-        "en-us": "Hydro RES"
-    },
-    "風元素耐性": {
-        "en-us": "Anemo RES"
-    },
-    "雷元素耐性": {
-        "en-us": "Electro RES"
-    },
-    "草元素耐性": {
-        "en-us": "Dendro RES"
-    },
-    "氷元素耐性": {
-        "en-us": "Cryo RES"
-    },
-    "岩元素耐性": {
-        "en-us": "Geo RES"
-    },
-    "物理耐性": {
-        "en-us": "Physical RES"
-    },
     "1段ダメージ": {
         "zh-cn": "一段伤害",
         "zh-tw": "一段傷害",
@@ -436,16 +100,16 @@
     "狙い撃ち": {
         "zh-cn": "瞄准射击",
         "zh-tw": "瞄準射擊",
-        "de-de": "Gezielte Schüsse",
+        "de-de": "gezielten Schuss",
         "en-us": "Aimed Shot",
         "es-es": "Disparo Preciso",
-        "fr-fr": "DGT tir visé",
-        "id-id": "DMG Membidik",
+        "fr-fr": "tir visé",
+        "id-id": "Serangan Membidik",
         "ko-kr": "조준 사격",
         "pt-pt": "Disparo com Mira",
-        "ru-ru": "Прицельный выстрел",
+        "ru-ru": "прицельный выстрел",
         "th-th": "เล็งโจมตี",
-        "vi-vn": "Ngắm Bắn"
+        "vi-vn": "ngắm bắn"
     },
     "フルチャージ狙い撃ち": {
         "zh-cn": "满蓄力瞄准射击",
@@ -474,12 +138,6 @@
         "ru-ru": "Урон в падении",
         "th-th": "ความเสียหายพุ่งลง",
         "vi-vn": "Sát Thương Khi Rơi"
-    },
-    "低空落下攻撃ダメージ": {
-        "en-us": "Low Plunge DMG"
-    },
-    "高空落下攻撃ダメージ": {
-        "en-us": "High Plunge DMG"
     },
     "スキルダメージ": {
         "zh-cn": "技能伤害",
@@ -631,7 +289,7 @@
         "id-id": "Astable Anemohypostasis Creation - 6308",
         "ko-kr": "풍령 작성·육삼공팔",
         "pt-pt": "Criação do Espírito do Vento: Experimento 6308",
-        "ru-ru": "Эксперимент №6308",
+        "ru-ru": "«Эксперимент №6308»",
         "th-th": "Astable Anemohypostasis Creation - 6308",
         "vi-vn": "Gió Thần Sáng Tạo 6308"
     },
@@ -645,7 +303,7 @@
         "id-id": "Forbidden Creation - Isomer 75 / Type II",
         "ko-kr": "금기·풍령 작성·칠오 동구 이형",
         "pt-pt": "Criação Proibida do Espírito do Vento: Isomórfico-75 Tipo II",
-        "ru-ru": "Запретно! Изомер 75 / Тип II",
+        "ru-ru": "«Запретно! Изомер 75 / Тип II»",
         "th-th": "Forbidden Creation - Isomer 75 / Type II",
         "vi-vn": "Cấm-Gió Thần Sáng Tạo-75 Loại 2"
     },
@@ -825,7 +483,7 @@
         "es-es": "Gran Oda del Viento",
         "fr-fr": "Ode au Vent",
         "id-id": "Wind's Grand Ode",
-        "ko-kr": "바람신의 시",
+        "ko-kr": "바람 신의 시",
         "pt-pt": "Grande Ode do Vento",
         "ru-ru": "Великая ода ветру",
         "th-th": "Wind's Grand Ode",
@@ -1100,7 +758,7 @@
     "千早振る": {
         "zh-cn": "千早振",
         "zh-tw": "千早振",
-        "de-de": "Chihayaburu",
+        "de-de": "Elektro",
         "en-us": "Chihayaburu",
         "es-es": "Vehemencia estremecedora",
         "fr-fr": "Véhémence divine",
@@ -1202,9 +860,9 @@
         "en-us": "Palm Vortex",
         "es-es": "Espada de vórtice",
         "fr-fr": "Vortex destructeur",
-        "id-id": "Palm Fortex",
+        "id-id": "Palm Vortex",
         "ko-kr": "회오리 검",
-        "pt-pt": "Vórtice da Palma",
+        "pt-pt": "Palma da Vórtice",
         "ru-ru": "Ладонь вихря",
         "th-th": "Palm Vortex",
         "vi-vn": "Kiếm Gió Lốc"
@@ -1288,7 +946,7 @@
         "fr-fr": "Griffes Cryo",
         "id-id": "Icy Paws",
         "ko-kr": "꽁꽁젤리",
-        "pt-pt": "Garra de Gato Gelada",
+        "pt-pt": "Garras de Gato Gelado",
         "ru-ru": "Морозные коготочки",
         "th-th": "Icy Paws",
         "vi-vn": "Móng Mèo Lạnh Giá"
@@ -1299,7 +957,7 @@
         "de-de": "Eisgekühlter Branntwein",
         "en-us": "Signature Mix",
         "es-es": "Cóctel asesino",
-        "fr-fr": "Cuvée spéciale",
+        "fr-fr": "Cuvée Spéciale",
         "id-id": "Signature Mix",
         "ko-kr": "특제 칵테일",
         "pt-pt": "Coquetel Assassino",
@@ -1387,7 +1045,7 @@
         "id-id": "Spirit Blade: Chonghua's Layered Frost",
         "ko-kr": "영도·중첩의 서리",
         "pt-pt": "Lâmina Espiritual - Geada de Chongyun",
-        "ru-ru": "Духовное лезвие: Холод Чунхуа",
+        "ru-ru": "Холода Чунхуа",
         "th-th": "Spirit Blade - Chonghua's Layered Frost",
         "vi-vn": "Linh Đao - Sương Bạc Trùng Điệp"
     },
@@ -1577,14 +1235,14 @@
         "zh-cn": "霜袭",
         "zh-tw": "霜襲",
         "de-de": "Kälteatem",
-        "en-us": "Frostgnaw",
+        "en-us": "Frozen",
         "es-es": "Golpe de escarcha",
-        "fr-fr": "Attaque givrée",
-        "id-id": "Frostgnaw",
+        "fr-fr": "gelés",
+        "id-id": "Frozen",
         "ko-kr": "서리 엄습",
-        "pt-pt": "Mordida Congelante",
-        "ru-ru": "Выпад холода",
-        "th-th": "Frostgnaw",
+        "pt-pt": "Congelados",
+        "ru-ru": "замороженные",
+        "th-th": "แช่แข็ง",
         "vi-vn": "Tuyết Tập Kích"
     },
     "凛冽なる輪舞": {
@@ -1674,7 +1332,7 @@
     "凍てついた大地": {
         "zh-cn": "冰尘雪野",
         "zh-tw": "冰塵雪野",
-        "de-de": "Frostüberzogene Felder",
+        "de-de": "Kryo-SCH-Bonus",
         "en-us": "Frozen Wilds",
         "es-es": "Campo gélido",
         "fr-fr": "Frozen Wilds",
@@ -1786,7 +1444,7 @@
     "降衆天華": {
         "zh-cn": "降众天华",
         "zh-tw": "降眾天華",
-        "de-de": "Bändigender Niederschlag",
+        "de-de": "Kryo-Schaden",
         "en-us": "Celestial Shower",
         "es-es": "Diluvio celestial",
         "fr-fr": "Baptême céleste",
@@ -1873,11 +1531,11 @@
         "de-de": "Eisiger Strudel",
         "en-us": "Icetide Vortex",
         "es-es": "Vórtice helado",
-        "fr-fr": "Vortex des mers glacées",
+        "fr-fr": "Lame de fond",
         "id-id": "Icetide Vortex",
         "ko-kr": "얼음 파도의 와류",
         "pt-pt": "Vórtice Gelado",
-        "ru-ru": "Ледяной прибой",
+        "ru-ru": "Ледяного прибоя",
         "th-th": "Icetide Vortex",
         "vi-vn": "Lốc Xoáy Băng Hàn"
     },
@@ -1887,11 +1545,11 @@
         "de-de": "Schwert der Brandung",
         "en-us": "Glacial Illumination",
         "es-es": "Fulgor glacial",
-        "fr-fr": "Lame de fond",
+        "fr-fr": "Vortex des mers glacées",
         "id-id": "Glacial Illumination",
         "ko-kr": "파도를 얼리는 광검",
         "pt-pt": "Espada das Ondas Congeladas",
-        "ru-ru": "Сумеречный меч",
+        "ru-ru": "Сумеречного меча",
         "th-th": "Glacial Illumination",
         "vi-vn": "Thanh Kiếm Sóng Nước"
     },
@@ -1982,9 +1640,9 @@
     "神女遣霊真訣": {
         "zh-cn": "神女遣灵真诀",
         "zh-tw": "神女遣靈真訣",
-        "de-de": "Geisterbefehligung der göttlichen Jungfrau",
+        "de-de": "Kryo-Schadensbonus",
         "en-us": "Divine Maiden's Deliverance",
-        "es-es": "Encantamiento de la damisela divina",
+        "es-es": "Bono de Daño Cryo",
         "fr-fr": "Délivrance de la demoiselle divine",
         "id-id": "Divine Maiden's Deliverance",
         "ko-kr": "신녀 강령 비결",
@@ -2178,7 +1836,7 @@
     "仙法·寒病鬼差": {
         "zh-cn": "仙法·寒病鬼差",
         "zh-tw": "仙法·寒病鬼差",
-        "de-de": "Adeptenkunst: Frostbringer",
+        "de-de": "Adeptenkunst – Frostbringer",
         "en-us": "Adeptus Art: Herald of Frost",
         "es-es": "Magia Adeptus: Heraldo de la escarcha",
         "fr-fr": "Arcane d'Adepte : Héraut de givre",
@@ -2187,7 +1845,7 @@
         "pt-pt": "Arte do Adeptus: Arauto da Floresta",
         "ru-ru": "Искусство Адепта: Вестник стужи",
         "th-th": "Adeptus Art: Herald of Frost",
-        "vi-vn": "Tiên pháp - Hàn Bệnh Quỷ Sai"
+        "vi-vn": "Tiên Pháp - Hàn Bệnh Quỷ Sai"
     },
     "仙法·救苦度厄": {
         "zh-cn": "仙法·救苦度厄",
@@ -2380,7 +2038,7 @@
         "fr-fr": "Tempestrier tengu",
         "id-id": "Tengu Stormcall",
         "ko-kr": "까마귀 깃 텐구의 뇌정 소환",
-        "pt-pt": "Tempestade Tengu",
+        "pt-pt": "Invocação da Tempestade Tengu",
         "ru-ru": "Призыв грозы тэнгу",
         "th-th": "Tengu Stormcall",
         "vi-vn": "Bão Sét Tengu"
@@ -2480,7 +2138,7 @@
         "ko-kr": "창뢰",
         "pt-pt": "Arco Violeta",
         "ru-ru": "Пурпурная дуга",
-        "th-th": "Violet Arc",
+        "th-th": "Violet Arc ",
         "vi-vn": "Sấm Giội"
     },
     "薔薇の雷光": {
@@ -2682,7 +2340,7 @@
     "雷牙": {
         "zh-cn": "雷牙",
         "zh-tw": "雷牙",
-        "de-de": "Blitzklauen",
+        "de-de": "Klauen und Donner",
         "en-us": "Lightning Fang",
         "es-es": "Colmillo relámpago",
         "fr-fr": "Croc éclair",
@@ -2773,7 +2431,7 @@
         "id-id": "Sanctifying Ring",
         "ko-kr": "제액의 뇌초지륜",
         "pt-pt": "Anel Santificador",
-        "ru-ru": "Освящающее кольцо",
+        "ru-ru": "Освящающего кольца",
         "th-th": "Sanctifying Ring",
         "vi-vn": "Vòng Cỏ Sấm Thánh Hóa"
     },
@@ -2883,7 +2541,7 @@
         "es-es": "Técnica secreta suprema: Encarnación de Kitsune Celestial",
         "fr-fr": "Technique secrète : Incarnation de tenko",
         "id-id": "Great Secret Art: Tenko Kenshin",
-        "ko-kr": "대비법·천호 현신",
+        "ko-kr": "대비법·천호현신",
         "pt-pt": "Grande Arte Secreta: Tenko Kenshin",
         "ru-ru": "Великое тайное искусство: Тэнко кэнсин",
         "th-th": "Great Secret Art: Tenko Kenshin",
@@ -3063,7 +2721,7 @@
         "de-de": "Rückkehr der Sterne",
         "en-us": "Stellar Restoration",
         "es-es": "Retorno estelar",
-        "fr-fr": "Retour des étoiles",
+        "fr-fr": "enchantement Électro",
         "id-id": "Stellar Restoration",
         "ko-kr": "성신 회귀",
         "pt-pt": "Restauração Estelar",
@@ -3145,7 +2803,7 @@
         "zh-cn": "雷影剑",
         "zh-tw": "雷影劍",
         "de-de": "Blitzschattenschwert",
-        "en-us": "Lightning Blade",
+        "en-us": "Lightning Blade's",
         "es-es": "Espada electrosombría",
         "fr-fr": "Lame d'éclair",
         "id-id": "Lightning Blade",
@@ -3326,14 +2984,14 @@
     "璇璣屏": {
         "zh-cn": "璇玑屏",
         "zh-tw": "璇璣屏",
-        "de-de": "Jadeschirm",
+        "de-de": "Geo-Schaden",
         "en-us": "Jade Screen",
         "es-es": "Pantalla de jade",
-        "fr-fr": "Paravent d'astrolabe",
+        "fr-fr": "bonus de DGT Géo",
         "id-id": "Jade Screen",
         "ko-kr": "선기 병풍",
         "pt-pt": "Tela de Jade",
-        "ru-ru": "Нефритовая ширма",
+        "ru-ru": "бонус Гео урона",
         "th-th": "Jade Screen",
         "vi-vn": "Vách Toàn Cơ"
     },
@@ -3430,7 +3088,7 @@
         "fr-fr": "Armure de cœur",
         "id-id": "Breastplate",
         "ko-kr": "호심경",
-        "pt-pt": "Guardião do Coração",
+        "pt-pt": " Guardião do Coração ",
         "ru-ru": "Бронефартук",
         "th-th": "Breastplate",
         "vi-vn": "Giáp Hộ Tâm"
@@ -3719,8 +3377,8 @@
         "zh-cn": "地心",
         "zh-tw": "地心",
         "de-de": "Dominus Lapidis",
-        "en-us": "Dominus Lapidis",
-        "es-es": "Dominus lapidis",
+        "en-us": "Dominus Lapidis'",
+        "es-es": "Lluvia estelar",
         "fr-fr": "Dominus Lapidis",
         "id-id": "Dominus Lapidis",
         "ko-kr": "지핵",
@@ -3993,7 +3651,7 @@
         "pt-pt": "Que Comece o Espetáculo ♪",
         "ru-ru": "Да начнётся шоу♪",
         "th-th": "Let the Show Begin♪",
-        "vi-vn": "Buổi Diễn, Bắt Đầu♪"
+        "vi-vn": "Buổi Diễn,Bắt Đầu♪"
     },
     "シャイニングミラクル♪": {
         "zh-cn": "闪耀奇迹♪",
@@ -4399,7 +4057,7 @@
         "pt-pt": "Vicissitude",
         "ru-ru": "Иллюзорный поток",
         "th-th": "Illusory Torrent",
-        "vi-vn": "Dòng Chảy Ảo"
+        "vi-vn": "dòng chảy ảo"
     },
     "星命定軌": {
         "zh-cn": "星命定轨",
@@ -4999,7 +4657,7 @@
         "id-id": "Crimson Ooyoroi",
         "ko-kr": "진홍 열화의 오오요로이",
         "pt-pt": "Grande Armadura Flamejante",
-        "ru-ru": "Багровый оёрой",
+        "ru-ru": "Багрового оёроя",
         "th-th": "Crimson Ooyoroi",
         "vi-vn": "Chiến Giáp Rực Cháy"
     },
@@ -5174,13 +4832,13 @@
     "溢れる情熱": {
         "zh-cn": "热情过载",
         "zh-tw": "熱情超載",
-        "de-de": "Überschwänglichkeit",
+        "de-de": "Fantastische Reise",
         "en-us": "Passion Overload",
         "es-es": "Sobrecarga de pasión",
         "fr-fr": "Surpassion",
         "id-id": "Passion Overload",
         "ko-kr": "열정 과부하",
-        "pt-pt": "Sobrecarga de Paixão",
+        "pt-pt": "Sobrecarga da Paixão",
         "ru-ru": "Чрезмерные стремления",
         "th-th": "Passion Overload",
         "vi-vn": "Nhiệt Tình Quá Độ"
@@ -5188,7 +4846,7 @@
     "素晴らしい旅": {
         "zh-cn": "美妙旅程",
         "zh-tw": "美妙旅程",
-        "de-de": "Fantastische Reise",
+        "de-de": "Überschwänglichkeit",
         "en-us": "Fantastic Voyage",
         "es-es": "Aventura maravillosa",
         "fr-fr": "Merveilleux voyage",
@@ -5289,7 +4947,7 @@
         "de-de": "Ryuukin-Steinbrech",
         "en-us": "Ryuukin Saxifrage",
         "es-es": "Saxifraga de oro",
-        "fr-fr": "Saxifrage Ryuukin",
+        "fr-fr": "Saxifrage d'or",
         "id-id": "Ryuukin Saxifrage",
         "ko-kr": "유금 운간초",
         "pt-pt": "Saxifraga Ryuukin",
@@ -5483,15 +5141,15 @@
         "zh-cn": "黎明",
         "zh-tw": "黎明",
         "de-de": "Dämmerung",
-        "en-us": "Dawn",
-        "es-es": "Amanecer",
-        "fr-fr": "Aurore",
-        "id-id": "Dawn",
+        "en-us": "Pyro Infusion",
+        "es-es": "elemento Pyro imbuido",
+        "fr-fr": "enchantement Pyro",
+        "id-id": "Pyro Infusion",
         "ko-kr": "여명",
-        "pt-pt": "Alvorecer",
-        "ru-ru": "Рассвет",
-        "th-th": "Dawn",
-        "vi-vn": "Lê Minh"
+        "pt-pt": "Encantamento Pyro",
+        "ru-ru": "инфузии Пиро",
+        "th-th": "พลังแห่งไฟ",
+        "vi-vn": "Nguyên Tố Hỏa đính kèm"
     },
     "ノンストップ": {
         "zh-cn": "永不休止",
@@ -5566,16 +5224,16 @@
     "蝶導来世": {
         "zh-cn": "蝶引来生",
         "zh-tw": "蝶引來生",
-        "de-de": "Geleit ins Jenseits",
-        "en-us": "Guide to Afterlife",
-        "es-es": "Guía hacia el más allá",
-        "fr-fr": "Chaperon de la renaissance",
-        "id-id": "Guide to Afterlife",
+        "de-de": "Paramita-Schmetterlingstanz",
+        "en-us": "Paramita Papilio",
+        "es-es": "mariposa excelsa",
+        "fr-fr": "Paramita Papilio",
+        "id-id": "Paramita Papilio",
         "ko-kr": "나비의 서",
-        "pt-pt": "Guia do Além",
-        "ru-ru": "Путеводитель по загробной жизни",
-        "th-th": "Guide to Afterlife",
-        "vi-vn": "Điệp Dẫn Lai Sinh"
+        "pt-pt": "Dança de Borboleta",
+        "ru-ru": "Танец бабочки",
+        "th-th": "Paramita Papilio",
+        "vi-vn": "Bỉ Ngạn Điệp Vũ"
     },
     "安神秘法": {
         "zh-cn": "安神秘法",
@@ -15026,5 +14684,1433 @@
         "ru-ru": "Объятья бабочки",
         "th-th": "Butterfly's Embrace",
         "vi-vn": "U Điệp Lưu Lại Một Chút Hương"
+    },
+    "通常攻撃": {
+        "zh-cn": "普通攻击",
+        "zh-tw": "普通攻擊",
+        "de-de": "Standardangriff",
+        "en-us": "Normal Attack",
+        "es-es": "Ataque Normal",
+        "fr-fr": "Attaque normale",
+        "id-id": "Normal Attack",
+        "ko-kr": "일반 공격",
+        "pt-pt": "Ataque Normal",
+        "ru-ru": "Обычная атака:",
+        "th-th": "โจมตีปกติ",
+        "vi-vn": "Tấn Công Thường"
+    },
+    "風元素ダメージ": {
+        "zh-cn": "风元素伤害",
+        "zh-tw": "風元素傷害",
+        "de-de": "Anemo-Schaden",
+        "en-us": "Anemo DMG",
+        "es-es": "Daño Anemo",
+        "fr-fr": "DGT Anémo",
+        "id-id": "Anemo DMG",
+        "ko-kr": "바람 원소 피해",
+        "pt-pt": "Dano Anemo",
+        "ru-ru": "Анемо урона",
+        "th-th": "ความเสียหายลม",
+        "vi-vn": "sát thương Nguyên Tố Phong"
+    },
+    "重撃": {
+        "zh-cn": "重击",
+        "zh-tw": "重擊",
+        "de-de": "Heftiger Schlag",
+        "en-us": "Charged Attack",
+        "es-es": "Ataque Cargado",
+        "fr-fr": "Attaque chargée",
+        "id-id": "Charged Attack",
+        "ko-kr": "강공격",
+        "pt-pt": "Ataque Carregado",
+        "ru-ru": "Заряженная атака:",
+        "th-th": "ชาร์จโจมตี",
+        "vi-vn": "Trọng Kích"
+    },
+    "落下攻撃": {
+        "zh-cn": "下落攻击",
+        "zh-tw": "下落攻擊",
+        "de-de": "Angriff aus dem Fall",
+        "en-us": "Plunging Attack",
+        "es-es": "Ataque Descendente",
+        "fr-fr": "Attaque plongeante",
+        "id-id": "Plunging Attack",
+        "ko-kr": "낙하 공격",
+        "pt-pt": "Ataque Imersivo",
+        "ru-ru": "Атака в падении:",
+        "th-th": "โจมตีพุ่งลงจากอากาศ",
+        "vi-vn": "Tấn Công Khi Đáp"
+    },
+    "風元素範囲ダメージ": {
+        "zh-cn": "风元素范围伤害",
+        "zh-tw": "風元素範圍傷害",
+        "de-de": "Anemo-Flächenschaden",
+        "en-us": "AoE Anemo DMG",
+        "es-es": "Daño Anemo en el AdE",
+        "fr-fr": "DGT Anémo de zone",
+        "id-id": "Anemo DMG Area",
+        "ko-kr": "바람 원소 범위 피해",
+        "pt-pt": "Dano em uma AdE Anemo",
+        "ru-ru": "Анемо урон",
+        "th-th": "ความเสียหายลมเป็นวงกว้าง",
+        "vi-vn": "sát thương phạm vi nguyên tố Phong"
+    },
+    "一回押し": {
+        "zh-cn": "点按",
+        "zh-tw": "點按",
+        "de-de": "Drücken",
+        "en-us": "Tap/Press",
+        "es-es": "Un toque/Pulsar una vez",
+        "fr-fr": "Appui simple",
+        "id-id": "Tekan",
+        "ko-kr": "짧은 터치",
+        "pt-pt": "Pressionar",
+        "ru-ru": "Быстрое нажатие:",
+        "th-th": "แตะ/กด",
+        "vi-vn": "Nhấn"
+    },
+    "長押し": {
+        "zh-cn": "长按",
+        "zh-tw": "長按",
+        "de-de": "Gedrückt halten",
+        "en-us": "Hold (Short)",
+        "es-es": "Mantener pulsado",
+        "fr-fr": "Appui long",
+        "id-id": "Tahan (Sesaat)",
+        "ko-kr": "홀드",
+        "pt-pt": "Manter pressionado (Brevemente)",
+        "ru-ru": "Долгое нажатие:",
+        "th-th": "แตะค้าง/กดค้าง",
+        "vi-vn": "Nhấn giữ"
+    },
+    "変格": {
+        "zh-cn": "变格",
+        "zh-tw": "變格",
+        "de-de": "Deklination",
+        "en-us": "Declension",
+        "es-es": "Decantación",
+        "fr-fr": "Détection",
+        "id-id": "Declension",
+        "ko-kr": "변격",
+        "pt-pt": "Declinação",
+        "ru-ru": "Отклонение",
+        "th-th": "Declension",
+        "vi-vn": "Biến Cách"
+    },
+    "水元素": {
+        "zh-cn": "水元素",
+        "zh-tw": "水元素",
+        "de-de": "Hydro",
+        "en-us": "Hydro",
+        "es-es": "Hydro",
+        "fr-fr": "Hydro",
+        "id-id": "Hydro",
+        "ko-kr": "물 원소",
+        "pt-pt": "Hydro",
+        "ru-ru": "Гидро",
+        "th-th": "ธาตุน้ำ",
+        "vi-vn": "Nguyên Tố Thủy"
+    },
+    "炎元素": {
+        "zh-cn": "火元素",
+        "zh-tw": "火元素",
+        "de-de": "Pyro",
+        "en-us": "Pyro",
+        "es-es": "Pyro",
+        "fr-fr": "Pyro",
+        "id-id": "Pyro",
+        "ko-kr": "불 원소",
+        "pt-pt": "Pyro",
+        "ru-ru": "Пиро",
+        "th-th": "ธาตุไฟ",
+        "vi-vn": "Nguyên Tố Hỏa"
+    },
+    "氷元素": {
+        "zh-cn": "冰元素",
+        "zh-tw": "冰元素",
+        "de-de": "Kryo",
+        "en-us": "Cryo",
+        "es-es": "Cryo",
+        "fr-fr": "Cryo",
+        "id-id": "Cryo",
+        "ko-kr": "얼음 원소",
+        "pt-pt": "Cryo",
+        "ru-ru": "Крио",
+        "th-th": "ธาตุน้ำแข็ง",
+        "vi-vn": "Nguyên Tố Băng"
+    },
+    "雷元素": {
+        "zh-cn": "雷元素",
+        "zh-tw": "雷元素",
+        "de-de": "Elektro",
+        "en-us": "Electro",
+        "es-es": "Electro",
+        "fr-fr": "Électro",
+        "id-id": "Electro",
+        "ko-kr": "번개 원소",
+        "pt-pt": "Electro",
+        "ru-ru": "Электро",
+        "th-th": "ธาตุไฟฟ้า",
+        "vi-vn": "Nguyên Tố Lôi"
+    },
+    "元素変化": {
+        "zh-cn": "元素转化",
+        "zh-tw": "元素轉化",
+        "de-de": "Elementarumwandlung",
+        "en-us": "Elemental Absorption",
+        "es-es": "Cambio elemental",
+        "fr-fr": "Absorption élémentaire",
+        "id-id": "Elemental Absorption",
+        "ko-kr": "원소 전환",
+        "pt-pt": "Absorção Elemental",
+        "ru-ru": "Поглощение стихии:",
+        "th-th": "การเปลี่ยนแปลงธาตุ",
+        "vi-vn": "Chuyển hóa nguyên tố"
+    },
+    "嗚呼流·影貉繚乱": {
+        "zh-cn": "呜呼流·影貉缭乱",
+        "zh-tw": "嗚呼流·影貉繚亂",
+        "de-de": "Juhu-Stil – Mujina-Wirrsal",
+        "en-us": "Yoohoo Art: Mujina Flurry",
+        "es-es": "Técnica “¡Yujuuu!”: Frenesí tejón",
+        "fr-fr": "École Yoohoo : Bourrasque du mujina",
+        "id-id": "Yoohoo Art: Mujina Flurry",
+        "ko-kr": "유후류·너구리 분신술",
+        "pt-pt": "Arte Yoohoo: Agitação Mujina",
+        "ru-ru": "Искусство Юху: Сумасшествие Мудзина",
+        "th-th": "Yoohoo Art: Mujina Flurry",
+        "vi-vn": "Trường Phái Yoohoo - Mujina Bối Rối"
+    },
+    "夜叉の儺面": {
+        "zh-cn": "夜叉傩面",
+        "zh-tw": "夜叉儺面",
+        "de-de": "Yaksha-Maske",
+        "en-us": "Yaksha's Mask",
+        "es-es": "Máscara de Yaksha",
+        "fr-fr": "Masque du Yaksha",
+        "id-id": "Yaksha Mask",
+        "ko-kr": "야차의 가면",
+        "pt-pt": "Máscara Yaksha",
+        "ru-ru": "Маска Якса:",
+        "th-th": "Yaksha's Mask",
+        "vi-vn": "Mặt Nạ Dạ Xoa"
+    },
+    "蒲公英エリア": {
+        "zh-cn": "蒲公英领域",
+        "zh-tw": "蒲公英領域",
+        "de-de": "Löwenzahnfeld",
+        "en-us": "Dandelion Field",
+        "es-es": "Campo de dientes de león",
+        "fr-fr": "Champ de pissenlits",
+        "id-id": "Dandelion Field",
+        "ko-kr": "민들레 영역",
+        "pt-pt": "Campo de Dandelions",
+        "ru-ru": "Поле одуванчиков:",
+        "th-th": "Dandelion Field",
+        "vi-vn": "Vùng Đất Bồ Công Anh"
+    },
+    "風元素の影響": {
+        "zh-cn": "风元素影响",
+        "zh-tw": "風元素影響",
+        "de-de": "Anemo-Einflüsse",
+        "en-us": "Anemo",
+        "es-es": "Anemo",
+        "fr-fr": "élément Anémo",
+        "id-id": "Anemo",
+        "ko-kr": "바람 원소의 영향을 받는다",
+        "pt-pt": "Anemo",
+        "ru-ru": "эффектом Анемо",
+        "th-th": "ผลกระทบจากธาตุลม",
+        "vi-vn": "ảnh hưởng Nguyên Tố Phong"
+    },
+    "落下攻撃·乱れ嵐斬": {
+        "zh-cn": "下落攻击·乱岚拨止",
+        "zh-tw": "下落攻擊·亂嵐撥止",
+        "de-de": "Angriff aus dem Fall: Midare Ranzan",
+        "en-us": "Plunging Attack: Midare Ranzan",
+        "es-es": "Ataque Descendente: Contención del caos",
+        "fr-fr": "Attaque plongeante : Contrôle du chaos",
+        "id-id": "Plunging Attack: Midare Ranzan",
+        "ko-kr": "낙하공격·폭풍 베기",
+        "pt-pt": "Ataque Imersivo - Ranzan Aéreo",
+        "ru-ru": "Атака в падении: Мидарэ рандзан",
+        "th-th": "การโจมตีพุ่งลงจากอากาศ - Midare Ranzan",
+        "vi-vn": "Tấn Công Khi Đáp - Xua Tan Mây Mù"
+    },
+    "氷元素ダメージ": {
+        "zh-cn": "冰元素伤害",
+        "zh-tw": "冰元素傷害",
+        "de-de": "Kryo-Schaden",
+        "en-us": "Cryo DMG",
+        "es-es": "Daño Cryo",
+        "fr-fr": "DGT Cryo",
+        "id-id": "Cryo DMG",
+        "ko-kr": "얼음 원소 피해",
+        "pt-pt": "Dano Cryo",
+        "ru-ru": "Крио урон",
+        "th-th": "ความเสียหายน้ำแข็ง",
+        "vi-vn": "sát thương nguyên tố Băng"
+    },
+    "氷元素付着": {
+        "zh-cn": "冰元素附着",
+        "zh-tw": "冰元素附著",
+        "de-de": "Kryo",
+        "en-us": "Cryo",
+        "es-es": "Cryo",
+        "fr-fr": "Cryo",
+        "id-id": "Cryo",
+        "ko-kr": "얼음 원소를 부착",
+        "pt-pt": "Cryo",
+        "ru-ru": "эффект Крио",
+        "th-th": "ธาตุน้ำแข็ง",
+        "vi-vn": "đính kèm Nguyên Tố Băng"
+    },
+    "氷元素範囲ダメージ": {
+        "zh-cn": "冰元素范围伤害",
+        "zh-tw": "冰元素範圍傷害",
+        "de-de": "Kryo-Flächenschaden",
+        "en-us": "AoE Cryo DMG",
+        "es-es": "Daño Cryo en el AdE",
+        "fr-fr": "DGT Cryo de zone",
+        "id-id": "Cryo DMG Area",
+        "ko-kr": "얼음 원소 범위 피해",
+        "pt-pt": "Dano Cryo em uma AdE",
+        "ru-ru": "Крио урон по площади",
+        "th-th": "ความเสียหายน้ำแข็งวงกว้าง",
+        "vi-vn": "sát thương phạm vi Nguyên Tố Băng"
+    },
+    "氷気の酒霧エリア": {
+        "zh-cn": "冰气酒雾领域",
+        "zh-tw": "冰氣酒霧領域",
+        "de-de": "Kältedunstfeld",
+        "en-us": "Drunken Mist",
+        "es-es": "Bruma embriagadora",
+        "fr-fr": "Champ de vapeur d'alcool",
+        "id-id": "Drunken Mist",
+        "ko-kr": "서리 술안개 영역",
+        "pt-pt": "Névoa Embriagada",
+        "ru-ru": "Прохладительная дымка:",
+        "th-th": "Drunken Mist",
+        "vi-vn": "Khu Vực Hơi Rượu Băng"
+    },
+    "氷元素付与": {
+        "zh-cn": "冰元素附魔",
+        "zh-tw": "冰元素附魔",
+        "de-de": "Kryo",
+        "en-us": "Cryo",
+        "es-es": "imbuye del elemento Cryo ",
+        "fr-fr": "DGT Cryo",
+        "id-id": "Cryo",
+        "ko-kr": "얼음 원소 부여 효과",
+        "pt-pt": "Encantamento Cryo",
+        "ru-ru": "инфузией Крио",
+        "th-th": "พลังแห่งน้ำแข็ง",
+        "vi-vn": "Nguyên Tố Băng đính kèm"
+    },
+    "氷元素耐性": {
+        "zh-cn": "冰元素抗性",
+        "zh-tw": "冰元素抗性",
+        "de-de": "Kryo-WDS",
+        "en-us": "Cryo RES",
+        "es-es": "RES Cryo",
+        "fr-fr": "RÉS Cryo",
+        "id-id": "Cryo RES",
+        "ko-kr": "얼음 원소 내성",
+        "pt-pt": "RES Cryo",
+        "ru-ru": "Крио сопротивление",
+        "th-th": "ความต้านทานน้ำแข็ง",
+        "vi-vn": "Kháng Nguyên Tố Băng"
+    },
+    "凍結": {
+        "zh-cn": "冻结",
+        "zh-tw": "凍結",
+        "de-de": "Gefroren",
+        "en-us": "Frostgnaw",
+        "es-es": "congela",
+        "fr-fr": "Attaque givrée",
+        "id-id": "Frostgnaw",
+        "ko-kr": "빙결",
+        "pt-pt": "Mordida Congelante",
+        "ru-ru": "Выпад холода",
+        "th-th": "Frostgnaw",
+        "vi-vn": "đóng băng"
+    },
+    "コイル": {
+        "zh-cn": "线圈",
+        "zh-tw": "線圈",
+        "de-de": "Spule",
+        "en-us": "Coil",
+        "es-es": "Inducción",
+        "fr-fr": "Bobine",
+        "id-id": "Coil",
+        "ko-kr": "코일",
+        "pt-pt": "Bobina",
+        "ru-ru": "Спирали",
+        "th-th": "Coil",
+        "vi-vn": "Dây Móc"
+    },
+    "氷蓮": {
+        "zh-cn": "冰莲",
+        "zh-tw": "冰蓮",
+        "de-de": "Eislotos",
+        "en-us": "Ice Lotus",
+        "es-es": "Loto de hielo",
+        "fr-fr": "Lotus de glace",
+        "id-id": "Ice Lotus",
+        "ko-kr": "얼음 연꽃",
+        "pt-pt": "Lótus de Gelo",
+        "ru-ru": "Ледяной лотос:",
+        "th-th": "Ice Lotus",
+        "vi-vn": "Băng Liên"
+    },
+    "冷酷な心": {
+        "zh-cn": "冷酷之心",
+        "zh-tw": "冷酷之心",
+        "de-de": "Kaltes Herz",
+        "en-us": "Grimheart",
+        "es-es": "Corazón impasible",
+        "fr-fr": "Cœur de glace",
+        "id-id": "Grimheart",
+        "ko-kr": "냉혹한 마음",
+        "pt-pt": "Coração Impassível",
+        "ru-ru": "Холодное сердце",
+        "th-th": "Grimheart",
+        "vi-vn": "Trái Tim Băng Giá"
+    },
+    "氷翎": {
+        "zh-cn": "冰翎",
+        "zh-tw": "冰翎",
+        "de-de": "Eisfeder",
+        "en-us": "Icy Quill",
+        "es-es": "Pluma glacial",
+        "fr-fr": "Pennage glacé",
+        "id-id": "Icy Quill",
+        "ko-kr": "얼음의 깃",
+        "pt-pt": "Pena Gelada",
+        "ru-ru": "Ледяное перо:",
+        "th-th": "Icy Quill",
+        "vi-vn": "Băng Linh"
+    },
+    "ダッシュの代わりに発動する": {
+        "zh-cn": "替代冲刺",
+        "zh-tw": "替代衝刺",
+        "de-de": "Ersetzt Rennen",
+        "en-us": "Alternate Sprint",
+        "es-es": "Reemplaza a Esprintar",
+        "fr-fr": "Sprint alternatif",
+        "id-id": "Alternate Sprint",
+        "ko-kr": "대시를 대체한다",
+        "pt-pt": "Arrancada Alternativa",
+        "ru-ru": "Заменяет спринт.",
+        "th-th": "Alternate Sprint",
+        "vi-vn": "Thay thế xung kích"
+    },
+    "霜見雪関扉": {
+        "zh-cn": "霜见雪关扉",
+        "zh-tw": "霜見雪關扉",
+        "de-de": "Frostflocke Seki no To",
+        "en-us": "Frostflake Seki no To",
+        "es-es": "Ráfaga de ventisca",
+        "fr-fr": "Tourbillon givré",
+        "id-id": "Frostflake Seki no To",
+        "ko-kr": "서리의 관문",
+        "pt-pt": "Granizo Seki no To",
+        "ru-ru": "Морозный сэки но то",
+        "th-th": "Frostflake Seki no To",
+        "vi-vn": "Cổng Băng Tuyết"
+    },
+    "寒病鬼差": {
+        "zh-cn": "寒病鬼差",
+        "zh-tw": "寒病鬼差",
+        "de-de": "Frostbringer",
+        "en-us": "Herald of Frost",
+        "es-es": "Heraldo de la escarcha",
+        "fr-fr": "Héraut de givre",
+        "id-id": "Herald of Frost",
+        "ko-kr": "한병의 귀차",
+        "pt-pt": "Arauto da Floresta",
+        "ru-ru": "Вестник стужи:",
+        "th-th": "Herald of Frost",
+        "vi-vn": "Hàn Bệnh Quỷ Sai"
+    },
+    "度厄のお札": {
+        "zh-cn": "度厄真符",
+        "zh-tw": "渡厄真符",
+        "de-de": "Leidbefreiungs-Talisman",
+        "en-us": "Fortune-Preserving Talisman",
+        "es-es": "Talismán de conservación de la fortuna",
+        "fr-fr": "Talisman",
+        "id-id": "Fortune-Preserving Talisman",
+        "ko-kr": "도액 부적",
+        "pt-pt": "Amuleto de Preservação da Fortuna",
+        "ru-ru": "Талисман Фортуны",
+        "th-th": "Fortune-Preserving Talisman",
+        "vi-vn": "Bùa Độ Ách Chân"
+    },
+    "璃月地域の特産": {
+        "zh-cn": "璃月区域特产",
+        "zh-tw": "璃月區域特產",
+        "de-de": "Besonderheiten Liyues",
+        "en-us": "resources unique to Liyue",
+        "es-es": "objetos típicos de Liyue",
+        "fr-fr": "produits de Liyue",
+        "id-id": "produk khas Liyue",
+        "ko-kr": "리월 지역 특산물",
+        "pt-pt": "Especialidades de Liyue",
+        "ru-ru": "диковины Ли Юэ",
+        "th-th": "ของพิเศษเฉพาะใน Liyue",
+        "vi-vn": "đặc sản xung quanh khu vực Liyue"
+    },
+    "雷元素ダメージ": {
+        "zh-cn": "雷元素伤害",
+        "zh-tw": "雷元素傷害",
+        "de-de": "Elektro-Schaden",
+        "en-us": "Electro DMG.",
+        "es-es": "Daño Electro",
+        "fr-fr": "DGT Électro",
+        "id-id": "Electro DMG.",
+        "ko-kr": "번개 원소 피해",
+        "pt-pt": "Dano Electro",
+        "ru-ru": "Электро урон",
+        "th-th": "ความเสียหายไฟฟ้า",
+        "vi-vn": "sát thương Nguyên Tố Lôi"
+    },
+    "雷の魔弾": {
+        "zh-cn": "雷之魔弹",
+        "zh-tw": "雷之魔彈",
+        "de-de": "Blitzgeschosse",
+        "en-us": "Freikugel",
+        "es-es": "balas Electro",
+        "fr-fr": "balles électrifiées",
+        "id-id": "Freikugel",
+        "ko-kr": "번개 에너지 탄",
+        "pt-pt": "Bolas Eletrificantes",
+        "ru-ru": "Электро снарядами",
+        "th-th": "Freikugel",
+        "vi-vn": "Đạn Sấm Sét"
+    },
+    "雷元素範囲ダメージ": {
+        "zh-cn": "雷元素范围伤害",
+        "zh-tw": "雷元素範圍傷害",
+        "de-de": "Elektro-Flächenschaden",
+        "en-us": "AoE Electro DMG",
+        "es-es": "Daño Electro en el AdE",
+        "fr-fr": "DGT Électro de zone",
+        "id-id": "Electro DMG area",
+        "ko-kr": "번개 원소 범위 피해",
+        "pt-pt": "Dano Electro em uma AdE",
+        "ru-ru": "Электро урон по площади",
+        "th-th": "ความเสียหายไฟฟ้าวงกว้าง",
+        "vi-vn": "sát thương phạm vi nguyên tố lôi"
+    },
+    "雷元素の関連反応": {
+        "zh-cn": "雷元素相关反应",
+        "zh-tw": "雷元素相關反應",
+        "de-de": "Elektro-Reaktion",
+        "en-us": "Electro-related Elemental Reaction",
+        "es-es": "Reacción Elemental con Electro",
+        "fr-fr": "DGT Électro de zone",
+        "id-id": "Reaksi Elemental yang berhubungan dengan elemen Electro",
+        "ko-kr": "번개 원소 관련 반응",
+        "pt-pt": "Reação Elemental do tipo Electro",
+        "ru-ru": "Электро реакцию",
+        "th-th": "ปฏิกิริยาที่เกี่ยวข้องกับธาตุไฟฟ้า",
+        "vi-vn": "phản ứng với Nguyên Tố Lôi"
+    },
+    "蔷薇の雷光": {
+        "zh-cn": "蔷薇的雷光",
+        "zh-tw": "薔薇的雷光",
+        "de-de": "Rosenblitz",
+        "en-us": "Lightning Rose",
+        "es-es": "Rayo de la rosa",
+        "fr-fr": "Rose de foudre",
+        "id-id": "Lightning Rose",
+        "ko-kr": "장미의 뇌광",
+        "pt-pt": "Rosa do Relâmpago",
+        "ru-ru": "Громовая роза",
+        "th-th": "Lightning Rose",
+        "vi-vn": "Tường Vi Sấm Sét"
+    },
+    "雷元素付着": {
+        "zh-cn": "雷元素附着",
+        "zh-tw": "雷元素附著",
+        "de-de": "Elektro-Attribut",
+        "en-us": "Electro element",
+        "es-es": "elemento Electro",
+        "fr-fr": "élément Électro",
+        "id-id": "elemen Electro",
+        "ko-kr": "번개 원소를 부착",
+        "pt-pt": "Elemento Electro",
+        "ru-ru": "эффект Электро",
+        "th-th": "ติดสถานะธาตุไฟฟ้า",
+        "vi-vn": "Nguyên Tố Lôi kèm theo"
+    },
+    "雷獣の盾": {
+        "zh-cn": "雷兽之盾",
+        "zh-tw": "雷獸之盾",
+        "de-de": "Donnerschild",
+        "en-us": "Thunderbeast's Targe",
+        "es-es": "Escudo del trueno",
+        "fr-fr": "Bouclier de foudre",
+        "id-id": "Thunderbeast's Targe",
+        "ko-kr": "뇌전 괴수의 방패",
+        "pt-pt": "Escudo do Trovão",
+        "ru-ru": "Громовой щит:",
+        "th-th": "Thunderbeast's Targe",
+        "vi-vn": "Khiên Lôi Thú"
+    },
+    "雷狼": {
+        "zh-cn": "雷狼",
+        "zh-tw": "雷狼",
+        "de-de": "Blitzwolf",
+        "en-us": "The Wolf Within",
+        "es-es": "Lobo interior",
+        "fr-fr": "Loup de tonnerre",
+        "id-id": "The Wolf Within",
+        "ko-kr": "썬더울프",
+        "pt-pt": "O Lobo Interior",
+        "ru-ru": "Внутренний волк:",
+        "th-th": "The Wolf Within",
+        "vi-vn": "Sói"
+    },
+    "雷元素耐性": {
+        "zh-cn": "雷元素抗性",
+        "zh-tw": "雷元素抗性",
+        "de-de": "Elektro-WDS",
+        "en-us": "Electro RES",
+        "es-es": "RES Electro",
+        "fr-fr": "RÉS Électro",
+        "id-id": "Electro RES",
+        "ko-kr": "번개 원소 내성",
+        "pt-pt": "RES Electro",
+        "ru-ru": "Электро сопротивление",
+        "th-th": "ความต้านทานไฟฟ้า",
+        "vi-vn": "Kháng Nguyên Tố Lôi"
+    },
+    "感電": {
+        "zh-cn": "感电",
+        "zh-tw": "感電",
+        "de-de": "Unter Strom",
+        "en-us": "Electro-Charged",
+        "es-es": "Electrocargado",
+        "fr-fr": "Électrocutions",
+        "id-id": "Electro-Charged",
+        "ko-kr": "감전",
+        "pt-pt": "Eletricamente Carregado",
+        "ru-ru": "Заряжен",
+        "th-th": "ชาร์จไฟฟ้า",
+        "vi-vn": "Điện Cảm"
+    },
+    "越祓草輪": {
+        "zh-cn": "越祓草轮",
+        "zh-tw": "越祓草輪",
+        "de-de": "Grasring",
+        "en-us": "Grass Ring of Sanctification",
+        "es-es": "Anillo purificador",
+        "fr-fr": "Anneau d'herbes de consécration",
+        "id-id": "Grass Ring of Sanctification",
+        "ko-kr": "제액의 륜",
+        "pt-pt": "Anel de Grama Santificada",
+        "ru-ru": "Травяное кольцо освящения",
+        "th-th": "Grass Ring of Sanctification",
+        "vi-vn": "Vòng Cỏ Thánh Hóa"
+    },
+    "殺生櫻": {
+        "zh-cn": "杀生樱",
+        "zh-tw": "殺生櫻",
+        "de-de": "Sesshou-Sakura",
+        "en-us": "Sesshou Sakura",
+        "es-es": "cerezos kitsune",
+        "fr-fr": "sakura dévastateurs",
+        "id-id": "Sesshou Sakura",
+        "ko-kr": "살생앵",
+        "pt-pt": "Sesshou Sakura",
+        "ru-ru": "Сакуры сэссё",
+        "th-th": "Sesshou Sakura",
+        "vi-vn": "Sesshou Sakura"
+    },
+    "雷罰悪曜の眼": {
+        "zh-cn": "雷罚恶曜之眼",
+        "zh-tw": "雷罰惡曜之眼",
+        "de-de": "Unheilvolles Auge der Blitzstrafe",
+        "en-us": "Eye of Stormy Judgment",
+        "es-es": "Ojo del castigo atronador",
+        "fr-fr": "Œil de jugement orageux",
+        "id-id": "Eye of Stormy Judgment",
+        "ko-kr": "뇌벌 악요의 눈",
+        "pt-pt": "Olho do Julgamento Tempestuoso",
+        "ru-ru": "Глаз грозового наказания",
+        "th-th": "Eye of Stormy Judgment",
+        "vi-vn": "Con Mắt Lôi Phạt"
+    },
+    "夢想の一心": {
+        "zh-cn": "梦想一心",
+        "zh-tw": "夢想一心",
+        "de-de": "Musou Isshin",
+        "en-us": "Musou Isshin",
+        "es-es": "mente onírica",
+        "fr-fr": "Harmonie d'idéal",
+        "id-id": "Musou Isshin",
+        "ko-kr": "몽상의 일심",
+        "pt-pt": "Musou Isshin",
+        "ru-ru": "Мусо иссин",
+        "th-th": "Musou Isshin",
+        "vi-vn": "Mộng Tưởng Nhất Tâm"
+    },
+    "諸願百目の輪": {
+        "zh-cn": "诸愿百眼之轮",
+        "zh-tw": "諸願百眼之輪",
+        "de-de": "Charkra-Desiderate",
+        "en-us": "Chakra Desiderata",
+        "es-es": "rueda de la ambición",
+        "fr-fr": "Chakra Desiderata",
+        "id-id": "Chakra Desiderata",
+        "ko-kr": "염원이 깃든 백안지륜",
+        "pt-pt": "Shogan Byakugen no Rin",
+        "ru-ru": "Чакра вожделения",
+        "th-th": "Chakra Desiderata",
+        "vi-vn": "Ước Nguyện Chakra"
+    },
+    "雷楔": {
+        "zh-cn": "雷楔",
+        "zh-tw": "雷楔",
+        "de-de": "Donnerkeil",
+        "en-us": "Lightning Stiletto",
+        "es-es": "Cuña relámpago",
+        "fr-fr": "Lame de foudre",
+        "id-id": "Lightning Stiletto",
+        "ko-kr": "뇌설",
+        "pt-pt": "Relâmpago Stiletto",
+        "ru-ru": "Громовой стилет:",
+        "th-th": "Lightning Stiletto",
+        "vi-vn": "Đá Lôi"
+    },
+    "雷元素付与": {
+        "zh-cn": "雷元素附魔",
+        "zh-tw": "雷元素附魔",
+        "de-de": "Elektro-Kraft",
+        "en-us": "Electro Infusion",
+        "es-es": "imbuye del elemento Electro",
+        "fr-fr": "Retour des Étoiles",
+        "id-id": "Electro Infusion",
+        "ko-kr": "번개 원소 부여",
+        "pt-pt": "Encantamento Electro",
+        "ru-ru": "инфузией Электро",
+        "th-th": "พลังแห่งไฟฟ้า",
+        "vi-vn": "Nguyên Tố Lôi đính kèm"
+    },
+    "豊穰の勾玉": {
+        "zh-cn": "丰穰勾玉",
+        "zh-tw": "豐穰勾玉",
+        "de-de": "Amulette des Überflusses",
+        "en-us": "Abundance Amulets",
+        "es-es": "Abalorio de la profusión",
+        "fr-fr": "Amulettes d'abondance",
+        "id-id": "Abundance Amulet",
+        "ko-kr": "풍요의 곡옥",
+        "pt-pt": "Amuleto da Abundância",
+        "ru-ru": "Амулеты изобилия",
+        "th-th": "Abundance Amulet",
+        "vi-vn": "Khuyết Ngọc Dậy Sóng"
+    },
+    "身に纏う雷霆": {
+        "zh-cn": "雷霆绕身",
+        "zh-tw": "雷霆繞身",
+        "de-de": "Blitzgewand",
+        "en-us": "Lightning Shroud",
+        "es-es": "Velo del relámpago",
+        "fr-fr": "Voile de foudre",
+        "id-id": "Lightning Shroud",
+        "ko-kr": "휘감는 뇌정",
+        "pt-pt": "Revestimento de Relâmpago",
+        "ru-ru": "Завеса молнии",
+        "th-th": "Lightning Shroud",
+        "vi-vn": "Sấm Sét Bao Vây"
+    },
+    "岩元素ダメージ": {
+        "zh-cn": "岩元素伤害",
+        "zh-tw": "岩元素傷害",
+        "de-de": "Geo-Schaden",
+        "en-us": "AoE Geo DMG",
+        "es-es": "Daño Geo",
+        "fr-fr": "DGT Géo",
+        "id-id": "Geo DMG",
+        "ko-kr": "바위 원소 피해",
+        "pt-pt": "Dano AdE Geo",
+        "ru-ru": "Гео урон",
+        "th-th": "ความเสียหายหิน 60%",
+        "vi-vn": "sát thương Nguyên Tố Nham"
+    },
+    "岩元素範囲ダメージ": {
+        "zh-cn": "岩元素范围伤害",
+        "zh-tw": "岩元素範圍傷害",
+        "de-de": "Geo-Flächenschaden",
+        "en-us": "AoE Geo DMG",
+        "es-es": "Daño Geo en el AdE",
+        "fr-fr": "DGT Géo de zone",
+        "id-id": "Geo DMG area",
+        "ko-kr": "바위 원소 범위 피해",
+        "pt-pt": "Dano AdE Geo",
+        "ru-ru": "Гео урон по площади",
+        "th-th": "ความเสียหายหินเป็นวงกว้าง",
+        "vi-vn": "Sát Thương Phạm Vi Nguyên Tố Nham"
+    },
+    "大将の旗指物": {
+        "zh-cn": "大将旗指物",
+        "zh-tw": "大將旗指物",
+        "de-de": "Generalbanner",
+        "en-us": "General's War Banner",
+        "es-es": "Estandarte del general",
+        "fr-fr": "Bannière de général",
+        "id-id": "General's War-Banner",
+        "ko-kr": "대장의 깃발",
+        "pt-pt": "Estandarte do General",
+        "ru-ru": "Боевой штандарт генерала",
+        "th-th": "General's War-Banner",
+        "vi-vn": "Đại Tướng Chiến Kỳ"
+    },
+    "岩元素": {
+        "zh-cn": "岩元素",
+        "zh-tw": "岩元素",
+        "de-de": "Geo",
+        "en-us": "Geo element",
+        "es-es": "Cresta de piedra",
+        "fr-fr": "l'élément Géo",
+        "id-id": "elemen Geo",
+        "ko-kr": "바위 원소",
+        "pt-pt": "Elemento Geo",
+        "ru-ru": "Гео элемента",
+        "th-th": "ธาตุหิน",
+        "vi-vn": "Nguyên Tố Nham"
+    },
+    "大将威儀": {
+        "zh-cn": "大将威仪",
+        "zh-tw": "大將威儀",
+        "de-de": "Würde des Generals",
+        "en-us": "General's Glory",
+        "es-es": "Gloria del general",
+        "fr-fr": "Prestige de général",
+        "id-id": "General's Glory",
+        "ko-kr": "대장의 위용",
+        "pt-pt": "Glória do General",
+        "ru-ru": "Влияние генерала",
+        "th-th": "General's Glory",
+        "vi-vn": "Uy Nghi Đại Tướng"
+    },
+    "稲妻地域の特産": {
+        "zh-cn": "稻妻区域特产",
+        "zh-tw": "稻妻區域特產",
+        "de-de": "Besonderheiten Inazumas",
+        "en-us": "resources unique to Inazuma",
+        "es-es": "objetos típicos de Inazuma",
+        "fr-fr": "produits d'Inazuma",
+        "id-id": "produk khas Inazuma",
+        "ko-kr": "이나즈마 지역 특산물",
+        "pt-pt": "recursos únicos de Inazuma",
+        "ru-ru": "диковины Инадзумы",
+        "th-th": "ของพิเศษเฉพาะใน Inazuma",
+        "vi-vn": "đặc sản khu vực Inazuma"
+    },
+    "岩元素創造物": {
+        "zh-cn": "岩元素创造物",
+        "zh-tw": "岩元素創造物",
+        "de-de": "Geo-Objekt",
+        "en-us": "Geo Construct",
+        "es-es": "creación Geo",
+        "fr-fr": "construction Géo",
+        "id-id": "Geo Construct",
+        "ko-kr": "바위 원소 창조물",
+        "pt-pt": "Construção Geo",
+        "ru-ru": "Гео конструкцией",
+        "th-th": "วัตถุธาตุหิน",
+        "vi-vn": "vật tạo ra Nguyên Tố Nham"
+    },
+    "鍛造に使われる鉱石の鉱脈": {
+        "zh-cn": "锻造用矿石的矿脉",
+        "zh-tw": "鍛造用礦石的礦脈",
+        "de-de": "Erzadern mit zum Schmieden geeignetem Erz",
+        "en-us": "ore veins used in forging",
+        "es-es": "minerales utilizados para forjar",
+        "fr-fr": "filons de minerai utilisables en forge",
+        "id-id": "tambang ore untuk Forge",
+        "ko-kr": "단조용 광석의 광맥",
+        "pt-pt": "veias de minério utilizadas na forja",
+        "ru-ru": "используемую для ковки руду",
+        "th-th": "สายแร่ของแร่ที่ใช้ในการหลอม",
+        "vi-vn": "mạch khoáng có thể sản xuất Quặng Đúc"
+    },
+    "飛雲旗陣": {
+        "zh-cn": "飞云旗阵",
+        "zh-tw": "飛雲旗陣",
+        "de-de": "Formation der fliegenden Wolken",
+        "en-us": "Flying Cloud Flag Formation",
+        "es-es": "Banderines de las nubes",
+        "fr-fr": "Formation de bannière de nuagerie",
+        "id-id": "Flying Cloud Flag Formation",
+        "ko-kr": "비운의 깃발",
+        "pt-pt": "Formação da Bandeira das Nuvens",
+        "ru-ru": "Строй облачных флагов",
+        "th-th": "Flying Cloud Flag Formation",
+        "vi-vn": "Phi Vân Kỳ Trận"
+    },
+    "「飛雲旗陣」": {
+        "zh-cn": "「飞云旗阵」",
+        "zh-tw": "「飛雲旗陣」",
+        "de-de": "Formation der Fliegenden Wolken",
+        "en-us": "Flying Cloud Flag Formation",
+        "es-es": "banderines de las nubes",
+        "fr-fr": "formation de bannière de nuagerie",
+        "id-id": "Flying Cloud Flag Formation",
+        "ko-kr": "「비운의 깃발」",
+        "pt-pt": "Formação da Bandeira das Nuvens",
+        "ru-ru": "Строй облачных флагов",
+        "th-th": "Flying Cloud Flag Formation",
+        "vi-vn": "Phi Vân Kỳ Trận"
+    },
+    "岩柱": {
+        "zh-cn": "岩脊",
+        "zh-tw": "岩脊",
+        "de-de": "Hügelkamm",
+        "en-us": "Stone Stele",
+        "es-es": "Daño Geo en el AdE",
+        "fr-fr": "Dorsale rocheuse",
+        "id-id": "Stone Stele",
+        "ko-kr": "암주",
+        "pt-pt": "Estela de Pedra",
+        "ru-ru": "Каменная стела:",
+        "th-th": "Stone Stele",
+        "vi-vn": "Vách Đá"
+    },
+    "玉璋シールド": {
+        "zh-cn": "玉璋护盾",
+        "zh-tw": "玉璋護盾",
+        "de-de": "Jadeblock-Schild",
+        "en-us": "Jade Shield",
+        "es-es": "Daño Geo",
+        "fr-fr": "Bouclier de jade",
+        "id-id": "Jade Shield",
+        "ko-kr": "옥홀 방패",
+        "pt-pt": "Escudo de Jade",
+        "ru-ru": "Яшмовый щит:",
+        "th-th": "Jade Shield",
+        "vi-vn": "Khiên Ngọc"
+    },
+    "石化": {
+        "zh-cn": "石化",
+        "zh-tw": "石化",
+        "de-de": "Versteinert",
+        "en-us": "Petrification",
+        "es-es": "Dominus lapidis",
+        "fr-fr": "pétrifiés",
+        "id-id": "Petrification",
+        "ko-kr": "석화",
+        "pt-pt": "Petrificante",
+        "ru-ru": "Окаменение",
+        "th-th": "การกลายเป็นหิน",
+        "vi-vn": "Hóa Thạch"
+    },
+    "陽華": {
+        "zh-cn": "阳华",
+        "zh-tw": "陽華",
+        "de-de": "Sonnennachbildung",
+        "en-us": "Solar Isotoma",
+        "es-es": "Isotoma solar",
+        "fr-fr": "Aura solaire",
+        "id-id": "Solar Isotoma",
+        "ko-kr": "태양꽃",
+        "pt-pt": "Radiação Solar",
+        "ru-ru": "Цветок солнца",
+        "th-th": "Solar Isotoma",
+        "vi-vn": "Hoa Mặt Trời"
+    },
+    "水元素ダメージ": {
+        "zh-cn": "水元素伤害",
+        "zh-tw": "水元素傷害",
+        "de-de": "Hydro-Schaden",
+        "en-us": "Hydro DMG",
+        "es-es": "Daño Hydro",
+        "fr-fr": "DGT Hydro",
+        "id-id": "Hydro DMG",
+        "ko-kr": "물 원소 피해",
+        "pt-pt": "Dano Hydro",
+        "ru-ru": "Гидро урон",
+        "th-th": "ความเสียหายน้ำ",
+        "vi-vn": "Sát Thương Nguyên Tố Thủy"
+    },
+    "水元素範囲ダメージ": {
+        "zh-cn": "水元素范围伤害",
+        "zh-tw": "水元素範圍傷害",
+        "de-de": "Hydro-Flächenschaden",
+        "en-us": "AoE Hydro DMG",
+        "es-es": "Daño Hydro en el AdE",
+        "fr-fr": "DGT Hydro de zone",
+        "id-id": "Hydro DMG Area",
+        "ko-kr": "물 원소 범위 피해",
+        "pt-pt": "Dano Hydro em AdE",
+        "ru-ru": "Гидро урон по площади",
+        "th-th": "ความเสียหายน้ำวงกว้าง",
+        "vi-vn": "Sát Thương Phạm Vi Nguyên Tố Thủy"
+    },
+    "湿潤": {
+        "zh-cn": "潮湿",
+        "zh-tw": "潮濕",
+        "de-de": "Nass",
+        "en-us": "Wet",
+        "es-es": "Mojado",
+        "fr-fr": "Trempé",
+        "id-id": "Wet",
+        "ko-kr": "습기",
+        "pt-pt": "Molhado",
+        "ru-ru": "Мокрый",
+        "th-th": "เปียกชุ่ม",
+        "vi-vn": "Ẩm Ướt"
+    },
+    "歌声の輪": {
+        "zh-cn": "歌声之环",
+        "zh-tw": "歌聲之環",
+        "de-de": "Singender Kreis",
+        "en-us": "Melody Loop",
+        "es-es": "Círculos melódicos",
+        "fr-fr": "Cercle de mélodie",
+        "id-id": "Melody Loop",
+        "ko-kr": "노래의 고리",
+        "pt-pt": "Círculo Melódico",
+        "ru-ru": "Кольцо мелодии:",
+        "th-th": "วงแหวนดนตรี",
+        "vi-vn": "Vòng Âm Thanh"
+    },
+    "水元素ダメージアップ": {
+        "zh-cn": "水元素伤害加成",
+        "zh-tw": "水元素傷害加成",
+        "de-de": "Hydro-SCH-Bonus",
+        "en-us": "Hydro DMG Bonus",
+        "es-es": "Bono de Daño Hydro",
+        "fr-fr": "bonus de DGT Hydro",
+        "id-id": "Hydro DMG Bonus",
+        "ko-kr": "물 원소 피해 보너스",
+        "pt-pt": "Dano Hydro Adicional",
+        "ru-ru": "бонуса Гидро урона",
+        "th-th": "โบนัสความเสียหายน้ำ",
+        "vi-vn": "buff Sát Thương Nguyên Tố Thủy"
+    },
+    "虹剣勢": {
+        "zh-cn": "虹剑势",
+        "zh-tw": "虹劍勢",
+        "de-de": "Regenbogentechnik",
+        "en-us": "Rainbow Bladework",
+        "es-es": "Espada arcoíris",
+        "fr-fr": "Lame arc-en-ciel",
+        "id-id": "Rainbow Bladework",
+        "ko-kr": "홍검세",
+        "pt-pt": "Trabalho com Lâminas do Arco-íris",
+        "ru-ru": "Радужная стойка:",
+        "th-th": "Rainbow Bladework",
+        "vi-vn": "Kiếm Cầu Vồng"
+    },
+    "断流": {
+        "zh-cn": "断流",
+        "zh-tw": "斷流",
+        "de-de": "Versiegen",
+        "en-us": "Riptide",
+        "es-es": "Obstrucción del flujo",
+        "fr-fr": "Contre-courant",
+        "id-id": "Riptide",
+        "ko-kr": "단류",
+        "pt-pt": "Interceptação de Fluxo",
+        "ru-ru": "Отлив",
+        "th-th": "Riptide",
+        "vi-vn": "Đoạn Lưu"
+    },
+    "断流·斬": {
+        "zh-cn": "断流·斩",
+        "zh-tw": "斷流·斬",
+        "de-de": "Versiegen – Hieb",
+        "en-us": "Riptide Slash",
+        "es-es": "Obstrucción del flujo: Corte",
+        "fr-fr": "Contre-courant : Entaille",
+        "id-id": "Riptide Slash",
+        "ko-kr": "단류·참",
+        "pt-pt": "Interceptação de Fluxo - Corte",
+        "ru-ru": "Отлив-удар:",
+        "th-th": "Riptide Slash",
+        "vi-vn": "Đoạn Lưu - Chém"
+    },
+    "遠隔モード·魔弾一閃": {
+        "zh-cn": "远程状态·魔弹一闪",
+        "zh-tw": "遠程狀態·魔彈一閃",
+        "de-de": "Fernkampf: Teufelsschuss",
+        "en-us": "Ranged Stance: Flash of Havoc",
+        "es-es": "Combate a distancia: Flecha del caos",
+        "fr-fr": "État à distance : Éclair de balle maléfique",
+        "id-id": "Mode Jarak Jauh: Flash of Havoc",
+        "ko-kr": "원거리 상태·마탄 일섬",
+        "pt-pt": "Posição À Distância·Clarão da Devastação",
+        "ru-ru": "Дальняя стойка - Вспышка хаоса:",
+        "th-th": "รูปแบบการต่อสู้ระยะไกล: Flash of Havoc",
+        "vi-vn": "Trạng thái đánh xa - Đạn Ma"
+    },
+    "近接モード·尽滅の水光": {
+        "zh-cn": "近战状态·尽灭水光",
+        "zh-tw": "近戰狀態·盡滅水光",
+        "de-de": "Nahkampf: Tödliches Glitzern",
+        "en-us": "Melee Stance: Light of Obliteration",
+        "es-es": "Combate cuerpo a cuerpo: Luz de obliteración",
+        "fr-fr": "État de mêlée : Lumière d'élimination",
+        "id-id": "Mode Jarak Dekat: Light of Obliteration",
+        "ko-kr": "근접 상태·진멸의 물빛",
+        "pt-pt": "Posição Corpo a Corpo·Luz da Obliteração",
+        "ru-ru": "Ближняя стойка - Свет погибели:",
+        "th-th": "รูปแบบการต่อสู้ระยะประชิด: Light of Obliteration",
+        "vi-vn": "Trạng thái cận chiến - Tận Diệt Thủy Quang"
+    },
+    "断流·爆": {
+        "zh-cn": "断流·爆",
+        "zh-tw": "斷流·爆",
+        "de-de": "Versiegen – Explosion",
+        "en-us": "Riptide Blast",
+        "es-es": "Obstrucción del flujo: Estallido",
+        "fr-fr": "Contre-courant : Torrent",
+        "id-id": "Riptide Blast",
+        "ko-kr": "단류·폭",
+        "pt-pt": "Interceptação de Fluxo·Explosão",
+        "ru-ru": "Отлив-взрыв:",
+        "th-th": "Riptide Blast",
+        "vi-vn": "Đoạn Lưu - Nổ"
+    },
+    "打破": {
+        "zh-cn": "破局",
+        "zh-tw": "破局",
+        "de-de": "Durchstoß",
+        "en-us": "Breakthrough",
+        "es-es": "Irrupción",
+        "fr-fr": "Percée",
+        "id-id": "Breakthrough",
+        "ko-kr": "타파",
+        "pt-pt": "Ruptura",
+        "ru-ru": "Прорыв",
+        "th-th": "Breakthrough",
+        "vi-vn": "Phá Trận"
+    },
+    "玲瓏一擲": {
+        "zh-cn": "玄掷玲珑",
+        "zh-tw": "玄擲玲瓏",
+        "de-de": "Würfel der Mystik",
+        "en-us": "Exquisite Throw",
+        "es-es": "Dado intrincado",
+        "fr-fr": "Dé exquis",
+        "id-id": "Exquisite Throw",
+        "ko-kr": "던져진 영롱",
+        "pt-pt": "Dado Misterioso",
+        "ru-ru": "Изысканный бросок",
+        "th-th": "Exquisite Throw",
+        "vi-vn": "Xúc Xắc Tinh Tế"
+    },
+    "「玲瓏一擲」": {
+        "zh-cn": "「玄掷玲珑」",
+        "zh-tw": "「玄擲玲瓏」",
+        "de-de": "„Würfel der Mystik“",
+        "en-us": "Exquisite Throw",
+        "es-es": "dado intrincado",
+        "fr-fr": "dé exquis",
+        "id-id": "Exquisite Throw",
+        "ko-kr": "「던져진 영롱」",
+        "pt-pt": "Dado Misterioso",
+        "ru-ru": "Изысканный бросок",
+        "th-th": "Exquisite Throw",
+        "vi-vn": "Xúc Xắc Tinh Tế"
+    },
+    "虚影": {
+        "zh-cn": "虚影",
+        "zh-tw": "虛影",
+        "de-de": "Trugbild",
+        "en-us": "Phantom",
+        "es-es": "ilusión",
+        "fr-fr": "Mirage",
+        "id-id": "Bayangan",
+        "ko-kr": "허영",
+        "pt-pt": "Fantasma",
+        "ru-ru": "Фантом",
+        "th-th": "Phantom",
+        "vi-vn": "Hư Ảnh"
+    },
+    "泡影": {
+        "zh-cn": "泡影",
+        "zh-tw": "泡影",
+        "de-de": "Blasenschatten",
+        "en-us": "Illusory Bubble",
+        "es-es": "Burbuja ilusoria",
+        "fr-fr": "Bulle nocturne",
+        "id-id": "Illusory Bubble",
+        "ko-kr": "포영",
+        "pt-pt": "Bolha Ilusória",
+        "ru-ru": "Теневой пузырь:",
+        "th-th": "Illusory Bubble",
+        "vi-vn": "Bóng Nước"
+    },
+    "星異": {
+        "zh-cn": "星异",
+        "zh-tw": "星異",
+        "de-de": "Omen",
+        "en-us": "Omen",
+        "es-es": "Presagio",
+        "fr-fr": "Présage",
+        "id-id": "Omen",
+        "ko-kr": "성이(星異)",
+        "pt-pt": "Presságio",
+        "ru-ru": "Омен:",
+        "th-th": "Omen",
+        "vi-vn": "Tinh Dị"
+    },
+    "化海月": {
+        "zh-cn": "化海月",
+        "zh-tw": "化海月",
+        "de-de": "Bakekurage",
+        "en-us": "Bake-Kurage",
+        "es-es": "Medusa",
+        "fr-fr": "Méduse fantôme",
+        "id-id": "Bake-Kurage",
+        "ko-kr": "환영 해파리",
+        "pt-pt": "Bake-Kurage",
+        "ru-ru": "Бакэ-курагэ",
+        "th-th": "Bake-Kurage",
+        "vi-vn": "Vầng Trăng Biển"
+    },
+    "儀来羽衣": {
+        "zh-cn": "仪来羽衣",
+        "zh-tw": "儀來羽衣",
+        "de-de": "Rituelles Federkleid",
+        "en-us": "Ceremonial Garment",
+        "es-es": "Manto ceremonial",
+        "fr-fr": "Parure cérémoniale",
+        "id-id": "Ceremonial Garment",
+        "ko-kr": "의식의 날개옷",
+        "pt-pt": "Vestimenta Cerimonial",
+        "ru-ru": "Церемониальное одеяние",
+        "th-th": "Ceremonial Garment",
+        "vi-vn": "Lễ Phục Nghi Thức"
+    },
+    "滝廻鑑花": {
+        "zh-cn": "泷廻鉴花",
+        "zh-tw": "瀧廻鑑花",
+        "de-de": "Takimeguri Kanka",
+        "en-us": "Takimeguri Kanka",
+        "es-es": "Reflejo torrencial",
+        "fr-fr": "Réflexion torrentielle",
+        "id-id": "Takimeguri Kanka",
+        "ko-kr": "선회하는 거울꽃",
+        "pt-pt": "Reflexão Torrencial",
+        "ru-ru": "Такимэгури канка",
+        "th-th": "Takimeguri Kanka",
+        "vi-vn": "Takimeguri Kanka"
+    },
+    "炎元素ダメージ": {
+        "zh-cn": "火元素伤害加成",
+        "zh-tw": "火元素傷害加成",
+        "de-de": "Pyro-Schaden",
+        "en-us": "Pyro DMG Bonus",
+        "es-es": "Bono de Daño Pyro",
+        "fr-fr": "bonus de DGT Pyro",
+        "id-id": "Pyro DMG Bonus",
+        "ko-kr": "불 원소 피해 보너스",
+        "pt-pt": "bônus de Dano Pyro",
+        "ru-ru": "бонус Пиро урона",
+        "th-th": "โบนัสความเสียหายไฟ",
+        "vi-vn": "buff sát thương Nguyên Tố Hỏa"
+    },
+    "ウサギ伯爵": {
+        "zh-cn": "兔兔伯爵",
+        "zh-tw": "兔兔伯爵",
+        "de-de": "Graf von Hoppel",
+        "en-us": "Baron Bunny",
+        "es-es": "Barón Bunny",
+        "fr-fr": "Baron Lapinou",
+        "id-id": "Baron Bunny",
+        "ko-kr": "토끼 백작",
+        "pt-pt": "Barão Coelho",
+        "ru-ru": "Барон Зайчик:",
+        "th-th": "Baron Bunny",
+        "vi-vn": "Bá Tước Thỏ"
+    },
+    "炎元素範囲ダメージ": {
+        "zh-cn": "火元素范围伤害",
+        "zh-tw": "火元素範圍傷害",
+        "de-de": "Pyro-Flächenschaden",
+        "en-us": "AoE Pyro DMG",
+        "es-es": "Daño Pyro en el AdE",
+        "fr-fr": "DGT Pyro de zone",
+        "id-id": "Pyro DMG area",
+        "ko-kr": "불 원소 범위 피해",
+        "pt-pt": "Dano Pyro AdE",
+        "ru-ru": "Пиро урон по площади",
+        "th-th": "ความเสียหายไฟวงกว้าง",
+        "vi-vn": "Sát Thương Phạm Vi Nguyên Tố Hỏa"
+    },
+    "灼灼": {
+        "zh-cn": "灼灼",
+        "zh-tw": "灼灼",
+        "de-de": "Sengende Hitze",
+        "en-us": "Brilliance",
+        "es-es": "Resplandor",
+        "fr-fr": "Brillance",
+        "id-id": "Brilliance",
+        "ko-kr": "이글이글",
+        "pt-pt": "Clarão",
+        "ru-ru": "Блеск",
+        "th-th": "Brilliance",
+        "vi-vn": "Bỏng Cháy"
+    },
+    "炎元素付着": {
+        "zh-cn": "火元素附着",
+        "zh-tw": "火元素附著",
+        "de-de": "Pyro-Attribut",
+        "en-us": "Pyro",
+        "es-es": "afectados por Pyro",
+        "fr-fr": "élément Pyro",
+        "id-id": "elemen Pyro",
+        "ko-kr": "불 원소를 부착",
+        "pt-pt": "Elemento Pyro",
+        "ru-ru": "эффект Пиро",
+        "th-th": "ติดสถานะธาตุไฟ",
+        "vi-vn": "nguyên tố hỏa kèm theo"
+    },
+    "熾炎の大鎧": {
+        "zh-cn": "炽火大铠",
+        "zh-tw": "熾火大鎧",
+        "de-de": "Brennende Ooyoroi",
+        "en-us": "Scorching Ooyoroi",
+        "es-es": "Coraza abrasadora",
+        "fr-fr": "O-yoroi embrasé",
+        "id-id": "Scorching Ooyoroi",
+        "ko-kr": "열화의 오오요로이",
+        "pt-pt": "Armadura Flamejante",
+        "ru-ru": "Оёрой огня",
+        "th-th": "Scorching Ooyoroi",
+        "vi-vn": "Chiến Giáp Lửa Đỏ"
+    },
+    "烈炎侍立シールド": {
+        "zh-cn": "烈烧佑命护盾",
+        "zh-tw": "烈燒佑命護盾",
+        "de-de": "Schild des lodernden Segens",
+        "en-us": "Blazing Barrier",
+        "es-es": "escudo llameante",
+        "fr-fr": "barrière brûlante",
+        "id-id": "Blazing Barrier",
+        "ko-kr": "타오르는 우명의 방패",
+        "pt-pt": "Barreira Flamejante",
+        "ru-ru": "Пылающий щит",
+        "th-th": "Blazing Barrier",
+        "vi-vn": "Khiên Lửa Hộ Mệnh"
+    },
+    "釣り": {
+        "zh-cn": "钓鱼",
+        "zh-tw": "釣魚",
+        "de-de": "Angeln",
+        "en-us": "fish",
+        "es-es": "pesca",
+        "fr-fr": "pêche",
+        "id-id": "memancing",
+        "ko-kr": "낚시를",
+        "pt-pt": "pescar",
+        "ru-ru": "рыбалкой",
+        "th-th": "ตกปลา",
+        "vi-vn": "câu cá"
+    },
+    "鼓舞エリア": {
+        "zh-cn": "鼓舞领域",
+        "zh-tw": "鼓舞領域",
+        "de-de": "Feld der Aufmunterung",
+        "en-us": "Inspiration Field",
+        "es-es": "Círculo de apoyo moral",
+        "fr-fr": "Champ vertueux",
+        "id-id": "Inspiration Field",
+        "ko-kr": "격려의 영역",
+        "pt-pt": "Campo de Inspiração",
+        "ru-ru": "Круг вдохновения:",
+        "th-th": "พื้นที่ให้กำลังใจ",
+        "vi-vn": "Vùng Đất Cổ Vũ"
+    },
+    "庭火の焔硝": {
+        "zh-cn": "庭火焰硝",
+        "zh-tw": "庭火焰硝",
+        "de-de": "Niwabi Enshou",
+        "en-us": "Niwabi Enshou",
+        "es-es": "Nitrofogata",
+        "fr-fr": "Niwabi Enshou",
+        "id-id": "Niwabi Enshou",
+        "ko-kr": "정화(庭火) 염초",
+        "pt-pt": "Niwabi Enshou",
+        "ru-ru": "Ниваби энсё",
+        "th-th": "Niwabi Enshou",
+        "vi-vn": "Niwabi Enshou"
+    },
+    "琉金の炎": {
+        "zh-cn": "琉金火光",
+        "zh-tw": "琉金火光",
+        "de-de": "Ryuukin-Lohe",
+        "en-us": "Aurous Blaze",
+        "es-es": "Ascua dorada",
+        "fr-fr": "Flamme Ryuukin",
+        "id-id": "Aurous Blaze",
+        "ko-kr": "유금화광",
+        "pt-pt": "Saxifraga Ryuukin",
+        "ru-ru": "Золотое сияние",
+        "th-th": "Aurous Blaze",
+        "vi-vn": "Lưu Kim Hỏa Quang"
+    },
+    "モンド地域の特産": {
+        "zh-cn": "蒙德区域特产",
+        "zh-tw": "蒙德區域特產",
+        "de-de": "Besonderheiten Mondstadts",
+        "en-us": "resources unique to Mondstadt",
+        "es-es": "objetos típicos de Mondstadt",
+        "fr-fr": "produits de Mondstadt",
+        "id-id": "produk khas Mondstadt",
+        "ko-kr": "몬드 지역 특산물",
+        "pt-pt": "Especialidades de Mondstadt",
+        "ru-ru": "диковины Мондштадта",
+        "th-th": "ของพิเศษเฉพาะใน Mondstadt",
+        "vi-vn": "đặc sản khu vực Mondstadt"
+    },
+    "炎元素付与": {
+        "zh-cn": "火元素附魔",
+        "zh-tw": "火元素附魔",
+        "de-de": "Pyro-Attribut",
+        "en-us": "Dawn",
+        "es-es": "Amanecer",
+        "fr-fr": "Aurore",
+        "id-id": "Dawn",
+        "ko-kr": "불 원소 마법 부여",
+        "pt-pt": "Alvorecer",
+        "ru-ru": "Рассвет",
+        "th-th": "Dawn",
+        "vi-vn": "Lê Minh"
+    },
+    "冥蝶の舞": {
+        "zh-cn": "彼岸蝶舞",
+        "zh-tw": "彼岸蝶舞",
+        "de-de": "Geleit ins Jenseits",
+        "en-us": "Guide to Afterlife",
+        "es-es": "Guía hacia el más allá",
+        "fr-fr": "Chaperon de la renaissance",
+        "id-id": "Guide to Afterlife",
+        "ko-kr": "피안접무",
+        "pt-pt": "Guia do Além",
+        "ru-ru": "Путеводитель по загробной жизни",
+        "th-th": "Guide to Afterlife",
+        "vi-vn": "Điệp Dẫn Lai Sinh"
+    },
+    "血梅香": {
+        "zh-cn": "血梅香",
+        "zh-tw": "血梅香",
+        "de-de": "Blutblüten",
+        "en-us": "Blood Blossom",
+        "es-es": "Pétalos sangrientos",
+        "fr-fr": "Bourgeon de prune",
+        "id-id": "Blood Blossom",
+        "ko-kr": "혈매향",
+        "pt-pt": "Pétalas Sangrentas",
+        "ru-ru": "Кровавый цветок:",
+        "th-th": "Blood Blossom",
+        "vi-vn": "Huyết Mai Hương"
     }
 }

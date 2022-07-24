@@ -10,8 +10,8 @@ import pathlib
 import re
 
 SRC_PATH = './RawData/data'
-ORG_PATH = '../data/Dictionary.json'
-DST_PATH = '../data/Dictionary.json'
+ORG_PATH = '../data/HoYoDictionary.json'
+DST_PATH = '../data/HoYoDictionary.json'
 
 CATEGORY_DIRS = ['characters', 'weapons', 'artifacts']
 
@@ -23,6 +23,7 @@ with open(ORG_PATH, 'r', encoding='utf_8_sig') as f:
     orgJson = json.load(f)
 
 newDictMap = {}
+keywordDictMap = {}
 
 for category in CATEGORY_DIRS:
     path = pathlib.Path(SRC_PATH)
@@ -39,7 +40,7 @@ for category in CATEGORY_DIRS:
 
         for language in LANGUAGES:
             langFile = str(jaJpFile).replace('ja-jp', language)
-            print(langFile)
+            # print(langFile)
 
             with open(langFile, 'r', encoding='utf_8_sig') as f:
                 langJson = json.load(f)
@@ -54,7 +55,9 @@ for category in CATEGORY_DIRS:
         newDictMap[dictKey] = dictObj
 
         jaJpTalents = []
+        jaJpKeywords = []
         langTalents = {}
+        langKeywords = {}
 
         for module in jaJpJson['modules']:
             for component in module['components']:
@@ -64,13 +67,16 @@ for category in CATEGORY_DIRS:
                         if entry['attributes'] != None:
                             for attribute in entry['attributes']:
                                 jaJpTalents.append(attribute['key'])
+                        if entry['desc'] != None:
+                            for m in re.finditer(r'<span.*?>(.+?)</span>', entry['desc']):
+                                jaJpKeywords.append(m.group(1))
                 if component['component_id'] == 'summaryList':
                     for entry in component['data']['list']:
                         jaJpTalents.append(entry['name'])
 
-
         for language in LANGUAGES:
             langWork = []
+            langKeywordWork = []
             for module in langJsonMap[language]['modules']:
                 for component in module['components']:
                     if component['component_id'] == 'talent':
@@ -79,10 +85,14 @@ for category in CATEGORY_DIRS:
                             if entry['attributes'] != None:
                                 for attribute in entry['attributes']:
                                     langWork.append(attribute['key'])
-                if component['component_id'] == 'summaryList':
-                    for entry in component['data']['list']:
-                        langWork.append(entry['name'])
+                            if entry['desc'] != None:
+                                for m in re.finditer(r'<span.*?>(.+?)</span>', entry['desc']):
+                                    langKeywordWork.append(m.group(1))
+                    if component['component_id'] == 'summaryList':
+                        for entry in component['data']['list']:
+                            langWork.append(entry['name'])
             langTalents[language] = langWork
+            langKeywords[language] = langKeywordWork
 
         for index, dictKey in enumerate(jaJpTalents):
             dictObj = {}
@@ -90,13 +100,33 @@ for category in CATEGORY_DIRS:
                 dictObj[language] = langTalents[language][index]
             newDictMap[dictKey] = dictObj
 
+        for index, dictKey in enumerate(jaJpKeywords):
+            dictObj = {}
+            okay = True
+            for language in LANGUAGES:
+                if index < len(langKeywords[language]):
+                    dictObj[language] = langKeywords[language][index]
+                else:
+                    okay = False
+            if okay:                
+                keywordDictMap[dictKey] = dictObj
+            else:
+                print ('Error:' + dictKey)
+        # print (keywordDictMap)
+
 for k, v in newDictMap.items():
     if k not in orgJson:
         orgJson[k] = v
     else:
         orgJson[k] = v
+for k, v in keywordDictMap.items():
+    if k not in orgJson:
+        orgJson[k] = v
+    else:
+        orgJson[k] = v
+    print (k, v)
 
-print(orgJson)
+# print(orgJson)
 
 if DST_PATH is not None:
     os.makedirs(os.path.dirname(DST_PATH), exist_ok=True)

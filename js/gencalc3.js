@@ -29,7 +29,8 @@ async function onLoad(searchParams) {
         'data/TeamOptionMaster.json',
         'data/OptionMaster1.json',
         'data/OptionMaster2.json',
-        'data/Dictionary.json'
+        'data/HoYoDictionary.json',
+        'data/LocalDictionary.json'
     ].map(s => fetch(s).then(resp => resp.json())));
 
     キャラクターMasterVar = responses[0];
@@ -50,6 +51,11 @@ async function onLoad(searchParams) {
     オプション1MasterVar = responses[13];
     オプション2MasterVar = responses[14];
     辞書MasterVar = responses[15];
+    Object.keys(responses[16]).forEach(key => {
+        if (!(key in 辞書MasterVar)) {
+            辞書MasterVar[key] = responses[16][key];
+        }
+    });
 
     const LanguageSelect = {
         data() {
