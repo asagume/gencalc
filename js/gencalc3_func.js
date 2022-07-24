@@ -1,37 +1,7 @@
-function getDisplayName(name) {
-    if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
-        name = name.replace(/バフ$/, '');
-    } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
-        name = name.replace(/バフ$/, '');
-    }
-    return name;
-}
+//// @ts-check
 
-function getDisplayNumber(name, value) {
-    const percentage = appendPercentage(name);
-    if (percentage) {
-        return (Math.round(value * 10) / 10) + percentage;
-    }
-    return Math.round(value);
-}
-
-function appendPercentage(name) {
-    if (['HP上限', 'HP', '攻撃力', '防御力', '元素熟知'].includes(name)) {
-        return '';
-    } else if (name.endsWith('アップ')) {
-        return '';
-    } else if (name.endsWith('+')) {
-        return '';
-    }
-    return '%';
-}
-
-function getStatStep(name) {
-    if (appendPercentage(name)) {
-        return 0.1;
-    }
-    return 1;
-}
+///<reference path="./gencalc3_var.js"/>
+///<reference path="./gencalc3_core.js"/>
 
 /**
  * 直近に誕生日を迎えたキャラクターを取得します.
@@ -55,34 +25,6 @@ function getCharacterByBirthday() {
         }
     });
     return result;
-}
-
-function getStarBackgroundUrl(master) {
-    if ('レアリティ' in master) {
-        return STAR_BACKGROUND_URL[master['レアリティ']];
-    }
-    return IMG_SRC_DUMMY;
-}
-
-function getElementImgSrc(master) {
-    if ('元素' in master) {
-        return ELEMENT_IMG_SRC[master['元素']];
-    }
-    return IMG_SRC_DUMMY;
-}
-
-function getColorClass(master) {
-    if ('元素' in master) {
-        return ELEMENT_COLOR_CLASS[master['元素']];
-    }
-    return ''
-}
-
-function getBgColorClass(master) {
-    if ('元素' in master) {
-        return ELEMENT_BG_COLOR_CLASS[master['元素']];
-    }
-    return ''
 }
 
 /**
@@ -172,6 +114,7 @@ function makeRecommendationList(characterMaster) {
         setName += ']';
         result.push([setName, myおすすめセット, false]);
     });
+
     return result;
 }
 
@@ -279,10 +222,6 @@ function getLevelStr(ascension, level) {
 function makeDamageDetailObjCharacter(characterInput) {
     const name = characterInput.name;
     const characterMaster = characterInput.master;
-
-    if (キャラクターダメージ詳細ObjMapVar.has(characterMaster['名前'])) {
-        return キャラクターダメージ詳細ObjMapVar.get(characterMaster['名前']);
-    }
 
     const result = {};
 
@@ -572,14 +511,14 @@ const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defau
             let my条件 = null;
             if ('条件' in detailObj) {
                 my条件 = detailObj['条件'];
-                if (typeof my条件 === 'object' && level && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
+                if (isPlainObject(my条件) && level && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
                     my条件 = my条件[level];
                 }
             }
             let my上限 = null;
             if ('上限' in detailObj) {
                 my上限 = detailObj['上限'];
-                if (typeof my上限 === 'object' && level && level in my上限) {   // 草薙の稲光
+                if (isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
                     my上限 = my上限[level];
                 }
                 my上限 = analyzeFormulaStr(my上限);
@@ -969,9 +908,12 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
                 const resultArr = [];
                 resultArr.push(talentDetail.名前);
                 resultArr.push(talentDetail.元素);
+
+                let value = calculateFormulaArray(statusInput['ステータス'], talentDetail.数値);
+
                 resultArr.push(0);  // 期待値
                 resultArr.push(0);  // 会心
-                resultArr.push(0);  // 非会心
+                resultArr.push(value);  // 非会心
                 calculationResult['計算結果'][category].push(resultArr);
             });
         });

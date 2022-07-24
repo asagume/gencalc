@@ -1,3 +1,7 @@
+//// @ts-check
+
+///<reference path="./gencalc3_var.js"/>
+
 function isString(value) {
     return typeof value === 'string' || value instanceof String;
 }
@@ -9,6 +13,86 @@ function isNumber(value) {
 function isPlainObject(value) {
     const myType = Object.prototype.toString.call(value);
     return myType === '[object Object]';
+}
+
+function getDisplayName(name) {
+    if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
+        name = name.replace(/バフ$/, '');
+    } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
+        name = name.replace(/バフ$/, '');
+    }
+    return name;
+}
+
+function getDisplayStatValue(name, value) {
+    const percentage = appendPercentage(name);
+    if (percentage) {
+        return (Math.round(value * 10) / 10) + percentage;
+    }
+    return Math.round(value);
+}
+
+function appendPercentage(name) {
+    if (['HP上限', 'HP', '攻撃力', '防御力', '元素熟知'].includes(name)) {
+        return '';
+    } else if (name.endsWith('アップ')) {
+        return '';
+    } else if (name.endsWith('+')) {
+        return '';
+    }
+    return '%';
+}
+
+function getDisplayDamageValue(item, index, opt_反応倍率 = null) {
+    console.debug(getDisplayDamageValue.name, item, index, opt_反応倍率);
+    let value = item[index];
+    if (opt_反応倍率) {
+        const element = item[1];
+        if (['炎', '水'].includes(element)) {
+            value *= opt_反応倍率;
+        }
+    }
+    let adj = 1;
+    const name = item[0];
+    if (name.endsWith('ダメージ') && name.endsWith('量')) {
+        return Math.round(value);
+    }
+    return Math.round(value * adj) / adj;
+}
+
+function getStatStep(name) {
+    if (appendPercentage(name)) {
+        return 0.1;
+    }
+    return 1;
+}
+
+function getStarBackgroundUrl(master) {
+    if ('レアリティ' in master) {
+        return STAR_BACKGROUND_URL[master['レアリティ']];
+    }
+    return IMG_SRC_DUMMY;
+}
+
+function getElementImgSrc(master) {
+    if ('元素' in master) {
+        return ELEMENT_IMG_SRC[master['元素']];
+    }
+    return IMG_SRC_DUMMY;
+}
+
+function getColorClass(master) {
+    if ('元素' in master) {
+        return ELEMENT_COLOR_CLASS[master['元素']];
+    }
+    return ''
+}
+
+function getBgColorClass(master) {
+    if ('元素' in master) {
+        return ELEMENT_BG_COLOR_CLASS[master['元素']];
+    }
+    return ''
 }
 
 /**

@@ -357,14 +357,14 @@
                             <td>
                                 <input v-show="isEditable" type="number" min="0" :step="statStep(item[0])"
                                     v-model="聖遺物ステータス[item[0]]" @change="changed">
-                                <span v-show="!isEditable"> {{displayNumber(item[0], 聖遺物ステータス[item[0]])}} </span>
+                                <span v-show="!isEditable"> {{displayStatValue(item[0], 聖遺物ステータス[item[0]])}} </span>
                             </td>
                             <template v-if="item[1]">
                                 <th>{{displayName(item[1])}}</th>
                                 <td>
                                     <input v-show="isEditable" type="number" min="0" :step="statStep(item[1])"
                                         v-model="聖遺物ステータス[item[1]]" @change="changed">
-                                    <span v-show="!isEditable"> {{displayNumber(item[1], 聖遺物ステータス[item[1]])}} </span>
+                                    <span v-show="!isEditable"> {{displayStatValue(item[1], 聖遺物ステータス[item[1]])}} </span>
                                 </td>
                             </template>
                             <template v-else-if="index == 5">
@@ -582,7 +582,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" :step="statStep(stat)" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{displayNumber(stat, ステータス[stat])}} </td>
+                                    <td> {{displayStatValue(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
                             <template v-for="category in ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
@@ -600,7 +600,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" :step="statStep(stat)" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{displayNumber(stat, ステータス[stat])}} </td>
+                                    <td> {{displayStatValue(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
                             <tr>
@@ -638,7 +638,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" :step="statStep(stat)" v-model="ステータス補正[stat]">
                                     </td>
-                                    <td> {{displayNumber(stat, ステータス[stat])}} </td>
+                                    <td> {{displayStatValue(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
                             <tr>
@@ -689,7 +689,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" :step="statStep(stat)" v-model="敵ステータス補正[stat]">
                                     </td>
-                                    <td> {{displayNumber(stat, 敵ステータス[stat])}} </td>
+                                    <td> {{displayStatValue(stat, 敵ステータス[stat])}} </td>
                                 </tr>
                                 <tr>
                                     <th :colspan="isEditable ? 3 : 2">{{displayName('その他')}}</th>
@@ -699,7 +699,7 @@
                                     <td v-show="isEditable">
                                         <input type="number" v-model="敵ステータス補正['防御力']">
                                     </td>
-                                    <td> {{displayNumber('防御力', 敵ステータス['防御力'])}} </td>
+                                    <td> {{displayStatValue('防御力', 敵ステータス['防御力'])}} </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; padding-left: 1rem;">
@@ -844,19 +844,13 @@
                         <tr v-for="item in damageList(category)">
                             <th>{{displayName(item[0])}}</th>
                             <td :class="classByElement(item[1])">
-                                {{item[2] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[2] *
-                                元素反応.蒸発倍率) :
-                                増幅反応 == '溶解' ? Math.round(item[2] * 元素反応.溶解倍率) : item[2] : item[2] : '-'}}
+                                {{displayDamageValue(item, 2, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 : null)}}
                             </td>
                             <td :class="classByElement(item[1])">
-                                {{item[3] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[3] *
-                                元素反応.蒸発倍率) :
-                                増幅反応 == '溶解' ? Math.round(item[3] * 元素反応.溶解倍率) : item[3] : item[3] : '-'}}
+                                {{displayDamageValue(item, 3, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 : null)}}
                             </td>
                             <td :class="classByElement(item[1])">
-                                {{item[4] ? ['炎', '水'].includes(item[1]) ? 増幅反応 == '蒸発' ? Math.round(item[4] *
-                                元素反応.蒸発倍率) :
-                                増幅反応 == '溶解' ? Math.round(item[4] * 元素反応.溶解倍率) : item[4] : item[4] : '-'}}
+                                {{displayDamageValue(item, 4, 増幅反応 === '蒸発' ? 元素反応.蒸発倍率 : 増幅反応 === '溶解' ? 元素反応.溶解倍率 : null)}}
                             </td>
                         </tr>
                     </tbody>

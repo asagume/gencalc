@@ -1,3 +1,10 @@
+//// @ts-check
+
+///<reference path="../vue.d.ts"/>
+///<reference path="./gencalc3_var.js"/>
+///<reference path="./gencalc3_core.js"/>
+///<reference path="./gencalc3_func.js"/>
+
 async function onLoad(searchParams) {
     if (localStorage['キャラクター所持状況']) {
         キャラクター所持状況Var = JSON.parse(localStorage['キャラクター所持状況']);
@@ -216,9 +223,6 @@ async function initialSetupCharacterInput(name) {
             }
         },
         created() {
-            for (let artifactSet in this.聖遺物セット効果) {
-                artifactSet.master = 聖遺物セット効果MasterVar[artifactSet['名前']];
-            }
         },
         mounted() {
             const character = getCharacterByBirthday();
@@ -589,8 +593,8 @@ function initialSetupArtifactDetailInput() {
             displayName: function (name) {
                 return getDisplayName(name);
             },
-            displayNumber: function (name, value) {
-                return getDisplayNumber(name, value);
+            displayStatValue: function (name, value) {
+                return getDisplayStatValue(name, value);
             },
             statStep: function (name) {
                 return getStatStep(name);
@@ -990,8 +994,8 @@ function initialSetupStatusInput(characterMaster) {
             displayName: function (name) {
                 return getDisplayName(name);
             },
-            displayNumber: function (name, value) {
-                return getDisplayNumber(name, value);
+            displayStatValue: function (name, value) {
+                return getDisplayStatValue(name, value);
             },
             statStep: function (name) {
                 return getStatStep(name);
@@ -1093,6 +1097,9 @@ function initialSetupCalcurationResult() {
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
+            },
+            displayDamageValue: function (item, index, opt_反応倍率 = null) {
+                return getDisplayDamageValue(item, index, opt_反応倍率);
             },
             classByElement(element) {
                 return ELEMENT_COLOR_CLASS[element];

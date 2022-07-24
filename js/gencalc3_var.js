@@ -1,3 +1,5 @@
+//// @ts-check
+
 var キャラクターMasterVar;
 var 武器MasterVar;
 var 聖遺物セット効果MasterVar;
