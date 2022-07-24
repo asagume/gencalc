@@ -627,6 +627,10 @@ table.result thead th {
     background-color: #333;
 }
 
+table.result tbody th {
+    font-size: smaller;
+}
+
 table.result thead th:first-child {
     color: gold;
 }
