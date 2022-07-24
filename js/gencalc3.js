@@ -787,7 +787,7 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                     [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
                         if ('オプション初期値' in master) {
                             if (condition.name in master['オプション初期値']) {
-                                value = characterMaster['オプション初期値'][condition.name];
+                                value = master['オプション初期値'][condition.name];
                             }
                         }
                     });
