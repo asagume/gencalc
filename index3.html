@@ -180,22 +180,27 @@
                     </table>
                     <table>
                         <tr>
-                            <td colspan="3" rowspan="3" style="width: 180px;">
-                                <img class="weapon" :src="weaponMaster['icon_url']" :alt="weaponMaster['名前']"
+                            <td colspan="3" rowspan="3" class="icon" style="width: 180px;">
+                                <img class="weapon with-tooltip" :src="weaponMaster['icon_url']"
+                                    :alt="weaponMaster['名前']"
                                     :style="'background-image: url(' + weaponStarBackgroundUrl +')'"
                                     @click="weaponOnClick">
+                                <div class="tooltip">{{displayName(weaponMaster['名前'])}}</div>
                             </td>
-                            <td>
-                                <img :class="'talent ' + bgColorClass" :src="master['通常攻撃']['icon_url']"
+                            <td class="icon">
+                                <img :class="'talent with-tooltip ' + bgColorClass" :src="master['通常攻撃']['icon_url']"
                                     :alt="master['通常攻撃']['名前']" @click="normalAttackOnClick">
+                                <div class="tooltip">{{displayName(master['通常攻撃']['名前'])}}</div>
                             </td>
-                            <td>
-                                <img :class="'talent ' + bgColorClass" :src="master['元素スキル']['icon_url']"
+                            <td class="icon">
+                                <img :class="'talent with-tooltip ' + bgColorClass" :src="master['元素スキル']['icon_url']"
                                     :alt="master['元素スキル']['名前']" @click="elementalSkillOnClick">
+                                <div class="tooltip">{{displayName(master['元素スキル']['名前'])}}</div>
                             </td>
-                            <td>
-                                <img :class="'talent ' + bgColorClass" :src="master['元素爆発']['icon_url']"
+                            <td class="icon">
+                                <img :class="'talent with-tooltip ' + bgColorClass" :src="master['元素爆発']['icon_url']"
                                     :alt="master['元素爆発']['名前']" @click="elementalBurstOnClick">
+                                <div class="tooltip">{{displayName(master['元素爆発']['名前'])}}</div>
                             </td>
                         </tr>
                         <tr>
@@ -219,17 +224,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="2">
-                                <label @click="artifactSetOnClick(0)">
+                            <td rowspan="2" class="icon">
+                                <label class="with-tooltip" @click="artifactSetOnClick(0)">
                                     <img :class="'artifact-set ' + classArtifactSetSelected(0)"
                                         :src="聖遺物セット効果[0].master.image" :alt="聖遺物セット効果[0]['名前']">
                                 </label>
+                                <div class="tooltip">{{displayName(聖遺物セット効果[0]['名前'])}}</div>
                             </td>
-                            <td rowspan="2">
-                                <label @click="artifactSetOnClick(1)">
+                            <td rowspan="2" class="icon">
+                                <label class="with-tooltip" @click="artifactSetOnClick(1)">
                                     <img :class="'artifact-set ' + classArtifactSetSelected(1)"
                                         :src="聖遺物セット効果[1].master.image" :alt="聖遺物セット効果[1]['名前']">
                                 </label>
+                                <div class="tooltip">{{displayName(聖遺物セット効果[1]['名前'])}}</div>
                             </td>
                             <td rowspan="2" @click="artifactDetailOnClick">
                                 <button type="button" class="artifact-detail-button">

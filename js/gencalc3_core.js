@@ -16,10 +16,12 @@ function isPlainObject(value) {
 }
 
 function getDisplayName(name) {
-    if (LanguageSelectVm) {
+    if (LanguageSelectVm && LanguageSelectVm.selected !== 'ja-jp') {
         if (name in 辞書MasterVar) {
             if (辞書MasterVar[name][LanguageSelectVm.selected]) {
                 name = 辞書MasterVar[name][LanguageSelectVm.selected];
+            } else if (LanguageSelectVm.selected !== 'en-us' && 辞書MasterVar[name]['en-us']) {
+                name = 辞書MasterVar[name]['en-us'];
             }
         }
     }

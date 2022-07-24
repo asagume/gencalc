@@ -237,6 +237,10 @@ fieldset {
     padding: 5px 3px;
 }
 
+.icon {
+    position: relative;
+}
+
 .with-tooltip+.tooltip {
     position: absolute;
     top: -0.5rem;
