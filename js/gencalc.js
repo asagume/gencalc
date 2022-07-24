@@ -211,7 +211,7 @@ function setupAllEvent() {
     $(document).on('click', '#ダメージアップRowGroup', StatusRowGroupOnClick);
     $(document).on('click', '#元素反応ボーナスRowGroup', StatusRowGroupOnClick);
 
-    // ステータス2 元素ステータス・耐性/その他
+    // ステータス2 元素ステータス·耐性/その他
     $(document).on('change', 'input[name="耐性軽減Input"]', inputOnChangeStatusUpdate);
     $(document).on('change', '#ステータス2補正入力Toggle', ステータス補正入力モードToggleOnChange);
     $(document).on('change', '#ステータス2補正初期化Toggle', buttonToggleCheckboxOnChange);
@@ -235,11 +235,11 @@ function setupAllEvent() {
         inputOnChangeStatusUpdate();
     });
 
-    // バフ/デバフ・元素共鳴
+    // バフ/デバフ·元素共鳴
     $(document).on('change', '[name="元素共鳴Input"]', elementalResonanceInputOnChange);
     $(document).on('change', '#元素共鳴なしInput', elementalResonanceInputOnChange);
 
-    // バフ/デバフ・ステータス調整
+    // バフ/デバフ·ステータス調整
     $(document).on('change', '[name="ステータス調整Input"]', inputOnChangeStatusUpdate);
 
     // 構成保存ボタンを活性化します

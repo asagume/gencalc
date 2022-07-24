@@ -57,7 +57,7 @@
                     </p>
                     <div style="position: absolute; right: 1rem; top: 0">
                         <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank"
-                            rel="noopener noreferrer">バグ報告・要望</a>
+                            rel="noopener noreferrer">バグ報告·要望</a>
                     </div>
                     <div style="position: absolute; left: 1rem; top: 0">
                         <a href="history.html">更新履歴</a>
@@ -599,7 +599,7 @@
                                     <td> {{displayStatValue(stat, ステータス[stat])}} </td>
                                 </tr>
                             </template>
-                            <template v-for="category in ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
+                            <template v-for="category in ['高級ステータス', '元素ステータス·ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ']">
                                 <tr>
                                     <th :colspan="isEditable ? 3 : 2">
                                         <label :for="category + '-opened'" class="open-close">
@@ -630,14 +630,14 @@
                                         {{displayName('補正値0初期化')}}
                                     </label>
                                     <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
-                                        @click="resetStatusAdjustment(ステータス補正, ['高級ステータス', '元素ステータス・ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ'])">
+                                        @click="resetStatusAdjustment(ステータス補正, ['高級ステータス', '元素ステータス·ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ'])">
                                         {{displayName('実行')}}</button>
                                 </td>
                             </tr>
                         </table>
 
                         <table class="status" v-show="activeTab === '2'">
-                            <template v-for="category in ['元素ステータス・耐性', 'その他']">
+                            <template v-for="category in ['元素ステータス·耐性', 'その他']">
                                 <tr>
                                     <th :colspan="isEditable ? 3 : 2">
                                         <label class="open-close">
@@ -668,7 +668,7 @@
                                         {{displayName('補正値0初期化')}}
                                     </label>
                                     <button type="button" style="width: 10rem" :disabled="!補正値0初期化Enabled"
-                                        @click="resetStatusAdjustment(ステータス補正, ['元素ステータス・耐性', 'その他'])">
+                                        @click="resetStatusAdjustment(ステータス補正, ['元素ステータス·耐性', 'その他'])">
                                         {{displayName('実行')}}</button>
                                 </td>
                             </tr>

@@ -2249,7 +2249,7 @@ function calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponM
         statusObj[toKey] += weaponMasterObj['ステータス'][key][my武器レベル];
     });
 
-    // 聖遺物・聖遺物メイン効果
+    // 聖遺物·聖遺物メイン効果
     Object.keys(inputObj).filter(s => s.startsWith('聖遺物メイン効果')).forEach(inputKey => {
         if (!inputObj[inputKey]) {
             return;
@@ -2273,7 +2273,7 @@ function calculateStatusObjSub1(statusObj, inputObj, characterMasterObj, weaponM
         statusObj[toKey] += 聖遺物メイン効果MasterVar[rarerity][key];
     });
 
-    // 聖遺物・聖遺物サブ効果
+    // 聖遺物·聖遺物サブ効果
     Object.keys(inputObj).filter(s => s.startsWith('聖遺物サブ効果')).forEach(inputKey => {
         const key = inputKey.replace('聖遺物サブ効果', '');
         let toKey = key;
@@ -2434,7 +2434,7 @@ function calculateStatusObj(statusObj, inputObj, characterMasterObj, weaponMaste
     const miscStatusObj = {};
     $('#その他オプションステータス変化').html('');
 
-    // その他オプション・聖遺物を計上します
+    // その他オプション·聖遺物を計上します
     const validMisc1ConditionValueArr = makeValidConditionValueArrFromInputObj(inputObj['オプション'], その他オプション1条件MapVar);
     if (validMisc1ConditionValueArr.length > 0) {
         その他オプション1ArrVar.forEach(detailObj => {
@@ -3801,7 +3801,7 @@ function setup武器説明() {
     setup武器説明レベル変動();
 }
 
-// 武器・精錬ランク 変更イベント
+// 武器·精錬ランク 変更イベント
 const 精錬ランクInputOnChange = function () {
     setupBaseDamageDetailDataWeapon();
     setup武器説明();
@@ -4917,7 +4917,7 @@ function build聖遺物セットリスト() {
     });
 }
 
-// ステータス1 基本ステータス/高級ステータス/元素ステータス・ダメージ/ダメージバフ/ダメージアップ
+// ステータス1 基本ステータス/高級ステータス/元素ステータス·ダメージ/ダメージバフ/ダメージアップ
 const StatusRowGroupOnClick = function () {
     let name = this.id.replace('RowGroup', '');
     let mode = this.classList.contains('opened');

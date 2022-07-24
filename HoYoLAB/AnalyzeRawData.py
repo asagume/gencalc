@@ -260,7 +260,7 @@ for filepath in files:
                                 targetJson[attribute['key']] = formatValue(
                                     attribute['values'][0])
                         else:
-                            # 戦闘天賦・元素スキル、元素爆発
+                            # 戦闘天賦·元素スキル、元素爆発
                             if gencalcJson['元素スキル'] == {}:
                                 targetJson = gencalcJson['元素スキル']
                             else:
