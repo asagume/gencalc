@@ -525,12 +525,14 @@ async function initialSetupWeaponSelect() {
         computed: {
             list: function () {
                 if (!this.type) return [];
-                return Object.keys(武器MasterVar[this.type]).map(function (key) {
-                    return {
+                const result = [];
+                Object.keys(武器MasterVar[this.type]).forEach(key => {
+                    result.push({
                         name: key,
                         master: 武器MasterVar[this.type][key]
-                    }
+                    })
                 });
+                return result;
             },
             baseATKValue: function () {
                 return 0;
