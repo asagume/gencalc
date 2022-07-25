@@ -63,51 +63,85 @@ for category in CATEGORY_DIRS:
         langKeywords = {}
 
         for module in jaJpJson['modules']:
+            # jaJpTalents.append(module['name'])
             for component in module['components']:
-                if component['component_id'] == 'talent':
-                    for entry in component['data']['list']:
-                        jaJpTalents.append(entry['title'])
-                        if entry['attributes'] != None:
-                            for attribute in entry['attributes']:
-                                jaJpTalents.append(attribute['key'])
-                        if entry['desc'] != None:
-                            for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
-                                jaJpKeywords.append(m.group(1))
-                if component['component_id'] == 'summaryList':
-                    for entry in component['data']['list']:
-                        jaJpTalents.append(entry['name'])
-                if component['component_id'] == 'story':
-                    for entry in component['data']['list']:
-                        jaJpTalents.append(entry['title'])
+                if component['component_id'] not in ['talent', 'summaryList', 'artifact_list']:
+                    continue
+                if 'data' in component:
+                    for key in ['flower_of_life', 'sands_of_eon', 'plume_of_death', 'circlet_of_logos', 'goblet_of_eonothem']:
+                        if key in component['data'] and 'title' in component['data'][key]:
+                            jaJpTalents.append(component['data'][key]['title'])
+                    if 'list' in component['data']:
+                        for entry in component['data']['list']:
+                            if 'key' in entry and entry['key'] != None:
+                                jaJpTalents.append(entry['key'])
+                            else:
+                                jaJpTalents.append(None)
+                            if 'title' in entry and entry['title'] != None:
+                                jaJpTalents.append(entry['title'])
+                            else:
+                                jaJpTalents.append(None)
+                            if 'name' in entry and entry['name'] != None:
+                                jaJpTalents.append(entry['name'])
+                            else:
+                                jaJpTalents.append(None)
+                            if 'attributes' in entry and entry['attributes'] != None:
+                                for attribute in entry['attributes']:
+                                    jaJpTalents.append(attribute['key'])
+                            if 'desc' in entry and entry['desc'] != None:
+                                for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
+                                    jaJpKeywords.append(m.group(1))
+
 
         for language in LANGUAGES:
             langWork = []
             langKeywordWork = []
             for module in langJsonMap[language]['modules']:
+                # langWork.append(module['name'])
                 for component in module['components']:
-                    if component['component_id'] == 'talent':
-                        for entry in component['data']['list']:
-                            langWork.append(entry['title'])
-                            if entry['attributes'] != None:
-                                for attribute in entry['attributes']:
-                                    langWork.append(attribute['key'])
-                            if entry['desc'] != None:
-                                for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
-                                    langKeywordWork.append(m.group(1))
-                    if component['component_id'] == 'summaryList':
-                        for entry in component['data']['list']:
-                            langWork.append(entry['name'])
-                    if component['component_id'] == 'story':
-                        for entry in component['data']['list']:
-                            langWork.append(entry['title'])
+                    if component['component_id'] not in ['talent', 'summaryList', 'artifact_list']:
+                        continue
+                    if 'data' in component:
+                        for key in ['flower_of_life', 'sands_of_eon', 'plume_of_death', 'circlet_of_logos', 'goblet_of_eonothem']:
+                            if key in component['data'] and 'title' in component['data'][key]:
+                                langWork.append(component['data'][key]['title'])
+                        if 'list' in component['data']:
+                            for entry in component['data']['list']:
+                                if 'key' in entry and entry['key'] != None:
+                                    langWork.append(entry['key'])
+                                else:
+                                    langWork.append(None)
+                                if 'title' in entry and entry['title'] != None:
+                                    langWork.append(entry['title'])
+                                else:
+                                    langWork.append(None)
+                                if 'name' in entry and entry['name'] != None:
+                                    langWork.append(entry['name'])
+                                else:
+                                    langWork.append(None)
+                                if 'attributes' in entry and entry['attributes'] != None:
+                                    for attribute in entry['attributes']:
+                                        langWork.append(attribute['key'])
+                                if 'desc' in entry and entry['desc'] != None:
+                                    for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
+                                        langKeywordWork.append(m.group(1))
             langTalents[language] = langWork
             langKeywords[language] = langKeywordWork
 
+        okay = True
         for index, dictKey in enumerate(jaJpTalents):
+            if dictKey == None:
+                continue
             dictObj = {}
             for language in LANGUAGES:
-                dictObj[language] = langTalents[language][index]
-            newDictMap[dictKey] = dictObj
+                if langTalents[language][index] != None and index < len(langTalents[language]):
+                    dictObj[language] = langTalents[language][index]
+                else:
+                    okay = False
+            if okay:                
+                newDictMap[dictKey] = dictObj
+            else:
+                print ('Error:' + dictKey)
 
         for index, dictKey in enumerate(jaJpKeywords):
             dictObj = {}
@@ -133,7 +167,7 @@ for k, v in keywordDictMap.items():
         orgJson[k] = v
     else:
         orgJson[k] = v
-    print (k, v)
+    # print (k, v)
 
 # print(orgJson)
 
