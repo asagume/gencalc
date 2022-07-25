@@ -57,7 +57,7 @@ templateJson = {
 
 
 def normalizeStatName(statName):
-    if statName.endswith('ダメージ'):
+    if statName.endswith('ダメージ') and statName != '会心ダメージ':
         statName = statName + 'バフ'
     else:
         statName = statName.replace('パーセンテージ', '%')
