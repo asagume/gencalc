@@ -268,7 +268,6 @@
                         </tr>
                     </table>
                 </div>
-
             </div>
 
             <div class="pane4">
@@ -503,49 +502,74 @@
                 </div>
 
                 <div id="character-information">
-                    <table>
-                        <tr v-for="key in Object.keys(master['ステータス'])">
-                            <th>{{displayName(key)}}</th>
-                            <td></td>
-                        </tr>
-                    </table>
-                    <table v-for="category in ['通常攻撃', '元素スキル', '元素爆発']">
-                        <tr>
-                            <th></th>
-                            <th>{{displayName(master[category]['名前'])}}</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">{{displayName(master[category]['説明'])}}</td>
-                        </tr>
-                        <template v-if="master[category]['詳細']">
-                            <tr v-for="item in master[category]['詳細']">
-                                <th>
-                                    <span v-if="item['名前']">{{displayName(item['名前'])}}</span>
-                                </th>
-                                <td>
-                                    {{displayFormula(item['数値'])}}
-                                </td>
+                    <div v-if="isVisible">
+                        <table class="information" v-show="isContentVisible['ステータス']">
+                            <tr v-for="key in Object.keys(master['ステータス'])">
+                                <th>{{displayName(key)}}</th>
+                                <td></td>
                             </tr>
+                        </table>
+                        <template v-for="category in ['通常攻撃', '元素スキル', '元素爆発']">
+                            <table class="information" v-show="isContentVisible[category]">
+                                <tr>
+                                    <th :rowspan="categoryOtherInfoCount(category) + 1" class="img">
+                                        <img class="icon" :src="master[category].icon_url"
+                                            :alt="displayName(master[category]['名前'])">
+                                    </th>
+                                    <th colspan="3" class="title">{{displayName(master[category]['名前'])}}</th>
+                                </tr>
+                                <template v-if="categoryOtherInfoCount(category) > 0">
+                                    <tr
+                                        v-for="item in Array.from({ length: categoryOtherInfoCount(category) }, (_, i) => i)">
+                                        <th colspan="2">{{categoryOtherInfoKey(category, item)}}</th>
+                                        <td>{{categoryOtherInfoValue(category, item)}}</td>
+                                    </tr>
+                                </template>
+                                <tr>
+                                    <td colspan="4" class="description" v-html="master[category]['説明']"></td>
+                                </tr>
+                                <template v-for="item in master[category]['詳細']">
+                                    <tr v-if="item['名前']">
+                                        <th colspan="2">
+                                            <span>{{displayName(item['名前'])}}</span>
+                                        </th>
+                                        <td colspan="2">
+                                            {{displayFormula(category, item)}}
+                                        </td>
+                                    </tr>
+                                </template>
+                            </table>
                         </template>
-                    </table>
-                    <table v-if="'その他戦闘天賦' in master">
-                        <tr v-for="item in master['その他戦闘天賦']">
-                            <th>{{displayName(item['名前'])}}</th>
-                            <td>{{displayName(item['説明'])}}</td>
-                        </tr>
-                    </table>
-                    <table v-if="'固有天賦' in master">
-                        <tr v-for="item in master['固有天賦']">
-                            <th>{{displayName(item['名前'])}}</th>
-                            <td>{{displayName(item['説明'])}}</td>
-                        </tr>
-                    </table>
-                    <table v-if="'命ノ星座' in master">
-                        <tr v-for="key in Object.keys(master['命ノ星座'])">
-                            <th>{{key}}</th>
-                            <td>{{displayName(master['命ノ星座'][key]['説明'])}}</td>
-                        </tr>
-                    </table>
+                        <table class="information" v-show="isContentVisible['その他戦闘天賦']" v-if="'その他戦闘天賦' in master">
+                        </table>
+                        <table class="information" v-show="isContentVisible['固有天賦']">
+                            <template v-for="item in master['固有天賦']">
+                                <tr>
+                                    <th class="img">
+                                        <img class="icon" :src="item.icon_url" :alt="displayName(item['名前'])">
+                                    </th>
+                                    <th class="title">{{displayName(item['名前'])}}</th>
+                                </tr>
+                                <tr>
+                                    <td class="description" colspan="2" v-html="item['説明']"></td>
+                                </tr>
+                            </template>
+                        </table>
+                        <table class="information" v-show="isContentVisible['命ノ星座']" v-if="'命ノ星座' in master">
+                            <template v-for="key in Object.keys(master['命ノ星座'])">
+                                <tr>
+                                    <th class="img">
+                                        <img class="icon" :src="master['命ノ星座'][key].icon_url"
+                                            :alt="displayName(master['命ノ星座'][key]['名前'])">
+                                    </th>
+                                    <th class="title">{{displayName(master['命ノ星座'][key]['名前'])}}</th>
+                                </tr>
+                                <tr>
+                                    <td class="description" colspan="2" v-html="master['命ノ星座'][key]['説明']"></td>
+                                </tr>
+                            </template>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -580,6 +604,12 @@
                                 </option>
                             </select>
                         </label>
+                        <hr>
+                        <div>
+                            <label v-for="key in Object.keys(conditionAdjustments)">
+                                {{displayStatKeyAndValue(key, conditionAdjustments[key])}}
+                            </label>
+                        </div>
                     </fieldset>
                 </div>
 
@@ -891,6 +921,56 @@
             </div>
 
             <div class="pane7">
+                <hr>
+                <h2>げんかるく</h2>
+                <fieldset style="text-align: center; margin: 1rem; padding: 1rem;">
+                    <legend>構成保存の対象範囲</legend>
+                    <button type="button">キャラクター</button>
+                    <button type="button">武器</button>
+                    <button type="button">聖遺物セット効果</button>
+                    <button type="button">聖遺物メイン効果</button>
+                    <button type="button">聖遺物サブ効果</button>
+                    <button type="button">オプション条件</button>
+                    <hr>
+                    <a href="SavedataList.html">保存構成リンク集</a>
+                </fieldset>
+
+                <fieldset>
+                    <legend>聖遺物詳細画面OCR</legend>
+                    <div style="text-align: left;">
+                        キャラクター＞聖遺物＞聖遺物詳細のスクリーンショットから聖遺物のステータスを設定する機能です。
+                        読み取り精度はいまひとつなので、実行後に目視にて確認、修正願います。
+                        本機能はすべてブラウザ内で処理されます。外部へのデータ送信などはありません。
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>被ダメージ表示</legend>
+                    <div style="text-align: left;">
+                        基礎ダメージ10000に対する被ダメージ(推定値)を表示します。<br>
+                        基礎ダメージはざっくり防御力0の場合の被ダメージです。
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>おまけ</legend>
+                    <input type="checkbox" id="全武器解放Config">
+                    <label for="全武器解放Config">全ての武器が選択可能になる</label>
+                    <div style="color: chocolate; font-size: smaller;">
+                        キャラクター再選択後に有効になります
+                    </div>
+                    <hr>
+                    <input type="checkbox" id="聖遺物詳細計算停止Config" />
+                    <label for="聖遺物詳細計算停止Config">聖遺物サブ効果の自動計算を止める</label>
+                    <div style="color: chocolate; font-size: smaller;">
+                        聖遺物サブ効果が自動計算されなくなります。<br>
+                        手動で入力して下さい
+                    </div>
+                    <hr>
+                    <input type="checkbox" id="聖遺物サブ効果初期化Toggle">
+                    <label for="聖遺物サブ効果初期化Toggle">聖遺物サブ効果0初期化</label>
+                    <button type="button" id="聖遺物サブ効果初期化Button" disabled>実行</button>
+                </fieldset>
             </div>
 
             <div class="bottom-pane">
@@ -975,28 +1055,7 @@
         console.log('window.innerWidth', window.innerWidth);
         console.log('window.devicePixelRatio', window.devicePixelRatio);
 
-        // var characterSelectVue;
-        // var characterInputVue;
-
-        // function recommendOnChange(recommend) {
-        //     weaponOnChange(recommend['武器']);
-        // }
-
-        // function weaponOnChange(name) {
-        //     const master = characterInputVue.master;
-        //     const weaponType = master['武器'];
-        //     const url = 武器MasterVar[weaponType][name]['import'];
-        //     fetch(url).then(resp => resp.json()).then(json => {
-        //         characterInputVue.weaponMaster = json;
-
-        //         characterInputVue.weaponAscension = 6;
-        //         characterInputVue.weaponLevel = 90;
-        //     });
-        // }
-
-
         onLoad();
-
     </script>
 </body>
 
