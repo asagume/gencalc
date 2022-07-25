@@ -694,3 +694,28 @@ table.result thead th:first-child {
 .elemental-reaction input[type="radio"]:checked+label {
     background: linear-gradient(to top, #dcc751, #bba116);
 }
+
+table.information {
+    border: 2px solid gray;
+}
+
+table.information th {
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+table.information th, table.information td {
+    border: 1px solid gray;
+}
+
+table.information th.img {
+    width: 60px;
+}
+
+table.information img.icon {
+    width: 60px;
+}
+
+td.description {
+    text-align: left;
+}
