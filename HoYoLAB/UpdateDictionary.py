@@ -65,7 +65,9 @@ for category in CATEGORY_DIRS:
         for module in jaJpJson['modules']:
             # jaJpTalents.append(module['name'])
             for component in module['components']:
-                if component['component_id'] not in ['talent', 'summaryList', 'artifact_list']:
+                if component['component_id'] not in ['baseInfo', 'talent', 'summaryList', 'artifact_list']:
+                    continue
+                if component['component_id'] == 'baseInfo' and category != 'weapons':
                     continue
                 if 'data' in component:
                     for key in ['flower_of_life', 'sands_of_eon', 'plume_of_death', 'circlet_of_logos', 'goblet_of_eonothem']:
@@ -99,7 +101,9 @@ for category in CATEGORY_DIRS:
             for module in langJsonMap[language]['modules']:
                 # langWork.append(module['name'])
                 for component in module['components']:
-                    if component['component_id'] not in ['talent', 'summaryList', 'artifact_list']:
+                    if component['component_id'] not in ['baseInfo', 'talent', 'summaryList', 'artifact_list']:
+                        continue
+                    if component['component_id'] == 'baseInfo' and category != 'weapons':
                         continue
                     if 'data' in component:
                         for key in ['flower_of_life', 'sands_of_eon', 'plume_of_death', 'circlet_of_logos', 'goblet_of_eonothem']:
@@ -134,7 +138,7 @@ for category in CATEGORY_DIRS:
                 continue
             dictObj = {}
             for language in LANGUAGES:
-                if langTalents[language][index] != None and index < len(langTalents[language]):
+                if index < len(langTalents[language]) and langTalents[language][index] != None:
                     dictObj[language] = langTalents[language][index]
                 else:
                     okay = False
