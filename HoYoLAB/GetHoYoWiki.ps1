@@ -154,6 +154,27 @@ foreach ($pageId in $pageIds) {
     }
     elseif ($menuId -eq 5) {
         # 聖遺物
+        foreach ($value in $contentMLang."en-us"."filter_values"."weapon_rarity"."values") {
+            $rarity = $value -replace "[^0-9]", ""
+        }
+
+        $outDirPath = Join-Path $destFolder -ChildPath ("data\" + $categoryMap.$menuId)
+        if (-not (Test-Path $outDirPath)) {
+            New-Item -Path $outDirPath -ItemType Directory -Force
+        }
+        # $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
+        $jsonFileName = $rarity + "_" + $writableName + ".json"
+        $jsonFilePath = $outDirPath
+
+        if ($contentMLang."en-us"."icon_url" -and $doDownloadImg) {
+            $imageUrl = $contentMLang."en-us"."icon_url"
+            $imageFile = $rarity + "_" + $writableName + ".png"
+            $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId)
+            if (-not (Test-Path $outDirPath)) {
+                New-Item -Path $outDirPath -ItemType Directory -Force
+            }
+            Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
+        }
     }
 
     if ($jsonFileName -ne "") {
@@ -162,7 +183,7 @@ foreach ($pageId in $pageIds) {
             if (-not (Test-Path $outFilePath)) {
                 New-Item -Path $outFilePath -ItemType Directory -Force
             }
-                $outFilePath = Join-Path $outFilePath -ChildPath $jsonFileName
+            $outFilePath = Join-Path $outFilePath -ChildPath $jsonFileName
             $outFilePath = [System.IO.Path]::GetFullPath($outFilePath)
             $outFilePath
     
