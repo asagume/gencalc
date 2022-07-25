@@ -1,4 +1,4 @@
-// @ts-check
+//// @ts-check
 
 ///<reference path="./gencalc3_var.js"/>
 

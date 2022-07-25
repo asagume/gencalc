@@ -2,16 +2,17 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 
 $pageIds = @()
 # キャラクター
-$pageIds += @(1..51)
-$pageIds += 2252   # 夜蘭
-$pageIds += 2256   # 久岐忍
-$pageIds += 2263   # 鹿野院平蔵
+# $pageIds += @(1..51)
+# $pageIds += 2252   # 夜蘭
+# $pageIds += 2256   # 久岐忍
+# $pageIds += 2263   # 鹿野院平蔵
 # 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
 # $pageIds += 2255   # 落霞
 # $pageIds += 2264   # 籠釣瓶一心
 # 聖遺物
+$pageIds += @(2061..2099)
 
 $doDownloadImg = $false
 

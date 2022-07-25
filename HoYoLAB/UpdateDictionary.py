@@ -76,6 +76,9 @@ for category in CATEGORY_DIRS:
                 if component['component_id'] == 'summaryList':
                     for entry in component['data']['list']:
                         jaJpTalents.append(entry['name'])
+                if component['component_id'] == 'story':
+                    for entry in component['data']['list']:
+                        jaJpTalents.append(entry['title'])
 
         for language in LANGUAGES:
             langWork = []
@@ -94,6 +97,9 @@ for category in CATEGORY_DIRS:
                     if component['component_id'] == 'summaryList':
                         for entry in component['data']['list']:
                             langWork.append(entry['name'])
+                    if component['component_id'] == 'story':
+                        for entry in component['data']['list']:
+                            langWork.append(entry['title'])
             langTalents[language] = langWork
             langKeywords[language] = langKeywordWork
 
