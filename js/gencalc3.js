@@ -29,6 +29,8 @@ async function onLoad(searchParams) {
         'data/OptionMaster1.json',
         'data/OptionMaster2.json',
         'data/HoYoDictionary.json',
+        'data/LocalDictionary.json',
+        'data/HoYoDictionary.json',
         'data/LocalDictionary.json'
     ].map(s => fetch(s).then(resp => resp.json())));
 

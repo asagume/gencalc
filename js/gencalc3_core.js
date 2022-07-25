@@ -27,7 +27,7 @@ function getDisplayName(name) {
         name = name.replace(/バフ$/, '');
     }
     if (LanguageSelectVm && LanguageSelectVm.selected !== 'ja-jp') {
-        if (name in 辞書MasterVar) {
+        if (辞書MasterVar && (name in 辞書MasterVar)) {
             if (辞書MasterVar[name][LanguageSelectVm.selected]) {
                 name = 辞書MasterVar[name][LanguageSelectVm.selected];
             } else if (LanguageSelectVm.selected !== 'en-us' && 辞書MasterVar[name]['en-us']) {
