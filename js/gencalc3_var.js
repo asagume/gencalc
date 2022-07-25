@@ -1,4 +1,4 @@
-//// @ts-check
+// @ts-check
 
 var キャラクターMasterVar;
 var 武器MasterVar;

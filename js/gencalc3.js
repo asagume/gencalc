@@ -1,6 +1,5 @@
 //// @ts-check
 
-///<reference path="../vue.d.ts"/>
 ///<reference path="./gencalc3_var.js"/>
 ///<reference path="./gencalc3_core.js"/>
 ///<reference path="./gencalc3_func.js"/>
@@ -96,10 +95,11 @@ async function onLoad(searchParams) {
     initialSetupStatusInput();
     initialSetupArtifactDetailInput();
     initialSetupArtifactSetSelect();
-    initialSetupWeaponSelect('弓');
+    initialSetupWeaponSelect();
     initialSetupCharacterInput();
     initialSetupOptionInput();
     initialSetupConditionInput();
+    initialSetupCharacterInformation();
     initialSetupCharacterOwnList();
     initialSetupWeaponOwnList();
 
@@ -397,16 +397,16 @@ async function initialSetupCharacterInput(name) {
                 switchActiveEntry(Pane4Group, ArtifactDetailInputVm);
             },
             normalAttackOnClick: function () {
-
+                CharacterInformationVm.controlVisible('通常攻撃');
             },
             elementalSkillOnClick: function () {
-
+                CharacterInformationVm.controlVisible('元素スキル');
             },
             elementalBurstOnClick: function () {
-
+                CharacterInformationVm.controlVisible('元素爆発');
             },
             characterInfoOnClick: function () {
-
+                CharacterInformationVm.controlVisible();
             },
             saveOnClick: function () {
                 if (!saveName) return;
@@ -418,48 +418,90 @@ async function initialSetupCharacterInput(name) {
         watch: {
             name: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 },
                 deep: true
             },
             突破レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    makeDamageDetailObjCharacter(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             命ノ星座: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    const constellation = newVal;
+                    const characterMaster = this.master;
+                    let maxSkillLevel = 10;
+                    let maxBurstLevel = 10;
+                    let mySkillName = characterMaster.元素スキル.名前;
+                    let myBurstName = characterMaster.元素爆発.名前;
+                    Object.keys(characterMaster.命ノ星座).forEach(key => {
+                        if (constellation < Number(key)) return;
+                        if ('名前' in characterMaster.命ノ星座[key]) {
+                            if (characterMaster.命ノ星座[key]['名前'].indexOf(mySkillName) != -1) {
+                                maxSkillLevel = 13;
+                            }
+                            if (characterMaster.命ノ星座[key]['名前'].indexOf(myBurstName) != -1) {
+                                maxBurstLevel = 13;
+                            }
+                        }
+                    });
+                    this.元素スキルレベルOption.max = maxSkillLevel;
+                    this.元素爆発レベルOption.max = maxBurstLevel;
+                    makeDamageDetailObjCharacter(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                }
+            },
+            通常攻撃レベル: {
+                handler: function (newVal, oldVal) {
+                    makeDamageDetailObjCharacter(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                }
+            },
+            元素スキルレベル: {
+                handler: function (newVal, oldVal) {
+                    makeDamageDetailObjCharacter(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                }
+            },
+            元素爆発レベル: {
+                handler: function (newVal, oldVal) {
+                    makeDamageDetailObjCharacter(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             weapon: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    makeDamageDetailObjWeapon(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             武器突破レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             武器レベル: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             武器精錬ランク: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    makeDamageDetailObjWeapon(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             聖遺物セット効果: {
                 handler: function (newVal, oldVal) {
-                    updateStatusInputStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
+                    makeDamageDetailObjArtifactSet(this);
+                    updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 },
                 deep: true
             }
@@ -468,26 +510,26 @@ async function initialSetupCharacterInput(name) {
     CharacterInputVm = Vue.createApp(CharacterInput).mount('#character-input');
 }
 
-async function initialSetupWeaponSelect(type) {
+async function initialSetupWeaponSelect() {
     const WeaponSelect = {
         data() {
             return {
                 isVisible: false,
+                type: null,
                 selected: null,
-                master: null,
-                type: type,
-                list: null
+                master: null
             }
         },
-        created() {
-            this.list = Object.keys(武器MasterVar[type]).map(function (key) {
-                return {
-                    name: key,
-                    master: 武器MasterVar[type][key]
-                }
-            });
-        },
         computed: {
+            list: function () {
+                if (!this.type) return [];
+                return Object.keys(武器MasterVar[this.type]).map(function (key) {
+                    return {
+                        name: key,
+                        master: 武器MasterVar[this.type][key]
+                    }
+                });
+            },
             baseATKValue: function () {
                 return 0;
             },
@@ -531,9 +573,10 @@ async function initialSetupWeaponSelect(type) {
                 return getStarBackgroundUrl(item.master);
             },
             onClick: function (event) {
-                if (event.target.alt != this.selected) {
-                    this.selected = event.target.alt;
-                    setupWeaponInput(this.type, this.selected, CharacterInputVm);
+                const newValue = list.filter(s => s.name == event.target.alt)[0];
+                if (event.target.alt != newValue.name) {
+                    this.selected = newValue;
+                    setupWeaponInput(this.type, newValue.name, CharacterInputVm);
                 }
                 this.isVisible = false;
             }
@@ -730,7 +773,7 @@ function initialSetupArtifactDetailInput() {
                     if (!this.isステータス計算無効) {
                         calculateArtifactStat(this);
                     }
-                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
             },
@@ -758,7 +801,7 @@ function initialSetupArtifactDetailInput() {
                     if (!this.isステータス計算無効) {
                         calculateArtifactStat(this);
                     }
-                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
             },
@@ -767,7 +810,7 @@ function initialSetupArtifactDetailInput() {
                     if (!this.isステータス計算無効) {
                         calculateArtifactStat(this);
                     }
-                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
             },
@@ -776,7 +819,7 @@ function initialSetupArtifactDetailInput() {
                     if (!this.isステータス計算無効) {
                         calculateArtifactStat(this);
                     }
-                    updateStatusInputStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
                 },
                 deep: true
             }
@@ -792,17 +835,16 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                 isVisible: true,
                 conditions: {},
                 character: null,
-                characterMaster: null
+                characterMaster: null,
+                conditionAdjustments: {}
             }
         },
         computed: {
             inputList: function () {
                 if (!this.character || !this.characterMaster) return [];
                 const result = [];
-                [
-                    キャラクターダメージ詳細ObjMapVar.get(this.character),
-                    武器ダメージ詳細ObjMapVar.get(CharacterInputVm.weapon)
-                ].forEach(damageDetailObj => {
+                const damageDetailObjArr = getDamageDetailObjArr(CharacterInputVm);
+                damageDetailObjArr.forEach(damageDetailObj => {
                     if (!damageDetailObj) return;
                     damageDetailObj['条件'].forEach((value, key) => {
                         if (value != null) return;
@@ -831,16 +873,13 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                     }
                     this.conditions[condition.name] = value;
                 });
-                console.log('inputList', result);
                 return result;
             },
             selectList: function () {
                 if (!this.character || !this.characterMaster) return [];
                 const result = [];
-                [
-                    キャラクターダメージ詳細ObjMapVar.get(this.character),
-                    武器ダメージ詳細ObjMapVar.get(CharacterInputVm.weapon)
-                ].forEach(damageDetailObj => {
+                const damageDetailObjArr = getDamageDetailObjArr(CharacterInputVm);
+                damageDetailObjArr.forEach(damageDetailObj => {
                     if (!damageDetailObj) return;
                     damageDetailObj['条件'].forEach((value, key) => {
                         if (value == null) return;
@@ -873,7 +912,6 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                     }
                     this.conditions[condition.name] = value;
                 });
-                console.debug('selectList', result);
                 return result;
             }
         },
@@ -892,6 +930,9 @@ function initialSetupConditionInput(opt_characterMaster = null) {
             displayOption: function (name) {
                 return getDisplayName(name.replace(/^required_/, ''));
             },
+            displayStatKeyAndValue: function (name, value) {
+                return getDisplayStatKeyAndValue(name, value);
+            },
             onChange: function (item) {
                 if (!item.exclusions) return;
                 this.inputList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
@@ -900,12 +941,34 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                 this.selectList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
                     this.conditions[entry.name] = null;
                 });
+            },
+            updateConditionAdjustments: function () {
+                if (!StatusInputVm) return;
+                const validConditionValueArr = makeValidConditionValueArr(this);
+                const constellation = CharacterInputVm.命ノ星座;
+                const result = {};
+                const damageDetailObjArr = getDamageDetailObjArr(CharacterInputVm);
+                damageDetailObjArr.forEach(damageDetailObj => {
+                    if (!damageDetailObj) return;
+                    damageDetailObj[CHANGE_KIND_STATUS].filter(s => s['条件']).forEach(detailObj => {
+                        const checkRet = checkConditionMatches(detailObj['条件'], validConditionValueArr, constellation);
+                        if (checkRet == 0) return;
+                        let formulaArr = detailObj['数値'];
+                        if (checkRet != 1) formulaArr = formulaArr.concat(['*', checkRet]);
+                        const work = calculateStatusDiff(StatusInputVm.ステータス, detailObj['種類'], formulaArr, detailObj['上限']);
+                        Object.keys(work).forEach(key => {
+                            addValueToObject(result, key, work[key]);
+                        });
+                    });
+                });
+                console.debug('updateConditionAdjustments', result);
+                this.conditionAdjustments = result;
             }
         },
         watch: {
             conditions: {
                 handler: function (newVal, oldVal) {
-                    //TODO
+                    this.updateConditionAdjustments();
                     console.log('conditions', this.conditions);
                 },
                 deep: true
@@ -932,7 +995,8 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 オプション1詳細: {},
                 option2Master: オプション2MasterVar,
                 オプション2: {},
-                オプション2詳細: {}
+                オプション2詳細: {},
+                ステータス補正: {}
             }
         },
         created() {
@@ -970,6 +1034,9 @@ function initialSetupOptionInput(opt_characterMaster = null) {
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
+            },
+            displayStatValue: function (name, value) {
+                return getDisplayStatValue(name, value);
             },
             name: function (item) {
                 return this.elementalResonanceMaster[item]['名前'];
@@ -1041,12 +1108,7 @@ function initialSetupStatusInput(characterMaster) {
             });
             this.敵ステータス['レベル'] = 90;
             this.isステータスOpened['基本ステータス'] = true;
-            this.enemyList = Object.keys(敵MasterVar).map(name => {
-                return {
-                    name: name,
-                    master: 敵MasterVar[name]
-                }
-            });
+            this.enemyList = Object.keys(敵MasterVar).map(name => makeEnemyObj(name));
             this.enemy = this.enemyList[0];
             Object.keys(this.enemy.master).forEach(stat => {
                 this.敵ステータス[stat] = this.enemy.master[stat];
@@ -1077,14 +1139,7 @@ function initialSetupStatusInput(characterMaster) {
                 return ステータスARRAY_MAP.get(category).filter(s => this.isステータスOpened[category] || this.ステータス[s]);
             },
             calculateEnemyStatus: function () {
-                const master = this.enemy.master;
-                Object.keys(master).forEach(stat => {
-                    this.敵ステータス[stat] = master[stat];
-                });
-                this.敵ステータス['防御力'] = 0;
-                Object.keys(this.敵ステータス補正).forEach(stat => {
-                    this.敵ステータス[stat] += this.敵ステータス補正[stat];
-                });
+                updateStatusEnemyStatus(this.enemy, this);
             },
             resetStatusAdjustment: function (adjustmentInput, opt_categoryArr = null) {
                 this.補正値0初期化Enabled = false;
@@ -1130,7 +1185,7 @@ function initialSetupCalcurationResult() {
     const CalculationResult = {
         data() {
             return {
-                元素: '雷',
+                元素: '風',
                 元素反応: JSON.parse(JSON.stringify(元素反応TEMPLATE)),
                 計算結果: JSON.parse(JSON.stringify(計算結果TEMPLATE)),
                 増幅反応: 'なし',
@@ -1143,22 +1198,6 @@ function initialSetupCalcurationResult() {
             });
         },
         beforeMount() {
-            this.元素 = '水';
-            this.元素反応['蒸発倍率'] = 2;
-            this.元素反応['溶解倍率'] = 0;
-            this.元素反応['過負荷ダメージ'] = 0;
-            this.元素反応['感電ダメージ'] = 2000;
-            this.元素反応['超電導ダメージ'] = 0;
-
-            this.計算結果['通常攻撃'] = [
-                ['1段ダメージ', '物理', 1500, 2000, 1000],
-                ['2段ダメージ', '物理', 1500, null, 1000],
-                ['3段ダメージ', '物理', 1500, 2000, null],
-                ['4段ダメージ', '水', 1500, 2000, 1000]
-            ];
-            this.計算結果['元素スキル'] = [
-                ['スキルダメージ', '水', 1500, 2000, 1000]
-            ];
         },
         mounted() {
         },
@@ -1183,6 +1222,95 @@ function initialSetupCalcurationResult() {
         }
     };
     CalculationResultVm = Vue.createApp(CalculationResult).mount('#calculation-result');
+}
+
+function initialSetupCharacterInformation() {
+    const CharacterInformation = {
+        data() {
+            return {
+                isVisible: false,
+                isContentVisible: {
+                    ステータス: true,
+                    通常攻撃: false,
+                    元素スキル: false,
+                    元素爆発: false,
+                    その他戦闘天賦: true,
+                    固有天賦: true,
+                    命ノ星座: true
+                }
+            }
+        },
+        computed: {
+            name: function () {
+                return CharacterInputVm.name;
+            },
+            master: function () {
+                return CharacterInputVm.master;
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            displayFormula: function (category, detailObj) {
+                if (isPlainObject(detailObj['数値'])) {
+                    let level;
+                    if ('ダメージバフ' in detailObj) {
+                        const workCategory = detailObj['ダメージバフ'].replace(/ダメージバフ$/, '');
+                        if (workCategory in this.master) {
+                            category = workCategory;
+                        }
+                    }
+                    if (category == '通常攻撃') level = CharacterInputVm.通常攻撃レベル;
+                    else if (category == '元素スキル') level = CharacterInputVm.元素スキルレベル;
+                    else if (category == '元素爆発') level = CharacterInputVm.元素爆発レベル;
+                    if (level in detailObj['数値']) {
+                        return detailObj['数値'][level];
+                    }
+                }
+                return detailObj['数値'];
+            },
+            categoryOtherInfoKeys: function (category) {
+                return Object.keys(this.master[category]).filter(s =>
+                    ['元素エネルギー'].includes(s) || s.endsWith('クールタイム') || s.endsWith('継続時間')
+                );
+            },
+            categoryOtherInfoCount: function (category) {
+                return this.categoryOtherInfoKeys(category).length;
+            },
+            categoryOtherInfoKey: function (category, index) {
+                return this.categoryOtherInfoKeys(category)[index];
+            },
+            categoryOtherInfoValue: function (category, index) {
+                return this.master[category][this.categoryOtherInfoKey(category, index)];
+            },
+            controlVisible: function (opt_target = null) {
+                if (opt_target) {
+                    if (this.isVisible && this.isContentVisible[opt_target]) {
+                        this.isVisible = false;
+                        return;
+                    }
+                    Object.keys(this.isContentVisible).forEach(key => {
+                        if (key == opt_target) this.isContentVisible[key] = true;
+                        else this.isContentVisible[key] = false;
+                    });
+                    this.isVisible = true;
+                } else {
+                    const TARGETABLE_ARR = ['通常攻撃', '元素スキル', '元素爆発'];
+                    if (this.isVisible && TARGETABLE_ARR.filter(s => this.isContentVisible[s]).length == 0) {
+                        this.isVisible = false;
+                        return;
+                    }
+                    Object.keys(this.isContentVisible).forEach(key => {
+                        if (TARGETABLE_ARR.includes(key)) this.isContentVisible[key] = false;
+                        else this.isContentVisible[key] = true;
+                    });
+                    this.isVisible = true;
+                }
+            }
+        }
+    }
+    CharacterInformationVm = Vue.createApp(CharacterInformation).mount('#character-information');
 }
 
 function initialSetupCharacterOwnList() {
@@ -1360,9 +1488,9 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, co
     characterInput.おすすめセットOption.list = myRecommendationList;
     characterInput.おすすめセット = myRecommendation[0];
 
-    let ascension = 6;        // 突破レベル
-    let level = 90;           // レベル
-    let constellation = 0;    // 命ノ星座
+    let ascension = characterInput.突破レベル;
+    let level = characterInput.レベル;
+    let constellation = 0;
 
     if ('レベル' in myRecommendation[1]) {
         level = Number(myRecommendation[1]['レベル'].replace('+', ''));
@@ -1443,8 +1571,6 @@ async function setupCharacterInput(name, characterInput, artifactDetailInput, co
  */
 async function setupWeaponInput(type, weapon, characterInput) {
     const weaponMaster = await fetch(武器MasterVar[type][weapon]['import']).then(resp => resp.json());
-    WeaponSelectVm.type = type;
-    WeaponSelectVm.selected = weapon;
     WeaponSelectVm.master = weaponMaster;
     characterInput.weapon = weapon;
     characterInput.weaponMaster = weaponMaster;
@@ -1463,7 +1589,7 @@ async function setupWeaponInput(type, weapon, characterInput) {
     makeDamageDetailObjWeapon(characterInput);
 }
 
-function updateStatusInputStatus(statusObj) {
+function updateStatusStatus(statusObj) {
     Object.keys(statusObj).forEach(stat => {
         if (stat in StatusInputVm.ステータス && StatusInputVm.ステータス[stat] == statusObj[stat]) return;
         StatusInputVm.ステータス[stat] = statusObj[stat];
@@ -1471,6 +1597,34 @@ function updateStatusInputStatus(statusObj) {
     calculateResult(CharacterInputVm, ConditionInputVm, OptionInputVm, StatusInputVm, CalculationResultVm);
 }
 
-function setupEnemyInput(name) {
+/**
+ * EnemyObjectを作成します.
+ * 
+ * @param {string} name 敵の名前
+ * @returns {object} 
+ */
+function makeEnemyObj(name) {
+    return {
+        name: name,
+        master: 敵MasterVar[name]
+    };
 }
 
+/**
+ * 敵ステータスを更新します.
+ * 
+ * @param {object} enemyObj EnemyObject
+ * @param {object} statusInput ステータス情報Object
+ */
+function updateStatusEnemyStatus(enemyObj, statusInput) {
+    statusInput.enemy = enemyObj;
+    Object.keys(statusInput.enemy.master).forEach(stat => {
+        statusInput.敵ステータス[stat] = statusInput.enemy.master[stat];
+    });
+    statusInput.敵ステータス['防御力'] = 0;
+    if (statusInput.敵ステータス補正) {
+        Object.keys(statusInput.敵ステータス補正).forEach(stat => {
+            statusInput.敵ステータス[stat] += statusInput.敵ステータス補正[stat];
+        });
+    }
+}

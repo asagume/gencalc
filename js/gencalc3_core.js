@@ -1,4 +1,4 @@
-//// @ts-check
+// @ts-check
 
 ///<reference path="./gencalc3_var.js"/>
 
@@ -15,6 +15,11 @@ function isPlainObject(value) {
     return myType === '[object Object]';
 }
 
+/**
+ * 
+ * @param {string} name 
+ * @returns {string}
+ */
 function getDisplayName(name) {
     if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
         name = name.replace(/バフ$/, '');
@@ -33,6 +38,12 @@ function getDisplayName(name) {
     return name;
 }
 
+/**
+ * 
+ * @param {string} name 
+ * @param {number} value 
+ * @returns {number | string}
+ */
 function getDisplayStatValue(name, value) {
     const percentage = appendPercentage(name);
     if (percentage) {
@@ -41,6 +52,11 @@ function getDisplayStatValue(name, value) {
     return Math.round(value);
 }
 
+/**
+ * 
+ * @param {string} name 
+ * @returns {string}
+ */
 function appendPercentage(name) {
     if (['基礎HP', '基礎攻撃力', '基礎防御力', 'HP上限', 'HP', '攻撃力', '防御力', '元素熟知'].includes(name)) {
         return '';
@@ -52,6 +68,13 @@ function appendPercentage(name) {
     return '%';
 }
 
+/**
+ * 
+ * @param {any[]} item 
+ * @param {number} index 
+ * @param {number} opt_反応倍率 
+ * @returns {number | string}
+ */
 function getDisplayDamageValue(item, index, opt_反応倍率 = null) {
     let value = item[index];
     if (opt_反応倍率) {
@@ -69,6 +92,33 @@ function getDisplayDamageValue(item, index, opt_反応倍率 = null) {
     return value ? value : '-';
 }
 
+/**
+ * 
+ * @param {string} name 
+ * @param {number} value 
+ * @returns {string}
+ */
+function getDisplayStatKeyAndValue(name, value) {
+    const percent = appendPercentage(name);
+    if (percent) {
+        if (name.endsWith('%')) {
+            name = name.replace(/%$/, '');
+        }
+        value = Math.round(value * 100) / 100;
+    } else {
+        value = Math.round(value);
+    }
+    let result = getDisplayName(name);
+    result += value >= 0 ? '+' + value : value;
+    result += percent;
+    return result;
+}
+
+/**
+ * 
+ * @param {string} name 
+ * @returns {number}
+ */
 function getStatStep(name) {
     if (appendPercentage(name)) {
         return 0.1;
@@ -76,6 +126,11 @@ function getStatStep(name) {
     return 1;
 }
 
+/**
+ * 
+ * @param {object} master 
+ * @returns {string}
+ */
 function getStarBackgroundUrl(master) {
     if ('レアリティ' in master) {
         return STAR_BACKGROUND_URL[master['レアリティ']];
@@ -83,6 +138,11 @@ function getStarBackgroundUrl(master) {
     return IMG_SRC_DUMMY;
 }
 
+/**
+ * 
+ * @param {object} master 
+ * @returns {string}
+ */
 function getElementImgSrc(master) {
     if ('元素' in master) {
         return ELEMENT_IMG_SRC[master['元素']];
@@ -90,6 +150,11 @@ function getElementImgSrc(master) {
     return IMG_SRC_DUMMY;
 }
 
+/**
+ * 
+ * @param {object} master 
+ * @returns {string}
+ */
 function getColorClass(master) {
     if ('元素' in master) {
         return ELEMENT_COLOR_CLASS[master['元素']];
@@ -97,6 +162,11 @@ function getColorClass(master) {
     return ''
 }
 
+/**
+ * 
+ * @param {object} master 
+ * @returns {string}
+ */
 function getBgColorClass(master) {
     if ('元素' in master) {
         return ELEMENT_BG_COLOR_CLASS[master['元素']];
@@ -147,7 +217,7 @@ const addDecimal = function (value1, value2, opt_max = null) {
 /**
  * 計算式を計算します
  * 
- * @param {Object} statusObj ステータス詳細
+ * @param {object} statusObj ステータス詳細
  * @param {number | string | Array} formulaArr 計算式
  * @param {number | string | Array} opt_max 上限
  * @returns {number} 計算結果
@@ -234,16 +304,16 @@ const calculateFormulaArray = function (statusObj, formulaArr, opt_max = null) {
  * 文字列を解析して、計算式Arrayを作成します Sub
  * 数値|数値%|数値%文字列|文字列
  * 
- * @param {string} str 計算式文字列
- * @param {string} defaultItem デフォルト種類
- * @returns {Array} 計算式
+ * @param {string} formulaStr 計算式文字列
+ * @param {string} opt_defaultItem デフォルト種類
+ * @returns {any[]} 計算式
  */
-function analyzeFormulaStrSub(str, defaultItem = null) {
+function analyzeFormulaStrSub(formulaStr, opt_defaultItem = null) {
     let resultArr = [];
-    if (isNumber(str)) {
-        resultArr.push(Number(str));
+    if (isNumber(formulaStr)) {
+        resultArr.push(Number(formulaStr));
     } else {
-        let strArr = str.split('%');
+        let strArr = formulaStr.split('%');
         if (strArr.length == 1) {
             resultArr.push(strArr[0]);
         } else {
@@ -251,8 +321,8 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
             resultArr.push('*');
             if (strArr[1].length > 0) {
                 resultArr.push(strArr[1]);
-            } else if (defaultItem != null) {
-                resultArr.push(defaultItem);
+            } else if (opt_defaultItem != null) {
+                resultArr.push(opt_defaultItem);
             }
         }
     }
@@ -263,14 +333,14 @@ function analyzeFormulaStrSub(str, defaultItem = null) {
  * 文字列を解析して、計算式Arrayを作成します
  * 数値|数値%|数値%文字列|文字列
  * 
- * @param {string} str 計算式文字列
- * @param {string} defaultItem デフォルト種類
- * @returns {Array} 計算式
+ * @param {string} formulaStr 計算式文字列
+ * @param {string} opt_defaultItem デフォルト種類
+ * @returns {any[]} 計算式
  */
-const analyzeFormulaStr = function (str, defaultItem = null) {
+const analyzeFormulaStr = function (formulaStr, opt_defaultItem = null) {
     let resultArr = [];
     let re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
-    let workStr = str;
+    let workStr = formulaStr;
     while (true) {
         let reRet = re.exec(workStr);
         if (!reRet) {
@@ -280,7 +350,7 @@ const analyzeFormulaStr = function (str, defaultItem = null) {
         if (reRet[1]) { // + - * /
             resultArr.push(reRet[1]);
         }
-        resultArr.push(analyzeFormulaStrSub(reRet[2], defaultItem));
+        resultArr.push(analyzeFormulaStrSub(reRet[2], opt_defaultItem));
         if (!reRet[3]) {
             break;
         }
@@ -318,10 +388,12 @@ function openTwitter(text, url, opt_hashtags = null, opt_via = null) {
 /**
  * 
  * @param {object} detailObj 
- * @param {object} statusObj キャラクターステータス
- * @param {object} enemyStatusObj 敵ステータス
- * @param {string} opt_element 元素
- * @returns {Array}
+ * @param {object} characterInput 
+ * @param {object} conditionInput 
+ * @param {object} optionInput 
+ * @param {object} statusInput 
+ * @param {string} opt_element 
+ * @returns {any[]}
  */
 function calculateDamageFromDetail(detailObj, characterInput, conditionInput, optionInput, statusInput, opt_element = null) {
     console.debug(calculateDamageFromDetail.name, detailObj, characterInput, conditionInput, optionInput, statusInput, opt_element);
@@ -337,19 +409,21 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
     let myステータス補正 = {};
     let my精度 = 0;
 
+    const constellation = statusInput['命ノ星座'];
+
     const statusObj = statusInput['ステータス'];
     const enemyStatusObj = statusInput['敵ステータス'];
 
     const myStatusChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_STATUS);
     const myTalentChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_TALENT);
 
-    const validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
+    let validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
 
     if (detailObj['除外条件']) {
         detailObj['除外条件'].forEach(condition => {
             if (isPlainObject(condition)) {
                 if (!(condition['名前'] in conditionInput.conditions)) return;
-                const number = checkConditionMatches(condition['名前'], validConditionValueArr);
+                const number = checkConditionMatches(condition['名前'], validConditionValueArr, constellation);
                 if (number > 0) {
                     ステータス条件取消(myステータス補正, condition['名前'], statusObj, validConditionValueArr, myStatusChangeDetailObjArr);
                     validConditionValueArr = validConditionValueArr.filter(p => p != condition && !p.startsWith(condition + '@'));
@@ -383,8 +457,9 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
                         case 'selectedIndex':   // for 甘雨+アモスの弓
                             const conditionObjArr = conditionInput.selectList.filter(s => s.name == condition['名前']);
                             if (conditionObjArr.length == 0) return;
-                            let curSelectedIndex = 0;  //FIXME
+                            const optionList = conditionObjArr[0].list;
                             let curSelectedValue = conditionInput.conditions[condition['名前']];
+                            let curSelectedIndex = optionList.indexOf(curSelectedValue);
                             let newSelectedIndex;
                             let newSelectedValue;
                             const re = new RegExp('([\\+\\-]?)(\\d+)');
@@ -392,14 +467,14 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
                             if (reRet) {
                                 if (reRet[1]) {
                                     if (reRet[1] == '+') {  // 加算
-                                        newSelectedIndex = Math.min(curSelectedIndex + Number(reRet[2]), optionElem.children.length - 1);
+                                        newSelectedIndex = Math.min(curSelectedIndex + Number(reRet[2]), optionList.length - 1);
                                     } else {    // 減算
                                         newSelectedIndex = Math.min(curSelectedIndex - Number(reRet[2]), 0);
                                     }
                                 } else {    // 直値
                                     newSelectedIndex = Number(reRet[2]);
                                 }
-                                newSelectedValue = optionElem.children[newSelectedIndex].textContent;
+                                newSelectedValue = optionList[newSelectedIndex].textContent;
                                 if (curSelectedIndex > 0) {
                                     let curCondition = condition['名前'] + '@' + curSelectedValue;
                                     if (validConditionValueArr.includes(curCondition)) {
@@ -408,7 +483,7 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
                                     myStatusChangeDetailObjArr.forEach(valueObj => {
                                         if (!valueObj['条件']) return;
                                         if (valueObj['対象']) return;   // 暫定
-                                        let number = checkConditionMatches(valueObj['条件'], [curCondition]);
+                                        let number = checkConditionMatches(valueObj['条件'], [curCondition], constellation);
                                         if (number == 0) return;
                                         let myNew数値 = valueObj['数値'];
                                         if (number != 1) {
@@ -430,7 +505,7 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
                                 myStatusChangeDetailObjArr.forEach(valueObj => {
                                     if (!valueObj['条件']) return;
                                     if (valueObj['対象']) return;   // 暫定
-                                    let number = checkConditionMatches(valueObj['条件'], [newCondition]);
+                                    let number = checkConditionMatches(valueObj['条件'], [newCondition], constellation);
                                     if (number == 0) return;
                                     let myNew数値 = valueObj['数値'];
                                     if (number != 1) {
@@ -488,7 +563,7 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
         myTalentChangeDetailObjArr.forEach(valueObj => {
             let number = null;
             if (valueObj['条件']) {
-                number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
+                number = checkConditionMatches(valueObj['条件'], validConditionValueArr, constellation);
                 if (number == 0) {
                     return;
                 }
@@ -560,7 +635,7 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
             let myNewValue = valueObj;
             let number = null;
             if (valueObj['条件']) {
-                number = checkConditionMatches(valueObj['条件'], validConditionValueArr);
+                number = checkConditionMatches(valueObj['条件'], validConditionValueArr, constellation);
                 if (number == 0) {
                     return;
                 }
@@ -615,7 +690,7 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
             damageDetailObj[CHANGE_KIND_STATUS].get('聖遺物セット').forEach(valueObj => {
                 if (!valueObj['条件']) return;
                 if (!valueObj['数値']) return;
-                if (checkConditionMatches(valueObj['条件'], [myCondition]) > 0) {
+                if (checkConditionMatches(valueObj['条件'], [myCondition], constellation) > 0) {
                     let myValue = calculateFormulaArray(statusObj, valueObj['数値'], valueObj['上限']);
                     if (!(valueObj['種類'] in myステータス補正)) {
                         myステータス補正[valueObj['種類']] = 0;
@@ -790,7 +865,7 @@ function calculateDamageFromDetail(detailObj, characterInput, conditionInput, op
 /**
  * ダメージ計算を行います
  * 
- * @param {Object} statusObj ステータス詳細
+ * @param {object} statusObj ステータス詳細
  * @param {number | string | Array} formula 計算式
  * @param {string []} buffArr バフリスト
  * @param {boolean} is会心Calc 会心計算要否
@@ -827,7 +902,7 @@ function calculateDamageFromDetailSub(statusObj, enemyStatusObj, formula, buffAr
         my非会心Result *= calculateEnemyDef(statusObj, enemyStatusObj, 防御無視);
     }
     if (is耐性補正Calc && 元素) {
-        my非会心Result *= calculateEnemyRes(元素, statusObj, enemyStatusObj);
+        my非会心Result *= calculateEnemyRes(元素, enemyStatusObj);
     }
     if (別枠乗算) {    // 別枠乗算 for 宵宮
         my非会心Result *= 別枠乗算 / 100;
@@ -850,12 +925,15 @@ function calculateDamageFromDetailSub(statusObj, enemyStatusObj, formula, buffAr
 
 /**
  * 
- * @param {Object} resultObj リザルト詳細
+ * @param {object} resultObj リザルト詳細
  * @param {string} condition 条件文字列
- * @param {Object} statusObj ステータス詳細
- * @param {Array<string>} validConditionValueArr 有効な条件
+ * @param {object} statusObj ステータス詳細
+ * @param {string[]} validConditionValueArr 有効な条件
+ * @param {object[]} statusChangeDetailObjArr 
  */
 function ステータス条件取消(resultObj, condition, statusObj, validConditionValueArr, statusChangeDetailObjArr) {
+    const constellation = statusObj['命ノ星座'];
+
     statusChangeDetailObjArr.forEach(valueObj => {
         if (valueObj['対象'] || !valueObj['数値'] || !valueObj['条件']) return;
 
@@ -872,7 +950,7 @@ function ステータス条件取消(resultObj, condition, statusObj, validCondi
         if (!isTarget) return;
 
         let multiplier = 1;
-        multiplier = checkConditionMatches(valueObj['条件'], validConditionValueArr);
+        multiplier = checkConditionMatches(valueObj['条件'], validConditionValueArr, constellation);
         if (multiplier > 0) {
             let workObj = JSON.parse(JSON.stringify(statusObj));    //　力技
             let myNew数値 = valueObj['数値'];
@@ -893,9 +971,10 @@ function ステータス条件取消(resultObj, condition, statusObj, validCondi
 
 /**
  * 
- * @param {Object} resultObj リザルト詳細
+ * @param {object} resultObj リザルト詳細
  * @param {string} condition 条件文字列
- * @param {Object} statusObj ステータス詳細
+ * @param {object} statusObj ステータス詳細
+ * @param {object[]} statusChangeDetailObjArr 
  */
 function ステータス条件追加(resultObj, condition, statusObj, statusChangeDetailObjArr) {
     statusChangeDetailObjArr.forEach(valueObj => {
@@ -949,7 +1028,7 @@ function isUseReference(formulaArr) {
 /**
  * ステータスを更新します
  * 
- * @param {Object} statusObj ステータス詳細
+ * @param {object} statusObj ステータス詳細
  * @param {string} kind 種類
  * @param {number | string | Array} formulaArr 計算式
  * @param {number | string | Array} opt_max 上限
@@ -975,7 +1054,7 @@ function updateStatus(statusObj, kind, formulaArr, opt_max = null) {
     } else {
         switch (kind) {
             case '自元素ダメージバフ':
-                statusName = 選択中キャラクターデータVar['元素'] + '元素ダメージバフ';
+                statusName = statusObj['元素'] + '元素ダメージバフ';
                 break;
             case '全元素ダメージバフ':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
@@ -987,7 +1066,7 @@ function updateStatus(statusObj, kind, formulaArr, opt_max = null) {
                 });
                 return;
             case '敵自元素耐性':
-                statusName = '敵' + 選択中キャラクターデータVar['元素'] + '元素耐性';
+                statusName = '敵' + statusObj['元素'] + '元素耐性';
                 break;
             case '敵全元素耐性':
                 ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
@@ -1016,6 +1095,73 @@ function updateStatus(statusObj, kind, formulaArr, opt_max = null) {
     console.debug(updateStatus.name, null, kind, formulaArr, '=>', result);
 }
 
+function addValueToObject(obj, key, value) {
+    if (!(key in obj)) obj[key] = 0;
+    obj[key] += value;
+}
+
+/**
+ * 
+ * @param {object} statusObj 
+ * @param {string} kind 
+ * @param {*} formulaArr 
+ * @param {*} opt_max 
+ * @returns {object}
+ */
+function calculateStatusDiff(statusObj, kind, formulaArr, opt_max = null) {
+    const result = {};
+
+    let value = calculateFormulaArray(statusObj, formulaArr, opt_max);
+    if (!isNumber(value)) {
+        console.error(statusObj, kind, formulaArr, value);
+    }
+
+    let stat = kind;
+    let target = result;
+    if (kind == 'HP') {
+        stat = 'HP上限';
+    } else if (kind.indexOf('.') != -1) {
+        const splittedArr = kind.split('.');
+        stat = splittedArr[0];
+        for (let i = 1; i < splittedArr.length; i++) {
+            if (!(splittedArr[i] in target)) {
+                target[splittedArr[i]] = {};
+            }
+            target = target[splittedArr[i]];
+        }
+    } else {
+        switch (kind) {
+            case '自元素ダメージバフ':
+                stat = statusObj['元素'] + '元素ダメージバフ';
+                break;
+            case '全元素ダメージバフ':
+                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                    stat = entry + '元素ダメージバフ';
+                    addValueToObject(target, stat, value);
+                });
+                return result;
+            case '敵自元素耐性':
+                stat = '敵' + statusObj['元素'] + '元素耐性';
+                break;
+            case '敵全元素耐性':
+                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                    stat = '敵' + entry + '元素耐性';
+                    addValueToObject(target, stat, value);
+                });
+                return result;
+            case '全元素耐性':
+                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                    stat = entry + '元素耐性';
+                    addValueToObject(target, stat, value);
+                });
+                return result;
+        }
+    }
+    addValueToObject(target, stat, value);
+    console.debug(calculateStatusDiff.name, null, kind, formulaArr, '=>', result);
+    return result;
+}
+
 /**
  * 指定の条件が適用可能かチェックします
  * {条件名}
@@ -1026,6 +1172,7 @@ function updateStatus(statusObj, kind, formulaArr, opt_max = null) {
  * 
  * @param {string} conditionStr チェックしたい条件
  * @param {string []} validConditionValueArr 有効な条件値の配列
+ * @param {number} constellation 命ノ星座
  * @returns {number} 0:アンマッチ/1以上:マッチ(=倍率)
  */
 const checkConditionMatches = function (conditionStr, validConditionValueArr, constellation) {
@@ -1103,9 +1250,14 @@ function checkConditionMatchesSub(conditionStr, validConditionValueArr, constell
     return 0;   // アンマッチ
 }
 
+/**
+ * 
+ * @param {object} conditionInput 
+ * @returns {string[]}
+ */
 function makeValidConditionValueArr(conditionInput) {
     if (!conditionInput) return [];
-    let result = [];
+    const result = [];
     const inputList = conditionInput.inputList;
     if (inputList) {
         conditionInput.inputList.forEach(entry => {
@@ -1126,6 +1278,12 @@ function makeValidConditionValueArr(conditionInput) {
     return result;
 }
 
+/**
+ * 
+ * @param {object} characterInput 
+ * @param {string} changeKind 
+ * @returns {string[]}
+ */
 function getChangeDetailObjArr(characterInput, changeKind) {
     let result = [];
     if (!characterInput) return result;
@@ -1184,7 +1342,8 @@ function getChangeDetailObjArr(characterInput, changeKind) {
 /**
  * 防御補正を計算します
  * 
- * @param {Object} statusObj ステータス詳細
+ * @param {object} statusObj ステータス詳細
+ * @param {object} enemyStatusObj 敵ステータス詳細
  * @param {number} opt_ignoreDef 防御無視
  * @returns {number} 防御補正
  */
@@ -1201,12 +1360,12 @@ function calculateEnemyDef(statusObj, enemyStatusObj, opt_ignoreDef = 0) { // �
 /**
  * 元素耐性補正を計算します
  * 
- * @param {Object} statusObj ステータス詳細
  * @param {string} element 元素
+ * @param {object} statusObj ステータス詳細
  * @returns {number} 元素耐性補正
  */
-function calculateEnemyRes(element, statusObj, enemyStatusObj) {
-    let result = enemyStatusObj[element + (element != '物理' ? '元素' : '') + '耐性'];
+function calculateEnemyRes(element, statusObj) {
+    let result = statusObj[element + (element != '物理' ? '元素' : '') + '耐性'];
     if (result < 0) {
         result = 100 - result / 2;
     } else if (result < 75) {
@@ -1256,7 +1415,7 @@ function calculate固定値系元素反応ダメージ(reaction, element, status
     }
     let result = getValueByLevel(level, 元素反応MasterVar[element][reaction]['数値']);
     result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
-    result *= calculateEnemyRes(dmgElement, statusObj, enemyStatusObj);
+    result *= calculateEnemyRes(dmgElement, enemyStatusObj);
     return result;
 }
 
@@ -1276,6 +1435,12 @@ function calculate結晶シールド吸収量(element, statusObj) {
     return result;
 }
 
+/**
+ * 
+ * @param {number} level 
+ * @param {object} valueObj 
+ * @returns {number}
+ */
 function getValueByLevel(level, valueObj) {
     if (level in valueObj) {
         return valueObj[level];
@@ -1298,12 +1463,13 @@ function getValueByLevel(level, valueObj) {
  * @param {number} damage ダメージ
  * @param {string} element 元素
  * @param {object} statusObj キャラクターステータス
+ * @param {object} enemyStatusObj 敵ステータス
  * @returns {number} 被ダメージ
  */
 function calculate被ダメージ(damage, element, statusObj, enemyStatusObj) {
-    let def = enemyStatusObj['防御力'];
-    let enemyLevel = enemyStatusObj['敵レベル'];
-    let dmgReduction = statusObj['ダメージ軽減'];
+    const def = enemyStatusObj['防御力'];
+    const enemyLevel = enemyStatusObj['敵レベル'];
+    const dmgReduction = statusObj['ダメージ軽減'];
     let res = statusObj[element == '物理' ? '物理耐性' : element + '元素耐性'];
     if (res < 0) {
         res = 100 - res / 2;

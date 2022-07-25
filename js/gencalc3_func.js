@@ -1,4 +1,4 @@
-//// @ts-check
+// @ts-check
 
 ///<reference path="./gencalc3_var.js"/>
 ///<reference path="./gencalc3_core.js"/>
@@ -219,6 +219,18 @@ function getLevelStr(ascension, level) {
     return level + 突破レベルレベルARRAY[ascension][0] == level ? '+' : '';
 }
 
+/**
+ * 変化の起点
+ * - キャラクター
+ * - 突破レベル
+ * - 命ノ星座
+ * - 通常攻撃レベル
+ * - 元素スキルレベル
+ * - 元素爆発レベル
+ * 
+ * @param {object} characterInput 
+ * @returns 
+ */
 function makeDamageDetailObjCharacter(characterInput) {
     const name = characterInput.name;
     const characterMaster = characterInput.master;
@@ -368,6 +380,14 @@ function makeDamageDetailObjCharacter(characterInput) {
     return result;
 }
 
+/**
+ * 変化の起点
+ * - 武器
+ * - 武器精錬ランク
+ * 
+ * @param {object} characterInput 
+ * @returns 
+ */
 function makeDamageDetailObjWeapon(characterInput) {
     const name = characterInput.weapon;
     const weaponMaster = characterInput.weaponMaster;
@@ -417,6 +437,13 @@ function makeDamageDetailObjWeapon(characterInput) {
     return result;
 }
 
+/**
+ * 変化の起点
+ * - 聖遺物セット効果
+ * 
+ * @param {object} characterInput 
+ * @returns 
+ */
 function makeDamageDetailObjArtifactSet(characterInput) {
     const result = [];
 
@@ -471,99 +498,99 @@ function makeDamageDetailObjArtifactSet(characterInput) {
 
 /**
  * 
- * @param {Object} talentDataObj 
+ * @param {object} talentDataObj 
  * @param {string} level 天賦レベル
  * @param {string} defaultKind デフォルト種類
  * @param {string} defaultElement デフォルト元素
- * @param {*} statusChangeArr 
- * @param {*} talentChangeArr 
+ * @param {any[]} statusChangeArr 
+ * @param {any[]} talentChangeArr 
  * @param {string} inputCategory 
- * @returns {Array}
+ * @returns {any[]}
  */
 const makeTalentDetailArray = function (talentDataObj, level, defaultKind, defaultElement, statusChangeArr, talentChangeArr, inputCategory) {
     let resultArr = [];
-    if ('詳細' in talentDataObj) {
-        talentDataObj['詳細'].forEach(detailObj => {
-            let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
-            let my対象 = null;
-            if (my種類.indexOf('.') != -1) {
-                my対象 = my種類.substring(my種類.indexOf('.') + 1);
-                my種類 = my種類.substring(0, my種類.indexOf('.'));
-            } else if ('対象' in detailObj) {
-                my対象 = detailObj['対象'];
+    if (!('詳細' in talentDataObj)) return resultArr;
+
+    talentDataObj['詳細'].forEach(detailObj => {
+        let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
+        let my対象 = null;
+        if (my種類.indexOf('.') != -1) {
+            my対象 = my種類.substring(my種類.indexOf('.') + 1);
+            my種類 = my種類.substring(0, my種類.indexOf('.'));
+        } else if ('対象' in detailObj) {
+            my対象 = detailObj['対象'];
+        }
+        let my数値 = null;
+        if ('数値' in detailObj) {
+            my数値 = detailObj['数値'];
+            if (isFinite(my数値) || isString(my数値)) {
+                // nop
+            } else if (isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
+                my数値 = my数値[level];
+            } else {
+                console.error(talentDataObj, level, defaultKind, defaultElement, my数値);
             }
-            let my数値 = null;
-            if ('数値' in detailObj) {
-                my数値 = detailObj['数値'];
-                if (isFinite(my数値) || isString(my数値)) {
-                    // nop
-                } else if (isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
-                    my数値 = my数値[level];
-                } else {
-                    console.error(talentDataObj, level, defaultKind, defaultElement, my数値);
-                }
-                if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
-                    my数値 = analyzeFormulaStr(my数値, '攻撃力');
-                } else {
-                    my数値 = analyzeFormulaStr(my数値, my種類);
-                }
+            if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
+                my数値 = analyzeFormulaStr(my数値, '攻撃力');
+            } else {
+                my数値 = analyzeFormulaStr(my数値, my種類);
             }
-            let my条件 = null;
-            if ('条件' in detailObj) {
-                my条件 = detailObj['条件'];
-                if (isPlainObject(my条件) && level && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
-                    my条件 = my条件[level];
-                }
+        }
+        let my条件 = null;
+        if ('条件' in detailObj) {
+            my条件 = detailObj['条件'];
+            if (isPlainObject(my条件) && level && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
+                my条件 = my条件[level];
             }
-            let my上限 = null;
-            if ('上限' in detailObj) {
-                my上限 = detailObj['上限'];
-                if (isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
-                    my上限 = my上限[level];
-                }
-                my上限 = analyzeFormulaStr(my上限);
+        }
+        let my上限 = null;
+        if ('上限' in detailObj) {
+            my上限 = detailObj['上限'];
+            if (isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
+                my上限 = my上限[level];
             }
-            let resultObj = {
-                名前: detailObj['名前'],
-                種類: my種類,
-                元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
-                数値: my数値,
-                条件: my条件,
-                対象: my対象,
-                上限: my上限,
-                HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
-                ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
-                元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
-                除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
-                適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
+            my上限 = analyzeFormulaStr(my上限);
+        }
+        let resultObj = {
+            名前: detailObj['名前'],
+            種類: my種類,
+            元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
+            数値: my数値,
+            条件: my条件,
+            対象: my対象,
+            上限: my上限,
+            HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
+            ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
+            元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
+            除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
+            適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
+        }
+        if (statusChangeArr != null) {
+            if (resultObj['種類'] in ステータスTEMPLATE
+                || resultObj['種類'].endsWith('%')
+                || new RegExp('[自全].+バフ').exec(resultObj['種類'])
+                || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
+                || resultObj['種類'] == '別枠乗算'
+                || ['継続時間', '発動回数', 'クールタイム', '使用回数'].includes(my種類)
+            ) {
+                resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+                statusChangeArr.push(resultObj);
+                return;
             }
-            if (statusChangeArr != null) {
-                if (resultObj['種類'] in ステータスTEMPLATE
-                    || resultObj['種類'].endsWith('%')
-                    || new RegExp('[自全].+バフ').exec(resultObj['種類'])
-                    || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
-                    || resultObj['種類'] == '別枠乗算'
-                    || ['継続時間', '発動回数', 'クールタイム', '使用回数'].includes(my種類)
-                ) {
-                    resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
-                    statusChangeArr.push(resultObj);
-                    return;
-                }
+        }
+        if (talentChangeArr != null) {
+            if (resultObj['種類'].endsWith('強化')
+                || resultObj['種類'].endsWith('付与')
+                || resultObj['種類'].endsWith('アップ')
+                || resultObj['種類'] == '防御無視' ||
+                resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
+                resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+                talentChangeArr.push(resultObj);
+                return;
             }
-            if (talentChangeArr != null) {
-                if (resultObj['種類'].endsWith('強化')
-                    || resultObj['種類'].endsWith('付与')
-                    || resultObj['種類'].endsWith('アップ')
-                    || resultObj['種類'] == '防御無視' ||
-                    resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
-                    resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
-                    talentChangeArr.push(resultObj);
-                    return;
-                }
-            }
-            resultArr.push(resultObj);
-        });
-    }
+        }
+        resultArr.push(resultObj);
+    });
     return resultArr;
 }
 
@@ -767,7 +794,7 @@ function calculateStatus(characterInput, artifactDetailInput, conditionInput, op
         } else {
             let toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
             if (!(toStat in result)) return;
-            result[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension, level);
+            result[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension);
         }
     });
 
@@ -785,35 +812,6 @@ function calculateStatus(characterInput, artifactDetailInput, conditionInput, op
         });
     }
 
-    const damageDetailObj = キャラクターダメージ詳細ObjMapVar.get(characterInput.name);
-    if (damageDetailObj) {
-        const validConditionArr = makeValidConditionValueArr(conditionInput);
-        if (conditionInput) {
-            damageDetailObj['ステータス変更系詳細'].filter(s => s['条件']).forEach(detailObj => {
-                if (!checkConditionMatches(detailObj['条件'], validConditionArr, result['命ノ星座'])) return;
-                if (detailObj['種類'] in result) {
-                    const statValue = calculateFormulaArray(result, detailObj['数値'], detailObj['上限']);
-                    result[detailObj['種類']] += statValue;
-                } else {
-                    console.error(detailObj);
-                }
-            });
-        }
-    }
-
-    if ('2セット効果' in characterInput['聖遺物セット効果'][0].master) {
-
-    }
-    if (characterInput['聖遺物セット効果'][0].name == characterInput['聖遺物セット効果'][1].name) {
-        if ('4セット効果' in characterInput['聖遺物セット効果'][0].master) {
-
-        }
-    } else {
-        if ('2セット効果' in characterInput['聖遺物セット効果'][1].master) {
-
-        }
-    }
-
     result['HP上限'] += result['基礎HP'];
     result['HP上限'] += result['基礎HP'] * result['HP%'] / 100;
     result['HP上限'] += result['HP+'];
@@ -826,8 +824,52 @@ function calculateStatus(characterInput, artifactDetailInput, conditionInput, op
     result['攻撃力'] += result['基礎攻撃力'] * result['攻撃力%'] / 100;
     result['攻撃力'] += result['攻撃力+'];
 
+    const damageDetailObjArr = getDamageDetailObjArr(characterInput);
+    damageDetailObjArr.forEach(damageDetailObj => {
+        if (!damageDetailObj) return;
+        const validConditionValueArr = makeValidConditionValueArr(conditionInput);
+        if (conditionInput) {
+            damageDetailObj[CHANGE_KIND_STATUS].filter(s => s['条件']).forEach(detailObj => {
+                const checkRet = checkConditionMatches(detailObj['条件'], validConditionValueArr, constellation);
+                if (checkRet == 0) return;
+                if (detailObj['種類'] in result) {
+                    let formulaArr = detailObj['数値'];
+                    if (checkRet != 1) formulaArr = formulaArr.concat(['*', checkRet]);
+                    const statValue = calculateFormulaArray(result, formulaArr, detailObj['上限']);
+                    result[detailObj['種類']] += statValue;
+                } else {
+                    console.error(detailObj);
+                }
+            });
+        }
+    });
+
     console.debug(calculateStatus.name, result);
     return result;
+}
+
+/**
+ * 
+ * @param {object} characterInput 
+ * @returns {object[]}
+ */
+function getDamageDetailObjArr(characterInput) {
+    const damageDetailObjArr = [];
+    damageDetailObjArr.push(キャラクターダメージ詳細ObjMapVar.get(characterInput.name));
+    damageDetailObjArr.push(武器ダメージ詳細ObjMapVar.get(characterInput.weapon));
+    if ('2セット効果' in characterInput['聖遺物セット効果'][0].master) {
+        damageDetailObjArr.push(聖遺物セット効果ダメージ詳細ObjMapVar.get(characterInput['聖遺物セット効果'][0]['名前']['2セット効果']));
+    }
+    if (characterInput['聖遺物セット効果'][0].name == characterInput['聖遺物セット効果'][1].name) {
+        if ('4セット効果' in characterInput['聖遺物セット効果'][0].master) {
+            damageDetailObjArr.push(聖遺物セット効果ダメージ詳細ObjMapVar.get(characterInput['聖遺物セット効果'][0]['名前']['4セット効果']));
+        }
+    } else {
+        if ('2セット効果' in characterInput['聖遺物セット効果'][1].master) {
+            damageDetailObjArr.push(聖遺物セット効果ダメージ詳細ObjMapVar.get(characterInput['聖遺物セット効果'][1]['名前']['2セット効果']));
+        }
+    }
+    return damageDetailObjArr;
 }
 
 /**
@@ -852,11 +894,23 @@ function getStatValueByLevel(statObj, ascension, level) {
     return result;
 }
 
+/**
+ * 
+ * @param {object} statObj 
+ * @param {number} ascension 
+ * @returns {number}
+ */
 function getPropertyValueByLevel(statObj, ascension) {
     const lowLevel = 突破レベルレベルARRAY[ascension][0];
-    return lowValue = statObj[lowLevel + '+'];
+    return statObj[lowLevel + '+'];
 }
 
+/**
+ * 
+ * @param {object[]} group 
+ * @param {object} active 
+ * @param {boolean} opt_invisible 
+ */
 function switchActiveEntry(group, active, opt_invisible = true) {
     group.forEach(entry => {
         if (entry != active) entry.isVisible = false;
@@ -868,9 +922,21 @@ function switchActiveEntry(group, active, opt_invisible = true) {
     }
 }
 
+/**
+ * ダメージ計算を実施します.
+ * 
+ * @param {object} characterInput 
+ * @param {object} conditionInput 
+ * @param {object} optionInput 
+ * @param {object} statusInput 
+ * @param {object} calculationResult 
+ */
 function calculateResult(characterInput, conditionInput, optionInput, statusInput, calculationResult) {
     const characterMaster = characterInput.master;
 
+    const constellation = statusInput['命ノ星座'];
+
+    // 元素反応を計算します
     const reactionResult = JSON.parse(JSON.stringify(元素反応TEMPLATE));
     const reactionMaster = 元素反応MasterVar[characterMaster['元素']];
     Object.keys(reactionMaster).forEach(reaction => {
@@ -895,9 +961,9 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
             }
         });
     });
-    console.debug(reactionResult);
     calculationResult['元素反応'] = reactionResult;
 
+    // 戦闘天賦およびその他のダメージを計算します
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
 
     const talentDetailArrObj = キャラクターダメージ詳細ObjMapVar.get(characterMaster.名前);
@@ -909,11 +975,14 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
             if (('特殊' + category) in talentDetailArrObj) {
                 const workObj = talentDetailArrObj['特殊' + category];
                 console.log(calculateResult.name, workObj, validConditionValueArr);
-                if (checkConditionMatches(workObj['条件'], validConditionValueArr)) {
+                if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation)) {
                     talentDetailArr = workObj['詳細'];
                 }
             }
             talentDetailArr.forEach(talentDetail => {
+                if (talentDetail['条件'] && !checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation)) {
+                    return;
+                }
                 const resultArr = calculateDamageFromDetail(
                     talentDetail,
                     characterInput,
@@ -928,6 +997,9 @@ function calculateResult(characterInput, conditionInput, optionInput, statusInpu
             if (!(category in talentDetailArrObj)) return;
             const talentDetailArr = talentDetailArrObj[category];
             talentDetailArr.forEach(talentDetail => {
+                if (talentDetail['条件'] && !checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation)) {
+                    return;
+                }
                 const resultArr = calculateDamageFromDetail(
                     talentDetail,
                     characterInput,
