@@ -18,29 +18,6 @@ function isPlainObject(value) {
 /**
  * 
  * @param {string} name 
- * @returns {string}
- */
-function getDisplayName(name) {
-    if (元素ステータス_ダメージARRAY.includes(name) || ダメージバフARRAY.includes(name)) {
-        name = name.replace(/バフ$/, '');
-    } else if (聖遺物メイン効果_空の杯ARRAY.includes(name)) {
-        name = name.replace(/バフ$/, '');
-    }
-    if (LanguageSelectVm && LanguageSelectVm.selected !== 'ja-jp') {
-        if (辞書MasterVar && (name in 辞書MasterVar)) {
-            if (辞書MasterVar[name][LanguageSelectVm.selected]) {
-                name = 辞書MasterVar[name][LanguageSelectVm.selected];
-            } else if (LanguageSelectVm.selected !== 'en-us' && 辞書MasterVar[name]['en-us']) {
-                name = 辞書MasterVar[name]['en-us'];
-            }
-        }
-    }
-    return name;
-}
-
-/**
- * 
- * @param {string} name 
  * @param {number} value 
  * @returns {number | string}
  */

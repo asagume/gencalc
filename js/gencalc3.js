@@ -3,6 +3,7 @@
 ///<reference path="./gencalc3_var.js"/>
 ///<reference path="./gencalc3_core.js"/>
 ///<reference path="./gencalc3_func.js"/>
+///<reference path="./gencalc3_sub.js"/>
 
 async function onLoad(searchParams) {
     if (localStorage['キャラクター所持状況']) {
@@ -28,8 +29,6 @@ async function onLoad(searchParams) {
         'data/TeamOptionMaster.json',
         'data/OptionMaster1.json',
         'data/OptionMaster2.json',
-        'data/HoYoDictionary.json',
-        'data/LocalDictionary.json',
         'data/HoYoDictionary.json',
         'data/LocalDictionary.json'
     ].map(s => fetch(s).then(resp => resp.json())));
@@ -58,6 +57,58 @@ async function onLoad(searchParams) {
         }
     });
 
+    const characterInput = JSON.parse(JSON.stringify(CHARACTER_INPUT_TEMPLATE));
+    characterInput.character = getCharacterByBirthday();
+    characterInput.characterMaster = await getCharacterMaster(characterInput.character);
+    const recommendationList = makeRecommendationList(characterInput.characterMaster);
+    const recommendation = recommendationList[0];
+    const artifactDetailInput = JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE));
+    const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation[1]);
+
+    initialSetupLanguageSelect();
+    initialSetupCharacterSelect(characterInput);
+    initialSetupWeaponSelect(characterInput);
+    initialSetupConditionInput(characterInput, conditionInput);
+    initialSetupArtifactDetailInput(characterInput, artifactDetailInput);
+    initialSetupArtifactSetSelect(characterInput);
+    initialSetupCharacterInput(characterInput, recommendation, recommendationList);
+    initialSetupStatusInput();
+    initialSetupCalcurationResult();
+    initialSetupOptionInput();
+    initialSetupCharacterInformation();
+    initialSetupCharacterOwnList();
+    initialSetupWeaponOwnList();
+    initialSetupStorageControl();
+
+    Pane4Group.add(WeaponSelectVm);
+    Pane4Group.add(ArtifactSetSelectVm);
+    Pane4Group.add(ArtifactDetailInputVm);
+
+    const Pane6Toggle = {
+        data() {
+            return {
+                targets: [null, ConditionInputVm, StatusInputVm, OptionInputVm]
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            checked: function (index) {
+                return this.targets[index].isVisible;
+            },
+            onClick: function (event) {
+                const index = Number(event.target.value);
+                console.log(index);
+                this.targets[index].isVisible = !this.targets[index].isVisible;
+            }
+        }
+    };
+    Pane6ToggleVm = Vue.createApp(Pane6Toggle).mount('#pane6-toggle');
+}
+
+function initialSetupLanguageSelect() {
     const LanguageSelect = {
         data() {
             return {
@@ -91,53 +142,14 @@ async function onLoad(searchParams) {
         }
     };
     LanguageSelectVm = Vue.createApp(LanguageSelect).mount('#language-select');
-
-    initialSetupCharacterSelect();
-    initialSetupCalcurationResult();
-    initialSetupStatusInput();
-    initialSetupArtifactDetailInput();
-    initialSetupArtifactSetSelect();
-    initialSetupWeaponSelect();
-    initialSetupCharacterInput();
-    initialSetupOptionInput();
-    initialSetupConditionInput();
-    initialSetupCharacterInformation();
-    initialSetupCharacterOwnList();
-    initialSetupWeaponOwnList();
-
-    Pane4Group.add(WeaponSelectVm);
-    Pane4Group.add(ArtifactSetSelectVm);
-    Pane4Group.add(ArtifactDetailInputVm);
-
-    const Pane6Toggle = {
-        data() {
-            return {
-                targets: [null, ConditionInputVm, StatusInputVm, OptionInputVm]
-            }
-        },
-        methods: {
-            displayName: function (name) {
-                return getDisplayName(name);
-            },
-            checked: function (index) {
-                return this.targets[index].isVisible;
-            },
-            onClick: function (event) {
-                const index = Number(event.target.value);
-                console.log(index);
-                this.targets[index].isVisible = !this.targets[index].isVisible;
-            }
-        }
-    };
-    Pane6ToggleVm = Vue.createApp(Pane6Toggle).mount('#pane6-toggle');
 }
 
-function initialSetupCharacterSelect() {
+function initialSetupCharacterSelect(characterInput) {
     const CharacterSelect = {
         data() {
             return {
                 isVisible: false,
-                selected: null,
+                selected: characterInput.character,
                 list: null,
                 filters: {
                     vision: {
@@ -212,15 +224,15 @@ function initialSetupCharacterSelect() {
     CharacterSelectVm = Vue.createApp(CharacterSelect).mount('#character-select');
 }
 
-async function initialSetupCharacterInput(name) {
+async function initialSetupCharacterInput(characterInput, recommendation, recommendationList) {
     const CharacterInput = {
         data() {
             return {
-                name: null,
-                master: CHARACTER_MASTER_DUMMY,
-                突破レベル: 6,
-                レベル: 90,
-                命ノ星座: 0,
+                character: characterInput.character,
+                characterMaster: characterInput.characterMaster,
+                突破レベル: characterInput.突破レベル,
+                レベル: characterInput.レベル,
+                命ノ星座: characterInput.命ノ星座,
                 命ノ星座Option: {
                     max: 6
                 },
@@ -236,14 +248,14 @@ async function initialSetupCharacterInput(name) {
                 元素爆発レベルOption: {
                     max: 13
                 },
-                weapon: null,
-                weaponMaster: WEAPON_MASTER_DUMMY,
-                武器突破レベル: 6,
+                weapon: characterInput.weapon,
+                weaponMaster: characterInput.weaponMaster,
+                武器突破レベル: characterInput.武器突破レベル,
                 武器突破レベルOption: {
                     max: 6
                 },
-                武器レベル: 90,
-                武器精錬ランク: 1,
+                武器レベル: characterInput.武器レベル,
+                武器精錬ランク: characterInput.武器精錬ランク,
                 武器精錬ランクOption: {
                     max: 5
                 },
@@ -258,37 +270,30 @@ async function initialSetupCharacterInput(name) {
                     }
                 ],
                 IMG_SRC_DUMMY: IMG_SRC_DUMMY,
-                おすすめセット: null,
+                おすすめセット: recommendation,
                 おすすめセットOption: {
                     isOpen: false,
-                    list: []
+                    list: recommendationList
                 },
-                saveName: '',
+                buildName: '',
                 isChanged: false
             }
         },
-        created() {
-        },
-        mounted() {
-            const character = getCharacterByBirthday();
-            setupCharacterInput(character, this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm);
-            CharacterSelectVm.selected = character;
-        },
         computed: {
             colorClass: function () {
-                return getColorClass(this.master);
+                return getColorClass(this.characterMaster);
             },
             bgColorClass: function () {
-                return getBgColorClass(this.master);
+                return getBgColorClass(this.characterMaster);
             },
             starBackgroundUrl: function () {
-                return getStarBackgroundUrl(this.master);
+                return getStarBackgroundUrl(this.characterMaster);
             },
             weaponStarBackgroundUrl: function () {
                 return getStarBackgroundUrl(this.weaponMaster);
             },
             elementImgSrc: function () {
-                return getElementImgSrc(this.master);
+                return getElementImgSrc(this.characterMaster);
             },
             ascensionRange: function () {
                 const max = 突破レベルレベルARRAY.length + 1;
@@ -331,90 +336,19 @@ async function initialSetupCharacterInput(name) {
                 return 0;
             },
             saveDisabled: function () {
-                if (!this.saveName) return true;
+                if (!this.buildName) return true;
                 return !this.isChanged;
             },
             removeDisabled: function () {
-                if (!this.saveName) return true;
-                let tempKey = '構成_' + this.name;
-                if (this.saveName != ('あなたの' + this.name)) {
-                    tempKey += '_' + this.saveName;
+                if (!this.buildName) return true;
+                let tempKey = '構成_' + this.character;
+                if (this.buildName != ('あなたの' + this.character)) {
+                    tempKey += '_' + this.buildName;
                 }
                 if (tempKey in localStorage) {
                     return false;
                 }
                 return true;
-            }
-        },
-        methods: {
-            displayName: function (name) {
-                return getDisplayName(name);
-            },
-            characterOnClick: function () {
-                CharacterSelectVm.isVisible = !CharacterSelectVm.isVisible;
-            },
-            ascensionOnChange: function () {
-                const min = this.levelRange[0];
-                const max = this.levelRange[this.levelRange.length - 1];
-                if (this.レベル < min) {
-                    this.レベル = min;
-                } else if (this.レベル > max) {
-                    this.レベル = max;
-                }
-            },
-            weaponAscensionOnChange: function () {
-                const min = this.weaponLevelRange[0];
-                const max = this.weaponLevelRange[this.weaponLevelRange.length - 1];
-                if (this.武器レベル < min) {
-                    this.武器レベル = min;
-                } else if (this.武器レベル > max) {
-                    this.武器レベル = max;
-                }
-            },
-            weaponOnClick: function () {
-                switchActiveEntry(Pane4Group, WeaponSelectVm);
-            },
-            artifactSetOnClick: function (index) {
-                if (ArtifactSetSelectVm.isVisible) {
-                    if (ArtifactSetSelectVm.index == index) {
-                        ArtifactSetSelectVm.isVisible = false;
-                    } else {
-                        ArtifactSetSelectVm.index = index;
-                    }
-                } else {
-                    ArtifactSetSelectVm.isVisible = true;
-                    ArtifactSetSelectVm.index = index;
-                }
-                if (ArtifactSetSelectVm.isVisible) {
-                    WeaponSelectVm.isVisible = false;
-                }
-            },
-            classArtifactSetSelected: function (index) {
-                if (ArtifactSetSelectVm && ArtifactSetSelectVm.isVisible && index == ArtifactSetSelectVm.index) {
-                    return 'selected';
-                }
-                return '';
-            },
-            artifactDetailOnClick: function () {
-                switchActiveEntry(Pane4Group, ArtifactDetailInputVm);
-            },
-            normalAttackOnClick: function () {
-                CharacterInformationVm.controlVisible('通常攻撃');
-            },
-            elementalSkillOnClick: function () {
-                CharacterInformationVm.controlVisible('元素スキル');
-            },
-            elementalBurstOnClick: function () {
-                CharacterInformationVm.controlVisible('元素爆発');
-            },
-            characterInfoOnClick: function () {
-                CharacterInformationVm.controlVisible();
-            },
-            saveOnClick: function () {
-                if (!saveName) return;
-            },
-            removeOnClick: function () {
-                if (!saveName) return;
             }
         },
         watch: {
@@ -438,7 +372,7 @@ async function initialSetupCharacterInput(name) {
             命ノ星座: {
                 handler: function (newVal, oldVal) {
                     const constellation = newVal;
-                    const characterMaster = this.master;
+                    const characterMaster = this.characterMaster;
                     let maxSkillLevel = 10;
                     let maxBurstLevel = 10;
                     let mySkillName = characterMaster.元素スキル.名前;
@@ -507,39 +441,115 @@ async function initialSetupCharacterInput(name) {
                 },
                 deep: true
             }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            displayBuildName: function (name) {
+                return getDisplayBuildName(name);
+            },
+            characterOnClick: function () {
+                CharacterSelectVm.isVisible = !CharacterSelectVm.isVisible;
+            },
+            ascensionOnChange: function () {
+                const min = this.levelRange[0];
+                const max = this.levelRange[this.levelRange.length - 1];
+                if (this.レベル < min) {
+                    this.レベル = min;
+                } else if (this.レベル > max) {
+                    this.レベル = max;
+                }
+            },
+            weaponAscensionOnChange: function () {
+                const min = this.weaponLevelRange[0];
+                const max = this.weaponLevelRange[this.weaponLevelRange.length - 1];
+                if (this.武器レベル < min) {
+                    this.武器レベル = min;
+                } else if (this.武器レベル > max) {
+                    this.武器レベル = max;
+                }
+            },
+            weaponOnClick: function () {
+                switchActiveEntry(Pane4Group, WeaponSelectVm);
+            },
+            artifactSetOnClick: function (index) {
+                if (ArtifactSetSelectVm.isVisible) {
+                    if (ArtifactSetSelectVm.index == index) {
+                        ArtifactSetSelectVm.isVisible = false;
+                    } else {
+                        ArtifactSetSelectVm.index = index;
+                    }
+                } else {
+                    ArtifactSetSelectVm.isVisible = true;
+                    ArtifactSetSelectVm.index = index;
+                }
+                if (ArtifactSetSelectVm.isVisible) {
+                    WeaponSelectVm.isVisible = false;
+                }
+            },
+            classArtifactSetSelected: function (index) {
+                if (ArtifactSetSelectVm && ArtifactSetSelectVm.isVisible && index == ArtifactSetSelectVm.index) {
+                    return 'selected';
+                }
+                return '';
+            },
+            artifactDetailOnClick: function () {
+                switchActiveEntry(Pane4Group, ArtifactDetailInputVm);
+            },
+            normalAttackOnClick: function () {
+                CharacterInformationVm.controlVisible('通常攻撃');
+            },
+            elementalSkillOnClick: function () {
+                CharacterInformationVm.controlVisible('元素スキル');
+            },
+            elementalBurstOnClick: function () {
+                CharacterInformationVm.controlVisible('元素爆発');
+            },
+            characterInfoOnClick: function () {
+                CharacterInformationVm.controlVisible();
+            },
+            saveOnClick: function () {
+                if (!this.buildName) return;
+            },
+            removeOnClick: function () {
+                if (!this.buildName) return;
+            }
         }
     }
     CharacterInputVm = Vue.createApp(CharacterInput).mount('#character-input');
 }
 
-async function initialSetupWeaponSelect() {
+async function initialSetupWeaponSelect(weaponType, weapon, weaponMaster) {
     const WeaponSelect = {
         data() {
             return {
                 isVisible: false,
-                type: null,
-                selected: null,
-                master: null
+                type: weaponType,
+                selected: weapon,
+                weaponMaster: weaponMaster
             }
         },
         computed: {
             list: function () {
                 if (!this.type) return [];
                 const result = [];
-                Object.keys(武器MasterVar[this.type]).forEach(key => {
-                    result.push({
-                        name: key,
-                        master: 武器MasterVar[this.type][key]
-                    })
-                });
+                if (this.weaponType) {
+                    Object.keys(武器MasterVar[this.type]).forEach(key => {
+                        result.push({
+                            name: key,
+                            master: 武器MasterVar[this.type][key]
+                        })
+                    });
+                }
                 return result;
             },
             baseATKValue: function () {
                 return 0;
             },
             propertyName: function () {
-                if (this.master && 'ステータス' in this.master) {
-                    const statArr = Object.keys(this.master['ステータス']).filter(s => !s.startsWith('基礎'));
+                if (this.weaponMaster && 'ステータス' in this.weaponMaster) {
+                    const statArr = Object.keys(this.weaponMaster['ステータス']).filter(s => !s.startsWith('基礎'));
                     if (statArr.length > 0) {
                         return statArr[0];
                     }
@@ -550,14 +560,14 @@ async function initialSetupWeaponSelect() {
                 return 0;
             },
             skillName: function () {
-                if (this.master && '武器スキル' in this.master && '名前' in this.master['武器スキル']) {
-                    return this.master['武器スキル']['名前'];
+                if (this.weaponMaster && '武器スキル' in this.weaponMaster && '名前' in this.weaponMaster['武器スキル']) {
+                    return this.weaponMaster['武器スキル']['名前'];
                 }
                 return null;
             },
             skillDesc: function () {
-                if (this.master && '武器スキル' in this.master && '説明' in this.master['武器スキル']) {
-                    return this.master['武器スキル']['説明'];
+                if (this.weaponMaster && '武器スキル' in this.weaponMaster && '説明' in this.weaponMaster['武器スキル']) {
+                    return this.weaponMaster['武器スキル']['説明'];
                 }
                 return null;
             }
@@ -709,6 +719,63 @@ function initialSetupArtifactDetailInput() {
         },
         mounted() {
         },
+        watch: {
+            聖遺物メイン効果: {
+                handler: function (newVal, oldVal) {
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
+            },
+            聖遺物優先するサブ効果: {
+                handler: function (newVal, oldVal) {
+                    for (let i = 0; i < this.subStatUpLists.length; i++) {
+                        const result = [];
+                        const stat = this.聖遺物優先するサブ効果[i];
+                        if (stat in 聖遺物サブ効果MasterVar) {
+                            const master = 聖遺物サブ効果MasterVar[stat];
+                            for (let i = 0; i < master.length; i++) {
+                                result.push(master[i]);
+                                if (i < master.length - 1) {
+                                    let newValue = master[i] + (master[i + 1] - master[i]) / 2;
+                                    newValue = Math.round(newValue * 100) / 100;
+                                    result.push(newValue);
+                                }
+                            }
+                        }
+                        this.subStatUpLists.splice(i, 1, result);
+                        if (result.length > 0 && this.subStatUpIndices[i] != -1) {
+                            this.聖遺物優先するサブ効果上昇値[i] = result[this.subStatUpIndices[i]];
+                        }
+                    }
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
+            },
+            聖遺物優先するサブ効果上昇量: {
+                handler: function (newVal, oldVal) {
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
+            },
+            聖遺物優先するサブ効果上昇回数: {
+                handler: function (newVal, oldVal) {
+                    if (!this.isステータス計算無効) {
+                        calculateArtifactStat(this);
+                    }
+                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
+                },
+                deep: true
+            }
+        },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
@@ -769,63 +836,6 @@ function initialSetupArtifactDetailInput() {
                     this.subStatUpIndices[i] = 上昇値Arr[gensenIndex][i];
                     this.聖遺物優先するサブ効果上昇回数[i] = 上昇回数Arr[gensenIndex][i];
                 }
-            }
-        },
-        watch: {
-            聖遺物メイン効果: {
-                handler: function (newVal, oldVal) {
-                    if (!this.isステータス計算無効) {
-                        calculateArtifactStat(this);
-                    }
-                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
-                },
-                deep: true
-            },
-            聖遺物優先するサブ効果: {
-                handler: function (newVal, oldVal) {
-                    for (let i = 0; i < this.subStatUpLists.length; i++) {
-                        const result = [];
-                        const stat = this.聖遺物優先するサブ効果[i];
-                        if (stat in 聖遺物サブ効果MasterVar) {
-                            const master = 聖遺物サブ効果MasterVar[stat];
-                            for (let i = 0; i < master.length; i++) {
-                                result.push(master[i]);
-                                if (i < master.length - 1) {
-                                    let newValue = master[i] + (master[i + 1] - master[i]) / 2;
-                                    newValue = Math.round(newValue * 100) / 100;
-                                    result.push(newValue);
-                                }
-                            }
-                        }
-                        this.subStatUpLists.splice(i, 1, result);
-                        if (result.length > 0 && this.subStatUpIndices[i] != -1) {
-                            this.聖遺物優先するサブ効果上昇値[i] = result[this.subStatUpIndices[i]];
-                        }
-                    }
-                    if (!this.isステータス計算無効) {
-                        calculateArtifactStat(this);
-                    }
-                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
-                },
-                deep: true
-            },
-            聖遺物優先するサブ効果上昇量: {
-                handler: function (newVal, oldVal) {
-                    if (!this.isステータス計算無効) {
-                        calculateArtifactStat(this);
-                    }
-                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
-                },
-                deep: true
-            },
-            聖遺物優先するサブ効果上昇回数: {
-                handler: function (newVal, oldVal) {
-                    if (!this.isステータス計算無効) {
-                        calculateArtifactStat(this);
-                    }
-                    updateStatusStatus(calculateStatus(CharacterInputVm, this, StatusInputVm));
-                },
-                deep: true
             }
         }
     }
@@ -927,6 +937,15 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                 }
             });
         },
+        watch: {
+            conditions: {
+                handler: function (newVal, oldVal) {
+                    this.updateConditionAdjustments();
+                    console.log('conditions', this.conditions);
+                },
+                deep: true
+            }
+        },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
@@ -968,15 +987,6 @@ function initialSetupConditionInput(opt_characterMaster = null) {
                 console.debug('updateConditionAdjustments', result);
                 this.conditionAdjustments = result;
             }
-        },
-        watch: {
-            conditions: {
-                handler: function (newVal, oldVal) {
-                    this.updateConditionAdjustments();
-                    console.log('conditions', this.conditions);
-                },
-                deep: true
-            }
         }
     };
     ConditionInputVm = Vue.createApp(ConditionInput).mount('#condition-input');
@@ -994,6 +1004,8 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 teamOptionMaster: チームオプションMasterVar,
                 チームオプション: {},
                 チームオプション詳細: {},
+                teamOptionSupporterList: [],
+                isTeamOptionSupporterOpened: {},
                 option1Master: オプション1MasterVar,
                 オプション1: {},
                 オプション1詳細: {},
@@ -1012,6 +1024,10 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 this.チームオプション[key] = null;
                 this.チームオプション詳細[key] = null;
             });
+            this.teamOptionSupporterList = Array.from(new Set(Object.keys(this.teamOptionMaster).map(s => s.split('_')[0])));
+            this.teamOptionSupporterList.forEach(supporter => {
+                this.isTeamOptionSupporterOpened[supporter] = false;
+            });
             Object.keys(this.option1Master).forEach(key => {
                 this.オプション1[key] = null;
                 this.オプション1詳細[key] = null;
@@ -1024,9 +1040,6 @@ function initialSetupOptionInput(opt_characterMaster = null) {
         computed: {
             elementalResonanceList: function () {
                 return Object.keys(this.elementalResonanceMaster).filter(s => s.endsWith('共鳴'));
-            },
-            teamOptionCharacterList: function () {
-                return Array.from(new Set(Object.keys(this.teamOptionMaster).map(s => s.split('_')[0])));
             },
             option1List: function () {
                 return Object.keys(this.option1Master);
@@ -1071,14 +1084,20 @@ function initialSetupOptionInput(opt_characterMaster = null) {
                 }
                 return '';
             },
-            teamOptionList: function (character) {
-                return Object.keys(this.teamOptionMaster).filter(s => s.startsWith(character + '_')).map(s => s.replace(character + '_', ''));
+            teamOptionList: function (supporter) {
+                return Object.keys(this.teamOptionMaster).filter(s => s.startsWith(supporter + '_')).map(s => s.replace(supporter + '_', ''));
             },
-            teamOptionCharacterDisabled(character) {
-                return CharacterInputVm && character == CharacterInputVm.name;
+            teamOptionSupporterDisabled(supporter) {
+                return CharacterInputVm && supporter == CharacterInputVm.name;
             },
             teamOptionDisabled(character, name) {
                 return false;
+            },
+            supporterInputList: function (supporter) {
+                return [];
+            },
+            supporterSelectList: function (supporter) {
+                return [];
             }
         }
     }
@@ -1129,6 +1148,25 @@ function initialSetupStatusInput(characterMaster) {
                 return 元素ステータス_耐性ARRAY.filter(s => this.is敵ステータスOpened || this.敵ステータス[s]);
             }
         },
+        watch: {
+            ステータス補正: {
+                handler: function (newVal, oldVal) {
+                    //TODO
+                },
+                deep: true
+            },
+            enemy: {
+                handler: function (newVal, oldVal) {
+                    this.calculateEnemyStatus();
+                }
+            },
+            敵ステータス補正: {
+                handler: function (newVal, oldVal) {
+                    this.calculateEnemyStatus();
+                },
+                deep: true
+            }
+        },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
@@ -1160,25 +1198,6 @@ function initialSetupStatusInput(characterMaster) {
                         adjustmentInput[stat] = 0;
                     })
                 }
-            }
-        },
-        watch: {
-            ステータス補正: {
-                handler: function (newVal, oldVal) {
-                    //TODO
-                },
-                deep: true
-            },
-            enemy: {
-                handler: function (newVal, oldVal) {
-                    this.calculateEnemyStatus();
-                }
-            },
-            敵ステータス補正: {
-                handler: function (newVal, oldVal) {
-                    this.calculateEnemyStatus();
-                },
-                deep: true
             }
         }
     };
@@ -1245,11 +1264,11 @@ function initialSetupCharacterInformation() {
             }
         },
         computed: {
-            name: function () {
-                return CharacterInputVm.name;
+            character: function () {
+                return CharacterInputVm.character;
             },
-            master: function () {
-                return CharacterInputVm.master;
+            characterMaster: function () {
+                return CharacterInputVm.characterMaster;
             }
         },
         methods: {
@@ -1459,176 +1478,22 @@ function initialSetupWeaponOwnList() {
     WeaponOwnListVm = Vue.createApp(WeaponOwnList).mount('#weapon-own-list');
 }
 
-/**
- * 
- * @param {string} name キャラクター名
- */
-async function setupCharacterInput(name, characterInput, artifactDetailInput, conditionInput, optionInput, statusInput) {
-    let characterMaster = null;
-    if (!キャラクター個別MasterMapVar.has(name)) {
-        const url = キャラクターMasterVar[name]['import'];
-        const json = await fetch(url).then(resp => resp.json());
-        キャラクター個別MasterMapVar.set(name, json);
-    }
-    characterMaster = キャラクター個別MasterMapVar.get(name);
-
-    if ('固有変数' in characterMaster) {
-        Object.keys(characterMaster['固有変数']).forEach(key => {
-            statusInput[key] = characterMaster['固有変数'][key];
-        });
-    }
-
-    if ('オプション初期値' in characterMaster) {
-
-    }
-
-    const rarity = characterMaster['レアリティ'];
-    const vision = characterMaster['元素'];
-    const weaponType = characterMaster['武器'];
-
-    const myRecommendationList = makeRecommendationList(characterMaster);
-    const myRecommendation = myRecommendationList[0];
-
-    characterInput.おすすめセットOption.list = myRecommendationList;
-    characterInput.おすすめセット = myRecommendation[0];
-
-    let ascension = characterInput.突破レベル;
-    let level = characterInput.レベル;
-    let constellation = 0;
-
-    if ('レベル' in myRecommendation[1]) {
-        level = Number(myRecommendation[1]['レベル'].replace('+', ''));
-        for (ascension = 0; ascension < 突破レベルレベルARRAY.length; ascension++) {
-            const max = 突破レベルレベルARRAY[ascension][突破レベルレベルARRAY[ascension].length - 1];
-            if (level <= max) {
-                break;
+function initialSetupStorageControl() {
+    const StorageControl = {
+        data() {
+            return {
+                canClearLocalStorage: false
+            }
+        },
+        methods: {
+            displayName: function (name) {
+                return getDisplayName(name);
+            },
+            clearLocalStorage() {
+                localStorage.clear();
             }
         }
-        if (myRecommendation[1]['レベル'].endsWith('+')) {
-            ascension++;
-        }
     }
-
-    if (name in キャラクター所持状況Var) {
-        constellation = キャラクター所持状況Var[name];
-    }
-    if (!constellation) {
-        constellation = 0;
-    }
-
-    if ('命ノ星座' in characterMaster) {
-        let maxSkillLevel = 10;
-        let maxBurstLevel = 10;
-        let mySkillName = characterMaster.元素スキル.名前;
-        let myBurstName = characterMaster.元素爆発.名前;
-        Object.keys(characterMaster.命ノ星座).forEach(key => {
-            if (constellation < Number(key)) return;
-            if ('名前' in characterMaster.命ノ星座[key]) {
-                if (characterMaster.命ノ星座[key]['名前'].indexOf(mySkillName) != -1) {
-                    maxSkillLevel = 13;
-                }
-                if (characterMaster.命ノ星座[key]['名前'].indexOf(myBurstName) != -1) {
-                    maxBurstLevel = 13;
-                }
-            }
-        });
-        characterInput.元素スキルレベルOption.max = maxSkillLevel;
-        characterInput.元素爆発レベルOption.max = maxBurstLevel;
-    } else {
-        characterInput.命ノ星座Option.max = 0;
-        characterInput.元素スキルレベルOption.max = 10;
-        characterInput.元素爆発レベルOption.max = 10;
-    }
-
-    characterInput.name = name;
-    characterInput.master = characterMaster;
-    characterInput.突破レベル = ascension;
-    characterInput.レベル = level;
-    characterInput.命ノ星座 = constellation;
-
-    await loadRecommendation(myRecommendation[1], characterInput, artifactDetailInput, conditionInput, statusInput);
-
-    if (WeaponSelectVm) {
-        WeaponSelectVm.weapon = characterInput.weapon;
-        WeaponSelectVm.type = weaponType;
-    }
-
-    await setupWeaponInput(weaponType, characterInput.weapon, CharacterInputVm);
-
-    if (!conditionInput) {  //　苦し紛れ
-        conditionInput = ConditionInputVm;
-    }
-    if (conditionInput) {
-        conditionInput.character = name;
-        conditionInput.characterMaster = characterMaster;
-    }
-
-    calculateArtifactStat(artifactDetailInput);
-    calculateStatus(characterInput, artifactDetailInput, statusInput);
-    calculateResult(characterInput, conditionInput, optionInput, statusInput, CalculationResultVm);
+    StorageControlVm = Vue.createApp(StorageControl).mount('#storage-control');
 }
 
-/**
- * 
- * @param {string} type 武器タイプ
- * @param {string} weapon 武器名
- */
-async function setupWeaponInput(type, weapon, characterInput) {
-    const weaponMaster = await fetch(武器MasterVar[type][weapon]['import']).then(resp => resp.json());
-    WeaponSelectVm.master = weaponMaster;
-    characterInput.weapon = weapon;
-    characterInput.weaponMaster = weaponMaster;
-    if (weaponMaster['レアリティ'] < 3) {
-        characterInput['武器突破レベルOption'].max = 4;
-        if (characterInput['武器突破レベル'] > 4) {
-            characterInput['武器突破レベル'] = 4;
-        }
-    } else {
-        characterInput['武器突破レベルOption'].max = 6;
-    }
-    if (weapon in 武器所持状況Var && 武器所持状況Var[weapon]) {
-        characterInput['武器精錬ランク'] = 武器所持状況Var[weapon];
-    }
-
-    makeDamageDetailObjWeapon(characterInput);
-}
-
-function updateStatusStatus(statusObj) {
-    Object.keys(statusObj).forEach(stat => {
-        if (stat in StatusInputVm.ステータス && StatusInputVm.ステータス[stat] == statusObj[stat]) return;
-        StatusInputVm.ステータス[stat] = statusObj[stat];
-    });
-    calculateResult(CharacterInputVm, ConditionInputVm, OptionInputVm, StatusInputVm, CalculationResultVm);
-}
-
-/**
- * EnemyObjectを作成します.
- * 
- * @param {string} name 敵の名前
- * @returns {object} 
- */
-function makeEnemyObj(name) {
-    return {
-        name: name,
-        master: 敵MasterVar[name]
-    };
-}
-
-/**
- * 敵ステータスを更新します.
- * 
- * @param {object} enemyObj EnemyObject
- * @param {object} statusInput ステータス情報Object
- */
-function updateStatusEnemyStatus(enemyObj, statusInput) {
-    statusInput.enemy = enemyObj;
-    Object.keys(statusInput.enemy.master).forEach(stat => {
-        statusInput.敵ステータス[stat] = statusInput.enemy.master[stat];
-    });
-    statusInput.敵ステータス['防御力'] = 0;
-    if (statusInput.敵ステータス補正) {
-        Object.keys(statusInput.敵ステータス補正).forEach(stat => {
-            statusInput.敵ステータス[stat] += statusInput.敵ステータス補正[stat];
-        });
-    }
-}

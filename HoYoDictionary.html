@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <link href="https://cdn.jsdelivr.net/npm/vue-good-table@2.18.0/dist/vue-good-table.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue-good-table@2.18.0/dist/vue-good-table.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-draggable-next@2.1.1/dist/vue-draggable-next.global.min.js"></script>
     <style>
         body {
             color: blanchedalmond;
@@ -29,11 +30,11 @@
         }
 
         a:link {
-            color: blanchedalmond;
+            color: chocolate;
         }
 
         a:visited {
-            color: blanchedalmond;
+            color: chocolate;
         }
 
         th,
@@ -55,10 +56,26 @@
         <h1>原神の辞書</h1>
 
         <div id="hoyo-dictionary-list">
+            <div>
+                if check, hide column.
+            </div>
+            <label v-for="column in columns">
+                <input type="checkbox" v-model="column.hidden" @click="onChange">
+                {{column.label}}
+            </label>
+
             <vue-good-table :columns="columns" :rows="rows" :line-numbers="true"
                 :pagination-options="{enabled: true, mode: 'pages', perPage: 10, perPageDropdown: [10, 25, 50, 100, 200], dropdownAllowAll: true, position: 'bottom', jumpFirstOrLast : true}"
                 :search-options="{enabled: true, trigger: 'enter', placeholder: 'Search this table'}"
                 :sort-options="{enabled: true, multipleColumns: true}" styleclass="vgt-table striped">
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'id'">
+                        <a :href="'https://wiki.hoyolab.com/pc/genshin/entry/' + props.row.id">HoYoWiKi</a>
+                    </span>
+                    <span v-else>
+                        {{props.formattedRow[props.column.field]}}
+                    </span>
+                </template>
             </vue-good-table>
         </div>
 
@@ -88,27 +105,45 @@
                 hoYoDictionaryList.push(entry);
             });
 
+            hoyoDictionaryHidden = [];
+            if (localStorage['hoyoDictionaryHidden']) {
+                hoyoDictionaryHidden = JSON.parse(localStorage['hoyoDictionaryHidden']);
+            }
+
             var columns = [
-                { label: '日本語', field: 'ja-jp' },
-                { label: 'English', field: 'en-us' },
-                { label: '简体中文', field: 'zh-cn' },
-                { label: '繁體中文', field: 'zh-tw' },
-                { label: '한국어', field: 'ko-kr' },
-                { label: 'Deutsch', field: 'de-de' },
-                { label: 'Español', field: 'es-es' },
-                { label: 'Français', field: 'fr-fr' },
-                { label: 'Indonesia', field: 'id-id' },
-                { label: 'Português', field: 'pt-pt' },
-                { label: 'Pусский', field: 'ru-ru' },
-                { label: 'ภาษาไทย', field: 'th-th' },
-                { label: 'Tiếng Việt', field: 'vi-vn' }
+                { label: '日本語', field: 'ja-jp', hidden: false },
+                { label: 'English', field: 'en-us', hidden: false },
+                { label: '简体中文', field: 'zh-cn', hidden: false },
+                { label: '繁體中文', field: 'zh-tw', hidden: false },
+                { label: '한국어', field: 'ko-kr', hidden: false },
+                { label: 'Deutsch', field: 'de-de', hidden: false },
+                { label: 'Español', field: 'es-es', hidden: false },
+                { label: 'Français', field: 'fr-fr', hidden: false },
+                { label: 'Indonesia', field: 'id-id', hidden: false },
+                { label: 'Português', field: 'pt-pt', hidden: false },
+                { label: 'Pусский', field: 'ru-ru', hidden: false },
+                { label: 'ภาษาไทย', field: 'th-th', hidden: false },
+                { label: 'Tiếng Việt', field: 'vi-vn', hidden: false },
+                { label: 'SOURCE', field: 'name', hidden: false },
+                { label: 'HoYoWiki', field: 'id', hidden: false },
             ];
+
+            hoyoDictionaryHidden.forEach(entry => {
+                columns.filter(s => s.label == entry.label).forEach(column => {
+                    column.hidden = entry.hidden;
+                })
+            });
 
             HoYoDictionaryVm = new Vue({
                 el: '#hoyo-dictionary-list',
                 data: {
                     columns: columns,
                     rows: hoYoDictionaryList
+                },
+                methods: {
+                    onChange: function () {
+                        localStorage['hoyoDictionaryHidden'] = JSON.stringify(this.columns);
+                    }
                 }
             });
         }

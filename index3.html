@@ -30,6 +30,7 @@
     <script src="js/gencalc3_var.js"></script>
     <script src="js/gencalc3_core.js"></script>
     <script src="js/gencalc3_func.js"></script>
+    <script src="js/gencalc3_sub.js"></script>
     <script src="js/gencalc3.js"></script>
     <style type="text/css">
     </style>
@@ -111,13 +112,13 @@
                     <table>
                         <tr>
                             <td colspan="3" rowspan="3" style="width: 180px; position: relative;">
-                                <img class="character" :src="master['icon_url']" :alt="name"
+                                <img class="character" :src="characterMaster['icon_url']" :alt="character"
                                     :style="'background-image: url(' + starBackgroundUrl +')'"
                                     @click="characterOnClick">
-                                <img class="vision" :src="elementImgSrc" :alt="master['元素']">
+                                <img class="vision" :src="elementImgSrc" :alt="characterMaster['元素']">
                             </td>
                             <td :class="'title ' + colorClass" colspan="3" style="position: relative;">
-                                {{displayName(master['名前'])}}
+                                {{displayName(character)}}
                                 <span class="material-symbols-outlined" style="position: absolute; right: 0;"
                                     @click="characterInfoOnClick"> info </span>
                             </td>
@@ -143,7 +144,7 @@
                             <td colspan="3" style="text-align: left;">
                                 <label>
                                     build name:
-                                    <input class="save-name" type="text" v-model="saveName" maxlength="20"
+                                    <input class="save-name" type="text" v-model="buildName" maxlength="20"
                                         @change="changed">
                                 </label>
                             </td>
@@ -173,8 +174,9 @@
                         </tr>
                         <tr v-if="おすすめセットOption.isOpen">
                             <td colspan="6">
-                                <select :value="おすすめセット">
-                                    <option v-for="item in おすすめセットOption.list" :value="item[0]">{{item[0]}}</option>
+                                <select v-model="おすすめセット">
+                                    <option v-for="item in おすすめセットOption.list" :value="item">
+                                        {{displayBuildName(item)}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -182,26 +184,28 @@
                     <table>
                         <tr>
                             <td colspan="3" rowspan="3" class="icon" style="width: 180px;">
-                                <img class="weapon with-tooltip" :src="weaponMaster['icon_url']"
-                                    :alt="weaponMaster['名前']"
+                                <img class="weapon with-tooltip" :src="weaponMaster['icon_url']" :alt="weapon"
                                     :style="'background-image: url(' + weaponStarBackgroundUrl +')'"
                                     @click="weaponOnClick">
-                                <div class="tooltip">{{displayName(weaponMaster['名前'])}}</div>
+                                <div class="tooltip">{{displayName(weapon)}}</div>
                             </td>
                             <td class="icon">
-                                <img :class="'talent with-tooltip ' + bgColorClass" :src="master['通常攻撃']['icon_url']"
-                                    :alt="master['通常攻撃']['名前']" @click="normalAttackOnClick">
-                                <div class="tooltip">{{displayName(master['通常攻撃']['名前'])}}</div>
+                                <img :class="'talent with-tooltip ' + bgColorClass"
+                                    :src="characterMaster['通常攻撃']['icon_url']" :alt="characterMaster['通常攻撃']['名前']"
+                                    @click="normalAttackOnClick">
+                                <div class="tooltip">{{displayName(characterMaster['通常攻撃']['名前'])}}</div>
                             </td>
                             <td class="icon">
-                                <img :class="'talent with-tooltip ' + bgColorClass" :src="master['元素スキル']['icon_url']"
-                                    :alt="master['元素スキル']['名前']" @click="elementalSkillOnClick">
-                                <div class="tooltip">{{displayName(master['元素スキル']['名前'])}}</div>
+                                <img :class="'talent with-tooltip ' + bgColorClass"
+                                    :src="characterMaster['元素スキル']['icon_url']" :alt="characterMaster['元素スキル']['名前']"
+                                    @click="elementalSkillOnClick">
+                                <div class="tooltip">{{displayName(characterMaster['元素スキル']['名前'])}}</div>
                             </td>
                             <td class="icon">
-                                <img :class="'talent with-tooltip ' + bgColorClass" :src="master['元素爆発']['icon_url']"
-                                    :alt="master['元素爆発']['名前']" @click="elementalBurstOnClick">
-                                <div class="tooltip">{{displayName(master['元素爆発']['名前'])}}</div>
+                                <img :class="'talent with-tooltip ' + bgColorClass"
+                                    :src="characterMaster['元素爆発']['icon_url']" :alt="characterMaster['元素爆発']['名前']"
+                                    @click="elementalBurstOnClick">
+                                <div class="tooltip">{{displayName(characterMaster['元素爆発']['名前'])}}</div>
                             </td>
                         </tr>
                         <tr>
@@ -276,13 +280,13 @@
                     <table class="weapon-desc" v-if="isVisible">
                         <tr>
                             <td rowspan="4">
-                                <img class="weapon" :src="master.icon_url" :alt="selected">
+                                <img class="weapon" :src="weaponMaster.icon_url" :alt="selected">
                             </td>
                             <th colspan="2" class="title">{{displayName(selected)}}</th>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <template v-for="item in Array.from({ length: master['レアリティ'] }, (_, i) => i)">
+                                <template v-for="item in Array.from({ length: weaponMaster['レアリティ'] }, (_, i) => i)">
                                     <img class="star" src="images/star.png" alt="star">
                                 </template>
                             </td>
@@ -505,7 +509,7 @@
                 <div id="character-information">
                     <div v-if="isVisible">
                         <table class="information" v-show="isContentVisible['ステータス']">
-                            <tr v-for="key in Object.keys(master['ステータス'])">
+                            <tr v-for="key in Object.keys(characterMaster['ステータス'])">
                                 <th>{{displayName(key)}}</th>
                                 <td></td>
                             </tr>
@@ -514,10 +518,10 @@
                             <table class="information" v-show="isContentVisible[category]">
                                 <tr>
                                     <th :rowspan="categoryOtherInfoCount(category) + 1" class="img">
-                                        <img class="icon" :src="master[category].icon_url"
-                                            :alt="displayName(master[category]['名前'])">
+                                        <img class="icon" :src="characterMaster[category].icon_url"
+                                            :alt="displayName(characterMaster[category]['名前'])">
                                     </th>
-                                    <th colspan="3" class="title">{{displayName(master[category]['名前'])}}</th>
+                                    <th colspan="3" class="title">{{displayName(characterMaster[category]['名前'])}}</th>
                                 </tr>
                                 <template v-if="categoryOtherInfoCount(category) > 0">
                                     <tr
@@ -527,9 +531,9 @@
                                     </tr>
                                 </template>
                                 <tr>
-                                    <td colspan="4" class="description" v-html="master[category]['説明']"></td>
+                                    <td colspan="4" class="description" v-html="characterMaster[category]['説明']"></td>
                                 </tr>
-                                <template v-for="item in master[category]['詳細']">
+                                <template v-for="item in characterMaster[category]['詳細']">
                                     <tr v-if="item['名前']">
                                         <th colspan="2">
                                             <span>{{displayName(item['名前'])}}</span>
@@ -541,10 +545,11 @@
                                 </template>
                             </table>
                         </template>
-                        <table class="information" v-show="isContentVisible['その他戦闘天賦']" v-if="'その他戦闘天賦' in master">
+                        <table class="information" v-show="isContentVisible['その他戦闘天賦']"
+                            v-if="'その他戦闘天賦' in characterMaster">
                         </table>
                         <table class="information" v-show="isContentVisible['固有天賦']">
-                            <template v-for="item in master['固有天賦']">
+                            <template v-for="item in characterMaster['固有天賦']">
                                 <tr>
                                     <th class="img">
                                         <img class="icon" :src="item.icon_url" :alt="displayName(item['名前'])">
@@ -556,17 +561,18 @@
                                 </tr>
                             </template>
                         </table>
-                        <table class="information" v-show="isContentVisible['命ノ星座']" v-if="'命ノ星座' in master">
-                            <template v-for="key in Object.keys(master['命ノ星座'])">
+                        <table class="information" v-show="isContentVisible['命ノ星座']" v-if="'命ノ星座' in characterMaster">
+                            <template v-for="key in Object.keys(characterMaster['命ノ星座'])">
                                 <tr>
                                     <th class="img">
-                                        <img class="icon" :src="master['命ノ星座'][key].icon_url"
-                                            :alt="displayName(master['命ノ星座'][key]['名前'])">
+                                        <img class="icon" :src="characterMaster['命ノ星座'][key].icon_url"
+                                            :alt="displayName(characterMaster['命ノ星座'][key]['名前'])">
                                     </th>
-                                    <th class="title">{{displayName(master['命ノ星座'][key]['名前'])}}</th>
+                                    <th class="title">{{displayName(characterMaster['命ノ星座'][key]['名前'])}}</th>
                                 </tr>
                                 <tr>
-                                    <td class="description" colspan="2" v-html="master['命ノ星座'][key]['説明']"></td>
+                                    <td class="description" colspan="2" v-html="characterMaster['命ノ星座'][key]['説明']">
+                                    </td>
                                 </tr>
                             </template>
                         </table>
@@ -823,12 +829,26 @@
                         </div>
 
                         <div v-show="activeTab == '2'">
-                            <template v-for="character in teamOptionCharacterList">
-                                <fieldset class="team-option" :disabled="teamOptionCharacterDisabled(character)">
-                                    <legend>{{displayName(character)}}</legend>
-                                    <label v-for="item in teamOptionList(character)"
-                                        :disabled="teamOptionDisabled(character, item)">
-                                        {{displayName(item)}}
+                            <template v-for="supporter in teamOptionSupporterList">
+                                <label class="expandable-option" v-show="!isTeamOptionSupporterOpened[supporter]">
+                                    <input class="hidden" type="checkbox"
+                                        v-model="isTeamOptionSupporterOpened[supporter]">
+                                    <span>{{displayName(supporter)}}</span>
+                                </label>
+                                <fieldset class="team-option" :disabled="teamOptionSupporterDisabled(supporter)"
+                                    v-show="isTeamOptionSupporterOpened[supporter]">
+                                    <legend>
+                                        <label>
+                                            <input class="hidden" type="checkbox"
+                                                v-model="isTeamOptionSupporterOpened[supporter]">
+                                            <span>{{displayName(supporter)}}</span>
+                                        </label>
+                                    </legend>
+                                    <label v-for="item in supporterInputList(supporter)">
+
+                                    </label>
+                                    <label v-for="item in supporterSelectList(supporter)">
+
                                     </label>
                                 </fieldset>
                             </template>
@@ -1030,8 +1050,11 @@
                     </template>
                 </div>
 
-                <div id="local-storage-control">
-
+                <div id="storage-control">
+                    <input type="checkbox" v-model="canClearLocalStorage">
+                    <button type="button" :disabled="!canClearLocalStorage" @click="clearLocalStorage">
+                        {{displayName('ローカルストレージをクリア')}}
+                    </button>
                 </div>
             </div>
 

@@ -16,6 +16,22 @@ var 辞書MasterVar;
 const キャラクター個別MasterMapVar = new Map();
 const 武器個別MasterMapVar = new Map();
 
+async function getCharacterMaster(character) {
+    if (!キャラクター個別MasterMapVar.has(character)) {
+        const characterMaster = await fetch(キャラクターMasterVar[character]['import']).then(resp => resp.json());
+        キャラクター個別MasterMapVar.set(character, characterMaster);
+    }
+    return キャラクター個別MasterMapVar.get(character);
+}
+
+async function getWeaponMaster(weaponType, weapon) {
+    if (!武器個別MasterMapVar.has(weapon)) {
+        const weaponMaster = await fetch(武器MasterVar[weaponType][weapon]['import']).then(resp => resp.json());
+        武器個別MasterMapVar.set(weapon, weaponMaster);
+    }
+    return 武器個別MasterMapVar.get(weapon);
+}
+
 const キャラクターダメージ詳細ObjMapVar = new Map();
 const 武器ダメージ詳細ObjMapVar = new Map();
 const 聖遺物セット効果ダメージ詳細ObjMapVar = new Map();
@@ -51,6 +67,8 @@ var CharacterInformationVm;
 var CharacterOwnListVm;
 /** 武器所持状況 */
 var WeaponOwnListVm;
+/** ストレージ操作 */
+var StorageControlVm;
 
 const Pane4Group = new Set();
 
@@ -389,4 +407,57 @@ const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ',
 const RECOMMEND_ABBREV_MAP = new Map([
     ['HP%', 'HP'], ['元素熟知', '熟'], ['元素チャージ効率', 'ﾁｬ'], ['会心率', '率'], ['会心ダメージ', 'ダ'], ['与える治療効果', '治']
 ]);
+
+const RECOMMEND_ABBREV_EN_REVERSE_MAP = new Map([
+    ['攻', 'AT'], ['防', 'DF'], ['熟', 'EM'], ['率', 'CR'], ['ダ', 'CD'], ['ﾁｬ', 'ER'], ['治', 'HE'],
+    ['炎', 'Py'], ['水', 'Hy'], ['風', 'An'], ['雷', 'El'], ['草', 'De'], ['氷', 'Cr'], ['岩', 'Ge'], ['物', 'Ph'],
+]);
+
+const CHARACTER_INPUT_TEMPLATE = {
+    character: null,
+    characterMaster: null,
+    突破レベル: 6,
+    レベル: 90,
+    命ノ星座: 0,
+    通常攻撃レベル: 8,
+    元素スキルレベル: 8,
+    元素爆発レベル: 8,
+    weapon: null,
+    weaponMaster: null,
+    武器突破レベル: 6,
+    武器レベル: 90,
+    武器精錬ランク: 1,
+    聖遺物セット効果: [
+        {
+            名前: 'NONE',
+            master: ARTIFACT_SET_MASTER_DUMMY
+        },
+        {
+            名前: 'NONE',
+            master: ARTIFACT_SET_MASTER_DUMMY
+        }
+    ],
+};
+
+const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
+    聖遺物メイン効果: [null, null, null, null, null],
+    聖遺物優先するサブ効果: [null, null, null],
+    聖遺物優先するサブ効果上昇値: [0, 0, 0],
+    聖遺物優先するサブ効果上昇回数: [8, 5, 5],
+    subStatUpLists: [[], [], []],
+    subStatUpIndices: [6, 6, 6],
+    gensen: '厳選1ヶ月',
+    gensenList: [null, '厳選初心者', '厳選1ヶ月', '厳選3ヶ月', '日々石割'],
+    厳選目安一括変更Enabled: false,
+    聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    聖遺物ステータス補正: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    isステータス計算無効: false
+};
+
+const CONDITION_INPUT_TEMPLATE = {
+    conditions: {},
+    character: null,
+    characterMaster: null,
+    conditionAdjustments: {}
+};
 
