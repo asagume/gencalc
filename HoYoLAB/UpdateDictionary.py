@@ -11,7 +11,7 @@ DST_PATH = '../data/HoYoDictionary'
 
 #CATEGORY_DIRS = ['characters', 'weapons', 'artifacts']
 CATEGORY_DIRS = [['character', 2], ['weapon', 4],
-                 ['reliquary', 5], ['enemy_and_monster', 7]]
+                 ['reliquary', 5], ['enemy_and_monster', 7], ['object', 9]]
 
 LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es",
              "fr-fr", "id-id", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn"]
@@ -38,9 +38,9 @@ for category_dir in CATEGORY_DIRS:
     jaJpContents = []
     for jaJpFile in jaJpFiles:
         with open(jaJpFile, 'r', encoding='utf_8_sig') as f:
-            jaJpContents.append([jaJpFile, json.load(f)]) 
+            jaJpContents.append([jaJpFile, json.load(f)])
 
-    for jaJpContent in sorted(jaJpContents, key=lambda jaJpContent : jaJpContent[1]['id']):
+    for jaJpContent in sorted(jaJpContents, key=lambda jaJpContent: jaJpContent[1]['id']):
         jaJpFile = jaJpContent[0]
         jaJpJson = jaJpContent[1]
 
@@ -85,7 +85,8 @@ for category_dir in CATEGORY_DIRS:
                     if 'data' in component:
                         for key in ['flower_of_life', 'sands_of_eon', 'plume_of_death', 'circlet_of_logos', 'goblet_of_eonothem']:
                             if key in component['data'] and 'title' in component['data'][key]:
-                                jaJpTalents.append(component['data'][key]['title'])
+                                jaJpTalents.append(
+                                    component['data'][key]['title'])
                         if 'list' in component['data']:
                             for entry in component['data']['list']:
                                 if 'key' in entry and entry['key'] != None:
