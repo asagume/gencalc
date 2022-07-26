@@ -1,7 +1,3 @@
-from contextlib import nullcontext
-from decimal import *
-import copy
-import glob
 import json
 from operator import indexOf
 import os
@@ -15,7 +11,8 @@ DST_PATH = '../data/HoYoDictionary.json'
 
 CATEGORY_DIRS = ['characters', 'weapons', 'artifacts']
 
-LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn"]
+LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es",
+             "fr-fr", "id-id", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn"]
 
 os.chdir(os.path.dirname(__file__))
 
@@ -50,10 +47,15 @@ for category in CATEGORY_DIRS:
                 langJsonMap[language] = langJson
 
         # 名前
-        dictKey = jaJpJson['name']
+        name = jaJpJson['name']
+        id = int(jaJpJson['id'])
+        dictKey = name
         dictObj = {}
         for language in LANGUAGES:
             dictObj[language] = langJsonMap[language]['name']
+        dictObj['id'] = id
+        dictObj['category'] = category
+        dictObj['name'] = name
 
         newDictMap[dictKey] = dictObj
 
@@ -94,7 +96,6 @@ for category in CATEGORY_DIRS:
                                 for m in re.finditer(r'<span style=\"color:#FFD780FF\">(.+?)</span>', entry['desc']):
                                     jaJpKeywords.append(m.group(1))
 
-
         for language in LANGUAGES:
             langWork = []
             langKeywordWork = []
@@ -108,7 +109,8 @@ for category in CATEGORY_DIRS:
                     if 'data' in component:
                         for key in ['flower_of_life', 'sands_of_eon', 'plume_of_death', 'circlet_of_logos', 'goblet_of_eonothem']:
                             if key in component['data'] and 'title' in component['data'][key]:
-                                langWork.append(component['data'][key]['title'])
+                                langWork.append(
+                                    component['data'][key]['title'])
                         if 'list' in component['data']:
                             for entry in component['data']['list']:
                                 if 'key' in entry and entry['key'] != None:
@@ -142,10 +144,13 @@ for category in CATEGORY_DIRS:
                     dictObj[language] = langTalents[language][index]
                 else:
                     okay = False
-            if okay:                
+            if okay:
+                dictObj['id'] = id
+                dictObj['category'] = category
+                dictObj['name'] = name
                 newDictMap[dictKey] = dictObj
             else:
-                print ('Error:' + dictKey)
+                print('Error:' + dictKey)
 
         for index, dictKey in enumerate(jaJpKeywords):
             dictObj = {}
@@ -155,10 +160,13 @@ for category in CATEGORY_DIRS:
                     dictObj[language] = langKeywords[language][index]
                 else:
                     okay = False
-            if okay:                
+            if okay:
+                dictObj['id'] = id
+                dictObj['category'] = category
+                dictObj['name'] = name
                 keywordDictMap[dictKey] = dictObj
             else:
-                print ('Error:' + dictKey)
+                print('Error:' + dictKey)
         # print (keywordDictMap)
 
 for k, v in newDictMap.items():
