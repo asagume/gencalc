@@ -70,7 +70,7 @@
                 :sort-options="{enabled: true, multipleColumns: true}" styleclass="vgt-table striped">
                 <template slot="table-row" slot-scope="props">
                     <span v-if="props.column.field == 'id'">
-                        <a :href="'https://wiki.hoyolab.com/pc/genshin/entry/' + props.row.id">HoYoWiKi</a>
+                        <a :href="'https://wiki.hoyolab.com/pc/genshin/entry/' + props.row.id" target="_blank">HoYoWiKi</a>
                     </span>
                     <span v-else>
                         {{props.formattedRow[props.column.field]}}

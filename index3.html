@@ -1079,7 +1079,10 @@
         console.log('window.innerWidth', window.innerWidth);
         console.log('window.devicePixelRatio', window.devicePixelRatio);
 
-        onLoad();
+        const searchParams = new URLSearchParams(window.location.search);
+        console.log(searchParams);
+
+        onLoad(searchParams);
     </script>
 </body>
 

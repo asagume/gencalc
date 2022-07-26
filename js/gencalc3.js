@@ -6,6 +6,11 @@
 ///<reference path="./gencalc3_sub.js"/>
 
 async function onLoad(searchParams) {
+    let buildDataFromUri = null;
+    if (searchParams.has('allin')) {
+        const allin = searchParams.get('allin');
+        buildDataFromUri = makeSaveDataFromShareData(allin);
+    }
     if (localStorage['キャラクター所持状況']) {
         キャラクター所持状況Var = JSON.parse(localStorage['キャラクター所持状況']);
     }
@@ -29,8 +34,10 @@ async function onLoad(searchParams) {
         'data/TeamOptionMaster.json',
         'data/OptionMaster1.json',
         'data/OptionMaster2.json',
-        'data/HoYoDictionary.json',
-        'data/LocalDictionary.json'
+        'data/HoYoDictionary2.json',
+        'data/HoYoDictionary4.json',
+        'data/HoYoDictionary5.json',
+        'data/LocalDictionary.json',
     ].map(s => fetch(s).then(resp => resp.json())));
 
     キャラクターMasterVar = responses[0];
@@ -51,16 +58,22 @@ async function onLoad(searchParams) {
     オプション1MasterVar = responses[13];
     オプション2MasterVar = responses[14];
     辞書MasterVar = responses[15];
-    Object.keys(responses[16]).forEach(key => {
-        if (!(key in 辞書MasterVar)) {
-            辞書MasterVar[key] = responses[16][key];
-        }
+    [responses[16], responses[17], responses[18]].forEach(response => {
+        Object.keys(response).forEach(key => {
+            if (!(key in 辞書MasterVar)) {
+                辞書MasterVar[key] = response[key];
+            }
+        })
     });
 
     const characterInput = JSON.parse(JSON.stringify(CHARACTER_INPUT_TEMPLATE));
-    characterInput.character = getCharacterByBirthday();
+    if (buildDataFromUri) {
+        characterInput.character = buildDataFromUri['キャラクター'];
+    } else {
+        characterInput.character = getCharacterByBirthday();
+    }
     characterInput.characterMaster = await getCharacterMaster(characterInput.character);
-    const recommendationList = makeRecommendationList(characterInput.characterMaster);
+    const recommendationList = makeRecommendationList(characterInput.characterMaster, buildDataFromUri);
     const recommendation = recommendationList[0];
     const artifactDetailInput = JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE));
     const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));

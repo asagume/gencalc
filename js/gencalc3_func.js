@@ -33,18 +33,16 @@ function getCharacterByBirthday() {
  * @param {object} characterMaster キャラクターマスター
  * @returns {[string, object, boolean][]} おすすめセットのリスト
  */
-function makeRecommendationList(characterMaster) {
+function makeRecommendationList(characterMaster, opt_buildData = null) {
     const result = [];
 
     const character = characterMaster['名前'];
     let isSavable = null;
 
-    // if (URIキャラクター構成ObjVar) {
-    //     if (myCharacterName == URIキャラクター構成ObjVar['キャラクター']) {
-    //         おすすめセットArrVar.push(['IMPORTED DATA', URIキャラクター構成ObjVar, false]);
-    //         isSavable = true;
-    //     }
-    // }
+    if (opt_buildData) {
+        result.push(['IMPORTED DATA', opt_buildData, false]);
+        isSavable = true;
+    }
 
     let storageKeyArr = [];
     Object.keys(localStorage).forEach(key => {

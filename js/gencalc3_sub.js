@@ -1,5 +1,112 @@
 // Vueのアプリケーションインスタンス*Vmを参照する関数はここに置こう
 
+function makeSaveDataFromShareData(shareData) {
+    const saveData = {};
+
+    try {
+        const shareDataArr = shareData.split(',');
+
+        let character;
+
+        let i = 0;
+        キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+            let newValue = shareDataArr[i];
+            switch (key) {
+                case 'キャラクター':
+                    Object.keys(キャラクターMasterVar).forEach(key2 => {
+                        if ('import' in キャラクターMasterVar[key2]) {
+                            const myBasename = basename(キャラクターMasterVar[key2]['import']);
+                            const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                            if (newValue == myAbbrev) {
+                                character = key2;
+                                newValue = character;
+                            }
+                        }
+                    });
+                    break;
+                case '武器':
+                    if (character) {
+                        const my武器タイプ = キャラクターMasterVar[character]['武器'];
+                        Object.keys(武器リストMasterVar[my武器タイプ]).forEach(key2 => {
+                            if ('import' in 武器リストMasterVar[my武器タイプ][key2]) {
+                                const myBasename = basename(武器リストMasterVar[my武器タイプ][key2]['import']);
+                                const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                                if (newValue == myAbbrev) {
+                                    newValue = key2;
+                                }
+                            }
+                        });
+                    }
+                    break;
+                case '聖遺物セット効果1':
+                case '聖遺物セット効果2':
+                    if (newValue) {
+                        Object.keys(聖遺物セット効果MasterVar).forEach(key2 => {
+                            if ('image' in 聖遺物セット効果MasterVar[key2]) {
+                                const myBasename = basename(聖遺物セット効果MasterVar[key2]['image']);
+                                const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
+                                if (newValue == myAbbrev) {
+                                    newValue = key2;
+                                }
+                            }
+                        });
+                    } else {
+                        newValue = 'NONE';  // 聖遺物セット効果なし
+                    }
+                    break;
+                case '聖遺物メイン効果1':
+                case '聖遺物メイン効果2':
+                case '聖遺物メイン効果3':
+                case '聖遺物メイン効果4':
+                case '聖遺物メイン効果5':
+                    if (newValue) {
+                        newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
+                    }
+                    break;
+                case '聖遺物優先するサブ効果1':
+                case '聖遺物優先するサブ効果2':
+                case '聖遺物優先するサブ効果3':
+                    if (newValue) {
+                        newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
+                    }
+                    break;
+            }
+            if (value == null) {
+                if (newValue) {
+                    saveData[key] = newValue;
+                } else {
+                    saveData[key] = '';
+                }
+            } else {
+                if (newValue) {
+                    saveData[key] = Number(newValue);
+                } else {
+                    saveData[key] = 0;
+                }
+            }
+            i++;
+        });
+
+        for (; i < shareDataArr.length; i++) {
+            const keyAndValue = shareDataArr[i];
+            let key;
+            let value;
+            if (keyAndValue.indexOf('=') != 1) {
+                const splitted = keyAndValue.split('=');
+                key = splitted[0];
+                value = splitted[1];
+
+                saveData[key] = value;
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+
+    return saveData;
+}
+
 /**
  * 
  * @param {string} name 

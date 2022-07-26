@@ -14,17 +14,24 @@ $pageIds = @()
 # 聖遺物
 # $pageIds += @(2061..2099)
 # 生物誌
-$pageIds += @(2100..2251)
+#$pageIds += @(2100..2251)
 # 物産誌
-#$pageIds += @(52..2251)
+$pageIds += @(52..1929)
+# $pageIds += 2253
+# $pageIds += 2254
+# $pageIds += 2257
+# $pageIds += 2258
+# $pageIds += 2259
+# $pageIds += 2260
 
 $doDownloadImg = $false
 
 $categoryMap = @{
-    "2" = "characters"
-    "4" = "weapons"
-    "5" = "artifacts"
+    "2" = "character"
+    "4" = "weapon"
+    "5" = "reliquary"
     "7" = "enemy_and_monster"
+    "9" = "object"
 }
 
 $xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
