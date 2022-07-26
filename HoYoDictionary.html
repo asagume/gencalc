@@ -149,7 +149,11 @@
                 },
                 methods: {
                     onChange: function () {
-                        localStorage['hoyoDictionaryHidden'] = JSON.stringify(this.columns);
+                        if (this.columns.filter(s => s.hidden).length > 0) {
+                            localStorage.setItem('hoyoDictionaryHidden', JSON.stringify(this.columns));
+                        } else {
+                            localStorage.removeItem('hoyoDictionaryHidden');
+                        }
                     }
                 }
             });
