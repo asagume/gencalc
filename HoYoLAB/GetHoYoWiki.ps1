@@ -12,7 +12,11 @@ $pageIds = @()
 # $pageIds += 2255   # 落霞
 # $pageIds += 2264   # 籠釣瓶一心
 # 聖遺物
-$pageIds += @(2061..2099)
+# $pageIds += @(2061..2099)
+# 生物誌
+$pageIds += @(2100..2251)
+# 物産誌
+#$pageIds += @(52..2251)
 
 $doDownloadImg = $false
 
@@ -20,14 +24,17 @@ $categoryMap = @{
     "2" = "characters"
     "4" = "weapons"
     "5" = "artifacts"
+    "7" = "enemy_and_monster"
 }
 
 $xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
 # $xRpcLanguages = @("en-us", "ja-jp")
 
+$ProgressPreference = 'SilentlyContinue'
+
 foreach ($pageId in $pageIds) {
+    $pageId
     $uri = "https://sg-wiki-api-static.hoyolab.com/hoyowiki/wapi/entry_page?entry_page_id=" + $pageId
-    $uri
 
     $contentMLang = @{}
 
@@ -155,9 +162,9 @@ foreach ($pageId in $pageIds) {
     }
     elseif ($menuId -eq 5) {
         # 聖遺物
-        foreach ($value in $contentMLang."en-us"."filter_values"."weapon_rarity"."values") {
-            $rarity = $value -replace "[^0-9]", ""
-        }
+        # foreach ($value in $contentMLang."en-us"."filter_values"."weapon_rarity"."values") {
+        #     $rarity = $value -replace "[^0-9]", ""
+        # }
 
         $outDirPath = Join-Path $destFolder -ChildPath ("data\" + $categoryMap.$menuId)
         if (-not (Test-Path $outDirPath)) {
@@ -177,6 +184,15 @@ foreach ($pageId in $pageIds) {
             Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
         }
     }
+    else {
+        $outDirPath = Join-Path $destFolder -ChildPath ("data\" + $categoryMap.$menuId)
+        if (-not (Test-Path $outDirPath)) {
+            New-Item -Path $outDirPath -ItemType Directory -Force
+        }
+        # $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
+        $jsonFileName = $pageId.ToString() + "_" + $writableName + ".json"
+        $jsonFilePath = $outDirPath
+    }
 
     if ($jsonFileName -ne "") {
         foreach ($xRpcLanguage in $xRpcLanguages) {
@@ -194,4 +210,4 @@ foreach ($pageId in $pageIds) {
     }
 }
 
-Write-Host 'Done'
+Write-Host "Done"

@@ -94,10 +94,17 @@
 
         async function onLoad() {
             const responses = await Promise.all([
-                'data/HoYoDictionary.json'
+                'data/HoYoDictionary2.json',
+                'data/HoYoDictionary4.json',
+                'data/HoYoDictionary5.json',
+                'data/HoYoDictionary7.json',
             ].map(s => fetch(s).then(resp => resp.json())));
 
-            HoYo辞書MasterVar = responses[0];
+            responses.forEach(response => {
+                Object.keys(response).forEach(key => {
+                    HoYo辞書MasterVar[key] = response[key];
+                })
+            });
 
             Object.keys(HoYo辞書MasterVar).forEach(key => {
                 const entry = HoYo辞書MasterVar[key];
