@@ -174,7 +174,7 @@
                         </tr>
                         <tr v-if="おすすめセットOption.isOpen">
                             <td colspan="6">
-                                <select v-model="おすすめセット">
+                                <select v-model="おすすめセット" @change="recommendationOnChange">
                                     <option v-for="item in おすすめセットOption.list" :value="item">
                                         {{displayBuildName(item)}}</option>
                                 </select>
@@ -606,8 +606,8 @@
                         <label class="condition" v-for="item in selectList">
                             {{displayName(item.name)}}
                             <select v-model="conditions[item.name]" @change="onChange(item)">
-                                <option v-if="!item.require" value=""></option>
-                                <option v-for="subitem in item.list" :value="subitem">{{displayOption(subitem)}}
+                                <option v-for="(option, optionIndex) in item.list" :value="optionIndex" :key="option">
+                                    {{displayOptionValue(option)}}
                                 </option>
                             </select>
                         </label>
@@ -829,26 +829,31 @@
                         </div>
 
                         <div v-show="activeTab == '2'">
-                            <template v-for="supporter in teamOptionSupporterList">
-                                <label class="expandable-option" v-show="!isTeamOptionSupporterOpened[supporter]">
-                                    <input class="hidden" type="checkbox"
-                                        v-model="isTeamOptionSupporterOpened[supporter]">
+                            <template v-for="supporter in supporterList">
+                                <label class="expandable-option" v-show="!isSupporterOptionOpened[supporter]">
+                                    <input class="hidden" type="checkbox" v-model="isSupporterOptionOpened[supporter]">
                                     <span>{{displayName(supporter)}}</span>
                                 </label>
-                                <fieldset class="team-option" :disabled="teamOptionSupporterDisabled(supporter)"
-                                    v-show="isTeamOptionSupporterOpened[supporter]">
+                                <fieldset class="team-option" :disabled="supporterOptionDisabled(supporter)"
+                                    v-show="isSupporterOptionOpened[supporter]">
                                     <legend>
                                         <label>
                                             <input class="hidden" type="checkbox"
-                                                v-model="isTeamOptionSupporterOpened[supporter]">
+                                                v-model="isSupporterOptionOpened[supporter]">
                                             <span>{{displayName(supporter)}}</span>
                                         </label>
                                     </legend>
                                     <label v-for="item in supporterInputList(supporter)">
-
+                                        <input type="checkbox" v-model="teamOptionConditions[supporter][item.name]">
+                                        {{displayName(item.name)}}
                                     </label>
                                     <label v-for="item in supporterSelectList(supporter)">
-
+                                        {{displayName(item.name)}}
+                                        <select v-model="teamOptionConditions[supporter][item.name]">
+                                            <option v-for="(option, optionIndex) in item.options" :value="optionIndex"
+                                                :key="option">
+                                                {{displayOptionValue(option)}}</option>
+                                        </select>
                                     </label>
                                 </fieldset>
                             </template>

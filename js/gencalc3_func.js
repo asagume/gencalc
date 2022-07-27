@@ -144,71 +144,77 @@ function makeArtifactSetAbbrev(name) {
  * @param {object} recommendation 
  */
 async function loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation) {
-    const character = characterInput.character;
-    const characterMaster = await getCharacterMaster(character);
-    characterInput.characterMaster = characterMaster;
+    try {
+        const character = characterInput.character;
+        const characterMaster = await getCharacterMaster(character);
+        characterInput.characterMaster = characterMaster;
 
-    if ('レベル' in recommendation) {
-        [characterInput.突破レベル, characterInput.レベル] = parseLevelStr(recommendation['レベル']);
-    }
-    ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
-        if (key in recommendation) {
-            characterInput[key] = recommendation[key];
+        if ('レベル' in recommendation) {
+            [characterInput.突破レベル, characterInput.レベル] = parseLevelStr(recommendation['レベル']);
         }
-    });
+        ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
+            if (key in recommendation) {
+                characterInput[key] = recommendation[key];
+            }
+        });
 
-    const weaponType = characterMaster['武器'];
-    if ('武器' in recommendation) {
-        characterInput.weapon = recommendation['武器'];
-        characterInput.weaponMaster = await getWeaponMaster(weaponType, characterInput.weapon);
-    }
-    if ('武器レベル' in recommendation) {
-        [characterInput.武器突破レベル, characterInput.武器レベル] = parseLevelStr(recommendation['武器レベル']);
-    }
-    if ('精錬ランク' in recommendation) {
-        characterInput.武器精錬ランク = recommendation['精錬ランク'];
-    }
+        const weaponType = characterMaster['武器'];
+        if ('武器' in recommendation) {
+            characterInput.weapon = recommendation['武器'];
+            characterInput.weaponMaster = await getWeaponMaster(weaponType, characterInput.weapon);
+        }
+        if ('武器レベル' in recommendation) {
+            [characterInput.武器突破レベル, characterInput.武器レベル] = parseLevelStr(recommendation['武器レベル']);
+        }
+        if ('精錬ランク' in recommendation) {
+            characterInput.武器精錬ランク = recommendation['精錬ランク'];
+        }
 
-    ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
-        const artifactSet = recommendation[key];
-        characterInput['聖遺物セット効果'][index]['名前'] = artifactSet;
-        if (artifactSet && artifactSet in 聖遺物セット効果MasterVar) {
-            characterInput['聖遺物セット効果'][index].master = 聖遺物セット効果MasterVar[artifactSet];
-        } else {
-            characterInput['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
-        }
-    });
-    ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
-        let mainStat = recommendation[key];
-        if (!mainStat) {
-            mainStat = ['5_HP', '5_攻撃力'][index];
-        }
-        artifactDetailInput['聖遺物メイン効果'][index] = mainStat;
-    });
-    ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
-        const mainstat = recommendation[key];
-        artifactDetailInput['聖遺物メイン効果'][index + 2] = mainstat;
-    });
-    ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
-        const substat = recommendation[key];
-        artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
-    });
-    let hasSubstat = false;
-    Object.keys(recommendation).filter(s => s.startsWith('聖遺物サブ効果')).forEach(key => {
-        let stat = key.replace(/^聖遺物サブ効果/, '');
-        if (stat in 聖遺物ステータスTEMPLATE) {
-            // nop
-        } else {
-            stat = stat.replace(/P$/, '%');
-        }
-        artifactDetailInput['聖遺物ステータス'][stat] = Math.round(recommendation[key] * 10) / 10;
-        hasSubstat = true;
-    });
-    artifactDetailInput.isステータス計算無効 = hasSubstat;
+        ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
+            const artifactSet = recommendation[key];
+            characterInput['聖遺物セット効果'][index]['名前'] = artifactSet;
+            if (artifactSet && artifactSet in 聖遺物セット効果MasterVar) {
+                characterInput['聖遺物セット効果'][index].master = 聖遺物セット効果MasterVar[artifactSet];
+            } else {
+                characterInput['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
+            }
+        });
+        ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
+            let mainStat = recommendation[key];
+            if (!mainStat) {
+                mainStat = ['5_HP', '5_攻撃力'][index];
+            }
+            artifactDetailInput['聖遺物メイン効果'][index] = mainStat;
+        });
+        ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
+            const mainstat = recommendation[key];
+            artifactDetailInput['聖遺物メイン効果'][index + 2] = mainstat;
+        });
+        ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
+            const substat = recommendation[key];
+            artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
+        });
+        let hasSubstat = false;
+        Object.keys(recommendation).filter(s => s.startsWith('聖遺物サブ効果')).forEach(key => {
+            let stat = key.replace(/^聖遺物サブ効果/, '');
+            if (stat in 聖遺物ステータスTEMPLATE) {
+                // nop
+            } else {
+                stat = stat.replace(/P$/, '%');
+            }
+            artifactDetailInput['聖遺物ステータス'][stat] = Math.round(recommendation[key] * 10) / 10;
+            hasSubstat = true;
+        });
+        artifactDetailInput.isステータス計算無効 = hasSubstat;
 
-    makeDamageDetailObjCharacter(characterInput);
-    makeDamageDetailObjWeapon(characterInput);
-    makeDamageDetailObjArtifactSet(characterInput);
+        makeDamageDetailObjCharacter(characterInput);
+        makeDamageDetailObjWeapon(characterInput);
+        makeDamageDetailObjArtifactSet(characterInput);
+    }
+    catch (error) {
+        console.error(characterInput, artifactDetailInput, conditionInput, recommendation);
+        throw error;
+    }
 }
 
 /**
@@ -227,18 +233,26 @@ function getLevelStr(ascension, level) {
  * @returns {[number, number]}
  */
 function parseLevelStr(levelStr) {
-    const level = Number(levelStr.replace('+', ''));
-    let ascension;
-    for (let i = 突破レベルレベルARRAY.length - 1; i >= 0; i--) {
-        if (突破レベルレベルARRAY[i][0] < level) continue;
-        if (突破レベルレベルARRAY[i][突破レベルレベルARRAY[i].length - 1] > level) continue;
-        ascension = i;
-        if (levelStr.endsWith('+')) {
-            ascension++;
+    try {
+        let level = levelStr;
+        if (isString(level)) {
+            level = Number(level.replace('+', ''));
         }
-        break;
+        let ascension;
+        for (let i = 突破レベルレベルARRAY.length - 1; i >= 0; i--) {
+            if (突破レベルレベルARRAY[i][0] < level) continue;
+            if (突破レベルレベルARRAY[i][突破レベルレベルARRAY[i].length - 1] > level) continue;
+            ascension = i;
+            if (levelStr.endsWith('+')) {
+                ascension++;
+            }
+            break;
+        }
+        return [ascension, level];
+    } catch (error) {
+        console.error(levelStr);
+        throw error;
     }
-    return [ascension, level];
 }
 
 /**
@@ -400,7 +414,6 @@ function makeDamageDetailObjCharacter(characterInput, conditionInput) {
 
         キャラクターダメージ詳細ObjMapVar.set(character, result);
         console.debug(makeDamageDetailObjCharacter.name, character, result);
-
         return result;
     } catch (error) {
         console.log(characterInput, conditionInput);
@@ -534,6 +547,40 @@ function makeDamageDetailObjArtifactSet(characterInput, conditionInput) {
         console.log(characterInput, conditionInput);
         throw error;
     }
+}
+
+/**
+ * 
+ * @param {object} talentDetail 
+ * @returns {object}
+ */
+function makeDamageDetailObjOption(talentDetail) {
+    const result = {};
+
+    const myInputCategory = 'オプション';
+
+    const myステータス変更系詳細Arr = [];
+    const my天賦性能変更系詳細Arr = [];
+
+    result['オプション'] = makeTalentDetailArray(talentDetail, null, null, null, myステータス変更系詳細Arr, my天賦性能変更系詳細Arr, myInputCategory);
+
+    result[CHANGE_KIND_STATUS] = myステータス変更系詳細Arr;
+    result[CHANGE_KIND_TALENT] = my天賦性能変更系詳細Arr;
+
+    const conditionMap = new Map();
+    const exclusionMap = new Map();
+    myステータス変更系詳細Arr.filter(s => s['条件']).forEach(detailObj => {
+        let condition = detailObj['条件'];
+        makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
+    });
+    my天賦性能変更系詳細Arr.filter(s => s['条件']).forEach(detailObj => {
+        let condition = detailObj['条件'];
+        makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
+    });
+    result['条件'] = conditionMap;
+    result['排他'] = exclusionMap;
+
+    return result;
 }
 
 /**

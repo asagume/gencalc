@@ -79,6 +79,9 @@ async function onLoad(searchParams) {
     const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation[1]);
 
+    const optionInput = JSON.parse(JSON.stringify(OPTION_INPUT_TEMPLATE));
+    await setupTeamOption(optionInput);
+
     initialSetupLanguageSelect();
     initialSetupCharacterSelect(characterInput);
     initialSetupWeaponSelect(characterInput);
@@ -88,7 +91,7 @@ async function onLoad(searchParams) {
     initialSetupCharacterInput(characterInput, recommendation, recommendationList);
     initialSetupStatusInput();
     initialSetupCalcurationResult();
-    initialSetupOptionInput();
+    initialSetupOptionInput(optionInput);
     initialSetupCharacterInformation();
     initialSetupCharacterOwnList();
     initialSetupWeaponOwnList();
@@ -237,7 +240,7 @@ function initialSetupCharacterSelect(characterInput) {
     CharacterSelectVm = Vue.createApp(CharacterSelect).mount('#character-select');
 }
 
-async function initialSetupCharacterInput(characterInput, recommendation, recommendationList) {
+function initialSetupCharacterInput(characterInput, recommendation, recommendationList) {
     const CharacterInput = {
         data() {
             return {
@@ -373,7 +376,7 @@ async function initialSetupCharacterInput(characterInput, recommendation, recomm
             },
             突破レベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this);
+                    makeDamageDetailObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
@@ -403,25 +406,25 @@ async function initialSetupCharacterInput(characterInput, recommendation, recomm
                     });
                     this.元素スキルレベルOption.max = maxSkillLevel;
                     this.元素爆発レベルOption.max = maxBurstLevel;
-                    makeDamageDetailObjCharacter(this);
+                    makeDamageDetailObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             通常攻撃レベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this);
+                    makeDamageDetailObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             元素スキルレベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this);
+                    makeDamageDetailObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             元素爆発レベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this);
+                    makeDamageDetailObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
@@ -522,6 +525,11 @@ async function initialSetupCharacterInput(characterInput, recommendation, recomm
             characterInfoOnClick: function () {
                 CharacterInformationVm.controlVisible();
             },
+            recommendationOnChange: function () {
+                loadRecommendation(this, ArtifactDetailInputVm, ConditionInputVm, this.おすすめセット);
+                // TODO ステータス情報更新
+                // TODO 計算結果更新
+            },
             saveOnClick: function () {
                 if (!this.buildName) return;
             },
@@ -533,7 +541,7 @@ async function initialSetupCharacterInput(characterInput, recommendation, recomm
     CharacterInputVm = Vue.createApp(CharacterInput).mount('#character-input');
 }
 
-async function initialSetupWeaponSelect(weaponType, weapon, weaponMaster) {
+function initialSetupWeaponSelect(weaponType, weapon, weaponMaster) {
     const WeaponSelect = {
         data() {
             return {
@@ -855,7 +863,7 @@ function initialSetupArtifactDetailInput() {
     ArtifactDetailInputVm = Vue.createApp(ArtifactDetailInput).mount('#artifact-detail-input');
 }
 
-function initialSetupConditionInput(opt_characterMaster = null) {
+function initialSetupConditionInput() {
     const ConditionInput = {
         data() {
             return {
@@ -963,7 +971,7 @@ function initialSetupConditionInput(opt_characterMaster = null) {
             displayName: function (name) {
                 return getDisplayName(name);
             },
-            displayOption: function (name) {
+            displayOptionValue: function (name) {
                 return getDisplayName(name.replace(/^required_/, ''));
             },
             displayStatKeyAndValue: function (name, value) {
@@ -1005,71 +1013,83 @@ function initialSetupConditionInput(opt_characterMaster = null) {
     ConditionInputVm = Vue.createApp(ConditionInput).mount('#condition-input');
 }
 
-function initialSetupOptionInput(opt_characterMaster = null) {
+function initialSetupOptionInput(optionInput) {
     const OptionInput = {
         data() {
             return {
                 isVisible: true,
                 activeTab: 1,
-                elementalResonanceMaster: 元素共鳴MasterVar,
                 元素共鳴: {},
                 元素共鳴詳細: {},
-                teamOptionMaster: チームオプションMasterVar,
-                チームオプション: {},
-                チームオプション詳細: {},
-                teamOptionSupporterList: [],
-                isTeamOptionSupporterOpened: {},
-                option1Master: オプション1MasterVar,
+                teamOptionConditionMap: {},
+                supporterList: [],
+                isSupporterOptionOpened: {},
+                teamOptionConditions: {},
                 オプション1: {},
                 オプション1詳細: {},
-                option2Master: オプション2MasterVar,
                 オプション2: {},
                 オプション2詳細: {},
                 ステータス補正: {}
             }
         },
         created() {
-            Object.keys(this.elementalResonanceMaster).forEach(key => {
+            Object.keys(optionInput).forEach(key => {
+                this[key] = optionInput[key];
+            });
+            Object.keys(元素共鳴MasterVar).forEach(key => {
                 this.元素共鳴[key] = false;
                 this.元素共鳴詳細[key] = null;
             });
-            Object.keys(this.teamOptionMaster).forEach(key => {
-                this.チームオプション[key] = null;
-                this.チームオプション詳細[key] = null;
+            Object.keys(this.teamOptionConditionMap).forEach(supporter => {
+                const teamOptionCondition = this.teamOptionConditionMap[supporter];
+                if (!(supporter in this.teamOptionConditions)) {
+                    this.teamOptionConditions[supporter] = {};
+                }
+                Object.keys(teamOptionCondition).forEach(name => {
+                    const options = teamOptionCondition[name];
+                    if (options) {
+                        this.teamOptionConditions[supporter][name] = null;
+                    } else {
+                        this.teamOptionConditions[supporter][name] = false;
+                    }
+                });
             });
-            this.teamOptionSupporterList = Array.from(new Set(Object.keys(this.teamOptionMaster).map(s => s.split('_')[0])));
-            this.teamOptionSupporterList.forEach(supporter => {
-                this.isTeamOptionSupporterOpened[supporter] = false;
+            this.supporterList.forEach(supporter => {
+                this.isSupporterOptionOpened[supporter] = false;
             });
-            Object.keys(this.option1Master).forEach(key => {
+            Object.keys(オプション1MasterVar).forEach(key => {
                 this.オプション1[key] = null;
                 this.オプション1詳細[key] = null;
             });
-            Object.keys(this.option2Master).forEach(key => {
+            Object.keys(オプション2MasterVar).forEach(key => {
                 this.オプション2[key] = null;
                 this.オプション2詳細[key] = null;
             });
         },
         computed: {
             elementalResonanceList: function () {
-                return Object.keys(this.elementalResonanceMaster).filter(s => s.endsWith('共鳴'));
+                return Object.keys(元素共鳴MasterVar).filter(s => s.endsWith('共鳴'));
             },
             option1List: function () {
-                return Object.keys(this.option1Master);
+                return Object.keys(オプション1MasterVar);
             },
             option2List: function () {
-                return Object.keys(this.option2Master);
+                return Object.keys(オプション2MasterVar);
             }
         },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
             },
+            displayOptionValue: function (name) {
+                if (name) return getDisplayName(name.replace(/^required_/, ''));
+                return name;
+            },
             displayStatValue: function (name, value) {
                 return getDisplayStatValue(name, value);
             },
             name: function (item) {
-                return this.elementalResonanceMaster[item]['名前'];
+                return 元素共鳴MasterVar[item]['名前'];
             },
             elementalResonanceOnChange: function (key, event) {
                 if (event.target.checked) {
@@ -1082,35 +1102,47 @@ function initialSetupOptionInput(opt_characterMaster = null) {
             elementalResonanceName: function (index) {
                 const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
                 if (arr.length > index) {
-                    return this.elementalResonanceMaster[arr[index]]['名前'];
+                    return 元素共鳴MasterVar[arr[index]]['名前'];
                 } else if (arr.length == 0 && index == 0) {
-                    return this.elementalResonanceMaster['元素共鳴なし']['名前'];
+                    return 元素共鳴MasterVar['元素共鳴なし']['名前'];
                 }
                 return '';
             },
             elementalResonanceDescription: function (index) {
                 const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
                 if (arr.length > index) {
-                    return this.elementalResonanceMaster[arr[index]]['説明'];
+                    return 元素共鳴MasterVar[arr[index]]['説明'];
                 } else if (arr.length == 0 && index == 0) {
-                    return this.elementalResonanceMaster['元素共鳴なし']['説明'];
+                    return 元素共鳴MasterVar['元素共鳴なし']['説明'];
                 }
                 return '';
             },
             teamOptionList: function (supporter) {
-                return Object.keys(this.teamOptionMaster).filter(s => s.startsWith(supporter + '_')).map(s => s.replace(supporter + '_', ''));
+                return Object.keys(チームオプションMasterVar).filter(s => s.startsWith(supporter + '_')).map(s => s.replace(supporter + '_', ''));
             },
-            teamOptionSupporterDisabled(supporter) {
+            supporterOptionDisabled(supporter) {
                 return CharacterInputVm && supporter == CharacterInputVm.name;
             },
             teamOptionDisabled(character, name) {
                 return false;
             },
             supporterInputList: function (supporter) {
-                return [];
+                const result = [];
+                Object.keys(this.teamOptionConditionMap[supporter]).forEach(key => {
+                    const value = this.teamOptionConditionMap[supporter][key];
+                    if (!value) result.push({ name: key });
+                });
+                console.log(result);
+                return result;
             },
             supporterSelectList: function (supporter) {
-                return [];
+                const result = [];
+                Object.keys(this.teamOptionConditionMap[supporter]).forEach(key => {
+                    const value = this.teamOptionConditionMap[supporter][key];
+                    if (value) result.push({ name: key, options: value });
+                });
+                console.log(result);
+                return result;
             }
         }
     }

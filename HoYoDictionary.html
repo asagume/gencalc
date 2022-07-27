@@ -15,7 +15,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <link href="https://cdn.jsdelivr.net/npm/vue-good-table@2.18.0/dist/vue-good-table.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue-good-table@2.18.0/dist/vue-good-table.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-draggable-next@2.1.1/dist/vue-draggable-next.global.min.js"></script>
     <style>
         body {
             color: blanchedalmond;
@@ -84,7 +83,7 @@
             <vue-good-table :columns="columns" :rows="rows" :line-numbers="true"
                 :pagination-options="{enabled: true, mode: 'pages', perPage: 10, perPageDropdown: [10, 25, 50, 100, 200], dropdownAllowAll: true, position: 'bottom', jumpFirstOrLast : true}"
                 :search-options="{enabled: true, trigger: 'enter', placeholder: 'Search this table'}"
-                :sort-options="{enabled: true, multipleColumns: true; trigger: 'enter'}" styleclass="vgt-table striped">
+                :sort-options="{enabled: true, multipleColumns: true, trigger: 'enter'}" styleclass="vgt-table striped">
                 <template slot="table-row" slot-scope="props">
                     <span v-if="props.column.field == 'id'">
                         <a :href="'https://wiki.hoyolab.com/pc/genshin/entry/' + props.row.id"

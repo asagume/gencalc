@@ -150,17 +150,21 @@ function getDisplayNameJaJp(name) {
  */
 function getDisplayBuildName(recommendation) {
     if (recommendation[2] || LanguageSelectVm.selected == 'ja-jp') return recommendation[0];
-    const splitted = recommendation[0].split(' ');
-    let weapon = splitted.shift();
-    let artifactSet = splitted.shift();
-    let stat = splitted.shift();
-    weapon = getDisplayName(weapon);
-    artifactSet = getDisplayName(artifactSet, 'en-us').replace(/[a-z ]/g, '');
-    RECOMMEND_ABBREV_EN_REVERSE_MAP.forEach((value, key) => {
-        stat = stat.replace(key, value);
-    });
-    let result = weapon + '+' + artifactSet + ' ' + stat;
-    return result;
+    let weapon = getDisplayName(recommendation[1]['武器']);
+    let artifactSet = '';
+    if (recommendation[1]['聖遺物セット効果1'] == recommendation[1]['聖遺物セット効果2']) {
+        artifactSet += getDisplayName(recommendation[1]['聖遺物セット効果1'], 'en-us');
+    } else {
+        artifactSet += getDisplayName(recommendation[1]['聖遺物セット効果1'], 'en-us');
+        artifactSet += '/';
+        artifactSet += getDisplayName(recommendation[2]['聖遺物セット効果1'], 'en-us');
+    }
+    artifactSet = artifactSet.replace(/[a-z ]/, '');
+    let stat = '';
+    stat += recommendation[1]['聖遺物メイン効果3'] ? RECOMMEND_ABBREV_EN_MAP.get(recommendation[1]['聖遺物メイン効果3']) : '  ';
+    stat += recommendation[1]['聖遺物メイン効果4'] ? RECOMMEND_ABBREV_EN_MAP.get(recommendation[1]['聖遺物メイン効果4']) : '  ';
+    stat += recommendation[1]['聖遺物メイン効果5'] ? RECOMMEND_ABBREV_EN_MAP.get(recommendation[1]['聖遺物メイン効果5']) : '  ';
+    return weapon + ' ' + artifactSet + ' [' + stat + ']';
 }
 
 /**
@@ -295,27 +299,67 @@ async function setupWeaponInput(type, weapon, characterInput) {
     makeDamageDetailObjWeapon(characterInput);
 }
 
-function setupTeamOption() {
-    const teamOptionSupporterOptions = {};
+/**
+ * 
+ * @param {object} optionInput 
+ */
+function setupElementalResonanceOption(optionInput) {
+
+}
+
+/**
+ * 
+ * @param {object} optionInput 
+ */
+async function setupTeamOption(optionInput) {
+    const teamOptionConditionMap = optionInput.teamOptionConditionMap;
+    const supporterList = optionInput.supporterList;
 
     Object.keys(チームオプションMasterVar).forEach(optionKey => {
         const splittedKey = optionKey.split('_');
         const character = splittedKey[0];
 
-        const detailObj = チームオプションMasterVar[optionKey];
-        if (isPlainObject(detailObj['数値'])) {
-
-        } else if (Array.isArray(detailObj['数値'])) {
-
+        if (!supporterList.includes(character)) {
+            supporterList.push(character);
         }
 
-        const buildNamePrefix = '構成_' + character;
-        const buildData = Object.keys(localStorage).filter(s => s.startsWith(buildNamePrefix));
-        if (buildData.length == 0) {
-            return;
+        if (!サポーターInputMapVar.has(character)) {
+            サポーターInputMapVar.set(character, JSON.parse(JSON.stringify(SUPPORTER_INPUT_TEMPLATE)))
+        }
+        const supporterInput = サポーターInputMapVar.get(character);
+        const characterInput = supporterInput.characterInput;
+        const artifactDetailInput = supporterInput.artifactDetailInput;
+        const conditionInput = supporterInput.conditionInput;
+
+        characterInput.character = character;
+
+        const storageKey = '構成_' + character;
+        if (localStorage[storageKey]) {
+            const recommendation = JSON.parse(localStorage[storageKey]);
+            // await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
         }
 
+        const damageDetailObj = makeDamageDetailObjOption(チームオプションMasterVar[optionKey]);
+        チームオプションダメージ詳細ObjMapVar.set(optionKey, damageDetailObj);
+
+        if (!(character in teamOptionConditionMap)) {
+            teamOptionConditionMap[character] = {};
+        }
+        const teamOptionCondition = teamOptionConditionMap[character];
+        if (damageDetailObj['条件'].size > 0) {
+            damageDetailObj['条件'].forEach((value, key) => {
+                if (Array.isArray(value) && value.length > 0) {
+                    if (isString(value[0]) && value[0].startsWith('required_')) {
+                        value.splice(0, 1, null);
+                    }
+                }
+                teamOptionCondition[key] = value;
+            });
+        } else {
+            teamOptionCondition[optionKey] = null;
+        }
     });
+    return optionInput;
 }
 
 function updateStatusStatus(statusObj) {

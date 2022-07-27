@@ -17,24 +17,38 @@ const キャラクター個別MasterMapVar = new Map();
 const 武器個別MasterMapVar = new Map();
 
 async function getCharacterMaster(character) {
-    if (!キャラクター個別MasterMapVar.has(character)) {
-        const characterMaster = await fetch(キャラクターMasterVar[character]['import']).then(resp => resp.json());
-        キャラクター個別MasterMapVar.set(character, characterMaster);
+    try {
+        if (!キャラクター個別MasterMapVar.has(character)) {
+            const characterMaster = await fetch(キャラクターMasterVar[character]['import']).then(resp => resp.json());
+            キャラクター個別MasterMapVar.set(character, characterMaster);
+        }
+        return キャラクター個別MasterMapVar.get(character);
+    } catch (error) {
+        console.error(character);
+        throw error;
     }
-    return キャラクター個別MasterMapVar.get(character);
 }
 
 async function getWeaponMaster(weaponType, weapon) {
-    if (!武器個別MasterMapVar.has(weapon)) {
-        const weaponMaster = await fetch(武器MasterVar[weaponType][weapon]['import']).then(resp => resp.json());
-        武器個別MasterMapVar.set(weapon, weaponMaster);
+    try {
+        if (!武器個別MasterMapVar.has(weapon)) {
+            const weaponMaster = await fetch(武器MasterVar[weaponType][weapon]['import']).then(resp => resp.json());
+            武器個別MasterMapVar.set(weapon, weaponMaster);
+        }
+        return 武器個別MasterMapVar.get(weapon);
+    } catch (error) {
+        console.error(weaponType, weapon);
+        throw error;
     }
-    return 武器個別MasterMapVar.get(weapon);
 }
 
 const キャラクターダメージ詳細ObjMapVar = new Map();
 const 武器ダメージ詳細ObjMapVar = new Map();
 const 聖遺物セット効果ダメージ詳細ObjMapVar = new Map();
+const 元素共鳴ダメージ詳細ObjMapVar = new Map();
+
+const チームオプションダメージ詳細ObjMapVar = new Map();
+const サポーターInputMapVar = new Map();
 
 var キャラクター所持状況Var = {};
 var 武器所持状況Var = {};
@@ -446,9 +460,10 @@ const RECOMMEND_ABBREV_MAP = new Map([
     ['HP%', 'HP'], ['元素熟知', '熟'], ['元素チャージ効率', 'ﾁｬ'], ['会心率', '率'], ['会心ダメージ', 'ダ'], ['与える治療効果', '治']
 ]);
 
-const RECOMMEND_ABBREV_EN_REVERSE_MAP = new Map([
-    ['攻', 'AT'], ['防', 'DF'], ['熟', 'EM'], ['率', 'CR'], ['ダ', 'CD'], ['ﾁｬ', 'ER'], ['治', 'HE'],
-    ['炎', 'Py'], ['水', 'Hy'], ['風', 'An'], ['雷', 'El'], ['草', 'De'], ['氷', 'Cr'], ['岩', 'Ge'], ['物', 'Ph'],
+const RECOMMEND_ABBREV_EN_MAP = new Map([
+    ['HP%', 'HP'], ['攻撃力%', 'AT'], ['防御力%', 'DF'], ['元素熟知', 'EM'],
+    ['会心率', 'CR'], ['会心ダメージ', 'CD'], ['元素チャージ効率', 'ER'], ['与える治療効果', 'HE'],
+    ['炎元素ダメージバフ', 'Py'], ['水元素ダメージバフ', 'Hy'], ['風元素ダメージバフ', 'An'], ['雷元素ダメージバフ', 'El'], ['草元素ダメージバフ', 'De'], ['氷元素ダメージバフ', 'Cr'], ['岩元素ダメージバフ', 'Ge'], ['物理ダメージバフ', 'Ph'],
 ]);
 
 const CHARACTER_INPUT_TEMPLATE = {
@@ -493,9 +508,32 @@ const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
 };
 
 const CONDITION_INPUT_TEMPLATE = {
+    isVisible: true,
     conditions: {},
     character: null,
     characterMaster: null,
     conditionAdjustments: {}
+};
+
+const OPTION_INPUT_TEMPLATE = {
+    isVisible: true,
+    activeTab: 1,
+    元素共鳴: {},
+    元素共鳴詳細: {},
+    teamOptionConditionMap: {},
+    supporterList: [],
+    isSupporterOptionOpened: {},
+    teamOptionConditions: {},
+    オプション1: {},
+    オプション1詳細: {},
+    オプション2: {},
+    オプション2詳細: {},
+    ステータス補正: {}
+};
+
+const SUPPORTER_INPUT_TEMPLATE = {
+    characterInput: CHARACTER_INPUT_TEMPLATE,
+    artifactDetailInput: ARTIFACT_DETAIL_INPUT_TEMPLATE,
+    conditionInput: CONDITION_INPUT_TEMPLATE
 };
 
