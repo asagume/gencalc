@@ -16,7 +16,8 @@ $pageIds = @()
 # 生物誌
 #$pageIds += @(2100..2251)
 # 物産誌
-$pageIds += @(52..1929)
+# $pageIds += @(52..1929)
+$pageIds += @(1523..1929)
 # $pageIds += 2253
 # $pageIds += 2254
 # $pageIds += 2257

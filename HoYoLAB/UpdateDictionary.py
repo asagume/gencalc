@@ -40,7 +40,7 @@ for category_dir in CATEGORY_DIRS:
         with open(jaJpFile, 'r', encoding='utf_8_sig') as f:
             jaJpContents.append([jaJpFile, json.load(f)])
 
-    for jaJpContent in sorted(jaJpContents, key=lambda jaJpContent: jaJpContent[1]['id']):
+    for jaJpContent in sorted(jaJpContents, key=lambda jaJpContent: int(jaJpContent[1]['id'])):
         jaJpFile = jaJpContent[0]
         jaJpJson = jaJpContent[1]
 
