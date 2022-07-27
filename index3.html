@@ -843,13 +843,13 @@
                                             <span>{{displayName(supporter)}}</span>
                                         </label>
                                     </legend>
-                                    <label v-for="item in supporterInputList(supporter)">
-                                        <input type="checkbox" v-model="teamOptionConditions[supporter][item.name]">
+                                    <label class="condition" v-for="item in supporterInputList(supporter)">
+                                        <input type="checkbox" v-model="teamOptionConditions[supporter][item.condition]">
                                         {{displayName(item.name)}}
                                     </label>
-                                    <label v-for="item in supporterSelectList(supporter)">
+                                    <label class="condition" v-for="item in supporterSelectList(supporter)">
                                         {{displayName(item.name)}}
-                                        <select v-model="teamOptionConditions[supporter][item.name]">
+                                        <select v-model="teamOptionConditions[supporter][item.condition]">
                                             <option v-for="(option, optionIndex) in item.options" :value="optionIndex"
                                                 :key="option">
                                                 {{displayOptionValue(option)}}</option>

@@ -962,7 +962,6 @@ function initialSetupConditionInput() {
             conditions: {
                 handler: function (newVal, oldVal) {
                     this.updateConditionAdjustments();
-                    console.log('conditions', this.conditions);
                 },
                 deep: true
             }
@@ -1005,7 +1004,6 @@ function initialSetupConditionInput() {
                         });
                     });
                 });
-                console.debug('updateConditionAdjustments', result);
                 this.conditionAdjustments = result;
             }
         }
@@ -1130,18 +1128,19 @@ function initialSetupOptionInput(optionInput) {
                 const result = [];
                 Object.keys(this.teamOptionConditionMap[supporter]).forEach(key => {
                     const value = this.teamOptionConditionMap[supporter][key];
-                    if (!value) result.push({ name: key });
+                    const workArr = key.split('_')
+                    workArr.shift();
+                    const name = workArr.join('_');
+                    if (!value) result.push({ name: name, condition: key });
                 });
-                console.log(result);
                 return result;
             },
             supporterSelectList: function (supporter) {
                 const result = [];
                 Object.keys(this.teamOptionConditionMap[supporter]).forEach(key => {
                     const value = this.teamOptionConditionMap[supporter][key];
-                    if (value) result.push({ name: key, options: value });
+                    if (value) result.push({ name: key, condition: key, options: value });
                 });
-                console.log(result);
                 return result;
             }
         }
