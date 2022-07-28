@@ -29,6 +29,7 @@
     <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
     <script src="js/gencalc3_var.js"></script>
     <script src="js/gencalc3_core.js"></script>
+    <script src="js/gencalc3_cond.js"></script>
     <script src="js/gencalc3_func.js"></script>
     <script src="js/gencalc3_sub.js"></script>
     <script src="js/gencalc3.js"></script>
@@ -599,22 +600,23 @@
                 <div id="condition-input" style="margin-bottom: 20px;">
                     <fieldset v-show="isVisible">
                         <legend>{{displayName('オプション条件')}}</legend>
-                        <label class="condition" v-for="item in inputList">
-                            <input type="checkbox" v-model="conditions[item.name]" @change="onChange(item)">
+                        <label class="condition" v-for="item in conditionListInput">
+                            <input type="checkbox" v-model="conditionValues[item.name]">
                             <span>{{displayName(item.name)}}</span>
                         </label>
-                        <label class="condition" v-for="item in selectList">
+                        <label class="condition" v-for="item in conditionListSelect">
                             {{displayName(item.name)}}
-                            <select v-model="conditions[item.name]" @change="onChange(item)">
-                                <option v-for="(option, optionIndex) in item.list" :value="optionIndex" :key="option">
+                            <select v-model="conditionValues[item.name]">
+                                <option v-for="(option, optionIndex) in item.options" :value="optionIndex"
+                                    :key="option">
                                     {{displayOptionValue(option)}}
                                 </option>
                             </select>
                         </label>
                         <hr>
                         <div>
-                            <label v-for="key in Object.keys(conditionAdjustments)">
-                                {{displayStatKeyAndValue(key, conditionAdjustments[key])}}
+                            <label v-for="key in Object.keys(conditionStatusAdjustment)">
+                                {{displayStatKeyAndValue(key, conditionStatusAdjustment[key])}}
                             </label>
                         </div>
                     </fieldset>
@@ -810,16 +812,16 @@
                         <div v-show="activeTab == '1'">
                             <template v-for="item in elementalResonanceList">
                                 <label class="checkbox">
-                                    <input type="checkbox" v-model="元素共鳴[item]"
+                                    <input type="checkbox" v-model="elementalResonanceConditionValues[item]"
                                         @change="elementalResonanceOnChange(item, $event)">
                                     {{displayName(name(item))}}
                                 </label>
                             </template>
-
+                            <hr>
                             <table class="description">
                                 <template v-for="index in [0,1]">
                                     <tr>
-                                        <th>{{elementalResonanceName(index)}}</th>
+                                        <th>{{displayName(elementalResonanceName(index))}}</th>
                                     </tr>
                                     <tr>
                                         <td>{{elementalResonanceDescription(index)}}</td>
@@ -843,13 +845,15 @@
                                             <span>{{displayName(supporter)}}</span>
                                         </label>
                                     </legend>
-                                    <label class="condition" v-for="item in supporterInputList(supporter)">
-                                        <input type="checkbox" v-model="teamOptionConditions[supporter][item.condition]">
-                                        {{displayName(item.name)}}
+                                    <label class="condition" v-for="item in teamConditionListCheckbox[supporter]">
+                                        <input type="checkbox" v-model="teamOptionConditionValues[item.name]"
+                                            @change="teamOptionOnChange">
+                                        <span>{{displayName(item.name)}}</span>
                                     </label>
-                                    <label class="condition" v-for="item in supporterSelectList(supporter)">
-                                        {{displayName(item.name)}}
-                                        <select v-model="teamOptionConditions[supporter][item.condition]">
+                                    <label class="condition" v-for="item in teamConditionListSelect[supporter]">
+                                        <span>{{displayName(item.name)}}</span>
+                                        <select v-model="teamOptionConditionValues[item.name]"
+                                            @change="teamOptionOnChange">
                                             <option v-for="(option, optionIndex) in item.options" :value="optionIndex"
                                                 :key="option">
                                                 {{displayOptionValue(option)}}</option>
@@ -857,18 +861,47 @@
                                     </label>
                                 </fieldset>
                             </template>
+                            <hr>
+                            <div>
+                                <label class="stat-and-value" v-for="key in Object.keys(teamOptionStatusAdjustment)">
+                                    {{displayStatKeyAndValue(key, teamOptionStatusAdjustment[key])}}
+                                </label>
+                            </div>
                         </div>
 
                         <div v-show="activeTab == '3'">
-                            <div>
-                                <label v-for="item in option1List">
-                                    {{displayName(item)}}
+                            <div class="misc-option-list">
+                                <label class="condition" v-for="item in miscOption1InputList">
+                                    <input type="checkbox" v-model="miscOptionConditionValues[item.name]">
+                                    <span>{{displayName(item.name)}}</span>
+                                </label>
+                                <label class="condition" v-for="item in miscOption1SelectList">
+                                    <span>{{displayName(item.name)}}</span>
+                                    <select v-model="miscOptionConditionValues[item.name]">
+                                        <option v-for="(option, optionIndex) in item.options" :value="optionIndex"
+                                            :key="option">
+                                            {{displayOptionValue(option)}}</option>
+                                    </select>
                                 </label>
                             </div>
-
+                            <div class="misc-option-list">
+                                <label class="condition" v-for="item in miscOption2InputList">
+                                    <input type="checkbox" v-model="miscOptionConditionValues[item.name]">
+                                    <span>{{displayName(item.name)}}</span>
+                                </label>
+                                <label class="condition" v-for="item in miscOption2SelectList">
+                                    <span>{{displayName(item.name)}}</span>
+                                    <select v-model="miscOptionConditionValues[item.name]">
+                                        <option v-for="(option, optionIndex) in item.options" :value="optionIndex"
+                                            :key="option">
+                                            {{displayOptionValue(option)}}</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <hr>
                             <div>
-                                <label v-for="item in option2List">
-                                    {{displayName(item)}}
+                                <label class="stat-and-value" v-for="key in Object.keys(miscOptionStatusAdjustment)">
+                                    {{displayStatKeyAndValue(key, miscOptionStatusAdjustment[key])}}
                                 </label>
                             </div>
                         </div>

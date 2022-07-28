@@ -99,12 +99,12 @@ function makeSaveDataFromShareData(shareData) {
                 saveData[key] = value;
             }
         }
+
+        return saveData;
     } catch (error) {
         console.error(error);
-        return null;
+        throw error;
     }
-
-    return saveData;
 }
 
 /**
@@ -296,24 +296,30 @@ async function setupWeaponInput(type, weapon, characterInput) {
         characterInput['武器精錬ランク'] = 武器所持状況Var[weapon];
     }
 
-    makeDamageDetailObjWeapon(characterInput);
+    makeDamageDetailObjArrObjWeapon(characterInput);
 }
 
 /**
  * 
- * @param {object} optionInput 
+ * @param {Object} optionInput 
  */
 function setupElementalResonanceOption(optionInput) {
-
+    Object.keys(元素共鳴MasterVar).forEach(optionKey => {
+        const damageDetailObj = makeDamageDetailObjArrObjOption(元素共鳴MasterVar[optionKey]);
+        元素共鳴ダメージ詳細ObjMapVar.set(optionKey, damageDetailObj);
+    });
 }
 
 /**
+ * チームオプションを設定します.
  * 
- * @param {object} optionInput 
+ * @param {Object} optionInput 
  */
 async function setupTeamOption(optionInput) {
-    const teamOptionConditionMap = optionInput.teamOptionConditionMap;
     const supporterList = optionInput.supporterList;
+
+    optionInput.teamConditionListCheckbox = {};
+    optionInput.teamConditionListSelect = {};
 
     Object.keys(チームオプションMasterVar).forEach(optionKey => {
         const splittedKey = optionKey.split('_');
@@ -323,43 +329,135 @@ async function setupTeamOption(optionInput) {
             supporterList.push(character);
         }
 
-        if (!サポーターInputMapVar.has(character)) {
-            サポーターInputMapVar.set(character, JSON.parse(JSON.stringify(SUPPORTER_INPUT_TEMPLATE)))
-        }
-        const supporterInput = サポーターInputMapVar.get(character);
-        const characterInput = supporterInput.characterInput;
-        const artifactDetailInput = supporterInput.artifactDetailInput;
-        const conditionInput = supporterInput.conditionInput;
-
-        characterInput.character = character;
-
-        const storageKey = '構成_' + character;
-        if (localStorage[storageKey]) {
-            const recommendation = JSON.parse(localStorage[storageKey]);
-            // await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
-        }
-
-        const damageDetailObj = makeDamageDetailObjOption(チームオプションMasterVar[optionKey]);
-        チームオプションダメージ詳細ObjMapVar.set(optionKey, damageDetailObj);
-
-        if (!(character in teamOptionConditionMap)) {
-            teamOptionConditionMap[character] = {};
-        }
-        const teamOptionCondition = teamOptionConditionMap[character];
-        if (damageDetailObj['条件'].size > 0) {
-            damageDetailObj['条件'].forEach((value, key) => {
-                if (Array.isArray(value) && value.length > 0) {
-                    if (isString(value[0]) && value[0].startsWith('required_')) {
-                        value.splice(0, 1, null);
-                    }
-                }
-                teamOptionCondition[key] = value;
-            });
-        } else {
-            teamOptionCondition[optionKey] = null;
-        }
+        setupTeamOptionSupporter(optionInput, character, optionKey);
     });
+
+    console.debug(setupTeamOption.name, optionInput.teamConditionListCheckbox, optionInput.teamConditionListSelect);
     return optionInput;
+}
+
+/**
+ * チームオプションを設定します（サポーター単位）.
+ * 
+ * @param {Object} optionInput 
+ * @param {string} character 
+ * @param {string} optionKey 
+ */
+async function setupTeamOptionSupporter(optionInput, character, optionKey) {
+    if (!(character in optionInput.teamConditionListCheckbox)) {
+        optionInput.teamConditionListCheckbox[character] = [];
+    }
+    if (!(character in optionInput.teamConditionListSelect)) {
+        optionInput.teamConditionListSelect[character] = [];
+    }
+    const conditionListCheckbox = optionInput.teamConditionListCheckbox[character];
+    const conditionListSelect = optionInput.teamConditionListSelect[character];
+    const teamOptionConditionValues = optionInput.teamOptionConditionValues;
+
+    if (!サポーターInputMapVar.has(character)) {
+        サポーターInputMapVar.set(character, JSON.parse(JSON.stringify(SUPPORTER_INPUT_TEMPLATE)))
+    }
+    const supporterInput = サポーターInputMapVar.get(character);
+    const characterInput = supporterInput.characterInput;
+    const artifactDetailInput = supporterInput.artifactDetailInput;
+    const conditionInput = supporterInput.conditionInput;
+
+    characterInput.character = character;
+
+    let recommendation = {};
+    const storageKey = '構成_' + character;
+    if (localStorage[storageKey]) {
+        recommendation = JSON.parse(localStorage[storageKey]);
+    }
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
+
+    const damageDetailObjArrObj = makeDamageDetailObjArrObjOption(チームオプションMasterVar[optionKey], optionKey);
+    チームオプションダメージ詳細ObjMapVar.set(optionKey, damageDetailObjArrObj);
+
+    conditionListCheckbox.push(...makeConditionListCheckbox(damageDetailObjArrObj));
+    conditionListSelect.push(...makeConditionListSelect(damageDetailObjArrObj));
+
+    initializeConditionValues(teamOptionConditionValues, conditionListCheckbox);
+    initializeConditionValues(teamOptionConditionValues, conditionListSelect);
+}
+
+/**
+ * その他オプションを設定します.
+ * 
+ * @param {Object} optionInput 
+ */
+function setupMiscOption(optionInput) {
+    Object.keys(オプション1MasterVar).forEach(optionKey => {
+        const damageDetailObj = makeDamageDetailObjArrObjOption(オプション1MasterVar[optionKey], optionKey);
+        その他オプションダメージ詳細ObjMapVar.set(optionKey, damageDetailObj);
+    });
+    Object.keys(オプション2MasterVar).forEach(optionKey => {
+        const damageDetailObj = makeDamageDetailObjArrObjOption(オプション2MasterVar[optionKey], optionKey);
+        その他オプションダメージ詳細ObjMapVar.set(optionKey, damageDetailObj);
+    });
+    console.log(setupMiscOption.name, その他オプションダメージ詳細ObjMapVar);
+}
+
+/**
+ * 
+ * @param {Object} statusAdjustment ステータス補正
+ * @param {Object[]} conditionList 条件のリスト
+ * @param {Object} conditionValues 現在の条件の値
+ * @param {Object} damageDetailObjArrObjArr 
+ * @param {Object} opt_statusObj 
+ */
+function calculateStatusAdjustmentFromArr(statusAdjustment, conditionList, conditionValues, damageDetailObjArrObjArr, opt_statusObj = {}) {
+    const constellation = 6;
+
+    const result = statusAdjustment;
+
+    const validConditionValueArr = makeValidConditionValueArr2(conditionList, conditionValues);
+    damageDetailObjArrObjArr.forEach(damageDetailObjArrObj => {
+        if (!damageDetailObjArrObj) return;
+        damageDetailObjArrObj[CHANGE_KIND_STATUS].filter(s => s['条件']).forEach(detailObj => {
+            const checkRet = checkConditionMatches(detailObj['条件'], validConditionValueArr, constellation);
+            if (checkRet == 0) return;
+            let formulaArr = detailObj['数値'];
+            if (checkRet != 1) formulaArr = formulaArr.concat(['*', checkRet]);
+            const statValue = calculateFormulaArray(opt_statusObj, formulaArr, detailObj['上限']);
+            if (detailObj['種類'] in result) {
+                result[detailObj['種類']] += statValue;
+            } else {
+                result[detailObj['種類']] = statValue;
+            }
+        });
+    });
+}
+
+/**
+ * 
+ * @param {Object} statusAdjustment ステータス補正
+ * @param {Object[]} conditionList 条件のリスト
+ * @param {Object} conditionValues 現在の条件の値
+ * @param {Object} damageDetailObjArrObjMap 
+ * @param {Object} opt_statusObj 
+ */
+function calculateStatusAdjustmentFromMap(statusAdjustment, conditionList, conditionValues, damageDetailObjArrObjMap, opt_statusObj = {}) {
+    const constellation = 6;
+
+    const result = statusAdjustment;
+
+    const validConditionValueArr = makeValidConditionValueArr2(conditionList, conditionValues);
+    damageDetailObjArrObjMap.forEach(damageDetailObj => {
+        damageDetailObj[CHANGE_KIND_STATUS].filter(s => s['条件']).forEach(detailObj => {
+            const checkRet = checkConditionMatches(detailObj['条件'], validConditionValueArr, constellation);
+            if (checkRet == 0) return;
+            let formulaArr = detailObj['数値'];
+            if (checkRet != 1) formulaArr = formulaArr.concat(['*', checkRet]);
+            console.log(formulaArr);
+            const statValue = calculateFormulaArray(opt_statusObj, formulaArr, detailObj['上限']);
+            if (detailObj['種類'] in result) {
+                result[detailObj['種類']] += statValue;
+            } else {
+                result[detailObj['種類']] = statValue;
+            }
+        });
+    });
 }
 
 function updateStatusStatus(statusObj) {
@@ -374,7 +472,7 @@ function updateStatusStatus(statusObj) {
  * EnemyObjectを作成します.
  * 
  * @param {string} name 敵の名前
- * @returns {object} 
+ * @returns {Object} 
  */
 function makeEnemyObj(name) {
     return {
@@ -386,8 +484,8 @@ function makeEnemyObj(name) {
 /**
  * 敵ステータスを更新します.
  * 
- * @param {object} enemyObj EnemyObject
- * @param {object} statusInput ステータス情報Object
+ * @param {Object} enemyObj EnemyObject
+ * @param {Object} statusInput ステータス情報Object
  */
 function updateStatusEnemyStatus(enemyObj, statusInput) {
     if (!statusInput) return;

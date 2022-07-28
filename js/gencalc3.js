@@ -80,15 +80,17 @@ async function onLoad(searchParams) {
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation[1]);
 
     const optionInput = JSON.parse(JSON.stringify(OPTION_INPUT_TEMPLATE));
+    setupElementalResonanceOption(optionInput);
     await setupTeamOption(optionInput);
+    setupMiscOption(optionInput);
 
     initialSetupLanguageSelect();
     initialSetupCharacterSelect(characterInput);
     initialSetupWeaponSelect(characterInput);
-    initialSetupConditionInput(characterInput, conditionInput);
-    initialSetupArtifactDetailInput(characterInput, artifactDetailInput);
     initialSetupArtifactSetSelect(characterInput);
     initialSetupCharacterInput(characterInput, recommendation, recommendationList);
+    initialSetupArtifactDetailInput(characterInput, artifactDetailInput);
+    initialSetupConditionInput(characterInput, conditionInput);
     initialSetupStatusInput();
     initialSetupCalcurationResult();
     initialSetupOptionInput(optionInput);
@@ -368,7 +370,7 @@ function initialSetupCharacterInput(characterInput, recommendation, recommendati
             }
         },
         watch: {
-            name: {
+            character: {
                 handler: function (newVal, oldVal) {
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 },
@@ -376,7 +378,7 @@ function initialSetupCharacterInput(characterInput, recommendation, recommendati
             },
             突破レベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this, ConditionInputVm);
+                    makeDamageDetailObjArrObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
@@ -406,31 +408,31 @@ function initialSetupCharacterInput(characterInput, recommendation, recommendati
                     });
                     this.元素スキルレベルOption.max = maxSkillLevel;
                     this.元素爆発レベルOption.max = maxBurstLevel;
-                    makeDamageDetailObjCharacter(this, ConditionInputVm);
+                    makeDamageDetailObjArrObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             通常攻撃レベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this, ConditionInputVm);
+                    makeDamageDetailObjArrObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             元素スキルレベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this, ConditionInputVm);
+                    makeDamageDetailObjArrObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             元素爆発レベル: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjCharacter(this, ConditionInputVm);
+                    makeDamageDetailObjArrObjCharacter(this, ConditionInputVm);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             weapon: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjWeapon(this);
+                    makeDamageDetailObjArrObjWeapon(this);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
@@ -446,13 +448,13 @@ function initialSetupCharacterInput(characterInput, recommendation, recommendati
             },
             武器精錬ランク: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjWeapon(this);
+                    makeDamageDetailObjArrObjWeapon(this);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 }
             },
             聖遺物セット効果: {
                 handler: function (newVal, oldVal) {
-                    makeDamageDetailObjArtifactSet(this);
+                    makeDamageDetailObjArrObjArtifactSet(this);
                     updateStatusStatus(calculateStatus(this, ArtifactDetailInputVm, ConditionInputVm, OptionInputVm, StatusInputVm));
                 },
                 deep: true
@@ -863,105 +865,40 @@ function initialSetupArtifactDetailInput() {
     ArtifactDetailInputVm = Vue.createApp(ArtifactDetailInput).mount('#artifact-detail-input');
 }
 
-function initialSetupConditionInput() {
+function initialSetupConditionInput(characterInput, conditionInput) {
     const ConditionInput = {
         data() {
             return {
                 isVisible: true,
-                conditions: {},
-                character: null,
-                characterMaster: null,
-                conditionAdjustments: {}
+                character: characterInput.character,
+                characterMaster: characterInput.characterMaster,
+                conditionListInput: [],
+                conditionListSelect: [],
+                conditionValues: {},
+                conditionStatusAdjustment: {}
             }
         },
         computed: {
-            inputList: function () {
-                if (!this.character || !this.characterMaster) return [];
-                const result = [];
-                const damageDetailObjArr = getDamageDetailObjArr(CharacterInputVm);
-                damageDetailObjArr.forEach(damageDetailObj => {
-                    if (!damageDetailObj) return;
-                    damageDetailObj['条件'].forEach((value, key) => {
-                        if (value != null) return;
-                        result.push({
-                            name: key,
-                            exclusions: damageDetailObj['排他'].has(key) ? damageDetailObj['排他'].get(key) : null
-                        });
-                    });
-                });
-                result.forEach(condition => {
-                    if (condition.name in this.conditions) return;
-                    let value = true;
-                    [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
-                        if ('オプション初期値' in master) {
-                            if (condition.name in master['オプション初期値']) {
-                                value = master['オプション初期値'][condition.name];
-                            }
-                        }
-                    });
-                    if (value && condition.exclusions) {
-                        condition.exclusions.forEach(exclusion => {
-                            if (this.conditions[exclusion]) {
-                                value = false;
-                            }
-                        });
-                    }
-                    this.conditions[condition.name] = value;
-                });
-                return result;
-            },
-            selectList: function () {
-                if (!this.character || !this.characterMaster) return [];
-                const result = [];
-                const damageDetailObjArr = getDamageDetailObjArr(CharacterInputVm);
-                damageDetailObjArr.forEach(damageDetailObj => {
-                    if (!damageDetailObj) return;
-                    damageDetailObj['条件'].forEach((value, key) => {
-                        if (value == null) return;
-                        result.push({
-                            name: key,
-                            list: value,
-                            require: value.filter(s => s.startsWith('required_')).length > 0,
-                            exclusions: damageDetailObj['排他'].has(key) ? damageDetailObj['排他'].get(key) : null
-                        });
-                    });
-                });
-                result.forEach(condition => {
-                    if (condition.name in this.conditions) return;
-                    let value = condition.list[condition.list.length - 1];
-                    [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
-                        if ('オプション初期値' in master) {
-                            if (condition.name in master['オプション初期値']) {
-                                let index = master['オプション初期値'][condition.name];
-                                if (!condition.require) index -= 1;
-                                value = condition.list[index];
-                            }
-                        }
-                    });
-                    if (value && condition.exclusions) {
-                        condition.exclusions.forEach(exclusion => {
-                            if (this.conditions[exclusion]) {
-                                value = null;
-                            }
-                        });
-                    }
-                    this.conditions[condition.name] = value;
-                });
-                return result;
-            }
         },
         mounted() {
             this.$nextTick(function () {
                 if (CharacterInputVm) {
-                    this.character = CharacterInputVm.name;
-                    this.characterMaster = CharacterInputVm.master;
+                    this.character = CharacterInputVm.character;
+                    this.characterMaster = CharacterInputVm.characterMaster;
                 }
             });
         },
         watch: {
-            conditions: {
+            characterMaster: {
                 handler: function (newVal, oldVal) {
-                    this.updateConditionAdjustments();
+                    this.conditionListInput = this.makeConditionListInput();
+                    this.conditionListSelect = this.makeConditionListSelect();
+                },
+                immediate: true
+            },
+            conditionValues: {
+                handler: function (newVal, oldVal) {
+                    this.updateConditionStatusAdjustment();
                 },
                 deep: true
             }
@@ -971,40 +908,72 @@ function initialSetupConditionInput() {
                 return getDisplayName(name);
             },
             displayOptionValue: function (name) {
-                return getDisplayName(name.replace(/^required_/, ''));
+                if (name) name = name.replace(/^required_/, '');
+                return getDisplayName(name);
             },
             displayStatKeyAndValue: function (name, value) {
                 return getDisplayStatKeyAndValue(name, value);
             },
-            onChange: function (item) {
-                if (!item.exclusions) return;
-                this.inputList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
-                    this.conditions[entry.name] = false;
+            makeConditionListInput: function () {
+                if (!CharacterInputVm || !this.character || !this.characterMaster) return [];
+                const result = [];
+                const damageDetailObjArrObjArr = getDamageDetailObjArrObjArr(CharacterInputVm);
+                damageDetailObjArrObjArr.forEach(damageDetailObjArrObj => {
+                    if (damageDetailObjArrObj) {
+                        result.push(...makeConditionListCheckbox(damageDetailObjArrObj));
+                    }
                 });
-                this.selectList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
-                    this.conditions[entry.name] = null;
-                });
-            },
-            updateConditionAdjustments: function () {
-                if (!StatusInputVm) return;
-                const validConditionValueArr = makeValidConditionValueArr(this);
-                const constellation = CharacterInputVm.命ノ星座;
-                const result = {};
-                const damageDetailObjArr = getDamageDetailObjArr(CharacterInputVm);
-                damageDetailObjArr.forEach(damageDetailObj => {
-                    if (!damageDetailObj) return;
-                    damageDetailObj[CHANGE_KIND_STATUS].filter(s => s['条件']).forEach(detailObj => {
-                        const checkRet = checkConditionMatches(detailObj['条件'], validConditionValueArr, constellation);
-                        if (checkRet == 0) return;
-                        let formulaArr = detailObj['数値'];
-                        if (checkRet != 1) formulaArr = formulaArr.concat(['*', checkRet]);
-                        const work = calculateStatusDiff(StatusInputVm.ステータス, detailObj['種類'], formulaArr, detailObj['上限']);
-                        Object.keys(work).forEach(key => {
-                            addValueToObject(result, key, work[key]);
+                let initialConditionValues = {};
+                [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
+                    if ('オプション初期値' in master) {
+                        Object.keys(master['オプション初期値']).forEach(key => {
+                            initialConditionValues[key] = master['オプション初期値'][key];
                         });
-                    });
+                    }
                 });
-                this.conditionAdjustments = result;
+                initializeConditionValues(this.conditionValues, result, true, Number.MAX_VALUE, initialConditionValues);
+                return result;
+            },
+            makeConditionListSelect: function () {
+                if (!CharacterInputVm || !this.character || !this.characterMaster) return [];
+                const result = [];
+                const damageDetailObjArrObjArr = getDamageDetailObjArrObjArr(CharacterInputVm);
+                damageDetailObjArrObjArr.forEach(damageDetailObjArrObj => {
+                    if (damageDetailObjArrObj) {
+                        result.push(...makeConditionListSelect(damageDetailObjArrObj));
+                    }
+                });
+                let initialConditionValues = {};
+                [this.characterMaster, CharacterInputVm.weaponMaster].forEach(master => {
+                    if ('オプション初期値' in master) {
+                        Object.keys(master['オプション初期値']).forEach(key => {
+                            initialConditionValues[key] = master['オプション初期値'][key];
+                        });
+                    }
+                });
+                initializeConditionValues(this.conditionValues, result, true, Number.MAX_VALUE, initialConditionValues);
+                return result;
+            },
+            conditionOnChange: function (item) {
+                if (item.exclusions) {
+                    this.inputList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
+                        this.conditionValues[entry.name] = false;
+                    });
+                    this.selectList.filter(s => item.exclusions.includes(s.name)).forEach(entry => {
+                        this.conditionValues[entry.name] = null;
+                    });
+                }
+                this.updateConditionStatusAdjustment();
+            },
+            updateConditionStatusAdjustment: function () {
+                if (!StatusInputVm) return;
+                this.conditionStatusAdjustment = {};
+                let conditionList = [];
+                let damageDetailObjArrObjArr = getDamageDetailObjArrObjArr(CharacterInputVm);;
+                let statusObj = {};
+                conditionList.push(...this.conditionListInput);
+                conditionList.push(...this.conditionListSelect);
+                calculateStatusAdjustmentFromArr(this.conditionStatusAdjustment, conditionList, this.conditionValues, damageDetailObjArrObjArr, statusObj);
             }
         }
     };
@@ -1017,17 +986,16 @@ function initialSetupOptionInput(optionInput) {
             return {
                 isVisible: true,
                 activeTab: 1,
-                元素共鳴: {},
-                元素共鳴詳細: {},
-                teamOptionConditionMap: {},
+                elementalResonanceConditionValues: {},
+                elementalResonanceStatusAdjustment: {},
                 supporterList: [],
                 isSupporterOptionOpened: {},
-                teamOptionConditions: {},
-                オプション1: {},
-                オプション1詳細: {},
-                オプション2: {},
-                オプション2詳細: {},
-                ステータス補正: {}
+                teamConditionListCheckbox: {},
+                teamConditionListSelect: {},
+                teamOptionConditionValues: {},
+                teamOptionStatusAdjustment: {},
+                miscOptionConditionValues: {},
+                miscOptionStatusAdjustment: {},
             }
         },
         created() {
@@ -1035,44 +1003,73 @@ function initialSetupOptionInput(optionInput) {
                 this[key] = optionInput[key];
             });
             Object.keys(元素共鳴MasterVar).forEach(key => {
-                this.元素共鳴[key] = false;
-                this.元素共鳴詳細[key] = null;
-            });
-            Object.keys(this.teamOptionConditionMap).forEach(supporter => {
-                const teamOptionCondition = this.teamOptionConditionMap[supporter];
-                if (!(supporter in this.teamOptionConditions)) {
-                    this.teamOptionConditions[supporter] = {};
-                }
-                Object.keys(teamOptionCondition).forEach(name => {
-                    const options = teamOptionCondition[name];
-                    if (options) {
-                        this.teamOptionConditions[supporter][name] = null;
-                    } else {
-                        this.teamOptionConditions[supporter][name] = false;
-                    }
-                });
+                this.elementalResonanceConditionValues[key] = false;
             });
             this.supporterList.forEach(supporter => {
                 this.isSupporterOptionOpened[supporter] = false;
-            });
-            Object.keys(オプション1MasterVar).forEach(key => {
-                this.オプション1[key] = null;
-                this.オプション1詳細[key] = null;
-            });
-            Object.keys(オプション2MasterVar).forEach(key => {
-                this.オプション2[key] = null;
-                this.オプション2詳細[key] = null;
             });
         },
         computed: {
             elementalResonanceList: function () {
                 return Object.keys(元素共鳴MasterVar).filter(s => s.endsWith('共鳴'));
             },
-            option1List: function () {
-                return Object.keys(オプション1MasterVar);
+            miscOption1InputList: function () {
+                const result = [];
+                Object.keys(オプション1MasterVar).forEach(optionKey => {
+                    result.push(...makeConditionListCheckbox(その他オプションダメージ詳細ObjMapVar.get(optionKey)));
+                });
+                initializeConditionValues(this.miscOptionConditionValues, result);
+                return result;
             },
-            option2List: function () {
-                return Object.keys(オプション2MasterVar);
+            miscOption1SelectList: function () {
+                const result = [];;
+                Object.keys(オプション1MasterVar).forEach(optionKey => {
+                    result.push(...makeConditionListSelect(その他オプションダメージ詳細ObjMapVar.get(optionKey)));
+                });
+                initializeConditionValues(this.miscOptionConditionValues, result);
+                return result;
+            },
+            miscOption2InputList: function () {
+                const result = [];
+                Object.keys(オプション2MasterVar).forEach(optionKey => {
+                    result.push(...makeConditionListCheckbox(その他オプションダメージ詳細ObjMapVar.get(optionKey)));
+                });
+                initializeConditionValues(this.miscOptionConditionValues, result);
+                return result;
+            },
+            miscOption2SelectList: function () {
+                const result = [];
+                Object.keys(オプション2MasterVar).forEach(optionKey => {
+                    result.push(...makeConditionListSelect(その他オプションダメージ詳細ObjMapVar.get(optionKey)));
+                });
+                initializeConditionValues(this.miscOptionConditionValues, result);
+                return result;
+            },
+        },
+        watch: {
+            elementalResonanceConditionValues: {
+                handler: function (newValue, oldValue) {
+
+                },
+                deep: true
+            },
+            teamOptionConditionValues: {
+                handler: function (newValue, oldValue) {
+                    this.teamOptionOnChange();
+                },
+                deep: true
+            },
+            miscOptionConditionValues: {
+                handler: function (newValue, oldValue) {
+                    this.miscOptionStatusAdjustment = {};
+                    let conditionList = [];
+                    conditionList.push(...this.miscOption1InputList);
+                    conditionList.push(...this.miscOption1SelectList);
+                    conditionList.push(...this.miscOption2InputList);
+                    conditionList.push(...this.miscOption2SelectList);
+                    calculateStatusAdjustmentFromMap(this.miscOptionStatusAdjustment, conditionList, newValue, その他オプションダメージ詳細ObjMapVar);
+                },
+                deep: true
             }
         },
         methods: {
@@ -1086,19 +1083,22 @@ function initialSetupOptionInput(optionInput) {
             displayStatValue: function (name, value) {
                 return getDisplayStatValue(name, value);
             },
+            displayStatKeyAndValue: function (name, value) {
+                return getDisplayStatKeyAndValue(name, value)
+            },
             name: function (item) {
                 return 元素共鳴MasterVar[item]['名前'];
             },
             elementalResonanceOnChange: function (key, event) {
                 if (event.target.checked) {
-                    if (Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]).length > 2) {
+                    if (Object.keys(this.elementalResonanceConditionValues).filter(s => this.elementalResonanceConditionValues[s]).length > 2) {
                         event.target.checked = false;
-                        this.元素共鳴[key] = false;
+                        this.elementalResonanceConditionValues[key] = false;
                     }
                 }
             },
             elementalResonanceName: function (index) {
-                const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
+                const arr = Object.keys(this.elementalResonanceConditionValues).filter(s => this.elementalResonanceConditionValues[s]);
                 if (arr.length > index) {
                     return 元素共鳴MasterVar[arr[index]]['名前'];
                 } else if (arr.length == 0 && index == 0) {
@@ -1107,7 +1107,7 @@ function initialSetupOptionInput(optionInput) {
                 return '';
             },
             elementalResonanceDescription: function (index) {
-                const arr = Object.keys(this.元素共鳴).filter(s => this.元素共鳴[s]);
+                const arr = Object.keys(this.elementalResonanceConditionValues).filter(s => this.elementalResonanceConditionValues[s]);
                 if (arr.length > index) {
                     return 元素共鳴MasterVar[arr[index]]['説明'];
                 } else if (arr.length == 0 && index == 0) {
@@ -1124,24 +1124,20 @@ function initialSetupOptionInput(optionInput) {
             teamOptionDisabled(character, name) {
                 return false;
             },
-            supporterInputList: function (supporter) {
-                const result = [];
-                Object.keys(this.teamOptionConditionMap[supporter]).forEach(key => {
-                    const value = this.teamOptionConditionMap[supporter][key];
-                    const workArr = key.split('_')
-                    workArr.shift();
-                    const name = workArr.join('_');
-                    if (!value) result.push({ name: name, condition: key });
+            teamOptionOnChange: function () {
+                this.teamOptionStatusAdjustment = {};
+                let conditionList = [];
+                Object.keys(this.teamConditionListCheckbox).forEach(supporter => {
+                    if (this.teamConditionListCheckbox[supporter].length > 0) {
+                        conditionList.push(...this.teamConditionListCheckbox[supporter]);
+                    }
                 });
-                return result;
-            },
-            supporterSelectList: function (supporter) {
-                const result = [];
-                Object.keys(this.teamOptionConditionMap[supporter]).forEach(key => {
-                    const value = this.teamOptionConditionMap[supporter][key];
-                    if (value) result.push({ name: key, condition: key, options: value });
+                Object.keys(this.teamConditionListSelect).forEach(supporter => {
+                    if (this.teamConditionListSelect[supporter].length > 0) {
+                        conditionList.push(...this.teamConditionListSelect[supporter]);
+                    }
                 });
-                return result;
+                calculateStatusAdjustmentFromMap(this.teamOptionStatusAdjustment, conditionList, this.teamOptionConditionValues, チームオプションダメージ詳細ObjMapVar);
             }
         }
     }

@@ -551,6 +551,12 @@ table.artifact-priority-stat td select {
 }
 
 label.condition {
+    display: inline-block;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+label.condition input, label.condition select {
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -559,8 +565,43 @@ label.condition input[type="checkbox"]:checked+span {
     color: palevioletred;
 }
 
+label.stat-and-value {
+    display: inline-block;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
 input[type="number"].level {
     width: 12rem;
+}
+
+table.description {
+    width: 100%;
+}
+
+table.description th {
+    color: #e8d14e;
+}
+
+table th {
+    font-weight: normal;
+}
+
+label.expandable-option {
+    display: inline-block;
+    margin: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-bottom: 2px solid gray;
+    border-radius: 10px;
+}
+
+div.misc-option-list {
+    text-align: left;
+}
+
+div.misc-option-list label.condition {
+    min-width: calc(50% - 2rem);
 }
 
 table.status {

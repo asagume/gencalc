@@ -46,6 +46,7 @@ const キャラクターダメージ詳細ObjMapVar = new Map();
 const 武器ダメージ詳細ObjMapVar = new Map();
 const 聖遺物セット効果ダメージ詳細ObjMapVar = new Map();
 const 元素共鳴ダメージ詳細ObjMapVar = new Map();
+const その他オプションダメージ詳細ObjMapVar = new Map();
 
 const チームオプションダメージ詳細ObjMapVar = new Map();
 const サポーターInputMapVar = new Map();
@@ -509,7 +510,7 @@ const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
 
 const CONDITION_INPUT_TEMPLATE = {
     isVisible: true,
-    conditions: {},
+    conditionValues: {},
     character: null,
     characterMaster: null,
     conditionAdjustments: {}
@@ -518,22 +519,21 @@ const CONDITION_INPUT_TEMPLATE = {
 const OPTION_INPUT_TEMPLATE = {
     isVisible: true,
     activeTab: 1,
-    元素共鳴: {},
-    元素共鳴詳細: {},
-    teamOptionConditionMap: {},
+    elementalResonanceConditionValues: {},
+    elementalResonanceStatusAdjustment: {},
     supporterList: [],
     isSupporterOptionOpened: {},
-    teamOptionConditions: {},
-    オプション1: {},
-    オプション1詳細: {},
-    オプション2: {},
-    オプション2詳細: {},
-    ステータス補正: {}
+    teamOptionConditionMap: {},
+    teamOptionConditionValues: {},
+    teamOptionStatusAdjustment: {},
+    miscOptionConditionValues: {},
+    miscOptionStatusAdjustment: {},
 };
 
 const SUPPORTER_INPUT_TEMPLATE = {
     characterInput: CHARACTER_INPUT_TEMPLATE,
     artifactDetailInput: ARTIFACT_DETAIL_INPUT_TEMPLATE,
-    conditionInput: CONDITION_INPUT_TEMPLATE
+    conditionInput: CONDITION_INPUT_TEMPLATE,
+    statusInput: {}
 };
 
