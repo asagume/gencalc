@@ -40,7 +40,7 @@ function makeRecommendationList(characterMaster, opt_buildData = null) {
     let isSavable = null;
 
     if (opt_buildData) {
-        result.push(['IMPORTED DATA', opt_buildData, false]);
+        result.push({ name: 'IMPORTED DATA', build: opt_buildData, overwrite: false });
         isSavable = true;
     }
 
@@ -56,13 +56,13 @@ function makeRecommendationList(characterMaster, opt_buildData = null) {
     storageKeyArr.sort();
     const re = new RegExp('^構成_' + character + '_');
     storageKeyArr.forEach(key => {
-        let buildName;
+        let buildname;
         if (key == '構成_' + character) {
-            buildName = 'あなたの' + character;
+            buildname = 'あなたの' + character;
         } else {
-            buildName = key.replace(re, '');
+            buildname = key.replace(re, '');
         }
-        result.push([buildName, JSON.parse(localStorage[key]), true]);
+        result.push({ name: buildname, build: JSON.parse(localStorage[key]), overwrie: true });
     });
 
     characterMaster['おすすめセット'].forEach(obj => {
@@ -91,26 +91,26 @@ function makeRecommendationList(characterMaster, opt_buildData = null) {
             }
         }
 
-        let buildName = myおすすめセット['武器'];
-        buildName += ' ';
+        let buildname = myおすすめセット['武器'];
+        buildname += ' ';
         if (myおすすめセット['聖遺物セット効果1'] == myおすすめセット['聖遺物セット効果2']) {
-            buildName += myおすすめセット['聖遺物セット効果1'];
+            buildname += myおすすめセット['聖遺物セット効果1'];
         } else {
-            buildName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果1']);
-            buildName += '/';
-            buildName += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果2']);
+            buildname += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果1']);
+            buildname += '/';
+            buildname += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果2']);
         }
-        buildName += ' [';
+        buildname += ' [';
         for (let i = 3; i <= 5; i++) {
             const statusName = myおすすめセット['聖遺物メイン効果' + i].split('_')[1];
             if (RECOMMEND_ABBREV_MAP.has(statusName)) {
-                buildName += RECOMMEND_ABBREV_MAP.get(statusName);
+                buildname += RECOMMEND_ABBREV_MAP.get(statusName);
             } else {
-                buildName += statusName.substring(0, 1);
+                buildname += statusName.substring(0, 1);
             }
         }
-        buildName += ']';
-        result.push([buildName, myおすすめセット, false]);
+        buildname += ']';
+        result.push({ name: buildname, build: myおすすめセット, overwrite: false });
     });
 
     return result;

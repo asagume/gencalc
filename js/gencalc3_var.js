@@ -56,6 +56,9 @@ var 武器所持状況Var = {};
 
 /** 言語選択 */
 var LanguageSelectVm;
+
+var GencalcVm;
+
 /** キャラクター選択 */
 var CharacterSelectVm;
 /** キャラクター情報入力 */
@@ -420,34 +423,61 @@ const キャラクター構成PROPERTY_MAP = new Map([
     ['聖遺物優先するサブ効果3上昇回数', 0]
 ]);
 
-const CHARACTER_MASTER_DUMMY = {
-    名前: 'dummy',
-    icon_url: IMG_SRC_DUMMY,
-    レアリティ: 4,
-    武器: null,
-    元素: null,
-    ステータス: {},
-    通常攻撃: {
-        名前: null,
-        icon_url: IMG_SRC_DUMMY
+const GENCALC_TEMPLATE = {
+    character: null,
+    characterMaster: null,
+    weapon: null,
+    weaponMaster: null,
+    artifactSets: [null, null],
+    artifactSetMasters: [null, null],
+    突破レベル: 6,
+    レベル: 90,
+    命ノ星座: 0,
+    武器突破レベル: 6,
+    武器レベル: 90,
+    武器精錬ランク: 1,
+    聖遺物メイン効果1: null,
+    聖遺物メイン効果2: null,
+    聖遺物メイン効果3: null,
+    聖遺物メイン効果4: null,
+    聖遺物メイン効果5: null,
+    聖遺物優先するサブ効果1: null,
+    聖遺物優先するサブ効果2: null,
+    聖遺物優先するサブ効果3: null,
+    聖遺物優先するサブ効果上昇値1: 0,
+    聖遺物優先するサブ効果上昇値2: 0,
+    聖遺物優先するサブ効果上昇値3: 0,
+    聖遺物優先するサブ効果上昇回数1: 0,
+    聖遺物優先するサブ効果上昇回数2: 0,
+    聖遺物優先するサブ効果上昇回数3: 0,
+    聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    recommendationList: [],
+    buildname: null,
+    // キャラクター選択
+    characterSelectList: [],
+    characterSelectFilter: {
+        vision: {
+            selected: null,
+            list: null
+        },
+        weapon: {
+            selected: null,
+            list: null
+        },
     },
-    元素スキル: {
-        名前: null,
-        icon_url: IMG_SRC_DUMMY
-    },
-    元素爆発: {
-        名前: null,
-        icon_url: IMG_SRC_DUMMY
-    }
+    // 武器選択
+    weaponSelectList: [],
+    // 聖遺物セット効果選択
+    artifactSelectList: [],
+    artifactSelectIndex: 0,
+
 
 };
 
-const WEAPON_MASTER_DUMMY = {
-    名前: 'dummy',
-    icon_url: IMG_SRC_DUMMY,
-    レアリティ: 4,
-    ステータス: {}
-};
+
+
+
+
 
 const ARTIFACT_SET_MASTER_DUMMY = {
     名前: 'dummy',

@@ -66,64 +66,199 @@ async function onLoad(searchParams) {
         })
     });
 
-    const characterInput = JSON.parse(JSON.stringify(CHARACTER_INPUT_TEMPLATE));
-    if (buildDataFromUri) {
-        characterInput.character = buildDataFromUri['キャラクター'];
-    } else {
-        characterInput.character = getCharacterByBirthday();
-    }
-    characterInput.characterMaster = await getCharacterMaster(characterInput.character);
-    const recommendationList = makeRecommendationList(characterInput.characterMaster, buildDataFromUri);
-    const recommendation = recommendationList[0];
-    const artifactDetailInput = JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE));
-    const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));
-    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation[1]);
-
-    const optionInput = JSON.parse(JSON.stringify(OPTION_INPUT_TEMPLATE));
-    setupElementalResonanceOption(optionInput);
-    await setupTeamOption(optionInput);
-    setupMiscOption(optionInput);
-
-    initialSetupLanguageSelect();
-    initialSetupCharacterSelect(characterInput);
-    initialSetupWeaponSelect(characterInput);
-    initialSetupArtifactSetSelect(characterInput);
-    initialSetupCharacterInput(characterInput, recommendation, recommendationList);
-    initialSetupArtifactDetailInput(characterInput, artifactDetailInput);
-    initialSetupConditionInput(characterInput, conditionInput);
-    initialSetupStatusInput();
-    initialSetupCalcurationResult();
-    initialSetupOptionInput(optionInput);
-    initialSetupCharacterInformation();
-    initialSetupCharacterOwnList();
-    initialSetupWeaponOwnList();
-    initialSetupStorageControl();
-
-    Pane4Group.add(WeaponSelectVm);
-    Pane4Group.add(ArtifactSetSelectVm);
-    Pane4Group.add(ArtifactDetailInputVm);
-
-    const Pane6Toggle = {
+    const Gencalc = {
         data() {
             return {
-                targets: [null, ConditionInputVm, StatusInputVm, OptionInputVm]
+                character: null,
+                characterMaster: null,
+                weapon: null,
+                weaponMaster: null,
+                artifactSets: [null, null],
+                artifactSetMasters: [null, null],
+                突破レベル: 6,
+                レベル: 90,
+                命ノ星座: 0,
+                武器突破レベル: 6,
+                武器レベル: 90,
+                武器精錬ランク: 1,
+                聖遺物メイン効果1: null,
+                聖遺物メイン効果2: null,
+                聖遺物メイン効果3: null,
+                聖遺物メイン効果4: null,
+                聖遺物メイン効果5: null,
+                聖遺物優先するサブ効果1: null,
+                聖遺物優先するサブ効果2: null,
+                聖遺物優先するサブ効果3: null,
+                聖遺物優先するサブ効果上昇値1: 0,
+                聖遺物優先するサブ効果上昇値2: 0,
+                聖遺物優先するサブ効果上昇値3: 0,
+                聖遺物優先するサブ効果上昇回数1: 0,
+                聖遺物優先するサブ効果上昇回数2: 0,
+                聖遺物優先するサブ効果上昇回数3: 0,
+                聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+                recommendationList: [],
+                buildname: null,
+                // キャラクター選択
+                isCharacterSelectVisible: true,
+                characterSelectList: [],
+                characterSelectFilter: {
+                    vision: {
+                        selected: null,
+                        list: null
+                    },
+                    weapon: {
+                        selected: null,
+                        list: null
+                    },
+                },
+                // 武器選択
+                isWeaponSelectVisible: true,
+                weaponSelectList: [],
+                // 聖遺物セット効果選択
+                isArtifactSetSelectVisible: true,
+                artifactSelectList: [],
+                artifactSelectIndex: 0,
+
+            }
+        },
+        computed: {
+            ascensionRange: function () {
+                return 突破レベルレベルARRAY[this.突破レベル];
+            },
+            weaponAscensionRange: function () {
+                return 突破レベルレベルARRAY[this.武器突破レベル];
+            },
+            saveDisabled: function () {
+                return false;
+            },
+            removeDisabled: function () {
+                return false;
+            },
+        },
+        watch: {
+            character: {
+                handler: function (newVal, oldVal) {
+
+                }
             }
         },
         methods: {
             displayName: function (name) {
                 return getDisplayName(name);
             },
-            checked: function (index) {
-                return this.targets[index].isVisible;
+            classCharacterSelected: function (item) {
+                return '';
             },
-            onClick: function (event) {
-                const index = Number(event.target.value);
-                console.log(index);
-                this.targets[index].isVisible = !this.targets[index].isVisible;
-            }
+            iconUrl: function (item) {
+                return '';
+            },
+            elementImgSrc: function (item) {
+                return '';
+            },
+            starBackgroundUrl: function (item) {
+                return '';
+            },
+            filterOnClick: function (filter, event) {
+
+            },
+            classFilterSelected: function (filter, item) {
+                return '';
+            },
+            characterSelectListFiltered: function () {
+                return this.characterSelectList;
+            },
+            characterOnClick: function () {
+
+            },
+            buildOnChanged: function (){
+
+            },
+            saveOnClick: function () {
+
+            },
+            removeOnClick: function () {
+
+            },
         }
     };
-    Pane6ToggleVm = Vue.createApp(Pane6Toggle).mount('#pane6-toggle');
+
+    let character;
+    if (buildDataFromUri) {
+        character = buildDataFromUri['キャラクター'];
+    } else {
+        character = getCharacterByBirthday();
+    }
+    const characterMaster = await getCharacterMaster(character);
+    Gencalc.character = character;
+    Gencalc.characterMaster = characterMaster;
+
+    const recommendationList = makeRecommendationList(characterMaster, buildDataFromUri);
+    const recommendation = recommendationList[0];
+
+    Gencalc.recommendationList = recommendationList;
+    Gencalc.buildname = recommendation.name;
+
+    console.log(Gencalc);
+    GencalcVm = Vue.createApp(Gencalc).mount('#gencalc');
+
+    // const characterInput = JSON.parse(JSON.stringify(CHARACTER_INPUT_TEMPLATE));
+    // if (buildDataFromUri) {
+    //     characterInput.character = buildDataFromUri['キャラクター'];
+    // } else {
+    //     characterInput.character = getCharacterByBirthday();
+    // }
+    // characterInput.characterMaster = await getCharacterMaster(characterInput.character);
+    // const recommendationList = makeRecommendationList(characterInput.characterMaster, buildDataFromUri);
+    // const recommendation = recommendationList[0];
+    // const artifactDetailInput = JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE));
+    // const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));
+    // await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation[1]);
+
+    // const optionInput = JSON.parse(JSON.stringify(OPTION_INPUT_TEMPLATE));
+    // setupElementalResonanceOption(optionInput);
+    // await setupTeamOption(optionInput);
+    // setupMiscOption(optionInput);
+
+    // initialSetupLanguageSelect();
+    // initialSetupCharacterSelect(characterInput);
+    // initialSetupWeaponSelect(characterInput);
+    // initialSetupArtifactSetSelect(characterInput);
+    // initialSetupCharacterInput(characterInput, recommendation, recommendationList);
+    // initialSetupArtifactDetailInput(characterInput, artifactDetailInput);
+    // initialSetupConditionInput(characterInput, conditionInput);
+    // initialSetupStatusInput();
+    // initialSetupCalcurationResult();
+    // initialSetupOptionInput(optionInput);
+    // initialSetupCharacterInformation();
+    // initialSetupCharacterOwnList();
+    // initialSetupWeaponOwnList();
+    // initialSetupStorageControl();
+
+    // Pane4Group.add(WeaponSelectVm);
+    // Pane4Group.add(ArtifactSetSelectVm);
+    // Pane4Group.add(ArtifactDetailInputVm);
+
+    // const Pane6Toggle = {
+    //     data() {
+    //         return {
+    //             targets: [null, ConditionInputVm, StatusInputVm, OptionInputVm]
+    //         }
+    //     },
+    //     methods: {
+    //         displayName: function (name) {
+    //             return getDisplayName(name);
+    //         },
+    //         checked: function (index) {
+    //             return this.targets[index].isVisible;
+    //         },
+    //         onClick: function (event) {
+    //             const index = Number(event.target.value);
+    //             console.log(index);
+    //             this.targets[index].isVisible = !this.targets[index].isVisible;
+    //         }
+    //     }
+    // };
+    // Pane6ToggleVm = Vue.createApp(Pane6Toggle).mount('#pane6-toggle');
 }
 
 function initialSetupLanguageSelect() {
