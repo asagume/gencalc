@@ -1,44 +1,55 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <CharacterSelect :character="character" @update:character="characterSelected($event)" />
+  <div class="pane2">
+    <CharacterSelect :character="character" :visible="characterSelectVisible"
+      @update:character="characterSelected($event)" />
+  </div>
+  <div class="pane3">
+    {{ characterMaster }}
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 
 const Master = require('./master.js');
 
-function getCharacterByBirthday(): string {
-  const today = new Date();
-  let curDiff = Number.MAX_SAFE_INTEGER;
-  let result = Master.CHARACTER_MASTER_LIST[0].key;
-  for (let entry of Master.CHARACTER_MASTER_LIST) {
-    if ('誕生日' in entry) {
-      const birthdayStrArr = entry['誕生日'].split('/');
-      const birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
-      const diff = today.getTime() - birthday.getTime();
-      if (diff < 0) continue;
-      if (diff < curDiff) {
-        curDiff = diff;
-        result = entry.key;
-      }
-    }
-  }
-  return result;
-}
 
 export default defineComponent({
   name: 'App',
   setup() {
-    let character = getCharacterByBirthday();
+    let characterSelectVisible = true;
+    let character = ref(getCharacterByBirthday());
+    let characterMaster;
+    let characterDetail = reactive({
+      突破レベル: 6,
+      レベル: 90,
+      命ノ星座: 0,
+      通常攻撃レベル: 8,
+      元素スキルレベル: 8,
+      元素爆発レベル: 8,
+      武器: null,
+      武器突破レベル: 6,
+      武器レベル: 90,
+      武器精錬ランク: 1,
+    });
+
 
     return {
+      characterSelectVisible,
       character,
+      characterMaster,
+      characterDetail,
+
     }
   },
   methods: {
-    characterSelected(character: any) { this.character = character.key; }
+    async characterSelected(character: string) {
+      this.character = character;
+      this.characterSelectVisible = false;
+      this.characterMaster = await Master.getCharacterMasterDetail(character);
+    }
   },
   components: {
     CharacterSelect

@@ -1,5 +1,5 @@
 <template>
-    <div id="character-select">
+    <div id="character-select" v-if="visible">
         <ul>
             <li v-for="item in elementList" :key="item">
                 <label>
@@ -20,11 +20,14 @@
         </ul>
         <ul>
             <li v-for="item in filteredList" :key="item.key">
-                <img :class="'character ' + selectedClass(item)" :src="item.icon_url" :alt="item.key"
-                    :style="'background-image: url(' + backgroundUrl(item) + ')'"
-                    @click="$emit('update:character', item)">
-                <span class="tooltip">{{ displayName(item.key) }}</span>
-                <img class="vision" :src="visionSrc(item)" :alt="item.元素">
+                <label>
+                    <input class="hidden" type="radio" name="character-select" :value="item.key"
+                        @change="$emit('update:character', item.key)">
+                    <img :class="'character ' + selectedClass(item)" :src="item.icon_url" :alt="item.key"
+                        :style="'background-image: url(' + backgroundUrl(item) + ')'">
+                    <span class="tooltip">{{ displayName(item.key) }}</span>
+                    <img class="vision" :src="visionSrc(item)" :alt="item.元素">
+                </label>
             </li>
         </ul>
     </div>
@@ -53,9 +56,10 @@ export default defineComponent({
     name: 'CharacterSelect',
     props: {
         character: String,
+        visible: Boolean,
     },
     emits: ['update:character'],
-    setup(props) {
+    setup(props, context) {
         const displayName = (name: string) => name;
 
         const visionSrc = (item: ICharacter) => Master.ELEMENT_IMG_SRC[item.元素] as string;
