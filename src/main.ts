@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 const Master = require('./master.js') as any
+const Input = require('./input.ts') as any
 
 const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;
 
@@ -118,7 +119,7 @@ function getCharacterByBirthday(): string {
     const today = new Date();
     let curDiff = Number.MAX_SAFE_INTEGER;
     let result = Master.CHARACTER_MASTER_LIST[0].key;
-    for (let entry of Master.CHARACTER_MASTER_LIST) {
+    for (const entry of Master.CHARACTER_MASTER_LIST) {
         if ('誕生日' in entry) {
             const birthdayStrArr = entry['誕生日'].split('/');
             const birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
@@ -133,14 +134,14 @@ function getCharacterByBirthday(): string {
     return result;
 }
 
-async function loadRecommendation(characterInput: {}, artifactDetailInput: {}, conditionInput: {}, recommendation: {}) {
+async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_TEMPLATE, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, recommendation: { [key: string]: any }) {
     try {
         const character = characterInput.character;
         const characterMaster = await Master.getCharacterMaster(character);
         characterInput.characterMaster = characterMaster;
 
         if ('レベル' in recommendation) {
-            [characterInput.突破レベル, characterInput.レベル] = parseLevelStr(recommendation['レベル']);
+            [characterInput.突破レベル, characterInput.レベル] = Input.parseLevelStr(recommendation['レベル']);
         }
         ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
             if (key in recommendation) {
@@ -151,10 +152,10 @@ async function loadRecommendation(characterInput: {}, artifactDetailInput: {}, c
         const weaponType = characterMaster['武器'];
         if ('武器' in recommendation) {
             characterInput.weapon = recommendation['武器'];
-            characterInput.weaponMaster = await getWeaponMaster(weaponType, characterInput.weapon);
+            characterInput.weaponMaster = await Master.getWeaponMaster(characterInput.weapon, weaponType);
         }
         if ('武器レベル' in recommendation) {
-            [characterInput.武器突破レベル, characterInput.武器レベル] = parseLevelStr(recommendation['武器レベル']);
+            [characterInput.武器突破レベル, characterInput.武器レベル] = Input.parseLevelStr(recommendation['武器レベル']);
         }
         if ('精錬ランク' in recommendation) {
             characterInput.武器精錬ランク = recommendation['精錬ランク'];
@@ -164,10 +165,10 @@ async function loadRecommendation(characterInput: {}, artifactDetailInput: {}, c
             if (!(key in recommendation)) return;
             const artifactSet = recommendation[key];
             characterInput['聖遺物セット効果'][index]['名前'] = artifactSet;
-            if (artifactSet && artifactSet in 聖遺物セット効果MasterVar) {
-                characterInput['聖遺物セット効果'][index].master = 聖遺物セット効果MasterVar[artifactSet];
+            if (artifactSet && artifactSet in Master.ARTIFACT_SET_MASTER) {
+                characterInput['聖遺物セット効果'][index].master = Master.ARTIFACT_SET_MASTER[artifactSet];
             } else {
-                characterInput['聖遺物セット効果'][index].master = ARTIFACT_SET_MASTER_DUMMY;
+                characterInput['聖遺物セット効果'][index].master = Master.ARTIFACT_SET_MASTER_DUMMY;
             }
         });
         ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
@@ -191,7 +192,7 @@ async function loadRecommendation(characterInput: {}, artifactDetailInput: {}, c
         let hasSubstat = false;
         Object.keys(recommendation).filter(s => s.startsWith('聖遺物サブ効果')).forEach(key => {
             let stat = key.replace(/^聖遺物サブ効果/, '');
-            if (stat in 聖遺物ステータスTEMPLATE) {
+            if (stat in Input.聖遺物ステータスTEMPLATE) {
                 // nop
             } else {
                 stat = stat.replace(/P$/, '%');
@@ -201,9 +202,9 @@ async function loadRecommendation(characterInput: {}, artifactDetailInput: {}, c
         });
         artifactDetailInput.isステータス計算無効 = hasSubstat;
 
-        makeDamageDetailObjArrObjCharacter(characterInput);
-        makeDamageDetailObjArrObjWeapon(characterInput);
-        makeDamageDetailObjArrObjArtifactSet(characterInput);
+        // makeDamageDetailObjArrObjCharacter(characterInput);
+        // makeDamageDetailObjArrObjWeapon(characterInput);
+        // makeDamageDetailObjArrObjArtifactSet(characterInput);
     }
     catch (error) {
         console.error(characterInput, artifactDetailInput, conditionInput, recommendation);
@@ -214,24 +215,27 @@ async function loadRecommendation(characterInput: {}, artifactDetailInput: {}, c
 const characterInput = {} as { [key: string]: any };
 const artifactDetailInput = {};
 const conditionInput = {};
+
 let recommendation;
-
-
-let savedata;
 const searchParams = new URLSearchParams(window.location.search);
 if (searchParams.has('allin')) {
-    savedata = makeSaveDataFromShareData(searchParams.get('allin')!);
-    characterInput.character = savedata.キャラクター;
-    loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
-
+    recommendation = makeSaveDataFromShareData(searchParams.get('allin')!);
+    characterInput.character = recommendation.キャラクター;
+    characterInput.characterMaster = await Master.getCharacterMaster(characterInput.character);
 } else {
     characterInput.character = getCharacterByBirthday();
-    if (localStorage['構成_' + characterInput.character]) {
+    characterInput.characterMaster = await Master.getCharacterMaster(characterInput.character);
+    const storageKey = '構成_' + characterInput.character;
+    if (localStorage[storageKey]) {
+        recommendation = JSON.parse(JSON.stringify(localStorage[storageKey]));
+    } else {
+        const recommendationList = [];
 
     }
 
 
 }
+await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
 
 
 

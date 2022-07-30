@@ -14,46 +14,39 @@ import { computed, defineComponent, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 
 const Master = require('./master.js');
+const Input = require('./input.ts');
 
 
 export default defineComponent({
   name: 'App',
-  setup() {
-    let characterSelectVisible = true;
-    let character = ref(getCharacterByBirthday());
-    let characterMaster;
-    let characterDetail = reactive({
-      突破レベル: 6,
-      レベル: 90,
-      命ノ星座: 0,
-      通常攻撃レベル: 8,
-      元素スキルレベル: 8,
-      元素爆発レベル: 8,
-      武器: null,
-      武器突破レベル: 6,
-      武器レベル: 90,
-      武器精錬ランク: 1,
-    });
+  props: {
+    characterInput: Object,
+},
+  setup(props) {
+  let characterSelectVisible = true;
+  let character = ref(props.characterInput!.character);
+  let characterMaster;
+  let characterDetail = reactive(Input.CHARACTER_INPUT_TEMPLATE);
 
 
-    return {
-      characterSelectVisible,
-      character,
-      characterMaster,
-      characterDetail,
+  return {
+    characterSelectVisible,
+    character,
+    characterMaster,
+    characterDetail,
 
-    }
-  },
-  methods: {
-    async characterSelected(character: string) {
-      this.character = character;
-      this.characterSelectVisible = false;
-      this.characterMaster = await Master.getCharacterMasterDetail(character);
-    }
-  },
-  components: {
-    CharacterSelect
   }
+},
+  methods: {
+  async characterSelected(character: string) {
+    this.character = character;
+    this.characterSelectVisible = false;
+    this.characterMaster = await Master.getCharacterMasterDetail(character);
+  }
+},
+  components: {
+  CharacterSelect
+}
 });
 </script>
 
