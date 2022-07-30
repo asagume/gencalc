@@ -234,13 +234,13 @@
         ]);
 
         const VISION_IMG_SRC = {
-            炎: 'images/element_pyro.png',
-            水: 'images/element_hydro.png',
-            風: 'images/element_anemo.png',
-            雷: 'images/element_electro.png',
-            草: 'images/element_dendro.png',
-            氷: 'images/element_cryo.png',
-            岩: 'images/element_geo.png'
+            炎: 'public/images/element_pyro.png',
+            水: 'public/images/element_hydro.png',
+            風: 'public/images/element_anemo.png',
+            雷: 'public/images/element_electro.png',
+            草: 'public/images/element_dendro.png',
+            氷: 'public/images/element_cryo.png',
+            岩: 'public/images/element_geo.png'
         };
 
         const GOBLET_MAINSTAT_OBJ = {
@@ -522,16 +522,16 @@
 
         async function onLoad() {
             const responses = await Promise.all([
-                'data/CharacterMaster.json',
-                'data/SwordMaster.json',
-                'data/ClaymoreMaster.json',
-                'data/PolearmMaster.json',
-                'data/BowMaster.json',
-                'data/CatalystMaster.json',
-                'data/ArtifactSetMaster.json',
-                'data/HoyoAvatarMaster.json',
-                'data/HoyoWeaponMaster.json',
-                'data/HoyoArtifactMaster.json'
+                'public/data/CharacterMaster.json',
+                'public/data/SwordMaster.json',
+                'public/data/ClaymoreMaster.json',
+                'public/data/PolearmMaster.json',
+                'public/data/BowMaster.json',
+                'public/data/CatalystMaster.json',
+                'public/data/ArtifactSetMaster.json',
+                'public/data/HoyoAvatarMaster.json',
+                'public/data/HoyoWeaponMaster.json',
+                'public/data/HoyoArtifactMaster.json'
             ].map(s => fetch(s).then(resp => resp.json())));
 
             キャラクターMaster = responses[0];
@@ -548,14 +548,14 @@
             HoyoArtifactMaster = responses[9];
 
             Object.keys(キャラクターMaster).forEach(name => {
-                const characterUrl = キャラクターMaster[name]['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+                const characterUrl = キャラクターMaster[name]['import'].replace(/data\/characters/, 'images/characters/face').replace(/json$/, 'png');
                 CharacterImageList.push({
                     name: name,
                     rarity: キャラクターMaster[name]['レアリティ'],
                     vision: キャラクターMaster[name]['元素'],
                     weapon: キャラクターMaster[name]['武器'],
                     url: characterUrl,
-                    rarityBgUrl: 'images/star' + キャラクターMaster[name]['レアリティ'] + '-bg.png',
+                    rarityBgUrl: 'public/images/star' + キャラクターMaster[name]['レアリティ'] + '-bg.png',
                     visionUrl: VISION_IMG_SRC[キャラクターMaster[name]['元素']],
                     birthday: キャラクターMaster[name]['誕生日']
                 });

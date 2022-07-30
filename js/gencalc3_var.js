@@ -118,29 +118,29 @@ const ELEMENT_BG_COLOR_CLASS = {
 };
 
 const ELEMENT_IMG_SRC = {
-    炎: 'images/element_pyro.png',
-    水: 'images/element_hydro.png',
-    風: 'images/element_anemo.png',
-    雷: 'images/element_electro.png',
-    // 草: 'images/element_dendro.png',
-    氷: 'images/element_cryo.png',
-    岩: 'images/element_geo.png'
+    炎: 'public/images/element_pyro.png',
+    水: 'public/images/element_hydro.png',
+    風: 'public/images/element_anemo.png',
+    雷: 'public/images/element_electro.png',
+    // 草: 'public/images/element_dendro.png',
+    氷: 'public/images/element_cryo.png',
+    岩: 'public/images/element_geo.png'
 };
 
 const WEAPON_IMG_SRC = {
-    片手剣: 'images/characters/NormalAttack_sword.png',
-    両手剣: 'images/characters/NormalAttack_claymore.png',
-    長柄武器: 'images/characters/NormalAttack_polearm.png',
-    弓: 'images/characters/NormalAttack_bow.png',
-    法器: 'images/characters/NormalAttack_catalyst.png',
+    片手剣: 'public/images/characters/NormalAttack_sword.png',
+    両手剣: 'public/images/characters/NormalAttack_claymore.png',
+    長柄武器: 'public/images/characters/NormalAttack_polearm.png',
+    弓: 'public/images/characters/NormalAttack_bow.png',
+    法器: 'public/images/characters/NormalAttack_catalyst.png',
 };
 
 const STAR_BACKGROUND_URL = {
-    1: 'images/star1-bg.png',
-    2: 'images/star2-bg.png',
-    3: 'images/star3-bg.png',
-    4: 'images/star4-bg.png',
-    5: 'images/star5-bg.png'
+    1: 'public/images/star1-bg.png',
+    2: 'public/images/star2-bg.png',
+    3: 'public/images/star3-bg.png',
+    4: 'public/images/star4-bg.png',
+    5: 'public/images/star5-bg.png'
 };
 
 const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";

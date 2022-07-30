@@ -60,7 +60,7 @@
             <div class="notice">
                 <ul>
                     <li>CASE INSENSITIVE</li>
-                    <li>NAME IN KANJI, IF LENGTH >= 2 THEN STARTSWITH or ENDSWITH</li>
+                    <li>NAME IN KANJI, IF LENGTH &gt;= 2 THEN STARTSWITH or ENDSWITH</li>
                 </ul>
             </div>
         </div>
@@ -117,7 +117,7 @@
 
         async function onLoad() {
             const responses = await Promise.all([
-                'data/CharacterMaster.json'
+                'public/data/CharacterMaster.json'
             ].map(url => fetch(url).then(resp => resp.json())));
 
             CharacterMaster = responses[0];

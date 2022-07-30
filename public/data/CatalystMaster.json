@@ -1,0 +1,86 @@
+{
+    "神楽の真意": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/catalyst/5_Kagura'sVerity.json"
+    },
+    "不滅の月華": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/catalyst/5_EverlastingMoonglow.json"
+    },
+    "浮世の錠": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/catalyst/5_MemoryofDust.json"
+    },
+    "四風原典": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/catalyst/5_LostPrayertotheSacredWinds.json"
+    },
+    "天空の巻": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/catalyst/5_SkywardAtlas.json"
+    },
+    "誓いの明瞳": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_OathswornEye.json"
+    },
+    "白辰の輪": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_HakushinRing.json"
+    },
+    "ドドコの物語": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_DodocoTales.json"
+    },
+    "ダークアレイの酒と詩": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_WineandSong.json"
+    },
+    "冬忍びの実": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_Frostbearer.json"
+    },
+    "昭心": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_EyeofPerception.json"
+    },
+    "黒岩の緋玉": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_BlackcliffAgate.json"
+    },
+    "万国諸海の図譜": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_MappaMare.json"
+    },
+    "金珀·試作": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_PrototypeAmber.json"
+    },
+    "匣中日月": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_SolarPearl.json"
+    },
+    "旧貴族秘法録": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_RoyalGrimoire.json"
+    },
+    "祭礼の断片": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_SacrificialFragments.json"
+    },
+    "流浪楽章": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_TheWidsith.json"
+    },
+    "西風秘典": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/catalyst/4_FavoniusCodex.json"
+    },
+    "龍殺しの英傑譚": {
+        "レアリティ": 3,
+        "import": "public/data/weapons/catalyst/3_ThrillingTalesofDragonSlayers.json"
+    },
+    "魔導緒論": {
+        "レアリティ": 3,
+        "import": "public/data/weapons/catalyst/3_MagicGuide.json"
+    }
+}

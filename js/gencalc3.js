@@ -19,25 +19,25 @@ async function onLoad(searchParams) {
     }
 
     const responses = await Promise.all([
-        'data/CharacterMaster.json',
-        'data/SwordMaster.json',
-        'data/ClaymoreMaster.json',
-        'data/PolearmMaster.json',
-        'data/BowMaster.json',
-        'data/CatalystMaster.json',
-        'data/ArtifactSetMaster.json',
-        'data/ArtifactMainMaster.json',
-        'data/ArtifactSubMaster.json',
-        'data/EnemyMaster.json',
-        'data/ElementalReactionMaster.json',
-        'data/ElementalResonanceMaster.json',
-        'data/TeamOptionMaster.json',
-        'data/OptionMaster1.json',
-        'data/OptionMaster2.json',
-        'data/HoYoDictionary2.json',
-        'data/HoYoDictionary4.json',
-        'data/HoYoDictionary5.json',
-        'data/LocalDictionary.json',
+        'public/data/CharacterMaster.json',
+        'public/data/SwordMaster.json',
+        'public/data/ClaymoreMaster.json',
+        'public/data/PolearmMaster.json',
+        'public/data/BowMaster.json',
+        'public/data/CatalystMaster.json',
+        'public/data/ArtifactSetMaster.json',
+        'public/data/ArtifactMainMaster.json',
+        'public/data/ArtifactSubMaster.json',
+        'public/data/EnemyMaster.json',
+        'public/data/ElementalReactionMaster.json',
+        'public/data/ElementalResonanceMaster.json',
+        'public/data/TeamOptionMaster.json',
+        'public/data/OptionMaster1.json',
+        'public/data/OptionMaster2.json',
+        'public/data/HoYoDictionary2.json',
+        'public/data/HoYoDictionary4.json',
+        'public/data/HoYoDictionary5.json',
+        'public/data/LocalDictionary.json',
     ].map(s => fetch(s).then(resp => resp.json())));
 
     キャラクターMasterVar = responses[0];
@@ -343,7 +343,7 @@ function initialSetupCharacterSelect(characterInput) {
             },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
-                return 'images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png');
+                return 'public/images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png');
             },
             starBackgroundUrl: function (item) {
                 return getStarBackgroundUrl(item.master);
@@ -739,7 +739,7 @@ function initialSetupWeaponSelect(weaponType, weapon, weaponMaster) {
             },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
-                return importUrl.replace('data/', 'images/').replace('.json', '.png');
+                return importUrl.replace('public/data/', 'public/images/').replace('.json', '.png');
             },
             starBackgroundUrl: function (item) {
                 return getStarBackgroundUrl(item.master);
@@ -1540,7 +1540,7 @@ function initialSetupCharacterOwnList() {
             },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
-                return 'images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png');
+                return 'public/images/characters/face/' + importUrl.split('/')[importUrl.split('/').length - 1].replace('json', 'png');
             },
             starBackgroundUrl: function (item) {
                 return getStarBackgroundUrl(item.master);
@@ -1623,7 +1623,7 @@ function initialSetupWeaponOwnList() {
             },
             iconUrl: function (item) {
                 const importUrl = item.master.import;
-                return importUrl.replace('data/', 'images/').replace('.json', '.png');
+                return importUrl.replace('public/data/', 'public/images/').replace('.json', '.png');
             },
             starBackgroundUrl: function (item) {
                 return getStarBackgroundUrl(item.master);

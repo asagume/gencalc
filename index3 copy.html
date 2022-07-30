@@ -248,8 +248,8 @@
                                 <button type="button" class="artifact-detail-button">
                                     <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')"
                                         @click="artifactDetailOnClick">
-                                    <img class="left-icon" src="images/artifact.png" alt="artifact">
-                                    <img class="right-icon" src="images/artifact.png" alt="artifact">
+                                    <img class="left-icon" src="public/images/artifact.png" alt="artifact">
+                                    <img class="right-icon" src="public/images/artifact.png" alt="artifact">
                                     <div class="absolute-center">{{artifactScore}}</div>
                                 </button>
                             </td>
@@ -288,7 +288,7 @@
                         <tr>
                             <td colspan="2">
                                 <template v-for="item in Array.from({ length: weaponMaster['レアリティ'] }, (_, i) => i)">
-                                    <img class="star" src="images/star.png" alt="star">
+                                    <img class="star" src="public/images/star.png" alt="star">
                                 </template>
                             </td>
                         </tr>

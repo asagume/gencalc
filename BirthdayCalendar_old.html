@@ -129,7 +129,7 @@
 
                         const splittedUrl = characterMasterObj[name]['import'].split('/');
                         const fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-                        const srcUrl = 'images/characters/face/' + fileName;
+                        const srcUrl = 'public/images/characters/face/' + fileName;
 
                         const imgElem = document.createElement('img');
                         imgElem.src = srcUrl;
@@ -146,7 +146,7 @@
         const curYear = curDate.getFullYear();
         const curMonth = curDate.getMonth() + 1;
 
-        const url = 'data/CharacterMaster.json';
+        const url = 'public/data/CharacterMaster.json';
         fetch(url).then(resp => resp.json()).then(json => {
             for (let month = 0; month < 12; month++) {
                 buildCalendar('calendar-area', curDate.getFullYear(), month, json);

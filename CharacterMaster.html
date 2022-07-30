@@ -76,7 +76,7 @@
                         {{props.row.name}}
                     </span>
                     <span v-else-if="props.column.label == 'STAR'">
-                        <img class="star" v-for="dummy in new Array(props.row.rarity)" src="images/star.png">
+                        <img class="star" v-for="dummy in new Array(props.row.rarity)" src="public/images/star.png">
                     </span>
                     <span v-else>
                         {{props.formattedRow[props.column.field]}}
@@ -100,7 +100,7 @@
 
         async function onLoad() {
             const responses = await Promise.all([
-                'data/CharacterMaster.json'
+                'public/data/CharacterMaster.json'
             ].map(s => fetch(s).then(resp => resp.json())));
 
             キャラクターMaster = responses[0];

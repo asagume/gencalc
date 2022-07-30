@@ -7,7 +7,7 @@ import re
 
 SOURCE_PATH = './RawData'
 FILTER = '[5]_*.json'
-UPDATE_PATH = '../data/ArtifactSetMaster.json'
+UPDATE_PATH = '../public/data/ArtifactSetMaster.json'
 
 with open(UPDATE_PATH, 'r', encoding='utf_8_sig') as f:
     updateJson = json.load(f)

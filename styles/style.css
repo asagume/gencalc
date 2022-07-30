@@ -1115,27 +1115,27 @@ table.result td.value {
 
 /* レアリティ背景色 */
 .star5 {
-    background-image: url(../images/star5-bg.png);
+    background-image: url(../public/images/star5-bg.png);
     background-size: contain;
 }
 
 .star4 {
-    background-image: url(../images/star4-bg.png);
+    background-image: url(../public/images/star4-bg.png);
     background-size: contain;
 }
 
 .star3 {
-    background-image: url(../images/star3-bg.png);
+    background-image: url(../public/images/star3-bg.png);
     background-size: contain;
 }
 
 .star2 {
-    background-image: url(../images/star2-bg.png);
+    background-image: url(../public/images/star2-bg.png);
     background-size: contain;
 }
 
 .star1 {
-    background-image: url(../images/star1-bg.png);
+    background-image: url(../public/images/star1-bg.png);
     background-size: contain;
 }
 

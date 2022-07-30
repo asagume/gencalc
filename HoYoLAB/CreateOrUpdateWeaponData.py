@@ -8,9 +8,9 @@ import os.path
 import re
 
 SRC_PATH = './RawData/data/weapons'
-ORG_PATH = '../data/weapons'
-DST_PATH = '../data/weapons'
-ICON_URL_PATH = 'images/weapons'
+ORG_PATH = '../public/data/weapons'
+DST_PATH = '../public/data/weapons'
+ICON_URL_PATH = 'public/images/weapons'
 
 os.chdir(os.path.dirname(__file__))
 

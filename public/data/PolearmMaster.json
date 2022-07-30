@@ -1,0 +1,82 @@
+{
+    "息災": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/polearm/5_CalamityQueller.json"
+    },
+    "草薙の稲光": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/polearm/5_EngulfingLightning.json"
+    },
+    "護摩の杖": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/polearm/5_StaffofHoma.json"
+    },
+    "破天の槍": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/polearm/5_VortexVanquisher.json"
+    },
+    "天空の脊": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/polearm/5_SkywardSpine.json"
+    },
+    "和璞鳶": {
+        "レアリティ": 5,
+        "import": "public/data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
+    },
+    "斬波のひれ長": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_Wavebreaker'sFin.json"
+    },
+    "「漁獲」": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_TheCatch.json"
+    },
+    "喜多院十文字槍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_KitainCrossSpear.json"
+    },
+    "千岩長槍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_LithicSpear.json"
+    },
+    "ドラゴンスピア": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_DragonspineSpear.json"
+    },
+    "旧貴族猟槍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_RoyalSpear.json"
+    },
+    "西風長槍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_FavoniusLance.json"
+    },
+    "死闘の槍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_Deathmatch.json"
+    },
+    "黒岩の突槍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_BlackcliffPole.json"
+    },
+    "流月の針": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_CrescentPike.json"
+    },
+    "星鎌·試作": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_PrototypeStarglitter.json"
+    },
+    "匣中滅龍": {
+        "レアリティ": 4,
+        "import": "public/data/weapons/polearm/4_Dragon'sBane.json"
+    },
+    "黒纓槍": {
+        "レアリティ": 3,
+        "import": "public/data/weapons/polearm/3_BlackTassel.json"
+    },
+    "白纓槍": {
+        "レアリティ": 3,
+        "import": "public/data/weapons/polearm/3_WhiteTassel.json"
+    }
+}

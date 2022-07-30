@@ -1,7 +1,7 @@
 # 育成計算機のlistリクエストヘッダーのCookieの値を入力してください
 $Cookie = ""
 
-$OutputDir = "..\data"
+$OutputDir = "..\public\data"
 $AvatarListOutFile = "HoyoAvatarMaster.json"
 $WeaponListOutFile = "HoyoWeaponMaster.json"
 $ArtifactListOutFile = "HoyoArtifactMaster.json"

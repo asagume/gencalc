@@ -8,9 +8,9 @@ import os.path
 import re
 
 SRC_PATH = './RawData/data/characters'
-ORG_PATH = '../data/characters'
-DST_PATH = '../data/characters'
-ICON_URL_PATH = 'images/characters'
+ORG_PATH = '../public/data/characters'
+DST_PATH = '../public/data/characters'
+ICON_URL_PATH = 'public/images/characters'
 
 os.chdir(os.path.dirname(__file__))
 

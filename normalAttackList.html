@@ -104,7 +104,7 @@
         }
 
         window.onload = () => {
-            fetch('data/CharacterMaster.json').then(resp => resp.json()).then(json => {
+            fetch('public/data/CharacterMaster.json').then(resp => resp.json()).then(json => {
                 let getMasterArr = [];
                 Object.keys(json).forEach(key => {
                     if ('disabled' in json[key] && json[key]['disabled']) return;

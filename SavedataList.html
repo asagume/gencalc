@@ -34,21 +34,21 @@
     <script>
         async function init() {
             const responses = await Promise.all([
-                'data/CharacterMaster.json',
-                'data/SwordMaster.json',
-                'data/ClaymoreMaster.json',
-                'data/PolearmMaster.json',
-                'data/BowMaster.json',
-                'data/CatalystMaster.json',
-                'data/ArtifactSetMaster.json',
-                'data/ArtifactMainMaster.json',
-                'data/ArtifactSubMaster.json',
-                'data/EnemyMaster.json',
-                'data/ElementalResonanceMaster.json',
-                'data/ElementalReactionMaster.json',
-                'data/OptionMaster1.json',
-                'data/OptionMaster2.json',
-                'data/TeamOptionMaster.json'
+                'public/data/CharacterMaster.json',
+                'public/data/SwordMaster.json',
+                'public/data/ClaymoreMaster.json',
+                'public/data/PolearmMaster.json',
+                'public/data/BowMaster.json',
+                'public/data/CatalystMaster.json',
+                'public/data/ArtifactSetMaster.json',
+                'public/data/ArtifactMainMaster.json',
+                'public/data/ArtifactSubMaster.json',
+                'public/data/EnemyMaster.json',
+                'public/data/ElementalResonanceMaster.json',
+                'public/data/ElementalReactionMaster.json',
+                'public/data/OptionMaster1.json',
+                'public/data/OptionMaster2.json',
+                'public/data/TeamOptionMaster.json'
             ].map(url => fetch(url).then(resp => resp.json())));
 
             キャラクターリストMasterVar = responses[0];

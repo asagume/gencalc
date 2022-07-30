@@ -44,8 +44,8 @@
 
         async function onLoad() {
             const responses = await Promise.all([
-                'data/CharacterMaster.json',
-                'data/ParticleMaster.json'
+                'public/data/CharacterMaster.json',
+                'public/data/ParticleMaster.json'
             ].map(url => fetch(url).then(resp => resp.json())));
 
             CharacterMaster = responses[0];

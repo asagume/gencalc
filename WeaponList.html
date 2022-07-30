@@ -68,7 +68,7 @@
                 return;
             }
 
-            const url = 'data/' + searchParams.get('kind') + 'Master.json';
+            const url = 'public/data/' + searchParams.get('kind') + 'Master.json';
             fetch(url).then(resp => resp.json()).then(json => {
                 let weaponListH = '';
 
@@ -112,9 +112,22 @@
                                 status2Name = statusName;
                             }
                         });
-                        dataArr.push(json2['ステータス']['基礎攻撃力']['90']);
-                        dataArr.push(status2Name.replace('%', ''));
-                        dataArr.push(json2['ステータス'][status2Name]['90'] + (status2Name != '元素熟知' ? '%' : ''));
+                        if ('90' in json2['ステータス']['基礎攻撃力']) {
+                            dataArr.push(json2['ステータス']['基礎攻撃力']['90']);
+                        } else {
+                            dataArr.push('');
+                        }
+                        if (status2Name) {
+                            dataArr.push(status2Name ? status2Name.replace('%', '') : '');
+                            if ('90' in json2['ステータス'][status2Name]) {
+                                dataArr.push(json2['ステータス'][status2Name]['90'] + (status2Name != '元素熟知' ? '%' : ''));
+                            } else {
+                                dataArr.push('');
+                            }
+                        } else {
+                            dataArr.push('');
+                            dataArr.push('');
+                        }
                         let desc = null;
                         if ('説明' in json2['武器スキル']) {
                             desc = json2['武器スキル']['説明'];

@@ -100,20 +100,20 @@ const ELEMENT_COLOR = {
 }
 
 const ELEMENT_IMG_SRC = {
-    炎: 'images/element_pyro.png',
-    水: 'images/element_hydro.png',
-    風: 'images/element_anemo.png',
-    雷: 'images/element_electro.png',
-    氷: 'images/element_cryo.png',
-    岩: 'images/element_geo.png'
+    炎: 'public/images/element_pyro.png',
+    水: 'public/images/element_hydro.png',
+    風: 'public/images/element_anemo.png',
+    雷: 'public/images/element_electro.png',
+    氷: 'public/images/element_cryo.png',
+    岩: 'public/images/element_geo.png'
 }
 
 const NORMAL_ATTACK_IMG_SRC = {
-    片手剣: 'images/characters/NormalAttack_sword.png',
-    両手剣: 'images/characters/NormalAttack_claymore.png',
-    長柄武器: 'images/characters/NormalAttack_polearm.png',
-    弓: 'images/characters/NormalAttack_bow.png',
-    法器: 'images/characters/NormalAttack_catalyst.png'
+    片手剣: 'public/images/characters/NormalAttack_sword.png',
+    両手剣: 'public/images/characters/NormalAttack_claymore.png',
+    長柄武器: 'public/images/characters/NormalAttack_polearm.png',
+    弓: 'public/images/characters/NormalAttack_bow.png',
+    法器: 'public/images/characters/NormalAttack_catalyst.png'
 }
 
 const REFERENCE_FRAMES = {
@@ -364,11 +364,11 @@ function getElementColor(characterMaster) {
 }
 
 function getCharacterImgSrc(characterMaster) {
-    return characterMaster['import'].replace(/^data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+    return characterMaster['import'].replace(/data\/characters/, 'images/characters/face').replace(/json$/, 'png');
 }
 
 function getCharacterBackgroundImageUrl(characterMaster) {
-    return 'images/star' + characterMaster['レアリティ'] + '-bg.png';
+    return 'public/images/star' + characterMaster['レアリティ'] + '-bg.png';
 }
 
 function getCharacterElementImgSrc(characterMaster) {
@@ -376,12 +376,12 @@ function getCharacterElementImgSrc(characterMaster) {
 }
 
 function getElementalSkillImgSrc(characterMaster) {
-    const imgDir = characterMaster['import'].replace(/^data\/characters/, 'images/characters').replace(/.json$/, '/');
+    const imgDir = characterMaster['import'].replace(/data\/characters/, 'images/characters').replace(/.json$/, '/');
     return imgDir + 'ElementalSkill.png';
 }
 
 function getElementalBurstImgSrc(characterMaster) {
-    const imgDir = characterMaster['import'].replace(/^data\/characters/, 'images/characters').replace(/.json$/, '/');
+    const imgDir = characterMaster['import'].replace(/data\/characters/, 'images/characters').replace(/.json$/, '/');
     return imgDir + 'ElementalBurst.png';
 }
 
@@ -1339,10 +1339,10 @@ function buildFileButton() {
 
 async function init() {
     const responses = await Promise.all([
-        'data/CharacterMaster.json',
-        'data/RotationMaster.json',
-        'data/RotationSample.json',
-        'data/ParticleMaster.json'
+        'public/data/CharacterMaster.json',
+        'public/data/RotationMaster.json',
+        'public/data/RotationSample.json',
+        'public/data/ParticleMaster.json'
     ].map(url => fetch(url).then(resp => resp.json())));
 
     CharacterMaster = responses[0];

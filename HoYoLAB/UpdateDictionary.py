@@ -6,8 +6,8 @@ import pathlib
 import re
 
 SRC_PATH = './RawData/data'
-ORG_PATH = '../data/HoYoDictionary'
-DST_PATH = '../data/HoYoDictionary'
+ORG_PATH = '../public/data/HoYoDictionary'
+DST_PATH = '../public/data/HoYoDictionary'
 
 #CATEGORY_DIRS = ['characters', 'weapons', 'artifacts']
 CATEGORY_DIRS = [['character', 2], ['weapon', 4],

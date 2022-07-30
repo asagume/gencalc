@@ -248,13 +248,13 @@ const ELEMENT_TD_CLASS_MAP = new Map([
 ]);
 
 const ELEMENT_IMG_SRC_MAP = new Map([
-    ['炎', 'images/element_pyro.png'],
-    ['水', 'images/element_hydro.png'],
-    ['風', 'images/element_anemo.png'],
-    ['雷', 'images/element_electro.png'],
-    ['草', 'images/element_dendro.png'],
-    ['氷', 'images/element_cryo.png'],
-    ['岩', 'images/element_geo.png']
+    ['炎', 'public/images/element_pyro.png'],
+    ['水', 'public/images/element_hydro.png'],
+    ['風', 'public/images/element_anemo.png'],
+    ['雷', 'public/images/element_electro.png'],
+    ['草', 'public/images/element_dendro.png'],
+    ['氷', 'public/images/element_cryo.png'],
+    ['岩', 'public/images/element_geo.png']
 ]);
 
 /**
@@ -930,7 +930,7 @@ function buildキャラクター所持状況List() {
 
         let splittedUrl = myMasterObj['import'].split('/');
         let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-        let srcUrl = 'images/characters/face/' + fileName;
+        let srcUrl = 'public/images/characters/face/' + fileName;
 
         let liElem = document.createElement('li');
         liElem.id = name + '_所持状況Input';
@@ -1031,7 +1031,7 @@ function build武器所持状況List() {
                 return;
             }
 
-            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
+            let srcUrl = myMasterObj['import'].replace('public/data/', 'public/images/').replace('.json', '.png');
 
             let liElem = document.createElement('li');
             liElem.id = name + '_所持状況Input';

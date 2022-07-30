@@ -3042,7 +3042,7 @@ function setup聖遺物セット効果説明() {
         if ('image' in 聖遺物セット効果MasterVar[myInput1Value]) {
             $('#artifactset1-img').attr('src', 聖遺物セット効果MasterVar[myInput1Value]['image']);
         } else {
-            $('#artifactset1-img').attr('src', 'images/artifacts/3_Adventurer.png');
+            $('#artifactset1-img').attr('src', 'public/images/artifacts/3_Adventurer.png');
         }
         $('#artifactset1-img').attr('alt', myInput1Value);
         $('#artifactset1-desc').html(makeHtml(聖遺物セット効果MasterVar[myInput1Value]['2セット効果']));
@@ -3056,7 +3056,7 @@ function setup聖遺物セット効果説明() {
         if ('image' in 聖遺物セット効果MasterVar[myInput2Value]) {
             $('#artifactset2-img').attr('src', 聖遺物セット効果MasterVar[myInput2Value]['image']);
         } else {
-            $('#artifactset2-img').attr('src', 'images/artifacts/3_Adventurer.png');
+            $('#artifactset2-img').attr('src', 'public/images/artifacts/3_Adventurer.png');
         }
         $('#artifactset2-img').attr('alt', myInput1Value);
         if (myInput1Value == myInput2Value) {
@@ -3692,18 +3692,18 @@ function build天賦詳細() {
     let dirName = urlArr[urlArr.length - 1].replace('.json', '');
 
     $('#talent1-name').html(通常攻撃名称Var);
-    $('#talent1-img').attr('src', 'images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
+    $('#talent1-img').attr('src', 'public/images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
     $('#talent1-img').prop('alt', 通常攻撃名称Var);
     $('#talent1-desc').html('');
 
     $('#talent2-name').html(元素スキル名称Var);
-    $('#talent2-img').prop('src', 'images/characters/' + dirName + '/ElementalSkill.png');
+    $('#talent2-img').prop('src', 'public/images/characters/' + dirName + '/ElementalSkill.png');
     $('#talent2-img').prop('alt', 元素スキル名称Var);
     // $('#talent2-particle').html('');
     $('#talent2-desc').html('');
 
     $('#talent3-name').html(元素爆発名称Var);
-    $('#talent3-img').prop('src', 'images/characters/' + dirName + '/ElementalBurst.png');
+    $('#talent3-img').prop('src', 'public/images/characters/' + dirName + '/ElementalBurst.png');
     $('#talent3-img').prop('alt', 元素爆発名称Var);
     $('#talent3-energy-cost').html('');
     $('#talent3-desc').html('');
@@ -3773,7 +3773,7 @@ function setup武器説明レベル変動() {
 function setup武器説明() {
     // 画像と説明
     $('#weapon-name').html($('#武器Input').val().toString());
-    const starImg = '<img width="16", height="16" src="images/star.png" alt="star">';
+    const starImg = '<img width="16", height="16" src="public/images/star.png" alt="star">';
     let myRarerityHtml = starImg;
     for (let i = 1; i < 選択中武器データVar['レアリティ']; i++) {
         myRarerityHtml += starImg;
@@ -4095,7 +4095,7 @@ function setupCharacterImg(url) {
     let fileName = urlArr[urlArr.length - 1].replace('.json', '.png');
 
     // キャラクター画像
-    $('#character-button img').attr('src', 'images/characters/face/' + fileName);
+    $('#character-button img').attr('src', 'public/images/characters/face/' + fileName);
     for (let i = 4; i <= 5; i++) {
         $('#character-button img').removeClass('star' + i);
     }
@@ -4111,7 +4111,7 @@ function setupTalentButton(url, characterData) {
     let dirName = urlArr[urlArr.length - 1].replace('.json', '');
 
     // 通常攻撃
-    $('#talent1-button img').attr('src', 'images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
+    $('#talent1-button img').attr('src', 'public/images/characters/' + WEAPON_TYPE_IMG_FILE_ALIST[characterData['武器']]);
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
         if (key == characterData['元素']) {
             $('#talent1-button').addClass(value + '-bg');
@@ -4122,7 +4122,7 @@ function setupTalentButton(url, characterData) {
     // $('#talent1-button .tooltip').html(通常攻撃名称Var);
 
     // 元素スキル
-    $('#talent2-button img').attr('src', 'images/characters/' + dirName + '/ElementalSkill.png');
+    $('#talent2-button img').attr('src', 'public/images/characters/' + dirName + '/ElementalSkill.png');
     $('#talent2-button img').attr('alt', characterData['元素スキル']['名前']);
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
         if (key == characterData['元素']) {
@@ -4134,7 +4134,7 @@ function setupTalentButton(url, characterData) {
     // $('#talent2-button .tooltip').html(元素スキル名称Var);
 
     // 元素爆発
-    $('#talent3-button img').attr('src', 'images/characters/' + dirName + '/ElementalBurst.png');
+    $('#talent3-button img').attr('src', 'public/images/characters/' + dirName + '/ElementalBurst.png');
     $('#talent3-button img').attr('alt', characterData['元素爆発']['名前']);
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
         if (key == characterData['元素']) {
@@ -4151,7 +4151,7 @@ const キャラクターInputOnChange = function () {
 
     let myMasterObj = キャラクターリストMasterVar[my名前];
 
-    let elementSrcUrl = 'images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
+    let elementSrcUrl = 'public/images/element_' + ELEMENT_TD_CLASS_MAP.get(myMasterObj['元素']) + '.png';
     let imgElem = '<img width="18" height="18" src="' + elementSrcUrl + '" alt="' + myMasterObj['元素'] + '">';
     $('#character-name').html(imgElem + my名前);
 
@@ -4588,7 +4588,7 @@ function buildキャラクター選択リスト(opt_elementType = null, opt_weap
 
         let splittedUrl = myMasterObj['import'].split('/');
         let fileName = splittedUrl[splittedUrl.length - 1].replace('.json', '.png');
-        let srcUrl = 'images/characters/face/' + fileName;
+        let srcUrl = 'public/images/characters/face/' + fileName;
 
         let imgElem = document.createElement('img');
         imgElem.className = 'star' + myMasterObj['レアリティ'];
@@ -4636,7 +4636,7 @@ function emSelectedItemInList(listSelector, name) {
 
 // 武器変更イベント
 function setupWeaponImg(url, name) {
-    let srcUrl = url.replace('data/', 'images/').replace('.json', '.png');
+    let srcUrl = url.replace('public/data/', 'public/images/').replace('.json', '.png');
 
     // 武器画像
     $('#weapon-button img').attr('src', srcUrl);
@@ -4668,7 +4668,7 @@ function build武器選択リスト() {
             if (!(name in 選択可能武器セットObjVar)) {
                 return;
             }
-            let srcUrl = myMasterObj['import'].replace('data/', 'images/').replace('.json', '.png');
+            let srcUrl = myMasterObj['import'].replace('public/data/', 'public/images/').replace('.json', '.png');
 
             let liElem = document.createElement('li');
             ulElem.appendChild(liElem);
