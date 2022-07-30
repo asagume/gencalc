@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <CharacterSelect :character="character" />
+  <CharacterSelect :character="character" @update:character="characterSelected($event)" />
 </template>
 
 <script lang="ts">
@@ -30,12 +30,15 @@ function getCharacterByBirthday(): string {
 
 export default defineComponent({
   name: 'App',
-  setup(props) {
-    const character = getCharacterByBirthday();
+  setup() {
+    let character = getCharacterByBirthday();
 
     return {
       character,
     }
+  },
+  methods: {
+    characterSelected(character: any) { this.character = character.key; }
   },
   components: {
     CharacterSelect

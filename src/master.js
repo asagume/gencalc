@@ -169,3 +169,54 @@ export async function getWeaponMasterDetail(weapon, opt_weaponType = null) {
         throw error;
     }
 }
+
+export const ELEMENT_COLOR_CLASS = {
+    炎: 'pyro',
+    水: 'hydro',
+    風: 'anemo',
+    雷: 'electro',
+    草: 'dendro',
+    氷: 'cryo',
+    岩: 'geo'
+};
+
+export const ELEMENT_BG_COLOR_CLASS = {
+    炎: 'pyro-bg',
+    水: 'hydro-bg',
+    風: 'anemo-bg',
+    雷: 'electro-bg',
+    草: 'dendro-bg',
+    氷: 'cryo-bg',
+    岩: 'geo-bg'
+};
+
+export const ELEMENT_IMG_SRC = {
+    炎: 'images/element_pyro.png',
+    水: 'images/element_hydro.png',
+    風: 'images/element_anemo.png',
+    雷: 'images/element_electro.png',
+    // 草: 'images/element_dendro.png',
+    氷: 'images/element_cryo.png',
+    岩: 'images/element_geo.png'
+};
+
+export const WEAPON_IMG_SRC = {
+    片手剣: 'images/characters/NormalAttack_sword.png',
+    両手剣: 'images/characters/NormalAttack_claymore.png',
+    長柄武器: 'images/characters/NormalAttack_polearm.png',
+    弓: 'images/characters/NormalAttack_bow.png',
+    法器: 'images/characters/NormalAttack_catalyst.png',
+};
+
+export const STAR_BACKGROUND_URL = {
+    1: 'images/star1-bg.png',
+    2: 'images/star2-bg.png',
+    3: 'images/star3-bg.png',
+    4: 'images/star4-bg.png',
+    5: 'images/star5-bg.png'
+};
+
+export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+
+export const ALLOW_LIST_LANG = ['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn'];
+
