@@ -20,33 +20,33 @@ const Input = require('./input.ts');
 export default defineComponent({
   name: 'App',
   props: {
-    characterInput: Object,
-},
+    characterInput: { type: Object, require: true }
+  },
   setup(props) {
-  let characterSelectVisible = true;
-  let character = ref(props.characterInput!.character);
-  let characterMaster;
-  let characterDetail = reactive(Input.CHARACTER_INPUT_TEMPLATE);
+    let characterSelectVisible = true;
+    let character = ref(props.characterInput ? props.characterInput.character : null);
+    let characterMaster;
+    let characterDetail = reactive(Input.CHARACTER_INPUT_TEMPLATE);
 
 
-  return {
-    characterSelectVisible,
-    character,
-    characterMaster,
-    characterDetail,
+    return {
+      characterSelectVisible,
+      character,
+      characterMaster,
+      characterDetail,
 
-  }
-},
+    }
+  },
   methods: {
-  async characterSelected(character: string) {
-    this.character = character;
-    this.characterSelectVisible = false;
-    this.characterMaster = await Master.getCharacterMasterDetail(character);
-  }
-},
+    async characterSelected(character: string) {
+      this.character = character;
+      // this.characterSelectVisible = false;
+      this.characterMaster = await Master.getCharacterMasterDetail(character);
+    }
+  },
   components: {
-  CharacterSelect
-}
+    CharacterSelect
+  }
 });
 </script>
 
@@ -58,5 +58,21 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.hidden {
+  display: none;
+}
+
+ul.select-list {
+  list-style-type: none;
+  padding: 0;
+  font-size: 0;
+}
+
+ul.select-list li {
+  display: inline-block;
+  margin: 0;
+  position: relative;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div id="character-select" v-if="visible">
-        <ul>
+    <div v-if="visible">
+        <ul class="select-list">
             <li v-for="item in elementList" :key="item">
                 <label>
                     <input class="hidden" type="checkbox" v-model="elementCheckList[item]"
@@ -9,7 +9,7 @@
                 </label>
             </li>
         </ul>
-        <ul>
+        <ul class="select-list">
             <li v-for="item in weaponList" :key="item">
                 <label>
                     <input class="hidden" type="checkbox" v-model="weaponCheckList[item]"
@@ -18,7 +18,7 @@
                 </label>
             </li>
         </ul>
-        <ul>
+        <ul class="select-list">
             <li v-for="item in filteredList" :key="item.key">
                 <label>
                     <input class="hidden" type="radio" name="character-select" :value="item.key"
@@ -118,18 +118,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-ul {
-    list-style-type: none;
-    padding: 0;
-    font-size: 0;
-}
-
-li {
-    display: inline-block;
-    margin: 0;
-    position: relative;
-}
-
 img.character {
     width: 90px;
     height: 90px;

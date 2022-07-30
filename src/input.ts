@@ -240,23 +240,79 @@ export const 突破レベルレベルARRAY = [
     Array.from({ length: 11 }, (_, i) => i + 80),
 ];
 
-export const CHARACTER_INPUT_TEMPLATE = {
-    character: '',
-    characterMaster: {},
-    weapon: '',
-    weaponMaster: {},
+const ARTIFACT_SET_MASTER_DUMMY = {
+    名前: 'dummy',
+    image: Master.IMG_SRC_DUMMY
+};
 
+export const CHARACTER_INPUT_TEMPLATE = {
+    character: null,
+    characterMaster: null,
     突破レベル: 6,
     レベル: 90,
     命ノ星座: 0,
     通常攻撃レベル: 8,
     元素スキルレベル: 8,
     元素爆発レベル: 8,
+    weapon: null,
+    weaponMaster: null,
     武器突破レベル: 6,
     武器レベル: 90,
     武器精錬ランク: 1,
-    聖遺物セット効果: [],
+    聖遺物セット効果: [
+        {
+            名前: 'NONE',
+            master: ARTIFACT_SET_MASTER_DUMMY
+        },
+        {
+            名前: 'NONE',
+            master: ARTIFACT_SET_MASTER_DUMMY
+        }
+    ],
+};
 
+export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
+    聖遺物メイン効果: [null, null, null, null, null],
+    聖遺物優先するサブ効果: [null, null, null],
+    聖遺物優先するサブ効果上昇値: [0, 0, 0],
+    聖遺物優先するサブ効果上昇回数: [8, 5, 5],
+    subStatUpLists: [[], [], []],
+    subStatUpIndices: [6, 6, 6],
+    gensen: '厳選1ヶ月',
+    gensenList: [null, '厳選初心者', '厳選1ヶ月', '厳選3ヶ月', '日々石割'],
+    厳選目安一括変更Enabled: false,
+    聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    聖遺物ステータス補正: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    isステータス計算無効: false
+};
+
+export const CONDITION_INPUT_TEMPLATE = {
+    isVisible: true,
+    conditionValues: {},
+    character: null,
+    characterMaster: null,
+    conditionAdjustments: {}
+};
+
+export const OPTION_INPUT_TEMPLATE = {
+    isVisible: true,
+    activeTab: 1,
+    elementalResonanceConditionValues: {},
+    elementalResonanceStatusAdjustment: {},
+    supporterList: [],
+    isSupporterOptionOpened: {},
+    teamOptionConditionMap: {},
+    teamOptionConditionValues: {},
+    teamOptionStatusAdjustment: {},
+    miscOptionConditionValues: {},
+    miscOptionStatusAdjustment: {},
+};
+
+export const SUPPORTER_INPUT_TEMPLATE = {
+    characterInput: CHARACTER_INPUT_TEMPLATE,
+    artifactDetailInput: ARTIFACT_DETAIL_INPUT_TEMPLATE,
+    conditionInput: CONDITION_INPUT_TEMPLATE,
+    statusInput: {}
 };
 
 export function isString(value: any) {
@@ -285,7 +341,7 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
         } else {
             level = Number(levelStr);
         }
-        let ascension: number = 0;
+        let ascension = 0;
         for (let i = 突破レベルレベルARRAY.length - 1; i >= 0; i--) {
             if (突破レベルレベルARRAY[i][0] < level) continue;
             if (突破レベルレベルARRAY[i][突破レベルレベルARRAY[i].length - 1] > level) continue;
@@ -308,7 +364,7 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
  * @param {Object} characterMaster キャラクターマスター
  * @returns {[string, object, boolean][]} おすすめセットのリスト
  */
-export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData = null) {
+export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }) {
     const result = [];
 
     const character = characterMaster['名前'];
@@ -319,7 +375,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
         isSavable = true;
     }
 
-    let storageKeyArr: string[] = [];
+    const storageKeyArr: string[] = [];
     Object.keys(localStorage).forEach(key => {
         if (key.startsWith('構成_' + character)) {
             storageKeyArr.push(key);
@@ -341,13 +397,13 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
     });
 
     characterMaster['おすすめセット'].forEach((obj: { [key: string]: any }) => {
-        let myおすすめセット = obj;
+        const myおすすめセット = obj;
         ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach(stat => {
             if (!(stat in obj)) {
                 obj[stat] = null;
             }
         });
-        let artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
+        const artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
         let artifactRarerity4Num = 0;
         if (Master.ARTIFACT_SET_MASTER[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {
             artifactRarerity4Num++;
@@ -356,7 +412,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
             artifactRarerity4Num++;
         }
         for (let i = 0; i < 2; i++) {
-            let name = '聖遺物メイン効果' + (i + 1);
+            const name = '聖遺物メイン効果' + (i + 1);
             if (!(name in myおすすめセット)) {
                 if (i == 0) {
                     myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';

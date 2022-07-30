@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { makeRecommendationList } from './input';
 
 const Master = require('./master.js') as any
 const Input = require('./input.ts') as any
@@ -137,7 +138,7 @@ function getCharacterByBirthday(): string {
 async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_TEMPLATE, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, recommendation: { [key: string]: any }) {
     try {
         const character = characterInput.character;
-        const characterMaster = await Master.getCharacterMaster(character);
+        const characterMaster = await Master.getCharacterMasterDetail(character);
         characterInput.characterMaster = characterMaster;
 
         if ('レベル' in recommendation) {
@@ -152,7 +153,7 @@ async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_T
         const weaponType = characterMaster['武器'];
         if ('武器' in recommendation) {
             characterInput.weapon = recommendation['武器'];
-            characterInput.weaponMaster = await Master.getWeaponMaster(characterInput.weapon, weaponType);
+            characterInput.weaponMaster = await Master.getWeaponMasterDetail(characterInput.weapon, weaponType);
         }
         if ('武器レベル' in recommendation) {
             [characterInput.武器突破レベル, characterInput.武器レベル] = Input.parseLevelStr(recommendation['武器レベル']);
@@ -212,31 +213,25 @@ async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_T
     }
 }
 
-const characterInput = {} as { [key: string]: any };
-const artifactDetailInput = {};
-const conditionInput = {};
+async function main() {
+    const characterInput = {} as { [key: string]: any };
+    const artifactDetailInput = {};
+    const conditionInput = {};
 
-let recommendation;
-const searchParams = new URLSearchParams(window.location.search);
-if (searchParams.has('allin')) {
-    recommendation = makeSaveDataFromShareData(searchParams.get('allin')!);
-    characterInput.character = recommendation.キャラクター;
-    characterInput.characterMaster = await Master.getCharacterMaster(characterInput.character);
-} else {
-    characterInput.character = getCharacterByBirthday();
-    characterInput.characterMaster = await Master.getCharacterMaster(characterInput.character);
-    const storageKey = '構成_' + characterInput.character;
-    if (localStorage[storageKey]) {
-        recommendation = JSON.parse(JSON.stringify(localStorage[storageKey]));
+    const searchParams = new URLSearchParams(window.location.search);
+    let savedata;
+    if (searchParams.has('allin')) {
+        savedata = makeSaveDataFromShareData(searchParams.get('allin')!);
+        characterInput.character = savedata.キャラクター;
     } else {
-        const recommendationList = [];
-
+        characterInput.character = getCharacterByBirthday();
     }
+    characterInput.characterMaster = await Master.getCharacterMasterDetail(characterInput.character);
+    const recommendationList = makeRecommendationList(characterInput.characterMaster, savedata);
+    const recommendation = recommendationList[0];
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
 
-
+    createApp(App, { characterInput: characterInput }).mount('#app')
 }
-await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
 
-
-
-createApp(App).mount('#app')
+main();
