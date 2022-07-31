@@ -31,8 +31,8 @@
 </template>
 
 <script lang="ts">
+import { TCharacterEntry, ELEMENT_IMG_SRC, STAR_BACKGROUND_URL, TVisionKey, WEAPON_IMG_SRC, TWeaponTypeKey, CHARACTER_MASTER_LIST } from '@/master';
 import { defineComponent, reactive, computed } from 'vue';
-import * as Master from '@/master';
 
 interface ICheckList {
     [key: string]: boolean
@@ -48,19 +48,19 @@ export default defineComponent({
     setup(props) {
         const displayName = (name: string) => name;
 
-        const visionSrc = (item: Master.TCharacterEntry) => Master.ELEMENT_IMG_SRC[item.元素];
-        const backgroundUrl = (item: Master.TCharacterEntry) => Master.STAR_BACKGROUND_URL[item.レアリティ] as string;
-        const selectedClass = (item: Master.TCharacterEntry) => { return item.key == props.character ? 'selected' : '' };
+        const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
+        const backgroundUrl = (item: TCharacterEntry) => STAR_BACKGROUND_URL[item.レアリティ] as string;
+        const selectedClass = (item: TCharacterEntry) => { return item.key == props.character ? 'selected' : '' };
 
-        const elementList = Object.keys(Master.ELEMENT_IMG_SRC) as Master.TVisionKey[];
-        const elementSrc = (element: Master.TVisionKey) => Master.ELEMENT_IMG_SRC[element] as string;
+        const elementList = Object.keys(ELEMENT_IMG_SRC) as TVisionKey[];
+        const elementSrc = (element: TVisionKey) => ELEMENT_IMG_SRC[element] as string;
         const elementCheckList = reactive({}) as ICheckList;
         for (let key of elementList) {
             elementCheckList[key] = false;
         }
 
-        const weaponList = Object.keys(Master.WEAPON_IMG_SRC) as Master.TWeaponTypeKey[];
-        const weaponSrc = (weapon: Master.TWeaponTypeKey) => Master.WEAPON_IMG_SRC[weapon] as string;
+        const weaponList = Object.keys(WEAPON_IMG_SRC) as TWeaponTypeKey[];
+        const weaponSrc = (weapon: TWeaponTypeKey) => WEAPON_IMG_SRC[weapon] as string;
         const weaponCheckList = reactive({}) as ICheckList;
         for (let key of weaponList) {
             weaponCheckList[key] = false;
@@ -77,7 +77,7 @@ export default defineComponent({
             const result = [];
             const elementChecked = Object.keys(elementCheckList).filter(s => elementCheckList[s]).length > 0;
             const weaponChecked = Object.keys(weaponCheckList).filter(s => weaponCheckList[s]).length > 0;
-            for (let entry of (Master.CHARACTER_MASTER_LIST as Master.TCharacterEntry[])) {
+            for (let entry of (CHARACTER_MASTER_LIST as TCharacterEntry[])) {
                 if (elementChecked && !elementCheckList[entry.元素]) continue;
                 if (weaponChecked && !weaponCheckList[entry.武器]) continue;
                 result.push(entry);

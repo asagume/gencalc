@@ -45,10 +45,10 @@ export type TCharacterDetail = {
 }
 
 export type TWeapon = {
-    レアリティ: number,
+    レアリティ: 1 | 2 | 3 | 4 | 5,
     import: string,
 }
-export type TWeaponEntry = TWeapon | TEntry
+export type TWeaponEntry = TWeapon & TEntry
 export type TSwordKey = keyof typeof SWORD_MASTER;
 export type TClaymoreKey = keyof typeof CLAYMORE_MASTER;
 export type TPolearmKey = keyof typeof POLEARM_MASTER;
@@ -77,7 +77,7 @@ export type TArtifactSet = {
     '2セット効果'?: TArtifactSetEffect,
     '4セット効果'?: TArtifactSetEffect,
 }
-export type TArtifactSetEntry = TArtifactSet | TEntry
+export type TArtifactSetEntry = TArtifactSet & TEntry
 export type TArtifactSetKey = keyof typeof ARTIFACT_SET_MASTER;
 
 export type TArtifactMainStat = keyof typeof ARTIFACT_MAIN_MASTER[5]

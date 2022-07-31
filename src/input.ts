@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSetKey } from '@/master';
+import { ARTIFACT_SET_MASTER, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSetKey, TWeaponKey } from '@/master';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -484,7 +484,7 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
         const weaponType = characterMaster['武器'];
         console.log(weaponType, recommendation);
         if ('武器' in recommendation) {
-            characterInput.weapon = recommendation['武器'];
+            characterInput.weapon = recommendation['武器'] as TWeaponKey;
             characterInput.weaponMaster = await getWeaponMasterDetail(characterInput.weapon, weaponType);
         }
         if ('武器レベル' in recommendation) {
