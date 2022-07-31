@@ -158,8 +158,9 @@ a:visited {
     display: none;
 }
 
-table th, table td {
+table, thead, tbody, th, td {
     padding: 0;
+    margin: 0;
 }
 
 button {

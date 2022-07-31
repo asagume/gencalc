@@ -4,35 +4,35 @@
             <legend>{{ displayName('聖遺物詳細') }}</legend>
             <label>
                 {{ displayName('生の花') }}
-                <select v-model="mainstat1" @change="updateMainstat">
+                <select v-model="mainstat[0]" @change="updateMainstat">
                     <option value=""></option>
                     <option v-for="item in mainstat1List" :value="item" :key="item"> {{ displayName(item) }} </option>
                 </select>
             </label>
             <label>
                 {{ displayName('死の羽') }}
-                <select v-model="mainstat2" @change="updateMainstat">
+                <select v-model="mainstat[1]" @change="updateMainstat">
                     <option value=""></option>
                     <option v-for="item in mainstat2List" :value="item" :key="item"> {{ displayName(item) }} </option>
                 </select>
             </label>
             <label>
                 {{ displayName('時の砂') }}
-                <select v-model="mainstat3" @change="updateMainstat">
+                <select v-model="mainstat[2]" @change="updateMainstat">
                     <option value=""></option>
                     <option v-for="item in mainstat3List" :value="item" :key="item"> {{ displayName(item) }} </option>
                 </select>
             </label>
             <label>
                 {{ displayName('空の杯') }}
-                <select v-model="mainstat4" @change="updateMainstat">
+                <select v-model="mainstat[3]" @change="updateMainstat">
                     <option value=""></option>
                     <option v-for="item in mainstat4List" :value="item" :key="item"> {{ displayName(item) }} </option>
                 </select>
             </label>
             <label>
                 {{ displayName('理の冠') }}
-                <select v-model="mainstat5" @change="updateMainstat">
+                <select v-model="mainstat[4]" @change="updateMainstat">
                     <option value=""></option>
                     <option v-for="item in mainstat5List" :value="item" :key="item"> {{ displayName(item) }} </option>
                 </select>
@@ -157,23 +157,10 @@ export default defineComponent({
 
         let artifactDetailInput = ref(props.artifactDetailInput);
 
-        let mainstat1: TArtifactMainStat | null = ref(props.artifactDetailInput!.聖遺物メイン効果1);
-        let mainstat2: TArtifactMainStat | null = ref(props.artifactDetailInput!.聖遺物メイン効果2);
-        let mainstat3: TArtifactMainStat | null = ref(props.artifactDetailInput!.聖遺物メイン効果3);
-        let mainstat4: TArtifactMainStat | null = ref(props.artifactDetailInput!.聖遺物メイン効果4);
-        let mainstat5: TArtifactMainStat | null = ref(props.artifactDetailInput!.聖遺物メイン効果5);
-        let prioritySubstat = ref([
-            props.artifactDetailInput!.聖遺物優先するサブ効果1,
-            props.artifactDetailInput!.聖遺物優先するサブ効果2,
-            props.artifactDetailInput!.聖遺物優先するサブ効果3]);
-        let prioritySubstatValue = ref([
-            props.artifactDetailInput!.聖遺物優先するサブ効果上昇値1,
-            props.artifactDetailInput!.聖遺物優先するサブ効果上昇値2,
-            props.artifactDetailInput!.聖遺物優先するサブ効果上昇値3]);
-        let prioritySubstatCount = ref([
-            props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数1,
-            props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数2,
-            props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数3]);
+        let mainstat = ref(props.artifactDetailInput!.聖遺物メイン効果);
+        let prioritySubstat = ref(props.artifactDetailInput!.聖遺物優先するサブ効果);
+        let prioritySubstatValue = ref(props.artifactDetailInput!.聖遺物優先するサブ効果上昇値);
+        let prioritySubstatCount = ref(props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数);
         let stat = reactive(props.artifactDetailInput!.聖遺物ステータス);
 
         let editable = ref(false);
@@ -211,8 +198,7 @@ export default defineComponent({
             prioritySubstatList: 聖遺物優先するサブ効果ARRAY,
             prioritySubstatValueList,
             prioritySubstatCountList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-            mainstat1, mainstat2, mainstat3, mainstat4, mainstat5,
-            prioritySubstat, prioritySubstatValue, prioritySubstatCount,
+            mainstat, prioritySubstat, prioritySubstatValue, prioritySubstatCount,
             stat,
             editable,
             updateMainstat, updatePrioritySubstat,

@@ -99,7 +99,7 @@ export const ステータスARRAY_MAP = new Map([
 
 function makeStatusTenmplate() {
     const statusObj = {} as { [key: string]: number };
-    ステータスARRAY_MAP.forEach((value, key) => {
+    ステータスARRAY_MAP.forEach((value) => {
         value.forEach(stat => {
             statusObj[stat] = 0;
         });
@@ -113,7 +113,7 @@ export const ステータスTEMPLATE = makeStatusTenmplate();
 
 function makeEnemyStatusTemplate() {
     const statusObj = {} as { [key: string]: number };
-    [元素ステータス_耐性ARRAY].forEach((value, key) => {
+    [元素ステータス_耐性ARRAY].forEach((value) => {
         value.forEach(stat => {
             statusObj[stat] = 0;
         });
