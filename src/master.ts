@@ -16,6 +16,30 @@ export type TCharacter = {
 }
 export type TCharacterEntry = TCharacter | TEntry
 export type TCharacterKey = keyof typeof CHARACTER_MASTER
+export type TCharacterDetail = {
+    名前: string,
+    説明: string,
+    icon_url: string,
+    レアリティ: number,
+    武器: TWeaponTypeKey,
+    元素: string,
+    baseInfo: any,
+    ステータス: any,
+    通常攻撃: any,
+    重撃: any,
+    落下攻撃: any,
+    元素スキル: any,
+    元素爆発: any,
+    固有天賦: any[],
+    命ノ星座?: any,
+    特殊通常攻撃?: any,
+    特殊重撃?: any,
+    特殊落下攻撃?: any,
+    その他天賦?: any,
+    オプション初期値?: any,
+    固有変数?: any,
+    おすすめセット: any[],
+}
 
 export type TWeapon = {
     レアリティ: number,
@@ -29,6 +53,17 @@ export type TBowKey = keyof typeof BOW_MASTER;
 export type TCatalystKey = keyof typeof CATALYST_MASTER;
 export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
 export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCatalystKey;
+export type TWeaponDetail = {
+    名前: string,
+    説明: string,
+    icon_url: string,
+    レアリティ: number,
+    種類: TWeaponTypeKey,
+    ステータス: any,
+    武器スキル?: any,
+    オプション初期値?: any,
+    固有変数?: any,
+}
 
 export type TArtifactSetEffect = {
     説明: string,
@@ -184,6 +219,8 @@ export const ELEMENTAL_REACTION_MASTER_LIST = (Object.keys(ELEMENTAL_REACTION_MA
 
 export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...HOYO_DICTIONARY5, ...LOCAL_DICTIONARY };
 
+////////////////
+////////////////
 export function isPlainObject(value: any) {
     const myType = Object.prototype.toString.call(value);
     return myType === '[object Object]';
@@ -205,13 +242,13 @@ function removeStrFromUrl(obj: any, str: string) {
     }
 }
 
-export const CHARACTER_MASTER_DETAIL_MAP = new Map();
+const CHARACTER_MASTER_DETAIL_MAP = new Map();
 /**
  * 
  * @param {string} character 
  * @returns {Promise<any>}
  */
-export async function getCharacterMasterDetail(character: TCharacterKey) {
+export async function getCharacterMasterDetail(character: TCharacterKey): Promise<TCharacterDetail> {
     try {
         if (!CHARACTER_MASTER_DETAIL_MAP.has(character)) {
             const characterMaster = await fetch(CHARACTER_MASTER[character]['import']).then(resp => resp.json());
@@ -225,14 +262,14 @@ export async function getCharacterMasterDetail(character: TCharacterKey) {
     }
 }
 
-export const WEAPON_MASTER_DETAIL_MAP = new Map();
+const WEAPON_MASTER_DETAIL_MAP = new Map();
 /**
  * 
- * @param {string} weapon 
- * @param {string} opt_weaponType 
- * @returns {any}
+ * @param weapon 
+ * @param opt_weaponType 
+ * @returns 
  */
-export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?: TWeaponTypeKey) {
+export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?: TWeaponTypeKey): Promise<TWeaponDetail> {
     try {
         if (!WEAPON_MASTER_DETAIL_MAP.has(weapon)) {
             let weaponTypeArr;
