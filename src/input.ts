@@ -1,4 +1,4 @@
-const Master = require('./master.ts') as any;
+import { ARTIFACT_SET_MASTER, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSetKey } from '@/master';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -242,7 +242,7 @@ export const 突破レベルレベルARRAY = [
 
 const ARTIFACT_SET_MASTER_DUMMY = {
     key: 'dummy',
-    image: Master.IMG_SRC_DUMMY
+    image: IMG_SRC_DUMMY
 };
 
 export const CHARACTER_INPUT_TEMPLATE = {
@@ -394,7 +394,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
     });
 
     characterMaster['おすすめセット'].forEach((obj: { [key: string]: any }) => {
-        const myおすすめセット = obj;
+        const myRecommendation = obj;
         ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach(stat => {
             if (!(stat in obj)) {
                 obj[stat] = null;
@@ -402,43 +402,45 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
         });
         const artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
         let artifactRarerity4Num = 0;
-        if (Master.ARTIFACT_SET_MASTER[myおすすめセット['聖遺物セット効果1']]['レアリティ'] == 4) {
+        const artifactSet1 = myRecommendation['聖遺物セット効果1'] as TArtifactSetKey;
+        const artifactSet2 = myRecommendation['聖遺物セット効果2'] as TArtifactSetKey;
+        if (ARTIFACT_SET_MASTER[artifactSet1]['レアリティ'] == 4) {
             artifactRarerity4Num++;
         }
-        if (Master.ARTIFACT_SET_MASTER[myおすすめセット['聖遺物セット効果2']]['レアリティ'] == 4) {
+        if (ARTIFACT_SET_MASTER[artifactSet2]['レアリティ'] == 4) {
             artifactRarerity4Num++;
         }
         for (let i = 0; i < 2; i++) {
             const name = '聖遺物メイン効果' + (i + 1);
-            if (!(name in myおすすめセット)) {
+            if (!(name in myRecommendation)) {
                 if (i == 0) {
-                    myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
+                    myRecommendation[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_HP';
                 } else if (i == 1) {
-                    myおすすめセット[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
+                    myRecommendation[name] = artifactRarerityArrArr[artifactRarerity4Num][i] + '_攻撃力';
                 }
             }
         }
 
-        let buildname = myおすすめセット['武器'];
+        let buildname = myRecommendation['武器'];
         buildname += ' ';
-        if (myおすすめセット['聖遺物セット効果1'] == myおすすめセット['聖遺物セット効果2']) {
-            buildname += myおすすめセット['聖遺物セット効果1'];
+        if (myRecommendation['聖遺物セット効果1'] == myRecommendation['聖遺物セット効果2']) {
+            buildname += myRecommendation['聖遺物セット効果1'];
         } else {
-            buildname += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果1']);
+            buildname += makeArtifactSetAbbrev(myRecommendation['聖遺物セット効果1']);
             buildname += '/';
-            buildname += makeArtifactSetAbbrev(myおすすめセット['聖遺物セット効果2']);
+            buildname += makeArtifactSetAbbrev(myRecommendation['聖遺物セット効果2']);
         }
         buildname += ' [';
         for (let i = 3; i <= 5; i++) {
-            const statusName = myおすすめセット['聖遺物メイン効果' + i].split('_')[1];
-            if (Master.RECOMMEND_ABBREV_MAP.has(statusName)) {
-                buildname += Master.RECOMMEND_ABBREV_MAP.get(statusName);
+            const statusName = myRecommendation['聖遺物メイン効果' + i].split('_')[1];
+            if (RECOMMEND_ABBREV_MAP.has(statusName)) {
+                buildname += RECOMMEND_ABBREV_MAP.get(statusName);
             } else {
                 buildname += statusName.substring(0, 1);
             }
         }
         buildname += ']';
-        result.push({ name: buildname, build: myおすすめセット, overwrite: false });
+        result.push({ name: buildname, build: myRecommendation, overwrite: false });
     });
 
     return result;
@@ -467,7 +469,7 @@ function makeArtifactSetAbbrev(name: string): string {
 export async function loadRecommendation(characterInput: { [key: string]: any }, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, recommendation: { [key: string]: any }) {
     try {
         const character = characterInput.character;
-        const characterMaster = await Master.getCharacterMasterDetail(character);
+        const characterMaster = await getCharacterMasterDetail(character);
         characterInput.characterMaster = characterMaster;
 
         if ('レベル' in recommendation) {
@@ -483,7 +485,7 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
         console.log(weaponType, recommendation);
         if ('武器' in recommendation) {
             characterInput.weapon = recommendation['武器'];
-            characterInput.weaponMaster = await Master.getWeaponMasterDetail(characterInput.weapon, weaponType);
+            characterInput.weaponMaster = await getWeaponMasterDetail(characterInput.weapon, weaponType);
         }
         if ('武器レベル' in recommendation) {
             [characterInput.武器突破レベル, characterInput.武器レベル] = parseLevelStr(recommendation['武器レベル']);
@@ -494,9 +496,9 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
 
         ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
             if (!(key in recommendation)) return;
-            const artifactSet = recommendation[key];
-            if (artifactSet && artifactSet in Master.ARTIFACT_SET_MASTER) {
-                characterInput.artifactSetMaster[index] = Master.ARTIFACT_SET_MASTER[artifactSet];
+            const artifactSet = recommendation[key] as TArtifactSetKey;
+            if (artifactSet && artifactSet in ARTIFACT_SET_MASTER) {
+                characterInput.artifactSetMaster[index] = ARTIFACT_SET_MASTER[artifactSet];
             } else {
                 characterInput.artifactSetMaster[index] = ARTIFACT_SET_MASTER_DUMMY;
             }

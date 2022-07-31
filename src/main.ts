@@ -1,9 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { makeRecommendationList, loadRecommendation } from './input';
-
-const Master = require('./master.ts') as any
-const Input = require('./input.ts') as any
+import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE } from '@/input';
+import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 
 
 const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;
@@ -16,16 +14,16 @@ function makeSaveDataFromShareData(shareData: string) {
     try {
         const shareDataArr = shareData.split(',');
 
-        let character: string;
+        let character: TCharacterKey;
 
         let i = 0;
-        Master.キャラクター構成PROPERTY_MAP.forEach((value: any, key: string) => {
+        キャラクター構成PROPERTY_MAP.forEach((value: any, key: string) => {
             let newValue = shareDataArr[i];
             switch (key) {
                 case 'キャラクター':
-                    Object.keys(Master.CHARACTER_MASTER).forEach(key2 => {
-                        if ('import' in Master.CHARACTER_MASTER[key2]) {
-                            const myBasename = basename(Master.CHARACTER_MASTER[key2]['import']);
+                    (Object.keys(CHARACTER_MASTER) as TCharacterKey[]).forEach(key2 => {
+                        if ('import' in CHARACTER_MASTER[key2]) {
+                            const myBasename = basename(CHARACTER_MASTER[key2]['import']);
                             const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
                             if (newValue == myAbbrev) {
                                 character = key2;
@@ -36,10 +34,11 @@ function makeSaveDataFromShareData(shareData: string) {
                     break;
                 case '武器':
                     if (character) {
-                        const my武器タイプ = Master.CHARACTER_MASTER[character]['武器'];
-                        Object.keys(Master.WEAPON_MASTER[my武器タイプ]).forEach(key2 => {
-                            if ('import' in Master.WEAPON_MASTER[my武器タイプ][key2]) {
-                                const myBasename = basename(Master.WEAPON_MASTER[my武器タイプ][key2]['import']);
+                        const weaponType = CHARACTER_MASTER[character]['武器'] as TWeaponTypeKey;
+                        const typedWeaponMaster = WEAPON_MASTER[weaponType];
+                        (Object.keys(typedWeaponMaster) as (keyof typeof typedWeaponMaster)[]).forEach(key2 => {
+                            if ('import' in WEAPON_MASTER[weaponType][key2]) {
+                                const myBasename = basename(WEAPON_MASTER[weaponType][key2]['import']);
                                 const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
                                 if (newValue == myAbbrev) {
                                     newValue = key2;
@@ -51,9 +50,9 @@ function makeSaveDataFromShareData(shareData: string) {
                 case '聖遺物セット効果1':
                 case '聖遺物セット効果2':
                     if (newValue) {
-                        Object.keys(Master.ARTIFACT_SET_MASTER).forEach(key2 => {
-                            if ('image' in Master.ARTIFACT_SET_MASTER[key2]) {
-                                const myBasename = basename(Master.ARTIFACT_SET_MASTER[key2]['image']);
+                        (Object.keys(ARTIFACT_SET_MASTER) as (keyof typeof ARTIFACT_SET_MASTER)[]).forEach(key2 => {
+                            if ('image' in ARTIFACT_SET_MASTER[key2]) {
+                                const myBasename = basename(ARTIFACT_SET_MASTER[key2]['image']);
                                 const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
                                 if (newValue == myAbbrev) {
                                     newValue = key2;
@@ -70,14 +69,14 @@ function makeSaveDataFromShareData(shareData: string) {
                 case '聖遺物メイン効果4':
                 case '聖遺物メイン効果5':
                     if (newValue) {
-                        newValue = newValue.split('_')[0] + '_' + Master.ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
+                        newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
                     }
                     break;
                 case '聖遺物優先するサブ効果1':
                 case '聖遺物優先するサブ効果2':
                 case '聖遺物優先するサブ効果3':
                     if (newValue) {
-                        newValue = Master.ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
+                        newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
                     }
                     break;
             }
@@ -120,9 +119,9 @@ function makeSaveDataFromShareData(shareData: string) {
 function getCharacterByBirthday(): string {
     const today = new Date();
     let curDiff = Number.MAX_SAFE_INTEGER;
-    let result = Master.CHARACTER_MASTER_LIST[0].key;
-    for (const entry of Master.CHARACTER_MASTER_LIST) {
-        if ('誕生日' in entry) {
+    let result = CHARACTER_MASTER_LIST[0].key;
+    for (const entry of CHARACTER_MASTER_LIST) {
+        if (entry['誕生日']) {
             const birthdayStrArr = entry['誕生日'].split('/');
             const birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
             const diff = today.getTime() - birthday.getTime();
@@ -137,9 +136,9 @@ function getCharacterByBirthday(): string {
 }
 
 async function main() {
-    const characterInput = JSON.parse(JSON.stringify(Input.CHARACTER_INPUT_TEMPLATE)) as { [key: string]: any };
-    const artifactDetailInput = JSON.parse(JSON.stringify(Input.ARTIFACT_DETAIL_INPUT_TEMPLATE));
-    const conditionInput = JSON.parse(JSON.stringify(Input.CONDITION_INPUT_TEMPLATE));
+    const characterInput = JSON.parse(JSON.stringify(CHARACTER_INPUT_TEMPLATE)) as { [key: string]: any };
+    const artifactDetailInput = JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE));
+    const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));
 
     const searchParams = new URLSearchParams(window.location.search);
     let savedata;
@@ -149,7 +148,7 @@ async function main() {
     } else {
         characterInput.character = getCharacterByBirthday();
     }
-    characterInput.characterMaster = await Master.getCharacterMasterDetail(characterInput.character);
+    characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
     const recommendationList = makeRecommendationList(characterInput.characterMaster, savedata);
     const recommendation = recommendationList[0];
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation.build);

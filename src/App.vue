@@ -13,10 +13,8 @@
 import { computed, defineComponent, PropType, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
-import { TRecommendation, makeRecommendationList, loadRecommendation } from './input';
-
-const Master = require('./master.ts');
-const Input = require('./input.ts');
+import { TRecommendation, makeRecommendationList, loadRecommendation } from '@/input';
+import { getCharacterMasterDetail, TCharacterKey } from '@/master';
 
 
 export default defineComponent({
@@ -60,10 +58,10 @@ export default defineComponent({
     }
   },
   methods: {
-    async characterSelected(character: string) {
+    async characterSelected(character: TCharacterKey) {
       this.characterInput!.character = character;
       this.characterSelectVisible = false;
-      this.characterInput!.characterMaster = await Master.getCharacterMasterDetail(character);
+      this.characterInput!.characterMaster = await getCharacterMasterDetail(character);
       this.recommendationList!.splice(0, this.recommendationList!.length, ...makeRecommendationList(this.characterInput!.characterMaster));
       const recommendation = this.recommendationList![0];
       await loadRecommendation(this.characterInput!, this.artifactDetailInput!, this.conditionInput!, recommendation.build);

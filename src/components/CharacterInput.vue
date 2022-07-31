@@ -159,11 +159,9 @@
 </template>
 
 <script lang="ts">
-import { TRecommendation } from '@/input';
+import { TRecommendation, 突破レベルレベルARRAY } from '@/input';
+import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, STAR_BACKGROUND_URL, TCharacterDetail } from '@/master';
 import { computed, defineComponent, PropType, ref } from 'vue';
-
-const Master = require('../master.ts');
-const Input = require('../input.ts');
 
 export default defineComponent({
     name: 'CharacterInput',
@@ -196,10 +194,10 @@ export default defineComponent({
 
         const artifactSetMaster = computed(() => characterInput.value!.artifactSetMaster);
 
-        const visionSrc = (item: any) => Master.ELEMENT_IMG_SRC[item.元素] as string;
-        const backgroundUrl = (item: any) => Master.STAR_BACKGROUND_URL[item.レアリティ] as string;
-        const colorClass = (item: any) => Master.ELEMENT_COLOR_CLASS[item.元素] as string;
-        const bgColorClass = (item: any) => Master.ELEMENT_BG_COLOR_CLASS[item.元素] as string;
+        const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
+        const backgroundUrl = (item: TCharacterDetail) => STAR_BACKGROUND_URL[item.レアリティ] as string;
+        const colorClass = (item: TCharacterDetail) => ELEMENT_COLOR_CLASS[item.元素] as string;
+        const bgColorClass = (item: TCharacterDetail) => ELEMENT_BG_COLOR_CLASS[item.元素] as string;
         let saveDisabled = false;
         let removeDisabled = false;
         let buildname = ref('');
@@ -217,7 +215,7 @@ export default defineComponent({
             return [0, 1, 2, 3, 4, 5, 6];
         });
         const levelRange = computed(() => {
-            return Input.突破レベルレベルARRAY[ascension.value];
+            return 突破レベルレベルARRAY[ascension.value];
         });
         const constellationRange = computed(() => {
             let max = 0;
@@ -247,7 +245,7 @@ export default defineComponent({
             return [0, 1, 2, 3, 4, 5, 6];
         });
         const weaponLevelRange = computed(() => {
-            return Input.突破レベルレベルARRAY[weaponAscension.value];
+            return 突破レベルレベルARRAY[weaponAscension.value];
         });
         const weaponRefineRange = computed(() => {
             return [1, 2, 3, 4, 5];
@@ -269,8 +267,6 @@ export default defineComponent({
             console.log(characterInput);
         };
 
-        const IMG_SRC_DUMMY = Master.IMG_SRC_DUMMY;
-
         return {
             displayName,
             displayBuildName,
@@ -288,7 +284,7 @@ export default defineComponent({
             recommendationListVisible, recommendationList, recommendation,
             normalAttackLevelRange, elementalSkillLevelRange, elementalBurstLevelRange,
             buildOnChange,
-            IMG_SRC_DUMMY,
+            IMG_SRC_DUMMY: IMG_SRC_DUMMY,
         }
     }
 });

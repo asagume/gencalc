@@ -7,22 +7,25 @@ export type TEntry = {
     icon_url: string,
 }
 
+export type TVisionKey = '炎' | '水' | '風' | '雷' | '草' | '氷' | '岩';
+export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
+
 export type TCharacter = {
-    レアリティ: number,
-    元素: string,
-    武器: string,
+    レアリティ: 4 | 5,
+    元素: TVisionKey,
+    武器: TWeaponTypeKey,
     誕生日?: string,
     import: string,
 }
-export type TCharacterEntry = TCharacter | TEntry
+export type TCharacterEntry = TCharacter & TEntry
 export type TCharacterKey = keyof typeof CHARACTER_MASTER
 export type TCharacterDetail = {
     名前: string,
     説明: string,
     icon_url: string,
-    レアリティ: number,
+    レアリティ: 4 | 5,
     武器: TWeaponTypeKey,
-    元素: string,
+    元素: TVisionKey,
     baseInfo: any,
     ステータス: any,
     通常攻撃: any,
@@ -51,7 +54,6 @@ export type TClaymoreKey = keyof typeof CLAYMORE_MASTER;
 export type TPolearmKey = keyof typeof POLEARM_MASTER;
 export type TBowKey = keyof typeof BOW_MASTER;
 export type TCatalystKey = keyof typeof CATALYST_MASTER;
-export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
 export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCatalystKey;
 export type TWeaponDetail = {
     名前: string,
@@ -139,12 +141,12 @@ function getIconUrl(master: TAnyObject) {
 
 export const CHARACTER_MASTER_LIST: TCharacterEntry[] = [];
 (Object.keys(CHARACTER_MASTER) as TCharacterKey[]).forEach(key => {
-    const master: TCharacter = CHARACTER_MASTER[key];
+    const master: any = CHARACTER_MASTER[key];
     master.import = master.import.replace(/^public/, '');
     CHARACTER_MASTER_LIST.push({ ...master, key: key, icon_url: getIconUrl(master) });
 });
 
-const WEAPON_MASTER = {
+export const WEAPON_MASTER = {
     片手剣: SWORD_MASTER,
     両手剣: CLAYMORE_MASTER,
     長柄武器: POLEARM_MASTER,
@@ -320,7 +322,7 @@ export const ELEMENT_IMG_SRC = {
     水: 'images/element_hydro.png',
     風: 'images/element_anemo.png',
     雷: 'images/element_electro.png',
-    // 草: 'images/element_dendro.png',
+    草: 'images/element_dendro.png',
     氷: 'images/element_cryo.png',
     岩: 'images/element_geo.png'
 };
@@ -395,3 +397,29 @@ export const RECOMMEND_ABBREV_EN_MAP = new Map([
     ['炎元素ダメージバフ', 'Py'], ['水元素ダメージバフ', 'Hy'], ['風元素ダメージバフ', 'An'], ['雷元素ダメージバフ', 'El'], ['草元素ダメージバフ', 'De'], ['氷元素ダメージバフ', 'Cr'], ['岩元素ダメージバフ', 'Ge'], ['物理ダメージバフ', 'Ph'],
 ]);
 
+export const ARTIFACT_STAT_JA_EN_ABBREV_MAP = new Map([
+    ['HP', 'HP'],
+    ['攻撃力', 'ATK'],
+    ['防御力', 'DEF'],
+    ['元素熟知', 'ElementalMastery'],
+    ['会心率', 'CritRate'],
+    ['会心ダメージ', 'CritDMG'],
+    ['元素チャージ効率', 'EnergyRecharge'],
+    ['炎元素ダメージバフ', 'Pyro'],
+    ['水元素ダメージバフ', 'Hydro'],
+    ['風元素ダメージバフ', 'anemo'],
+    ['雷元素ダメージバフ', 'Electro'],
+    ['草元素ダメージバフ', 'Dendro'],
+    ['氷元素ダメージバフ', 'Cryo'],
+    ['岩元素ダメージバフ', 'Geo'],
+    ['物理ダメージバフ', 'Physical'],
+    ['与える治療効果', 'Healing'],
+    ['HP%', 'HPp'],
+    ['攻撃力%', 'ATKp'],
+    ['防御力%', 'DEFp']
+]);
+
+export const ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP = new Map();
+ARTIFACT_STAT_JA_EN_ABBREV_MAP.forEach((value, key) => {
+    ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.set(value, key);
+});
