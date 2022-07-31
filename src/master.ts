@@ -72,7 +72,7 @@ export type TArtifactSetEffect = {
     詳細?: []
 }
 export type TArtifactSet = {
-    レアリティ: number,
+    レアリティ: 1 | 2 | 3 | 4 | 5,
     image: string,
     '2セット効果'?: TArtifactSetEffect,
     '4セット効果'?: TArtifactSetEffect,
@@ -335,13 +335,13 @@ export const WEAPON_IMG_SRC = {
     法器: 'images/characters/NormalAttack_catalyst.png',
 };
 
-export const STAR_BACKGROUND_URL = {
-    1: 'images/star1-bg.png',
-    2: 'images/star2-bg.png',
-    3: 'images/star3-bg.png',
-    4: 'images/star4-bg.png',
-    5: 'images/star5-bg.png'
-};
+export const STAR_BACKGROUND_IMAGE_CLASS = {
+    1: 'star1-bg',
+    2: 'star2-bg',
+    3: 'star3-bg',
+    4: 'star4-bg',
+    5: 'star5-bg'
+}
 
 export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 

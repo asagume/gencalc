@@ -2,9 +2,8 @@
     <table>
         <tr>
             <td colspan="3" rowspan="3" style="width: 40%; max-width: 200px; position: relative;">
-                <img class="character" :src="characterMaster.icon_url" :alt="characterMaster.名前"
-                    :style="'background-image: url(' + backgroundUrl(characterMaster) + ')'"
-                    @click="$emit('open:character-select')">
+                <img :class="'character' + bgImageClass(characterMaster)" :src="characterMaster.icon_url"
+                    :alt="characterMaster.名前" @click="$emit('open:character-select')">
                 <img class="vision" :src="visionSrc(characterMaster)" :alt="characterMaster.元素">
             </td>
             <td :class="'title ' + colorClass((characterMaster))" colspan="3" style="position: relative;">
@@ -71,24 +70,23 @@
     <table>
         <tr>
             <td colspan="3" rowspan="3" class="icon" style="width: 40%; max-width: 200px;">
-                <img class="weapon with-tooltip" :src="weaponMaster['icon_url']" :alt="weaponMaster.名前"
-                    :style="'background-image: url(' + backgroundUrl(weaponMaster) + ')'"
-                    @click="$emit('open:weapon-select')">
+                <img :class="'weapon' + bgImageClass(weaponMaster)" :src="weaponMaster['icon_url']"
+                    :alt="weaponMaster.名前" @click="$emit('open:weapon-select')">
                 <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
             </td>
             <td class="icon">
-                <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
-                    :src="characterMaster['通常攻撃']['icon_url']" :alt="characterMaster['通常攻撃']['名前']" @click="false">
+                <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['通常攻撃']['icon_url']"
+                    :alt="characterMaster['通常攻撃']['名前']" @click="false">
                 <div class="tooltip">{{ displayName(characterMaster['通常攻撃']['名前']) }}</div>
             </td>
             <td class="icon">
-                <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
-                    :src="characterMaster['元素スキル']['icon_url']" :alt="characterMaster['元素スキル']['名前']" @click="false">
+                <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素スキル']['icon_url']"
+                    :alt="characterMaster['元素スキル']['名前']" @click="false">
                 <div class="tooltip">{{ displayName(characterMaster['元素スキル']['名前']) }}</div>
             </td>
             <td class="icon">
-                <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
-                    :src="characterMaster['元素爆発']['icon_url']" :alt="characterMaster['元素爆発']['名前']" @click="false">
+                <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素爆発']['icon_url']"
+                    :alt="characterMaster['元素爆発']['名前']" @click="false">
                 <div class="tooltip">{{ displayName(characterMaster['元素爆発']['名前']) }}</div>
             </td>
         </tr>
@@ -114,14 +112,14 @@
         </tr>
         <tr>
             <td rowspan="2" class="icon">
-                <label class="with-tooltip" @click="false">
+                <label @click="$emit('open:artifact-set-select', 0)">
                     <img :class="'artifact-set ' + ''" :src="artifactSetMaster[0].image"
                         :alt="artifactSetMaster[0].key">
                 </label>
                 <div class="tooltip">{{ displayName(artifactSetMaster[0].key) }}</div>
             </td>
             <td rowspan="2" class="icon">
-                <label class="with-tooltip" @click="false">
+                <label @click="$emit('open:artifact-set-select', 1)">
                     <img :class="'artifact-set ' + ''" :src="artifactSetMaster[1].image"
                         :alt="artifactSetMaster[1].key">
                 </label>
@@ -160,7 +158,7 @@
 
 <script lang="ts">
 import { TRecommendation, 突破レベルレベルARRAY } from '@/input';
-import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, STAR_BACKGROUND_URL, TCharacterDetail } from '@/master';
+import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, STAR_BACKGROUND_IMAGE_CLASS, TCharacterDetail } from '@/master';
 import { computed, defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
@@ -169,7 +167,14 @@ export default defineComponent({
         characterInput: { type: Object, require: true },
         recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
     },
-    emits: ['open:character-select', 'open:character-info', 'update:recommendation', 'open:weapon-select', 'open-artifact-detail-input'],
+    emits: [
+        'open:character-select',
+        'open:character-info',
+        'update:recommendation',
+        'open:weapon-select',
+        'open:artifact-set-select',
+        'open-artifact-detail-input'
+    ],
     setup(props) {
         const characterInput: { [key: string]: any } = ref(props.characterInput);
         let ascension = ref(props.characterInput!.突破レベル);
@@ -195,7 +200,7 @@ export default defineComponent({
         const artifactSetMaster = computed(() => characterInput.value!.artifactSetMaster);
 
         const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
-        const backgroundUrl = (item: TCharacterDetail) => STAR_BACKGROUND_URL[item.レアリティ] as string;
+        const bgImageClass = (item: TCharacterDetail) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
         const colorClass = (item: TCharacterDetail) => ELEMENT_COLOR_CLASS[item.元素] as string;
         const bgColorClass = (item: TCharacterDetail) => ELEMENT_BG_COLOR_CLASS[item.元素] as string;
         let saveDisabled = false;
@@ -270,7 +275,7 @@ export default defineComponent({
         return {
             displayName,
             displayBuildName,
-            visionSrc, backgroundUrl, colorClass, bgColorClass,
+            visionSrc, bgImageClass, colorClass, bgColorClass,
             characterMaster, weaponMaster, artifactSetMaster,
             ascension, level, constellation,
             normalAttackLevel, elementalSkillLevel, elementalBurstLevel,

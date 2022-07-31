@@ -20,9 +20,8 @@
         </ul>
         <ul class="select-list">
             <li v-for="item in filteredList" :key="item.key">
-                <img :class="'character with-tooltip ' + selectedClass(item)" :src="item.icon_url" :alt="item.key"
-                    :style="'background-image: url(' + backgroundUrl(item) + ')'"
-                    @click="$emit('update:character', item.key)">
+                <img :class="'character with-tooltip' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url"
+                    :alt="item.key" @click="$emit('update:character', item.key)">
                 <div class="tooltip">{{ displayName(item.key) }}</div>
                 <img class="vision" :src="visionSrc(item)" :alt="item.元素">
             </li>
@@ -31,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { TCharacterEntry, ELEMENT_IMG_SRC, STAR_BACKGROUND_URL, TVisionKey, WEAPON_IMG_SRC, TWeaponTypeKey, CHARACTER_MASTER_LIST } from '@/master';
+import { TCharacterEntry, ELEMENT_IMG_SRC, TVisionKey, WEAPON_IMG_SRC, TWeaponTypeKey, CHARACTER_MASTER_LIST, STAR_BACKGROUND_IMAGE_CLASS } from '@/master';
 import { defineComponent, reactive, computed } from 'vue';
 
 interface ICheckList {
@@ -49,7 +48,7 @@ export default defineComponent({
         const displayName = (name: string) => name;
 
         const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
-        const backgroundUrl = (item: TCharacterEntry) => STAR_BACKGROUND_URL[item.レアリティ] as string;
+        const bgImageClass = (item: TCharacterEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
         const selectedClass = (item: TCharacterEntry) => { return item.key == props.character ? 'selected' : '' };
 
         const elementList = Object.keys(ELEMENT_IMG_SRC) as TVisionKey[];
@@ -88,7 +87,7 @@ export default defineComponent({
         return {
             displayName,
             visionSrc,
-            backgroundUrl,
+            bgImageClass,
             selectedClass,
             elementList,
             elementSrc,

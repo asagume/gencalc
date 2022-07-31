@@ -216,6 +216,26 @@ button {
     background-color: #df8f37;
 }
 
+.star1-bg {
+    background-image: url('../images/star1-bg.png');
+}
+
+.star2-bg {
+    background-image: url('../images/star2-bg.png');
+}
+
+.star3-bg {
+    background-image: url('../images/star3-bg.png');
+}
+
+.star4-bg {
+    background-image: url('../images/star4-bg.png');
+}
+
+.star5-bg {
+    background-image: url('../images/star5-bg.png');
+}
+
 h2 {
     margin-left: auto;
     margin-right: auto;
@@ -241,22 +261,35 @@ img.star {
     width: 2.4rem;
 }
 
+
+ul.select-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 0;
+}
+
+ul.select-list li {
+    display: inline-block;
+    margin: 0;
+    position: relative;
+}
+
 .icon {
     position: relative;
 }
 
-.with-tooltip+.tooltip {
+.tooltip {
     position: absolute;
     top: -0.5rem;
     left: 2rem;
     white-space: nowrap;
-    z-index: 100;
     color: #e8d14e;
     text-shadow: 0px 1px 5px black;
+    z-index: 100;
     display: none;
 }
 
-.with-tooltip:hover+.tooltip {
+:hover+.tooltip {
     display: block;
 }
 

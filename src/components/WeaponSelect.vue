@@ -1,9 +1,8 @@
 <template>
     <div v-if="visible">
         <ul class="select-list">
-            <li v-for="item in filteredList" :key="item.key">
-                <img :class="'weapon with-tooltip ' + selectedClass(item)" :src="item.icon_url" :alt="item.key"
-                    :style="'background-image: url(' + backgroundUrl(item) + ')'"
+            <li class="icon" v-for="item in filteredList" :key="item.key">
+                <img :class="'weapon' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url" :alt="item.key"
                     @click="$emit('update:weapon', item.key)">
                 <div class="tooltip">{{ displayName(item.key) }}</div>
             </li>
@@ -12,36 +11,33 @@
 </template>
 
 <script lang="ts">
-import { STAR_BACKGROUND_URL, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER_LIST } from '@/master';
-import { defineComponent, reactive, computed, ref } from 'vue';
-
-interface ICheckList {
-    [key: string]: boolean
-}
+import { STAR_BACKGROUND_IMAGE_CLASS, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER_LIST } from '@/master';
+import { defineComponent, computed, ref } from 'vue';
 
 export default defineComponent({
     name: 'WeaponSelect',
     props: {
+        visible: Boolean,
         weapon: String,
         weaponType: String,
-        visible: Boolean,
     },
     emits: ['update:weapon'],
     setup(props) {
         const displayName = (name: string) => name;
 
-        const backgroundUrl = (item: TWeaponEntry) => STAR_BACKGROUND_URL[item.レアリティ] as string;
-        const selectedClass = (item: TWeaponEntry) => { return item.key == props.weapon ? 'selected' : '' };
+        const bgImageClass = (item: TWeaponEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
+        const selectedClass = (item: TWeaponEntry) => { return item.key == props.weapon ? ' selected' : '' };
 
         let weaponType = ref(props.weaponType as TWeaponTypeKey);
 
         const filteredList = computed(() => {
+            // eslint-disable-next-line
             return WEAPON_MASTER_LIST[weaponType.value!] as TWeaponEntry[];
         });
 
         return {
             displayName,
-            backgroundUrl, selectedClass,
+            bgImageClass, selectedClass,
             filteredList,
         }
     }
@@ -56,10 +52,6 @@ img.weapon {
 }
 
 .selected {
-    background-color: gold;
-}
-
-:checked+img {
     background-color: gold;
 }
 </style>

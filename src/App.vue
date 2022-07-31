@@ -5,12 +5,14 @@
   </div>
   <div class="pane3">
     <CharacterInput :characterInput="characterInput" :recommendationList="recommendationList"
-      @open:character-select="characterSelectVisible = !characterSelectVisible"
-      @open:weapon-select="weaponSelectVisible = !weaponSelectVisible" />
+      @open:character-select="characterSelectVisible = !characterSelectVisible" @open:weapon-select="openWeaponSelect"
+      @open:artifact-set-select="openArtifactSetSelect($event)" />
   </div>
   <div class="pane4">
-    <WeaponSelect :weapon="weapon" :weaponType="weaponType" :visible="weaponSelectVisible"
+    <WeaponSelect :visible="weaponSelectVisible" :weapon="weapon" :weaponType="weaponType"
       @update:weapon="weaponSelected($event)" />
+    <ArtifactSetSelect :visible="artifactSetSelectVisible" :artifactSet="artifactSet[artifactSetIndex]"
+      :index="artifactSetIndex" @update:artifact-set="artifactSetSelected($event)" />
   </div>
 </template>
 
@@ -19,8 +21,9 @@ import { computed, defineComponent, PropType, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
 import WeaponSelect from './components/WeaponSelect.vue';
+import ArtifactSetSelect from './components/ArtifactSetSelect.vue';
 import { TRecommendation, makeRecommendationList, loadRecommendation } from '@/input';
-import { getCharacterMasterDetail, getWeaponMasterDetail, TCharacterKey, TWeaponKey } from '@/master';
+import { ARTIFACT_SET_MASTER, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
 
 
 export default defineComponent({
@@ -32,7 +35,7 @@ export default defineComponent({
     initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
   },
   components: {
-    CharacterSelect, CharacterInput, WeaponSelect,
+    CharacterSelect, CharacterInput, WeaponSelect, ArtifactSetSelect,
   },
   setup(props) {
     let characterInput = ref(props.initialCharacterInput);
@@ -40,13 +43,13 @@ export default defineComponent({
     let conditionInput = ref(props.initialConditionInput);
 
     let characterSelectVisible = ref(false);
-    let character = computed(() => characterInput.value!.character);
+    let character = computed(() => characterInput.value ? characterInput.value.character : undefined);
 
     let recommendationList = ref(props.initialRecommendationList);
 
     let weaponSelectVisible = ref(false);
-    let weapon = computed(() => characterInput.value!.weapon);
-    let weaponType = computed(() => characterInput.value!.characterMaster.武器);
+    let weapon = computed(() => characterInput.value ? characterInput.value.weapon : undefined);
+    let weaponType = computed(() => characterInput.value ? characterInput.value.characterMaster.武器 : undefined);
 
     let artifactSetSelectVisible = ref(false);
     let artifactSetIndex = ref(0);
@@ -66,6 +69,7 @@ export default defineComponent({
     }
   },
   methods: {
+    /** キャラクターを選択しました */
     async characterSelected(character: TCharacterKey) {
       this.characterInput!.character = character;
       this.characterSelectVisible = false;
@@ -75,11 +79,35 @@ export default defineComponent({
       await loadRecommendation(this.characterInput!, this.artifactDetailInput!, this.conditionInput!, recommendation.build);
       console.log(recommendation.name, this.characterInput!.weaponMaster.名前);
     },
+    openWeaponSelect() {
+      this.weaponSelectVisible = !this.weaponSelectVisible;
+      if (this.weaponSelectVisible) {
+        this.artifactSetSelectVisible = false;
+      }
+    },
+    /** 武器を選択しました */
     async weaponSelected(weapon: TWeaponKey) {
       this.characterInput!.weapon = weapon;
       this.weaponSelectVisible = false;
       this.characterInput!.weaponMaster = await getWeaponMasterDetail(weapon, this.characterInput!.characterMaster.武器);
 
+    },
+    openArtifactSetSelect(index: number) {
+      if (index == this.artifactSetIndex) {
+        this.artifactSetSelectVisible = !this.artifactSetSelectVisible;
+      } else {
+        this.artifactSetIndex = index;
+        this.artifactSetSelectVisible = true;
+      }
+      if (this.artifactSetSelectVisible) {
+        this.weaponSelectVisible = false;
+      }
+    },
+    /** 聖遺物セット効果を選択しました */
+    artifactSetSelected(artifactSet: TArtifactSetKey) {
+      this.artifactSet[this.artifactSetIndex] = artifactSet;
+      this.characterInput!.artifactSetMaster[this.artifactSetIndex] = ARTIFACT_SET_MASTER[artifactSet];
+      this.artifactSetSelectVisible = false;
     }
   }
 });
@@ -90,83 +118,5 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-}
-
-.hidden {
-  display: none;
-}
-
-.pyro {
-  color: #d2655a;
-}
-
-.hydro {
-  color: #559cc9;
-}
-
-.anemo {
-  color: #3aaf7a;
-}
-
-.electro {
-  color: #b681df;
-}
-
-.cryo {
-  color: #63beb4;
-}
-
-.geo {
-  color: #df8f37;
-}
-
-.pyro-bg {
-  background-color: #d2655a;
-}
-
-.hydro-bg {
-  background-color: #559cc9;
-}
-
-.anemo-bg {
-  background-color: #3aaf7a;
-}
-
-.electro-bg {
-  background-color: #b681df;
-}
-
-.cryo-bg {
-  background-color: #63beb4;
-}
-
-.geo-bg {
-  background-color: #df8f37;
-}
-
-ul.select-list {
-  list-style-type: none;
-  padding: 0;
-  font-size: 0;
-}
-
-ul.select-list li {
-  display: inline-block;
-  margin: 0;
-  position: relative;
-}
-
-.tooltip {
-  display: none;
-  position: absolute;
-  left: 15px;
-  top: 5px;
-  z-index: 100;
-  color: bisque;
-  text-shadow: 1px 1px 2px black, 0 0 1em orange, 0 0 0.2em orange;
-}
-
-:hover+.tooltip {
-  display: block;
 }
 </style>
