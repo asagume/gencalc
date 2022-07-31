@@ -5,7 +5,7 @@
   </div>
   <div class="pane3">
     <CharacterInput :initialCharacterInput="initialCharacterInput" :initialRecommendationList="recommendationList"
-      @open:character-select="characterSelectVisible = true" />
+      @open:character-select="characterSelectVisible = !characterSelectVisible" />
   </div>
 </template>
 
@@ -144,7 +144,7 @@ ul.select-list li {
   position: relative;
 }
 
-span.tooltip {
+.tooltip {
   display: none;
   position: absolute;
   left: 15px;
@@ -154,7 +154,7 @@ span.tooltip {
   text-shadow: 1px 1px 2px black, 0 0 1em orange, 0 0 0.2em orange;
 }
 
-:hover+span.tooltip {
+:hover+.tooltip {
   display: block;
 }
 </style>

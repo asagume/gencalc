@@ -20,14 +20,11 @@
         </ul>
         <ul class="select-list">
             <li v-for="item in filteredList" :key="item.key">
-                <label>
-                    <input class="hidden" type="radio" name="character-select" :value="item.key"
-                        @change="$emit('update:character', item.key)">
-                    <img :class="'character ' + selectedClass(item)" :src="item.icon_url" :alt="item.key"
-                        :style="'background-image: url(' + backgroundUrl(item) + ')'">
-                    <span class="tooltip">{{ displayName(item.key) }}</span>
-                    <img class="vision" :src="visionSrc(item)" :alt="item.元素">
-                </label>
+                <img :class="'character with-tooltip ' + selectedClass(item)" :src="item.icon_url" :alt="item.key"
+                    :style="'background-image: url(' + backgroundUrl(item) + ')'"
+                    @click="$emit('update:character', item.key)">
+                <div class="tooltip">{{ displayName(item.key) }}</div>
+                <img class="vision" :src="visionSrc(item)" :alt="item.元素">
             </li>
         </ul>
     </div>
@@ -59,7 +56,7 @@ export default defineComponent({
         visible: Boolean,
     },
     emits: ['update:character'],
-    setup(props, context) {
+    setup(props) {
         const displayName = (name: string) => name;
 
         const visionSrc = (item: ICharacter) => Master.ELEMENT_IMG_SRC[item.元素] as string;
