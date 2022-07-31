@@ -126,9 +126,8 @@
                 <div class="tooltip">{{ displayName(artifactSetMaster[1].key) }}</div>
             </td>
             <td rowspan="2">
-                <button type="button" class="artifact-detail-button">
-                    <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')"
-                        @click="$emit('open-artifact-detail-input')">
+                <button type="button" class="artifact-detail-button" @click="$emit('open:artifact-detail-input')">
+                    <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')">
                     <img class="left-icon" src="images/artifact.png" alt="artifact">
                     <img class="right-icon" src="images/artifact.png" alt="artifact">
                     <div class="absolute-center">{{ 'artifactScore' }}</div>
@@ -173,7 +172,7 @@ export default defineComponent({
         'update:recommendation',
         'open:weapon-select',
         'open:artifact-set-select',
-        'open-artifact-detail-input'
+        'open:artifact-detail-input'
     ],
     setup(props) {
         const characterInput: { [key: string]: any } = ref(props.characterInput);

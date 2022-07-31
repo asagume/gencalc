@@ -26,7 +26,7 @@ export default defineComponent({
         const displayName = (name: string) => name;
 
         const bgImageClass = (item: TArtifactSetEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
-        const selectedClass = (item: TArtifactSetEntry) => { return item.key == props.artifactSet ? 'selected' : '' };
+        const selectedClass = (item: TArtifactSetEntry) => { return item.key == props.artifactSet ? ' selected' : '' };
 
         const filteredList = computed(() => {
             return ARTIFACT_SET_MASTER_LIST as TArtifactSetEntry[];

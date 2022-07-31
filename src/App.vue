@@ -6,13 +6,15 @@
   <div class="pane3">
     <CharacterInput :characterInput="characterInput" :recommendationList="recommendationList"
       @open:character-select="characterSelectVisible = !characterSelectVisible" @open:weapon-select="openWeaponSelect"
-      @open:artifact-set-select="openArtifactSetSelect($event)" />
+      @open:artifact-set-select="openArtifactSetSelect($event)" @open:artifact-detail-input="openArtifactDetailInput" />
   </div>
   <div class="pane4">
     <WeaponSelect :visible="weaponSelectVisible" :weapon="weapon" :weaponType="weaponType"
       @update:weapon="weaponSelected($event)" />
     <ArtifactSetSelect :visible="artifactSetSelectVisible" :artifactSet="artifactSet[artifactSetIndex]"
       :index="artifactSetIndex" @update:artifact-set="artifactSetSelected($event)" />
+    <ArtifactDetailInput :visible="artifactDetailInputVisible" :artifactDetailInput="artifactDetailInput"
+      @update:artifact-detail="updateArtifactDetail($event)" />
   </div>
 </template>
 
@@ -22,6 +24,7 @@ import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
 import WeaponSelect from './components/WeaponSelect.vue';
 import ArtifactSetSelect from './components/ArtifactSetSelect.vue';
+import ArtifactDetailInput from './components/ArtifactDetailInput.vue';
 import { TRecommendation, makeRecommendationList, loadRecommendation } from '@/input';
 import { ARTIFACT_SET_MASTER, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
 
@@ -35,7 +38,7 @@ export default defineComponent({
     initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
   },
   components: {
-    CharacterSelect, CharacterInput, WeaponSelect, ArtifactSetSelect,
+    CharacterSelect, CharacterInput, WeaponSelect, ArtifactSetSelect, ArtifactDetailInput,
   },
   setup(props) {
     let characterInput = ref(props.initialCharacterInput);
@@ -54,7 +57,7 @@ export default defineComponent({
     let artifactSetSelectVisible = ref(false);
     let artifactSetIndex = ref(0);
     let artifactSet = ref(['NONE', 'NONE']);
-    let artifactDetailVisivle = ref(false);
+    let artifactDetailInputVisible = ref(false);
 
 
     return {
@@ -65,7 +68,7 @@ export default defineComponent({
       recommendationList,
       weaponSelectVisible, weapon, weaponType,
       artifactSetSelectVisible, artifactSetIndex, artifactSet,
-      artifactDetailVisivle,
+      artifactDetailInputVisible,
     }
   },
   methods: {
@@ -108,6 +111,16 @@ export default defineComponent({
       this.artifactSet[this.artifactSetIndex] = artifactSet;
       this.characterInput!.artifactSetMaster[this.artifactSetIndex] = ARTIFACT_SET_MASTER[artifactSet];
       this.artifactSetSelectVisible = false;
+    },
+    openArtifactDetailInput() {
+      this.artifactDetailInputVisible = !this.artifactDetailInputVisible;
+      if (this.artifactDetailInputVisible) {
+        this.weaponSelectVisible = false;
+        this.artifactSetSelectVisible = false;
+      }
+    },
+    updateArtifactDetail(artifactDetailInput: any) {
+      console.log(artifactDetailInput);
     }
   }
 });
