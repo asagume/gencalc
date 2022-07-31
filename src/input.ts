@@ -1,4 +1,4 @@
-const Master = require('./master.js') as any;
+const Master = require('./master.ts') as any;
 
 export const 基礎ステータスARRAY = [
     '基礎HP',

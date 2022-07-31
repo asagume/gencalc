@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { makeRecommendationList } from './input';
 
-const Master = require('./master.js') as any
+const Master = require('./master.ts') as any
 const Input = require('./input.ts') as any
 
 const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;

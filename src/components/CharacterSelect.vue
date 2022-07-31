@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent, reactive, computed } from 'vue';
 
-const Master = require('../master.js');
+const Master = require('../master.ts');
 
 interface ICharacter {
     レアリティ: number,

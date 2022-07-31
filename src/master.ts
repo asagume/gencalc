@@ -1,3 +1,54 @@
+export type TAnyObject = {
+    [key: string]: any
+}
+
+export type TEntry = {
+    key: string,
+    icon_url: string,
+}
+
+export type TCharacter = {
+    レアリティ: number,
+    元素: string,
+    武器: string,
+    誕生日?: string,
+    import: string,
+}
+export type TCharacterEntry = TCharacter | TEntry
+export type TCharacterKey = keyof typeof CHARACTER_MASTER
+
+export type TWeapon = {
+    レアリティ: number,
+    import: string,
+}
+export type TWeaponEntry = TWeapon | TEntry
+export type TSwordKey = keyof typeof SWORD_MASTER;
+export type TClaymoreKey = keyof typeof CLAYMORE_MASTER;
+export type TPolearmKey = keyof typeof POLEARM_MASTER;
+export type TBowKey = keyof typeof BOW_MASTER;
+export type TCatalystKey = keyof typeof CATALYST_MASTER;
+export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
+export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCatalystKey;
+
+export type TArtifactSetEffect = {
+    説明: string,
+    詳細?: []
+}
+export type TArtifactSet = {
+    レアリティ: number,
+    image: string,
+    '2セット効果'?: TArtifactSetEffect,
+    '4セット効果'?: TArtifactSetEffect,
+}
+export type TArtifactSetEntry = TArtifactSet | TEntry
+export type TArtifactSetKey = keyof typeof ARTIFACT_SET_MASTER;
+
+export type TArtifactMainStat = keyof typeof ARTIFACT_MAIN_MASTER[5]
+export type TArtifactMain = {
+    5: TArtifactMainStat,
+    4: TArtifactMainStat,
+}
+
 import CHARACTER_MASTER from '../public/data/CharacterMaster.json'// assert {type: 'json'}
 
 import SWORD_MASTER from '../public/data/SwordMaster.json'// assert {type: 'json'}
@@ -37,7 +88,7 @@ export {
     ELEMENTAL_REACTION_MASTER
 };
 
-function getIconUrl(master) {
+function getIconUrl(master: TAnyObject) {
     if (master.icon_url) return master.icon_url;
     if (master.image) return master.image;
     if (master.import) {
@@ -51,35 +102,34 @@ function getIconUrl(master) {
     return null;
 }
 
-export const CHARACTER_MASTER_LIST = [];
-Object.keys(CHARACTER_MASTER).forEach(key => {
-    const master = CHARACTER_MASTER[key];
-    master.key = key;
+export const CHARACTER_MASTER_LIST: TCharacterEntry[] = [];
+(Object.keys(CHARACTER_MASTER) as TCharacterKey[]).forEach(key => {
+    const master: TCharacter = CHARACTER_MASTER[key];
     master.import = master.import.replace(/^public/, '');
-    master.icon_url = getIconUrl(master);
-    CHARACTER_MASTER_LIST.push(CHARACTER_MASTER[key]);
+    CHARACTER_MASTER_LIST.push({ ...master, key: key, icon_url: getIconUrl(master) });
 });
 
-export const WEAPON_MASTER = {
+const WEAPON_MASTER = {
     片手剣: SWORD_MASTER,
     両手剣: CLAYMORE_MASTER,
     長柄武器: POLEARM_MASTER,
     弓: BOW_MASTER,
     法器: CATALYST_MASTER,
 };
-Object.keys(WEAPON_MASTER).forEach(key2 => {
-    const master = WEAPON_MASTER[key2];
-    Object.keys(master).forEach(key => {
-        master[key].key = key;
-        master[key].import = master[key].import.replace(/^public/, '');
-        master[key].icon_url = getIconUrl(master[key]);
+(Object.keys(WEAPON_MASTER) as TWeaponTypeKey[]).forEach(key2 => {
+    const typedMaster = WEAPON_MASTER[key2] as TAnyObject; // お手上げ
+    Object.keys(typedMaster).forEach(key => {
+        const master = typedMaster[key];
+        master.key = key;
+        master.import = master.import.replace(/^public/, '');
+        master.icon_url = getIconUrl(master);
     });
 })
-const SWORD_MASTER_LIST = Object.keys(SWORD_MASTER).map(key => SWORD_MASTER[key]);
-const CLAYMORE_MASTER_LIST = Object.keys(CLAYMORE_MASTER).map(key => CLAYMORE_MASTER[key]);
-const POLEARM_MASTER_LIST = Object.keys(POLEARM_MASTER).map(key => POLEARM_MASTER[key]);
-const BOW_MASTER_LIST = Object.keys(BOW_MASTER).map(key => BOW_MASTER[key]);
-const CATALYST_MASTER_LIST = Object.keys(CATALYST_MASTER).map(key => CATALYST_MASTER[key]);
+const SWORD_MASTER_LIST = (Object.keys(SWORD_MASTER) as TSwordKey[]).map(key => SWORD_MASTER[key]);
+const CLAYMORE_MASTER_LIST = (Object.keys(CLAYMORE_MASTER) as TClaymoreKey[]).map(key => CLAYMORE_MASTER[key]);
+const POLEARM_MASTER_LIST = (Object.keys(POLEARM_MASTER) as TPolearmKey[]).map(key => POLEARM_MASTER[key]);
+const BOW_MASTER_LIST = (Object.keys(BOW_MASTER) as TBowKey[]).map(key => BOW_MASTER[key]);
+const CATALYST_MASTER_LIST = (Object.keys(CATALYST_MASTER) as TCatalystKey[]).map(key => CATALYST_MASTER[key]);
 export const WEAPON_MASTER_LIST = {
     片手剣: SWORD_MASTER_LIST,
     両手剣: CLAYMORE_MASTER_LIST,
@@ -88,51 +138,62 @@ export const WEAPON_MASTER_LIST = {
     法器: CATALYST_MASTER_LIST,
 };
 
-export const ARTIFACT_SET_MASTER_LIST = [];
-Object.keys(ARTIFACT_SET_MASTER).forEach(key => {
-    const master = ARTIFACT_SET_MASTER[key];
-    master.key = key;
+export const ARTIFACT_SET_MASTER_LIST: TArtifactSetEntry[] = [];
+(Object.keys(ARTIFACT_SET_MASTER) as TArtifactSetKey[]).forEach(key => {
+    const master = ARTIFACT_SET_MASTER[key] as TArtifactSet;
     master.image = master.image.replace(/^public/, '');
-    master.icon_url = getIconUrl(master);
-    ARTIFACT_SET_MASTER_LIST.push(master);
+    ARTIFACT_SET_MASTER_LIST.push({ ...master, key: key, icon_url: getIconUrl(master) });
 });
 
-const ARTIFACT_MAIN_MASTER_KEYLIST = [];
-Object.keys(ARTIFACT_MAIN_MASTER).forEach(rarity => {
-    const rarityArtifactMain = ARTIFACT_MAIN_MASTER[rarity];
-    Object.keys(rarityArtifactMain).forEach(key => {
-        if (!ARTIFACT_MAIN_MASTER_KEYLIST.includes(key)) {
-            ARTIFACT_MAIN_MASTER_KEYLIST.push(key);
-        }
-    })
-});
+export const ARTIFACT_MAIN_MASTER_STATLIST: string[] = Object.keys(ARTIFACT_MAIN_MASTER[5]);
 
-export const ARTIFACT_SUB_MASTER_KEYLIST = Object.keys(ARTIFACT_SUB_MASTER);
+export const ARTIFACT_SUB_MASTER_STATLIST = Object.keys(ARTIFACT_SUB_MASTER);
 
-export const ENEMY_MASTER_LIST = Object.keys(ENEMY_MASTER).map(key => ({ key: key, ...ENEMY_MASTER[key] }));
+export type TEnemy = {
+    炎元素耐性: number,
+    水元素耐性: number,
+    風元素耐性: number,
+    雷元素耐性: number,
+    氷元素耐性: number,
+    岩元素耐性: number,
+    物理耐性: number,
+}
+export type TEnemyKey = keyof typeof ENEMY_MASTER;
+export const ENEMY_MASTER_LIST = (Object.keys(ENEMY_MASTER) as TEnemyKey[])
+    .map(key => ({ key: key, ...ENEMY_MASTER[key] }));
 
-export const ELEMENTAL_RESONANCE_MASTER_LIST = Object.keys(ELEMENTAL_RESONANCE_MASTER).map(key => ({ key: key, ...ELEMENTAL_RESONANCE_MASTER[key] }));
+export type TElementalResonanceKey = keyof typeof ELEMENTAL_RESONANCE_MASTER;
+export const ELEMENTAL_RESONANCE_MASTER_LIST = (Object.keys(ELEMENTAL_RESONANCE_MASTER) as TElementalResonanceKey[])
+    .map(key => ({ key: key, ...ELEMENTAL_RESONANCE_MASTER[key] }));
 
-export const TEAM_OPTION_MASTER_LIST = Object.keys(TEAM_OPTION_MASTER).map(key => ({ key: key, ...TEAM_OPTION_MASTER[key] }));
+export type TTeamOptionKey = keyof typeof TEAM_OPTION_MASTER;
+export const TEAM_OPTION_MASTER_LIST = (Object.keys(TEAM_OPTION_MASTER) as TTeamOptionKey[])
+    .map(key => ({ key: key, ...TEAM_OPTION_MASTER[key] }));
 
-export const OPTION1_MASTER_LIST = Object.keys(OPTION1_MASTER).map(key => ({ key: key, ...OPTION1_MASTER[key] }));
+export type TOption1Key = keyof typeof OPTION1_MASTER;
+export const OPTION1_MASTER_LIST = (Object.keys(OPTION1_MASTER) as TOption1Key[])
+    .map(key => ({ key: key, ...OPTION1_MASTER[key] }));
 
-export const OPTION2_MASTER_LIST = Object.keys(OPTION2_MASTER).map(key => ({ key: key, ...OPTION2_MASTER[key] }));
+export type TOption2Key = keyof typeof OPTION2_MASTER;
+export const OPTION2_MASTER_LIST = (Object.keys(OPTION2_MASTER) as TOption2Key[])
+    .map(key => ({ key: key, ...OPTION2_MASTER[key] }));
 
-export const ELEMENTAL_REACTION_MASTER_LIST = Object.keys(ELEMENTAL_REACTION_MASTER).map(key => ({ key: key, ...ELEMENTAL_REACTION_MASTER[key] }));
+export type TElementalReactionKey = keyof typeof ELEMENTAL_REACTION_MASTER;
+export const ELEMENTAL_REACTION_MASTER_LIST = (Object.keys(ELEMENTAL_REACTION_MASTER) as TElementalReactionKey[])
+    .map(key => ({ key: key, ...ELEMENTAL_REACTION_MASTER[key] }));
 
 export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...HOYO_DICTIONARY5, ...LOCAL_DICTIONARY };
 
-export function isPlainObject(value) {
+export function isPlainObject(value: any) {
     const myType = Object.prototype.toString.call(value);
     return myType === '[object Object]';
 }
 
-export function isString(value) {
+export function isString(value: any) {
     return typeof value === 'string' || value instanceof String;
 }
 
-function removeStrFromUrl(obj, str) {
+function removeStrFromUrl(obj: any, str: string) {
     if (isPlainObject(obj)) {
         Object.keys(obj).forEach(key => {
             if (isPlainObject(obj[key])) {
@@ -150,7 +211,7 @@ export const CHARACTER_MASTER_DETAIL_MAP = new Map();
  * @param {string} character 
  * @returns {Promise<any>}
  */
-export async function getCharacterMasterDetail(character) {
+export async function getCharacterMasterDetail(character: TCharacterKey) {
     try {
         if (!CHARACTER_MASTER_DETAIL_MAP.has(character)) {
             const characterMaster = await fetch(CHARACTER_MASTER[character]['import']).then(resp => resp.json());
@@ -171,15 +232,17 @@ export const WEAPON_MASTER_DETAIL_MAP = new Map();
  * @param {string} opt_weaponType 
  * @returns {any}
  */
-export async function getWeaponMasterDetail(weapon, opt_weaponType = null) {
+export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?: TWeaponTypeKey) {
     try {
         if (!WEAPON_MASTER_DETAIL_MAP.has(weapon)) {
             let weaponTypeArr;
             if (opt_weaponType) weaponTypeArr = [opt_weaponType];
             else weaponTypeArr = Object.keys(WEAPON_MASTER);
-            for (let weaponType of weaponTypeArr) {
-                if (weapon in WEAPON_MASTER[weaponType]) {
-                    const weaponMaster = await fetch(WEAPON_MASTER[weaponType][weapon]['import']).then(resp => resp.json());
+            for (const weaponType of weaponTypeArr) {
+                if (weapon in WEAPON_MASTER[weaponType as TWeaponTypeKey]) {
+                    const typedMaster: any = WEAPON_MASTER[weaponType as TWeaponTypeKey];
+                    const url = typedMaster[weapon]['import'];
+                    const weaponMaster: any = await fetch(url).then(resp => resp.json());
                     removeStrFromUrl(weaponMaster, 'public/');
                     WEAPON_MASTER_DETAIL_MAP.set(weapon, weaponMaster);
                     break;

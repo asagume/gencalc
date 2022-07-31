@@ -1,11 +1,10 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
   <div class="pane2">
     <CharacterSelect :character="character" :visible="characterSelectVisible"
       @update:character="characterSelected($event)" />
   </div>
   <div class="pane3">
-    <CharacterInput :characterInput="initialCharacterInput" />
+    <CharacterInput :initialCharacterInput="initialCharacterInput" />
   </div>
 </template>
 
@@ -15,7 +14,7 @@ import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
 import { makeRecommendationList } from './input';
 
-const Master = require('./master.js');
+const Master = require('./master.ts');
 const Input = require('./input.ts');
 
 

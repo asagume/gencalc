@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <td>
-                <select v-model="ascension">
+                <select v-model="ascension" @change="ascensionOnChange">
                     <option v-for="item in ascensionRange" :value="item" :key="item"> A{{ item }} </option>
                 </select>
             </td>
@@ -162,23 +162,28 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 
-const Master = require('../master.js');
+const Master = require('../master.ts');
 const Input = require('../input.ts');
 
 export default defineComponent({
     name: 'CharacterInput',
     props: {
-        characterInput: { type: Object, require: true }
+        initialCharacterInput: { type: Object, require: true }
     },
     emits: ['open:character-select', 'open:character-info'],
     setup(props) {
+        const characterInput: { [key: string]: any } = ref(props.initialCharacterInput);
+        let ascension = ref(props.initialCharacterInput!.突破レベル);
+        let level = ref(props.initialCharacterInput!.レベル);
+        let constellation = ref(props.initialCharacterInput!.命ノ星座);
+        let normalAttackLevel = ref(props.initialCharacterInput!.通常攻撃レベル);
+        let elementalSkillLevel = ref(props.initialCharacterInput!.元素スキルレベル);
+        let elementalBurstLevel = ref(props.initialCharacterInput!.元素爆発レベル);
+
         const displayName = (name: string) => name;
 
-        const characterMaster = computed(() => props.characterInput!.characterMaster);
-        const weaponMaster = computed(() => props.characterInput!.weaponMaster);
-        let ascension = ref(props.characterInput!.突破レベル);
-        let level = ref(props.characterInput!.レベル);
-        let constellation = ref(props.characterInput!.命ノ星座);
+        const characterMaster = computed(() => characterInput.value!.characterMaster);
+        const weaponMaster = computed(() => characterInput.value!.weaponMaster);
 
         const visionSrc = (item: any) => Master.ELEMENT_IMG_SRC[item.元素] as string;
         const backgroundUrl = (item: any) => Master.STAR_BACKGROUND_URL[item.レアリティ] as string;
@@ -193,7 +198,7 @@ export default defineComponent({
         };
         const removeOnClick = () => {
             if (buildname.value) {
-                localStorage.removeItem('構成_' + props.characterInput!.character + '_' + buildname.value);
+                localStorage.removeItem('構成_' + characterInput.value!.character + '_' + buildname.value);
             }
         };
         const ascensionRange = computed(() => {
@@ -203,30 +208,41 @@ export default defineComponent({
             return Input.突破レベルレベルARRAY[ascension.value];
         });
         const constellationRange = computed(() => {
-            return [0, 1, 2, 3, 4, 5, 6];
+            let max = 0;
+            if ('命ノ星座' in characterMaster.value) {
+                max = Object.keys(characterMaster.value['命ノ星座']).length;
+            }
+            return Array.from({ length: max + 1 }, (_, i) => i);
         });
+        const ascensionOnChange = () => {
+            if (level.value < levelRange.value[0]) {
+                level.value = levelRange.value[0];
+            } else if (level.value > levelRange.value[levelRange.value.length - 1]) {
+                level.
+                    value = levelRange.value[levelRange.value.length - 1];
+            }
+            buildOnChange();
+        };
         const buildOnChange = () => {
-            console.log(props.characterInput);
+            if (characterInput.value) {
+                characterInput!.突破レベル = ascension;
+                characterInput!.レベル = level;
+                characterInput!.命ノ星座 = constellation;
+            }
+            console.log(characterInput);
         };
 
         return {
             displayName,
-            visionSrc,
-            backgroundUrl,
-            colorClass,
+            visionSrc, backgroundUrl, colorClass,
             characterMaster,
             weaponMaster,
-            ascension,
-            level,
-            constellation,
-            saveDisabled,
-            removeDisabled,
-            buildname,
-            saveOnClick,
-            removeOnClick,
-            ascensionRange,
-            levelRange,
-            constellationRange,
+            ascension, level, constellation,
+            normalAttackLevel, elementalSkillLevel, elementalBurstLevel,
+            saveDisabled, removeDisabled, buildname,
+            saveOnClick, removeOnClick,
+            ascensionRange, levelRange, constellationRange,
+            ascensionOnChange,
             buildOnChange,
         }
     }
