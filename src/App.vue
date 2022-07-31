@@ -4,8 +4,13 @@
       @update:character="characterSelected($event)" />
   </div>
   <div class="pane3">
-    <CharacterInput :initialCharacterInput="initialCharacterInput" :initialRecommendationList="recommendationList"
-      @open:character-select="characterSelectVisible = !characterSelectVisible" />
+    <CharacterInput :characterInput="characterInput" :recommendationList="recommendationList"
+      @open:character-select="characterSelectVisible = !characterSelectVisible"
+      @open:weapon-select="weaponSelectVisible = !weaponSelectVisible" />
+  </div>
+  <div class="pane4">
+    <WeaponSelect :weapon="weapon" :weaponType="weaponType" :visible="weaponSelectVisible"
+      @update:weapon="weaponSelected($event)" />
   </div>
 </template>
 
@@ -13,8 +18,9 @@
 import { computed, defineComponent, PropType, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
+import WeaponSelect from './components/WeaponSelect.vue';
 import { TRecommendation, makeRecommendationList, loadRecommendation } from '@/input';
-import { getCharacterMasterDetail, TCharacterKey } from '@/master';
+import { getCharacterMasterDetail, getWeaponMasterDetail, TCharacterKey, TWeaponKey } from '@/master';
 
 
 export default defineComponent({
@@ -26,7 +32,7 @@ export default defineComponent({
     initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
   },
   components: {
-    CharacterSelect, CharacterInput,
+    CharacterSelect, CharacterInput, WeaponSelect,
   },
   setup(props) {
     let characterInput = ref(props.initialCharacterInput);
@@ -40,6 +46,8 @@ export default defineComponent({
 
     let weaponSelectVisible = ref(false);
     let weapon = computed(() => characterInput.value!.weapon);
+    let weaponType = computed(() => characterInput.value!.characterMaster.武器);
+
     let artifactSetSelectVisible = ref(false);
     let artifactSetIndex = ref(0);
     let artifactSet = ref(['NONE', 'NONE']);
@@ -52,7 +60,7 @@ export default defineComponent({
       conditionInput,
       characterSelectVisible, character,
       recommendationList,
-      weaponSelectVisible, weapon,
+      weaponSelectVisible, weapon, weaponType,
       artifactSetSelectVisible, artifactSetIndex, artifactSet,
       artifactDetailVisivle,
     }
@@ -66,6 +74,12 @@ export default defineComponent({
       const recommendation = this.recommendationList![0];
       await loadRecommendation(this.characterInput!, this.artifactDetailInput!, this.conditionInput!, recommendation.build);
       console.log(recommendation.name, this.characterInput!.weaponMaster.名前);
+    },
+    async weaponSelected(weapon: TWeaponKey) {
+      this.characterInput!.weapon = weapon;
+      this.weaponSelectVisible = false;
+      this.characterInput!.weaponMaster = await getWeaponMasterDetail(weapon, this.characterInput!.characterMaster.武器);
+
     }
   }
 });

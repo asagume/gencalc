@@ -166,25 +166,25 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 export default defineComponent({
     name: 'CharacterInput',
     props: {
-        initialCharacterInput: { type: Object, require: true },
-        initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
+        characterInput: { type: Object, require: true },
+        recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
     },
     emits: ['open:character-select', 'open:character-info', 'update:recommendation', 'open:weapon-select', 'open-artifact-detail-input'],
     setup(props) {
-        const characterInput: { [key: string]: any } = ref(props.initialCharacterInput);
-        let ascension = ref(props.initialCharacterInput!.突破レベル);
-        let level = ref(props.initialCharacterInput!.レベル);
-        let constellation = ref(props.initialCharacterInput!.命ノ星座);
-        let normalAttackLevel = ref(props.initialCharacterInput!.通常攻撃レベル);
-        let elementalSkillLevel = ref(props.initialCharacterInput!.元素スキルレベル);
-        let elementalBurstLevel = ref(props.initialCharacterInput!.元素爆発レベル);
-        let weaponAscension = ref(props.initialCharacterInput!.武器突破レベル);
-        let weaponLevel = ref(props.initialCharacterInput!.武器レベル);
-        let weaponRefine = ref(props.initialCharacterInput!.武器精錬ランク);
+        const characterInput: { [key: string]: any } = ref(props.characterInput);
+        let ascension = ref(props.characterInput!.突破レベル);
+        let level = ref(props.characterInput!.レベル);
+        let constellation = ref(props.characterInput!.命ノ星座);
+        let normalAttackLevel = ref(props.characterInput!.通常攻撃レベル);
+        let elementalSkillLevel = ref(props.characterInput!.元素スキルレベル);
+        let elementalBurstLevel = ref(props.characterInput!.元素爆発レベル);
+        let weaponAscension = ref(props.characterInput!.武器突破レベル);
+        let weaponLevel = ref(props.characterInput!.武器レベル);
+        let weaponRefine = ref(props.characterInput!.武器精錬ランク);
 
         let recommendationListVisible = ref(false);
-        let recommendationList = ref(props.initialRecommendationList as TRecommendation[]);
-        let recommendation = ref(recommendationList.value![0]);
+        // let recommendationList = ref(props.recommendationList as TRecommendation[]);
+        let recommendation = ref(props.recommendationList![0]);
 
         const displayName = (name: string) => name;
         const displayBuildName = (item: TRecommendation) => item.name;
@@ -281,7 +281,7 @@ export default defineComponent({
             ascensionOnChange,
             weaponAscensionRange, weaponLevelRange, weaponRefineRange,
             weaponAscensionOnChange,
-            recommendationListVisible, recommendationList, recommendation,
+            recommendationListVisible, recommendation,
             normalAttackLevelRange, elementalSkillLevelRange, elementalBurstLevelRange,
             buildOnChange,
             IMG_SRC_DUMMY: IMG_SRC_DUMMY,

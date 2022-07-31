@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { CHARACTER_MASTER_LIST, ELEMENT_IMG_SRC, STAR_BACKGROUND_URL, TCharacterEntry, TVisionKey, TWeaponEntry, TWeaponTypeKey, WEAPON_IMG_SRC, WEAPON_MASTER_LIST } from '@/master';
+import { STAR_BACKGROUND_URL, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER_LIST } from '@/master';
 import { defineComponent, reactive, computed, ref } from 'vue';
 
 interface ICheckList {
@@ -49,28 +49,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
-img.character {
-    width: 90px;
-    height: 90px;
+img.weapon {
+    width: 75px;
+    height: 75px;
     background-size: contain;
 }
 
-.character.selected {
+.selected {
     background-color: gold;
-}
-
-img.vision {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    left: 3px;
-    top: 3px;
-}
-
-img.filter {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
 }
 
 :checked+img {
