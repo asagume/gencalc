@@ -4,7 +4,8 @@
       @update:character="characterSelected($event)" />
   </div>
   <div class="pane3">
-    <CharacterInput :initialCharacterInput="initialCharacterInput" />
+    <CharacterInput :initialCharacterInput="initialCharacterInput"
+      @open:character-select="characterSelectVisible = true" />
   </div>
 </template>
 
@@ -25,7 +26,7 @@ export default defineComponent({
   },
   setup(props) {
     let characterInput = ref(props.initialCharacterInput);
-    let characterSelectVisible = true;
+    let characterSelectVisible = ref(false);
     let character = computed(() => characterInput.value!.character);
 
 
@@ -39,7 +40,7 @@ export default defineComponent({
   methods: {
     async characterSelected(character: string) {
       this.characterInput!.character = character;
-      // this.characterSelectVisible = false;
+      this.characterSelectVisible = false;
       this.characterInput!.characterMaster = await Master.getCharacterMasterDetail(character);
       const recommendationList = makeRecommendationList(this.characterInput!.characterMaster);
       const recommendation = recommendationList[0];
