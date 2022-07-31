@@ -4,7 +4,7 @@
       @update:character="characterSelected($event)" />
   </div>
   <div class="pane3">
-    <CharacterInput :initialCharacterInput="initialCharacterInput" :recommendationList="recommendationList"
+    <CharacterInput :initialCharacterInput="initialCharacterInput" :initialRecommendationList="recommendationList"
       @open:character-select="characterSelectVisible = true" />
   </div>
 </template>
@@ -13,7 +13,7 @@
 import { computed, defineComponent, PropType, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
-import { TRecommendation, makeRecommendationList } from './input';
+import { TRecommendation, makeRecommendationList, loadRecommendation } from './input';
 
 const Master = require('./master.ts');
 const Input = require('./input.ts');
@@ -64,8 +64,10 @@ export default defineComponent({
       this.characterInput!.character = character;
       this.characterSelectVisible = false;
       this.characterInput!.characterMaster = await Master.getCharacterMasterDetail(character);
-      this.recommendationList = makeRecommendationList(this.characterInput!.characterMaster);
-      const recommendation = this.recommendationList[0];
+      this.recommendationList!.splice(0, this.recommendationList!.length, ...makeRecommendationList(this.characterInput!.characterMaster));
+      const recommendation = this.recommendationList![0];
+      await loadRecommendation(this.characterInput!, this.artifactDetailInput!, this.conditionInput!, recommendation.build);
+      console.log(recommendation.name, this.characterInput!.weaponMaster.名前);
     }
   }
 });
@@ -83,51 +85,51 @@ export default defineComponent({
 }
 
 .pyro {
-    color: #d2655a;
+  color: #d2655a;
 }
 
 .hydro {
-    color: #559cc9;
+  color: #559cc9;
 }
 
 .anemo {
-    color: #3aaf7a;
+  color: #3aaf7a;
 }
 
 .electro {
-    color: #b681df;
+  color: #b681df;
 }
 
 .cryo {
-    color: #63beb4;
+  color: #63beb4;
 }
 
 .geo {
-    color: #df8f37;
+  color: #df8f37;
 }
 
 .pyro-bg {
-    background-color: #d2655a;
+  background-color: #d2655a;
 }
 
 .hydro-bg {
-    background-color: #559cc9;
+  background-color: #559cc9;
 }
 
 .anemo-bg {
-    background-color: #3aaf7a;
+  background-color: #3aaf7a;
 }
 
 .electro-bg {
-    background-color: #b681df;
+  background-color: #b681df;
 }
 
 .cryo-bg {
-    background-color: #63beb4;
+  background-color: #63beb4;
 }
 
 .geo-bg {
-    background-color: #df8f37;
+  background-color: #df8f37;
 }
 
 ul.select-list {

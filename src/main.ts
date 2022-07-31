@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { makeRecommendationList } from './input';
+import { makeRecommendationList, loadRecommendation } from './input';
 
 const Master = require('./master.ts') as any
 const Input = require('./input.ts') as any
+
 
 const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;
 
@@ -133,84 +134,6 @@ function getCharacterByBirthday(): string {
         }
     }
     return result;
-}
-
-async function loadRecommendation(characterInput: { [key: string]: any }, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, recommendation: { [key: string]: any }) {
-    try {
-        const character = characterInput.character;
-        const characterMaster = await Master.getCharacterMasterDetail(character);
-        characterInput.characterMaster = characterMaster;
-
-        if ('レベル' in recommendation) {
-            [characterInput.突破レベル, characterInput.レベル] = Input.parseLevelStr(recommendation['レベル']);
-        }
-        ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
-            if (key in recommendation) {
-                characterInput[key] = recommendation[key];
-            }
-        });
-
-        const weaponType = characterMaster['武器'];
-        console.log(weaponType, recommendation);
-        if ('武器' in recommendation) {
-            characterInput.weapon = recommendation['武器'];
-            characterInput.weaponMaster = await Master.getWeaponMasterDetail(characterInput.weapon, weaponType);
-        }
-        if ('武器レベル' in recommendation) {
-            [characterInput.武器突破レベル, characterInput.武器レベル] = Input.parseLevelStr(recommendation['武器レベル']);
-        }
-        if ('精錬ランク' in recommendation) {
-            characterInput.武器精錬ランク = recommendation['精錬ランク'];
-        }
-
-        ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
-            if (!(key in recommendation)) return;
-            const artifactSet = recommendation[key];
-            if (artifactSet && artifactSet in Master.ARTIFACT_SET_MASTER) {
-                characterInput.artifactSetMaster[index] = Master.ARTIFACT_SET_MASTER[artifactSet];
-            } else {
-                characterInput.artifactSetMaster[index] = Input.ARTIFACT_SET_MASTER_DUMMY;
-            }
-        });
-        ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
-            if (!(key in recommendation)) return;
-            let mainStat = recommendation[key];
-            if (!mainStat) {
-                mainStat = ['5_HP', '5_攻撃力'][index];
-            }
-            artifactDetailInput['聖遺物メイン効果'][index] = mainStat;
-        });
-        ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
-            if (!(key in recommendation)) return;
-            const mainstat = recommendation[key];
-            artifactDetailInput['聖遺物メイン効果'][index + 2] = mainstat;
-        });
-        ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
-            if (!(key in recommendation)) return;
-            const substat = recommendation[key];
-            artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
-        });
-        let hasSubstat = false;
-        Object.keys(recommendation).filter(s => s.startsWith('聖遺物サブ効果')).forEach(key => {
-            let stat = key.replace(/^聖遺物サブ効果/, '');
-            if (stat in Input.聖遺物ステータスTEMPLATE) {
-                // nop
-            } else {
-                stat = stat.replace(/P$/, '%');
-            }
-            artifactDetailInput['聖遺物ステータス'][stat] = Math.round(recommendation[key] * 10) / 10;
-            hasSubstat = true;
-        });
-        artifactDetailInput.isステータス計算無効 = hasSubstat;
-
-        // makeDamageDetailObjArrObjCharacter(characterInput);
-        // makeDamageDetailObjArrObjWeapon(characterInput);
-        // makeDamageDetailObjArrObjArtifactSet(characterInput);
-    }
-    catch (error) {
-        console.error(characterInput, artifactDetailInput, conditionInput, recommendation);
-        throw error;
-    }
 }
 
 async function main() {

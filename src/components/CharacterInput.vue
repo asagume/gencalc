@@ -169,7 +169,7 @@ export default defineComponent({
     name: 'CharacterInput',
     props: {
         initialCharacterInput: { type: Object, require: true },
-        recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
+        initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
     },
     emits: ['open:character-select', 'open:character-info', 'update:recommendation', 'open:weapon-select', 'open-artifact-detail-input'],
     setup(props) {
@@ -185,8 +185,8 @@ export default defineComponent({
         let weaponRefine = ref(props.initialCharacterInput!.武器精錬ランク);
 
         let recommendationListVisible = ref(false);
-        let recommendation = ref(props.recommendationList![0]);
-        console.log(recommendation);
+        let recommendationList = ref(props.initialRecommendationList as TRecommendation[]);
+        let recommendation = ref(recommendationList.value![0]);
 
         const displayName = (name: string) => name;
         const displayBuildName = (item: TRecommendation) => item.name;
@@ -285,7 +285,7 @@ export default defineComponent({
             ascensionOnChange,
             weaponAscensionRange, weaponLevelRange, weaponRefineRange,
             weaponAscensionOnChange,
-            recommendationListVisible, recommendation,
+            recommendationListVisible, recommendationList, recommendation,
             normalAttackLevelRange, elementalSkillLevelRange, elementalBurstLevelRange,
             buildOnChange,
             IMG_SRC_DUMMY,
