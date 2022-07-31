@@ -89,7 +89,7 @@ export const WEAPON_MASTER_LIST = {
 };
 
 export const ARTIFACT_SET_MASTER_LIST = [];
-Object.keys(ARTIFACT_SET_MASTER).forEach(key =>{
+Object.keys(ARTIFACT_SET_MASTER).forEach(key => {
     const master = ARTIFACT_SET_MASTER[key];
     master.key = key;
     master.image = master.image.replace(/^public/, '');
@@ -123,6 +123,27 @@ export const ELEMENTAL_REACTION_MASTER_LIST = Object.keys(ELEMENTAL_REACTION_MAS
 
 export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...HOYO_DICTIONARY5, ...LOCAL_DICTIONARY };
 
+export function isPlainObject(value) {
+    const myType = Object.prototype.toString.call(value);
+    return myType === '[object Object]';
+}
+
+export function isString(value) {
+    return typeof value === 'string' || value instanceof String;
+}
+
+function removeStrFromUrl(obj, str) {
+    if (isPlainObject(obj)) {
+        Object.keys(obj).forEach(key => {
+            if (isPlainObject(obj[key])) {
+                removeStrFromUrl(obj[key], str);
+            } else if (isString(obj[key])) {
+                obj[key] = obj[key].replace(str, '');
+            }
+        })
+    }
+}
+
 export const CHARACTER_MASTER_DETAIL_MAP = new Map();
 /**
  * 
@@ -133,6 +154,7 @@ export async function getCharacterMasterDetail(character) {
     try {
         if (!CHARACTER_MASTER_DETAIL_MAP.has(character)) {
             const characterMaster = await fetch(CHARACTER_MASTER[character]['import']).then(resp => resp.json());
+            removeStrFromUrl(characterMaster, 'public/');
             CHARACTER_MASTER_DETAIL_MAP.set(character, characterMaster);
         }
         return CHARACTER_MASTER_DETAIL_MAP.get(character);
@@ -158,6 +180,7 @@ export async function getWeaponMasterDetail(weapon, opt_weaponType = null) {
             for (let weaponType of weaponTypeArr) {
                 if (weapon in WEAPON_MASTER[weaponType]) {
                     const weaponMaster = await fetch(WEAPON_MASTER[weaponType][weapon]['import']).then(resp => resp.json());
+                    removeStrFromUrl(weaponMaster, 'public/');
                     WEAPON_MASTER_DETAIL_MAP.set(weapon, weaponMaster);
                     break;
                 }

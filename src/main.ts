@@ -135,7 +135,7 @@ function getCharacterByBirthday(): string {
     return result;
 }
 
-async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_TEMPLATE, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, recommendation: { [key: string]: any }) {
+async function loadRecommendation(characterInput: { [key: string]: any }, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, recommendation: { [key: string]: any }) {
     try {
         const character = characterInput.character;
         const characterMaster = await Master.getCharacterMasterDetail(character);
@@ -151,6 +151,7 @@ async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_T
         });
 
         const weaponType = characterMaster['武器'];
+        console.log(weaponType, recommendation);
         if ('武器' in recommendation) {
             characterInput.weapon = recommendation['武器'];
             characterInput.weaponMaster = await Master.getWeaponMasterDetail(characterInput.weapon, weaponType);
@@ -214,9 +215,9 @@ async function loadRecommendation(characterInput: typeof Input.CHARACTER_INPUT_T
 }
 
 async function main() {
-    const characterInput = {} as { [key: string]: any };
-    const artifactDetailInput = {};
-    const conditionInput = {};
+    const characterInput = JSON.parse(JSON.stringify(Input.CHARACTER_INPUT_TEMPLATE)) as { [key: string]: any };
+    const artifactDetailInput = JSON.parse(JSON.stringify(Input.ARTIFACT_DETAIL_INPUT_TEMPLATE));
+    const conditionInput = JSON.parse(JSON.stringify(Input.CONDITION_INPUT_TEMPLATE));
 
     const searchParams = new URLSearchParams(window.location.search);
     let savedata;
@@ -229,9 +230,10 @@ async function main() {
     characterInput.characterMaster = await Master.getCharacterMasterDetail(characterInput.character);
     const recommendationList = makeRecommendationList(characterInput.characterMaster, savedata);
     const recommendation = recommendationList[0];
-    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation);
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation.build);
+    console.log(characterInput);
 
-    createApp(App, { characterInput: characterInput }).mount('#app')
+    createApp(App, { initialCharacterInput: characterInput }).mount('#app')
 }
 
 main();

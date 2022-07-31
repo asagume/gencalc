@@ -5,13 +5,15 @@
       @update:character="characterSelected($event)" />
   </div>
   <div class="pane3">
-    {{ characterMaster }}
+    <CharacterInput :characterInput="initialCharacterInput" />
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
+import CharacterInput from './components/CharacterInput.vue';
+import { makeRecommendationList } from './input';
 
 const Master = require('./master.js');
 const Input = require('./input.ts');
@@ -20,32 +22,32 @@ const Input = require('./input.ts');
 export default defineComponent({
   name: 'App',
   props: {
-    characterInput: { type: Object, require: true }
+    initialCharacterInput: { type: Object, require: true }
   },
   setup(props) {
+    let characterInput = ref(props.initialCharacterInput);
     let characterSelectVisible = true;
-    let character = ref(props.characterInput ? props.characterInput.character : null);
-    let characterMaster;
-    let characterDetail = reactive(Input.CHARACTER_INPUT_TEMPLATE);
+    let character = computed(() => characterInput.value!.character);
 
 
     return {
+      characterInput,
       characterSelectVisible,
       character,
-      characterMaster,
-      characterDetail,
 
     }
   },
   methods: {
     async characterSelected(character: string) {
-      this.character = character;
+      this.characterInput!.character = character;
       // this.characterSelectVisible = false;
-      this.characterMaster = await Master.getCharacterMasterDetail(character);
+      this.characterInput!.characterMaster = await Master.getCharacterMasterDetail(character);
+      const recommendationList = makeRecommendationList(this.characterInput!.characterMaster);
+      const recommendation = recommendationList[0];
     }
   },
   components: {
-    CharacterSelect
+    CharacterSelect, CharacterInput,
   }
 });
 </script>
@@ -74,5 +76,19 @@ ul.select-list li {
   display: inline-block;
   margin: 0;
   position: relative;
+}
+
+span.tooltip {
+  display: none;
+  position: absolute;
+  left: 15px;
+  top: 5px;
+  z-index: 100;
+  color: bisque;
+  text-shadow: 1px 1px 2px black, 0 0 1em orange, 0 0 0.2em orange;
+}
+
+:hover+span.tooltip {
+  display: block;
 }
 </style>

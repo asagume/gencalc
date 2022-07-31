@@ -128,20 +128,6 @@ img.character {
     background-color: gold;
 }
 
-span.tooltip {
-    display: none;
-    position: absolute;
-    left: 15px;
-    top: 5px;
-    z-index: 100;
-    color: bisque;
-    text-shadow: 1px 1px 2px black, 0 0 1em orange, 0 0 0.2em orange;
-}
-
-:hover+span.tooltip {
-    display: block;
-}
-
 img.vision {
     width: 30px;
     height: 30px;
