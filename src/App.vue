@@ -4,16 +4,16 @@
       @update:character="characterSelected($event)" />
   </div>
   <div class="pane3">
-    <CharacterInput :initialCharacterInput="initialCharacterInput"
+    <CharacterInput :initialCharacterInput="initialCharacterInput" :recommendationList="recommendationList"
       @open:character-select="characterSelectVisible = true" />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, PropType, reactive, ref } from 'vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 import CharacterInput from './components/CharacterInput.vue';
-import { makeRecommendationList } from './input';
+import { TRecommendation, makeRecommendationList } from './input';
 
 const Master = require('./master.ts');
 const Input = require('./input.ts');
@@ -22,19 +22,41 @@ const Input = require('./input.ts');
 export default defineComponent({
   name: 'App',
   props: {
-    initialCharacterInput: { type: Object, require: true }
+    initialCharacterInput: { type: Object, require: true },
+    initialArtifactDetailInput: { type: Object, require: true },
+    initialConditionInput: { type: Object, require: true },
+    initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
+  },
+  components: {
+    CharacterSelect, CharacterInput,
   },
   setup(props) {
     let characterInput = ref(props.initialCharacterInput);
+    let artifactDetailInput = ref(props.initialArtifactDetailInput);
+    let conditionInput = ref(props.initialConditionInput);
+
     let characterSelectVisible = ref(false);
     let character = computed(() => characterInput.value!.character);
+
+    let recommendationList = ref(props.initialRecommendationList);
+
+    let weaponSelectVisible = ref(false);
+    let weapon = computed(() => characterInput.value!.weapon);
+    let artifactSetSelectVisible = ref(false);
+    let artifactSetIndex = ref(0);
+    let artifactSet = ref(['NONE', 'NONE']);
+    let artifactDetailVisivle = ref(false);
 
 
     return {
       characterInput,
-      characterSelectVisible,
-      character,
-
+      artifactDetailInput,
+      conditionInput,
+      characterSelectVisible, character,
+      recommendationList,
+      weaponSelectVisible, weapon,
+      artifactSetSelectVisible, artifactSetIndex, artifactSet,
+      artifactDetailVisivle,
     }
   },
   methods: {
@@ -42,12 +64,9 @@ export default defineComponent({
       this.characterInput!.character = character;
       this.characterSelectVisible = false;
       this.characterInput!.characterMaster = await Master.getCharacterMasterDetail(character);
-      const recommendationList = makeRecommendationList(this.characterInput!.characterMaster);
-      const recommendation = recommendationList[0];
+      this.recommendationList = makeRecommendationList(this.characterInput!.characterMaster);
+      const recommendation = this.recommendationList[0];
     }
-  },
-  components: {
-    CharacterSelect, CharacterInput,
   }
 });
 </script>
@@ -61,6 +80,54 @@ export default defineComponent({
 
 .hidden {
   display: none;
+}
+
+.pyro {
+    color: #d2655a;
+}
+
+.hydro {
+    color: #559cc9;
+}
+
+.anemo {
+    color: #3aaf7a;
+}
+
+.electro {
+    color: #b681df;
+}
+
+.cryo {
+    color: #63beb4;
+}
+
+.geo {
+    color: #df8f37;
+}
+
+.pyro-bg {
+    background-color: #d2655a;
+}
+
+.hydro-bg {
+    background-color: #559cc9;
+}
+
+.anemo-bg {
+    background-color: #3aaf7a;
+}
+
+.electro-bg {
+    background-color: #b681df;
+}
+
+.cryo-bg {
+    background-color: #63beb4;
+}
+
+.geo-bg {
+    background-color: #df8f37;
 }
 
 ul.select-list {

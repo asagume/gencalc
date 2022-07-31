@@ -166,11 +166,10 @@ async function loadRecommendation(characterInput: { [key: string]: any }, artifa
         ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
             if (!(key in recommendation)) return;
             const artifactSet = recommendation[key];
-            characterInput['聖遺物セット効果'][index]['名前'] = artifactSet;
             if (artifactSet && artifactSet in Master.ARTIFACT_SET_MASTER) {
-                characterInput['聖遺物セット効果'][index].master = Master.ARTIFACT_SET_MASTER[artifactSet];
+                characterInput.artifactSetMaster[index] = Master.ARTIFACT_SET_MASTER[artifactSet];
             } else {
-                characterInput['聖遺物セット効果'][index].master = Master.ARTIFACT_SET_MASTER_DUMMY;
+                characterInput.artifactSetMaster[index] = Input.ARTIFACT_SET_MASTER_DUMMY;
             }
         });
         ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
@@ -231,9 +230,13 @@ async function main() {
     const recommendationList = makeRecommendationList(characterInput.characterMaster, savedata);
     const recommendation = recommendationList[0];
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation.build);
-    console.log(characterInput);
 
-    createApp(App, { initialCharacterInput: characterInput }).mount('#app')
+    createApp(App, {
+        initialCharacterInput: characterInput,
+        initialArtifactDetailInput: artifactDetailInput,
+        initialConditionInput: conditionInput,
+        initialRecommendationList: recommendationList,
+    }).mount('#app')
 }
 
 main();

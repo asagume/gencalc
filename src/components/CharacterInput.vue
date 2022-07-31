@@ -7,7 +7,7 @@
                     @click="$emit('open:character-select')">
                 <img class="vision" :src="visionSrc(characterMaster)" :alt="characterMaster.元素">
             </td>
-            <td :class="'title ' + colorClass" colspan="3" style="position: relative;">
+            <td :class="'title ' + colorClass((characterMaster))" colspan="3" style="position: relative;">
                 {{ displayName(characterMaster.名前) }}
                 <span class="material-symbols-outlined" style="position: absolute; right: 0;"
                     @click="$emit('open:character-info')"> info </span>
@@ -20,9 +20,7 @@
                     <span class="material-symbols-outlined"> save </span>
                 </button>
             </td>
-            <td>
-                &emsp;
-            </td>
+            <td> &emsp; </td>
             <td>
                 <button type="button" :disabled="removeDisabled" @click="removeOnClick">
                     Remove<br>
@@ -55,112 +53,114 @@
                 </select>
             </td>
             <td colspan="3">
-                <!-- <label class="button open-close">
-                    <input class="hidden" type="checkbox" v-model="おすすめセットOption.isOpen">
+                <label class="button open-close">
+                    <input class="hidden" type="checkbox" v-model="recommendationListVisible">
                     <span>{{ displayName('おすすめセット') }}</span>
-                </label> -->
+                </label>
             </td>
         </tr>
-        <!-- <tr v-if="おすすめセットOption.isOpen">
+        <tr v-if="recommendationListVisible">
             <td colspan="6">
-                <select v-model="おすすめセット" @change="recommendationOnChange">
-                    <option v-for="item in おすすめセットOption.list" :value="item">
+                <select v-model="recommendation" @change="$emit('update:recommendation', recommendation)">
+                    <option v-for="item in recommendationList" :value="item" :key="item.name">
                         {{ displayBuildName(item) }}</option>
                 </select>
             </td>
-        </tr> -->
+        </tr>
     </table>
-    <!-- <table>
+    <table>
         <tr>
             <td colspan="3" rowspan="3" class="icon" style="width: 180px;">
                 <img class="weapon with-tooltip" :src="weaponMaster['icon_url']" :alt="weaponMaster.key"
-                    :style="'background-image: url(' + weaponStarBackgroundUrl + ')'" @click="weaponOnClick">
+                    :style="'background-image: url(' + backgroundUrl(weaponMaster) + ')'"
+                    @click="$emit('open:weapon-select')">
                 <div class="tooltip">{{ displayName(weaponMaster.key) }}</div>
             </td>
             <td class="icon">
-                <img :class="'talent with-tooltip ' + bgColorClass" :src="characterMaster['通常攻撃']['icon_url']"
-                    :alt="characterMaster['通常攻撃']['名前']" @click="normalAttackOnClick">
+                <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
+                    :src="characterMaster['通常攻撃']['icon_url']" :alt="characterMaster['通常攻撃']['名前']" @click="false">
                 <div class="tooltip">{{ displayName(characterMaster['通常攻撃']['名前']) }}</div>
             </td>
             <td class="icon">
-                <img :class="'talent with-tooltip ' + bgColorClass" :src="characterMaster['元素スキル']['icon_url']"
-                    :alt="characterMaster['元素スキル']['名前']" @click="elementalSkillOnClick">
+                <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
+                    :src="characterMaster['元素スキル']['icon_url']" :alt="characterMaster['元素スキル']['名前']" @click="false">
                 <div class="tooltip">{{ displayName(characterMaster['元素スキル']['名前']) }}</div>
             </td>
             <td class="icon">
-                <img :class="'talent with-tooltip ' + bgColorClass" :src="characterMaster['元素爆発']['icon_url']"
-                    :alt="characterMaster['元素爆発']['名前']" @click="elementalBurstOnClick">
+                <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
+                    :src="characterMaster['元素爆発']['icon_url']" :alt="characterMaster['元素爆発']['名前']" @click="false">
                 <div class="tooltip">{{ displayName(characterMaster['元素爆発']['名前']) }}</div>
             </td>
         </tr>
         <tr>
             <td>
-                <select v-model="通常攻撃レベル" @change="buildOnChange">
-                    <option v-for="item in normalAttackLevelRange" :value="item"> Lv.{{ item }}
+                <select v-model="normalAttackLevel" @change="buildOnChange">
+                    <option v-for="item in normalAttackLevelRange" :value="item" :key="item"> Lv.{{ item }}
                     </option>
                 </select>
             </td>
             <td>
-                <select v-model="元素スキルレベル" @change="buildOnChange">
-                    <option v-for="item in elementalSkillLevelRange" :value="item"> Lv.{{ item }}
+                <select v-model="elementalSkillLevel" @change="buildOnChange">
+                    <option v-for="item in elementalSkillLevelRange" :value="item" :key="item"> Lv.{{ item }}
                     </option>
                 </select>
             </td>
             <td>
-                <select v-model="元素爆発レベル" @change="buildOnChange">
-                    <option v-for="item in elementalBurstLevelRange" :value="item"> Lv.{{ item }}
+                <select v-model="elementalBurstLevel" @change="buildOnChange">
+                    <option v-for="item in elementalBurstLevelRange" :value="item" :key="item"> Lv.{{ item }}
                     </option>
                 </select>
             </td>
         </tr>
         <tr>
             <td rowspan="2" class="icon">
-                <label class="with-tooltip" @click="artifactSetOnClick(0)">
-                    <img :class="'artifact-set ' + classArtifactSetSelected(0)" :src="聖遺物セット効果[0].master.image"
-                        :alt="聖遺物セット効果[0]['名前']">
+                <label class="with-tooltip" @click="false">
+                    <img :class="'artifact-set ' + ''" :src="artifactSetMaster[0].image"
+                        :alt="artifactSetMaster[0].key">
                 </label>
-                <div class="tooltip">{{ displayName(聖遺物セット効果[0]['名前']) }}</div>
+                <div class="tooltip">{{ displayName(artifactSetMaster[0].key) }}</div>
             </td>
             <td rowspan="2" class="icon">
-                <label class="with-tooltip" @click="artifactSetOnClick(1)">
-                    <img :class="'artifact-set ' + classArtifactSetSelected(1)" :src="聖遺物セット効果[1].master.image"
-                        :alt="聖遺物セット効果[1]['名前']">
+                <label class="with-tooltip" @click="false">
+                    <img :class="'artifact-set ' + ''" :src="artifactSetMaster[1].image"
+                        :alt="artifactSetMaster[1].key">
                 </label>
-                <div class="tooltip">{{ displayName(聖遺物セット効果[1]['名前']) }}</div>
+                <div class="tooltip">{{ displayName(artifactSetMaster[1].key) }}</div>
             </td>
             <td rowspan="2">
                 <button type="button" class="artifact-detail-button">
                     <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')"
-                        @click="artifactDetailOnClick">
-                    <img class="left-icon" src="public/images/artifact.png" alt="artifact">
-                    <img class="right-icon" src="public/images/artifact.png" alt="artifact">
-                    <div class="absolute-center">{{ artifactScore }}</div>
+                        @click="$emit('open-artifact-detail-input')">
+                    <img class="left-icon" src="images/artifact.png" alt="artifact">
+                    <img class="right-icon" src="images/artifact.png" alt="artifact">
+                    <div class="absolute-center">{{ 'artifactScore' }}</div>
                 </button>
             </td>
         </tr>
         <tr>
             <td>
-                <select v-model="武器突破レベル" @change="weaponAscensionOnChange">
-                    <option v-for="item in weaponAscensionRange" :value="item"> A{{ item }}
+                <select v-model="weaponAscension" @change="weaponAscensionOnChange">
+                    <option v-for="item in weaponAscensionRange" :value="item" :key="item"> A{{ item }}
                     </option>
                 </select>
             </td>
             <td>
-                <select v-model="武器レベル" @change="buildOnChange">
-                    <option v-for="item in weaponLevelRange" :value="item"> Lv.{{ item }} </option>
+                <select v-model="weaponLevel" @change="buildOnChange">
+                    <option v-for="item in weaponLevelRange" :value="item" :key="item"> Lv.{{ item }} </option>
                 </select>
             </td>
             <td>
-                <select v-model="武器精錬ランク" @change="buildOnChange">
-                    <option v-for="item in weaponRefineRange" :value="item"> R{{ item }} </option>
+                <select v-model="weaponRefine" @change="buildOnChange">
+                    <option v-for="item in weaponRefineRange" :value="item" :key="item"> R{{ item }} </option>
                 </select>
             </td>
         </tr>
-    </table> -->
+    </table>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { TRecommendation } from '@/input';
+import { computed, defineComponent, PropType, ref } from 'vue';
 
 const Master = require('../master.ts');
 const Input = require('../input.ts');
@@ -168,9 +168,10 @@ const Input = require('../input.ts');
 export default defineComponent({
     name: 'CharacterInput',
     props: {
-        initialCharacterInput: { type: Object, require: true }
+        initialCharacterInput: { type: Object, require: true },
+        recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
     },
-    emits: ['open:character-select', 'open:character-info'],
+    emits: ['open:character-select', 'open:character-info', 'update:recommendation', 'open:weapon-select', 'open-artifact-detail-input'],
     setup(props) {
         const characterInput: { [key: string]: any } = ref(props.initialCharacterInput);
         let ascension = ref(props.initialCharacterInput!.突破レベル);
@@ -179,15 +180,26 @@ export default defineComponent({
         let normalAttackLevel = ref(props.initialCharacterInput!.通常攻撃レベル);
         let elementalSkillLevel = ref(props.initialCharacterInput!.元素スキルレベル);
         let elementalBurstLevel = ref(props.initialCharacterInput!.元素爆発レベル);
+        let weaponAscension = ref(props.initialCharacterInput!.武器突破レベル);
+        let weaponLevel = ref(props.initialCharacterInput!.武器レベル);
+        let weaponRefine = ref(props.initialCharacterInput!.武器精錬ランク);
+
+        let recommendationListVisible = ref(false);
+        let recommendation = ref(props.recommendationList![0]);
+        console.log(recommendation);
 
         const displayName = (name: string) => name;
+        const displayBuildName = (item: TRecommendation) => item.name;
 
         const characterMaster = computed(() => characterInput.value!.characterMaster);
         const weaponMaster = computed(() => characterInput.value!.weaponMaster);
 
+        const artifactSetMaster = computed(() => characterInput.value!.artifactSetMaster);
+
         const visionSrc = (item: any) => Master.ELEMENT_IMG_SRC[item.元素] as string;
         const backgroundUrl = (item: any) => Master.STAR_BACKGROUND_URL[item.レアリティ] as string;
         const colorClass = (item: any) => Master.ELEMENT_COLOR_CLASS[item.元素] as string;
+        const bgColorClass = (item: any) => Master.ELEMENT_BG_COLOR_CLASS[item.元素] as string;
         let saveDisabled = false;
         let removeDisabled = false;
         let buildname = ref('');
@@ -218,8 +230,33 @@ export default defineComponent({
             if (level.value < levelRange.value[0]) {
                 level.value = levelRange.value[0];
             } else if (level.value > levelRange.value[levelRange.value.length - 1]) {
-                level.
-                    value = levelRange.value[levelRange.value.length - 1];
+                level.value = levelRange.value[levelRange.value.length - 1];
+            }
+            buildOnChange();
+        };
+        const normalAttackLevelRange = computed(() => {
+            return Array.from({ length: 10 }, (_, i) => i + 1);
+        });
+        const elementalSkillLevelRange = computed(() => {
+            return Array.from({ length: 13 }, (_, i) => i + 1);
+        });
+        const elementalBurstLevelRange = computed(() => {
+            return Array.from({ length: 13 }, (_, i) => i + 1);
+        });
+        const weaponAscensionRange = computed(() => {
+            return [0, 1, 2, 3, 4, 5, 6];
+        });
+        const weaponLevelRange = computed(() => {
+            return Input.突破レベルレベルARRAY[weaponAscension.value];
+        });
+        const weaponRefineRange = computed(() => {
+            return [1, 2, 3, 4, 5];
+        });
+        const weaponAscensionOnChange = () => {
+            if (weaponLevel.value < weaponLevelRange.value[0]) {
+                weaponLevel.value = weaponLevelRange.value[0];
+            } else if (weaponLevel.value > weaponLevelRange.value[weaponLevelRange.value.length - 1]) {
+                weaponLevel.value = weaponLevelRange.value[weaponLevelRange.value.length - 1];
             }
             buildOnChange();
         };
@@ -232,24 +269,58 @@ export default defineComponent({
             console.log(characterInput);
         };
 
+        const IMG_SRC_DUMMY = Master.IMG_SRC_DUMMY;
+
         return {
             displayName,
-            visionSrc, backgroundUrl, colorClass,
-            characterMaster,
-            weaponMaster,
+            displayBuildName,
+            visionSrc, backgroundUrl, colorClass, bgColorClass,
+            characterMaster, weaponMaster, artifactSetMaster,
             ascension, level, constellation,
             normalAttackLevel, elementalSkillLevel, elementalBurstLevel,
+            weaponAscension, weaponLevel, weaponRefine,
             saveDisabled, removeDisabled, buildname,
             saveOnClick, removeOnClick,
             ascensionRange, levelRange, constellationRange,
             ascensionOnChange,
+            weaponAscensionRange, weaponLevelRange, weaponRefineRange,
+            weaponAscensionOnChange,
+            recommendationListVisible, recommendation,
+            normalAttackLevelRange, elementalSkillLevelRange, elementalBurstLevelRange,
             buildOnChange,
+            IMG_SRC_DUMMY,
         }
     }
 });
 </script>
 
 <style scoped>
+table {
+    width: 100%;
+    min-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    table-layout: fixed;
+}
+
+tr,
+td {
+    border: none;
+}
+
+td.title {
+    font-size: 3rem;
+    text-align: left;
+    text-shadow: 0 0 2px black;
+}
+
+td select,
+td input,
+td label {
+    width: 100%;
+}
+
 img.character {
     width: 180px;
     height: 180px;
@@ -257,20 +328,28 @@ img.character {
 }
 
 img.vision {
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     position: absolute;
-    left: 3px;
-    top: 3px;
-}
-
-img.filter {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
+    left: 6px;
+    top: 6px;
 }
 
 :checked+img {
     background-color: gold;
+}
+
+img.weapon {
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+}
+
+img.talent,
+img.artifact-set {
+    width: 100%;
+    max-width: 72px;
+    border-radius: 50%;
+    border: none;
 }
 </style>

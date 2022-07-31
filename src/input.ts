@@ -241,7 +241,7 @@ export const 突破レベルレベルARRAY = [
 ];
 
 const ARTIFACT_SET_MASTER_DUMMY = {
-    名前: 'dummy',
+    key: 'dummy',
     image: Master.IMG_SRC_DUMMY
 };
 
@@ -259,16 +259,7 @@ export const CHARACTER_INPUT_TEMPLATE = {
     武器突破レベル: 6,
     武器レベル: 90,
     武器精錬ランク: 1,
-    聖遺物セット効果: [
-        {
-            名前: 'NONE',
-            master: ARTIFACT_SET_MASTER_DUMMY
-        },
-        {
-            名前: 'NONE',
-            master: ARTIFACT_SET_MASTER_DUMMY
-        }
-    ],
+    artifactSetMaster: [ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY],
 };
 
 export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
@@ -358,14 +349,20 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
     }
 }
 
+export type TRecommendation = {
+    name: string,
+    build: any,
+    overwrite: boolean
+}
+
 /**
  * おすすめセットのリストを作成します.
  * 
  * @param {Object} characterMaster キャラクターマスター
  * @returns {[string, object, boolean][]} おすすめセットのリスト
  */
-export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }) {
-    const result = [];
+export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }): TRecommendation[] {
+    const result: TRecommendation[] = [];
 
     const character = characterMaster['名前'];
     let isSavable: boolean | null = null;
@@ -393,7 +390,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
         } else {
             buildname = key.replace(re, '');
         }
-        result.push({ name: buildname, build: JSON.parse(localStorage[key]), overwrie: true });
+        result.push({ name: buildname, build: JSON.parse(localStorage[key]), overwrite: true });
     });
 
     characterMaster['おすすめセット'].forEach((obj: { [key: string]: any }) => {
