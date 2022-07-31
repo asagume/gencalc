@@ -37,43 +37,73 @@
                     <option v-for="item in mainstat5List" :value="item" :key="item"> {{ displayName(item) }} </option>
                 </select>
             </label>
+            <table>
+                <tr>
+                    <th>{{ displayName('HP') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.HP">
+                        <span v-else>{{ stat.HP }}</span>
+                    </td>
+                    <th>{{ displayName('HP%') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat['HP%']">
+                        <span v-else>{{ stat['HP%'] }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ displayName('攻撃力') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.攻撃力">
+                        <span v-else>{{ stat.攻撃力 }}</span>
+                    </td>
+                    <th>{{ displayName('攻撃力%') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat['攻撃力%']">
+                        <span v-else>{{ stat['攻撃力%'] }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ displayName('防御力') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.防御力">
+                        <span v-else>{{ stat.防御力 }}</span>
+                    </td>
+                    <th>{{ displayName('防御力%') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat['防御力%']">
+                        <span v-else>{{ stat['防御力%'] }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ displayName('元素熟知') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.元素熟知">
+                        <span v-else>{{ stat.元素熟知 }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ displayName('会心率') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.会心率">
+                        <span v-else>{{ stat.会心率 }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ displayName('会心ダメージ') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.会心ダメージ">
+                        <span v-else>{{ stat.会心ダメージ }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ displayName('元素チャージ効率') }}</th>
+                    <td>
+                        <input v-if="editable" type="number" v-model="stat.元素チャージ効率">
+                        <span v-else>{{ stat.元素チャージ効率 }}</span>
+                    </td>
+                </tr>
+            </table>
         </fieldset>
-        <table>
-            <tr>
-                <th>{{ displayName('HP') }}</th>
-                <td></td>
-                <th>{{ displayName('HP%') }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ displayName('攻撃力') }}</th>
-                <td></td>
-                <th>{{ displayName('攻撃力%') }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ displayName('防御力') }}</th>
-                <td></td>
-                <th>{{ displayName('防御力%') }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ displayName('元素熟知') }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ displayName('会心率') }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ displayName('会心ダメージ') }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ displayName('元素チャージ効率') }}</th>
-                <td></td>
-            </tr>
-        </table>
         <fieldset>
             <legend>{{ displayName('簡易設定') }}</legend>
             <table>
@@ -81,6 +111,7 @@
                     <th>{{ displayName('優先するサブ効果') }}</th>
                     <th>{{ displayName('上昇値') }}</th>
                     <th>{{ displayName('初期+強化') }}</th>
+                    <td></td>
                 </tr>
                 <tr v-for="i in [0, 1, 2]" :key="i">
                     <td>
@@ -102,6 +133,7 @@
                                 {{ ' × ' + displayName(item) }} </option>
                         </select>
                     </td>
+                    <td></td>
                 </tr>
             </table>
         </fieldset>
@@ -109,9 +141,9 @@
 </template>
 
 <script lang="ts">
-import { 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY, 聖遺物優先するサブ効果ARRAY } from '@/input';
+import { 聖遺物ステータスTEMPLATE, 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY, 聖遺物優先するサブ効果ARRAY } from '@/input';
 import { ARTIFACT_SUB_MASTER, TArtifactMainStat } from '@/master';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
     name: 'ArtifactDetailInput',
@@ -142,6 +174,9 @@ export default defineComponent({
             props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数1,
             props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数2,
             props.artifactDetailInput!.聖遺物優先するサブ効果上昇回数3]);
+        let stat = reactive(props.artifactDetailInput!.聖遺物ステータス);
+
+        let editable = ref(false);
 
         const prioritySubstatValueList = (index: number) => {
             const result = [];
@@ -178,6 +213,8 @@ export default defineComponent({
             prioritySubstatCountList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
             mainstat1, mainstat2, mainstat3, mainstat4, mainstat5,
             prioritySubstat, prioritySubstatValue, prioritySubstatCount,
+            stat,
+            editable,
             updateMainstat, updatePrioritySubstat,
         }
     }
@@ -188,11 +225,14 @@ export default defineComponent({
 table {
     width: 100%;
     table-layout: fixed;
+    border-top: 2px solid gray;
+    margin-top: 10px;
 }
 
 th,
 td {
     text-align: right;
     white-space: nowrap;
+    border-bottom: 2px solid gray;
 }
 </style>
