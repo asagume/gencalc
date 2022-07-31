@@ -1,7 +1,7 @@
 <template>
     <table>
         <tr>
-            <td colspan="3" rowspan="3" style="width: 180px; position: relative;">
+            <td colspan="3" rowspan="3" style="width: 40%; max-width: 200px; position: relative;">
                 <img class="character" :src="characterMaster.icon_url" :alt="characterMaster.名前"
                     :style="'background-image: url(' + backgroundUrl(characterMaster) + ')'"
                     @click="$emit('open:character-select')">
@@ -70,11 +70,11 @@
     </table>
     <table>
         <tr>
-            <td colspan="3" rowspan="3" class="icon" style="width: 180px;">
-                <img class="weapon with-tooltip" :src="weaponMaster['icon_url']" :alt="weaponMaster.key"
+            <td colspan="3" rowspan="3" class="icon" style="width: 40%; max-width: 200px;">
+                <img class="weapon with-tooltip" :src="weaponMaster['icon_url']" :alt="weaponMaster.名前"
                     :style="'background-image: url(' + backgroundUrl(weaponMaster) + ')'"
                     @click="$emit('open:weapon-select')">
-                <div class="tooltip">{{ displayName(weaponMaster.key) }}</div>
+                <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
             </td>
             <td class="icon">
                 <img :class="'talent with-tooltip ' + bgColorClass(characterMaster)"
@@ -322,8 +322,7 @@ td label {
 }
 
 img.character {
-    width: 180px;
-    height: 180px;
+    width: 100%;
     background-size: contain;
 }
 

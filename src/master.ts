@@ -152,7 +152,7 @@ const WEAPON_MASTER = {
     法器: CATALYST_MASTER,
 };
 (Object.keys(WEAPON_MASTER) as TWeaponTypeKey[]).forEach(key2 => {
-    const typedMaster = WEAPON_MASTER[key2] as TAnyObject; // お手上げ
+    const typedMaster = WEAPON_MASTER[key2] as any; // お手上げ
     Object.keys(typedMaster).forEach(key => {
         const master = typedMaster[key];
         master.key = key;
@@ -175,9 +175,11 @@ export const WEAPON_MASTER_LIST = {
 
 export const ARTIFACT_SET_MASTER_LIST: TArtifactSetEntry[] = [];
 (Object.keys(ARTIFACT_SET_MASTER) as TArtifactSetKey[]).forEach(key => {
-    const master = ARTIFACT_SET_MASTER[key] as TArtifactSet;
+    const master = ARTIFACT_SET_MASTER[key] as any;
     master.image = master.image.replace(/^public/, '');
-    ARTIFACT_SET_MASTER_LIST.push({ ...master, key: key, icon_url: getIconUrl(master) });
+    master.key = key;
+    master.icon_url = getIconUrl(master);
+    ARTIFACT_SET_MASTER_LIST.push(master);
 });
 
 export const ARTIFACT_MAIN_MASTER_STATLIST: string[] = Object.keys(ARTIFACT_MAIN_MASTER[5]);
