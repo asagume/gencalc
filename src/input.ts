@@ -720,6 +720,18 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: any, conditio
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
+        conditionMap.forEach((value, key) => {
+            if (key in conditionInput.conditionValues) {
+                console.log(key);
+            } else {
+                if (value) {    // select
+                    conditionInput.conditionValues[key] = value.length - 1;
+                } else {    // checkbox
+                    conditionInput.conditionValues[key] = true;
+                }
+            }
+        });
+
         return result;
     } catch (error) {
         console.log(characterInput, conditionInput);
@@ -770,9 +782,21 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionIn
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
+        conditionMap.forEach((value, key) => {
+            if (key in conditionInput.conditionValues) {
+                console.log(key);
+            } else {
+                if (value) {    // select
+                    conditionInput.conditionValues[key] = value.length - 1;
+                } else {    // checkbox
+                    conditionInput.conditionValues[key] = true;
+                }
+            }
+        });
+
         return result;
     } catch (error) {
-        console.log(characterInput, conditionInput);
+        console.log(characterInput);
         throw error;
     }
 }

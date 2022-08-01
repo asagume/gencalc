@@ -49,7 +49,7 @@ export default defineComponent({
 
         const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
         const bgImageClass = (item: TCharacterEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
-        const selectedClass = (item: TCharacterEntry) => { return item.key == props.character ? 'selected' : '' };
+        const selectedClass = (item: TCharacterEntry) => { return item.key == props.character ? ' selected' : '' };
 
         const elementList = Object.keys(ELEMENT_IMG_SRC) as TVisionKey[];
         const elementSrc = (element: TVisionKey) => ELEMENT_IMG_SRC[element] as string;

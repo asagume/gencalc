@@ -29,7 +29,7 @@
         <label class="toggle-switch" for="pane6-toggle-3"> {{ displayName('バフ/デバフ') }} </label>
       </div>
       <template v-if="pane6Toggle1">
-        オプション条件
+        <ConditionInput :conditionInput="conditionInput" />
       </template>
       <template v-if="pane6Toggle2">
         <div class="tab-switch">
@@ -91,21 +91,24 @@
   <div id="debug-info" v-if="true">
     <hr>
     <h2>DEBUG</h2>
-    <dl v-for="dd in [damageDetailMyCharacter, damageDetailMyWeapon].filter(s => s)" :key="dd">
-      <template v-for="key in Object.keys(dd)" :key="key">
-        <template v-if="dd[key]">
-          <dt>{{ key }}</dt>
-          <dd>
-            <ol v-if="Array.isArray(dd[key])">
-              <li v-for="item in dd[key]" :key="item">{{ item }}</li>
-            </ol>
-            <div v-else>
-              {{ dd[key] }}
-            </div>
-          </dd>
+    <template v-if="conditionInput">
+      <dl v-for="dd in [conditionInput.damageDetailMyCharacter, conditionInput.damageDetailMyWeapon].filter(s => s)"
+        :key="dd">
+        <template v-for="key in Object.keys(dd)" :key="key">
+          <template v-if="dd[key]">
+            <dt>{{ key }}</dt>
+            <dd>
+              <ol v-if="Array.isArray(dd[key])">
+                <li v-for="item in dd[key]" :key="item">{{ item }}</li>
+              </ol>
+              <div v-else>
+                {{ dd[key] }}
+              </div>
+            </dd>
+          </template>
         </template>
-      </template>
-    </dl>
+      </dl>
+    </template>
     <hr>
   </div>
 </template>
@@ -117,6 +120,7 @@ import CharacterInput from './components/CharacterInput.vue';
 import WeaponSelect from './components/WeaponSelect.vue';
 import ArtifactSetSelect from './components/ArtifactSetSelect.vue';
 import ArtifactDetailInput from './components/ArtifactDetailInput.vue';
+import ConditionInput from './components/ConditionInput.vue';
 import StatsInput from './components/StatsInput.vue';
 import CharacterOwnList from './components/CharacterOwnList.vue';
 import WeaponOwnList from './components/WeaponOwnList.vue';
@@ -138,7 +142,7 @@ export default defineComponent({
     WeaponSelect,
     ArtifactSetSelect,
     ArtifactDetailInput,
-    StatsInput,
+    ConditionInput, StatsInput,
     CharacterOwnList, WeaponOwnList,
   },
   setup(props) {
@@ -160,9 +164,6 @@ export default defineComponent({
     const artifactSets = ref(characterInput.value?.artifactSets ?? ['NONE', 'NONE']);
     const artifactDetailInputVisible = ref(false);
 
-    const damageDetailMyCharacter = ref(undefined as any);
-    const damageDetailMyWeapon = ref(undefined as any);
-
     const statsObj = ref(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
     const characterStats1CategoryList = ['基礎ステータス', '基本ステータス', '高級ステータス', '元素ステータス·ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ'];
     const characterStats2CategoryList = ['元素ステータス·耐性', 'その他'];
@@ -183,8 +184,8 @@ export default defineComponent({
       if (!characterInput.value || !artifactDetailInput.value || !conditionInput.value) return;
       await loadRecommendation(characterInput.value, artifactDetailInput.value, conditionInput.value, recommendation.build);
 
-      damageDetailMyCharacter.value = makeDamageDetailObjArrObjCharacter(characterInput.value, conditionInput.value);
-      damageDetailMyWeapon.value = makeDamageDetailObjArrObjWeapon(characterInput.value, conditionInput.value);
+      conditionInput.value.damageDetailMyCharacter = makeDamageDetailObjArrObjCharacter(characterInput.value, conditionInput.value);
+      conditionInput.value.damageDetailMyWeapon = makeDamageDetailObjArrObjWeapon(characterInput.value, conditionInput.value);
 
       Object.keys(ステータスTEMPLATE).forEach(key => {
         statsObj[key] = ステータスTEMPLATE[key];
@@ -258,7 +259,6 @@ export default defineComponent({
       weaponSelectVisible, weapon, weaponType,
       artifactSetSelectVisible, artifactSetIndex, artifactSets,
       artifactDetailInputVisible,
-      damageDetailMyCharacter, damageDetailMyWeapon,
       statsObj, characterStats1CategoryList, characterStats2CategoryList, enemyStatsCategoryList,
       enemyList,
 

@@ -8,7 +8,7 @@
             </td>
             <td :class="'title ' + colorClass((characterMaster))" colspan="3" style="position: relative;">
                 {{ displayName(characterMaster.名前) }}
-                <span class="material-symbols-outlined" style="position: absolute; right: 0;"
+                <span class="material-symbols-outlined" style="position: absolute; right: 1rem;"
                     @click="$emit('open:character-info')"> info </span>
             </td>
         </tr>
