@@ -98,7 +98,13 @@ body {
 .main {
     background: linear-gradient(to top, #3d3d3b, #141414);
     margin: 0 auto;
-    font-family: 'Yusei Magic', sans-serif;
+    font-family: "Helvetica Neue",
+        Arial,
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        "BIZ UDPGothic",
+        Meiryo,
+        sans-serif;
 }
 
 button,
@@ -317,6 +323,36 @@ div.filter img.filter {
 div.filter img.filter.selected {
     border: 2px solid whitesmoke;
     border-radius: 50%;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: calc(100% / 3 - 6px - 1rem);
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin: 5px 1px;
+    text-shadow: 0 0 3px black;
+}
+
+.toggle-switch::before, .toggle-switch::after {
+    content: '';
+    width: 1.5rem;
+    height: 2px;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    transform: translateY(-50%);
+}
+
+.toggle-switch::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+:checked+.toggle-switch::after {
+    transform: translateY(-50%) rotate(0);
 }
 
 ul.character-list,

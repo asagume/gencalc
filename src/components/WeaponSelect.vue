@@ -31,8 +31,15 @@ export default defineComponent({
         let weaponType = ref(props.weaponType as TWeaponTypeKey);
 
         const filteredList = computed(() => {
-            // eslint-disable-next-line
-            return WEAPON_MASTER_LIST[weaponType.value!] as TWeaponEntry[];
+            if (weaponType.value) {
+                return WEAPON_MASTER_LIST[weaponType.value] as TWeaponEntry[];
+            }
+            const result: TWeaponEntry[] = [];
+            (Object.keys(WEAPON_MASTER_LIST) as TWeaponTypeKey[]).forEach(weaponType => {
+                const list = WEAPON_MASTER_LIST[weaponType] as TWeaponEntry[];
+                result.push(...list);
+            })
+            return result;
         });
 
         return {

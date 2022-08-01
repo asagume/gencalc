@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE } from '@/input';
+import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, isNumber } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 
-
+// eslint-disable-next-line
 const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;
 
 function makeSaveDataFromShareData(shareData: string) {
@@ -80,17 +80,17 @@ function makeSaveDataFromShareData(shareData: string) {
                     }
                     break;
             }
-            if (value == null) {
-                if (newValue) {
-                    savedata[key] = newValue;
-                } else {
-                    savedata[key] = '';
-                }
-            } else {
+            if (value != null && isNumber(value)) {
                 if (newValue) {
                     savedata[key] = Number(newValue);
                 } else {
                     savedata[key] = 0;
+                }
+            } else {
+                if (newValue) {
+                    savedata[key] = newValue;
+                } else {
+                    savedata[key] = '';
                 }
             }
             i++;
@@ -104,7 +104,6 @@ function makeSaveDataFromShareData(shareData: string) {
                 const splitted = keyAndValue.split('=');
                 key = splitted[0];
                 value = splitted[1];
-
                 savedata[key] = value;
             }
         }
@@ -143,9 +142,13 @@ async function main() {
     const searchParams = new URLSearchParams(window.location.search);
     let savedata;
     if (searchParams.has('allin')) {
-        savedata = makeSaveDataFromShareData(searchParams.get('allin')!);
-        characterInput.character = savedata.キャラクター;
-    } else {
+        const allin = searchParams.get('allin');
+        if (allin) {
+            savedata = makeSaveDataFromShareData(allin);
+            characterInput.character = savedata.キャラクター;
+        }
+    }
+    if (!characterInput.character) {
         characterInput.character = getCharacterByBirthday();
     }
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);

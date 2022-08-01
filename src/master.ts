@@ -2,90 +2,6 @@ export type TAnyObject = {
     [key: string]: any
 }
 
-export type TEntry = {
-    key: string,
-    icon_url: string,
-}
-
-export type TVisionKey = '炎' | '水' | '風' | '雷' | '草' | '氷' | '岩';
-export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
-
-export type TCharacter = {
-    レアリティ: 4 | 5,
-    元素: TVisionKey,
-    武器: TWeaponTypeKey,
-    誕生日?: string,
-    import: string,
-}
-export type TCharacterEntry = TCharacter & TEntry
-export type TCharacterKey = keyof typeof CHARACTER_MASTER
-export type TCharacterDetail = {
-    名前: string,
-    説明: string,
-    icon_url: string,
-    レアリティ: 4 | 5,
-    武器: TWeaponTypeKey,
-    元素: TVisionKey,
-    baseInfo: any,
-    ステータス: any,
-    通常攻撃: any,
-    重撃: any,
-    落下攻撃: any,
-    元素スキル: any,
-    元素爆発: any,
-    固有天賦: any[],
-    命ノ星座?: any,
-    特殊通常攻撃?: any,
-    特殊重撃?: any,
-    特殊落下攻撃?: any,
-    その他天賦?: any,
-    オプション初期値?: any,
-    固有変数?: any,
-    おすすめセット: any[],
-}
-
-export type TWeapon = {
-    レアリティ: 1 | 2 | 3 | 4 | 5,
-    import: string,
-}
-export type TWeaponEntry = TWeapon & TEntry
-export type TSwordKey = keyof typeof SWORD_MASTER;
-export type TClaymoreKey = keyof typeof CLAYMORE_MASTER;
-export type TPolearmKey = keyof typeof POLEARM_MASTER;
-export type TBowKey = keyof typeof BOW_MASTER;
-export type TCatalystKey = keyof typeof CATALYST_MASTER;
-export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCatalystKey;
-export type TWeaponDetail = {
-    名前: string,
-    説明: string,
-    icon_url: string,
-    レアリティ: number,
-    種類: TWeaponTypeKey,
-    ステータス: any,
-    武器スキル?: any,
-    オプション初期値?: any,
-    固有変数?: any,
-}
-
-export type TArtifactSetEffect = {
-    説明: string,
-    詳細?: []
-}
-export type TArtifactSet = {
-    レアリティ: 1 | 2 | 3 | 4 | 5,
-    image: string,
-    '2セット効果'?: TArtifactSetEffect,
-    '4セット効果'?: TArtifactSetEffect,
-}
-export type TArtifactSetEntry = TArtifactSet & TEntry
-export type TArtifactSetKey = keyof typeof ARTIFACT_SET_MASTER;
-
-export type TArtifactMainStat = keyof typeof ARTIFACT_MAIN_MASTER[5]
-export type TArtifactMain = {
-    5: TArtifactMainStat,
-    4: TArtifactMainStat,
-}
-
 import CHARACTER_MASTER from '../public/data/CharacterMaster.json'// assert {type: 'json'}
 
 import SWORD_MASTER from '../public/data/SwordMaster.json'// assert {type: 'json'}
@@ -124,6 +40,104 @@ export {
     OPTION2_MASTER,
     ELEMENTAL_REACTION_MASTER
 };
+
+export type TVisionKey = '炎' | '水' | '風' | '雷' | '草' | '氷' | '岩';
+export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
+
+export type TCharacterMaster = typeof CHARACTER_MASTER;
+export type TCharacter = {
+    レアリティ: 4 | 5,
+    元素: TVisionKey,
+    武器: TWeaponTypeKey,
+    誕生日?: string,
+    import: string,
+}
+export type TCharacterKey = keyof typeof CHARACTER_MASTER
+export type TCharacterEntry = TCharacter & {
+    key: TCharacterKey,
+    icon_url: string,
+}
+
+export type TCharacterDetail = {
+    名前: string,
+    説明: string,
+    icon_url: string,
+    レアリティ: 4 | 5,
+    武器: TWeaponTypeKey,
+    元素: TVisionKey,
+    baseInfo: any,
+    ステータス: any,
+    通常攻撃: any,
+    重撃: any,
+    落下攻撃: any,
+    元素スキル: any,
+    元素爆発: any,
+    固有天賦: any[],
+    命ノ星座?: any,
+    特殊通常攻撃?: any,
+    特殊重撃?: any,
+    特殊落下攻撃?: any,
+    その他天賦?: any,
+    オプション初期値?: any,
+    固有変数?: any,
+    おすすめセット: any[],
+}
+
+export type TWeaponRarity = 1 | 2 | 3 | 4 | 5;
+export type TWeaponStats = {
+    基礎攻撃力: any,
+    [key: string]: any,
+}
+export type TWeapon = {
+    レアリティ: TWeaponRarity,
+    import: string,
+}
+export type TSwordKey = keyof typeof SWORD_MASTER;
+export type TClaymoreKey = keyof typeof CLAYMORE_MASTER;
+export type TPolearmKey = keyof typeof POLEARM_MASTER;
+export type TBowKey = keyof typeof BOW_MASTER;
+export type TCatalystKey = keyof typeof CATALYST_MASTER;
+export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCatalystKey;
+export type TWeaponEntry = TWeapon & {
+    key: TWeaponKey,
+    icon_url: string,
+}
+export type TWeaponDetail = {
+    名前: TWeaponKey,
+    説明: string,
+    icon_url: string,
+    レアリティ: TWeaponRarity,
+    種類: TWeaponTypeKey,
+    ステータス: TWeaponStats,
+    武器スキル?: any,
+    オプション初期値?: any,
+    固有変数?: any,
+}
+
+export type TArtifactSetEffect = {
+    説明: string,
+    詳細?: any[]
+}
+export type TArtifactSetRarity = 1 | 2 | 3 | 4 | 5;
+export type TArtifactSet = {
+    レアリティ: TArtifactSetRarity,
+    image: string,
+    '2セット効果'?: TArtifactSetEffect,
+    '4セット効果'?: TArtifactSetEffect,
+}
+export type TArtifactSetKey = keyof typeof ARTIFACT_SET_MASTER;
+export type TArtifactSetEntry = TArtifactSet & {
+    key: TArtifactSetKey,
+    icon_url: string,
+}
+
+export type TArtifactMainStat = keyof typeof ARTIFACT_MAIN_MASTER[5]
+export type TArtifactMainRarity = 4 | 5;
+export type TArtifactMain = {
+    5: TArtifactMainStat,
+    4: TArtifactMainStat,
+}
+
 
 function getIconUrl(master: TAnyObject) {
     if (master.icon_url) return master.icon_url;

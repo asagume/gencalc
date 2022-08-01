@@ -113,17 +113,17 @@
         <tr>
             <td rowspan="2" class="icon">
                 <label @click="$emit('open:artifact-set-select', 0)">
-                    <img :class="'artifact-set ' + ''" :src="artifactSetMaster[0].image"
-                        :alt="artifactSetMaster[0].key">
+                    <img :class="'artifact-set ' + ''" :src="artifactSetMasters[0].image"
+                        :alt="artifactSetMasters[0].key">
                 </label>
-                <div class="tooltip">{{ displayName(artifactSetMaster[0].key) }}</div>
+                <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
             </td>
             <td rowspan="2" class="icon">
                 <label @click="$emit('open:artifact-set-select', 1)">
-                    <img :class="'artifact-set ' + ''" :src="artifactSetMaster[1].image"
-                        :alt="artifactSetMaster[1].key">
+                    <img :class="'artifact-set ' + ''" :src="artifactSetMasters[1].image"
+                        :alt="artifactSetMasters[1].key">
                 </label>
-                <div class="tooltip">{{ displayName(artifactSetMaster[1].key) }}</div>
+                <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
             </td>
             <td rowspan="2">
                 <button type="button" class="artifact-detail-button" @click="$emit('open:artifact-detail-input')">
@@ -156,7 +156,7 @@
 </template>
 
 <script lang="ts">
-import { TRecommendation, 突破レベルレベルARRAY } from '@/input';
+import { ARTIFACT_SET_MASTER_DUMMY, TRecommendation, 突破レベルレベルARRAY } from '@/input';
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, STAR_BACKGROUND_IMAGE_CLASS, TCharacterDetail } from '@/master';
 import { computed, defineComponent, PropType, ref } from 'vue';
 
@@ -176,27 +176,27 @@ export default defineComponent({
     ],
     setup(props) {
         const characterInput: { [key: string]: any } = ref(props.characterInput);
-        let ascension = ref(props.characterInput!.突破レベル);
-        let level = ref(props.characterInput!.レベル);
-        let constellation = ref(props.characterInput!.命ノ星座);
-        let normalAttackLevel = ref(props.characterInput!.通常攻撃レベル);
-        let elementalSkillLevel = ref(props.characterInput!.元素スキルレベル);
-        let elementalBurstLevel = ref(props.characterInput!.元素爆発レベル);
-        let weaponAscension = ref(props.characterInput!.武器突破レベル);
-        let weaponLevel = ref(props.characterInput!.武器レベル);
-        let weaponRefine = ref(props.characterInput!.武器精錬ランク);
+        let ascension = ref(props.characterInput?.突破レベル ?? 6);
+        let level = ref(props.characterInput?.レベル ?? 90);
+        let constellation = ref(props.characterInput?.命ノ星座 ?? 0);
+        let normalAttackLevel = ref(props.characterInput?.通常攻撃レベル ?? 8);
+        let elementalSkillLevel = ref(props.characterInput?.元素スキルレベル ?? 8);
+        let elementalBurstLevel = ref(props.characterInput?.元素爆発レベル ?? 8);
+        let weaponAscension = ref(props.characterInput?.武器突破レベル ?? 6);
+        let weaponLevel = ref(props.characterInput?.武器レベル ?? 90);
+        let weaponRefine = ref(props.characterInput?.武器精錬ランク ?? 1);
 
         let recommendationListVisible = ref(false);
         // let recommendationList = ref(props.recommendationList as TRecommendation[]);
-        let recommendation = ref(props.recommendationList![0]);
+        let recommendation = ref(props.recommendationList ? props.recommendationList[0] : { name: null, build: null, overwrite: false, });
 
         const displayName = (name: string) => name;
         const displayBuildName = (item: TRecommendation) => item.name;
 
-        const characterMaster = computed(() => characterInput.value!.characterMaster);
-        const weaponMaster = computed(() => characterInput.value!.weaponMaster);
+        const characterMaster = computed(() => characterInput.value?.characterMaster ?? {});
+        const weaponMaster = computed(() => characterInput.value?.weaponMaster ?? {});
 
-        const artifactSetMaster = computed(() => characterInput.value!.artifactSetMaster);
+        const artifactSetMasters = computed(() => characterInput.value?.artifactSetMasters ?? [ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY]);
 
         const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
         const bgImageClass = (item: TCharacterDetail) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
@@ -211,8 +211,8 @@ export default defineComponent({
             }
         };
         const removeOnClick = () => {
-            if (buildname.value) {
-                localStorage.removeItem('構成_' + characterInput.value!.character + '_' + buildname.value);
+            if (characterInput.value && buildname.value) {
+                localStorage.removeItem('構成_' + characterInput.value.character + '_' + buildname.value);
             }
         };
         const ascensionRange = computed(() => {
@@ -264,9 +264,9 @@ export default defineComponent({
         };
         const buildOnChange = () => {
             if (characterInput.value) {
-                characterInput!.突破レベル = ascension;
-                characterInput!.レベル = level;
-                characterInput!.命ノ星座 = constellation;
+                characterInput.value.突破レベル = ascension;
+                characterInput.value.レベル = level;
+                characterInput.value.命ノ星座 = constellation;
             }
             console.log(characterInput);
         };
@@ -275,7 +275,7 @@ export default defineComponent({
             displayName,
             displayBuildName,
             visionSrc, bgImageClass, colorClass, bgColorClass,
-            characterMaster, weaponMaster, artifactSetMaster,
+            characterMaster, weaponMaster, artifactSetMasters,
             ascension, level, constellation,
             normalAttackLevel, elementalSkillLevel, elementalBurstLevel,
             weaponAscension, weaponLevel, weaponRefine,
