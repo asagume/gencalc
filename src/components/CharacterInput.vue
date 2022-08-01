@@ -29,10 +29,8 @@
         </tr>
         <tr>
             <td colspan="3" style="text-align: left;">
-                <label>
-                    build name:
-                    <input class="save-name" type="text" v-model="buildname" maxlength="20" @change="buildOnChange">
-                </label>
+                build name:
+                <input class="save-name" type="text" v-model="buildname" maxlength="20" @change="buildOnChange">
             </td>
         </tr>
         <tr>
@@ -319,6 +317,10 @@ td select,
 td input,
 td label {
     width: 100%;
+}
+
+input.save-name {
+    width: calc(100% - 1rem);
 }
 
 img.character {

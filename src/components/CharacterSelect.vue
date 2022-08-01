@@ -128,6 +128,6 @@ img.filter {
 }
 
 :checked+img {
-    background-color: gold;
+    background-color: rgb(156, 140, 49);
 }
 </style>

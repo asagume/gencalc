@@ -504,6 +504,7 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
             if (!(key in build)) return;
             const artifactSet = build[key] as TArtifactSetKey;
             if (artifactSet && artifactSet in ARTIFACT_SET_MASTER) {
+                characterInput.artifactSets[index] = artifactSet;
                 characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER[artifactSet];
             } else {
                 characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER_DUMMY;

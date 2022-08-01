@@ -272,7 +272,6 @@ img.star {
 ul.select-list {
     list-style-type: none;
     padding: 0;
-    font-size: 0;
 }
 
 ul.select-list li {
@@ -300,8 +299,16 @@ ul.select-list li {
     display: block;
 }
 
+.no-border {
+    border: none !important;
+}
+
+input[type="checkbox"]:disabled+span {
+    color: gray;
+}
+
 td button, td label.button {
-    width: 100%;
+    width: calc(100% - 4px);
 }
 
 label.button {
@@ -358,7 +365,7 @@ div.filter img.filter.selected {
 ul.character-list,
 ul.weapon-list,
 #artifact-set-select ul {
-    width: 100%;
+    width: calc(100% - 4px);
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -447,7 +454,7 @@ ul.weapon-list,
 }
 
 #character-input table td select, #character-input table td input, #character-input table td label {
-    width: 100%;
+    width: calc(100% - 4px);
 }
 
 #character-input img.character {

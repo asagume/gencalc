@@ -65,8 +65,16 @@
       <p>計算結果</p>
     </div>
     <div class="bottom-pane">
-      <p>キャラクター所持リスト</p>
-      <p>武器所持リスト</p>
+      <h2>
+        <input class="hidden" id="own-list-toggle-1" type="checkbox" v-model="ownListToggle1">
+        <label class="toggle-switch no-border" for="own-list-toggle-1"> {{ displayName('キャラクター所持リスト') }} </label>
+      </h2>
+      <CharacterOwnList v-if="ownListToggle1" />
+      <h2>
+        <input class="hidden" id="own-list-toggle-2" type="checkbox" v-model="ownListToggle2">
+        <label class="toggle-switch no-border" for="own-list-toggle-2"> {{ displayName('武器所持リスト') }} </label>
+      </h2>
+      <WeaponOwnList v-if="ownListToggle2" />
     </div>
     <div class="pane7">
       <p>本サイトの説明とか</p>
@@ -109,6 +117,8 @@ import WeaponSelect from './components/WeaponSelect.vue';
 import ArtifactSetSelect from './components/ArtifactSetSelect.vue';
 import ArtifactDetailInput from './components/ArtifactDetailInput.vue';
 import StatsInput from './components/StatsInput.vue';
+import CharacterOwnList from './components/CharacterOwnList.vue';
+import WeaponOwnList from './components/WeaponOwnList.vue';
 import { TRecommendation, makeRecommendationList, loadRecommendation, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, ステータスTEMPLATE } from '@/input';
 import { ARTIFACT_SET_MASTER, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
 
@@ -122,7 +132,13 @@ export default defineComponent({
     initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
   },
   components: {
-    CharacterSelect, CharacterInput, WeaponSelect, ArtifactSetSelect, ArtifactDetailInput, StatsInput,
+    CharacterSelect,
+    CharacterInput,
+    WeaponSelect,
+    ArtifactSetSelect,
+    ArtifactDetailInput,
+    StatsInput,
+    CharacterOwnList, WeaponOwnList,
   },
   setup(props) {
     const characterInput = ref(props.initialCharacterInput);
@@ -140,7 +156,7 @@ export default defineComponent({
 
     const artifactSetSelectVisible = ref(false);
     const artifactSetIndex = ref(0);
-    const artifactSets = ref(['NONE', 'NONE']);
+    const artifactSets = ref(characterInput.value?.artifactSets ?? ['NONE', 'NONE']);
     const artifactDetailInputVisible = ref(false);
 
     const damageDetailMyCharacter = ref(undefined as any);
@@ -156,7 +172,8 @@ export default defineComponent({
     const pane6Toggle2 = ref(true);
     const pane6Toggle3 = ref(true);
     const statInputTab = ref(1);
-
+    const ownListToggle1 = ref(false);
+    const ownListToggle2 = ref(false);
 
     const displayName = (name: string) => name;
 
@@ -239,7 +256,7 @@ export default defineComponent({
       statsObj, characterStats1CategoryList, characterStats2CategoryList, enemyStatsCategoryList,
       enemyList,
 
-      pane6Toggle1, pane6Toggle2, pane6Toggle3, statInputTab,
+      pane6Toggle1, pane6Toggle2, pane6Toggle3, statInputTab, ownListToggle1, ownListToggle2,
 
       displayName,
       updateCharacter,
@@ -256,6 +273,10 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+h2 label {
+  min-width: 50% !important;
 }
 </style>
 <style scoped>

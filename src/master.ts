@@ -101,7 +101,7 @@ export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCat
 export type TWeaponEntry = TWeapon & {
     key: TWeaponKey,
     icon_url: string,
-}
+};
 export type TWeaponDetail = {
     名前: TWeaponKey,
     説明: string,
@@ -112,31 +112,31 @@ export type TWeaponDetail = {
     武器スキル?: any,
     オプション初期値?: any,
     固有変数?: any,
-}
+};
 
 export type TArtifactSetEffect = {
     説明: string,
     詳細?: any[]
-}
+};
 export type TArtifactSetRarity = 1 | 2 | 3 | 4 | 5;
 export type TArtifactSet = {
     レアリティ: TArtifactSetRarity,
     image: string,
     '2セット効果'?: TArtifactSetEffect,
     '4セット効果'?: TArtifactSetEffect,
-}
+};
 export type TArtifactSetKey = keyof typeof ARTIFACT_SET_MASTER;
 export type TArtifactSetEntry = TArtifactSet & {
     key: TArtifactSetKey,
     icon_url: string,
-}
+};
 
 export type TArtifactMainStat = keyof typeof ARTIFACT_MAIN_MASTER[5]
 export type TArtifactMainRarity = 4 | 5;
 export type TArtifactMain = {
     5: TArtifactMainStat,
     4: TArtifactMainStat,
-}
+};
 
 
 function getIconUrl(master: TAnyObject) {
@@ -157,7 +157,9 @@ export const CHARACTER_MASTER_LIST: TCharacterEntry[] = [];
 (Object.keys(CHARACTER_MASTER) as TCharacterKey[]).forEach(key => {
     const master: any = CHARACTER_MASTER[key];
     master.import = master.import.replace(/^public/, '');
-    CHARACTER_MASTER_LIST.push({ ...master, key: key, icon_url: getIconUrl(master) });
+    master.key = key;
+    master.icon_url = getIconUrl(master);
+    CHARACTER_MASTER_LIST.push(master);
 });
 
 export const WEAPON_MASTER = {
@@ -311,6 +313,8 @@ export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?:
     }
 }
 
+export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+
 export const ELEMENT_COLOR_CLASS = {
     炎: 'pyro',
     水: 'hydro',
@@ -336,7 +340,7 @@ export const ELEMENT_IMG_SRC = {
     水: 'images/element_hydro.png',
     風: 'images/element_anemo.png',
     雷: 'images/element_electro.png',
-    草: 'images/element_dendro.png',
+    草: IMG_SRC_DUMMY,
     氷: 'images/element_cryo.png',
     岩: 'images/element_geo.png'
 };
@@ -356,8 +360,6 @@ export const STAR_BACKGROUND_IMAGE_CLASS = {
     4: 'star4-bg',
     5: 'star5-bg'
 }
-
-export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 
 export const ALLOW_LIST_LANG = ['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn'];
 
