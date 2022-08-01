@@ -112,38 +112,47 @@ textarea {
 
 .pane1 {
     grid-area: pane1;
+    width: calc(100% - 2px);
 }
 
 .pane2 {
     grid-area: pane2;
+    width: calc(100% - 2px);
 }
 
 .pane3 {
     grid-area: pane3;
+    width: calc(100% - 2px);
 }
 
 .pane4 {
     grid-area: pane4;
+    width: calc(100% - 2px);
 }
 
 .pane6 {
     grid-area: pane6;
+    width: calc(100% - 2px);
 }
 
 .result-pane {
     grid-area: result-pane;
+    width: calc(100% - 2px);
 }
 
 .bottom-pane {
     grid-area: bottom-pane;
+    width: calc(100% - 2px);
 }
 
 .pane7 {
     grid-area: pane7;
+    width: calc(100% - 2px);
 }
 
 .footer {
     grid-area: footer;
+    width: calc(100% - 2px);
 }
 
 a:link {

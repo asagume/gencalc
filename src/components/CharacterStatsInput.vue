@@ -12,7 +12,7 @@
             <tr v-for="stat in visibleStatList(category)" :key="stat">
                 <th>{{ displayName(stat) }}</th>
                 <td v-if="editable">
-                    <input type="number" v-model="statusAdjustments[stat]" @change="adjustmentsOnChange">
+                    <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange">
                 </td>
                 <td>{{ displayStatValue(stat) }}</td>
             </tr>
@@ -39,14 +39,14 @@
 
 <script lang="ts">
 import { ステータスARRAY_MAP, ステータスTEMPLATE } from '@/input';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
-    name: 'CharacterStats2Input',
+    name: 'CharacterStatsInput',
     props: {
-        visible: Boolean,
         lang: String,
-        characterStatsObj: Object,
+        characterStatsObj: { type: Object, require: true },
+        categoryList: { type: Array as PropType<Array<string>>, require: true },
     },
     emits: ['update:stat-adjustment'],
     setup(props) {
@@ -61,36 +61,41 @@ export default defineComponent({
         const editable = ref(false);
         const initializable = ref(false);
 
-        const status2Category = ['元素ステータス·耐性', 'その他'];
-        const categoryList = status2Category;
         const statList = (category: string) => ステータスARRAY_MAP.get(category);
         const categoryOpenClose = ref({} as any);
-        for (const category of categoryList) {
-            categoryOpenClose.value[category] = false;
+        if (props.categoryList) {
+            for (const category of props.categoryList) {
+                categoryOpenClose.value[category] = false;
+            }
         }
         const visibleStatList = (category: string) => statList(category)?.filter(stat => categoryOpenClose.value[category] || (props.characterStatsObj && props.characterStatsObj[stat])) ?? [];
 
-        const statusAdjustments = JSON.parse(JSON.stringify(ステータスTEMPLATE));
+        const statAdjustments = JSON.parse(JSON.stringify(ステータスTEMPLATE));
 
         //
         const adjustmentsOnChange = () => {
-            console.log(statusAdjustments.value);
+            console.log(statAdjustments.value);
         };
 
         // 補正値を0クリアします
         const initializeAdjustments = () => {
-            Object.keys(statusAdjustments).forEach(key => {
-                statusAdjustments[key] = 0;
-            });
-        };
+            if (!props.categoryList) return;
+            for (const category of props.categoryList) {
+                const list = statList(category);
+                if (!list) continue;
+                for (const stat of list) {
+                    statAdjustments[stat] = 0;
+                }
+            }
+        }
         initializeAdjustments();
 
         return {
             displayName, displayStatValue,
 
-            categoryList, statList, visibleStatList, categoryOpenClose,
+            statList, visibleStatList, categoryOpenClose,
 
-            statusAdjustments,
+            statAdjustments,
             adjustmentsOnChange,
             editable, initializable, initializeAdjustments,
         }
@@ -119,7 +124,7 @@ td {
 }
 
 th {
-     color: #df8f37;
+    color: #df8f37;
 }
 
 th[colspan="2"],
