@@ -40,13 +40,21 @@
           <label for="status-input-tab-3"> {{ displayName('敵') }} </label>
         </div>
         <template v-if="statInputTab == 1">
-          <CharacterStatsInput :characterStatsObj="characterStatsObj" :categoryList="characterStats1CategoryList" />
+          <StatsInput :statsObj="statsObj" :categoryList="characterStats1CategoryList" />
         </template>
         <template v-if="statInputTab == 2">
-          <CharacterStatsInput :characterStatsObj="characterStatsObj" :categoryList="characterStats2CategoryList" />
+          <StatsInput :statsObj="statsObj" :categoryList="characterStats2CategoryList" />
         </template>
         <template v-if="statInputTab == 3">
-          <EnemyStatsInput :enemyStatsObj="enemyStatsObj" />
+          <label>{{ displayName('敵') }}
+            <select>
+              <option v-for="item in enemyList" :value="item" :key="item.key">{{ displayName(item.key) }}</option>
+            </select>
+          </label>
+          <label>Lv.
+            <input type="number" min="1">
+          </label>
+          <StatsInput :statsObj="statsObj" :categoryList="enemyStatsCategoryList" />
         </template>
       </template>
       <template v-if="pane6Toggle3">
@@ -100,10 +108,9 @@ import CharacterInput from './components/CharacterInput.vue';
 import WeaponSelect from './components/WeaponSelect.vue';
 import ArtifactSetSelect from './components/ArtifactSetSelect.vue';
 import ArtifactDetailInput from './components/ArtifactDetailInput.vue';
-import CharacterStatsInput from './components/CharacterStatsInput.vue';
-import EnemyStatsInput from './components/EnemyStatsInput.vue';
-import { TRecommendation, makeRecommendationList, loadRecommendation, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, ステータスTEMPLATE, 敵ステータスTEMPLATE } from '@/input';
-import { ARTIFACT_SET_MASTER, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
+import StatsInput from './components/StatsInput.vue';
+import { TRecommendation, makeRecommendationList, loadRecommendation, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, ステータスTEMPLATE } from '@/input';
+import { ARTIFACT_SET_MASTER, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
 
 
 export default defineComponent({
@@ -115,7 +122,7 @@ export default defineComponent({
     initialRecommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
   },
   components: {
-    CharacterSelect, CharacterInput, WeaponSelect, ArtifactSetSelect, ArtifactDetailInput, CharacterStatsInput, EnemyStatsInput,
+    CharacterSelect, CharacterInput, WeaponSelect, ArtifactSetSelect, ArtifactDetailInput, StatsInput,
   },
   setup(props) {
     const characterInput = ref(props.initialCharacterInput);
@@ -139,15 +146,17 @@ export default defineComponent({
     const damageDetailMyCharacter = ref(undefined as any);
     const damageDetailMyWeapon = ref(undefined as any);
 
-    const characterStatsObj = ref(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
-    const enemyStatsObj = ref(JSON.parse(JSON.stringify(敵ステータスTEMPLATE)));
+    const statsObj = ref(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
     const characterStats1CategoryList = ['基礎ステータス', '基本ステータス', '高級ステータス', '元素ステータス·ダメージ', 'ダメージバフ', '実数ダメージ加算', '元素反応バフ'];
     const characterStats2CategoryList = ['元素ステータス·耐性', 'その他'];
+    const enemyStatsCategoryList = ['敵元素ステータス·耐性'];
+    const enemyList = ENEMY_MASTER_LIST;
 
     const pane6Toggle1 = ref(true);
     const pane6Toggle2 = ref(true);
     const pane6Toggle3 = ref(true);
     const statInputTab = ref(1);
+
 
     const displayName = (name: string) => name;
 
@@ -165,7 +174,7 @@ export default defineComponent({
       damageDetailMyWeapon.value = makeDamageDetailObjArrObjWeapon(characterInput.value, conditionInput.value);
 
       Object.keys(ステータスTEMPLATE).forEach(key => {
-        characterStatsObj[key] = ステータスTEMPLATE[key];
+        statsObj[key] = ステータスTEMPLATE[key];
       });
     };
     // 武器選択画面を開きます/閉じます
@@ -227,7 +236,8 @@ export default defineComponent({
       artifactSetSelectVisible, artifactSetIndex, artifactSets,
       artifactDetailInputVisible,
       damageDetailMyCharacter, damageDetailMyWeapon,
-      characterStatsObj, enemyStatsObj, characterStats1CategoryList, characterStats2CategoryList,
+      statsObj, characterStats1CategoryList, characterStats2CategoryList, enemyStatsCategoryList,
+      enemyList,
 
       pane6Toggle1, pane6Toggle2, pane6Toggle3, statInputTab,
 

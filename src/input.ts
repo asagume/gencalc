@@ -84,6 +84,16 @@ export const ステータスその他ARRAY = [
     '攻撃力+',
     '防御力+'
 ];
+export const 敵元素ステータス_耐性ARRAY = [
+    '敵炎元素耐性',
+    '敵水元素耐性',
+    '敵風元素耐性',
+    '敵雷元素耐性',
+    '敵草元素耐性',
+    '敵氷元素耐性',
+    '敵岩元素耐性',
+    '敵物理耐性'
+];
 
 export const ステータスARRAY_MAP = new Map([
     ['基礎ステータス', 基礎ステータスARRAY],
@@ -94,7 +104,8 @@ export const ステータスARRAY_MAP = new Map([
     ['ダメージバフ', ダメージバフARRAY],
     ['実数ダメージ加算', 実数ダメージ加算ARRAY],
     ['元素反応バフ', 元素反応バフARRAY],
-    ['その他', ステータスその他ARRAY]
+    ['その他', ステータスその他ARRAY],
+    ['敵元素ステータス·耐性', 敵元素ステータス_耐性ARRAY],
 ]);
 
 function makeStatusTenmplate() {

@@ -42,18 +42,18 @@ import { ステータスARRAY_MAP, ステータスTEMPLATE } from '@/input';
 import { defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
-    name: 'CharacterStatsInput',
+    name: 'StatsInput',
     props: {
         lang: String,
-        characterStatsObj: { type: Object, require: true },
+        statsObj: { type: Object, require: true },
         categoryList: { type: Array as PropType<Array<string>>, require: true },
     },
     emits: ['update:stat-adjustment'],
     setup(props) {
         const displayName = (name: string | number) => name;
         const displayStatValue = (stat: string) => {
-            if (props.characterStatsObj && props.characterStatsObj[stat]) {
-                return props.characterStatsObj[stat];
+            if (props.statsObj && props.statsObj[stat]) {
+                return props.statsObj[stat];
             }
             return 0;
         };
@@ -68,7 +68,7 @@ export default defineComponent({
                 categoryOpenClose.value[category] = false;
             }
         }
-        const visibleStatList = (category: string) => statList(category)?.filter(stat => categoryOpenClose.value[category] || (props.characterStatsObj && props.characterStatsObj[stat])) ?? [];
+        const visibleStatList = (category: string) => statList(category)?.filter(stat => categoryOpenClose.value[category] || (props.statsObj && props.statsObj[stat])) ?? [];
 
         const statAdjustments = JSON.parse(JSON.stringify(ステータスTEMPLATE));
 
@@ -136,5 +136,9 @@ th[colspan="3"] {
 
 input[type="number"] {
     width: calc(100% - 6px);
+}
+
+button {
+    width: 10rem;
 }
 </style>
