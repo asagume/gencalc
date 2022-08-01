@@ -731,6 +731,17 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: any, conditio
                 }
             }
         });
+        exclusionMap.forEach((value, key) => {
+            if (!(key in conditionInput.conditionValues)) return;
+            for (const exclusion of value) {
+                if (!(exclusion in conditionInput.conditionValues)) return;
+                if (conditionMap.get(exclusion) == null) {
+                    conditionInput.conditionValues[exclusion] == null;
+                } else {
+                    conditionInput.conditionValues[exclusion] == -1;
+                }
+            }
+        });
 
         return result;
     } catch (error) {
@@ -783,13 +794,21 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionIn
         result['排他'] = exclusionMap;
 
         conditionMap.forEach((value, key) => {
-            if (key in conditionInput.conditionValues) {
-                console.log(key);
-            } else {
-                if (value) {    // select
-                    conditionInput.conditionValues[key] = value.length - 1;
-                } else {    // checkbox
-                    conditionInput.conditionValues[key] = true;
+            if (key in conditionInput.conditionValues) return;
+            if (value) {    // select
+                conditionInput.conditionValues[key] = value.length - 1;
+            } else {    // checkbox
+                conditionInput.conditionValues[key] = true;
+            }
+        });
+        exclusionMap.forEach((value, key) => {
+            if (!(key in conditionInput.conditionValues)) return;
+            for (const exclusion of value) {
+                if (!(exclusion in conditionInput.conditionValues)) return;
+                if (conditionMap.get(exclusion) == null) {
+                    conditionInput.conditionValues[exclusion] == null;
+                } else {
+                    conditionInput.conditionValues[exclusion] == -1;
                 }
             }
         });
