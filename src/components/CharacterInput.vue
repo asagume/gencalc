@@ -58,7 +58,7 @@
         </tr>
         <tr v-if="recommendationListVisible">
             <td colspan="6">
-                <select @change="recommendationOnChange($event)">
+                <select v-model="selectedRecommendation" @change="recommendationOnChange($event)">
                     <option v-for="item in recommendationList" :value="item" :key="item.name">
                         {{ displayBuildName(item) }}</option>
                 </select>
@@ -190,9 +190,9 @@ export default defineComponent({
         const displayName = (name: string) => name;
         const displayBuildName = (item: TRecommendation) => item.name;
 
+        const selectedRecommendation = ref(props.recommendation);
         const characterMaster = computed(() => characterInput.value?.characterMaster ?? {});
         const weaponMaster = computed(() => characterInput.value?.weaponMaster ?? {});
-
         const artifactSetMasters = computed(() => characterInput.value?.artifactSetMasters ?? [ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY]);
 
         const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
@@ -278,6 +278,7 @@ export default defineComponent({
             displayName,
             displayBuildName,
             visionSrc, bgImageClass, colorClass, bgColorClass,
+            selectedRecommendation,
             characterMaster, weaponMaster, artifactSetMasters,
             ascension, level, constellation,
             recommendationOnChange,
