@@ -6,7 +6,8 @@
     </div>
     <div class="pane3">
       <CharacterInput :characterInput="characterInput" :recommendationList="recommendationList"
-        @open:character-select="characterSelectVisible = !characterSelectVisible" @open:weapon-select="openWeaponSelect"
+        @open:character-select="characterSelectVisible = !characterSelectVisible"
+        @update:recommendation="updateRecommendation($event)" @open:weapon-select="openWeaponSelect"
         @open:artifact-set-select="openArtifactSetSelect($event)"
         @open:artifact-detail-input="openArtifactDetailInput" />
     </div>
@@ -177,14 +178,9 @@ export default defineComponent({
 
     const displayName = (name: string) => name;
 
-    /** キャラクターを選択します */
-    const updateCharacter = async function (character: TCharacterKey) {
-      if (!characterInput.value || !recommendationList.value || !artifactDetailInput.value || !conditionInput.value) return;
-      characterSelectVisible.value = false;
-      characterInput.value.character = character;
-      characterInput.value.characterMaster = await getCharacterMasterDetail(character);
-      recommendationList.value.splice(0, recommendationList.value.length, ...makeRecommendationList(characterInput.value.characterMaster));
-      const recommendation = recommendationList.value[0];
+    // おすすめセットを更新します
+    const updateRecommendation = async (recommendation: TRecommendation) => {
+      if (!characterInput.value || !artifactDetailInput.value || !conditionInput.value) return;
       await loadRecommendation(characterInput.value, artifactDetailInput.value, conditionInput.value, recommendation.build);
 
       damageDetailMyCharacter.value = makeDamageDetailObjArrObjCharacter(characterInput.value, conditionInput.value);
@@ -193,6 +189,16 @@ export default defineComponent({
       Object.keys(ステータスTEMPLATE).forEach(key => {
         statsObj[key] = ステータスTEMPLATE[key];
       });
+    };
+    /** キャラクターを選択します */
+    const updateCharacter = async function (character: TCharacterKey) {
+      if (!characterInput.value || !recommendationList.value || !artifactDetailInput.value || !conditionInput.value) return;
+      characterSelectVisible.value = false;
+      characterInput.value.character = character;
+      characterInput.value.characterMaster = await getCharacterMasterDetail(character);
+      recommendationList.value.splice(0, recommendationList.value.length, ...makeRecommendationList(characterInput.value.characterMaster));
+      const recommendation = recommendationList.value[0];
+      await updateRecommendation(recommendation);
     };
     // 武器選択画面を開きます/閉じます
     const openWeaponSelect = () => {
@@ -259,7 +265,7 @@ export default defineComponent({
       pane6Toggle1, pane6Toggle2, pane6Toggle3, statInputTab, ownListToggle1, ownListToggle2,
 
       displayName,
-      updateCharacter,
+      updateRecommendation, updateCharacter,
       openWeaponSelect, updateWeapon,
       openArtifactSetSelect, updateArtifactSet,
       openArtifactDetailInput, updateArtifactDetail,

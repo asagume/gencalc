@@ -58,7 +58,7 @@
         </tr>
         <tr v-if="recommendationListVisible">
             <td colspan="6">
-                <select v-model="recommendation" @change="$emit('update:recommendation', recommendation)">
+                <select @change="recommendationOnChange($event)">
                     <option v-for="item in recommendationList" :value="item" :key="item.name">
                         {{ displayBuildName(item) }}</option>
                 </select>
@@ -163,6 +163,7 @@ export default defineComponent({
     props: {
         characterInput: { type: Object, require: true },
         recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
+        recommendation: { type: Object as PropType<TRecommendation>, require: true },
     },
     emits: [
         'open:character-select',
@@ -172,7 +173,7 @@ export default defineComponent({
         'open:artifact-set-select',
         'open:artifact-detail-input'
     ],
-    setup(props) {
+    setup(props, context) {
         const characterInput: { [key: string]: any } = ref(props.characterInput);
         let ascension = ref(props.characterInput?.突破レベル ?? 6);
         let level = ref(props.characterInput?.レベル ?? 90);
@@ -185,8 +186,6 @@ export default defineComponent({
         let weaponRefine = ref(props.characterInput?.武器精錬ランク ?? 1);
 
         let recommendationListVisible = ref(false);
-        // let recommendationList = ref(props.recommendationList as TRecommendation[]);
-        let recommendation = ref(props.recommendationList ? props.recommendationList[0] : { name: null, build: null, overwrite: false, });
 
         const displayName = (name: string) => name;
         const displayBuildName = (item: TRecommendation) => item.name;
@@ -202,7 +201,7 @@ export default defineComponent({
         const bgColorClass = (item: TCharacterDetail) => ELEMENT_BG_COLOR_CLASS[item.元素] as string;
         let saveDisabled = false;
         let removeDisabled = false;
-        let buildname = ref('');
+        let buildname = ref(props.recommendation?.name ?? '');
         const saveOnClick = () => {
             if (buildname.value) {
                 console.log(buildname);
@@ -233,6 +232,12 @@ export default defineComponent({
                 level.value = levelRange.value[levelRange.value.length - 1];
             }
             buildOnChange();
+        };
+        const recommendationOnChange = (event: Event) => {
+            if (!props.recommendationList) return;
+            if (event.target instanceof HTMLSelectElement) {
+                context.emit('update:recommendation', props.recommendationList[event.target.selectedIndex]);
+            }
         };
         const normalAttackLevelRange = computed(() => {
             return Array.from({ length: 10 }, (_, i) => i + 1);
@@ -275,6 +280,7 @@ export default defineComponent({
             visionSrc, bgImageClass, colorClass, bgColorClass,
             characterMaster, weaponMaster, artifactSetMasters,
             ascension, level, constellation,
+            recommendationOnChange,
             normalAttackLevel, elementalSkillLevel, elementalBurstLevel,
             weaponAscension, weaponLevel, weaponRefine,
             saveDisabled, removeDisabled, buildname,
@@ -283,7 +289,7 @@ export default defineComponent({
             ascensionOnChange,
             weaponAscensionRange, weaponLevelRange, weaponRefineRange,
             weaponAscensionOnChange,
-            recommendationListVisible, recommendation,
+            recommendationListVisible,
             normalAttackLevelRange, elementalSkillLevelRange, elementalBurstLevelRange,
             buildOnChange,
             IMG_SRC_DUMMY: IMG_SRC_DUMMY,
