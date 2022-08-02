@@ -26,12 +26,14 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { STAR_BACKGROUND_IMAGE_CLASS, TWeaponEntry, WEAPON_MASTER_LIST, TWeaponTypeKey, WEAPON_IMG_SRC } from '@/master';
 import { computed, defineComponent, reactive, ref } from 'vue';
 
 
 export default defineComponent({
     name: 'WeaponOwnList',
+    mixins: [GlobalMixin],
     setup() {
         const bgImageClass = (item: TWeaponEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
 

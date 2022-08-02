@@ -11,11 +11,13 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { ARTIFACT_SET_MASTER_LIST, STAR_BACKGROUND_IMAGE_CLASS, TArtifactSetEntry, } from '@/master';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'ArtifactSetSelect',
+    mixins: [GlobalMixin],
     props: {
         visible: Boolean,
         index: Number,

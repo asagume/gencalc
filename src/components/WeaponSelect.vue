@@ -11,11 +11,13 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { STAR_BACKGROUND_IMAGE_CLASS, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER_LIST } from '@/master';
 import { defineComponent, computed, ref } from 'vue';
 
 export default defineComponent({
     name: 'WeaponSelect',
+    mixins: [GlobalMixin],
     props: {
         visible: Boolean,
         weapon: String,

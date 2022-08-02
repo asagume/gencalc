@@ -168,12 +168,14 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { ARTIFACT_DETAIL_INPUT_TEMPLATE, 聖遺物ステータスTEMPLATE, 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY, 聖遺物優先するサブ効果ARRAY } from '@/input';
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, TArtifactMainRarity, TArtifactMainStat } from '@/master';
 import { computed, defineComponent, reactive, ref, watch } from 'vue';
 
 export default defineComponent({
     name: 'ArtifactDetailInput',
+    mixins: [GlobalMixin],
     props: {
         visible: Boolean,
         artifactDetailInput: { type: Object, default: JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE)) },

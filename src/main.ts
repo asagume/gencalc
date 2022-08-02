@@ -164,43 +164,7 @@ async function main() {
         initialArtifactDetailInput: artifactDetailInput,
         initialConditionInput: conditionInput,
         initialRecommendationList: recommendationList,
-    }).use(i18n).mixin({
-        data() {
-            return {
-                lang: 'ja-jp',
-                langList: [
-                    { name: '日本語', value: 'ja-jp' },
-                    { name: 'English', value: 'en-us' },
-                    { name: '简体中文', value: 'zh-cn' },
-                    { name: '繁體中文', value: 'zh-tw' },
-                    { name: '한국어', value: 'ko-kr' },
-                    { name: 'Deutsch', value: 'de-de' },
-                    { name: 'Español', value: 'es-es' },
-                    { name: 'Français', value: 'fr-fr' },
-                    { name: 'Indonesia', value: 'id-id' },
-                    { name: 'Português', value: 'pt-pt' },
-                    { name: 'Pусский', value: 'ru-ru' },
-                    { name: 'Tiếng Việt', value: 'vi-vn' }
-                ],
-            }
-        },
-        methods: {
-            targetValue: function (event: Event) {
-                if (event.target instanceof HTMLInputElement) return event.target.value;
-                if (event.target instanceof HTMLSelectElement) return event.target.value;
-                return undefined;
-            },
-            langOnChange: (lang: string | undefined) => {
-                if (lang) {
-                    document.getElementsByName('html')[0].lang = lang;
-                }
-            },
-            displayName: (name: string | number) => {
-                if (isString(name)) return String(name);
-                return String(name);
-            }
-        },
-    }).mount('#app')
+    }).use(i18n).mount('#app')
 }
 
 

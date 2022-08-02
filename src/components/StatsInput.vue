@@ -38,11 +38,13 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { ステータスARRAY_MAP, ステータスTEMPLATE } from '@/input';
 import { defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
     name: 'StatsInput',
+    mixins: [GlobalMixin],
     props: {
         statsObj: { type: Object, require: true },
         categoryList: { type: Array as PropType<Array<string>>, require: true },

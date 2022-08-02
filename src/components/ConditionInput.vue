@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { computed, defineComponent, ref } from 'vue';
 
 type TCheckboxEntry = string;
@@ -28,6 +29,7 @@ type TSelectEntry = {
 
 export default defineComponent({
     name: 'ConditionInput',
+    mixins: [GlobalMixin],
     props: {
         characterInput: { type: Object, require: true },
         conditionInput: { type: Object, require: true },

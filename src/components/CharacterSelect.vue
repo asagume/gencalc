@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { TCharacterEntry, ELEMENT_IMG_SRC, TVisionKey, WEAPON_IMG_SRC, TWeaponTypeKey, CHARACTER_MASTER_LIST, STAR_BACKGROUND_IMAGE_CLASS } from '@/master';
 import { defineComponent, reactive, computed } from 'vue';
 
@@ -39,6 +40,7 @@ interface ICheckList {
 
 export default defineComponent({
     name: 'CharacterSelect',
+    mixins: [GlobalMixin],
     props: {
         character: String,
         visible: Boolean,

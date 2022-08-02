@@ -156,12 +156,14 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { ARTIFACT_SET_MASTER_DUMMY, TRecommendation, 突破レベルレベルARRAY } from '@/input';
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, STAR_BACKGROUND_IMAGE_CLASS, TCharacterDetail } from '@/master';
 import { computed, defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
     name: 'CharacterInput',
+    mixins: [GlobalMixin],
     props: {
         characterInput: { type: Object, require: true },
         recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },

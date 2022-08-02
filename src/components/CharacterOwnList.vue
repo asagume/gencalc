@@ -16,12 +16,14 @@
 </template>
 
 <script lang="ts">
+import GlobalMixin from '@/GlobalMixin.vue';
 import { TCharacterEntry, ELEMENT_IMG_SRC, CHARACTER_MASTER_LIST, STAR_BACKGROUND_IMAGE_CLASS } from '@/master';
 import { defineComponent, reactive, ref } from 'vue';
 
 
 export default defineComponent({
     name: 'CharacterOwnList',
+    mixins: [GlobalMixin],
     setup() {
         const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
         const bgImageClass = (item: TCharacterEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;

@@ -135,10 +135,12 @@ import CharacterOwnList from './components/CharacterOwnList.vue';
 import WeaponOwnList from './components/WeaponOwnList.vue';
 import { TRecommendation, makeRecommendationList, loadRecommendation, ステータスTEMPLATE, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDamageDetailObjArrObjArtifactSets } from '@/input';
 import { ARTIFACT_SET_MASTER, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
+import { useI18n } from 'vue-i18n';
+import GlobalMixin from './GlobalMixin.vue';
 
 export default defineComponent({
   name: 'App',
-  // mixins: [GlobalMixin],
+  mixins: [GlobalMixin],
   props: {
     initialCharacterInput: { type: Object, require: true },
     initialArtifactDetailInput: { type: Object, require: true },
@@ -155,6 +157,11 @@ export default defineComponent({
     CharacterOwnList, WeaponOwnList,
   },
   setup(props) {
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: 'local'
+    })
+
     const characterInput = ref(props.initialCharacterInput);
     const artifactDetailInput = ref(props.initialArtifactDetailInput);
     const conditionInput = ref(props.initialConditionInput);
@@ -268,6 +275,7 @@ export default defineComponent({
 
 
     return {
+      t,
       characterInput,
       artifactDetailInput,
       conditionInput,
