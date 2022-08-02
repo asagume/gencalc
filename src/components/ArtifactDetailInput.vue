@@ -214,7 +214,7 @@
           <td>
             <select v-model="prioritySubstatCounts[i]" @change="updatePrioritySubstats">
               <option v-for="item in prioritySubstatCountList" :value="item" :key="item">
-                {{ " × " + displayName(item) }}
+                {{ " × " + item }}
               </option>
             </select>
           </td>
@@ -257,7 +257,7 @@ export default defineComponent({
   },
   emits: ["update:artifact-detail"],
   setup(props, context) {
-    const artifactDetailInput = ref(props.artifactDetailInput);
+    const innerArtifactDetailInput = ref(props.artifactDetailInput);
 
     // 配列およびオブジェクトの更新は親コンポーネントに影響があります
     const mainstats = ref(
@@ -277,11 +277,15 @@ export default defineComponent({
         JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE))
     );
     const artifactStatsMain = reactive(
-      JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE))
+      props.artifactDetailInput?.聖遺物ステータスメイン効果 ??
+        JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE))
     );
     const artifactStatsSub = reactive(
-      props.artifactDetailInput?.聖遺物ステータス ??
+      props.artifactDetailInput?.聖遺物ステータスサブ効果 ??
         JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE))
+    );
+    const prioritySubstatsDisabled = ref(
+      props.artifactDetailInput?.聖遺物優先するサブ効果Disabled ?? true
     );
 
     const editable = ref(false);
@@ -302,7 +306,7 @@ export default defineComponent({
       index: number,
       opt_substat?: keyof typeof ARTIFACT_SUB_MASTER
     ) => {
-      const result = [];
+      const result: any[] = [];
       if (prioritySubstats.value[index]) {
         if (!opt_substat) opt_substat = prioritySubstats.value[index];
         if (opt_substat && opt_substat in ARTIFACT_SUB_MASTER) {
@@ -319,36 +323,85 @@ export default defineComponent({
       return result;
     };
 
-    /** メイン効果が更新されました */
-    const updateMainstats = () => {
-      console.log(updateMainstats.name);
-      // calculateArtifactStats();
-      // context.emit('update:artifact-detail', artifactDetailInput.value);
+    /** 聖遺物ステータスを計算します（メイン効果） */
+    const calculateArtifactStatsMain = () => {
+      (Object.keys(artifactStatsMain) as (keyof typeof artifactStatsMain)[]).forEach(
+        (key) => {
+          artifactStatsMain[key] = 0;
+        }
+      );
+      for (const statWithRarity of mainstats.value) {
+        if (!statWithRarity) continue;
+        const stat: [TArtifactMainRarity, TArtifactMainStat] = statWithRarity.split("_");
+        artifactStatsMain[stat[1]] += ARTIFACT_MAIN_MASTER[stat[0]][stat[1]];
+      }
     };
-    /** 優先するサブ効果が更新されました */
-    const updatePrioritySubstats = () => {
-      calculateArtifactStats();
-      context.emit("update:artifact-detail", artifactDetailInput.value);
+    /** 聖遺物ステータスを計算します（サブ効果） */
+    const calculateArtifactStatsPrioritySub = () => {
+      if (prioritySubstatsDisabled.value) return;
+      (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach(
+        (key) => {
+          artifactStatsSub[key] = 0;
+        }
+      );
+      for (let i = 0; i < 3; i++) {
+        if (!prioritySubstats.value[i]) continue;
+        if (!prioritySubstatValues.value[i]) continue;
+        if (!prioritySubstatCounts.value[i]) continue;
+        artifactStats[prioritySubstats.value[i]] +=
+          Number(prioritySubstatValueList(i)[Number(prioritySubstatValues.value[i])]) *
+          Number(prioritySubstatCounts.value[i]);
+        console.log(
+          calculateArtifactStatsPrioritySub.name,
+          prioritySubstats.value[i],
+          prioritySubstatValues.value[i],
+          prioritySubstatCounts.value[i],
+          artifactStats[prioritySubstats.value[i]]
+        );
+      }
     };
-    /** 厳選目安が選択されました */
-    const gensenOnChange = () => {
-      gensenEnabled.value = false;
-      console.log(gensen.value);
-      context.emit("update:artifact-detail", artifactDetailInput.value);
-    };
-
     /** 聖遺物ステータスを計算します */
     const calculateArtifactStats = () => {
       (Object.keys(artifactStats) as (keyof typeof artifactStats)[]).forEach((key) => {
         artifactStats[key] = 0;
       });
-      for (const statWithRarity of mainstats.value) {
-        if (!statWithRarity) continue;
-        const stat: [TArtifactMainRarity, TArtifactMainStat] = statWithRarity.split("_");
-        artifactStats[stat[1]] += ARTIFACT_MAIN_MASTER[stat[0]][stat[1]];
-      }
+      (Object.keys(artifactStatsMain) as (keyof typeof artifactStatsMain)[]).forEach(
+        (key) => {
+          if (!(key in artifactStats)) artifactStats[key] = 0;
+          artifactStats[key] += artifactStatsMain[key];
+        }
+      );
+      (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach(
+        (key) => {
+          if (!(key in artifactStats)) artifactStats[key] = 0;
+          artifactStats[key] += artifactStatsSub[key];
+        }
+      );
     };
+    calculateArtifactStatsMain();
+    calculateArtifactStatsPrioritySub();
     calculateArtifactStats();
+    /** メイン効果が更新されました */
+    const updateMainstats = () => {
+      console.log(updateMainstats.name);
+      calculateArtifactStatsMain();
+      calculateArtifactStats();
+      context.emit("update:artifact-detail", innerArtifactDetailInput.value);
+    };
+    /** 優先するサブ効果が更新されました */
+    const updatePrioritySubstats = () => {
+      console.log(updatePrioritySubstats.name);
+      prioritySubstatsDisabled.value = false;
+      calculateArtifactStatsPrioritySub();
+      calculateArtifactStats();
+      context.emit("update:artifact-detail", innerArtifactDetailInput.value);
+    };
+    /** 厳選目安が選択されました */
+    const gensenOnChange = () => {
+      gensenEnabled.value = false;
+      console.log(gensen.value);
+      context.emit("update:artifact-detail", innerArtifactDetailInput.value);
+    };
 
     const artifactStatsOnChange = (opt_stat?: any, opt_value?: string) => {
       Object.keys(artifactStats)
@@ -419,6 +472,7 @@ export default defineComponent({
       prioritySubstatValues,
       prioritySubstatCounts,
       artifactStats,
+      prioritySubstatsDisabled,
       upTotalCount,
       editable,
       gensenEnabled,

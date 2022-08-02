@@ -283,10 +283,12 @@ export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物メイン効果: ['', '', '', '', ''],
     聖遺物優先するサブ効果: ['', '', ''],
-    聖遺物優先するサブ効果上昇値: [-1, -1, -1],
+    聖遺物優先するサブ効果上昇値: [4, 4, 4],
     聖遺物優先するサブ効果上昇回数: [8, 5, 5],
     聖遺物ステータス: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
-    聖遺物ステータス補正: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE))
+    聖遺物ステータスメイン効果: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    聖遺物ステータスサブ効果: JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)),
+    聖遺物優先するサブ効果Disabled: false,
 };
 export type TArticactDetailInput = typeof ARTIFACT_DETAIL_INPUT_TEMPLATE;
 
