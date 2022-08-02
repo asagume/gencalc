@@ -51,12 +51,12 @@
                     <option v-for="item in constellationRange" :value="item" :key="item"> C{{ item }} </option>
                 </select>
             </td>
-            <td colspan="3">
-                <label class="button open-close">
+            <th colspan="3">
+                <label class="open-close">
                     <input class="hidden" type="checkbox" v-model="recommendationListVisible">
                     <span>{{ displayName('おすすめセット') }}</span>
                 </label>
-            </td>
+            </th>
         </tr>
         <tr v-if="recommendationListVisible">
             <td colspan="6">
@@ -361,5 +361,13 @@ img.artifact-set {
     max-width: 72px;
     border-radius: 50%;
     border: none;
+}
+
+th[colspan="3"] {
+    color: #e8d14e;
+    background-color: #333;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 2px;
 }
 </style>

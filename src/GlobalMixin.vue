@@ -1,6 +1,6 @@
 <script lang="ts">
 // グローバルになっていないので名前とあっていないが、
-// グローバルにするとtypescriptのエラーが多発するので仕方がないのです...
+// グローバルにするとtypescriptやリンターでエラーが多発するので仕方がないのです...
 
 // import { defineComponent, ref } from 'vue';
 // import { isString } from './common';

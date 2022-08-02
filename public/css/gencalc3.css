@@ -113,6 +113,7 @@ textarea {
     font-family: inherit;
     font-size: 100%;
     border-radius: 5px;
+    padding: 2px 1px;
 }
 
 .pane1 {
@@ -250,8 +251,8 @@ h2 {
     text-shadow: 0 0 5px black;
     border: 4px double gray;
     border-radius: 20px;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 fieldset {
@@ -334,12 +335,14 @@ div.filter img.filter.selected {
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: calc(100% / 3 - 6px - 1rem);
+    width: calc(100% / 3 - 16px);
     border: 2px solid gray;
-    border-radius: 10px;
-    padding: 0.5rem;
+    padding: 5px;
     margin: 5px 1px;
     text-shadow: 0 0 3px black;
+    color: #e8d14e;
+    background-color: #333;
+    border-radius: 10px;
 }
 
 .toggle-switch::before, .toggle-switch::after {
@@ -359,6 +362,15 @@ div.filter img.filter.selected {
 
 :checked+.toggle-switch::after {
     transform: translateY(-50%) rotate(0);
+}
+
+.pane1 fieldset {
+    margin: 2px;
+    position: relative;
+}
+
+.pane1 fieldset p a {
+    margin: 5px;
 }
 
 ul.character-list,
@@ -541,25 +553,12 @@ td input[type="number"] {
     display: inline-block;
 }
 
-label.column-2 {
-    width: calc(100% / 2 - 8px);
-}
-
-label.column-2 select {
-    width: 16rem;
-}
-
-label.column-3 {
-    width: calc(100% / 3 - 4px);
-}
-
-label.column-3 select {
-    width: 100%;
-}
-
 label.open-close {
     padding-left: 2rem;
     position: relative;
+    color: #e8d14e;
+    background-color: #333;
+    border-radius: 10px;
 }
 
 label.open-close input[type="checkbox"]+span {
@@ -586,46 +585,6 @@ label.open-close input[type="checkbox"]:checked+span::after {
     transform: translateY(-50%) rotate(0);
 }
 
-#weapon-select table, #artifact-set-select table {
-    width: 100%;
-}
-
-#weapon-select table th, #artifact-set-select table th {
-    font-weight: normal;
-    color: #df8f37;
-    background-color: #333;
-}
-
-table.weapon-desc {
-    table-layout: fixed;
-    margin: 1rem 2px;
-    border: 2px solid gray;
-    border-radius: 10px;
-}
-
-table.weapon-desc img.weapon {
-    width: 100px;
-}
-
-table.weapon-desc td[colspan="3"] {
-    text-align: left;
-}
-
-table.artifact-priority-stat {
-    width: 100%;
-    table-layout: auto;
-}
-
-table.artifact-priority-stat th {
-    font-size: smaller;
-    font-weight: normal;
-    color: #df8f37;
-}
-
-table.artifact-priority-stat td select {
-    width: 100%;
-}
-
 label.condition {
     display: inline-block;
     margin-left: 1rem;
@@ -649,14 +608,6 @@ label.stat-and-value {
 
 input[type="number"].level {
     width: 12rem;
-}
-
-table.description {
-    width: 100%;
-}
-
-table.description th {
-    color: #e8d14e;
 }
 
 table th {

@@ -2,7 +2,32 @@
   <div class="base-container">
     <div class="pane1">
       <fieldset>
-        <label>
+        <legend>げんかるく - 原神ダメージシミュレーター Ver.3.0.0</legend>
+        <p>
+          <a href="ArtifactSetList.html">聖遺物セット効果一覧</a>
+          <a href="BirthdayCalendar.html">誕生日カレンダー</a>
+        </p>
+        <p>
+          <a href="WeaponList.html?kind=Sword">片手剣一覧</a>
+          <a href="WeaponList.html?kind=Claymore">両手剣一覧</a>
+          <a href="WeaponList.html?kind=Polearm">長柄武器一覧</a>
+          <a href="WeaponList.html?kind=Bow">弓一覧</a>
+          <a href="WeaponList.html?kind=Catalyst">法器一覧</a>
+        </p>
+        <p>
+          <a href="RandomTeam.html">ランダムチーム編成メーカー</a>
+          <a href="HoYoDictionary.html">原神の辞書</a>
+        </p>
+        <div style="position: absolute; right: 1rem; top: 0">
+          <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告·要望</a>
+        </div>
+        <div style="position: absolute; left: 1rem; top: 0">
+          <a href="history.html">更新履歴</a>
+        </div>
+        <div style="position: absolute; left: 1rem; bottom: 1rem;">
+          <a href="RotationVisualizer.html">げんろーて</a>
+        </div>
+        <label style="position: absolute; right: 1rem; bottom: 1rem;">
           Language:
           <select v-model="lang" @change="langOnChange(targetValue($event))">
             <option v-for="item in langList" :value="item.value" :key="item.value">{{ item.name }}</option>
@@ -78,12 +103,12 @@
     <div class="bottom-pane">
       <h2>
         <input class="hidden" id="own-list-toggle-1" type="checkbox" v-model="ownListToggle1">
-        <label class="toggle-switch no-border" for="own-list-toggle-1"> {{ displayName('キャラクター所持リスト') }} </label>
+        <label class="toggle-switch no-border" for="own-list-toggle-1"> {{ displayName('キャラクター所持状況') }} </label>
       </h2>
       <CharacterOwnList v-if="ownListToggle1" />
       <h2>
         <input class="hidden" id="own-list-toggle-2" type="checkbox" v-model="ownListToggle2">
-        <label class="toggle-switch no-border" for="own-list-toggle-2"> {{ displayName('武器所持リスト') }} </label>
+        <label class="toggle-switch no-border" for="own-list-toggle-2"> {{ displayName('武器所持状況') }} </label>
       </h2>
       <WeaponOwnList v-if="ownListToggle2" />
     </div>
