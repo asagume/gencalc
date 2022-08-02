@@ -63,10 +63,10 @@
         <input class="hidden" id="pane6-toggle-3" type="checkbox" v-model="pane6Toggle3">
         <label class="toggle-switch" for="pane6-toggle-3"> {{ displayName('バフ/デバフ') }} </label>
       </div>
-      <template v-if="pane6Toggle1">
+      <div v-if="pane6Toggle1" style="margin-bottom: 10px;">
         <ConditionInput :characterInput="characterInput" :conditionInput="conditionInput" />
-      </template>
-      <template v-if="pane6Toggle2">
+      </div>
+      <div v-if="pane6Toggle2" style="margin-bottom: 10px;">
         <div class="tab-switch">
           <input id="status-input-tab-1" type="radio" v-model="statInputTab" name="stat-input-tab" value="1">
           <label for="status-input-tab-1"> {{ displayName('ステータス1') }} </label>
@@ -92,10 +92,10 @@
           </label>
           <StatsInput :statsObj="statsObj" :categoryList="enemyStatsCategoryList" />
         </template>
-      </template>
-      <template v-if="pane6Toggle3">
+      </div>
+      <div v-if="pane6Toggle3" style="margin-bottom: 10px;">
         バフ/デバフ
-      </template>
+      </div>
     </div>
     <div class="result-pane">
       <p>計算結果</p>

@@ -253,6 +253,12 @@ h2 {
     border-radius: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
+    background-color: #333;
+}
+
+h2 label {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 fieldset {
