@@ -2,6 +2,7 @@
 
 <script lang="ts">
 import GlobalMixin from "@/GlobalMixin.vue";
+import { ELEMENTAL_RESONANCE_MASTER_LIST } from "@/master";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
