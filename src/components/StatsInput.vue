@@ -44,13 +44,11 @@ import { defineComponent, PropType, ref } from 'vue';
 export default defineComponent({
     name: 'StatsInput',
     props: {
-        lang: String,
         statsObj: { type: Object, require: true },
         categoryList: { type: Array as PropType<Array<string>>, require: true },
     },
     emits: ['update:stat-adjustment'],
     setup(props) {
-        const displayName = (name: string | number) => name;
         const displayStatValue = (stat: string) => {
             if (props.statsObj && props.statsObj[stat]) {
                 return props.statsObj[stat];
@@ -91,7 +89,7 @@ export default defineComponent({
         initializeAdjustments();
 
         return {
-            displayName, displayStatValue,
+            displayStatValue,
 
             statList, visibleStatList, categoryOpenClose,
 

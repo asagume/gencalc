@@ -45,8 +45,6 @@ export default defineComponent({
     },
     emits: ['update:character'],
     setup(props) {
-        const displayName = (name: string) => name;
-
         const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
         const bgImageClass = (item: TCharacterEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
         const selectedClass = (item: TCharacterEntry) => { return item.key == props.character ? ' selected' : '' };
@@ -85,7 +83,6 @@ export default defineComponent({
         });
 
         return {
-            displayName,
             visionSrc,
             bgImageClass,
             selectedClass,

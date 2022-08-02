@@ -1,4 +1,5 @@
 import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSetKey, TCharacterDetail, TCharacterKey, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
+import { isNumber, isPlainObject, isString } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -273,6 +274,9 @@ export const CHARACTER_INPUT_TEMPLATE = {
     武器精錬ランク: 1,
     artifactSets: ['NONE', 'NONE'],
     artifactSetMasters: [ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY],
+    damageDetailMyCharacter: null as any,
+    damageDetailMyWeapon: null as any,
+    damageDetailMyArtifactSets: null as any,
 };
 export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 
@@ -312,19 +316,6 @@ export const SUPPORTER_INPUT_TEMPLATE = {
     conditionInput: CONDITION_INPUT_TEMPLATE,
     statusInput: {}
 };
-
-export function isString(value: any) {
-    return typeof value === 'string' || value instanceof String;
-}
-
-export function isNumber(value: any) {
-    return isFinite(value) && value != null;
-}
-
-export function isPlainObject(value: any) {
-    const myType = Object.prototype.toString.call(value);
-    return myType === '[object Object]';
-}
 
 /**
  * 
@@ -720,28 +711,8 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: any, conditio
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
-        conditionMap.forEach((value, key) => {
-            if (key in conditionInput.conditionValues) {
-                console.log(key);
-            } else {
-                if (value) {    // select
-                    conditionInput.conditionValues[key] = value.length - 1;
-                } else {    // checkbox
-                    conditionInput.conditionValues[key] = true;
-                }
-            }
-        });
-        exclusionMap.forEach((value, key) => {
-            if (!(key in conditionInput.conditionValues)) return;
-            for (const exclusion of value) {
-                if (!(exclusion in conditionInput.conditionValues)) return;
-                if (conditionMap.get(exclusion) == null) {
-                    conditionInput.conditionValues[exclusion] == null;
-                } else {
-                    conditionInput.conditionValues[exclusion] == -1;
-                }
-            }
-        });
+        setupConditionValues(conditionInput, result);
+        characterInput.damageDetailMyCharacter = result;
 
         return result;
     } catch (error) {
@@ -793,25 +764,8 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionIn
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
-        conditionMap.forEach((value, key) => {
-            if (key in conditionInput.conditionValues) return;
-            if (value) {    // select
-                conditionInput.conditionValues[key] = value.length - 1;
-            } else {    // checkbox
-                conditionInput.conditionValues[key] = true;
-            }
-        });
-        exclusionMap.forEach((value, key) => {
-            if (!(key in conditionInput.conditionValues)) return;
-            for (const exclusion of value) {
-                if (!(exclusion in conditionInput.conditionValues)) return;
-                if (conditionMap.get(exclusion) == null) {
-                    conditionInput.conditionValues[exclusion] == null;
-                } else {
-                    conditionInput.conditionValues[exclusion] == -1;
-                }
-            }
-        });
+        setupConditionValues(conditionInput, result);
+        characterInput.damageDetailMyWeapon = result;
 
         return result;
     } catch (error) {
@@ -820,6 +774,57 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionIn
     }
 }
 
+export function makeDamageDetailObjArrObjArtifactSets(characterInput: any, conditionInput: any) {
+    try {
+        const result = [] as any;
+
+        let myTalentDetail;
+        const myInputCategory = '聖遺物セット効果';
+
+        const myStatusChangeDetailObjArr = [] as any[];
+        const myTalentChangeDetailObjArr = [] as any[];
+
+        const artifactSetMasters = characterInput.artifactSetMasters.filter((s: any) => s);
+
+        if (artifactSetMasters.length > 0) {
+            if ('2セット効果' in artifactSetMasters[0]) {
+                myTalentDetail = artifactSetMasters[0]['2セット効果'];
+                result['聖遺物セット効果1'] = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+            }
+            if (artifactSetMasters.length == 2) {
+                if (artifactSetMasters[0] == artifactSetMasters[1]) {
+                    myTalentDetail = artifactSetMasters[0]['4セット効果'];
+                    result['聖遺物セット効果2'] = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                } else {
+                    myTalentDetail = artifactSetMasters[1]['2セット効果'];
+                    result['聖遺物セット効果2'] = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                }
+            }
+        }
+
+        result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
+        result[CHANGE_KIND_TALENT] = myTalentChangeDetailObjArr;
+
+        const conditionMap = new Map();
+        const exclusionMap = new Map();
+        myStatusChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
+            makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+        });
+        myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
+            makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+        });
+        result['条件'] = conditionMap;
+        result['排他'] = exclusionMap;
+
+        setupConditionValues(conditionInput, result);
+        characterInput.damageDetailMyArtifactSets = result;
+
+        return result;
+    } catch (error) {
+        console.log(characterInput, conditionInput);
+        throw error;
+    }
+}
 
 export const makeDamageDetailObjArr = function (talentDataObj: any, level: number | null, defaultKind: string | null, defaultElement: string | null, statusChangeDetailObjArr: any[], talentChangeDetailObjArr: any[], inputCategory: string, opt_condition = null) {
     const resultArr = [] as any[];
@@ -985,6 +990,53 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
         exclusion.split(',').forEach(e => {
             pushToMapValueArray(exclusionMap, myName, e);
         });
+    }
+}
+
+function setupConditionValues(conditionInput: any, damageDetail: any) {
+    try {
+        const conditionValues = conditionInput.conditionValues;
+        const conditionMap: Map<string, any[] | null> = damageDetail['条件'];
+        const exclusionMap: Map<string, string[]> = damageDetail['排他'];
+
+        conditionMap.forEach((value, key) => {
+            if (key in conditionValues && conditionValues[key]) {
+                const exclusions = exclusionMap.get(key);
+                if (exclusions) {
+                    for (const exclusion of exclusions) {
+                        if (exclusion in conditionValues) {
+                            const conditionValue = conditionMap.get(exclusion);
+                            if (conditionValue !== undefined) {
+                                if (conditionValue === null) {  // checkbox
+                                    conditionValues[exclusion] = false;
+                                } else {    // select
+                                    conditionValues[exclusion] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (value === null) {   // checkbox
+                    let checked = true;
+                    const arr = exclusionMap.get(key);
+                    if (arr && arr.filter(s => conditionValues[s]).length > 0) {
+                        checked = false;
+                    }
+                    conditionValues[key] = checked;
+                } else {   // select
+                    let selectedIndex = value.length - 1;
+                    const arr = exclusionMap.get(key);
+                    if (arr && arr.filter(s => conditionValues[s]).length > 0) {
+                        selectedIndex = 0;
+                    }
+                    conditionValues[key] = selectedIndex;
+                }
+            }
+        });
+    } catch (error) {
+        console.error(conditionInput, damageDetail);
+        throw error;
     }
 }
 

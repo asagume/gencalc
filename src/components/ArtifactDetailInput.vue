@@ -41,50 +41,58 @@
                 <tr>
                     <th>{{ displayName('HP') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats.HP">
+                        <input v-if="editable" type="number" v-model="artifactStats.HP"
+                            @change="artifactStatsOnChange('HP', targetValue($event))">
                         <span v-else>{{ artifactStats.HP }}</span>
                     </td>
                     <th>{{ displayName('HP%') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats['HP%']">
+                        <input v-if="editable" type="number" v-model="artifactStats['HP%']"
+                            @change="artifactStatsOnChange('HP%', targetValue($event))">
                         <span v-else>{{ artifactStats['HP%'] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ displayName('攻撃力') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats.攻撃力">
+                        <input v-if="editable" type="number" v-model="artifactStats.攻撃力"
+                            @change="artifactStatsOnChange('攻撃力', targetValue($event))">
                         <span v-else>{{ artifactStats.攻撃力 }}</span>
                     </td>
                     <th>{{ displayName('攻撃力%') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats['攻撃力%']">
+                        <input v-if="editable" type="number" v-model="artifactStats['攻撃力%']"
+                            @change="artifactStatsOnChange('攻撃力%', targetValue($event))">
                         <span v-else>{{ artifactStats['攻撃力%'] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ displayName('防御力') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats.防御力">
+                        <input v-if="editable" type="number" v-model="artifactStats.防御力"
+                            @change="artifactStatsOnChange('防御力', targetValue($event))">
                         <span v-else>{{ artifactStats.防御力 }}</span>
                     </td>
                     <th>{{ displayName('防御力%') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats['防御力%']">
+                        <input v-if="editable" type="number" v-model="artifactStats['防御力%']"
+                            @change="artifactStatsOnChange('防御力%', targetValue($event))">
                         <span v-else>{{ artifactStats['防御力%'] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ displayName('元素熟知') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats.元素熟知">
+                        <input v-if="editable" type="number" v-model="artifactStats.元素熟知"
+                            @change="artifactStatsOnChange('元素熟知', targetValue($event))">
                         <span v-else>{{ artifactStats.元素熟知 }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ displayName('会心率') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats.会心率">
+                        <input v-if="editable" type="number" v-model="artifactStats.会心率"
+                            @change="artifactStatsOnChange('会心率', targetValue($event))">
                         <span v-else>{{ artifactStats.会心率 }}</span>
                     </td>
                     <td colspan="2" style="border-color: transparent;">
@@ -97,7 +105,8 @@
                 <tr>
                     <th>{{ displayName('会心ダメージ') }}</th>
                     <td>
-                        <input v-if="editable" type="number" v-model="artifactStats.会心ダメージ">
+                        <input v-if="editable" type="number" v-model="artifactStats.会心ダメージ"
+                            @change="artifactStatsOnChange('会心ダメージ', targetValue($event))">
                         <span v-else>{{ artifactStats.会心ダメージ }}</span>
                     </td>
                     <td colspan="2" style="border-color: transparent;">
@@ -161,32 +170,31 @@
 <script lang="ts">
 import { ARTIFACT_DETAIL_INPUT_TEMPLATE, 聖遺物ステータスTEMPLATE, 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY, 聖遺物優先するサブ効果ARRAY } from '@/input';
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, TArtifactMainRarity, TArtifactMainStat } from '@/master';
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, reactive, ref, watch } from 'vue';
 
 export default defineComponent({
     name: 'ArtifactDetailInput',
     props: {
         visible: Boolean,
-        lang: String,
         artifactDetailInput: { type: Object, default: JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE)) },
     },
     emits: ['update:artifact-detail'],
     setup(props, context) {
-        const displayName = (name: string | number) => name;
-
-        let artifactDetailInput = ref(props.artifactDetailInput);
+        const artifactDetailInput = ref(props.artifactDetailInput);
 
         // 配列およびオブジェクトの更新は親コンポーネントに影響があります
-        let mainstats = ref(props.artifactDetailInput?.聖遺物メイン効果 ?? [null, null, null]);
-        let prioritySubstats = ref(props.artifactDetailInput?.聖遺物優先するサブ効果 ?? [null, null, null]);
-        let prioritySubstatValues = ref(props.artifactDetailInput?.聖遺物優先するサブ効果上昇値 ?? [-1, -1, -1]);
-        let prioritySubstatCounts = ref(props.artifactDetailInput?.聖遺物優先するサブ効果上昇回数 ?? [0, 0, 0]);
-        let artifactStats = reactive(props.artifactDetailInput?.聖遺物ステータス ?? JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)));
+        const mainstats = ref(props.artifactDetailInput?.聖遺物メイン効果 ?? [null, null, null]);
+        const prioritySubstats = ref(props.artifactDetailInput?.聖遺物優先するサブ効果 ?? [null, null, null]);
+        const prioritySubstatValues = ref(props.artifactDetailInput?.聖遺物優先するサブ効果上昇値 ?? [-1, -1, -1]);
+        const prioritySubstatCounts = ref(props.artifactDetailInput?.聖遺物優先するサブ効果上昇回数 ?? [0, 0, 0]);
+        const artifactStats = reactive(props.artifactDetailInput?.聖遺物ステータス ?? JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)));
+        const artifactStatsMain = reactive(JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)));
+        const artifactStatsSub = reactive(props.artifactDetailInput?.聖遺物ステータス ?? JSON.parse(JSON.stringify(聖遺物ステータスTEMPLATE)));
 
-        let editable = ref(false);
-        let gensenEnabled = ref(false);
+        const editable = ref(false);
+        const gensenEnabled = ref(false);
         const gensenList = ['', '厳選初心者', '厳選1ヶ月', '厳選3ヶ月', '日々石割'];
-        let gensen = ref("");
+        const gensen = ref("");
 
         const upTotalCount = computed(() => {
             let result = 0;
@@ -198,11 +206,11 @@ export default defineComponent({
 
 
         /** 優先するサブ効果上昇値のオプション値のリストを作成します */
-        const prioritySubstatValueList = (index: number) => {
+        const prioritySubstatValueList = (index: number, opt_substat?: keyof typeof ARTIFACT_SUB_MASTER) => {
             const result = [];
             if (prioritySubstats.value[index]) {
-                const substat = prioritySubstats.value[index] as keyof typeof ARTIFACT_SUB_MASTER;
-                const valueArr = ARTIFACT_SUB_MASTER[substat];
+                if (!opt_substat) opt_substat = prioritySubstats.value[index] as keyof typeof ARTIFACT_SUB_MASTER;
+                const valueArr = ARTIFACT_SUB_MASTER[opt_substat];
                 for (let i = 0; i < valueArr.length; i++) {
                     result.push(valueArr[i]);
                     if (i < valueArr.length - 1) {
@@ -216,8 +224,9 @@ export default defineComponent({
 
         /** メイン効果が更新されました */
         const updateMainstats = () => {
-            calculateArtifactStats();
-            context.emit('update:artifact-detail', artifactDetailInput.value);
+            console.log(updateMainstats.name);
+            // calculateArtifactStats();
+            // context.emit('update:artifact-detail', artifactDetailInput.value);
         };
         /** 優先するサブ効果が更新されました */
         const updatePrioritySubstats = () => {
@@ -242,11 +251,53 @@ export default defineComponent({
                 artifactStats[stat[1]] += ARTIFACT_MAIN_MASTER[stat[0]][stat[1]];
             }
         };
-
         calculateArtifactStats();
 
+        const artifactStatsOnChange = (opt_stat?: any, opt_value?: string) => {
+            Object.keys(artifactStats).filter(s => !opt_stat || s == opt_stat).forEach(key => {
+                if (key == opt_stat && opt_value !== undefined) artifactStatsSub[key] = Number(opt_value);
+                artifactStatsSub[key] = artifactStats[key] - artifactStatsMain[key];
+                if (artifactStatsSub[key] < 0) {
+                    artifactStatsSub[key] = 0;
+                    artifactStats[key] = artifactStatsMain[key];
+                }
+            })
+        };
+
+        watch(mainstats, (newVal, oldVal) => {
+            for (const val of oldVal as any[]) {
+                if (!val) continue;
+                const stat: [TArtifactMainRarity, TArtifactMainStat] = val.split('_');
+                const statValue = ARTIFACT_MAIN_MASTER[stat[0]][stat[1]];
+                artifactStats[stat[1]] -= statValue;
+                if (artifactStats[stat[1]] < 0) artifactStats[stat[1]] = 0;
+            }
+            for (const val of newVal as any[]) {
+                if (!val) continue;
+                const stat: [TArtifactMainRarity, TArtifactMainStat] = val.split('_');
+                const statValue = ARTIFACT_MAIN_MASTER[stat[0]][stat[1]];
+                artifactStats[stat[1]] += statValue;
+            }
+        }, { deep: true })
+        watch([prioritySubstats, prioritySubstatValues, prioritySubstatCounts], ([newVal, newValuesVal, newCountsVal], [oldVal, oldValuesVal, oldCountsVal]) => {
+            for (let i = 0; i < 3; i++) {
+                if (!oldVal || !oldValuesVal || !oldCountsVal) continue;
+                const stat = oldVal;
+                const valueList = prioritySubstatValueList(i, stat);
+                const statValue = valueList[oldValuesVal] * oldCountsVal;
+                artifactStats[stat] -= statValue;
+                if (artifactStats[stat] < 0) artifactStats[stat] = 0;
+            }
+            for (let i = 0; i < 3; i++) {
+                if (!newVal || !newValuesVal || !newCountsVal) continue;
+                const stat = newVal;
+                const valueList = prioritySubstatValueList(i, stat);
+                const statValue = valueList[newValuesVal] * newCountsVal;
+                artifactStats[stat] += statValue;
+            }
+        }, { deep: true });
+
         return {
-            displayName,
             mainstat1List: 聖遺物メイン効果_生の花ARRAY,
             mainstat2List: 聖遺物メイン効果_死の羽ARRAY,
             mainstat3List: 聖遺物メイン効果_時の砂ARRAY,
@@ -259,6 +310,7 @@ export default defineComponent({
             artifactStats, upTotalCount,
             editable,
             gensenEnabled, gensen, gensenList, gensenOnChange,
+            artifactStatsOnChange,
             updateMainstats, updatePrioritySubstats,
         }
     }

@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 type TCheckboxEntry = string;
 type TSelectEntry = {
@@ -29,41 +29,43 @@ type TSelectEntry = {
 export default defineComponent({
     name: 'ConditionInput',
     props: {
-        conditionInput: { type: Object, require: true }
+        characterInput: { type: Object, require: true },
+        conditionInput: { type: Object, require: true },
     },
     setup(props) {
-        const displayName = (name: string) => name;
         const displayOptionName = (name: string) => name.replace(/^required_/, '');
 
+        const myDamageDatailArr = computed(() => {
+            if (props.characterInput) {
+                return [props.characterInput.damageDetailMyCharacter, props.characterInput.damageDetailMyWeapon, props.characterInput.damageDetailMyArtifactSets];
+            }
+            return [];
+        });
         const checkboxList = computed((): TCheckboxEntry[] => {
             const result = [] as string[];
-            if (props.conditionInput) {
-                [props.conditionInput.damageDetailMyCharacter, props.conditionInput.damageDetailMyWeapon].filter(s => s).forEach(damageDetail => {
-                    damageDetail.条件.forEach((value: string[] | null, key: string) => {
-                        if (value) return;
-                        result.push(key);
-                    })
-                });
-            }
+            myDamageDatailArr.value.filter(s => s).forEach(damageDetail => {
+                damageDetail.条件.forEach((value: string[] | null, key: string) => {
+                    if (value) return;
+                    result.push(key);
+                })
+            });
             return result;
         });
         const selectList = computed((): TSelectEntry[] => {
             const result = [] as TSelectEntry[];
-            if (props.conditionInput) {
-                [props.conditionInput.damageDetailMyCharacter, props.conditionInput.damageDetailMyWeapon].filter(s => s).forEach(damageDetail => {
-                    damageDetail.条件.forEach((value: string[] | null, key: string) => {
-                        if (!value) return;
-                        result.push({ key: key, options: value, require: value[0].startsWith('required_') });
-                    })
-                });
-            }
+            myDamageDatailArr.value.filter(s => s).forEach(damageDetail => {
+                damageDetail.条件.forEach((value: string[] | null, key: string) => {
+                    if (!value) return;
+                    result.push({ key: key, options: value, require: value[0].startsWith('required_') });
+                })
+            });
             return result;
         });
 
         const conditionValues = ref(props.conditionInput?.conditionValues ?? {});
 
         return {
-            displayName, displayOptionName,
+            displayOptionName,
             checkboxList, selectList,
             conditionValues,
         }

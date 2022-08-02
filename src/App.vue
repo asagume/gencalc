@@ -1,5 +1,15 @@
 <template>
   <div class="base-container">
+    <div class="pane1">
+      <fieldset>
+        <label>
+          Language:
+          <select v-model="lang" @change="langOnChange(targetValue($event))">
+            <option v-for="item in langList" :value="item.value" :key="item.value">{{ item.name }}</option>
+          </select>
+        </label>
+      </fieldset>
+    </div>
     <div class="pane2">
       <CharacterSelect :character="character" :visible="characterSelectVisible"
         @update:character="updateCharacter($event)" />
@@ -29,7 +39,7 @@
         <label class="toggle-switch" for="pane6-toggle-3"> {{ displayName('バフ/デバフ') }} </label>
       </div>
       <template v-if="pane6Toggle1">
-        <ConditionInput :conditionInput="conditionInput" />
+        <ConditionInput :characterInput="characterInput" :conditionInput="conditionInput" />
       </template>
       <template v-if="pane6Toggle2">
         <div class="tab-switch">
@@ -47,12 +57,12 @@
           <StatsInput :statsObj="statsObj" :categoryList="characterStats2CategoryList" />
         </template>
         <template v-if="statInputTab == 3">
-          <label>{{ displayName('敵') }}
+          <label class="enemy">{{ displayName('敵') }}
             <select>
               <option v-for="item in enemyList" :value="item" :key="item.key">{{ displayName(item.key) }}</option>
             </select>
           </label>
-          <label>Lv.
+          <label class="enemy-level">Lv.
             <input type="number" min="1">
           </label>
           <StatsInput :statsObj="statsObj" :categoryList="enemyStatsCategoryList" />
@@ -91,9 +101,8 @@
   <div id="debug-info" v-if="true">
     <hr>
     <h2>DEBUG</h2>
-    <template v-if="conditionInput">
-      <dl v-for="dd in [conditionInput.damageDetailMyCharacter, conditionInput.damageDetailMyWeapon].filter(s => s)"
-        :key="dd">
+    <template v-if="characterInput">
+      <dl v-for="dd in myDamageDatailArr.filter(s => s)" :key="dd">
         <template v-for="key in Object.keys(dd)" :key="key">
           <template v-if="dd[key]">
             <dt>{{ key }}</dt>
@@ -124,12 +133,12 @@ import ConditionInput from './components/ConditionInput.vue';
 import StatsInput from './components/StatsInput.vue';
 import CharacterOwnList from './components/CharacterOwnList.vue';
 import WeaponOwnList from './components/WeaponOwnList.vue';
-import { TRecommendation, makeRecommendationList, loadRecommendation, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, ステータスTEMPLATE } from '@/input';
+import { TRecommendation, makeRecommendationList, loadRecommendation, ステータスTEMPLATE, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDamageDetailObjArrObjArtifactSets } from '@/input';
 import { ARTIFACT_SET_MASTER, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, TArtifactSetKey, TCharacterKey, TWeaponKey } from '@/master';
-
 
 export default defineComponent({
   name: 'App',
+  // mixins: [GlobalMixin],
   props: {
     initialCharacterInput: { type: Object, require: true },
     initialArtifactDetailInput: { type: Object, require: true },
@@ -184,8 +193,9 @@ export default defineComponent({
       if (!characterInput.value || !artifactDetailInput.value || !conditionInput.value) return;
       await loadRecommendation(characterInput.value, artifactDetailInput.value, conditionInput.value, recommendation.build);
 
-      conditionInput.value.damageDetailMyCharacter = makeDamageDetailObjArrObjCharacter(characterInput.value, conditionInput.value);
-      conditionInput.value.damageDetailMyWeapon = makeDamageDetailObjArrObjWeapon(characterInput.value, conditionInput.value);
+      makeDamageDetailObjArrObjCharacter(characterInput.value, conditionInput.value); // キャラクター
+      makeDamageDetailObjArrObjWeapon(characterInput.value, conditionInput.value);  // 武器
+      makeDamageDetailObjArrObjArtifactSets(characterInput.value, conditionInput.value);  // 聖遺物セット効果
 
       Object.keys(ステータスTEMPLATE).forEach(key => {
         statsObj[key] = ステータスTEMPLATE[key];
@@ -249,6 +259,13 @@ export default defineComponent({
 
     updateCharacter(character.value);
 
+    const myDamageDatailArr = computed(() => {
+      if (characterInput.value) {
+        return [characterInput.value.damageDetailMyCharacter, characterInput.value.damageDetailMyWeapon, characterInput.value.damageDetailMyArtifactSets];
+      }
+      return [];
+    });
+
 
     return {
       characterInput,
@@ -269,6 +286,8 @@ export default defineComponent({
       openWeaponSelect, updateWeapon,
       openArtifactSetSelect, updateArtifactSet,
       openArtifactDetailInput, updateArtifactDetail,
+
+      myDamageDatailArr,
     }
   }
 });

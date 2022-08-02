@@ -23,8 +23,6 @@ export default defineComponent({
     },
     emits: ['update:weapon'],
     setup(props) {
-        const displayName = (name: string) => name;
-
         const bgImageClass = (item: TWeaponEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
         const selectedClass = (item: TWeaponEntry) => { return item.key == props.weapon ? ' selected' : '' };
 
@@ -43,7 +41,6 @@ export default defineComponent({
         });
 
         return {
-            displayName,
             bgImageClass, selectedClass,
             filteredList,
         }

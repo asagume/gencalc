@@ -23,8 +23,6 @@ export default defineComponent({
     },
     emits: ['update:artifact-set'],
     setup(props) {
-        const displayName = (name: string) => name;
-
         const bgImageClass = (item: TArtifactSetEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
         const selectedClass = (item: TArtifactSetEntry) => { return item.key == props.artifactSet ? ' selected' : '' };
 
@@ -33,7 +31,6 @@ export default defineComponent({
         });
 
         return {
-            displayName,
             bgImageClass, selectedClass,
             filteredList,
         }

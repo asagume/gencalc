@@ -23,8 +23,6 @@ import { defineComponent, reactive, ref } from 'vue';
 export default defineComponent({
     name: 'CharacterOwnList',
     setup() {
-        const displayName = (name: string) => name;
-
         const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
         const bgImageClass = (item: TCharacterEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
 
@@ -67,7 +65,6 @@ export default defineComponent({
         };
 
         return {
-            displayName,
             visionSrc,
             bgImageClass,
             characterList,

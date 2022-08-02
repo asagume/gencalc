@@ -29,8 +29,10 @@
         </tr>
         <tr>
             <td colspan="3" style="text-align: left;">
-                build name:
-                <input class="save-name" type="text" v-model="buildname" maxlength="20" @change="buildOnChange">
+                <label>
+                    build name:
+                    <input class="save-name" type="text" v-model="buildname" maxlength="20" @change="buildOnChange">
+                </label>
             </td>
         </tr>
         <tr>
@@ -187,7 +189,6 @@ export default defineComponent({
 
         let recommendationListVisible = ref(false);
 
-        const displayName = (name: string) => name;
         const displayBuildName = (item: TRecommendation) => item.name;
 
         const selectedRecommendation = ref(props.recommendation);
@@ -275,7 +276,6 @@ export default defineComponent({
         };
 
         return {
-            displayName,
             displayBuildName,
             visionSrc, bgImageClass, colorClass, bgColorClass,
             selectedRecommendation,

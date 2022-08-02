@@ -11,7 +11,8 @@
     <div v-for="weaponType in weaponTypeList" :key="weaponType">
         <ul class="select-list" v-if="weaponType == selectedWeaponType">
             <li v-for="item in weaponList(weaponType)" :key="item.key">
-                <img :class="'weapon' + bgImageClass(item) + notOwnedClass(item)" :src="item.icon_url" :alt="item.key" @click="onClick(item)">
+                <img :class="'weapon' + bgImageClass(item) + notOwnedClass(item)" :src="item.icon_url" :alt="item.key"
+                    @click="onClick(item)">
                 <div class="tooltip">{{ displayName(item.key) }}</div>
                 <div class="refine">{{ refineObj[item.key] }}</div>
             </li>
@@ -32,8 +33,6 @@ import { computed, defineComponent, reactive, ref } from 'vue';
 export default defineComponent({
     name: 'WeaponOwnList',
     setup() {
-        const displayName = (name: string) => name;
-
         const bgImageClass = (item: TWeaponEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
 
         const weaponTypeList = computed(() => Object.keys(WEAPON_IMG_SRC) as TWeaponTypeKey[]);
@@ -81,7 +80,6 @@ export default defineComponent({
         };
 
         return {
-            displayName,
             bgImageClass,
             weaponTypeList,
             weaponSrc,
@@ -124,6 +122,7 @@ div.refine {
     right: 10px;
     top: 3px;
 }
+
 .not-owned {
     opacity: 50%;
 }

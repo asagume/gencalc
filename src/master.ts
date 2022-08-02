@@ -361,8 +361,6 @@ export const STAR_BACKGROUND_IMAGE_CLASS = {
     5: 'star5-bg'
 }
 
-export const ALLOW_LIST_LANG = ['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn'];
-
 export const キャラクター構成PROPERTY_MAP = new Map([
     ['キャラクター', null],
     ['レベル', null],
