@@ -53,6 +53,7 @@
       <CharacterInput
         :characterInput="characterInputRef"
         :recommendationList="recommendationList"
+        :artifactSetSelectVisible="artifactSetSelectVisibleRef"
         @open:character-select="characterSelectVisibleRef = !characterSelectVisibleRef"
         @update:recommendation="updateRecommendation($event)"
         @open:weapon-select="openWeaponSelect"
@@ -489,7 +490,7 @@ export default defineComponent({
     /** 聖遺物セット効果を選択しました */
     const updateArtifactSet = (artifactSet: TArtifactSetKey) => {
       if (!characterInputRef.value) return;
-      artifactSets.value[artifactSetIndexRef.value] = artifactSet;
+      artifactSets[artifactSetIndexRef.value] = artifactSet;
       characterInputRef.value.artifactSetMasters[artifactSetIndexRef.value] =
         ARTIFACT_SET_MASTER[artifactSet];
       artifactSetSelectVisibleRef.value = false;

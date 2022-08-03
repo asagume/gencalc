@@ -170,9 +170,9 @@
     </tr>
     <tr>
       <td rowspan="2" class="icon">
-        <label @click="$emit('open:artifact-set-select', 0)">
+        <label @click="openArtifactSetSelect(0)">
           <img
-            :class="'artifact-set ' + ''"
+            :class="'artifact-set' + artifactSetSelectClass(0)"
             :src="artifactSetMasters[0].image"
             :alt="artifactSetMasters[0].key"
           />
@@ -180,9 +180,9 @@
         <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
       </td>
       <td rowspan="2" class="icon">
-        <label @click="$emit('open:artifact-set-select', 1)">
+        <label @click="openArtifactSetSelect(1)">
           <img
-            :class="'artifact-set ' + ''"
+            :class="'artifact-set' + artifactSetSelectClass(1)"
             :src="artifactSetMasters[1].image"
             :alt="artifactSetMasters[1].key"
           />
@@ -256,6 +256,7 @@ export default defineComponent({
     characterInput: { type: Object, require: true },
     recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
     recommendation: { type: Object as PropType<TRecommendation>, require: true },
+    artifactSetSelectVisible: { type: Boolean },
   },
   emits: [
     "open:character-select",
@@ -373,6 +374,15 @@ export default defineComponent({
       }
       weaponOnChange();
     };
+    const artifactSetIndexRef = ref(0);
+    const artifactSetSelectClass = (index: number) =>
+      props.artifactSetSelectVisible && index == artifactSetIndexRef.value
+        ? " selected"
+        : "";
+    const openArtifactSetSelect = (index: number) => {
+      artifactSetIndexRef.value = index;
+      context.emit("open:artifact-set-select", index);
+    };
     const characterOnChange = () => {
       const workInput = {} as any;
       workInput.突破レベル = ascensionRef.value;
@@ -428,6 +438,8 @@ export default defineComponent({
       normalAttackLevelRange,
       elementalSkillLevelRange,
       elementalBurstLevelRange,
+      openArtifactSetSelect,
+      artifactSetSelectClass,
       characterOnChange,
       weaponOnChange,
       IMG_SRC_DUMMY: IMG_SRC_DUMMY,
@@ -496,6 +508,10 @@ img.artifact-set {
   max-width: 72px;
   border-radius: 50%;
   border: none;
+}
+
+img.selected {
+  background-color: rgb(156, 140, 49);
 }
 
 th[colspan="3"] {
