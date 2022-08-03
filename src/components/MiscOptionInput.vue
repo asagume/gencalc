@@ -1,5 +1,5 @@
 <template>
-
+    <div></div>
 </template>
 
 <script lang="ts">
@@ -12,9 +12,6 @@ export default defineComponent({
     props: {
         characterInput: { type: Object, require: true },
         conditionInput: { type: Object, require: true },
-    },
-    setup(props) {
-
     }
 })
 </script>

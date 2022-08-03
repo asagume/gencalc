@@ -19,12 +19,7 @@
           <a href="HoYoDictionary.html">原神の辞書</a>
         </p>
         <div style="position: absolute; right: 1rem; top: 0">
-          <a
-            href="https://zawazawa.jp/gencalc/topic/1"
-            target="_blank"
-            rel="noopener noreferrer"
-            >バグ報告·要望</a
-          >
+          <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告·要望</a>
         </div>
         <div style="position: absolute; left: 1rem; top: 0">
           <a href="history.html">更新履歴</a>
@@ -43,157 +38,92 @@
       </fieldset>
     </div>
     <div class="pane2">
-      <CharacterSelect
-        :character="character"
-        :visible="characterSelectVisible"
-        @update:character="updateCharacter($event)"
-      />
+      <CharacterSelect :character="character" :visible="characterSelectVisibleRef"
+        @update:character="updateCharacter($event)" />
     </div>
     <div class="pane3">
-      <CharacterInput
-        :characterInput="characterInput"
-        :recommendationList="recommendationList"
-        @open:character-select="characterSelectVisible = !characterSelectVisible"
-        @update:recommendation="updateRecommendation($event)"
-        @open:weapon-select="openWeaponSelect"
-        @open:artifact-set-select="openArtifactSetSelect($event)"
-        @open:artifact-detail-input="openArtifactDetailInput"
-      />
+      <CharacterInput :characterInput="characterInputRef" :recommendationList="recommendationList"
+        @open:character-select="characterSelectVisibleRef = !characterSelectVisibleRef"
+        @update:recommendation="updateRecommendation($event)" @open:weapon-select="openWeaponSelect"
+        @open:artifact-set-select="openArtifactSetSelect($event)" @open:artifact-detail-input="openArtifactDetailInput"
+        @update-character-input-character="updateCharacterInputCharacter($event)"
+        @update-character-input-weapon="updateCharacterInputWeapon($event)" />
     </div>
     <div class="pane4">
-      <WeaponSelect
-        :visible="weaponSelectVisible"
-        :weapon="weapon"
-        :weaponType="weaponType"
-        @update:weapon="updateWeapon($event)"
-      />
-      <ArtifactSetSelect
-        :visible="artifactSetSelectVisible"
-        :artifactSet="artifactSets[artifactSetIndex]"
-        :index="artifactSetIndex"
-        @update:artifact-set="updateArtifactSet($event)"
-      />
-      <ArtifactDetailInput
-        :visible="artifactDetailInputVisible"
-        :artifactDetailInput="artifactDetailInput"
-        @update:artifact-detail="updateArtifactDetail($event)"
-      />
+      <WeaponSelect :visible="weaponSelectVisibleRef" :weapon="weapon" :weaponType="weaponType"
+        @update:weapon="updateWeapon($event)" />
+      <ArtifactSetSelect :visible="artifactSetSelectVisibleRef" :artifactSet="artifactSets[artifactSetIndexRef]"
+        :index="artifactSetIndexRef" @update:artifact-set="updateArtifactSet($event)" />
+      <ArtifactDetailInput :visible="artifactDetailInputVisibleRef" :artifactDetailInput="artifactDetailInputRef"
+        @update:artifact-detail="updateArtifactDetail($event)" />
     </div>
     <div class="pane6">
       <div>
-        <input
-          class="hidden"
-          id="pane6-toggle-1"
-          type="checkbox"
-          v-model="pane6Toggle1"
-        />
+        <input class="hidden" id="pane6-toggle-1" type="checkbox" v-model="pane6Toggle1Ref" />
         <label class="toggle-switch" for="pane6-toggle-1">
           {{ displayName("オプション条件") }}
         </label>
-        <input
-          class="hidden"
-          id="pane6-toggle-2"
-          type="checkbox"
-          v-model="pane6Toggle2"
-        />
+        <input class="hidden" id="pane6-toggle-2" type="checkbox" v-model="pane6Toggle2Ref" />
         <label class="toggle-switch" for="pane6-toggle-2">
           {{ displayName("ステータス") }}
         </label>
-        <input
-          class="hidden"
-          id="pane6-toggle-3"
-          type="checkbox"
-          v-model="pane6Toggle3"
-        />
+        <input class="hidden" id="pane6-toggle-3" type="checkbox" v-model="pane6Toggle3Ref" />
         <label class="toggle-switch" for="pane6-toggle-3">
           {{ displayName("バフ/デバフ") }}
         </label>
       </div>
-      <div v-if="pane6Toggle1" style="margin-bottom: 10px">
-        <ConditionInput
-          :characterInput="characterInput"
-          :conditionInput="conditionInput"
-        />
+      <div v-if="pane6Toggle1Ref" style="margin-bottom: 10px">
+        <ConditionInput :characterInput="characterInputRef" :conditionInput="conditionInputRef" />
       </div>
-      <div v-if="pane6Toggle2" style="margin-bottom: 10px">
+      <div v-if="pane6Toggle2Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
-          <input
-            id="status-input-tab-1"
-            type="radio"
-            v-model="statInputTab"
-            name="stat-input-tab"
-            value="1"
-          />
+          <input id="status-input-tab-1" type="radio" v-model="statInputTabRef" name="stat-input-tab" value="1" />
           <label for="status-input-tab-1"> {{ displayName("ステータス1") }} </label>
-          <input
-            id="status-input-tab-2"
-            type="radio"
-            v-model="statInputTab"
-            name="stat-input-tab"
-            value="2"
-          />
+          <input id="status-input-tab-2" type="radio" v-model="statInputTabRef" name="stat-input-tab" value="2" />
           <label for="status-input-tab-2"> {{ displayName("ステータス2") }} </label>
-          <input
-            id="status-input-tab-3"
-            type="radio"
-            v-model="statInputTab"
-            name="stat-input-tab"
-            value="3"
-          />
+          <input id="status-input-tab-3" type="radio" v-model="statInputTabRef" name="stat-input-tab" value="3" />
           <label for="status-input-tab-3"> {{ displayName("敵") }} </label>
         </div>
-        <template v-if="statInputTab == 1">
-          <StatsInput :statsObj="statsObj" :categoryList="characterStats1CategoryList" />
+        <template v-if="statInputTabRef == 1">
+          <StatsInput :statsObj="statsInput.statsObj" :categoryList="characterStats1CategoryList" />
         </template>
-        <template v-if="statInputTab == 2">
-          <StatsInput :statsObj="statsObj" :categoryList="characterStats2CategoryList" />
+        <template v-if="statInputTabRef == 2">
+          <StatsInput :statsObj="statsInput.statsObj" :categoryList="characterStats2CategoryList" />
         </template>
-        <template v-if="statInputTab == 3">
-          <label class="enemy"
-            >{{ displayName("敵") }}
+        <template v-if="statInputTabRef == 3">
+          <label class="enemy">{{ displayName("敵") }}
             <select>
               <option v-for="item in enemyList" :value="item" :key="item.key">
                 {{ displayName(item.key) }}
               </option>
             </select>
           </label>
-          <label class="enemy-level"
-            >Lv.
+          <label class="enemy-level">Lv.
             <input type="number" min="1" />
           </label>
-          <StatsInput :statsObj="statsObj" :categoryList="enemyStatsCategoryList" />
+          <StatsInput :statsObj="statsInput.statsObj" :categoryList="enemyStatsCategoryList" />
         </template>
       </div>
-      <div v-if="pane6Toggle3" style="margin-bottom: 10px">バフ/デバフ</div>
+      <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">バフ/デバフ</div>
     </div>
     <div class="result-pane">
       <p>計算結果</p>
     </div>
     <div class="bottom-pane">
       <h2>
-        <input
-          class="hidden"
-          id="own-list-toggle-1"
-          type="checkbox"
-          v-model="ownListToggle1"
-        />
+        <input class="hidden" id="own-list-toggle-1" type="checkbox" v-model="ownListToggle1Ref" />
         <label class="toggle-switch no-border" for="own-list-toggle-1">
           {{ displayName("キャラクター所持状況") }}
         </label>
       </h2>
-      <CharacterOwnList v-if="ownListToggle1" />
+      <CharacterOwnList v-if="ownListToggle1Ref" />
       <h2>
-        <input
-          class="hidden"
-          id="own-list-toggle-2"
-          type="checkbox"
-          v-model="ownListToggle2"
-        />
+        <input class="hidden" id="own-list-toggle-2" type="checkbox" v-model="ownListToggle2Ref" />
         <label class="toggle-switch no-border" for="own-list-toggle-2">
           {{ displayName("武器所持状況") }}
         </label>
       </h2>
-      <WeaponOwnList v-if="ownListToggle2" />
+      <WeaponOwnList v-if="ownListToggle2Ref" />
     </div>
     <div class="pane7">
       <p>本サイトの説明とか</p>
@@ -210,7 +140,7 @@
   <div id="debug-info" v-if="true">
     <hr />
     <h2>DEBUG</h2>
-    <template v-if="characterInput">
+    <template v-if="characterInputRef">
       <dl v-for="dd in myDamageDatailArr.filter((s) => s)" :key="dd">
         <template v-for="key in Object.keys(dd)" :key="key">
           <template v-if="dd[key]">
@@ -232,7 +162,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import CharacterSelect from "./components/CharacterSelect.vue";
 import CharacterInput from "./components/CharacterInput.vue";
 import WeaponSelect from "./components/WeaponSelect.vue";
@@ -250,6 +180,8 @@ import {
   makeDamageDetailObjArrObjCharacter,
   makeDamageDetailObjArrObjWeapon,
   makeDamageDetailObjArrObjArtifactSets,
+  STATS_INPUT_TEMPLATE,
+  calculateStats,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -267,10 +199,10 @@ export default defineComponent({
   name: "App",
   mixins: [GlobalMixin],
   props: {
-    initialCharacterInput: { type: Object, require: true },
-    initialArtifactDetailInput: { type: Object, require: true },
-    initialConditionInput: { type: Object, require: true },
-    initialRecommendationList: {
+    characterInput: { type: Object, require: true },
+    artifactDetailInput: { type: Object, require: true },
+    conditionInput: { type: Object, require: true },
+    recommendationList: {
       type: Array as PropType<TRecommendation[]>,
       require: true,
     },
@@ -292,31 +224,33 @@ export default defineComponent({
       useScope: "local",
     });
 
-    const characterInput = ref(props.initialCharacterInput);
-    const artifactDetailInput = ref(props.initialArtifactDetailInput);
-    const conditionInput = ref(props.initialConditionInput);
+    const characterInputRef = ref(props.characterInput);
+    const artifactDetailInputRef = ref(props.artifactDetailInput);
+    const conditionInputRef = ref(props.conditionInput);
 
-    const characterSelectVisible = ref(false);
+    const characterSelectVisibleRef = ref(false);
     const character = computed(() =>
-      characterInput.value ? characterInput.value.character : undefined
+      characterInputRef.value ? characterInputRef.value.character : undefined
     );
 
-    const recommendationList = ref(props.initialRecommendationList);
+    const recommendationListRea = reactive(props.recommendationList ?? []);
 
-    const weaponSelectVisible = ref(false);
+    const weaponSelectVisibleRef = ref(false);
     const weapon = computed(() =>
-      characterInput.value ? characterInput.value.weapon : undefined
+      characterInputRef.value ? characterInputRef.value.weapon : undefined
     );
     const weaponType = computed(() =>
-      characterInput.value ? characterInput.value.characterMaster.武器 : undefined
+      characterInputRef.value ? characterInputRef.value.characterMaster.武器 : undefined
     );
 
-    const artifactSetSelectVisible = ref(false);
-    const artifactSetIndex = ref(0);
-    const artifactSets = ref(characterInput.value?.artifactSets ?? ["NONE", "NONE"]);
-    const artifactDetailInputVisible = ref(false);
+    const artifactSetSelectVisibleRef = ref(false);
+    const artifactSetIndexRef = ref(0);
+    const artifactSets = reactive(
+      characterInputRef.value?.artifactSets ?? ["NONE", "NONE"]
+    );
+    const artifactDetailInputVisibleRef = ref(false);
 
-    const statsObj = ref(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
+    const statsInput = reactive(JSON.parse(JSON.stringify(STATS_INPUT_TEMPLATE)));
     const characterStats1CategoryList = [
       "基礎ステータス",
       "基本ステータス",
@@ -330,98 +264,144 @@ export default defineComponent({
     const enemyStatsCategoryList = ["敵元素ステータス·耐性"];
     const enemyList = ENEMY_MASTER_LIST;
 
-    const pane6Toggle1 = ref(true);
-    const pane6Toggle2 = ref(true);
-    const pane6Toggle3 = ref(true);
-    const statInputTab = ref(1);
-    const ownListToggle1 = ref(false);
-    const ownListToggle2 = ref(false);
-
-    const displayName = (name: string) => name;
+    const pane6Toggle1Ref = ref(true);
+    const pane6Toggle2Ref = ref(true);
+    const pane6Toggle3Ref = ref(true);
+    const statInputTabRef = ref(1);
+    const ownListToggle1Ref = ref(false);
+    const ownListToggle2Ref = ref(false);
 
     // おすすめセットを更新します
     const updateRecommendation = async (recommendation: TRecommendation) => {
-      if (!characterInput.value || !artifactDetailInput.value || !conditionInput.value)
+      if (
+        !characterInputRef.value ||
+        !artifactDetailInputRef.value ||
+        !conditionInputRef.value
+      )
         return;
       await loadRecommendation(
-        characterInput.value,
-        artifactDetailInput.value,
-        conditionInput.value,
+        characterInputRef.value,
+        artifactDetailInputRef.value,
+        conditionInputRef.value,
         recommendation.build
       );
 
-      makeDamageDetailObjArrObjCharacter(characterInput.value, conditionInput.value); // キャラクター
-      makeDamageDetailObjArrObjWeapon(characterInput.value, conditionInput.value); // 武器
-      makeDamageDetailObjArrObjArtifactSets(characterInput.value, conditionInput.value); // 聖遺物セット効果
+      makeDamageDetailObjArrObjCharacter(
+        characterInputRef.value,
+        conditionInputRef.value
+      ); // キャラクター
+      makeDamageDetailObjArrObjWeapon(characterInputRef.value, conditionInputRef.value); // 武器
+      makeDamageDetailObjArrObjArtifactSets(
+        characterInputRef.value,
+        conditionInputRef.value
+      ); // 聖遺物セット効果
 
-      Object.keys(ステータスTEMPLATE).forEach((key) => {
-        statsObj[key] = ステータスTEMPLATE[key];
-      });
+      calculateStats(
+        statsInput,
+        characterInputRef.value as any,
+        artifactDetailInputRef.value as any,
+        conditionInputRef.value as any
+      );
+      console.log(statsInput.statsObj);
     };
     /** キャラクターを選択します */
     const updateCharacter = async function (character: TCharacterKey) {
       if (
-        !characterInput.value ||
-        !recommendationList.value ||
-        !artifactDetailInput.value ||
-        !conditionInput.value
+        !characterInputRef.value ||
+        !recommendationListRea ||
+        !artifactDetailInputRef.value ||
+        !conditionInputRef.value
       )
         return;
-      characterSelectVisible.value = false;
-      characterInput.value.character = character;
-      characterInput.value.characterMaster = await getCharacterMasterDetail(character);
-      recommendationList.value.splice(
+      characterSelectVisibleRef.value = false;
+      characterInputRef.value.character = character;
+      characterInputRef.value.characterMaster = await getCharacterMasterDetail(character);
+      recommendationListRea.splice(
         0,
-        recommendationList.value.length,
-        ...makeRecommendationList(characterInput.value.characterMaster)
+        recommendationListRea.length,
+        ...makeRecommendationList(characterInputRef.value.characterMaster)
       );
-      const recommendation = recommendationList.value[0];
+      const recommendation = recommendationListRea[0];
       await updateRecommendation(recommendation);
     };
     // 武器選択画面を開きます/閉じます
     const openWeaponSelect = () => {
-      weaponSelectVisible.value = !weaponSelectVisible.value;
-      if (weaponSelectVisible.value) {
-        artifactSetSelectVisible.value = false;
+      weaponSelectVisibleRef.value = !weaponSelectVisibleRef.value;
+      if (weaponSelectVisibleRef.value) {
+        artifactSetSelectVisibleRef.value = false;
       }
     };
     /** 武器を選択しました */
     const updateWeapon = async (weapon: TWeaponKey) => {
-      if (!characterInput.value) return;
-      weaponSelectVisible.value = false;
-      characterInput.value.weapon = weapon;
-      characterInput.value.weaponMaster = await getWeaponMasterDetail(
+      if (!characterInputRef.value) return;
+      weaponSelectVisibleRef.value = false;
+      characterInputRef.value.weapon = weapon;
+      characterInputRef.value.weaponMaster = await getWeaponMasterDetail(
         weapon,
-        characterInput.value.characterMaster.武器
+        characterInputRef.value.characterMaster.武器
       );
     };
     // 聖遺物セット効果選択画面を開きます/閉じます
     const openArtifactSetSelect = (index: number) => {
-      if (index == artifactSetIndex.value) {
-        artifactSetSelectVisible.value = !artifactSetSelectVisible.value;
+      if (index == artifactSetIndexRef.value) {
+        artifactSetSelectVisibleRef.value = !artifactSetSelectVisibleRef.value;
       } else {
-        artifactSetIndex.value = index;
-        artifactSetSelectVisible.value = true;
+        artifactSetIndexRef.value = index;
+        artifactSetSelectVisibleRef.value = true;
       }
-      if (artifactSetSelectVisible.value) {
-        weaponSelectVisible.value = false;
+      if (artifactSetSelectVisibleRef.value) {
+        weaponSelectVisibleRef.value = false;
       }
     };
     /** 聖遺物セット効果を選択しました */
     const updateArtifactSet = (artifactSet: TArtifactSetKey) => {
-      if (!characterInput.value) return;
-      artifactSets.value[artifactSetIndex.value] = artifactSet;
-      characterInput.value.artifactSetMasters[artifactSetIndex.value] =
+      if (!characterInputRef.value) return;
+      artifactSets.value[artifactSetIndexRef.value] = artifactSet;
+      characterInputRef.value.artifactSetMasters[artifactSetIndexRef.value] =
         ARTIFACT_SET_MASTER[artifactSet];
-      artifactSetSelectVisible.value = false;
+      artifactSetSelectVisibleRef.value = false;
     };
     // 聖遺物詳細画面を開きます/閉じます
     const openArtifactDetailInput = () => {
-      artifactDetailInputVisible.value = !artifactDetailInputVisible.value;
-      if (artifactDetailInputVisible.value) {
-        weaponSelectVisible.value = false;
-        artifactSetSelectVisible.value = false;
+      artifactDetailInputVisibleRef.value = !artifactDetailInputVisibleRef.value;
+      if (artifactDetailInputVisibleRef.value) {
+        weaponSelectVisibleRef.value = false;
+        artifactSetSelectVisibleRef.value = false;
       }
+    };
+    //
+    const updateCharacterInputCharacter = (characterInput: any) => {
+      Object.keys(characterInput).forEach((key) => {
+        if (characterInputRef.value && key in characterInputRef.value) {
+          [key] = characterInput[key];
+        }
+      });
+      makeDamageDetailObjArrObjCharacter(
+        characterInputRef.value,
+        conditionInputRef.value
+      ); // キャラクター
+      calculateStats(
+        statsInput,
+        characterInputRef.value as any,
+        artifactDetailInputRef.value as any,
+        conditionInputRef.value as any
+      );
+      console.log(statsInput.statsObj);
+    };
+    const updateCharacterInputWeapon = (characterInput: any) => {
+      Object.keys(characterInput).forEach((key) => {
+        if (characterInputRef.value && key in characterInputRef.value) {
+          [key] = characterInput[key];
+        }
+      });
+      makeDamageDetailObjArrObjWeapon(characterInputRef.value, conditionInputRef.value); // 武器
+      calculateStats(
+        statsInput,
+        characterInputRef.value as any,
+        artifactDetailInputRef.value as any,
+        conditionInputRef.value as any
+      );
+      console.log(statsInput.statsObj);
     };
     // 聖遺物ステータスを更新しました
     const updateArtifactDetail = (artifactDetailInput: any) => {
@@ -431,11 +411,11 @@ export default defineComponent({
     updateCharacter(character.value);
 
     const myDamageDatailArr = computed(() => {
-      if (characterInput.value) {
+      if (characterInputRef.value) {
         return [
-          characterInput.value.damageDetailMyCharacter,
-          characterInput.value.damageDetailMyWeapon,
-          characterInput.value.damageDetailMyArtifactSets,
+          characterInputRef.value.damageDetailMyCharacter,
+          characterInputRef.value.damageDetailMyWeapon,
+          characterInputRef.value.damageDetailMyArtifactSets,
         ];
       }
       return [];
@@ -443,33 +423,32 @@ export default defineComponent({
 
     return {
       t,
-      characterInput,
-      artifactDetailInput,
-      conditionInput,
-      characterSelectVisible,
+      characterInputRef,
+      artifactDetailInputRef,
+      conditionInputRef,
+      characterSelectVisibleRef,
       character,
-      recommendationList,
-      weaponSelectVisible,
+      recommendationListRea,
+      weaponSelectVisibleRef,
       weapon,
       weaponType,
-      artifactSetSelectVisible,
-      artifactSetIndex,
+      artifactSetSelectVisibleRef,
+      artifactSetIndexRef,
       artifactSets,
-      artifactDetailInputVisible,
-      statsObj,
+      artifactDetailInputVisibleRef,
+      statsInput,
       characterStats1CategoryList,
       characterStats2CategoryList,
       enemyStatsCategoryList,
       enemyList,
 
-      pane6Toggle1,
-      pane6Toggle2,
-      pane6Toggle3,
-      statInputTab,
-      ownListToggle1,
-      ownListToggle2,
+      pane6Toggle1Ref,
+      pane6Toggle2Ref,
+      pane6Toggle3Ref,
+      statInputTabRef,
+      ownListToggle1Ref,
+      ownListToggle2Ref,
 
-      displayName,
       updateRecommendation,
       updateCharacter,
       openWeaponSelect,
@@ -477,6 +456,7 @@ export default defineComponent({
       openArtifactSetSelect,
       updateArtifactSet,
       openArtifactDetailInput,
+      updateCharacterInputCharacter, updateCharacterInputWeapon,
       updateArtifactDetail,
 
       myDamageDatailArr,

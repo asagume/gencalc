@@ -2,9 +2,8 @@
 // グローバルになっていないので名前とあっていないが、
 // グローバルにするとtypescriptやリンターでエラーが多発するので仕方がないのです...
 
-// import { defineComponent, ref } from 'vue';
-// import { isString } from './common';
 import i18n from "./i18n";
+import { STAT_PERCENT_LIST } from "./input";
 
 const GlobalMixin = {
   data() {
@@ -28,16 +27,26 @@ const GlobalMixin = {
     };
   },
   methods: {
-    displayName: function (name: string | number): string {
+    displayName(name: string | number): string {
       // return i18n.global.t(String(name));
       return String(name);
     },
-    targetValue: function (event: Event) {
+    percent(stat: string) {
+      return (stat.endsWith('%') || STAT_PERCENT_LIST.includes(stat)) ? '%' : '';
+    },
+    displayStatValue(stat: string, value: number, opt_s?: number): string {
+      const percent = this.percent(stat);
+      let p = percent ? 10 : 1;
+      if (opt_s) p = Math.pow(10, opt_s);
+      return String(Math.round(value * p) / p) + percent;
+    },
+    /** $event.target.valueでのtypescriptエラー回避のために */
+    targetValue(event: Event) {
       if (event.target instanceof HTMLInputElement) return event.target.value;
       if (event.target instanceof HTMLSelectElement) return event.target.value;
       return undefined;
     },
-    langOnChange: function (lang: string | undefined) {
+    langOnChange(lang: string | undefined) {
       if (lang) {
         // document.getElementsByName('html')[0].lang = lang;
         i18n.global.locale.value = lang;

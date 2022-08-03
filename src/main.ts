@@ -160,10 +160,10 @@ async function main() {
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendation.build);
 
     createApp(App, {
-        initialCharacterInput: characterInput,
-        initialArtifactDetailInput: artifactDetailInput,
-        initialConditionInput: conditionInput,
-        initialRecommendationList: recommendationList,
+        characterInput: characterInput,
+        artifactDetailInput: artifactDetailInput,
+        conditionInput: conditionInput,
+        recommendationList: recommendationList,
     }).use(i18n).mount('#app')
 }
 

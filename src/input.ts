@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSetKey, TCharacterDetail, TCharacterKey, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SET_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactMainRarity, TArtifactMainStat, TArtifactSetKey, TCharacterDetail, TCharacterKey, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
 import { isNumber, isPlainObject, isString } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -108,6 +108,10 @@ export const ステータスARRAY_MAP = new Map([
     ['その他', ステータスその他ARRAY],
     ['敵元素ステータス·耐性', 敵元素ステータス_耐性ARRAY],
 ]);
+
+export const STAT_PERCENT_LIST = [
+    ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵元素ステータス_耐性ARRAY
+];
 
 function makeStatusTenmplate() {
     const statusObj = {} as { [key: string]: number };
@@ -259,7 +263,7 @@ export const ARTIFACT_SET_MASTER_DUMMY = {
 };
 
 export const CHARACTER_INPUT_TEMPLATE = {
-    character: null,
+    character: '',
     characterMaster: {} as TCharacterDetail,
     突破レベル: 6,
     レベル: 90,
@@ -267,7 +271,7 @@ export const CHARACTER_INPUT_TEMPLATE = {
     通常攻撃レベル: 8,
     元素スキルレベル: 8,
     元素爆発レベル: 8,
-    weapon: null,
+    weapon: '',
     weaponMaster: {} as TWeaponDetail,
     武器突破レベル: 6,
     武器レベル: 90,
@@ -299,6 +303,12 @@ export const CONDITION_INPUT_TEMPLATE = {
     conditionAdjustments: {}
 };
 export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
+
+export const STATS_INPUT_TEMPLATE = {
+    statsObj: JSON.parse(JSON.stringify(ステータスTEMPLATE)),
+    statsAdjustments: JSON.parse(JSON.stringify(ステータスTEMPLATE)),
+};
+export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
 export const OPTION_INPUT_TEMPLATE = {
     elementalResonanceConditionValues: {},
@@ -1109,4 +1119,133 @@ function analyzeFormulaStrSub(formulaStr: string, opt_defaultItem: string | null
         }
     }
     return resultArr;
+}
+
+export const calculateArtifactStatsMain = (artifactStatsMain: any, mainstats: string[]) => {
+    (Object.keys(artifactStatsMain) as (keyof typeof artifactStatsMain)[]).forEach(
+        (key) => {
+            artifactStatsMain[key] = 0;
+        }
+    );
+    for (const statWithRarity of mainstats) {
+        if (!statWithRarity) continue;
+        const stat: any[] = statWithRarity.split("_");
+        artifactStatsMain[stat[1]] += ARTIFACT_MAIN_MASTER[stat[0] as TArtifactMainRarity][stat[1] as TArtifactMainStat];
+    }
+};
+
+export function calculateArtifactSubStatByPriority(artifactStatsSub: any, mainstats: string[], prioritySubstats: string[], priotritySubstatIndices: number[], priotritySubstatValues: number[][], prioritySubstatCounts: number[]) {
+    (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach(
+        (key) => {
+            artifactStatsSub[key] = 0;
+        }
+    );
+    let totalCount = 0;
+    for (let i = 0; i < 3; i++) {
+        if (!prioritySubstats[i]) continue;
+        if (!priotritySubstatIndices[i]) continue;
+        if (!prioritySubstatCounts[i]) continue;
+        artifactStatsSub[prioritySubstats[i]] += priotritySubstatValues[i][priotritySubstatIndices[i]] * prioritySubstatCounts[i];
+        totalCount += prioritySubstatCounts[i];
+    }
+    // 初期: 3 or 4
+    // 強化: 5 (+4 +8 +12 +16 +20)
+    // 初期+強化: min=40 max=45
+    const noPrioritySubstatArr = Object.keys(聖遺物ステータスTEMPLATE).filter(s => !prioritySubstats.includes(s));
+    let noPriorityCount = Math.min(45, 40 + Math.round(Math.max(0, (totalCount - 12) / 4)));
+    noPriorityCount -= Math.min(45, totalCount);
+    for (let i = noPriorityCount; i > 0; i--) {
+        const substat = noPrioritySubstatArr[i % noPrioritySubstatArr.length] as keyof typeof ARTIFACT_SUB_MASTER;
+        artifactStatsSub[substat] += ARTIFACT_SUB_MASTER[substat][3];
+    }
+    const star4Count = mainstats.filter(s => s && s.startsWith('4')).length;
+    const multiplier = 1 - (0.07 * star4Count); // ★4聖遺物ひとつにつきステータスを7%下げます
+    (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach(
+        (key) => {
+            artifactStatsSub[key] *= multiplier;
+            artifactStatsSub[key] = Math.round(artifactStatsSub[key] * 10) / 10;
+        }
+    );
+}
+
+export const calculateStats = function (statsInput: TStatsInput, characterInput: TCharacterInput, artifactDetailInput: TArticactDetailInput, conditionInput: TConditionInput) {
+    if (!statsInput) return;
+    if (!characterInput) return;
+    if (!artifactDetailInput) return;
+    if (!conditionInput) return;
+
+    const statsObj = statsInput.statsObj;
+    Object.keys(statsObj).forEach(key => {
+        statsObj[key] = 0;
+    });
+
+    // ステータス補正を計上します
+    const statsAdjustments = statsInput.statsAdjustments;
+    Object.keys(statsAdjustments).forEach(stat => {
+        if (stat in statsObj) statsObj[stat] += statsAdjustments[stat];
+    });
+
+    const characterMaster = characterInput.characterMaster;
+    const ascension = characterInput.突破レベル;
+    const level = characterInput.レベル;
+    // const constellation = characterInput.命ノ星座;
+    const weaponMaster = characterInput.weaponMaster;
+    const weaponAscension = characterInput.武器突破レベル;
+    const weaponLevel = characterInput.武器レベル;
+
+    console.log(statsObj);
+
+    // キャラクターのステータスを計上します
+    Object.keys(characterMaster['ステータス']).forEach(stat => {
+        if (基礎ステータスARRAY.includes(stat)) {
+            statsObj[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], ascension, level);
+        } else {
+            const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
+            if (!(toStat in statsObj)) return;
+            statsObj[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension);
+        }
+    });
+
+    // 武器のステータスを計上します
+    Object.keys(weaponMaster['ステータス']).forEach(stat => {
+        statsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
+    });
+
+    // 聖遺物のステータスを計上します
+    const artifactStats = artifactDetailInput.聖遺物ステータス;
+    Object.keys(artifactStats).forEach(stat => {
+        statsObj[stat] += artifactStats[stat];
+    });
+
+    //TODO
+
+    // HP, 攻撃力, 防御力を計算します
+    statsObj['HP'] += statsObj['基礎HP'] + (statsObj['基礎HP'] * statsObj['HP%']) + statsObj['HP+'];
+    statsObj['攻撃力'] += statsObj['基礎攻撃力'] + (statsObj['基礎攻撃力'] * statsObj['攻撃力%']) + statsObj['攻撃力+'];
+    statsObj['防御力'] += statsObj['基礎防御力'] + (statsObj['基礎防御力'] * statsObj['防御力%']) + statsObj['防御力+'];
+
+    // HP, 攻撃力, 防御力 基準ステータスを計上します
+
+}
+
+export function getStatValueByLevel(statObj: any, ascension: number, level: number) {
+    if (!statObj) return 0;
+    const myLevelStr = getLevelStr(ascension, level);
+    if (myLevelStr in statObj) {
+        return statObj[myLevelStr];
+    }
+    const lowLevel = 突破レベルレベルARRAY[ascension][0];
+    const highLevel = 突破レベルレベルARRAY[ascension][突破レベルレベルARRAY[ascension].length - 1];
+    const lowValue = statObj[lowLevel + '+'];
+    const highValue = statObj[highLevel];
+    return lowValue + (highValue - lowValue) * (level - lowLevel) / (highLevel - lowLevel);
+}
+
+function getPropertyValueByLevel(statObj: any, ascension: number) {
+    const lowLevel = 突破レベルレベルARRAY[ascension][0];
+    return statObj[lowLevel + '+'];
+}
+
+export function getLevelStr(ascension: number, level: number) {
+    return level + 突破レベルレベルARRAY[ascension][0] == level ? '+' : '';
 }

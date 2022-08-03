@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div></div>
+</template>
 
 <script lang="ts">
 import GlobalMixin from "@/GlobalMixin.vue";
@@ -11,7 +13,8 @@ export default defineComponent({
     characterInput: { type: Object, require: true },
     conditionInput: { type: Object, require: true },
   },
-  setup(props) {},
+
 });
 </script>
-<style scoped></style>
+<style scoped>
+</style>

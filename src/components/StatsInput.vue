@@ -14,7 +14,7 @@
                 <td v-if="editable">
                     <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange">
                 </td>
-                <td>{{ displayStatValue(stat) }}</td>
+                <td>{{ displayStatValue(stat, statAdjustments[stat]) }}</td>
             </tr>
         </template>
         <tr>
@@ -39,24 +39,20 @@
 
 <script lang="ts">
 import GlobalMixin from '@/GlobalMixin.vue';
-import { ステータスARRAY_MAP, ステータスTEMPLATE } from '@/input';
-import { defineComponent, PropType, ref } from 'vue';
+import { STATS_INPUT_TEMPLATE, TStatsInput, ステータスARRAY_MAP } from '@/input';
+import { defineComponent, PropType, reactive, ref } from 'vue';
 
 export default defineComponent({
     name: 'StatsInput',
     mixins: [GlobalMixin],
     props: {
-        statsObj: { type: Object, require: true },
+        statsInput: { type: Object as PropType<TStatsInput>, require: true },
         categoryList: { type: Array as PropType<Array<string>>, require: true },
     },
     emits: ['update:stat-adjustment'],
     setup(props) {
-        const displayStatValue = (stat: string) => {
-            if (props.statsObj && props.statsObj[stat]) {
-                return props.statsObj[stat];
-            }
-            return 0;
-        };
+        const statsInputRea = reactive(props.statsInput ?? JSON.parse(JSON.stringify(STATS_INPUT_TEMPLATE)));
+        const statsAdjustments = reactive(statsInputRea.statsAdjustments);
 
         const editable = ref(false);
         const initializable = ref(false);
@@ -68,13 +64,12 @@ export default defineComponent({
                 categoryOpenClose.value[category] = false;
             }
         }
-        const visibleStatList = (category: string) => statList(category)?.filter(stat => categoryOpenClose.value[category] || (props.statsObj && props.statsObj[stat])) ?? [];
+        const visibleStatList = (category: string) => statList(category)?.filter(stat => categoryOpenClose.value[category] || (statsInputRea.statsObj && statsInputRea.statsObj[stat])) ?? [];
 
-        const statAdjustments = JSON.parse(JSON.stringify(ステータスTEMPLATE));
 
         //
         const adjustmentsOnChange = () => {
-            console.log(statAdjustments.value);
+            console.log(statsAdjustments.value);
         };
 
         // 補正値を0クリアします
@@ -84,18 +79,17 @@ export default defineComponent({
                 const list = statList(category);
                 if (!list) continue;
                 for (const stat of list) {
-                    statAdjustments[stat] = 0;
+                    statsAdjustments[stat] = 0;
                 }
             }
         }
         initializeAdjustments();
 
         return {
-            displayStatValue,
-
+            statsInputRef: statsInputRea,
             statList, visibleStatList, categoryOpenClose,
 
-            statAdjustments,
+            statAdjustments: statsAdjustments,
             adjustmentsOnChange,
             editable, initializable, initializeAdjustments,
         }
