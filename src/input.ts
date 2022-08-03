@@ -1175,7 +1175,7 @@ export const calculateStats = function (statsObj: typeof ステータスTEMPLATE
     if (!conditionInput) return;
 
     Object.keys(statsObj).forEach(key => {
-        statsObj[key] = 0;
+        statsObj[key] = key in ステータスTEMPLATE ? ステータスTEMPLATE[key] : 0;
     });
 
     // ステータス補正を計上します

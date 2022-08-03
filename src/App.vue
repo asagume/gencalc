@@ -145,10 +145,18 @@
           <label for="status-input-tab-3"> {{ displayName("敵") }} </label>
         </div>
         <template v-if="statInputTabRef == 1">
-          <StatsInput :statsObj="statsObj" :categoryList="characterStats1CategoryList" />
+          <StatsInput
+            :statsObj="statsObj"
+            :categoryList="characterStats1CategoryList"
+            @update:stat-adjustments="updateStatAdjustments($event)"
+          />
         </template>
         <template v-if="statInputTabRef == 2">
-          <StatsInput :statsObj="statsObj" :categoryList="characterStats2CategoryList" />
+          <StatsInput
+            :statsObj="statsObj"
+            :categoryList="characterStats2CategoryList"
+            @update:stat-adjustments="updateStatAdjustments($event)"
+          />
         </template>
         <template v-if="statInputTabRef == 3">
           <label class="enemy"
@@ -163,7 +171,11 @@
             >Lv.
             <input type="number" min="1" />
           </label>
-          <StatsInput :statsObj="statsObj" :categoryList="enemyStatsCategoryList" />
+          <StatsInput
+            :statsObj="statsObj"
+            :categoryList="enemyStatsCategoryList"
+            @update:stat-adjustments="updateStatAdjustments($event)"
+          />
         </template>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
@@ -298,6 +310,7 @@ import {
 } from "@/master";
 import { useI18n } from "vue-i18n";
 import GlobalMixin from "./GlobalMixin.vue";
+import { objectToString } from "@vue/shared";
 
 export default defineComponent({
   name: "App",
@@ -357,6 +370,9 @@ export default defineComponent({
 
     const statsObj = reactive(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
     const statsAdjustments = reactive(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
+    Object.keys(statsAdjustments).forEach((key) => {
+      statsAdjustments[key] = 0;
+    });
     const characterStats1CategoryList = [
       "基礎ステータス",
       "基本ステータス",
@@ -556,6 +572,19 @@ export default defineComponent({
       }
       return [];
     });
+    const updateStatAdjustments = (argStatsAdjustments: any) => {
+      Object.keys(argStatsAdjustments).forEach((key) => {
+        statsAdjustments[key] = argStatsAdjustments[key];
+      });
+      calculateStats(
+        statsObj,
+        statsAdjustments,
+        characterInputRef.value as any,
+        artifactDetailInputRef.value as any,
+        conditionInputRef.value as any
+      );
+      // ダメージ計算
+    };
     /** 元素共鳴を更新しました */
     const updateElementalResonance = (checked: any) => {
       elementalResonanceInputRef.value = checked;
@@ -603,6 +632,7 @@ export default defineComponent({
       updateCharacterInputCharacter,
       updateCharacterInputWeapon,
       updateArtifactDetail,
+      updateStatAdjustments,
       updateElementalResonance,
 
       myDamageDatailArr,

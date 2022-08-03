@@ -266,6 +266,7 @@ import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
+  TArticactDetailInput,
   聖遺物ステータスTEMPLATE,
   聖遺物メイン効果_時の砂ARRAY,
   聖遺物メイン効果_死の羽ARRAY,
@@ -280,7 +281,7 @@ import {
   TArtifactMainRarity,
   TArtifactMainStat,
 } from "@/master";
-import { computed, defineComponent, reactive, ref, watch } from "vue";
+import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 
 export default defineComponent({
   name: "ArtifactDetailInput",

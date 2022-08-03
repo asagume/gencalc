@@ -53,17 +53,23 @@ export default defineComponent({
     statsObj: { type: Object as PropType<TStats>, require: true },
     categoryList: { type: Array as PropType<Array<string>>, require: true },
   },
-  emits: ["update:stat-adjustment"],
-  setup(props) {
-    const statsAdjustments = reactive(JSON.parse(JSON.stringify(ステータスTEMPLATE)));
-    Object.keys(statsAdjustments).forEach((key) => {
-      statsAdjustments[key] = 0;
-    });
-
+  emits: ["update:stat-adjustments"],
+  setup(props, context) {
     const editable = ref(false);
     const initializable = ref(false);
 
     const statList = (category: string) => ステータスARRAY_MAP.get(category);
+    const statsAdjustments = reactive({} as any);
+    if (props.categoryList) {
+      for (const category of props.categoryList) {
+        const workList = statList(category);
+        if (!workList) continue;
+        for (const stat of workList) {
+          statsAdjustments[stat] = 0;
+        }
+      }
+    }
+
     const categoryOpenClose = ref({} as any);
     if (props.categoryList) {
       for (const category of props.categoryList) {
@@ -79,6 +85,7 @@ export default defineComponent({
 
     //
     const adjustmentsOnChange = () => {
+      context.emit("update:stat-adjustments", statsAdjustments);
       console.log(statsAdjustments);
     };
 
