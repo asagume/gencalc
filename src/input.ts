@@ -126,6 +126,7 @@ function makeStatusTenmplate() {
     return statusObj;
 }
 export const ステータスTEMPLATE = makeStatusTenmplate();
+export type TStats = typeof ステータスTEMPLATE;
 
 function makeEnemyStatusTemplate() {
     const statusObj = {} as { [key: string]: number };
@@ -1168,19 +1169,16 @@ export function calculateArtifactSubStatByPriority(artifactStatsSub: any, mainst
     );
 }
 
-export const calculateStats = function (statsInput: TStatsInput, characterInput: TCharacterInput, artifactDetailInput: TArticactDetailInput, conditionInput: TConditionInput) {
-    if (!statsInput) return;
+export const calculateStats = function (statsObj: typeof ステータスTEMPLATE, statsAdjustments: typeof ステータスTEMPLATE, characterInput: TCharacterInput, artifactDetailInput: TArticactDetailInput, conditionInput: TConditionInput) {
     if (!characterInput) return;
     if (!artifactDetailInput) return;
     if (!conditionInput) return;
 
-    const statsObj = statsInput.statsObj;
     Object.keys(statsObj).forEach(key => {
         statsObj[key] = 0;
     });
 
     // ステータス補正を計上します
-    const statsAdjustments = statsInput.statsAdjustments;
     Object.keys(statsAdjustments).forEach(stat => {
         if (stat in statsObj) statsObj[stat] += statsAdjustments[stat];
     });
@@ -1220,9 +1218,12 @@ export const calculateStats = function (statsInput: TStatsInput, characterInput:
     //TODO
 
     // HP, 攻撃力, 防御力を計算します
-    statsObj['HP'] += statsObj['基礎HP'] + (statsObj['基礎HP'] * statsObj['HP%']) + statsObj['HP+'];
-    statsObj['攻撃力'] += statsObj['基礎攻撃力'] + (statsObj['基礎攻撃力'] * statsObj['攻撃力%']) + statsObj['攻撃力+'];
-    statsObj['防御力'] += statsObj['基礎防御力'] + (statsObj['基礎防御力'] * statsObj['防御力%']) + statsObj['防御力+'];
+    statsObj['HP上限'] += statsObj['基礎HP'] + statsObj['HP+'];
+    statsObj['HP上限'] += (statsObj['基礎HP'] * statsObj['HP%']) / 100;
+    statsObj['攻撃力'] += statsObj['基礎攻撃力'] + statsObj['攻撃力+'];
+    statsObj['攻撃力'] += (statsObj['基礎攻撃力'] * statsObj['攻撃力%']) / 100;
+    statsObj['防御力'] += statsObj['基礎防御力'] + statsObj['防御力+'];
+    statsObj['防御力'] += (statsObj['基礎防御力'] * statsObj['防御力%']) / 100;
 
     // HP, 攻撃力, 防御力 基準ステータスを計上します
 
