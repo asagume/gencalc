@@ -351,6 +351,10 @@ div.filter img.filter.selected {
     border-radius: 10px;
 }
 
+th .toggle-switch, td.toggle-switch, h2 .toggle-switch {
+    width: inherit;
+}
+
 .toggle-switch::before, .toggle-switch::after {
     content: '';
     width: 1.5rem;

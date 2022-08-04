@@ -3,7 +3,7 @@
     <tr>
       <td
         colspan="3"
-        rowspan="3"
+        rowspan="4"
         style="width: 40%; max-width: 200px; position: relative"
       >
         <img
@@ -19,9 +19,9 @@
         />
       </td>
       <td
-        :class="'title ' + colorClass(characterMaster)"
+        :class="'name ' + colorClass(characterMaster)"
         colspan="3"
-        style="position: relative"
+        style="position: relative; height: 50px"
       >
         {{ displayName(characterMaster.名前) }}
         <span
@@ -31,6 +31,12 @@
         >
           info
         </span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="title">
+        {{ displayName(characterMaster.baseInfo.称号) }}
+        <hr />
       </td>
     </tr>
     <tr>
@@ -63,7 +69,7 @@
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 50px">
         <select v-model="ascension" @change="ascensionOnChange">
           <option v-for="item in ascensionRange" :value="item" :key="item">
             A{{ item }}
@@ -77,7 +83,7 @@
           </option>
         </select>
       </td>
-      <td>
+      <td style="width: 50px">
         <select v-model="constellation" @change="characterOnChange">
           <option v-for="item in constellationRange" :value="item" :key="item">
             C{{ item }}
@@ -463,10 +469,16 @@ td {
   border: none;
 }
 
-td.title {
+td.name {
   font-size: 3rem;
   text-align: left;
   text-shadow: 0 0 2px black;
+}
+
+td.title {
+  text-align: right;
+  text-shadow: 0 0 2px black;
+  padding: 0 1rem;
 }
 
 td select,
