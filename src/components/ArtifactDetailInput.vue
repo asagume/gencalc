@@ -47,7 +47,7 @@
           </option>
         </select>
       </label>
-      <table>
+      <table class="detail">
         <tr>
           <th>{{ displayName("HP") }}</th>
           <td>
@@ -203,7 +203,7 @@
     </fieldset>
     <fieldset>
       <legend>{{ displayName("聖遺物サブ効果 簡易設定") }}</legend>
-      <table style="margin-top: 0">
+      <table class="priority-substat">
         <tr>
           <th>{{ displayName("優先するサブ効果") }}</th>
           <th>{{ displayName("上昇値") }}</th>
@@ -522,6 +522,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+fieldset {
+  margin-bottom: 10px;
+}
+
 label {
   display: inline-block;
   color: #df8f37;
@@ -550,6 +554,12 @@ table {
   margin-top: 10px;
 }
 
+table.priority-substat {
+  table-layout: auto;
+  margin-top: 0;
+  border: none;
+}
+
 th,
 td {
   text-align: right;
@@ -560,6 +570,19 @@ td {
 
 th {
   color: #df8f37;
+}
+
+table.priority-substat th {
+  text-align: center;
+  border: none;
+}
+
+table.priority-substat td {
+  border: none;
+}
+
+table.priority-substat td select {
+  width: 100%;
 }
 
 input[type="number"] {
