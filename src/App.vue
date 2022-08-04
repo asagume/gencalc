@@ -386,7 +386,7 @@ export default defineComponent({
     const artifactSets = reactive(
       characterInputRef.value?.artifactSets ?? ["NONE", "NONE"]
     );
-    const artifactDetailInputVisibleRef = ref(false);
+    const artifactDetailInputVisibleRef = ref(true);
 
     const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE));
     Object.keys(statsInput.statsAdjustments).forEach((key) => {
