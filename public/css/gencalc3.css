@@ -7,7 +7,7 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto 480px auto minmax(500px, auto) auto auto;
+        grid-template-rows: auto auto auto auto minmax(500px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1 pane1"
             "pane2 pane2 pane2"

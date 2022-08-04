@@ -44,7 +44,7 @@
           :alt="characterMaster.元素"
         />
       </td>
-      <td>
+      <td class="icon">
         <img
           :class="'weapon' + bgImageClass(weaponMaster)"
           :src="weaponMaster['icon_url']"
