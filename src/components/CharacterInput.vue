@@ -129,7 +129,7 @@
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
       </td>
-      <td rowspan="2">
+      <td>
         <button
           type="button"
           class="artifact-detail-button"
@@ -168,16 +168,15 @@
           </option>
         </select>
       </td>
-      <td colspan="2"></td>
-    </tr>
-    <tr>
-      <th colspan="3" rowspan="2" class="recommendation">
-        <label class="open-close">
-          <input class="hidden" type="checkbox" v-model="recommendationListVisible" />
-          <span>{{ displayName("おすすめセット") }}</span>
-        </label>
-      </th>
       <td colspan="3">
+        <select v-model="storageOrRecommendationRef">
+          <option value="0">{{ displayName("名前を付けて保存") }}</option>
+          <option value="1">{{ displayName("おすすめセット呼び出し") }}</option>
+        </select>
+      </td>
+    </tr>
+    <tr v-show="storageOrRecommendationRef == '0'">
+      <td colspan="4">
         <label>
           <input
             class="save-name"
@@ -189,9 +188,6 @@
           />
         </label>
       </td>
-    </tr>
-    <tr>
-      <td></td>
       <td>
         <button type="button" :disabled="saveDisabled" @click="saveOnClick">
           Save
@@ -205,7 +201,7 @@
         </button>
       </td>
     </tr>
-    <tr v-if="recommendationListVisible">
+    <tr v-show="storageOrRecommendationRef == '1'">
       <td colspan="6">
         <select
           v-model="selectedRecommendation"
@@ -267,7 +263,7 @@ export default defineComponent({
     const weaponLevelRef = ref(props.characterInput?.武器レベル ?? 90);
     const weaponRefineRef = ref(props.characterInput?.武器精錬ランク ?? 1);
 
-    const recommendationListVisibleRef = ref(false);
+    const storageOrRecommendationRef = ref("0");
 
     const displayBuildName = (item: TRecommendation) => item.name;
 
@@ -422,7 +418,7 @@ export default defineComponent({
       weaponLevelRange,
       weaponRefineRange,
       weaponAscensionOnChange,
-      recommendationListVisible: recommendationListVisibleRef,
+      storageOrRecommendationRef,
       normalAttackLevelRange,
       elementalSkillLevelRange,
       elementalBurstLevelRange,

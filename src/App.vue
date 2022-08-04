@@ -516,6 +516,7 @@ export default defineComponent({
       }
       if (artifactSetSelectVisibleRef.value) {
         weaponSelectVisibleRef.value = false;
+        artifactDetailInputVisibleRef.value = false;
       }
     };
     /** 聖遺物セット効果を選択しました */
