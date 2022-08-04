@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
-import { isNumber } from './common';
+import { deepcopy, isNumber } from './common';
 import i18n from './i18n';
 
 
@@ -138,9 +138,9 @@ function getCharacterByBirthday(): string {
 }
 
 async function main() {
-    const characterInput = JSON.parse(JSON.stringify(CHARACTER_INPUT_TEMPLATE)) as { [key: string]: any };
-    const artifactDetailInput = JSON.parse(JSON.stringify(ARTIFACT_DETAIL_INPUT_TEMPLATE));
-    const conditionInput = JSON.parse(JSON.stringify(CONDITION_INPUT_TEMPLATE));
+    const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as { [key: string]: any };
+    const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE);
+    const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE);
 
     const searchParams = new URLSearchParams(window.location.search);
     let savedata;

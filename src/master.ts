@@ -27,6 +27,7 @@ import HOYO_DICTIONARY2 from '../public/data/HoYoDictionary2.json'// assert {typ
 import HOYO_DICTIONARY4 from '../public/data/HoYoDictionary4.json'// assert {type: 'json'}
 import HOYO_DICTIONARY5 from '../public/data/HoYoDictionary5.json'// assert {type: 'json'}
 import LOCAL_DICTIONARY from '../public/data/LocalDictionary.json'// assert {type: 'json'}
+import { isPlainObject, isString } from './common'
 
 export {
     CHARACTER_MASTER,
@@ -59,14 +60,14 @@ export type TCharacterEntry = TCharacter & {
 }
 
 export type TCharacterDetail = {
-    名前: string,
+    名前: TCharacterKey,
     説明: string,
     icon_url: string,
     レアリティ: 4 | 5,
     武器: TWeaponTypeKey,
     元素: TVisionKey,
     baseInfo: any,
-    ステータス: any,
+    ステータス: TCharacterStats,
     通常攻撃: any,
     重撃: any,
     落下攻撃: any,
@@ -82,6 +83,34 @@ export type TCharacterDetail = {
     固有変数?: any,
     おすすめセット: any[],
 }
+export type TCharacterStats = {
+    基礎HP: {
+        [key: string]: number,
+    },
+    基礎攻撃力: {
+        [key: string]: number,
+    },
+    基礎防御力: {
+        [key: string]: number,
+    },
+    [key: string]: {
+        [key: string]: number,
+    }
+};
+export type TLeveldValue = {
+    [key: number | string]: number,
+};
+export type TTalentFormula = number | string | TLeveldValue;
+export type TCharacterTalent = {
+    名前?: string,
+    詳細?: {
+        名前?: string,
+        種類?: string,
+        対象?: string,
+        条件?: string,
+    }[],
+    [key: string]: string | number | any[] | undefined,
+};
 
 export type TWeaponRarity = 1 | 2 | 3 | 4 | 5;
 export type TWeaponStats = {
@@ -241,15 +270,6 @@ export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...
 
 ////////////////
 ////////////////
-export function isPlainObject(value: any) {
-    const myType = Object.prototype.toString.call(value);
-    return myType === '[object Object]';
-}
-
-export function isString(value: any) {
-    return typeof value === 'string' || value instanceof String;
-}
-
 function removeStrFromUrl(obj: any, str: string) {
     if (isPlainObject(obj)) {
         Object.keys(obj).forEach(key => {
@@ -324,6 +344,7 @@ export const ELEMENT_COLOR_CLASS = {
     氷: 'cryo',
     岩: 'geo'
 };
+export type TElementColorClassKey = keyof typeof ELEMENT_COLOR_CLASS;
 
 export const ELEMENT_BG_COLOR_CLASS = {
     炎: 'pyro-bg',

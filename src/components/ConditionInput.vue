@@ -4,9 +4,9 @@
       <input type="checkbox" v-model="conditionValues[item]" :value="item" />
       <span>{{ item }}</span>
     </label>
-    <label v-for="item in selectList" :key="item.key">
-      <span>{{ item.key }}</span>
-      <select v-model="conditionValues[item.key]">
+    <label v-for="item in selectList" :key="item.name">
+      <span>{{ item.name }}</span>
+      <select v-model="conditionValues[item.name]">
         <option v-if="!item.require" value=""></option>
         <option v-for="(option, index) in item.options" :value="index" :key="index">
           {{ displayOptionName(option) }}
@@ -18,11 +18,12 @@
 
 <script lang="ts">
 import GlobalMixin from "@/GlobalMixin.vue";
+import { TDamageDetail } from "@/input";
 import { computed, defineComponent, ref } from "vue";
 
 type TCheckboxEntry = string;
 type TSelectEntry = {
-  key: string;
+  name: string;
   options: string[];
   require: boolean;
 };
@@ -38,14 +39,13 @@ export default defineComponent({
     const displayOptionName = (name: string) => name.replace(/^required_/, "");
 
     const myDamageDatailArr = computed(() => {
+      const result = [] as TDamageDetail[];
       if (props.characterInput) {
-        return [
-          props.characterInput.damageDetailMyCharacter,
-          props.characterInput.damageDetailMyWeapon,
-          props.characterInput.damageDetailMyArtifactSets,
-        ];
+        if (props.characterInput.damageDetailMyCharacter) result.push(props.characterInput.damageDetailMyCharacter);
+        if (props.characterInput.damageDetailMyWeapon) result.push(props.characterInput.damageDetailMyWeapon);
+        if (props.characterInput.damageDetailMyArtifactSets) result.push(props.characterInput.damageDetailMyArtifactSets);
       }
-      return [];
+      return result;
     });
     const checkboxList = computed((): TCheckboxEntry[] => {
       const result = [] as string[];
@@ -67,7 +67,7 @@ export default defineComponent({
           damageDetail.条件.forEach((value: string[] | null, key: string) => {
             if (!value) return;
             result.push({
-              key: key,
+              name: key,
               options: value,
               require: value[0].startsWith("required_"),
             });
@@ -99,7 +99,7 @@ label select {
   margin: 0 0.5rem;
 }
 
-:checked + span {
+:checked+span {
   color: palevioletred;
 }
 </style>

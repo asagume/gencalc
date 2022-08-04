@@ -12,11 +12,7 @@
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayName(stat) }}</th>
         <td v-if="editable">
-          <input
-            type="number"
-            v-model="statsAdjustments[stat]"
-            @change="adjustmentsOnChange"
-          />
+          <input type="number" v-model="statsAdjustments[stat]" @change="adjustmentsOnChange" />
         </td>
         <td>{{ displayStatValue(stat, statValue(stat)) }}</td>
       </tr>
@@ -43,7 +39,7 @@
 
 <script lang="ts">
 import GlobalMixin from "@/GlobalMixin.vue";
-import { TStats, ステータスARRAY_MAP, ステータスTEMPLATE } from "@/input";
+import { TStats, ステータスARRAY_MAP } from "@/input";
 import { defineComponent, PropType, reactive, ref } from "vue";
 
 export default defineComponent({
