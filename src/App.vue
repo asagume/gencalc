@@ -393,7 +393,6 @@ export default defineComponent({
       statsInput.statsAdjustments[key] = 0;
     });
     const characterStats1CategoryList = [
-      "基礎ステータス",
       "基本ステータス",
       "高級ステータス",
       "元素ステータス·ダメージ",
@@ -401,7 +400,11 @@ export default defineComponent({
       "実数ダメージ加算",
       "元素反応バフ",
     ];
-    const characterStats2CategoryList = ["元素ステータス·耐性", "その他"];
+    const characterStats2CategoryList = [
+      "元素ステータス·耐性",
+      "基礎ステータス",
+      "その他",
+    ];
     const enemyStatsCategoryList = ["敵元素ステータス·耐性"];
     const enemyList = ENEMY_MASTER_LIST;
     const elementalResonanceInputRef = ref({ 元素共鳴なし: true } as any);

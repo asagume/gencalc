@@ -529,10 +529,10 @@ export function calculate結晶シールド吸収量(element: string, statsObj: 
 
 export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防御力,防御無視
     try {
-        const level = statsObj['レベル'];
-        const enemyLevel = statsObj['敵レベル'];
+        const level = statsObj['レベル'] ?? 0;
+        const enemyLevel = statsObj['敵レベル'] ?? 0;
         const calcIgnoreDef = opt_ignoreDef / 100;
-        const calcDef = statsObj['敵防御力'] / 100;
+        const calcDef = (statsObj['敵防御力'] ?? 0) / 100;
         const result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
         return result;
     } catch (error) {
@@ -543,7 +543,8 @@ export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防�
 
 export function calculateEnemyRes(element: string, statsObj: TStats) {
     try {
-        let result = statsObj[element + (element != '物理' ? '元素' : '') + '耐性'];
+        const statName = '敵' + element + (element != '物理' ? '元素' : '') + '耐性';
+        let result = statsObj[statName] ?? 0;
         if (result < 0) {
             result = 100 - result / 2;
         } else if (result < 75) {
@@ -1212,7 +1213,7 @@ function updateStats(
     }
     if (statName == 'HP') {
         statName = 'HP上限';
-    // } else if (statName.indexOf('.') != -1) {
+        // } else if (statName.indexOf('.') != -1) {
     } else {
         switch (statName) {
             case '自元素ダメージバフ':

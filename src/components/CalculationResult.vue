@@ -78,11 +78,11 @@
           <th>{{ displayName("非会心") }}</th>
         </tr>
       </thead>
-      <tr v-for="item in calculationResultObj[category]" :key="item[0]">
+      <tr v-for="item in itemList(category)" :key="item[0]">
         <th>{{ displayName(item[0]) }}</th>
-        <td>{{ item[2] }}</td>
-        <td>{{ item[3] }}</td>
-        <td>{{ item[4] }}</td>
+        <td :class="elementClass(item[1])">{{ displayDamageValue(item[2]) }}</td>
+        <td :class="elementClass(item[1])">{{ displayDamageValue(item[3]) }}</td>
+        <td :class="elementClass(item[1])">{{ displayDamageValue(item[4]) }}</td>
       </tr>
     </table>
   </template>
@@ -109,6 +109,14 @@ export default defineComponent({
       ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
     const calculationResultObj = props.resultObj ?? {};
 
+    const displayDamageValue = (value: number) => {
+      if (!value) return "-";
+      if (value < 10) value = Math.round(value * 100) / 100;
+      else if (value < 100) value = Math.round(value * 10) / 10;
+      else value = Math.round(value);
+      return value;
+    };
+
     console.log(元素反応);
 
     const CATEGORY_LIST = [
@@ -119,12 +127,19 @@ export default defineComponent({
       "元素爆発",
       "その他",
     ];
+    const itemList = (category: string) => {
+      return calculationResultObj[category].filter(
+        (s: any[]) => !s[0].startsWith("非表示")
+      );
+    };
 
     return {
       元素反応,
       増幅反応,
       elementClass,
+      displayDamageValue,
       CATEGORY_LIST,
+      itemList,
       calculationResultObj,
     };
   },
