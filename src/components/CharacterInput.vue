@@ -1,22 +1,16 @@
 <template>
   <table>
     <tr>
-      <td
-        :class="'name ' + colorClass(characterMaster)"
-        colspan="2"
-        style="position: relative; height: 50px"
-      >
-        {{ displayName(characterMaster.名前) }}
-        <span
-          class="material-symbols-outlined"
-          style="position: absolute; right: 1rem"
-          @click="$emit('open:character-info')"
-        >
-          info
+      <td :class="'name ' + colorClass(characterMaster)" colspan="2">
+        <span @click="$emit('open:character-info')">
+          {{ displayName(characterMaster.名前) }}
+          <span class="material-symbols-outlined"> info </span>
         </span>
       </td>
-      <td colspan="2" class="title">
-        {{ displayName(characterMaster.baseInfo.称号) }}
+      <td colspan="2" :class="'title ' + colorClass(characterMaster)">
+        <span v-show="characterMaster.baseInfo.称号">
+          {{ displayName(characterMaster.baseInfo.称号) }}</span
+        >
       </td>
     </tr>
     <tr>
@@ -78,7 +72,7 @@
       </td>
     </tr>
   </table>
-  <table style="table-layout: fixed">
+  <table>
     <tr>
       <td class="icon">
         <img
@@ -447,8 +441,14 @@ td {
 }
 
 td.name {
+  padding-bottom: 5px;
+  text-align: right;
+  vertical-align: middle;
+}
+
+td.name span {
   font-size: 3rem;
-  text-align: left;
+  font-weight: bold;
   text-shadow: 0 0 2px black;
 }
 
