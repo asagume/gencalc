@@ -243,6 +243,10 @@ button {
     background-image: url('../images/star5-bg.png');
 }
 
+img {
+    vertical-align: middle;
+}
+
 h2 {
     margin-left: auto;
     margin-right: auto;

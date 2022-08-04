@@ -72,7 +72,7 @@
       </td>
     </tr>
   </table>
-  <table>
+  <table class="talent-and-artifact">
     <tr>
       <td class="icon">
         <img
@@ -123,12 +123,8 @@
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
       </td>
-      <td>
-        <button
-          type="button"
-          class="artifact-detail-button"
-          @click="$emit('open:artifact-detail-input')"
-        >
+      <td class="artifact-detail-button icon">
+        <label @click="$emit('open:artifact-detail-input')">
           <img
             class="artifact-set"
             :src="IMG_SRC_DUMMY"
@@ -136,8 +132,9 @@
           />
           <img class="left-icon" src="images/artifact.png" alt="artifact" />
           <img class="right-icon" src="images/artifact.png" alt="artifact" />
-          <div class="absolute-center">{{ "artifactScore" }}</div>
-        </button>
+          <div class="absolute-center">{{ "000" }}</div>
+        </label>
+        <div class="tooltip">{{ displayName("聖遺物詳細") }}</div>
       </td>
     </tr>
     <tr>
@@ -169,6 +166,8 @@
         </select>
       </td>
     </tr>
+  </table>
+  <table style="margin-top: 10px; table-layout: fixed">
     <tr v-show="storageOrRecommendationRef == '0'">
       <td colspan="4">
         <label>
@@ -476,8 +475,8 @@ img.character {
 img.vision {
   width: 30%;
   position: absolute;
-  left: 6px;
-  top: 6px;
+  left: 5%;
+  top: 5%;
 }
 
 :checked + img {
@@ -492,7 +491,6 @@ img.weapon {
 img.talent,
 img.artifact-set {
   width: 100%;
-  max-width: 72px;
   border-radius: 50%;
   border: none;
 }
@@ -507,19 +505,24 @@ th.recommendation {
   border: 2px solid gray;
   border-radius: 10px;
   padding: 2px;
+  margin: 10px;
 }
 
-th button,
-td button {
-  width: calc(100% - 4px);
-  display: inline-block;
+td.artifact-detail-button {
+  border: 2px solid gray;
 }
 
 input[type="text"] {
   padding-left: 1rem;
 }
 
-.icon {
-  vertical-align: top;
+table.talent-and-artifact {
+  table-layout: fixed;
+}
+
+table.talent-and-artifact td {
+  table-layout: fixed;
+  background-color: #333;
+  border-radius: 10px;
 }
 </style>

@@ -563,7 +563,7 @@ export default defineComponent({
     const updateCharacterInputCharacter = (characterInput: any) => {
       Object.keys(characterInput).forEach((key) => {
         if (characterInputRef.value && key in characterInputRef.value) {
-          [key] = characterInput[key];
+          characterInputRef.value[key] = characterInput[key];
         }
       });
       makeDamageDetailObjArrObjCharacter(
