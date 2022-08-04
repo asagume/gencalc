@@ -77,52 +77,6 @@
         </select>
       </td>
     </tr>
-    <tr>
-      <td colspan="2" style="text-align: right">build name:</td>
-      <td colspan="2">
-        <label>
-          <input
-            class="save-name"
-            type="text"
-            v-model="buildname"
-            maxlength="20"
-            @change="saveDisabled = false"
-          />
-        </label>
-      </td>
-    </tr>
-    <tr>
-      <th colspan="2">
-        <label class="open-close">
-          <input class="hidden" type="checkbox" v-model="recommendationListVisible" />
-          <span>{{ displayName("おすすめセット") }}</span>
-        </label>
-      </th>
-      <td>
-        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
-          Save
-          <!-- <span class="material-symbols-outlined"> save </span> -->
-        </button>
-      </td>
-      <td>
-        <button type="button" :disabled="removeDisabled" @click="removeOnClick">
-          Remove
-          <!-- <span class="material-symbols-outlined"> delete </span> -->
-        </button>
-      </td>
-    </tr>
-    <tr v-if="recommendationListVisible">
-      <td colspan="4">
-        <select
-          v-model="selectedRecommendation"
-          @change="$emit('update:recommendation', targetValue($event))"
-        >
-          <option v-for="item in recommendationList" :value="item" :key="item.name">
-            {{ displayBuildName(item) }}
-          </option>
-        </select>
-      </td>
-    </tr>
   </table>
   <table style="table-layout: fixed">
     <tr>
@@ -214,8 +168,53 @@
           </option>
         </select>
       </td>
-      <td colspan="2" style="text-align: right">
-        {{ displayName("聖遺物詳細") }} &gt;&gt;
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <th colspan="3" rowspan="2" class="recommendation">
+        <label class="open-close">
+          <input class="hidden" type="checkbox" v-model="recommendationListVisible" />
+          <span>{{ displayName("おすすめセット") }}</span>
+        </label>
+      </th>
+      <td colspan="3">
+        <label>
+          <input
+            class="save-name"
+            type="text"
+            v-model="buildname"
+            maxlength="20"
+            placeholder="input build name"
+            @change="saveDisabled = false"
+          />
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
+          Save
+          <!-- <span class="material-symbols-outlined"> save </span> -->
+        </button>
+      </td>
+      <td>
+        <button type="button" :disabled="removeDisabled" @click="removeOnClick">
+          Remove
+          <!-- <span class="material-symbols-outlined"> delete </span> -->
+        </button>
+      </td>
+    </tr>
+    <tr v-if="recommendationListVisible">
+      <td colspan="6">
+        <select
+          v-model="selectedRecommendation"
+          @change="$emit('update:recommendation', targetValue($event))"
+        >
+          <option v-for="item in recommendationList" :value="item" :key="item.name">
+            {{ displayBuildName(item) }}
+          </option>
+        </select>
       </td>
     </tr>
   </table>
@@ -466,11 +465,11 @@ td.title {
 td select,
 td input,
 td label {
-  width: 100%;
+  width: calc(100% - 6px);
 }
 
 input.save-name {
-  width: calc(100% - 1rem);
+  width: calc(100% - 16px);
 }
 
 img.character {
@@ -506,7 +505,7 @@ img.selected {
   background-color: rgb(156, 140, 49);
 }
 
-th[colspan="2"] {
+th.recommendation {
   color: #e8d14e;
   background-color: #333;
   border: 2px solid gray;
@@ -514,9 +513,14 @@ th[colspan="2"] {
   padding: 2px;
 }
 
-button {
-  width: 12rem;
+th button,
+td button {
+  width: calc(100% - 4px);
   display: inline-block;
+}
+
+input[type="text"] {
+  padding-left: 1rem;
 }
 
 .icon {
