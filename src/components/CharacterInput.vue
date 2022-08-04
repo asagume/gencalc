@@ -2,10 +2,42 @@
   <table>
     <tr>
       <td
-        colspan="3"
-        rowspan="4"
-        style="width: 40%; max-width: 200px; position: relative"
+        :class="'name ' + colorClass(characterMaster)"
+        colspan="2"
+        style="position: relative; height: 50px"
       >
+        {{ displayName(characterMaster.名前) }}
+        <span
+          class="material-symbols-outlined"
+          style="position: absolute; right: 1rem"
+          @click="$emit('open:character-info')"
+        >
+          info
+        </span>
+      </td>
+      <td colspan="2" class="title">
+        {{ displayName(characterMaster.baseInfo.称号) }}
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 20%">
+        <select v-model="ascension" @change="ascensionOnChange">
+          <option v-for="item in ascensionRange" :value="item" :key="item">
+            A{{ item }}
+          </option>
+        </select>
+        <select v-model="level" @change="characterOnChange">
+          <option v-for="item in levelRange" :value="item" :key="item">
+            Lv.{{ item }}
+          </option>
+        </select>
+        <select v-model="constellation" @change="characterOnChange">
+          <option v-for="item in constellationRange" :value="item" :key="item">
+            C{{ item }}
+          </option>
+        </select>
+      </td>
+      <td style="position: relative; width: 30%">
         <img
           :class="'character' + bgImageClass(characterMaster)"
           :src="characterMaster.icon_url"
@@ -18,46 +50,37 @@
           :alt="characterMaster.元素"
         />
       </td>
-      <td
-        :class="'name ' + colorClass(characterMaster)"
-        colspan="3"
-        style="position: relative; height: 50px"
-      >
-        {{ displayName(characterMaster.名前) }}
-        <span
-          class="material-symbols-outlined"
-          style="position: absolute; right: 1rem"
-          @click="$emit('open:character-info')"
-        >
-          info
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" class="title">
-        {{ displayName(characterMaster.baseInfo.称号) }}
-        <hr />
-      </td>
-    </tr>
-    <tr>
       <td>
-        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
-          Save<br />
-          <span class="material-symbols-outlined"> save </span>
-        </button>
+        <img
+          :class="'weapon' + bgImageClass(weaponMaster)"
+          :src="weaponMaster['icon_url']"
+          :alt="weaponMaster.名前"
+          @click="$emit('open:weapon-select')"
+        />
+        <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
       </td>
-      <td>&emsp;</td>
-      <td>
-        <button type="button" :disabled="removeDisabled" @click="removeOnClick">
-          Remove<br />
-          <span class="material-symbols-outlined"> delete </span>
-        </button>
+      <td style="width: 20%">
+        <select v-model="weaponAscension" @change="weaponAscensionOnChange">
+          <option v-for="item in weaponAscensionRange" :value="item" :key="item">
+            A{{ item }}
+          </option>
+        </select>
+        <select v-model="weaponLevel" @change="weaponOnChange">
+          <option v-for="item in weaponLevelRange" :value="item" :key="item">
+            Lv.{{ item }}
+          </option>
+        </select>
+        <select v-model="weaponRefine" @change="weaponOnChange">
+          <option v-for="item in weaponRefineRange" :value="item" :key="item">
+            R{{ item }}
+          </option>
+        </select>
       </td>
     </tr>
     <tr>
-      <td colspan="3" style="text-align: left">
+      <td colspan="2" style="text-align: right">build name:</td>
+      <td colspan="2">
         <label>
-          build name:
           <input
             class="save-name"
             type="text"
@@ -69,36 +92,27 @@
       </td>
     </tr>
     <tr>
-      <td style="width: 50px">
-        <select v-model="ascension" @change="ascensionOnChange">
-          <option v-for="item in ascensionRange" :value="item" :key="item">
-            A{{ item }}
-          </option>
-        </select>
-      </td>
-      <td>
-        <select v-model="level" @change="characterOnChange">
-          <option v-for="item in levelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-      <td style="width: 50px">
-        <select v-model="constellation" @change="characterOnChange">
-          <option v-for="item in constellationRange" :value="item" :key="item">
-            C{{ item }}
-          </option>
-        </select>
-      </td>
-      <th colspan="3">
+      <th colspan="2">
         <label class="open-close">
           <input class="hidden" type="checkbox" v-model="recommendationListVisible" />
           <span>{{ displayName("おすすめセット") }}</span>
         </label>
       </th>
+      <td>
+        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
+          Save
+          <!-- <span class="material-symbols-outlined"> save </span> -->
+        </button>
+      </td>
+      <td>
+        <button type="button" :disabled="removeDisabled" @click="removeOnClick">
+          Remove
+          <!-- <span class="material-symbols-outlined"> delete </span> -->
+        </button>
+      </td>
     </tr>
     <tr v-if="recommendationListVisible">
-      <td colspan="6">
+      <td colspan="4">
         <select
           v-model="selectedRecommendation"
           @change="$emit('update:recommendation', targetValue($event))"
@@ -110,17 +124,8 @@
       </td>
     </tr>
   </table>
-  <table>
+  <table style="table-layout: fixed">
     <tr>
-      <td colspan="3" rowspan="3" class="icon" style="width: 40%; max-width: 200px">
-        <img
-          :class="'weapon' + bgImageClass(weaponMaster)"
-          :src="weaponMaster['icon_url']"
-          :alt="weaponMaster.名前"
-          @click="$emit('open:weapon-select')"
-        />
-        <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
-      </td>
       <td class="icon">
         <img
           :class="'talent ' + bgColorClass(characterMaster)"
@@ -150,32 +155,7 @@
         />
         <div class="tooltip">{{ displayName(characterMaster["元素爆発"]["名前"]) }}</div>
       </td>
-    </tr>
-    <tr>
-      <td>
-        <select v-model="normalAttackLevel" @change="characterOnChange">
-          <option v-for="item in normalAttackLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-      <td>
-        <select v-model="elementalSkillLevel" @change="characterOnChange">
-          <option v-for="item in elementalSkillLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-      <td>
-        <select v-model="elementalBurstLevel" @change="characterOnChange">
-          <option v-for="item in elementalBurstLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td rowspan="2" class="icon">
+      <td class="icon">
         <label @click="openArtifactSetSelect(0)">
           <img
             :class="'artifact-set' + artifactSetSelectClass(0)"
@@ -185,7 +165,7 @@
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
       </td>
-      <td rowspan="2" class="icon">
+      <td class="icon">
         <label @click="openArtifactSetSelect(1)">
           <img
             :class="'artifact-set' + artifactSetSelectClass(1)"
@@ -214,25 +194,28 @@
     </tr>
     <tr>
       <td>
-        <select v-model="weaponAscension" @change="weaponAscensionOnChange">
-          <option v-for="item in weaponAscensionRange" :value="item" :key="item">
-            A{{ item }}
-          </option>
-        </select>
-      </td>
-      <td>
-        <select v-model="weaponLevel" @change="weaponOnChange">
-          <option v-for="item in weaponLevelRange" :value="item" :key="item">
+        <select v-model="normalAttackLevel" @change="characterOnChange">
+          <option v-for="item in normalAttackLevelRange" :value="item" :key="item">
             Lv.{{ item }}
           </option>
         </select>
       </td>
       <td>
-        <select v-model="weaponRefine" @change="weaponOnChange">
-          <option v-for="item in weaponRefineRange" :value="item" :key="item">
-            R{{ item }}
+        <select v-model="elementalSkillLevel" @change="characterOnChange">
+          <option v-for="item in elementalSkillLevelRange" :value="item" :key="item">
+            Lv.{{ item }}
           </option>
         </select>
+      </td>
+      <td>
+        <select v-model="elementalBurstLevel" @change="characterOnChange">
+          <option v-for="item in elementalBurstLevelRange" :value="item" :key="item">
+            Lv.{{ item }}
+          </option>
+        </select>
+      </td>
+      <td colspan="2" style="text-align: right">
+        {{ displayName("聖遺物詳細") }} &gt;&gt;
       </td>
     </tr>
   </table>
@@ -461,7 +444,6 @@ table {
   margin-left: auto;
   margin-right: auto;
   border: none;
-  table-layout: fixed;
 }
 
 tr,
@@ -497,8 +479,7 @@ img.character {
 }
 
 img.vision {
-  width: 60px;
-  height: 60px;
+  width: 30%;
   position: absolute;
   left: 6px;
   top: 6px;
@@ -509,8 +490,7 @@ img.vision {
 }
 
 img.weapon {
-  width: 150px;
-  height: 150px;
+  width: 90%;
   background-size: contain;
 }
 
@@ -526,11 +506,20 @@ img.selected {
   background-color: rgb(156, 140, 49);
 }
 
-th[colspan="3"] {
+th[colspan="2"] {
   color: #e8d14e;
   background-color: #333;
   border: 2px solid gray;
   border-radius: 10px;
   padding: 2px;
+}
+
+button {
+  width: 12rem;
+  display: inline-block;
+}
+
+.icon {
+  vertical-align: top;
 }
 </style>

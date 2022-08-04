@@ -50,7 +50,7 @@
         @update:character="updateCharacter($event)"
       />
     </div>
-    <div class="pane3">
+    <div class="pane3" style="margin-bottom: 15px">
       <CharacterInput
         :characterInput="characterInputRef"
         :recommendationList="recommendationList"
