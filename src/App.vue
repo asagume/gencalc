@@ -325,6 +325,7 @@ import {
   setupConditionValues,
   OPTION_INPUT_TEMPLATE,
   TOptionInput,
+  TStatsInput,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -410,7 +411,7 @@ export default defineComponent({
     const artifactDetailInputVisibleRef = ref(true);
 
     // ステータス1, ステータス2, 敵
-    const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE));
+    const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput);
     const characterStats1CategoryList = [
       "基本ステータス",
       "高級ステータス",
@@ -451,7 +452,7 @@ export default defineComponent({
 
     /** 敵を更新します */
     const updateEnemy = () => {
-      statsInput.enemyMaster = selectedEnemy.value;
+      (statsInput.enemyMaster as any) = selectedEnemy.value;
       // ステータスを計算します
       calculateStats(
         statsInput,
@@ -691,8 +692,6 @@ export default defineComponent({
       calculateResult(damageResult, characterInputRea, conditionInputRea, statsInput);
     };
 
-    updateCharacter(character);
-
     // オプション条件を更新します
     const updateCondition = () => {
       console.log(conditionInputRea.conditionValues);
@@ -769,6 +768,8 @@ export default defineComponent({
         statsInput
       );
     };
+
+    updateCharacter(character);
 
     return {
       t,

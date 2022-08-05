@@ -13,5 +13,18 @@ export function isPlainObject(value: any): boolean {
 
 /** 簡易なdeep copy。undefinedなどは消失します */
 export function deepcopy(value: any): any {
-    return JSON.parse(JSON.stringify(value));
+    const result = JSON.parse(JSON.stringify(value));
+    return result;
+}
+
+export function overwriteObject(dst: any, src: any) {
+    if (isPlainObject(src) && isPlainObject(dst)) {
+        const srcKeys = Object.keys(src);
+        for (const key of srcKeys) {
+            dst[key] = src[key];
+        }
+        for (const key of Object.keys(dst)) {
+            if (!srcKeys.includes(key)) delete dst[key];
+        }
+    }
 }

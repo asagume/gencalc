@@ -1,5 +1,5 @@
-import { deepcopy, isNumber } from "./common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物ステータスTEMPLATE } from "./input";
+import { deepcopy, isNumber, overwriteObject } from "./common";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY, 聖遺物ステータスTEMPLATE } from "./input";
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
 
 /** [突破レベル, レベル] => レベル\+?  */
@@ -103,7 +103,7 @@ export function calculateArtifactSubStatByPriority(
     // 初期: 3 or 4
     // 強化: 5 (+4 +8 +12 +16 +20)
     // 初期+強化: min=40 max=45
-    const noPrioritySubstatArr = Object.keys(聖遺物ステータスTEMPLATE).filter(s => !prioritySubstats.includes(s));
+    const noPrioritySubstatArr = 聖遺物サブ効果ARRAY.filter(s => !prioritySubstats.includes(s));
     let noPriorityCount = Math.min(45, 40 + Math.round(Math.max(0, (totalCount - 12) / 4)));
     noPriorityCount -= Math.min(45, totalCount);
     for (let i = noPriorityCount; i > 0; i--) {
@@ -156,20 +156,18 @@ export const calculateStats = function (
     const weaponAscension = characterInput.武器突破レベル;
     const weaponLevel = characterInput.武器レベル;
 
-    Object.keys(statsInput.statsObj).forEach(key => {
-        statsInput.statsObj[key] = key in ステータスTEMPLATE ? ステータスTEMPLATE[key] : 0;
-    });
+    const workStatsObj = deepcopy(ステータスTEMPLATE);
 
     // キャラクターマスターから元素エネルギーを設定します
     if ('元素エネルギー' in characterMaster['元素爆発']) {
-        statsInput.statsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
+        workStatsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
     }
     if ('固有変数' in characterMaster) {
         for (const name of Object.keys(characterMaster['固有変数'])) {
             if (name in conditionInput.conditionValues) {
-                statsInput.statsObj[name] = Number(conditionInput.conditionValues[name]);
+                workStatsObj[name] = Number(conditionInput.conditionValues[name]);
             } else {
-                statsInput.statsObj[name] = characterMaster['固有変数'][name];
+                workStatsObj[name] = characterMaster['固有変数'][name];
             }
         }
     }
@@ -177,36 +175,37 @@ export const calculateStats = function (
     // 敵マスターから敵のステータス（耐性）を設定します
     for (const stat of Object.keys(statsInput.enemyMaster).filter(s => s != 'key')) {
         const toStat = '敵' + stat;
-        statsInput.statsObj[toStat] = statsInput.enemyMaster[stat];
+        workStatsObj[toStat] = statsInput.enemyMaster[stat];
     }
 
     // ステータス補正を計上します
     Object.keys(statsInput.statAdjustments).forEach(stat => {
-        if (stat in statsInput.statsObj) statsInput.statsObj[stat] += statsInput.statAdjustments[stat];
+        if (stat in workStatsObj) workStatsObj[stat] += statsInput.statAdjustments[stat];
     });
 
     // キャラクターの基礎ステータスと突破ステータスを計上します
     for (const stat of Object.keys(characterMaster['ステータス'])) {
         if (基礎ステータスARRAY.includes(stat)) {
-            statsInput.statsObj[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], ascension, level);
+            workStatsObj[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], ascension, level);
         } else {
             const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
-            if (toStat in statsInput.statsObj) {
-                statsInput.statsObj[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension);
+            if (toStat in workStatsObj) {
+                workStatsObj[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension);
             }
         }
     }
 
     // 武器の基礎ステータスと突破ステータスを計上します
     for (const stat of Object.keys(weaponMaster['ステータス'])) {
-        statsInput.statsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
+        workStatsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
     }
 
     // 聖遺物のステータスを計上します
     const artifactStats = artifactDetailInput.聖遺物ステータス;
     for (const stat of Object.keys(artifactStats)) {
         const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
-        statsInput.statsObj[toStat] += artifactStats[stat];
+        const statValue = artifactStats[stat];
+        workStatsObj[toStat] += artifactStats[stat];
     }
 
     if (optionInput) {
@@ -217,7 +216,7 @@ export const calculateStats = function (
                 if (detailObjArr) {
                     for (const detailObj of detailObjArr) {
                         if ('種類' in detailObj && '数値' in detailObj) {
-                            statsInput.statsObj[detailObj.種類] += detailObj.数値;
+                            workStatsObj[detailObj.種類] += detailObj.数値;
                         }
                     }
                 }
@@ -275,26 +274,26 @@ export const calculateStats = function (
     }
     // 攻撃力の計算で参照されるステータスアップを先に計上します
     myPriority1KindFormulaArr.forEach(entry => {
-        updateStats(statsInput.statsObj, entry[0], entry[1], entry[2]);
+        updateStats(workStatsObj, entry[0], entry[1], entry[2]);
     });
     // 乗算系のステータスアップを計上します HP% 攻撃力% 防御力%
     myPriority2KindFormulaArr.sort(compareFunction);
     myPriority2KindFormulaArr.forEach(entry => {
-        updateStats(statsInput.statsObj, entry[0], entry[1], entry[2]);
+        updateStats(workStatsObj, entry[0], entry[1], entry[2]);
     });
 
     // HP, 攻撃力, 防御力を計算します
-    statsInput.statsObj['HP上限'] += statsInput.statsObj['基礎HP'] + statsInput.statsObj['HP+'];
-    statsInput.statsObj['HP上限'] += (statsInput.statsObj['基礎HP'] * statsInput.statsObj['HP%']) / 100;
-    statsInput.statsObj['攻撃力'] += statsInput.statsObj['基礎攻撃力'] + statsInput.statsObj['攻撃力+'];
-    statsInput.statsObj['攻撃力'] += (statsInput.statsObj['基礎攻撃力'] * statsInput.statsObj['攻撃力%']) / 100;
-    statsInput.statsObj['防御力'] += statsInput.statsObj['基礎防御力'] + statsInput.statsObj['防御力+'];
-    statsInput.statsObj['防御力'] += (statsInput.statsObj['基礎防御力'] * statsInput.statsObj['防御力%']) / 100;
+    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
+    workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
+    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
+    workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
+    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
+    workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
 
     // それ以外のステータスアップを計上します
     myKindFormulaArr.sort(compareFunction);
     myKindFormulaArr.forEach(entry => {
-        updateStats(statsInput.statsObj, entry[0], entry[1], entry[2]);
+        updateStats(workStatsObj, entry[0], entry[1], entry[2]);
     });
 
     // 天賦性能変化
@@ -326,6 +325,8 @@ export const calculateStats = function (
         }
     }
     conditionInput.攻撃元素 = [通常攻撃_元素Var, 重撃_元素Var, 落下攻撃_元素Var];
+
+    overwriteObject(statsInput.statsObj, workStatsObj);
     console.log(statsInput.statsObj);
 }
 
@@ -1454,5 +1455,5 @@ function updateStats(
         statsObj[statName] = 0;
     }
     statsObj[statName] += result;
-    console.debug(updateStats.name, null, statName, formulaArr, '=>', result);
+    console.debug(updateStats.name, null, statName, formulaArr, '=>', result, statsObj[statName]);
 }
