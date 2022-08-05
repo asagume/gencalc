@@ -12,7 +12,11 @@
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayName(stat) }}</th>
         <td v-if="editable">
-          <input type="number" v-model="statsAdjustments[stat]" @change="adjustmentsOnChange" />
+          <input
+            type="number"
+            v-model="statAdjustments[stat]"
+            @change="adjustmentsOnChange"
+          />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
@@ -39,7 +43,7 @@
 
 <script lang="ts">
 import { deepcopy } from "@/common";
-import GlobalMixin from '@/GlobalMixin.vue';
+import GlobalMixin from "@/GlobalMixin.vue";
 import { STATS_INPUT_TEMPLATE, TStatsInput, ステータスARRAY_MAP } from "@/input";
 import { defineComponent, PropType, reactive, ref } from "vue";
 
@@ -59,7 +63,7 @@ export default defineComponent({
 
     const statList = (category: string) => ステータスARRAY_MAP.get(category);
     const statsObj = statsInputRea.statsObj;
-    const statsAdjustments = statsInputRea.statsAdjustments;
+    const statAdjustments = statsInputRea.statAdjustments;
 
     const categoryOpenClose = ref({} as any);
     if (props.categoryList) {
@@ -70,13 +74,14 @@ export default defineComponent({
     const visibleStatList = (category: string) =>
       statList(category)?.filter(
         (stat) =>
-          categoryOpenClose.value[category] || (statsInputRea.statsObj && statsInputRea.statsObj[stat])
+          categoryOpenClose.value[category] ||
+          (statsInputRea.statsObj && statsInputRea.statsObj[stat])
       ) ?? [];
 
     //
     const adjustmentsOnChange = () => {
-      context.emit("update:stat-adjustments", statsInputRea.statsAdjustments);
-      console.log(statsInputRea.statsAdjustments);
+      console.log(statsInputRea.statAdjustments);
+      context.emit("update:stat-adjustments", statsInputRea.statAdjustments);
     };
 
     // 補正値を0クリアします
@@ -86,7 +91,7 @@ export default defineComponent({
         const list = statList(category);
         if (!list) continue;
         for (const stat of list) {
-          statsInputRea.statsAdjustments[stat] = 0;
+          statsInputRea.statAdjustments[stat] = 0;
         }
       }
     };
@@ -96,7 +101,7 @@ export default defineComponent({
       statList,
       visibleStatList,
       statsObj,
-      statsAdjustments,
+      statAdjustments,
       categoryOpenClose,
 
       adjustmentsOnChange,

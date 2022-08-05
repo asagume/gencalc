@@ -364,11 +364,11 @@ export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
 
 export const STATS_INPUT_TEMPLATE = {
     statsObj: deepcopy(ステータスTEMPLATE) as TStats,
-    statsAdjustments: deepcopy(ステータスTEMPLATE) as TStats,
+    statAdjustments: deepcopy(ステータスTEMPLATE) as TStats,
     enemyMaster: ENEMY_MASTER_LIST[0] as TEnemyEntry,
 };
-for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statsAdjustments)) {
-    STATS_INPUT_TEMPLATE.statsAdjustments[stat] = 0;
+for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {
+    STATS_INPUT_TEMPLATE.statAdjustments[stat] = 0;
 }
 export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
@@ -712,19 +712,21 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
 
         // 命ノ星座
         if ('命ノ星座' in characterMaster) {
+            let c = 0;
             Object.keys(characterMaster['命ノ星座']).forEach(key => {
+                if (c++ > characterInput.命ノ星座) return;
                 myTalentDetail = characterMaster['命ノ星座'][key];
-                if ('詳細' in myTalentDetail) {
-                    myTalentDetail['詳細'].forEach((detailObj: { [x: string]: string; }) => {
-                        if ('条件' in detailObj && detailObj['条件']) {
-                            if (detailObj['条件'].indexOf('命ノ星座') == -1) {
-                                detailObj['条件'] = '命ノ星座@' + key + '&' + detailObj['条件'];
-                            }
-                        } else {
-                            detailObj['条件'] = '命ノ星座@' + key;
-                        }
-                    });
-                }
+                // if ('詳細' in myTalentDetail) {
+                //     myTalentDetail['詳細'].forEach((detailObj: { [x: string]: string; }) => {
+                //         if ('条件' in detailObj && detailObj['条件']) {
+                //             if (detailObj['条件'].indexOf('命ノ星座') == -1) {
+                //                 detailObj['条件'] = '命ノ星座@' + key + '&' + detailObj['条件'];
+                //             }
+                //         } else {
+                //             detailObj['条件'] = '命ノ星座@' + key;
+                //         }
+                //     });
+                // }
                 let workArr = [];
                 if ('その他' in result) {
                     workArr = result['その他'];

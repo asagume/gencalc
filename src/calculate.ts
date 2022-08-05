@@ -164,7 +164,7 @@ export const calculateStats = function (
         statsInput.statsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
     }
     if ('固有変数' in characterMaster) {
-        for (const name of characterMaster['固有変数']) {
+        for (const name of Object.keys(characterMaster['固有変数'])) {
             if (name in conditionInput.conditionValues) {
                 statsInput.statsObj[name] = Number(conditionInput.conditionValues[name]);
             } else {
@@ -180,8 +180,8 @@ export const calculateStats = function (
     }
 
     // ステータス補正を計上します
-    Object.keys(statsInput.statsAdjustments).forEach(stat => {
-        if (stat in statsInput.statsObj) statsInput.statsObj[stat] += statsInput.statsAdjustments[stat];
+    Object.keys(statsInput.statAdjustments).forEach(stat => {
+        if (stat in statsInput.statsObj) statsInput.statsObj[stat] += statsInput.statAdjustments[stat];
     });
 
     // キャラクターの基礎ステータスと突破ステータスを計上します

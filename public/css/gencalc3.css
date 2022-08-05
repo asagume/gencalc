@@ -116,6 +116,10 @@ textarea {
     padding: 2px 1px;
 }
 
+.stat-value, .damage-value {
+    font-size: 2.6rem;
+}
+
 .pane1 {
     grid-area: pane1;
 }
