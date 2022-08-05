@@ -437,7 +437,6 @@ export default defineComponent({
     for (const name of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
       optionInputRea.elementalResonanceChecked[name] = false;
     }
-    optionInputRea.elementalResonanceChecked["元素共鳴なし"] = true;
 
     // ダメージ計算結果
     const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
