@@ -1,14 +1,18 @@
 <template>
-  <div>
+  <div class="elemental-resonance">
     <label v-for="item in elementalResonanceList" :key="item.key">
-      <input type="checkbox" v-model="elementalResonanceCheckedRea[item.key]" @change="onChange(item.key)" />
+      <input
+        type="checkbox"
+        v-model="elementalResonanceCheckedRea[item.key]"
+        @change="onChange(item.key)"
+      />
       <span>{{ displayName(item.名前) }}</span>
     </label>
   </div>
 </template>
 
 <script lang="ts">
-import GlobalMixin from '@/GlobalMixin.vue';
+import GlobalMixin from "@/GlobalMixin.vue";
 import { ELEMENTAL_RESONANCE_MASTER_LIST } from "@/master";
 import { defineComponent, PropType, reactive } from "vue";
 
@@ -17,11 +21,16 @@ export default defineComponent({
   mixins: [GlobalMixin],
   emits: ["update:elemental-resonance"],
   props: {
-    elementalResonanceChecked: { type: Object as PropType<{ [key: string]: boolean }>, require: true },
+    elementalResonanceChecked: {
+      type: Object as PropType<{ [key: string]: boolean }>,
+      require: true,
+    },
   },
   setup(props, context) {
     const elementalResonanceList = ELEMENTAL_RESONANCE_MASTER_LIST;
-    const elementalResonanceCheckedRea = reactive(props.elementalResonanceChecked ?? {} as { [key: string]: boolean });
+    const elementalResonanceCheckedRea = reactive(
+      props.elementalResonanceChecked ?? ({} as { [key: string]: boolean })
+    );
 
     const onChange = (key: string) => {
       const count = Object.keys(elementalResonanceCheckedRea).filter(
@@ -47,6 +56,10 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+div.elemental-resonance {
+  margin-top: 10px;
+}
+
 label {
   display: inline-block;
 }

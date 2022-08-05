@@ -218,6 +218,12 @@
             @update:elemental-resonance="updateElementalResonance($event)"
           />
         </template>
+        <template v-if="optionInputTabRef == 2">
+          <TeamOptionInput />
+        </template>
+        <template v-if="optionInputTabRef == 3">
+          <MiscOptionInput />
+        </template>
       </div>
     </div>
     <div class="result-pane">
@@ -295,6 +301,8 @@ import ArtifactDetailInput from "./components/ArtifactDetailInput.vue";
 import ConditionInput from "./components/ConditionInput.vue";
 import StatsInput from "./components/StatsInput.vue";
 import ElementalResonanceInput from "./components/ElementalResonanceInput.vue";
+import TeamOptionInput from "./components/TeamOptionInput.vue";
+import MiscOptionInput from "./components/MiscOptionInput.vue";
 import DamageResult from "./components/DamageResult.vue";
 import CharacterOwnList from "./components/CharacterOwnList.vue";
 import WeaponOwnList from "./components/WeaponOwnList.vue";
@@ -365,6 +373,8 @@ export default defineComponent({
     ConditionInput,
     StatsInput,
     ElementalResonanceInput,
+    TeamOptionInput,
+    MiscOptionInput,
     DamageResult,
     CharacterOwnList,
     WeaponOwnList,
