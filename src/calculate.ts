@@ -245,6 +245,7 @@ export const calculateStats = function (
                     const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
                     if (number == 0) continue;
                     if (number != 1) {
+                        console.log(myDetailObj, number);
                         myNew数値 = (myNew数値 as any).concat(['*', number]);
                     }
                 }
@@ -596,8 +597,8 @@ function makeValidConditionValueArr(conditionInput: any) {
         if (selectList) {
             selectList.forEach((entry: any) => {
                 const value = conditionInput.conditionValues[entry.name];
-                if (value != null) {
-                    result.push(entry.name + '@' + value);
+                if (value && value >= 0) {
+                    result.push(entry.name + '@' + entry.options[value]);
                 }
             });
         }
