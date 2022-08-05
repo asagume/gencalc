@@ -791,6 +791,13 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
         conditionMap.delete('命ノ星座');
+        conditionMap.forEach((value, key) => {
+            if (value && Array.isArray(value)) {
+                if (!value[0].startsWith('required_')) {
+                    conditionMap.set(key, ['', ...value]);
+                }
+            }
+        });
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
@@ -843,6 +850,13 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
             }
             makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
+        conditionMap.forEach((value, key) => {
+            if (value && Array.isArray(value)) {
+                if (!value[0].startsWith('required_')) {
+                    conditionMap.set(key, ['', ...value]);
+                }
+            }
+        });
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
@@ -893,6 +907,13 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
         });
         myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+        });
+        conditionMap.forEach((value, key) => {
+            if (value && Array.isArray(value)) {
+                if (!value[0].startsWith('required_')) {
+                    conditionMap.set(key, ['', ...value]);
+                }
+            }
         });
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
@@ -1096,10 +1117,11 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                 if (myDamageDetail && myDamageDetail.条件) {
                     myDamageDetail.条件.forEach((value: string[] | null, key: string) => {
                         if (value) {
+                            const require = value[0].startsWith("required_");
                             selectList.push({
                                 name: key,
                                 options: value,
-                                require: value[0].startsWith("required_"),
+                                require: require,
                             });
                         } else {
                             checkboxList.push(key);
