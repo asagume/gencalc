@@ -373,23 +373,25 @@ for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {
 export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
 export const OPTION_INPUT_TEMPLATE = {
-    elementalResonanceConditionValues: {},
-    elementalResonanceStatusAdjustment: {},
+    elementalResonanceChecked: {} as { [key: string]: boolean },
+    elementalResonanceStatusAdjustment: {} as TStats,
     supporterList: [],
-    isSupporterOptionOpened: {},
+    isSupporterOptionOpened: {} as { [key: string]: boolean },
     teamOptionConditionMap: {},
     teamOptionConditionValues: {},
-    teamOptionStatusAdjustment: {},
+    teamOptionStatusAdjustment: {} as TStats,
     miscOptionConditionValues: {},
-    miscOptionStatusAdjustment: {},
+    miscOptionStatusAdjustment: {} as TStats,
 };
+export type TOptionInput = typeof OPTION_INPUT_TEMPLATE;
 
 export const SUPPORTER_INPUT_TEMPLATE = {
-    characterInput: CHARACTER_INPUT_TEMPLATE,
-    artifactDetailInput: ARTIFACT_DETAIL_INPUT_TEMPLATE,
-    conditionInput: CONDITION_INPUT_TEMPLATE,
-    statusInput: {}
+    characterInput: deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput,
+    artifactDetailInput: deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput,
+    conditionInput: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
+    statusInput: deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput,
 };
+export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
 /**
  * 

@@ -214,6 +214,7 @@
         </div>
         <template v-if="optionInputTabRef == 1">
           <ElementalResonanceInput
+            :elementalResonanceChecked="optionInputRea.elementalResonanceChecked"
             @update:elemental-resonance="updateElementalResonance($event)"
           />
         </template>
@@ -314,9 +315,12 @@ import {
   DAMAGE_RESULT_TEMPLATE,
   TDamageResult,
   setupConditionValues,
+  OPTION_INPUT_TEMPLATE,
+  TOptionInput,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
+  ELEMENTAL_RESONANCE_MASTER,
   ENEMY_MASTER_LIST,
   getCharacterMasterDetail,
   getWeaponMasterDetail,
@@ -416,8 +420,13 @@ export default defineComponent({
     statsInput.statAdjustments["敵レベル"] = 90;
     statsInput.statAdjustments["敵防御力"] = 0;
 
+    //
+    const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
     // 元素共鳴
-    const elementalResonanceInputRef = ref({ 元素共鳴なし: true } as any);
+    for (const name of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
+      optionInputRea.elementalResonanceChecked[name] = false;
+    }
+    optionInputRea.elementalResonanceChecked["元素共鳴なし"] = true;
 
     // ダメージ計算結果
     const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
@@ -436,9 +445,10 @@ export default defineComponent({
       // ステータスを計算します
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       // ダメージ計算を実行します
       calculateResult(
@@ -490,9 +500,10 @@ export default defineComponent({
       // ステータスを計算します
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       // ダメージ計算を実行します
       calculateResult(
@@ -535,9 +546,10 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea);
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -567,9 +579,10 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea);
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -590,9 +603,10 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea);
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -630,9 +644,10 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea);
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -660,7 +675,8 @@ export default defineComponent({
         statsInput,
         characterInputRea,
         artifactDetailInputRea,
-        conditionInputRea
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(damageResult, characterInputRea, conditionInputRea, statsInput);
     };
@@ -672,9 +688,10 @@ export default defineComponent({
       console.log(conditionInputRea.conditionValues);
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -712,9 +729,10 @@ export default defineComponent({
       });
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -724,14 +742,15 @@ export default defineComponent({
       );
     };
     /** 元素共鳴を更新しました */
-    const updateElementalResonance = (checked: any) => {
-      elementalResonanceInputRef.value = checked;
-      //
+    const updateElementalResonance = (elementalResonanceChecked: {
+      [key: string]: boolean;
+    }) => {
       calculateStats(
         statsInput,
-        characterInputRea as any,
-        artifactDetailInputRea as any,
-        conditionInputRea as any
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
       );
       calculateResult(
         damageResult,
@@ -764,6 +783,7 @@ export default defineComponent({
       enemyList,
       selectedEnemy,
       updateEnemy,
+      optionInputRea,
       damageResult,
 
       pane6Toggle1Ref,

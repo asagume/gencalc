@@ -1,6 +1,6 @@
 import { deepcopy, isNumber } from "./common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物ステータスTEMPLATE } from "./input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物ステータスTEMPLATE } from "./input";
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -142,7 +142,8 @@ export const calculateStats = function (
     statsInput: TStatsInput,
     characterInput: TCharacterInput,
     artifactDetailInput: TArtifactDetailInput,
-    conditionInput: TConditionInput) {
+    conditionInput: TConditionInput,
+    optionInput: TOptionInput) {
     if (!characterInput) return;
     if (!artifactDetailInput) return;
     if (!conditionInput) return;
@@ -208,12 +209,25 @@ export const calculateStats = function (
         statsInput.statsObj[toStat] += artifactStats[stat];
     }
 
-    // TODO 元素共鳴を計上します
+    if (optionInput) {
+        // 元素共鳴を計上します
+        for (const name of Object.keys(optionInput.elementalResonanceChecked).filter(s => optionInput.elementalResonanceChecked[s])) {
+            if ('詳細' in (ELEMENTAL_RESONANCE_MASTER as any)[name]) {
+                const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[name].詳細;
+                if (detailObjArr) {
+                    for (const detailObj of detailObjArr) {
+                        if ('種類' in detailObj && '数値' in detailObj) {
+                            statsInput.statsObj[detailObj.種類] += detailObj.数値;
+                        }
+                    }
+                }
+            }
+        }
 
-    // TODO チームオプションを計上します
+        // TODO チームオプションを計上します
 
-    // TODO その他オプションを計上します
-
+        // TODO その他オプションを計上します
+    }
 
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
     console.log('conditionInput', conditionInput);

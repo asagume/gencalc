@@ -1,7 +1,7 @@
 <template>
   <div>
     <label v-for="item in elementalResonanceList" :key="item.key">
-      <input type="checkbox" v-model="elementalResonanceChecked[item.key]" @change="onChange(item.key)" />
+      <input type="checkbox" v-model="elementalResonanceCheckedRea[item.key]" @change="onChange(item.key)" />
       <span>{{ displayName(item.名前) }}</span>
     </label>
   </div>
@@ -10,38 +10,37 @@
 <script lang="ts">
 import GlobalMixin from '@/GlobalMixin.vue';
 import { ELEMENTAL_RESONANCE_MASTER_LIST } from "@/master";
-import { defineComponent, reactive } from "vue";
+import { defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
   name: "ElementalResonanceInput",
   mixins: [GlobalMixin],
   emits: ["update:elemental-resonance"],
+  props: {
+    elementalResonanceChecked: { type: Object as PropType<{ [key: string]: boolean }>, require: true },
+  },
   setup(props, context) {
     const elementalResonanceList = ELEMENTAL_RESONANCE_MASTER_LIST;
-    const elementalResonanceChecked = reactive({} as any);
-    for (const elementalResonance of elementalResonanceList) {
-      elementalResonanceChecked[elementalResonance.key] = false;
-    }
-    elementalResonanceChecked["元素共鳴なし"] = true;
+    const elementalResonanceCheckedRea = reactive(props.elementalResonanceChecked ?? {} as { [key: string]: boolean });
 
     const onChange = (key: string) => {
-      const count = Object.keys(elementalResonanceChecked).filter(
-        (s) => s != "元素共鳴なし" && elementalResonanceChecked[s]
+      const count = Object.keys(elementalResonanceCheckedRea).filter(
+        (s) => s != "元素共鳴なし" && elementalResonanceCheckedRea[s]
       ).length;
       if (count > 0) {
-        elementalResonanceChecked["元素共鳴なし"] = false;
+        elementalResonanceCheckedRea["元素共鳴なし"] = false;
         if (count > 2) {
-          elementalResonanceChecked[key] = false;
+          elementalResonanceCheckedRea[key] = false;
         }
       } else {
-        elementalResonanceChecked["元素共鳴なし"] = true;
+        elementalResonanceCheckedRea["元素共鳴なし"] = true;
       }
-      context.emit("update:elemental-resonance", elementalResonanceChecked);
+      context.emit("update:elemental-resonance", elementalResonanceCheckedRea);
     };
 
     return {
       elementalResonanceList,
-      elementalResonanceChecked,
+      elementalResonanceCheckedRea,
       onChange,
     };
   },
