@@ -1,12 +1,12 @@
 <template>
   <fieldset>
     <label v-for="item in checkboxList" :key="item">
-      <input type="checkbox" v-model="conditionValues[item]" :value="item" />
+      <input type="checkbox" v-model="conditionValues[item]" :value="item" @change="$emit('update:condition')" />
       <span>{{ item }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
       <span>{{ item.name }}</span>
-      <select v-model="conditionValues[item.name]">
+      <select v-model="conditionValues[item.name]" @change="$emit('update:condition')">
         <option v-if="!item.require" value=""></option>
         <option v-for="(option, index) in item.options" :value="index" :key="index">
           {{ displayOptionName(option) }}
@@ -17,16 +17,10 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
-import { TDamageDetail } from "@/input";
-import { computed, defineComponent, ref } from "vue";
-
-type TCheckboxEntry = string;
-type TSelectEntry = {
-  name: string;
-  options: string[];
-  require: boolean;
-};
+import { deepcopy } from "@/common";
+import GlobalMixin from '@/GlobalMixin.vue';
+import { CONDITION_INPUT_TEMPLATE } from "@/input";
+import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
   name: 'ConditionInput',
@@ -35,48 +29,14 @@ export default defineComponent({
     characterInput: { type: Object, require: true },
     conditionInput: { type: Object, require: true },
   },
+  emits: ['update:condition'],
   setup(props) {
+    const conditionInputRea = reactive(props.conditionInput ?? deepcopy(CONDITION_INPUT_TEMPLATE));
+    const conditionValues = conditionInputRea.conditionValues;
+    const checkboxList = conditionInputRea.checkboxList;
+    const selectList = conditionInputRea.selectList;
+
     const displayOptionName = (name: string) => name.replace(/^required_/, "");
-
-    const myDamageDatailArr = computed(() => {
-      const result = [] as TDamageDetail[];
-      if (props.characterInput) {
-        if (props.characterInput.damageDetailMyCharacter) result.push(props.characterInput.damageDetailMyCharacter);
-        if (props.characterInput.damageDetailMyWeapon) result.push(props.characterInput.damageDetailMyWeapon);
-        if (props.characterInput.damageDetailMyArtifactSets) result.push(props.characterInput.damageDetailMyArtifactSets);
-      }
-      return result;
-    });
-    const checkboxList = computed((): TCheckboxEntry[] => {
-      const result = [] as string[];
-      myDamageDatailArr.value
-        .filter((s) => s)
-        .forEach((damageDetail) => {
-          damageDetail.条件.forEach((value: string[] | null, key: string) => {
-            if (value) return;
-            result.push(key);
-          });
-        });
-      return result;
-    });
-    const selectList = computed((): TSelectEntry[] => {
-      const result = [] as TSelectEntry[];
-      myDamageDatailArr.value
-        .filter((s) => s)
-        .forEach((damageDetail) => {
-          damageDetail.条件.forEach((value: string[] | null, key: string) => {
-            if (!value) return;
-            result.push({
-              name: key,
-              options: value,
-              require: value[0].startsWith("required_"),
-            });
-          });
-        });
-      return result;
-    });
-
-    const conditionValues = ref(props.conditionInput?.conditionValues ?? {});
 
     return {
       displayOptionName,

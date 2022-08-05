@@ -232,6 +232,7 @@ export const ARTIFACT_SET_MASTER_LIST: TArtifactSetEntry[] = [];
 export const ARTIFACT_MAIN_MASTER_STATLIST: string[] = Object.keys(ARTIFACT_MAIN_MASTER[5]);
 
 export const ARTIFACT_SUB_MASTER_STATLIST = Object.keys(ARTIFACT_SUB_MASTER);
+export type TArtifactSubKey = keyof typeof ARTIFACT_SUB_MASTER;
 
 export type TEnemy = {
     炎元素耐性: number,
@@ -241,8 +242,12 @@ export type TEnemy = {
     氷元素耐性: number,
     岩元素耐性: number,
     物理耐性: number,
-}
+    [key: string]: number,
+};
 export type TEnemyKey = keyof typeof ENEMY_MASTER;
+export type TEnemyEntry = TEnemy & {
+    key: TEnemyKey,
+};
 export const ENEMY_MASTER_LIST = (Object.keys(ENEMY_MASTER) as TEnemyKey[])
     .map(key => ({ key: key, ...ENEMY_MASTER[key] }));
 

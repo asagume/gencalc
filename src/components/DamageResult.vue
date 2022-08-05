@@ -58,7 +58,7 @@
   </template>
 </template>
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin";
+import GlobalMixin from '@/GlobalMixin.vue';
 import { DAMAGE_RESULT_TEMPLATE } from "@/input";
 import { ELEMENT_COLOR_CLASS, TElementColorClassKey } from "@/master";
 import { defineComponent, reactive, ref } from "vue";

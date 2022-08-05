@@ -32,7 +32,7 @@ const GlobalMixin = {
       return String(name);
     },
     percent(stat: string) {
-      return (stat.endsWith('%') || STAT_PERCENT_LIST.includes(stat)) ? '%' : '';
+      return stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat) ? "%" : "";
     },
     displayStatValue(stat: string, value: number, opt_s?: number): string {
       const percent = this.percent(stat);

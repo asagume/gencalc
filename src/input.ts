@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSet, TArtifactSetKey, TCharacterDetail, TCharacterKey, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSet, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
 import { deepcopy, isNumber, isPlainObject, isString } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -241,15 +241,31 @@ export const 元素反応TEMPLATE = {
     激化ダメージ: 0,
     開花ダメージ: 0
 };
-export type TElementalReactionResultKey = keyof typeof 元素反応TEMPLATE;
+export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
+export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
 
-export const 計算結果TEMPLATE = {
-    通常攻撃: [],
-    重撃: [],
-    落下攻撃: [],
-    元素スキル: [],
-    元素爆発: [],
-    その他: []
+export type TDamageResultEntry = [string, string | null, number, number | null, number];    // 名前, 元素, 期待値, 会心, 非会心
+export type TDamageResult = {
+    元素反応: TDamageResultElementalReaction,
+    通常攻撃: TDamageResultEntry[],
+    重撃: TDamageResultEntry[],
+    落下攻撃: TDamageResultEntry[],
+    元素スキル: TDamageResultEntry[],
+    元素爆発: TDamageResultEntry[],
+    その他: TDamageResultEntry[],
+    キャラクター注釈: string[],
+    [key: string]: TDamageResultElementalReaction | TDamageResultEntry[] | string[],
+};
+
+export const DAMAGE_RESULT_TEMPLATE = {
+    元素反応: deepcopy(元素反応TEMPLATE) as TDamageResultElementalReaction,
+    通常攻撃: [] as TDamageResultEntry[],
+    重撃: [] as TDamageResultEntry[],
+    落下攻撃: [] as TDamageResultEntry[],
+    元素スキル: [] as TDamageResultEntry[],
+    元素爆発: [] as TDamageResultEntry[],
+    その他: [] as TDamageResultEntry[],
+    キャラクター注釈: [] as string[],
 };
 
 export const 突破レベルレベルARRAY = [
@@ -331,18 +347,29 @@ export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
 };
 export type TArtifactDetailInput = typeof ARTIFACT_DETAIL_INPUT_TEMPLATE;
 
+export type TCheckboxEntry = string;
+export type TSelectEntry = {
+    name: string;
+    options: string[];
+    require: boolean;
+};
 export const CONDITION_INPUT_TEMPLATE = {
-    checkboxList: [] as string[],
-    selectList: [] as [string, string[] | null][],
-    conditionValues: {} as { [key: string]: boolean | string | null },
+    checkboxList: [] as TCheckboxEntry[],
+    selectList: [] as TSelectEntry[],
+    conditionValues: {} as { [key: string]: boolean | number | null },
     conditionAdjustments: {} as { [key: string]: number },
+    攻撃元素: [null, null, null] as (string | null)[],
 };
 export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
 
 export const STATS_INPUT_TEMPLATE = {
     statsObj: deepcopy(ステータスTEMPLATE) as TStats,
     statsAdjustments: deepcopy(ステータスTEMPLATE) as TStats,
+    enemyMaster: ENEMY_MASTER_LIST[0] as TEnemyEntry,
 };
+for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statsAdjustments)) {
+    STATS_INPUT_TEMPLATE.statsAdjustments[stat] = 0;
+}
 export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
 export const OPTION_INPUT_TEMPLATE = {
@@ -511,7 +538,7 @@ function makeArtifactSetAbbrev(name: string): string {
     return abbr;
 }
 
-export async function loadRecommendation(characterInput: { [key: string]: any }, artifactDetailInput: { [key: string]: any }, conditionInput: { [key: string]: any }, build: { [key: string]: any }) {
+export async function loadRecommendation(characterInput: TCharacterInput, artifactDetailInput: TArtifactDetailInput, conditionInput: TConditionInput, build: { [key: string]: any }) {
     try {
         const character = characterInput.character;
         const characterMaster = await getCharacterMasterDetail(character);
@@ -522,7 +549,7 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
         }
         ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
             if (key in build) {
-                characterInput[key] = build[key];
+                (characterInput as any)[key] = build[key];
             }
         });
 
@@ -538,23 +565,32 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
             characterInput.武器精錬ランク = build['精錬ランク'];
         }
 
+        let prioritySubstatsDisabled = false;
+        if (Object.keys((s: string) => s.startsWith('聖遺物サブ効果')).length > 0) {
+            prioritySubstatsDisabled = true;
+        }
+        artifactDetailInput.聖遺物優先するサブ効果Disabled = prioritySubstatsDisabled;
+
         ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
             if (!(key in build)) return;
             const artifactSet = build[key] as TArtifactSetKey;
             if (artifactSet && artifactSet in ARTIFACT_SET_MASTER) {
                 characterInput.artifactSets[index] = artifactSet;
-                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER[artifactSet];
+                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER[artifactSet] as TArtifactSet;
             } else {
                 characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER_DUMMY;
             }
         });
         ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
-            if (!(key in build)) return;
-            let mainstat = build[key];
-            if (!mainstat) {
-                mainstat = ['5_HP', '5_攻撃力'][index];
+            if (key in build) {
+                let mainstat = build[key];
+                if (!mainstat) {
+                    mainstat = ['5_HP', '5_攻撃力'][index];
+                }
+                artifactDetailInput['聖遺物メイン効果'][index] = mainstat;
+            } else {
+                artifactDetailInput['聖遺物メイン効果'][index] = '';
             }
-            artifactDetailInput['聖遺物メイン効果'][index] = mainstat;
         });
         ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
             if (!(key in build)) return;
@@ -580,10 +616,6 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s)).forEach(key => {
             conditionInput.conditionValues[key] = build[key];
         });
-
-        // makeDamageDetailObjArrObjCharacter(characterInput);
-        // makeDamageDetailObjArrObjWeapon(characterInput);
-        // makeDamageDetailObjArrObjArtifactSet(characterInput);
     }
     catch (error) {
         console.error(characterInput, artifactDetailInput, conditionInput, build);
@@ -594,7 +626,7 @@ export async function loadRecommendation(characterInput: { [key: string]: any },
 export const CHANGE_KIND_STATUS = 'ステータス変更系詳細';
 export const CHANGE_KIND_TALENT = '天賦性能変更系詳細';
 
-export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInput, conditionInput: TConditionInput): TDamageDetail {
+export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInput): TDamageDetail {
     try {
         const characterMaster = characterInput.characterMaster as any;
 
@@ -737,17 +769,16 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
-        setupConditionValues(conditionInput, result);
         characterInput.damageDetailMyCharacter = result;
 
         return result;
     } catch (error) {
-        console.log(characterInput, conditionInput);
+        console.log(characterInput);
         throw error;
     }
 }
 
-export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionInput: any) {
+export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
     try {
         const name = characterInput.weapon;
         const weaponMaster = characterInput.weaponMaster;
@@ -790,7 +821,6 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionIn
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
-        setupConditionValues(conditionInput, result);
         characterInput.damageDetailMyWeapon = result;
 
         return result;
@@ -800,7 +830,7 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any, conditionIn
     }
 }
 
-export function makeDamageDetailObjArrObjArtifactSets(characterInput: any, conditionInput: any) {
+export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
     try {
         const result = [] as any;
 
@@ -842,12 +872,11 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any, condi
         result['条件'] = conditionMap;
         result['排他'] = exclusionMap;
 
-        setupConditionValues(conditionInput, result);
         characterInput.damageDetailMyArtifactSets = result;
 
         return result;
     } catch (error) {
-        console.log(characterInput, conditionInput);
+        console.log(characterInput);
         throw error;
     }
 }
@@ -1028,49 +1057,72 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
     }
 }
 
-function setupConditionValues(conditionInput: any, damageDetail: any) {
+export function setupConditionValues(conditionInput: TConditionInput, characterInput: TCharacterInput) {
     try {
         const conditionValues = conditionInput.conditionValues;
-        const conditionMap: Map<string, any[] | null> = damageDetail['条件'];
-        const exclusionMap: Map<string, string[]> = damageDetail['排他'];
+        const checkboxList = conditionInput.checkboxList as TCheckboxEntry[];
+        const selectList = conditionInput.selectList as TSelectEntry[];
 
-        conditionMap.forEach((value, key) => {
-            if (key in conditionValues && conditionValues[key]) {
-                const exclusions = exclusionMap.get(key);
-                if (exclusions) {
-                    for (const exclusion of exclusions) {
-                        if (exclusion in conditionValues) {
-                            const conditionValue = conditionMap.get(exclusion);
-                            if (conditionValue !== undefined) {
-                                if (conditionValue === null) {  // checkbox
-                                    conditionValues[exclusion] = false;
-                                } else {    // select
-                                    conditionValues[exclusion] = 0;
+        checkboxList.splice(0, checkboxList.length);
+        selectList.splice(0, selectList.length);
+
+        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
+            if (myDamageDetail && myDamageDetail.条件 && myDamageDetail.排他) {
+                if (myDamageDetail && myDamageDetail.条件) {
+                    myDamageDetail.条件.forEach((value: string[] | null, key: string) => {
+                        if (value) {
+                            selectList.push({
+                                name: key,
+                                options: value,
+                                require: value[0].startsWith("required_"),
+                            });
+                        } else {
+                            checkboxList.push(key);
+                        }
+                    });
+                }
+
+                const conditionMap: Map<string, any[] | null> = myDamageDetail.条件;
+                const exclusionMap: Map<string, string[] | null> = myDamageDetail.排他;
+                conditionMap.forEach((value, key) => {
+                    if (key in conditionValues && conditionValues[key]) {
+                        const exclusions = exclusionMap.get(key);
+                        if (exclusions) {
+                            for (const exclusion of exclusions) {
+                                if (exclusion in conditionValues) {
+                                    const conditionValue = conditionMap.get(exclusion);
+                                    if (conditionValue !== undefined) {
+                                        if (conditionValue === null) {  // checkbox
+                                            conditionValues[exclusion] = false;
+                                        } else {    // select
+                                            conditionValues[exclusion] = 0;
+                                        }
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        if (value === null) {   // checkbox
+                            let checked = true;
+                            const arr = exclusionMap.get(key);
+                            if (arr && arr.filter(s => conditionValues[s]).length > 0) {
+                                checked = false;
+                            }
+                            conditionValues[key] = checked;
+                        } else {   // select
+                            let selectedIndex = value.length - 1;
+                            const arr = exclusionMap.get(key);
+                            if (arr && arr.filter(s => conditionValues[s]).length > 0) {
+                                selectedIndex = 0;
+                            }
+                            conditionValues[key] = selectedIndex;
+                        }
                     }
-                }
-            } else {
-                if (value === null) {   // checkbox
-                    let checked = true;
-                    const arr = exclusionMap.get(key);
-                    if (arr && arr.filter(s => conditionValues[s]).length > 0) {
-                        checked = false;
-                    }
-                    conditionValues[key] = checked;
-                } else {   // select
-                    let selectedIndex = value.length - 1;
-                    const arr = exclusionMap.get(key);
-                    if (arr && arr.filter(s => conditionValues[s]).length > 0) {
-                        selectedIndex = 0;
-                    }
-                    conditionValues[key] = selectedIndex;
-                }
+                });
             }
-        });
+        }
     } catch (error) {
-        console.error(conditionInput, damageDetail);
+        console.error(conditionInput, characterInput);
         throw error;
     }
 }
@@ -1143,5 +1195,3 @@ function analyzeFormulaStrSub(formulaStr: string, opt_defaultItem: string | null
     }
     return resultArr;
 }
-
-

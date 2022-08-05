@@ -14,7 +14,7 @@
         <td v-if="editable">
           <input type="number" v-model="statsAdjustments[stat]" @change="adjustmentsOnChange" />
         </td>
-        <td>{{ displayStatValue(stat, statValue(stat)) }}</td>
+        <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
     </template>
     <tr>
@@ -38,33 +38,28 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
-import { TStats, ステータスARRAY_MAP } from "@/input";
+import { deepcopy } from "@/common";
+import GlobalMixin from '@/GlobalMixin.vue';
+import { STATS_INPUT_TEMPLATE, TStatsInput, ステータスARRAY_MAP } from "@/input";
 import { defineComponent, PropType, reactive, ref } from "vue";
 
 export default defineComponent({
   name: "StatsInput",
   mixins: [GlobalMixin],
   props: {
-    statsObj: { type: Object as PropType<TStats>, require: true },
+    statsInput: { type: Object as PropType<TStatsInput>, require: true },
     categoryList: { type: Array as PropType<Array<string>>, require: true },
   },
   emits: ["update:stat-adjustments"],
   setup(props, context) {
+    const statsInputRea = reactive(props.statsInput ?? deepcopy(STATS_INPUT_TEMPLATE));
+
     const editable = ref(false);
     const initializable = ref(false);
 
     const statList = (category: string) => ステータスARRAY_MAP.get(category);
-    const statsAdjustments = reactive({} as any);
-    if (props.categoryList) {
-      for (const category of props.categoryList) {
-        const workList = statList(category);
-        if (!workList) continue;
-        for (const stat of workList) {
-          statsAdjustments[stat] = 0;
-        }
-      }
-    }
+    const statsObj = statsInputRea.statsObj;
+    const statsAdjustments = statsInputRea.statsAdjustments;
 
     const categoryOpenClose = ref({} as any);
     if (props.categoryList) {
@@ -75,14 +70,13 @@ export default defineComponent({
     const visibleStatList = (category: string) =>
       statList(category)?.filter(
         (stat) =>
-          categoryOpenClose.value[category] || (props.statsObj && props.statsObj[stat])
+          categoryOpenClose.value[category] || (statsInputRea.statsObj && statsInputRea.statsObj[stat])
       ) ?? [];
-    const statValue = (stat: string) => (props.statsObj ? props.statsObj[stat] : 0);
 
     //
     const adjustmentsOnChange = () => {
-      context.emit("update:stat-adjustments", statsAdjustments);
-      console.log(statsAdjustments);
+      context.emit("update:stat-adjustments", statsInputRea.statsAdjustments);
+      console.log(statsInputRea.statsAdjustments);
     };
 
     // 補正値を0クリアします
@@ -92,7 +86,7 @@ export default defineComponent({
         const list = statList(category);
         if (!list) continue;
         for (const stat of list) {
-          statsAdjustments[stat] = 0;
+          statsInputRea.statsAdjustments[stat] = 0;
         }
       }
     };
@@ -101,10 +95,10 @@ export default defineComponent({
     return {
       statList,
       visibleStatList,
-      statValue,
+      statsObj,
+      statsAdjustments,
       categoryOpenClose,
 
-      statsAdjustments,
       adjustmentsOnChange,
       editable,
       initializable,

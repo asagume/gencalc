@@ -1,18 +1,14 @@
 <template>
   <div>
     <label v-for="item in elementalResonanceList" :key="item.key">
-      <input
-        type="checkbox"
-        v-model="elementalResonanceChecked[item.key]"
-        @change="onChange(item.key)"
-      />
+      <input type="checkbox" v-model="elementalResonanceChecked[item.key]" @change="onChange(item.key)" />
       <span>{{ displayName(item.名前) }}</span>
     </label>
   </div>
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
+import GlobalMixin from '@/GlobalMixin.vue';
 import { ELEMENTAL_RESONANCE_MASTER_LIST } from "@/master";
 import { defineComponent, reactive } from "vue";
 

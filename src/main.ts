@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE } from '@/input';
+import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { deepcopy, isNumber } from './common';
 import i18n from './i18n';
@@ -118,7 +118,7 @@ function makeSaveDataFromShareData(shareData: string) {
     }
 }
 
-function getCharacterByBirthday(): string {
+function getCharacterByBirthday(): TCharacterKey {
     const today = new Date();
     let curDiff = Number.MAX_SAFE_INTEGER;
     let result = CHARACTER_MASTER_LIST[0].key;
@@ -138,7 +138,7 @@ function getCharacterByBirthday(): string {
 }
 
 async function main() {
-    const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as { [key: string]: any };
+    const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
     const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE);
     const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE);
 
@@ -148,7 +148,7 @@ async function main() {
         const allin = searchParams.get('allin');
         if (allin) {
             savedata = makeSaveDataFromShareData(allin);
-            characterInput.character = savedata.キャラクター;
+            characterInput.character = savedata.キャラクター as TCharacterKey;
         }
     }
     if (!characterInput.character) {
