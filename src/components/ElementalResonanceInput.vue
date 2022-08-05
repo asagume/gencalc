@@ -33,16 +33,23 @@ export default defineComponent({
     );
 
     const onChange = (key: string) => {
-      const count = Object.keys(elementalResonanceCheckedRea).filter(
-        (s) => s != "元素共鳴なし" && elementalResonanceCheckedRea[s]
-      ).length;
-      if (count > 0) {
-        elementalResonanceCheckedRea["元素共鳴なし"] = false;
-        if (count > 2) {
-          elementalResonanceCheckedRea[key] = false;
+      if (elementalResonanceCheckedRea[key]) {
+        if (key == "元素共鳴なし") {
+          for (const name of Object.keys(elementalResonanceCheckedRea).filter(
+            (s) => s != "元素共鳴なし"
+          )) {
+            elementalResonanceCheckedRea[name] = false;
+          }
+        } else {
+          if (
+            Object.keys(elementalResonanceCheckedRea).filter(
+              (s) => s != "元素共鳴なし" && elementalResonanceCheckedRea[s]
+            ).length > 2
+          ) {
+            elementalResonanceCheckedRea[key] = false;
+          }
+          elementalResonanceCheckedRea["元素共鳴なし"] = false;
         }
-      } else {
-        elementalResonanceCheckedRea["元素共鳴なし"] = true;
       }
       context.emit("update:elemental-resonance", elementalResonanceCheckedRea);
     };
