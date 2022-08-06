@@ -69,12 +69,15 @@
         :visible="weaponSelectVisibleRef"
         :weapon="weapon"
         :weaponType="weaponType"
+        :ascension="characterInputRea.武器突破レベル"
+        :level="characterInputRea.武器レベル"
         @update:weapon="updateWeapon($event)"
       />
       <ArtifactSetSelect
         :visible="artifactSetSelectVisibleRef"
-        :artifactSet="artifactSets[artifactSetIndexRef]"
         :index="artifactSetIndexRef"
+        :artifactSet="artifactSets[artifactSetIndexRef]"
+        :artifactSetMasters="characterInputRea.artifactSetMasters"
         @update:artifact-set="updateArtifactSet($event)"
       />
       <ArtifactDetailInput
@@ -605,7 +608,7 @@ export default defineComponent({
     const updateCharacterInputWeapon = (characterInput: any) => {
       Object.keys(characterInput).forEach((key) => {
         if (characterInputRea && key in characterInputRea) {
-          [key] = characterInput[key];
+          characterInputRea[key] = characterInput[key];
         }
       });
       // 武器のダメージ計算式を再抽出します

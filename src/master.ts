@@ -42,6 +42,8 @@ export {
     ELEMENTAL_REACTION_MASTER
 };
 
+export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+
 export type TVisionKey = '炎' | '水' | '風' | '雷' | '草' | '氷' | '岩';
 export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
 
@@ -130,6 +132,16 @@ export type TWeaponKey = TSwordKey | TClaymoreKey | TPolearmKey | TBowKey | TCat
 export type TWeaponEntry = TWeapon & {
     key: TWeaponKey,
     icon_url: string,
+};
+export const WEAPON_DETAIL_TEMPLATE = {
+    名前: '西風猟弓',
+    説明: '',
+    icon_url: IMG_SRC_DUMMY,
+    レアリティ: 4,
+    種類: '弓',
+    ステータス: {
+        基礎攻撃力: {}
+    },
 };
 export type TWeaponDetail = {
     名前: TWeaponKey,
@@ -338,8 +350,6 @@ export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?:
         throw error;
     }
 }
-
-export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 
 export const ELEMENT_COLOR_CLASS = {
     炎: 'pyro',
