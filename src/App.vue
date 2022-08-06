@@ -221,7 +221,10 @@
           />
         </template>
         <template v-if="optionInputTabRef == 2">
-          <TeamOptionInput @update:team-option="updateTeamOption" />
+          <TeamOptionInput
+            :savedSupporters="savedSupporters"
+            @update:team-option="updateTeamOption"
+          />
         </template>
         <template v-if="optionInputTabRef == 3">
           <MiscOptionInput @update:misc-option="updateMiscOption" />
@@ -433,6 +436,15 @@ export default defineComponent({
     const selectedEnemy = ref(enemyList[0]);
     statsInput.statAdjustments["敵レベル"] = 90;
     statsInput.statAdjustments["敵防御力"] = 0;
+
+    const savedSupporters = reactive([] as { key: string; value: string }[]);
+    const setupSavedSupporters = () => {
+      const work = Object.keys(localStorage)
+        .filter((s) => s.startsWith("構成_") && s.split("_").length == 2)
+        .map((s) => ({ key: s, value: localStorage[s] }));
+      savedSupporters.splice(0, savedSupporters.length, ...work);
+    };
+    setupSavedSupporters();
 
     //
     const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
@@ -832,6 +844,7 @@ export default defineComponent({
       updateEnemy,
       optionInputRea,
       damageResult,
+      savedSupporters,
 
       pane6Toggle1Ref,
       pane6Toggle2Ref,
@@ -876,6 +889,10 @@ h2 label {
 }
 </style>
 <style scoped>
+.toggle-switch {
+  width: calc(100% / 3 - 16px);
+}
+
 label.enemy {
   display: inline-block;
   width: calc(100% / 2 - 8px);

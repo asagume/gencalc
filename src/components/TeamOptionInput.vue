@@ -1,32 +1,59 @@
 <template>
   <fieldset class="team-option">
-    <fieldset class="supporter" v-for="supporter in supporterKeyList" :key="supporter">
-      <legend>{{ displayName(supporter) }}</legend>
-      <div class="left">
-        <label v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+    <template v-for="supporter in supporterKeyList" :key="supporter">
+      <fieldset v-if="supporterOpenClose[supporter]" class="supporter">
+        <legend>
           <input
+            class="hidden"
+            :id="'supporter-' + supporter"
             type="checkbox"
-            v-model="conditionValues[item.name]"
-            :value="item.name"
-            :disabled="conditionDisabled(item)"
-            @change="onChange"
+            v-model="supporterOpenClose[supporter]"
           />
-          <span> {{ displayName(item.displayName) }}</span>
+          <label class="toggle-switch" :for="'supporter-' + supporter">
+            <span>{{ displayName(supporter) }}</span>
+          </label>
+        </legend>
+        <div class="left">
+          <label v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+            <input
+              type="checkbox"
+              v-model="conditionValues[item.name]"
+              :value="item.name"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            />
+            <span> {{ displayName(item.displayName) }}</span>
+          </label>
+          <label v-for="item in supporterSelectList(supporter)" :key="item.name">
+            <span> {{ displayName(item.displayName) }} </span>
+            <select
+              v-model="conditionValues[item.name]"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            >
+              <option
+                v-for="(option, index) in item.options"
+                :value="index"
+                :key="option"
+              >
+                {{ displayOptionName(option) }}
+              </option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+      <template v-else>
+        <input
+          class="hidden"
+          :id="'supporter-else-' + supporter"
+          type="checkbox"
+          v-model="supporterOpenClose[supporter]"
+        />
+        <label class="toggle-switch" :for="'supporter-else-' + supporter">
+          <span>{{ displayName(supporter) }}</span>
         </label>
-        <label v-for="item in supporterSelectList(supporter)" :key="item.name">
-          <span> {{ displayName(item.displayName) }} </span>
-          <select
-            v-model="conditionValues[item.name]"
-            :disabled="conditionDisabled(item)"
-            @change="onChange"
-          >
-            <option v-for="(option, index) in item.options" :value="index" :key="option">
-              {{ displayOptionName(option) }}
-            </option>
-          </select>
-        </label>
-      </div>
-    </fieldset>
+      </template>
+    </template>
     <hr />
     <ul class="option-description">
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
@@ -73,70 +100,62 @@ import {
   STAT_PERCENT_LIST,
 } from "@/input";
 import { TEAM_OPTION_MASTER_LIST } from "@/master";
-import { computed, defineComponent, reactive } from "vue";
+import { stringLiteral } from "@babel/types";
+import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
   name: "TeamOptionInput",
   mixins: [GlobalMixin],
+  props: {
+    savedSupporters: Object as PropType<{ key: string; value: string }[]>,
+  },
   emits: ["update:team-option"],
   setup(props, context) {
-    const savedSupporters = Object.keys(localStorage)
-      .filter((s) => s.startsWith("構成_") && s.split("_").length == 2)
-      .map((s) => ({ key: s, value: localStorage[s] }));
-
-    const supporterMap = computed(() => {
-      const result = new Map();
-      for (const entry of TEAM_OPTION_MASTER_LIST) {
-        result.set(entry.key.split("_")[0], entry);
-      }
-      return result;
-    });
-    const supporterKeyList = computed(() => {
-      return Array.from(supporterMap.value.keys());
-    });
+    const savedSupportersRea = reactive(
+      props.savedSupporters ?? ([] as { key: string; value: string }[])
+    );
+    const supporterKeyList = reactive([] as string[]);
+    const supporterOpenClose = reactive({} as { [key: string]: boolean });
 
     const loadSupporterData = async () => {
-      for (const supporter of supporterKeyList.value) {
-        const storageKey = "あなたの" + supporter;
-        if (localStorage[storageKey]) {
-          const supporterSavedata = JSON.parse(localStorage[storageKey]);
-          const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-          const artifactDetailInput = deepcopy(
-            ARTIFACT_DETAIL_INPUT_TEMPLATE
-          ) as TArtifactDetailInput;
-          const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-          const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
-          const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
-          const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
-          await loadRecommendation(
-            characterInput,
-            artifactDetailInput,
-            conditionInput,
-            supporterSavedata
-          );
-          makeDamageDetailObjArrObjCharacter(characterInput);
-          makeDamageDetailObjArrObjWeapon(characterInput);
-          makeDamageDetailObjArrObjArtifactSets(characterInput);
-          setupConditionValues(conditionInput, characterInput);
-          calculateArtifactStatsMain(
-            artifactDetailInput.聖遺物ステータスメイン効果,
-            artifactDetailInput.聖遺物メイン効果
-          );
-          calculateArtifactStats(artifactDetailInput);
-          calculateStats(
-            statsInput,
-            characterInput,
-            artifactDetailInput,
-            conditionInput,
-            optionInput
-          );
-          calculateResult(
-            damageResult,
-            characterInput as any,
-            conditionInput as any,
-            statsInput
-          );
-        }
+      for (const savedSupporter of savedSupportersRea) {
+        const supporterSavedata = JSON.parse(savedSupporter.value);
+        const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
+        const artifactDetailInput = deepcopy(
+          ARTIFACT_DETAIL_INPUT_TEMPLATE
+        ) as TArtifactDetailInput;
+        const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
+        const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
+        const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
+        const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
+        await loadRecommendation(
+          characterInput,
+          artifactDetailInput,
+          conditionInput,
+          supporterSavedata
+        );
+        makeDamageDetailObjArrObjCharacter(characterInput);
+        makeDamageDetailObjArrObjWeapon(characterInput);
+        makeDamageDetailObjArrObjArtifactSets(characterInput);
+        setupConditionValues(conditionInput, characterInput);
+        calculateArtifactStatsMain(
+          artifactDetailInput.聖遺物ステータスメイン効果,
+          artifactDetailInput.聖遺物メイン効果
+        );
+        calculateArtifactStats(artifactDetailInput);
+        calculateStats(
+          statsInput,
+          characterInput,
+          artifactDetailInput,
+          conditionInput,
+          optionInput
+        );
+        calculateResult(
+          damageResult,
+          characterInput as any,
+          conditionInput as any,
+          statsInput
+        );
       }
     };
 
@@ -158,6 +177,7 @@ export default defineComponent({
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
         const supporter = entry.key.split("_")[0];
+        if (!supporterKeyList.includes(supporter)) supporterKeyList.push(supporter);
         if ("詳細" in entry) {
           for (const detailObj of entry.詳細) {
             if ("条件" in detailObj) {
@@ -184,19 +204,21 @@ export default defineComponent({
         );
       }
     }
-    console.log("team damageDetailArr", damageDetailArr);
+    damageDetailArr
+      .filter((s) => s["条件"])
+      .forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj["条件"], conditionMap, exclusionMap);
+      });
     statusChangeDetailObjArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
         makeConditionExclusionMapFromStr(detailObj["条件"], conditionMap, exclusionMap);
       });
-    console.log("team statusChangeDetailObjArr", statusChangeDetailObjArr);
     talentChangeDetailObjArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
         makeConditionExclusionMapFromStr(detailObj["条件"], conditionMap, exclusionMap);
       });
-    console.log("team talentChangeDetailObjArr", talentChangeDetailObjArr);
     conditionMap.forEach((value, key) => {
       if (value && Array.isArray(value)) {
         if (!value[0].startsWith("required_")) {
@@ -230,6 +252,9 @@ export default defineComponent({
         conditionValues[key] = 0;
       }
     });
+    for (const key of supporterKeyList) {
+      supporterOpenClose[key] = false;
+    }
 
     const supporterCheckboxList = (supporter: any) => {
       return checkboxList.filter((s) => s.name.startsWith(supporter));
@@ -241,7 +266,7 @@ export default defineComponent({
 
     const conditionDisabled = (item: any): boolean => {
       const supporter = item.name.split("_")[0];
-      if (savedSupporters.includes(supporter)) return false;
+      if (savedSupportersRea.includes(supporter)) return false;
       for (const myDetailObj of statusChangeDetailObjArr) {
         if (myDetailObj.条件.startsWith(item.name)) {
           if (isUseReference(myDetailObj.数値)) {
@@ -312,6 +337,7 @@ export default defineComponent({
       conditionDisabled,
       onChange,
       displayStatAjustmentList,
+      supporterOpenClose,
     };
   },
 });
@@ -321,16 +347,33 @@ div.left {
   text-align: left;
 }
 
-label {
-  display: inline-block;
-  margin: 2px 1rem;
-  min-width: calc(100% / 3 - 2rem);
-  text-align: left;
+fieldset.supporter {
+  margin-bottom: 10px;
 }
 
 label input,
 label select {
   margin: 0 0.5rem;
+}
+
+label {
+  display: inline-block;
+  margin: 2px 0.5rem;
+  text-align: left;
+}
+
+label.toggle-switch {
+  text-align: center;
+  width: calc(100% / 3 - 3rem - 4px);
+  min-width: none;
+}
+
+legend label.toggle-switch {
+  padding: 0;
+  background-color: transparent;
+  border-width: 0 0 1px 0;
+  border-radius: 0;
+  width: 20rem;
 }
 
 :checked + span {

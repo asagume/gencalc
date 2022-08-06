@@ -352,7 +352,6 @@ div.filter img.filter.selected {
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: calc(100% / 3 - 16px);
     border: 2px solid gray;
     padding: 5px;
     margin: 5px 1px;
