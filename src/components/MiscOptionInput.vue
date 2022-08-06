@@ -1,13 +1,8 @@
 <template>
   <fieldset>
-    <label v-for="item in checkboxList" :key="item">
-      <input
-        type="checkbox"
-        v-model="conditionValues[item]"
-        :value="item"
-        @change="onChange"
-      />
-      <span> {{ displayName(item) }}</span>
+    <label v-for="item in checkboxList" :key="item.name">
+      <input type="checkbox" v-model="conditionValues[item.name]" :value="item" @change="onChange" />
+      <span> {{ displayName(item.name) }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
       <span> {{ displayName(item.name) }} </span>
@@ -47,10 +42,6 @@ import { computed, defineComponent, reactive } from "vue";
 export default defineComponent({
   name: "MiscOptionInput",
   mixins: [GlobalMixin],
-  props: {
-    characterInput: { type: Object, require: true },
-    conditionInput: { type: Object, require: true },
-  },
   emits: ["update:misc-option"],
   setup(props, context) {
     const damageDetailArr = [] as any[];
@@ -59,7 +50,7 @@ export default defineComponent({
     const conditionMap = new Map() as Map<string, any[] | null>;
     const exclusionMap = new Map() as Map<string, string[] | null>;
     const conditionInput = reactive({
-      conditionValues: {} as { [ket: string]: any },
+      conditionValues: {} as { [key: string]: any },
       checkboxList: [] as TCheckboxEntry[],
       selectList: [] as TSelectEntry[],
     });
@@ -120,8 +111,8 @@ export default defineComponent({
           });
         }
       } else {
-        if (checkboxList.filter((s) => s == key).length == 0) {
-          checkboxList.push(key);
+        if (checkboxList.filter((s) => s.name == key).length == 0) {
+          checkboxList.push({ name: key });
         }
       }
     });
@@ -204,7 +195,7 @@ label select {
   margin: 0 0.5rem;
 }
 
-:checked + span {
+:checked+span {
   color: palevioletred;
 }
 </style>

@@ -221,7 +221,7 @@
           />
         </template>
         <template v-if="optionInputTabRef == 2">
-          <TeamOptionInput />
+          <TeamOptionInput @update:team-option="updateTeamOption" />
         </template>
         <template v-if="optionInputTabRef == 3">
           <MiscOptionInput @update:misc-option="updateMiscOption" />
@@ -787,6 +787,24 @@ export default defineComponent({
       );
     };
 
+    const updateTeamOption = (statAdjustments: TStats) => {
+      overwriteObject(optionInputRea.teamOptionStatAdjustments, statAdjustments);
+      console.log(statAdjustments);
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      calculateResult(
+        damageResult,
+        characterInputRea as any,
+        conditionInputRea as any,
+        statsInput
+      );
+    };
+
     updateCharacter(character);
 
     return {
@@ -836,6 +854,7 @@ export default defineComponent({
       updateStatAdjustments,
       updateElementalResonance,
       updateMiscOption,
+      updateTeamOption,
 
       myDamageDatailArr,
       objectKeys,

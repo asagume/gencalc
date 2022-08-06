@@ -32,7 +32,9 @@ const GlobalMixin = {
       return String(name);
     },
     percent(stat: string) {
-      return stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat) ? "%" : "";
+      if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) return "%";
+      if (stat.endsWith("会心率") || stat.endsWith("会心ダメージ")) return "%";
+      return "";
     },
     displayStatValue(stat: string, value: number, opt_s?: number): string {
       const percent = this.percent(stat);
@@ -52,8 +54,9 @@ const GlobalMixin = {
         i18n.global.locale.value = lang;
       }
     },
-    displayOptionName(name: string) { return name.replace(/^required_/, "") },
-
+    displayOptionName(name: string) {
+      return name.replace(/^required_/, "");
+    },
   },
 };
 export default GlobalMixin;

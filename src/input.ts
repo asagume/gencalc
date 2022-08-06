@@ -368,7 +368,9 @@ export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
 };
 export type TArtifactDetailInput = typeof ARTIFACT_DETAIL_INPUT_TEMPLATE;
 
-export type TCheckboxEntry = string;
+export type TCheckboxEntry = {
+    name: string;
+};
 export type TSelectEntry = {
     name: string;
     options: string[];
@@ -1013,6 +1015,11 @@ export const makeDamageDetailObjArr = function (
                 || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
                 || resultObj['種類'] == '別枠乗算'
                 || ['継続時間', '発動回数', 'クールタイム', '使用回数'].includes(my種類)
+                || ['敵防御力', '移動速度', '攻撃速度', '通常攻撃速度'].includes(my種類)
+                || my種類.endsWith('継続時間')
+                || my種類.endsWith('クールタイム')
+                || my種類.endsWith('会心率')
+                || my種類.endsWith('会心ダメージ')
             ) {
                 resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                 statusChangeDetailObjArr.push(resultObj);
@@ -1146,8 +1153,8 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                                 });
                             }
                         } else {
-                            if (checkboxList.filter(s => s == key).length == 0) {
-                                checkboxList.push(key);
+                            if (checkboxList.filter(s => s.name == key).length == 0) {
+                                checkboxList.push({ name: key });
                             }
                         }
                     });

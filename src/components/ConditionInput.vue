@@ -1,16 +1,16 @@
 <template>
   <fieldset>
-    <label v-for="item in checkboxList" :key="item">
+    <label v-for="item in checkboxList" :key="item.name">
       <input
         type="checkbox"
-        v-model="conditionValues[item]"
-        :value="item"
+        v-model="conditionValues[item.name]"
+        :value="item.name"
         @change="$emit('update:condition')"
       />
-      <span>{{ item }}</span>
+      <span>{{ displayName(item.name) }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
-      <span>{{ item.name }}</span>
+      <span>{{ displayName(item.name) }}</span>
       <select v-model="conditionValues[item.name]" @change="$emit('update:condition')">
         <option v-for="(option, index) in item.options" :value="index" :key="index">
           {{ displayOptionName(option) }}

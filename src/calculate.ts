@@ -213,10 +213,11 @@ export const calculateStats = function (
         Object.keys(optionInput.elementalResonanceStatAdjustments).forEach(stat => {
             if (stat in workStatsObj) workStatsObj[stat] += optionInput.elementalResonanceStatAdjustments[stat];
         });
-
-        // TODO チームオプションを計上します
-
-        // TODO その他オプションを計上します
+        // チームオプションを計上します
+        Object.keys(optionInput.teamOptionStatAdjustments).forEach(stat => {
+            if (stat in workStatsObj) workStatsObj[stat] += optionInput.teamOptionStatAdjustments[stat];
+        });
+        // その他オプションを計上します
         Object.keys(optionInput.miscOptionStatAdjustments).forEach(stat => {
             if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOptionStatAdjustments[stat];
         });
@@ -582,8 +583,8 @@ export function makeValidConditionValueArr(conditionInput: any) {
         const checkboxList = conditionInput.checkboxList;
         if (checkboxList) {
             checkboxList.forEach((entry: any) => {
-                if (conditionInput.conditionValues[entry]) {
-                    result.push(entry);
+                if (conditionInput.conditionValues[entry.name]) {
+                    result.push(entry.name);
                 }
             });
         }
@@ -1369,7 +1370,7 @@ function ステータス条件追加(newStatsObj: TStats, condition: string, sta
 /**
  * 計算式内の参照有無を求めます
  */
-function isUseReference(formulaArr: number | string | Array<number | string>): boolean {
+export function isUseReference(formulaArr: number | string | Array<number | string>): boolean {
     if (!Array.isArray(formulaArr)) {
         if (isNumber(formulaArr)) {
             return false;
