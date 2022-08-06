@@ -395,12 +395,12 @@ export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
 export const OPTION_INPUT_TEMPLATE = {
     elementalResonanceChecked: {} as { [key: string]: boolean },
-    elementalResonanceStatusAdjustment: {} as TStats,
+    elementalResonanceStatAdjustments: {} as TStats,
     supporterList: [],
     isSupporterOptionOpened: {} as { [key: string]: boolean },
     teamOptionConditionMap: {},
     teamOptionConditionValues: {},
-    teamOptionStatusAdjustment: {} as TStats,
+    teamOptionStatAdjustments: {} as TStats,
     miscOptionConditionValues: {},
     miscOptionStatAdjustments: {} as TStats,
 };

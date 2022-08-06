@@ -91,7 +91,7 @@ export default defineComponent({
           elementalResonanceCheckedRea["元素共鳴なし"] = false;
         }
       }
-      context.emit("update:elemental-resonance", elementalResonanceCheckedRea);
+      context.emit("update:elemental-resonance", statAdjustments.value);
     };
 
     return {

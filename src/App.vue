@@ -755,9 +755,8 @@ export default defineComponent({
       );
     };
     /** 元素共鳴を更新しました */
-    const updateElementalResonance = (elementalResonanceChecked: {
-      [key: string]: boolean;
-    }) => {
+    const updateElementalResonance = (statAdjustments: TStats) => {
+      overwriteObject(optionInputRea.elementalResonanceStatAdjustments, statAdjustments);
       calculateStats(
         statsInput,
         characterInputRea,

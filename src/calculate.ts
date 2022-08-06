@@ -210,18 +210,9 @@ export const calculateStats = function (
 
     if (optionInput) {
         // 元素共鳴を計上します
-        for (const name of Object.keys(optionInput.elementalResonanceChecked).filter(s => optionInput.elementalResonanceChecked[s])) {
-            if ('詳細' in (ELEMENTAL_RESONANCE_MASTER as any)[name]) {
-                const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[name].詳細;
-                if (detailObjArr) {
-                    for (const detailObj of detailObjArr) {
-                        if ('種類' in detailObj && '数値' in detailObj) {
-                            workStatsObj[detailObj.種類] += detailObj.数値;
-                        }
-                    }
-                }
-            }
-        }
+        Object.keys(optionInput.elementalResonanceStatAdjustments).forEach(stat => {
+            if (stat in workStatsObj) workStatsObj[stat] += optionInput.elementalResonanceStatAdjustments[stat];
+        });
 
         // TODO チームオプションを計上します
 
@@ -229,7 +220,7 @@ export const calculateStats = function (
         Object.keys(optionInput.miscOptionStatAdjustments).forEach(stat => {
             if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOptionStatAdjustments[stat];
         });
-        }
+    }
 
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
     console.log('conditionInput', conditionInput);
@@ -601,7 +592,7 @@ export function makeValidConditionValueArr(conditionInput: any) {
             selectList.forEach((entry: any) => {
                 const value = conditionInput.conditionValues[entry.name];
                 if (value !== undefined && value !== null) {
-                    if (value > 0 || (value == 0 &&entry.require)) {
+                    if (value > 0 || (value == 0 && entry.require)) {
                         result.push(entry.name + '@' + entry.options[value]);
                     }
                 }
