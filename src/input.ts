@@ -761,22 +761,24 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
 
         // 風元素キャラクター
         if (characterMaster['元素'] == '風') {
-            ['炎元素', '水元素', '雷元素', '氷元素'].forEach(cond => {
-                myTalentChangeDetailObjArr.push({
-                    名前: null,
-                    種類: '固有変数',
-                    元素: null,
-                    数値: null,
-                    条件: '拡散@' + cond,
-                    対象: null,
-                    上限: null,
-                    HIT数: null,
-                    ダメージバフ: null,
-                    元素付与無効: null,
-                    除外条件: null,
-                    適用条件: null
+            if (myTalentChangeDetailObjArr.filter(s => s.条件 && s.条件.startsWith('拡散@')).length == 0) {
+                ['炎元素', '水元素', '雷元素', '氷元素'].forEach(cond => {
+                    myTalentChangeDetailObjArr.push({
+                        名前: null,
+                        種類: '固有変数',
+                        元素: null,
+                        数値: null,
+                        条件: '拡散@' + cond,
+                        対象: null,
+                        上限: null,
+                        HIT数: null,
+                        ダメージバフ: null,
+                        元素付与無効: null,
+                        除外条件: null,
+                        適用条件: null
+                    });
                 });
-            });
+            }
         }
 
         result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
@@ -1128,14 +1130,18 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                 if (myDamageDetail && myDamageDetail.条件) {
                     myDamageDetail.条件.forEach((value: string[] | null, key: string) => {
                         if (value) {
-                            const require = value[0].startsWith("required_");
-                            selectList.push({
-                                name: key,
-                                options: value,
-                                require: require,
-                            });
+                            if (selectList.filter(s => s.name == key).length == 0) {
+                                const require = value[0].startsWith("required_");
+                                selectList.push({
+                                    name: key,
+                                    options: value,
+                                    require: require,
+                                });
+                            }
                         } else {
-                            checkboxList.push(key);
+                            if (checkboxList.filter(s => s == key).length == 0) {
+                                checkboxList.push(key);
+                            }
                         }
                     });
                 }
