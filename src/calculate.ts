@@ -226,7 +226,10 @@ export const calculateStats = function (
         // TODO チームオプションを計上します
 
         // TODO その他オプションを計上します
-    }
+        Object.keys(optionInput.miscOptionStatAdjustments).forEach(stat => {
+            if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOptionStatAdjustments[stat];
+        });
+        }
 
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
     console.log('conditionInput', conditionInput);

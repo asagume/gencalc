@@ -402,7 +402,7 @@ export const OPTION_INPUT_TEMPLATE = {
     teamOptionConditionValues: {},
     teamOptionStatusAdjustment: {} as TStats,
     miscOptionConditionValues: {},
-    miscOptionStatusAdjustment: {} as TStats,
+    miscOptionStatAdjustments: {} as TStats,
 };
 export type TOptionInput = typeof OPTION_INPUT_TEMPLATE;
 

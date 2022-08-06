@@ -226,7 +226,7 @@
           <TeamOptionInput />
         </template>
         <template v-if="optionInputTabRef == 3">
-          <MiscOptionInput />
+          <MiscOptionInput @update:misc-option="updateMiscOption" />
         </template>
       </div>
     </div>
@@ -330,6 +330,7 @@ import {
   OPTION_INPUT_TEMPLATE,
   TOptionInput,
   TStatsInput,
+  TStats,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -351,7 +352,7 @@ import {
 } from "@/calculate";
 import { useI18n } from "vue-i18n";
 import GlobalMixin from "@/GlobalMixin.vue";
-import { deepcopy, isPlainObject } from "./common";
+import { deepcopy, isPlainObject, overwriteObject } from "./common";
 import { calculateResult } from "./calculate";
 
 export default defineComponent({
@@ -772,6 +773,23 @@ export default defineComponent({
       );
     };
 
+    const updateMiscOption = (statAdjustments: TStats) => {
+      overwriteObject(optionInputRea.miscOptionStatAdjustments, statAdjustments);
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      calculateResult(
+        damageResult,
+        characterInputRea as any,
+        conditionInputRea as any,
+        statsInput
+      );
+    };
+
     updateCharacter(character);
 
     return {
@@ -820,6 +838,7 @@ export default defineComponent({
       updateArtifactDetail,
       updateStatAdjustments,
       updateElementalResonance,
+      updateMiscOption,
 
       myDamageDatailArr,
       objectKeys,

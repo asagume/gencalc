@@ -51,7 +51,8 @@ export default defineComponent({
     characterInput: { type: Object, require: true },
     conditionInput: { type: Object, require: true },
   },
-  setup() {
+  emits: ["update:misc-option"],
+  setup(props, context) {
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr = [] as any[];
     const talentChangeDetailObjArr = [] as any[];
@@ -173,7 +174,7 @@ export default defineComponent({
     });
 
     const onChange = () => {
-      console.log("onChange");
+      context.emit("update:misc-option", statAdjustments.value);
     };
 
     return {
