@@ -54,12 +54,12 @@
 </template>
 
 <script lang="ts">
-import { getPropertyValueByLevel, getStatValueByLevel } from "@/calculate";
+import { getStatValueByLevel } from "@/calculate";
 import { deepcopy } from "@/common";
 import GlobalMixin from "@/GlobalMixin.vue";
 import {
-  getWeaponMasterDetail,
   STAR_BACKGROUND_IMAGE_CLASS,
+  TWeaponDetail,
   TWeaponEntry,
   TWeaponKey,
   TWeaponTypeKey,
@@ -75,6 +75,7 @@ export default defineComponent({
     visible: { type: Boolean, require: true },
     weapon: { type: String as PropType<TWeaponKey>, require: true },
     weaponType: { type: String as PropType<TWeaponTypeKey>, require: true },
+    weaponMaster: { type: Object as PropType<TWeaponDetail>, require: true },
     ascension: { type: Number, require: true },
     level: { type: Number, require: true },
   },
@@ -86,20 +87,13 @@ export default defineComponent({
       return item.key == props.weapon ? " selected" : "";
     };
     const weaponRef = ref(props.weapon ?? "西風猟弓");
-    const weaponMasterRef = ref(deepcopy(WEAPON_DETAIL_TEMPLATE));
-
-    const setupWeaponMaster = () => {
-      if (weaponRef.value && props.weaponType) {
-        getWeaponMasterDetail(weaponRef.value, props.weaponType).then((ret) => {
-          weaponMasterRef.value = ret;
-        });
-      }
-    };
-    setupWeaponMaster();
+    const weaponTypeRef = ref(props.weaponType as TWeaponTypeKey);
+    const weaponMasterRef = ref(props.weaponMaster ?? deepcopy(WEAPON_DETAIL_TEMPLATE));
 
     const stats = computed(() => {
-      const result = [] as any;
+      const result = [] as { key: string; value: number }[];
       if (
+        weaponMasterRef.value &&
         weaponMasterRef.value.ステータス &&
         props.ascension !== undefined &&
         props.level !== undefined
@@ -118,10 +112,9 @@ export default defineComponent({
       return result;
     });
 
-    let weaponType = ref(props.weaponType as TWeaponTypeKey);
     const filteredList = computed(() => {
-      if (weaponType.value) {
-        return WEAPON_MASTER_LIST[weaponType.value] as TWeaponEntry[];
+      if (weaponTypeRef.value) {
+        return WEAPON_MASTER_LIST[weaponTypeRef.value] as TWeaponEntry[];
       }
       const result: TWeaponEntry[] = [];
       (Object.keys(WEAPON_MASTER_LIST) as TWeaponTypeKey[]).forEach((weaponType) => {
@@ -135,10 +128,6 @@ export default defineComponent({
       weaponRef.value = key;
       context.emit("update:weapon", key);
     };
-
-    watch(weaponRef, () => {
-      setupWeaponMaster();
-    });
 
     return {
       bgImageClass,

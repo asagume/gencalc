@@ -69,6 +69,7 @@
         :visible="weaponSelectVisibleRef"
         :weapon="weapon"
         :weaponType="weaponType"
+        :weaponMaster="characterInputRea.weaponMaster"
         :ascension="characterInputRea.武器突破レベル"
         :level="characterInputRea.武器レベル"
         @update:weapon="updateWeapon($event)"
