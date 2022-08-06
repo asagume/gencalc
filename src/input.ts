@@ -1105,6 +1105,17 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
 
 export function setupConditionValues(conditionInput: TConditionInput, characterInput: TCharacterInput) {
     try {
+        const masters = [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters];
+        for (const master of masters.filter(s => s)) {
+            if ('オプション初期値' in master) {
+                for (const key of Object.keys((master as any)['オプション初期値'])) {
+                    if (!(key in conditionInput.conditionValues)) {
+                        conditionInput.conditionValues[key] = (master as any)['オプション初期値'][key];
+                    }
+                }
+            }
+        }
+
         const conditionValues = conditionInput.conditionValues;
         const checkboxList = conditionInput.checkboxList as TCheckboxEntry[];
         const selectList = conditionInput.selectList as TSelectEntry[];
