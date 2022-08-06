@@ -779,6 +779,13 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
                     });
                 });
             }
+            if ('オプション初期値' in characterMaster) {
+                if (Object.keys(characterMaster['オプション初期値']).filter(s => s == '拡散').length == 0) {
+                    characterMaster['オプション初期値']['拡散'] = 1;
+                }
+            } else {
+                characterMaster['オプション初期値'] = { 拡散: 1 };
+            }
         }
 
         result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
