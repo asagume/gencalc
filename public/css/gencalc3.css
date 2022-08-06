@@ -138,6 +138,8 @@ textarea {
     grid-area: pane6;
     vertical-align: top;
     margin-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .result-pane {

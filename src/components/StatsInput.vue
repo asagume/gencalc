@@ -151,4 +151,8 @@ input[type="number"] {
 button {
   width: 10rem;
 }
+
+.stat-value {
+  padding-right: 1rem;
+}
 </style>

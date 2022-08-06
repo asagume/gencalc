@@ -508,7 +508,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                 }
             });
         });
-        damageResult['元素反応'] = reactionResult;
+        overwriteObject(damageResult['元素反応'], reactionResult);
         console.log('元素反応', damageResult);
 
         // 戦闘天賦およびその他のダメージを計算します
