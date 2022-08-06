@@ -581,7 +581,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
     }
 }
 
-function makeValidConditionValueArr(conditionInput: any) {
+export function makeValidConditionValueArr(conditionInput: any) {
     try {
         if (!conditionInput) return [];
         const result = [] as any;
@@ -597,8 +597,10 @@ function makeValidConditionValueArr(conditionInput: any) {
         if (selectList) {
             selectList.forEach((entry: any) => {
                 const value = conditionInput.conditionValues[entry.name];
-                if (value && value >= 0) {
-                    result.push(entry.name + '@' + entry.options[value]);
+                if (value !== undefined && value !== null) {
+                    if (value > 0 || (value == 0 &&entry.require)) {
+                        result.push(entry.name + '@' + entry.options[value]);
+                    }
                 }
             });
         }
@@ -609,7 +611,7 @@ function makeValidConditionValueArr(conditionInput: any) {
     }
 }
 
-const checkConditionMatches = function (conditionStr: string, validConditionValueArr: string[], constellation: number): number {
+export const checkConditionMatches = function (conditionStr: string, validConditionValueArr: string[], constellation: number): number {
     const myCondStr = conditionStr.split('^')[0];
 
     if (myCondStr.indexOf('|') != -1) {  // |はOR条件です

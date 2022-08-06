@@ -52,6 +52,8 @@ const GlobalMixin = {
         i18n.global.locale.value = lang;
       }
     },
+    displayOptionName(name: string) { return name.replace(/^required_/, "") },
+
   },
 };
 export default GlobalMixin;

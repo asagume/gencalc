@@ -282,7 +282,6 @@ img.star {
     width: 2.4rem;
 }
 
-
 ul.select-list {
     list-style-type: none;
     padding: 0;
@@ -805,3 +804,14 @@ table.information img.icon {
 td.description {
     text-align: left;
 }
+
+ul.option-description {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.option-description li {
+    display: inline-block;
+    margin: 0.5rem 1rem;
+}
+

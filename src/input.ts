@@ -1035,7 +1035,7 @@ export const makeDamageDetailObjArr = function (
     return resultArr;
 }
 
-const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>) {
+export const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>) {
     // 排他条件を抽出します
     let exclusionCond: string | null = null;
     let myCondStrArr = conditionStr.split('^');

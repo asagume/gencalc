@@ -42,10 +42,7 @@ export default defineComponent({
     const checkboxList = conditionInputRea.checkboxList;
     const selectList = conditionInputRea.selectList;
 
-    const displayOptionName = (name: string) => name.replace(/^required_/, "");
-
     return {
-      displayOptionName,
       checkboxList,
       selectList,
       conditionValues,
