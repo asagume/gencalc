@@ -14,7 +14,11 @@
           </label>
         </legend>
         <div class="left">
-          <label v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+          <label
+            class="condition"
+            v-for="item in supporterCheckboxList(supporter)"
+            :key="item.name"
+          >
             <input
               type="checkbox"
               v-model="conditionValues[item.name]"
@@ -24,7 +28,11 @@
             />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label v-for="item in supporterSelectList(supporter)" :key="item.name">
+          <label
+            class="condition"
+            v-for="item in supporterSelectList(supporter)"
+            :key="item.name"
+          >
             <span> {{ displayName(item.displayName) }} </span>
             <select
               v-model="conditionValues[item.name]"
@@ -345,15 +353,11 @@ export default defineComponent({
 <style scoped>
 div.left {
   text-align: left;
+  width: 100%;
 }
 
 fieldset.supporter {
   margin-bottom: 10px;
-}
-
-label input,
-label select {
-  margin: 0 0.5rem;
 }
 
 label {
@@ -376,7 +380,7 @@ legend label.toggle-switch {
   width: 20rem;
 }
 
-:checked + span {
-  color: palevioletred;
+label.condition {
+  min-width: calc(100% / 3 - 1rem - 4px);
 }
 </style>
