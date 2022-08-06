@@ -153,6 +153,7 @@ export type TArtifactSet = {
     image: string,
     '2セット効果'?: TArtifactSetEffect,
     '4セット効果'?: TArtifactSetEffect,
+    オプション初期値?: { [key: string]: boolean | number }
 };
 export type TArtifactSetKey = keyof typeof ARTIFACT_SET_MASTER;
 export type TArtifactSetEntry = TArtifactSet & {

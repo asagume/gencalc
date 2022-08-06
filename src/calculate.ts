@@ -171,6 +171,29 @@ export const calculateStats = function (
             }
         }
     }
+    if ('オプション初期値' in characterMaster) {
+        for (const key of Object.keys(characterMaster['オプション初期値'])) {
+            if (!(key in conditionInput.conditionValues)) {
+                conditionInput.conditionValues[key] = characterMaster['オプション初期値'][key];
+            }
+        }
+    }
+    if ('オプション初期値' in weaponMaster) {
+        for (const key of Object.keys(weaponMaster['オプション初期値'])) {
+            if (!(key in conditionInput.conditionValues)) {
+                conditionInput.conditionValues[key] = weaponMaster['オプション初期値'][key];
+            }
+        }
+    }
+    for (const artifactSetMaster of characterInput.artifactSetMasters.filter(s => s)) {
+        if ('オプション初期値' in artifactSetMaster) {
+            for (const key of Object.keys((artifactSetMaster as any)['オプション初期値'])) {
+                if (!(key in conditionInput.conditionValues)) {
+                    conditionInput.conditionValues[key] = (artifactSetMaster as any)['オプション初期値'][key];
+                }
+            }
+        }
+    }
 
     // 敵マスターから敵のステータス（耐性）を設定します
     for (const stat of Object.keys(statsInput.enemyMaster).filter(s => s != 'key')) {
