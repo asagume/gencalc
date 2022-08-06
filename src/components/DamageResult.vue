@@ -83,13 +83,13 @@
       <tr v-for="item in itemList(category)" :key="item[0]">
         <th>{{ displayName(item[0]) }}</th>
         <td :class="'damage-value ' + elementClass(item[1])">
-          {{ displayDamageValue(item[2]) }}
+          {{ displayDamageValue(item, 2) }}
         </td>
         <td :class="'damage-value ' + elementClass(item[1])">
-          {{ displayDamageValue(item[3]) }}
+          {{ displayDamageValue(item, 3) }}
         </td>
         <td :class="'damage-value ' + elementClass(item[1])">
-          {{ displayDamageValue(item[4]) }}
+          {{ displayDamageValue(item, 4) }}
         </td>
       </tr>
     </table>
@@ -117,8 +117,16 @@ export default defineComponent({
     const elementClass = (item: string) =>
       ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
 
-    const displayDamageValue = (value: number) => {
+    const displayDamageValue = (item: any, index: number) => {
+      let value = item[index];
       if (!value) return "-";
+      if (!["シールド"].includes(item[5])) {
+        if (増幅反応.value == "蒸発" && ["炎", "水", "氷"].includes(item[1])) {
+          value *= 元素反応.蒸発倍率;
+        } else if (増幅反応.value == "溶解" && ["炎", "水", "氷"].includes(item[1])) {
+          value *= 元素反応.溶解倍率;
+        }
+      }
       if (value < 10) value = Math.round(value * 100) / 100;
       else if (value < 100) value = Math.round(value * 10) / 10;
       else value = Math.round(value);

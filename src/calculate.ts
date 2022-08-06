@@ -158,6 +158,10 @@ export const calculateStats = function (
 
     const workStatsObj = deepcopy(ステータスTEMPLATE);
 
+    workStatsObj['突破レベル'] = ascension;
+    workStatsObj['レベル'] = level;
+    workStatsObj['命ノ星座'] = constellation;
+
     // キャラクターマスターから元素エネルギーを設定します
     if ('元素エネルギー' in characterMaster['元素爆発']) {
         workStatsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
@@ -1146,22 +1150,22 @@ function calculateDamageFromDetail(
                 if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                     // 複数回HITするダメージについては、HIT数を乗算します
                     if (myHIT数 > 1) {
-                        myResultWork[1] *= myHIT数;
-                        if (myResultWork[2] != null) {
-                            myResultWork[2] *= myHIT数;
-                        }
+                        myResultWork[2] *= myHIT数;
                         if (myResultWork[3] != null) {
                             myResultWork[3] *= myHIT数;
+                        }
+                        if (myResultWork[4] != null) {
+                            myResultWork[4] *= myHIT数;
                         }
                     }
                 }
             }
-            my計算Result[1] += myResultWork[1];
-            if (my計算Result[2] != null && myResultWork[2]) {
-                my計算Result[2] += myResultWork[2];
-            }
-            if (my計算Result[3] != null) {
+            my計算Result[2] += myResultWork[2];
+            if (my計算Result[3] != null && myResultWork[3]) {
                 my計算Result[3] += myResultWork[3];
+            }
+            if (my計算Result[4] != null) {
+                my計算Result[4] += myResultWork[4];
             }
         });
 
@@ -1172,20 +1176,20 @@ function calculateDamageFromDetail(
                 const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
-                    myResultWork[1] *= myHIT数;
-                    if (myResultWork[2] != null) {
-                        myResultWork[2] *= myHIT数;
-                    }
+                    myResultWork[2] *= myHIT数;
                     if (myResultWork[3] != null) {
                         myResultWork[3] *= myHIT数;
                     }
+                    if (myResultWork[4] != null) {
+                        myResultWork[4] *= myHIT数;
+                    }
                 }
-                my計算Result[1] += myResultWork[1];
-                if (my計算Result[2] != null && myResultWork[2]) {
-                    my計算Result[2] += myResultWork[2];
-                }
-                if (my計算Result[3] != null) {
+                my計算Result[2] += myResultWork[2];
+                if (my計算Result[3] != null && myResultWork[3]) {
                     my計算Result[3] += myResultWork[3];
+                }
+                if (my計算Result[4] != null) {
+                    my計算Result[4] += myResultWork[4];
                 }
             }
         }
@@ -1194,20 +1198,20 @@ function calculateDamageFromDetail(
                 const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
-                    myResultWork[1] *= myHIT数;
-                    if (myResultWork[2] != null) {
-                        myResultWork[2] *= myHIT数;
-                    }
+                    myResultWork[2] *= myHIT数;
                     if (myResultWork[3] != null) {
                         myResultWork[3] *= myHIT数;
                     }
+                    if (myResultWork[4] != null) {
+                        myResultWork[4] *= myHIT数;
+                    }
                 }
-                my計算Result[1] += myResultWork[1];
-                if (my計算Result[2] != null && myResultWork[2]) {
-                    my計算Result[2] += myResultWork[2];
-                }
-                if (my計算Result[3] != null) {
+                my計算Result[2] += myResultWork[2];
+                if (my計算Result[3] != null && myResultWork[3]) {
                     my計算Result[3] += myResultWork[3];
+                }
+                if (my計算Result[4] != null) {
+                    my計算Result[4] += myResultWork[4];
                 }
             }
         }
@@ -1218,13 +1222,13 @@ function calculateDamageFromDetail(
         });
 
         if (detailObj['種類'] == 'シールド') {
-            if (my計算Result[0] == '岩') {  // 岩元素シールド for ノエル 鍾離
-                my計算Result[1] = my計算Result[1] * 1.5;
-                my計算Result[3] = my計算Result[3] * 1.5;
+            if (my計算Result[1] == '岩') {  // 岩元素シールド for ノエル 鍾離
+                my計算Result[2] = my計算Result[2] * 1.5;
+                my計算Result[4] = my計算Result[4] * 1.5;
             }
         }
 
-        const resultArr = [detailObj['名前'], my計算Result[0], my計算Result[1], my計算Result[2], my計算Result[3]] as TDamageResultEntry;
+        const resultArr = [detailObj['名前'], my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj['種類']] as TDamageResultEntry;
         return resultArr;
     } catch (error) {
         console.error(detailObj, characterInput, conditionInput, statsObj, opt_element);
@@ -1243,7 +1247,7 @@ export function calculateDamageFromDetailSub(
     元素: string,
     防御無視: number,
     別枠乗算: number
-): [string | null, number, number | null, number] {
+): TDamageResultEntry {
     let my非会心Result = calculateFormulaArray(formula, statsObj, damageResult);
     console.debug("%o => %o", formula, my非会心Result);
 
@@ -1287,7 +1291,7 @@ export function calculateDamageFromDetailSub(
         }
     }
     console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
-    return [元素, my期待値Result, my会心Result, my非会心Result];
+    return ['未設定', 元素, my期待値Result, my会心Result, my非会心Result, null];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {

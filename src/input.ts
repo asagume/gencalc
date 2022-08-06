@@ -265,7 +265,7 @@ export const 元素反応TEMPLATE = {
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
 
-export type TDamageResultEntry = [string, string | null, number, number | null, number];    // 名前, 元素, 期待値, 会心, 非会心
+export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類
 export type TDamageResult = {
     元素反応: TDamageResultElementalReaction,
     通常攻撃: TDamageResultEntry[],
