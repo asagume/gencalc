@@ -1,5 +1,5 @@
 <template>
-  <div class="elemental-resonance">
+  <fieldset class="elemental-resonance">
     <label v-for="item in elementalResonanceList" :key="item.key">
       <input
         type="checkbox"
@@ -8,11 +8,11 @@
       />
       <span>{{ displayName(item.名前) }}</span>
     </label>
-  </div>
-  <hr />
-  <ul class="option-description">
-    <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
-  </ul>
+    <hr />
+    <ul class="option-description">
+      <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
+    </ul>
+  </fieldset>
 </template>
 
 <script lang="ts">

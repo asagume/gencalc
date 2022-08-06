@@ -7,12 +7,12 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto auto auto minmax(500px, auto) auto auto;
+        grid-template-rows: auto auto auto minmax(400px, auto) auto auto;
         grid-template-areas:
             "pane1 pane1 pane1"
             "pane2 pane2 pane2"
             "pane3 pane6 result-pane"
-            "pane4 pane6 result-pane"
+            "pane3 pane6 result-pane"
             "bottom-pane bottom-pane pane7"
             "footer footer footer";
     }
@@ -31,12 +31,11 @@
     .base-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: auto auto 480px auto minmax(400px, auto) auto auto;
+        grid-template-rows: auto auto auto minmax(400px, auto) auto auto auto;
         grid-template-areas:
             "pane1 pane1"
             "pane2 pane2"
             "pane3 result-pane"
-            "pane4 result-pane"
             "pane6 result-pane"
             "bottom-pane bottom-pane"
             "pane7 pane7"
@@ -61,12 +60,11 @@
     .base-container {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: auto auto auto auto auto minmax(400px, auto) auto auto;
+        grid-template-rows: auto auto auto auto minmax(400px, auto) auto auto auto;
         grid-template-areas:
             "pane1"
             "pane2"
             "pane3"
-            "pane4"
             "pane6"
             "result-pane"
             "bottom-pane"
@@ -122,34 +120,40 @@ textarea {
 
 .pane1 {
     grid-area: pane1;
+    margin-bottom: 20px;
 }
 
 .pane2 {
     grid-area: pane2;
+    margin-bottom: 20px;
 }
 
 .pane3 {
     grid-area: pane3;
-}
-
-.pane4 {
-    grid-area: pane4;
+    vertical-align: top;
+    margin-bottom: 20px;
 }
 
 .pane6 {
     grid-area: pane6;
+    vertical-align: top;
+    margin-bottom: 20px;
 }
 
 .result-pane {
     grid-area: result-pane;
+    vertical-align: top;
+    margin-bottom: 20px;
 }
 
 .bottom-pane {
     grid-area: bottom-pane;
+    margin-bottom: 20px;
 }
 
 .pane7 {
     grid-area: pane7;
+    margin-bottom: 20px;
 }
 
 .footer {
@@ -814,4 +818,3 @@ ul.option-description li {
     display: inline-block;
     margin: 0.5rem 1rem;
 }
-

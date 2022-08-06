@@ -63,8 +63,6 @@
         @update:character-input-character="updateCharacterInputCharacter($event)"
         @update:character-input-weapon="updateCharacterInputWeapon($event)"
       />
-    </div>
-    <div class="pane4">
       <WeaponSelect
         :visible="weaponSelectVisibleRef"
         :weapon="weapon"
