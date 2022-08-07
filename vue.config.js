@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  indexPath: 'indexV.html',
+  indexPath: 'index.html',
 
   pages: {
     index: {
