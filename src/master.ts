@@ -297,7 +297,6 @@ function removeStrFromUrl(obj: any, str: string) {
                 removeStrFromUrl(obj[key], str);
             } else if (Array.isArray(obj[key])) {
                 for (const entry of obj[key]) {
-                    console.log(removeStrFromUrl.name,  entry);
                     removeStrFromUrl(entry, str);
                 }
             }
@@ -479,3 +478,33 @@ export const ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP = new Map();
 ARTIFACT_STAT_JA_EN_ABBREV_MAP.forEach((value, key) => {
     ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.set(value, key);
 });
+
+export const GENSEN_MASTER_LIST = [
+    {
+        key: "",
+        values: [7, 7, 7],
+        counts: [0, 0, 0],
+    },
+    {
+        key: "厳選初心者",
+        values: [4, 4, 4],
+        counts: [4, 4, 4],
+    },
+    {
+        key: "厳選1ヶ月",
+        values: [3, 3, 3],
+        counts: [8, 5, 5],
+    },
+    {
+        key: "厳選3ヶ月",
+        values: [2, 2, 2],
+        counts: [11, 7, 7],
+    },
+    {
+        key: "日々石割り",
+        values: [1, 1, 1],
+        counts: [15, 10, 10],
+    },
+];
+export type TGensen = { key: string; values: number[]; counts: number[] };
+

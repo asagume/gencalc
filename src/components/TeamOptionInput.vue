@@ -108,7 +108,6 @@ import {
   STAT_PERCENT_LIST,
 } from "@/input";
 import { TEAM_OPTION_MASTER_LIST } from "@/master";
-import { stringLiteral } from "@babel/types";
 import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({

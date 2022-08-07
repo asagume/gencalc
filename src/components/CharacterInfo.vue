@@ -1,7 +1,7 @@
 <template>
   <template v-if="visible">
     <template v-if="mode == 1">
-      <table class="character-info">
+      <table class="character-info status">
         <caption>
           {{
             displayName("ステータス")
@@ -134,7 +134,7 @@ import { getStatValueByLevel } from "@/calculate";
 import { isPlainObject } from "@/common";
 import GlobalMixin from "@/GlobalMixin.vue";
 import { TCharacterDetail } from "@/master";
-import { computed, defineComponent, PropType, reactive } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 
 type TConstellationInfo = {
   名前: string;
@@ -148,27 +148,6 @@ type TTalentInfo = {
   説明: string;
   icon_url: string;
   [key: string]: any;
-};
-
-const CHARACTER_TALENT_DETAIL_TEMPLATE = {
-  名前: "",
-  数値: 0,
-};
-
-const CHARACTER_TALENT_TEMPLATE = {
-  名前: "",
-  説明: "",
-  詳細: [CHARACTER_TALENT_DETAIL_TEMPLATE],
-};
-
-const CHARACTER_DETAIL_TEMPLATE = {
-  名前: "",
-  説明: "",
-  通常攻撃: CHARACTER_TALENT_TEMPLATE,
-  重撃: CHARACTER_TALENT_TEMPLATE,
-  落下攻撃: CHARACTER_TALENT_TEMPLATE,
-  元素スキル: CHARACTER_TALENT_TEMPLATE,
-  元素爆発: CHARACTER_TALENT_TEMPLATE,
 };
 
 export default defineComponent({
@@ -273,6 +252,7 @@ table {
   width: calc(100% - 1rem);
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10px;
   border: 2px solid gray;
   border-spacing: 0;
 }

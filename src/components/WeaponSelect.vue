@@ -66,7 +66,7 @@ import {
   WEAPON_DETAIL_TEMPLATE,
   WEAPON_MASTER_LIST,
 } from "@/master";
-import { defineComponent, computed, ref, PropType, watch } from "vue";
+import { defineComponent, computed, ref, PropType } from "vue";
 
 export default defineComponent({
   name: "WeaponSelect",

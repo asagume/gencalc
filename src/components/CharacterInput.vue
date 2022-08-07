@@ -432,6 +432,7 @@ table {
   min-width: 360px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10px;
   border: none;
 }
 

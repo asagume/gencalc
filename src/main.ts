@@ -127,6 +127,7 @@ function getCharacterByBirthday(): TCharacterKey {
             const birthdayStrArr = entry['誕生日'].split('/');
             const birthday = new Date(today.getFullYear(), Number(birthdayStrArr[0]) - 1, Number(birthdayStrArr[1]), 0, 0, 0, 0);
             const diff = today.getTime() - birthday.getTime();
+            console.log(today, birthday, diff, entry.key);
             if (diff < 0) continue;
             if (diff < curDiff) {
                 curDiff = diff;
@@ -149,9 +150,10 @@ async function main() {
         if (allin) {
             savedata = makeSaveDataFromShareData(allin);
             characterInput.character = savedata.キャラクター as TCharacterKey;
+        } else {
+            console.error('query strings are not valid!');
         }
-    }
-    if (!characterInput.character) {
+    } else {
         characterInput.character = getCharacterByBirthday();
     }
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);

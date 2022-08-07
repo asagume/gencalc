@@ -98,10 +98,6 @@ export default defineComponent({
     };
   },
 });
-
-function reaction(artifactSetMasters: unknown[] | undefined) {
-  throw new Error("Function not implemented.");
-}
 </script>
 
 <style scoped>
