@@ -10,6 +10,10 @@ module.exports = defineConfig({
     },
   },
 
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/gencalc3-test/'
+    : '/',
+
   pluginOptions: {
     i18n: {
       locale: 'ja',
