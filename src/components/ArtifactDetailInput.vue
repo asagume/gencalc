@@ -311,8 +311,8 @@ export default defineComponent({
     const prioritySubstats = reactive(
       artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[]
     );
-    const prioritySubstatIndices = reactive(GENSEN_MASTER_LIST[1].values);
-    const prioritySubstatCounts = reactive(GENSEN_MASTER_LIST[1].counts);
+    const prioritySubstatIndices = reactive(GENSEN_MASTER_LIST[2].values);
+    const prioritySubstatCounts = reactive(GENSEN_MASTER_LIST[2].counts);
     const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
     const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
@@ -323,7 +323,7 @@ export default defineComponent({
     const editableRef = ref(false);
     const gensenEnabledRef = ref(false);
     const gensenMasterList = GENSEN_MASTER_LIST;
-    const gensenRef = ref(GENSEN_MASTER_LIST[1] as TGensen);
+    const gensenRef = ref(GENSEN_MASTER_LIST[2] as TGensen);
 
     const upTotalCount = computed(() => {
       let result = 0;
