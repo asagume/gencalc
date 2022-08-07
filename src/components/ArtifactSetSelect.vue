@@ -38,10 +38,10 @@ export default defineComponent({
   name: "ArtifactSetSelect",
   mixins: [GlobalMixin],
   props: {
-    visible: { type: Boolean, require: true },
-    index: { type: Number, require: true },
-    artifactSet: { type: String, require: true },
-    artifactSetMasters: { type: Array as PropType<TArtifactSetEntry[]>, require: true },
+    visible: { type: Boolean, required: true },
+    index: { type: Number, required: true },
+    artifactSet: { type: String, required: true },
+    artifactSetMasters: { type: Array as PropType<TArtifactSetEntry[]>, required: true },
   },
   emits: ["update:artifact-set"],
   setup(props) {

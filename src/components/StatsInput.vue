@@ -51,8 +51,8 @@ export default defineComponent({
   name: "StatsInput",
   mixins: [GlobalMixin],
   props: {
-    statsInput: { type: Object as PropType<TStatsInput>, require: true },
-    categoryList: { type: Array as PropType<Array<string>>, require: true },
+    statsInput: { type: Object as PropType<TStatsInput>, required: true },
+    categoryList: { type: Array as PropType<Array<string>>, required: true },
   },
   emits: ["update:stat-adjustments"],
   setup(props, context) {

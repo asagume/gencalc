@@ -72,12 +72,12 @@ export default defineComponent({
   name: "WeaponSelect",
   mixins: [GlobalMixin],
   props: {
-    visible: { type: Boolean, require: true },
-    weapon: { type: String as PropType<TWeaponKey>, require: true },
-    weaponType: { type: String as PropType<TWeaponTypeKey>, require: true },
-    weaponMaster: { type: Object as PropType<TWeaponDetail>, require: true },
-    ascension: { type: Number, require: true },
-    level: { type: Number, require: true },
+    visible: { type: Boolean, required: true },
+    weapon: { type: String as PropType<TWeaponKey>, required: true },
+    weaponType: { type: String as PropType<TWeaponTypeKey>, required: true },
+    weaponMaster: { type: Object as PropType<TWeaponDetail>, required: true },
+    ascension: { type: Number, required: true },
+    level: { type: Number, required: true },
   },
   emits: ["update:weapon"],
   setup(props, context) {

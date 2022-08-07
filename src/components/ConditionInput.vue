@@ -30,8 +30,8 @@ export default defineComponent({
   name: "ConditionInput",
   mixins: [GlobalMixin],
   props: {
-    characterInput: { type: Object, require: true },
-    conditionInput: { type: Object, require: true },
+    characterInput: { type: Object, required: true },
+    conditionInput: { type: Object, required: true },
   },
   emits: ["update:condition"],
   setup(props) {

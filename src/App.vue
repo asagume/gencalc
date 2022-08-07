@@ -54,6 +54,7 @@
       <CharacterInput
         :characterInput="characterInputRea"
         :recommendationList="recommendationList"
+        :recommendation="recommendation"
         :artifactSetSelectVisible="artifactSetSelectVisibleRef"
         @open:character-select="characterSelectVisibleRef = !characterSelectVisibleRef"
         @update:recommendation="updateRecommendation($event)"
@@ -346,7 +347,9 @@ import {
   getCharacterMasterDetail,
   getWeaponMasterDetail,
   TArtifactSet,
+  TArtifactSetEntry,
   TArtifactSetKey,
+  TArtifactSubKey,
   TCharacterKey,
   TWeaponKey,
 } from "@/master";
@@ -366,15 +369,15 @@ export default defineComponent({
   name: "App",
   mixins: [GlobalMixin],
   props: {
-    characterInput: { type: Object as PropType<TCharacterInput>, require: true },
+    characterInput: { type: Object as PropType<TCharacterInput>, required: true },
     artifactDetailInput: {
       type: Object as PropType<TArtifactDetailInput>,
-      require: true,
+      required: true,
     },
-    conditionInput: { type: Object as PropType<TConditionInput>, require: true },
+    conditionInput: { type: Object as PropType<TConditionInput>, required: true },
     recommendationList: {
       type: Array as PropType<TRecommendation[]>,
-      require: true,
+      required: true,
     },
   },
   components: {
@@ -515,9 +518,18 @@ export default defineComponent({
       );
       if (!artifactDetailInputRea.聖遺物優先するサブ効果Disabled) {
         const prioritySubstatValueArr = [
-          makePrioritySubstatValueList(artifactDetailInputRea.聖遺物優先するサブ効果, 0),
-          makePrioritySubstatValueList(artifactDetailInputRea.聖遺物優先するサブ効果, 1),
-          makePrioritySubstatValueList(artifactDetailInputRea.聖遺物優先するサブ効果, 2),
+          makePrioritySubstatValueList(
+            artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
+            0
+          ),
+          makePrioritySubstatValueList(
+            artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
+            1
+          ),
+          makePrioritySubstatValueList(
+            artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
+            2
+          ),
         ];
         calculateArtifactSubStatByPriority(
           artifactDetailInputRea.聖遺物ステータスサブ効果,
@@ -570,7 +582,7 @@ export default defineComponent({
       if (!characterInputRea) return;
       Object.keys(characterInput).forEach((key) => {
         if (key in characterInputRea) {
-          characterInputRea[key] = characterInput[key];
+          (characterInputRea as any)[key] = characterInput[key];
         }
       });
       // キャラクターのダメージ計算式を再抽出します
@@ -627,7 +639,7 @@ export default defineComponent({
     const updateCharacterInputWeapon = (characterInput: any) => {
       Object.keys(characterInput).forEach((key) => {
         if (characterInputRea && key in characterInputRea) {
-          characterInputRea[key] = characterInput[key];
+          (characterInputRea as any)[key] = characterInput[key];
         }
       });
       // 武器のダメージ計算式を再抽出します
@@ -668,7 +680,7 @@ export default defineComponent({
       characterInputRea.artifactSetMasters.splice(
         artifactSetIndexRef.value,
         1,
-        tempMaster
+        tempMaster as TArtifactSetEntry
       );
       artifactSetSelectVisibleRef.value = false;
       // 聖遺物セット効果のダメージ計算式を再抽出します

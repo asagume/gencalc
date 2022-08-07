@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSet, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
 import { deepcopy, isNumber, isPlainObject, isString } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -349,7 +349,7 @@ export const CHARACTER_INPUT_TEMPLATE = {
     武器レベル: 90,
     武器精錬ランク: 1,
     artifactSets: ['NONE' as TArtifactSetKey, 'NONE' as TArtifactSetKey],
-    artifactSetMasters: [ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY],
+    artifactSetMasters: [ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY] as TArtifactSetEntry[],
     damageDetailMyCharacter: null as TDamageDetail | null,
     damageDetailMyWeapon: null as TDamageDetail | null,
     damageDetailMyArtifactSets: null as TDamageDetail | null,
@@ -374,7 +374,7 @@ export type TCheckboxEntry = {
 export type TSelectEntry = {
     name: string;
     options: string[];
-    require: boolean;
+    required: boolean;
 };
 export const CONDITION_INPUT_TEMPLATE = {
     checkboxList: [] as TCheckboxEntry[],
@@ -601,9 +601,9 @@ export async function loadRecommendation(characterInput: TCharacterInput, artifa
             const artifactSet = build[key] as TArtifactSetKey;
             if (artifactSet && artifactSet in ARTIFACT_SET_MASTER) {
                 characterInput.artifactSets[index] = artifactSet;
-                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER[artifactSet] as TArtifactSet;
+                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER[artifactSet] as TArtifactSetEntry;
             } else {
-                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER_DUMMY;
+                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER_DUMMY as TArtifactSetEntry;
             }
         });
         ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
@@ -1145,11 +1145,11 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                     myDamageDetail.条件.forEach((value: string[] | null, key: string) => {
                         if (value) {
                             if (selectList.filter(s => s.name == key).length == 0) {
-                                const require = value[0].startsWith("required_");
+                                const required = value[0].startsWith("required_");
                                 selectList.push({
                                     name: key,
                                     options: value,
-                                    require: require,
+                                    required: required,
                                 });
                             }
                         } else {

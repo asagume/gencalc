@@ -597,7 +597,7 @@ export function makeValidConditionValueArr(conditionInput: any) {
             selectList.forEach((entry: any) => {
                 const value = conditionInput.conditionValues[entry.name];
                 if (value !== undefined && value !== null) {
-                    if (value > 0 || (value == 0 && entry.require)) {
+                    if (value > 0 || (value == 0 && entry.required)) {
                         result.push(entry.name + '@' + entry.options[value]);
                     }
                 }

@@ -107,7 +107,7 @@ export default defineComponent({
   props: {
     damageResult: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
   setup(props) {

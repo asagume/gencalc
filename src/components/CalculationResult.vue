@@ -99,7 +99,7 @@ export default defineComponent({
   props: {
     resultObj: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
   setup(props) {

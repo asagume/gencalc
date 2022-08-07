@@ -230,9 +230,9 @@ export default defineComponent({
   name: "CharacterInput",
   mixins: [GlobalMixin],
   props: {
-    characterInput: { type: Object, require: true },
-    recommendationList: { type: Array as PropType<TRecommendation[]>, require: true },
-    recommendation: { type: Object as PropType<TRecommendation>, require: true },
+    characterInput: { type: Object, required: true },
+    recommendationList: { type: Array as PropType<TRecommendation[]>, required: true },
+    recommendation: { type: Object as PropType<TRecommendation>, required: true },
     artifactSetSelectVisible: { type: Boolean },
   },
   emits: [

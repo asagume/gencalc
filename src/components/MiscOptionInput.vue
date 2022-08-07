@@ -103,11 +103,11 @@ export default defineComponent({
     conditionMap.forEach((value: string[] | null, key: string) => {
       if (value) {
         if (selectList.filter((s) => s.name == key).length == 0) {
-          const require = value[0].startsWith("required_");
+          const required = value[0].startsWith("required_");
           selectList.push({
             name: key,
             options: value,
-            require: require,
+            required: required,
           });
         }
       } else {

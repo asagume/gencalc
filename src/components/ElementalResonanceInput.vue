@@ -28,7 +28,7 @@ export default defineComponent({
   props: {
     elementalResonanceChecked: {
       type: Object as PropType<{ [key: string]: boolean }>,
-      require: true,
+      required: true,
     },
   },
   setup(props, context) {

@@ -44,13 +44,36 @@
       </tr>
     </template>
   </table>
+  <table class="character-info">
+    <caption></caption>
+    <tr>
+      <td rowspan="2">
+        <img
+          class="icon"
+          :src="characterMaster.元素スキル.icon_url"
+          :alt="characterMaster.元素スキル.名前"
+        />
+      </td>
+      <td>
+        {{ displayName(characterMaster.元素スキル.名前) }}
+      </td>
+    </tr>
+    <tr>
+      <td class="description" v-html="characterMaster.元素スキル.説明"></td>
+    </tr>
+    <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
+      <tr>
+        <th>{{ displayName(item.名前) }}</th>
+      </tr>
+    </template>
+  </table>
 </template>
 
 <script lang="ts">
 import { getStatValueByLevel } from "@/calculate";
 import GlobalMixin from "@/GlobalMixin.vue";
 import { TCharacterDetail } from "@/master";
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType, reactive } from "vue";
 
 type TConstellationInfo = {
   名前: string;
@@ -66,21 +89,42 @@ type TTalentInfo = {
   [key: string]: any;
 };
 
+const CHARACTER_TALENT_DETAIL_TEMPLATE = {
+  名前: "",
+  数値: 0,
+};
+
+const CHARACTER_TALENT_TEMPLATE = {
+  名前: "",
+  説明: "",
+  詳細: [CHARACTER_TALENT_DETAIL_TEMPLATE],
+};
+
+const CHARACTER_DETAIL_TEMPLATE = {
+  名前: "",
+  説明: "",
+  通常攻撃: CHARACTER_TALENT_TEMPLATE,
+  重撃: CHARACTER_TALENT_TEMPLATE,
+  落下攻撃: CHARACTER_TALENT_TEMPLATE,
+  元素スキル: CHARACTER_TALENT_TEMPLATE,
+  元素爆発: CHARACTER_TALENT_TEMPLATE,
+};
+
 export default defineComponent({
   name: "CharacterInfo",
   mixins: [GlobalMixin],
   props: {
     characterMaster: {
       type: Object as PropType<TCharacterDetail>,
-      require: true,
+      required: true,
     },
     ascension: {
       type: Number,
-      require: true,
+      required: true,
     },
     level: {
       type: Number,
-      require: true,
+      required: true,
     },
   },
   setup(props) {
