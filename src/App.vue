@@ -63,11 +63,17 @@
         @open:artifact-detail-input="openArtifactDetailInput"
         @update:character-input-character="updateCharacterInputCharacter($event)"
         @update:character-input-weapon="updateCharacterInputWeapon($event)"
+        @open:character-info="openCharacterInfo($event)"
       />
       <CharacterInfo
+        :visible="characterInfoVisibleRef"
+        :mode="characterInfoModeRef"
         :characterMaster="characterInputRea.characterMaster"
         :ascension="characterInputRea.突破レベル"
         :level="characterInputRea.レベル"
+        :normalAttackLevel="characterInputRea.通常攻撃レベル"
+        :elementalSkillLevel="characterInputRea.元素スキルレベル"
+        :elementalBurstLevel="characterInputRea.元素爆発レベル"
       />
       <WeaponSelect
         :visible="weaponSelectVisibleRef"
@@ -426,6 +432,9 @@ export default defineComponent({
     const artifactSets = characterInputRea.artifactSets;
     const artifactDetailInputVisibleRef = ref(true);
 
+    const characterInfoVisibleRef = ref(false);
+    const characterInfoModeRef = ref(0);
+
     // ステータス1, ステータス2, 敵
     const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput);
     const characterStats1CategoryList = [
@@ -607,6 +616,8 @@ export default defineComponent({
       weaponSelectVisibleRef.value = !weaponSelectVisibleRef.value;
       if (weaponSelectVisibleRef.value) {
         artifactSetSelectVisibleRef.value = false;
+        artifactDetailInputVisibleRef.value = false;
+        characterInfoVisibleRef.value = false;
       }
     };
     /** 武器を選択しました */
@@ -670,6 +681,7 @@ export default defineComponent({
       if (artifactSetSelectVisibleRef.value) {
         weaponSelectVisibleRef.value = false;
         artifactDetailInputVisibleRef.value = false;
+        characterInfoVisibleRef.value = false;
       }
     };
     /** 聖遺物セット効果を選択しました */
@@ -706,6 +718,7 @@ export default defineComponent({
       if (artifactDetailInputVisibleRef.value) {
         weaponSelectVisibleRef.value = false;
         artifactSetSelectVisibleRef.value = false;
+        characterInfoVisibleRef.value = false;
       }
     };
     // 聖遺物ステータスを更新しました
@@ -723,6 +736,21 @@ export default defineComponent({
         optionInputRea
       );
       calculateResult(damageResult, characterInputRea, conditionInputRea, statsInput);
+    };
+    /** キャラクター情報を開きます */
+    const openCharacterInfo = (mode: number) => {
+      console.log(mode, characterInfoModeRef.value, characterInfoVisibleRef.value);
+      if (characterInfoModeRef.value == mode) {
+        characterInfoVisibleRef.value = !characterInfoVisibleRef.value;
+      } else {
+        characterInfoModeRef.value = mode;
+        characterInfoVisibleRef.value = true;
+      }
+      if (characterInfoVisibleRef.value) {
+        weaponSelectVisibleRef.value = false;
+        artifactSetSelectVisibleRef.value = false;
+        artifactDetailInputVisibleRef.value = false;
+      }
     };
 
     // オプション条件を更新します
@@ -853,6 +881,8 @@ export default defineComponent({
       artifactSetIndexRef,
       artifactSets,
       artifactDetailInputVisibleRef,
+      characterInfoVisibleRef,
+      characterInfoModeRef,
       updateCondition,
       statsInput,
       characterStats1CategoryList,
@@ -883,6 +913,7 @@ export default defineComponent({
       updateCharacterInputCharacter,
       updateCharacterInputWeapon,
       updateArtifactDetail,
+      openCharacterInfo,
       updateStatAdjustments,
       updateElementalResonance,
       updateMiscOption,

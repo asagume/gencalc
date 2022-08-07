@@ -2,7 +2,7 @@
   <table>
     <tr>
       <td :class="'name ' + colorClass(characterMaster)" colspan="2">
-        <span @click="$emit('open:character-info')">
+        <span @click="$emit('open:character-info', 1)">
           {{ displayName(characterMaster.名前) }}
           <span class="material-symbols-outlined"> info </span>
         </span>
@@ -79,7 +79,7 @@
           :class="'talent ' + bgColorClass(characterMaster)"
           :src="characterMaster['通常攻撃']['icon_url']"
           :alt="characterMaster['通常攻撃']['名前']"
-          @click="false"
+          @click="$emit('open:character-info', 2)"
         />
         <div class="tooltip">{{ displayName(characterMaster["通常攻撃"]["名前"]) }}</div>
       </td>
@@ -88,7 +88,7 @@
           :class="'talent ' + bgColorClass(characterMaster)"
           :src="characterMaster['元素スキル']['icon_url']"
           :alt="characterMaster['元素スキル']['名前']"
-          @click="false"
+          @click="$emit('open:character-info', 3)"
         />
         <div class="tooltip">
           {{ displayName(characterMaster["元素スキル"]["名前"]) }}
@@ -99,7 +99,7 @@
           :class="'talent ' + bgColorClass(characterMaster)"
           :src="characterMaster['元素爆発']['icon_url']"
           :alt="characterMaster['元素爆発']['名前']"
-          @click="false"
+          @click="$emit('open:character-info', 4)"
         />
         <div class="tooltip">{{ displayName(characterMaster["元素爆発"]["名前"]) }}</div>
       </td>
@@ -244,6 +244,7 @@ export default defineComponent({
     "open:artifact-detail-input",
     "update:character-input-character",
     "update:character-input-weapon",
+    "open:character-info",
   ],
   setup(props, context) {
     const ascensionRef = ref(props.characterInput?.突破レベル ?? 6);
