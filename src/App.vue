@@ -63,6 +63,11 @@
         @update:character-input-character="updateCharacterInputCharacter($event)"
         @update:character-input-weapon="updateCharacterInputWeapon($event)"
       />
+      <CharacterInfo
+        :characterMaster="characterInputRea.characterMaster"
+        :ascension="characterInputRea.突破レベル"
+        :level="characterInputRea.レベル"
+      />
       <WeaponSelect
         :visible="weaponSelectVisibleRef"
         :weapon="weapon"
@@ -298,19 +303,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, reactive, ref } from "vue";
-import CharacterSelect from "./components/CharacterSelect.vue";
-import CharacterInput from "./components/CharacterInput.vue";
-import WeaponSelect from "./components/WeaponSelect.vue";
-import ArtifactSetSelect from "./components/ArtifactSetSelect.vue";
-import ArtifactDetailInput from "./components/ArtifactDetailInput.vue";
-import ConditionInput from "./components/ConditionInput.vue";
-import StatsInput from "./components/StatsInput.vue";
-import ElementalResonanceInput from "./components/ElementalResonanceInput.vue";
-import TeamOptionInput from "./components/TeamOptionInput.vue";
-import MiscOptionInput from "./components/MiscOptionInput.vue";
-import DamageResult from "./components/DamageResult.vue";
-import CharacterOwnList from "./components/CharacterOwnList.vue";
-import WeaponOwnList from "./components/WeaponOwnList.vue";
+import CharacterSelect from "@/components/CharacterSelect.vue";
+import CharacterInput from "@/components/CharacterInput.vue";
+import CharacterInfo from "@/components/CharacterInfo.vue";
+import WeaponSelect from "@/components/WeaponSelect.vue";
+import ArtifactSetSelect from "@/components/ArtifactSetSelect.vue";
+import ArtifactDetailInput from "@/components/ArtifactDetailInput.vue";
+import ConditionInput from "@/components/ConditionInput.vue";
+import StatsInput from "@/components/StatsInput.vue";
+import ElementalResonanceInput from "@/components/ElementalResonanceInput.vue";
+import TeamOptionInput from "@/components/TeamOptionInput.vue";
+import MiscOptionInput from "@/components/MiscOptionInput.vue";
+import DamageResult from "@/components/DamageResult.vue";
+import CharacterOwnList from "@/components/CharacterOwnList.vue";
+import WeaponOwnList from "@/components/WeaponOwnList.vue";
 import {
   TRecommendation,
   makeRecommendationList,
@@ -374,6 +380,7 @@ export default defineComponent({
   components: {
     CharacterSelect,
     CharacterInput,
+    CharacterInfo,
     WeaponSelect,
     ArtifactSetSelect,
     ArtifactDetailInput,

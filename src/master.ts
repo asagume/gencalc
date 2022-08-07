@@ -290,13 +290,18 @@ export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...
 ////////////////
 function removeStrFromUrl(obj: any, str: string) {
     if (isPlainObject(obj)) {
-        Object.keys(obj).forEach(key => {
-            if (isPlainObject(obj[key])) {
-                removeStrFromUrl(obj[key], str);
-            } else if (isString(obj[key])) {
+        for (const key of Object.keys(obj)) {
+            if (isString(obj[key])) {
                 obj[key] = obj[key].replace(str, '');
+            } else if (isPlainObject(obj[key])) {
+                removeStrFromUrl(obj[key], str);
+            } else if (Array.isArray(obj[key])) {
+                for (const entry of obj[key]) {
+                    console.log(removeStrFromUrl.name,  entry);
+                    removeStrFromUrl(entry, str);
+                }
             }
-        })
+        }
     }
 }
 
