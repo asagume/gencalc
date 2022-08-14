@@ -12,11 +12,7 @@
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayName(stat) }}</th>
         <td v-if="editable">
-          <input
-            type="number"
-            v-model="statAdjustments[stat]"
-            @change="adjustmentsOnChange"
-          />
+          <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange" />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
@@ -42,21 +38,21 @@
 </template>
 
 <script lang="ts">
-import { deepcopy } from "@/common";
-import GlobalMixin from "@/GlobalMixin.vue";
-import { STATS_INPUT_TEMPLATE, TStatsInput, ステータスARRAY_MAP } from "@/input";
+import { TStatsInput, ステータスARRAY_MAP } from "@/input";
 import { defineComponent, PropType, reactive, ref } from "vue";
+import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
   name: "StatsInput",
-  mixins: [GlobalMixin],
   props: {
     statsInput: { type: Object as PropType<TStatsInput>, required: true },
     categoryList: { type: Array as PropType<Array<string>>, required: true },
   },
   emits: ["update:stat-adjustments"],
   setup(props, context) {
-    const statsInputRea = reactive(props.statsInput ?? deepcopy(STATS_INPUT_TEMPLATE));
+    const { displayName, displayStatValue } = CompositionFunction();
+
+    const statsInputRea = reactive(props.statsInput);
 
     const editable = ref(false);
     const initializable = ref(false);
@@ -98,6 +94,8 @@ export default defineComponent({
     initializeAdjustments();
 
     return {
+      displayName, displayStatValue,
+
       statList,
       visibleStatList,
       statsObj,

@@ -6,13 +6,16 @@ module.exports = defineConfig({
   pages: {
     index: {
       entry: 'src/main.ts',
-      template: 'public/indexV.html',
+      template: 'public/index3.html',
     },
   },
 
   publicPath: process.env.NODE_ENV === 'production'
     ? '/gencalc3-test/'
     : '/',
+  outputDir: 'docs',
+  assetsDir: './',
+  publicPath: './',
 
   pluginOptions: {
     i18n: {

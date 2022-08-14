@@ -27,4 +27,5 @@ export function overwriteObject(dst: any, src: any) {
             if (!srcKeys.includes(key)) delete dst[key];
         }
     }
+    return dst;
 }

@@ -13,12 +13,8 @@
 
     <ul class="select-list">
       <li v-for="item in filteredList" :key="item.key">
-        <img
-          :class="'artifact-set with-tooltip' + bgImageClass(item) + selectedClass(item)"
-          :src="item.icon_url"
-          :alt="item.key"
-          @click="$emit('update:artifact-set', item.key)"
-        />
+        <img :class="'artifact-set with-tooltip' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url"
+          :alt="item.key" @click="$emit('update:artifact-set', item.key)" />
         <div class="tooltip">{{ displayName(item.key) }}</div>
       </li>
     </ul>
@@ -26,17 +22,16 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
 import {
   ARTIFACT_SET_MASTER_LIST,
   STAR_BACKGROUND_IMAGE_CLASS,
   TArtifactSetEntry,
 } from "@/master";
 import { computed, defineComponent, PropType, reactive } from "vue";
+import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
   name: "ArtifactSetSelect",
-  mixins: [GlobalMixin],
   props: {
     visible: { type: Boolean, required: true },
     index: { type: Number, required: true },
@@ -45,14 +40,14 @@ export default defineComponent({
   },
   emits: ["update:artifact-set"],
   setup(props) {
+    const { displayName } = CompositionFunction();
+
     const bgImageClass = (item: TArtifactSetEntry) =>
       (" " + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
     const selectedClass = (item: TArtifactSetEntry) => {
       return item.key == props.artifactSet ? " selected" : "";
     };
-    const artifactSetMastersRea = reactive(
-      props.artifactSetMasters ?? ([] as TArtifactSetEntry[])
-    );
+    const artifactSetMastersRea = reactive(props.artifactSetMasters);
 
     const filteredList = computed(() => {
       return ARTIFACT_SET_MASTER_LIST as TArtifactSetEntry[];
@@ -60,29 +55,27 @@ export default defineComponent({
 
     const artifactSetEffects = computed(() => {
       const result = [] as any;
-      if (artifactSetMastersRea) {
-        if (artifactSetMastersRea.length > 0) {
-          if ("2セット効果" in artifactSetMastersRea[0]) {
-            result.push({
-              key: artifactSetMastersRea[0].key + " " + "2セット効果",
-              value: artifactSetMastersRea[0]["2セット効果"]?.説明,
-            });
-          }
-          if (artifactSetMastersRea.length > 1) {
-            if (artifactSetMastersRea[0].key == artifactSetMastersRea[1].key) {
-              if ("4セット効果" in artifactSetMastersRea[0]) {
-                result.push({
-                  key: artifactSetMastersRea[0].key + " " + "4セット効果",
-                  value: artifactSetMastersRea[0]["4セット効果"]?.説明,
-                });
-              }
-            } else {
-              if ("2セット効果" in artifactSetMastersRea[1]) {
-                result.push({
-                  key: artifactSetMastersRea[1].key + " " + "2セット効果",
-                  value: artifactSetMastersRea[1]["2セット効果"]?.説明,
-                });
-              }
+      if (artifactSetMastersRea.length > 0) {
+        if ("2セット効果" in artifactSetMastersRea[0]) {
+          result.push({
+            key: artifactSetMastersRea[0].key + " " + "2セット効果",
+            value: artifactSetMastersRea[0]["2セット効果"]?.説明,
+          });
+        }
+        if (artifactSetMastersRea.length > 1) {
+          if (artifactSetMastersRea[0].key == artifactSetMastersRea[1].key) {
+            if ("4セット効果" in artifactSetMastersRea[0]) {
+              result.push({
+                key: artifactSetMastersRea[0].key + " " + "4セット効果",
+                value: artifactSetMastersRea[0]["4セット効果"]?.説明,
+              });
+            }
+          } else {
+            if ("2セット効果" in artifactSetMastersRea[1]) {
+              result.push({
+                key: artifactSetMastersRea[1].key + " " + "2セット効果",
+                value: artifactSetMastersRea[1]["2セット効果"]?.説明,
+              });
             }
           }
         }
@@ -91,6 +84,8 @@ export default defineComponent({
     });
 
     return {
+      displayName,
+
       bgImageClass,
       selectedClass,
       filteredList,
@@ -111,7 +106,7 @@ img.artifact-set {
   background-color: gold;
 }
 
-:checked + img {
+:checked+img {
   background-color: gold;
 }
 

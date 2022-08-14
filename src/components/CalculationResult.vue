@@ -1,41 +1,15 @@
 <template>
   <div class="elemental-reaction">
-    <input
-      id="増幅反応-なし"
-      type="radio"
-      v-model="増幅反応"
-      value="なし"
-      name="増幅反応-name"
-    />
+    <input id="増幅反応-なし" type="radio" v-model="増幅反応" value="なし" name="増幅反応-name" />
     <label for="増幅反応-なし">
       {{ displayName("反応なし") }}
     </label>
-    <input
-      id="増幅反応-蒸発"
-      type="radio"
-      v-model="増幅反応"
-      value="蒸発"
-      name="増幅反応-name"
-    />
-    <label
-      for="増幅反応-蒸発"
-      v-if="元素反応.蒸発倍率"
-      :class="elementClass(元素反応.元素)"
-    >
+    <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name" />
+    <label for="増幅反応-蒸発" v-if="元素反応.蒸発倍率" :class="elementClass(元素反応.元素)">
       {{ displayName("蒸発") }} * {{ Math.round(元素反応.蒸発倍率 * 100) / 100 }}
     </label>
-    <input
-      id="増幅反応-溶解"
-      type="radio"
-      v-model="増幅反応"
-      value="溶解"
-      name="増幅反応-name"
-    />
-    <label
-      for="増幅反応-溶解"
-      v-if="元素反応.溶解倍率"
-      :class="elementClass(元素反応.元素)"
-    >
+    <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name" />
+    <label for="増幅反応-溶解" v-if="元素反応.溶解倍率" :class="elementClass(元素反応.元素)">
       {{ displayName("溶解") }} * {{ Math.round(元素反応.溶解倍率 * 100) / 100 }}
     </label>
     <span></span>
@@ -65,11 +39,8 @@
     </label>
   </div>
   <template v-for="category in CATEGORY_LIST">
-    <table
-      class="result"
-      v-if="calculationResultObj[category] && calculationResultObj[category].length > 0"
-      :key="category"
-    >
+    <table class="result" v-if="calculationResultObj[category] && calculationResultObj[category].length > 0"
+      :key="category">
       <thead>
         <tr>
           <th>{{ displayName(category) }}</th>
@@ -88,7 +59,7 @@
   </template>
 </template>
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
+import GlobalMixin from '@/GlobalMixin.vue';
 import { 元素反応TEMPLATE } from "@/input";
 import { ELEMENT_COLOR_CLASS, TElementColorClassKey } from "@/master";
 import { defineComponent, ref } from "vue";

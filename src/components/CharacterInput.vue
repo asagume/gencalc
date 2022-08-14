@@ -9,8 +9,7 @@
       </td>
       <td colspan="2" :class="'title ' + colorClass(characterMaster)">
         <span v-show="characterMaster.baseInfo.称号">
-          {{ displayName(characterMaster.baseInfo.称号) }}</span
-        >
+          {{ displayName(characterMaster.baseInfo.称号) }}</span>
       </td>
     </tr>
     <tr>
@@ -32,25 +31,13 @@
         </select>
       </td>
       <td style="position: relative; width: 30%">
-        <img
-          :class="'character' + bgImageClass(characterMaster)"
-          :src="characterMaster.icon_url"
-          :alt="characterMaster.名前"
-          @click="$emit('open:character-select')"
-        />
-        <img
-          class="vision"
-          :src="visionSrc(characterMaster)"
-          :alt="characterMaster.元素"
-        />
+        <img :class="'character' + bgImageClass(characterMaster)" :src="characterMaster.icon_url"
+          :alt="characterMaster.名前" @click="$emit('open:character-select')" />
+        <img class="vision" :src="visionSrc(characterMaster)" :alt="characterMaster.元素" />
       </td>
       <td class="icon">
-        <img
-          :class="'weapon' + bgImageClass(weaponMaster)"
-          :src="weaponMaster['icon_url']"
-          :alt="weaponMaster.名前"
-          @click="$emit('open:weapon-select')"
-        />
+        <img :class="'weapon' + bgImageClass(weaponMaster)" :src="weaponMaster['icon_url']" :alt="weaponMaster.名前"
+          @click="$emit('open:weapon-select')" />
         <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
       </td>
       <td style="width: 20%">
@@ -75,61 +62,39 @@
   <table class="talent-and-artifact">
     <tr>
       <td class="icon">
-        <img
-          :class="'talent ' + bgColorClass(characterMaster)"
-          :src="characterMaster['通常攻撃']['icon_url']"
-          :alt="characterMaster['通常攻撃']['名前']"
-          @click="$emit('open:character-info', 2)"
-        />
+        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['通常攻撃']['icon_url']"
+          :alt="characterMaster['通常攻撃']['名前']" @click="$emit('open:character-info', 2)" />
         <div class="tooltip">{{ displayName(characterMaster["通常攻撃"]["名前"]) }}</div>
       </td>
       <td class="icon">
-        <img
-          :class="'talent ' + bgColorClass(characterMaster)"
-          :src="characterMaster['元素スキル']['icon_url']"
-          :alt="characterMaster['元素スキル']['名前']"
-          @click="$emit('open:character-info', 3)"
-        />
+        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素スキル']['icon_url']"
+          :alt="characterMaster['元素スキル']['名前']" @click="$emit('open:character-info', 3)" />
         <div class="tooltip">
           {{ displayName(characterMaster["元素スキル"]["名前"]) }}
         </div>
       </td>
       <td class="icon">
-        <img
-          :class="'talent ' + bgColorClass(characterMaster)"
-          :src="characterMaster['元素爆発']['icon_url']"
-          :alt="characterMaster['元素爆発']['名前']"
-          @click="$emit('open:character-info', 4)"
-        />
+        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素爆発']['icon_url']"
+          :alt="characterMaster['元素爆発']['名前']" @click="$emit('open:character-info', 4)" />
         <div class="tooltip">{{ displayName(characterMaster["元素爆発"]["名前"]) }}</div>
       </td>
       <td class="icon">
         <label @click="openArtifactSetSelect(0)">
-          <img
-            :class="'artifact-set' + artifactSetSelectClass(0)"
-            :src="artifactSetMasters[0].image"
-            :alt="artifactSetMasters[0].key"
-          />
+          <img :class="'artifact-set' + artifactSetSelectClass(0)" :src="artifactSetMasters[0].image"
+            :alt="artifactSetMasters[0].key" />
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
       </td>
       <td class="icon">
         <label @click="openArtifactSetSelect(1)">
-          <img
-            :class="'artifact-set' + artifactSetSelectClass(1)"
-            :src="artifactSetMasters[1].image"
-            :alt="artifactSetMasters[1].key"
-          />
+          <img :class="'artifact-set' + artifactSetSelectClass(1)" :src="artifactSetMasters[1].image"
+            :alt="artifactSetMasters[1].key" />
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
       </td>
       <td class="artifact-detail-button icon">
         <label @click="$emit('open:artifact-detail-input')">
-          <img
-            class="artifact-set"
-            :src="IMG_SRC_DUMMY"
-            :alt="displayName('聖遺物ステータス')"
-          />
+          <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')" />
           <img class="left-icon" src="images/artifact.png" alt="artifact" />
           <img class="right-icon" src="images/artifact.png" alt="artifact" />
           <div class="absolute-center">{{ "000" }}</div>
@@ -171,14 +136,8 @@
     <tr v-show="storageOrRecommendationRef == '0'">
       <td colspan="4">
         <label>
-          <input
-            class="save-name"
-            type="text"
-            v-model="buildname"
-            maxlength="20"
-            placeholder="input build name"
-            @change="saveDisabled = false"
-          />
+          <input class="save-name" type="text" v-model="buildname" maxlength="20" placeholder="input build name"
+            @change="saveDisabled = false" />
         </label>
       </td>
       <td>
@@ -196,11 +155,8 @@
     </tr>
     <tr v-show="storageOrRecommendationRef == '1'">
       <td colspan="6">
-        <select
-          v-model="selectedRecommendation"
-          @change="$emit('update:recommendation', targetValue($event))"
-        >
-          <option v-for="item in recommendationList" :value="item" :key="item.name">
+        <select v-model="selectedRecommendation" @change="recommendationOnChange($event)">
+          <option v-for="item in recommendationList" :value="item.name" :key="item.name">
             {{ displayBuildName(item) }}
           </option>
         </select>
@@ -210,7 +166,6 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
 import {
   ARTIFACT_SET_MASTER_DUMMY,
   TRecommendation,
@@ -225,10 +180,10 @@ import {
   TCharacterDetail,
 } from "@/master";
 import { computed, defineComponent, PropType, ref } from "vue";
+import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
   name: "CharacterInput",
-  mixins: [GlobalMixin],
   props: {
     characterInput: { type: Object, required: true },
     recommendationList: { type: Array as PropType<TRecommendation[]>, required: true },
@@ -247,23 +202,25 @@ export default defineComponent({
     "open:character-info",
   ],
   setup(props, context) {
-    const ascensionRef = ref(props.characterInput?.突破レベル ?? 6);
-    const levelRef = ref(props.characterInput?.レベル ?? 90);
-    const constellationRef = ref(props.characterInput?.命ノ星座 ?? 0);
-    const normalAttackLevelRef = ref(props.characterInput?.通常攻撃レベル ?? 8);
-    const elementalSkillLevelRef = ref(props.characterInput?.元素スキルレベル ?? 8);
-    const elementalBurstLevelRef = ref(props.characterInput?.元素爆発レベル ?? 8);
-    const weaponAscensionRef = ref(props.characterInput?.武器突破レベル ?? 6);
-    const weaponLevelRef = ref(props.characterInput?.武器レベル ?? 90);
-    const weaponRefineRef = ref(props.characterInput?.武器精錬ランク ?? 1);
+    const { displayName, targetValue } = CompositionFunction();
+
+    const ascensionRef = ref(props.characterInput.突破レベル);
+    const levelRef = ref(props.characterInput.レベル);
+    const constellationRef = ref(props.characterInput.命ノ星座);
+    const normalAttackLevelRef = ref(props.characterInput.通常攻撃レベル);
+    const elementalSkillLevelRef = ref(props.characterInput.元素スキルレベル);
+    const elementalBurstLevelRef = ref(props.characterInput.元素爆発レベル);
+    const weaponAscensionRef = ref(props.characterInput.武器突破レベル);
+    const weaponLevelRef = ref(props.characterInput.武器レベル);
+    const weaponRefineRef = ref(props.characterInput.武器精錬ランク);
 
     const storageOrRecommendationRef = ref("0");
 
     const displayBuildName = (item: TRecommendation) => item.name;
 
-    const selectedRecommendationRef = ref(props.recommendation);
-    const characterMaster = computed(() => props.characterInput?.characterMaster ?? {});
-    const weaponMaster = computed(() => props.characterInput?.weaponMaster ?? {});
+    const selectedRecommendationRef = ref(props.recommendation.name);
+    const characterMaster = computed(() => props.characterInput.characterMaster);
+    const weaponMaster = computed(() => props.characterInput.weaponMaster);
     const artifactSetMasters = computed(
       () =>
         props.characterInput?.artifactSetMasters ?? [
@@ -281,7 +238,7 @@ export default defineComponent({
       ELEMENT_BG_COLOR_CLASS[item.元素] as string;
     let saveDisabled = false;
     let removeDisabled = false;
-    const buildnameRef = ref(props.recommendation?.name ?? "");
+    const buildnameRef = ref(props.recommendation.name);
     const saveOnClick = () => {
       if (buildnameRef.value) {
         console.log(buildnameRef.value);
@@ -318,6 +275,7 @@ export default defineComponent({
     const recommendationOnChange = (event: Event) => {
       if (!props.recommendationList) return;
       if (event.target instanceof HTMLSelectElement) {
+        console.log(event.target.value);
         context.emit(
           "update:recommendation",
           props.recommendationList[event.target.selectedIndex]
@@ -380,6 +338,8 @@ export default defineComponent({
     };
 
     return {
+      displayName, targetValue,
+
       displayBuildName,
       visionSrc,
       bgImageClass,
@@ -481,7 +441,7 @@ img.vision {
   top: 5%;
 }
 
-:checked + img {
+:checked+img {
   background-color: gold;
 }
 

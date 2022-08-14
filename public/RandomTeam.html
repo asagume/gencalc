@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Random Team - Genshin Impact</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        body {
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2rem;
+        }
+
+        #main {
+            max-width: 1280px;
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        a:link {
+            color: blanchedalmond;
+        }
+
+        a:visited {
+            color: blanchedalmond;
+        }
+
+        ul.team {
+            width: 100%;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            list-style: none;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            padding-inline-start: 0;
+            padding-inline-end: 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        li.character {
+            position: relative;
+            display: inline-block;
+            max-width: calc(100% / 4 - 10px);
+        }
+
+        img.character {
+            width: 100%;
+            max-width: 256px;
+            background-size: contain;
+        }
+
+        img.vision {
+            position: absolute;
+            left: 4%;
+            top: 4%;
+            max-width: 25%;
+            max-height: 25%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div style="text-align: left;">
+            <p><a href="./index.html">Back to GENCALC</a></p>
+        </div>
+
+        <h1>原神 ランダムチーム編成メーカー</h1>
+
+        <div id="random-team-1">
+            <h2>TEAM-1 &emsp;
+                <button type="button" @click="redraw"><span class="material-symbols-outlined"> Refresh </span></button>
+            </h2>
+            <ul class="team">
+                <li class="character" v-for="(item, index) in list">
+                    <img class="character" :src="item.url" :alt="item.name"
+                        :style="'background-image: url(' + item.rarityBgUrl +')'">
+                    <img class="vision" :src="item.visionUrl" :alt="item.vision">
+                </li>
+            </ul>
+        </div>
+
+        <div id="random-team-2">
+            <h2>TEAM-2 &emsp;
+                <button type="button" @click="redraw"><span class="material-symbols-outlined"> Refresh </span></button>
+            </h2>
+            <ul class="team">
+                <li class="character" v-for="(item, index) in list">
+                    <img class="character" :src="item.url" :alt="item.name"
+                        :style="'background-image: url(' + item.rarityBgUrl +')'">
+                    <img class="vision" :src="item.visionUrl" :alt="item.vision">
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div style="padding-bottom: 4rem;">
+            <p>とくにいみはないです</p>
+        </div>
+    </div>
+
+    <script>
+        const VISION_IMG_SRC = {
+            炎: 'images/element_pyro.png',
+            水: 'images/element_hydro.png',
+            風: 'images/element_anemo.png',
+            雷: 'images/element_electro.png',
+            草: 'images/element_dendro.png',
+            氷: 'images/element_cryo.png',
+            岩: 'images/element_geo.png'
+        };
+
+        var キャラクターMaster = {};
+        var CharacterImageList = [];
+        var キャラクター所持状況ObjVar = {};
+        var キャラクター所持数 = 0;
+
+        function buildRandomTeamList(excludeList) {
+            const excludeNames = [];
+            if (excludeList) {
+                for (entry of excludeList) {
+                    excludeNames.push(entry.name);
+                }
+            }
+            const randomTeamIndexSet = new Set();
+            while (randomTeamIndexSet.size < 4) {
+                const newIndex = Math.floor(Math.random() * CharacterImageList.length);
+                const name = CharacterImageList[newIndex].name;
+                if ((キャラクター所持数 - excludeNames.length) > 9) {
+                    if (!(name in キャラクター所持状況ObjVar)) continue;
+                    if (name.startsWith('旅人')) {
+                        if (excludeNames.filter(s => s.startsWith('旅人')).length > 0) continue;
+                    } else {
+                        if (excludeNames.includes(name)) continue;
+                    }
+                }
+                if (name.startsWith('旅人')) {
+                    let isPresent = false;
+                    for (entry of randomTeamIndexSet) {
+                        if (CharacterImageList[entry].name.startsWith('旅人')) {
+                            isPresent = true;
+                            break;
+                        }
+                    }
+                    if (isPresent) continue;
+                }
+                randomTeamIndexSet.add(newIndex);
+            }
+
+            const result = [];
+            for (entry of randomTeamIndexSet) {
+                result.push(CharacterImageList[entry]);
+            }
+            console.debug('buildRandomTeamList', result);
+            return result;
+        }
+
+        async function onLoad() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json'
+            ].map(s => fetch(s).then(resp => resp.json())));
+
+            キャラクターMaster = responses[0];
+
+            Object.keys(キャラクターMaster).forEach(name => {
+                const characterUrl = キャラクターMaster[name]['import'].replace(/data\/characters/, 'images/characters/face').replace(/json$/, 'png');
+                CharacterImageList.push({
+                    name: name,
+                    rarity: キャラクターMaster[name]['レアリティ'],
+                    vision: キャラクターMaster[name]['元素'],
+                    weapon: キャラクターMaster[name]['武器'],
+                    url: characterUrl,
+                    rarityBgUrl: 'images/star' + キャラクターMaster[name]['レアリティ'] + '-bg.png',
+                    visionUrl: VISION_IMG_SRC[キャラクターMaster[name]['元素']]
+                });
+            });
+
+            if (localStorage['キャラクター所持状況']) {
+                try {
+                    キャラクター所持状況ObjVar = JSON.parse(localStorage['キャラクター所持状況']);
+                } catch (error) {
+                    // nop
+                }
+            }
+            キャラクター所持数 = Array.from(Object.keys(キャラクター所持状況ObjVar), key => キャラクター所持状況ObjVar[key]).filter(s => s != null).length;
+
+            const randomTeam1 = new Vue({
+                el: '#random-team-1',
+                data: {
+                    list: buildRandomTeamList(),
+                    isAllowDuplication: true
+                },
+                methods: {
+                    redraw: function () {
+                        const excludeList = this.isAllowDuplication ? null : randomTeam2.list;
+                        this.list.splice(0, this.list.length, ...buildRandomTeamList(excludeList));
+                        console.log(this.list);
+                    }
+                }
+            });
+
+            const randomTeam2 = new Vue({
+                el: '#random-team-2',
+                data: {
+                    list: buildRandomTeamList(randomTeam1.list),
+                    isAllowDuplication: false
+                },
+                methods: {
+                    redraw: function () {
+                        const excludeList = this.isAllowDuplication ? null : randomTeam1.list;
+                        this.list.splice(0, this.list.length, ...buildRandomTeamList(excludeList));
+                        console.log(this.list);
+                    }
+                }
+            });
+        }
+
+        onLoad();
+    </script>
+</body>
+
+</html>

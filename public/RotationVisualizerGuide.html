@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんろーて - Genshin Impact Rotation Visualizer</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <link href="styles/RotationVisualizer.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="js/RotationVisualizer.js"></script>
+    <style>
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            border: solid 2px;
+            width: calc(max(360px, 80%));
+        }
+
+        tr {
+            border: solid 2px;
+        }
+
+        td {
+            border: solid 1px;
+            min-width: 8rem;
+        }
+
+        .notice {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <fieldset style="margin: 1rem; position: relative;">
+            <legend>げんろーて - Genshin Impact Rotation Visualizer Ver.0.1.0</legend>
+            <p style="text-align: left;"><a href="./RotationVisualizer.html">げんろーて</a> </p>
+        </fieldset>
+
+        <h2>CHARACTER NAME</h2>
+        <div class="char-name-list" id="charNameList">
+            <table>
+                <template v-for="rowItem in list">
+                    <tr>
+                        <template v-for="columnItem in rowItem">
+                            <td>{{columnItem}}</td>
+                        </template>
+                    </tr>
+                </template>
+            </table>
+
+            <div class="notice">
+                <ul>
+                    <li>CASE INSENSITIVE</li>
+                    <li>NAME IN KANJI, IF LENGTH &gt;= 2 THEN STARTSWITH or ENDSWITH</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>ACTION</h2>
+        <table id="actionList">
+            <template v-for="[k1, v1] in Array.from(map)">
+                <tr>
+                    <td :rowspan="v1.size + 1"> {{ k1 }} </td>
+                    <td :rowspan="v1.size + 1">
+                        <span v-if="k1 == 'N'"> 通常攻撃 / Normal Attack </span>
+                        <span v-if="k1 == 'C'"> 重撃 / Charged Attack </span>
+                        <span v-if="k1 == 'P'"> 落下攻撃 / Plunge </span>
+                        <span v-if="k1 == 'E'"> 元素スキル / Elemental SKill </span>
+                        <span v-if="k1 == 'Q'"> 元素爆発 / Elemental Burst </span>
+                    </td>
+                </tr>
+                <tr v-for="[k2, v2] in Array.from(v1)">
+                    <td> {{ k1 }}.{{ k2 }} </td>
+                    <td> {{ v2 }} </td>
+                </tr>
+            </template>
+            <tr>
+                <td>Q</td>
+                <td>元素爆発/ Elemental Burst</td>
+            </tr>
+            <tr>
+                <td>W</td>
+                <td>歩き / Walk</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>ダッシュ / Dash</td>
+            </tr>
+            <tr>
+                <td>J</td>
+                <td>ジャンプ / Jump</td>
+            </tr>
+        </table>
+
+        <div class="notice">
+            <ul>
+                <li>N1 .. N6<br>
+                </li>
+                <li>X(3) = X(3s) = X(180f)<br>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        var charNameList;
+        var actionList;
+
+        async function onLoad() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json'
+            ].map(url => fetch(url).then(resp => resp.json())));
+
+            CharacterMaster = responses[0];
+
+            CharacterNameMatchMap = createCharacterNameMatchMap();
+
+            let nameArrFlat = [];
+            const nameArr = [];
+            CharacterNameMatchMap.forEach((value, key) => {
+                const newValue = [];
+                value.forEach(v => {
+                    if (!nameArrFlat.includes(v)) {
+                        newValue.push(v)
+                    }
+                })
+                nameArr.push(newValue);
+                nameArrFlat = nameArrFlat.concat(newValue)
+            })
+
+            charNameList = new Vue({
+                el: '#charNameList',
+                data: {
+                    list: nameArr
+                }
+            })
+
+            console.log('actioinVariationMap', actioinVariationMap);
+
+            actionList = new Vue({
+                el: '#actionList',
+                data: {
+                    map: actioinVariationMap
+                }
+            })
+        }
+
+        onLoad();
+    </script>
+</body>
+
+</html>

@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
 import {
   calculateFormulaArray,
   checkConditionMatches,
@@ -38,12 +37,14 @@ import {
 } from "@/input";
 import { OPTION1_MASTER_LIST, OPTION2_MASTER_LIST } from "@/master";
 import { computed, defineComponent, reactive } from "vue";
+import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
   name: "MiscOptionInput",
-  mixins: [GlobalMixin],
   emits: ["update:misc-option"],
   setup(props, context) {
+    const { displayName, displayOptionName } = CompositionFunction();
+
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr = [] as any[];
     const talentChangeDetailObjArr = [] as any[];
@@ -169,6 +170,8 @@ export default defineComponent({
     };
 
     return {
+      displayName, displayOptionName,
+
       checkboxList,
       selectList,
       conditionValues,

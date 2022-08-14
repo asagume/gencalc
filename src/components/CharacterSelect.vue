@@ -30,9 +30,9 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from '@/GlobalMixin.vue';
 import { TCharacterEntry, ELEMENT_IMG_SRC, TVisionKey, WEAPON_IMG_SRC, TWeaponTypeKey, CHARACTER_MASTER_LIST, STAR_BACKGROUND_IMAGE_CLASS } from '@/master';
 import { defineComponent, reactive, computed } from 'vue';
+import CompositionFunction from './CompositionFunction.vue';
 
 interface ICheckList {
     [key: string]: boolean
@@ -40,13 +40,14 @@ interface ICheckList {
 
 export default defineComponent({
     name: 'CharacterSelect',
-    mixins: [GlobalMixin],
     props: {
-        character: String,
-        visible: Boolean,
+        character: { type: String, required: true },
+        visible: { type: Boolean, required: true },
     },
     emits: ['update:character'],
     setup(props) {
+        const { displayName } = CompositionFunction();
+
         const visionSrc = (item: TCharacterEntry) => ELEMENT_IMG_SRC[item.元素];
         const bgImageClass = (item: TCharacterEntry) => ' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ] as string;
         const selectedClass = (item: TCharacterEntry) => { return item.key == props.character ? ' selected' : '' };
@@ -85,6 +86,8 @@ export default defineComponent({
         });
 
         return {
+            displayName,
+
             visionSrc,
             bgImageClass,
             selectedClass,

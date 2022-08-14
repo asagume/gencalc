@@ -1,6 +1,6 @@
-import { deepcopy, isNumber, overwriteObject } from "./common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY, 聖遺物ステータスTEMPLATE } from "./input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
+import { deepcopy, isNumber, isPlainObject, overwriteObject } from "./common";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "./input";
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -208,7 +208,6 @@ export const calculateStats = function (
     const artifactStats = artifactDetailInput.聖遺物ステータス;
     for (const stat of Object.keys(artifactStats)) {
         const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
-        const statValue = artifactStats[stat];
         workStatsObj[toStat] += artifactStats[stat];
     }
 
@@ -228,8 +227,6 @@ export const calculateStats = function (
     }
 
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
-    console.log('conditionInput', conditionInput);
-    console.log('validConditionValueArr', validConditionValueArr);
 
     // ステータス変化
     const myPriority1KindArr = ['元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
@@ -244,7 +241,6 @@ export const calculateStats = function (
                     const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
                     if (number == 0) continue;
                     if (number != 1) {
-                        console.log(myDetailObj, number);
                         myNew数値 = (myNew数値 as any).concat(['*', number]);
                     }
                 }
@@ -327,7 +323,6 @@ export const calculateStats = function (
     conditionInput.攻撃元素 = [通常攻撃_元素Var, 重撃_元素Var, 落下攻撃_元素Var];
 
     overwriteObject(statsInput.statsObj, workStatsObj);
-    console.log(statsInput.statsObj);
 }
 
 function compareFunction(a: string, b: string) {
@@ -513,7 +508,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
             });
         });
         overwriteObject(damageResult['元素反応'], reactionResult);
-        console.log('元素反応', damageResult);
+        console.debug('元素反応', damageResult);
 
         // 戦闘天賦およびその他のダメージを計算します
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
@@ -540,6 +535,23 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult, element);
                     (damageResult[category] as any).push(resultArr);
+                }
+                if (category == '通常攻撃') {
+                    let n = 0;
+                    const sum = ['合計ダメージ', null, 0, 0, 0, null] as TDamageResultEntry;
+                    for (const entry of damageResult[category]) {
+                        if (entry[0].endsWith('段ダメージ')) {
+                            sum[1] = entry[1];
+                            sum[2] += entry[2];
+                            if (entry[3] == null) sum[3] = null;
+                            else if (sum[3] != null) sum[3] += entry[3];
+                            sum[4] += entry[4];
+                            n++;
+                        }
+                    }
+                    if (n > 0) {
+                        damageResult[category].splice(n, 1, sum);
+                    }
                 }
             }
             for (const category of ['元素スキル', '元素爆発', 'その他']) {
@@ -573,7 +585,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
         // 被ダメージを計算します
         // TODO
 
-        console.log(damageResult);
+        console.debug(damageResult);
     } catch (error) {
         console.error(error);
         throw error;
@@ -582,8 +594,8 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
 
 export function makeValidConditionValueArr(conditionInput: any) {
     try {
-        if (!conditionInput) return [];
-        const result = [] as any;
+        const result = [] as string[];
+        if (!conditionInput) return result;
         const checkboxList = conditionInput.checkboxList;
         if (checkboxList) {
             checkboxList.forEach((entry: any) => {
@@ -781,145 +793,142 @@ function calculateDamageFromDetail(
         let my別枠乗算 = 0; // for 宵宮
         const myHIT数 = detailObj['HIT数'] != null ? Number(detailObj['HIT数']) : 1;
         const myステータス補正 = {} as { [key: string]: number };
-        let my精度 = 0;
+        // let my精度 = 0;
 
         const constellation = statsObj['命ノ星座'];
 
         const statusChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_STATUS);
         const talentChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_TALENT);
 
-        const validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
+        let validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
 
-        // if (detailObj['除外条件']) {
-        //     for (const condition of detailObj['除外条件']) {
-        //         if (isPlainObject(condition)) {
-        //             if (!(condition['名前'] in conditionInput.conditions)) return;
-        //             const number = checkConditionMatches(condition['名前'], validConditionValueArr, constellation);
-        //             if (number > 0) {
-        //                 ステータス条件取消(myステータス補正, condition['名前'], statsObj, validConditionValueArr, statusChangeDetailObjArr);
-        //                 validConditionValueArr = validConditionValueArr.filter(p => p != condition && !p.startsWith(condition + '@'));
-        //             }
-        //             if ('説明' in condition) {
-        //                 if (Array.isArray(condition['説明'])) {
-        //                     condition['説明'].forEach(description => {
-        //                         if (!statsObj['キャラクター注釈'].includes(description)) {
-        //                             statsObj['キャラクター注釈'].push(description);
-        //                         }
-        //                     });
-        //                 } else {
-        //                     if (!statsObj['キャラクター注釈'].includes(condition['説明'])) {
-        //                         statsObj['キャラクター注釈'].push(condition['説明']);
-        //                     }
-        //                 }
-        //             }
-        //         } else if (validConditionValueArr.includes(condition)) {
-        //             ステータス条件取消(myステータス補正, condition, statsObj, validConditionValueArr, statusChangeDetailObjArr);
-        //             validConditionValueArr = validConditionValueArr.filter(p => p != condition && !p.startsWith(condition + '@'));
-        //         }
-        //     }
-        // }
+        if (detailObj['除外条件']) {
+            for (const delCondition of detailObj['除外条件']) {
+                if (isPlainObject(delCondition)) {
+                    const number = checkConditionMatches(delCondition['名前'], validConditionValueArr, constellation);
+                    if (number > 0) {
+                        ステータス条件取消(myステータス補正, delCondition['名前'], statsObj, validConditionValueArr, statusChangeDetailObjArr);
+                        validConditionValueArr = validConditionValueArr.filter(s => s != delCondition && !s.startsWith(delCondition + '@'));
+                    }
+                    if ('説明' in delCondition) {
+                        if (Array.isArray(delCondition['説明'])) {
+                            delCondition['説明'].forEach(description => {
+                                if (!damageResult['キャラクター注釈'].includes(description)) {
+                                    damageResult['キャラクター注釈'].push(description);
+                                }
+                            });
+                        } else {
+                            if (!damageResult['キャラクター注釈'].includes(delCondition['説明'])) {
+                                damageResult['キャラクター注釈'].push(delCondition['説明']);
+                            }
+                        }
+                    }
+                } else if (validConditionValueArr.includes(delCondition)) {
+                    ステータス条件取消(myステータス補正, delCondition, statsObj, validConditionValueArr, statusChangeDetailObjArr);
+                    validConditionValueArr = validConditionValueArr.filter(s => s != delCondition && !s.startsWith(delCondition + '@'));
+                }
+            }
+        }
 
-        // if (detailObj['適用条件']) {
-        //     for (const condition of detailObj['適用条件']) {
-        //         if (isPlainObject(condition)) {
-        //             if (!(condition['名前'] in conditionInput.conditions)) return;
-        //             if (condition['種類'] && condition['種類'] == 'selectedIndex') { // for 甘雨+アモスの弓
-        //                 const conditionObjArr = conditionInput.selectList.filter(s => s.name == condition['名前']);
-        //                 if (conditionObjArr.length == 0) return;
-        //                 const optionList = conditionObjArr[0].list;
-        //                 const curSelectedValue = conditionInput.conditions[condition['名前']];
-        //                 const curSelectedIndex = optionList.indexOf(curSelectedValue);
-        //                 let newSelectedIndex;
-        //                 let newSelectedValue;
-        //                 const re = new RegExp('([\\+\\-]?)(\\d+)');
-        //                 const reRet = re.exec(String(condition['数値']));
-        //                 if (reRet) {
-        //                     if (reRet[1]) {
-        //                         if (reRet[1] == '+') {  // 加算
-        //                             newSelectedIndex = Math.min(curSelectedIndex + Number(reRet[2]), optionList.length - 1);
-        //                         } else {    // 減算
-        //                             newSelectedIndex = Math.min(curSelectedIndex - Number(reRet[2]), 0);
-        //                         }
-        //                     } else {    // 直値
-        //                         newSelectedIndex = Number(reRet[2]);
-        //                     }
-        //                     newSelectedValue = optionList[newSelectedIndex].textContent;
-        //                     if (curSelectedIndex > 0) {
-        //                         const curCondition = condition['名前'] + '@' + curSelectedValue;
-        //                         if (validConditionValueArr.includes(curCondition)) {
-        //                             validConditionValueArr = validConditionValueArr.filter(p => p != curCondition);
-        //                         }
-        //                         statusChangeDetailObjArr.forEach(valueObj => {
-        //                             if (!valueObj['条件']) return;
-        //                             if (valueObj['対象']) return;   // 暫定
-        //                             const number = checkConditionMatches(valueObj['条件'], [curCondition], constellation);
-        //                             if (number == 0) return;
-        //                             let myNew数値 = valueObj['数値'];
-        //                             if (number != 1) {
-        //                                 myNew数値 = myNew数値.concat(['*', number]);
-        //                             }
-        //                             const workObj = JSON.parse(JSON.stringify(statsObj));    // 力技
-        //                             updateStats(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
-        //                             Object.keys(workObj).forEach(statName => {
-        //                                 if (!isNumber(workObj[statName]) || workObj[statName] == statsObj[statName]) return;
-        //                                 if (!(statName in myステータス補正)) {
-        //                                     myステータス補正[statName] = 0;
-        //                                 }
-        //                                 myステータス補正[statName] -= workObj[statName] - statsObj[statName];
-        //                             });
-        //                         });
-        //                     }
-        //                     const newCondition = condition['名前'] + '@' + newSelectedValue;
-        //                     validConditionValueArr.push(newCondition);
-        //                     statusChangeDetailObjArr.forEach(valueObj => {
-        //                         if (!valueObj['条件']) return;
-        //                         if (valueObj['対象']) return;   // 暫定
-        //                         const number = checkConditionMatches(valueObj['条件'], [newCondition], constellation);
-        //                         if (number == 0) return;
-        //                         let myNew数値 = valueObj['数値'];
-        //                         if (number != 1) {
-        //                             myNew数値 = myNew数値.concat(['*', number]);
-        //                         }
-        //                         const workObj = JSON.parse(JSON.stringify(statsObj));    // 力技
-        //                         updateStats(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
-        //                         Object.keys(workObj).forEach(statName => {
-        //                             if (!isNumber(workObj[statName]) || workObj[statName] == statsObj[statName]) return;
-        //                             if (!(statName in myステータス補正)) {
-        //                                 myステータス補正[statName] = 0;
-        //                             }
-        //                             myステータス補正[statName] += workObj[statName] - statsObj[statName];
-        //                         });
-        //                     });
-        //                 } else {
-        //                     console.error(detailObj, opt_element, null, condition);
-        //                 }
-        //             } else {
-        //                 if (!validConditionValueArr.includes(condition)) {
-        //                     ステータス条件追加(myステータス補正, condition, statsObj, statusChangeDetailObjArr);
-        //                     validConditionValueArr.push(condition);
-        //                 }
-        //             }
-        //             if ('説明' in condition) {
-        //                 if (Array.isArray(condition['説明'])) {
-        //                     condition['説明'].forEach(description => {
-        //                         if (!statsObj['キャラクター注釈'].includes(description)) {
-        //                             statsObj['キャラクター注釈'].push(description);
-        //                         }
-        //                     });
-        //                 } else {
-        //                     if (!statsObj['キャラクター注釈'].includes(condition['説明'])) {
-        //                         statsObj['キャラクター注釈'].push(condition['説明']);
-        //                     }
-        //                 }
-        //             }
-        //         } else if (!validConditionValueArr.includes(condition)) {
-        //             ステータス条件追加(myステータス補正, condition, statsObj, statusChangeDetailObjArr);
-        //             validConditionValueArr.push(condition);
-        //         }
-        //     }
-        // }
-
-        const damageDetailObj = characterInput.damageDetailMyCharacter;
+        if (detailObj['適用条件']) {
+            for (const addCondition of detailObj['適用条件']) {
+                if (isPlainObject(addCondition)) {
+                    if (!(addCondition['名前'] in conditionInput.conditionValues)) continue;
+                    if (addCondition['種類'] && addCondition['種類'] == 'selectedIndex') { // for 甘雨+アモスの弓
+                        const conditionObjArr = conditionInput.selectList.filter(s => s.name == addCondition['名前']);
+                        if (conditionObjArr.length == 0) continue;
+                        const optionList = conditionInput.selectList.filter(s => s.name == addCondition['名前']).map(s => s.options)[0];
+                        const curSelectedIndex = conditionInput.conditionValues[addCondition['名前']] as number;
+                        const curSelectedValue = optionList[curSelectedIndex];
+                        let newSelectedIndex;
+                        let newSelectedValue;
+                        const re = new RegExp('([\\+\\-]?)(\\d+)');
+                        const reRet = re.exec(String(addCondition['数値']));
+                        if (reRet) {
+                            if (reRet[1]) {
+                                if (reRet[1] == '+') {  // 加算
+                                    newSelectedIndex = Math.min(curSelectedIndex + Number(reRet[2]), optionList.length - 1);
+                                } else {    // 減算
+                                    newSelectedIndex = Math.max(curSelectedIndex - Number(reRet[2]), 0);
+                                }
+                            } else {    // 直値
+                                newSelectedIndex = Number(reRet[2]);
+                            }
+                            newSelectedValue = optionList[newSelectedIndex];
+                            if (curSelectedIndex > 0) {
+                                const curCondition = addCondition['名前'] + '@' + curSelectedValue;
+                                if (validConditionValueArr.includes(curCondition)) {
+                                    validConditionValueArr = validConditionValueArr.filter(p => p != curCondition);
+                                }
+                                statusChangeDetailObjArr.forEach(valueObj => {
+                                    if (!valueObj['条件']) return;
+                                    if (valueObj['対象']) return;   // 暫定
+                                    const number = checkConditionMatches(valueObj['条件'], [curCondition], constellation);
+                                    if (number == 0) return;
+                                    let myNew数値 = valueObj['数値'];
+                                    if (number != 1) {
+                                        myNew数値 = myNew数値.concat(['*', number]);
+                                    }
+                                    const workObj = JSON.parse(JSON.stringify(statsObj));    // 力技
+                                    updateStats(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
+                                    Object.keys(workObj).forEach(statName => {
+                                        if (!isNumber(workObj[statName]) || workObj[statName] == statsObj[statName]) return;
+                                        if (!(statName in myステータス補正)) {
+                                            myステータス補正[statName] = 0;
+                                        }
+                                        myステータス補正[statName] -= workObj[statName] - statsObj[statName];
+                                    });
+                                });
+                            }
+                            const newCondition = addCondition['名前'] + '@' + newSelectedValue;
+                            validConditionValueArr.push(newCondition);
+                            statusChangeDetailObjArr.forEach(valueObj => {
+                                if (!valueObj['条件']) return;
+                                if (valueObj['対象']) return;   // 暫定
+                                const number = checkConditionMatches(valueObj['条件'], [newCondition], constellation);
+                                if (number == 0) return;
+                                let myNew数値 = valueObj['数値'];
+                                if (number != 1) {
+                                    myNew数値 = myNew数値.concat(['*', number]);
+                                }
+                                const workObj = JSON.parse(JSON.stringify(statsObj));    // 力技
+                                updateStats(workObj, valueObj['種類'], myNew数値, valueObj['上限']);
+                                Object.keys(workObj).forEach(statName => {
+                                    if (!isNumber(workObj[statName]) || workObj[statName] == statsObj[statName]) return;
+                                    if (!(statName in myステータス補正)) {
+                                        myステータス補正[statName] = 0;
+                                    }
+                                    myステータス補正[statName] += workObj[statName] - statsObj[statName];
+                                });
+                            });
+                        } else {
+                            console.error(detailObj, opt_element, null, addCondition);
+                        }
+                    } else {
+                        if (!validConditionValueArr.includes(addCondition)) {
+                            ステータス条件追加(myステータス補正, addCondition, statsObj, statusChangeDetailObjArr);
+                            validConditionValueArr.push(addCondition);
+                        }
+                    }
+                    if ('説明' in addCondition) {
+                        if (Array.isArray(addCondition['説明'])) {
+                            addCondition['説明'].forEach(description => {
+                                if (!damageResult['キャラクター注釈'].includes(description)) {
+                                    damageResult['キャラクター注釈'].push(description);
+                                }
+                            });
+                        } else {
+                            if (!damageResult['キャラクター注釈'].includes(addCondition['説明'])) {
+                                damageResult['キャラクター注釈'].push(addCondition['説明']);
+                            }
+                        }
+                    }
+                } else if (!validConditionValueArr.includes(addCondition)) {
+                    ステータス条件追加(myステータス補正, addCondition, statsObj, statusChangeDetailObjArr);
+                    validConditionValueArr.push(addCondition);
+                }
+            }
+        }
 
         const myTalentChangeDetailObjArr = [] as any[];
         const myStatusChangeDetailObjArr = [] as any[];
@@ -1121,10 +1130,10 @@ function calculateDamageFromDetail(
                     is防御補正Calc = false;
                     is耐性補正Calc = false;
                     my元素 = null;
-                    const 種類SplitArr = detailObj['種類'].split('_');
-                    if (種類SplitArr.length > 1) {
-                        my精度 = Number(種類SplitArr[1]);
-                    }
+                    // const 種類SplitArr = detailObj['種類'].split('_');
+                    // if (種類SplitArr.length > 1) {
+                    //     my精度 = Number(種類SplitArr[1]);
+                    // }
                 } else {
                     myバフArr.push('与えるダメージ');
                     if (detailObj['ダメージバフ'] != null) {

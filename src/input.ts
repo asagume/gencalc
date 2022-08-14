@@ -1,5 +1,5 @@
 import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
-import { deepcopy, isNumber, isPlainObject, isString } from './common';
+import { deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -124,6 +124,8 @@ function makeStatusTenmplate() {
     statsObj['会心率'] = 5;
     statsObj['会心ダメージ'] = 50;
     statsObj['元素チャージ効率'] = 100;
+    statsObj['敵レベル'] = 0;
+    statsObj['敵防御力'] = 0;
     return statsObj;
 }
 export const ステータスTEMPLATE = makeStatusTenmplate();
@@ -417,11 +419,7 @@ export const SUPPORTER_INPUT_TEMPLATE = {
 };
 export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
-/**
- * 
- * @param {string} levelStr 
- * @returns {[number, number]}
- */
+/** レベル文字列（1+,20,20+,...,90）を突破レベルとレベルに分割します */
 export function parseLevelStr(levelStr: number | string): [number, number] {
     try {
         let level: number;
@@ -432,8 +430,8 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
         }
         let ascension = 0;
         for (let i = 突破レベルレベルARRAY.length - 1; i >= 0; i--) {
-            if (突破レベルレベルARRAY[i][0] < level) continue;
-            if (突破レベルレベルARRAY[i][突破レベルレベルARRAY[i].length - 1] > level) continue;
+            if (突破レベルレベルARRAY[i][0] > level) continue;
+            if (突破レベルレベルARRAY[i][突破レベルレベルARRAY[i].length - 1] < level) continue;
             ascension = i;
             if (String(levelStr).endsWith('+')) {
                 ascension++;
@@ -453,12 +451,7 @@ export type TRecommendation = {
     overwrite: boolean
 }
 
-/**
- * おすすめセットのリストを作成します.
- * 
- * @param {Object} characterMaster キャラクターマスター
- * @returns {[string, object, boolean][]} おすすめセットのリスト
- */
+/** おすすめセットのリストを作成します. [おすすめセットの名前, おすすめセットの内容, 上書き可不可][] */
 export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }): TRecommendation[] {
     const result: TRecommendation[] = [];
 
@@ -468,6 +461,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
     if (opt_buildData) {
         result.push({ name: 'IMPORTED DATA', build: opt_buildData, overwrite: false });
         isSavable = true;
+        console.log(opt_buildData);
     }
 
     const storageKeyArr: string[] = [];
@@ -544,12 +538,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
     return result;
 }
 
-/**
- * 聖遺物セット名の略称を作成します
- * 
- * @param {string} name 聖遺物セット名
- * @returns {string} 聖遺物セット名の略称
- */
+/** 聖遺物セット名の略称を作成します */
 function makeArtifactSetAbbrev(name: string): string {
     const abbrRe = /[\p{sc=Hiragana}\p{sc=Katakana}ー]+/ug;
     let abbr = name.replace(abbrRe, '');
@@ -564,11 +553,21 @@ function makeArtifactSetAbbrev(name: string): string {
     return abbr;
 }
 
-export async function loadRecommendation(characterInput: TCharacterInput, artifactDetailInput: TArtifactDetailInput, conditionInput: TConditionInput, build: { [key: string]: any }) {
+/** おすすめセットをロードします */
+export async function loadRecommendation(
+    characterInput: TCharacterInput,
+    artifactDetailInput: TArtifactDetailInput,
+    conditionInput: TConditionInput,
+    build: { [key: string]: any }
+) {
+    console.log(loadRecommendation.name, build);
+
     try {
         const character = characterInput.character;
         const characterMaster = await getCharacterMasterDetail(character);
         characterInput.characterMaster = characterMaster;
+        const artifactStatsMain = deepcopy(聖遺物ステータスTEMPLATE);
+        const artifactStatsSub = deepcopy(聖遺物ステータスTEMPLATE);
 
         if ('レベル' in build) {
             [characterInput.突破レベル, characterInput.レベル] = parseLevelStr(build['レベル']);
@@ -592,10 +591,16 @@ export async function loadRecommendation(characterInput: TCharacterInput, artifa
         }
 
         let prioritySubstatsDisabled = false;
-        if (Object.keys((s: string) => s.startsWith('聖遺物サブ効果')).length > 0) {
-            prioritySubstatsDisabled = true;
+        for (const key of Object.keys(build).filter((s: string) => s.startsWith('聖遺物サブ効果'))) {
+            let toKey = key.replace(/^聖遺物サブ効果/, '');
+            if (toKey != 'HP') toKey = toKey.replace(/P$/, '%');
+            if (build[key]) {
+                prioritySubstatsDisabled = true;
+                artifactStatsSub[toKey] = Number(build[key]);
+            }
         }
         artifactDetailInput.聖遺物優先するサブ効果Disabled = prioritySubstatsDisabled;
+        overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
 
         ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
             if (!(key in build)) return;
@@ -607,15 +612,12 @@ export async function loadRecommendation(characterInput: TCharacterInput, artifa
                 characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER_DUMMY as TArtifactSetEntry;
             }
         });
+
         ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
             if (key in build) {
-                let mainstat = build[key];
-                if (!mainstat) {
-                    mainstat = ['5_HP', '5_攻撃力'][index];
-                }
-                artifactDetailInput['聖遺物メイン効果'][index] = mainstat;
+                artifactDetailInput['聖遺物メイン効果'][index] = build[key];
             } else {
-                artifactDetailInput['聖遺物メイン効果'][index] = '';
+                artifactDetailInput['聖遺物メイン効果'][index] = ['5_HP', '5_攻撃力'][index];
             }
         });
         ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
@@ -623,6 +625,12 @@ export async function loadRecommendation(characterInput: TCharacterInput, artifa
             const mainstat = build[key];
             artifactDetailInput['聖遺物メイン効果'][index + 2] = mainstat;
         });
+        // for (const entry of artifactDetailInput['聖遺物メイン効果']) {
+        //     const [rarity, stat] = entry.split('_');
+        //     artifactStatsMain[stat] += (ARTIFACT_MAIN_MASTER as any)[rarity][stat];
+        // }
+        // overwriteObject(artifactDetailInput.聖遺物ステータスメイン効果, artifactStatsMain);
+
         ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
             if (!(key in build)) return;
             const substat = build[key];
@@ -642,6 +650,10 @@ export async function loadRecommendation(characterInput: TCharacterInput, artifa
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s)).forEach(key => {
             conditionInput.conditionValues[key] = build[key];
         });
+
+        console.log('build', build);
+        console.log('聖遺物ステータスメイン効果', artifactDetailInput.聖遺物ステータスメイン効果, artifactStatsMain);
+        console.log('聖遺物ステータスサブ効果', artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
     }
     catch (error) {
         console.error(characterInput, artifactDetailInput, conditionInput, build);
@@ -802,7 +814,7 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
-        conditionMap.delete('命ノ星座');
+        // conditionMap.delete('命ノ星座');
         conditionMap.forEach((value, key) => {
             if (value && Array.isArray(value)) {
                 if (!value[0].startsWith('required_')) {

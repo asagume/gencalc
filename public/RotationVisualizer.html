@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんろーて - Genshin Impact Rotation Visualizer</title>
+    <link href="favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/RotationVisualizer.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="js/RotationVisualizer.js"></script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 30
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <fieldset style="margin: 1rem; position: relative;">
+            <legend>げんろーて - Genshin Impact Rotation Visualizer Ver.0.1.0</legend>
+            <p style="position: absolute; left: 1rem;"> <a href="/gencalc/">げんかるく</a> </p>
+            <p style="text-align: center;">
+                <a href="./RotationVisualizerGuide.html">Usage?</a>
+            </p>
+        </fieldset>
+
+        <h2 class="toggle-switch opened">NEW ROTATION</h2>
+        <div class="rotation-data" id="data_">
+            <div class="input-container">
+                <div class="name-and-controller">
+                    <input ref="name" v-model="name" class="name" type="text" size="30" minlength="1" maxlength="40"
+                        placeholder="INPUT YOUR ROTATION NAME" tabindex="1">
+                    <button type="button" @click="saveButtonOnClick">
+                        <span class="material-symbols-outlined"> save </span> </button>
+                    <button type="button" @click="isCalculatable = !isCalculatable">
+                        <span class="material-symbols-outlined"> calculate </span> </button>
+                </div>
+                <textarea ref="rotation" :value="rotation" @input="rotationOnInput" class="rotation" cols="55" rows="8"
+                    placeholder="INPUT YOUR ROTATION" tabindex="2"></textarea>
+                <textarea ref="description" v-model="description" class="description" cols="55" rows="8"
+                    placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
+            </div>
+            <div class="characters">
+                <div v-for="character in rotation4v.list" class="character">
+                    <img class="character" :src="character.imgSrc" :alt="character.name"
+                        :style="'background-image: url(' + character.starBgUrl +');'">
+                    <div class="tooltip"> {{character.name}} </div>
+                    <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                    <p class="ratio"> {{Math.round(character.timeOnFieldRatio * 100)}}% </p>
+                    <div class="actions" :style="'border-color: ' + character.elementColor + ';'">
+                        <template v-for="action in character.actions">
+                            <div class="action" :style="'left: ' + action.x + 'px;'">
+                                <template v-for="icon in action.icons">
+                                    <template v-if="icon.imgSrc">
+                                        <div :class="'icon ' + icon.code"
+                                            :style="'left: ' + icon.x + 'px; width: ' + icon.width + 'px; background-color: ' + character.elementColor + ';'">
+                                        </div>
+                                        <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
+                                            :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
+                                        </div>
+                                        <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
+                                            :style="'left: ' + icon.x + 'px; width:' + icon.cdDisplay + 'px;'">
+                                        </div>
+                                        <img :class="'icon ' + icon.code" :src="icon.imgSrc" :alt="icon.name"
+                                            :style="'left:' + icon.x + 'px; background-color: ' + character.elementColor + ';'">
+                                        <div v-if="icon.name" class="tooltip">
+                                            {{icon.name}} <br>
+                                            <span v-if="icon.duration">duration: {{icon.duration}}
+                                                <br></span>
+                                            <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
+                                            <span v-if="icon.energyCost">energy cost: {{icon.energyCost}}
+                                                <br></span>
+                                        </div>
+                                    </template>
+                                    <div v-else class="noicon" :style="'left: ' + icon.x + 'px;'">
+                                        <p class="noicon"> {{icon.code}} </p>
+                                    </div>
+                                </template>
+                                <p v-if="action.groupNameDisplay" class="name" v-html="action.groupNameDisplay"></p>
+                            </div>
+                            <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
+                                {{action.comment}}
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <template v-if="isCalculatable">
+                <h3>Energy Recharge Estimator</h3>
+                <div style="text-align: left;">
+                    <label>Rotation time:
+                        <input v-model="erEstimator.rotationTime" @change="erEstimatorOnChange" type="number" min="0">
+                    </label>
+                    <label>Energy from enemy drops:
+                        <input v-model="erEstimator.energyFromEnemy" @change="erEstimatorOnChange" type="number"
+                            min="0">
+                    </label>
+                </div>
+                <div v-for="(character, index) in rotation4v.list" class="character">
+                    <img class="character" :src="character.imgSrc" :alt="character.name"
+                        :style="'background-image: url(' + character.starBgUrl +');'">
+                    <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                    <div style="position: absolute; left: 90px; text-align: left;">
+                        <label>
+                            <input v-model="erEstimator.list[index].windfall" @change="erEstimatorOnChange"
+                                type="checkbox">
+                            Windfall </label>
+                        <br>
+                        <label>Energy Correction:
+                            <input v-model="erEstimator.list[index].correction" @change="erEstimatorOnChange"
+                                type="number" step="1">
+                        </label>
+                        {{erEstimator.list[index].energyRecharge}}%
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <h2 class="toggle-switch opened">YOUR ROTATIONS</h2>
+        <ol class="your-data-area" id="saveDataArea">
+            <template v-for="(item, index) in list">
+                <li class="data">
+                    <div class="input-container">
+                        <div class="name-and-controller">
+                            <input v-model="item.name" class="name" type="text" size="30" minlength="1" maxlength="40"
+                                :readonly="!item.isEditable" placeholder="INPUT YOUR ROTATION NAME" tabindex="1">
+
+                            <button v-show="item.isEditable" type="button" @click="cancelButtonOnClick(index, $event)">
+                                <span class="material-symbols-outlined"> cancel </span> </button>
+                            <button v-show="item.isEditable" type="button" @click="saveButtonOnClick(index, $event)">
+                                <span class="material-symbols-outlined"> save </span> </button>
+                            <button v-show="item.isCompact" type="button" @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_more </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_less </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isEditable = true">
+                                <span class="material-symbols-outlined"> edit </span> </button>
+                            <button v-show="!item.isCompact" type="button"
+                                @click="item.isCalculatable = !item.isCalculatable">
+                                <span class="material-symbols-outlined"> calculate </span> </button>
+                            <input v-show="!item.isCompact && !item.isEditable" v-model="item.isDeletable"
+                                type="checkbox">
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="removeButtonOnClick(index)" :disabled="!item.isDeletable">
+                                <span class="material-symbols-outlined"> delete </span> </button>
+                            <button v-show="item.isCompact" type="button" @click="upButtonOnClick(index)"
+                                :disabled="index == 0">
+                                <span class="material-symbols-outlined"> arrow_upward </span> </button>
+                            <button v-show="item.isCompact" type="button" @click="downButtonOnClick(index)"
+                                :disabled="index == (list.length - 1)">
+                                <span class="material-symbols-outlined"> arrow_downward </span> </button>
+                        </div>
+                        <textarea v-show="item.isEditable" :value="item.rotation"
+                            @input="rotationOnInput(index, $event)" class="rotation" cols="55" rows="8"
+                            placeholder="INPUT YOUR ROTATION" tabindex="2"></textarea>
+                        <textarea v-show="item.isEditable" v-model="item.description" class="description" cols="55"
+                            rows="8" placeholder="INPUT DESCRIPTION" tabindex="3"></textarea>
+                    </div>
+                    <template v-if="item.isCompact">
+                        <div class="view-container-compact">
+                            <div class="characters">
+                                <template v-for="character in item.rotation4v.list">
+                                    <div class="character">
+                                        <img class="character" :src="character.imgSrc" :alt="character.name"
+                                            :style="'background-image: url(' + character.starBgUrl +');'">
+                                        <div class="tooltip"> {{character.name}} </div>
+                                        <img class="element" :src="character.elementImgSrc"
+                                            :alt="character.elementName">
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="description" v-html="item.description"></div>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="characters">
+                            <div v-for="character in item.rotation4v.list" class="character">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                                <div class="tooltip"> {{character.name}} </div>
+                                <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                                <p class="ratio"> {{Math.round(character.timeOnFieldRatio * 100)}}% </p>
+                                <div class="actions"
+                                    :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
+                                    <template v-for="action in character.actions">
+                                        <div class="action" :style="'left: ' + action.x + 'px;'">
+                                            <template v-for="(icon, index2) in action.icons">
+                                                <template v-if="icon.imgSrc">
+                                                    <div class="icon"
+                                                        :style="'left: ' + icon.x + 'px; width: ' + Math.max(40, icon.width) + 'px; background-color: ' + character.elementColor + ';'">
+                                                    </div>
+                                                    <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
+                                                    </div>
+                                                    <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.cdDisplay + 'px;'">
+                                                    </div>
+                                                    <img :class="'icon ' + icon.code" :src="icon.imgSrc"
+                                                        :alt="icon.name"
+                                                        :style="'left:' + (icon.x + Math.max(0, icon.width - 40)) + 'px; background-color: ' + character.elementColor + ';'">
+                                                    <div v-if="icon.name && ['E', 'Q'].includes(icon.code)"
+                                                        class="tooltip">
+                                                        {{icon.name}} <br>
+                                                        <span v-if="icon.duration">duration: {{icon.duration}}
+                                                            <br></span>
+                                                        <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
+                                                        <span v-if="icon.energyCost">energy cost:
+                                                            {{icon.energyCost}}
+                                                            <br></span>
+                                                    </div>
+                                                    <div v-if="icon.code == 'N'" class="attr N"
+                                                        :style="'left: ' + (icon.x + Math.max(0, icon.width - 40)) + 'px;'">
+                                                        <p> {{icon.numberOfAttack}} </p>
+                                                    </div>
+                                                    <div v-if="['C', 'P'].includes(icon.code)"
+                                                        :class="'attr ' + icon.code"
+                                                        :style="'left: ' + (icon.x + Math.max(0, icon.width - 40)) + 'px;'">
+                                                        <p> {{icon.code}} </p>
+                                                    </div>
+                                                </template>
+                                                <div v-else class="noicon"
+                                                    :style="'left: ' + Math.max(0, icon.x - 5) + 'px;'">
+                                                    <p class="noicon"> {{icon.code}} </p>
+                                                </div>
+                                            </template>
+                                            <p v-if="action.groupNameDisplay" class="name"
+                                                v-html="action.groupNameDisplay"></p>
+                                        </div>
+                                        <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
+                                            {{action.comment}}
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="description" v-html="item.description"></div>
+                        <template v-if="item.isCalculatable">
+                            <h3>Energy Recharge Estimator</h3>
+                            <div style="text-align: left;">
+                                <label>Rotation time:
+                                    <input v-model="item.erEstimator.rotationTime" @change="erEstimatorOnChange(index)"
+                                        type="number" min="0">
+                                </label>
+                                <label>Energy from enemy drops:
+                                    <input v-model="item.erEstimator.energyFromEnemy"
+                                        @change="erEstimatorOnChange(index)" type="number" min="0">
+                                </label>
+                            </div>
+                            <div v-for="(character, index2) in item.rotation4v.list" class="character">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                                <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                                <div style="position: absolute; left: 90px; text-align: left;">
+                                    <label>
+                                        <input v-model="item.erEstimator.list[index2].windfall"
+                                            @change="erEstimatorOnChange(index)" type="checkbox">
+                                        Windfall </label>
+                                    <br>
+                                    <label>Energy Correction:
+                                        <input v-model="item.erEstimator.list[index2].correction"
+                                            @change="erEstimatorOnChange(index)" type="number" step="1">
+                                    </label>
+                                    {{item.erEstimator.list[index2].energyRecharge}}%
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                </li>
+            </template>
+        </ol>
+        <div id="file-button-area">
+            <button class="file" @click="savedDataDownloadOnClick"> DOWNLOAD </button>
+            <button class="file" disabled> UPLOAD </button>
+        </div>
+
+        <h2 class="toggle-switch opened">SAMPLE ROTATIONS</h2>
+        <ol class="sample-data-area" id="sampleDataArea">
+            <template v-for="(item, index) in list">
+                <li class="data">
+                    <div class="input-container">
+                        <div class="name-and-controller">
+                            <input v-model="item.name" class="name" type="text" size="30" minlength="1" maxlength="40"
+                                readonly placeholder="INPUT YOUR ROTATION NAME">
+
+                            <button v-show="item.isCompact" type="button" @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_more </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isCompact = !item.isCompact">
+                                <span class="material-symbols-outlined"> expand_less </span> </button>
+                            <button v-show="!item.isCompact && !item.isEditable" type="button"
+                                @click="item.isEditable = true">
+                                <span class="material-symbols-outlined"> visibility </span> </button>
+                            <button v-show="!item.isCompact && item.isEditable" type="button"
+                                @click="item.isEditable = false">
+                                <span class="material-symbols-outlined"> visibility_off </span> </button>
+                        </div>
+                        <textarea v-if="item.isEditable" v-model="item.rotation" class="rotation" cols="55" rows="8"
+                            readonly></textarea>
+                        <div v-if="item.isEditable" class="description" v-html="item.description"></div>
+                    </div>
+                    <template v-if="item.isCompact">
+                        <div class="view-container-compact">
+                            <div class="characters">
+                                <template v-for="character in item.rotation4v.list">
+                                    <div class="character">
+                                        <img class="character" :src="character.imgSrc" :alt="character.name"
+                                            :style="'background-image: url(' + character.starBgUrl +');'">
+                                        <div class="tooltip"> {{character.name}} </div>
+                                        <img class="element" :src="character.elementImgSrc"
+                                            :alt="character.elementName">
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="description" v-html="item.description"></div>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="characters">
+                            <div v-for="character in item.rotation4v.list" class="character">
+                                <img class="character" :src="character.imgSrc" :alt="character.name"
+                                    :style="'background-image: url(' + character.starBgUrl +');'">
+                                <div class="tooltip"> {{character.name}} </div>
+                                <img class="element" :src="character.elementImgSrc" :alt="character.elementName">
+                                <p class="ratio"> {{Math.round(character.timeOnFieldRatio * 100)}}% </p>
+                                <div class="actions"
+                                    :style="'border-color: ' + character.elementColor + '; width: ' + character.width + 'px;'">
+                                    <template v-for="action in character.actions">
+                                        <div class="action" :style="'left: ' + action.x + 'px;'">
+                                            <template v-for="(icon, index2) in action.icons">
+                                                <template v-if="icon.imgSrc">
+                                                    <div class="icon"
+                                                        :style="'left: ' + icon.x + 'px; width: ' + Math.max(40, icon.width) + 'px; background-color: ' + character.elementColor + ';'">
+                                                    </div>
+                                                    <div v-if="icon.durationDisplay" :class="'duration ' + icon.code"
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.durationDisplay + 'px;'">
+                                                    </div>
+                                                    <div v-if="icon.cdDisplay" :class="'cd ' + icon.code"
+                                                        :style="'left: ' + icon.x + 'px; width:' + icon.cdDisplay + 'px;'">
+                                                    </div>
+                                                    <img :class="'icon ' + icon.code" :src="icon.imgSrc"
+                                                        :alt="icon.name"
+                                                        :style="'left:' + (icon.x + Math.max(0, icon.width - 40)) + 'px; background-color: ' + character.elementColor + ';'">
+                                                    <div v-if="icon.name && ['E', 'Q'].includes(icon.code)"
+                                                        class="tooltip">
+                                                        {{icon.name}} <br>
+                                                        <span v-if="icon.duration">duration: {{icon.duration}}
+                                                            <br></span>
+                                                        <span v-if="icon.cd">cd: {{icon.cd}} <br></span>
+                                                        <span v-if="icon.energyCost">energy cost:
+                                                            {{icon.energyCost}}
+                                                            <br></span>
+                                                    </div>
+                                                    <div v-if="icon.code == 'N'" class="attr N"
+                                                        :style="'left: ' + (icon.x + Math.max(0, icon.width - 40)) + 'px;'">
+                                                        <p> {{icon.numberOfAttack}} </p>
+                                                    </div>
+                                                    <div v-if="['C', 'P'].includes(icon.code)"
+                                                        :class="'attr ' + icon.code"
+                                                        :style="'left: ' + (icon.x + Math.max(0, icon.width - 40)) + 'px;'">
+                                                        <p> {{icon.code}} </p>
+                                                    </div>
+                                                </template>
+                                                <div v-else class="noicon"
+                                                    :style="'left: ' + Math.max(0, icon.x - 5) + 'px;'">
+                                                    <p class="noicon"> {{icon.code}} </p>
+                                                </div>
+                                            </template>
+                                            <p v-if="action.groupNameDisplay" class="name"
+                                                v-html="action.groupNameDisplay"></p>
+                                        </div>
+                                        <div v-if="action.comment" class="comment" :style="'left: ' + action.x + 'px;'">
+                                            {{action.comment}}
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="description" v-html="item.description"></div>
+                    </template>
+                </li>
+            </template>
+        </ol>
+
+        <hr>
+    </div>
+
+    <script>
+        window.onload = () => {
+            init();
+        };
+    </script>
+</body>
+
+</html>

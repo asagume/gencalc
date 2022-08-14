@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLF3R2FB5T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BLF3R2FB5T');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - 武器一覧</title>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        body {
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        table th {
+            background-color: khaki;
+        }
+
+        table tbody tr.odd {
+            background-color: #FFFFFF;
+        }
+
+        table tbody tr.even {
+            background-color: #EEEEEE;
+        }
+
+        td {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .var {
+            font-weight: bold;
+            color: darkslateblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <p style="text-align: left; margin-left: 1rem;"><a href="/gencalc/">げんかるく</a> </p>
+
+        <div id="weapon-list-area">
+            <h2 id="weapon-list-h">武器一覧</h2>
+            <table id="weapon-list">
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const searchParams = new URLSearchParams(window.location.search);
+
+        window.onload = () => {
+            if (!searchParams.get('kind')) {
+                return;
+            }
+
+            const url = 'data/' + searchParams.get('kind') + 'Master.json';
+            fetch(url).then(resp => resp.json()).then(json => {
+                let weaponListH = '';
+
+                const columns = [
+                    { title: 'Icon', width: '50px' },
+                    { title: '武器' },
+                    { title: '★' },
+                    { title: '基礎攻撃力' },
+                    { title: 'ステータス' },
+                    { title: 'ステータス値' },
+                    { title: '能力', width: '50%' }
+                ];
+
+                let fetchArr = [];
+
+                let urlMap = new Map();
+                let dataMap = new Map();
+
+                Object.keys(json).forEach(name => {
+                    urlMap.set(name, json[name]['import']);
+
+                    fetchArr.push(fetch(json[name]['import']).then(resp2 => resp2.json()).then(json2 => {
+                        if ('種類' in json2) {
+                            weaponListH = json2['種類'] + '一覧';
+                        }
+
+                        let dataArr = [];
+
+                        let imgSrc = urlMap.get(json2['名前']);
+                        if (!urlMap.has(json2['名前'])) {
+                            console.error(json2['名前']);
+                            return;
+                        }
+                        imgSrc = urlMap.get(json2['名前']).replace(/data/, 'images').replace(/json/, 'png');
+                        dataArr.push('<img width="50" height="50" src="' + imgSrc + '" alt="' + json2['名前'] + '">');
+                        dataArr.push(json2['名前']);
+                        dataArr.push(json2['レアリティ']);
+                        let status2Name = null;
+                        Object.keys(json2['ステータス']).forEach(statusName => {
+                            if (statusName != '基礎攻撃力') {
+                                status2Name = statusName;
+                            }
+                        });
+                        if ('90' in json2['ステータス']['基礎攻撃力']) {
+                            dataArr.push(json2['ステータス']['基礎攻撃力']['90']);
+                        } else {
+                            dataArr.push('');
+                        }
+                        if (status2Name) {
+                            dataArr.push(status2Name ? status2Name.replace('%', '') : '');
+                            if ('90' in json2['ステータス'][status2Name]) {
+                                dataArr.push(json2['ステータス'][status2Name]['90'] + (status2Name != '元素熟知' ? '%' : ''));
+                            } else {
+                                dataArr.push('');
+                            }
+                        } else {
+                            dataArr.push('');
+                            dataArr.push('');
+                        }
+                        let desc = null;
+                        if ('説明' in json2['武器スキル']) {
+                            desc = json2['武器スキル']['説明'];
+                            if ($.isArray(desc)) {
+                                desc = desc.join('');
+                            }
+                        }
+                        desc = desc.replace(/\{.+?\}/g, '<span class="var">$&</span>');
+                        dataArr.push(desc);
+
+                        dataMap.set(json2['名前'], dataArr);
+                    }));
+                });
+
+                Promise.all(fetchArr).then(() => {
+                    let data = [];
+                    urlMap.forEach((value, key) => {
+                        data.push(dataMap.get(key));
+                    });
+
+                    $('#weapon-list-h').html(weaponListH);
+
+                    $('#weapon-list').DataTable({
+                        data: data,
+                        columns: columns,
+                        autoWidth: true,
+                        info: false,
+                        paging: false,
+                        searching: true,
+                        scrollX: true,
+                        scrollY: true
+                    });
+                });
+            });
+        };
+    </script>
+</body>
+
+</html>

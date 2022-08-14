@@ -3,47 +3,22 @@
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter">
         <legend>
-          <input
-            class="hidden"
-            :id="'supporter-' + supporter"
-            type="checkbox"
-            v-model="supporterOpenClose[supporter]"
-          />
+          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
+            v-model="supporterOpenClose[supporter]" />
           <label class="toggle-switch" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </legend>
         <div class="left">
-          <label
-            class="condition"
-            v-for="item in supporterCheckboxList(supporter)"
-            :key="item.name"
-          >
-            <input
-              type="checkbox"
-              v-model="conditionValues[item.name]"
-              :value="item.name"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            />
+          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
+              :disabled="conditionDisabled(item)" @change="onChange" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label
-            class="condition"
-            v-for="item in supporterSelectList(supporter)"
-            :key="item.name"
-          >
+          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select
-              v-model="conditionValues[item.name]"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            >
-              <option
-                v-for="(option, index) in item.options"
-                :value="index"
-                :key="option"
-              >
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
+              <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -51,12 +26,8 @@
         </div>
       </fieldset>
       <template v-else>
-        <input
-          class="hidden"
-          :id="'supporter-else-' + supporter"
-          type="checkbox"
-          v-model="supporterOpenClose[supporter]"
-        />
+        <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
+          v-model="supporterOpenClose[supporter]" />
         <label class="toggle-switch" :for="'supporter-else-' + supporter">
           <span>{{ displayName(supporter) }}</span>
         </label>
@@ -81,7 +52,6 @@ import {
   makeValidConditionValueArr,
 } from "@/calculate";
 import { deepcopy } from "@/common";
-import GlobalMixin from "@/GlobalMixin.vue";
 import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
   CHARACTER_INPUT_TEMPLATE,
@@ -107,64 +77,90 @@ import {
   TStats,
   STAT_PERCENT_LIST,
 } from "@/input";
-import { TEAM_OPTION_MASTER_LIST } from "@/master";
-import { computed, defineComponent, PropType, reactive } from "vue";
+import { getCharacterMasterDetail, TCharacterKey, TEAM_OPTION_MASTER_LIST } from "@/master";
+import { computed, defineComponent, PropType, reactive, watch } from "vue";
+import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
   name: "TeamOptionInput",
-  mixins: [GlobalMixin],
   props: {
-    savedSupporters: Object as PropType<{ key: string; value: string }[]>,
+    savedSupporters: { type: Object as PropType<{ key: string; value: string }[]>, required: true },
   },
   emits: ["update:team-option"],
   setup(props, context) {
-    const savedSupportersRea = reactive(
-      props.savedSupporters ?? ([] as { key: string; value: string }[])
-    );
+    const { displayName, displayOptionName } = CompositionFunction();
+
+    const savedSupportersRea = reactive(props.savedSupporters);
     const supporterKeyList = reactive([] as string[]);
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
 
+    const supporterDamageResult = new Map() as Map<string, TDamageResult>;
+
+    const setupSupporterDamageResult = async (savedSupporter: { key: string, value: string }) => {
+      console.log(setupSupporterDamageResult.name, savedSupporter);
+      const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
+      const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
+      const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
+      const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
+      const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
+      const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
+
+      characterInput.character = savedSupporter.key as TCharacterKey;
+      characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
+      await loadRecommendation(
+        characterInput,
+        artifactDetailInput,
+        conditionInput,
+        JSON.parse(savedSupporter.value)
+      );
+      makeDamageDetailObjArrObjCharacter(characterInput);
+      makeDamageDetailObjArrObjWeapon(characterInput);
+      makeDamageDetailObjArrObjArtifactSets(characterInput);
+      setupConditionValues(conditionInput, characterInput);
+      calculateArtifactStatsMain(
+        artifactDetailInput.聖遺物ステータスメイン効果,
+        artifactDetailInput.聖遺物メイン効果
+      );
+      calculateArtifactStats(artifactDetailInput);
+      calculateStats(
+        statsInput,
+        characterInput,
+        artifactDetailInput,
+        conditionInput,
+        optionInput
+      );
+      calculateResult(
+        damageResult,
+        characterInput,
+        conditionInput,
+        statsInput
+      );
+      return damageResult;
+    };
+
     const loadSupporterData = async () => {
       for (const savedSupporter of savedSupportersRea) {
-        const supporterSavedata = JSON.parse(savedSupporter.value);
-        const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-        const artifactDetailInput = deepcopy(
-          ARTIFACT_DETAIL_INPUT_TEMPLATE
-        ) as TArtifactDetailInput;
-        const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-        const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
-        const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
-        const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
-        await loadRecommendation(
-          characterInput,
-          artifactDetailInput,
-          conditionInput,
-          supporterSavedata
-        );
-        makeDamageDetailObjArrObjCharacter(characterInput);
-        makeDamageDetailObjArrObjWeapon(characterInput);
-        makeDamageDetailObjArrObjArtifactSets(characterInput);
-        setupConditionValues(conditionInput, characterInput);
-        calculateArtifactStatsMain(
-          artifactDetailInput.聖遺物ステータスメイン効果,
-          artifactDetailInput.聖遺物メイン効果
-        );
-        calculateArtifactStats(artifactDetailInput);
-        calculateStats(
-          statsInput,
-          characterInput,
-          artifactDetailInput,
-          conditionInput,
-          optionInput
-        );
-        calculateResult(
-          damageResult,
-          characterInput as any,
-          conditionInput as any,
-          statsInput
-        );
+        const damageResult = await setupSupporterDamageResult(savedSupporter);
+        supporterDamageResult.set(savedSupporter.key, damageResult);
       }
     };
+    loadSupporterData();
+
+    watch(savedSupportersRea, async (newVal, oldVal) => {
+      for (const entry of newVal) {
+        const changed = oldVal.filter(s => s.key == entry.key && s.value == entry.value).length > 0;
+        if (changed) {
+          const damageResult = await setupSupporterDamageResult(entry);
+          supporterDamageResult.set(entry.key, damageResult);
+        }
+      }
+      for (const entry of oldVal) {
+        const absent = newVal.filter(s => s.key == entry.key).length == 0;
+        if (absent) {
+          supporterDamageResult.delete(entry.key);
+        }
+      }
+    });
 
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr = [] as any[];
@@ -273,7 +269,8 @@ export default defineComponent({
 
     const conditionDisabled = (item: any): boolean => {
       const supporter = item.name.split("_")[0];
-      if (savedSupportersRea.includes(supporter)) return false;
+      if (supporterDamageResult.has(supporter)) return false;
+      // if (savedSupportersRea.includes(supporter)) return false;
       for (const myDetailObj of statusChangeDetailObjArr) {
         if (myDetailObj.条件.startsWith(item.name)) {
           if (isUseReference(myDetailObj.数値)) {
@@ -288,8 +285,10 @@ export default defineComponent({
       const workObj = {} as TStats;
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
       for (const myDetailObj of statusChangeDetailObjArr) {
+        let supporter;
         let myNew数値 = myDetailObj["数値"];
         if (myDetailObj["条件"]) {
+          supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf('*'));
           const number = checkConditionMatches(
             myDetailObj["条件"],
             validConditionValueArr,
@@ -300,11 +299,22 @@ export default defineComponent({
             myNew数値 = (myNew数値 as any).concat(["*", number]);
           }
         }
-        const myValue = calculateFormulaArray(myNew数値, workObj, damageResultDummy);
-        if (myDetailObj["種類"] in workObj) {
-          workObj[myDetailObj["種類"]] += myValue;
+        const damageResult = supporter ? supporterDamageResult.get(supporter) : damageResultDummy;
+        const myValue = calculateFormulaArray(myNew数値, workObj, damageResult);
+        const kinds = [] as string[];
+        if (myDetailObj["種類"].startsWith('全') || myDetailObj["種類"].startsWith('敵全')) {
+          for (const elem of ['炎', '水', '風', '雷', '草', '氷', '岩']) {
+            kinds.push(myDetailObj["種類"].replace('全', elem))
+          }
         } else {
-          workObj[myDetailObj["種類"]] = myValue;
+          kinds.push(myDetailObj["種類"]);
+        }
+        for (const kind of kinds) {
+          if (kind in workObj) {
+            workObj[kind] += myValue;
+          } else {
+            workObj[kind] = myValue;
+          }
         }
       }
       return workObj;
@@ -337,6 +347,8 @@ export default defineComponent({
     };
 
     return {
+      displayName, displayOptionName,
+
       supporterKeyList,
       supporterCheckboxList,
       supporterSelectList,

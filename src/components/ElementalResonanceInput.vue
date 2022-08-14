@@ -1,11 +1,7 @@
 <template>
   <fieldset class="elemental-resonance">
     <label v-for="item in elementalResonanceList" :key="item.key">
-      <input
-        type="checkbox"
-        v-model="elementalResonanceCheckedRea[item.key]"
-        @change="onChange(item.key)"
-      />
+      <input type="checkbox" v-model="elementalResonanceCheckedRea[item.key]" @change="onChange(item.key)" />
       <span>{{ displayName(item.名前) }}</span>
     </label>
     <hr />
@@ -16,14 +12,13 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "@/GlobalMixin.vue";
 import { STAT_PERCENT_LIST, TStats } from "@/input";
 import { ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST } from "@/master";
 import { computed, defineComponent, PropType, reactive } from "vue";
+import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
   name: "ElementalResonanceInput",
-  mixins: [GlobalMixin],
   emits: ["update:elemental-resonance"],
   props: {
     elementalResonanceChecked: {
@@ -32,10 +27,10 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const { displayName } = CompositionFunction();
+
     const elementalResonanceList = ELEMENTAL_RESONANCE_MASTER_LIST;
-    const elementalResonanceCheckedRea = reactive(
-      props.elementalResonanceChecked ?? ({} as { [key: string]: boolean })
-    );
+    const elementalResonanceCheckedRea = reactive(props.elementalResonanceChecked);
 
     const statAdjustments = computed(() => {
       const workObj = {} as TStats;
@@ -95,6 +90,8 @@ export default defineComponent({
     };
 
     return {
+      displayName,
+
       elementalResonanceList,
       elementalResonanceCheckedRea,
       onChange,

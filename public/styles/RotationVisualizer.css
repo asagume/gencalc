@@ -1,0 +1,480 @@
+/* 2 Columns */
+@media all and (min-width: 769px) {
+    #main {
+        max-width: 1280px;
+    }
+
+    html {
+        font-size: 8px;
+    }
+
+    body {
+        font-size: 8px;
+    }
+
+    .input-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "name-and-controller name-and-controller"
+            "rotation description";
+    }
+
+    .view-container-compact {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "characters description";
+    }
+}
+
+/* 1 Column */
+@media all and (max-width: 768px) {
+    html {
+        font-size: calc(100vw / 72);
+    }
+
+    body {
+        font-size: calc(100vw / 72);
+    }
+
+    #main {
+        min-width: 360px;
+    }
+
+    .input-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr 1fr;
+        grid-template-areas:
+            "name-and-controller"
+            "rotation"
+            "description";
+    }
+
+    .view-container-compact {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+            "characters"
+            "description";
+    }
+}
+
+body {
+    color: blanchedalmond;
+    background-color: black;
+    font-size: 2rem;
+}
+
+#main {
+    background: linear-gradient(to top, #3d3d3b, #141414);
+    margin: 0 auto;
+}
+
+#main {
+    font-family: 'Yusei Magic', sans-serif;
+}
+
+input {
+    font-family: monospace;
+}
+
+input:read-only {
+    font-family: 'Yusei Magic', sans-serif;
+}
+
+h2 {
+    max-width: 60rem;
+    margin-top: 4rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.8rem;
+    border: 1px solid gray;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 2.6rem;
+}
+
+a:link {
+    color: blanchedalmond;
+}
+
+a:visited {
+    color: blanchedalmond;
+}
+
+button:enabled:hover {
+    background-color: antiquewhite;
+}
+
+fieldset {
+    padding: 1rem;
+}
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+ol {
+    padding-inline-start: 25px;
+}
+
+.maru {
+    position: relative;
+    width: 10px;
+    height: 12px;
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 25%;
+    border: 2px solid brown;
+}
+
+.maru p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding: 0;
+}
+
+.toggle-switch {
+    position: relative;
+}
+
+.toggle-switch::before, .toggle-switch::after {
+    content: '';
+    width: 1.5rem;
+    height: 2px;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    transform: translateY(-50%);
+}
+
+.toggle-switch::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.toggle-switch.opened::after {
+    transform: translateY(-50%) rotate(0);
+}
+
+.toggle-switch+div, .toggle-switch+ol {
+    display: none;
+}
+
+.toggle-switch.opened+div, .toggle-switch.opened+ol {
+    display: block;
+}
+
+div.rotation-data {
+    text-align: center;
+}
+
+div.input-container {
+    text-align: left;
+}
+
+input {
+    margin: 5px;
+    font-size: 2.2rem;
+}
+
+input:read-only {
+    color: blanchedalmond;
+    border: none;
+    background-color: transparent;
+}
+
+textarea {
+    margin: 5px;
+    font-size: 2.2rem;
+}
+
+button {
+    border-width: 0;
+    border-radius: 10%;
+    padding: 0 6px;
+    vertical-align: middle;
+}
+
+li.data {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+div.description {
+    text-align: left;
+    vertical-align: top;
+    min-height: 85px;
+    padding: 5px;
+    border-radius: 15px;
+    border: 3px double;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+div.characters {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    min-width: 340px;
+}
+
+div.character {
+    position: relative;
+    height: 85px;
+    width: 100%;
+}
+
+img.character {
+    width: 85px;
+    height: 85px;
+    background-size: contain;
+    position: absolute;
+    left: 0px;
+    z-index: 10;
+}
+
+img.element {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    z-index: 100;
+}
+
+.view-container-compact .characters div.character {
+    display: inline-block;
+    position: relative;
+    width: 85px;
+}
+
+div.character p.ratio {
+    position: absolute;
+    left: 0;
+    top: 65px;
+    z-index: 110;
+    color: chartreuse;
+    font-size: 15px;
+}
+
+div.character div.actions {
+    position: absolute;
+    left: 85px;
+    top: 0px;
+    width: calc(100% - 85px);
+    height: 65px;
+    border-bottom: 20px solid;
+}
+
+div.actions div.action {
+    position: absolute;
+    top: 10px;
+    min-width: 40px;
+    height: 75px;
+}
+
+div.icon {
+    position: absolute;
+    top: 13px;
+    width: 40px;
+    height: 40px;
+    border-radius: 22px;
+    border: 2px solid transparent;
+    z-index: 0
+}
+
+img.icon {
+    position: absolute;
+    top: 13px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    z-index: 1;
+}
+
+img.icon.N, img.icon.C, img.icon.P  {
+    border-color: lightgray;
+}
+
+img.icon.E {
+    border-color: seashell;
+}
+
+img.icon.Q {
+    border-color: khaki;
+}
+
+div.attr {
+    position: absolute;
+    top: 13px;
+    width: 40px;
+    height: 40px;
+}
+
+div.attr p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    color: darkred;
+    font-size: 20px;
+    color: yellow;
+    text-shadow: #141414 0 0 2px;
+    font-weight: bold;
+}
+
+div.noicon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 35px;
+    min-width: 20px;
+    height: 20px;
+    background-color: linen;
+    opacity: 80%;
+    border: 2px solid;
+    transform: rotate(45deg);
+    z-index: 100;
+}
+
+div.noicon p.noicon {
+    font-size: 14px;
+    font-weight: bold;
+    color: darkred;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    transform: rotate(-45deg);
+}
+
+div.actions div.action p.name {
+    position: absolute;
+    left: 19px;
+    bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: darkred;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    z-index: 100;
+}
+
+div.duration {
+    position: absolute;
+    top: 13px;
+    height: 40px;
+    border-right: 10px double;
+    border-bottom: 2px solid;
+    border-radius: 22px;
+}
+
+div.cd {
+    position: absolute;
+    top: 13px;
+    height: 40px;
+    border-right: 10px dotted;
+    border-bottom: 2px solid;
+    border-radius: 22px;
+}
+
+div.duration.E {
+    border-color: seashell;
+    /* background: linear-gradient(to top, transparent, seashell); */
+}
+
+div.duration.Q {
+    border-color: khaki;
+    /* background: linear-gradient(to top, transparent,  khaki); */
+}
+
+div.cd.E {
+    border-color: seashell;
+}
+
+div.cd.Q {
+    border-color: khaki;
+}
+
+div.actions div.comment {
+    position: absolute;
+    top: 0;
+    color: gold;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.tooltip {
+    position: absolute;
+    left: 30px;
+    display: none;
+    background-color: gray;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 9999;
+    font-size: 15px;
+}
+
+:hover>.tooltip {
+    display: block;
+}
+
+.input-container .name-and-controller {
+    grid-area: name-and-controller;
+}
+
+.input-container .rotation {
+    grid-area: rotation;
+}
+
+.input-container .description {
+    grid-area: description;
+}
+
+.view-container-compact {
+    margin-bottom: 1rem;
+}
+
+.view-container-compact .characters {
+    grid-area: characters;
+    border-bottom: double 3px;
+}
+
+.view-container-compact .description {
+    grid-area: description;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#file-button-area {
+    width: 100%;
+    text-align: right;
+}
+
+button.file {
+    text-align: center;
+    margin: 10px;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: 5px double;
+    min-width: 20rem;
+    font-size: 12px;
+}
+
+input[type="number"] {
+    width: 60px;
+}

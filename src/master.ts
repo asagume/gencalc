@@ -27,7 +27,7 @@ import HOYO_DICTIONARY2 from '../public/data/HoYoDictionary2.json'// assert {typ
 import HOYO_DICTIONARY4 from '../public/data/HoYoDictionary4.json'// assert {type: 'json'}
 import HOYO_DICTIONARY5 from '../public/data/HoYoDictionary5.json'// assert {type: 'json'}
 import LOCAL_DICTIONARY from '../public/data/LocalDictionary.json'// assert {type: 'json'}
-import { isPlainObject, isString } from './common'
+// import { isPlainObject, isString } from './common'
 
 export {
     CHARACTER_MASTER,
@@ -41,6 +41,36 @@ export {
     OPTION2_MASTER,
     ELEMENTAL_REACTION_MASTER
 };
+
+// function removeStrFromUrl(obj: any, str: string) {
+//     if (isPlainObject(obj)) {
+//         for (const key of Object.keys(obj)) {
+//             if (isString(obj[key])) {
+//                 obj[key] = obj[key].replace(str, '');
+//             } else if (isPlainObject(obj[key])) {
+//                 removeStrFromUrl(obj[key], str);
+//             } else if (Array.isArray(obj[key])) {
+//                 for (const entry of obj[key]) {
+//                     removeStrFromUrl(entry, str);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// for (const master of [
+//     CHARACTER_MASTER,
+//     SWORD_MASTER,
+//     CLAYMORE_MASTER,
+//     POLEARM_MASTER,
+//     BOW_MASTER,
+//     CATALYST_MASTER,
+//     ARTIFACT_SET_MASTER
+// ]) {
+//     for (const key of Object.keys(master)) {
+//         removeStrFromUrl((master as any)[key], '');
+//     }
+// }
 
 export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 
@@ -198,7 +228,6 @@ function getIconUrl(master: TAnyObject) {
 export const CHARACTER_MASTER_LIST: TCharacterEntry[] = [];
 (Object.keys(CHARACTER_MASTER) as TCharacterKey[]).forEach(key => {
     const master: any = CHARACTER_MASTER[key];
-    master.import = master.import.replace(/^public/, '');
     master.key = key;
     master.icon_url = getIconUrl(master);
     CHARACTER_MASTER_LIST.push(master);
@@ -216,7 +245,6 @@ export const WEAPON_MASTER = {
     Object.keys(typedMaster).forEach(key => {
         const master = typedMaster[key];
         master.key = key;
-        master.import = master.import.replace(/^public/, '');
         master.icon_url = getIconUrl(master);
     });
 })
@@ -236,7 +264,6 @@ export const WEAPON_MASTER_LIST = {
 export const ARTIFACT_SET_MASTER_LIST: TArtifactSetEntry[] = [];
 (Object.keys(ARTIFACT_SET_MASTER) as TArtifactSetKey[]).forEach(key => {
     const master = ARTIFACT_SET_MASTER[key] as any;
-    master.image = master.image.replace(/^public/, '');
     master.key = key;
     master.icon_url = getIconUrl(master);
     ARTIFACT_SET_MASTER_LIST.push(master);
@@ -288,22 +315,6 @@ export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...
 
 ////////////////
 ////////////////
-function removeStrFromUrl(obj: any, str: string) {
-    if (isPlainObject(obj)) {
-        for (const key of Object.keys(obj)) {
-            if (isString(obj[key])) {
-                obj[key] = obj[key].replace(str, '');
-            } else if (isPlainObject(obj[key])) {
-                removeStrFromUrl(obj[key], str);
-            } else if (Array.isArray(obj[key])) {
-                for (const entry of obj[key]) {
-                    removeStrFromUrl(entry, str);
-                }
-            }
-        }
-    }
-}
-
 const CHARACTER_MASTER_DETAIL_MAP = new Map();
 /**
  * 
@@ -313,8 +324,9 @@ const CHARACTER_MASTER_DETAIL_MAP = new Map();
 export async function getCharacterMasterDetail(character: TCharacterKey): Promise<TCharacterDetail> {
     try {
         if (!CHARACTER_MASTER_DETAIL_MAP.has(character)) {
-            const characterMaster = await fetch(CHARACTER_MASTER[character]['import']).then(resp => resp.json());
-            removeStrFromUrl(characterMaster, 'public/');
+            const url = CHARACTER_MASTER[character]['import'].replace(/^\//, '');
+            const characterMaster = await fetch(url).then(resp => resp.json());
+            // removeStrFromUrl(characterMaster, '');
             CHARACTER_MASTER_DETAIL_MAP.set(character, characterMaster);
         }
         return CHARACTER_MASTER_DETAIL_MAP.get(character);
@@ -342,7 +354,7 @@ export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?:
                     const typedMaster: any = WEAPON_MASTER[weaponType as TWeaponTypeKey];
                     const url = typedMaster[weapon]['import'];
                     const weaponMaster: any = await fetch(url).then(resp => resp.json());
-                    removeStrFromUrl(weaponMaster, 'public/');
+                    // removeStrFromUrl(weaponMaster, '');
                     WEAPON_MASTER_DETAIL_MAP.set(weapon, weaponMaster);
                     break;
                 }

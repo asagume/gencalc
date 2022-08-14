@@ -4,7 +4,7 @@
       <table class="character-info status">
         <caption>
           {{
-            displayName("ステータス")
+              displayName("ステータス")
           }}
         </caption>
         <template v-for="(item, index) in statsInfoList" :key="index">
@@ -17,7 +17,7 @@
       <table class="character-info">
         <caption>
           {{
-            displayName("命ノ星座")
+              displayName("命ノ星座")
           }}
         </caption>
         <template v-for="(item, index) in constellationInfoList" :key="index">
@@ -37,7 +37,7 @@
       <table class="character-info">
         <caption>
           {{
-            displayName("固有天賦")
+              displayName("固有天賦")
           }}
         </caption>
         <template v-for="(item, index) in passiveTalentInfoList" :key="index">
@@ -93,11 +93,7 @@
           </th>
         </tr>
         <tr>
-          <td
-            colspan="2"
-            class="description"
-            v-html="characterMaster.元素スキル.説明"
-          ></td>
+          <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
         </tr>
         <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
           <tr>
@@ -132,9 +128,9 @@
 <script lang="ts">
 import { getStatValueByLevel } from "@/calculate";
 import { isPlainObject } from "@/common";
-import GlobalMixin from "@/GlobalMixin.vue";
 import { TCharacterDetail } from "@/master";
 import { computed, defineComponent, PropType } from "vue";
+import CompositionFunction from "./CompositionFunction.vue";
 
 type TConstellationInfo = {
   名前: string;
@@ -152,7 +148,6 @@ type TTalentInfo = {
 
 export default defineComponent({
   name: "CharacterInfo",
-  mixins: [GlobalMixin],
   props: {
     visible: {
       type: Boolean,
@@ -188,19 +183,15 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { displayName, displayStatValue } = CompositionFunction();
+
     const statsInfoList = computed((): any[] => {
       const result = [] as any[];
-      if (
-        props.characterMaster &&
-        props.ascension !== undefined &&
-        props.level !== undefined
-      ) {
-        if ("ステータス" in props.characterMaster) {
-          for (const key of Object.keys((props.characterMaster as any).ステータス)) {
-            const valueObj = (props.characterMaster as any).ステータス[key];
-            const value = getStatValueByLevel(valueObj, props.ascension, props.level);
-            result.push({ key: key, value: value });
-          }
+      if ("ステータス" in props.characterMaster) {
+        for (const key of Object.keys((props.characterMaster as any).ステータス)) {
+          const valueObj = (props.characterMaster as any).ステータス[key];
+          const value = getStatValueByLevel(valueObj, props.ascension, props.level);
+          result.push({ key: key, value: value });
         }
       }
       return result;
@@ -208,11 +199,9 @@ export default defineComponent({
 
     const constellationInfoList = computed((): TConstellationInfo[] => {
       const result = [] as TConstellationInfo[];
-      if (props.characterMaster) {
-        if ("命ノ星座" in props.characterMaster) {
-          for (const key of Object.keys((props.characterMaster as any).命ノ星座)) {
-            result.push((props.characterMaster as any).命ノ星座[key]);
-          }
+      if ("命ノ星座" in props.characterMaster) {
+        for (const key of Object.keys((props.characterMaster as any).命ノ星座)) {
+          result.push((props.characterMaster as any).命ノ星座[key]);
         }
       }
       return result;
@@ -220,11 +209,9 @@ export default defineComponent({
 
     const passiveTalentInfoList = computed((): TTalentInfo[] => {
       const result = [] as TTalentInfo[];
-      if (props.characterMaster) {
-        if ("固有天賦" in props.characterMaster) {
-          for (const entry of (props.characterMaster as any).固有天賦) {
-            result.push(entry);
-          }
+      if ("固有天賦" in props.characterMaster) {
+        for (const entry of (props.characterMaster as any).固有天賦) {
+          result.push(entry);
         }
       }
       return result;
@@ -238,6 +225,8 @@ export default defineComponent({
     };
 
     return {
+      displayName, displayStatValue,
+
       statsInfoList,
       constellationInfoList,
       passiveTalentInfoList,

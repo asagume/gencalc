@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+        function makeBruteForceSet(resultSet, arr1, arr2, depth) {
+            if (depth <= 1) {
+                arr1.forEach(value => {
+                    resultSet.add(value);
+                    console.debug(value);
+                });
+                return null;
+            }
+            let resultMap = new Map();
+            for (let i = 0; i < arr1.length; i++) {
+                let newArr = [];
+                for (let j = 0; j < arr2.length; j++) {
+                    newArr.push(Math.round((arr1[i] + arr2[j]) * 10) / 10);
+                }
+                resultMap.set(arr1[i], makeBruteForceSet(resultSet, newArr, arr2, depth - 1));
+            }
+            return resultMap;
+        }
+
+        function uniq(array) {
+            const knownElements = new Set();
+            for (const elem of array) {
+                knownElements.add(elem); // 同じ値を何度追加しても問題ない
+            }
+            return Array.from(knownElements);
+        }
+
+        function execMakeBruteForceSet() {
+            const TEST_ARR = [
+                7.8,
+                7,
+                6.2,
+                5.4
+            ];
+            let resultSet = new Set();
+            let resultMap = makeBruteForceSet(resultSet, TEST_ARR, TEST_ARR, 6);
+            console.log(resultMap);
+            console.log(resultSet);
+            let resultArr = Array.from(resultSet.values());
+            resultArr.sort();
+            console.log(resultArr);
+        }
+
+        // execMakeBruteForceSet();
+
+        // text ツイートの本文
+        // url URLのシェア
+        // hashtags ハッシュタグ
+        // via アカウント関連付け @viaさんから
+        function openTwitter(text, url, hashtags, via) {
+            const baseUrl = 'https://twitter.com/intent/tweet?';
+            const params = [];
+            params.push(['text', text]);
+            params.push(['url', url]);
+            if (hashtags) {
+                params.push(['hashtags'], hashtags);
+            }
+            if (via) {
+                params.push(['via'], via);
+            }
+            const query = new URLSearchParams(params).toString();
+            const shareUrl = `${baseUrl}${query}`;
+            window.open(shareUrl);
+        }
+
+        openTwitter('てすと\nてすと\nてすと\n', location.href, null, null);
+
+    </script>
+</body>
+
+</html>
