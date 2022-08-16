@@ -1,0 +1,1058 @@
+[
+  {
+    "id": 15509,
+    "name": "飛雷の鳴弦",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0ad6704f86afc5c30f80559a287bcffa.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 15508,
+    "name": "若水",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b64cc2e7898587c73f52df79285119ab.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 15507,
+    "name": "冬極の白星",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0197a8b97b33e541c6fcde73b189bf21.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 15503,
+    "name": "終焉を嘆く詩",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/250e0e3794dfe5bd0bd46fc33cc8f76b.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 15502,
+    "name": "アモスの弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/2f9ea96cc99510839bfd9ae4795382f2.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 15501,
+    "name": "天空の翼",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6b67b6b4a01bc5641cdd2db9c7203e6c.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 14509,
+    "name": "神楽の真意",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/69e9e505bb85a9a861817b5c77c7eb81.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 14506,
+    "name": "不滅の月華",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/980b495ba633c29e7d6d2e2565d44f54.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 14504,
+    "name": "浮世の錠",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b4a15d9fd6e86093ea34e0726114a064.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 14502,
+    "name": "四風原典",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/76e556ee1f07104240d963e094c7d0b8.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 14501,
+    "name": "天空の巻",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/4b6e3c3792354494a490cf86c410c158.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 13509,
+    "name": "草薙の稲光",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/5990d0da5ece890e7db9d9fc6165894a.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 13507,
+    "name": "息災",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f08ce392c3facf6311679c2982171c1b.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 13505,
+    "name": "和璞鳶",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b682468a35c278c9d216fa3c784605e7.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 13504,
+    "name": "破天の槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/86525ea643afd9f89e148d36c5d22d0f.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 13502,
+    "name": "天空の脊",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e19160e960bda6f92a9fcb3ad6de4326.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 13501,
+    "name": "護摩の杖",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ae251fae150ad03fa8c7c24644da5672.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 12510,
+    "name": "赤角石塵滅砕",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f6a5769892eb49c4ca30bf1b9d3f1fab.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 12504,
+    "name": "無工の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7671e2a469a75e3f7a06047dff19217c.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 12503,
+    "name": "松韻の響く頃",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b1da5dd4956456ed3807b9d3034c9a35.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 12502,
+    "name": "狼の末路",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0fb59ad69ef00b1443b381ef112d8fe2.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 12501,
+    "name": "天空の傲",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/491be30471886795a53c802e53eed5f4.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11510,
+    "name": "波乱月白経津",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6fd828ededc2a6f89f1e88ccd1f57bfb.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11509,
+    "name": "霧切の廻光",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e0a6bb8cbeeae26f1a922d6332aa5b6b.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11505,
+    "name": "磐岩結緑",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/868c81bc7f10ac93ef768fd5536dd841.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11504,
+    "name": "斬山の刃",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0eebb289ead9eb578e80a5ae14be1154.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11503,
+    "name": "蒼古なる自由への誓い",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/bc645786692e2335de5afecd2c8a7f03.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11502,
+    "name": "天空の刃",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/afb4a58fc80e8768d05296903447a18b.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 11501,
+    "name": "風鷹剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/794c555a429a3b3efdf739ccf12eaf3e.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
+    "id": 15416,
+    "name": "曚雲の月",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/5e183291228a96d078597c854bc7aa08.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15415,
+    "name": "プレデター",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/00078266194262ece86227095e225893.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15414,
+    "name": "破魔の弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a65bb6503d786c3fdec23b6302ee31c7.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15413,
+    "name": "風花の頌歌",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/55018febadefce6f5da5fa8a11a69a4c.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15412,
+    "name": "幽夜のワルツ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6351a3e6775a0969fa71052b44f83e80.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15411,
+    "name": "落霞",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ced203b35e5c01ce6aaadb09bc88421a.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15410,
+    "name": "ダークアレイの狩人",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7218b867f3437efb4f93db2f59d3e215.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15409,
+    "name": "蒼翠の狩猟弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a70280e388dbd05d447b7a7d6094f57c.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15408,
+    "name": "黒岩の戦弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9e19b96330497dd9cacca9a537fcd550.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15407,
+    "name": "リングボウ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/187e81ffa654012e665e5e12f3e0800f.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15406,
+    "name": "澹月·試作",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b4e110577f127ccbb4c8719af81516fa.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15405,
+    "name": "弓蔵",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/08b75ee5daf235748f02f27fd34dadd8.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15404,
+    "name": "旧貴族長弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b3a923649693bb161160e2db51026f8f.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15403,
+    "name": "祭礼の弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/236b70056ee5e099a863f91c0e21ca12.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15402,
+    "name": "絶弦",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7e087567b1a9897e0949e4d3b688fb5a.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15401,
+    "name": "西風猟弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9ba6d217efe173b2c9135f0c2425f88e.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14415,
+    "name": "誓いの明瞳",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f2a6a12c4df3ba78c955edb3b32922db.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14414,
+    "name": "白辰の輪",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c17b46de93b1c27154c196f247062d92.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14413,
+    "name": "ドドコの物語",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7c92fc04c79dafa75a0eb5e3b4c17e78.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14412,
+    "name": "冬忍びの実",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e0aa1b61556f3cdcac492e0333e2988b.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14410,
+    "name": "ダークアレイの酒と詩",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/8935c09fc48b67bbee66536d6576ca4f.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14409,
+    "name": "昭心",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e675256bd05b50042f5e602469a4eeab.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14408,
+    "name": "黒岩の緋玉",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0e3746068594d66f9ceb21ee608bee4b.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14407,
+    "name": "万国諸海の図譜",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e1e12f6c410d5b895f80b64f41e25d65.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14406,
+    "name": "金珀·試作",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/4d83b12163115c232c6a9be6fc290af4.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14405,
+    "name": "匣中日月",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b25a539ae6051ad984e9759f81b32543.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14404,
+    "name": "旧貴族秘法録",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9b64e17584b86eaacf4ef332e8ebb1e0.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14403,
+    "name": "祭礼の断片",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/dd287e3e61989f5eb4a93ca413fc0c5c.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14402,
+    "name": "流浪楽章",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/34f73a5851799fd881c176e89fbedbc6.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14401,
+    "name": "西風秘典",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/45fb1b3dc0bfe0327de95d99919aac0c.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13416,
+    "name": "斬波のひれ長",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/097829926b57cc8e2281d81027a074db.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13415,
+    "name": "「漁獲」",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/8aeec490cfc4d550eb10b1af71a82267.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13414,
+    "name": "喜多院十文字槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/fa21a35e8a154ea7c14352bc4b14e81e.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13409,
+    "name": "ドラゴンスピア",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/4686b7d0efeb78f15a4dd8caf8dcab75.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13408,
+    "name": "旧貴族猟槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6feaf1c5287df37f03f91cb959e70943.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13407,
+    "name": "西風長槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ce8fbd507c37f86e9307b4a9571eb38f.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13406,
+    "name": "千岩長槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/892123dee7b3d72dcd19db5c958697d0.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13405,
+    "name": "死闘の槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/021aae70e844dbd7e307e569cb331522.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13404,
+    "name": "黒岩の突槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7dded734b65ebd7134f8205a9e59c25b.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13403,
+    "name": "流月の針",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1514b49409d990de825a4086ac561cfd.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13402,
+    "name": "星鎌·試作",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3420025111bf613f8fb029847a59ce41.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13401,
+    "name": "匣中滅龍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c2e333c0d81da47f58322c4f2f966e92.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12416,
+    "name": "惡王丸",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e8d3f898721bfd5ca523d819ca96c969.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12414,
+    "name": "桂木斬長正",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6acd547a262398d1c9735bf9152513f6.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12412,
+    "name": "銜玉の海皇",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/81136ed23a532cb786207b5a6e598d9e.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12411,
+    "name": "雪葬の星銀",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0522384b48bc3b40949da31ea2b98747.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12410,
+    "name": "千岩古剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/88f553e8c6435febbd237b7458884a12.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12409,
+    "name": "螭龍の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0829ed159644819532b27b75136a95f6.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12408,
+    "name": "黒岩の斬刀",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/2ee06ea96d2891deffbe38a813d6eead.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12407,
+    "name": "白影の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/fa80727d0fabd0d136e226be6478cfca.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12406,
+    "name": "古華·試作",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a994f4b7ba77a914752957028336d4f5.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12405,
+    "name": "雨裁",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/caf3681e70078f5f431407467b43610e.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12404,
+    "name": "旧貴族大剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/fdd40a6ba3fd3571d400da1c554b7ca2.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12403,
+    "name": "祭礼の大剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/875410f1f67ec7cc1f05842a168be220.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12402,
+    "name": "鐘の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a197063ec5e1118ee66a17f0017625a9.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12401,
+    "name": "西風大剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/d971567666021545a8c83304ee9a5be2.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11415,
+    "name": "シナバースピンドル",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3bbe307016a34a21fe13a55e3a6b156d.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11414,
+    "name": "天目影打",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b66f7eb01863d06a1eb5e30bf76570fc.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11413,
+    "name": "腐植の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6d22c55083e729439a154f8de7b5870d.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11410,
+    "name": "ダークアレイの閃光",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f6f36ad0a935751541e065771d46d15a.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11409,
+    "name": "黒剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0635d0cd7df8d263d2da2ec4b3111c85.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11408,
+    "name": "黒岩の長剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/d1ac687a59c69c1731618c84517ee2eb.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11407,
+    "name": "鉄蜂の刺し",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/2f7bd8ce929b1754faa961ef82979e4f.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11406,
+    "name": "斬岩·試作",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1ad9828185717e071a38ade25d2b8c57.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11405,
+    "name": "匣中龍吟",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e3a205fbaa7391f698da67d4336f171a.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11404,
+    "name": "旧貴族長剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/5ce8f05d4be8bf36b7fe7b9b4831f201.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11403,
+    "name": "祭礼の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e8e624bbd260d21ffedbe7a025466875.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11402,
+    "name": "笛の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f3eaead40722e7789a1e4601b1896b1f.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11401,
+    "name": "西風剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3b9896b0d5a906847e96045d1301c14a.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15305,
+    "name": "文使い",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/52e50470bd092461b021d76f8321b9fb.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 15304,
+    "name": "弾弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/cc760dfc51216e8aba22915062ff9b51.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 15303,
+    "name": "リカーブボウ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7eb78f697ecc2b5ff13bda30cea57d8d.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 15302,
+    "name": "シャープシューターの誓い",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/d1c7389492e17714698b697268896e02.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 15301,
+    "name": "鴉羽の弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/4d752f121293da5ad6ae052949117196.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 14305,
+    "name": "特級の宝玉",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/dc221e1976335a55fd385dfa0e38c94d.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 14304,
+    "name": "翡玉法珠",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ba70a15d9eb8e20411b9923b6716bf1e.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 14303,
+    "name": "異世界旅行記",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f186e13cbf01d14fa7aef4f3e2c18a22.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 14302,
+    "name": "龍殺しの英傑譚",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7ffe80cc2e2692a37483218e46e65902.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 14301,
+    "name": "魔導緒論",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3b6605e19e05c204e8dca5f7343aee39.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 13303,
+    "name": "黒纓槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a0d2de42c41e8c0566d89c4699f5dd58.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 13302,
+    "name": "鉾槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/cb7d20dcfe93a021f8c6f34b07a15c2c.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 13301,
+    "name": "白纓槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b427ca47c8d96c7942d1579359fc4b8c.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 12306,
+    "name": "飛天大御剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9cb2dd8d4398e3b8a4e0aa5e083a5376.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 12305,
+    "name": "理屈責め",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/7820d37d8de3d4fc6067d8aa628efe8c.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 12303,
+    "name": "白鉄の大剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1990f77b5b8f59580e66a64e38763cf1.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 12302,
+    "name": "龍血を浴びた剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ada81b729a46c9d6e43d293fff7edc0c.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 12301,
+    "name": "鉄影段平",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b39caa87e9459bc280a03991c57e0ec8.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 11306,
+    "name": "飛天御剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ed07bfc89b7f65437ffff1dc9e2c84e2.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 11305,
+    "name": "チ虎魚の刀",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/118f52464814ba2e3402d037da300dc5.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 11304,
+    "name": "暗鉄剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/8175ecd0b5ba8e2a0b7be2b060ac379a.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 11303,
+    "name": "旅道の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/8ca21d985ee3ffa8f10be5e67d959e81.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 11302,
+    "name": "黎明の神剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/2495ddeb39cd6c7a1ee93ddb4c864e78.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 11301,
+    "name": "冷刃",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f345c640a03121ea4a57377a2d538a50.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 3,
+    "max_level": 90
+  },
+  {
+    "id": 15201,
+    "name": "歴戦の狩猟弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/682a30d3e65bdfcdbe64bf31aef211d0.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 2,
+    "max_level": 70
+  },
+  {
+    "id": 14201,
+    "name": "ポケット魔導書",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e17f19a19ac8347a621027086c2ed1b5.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 2,
+    "max_level": 70
+  },
+  {
+    "id": 13201,
+    "name": "鉄尖槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9010e0dd2d262175e026c848391741e2.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 2,
+    "max_level": 70
+  },
+  {
+    "id": 12201,
+    "name": "傭兵の重剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/d38b45ea1766c7d2ba51bf82af197978.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 2,
+    "max_level": 70
+  },
+  {
+    "id": 11201,
+    "name": "銀の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3d9feeaf0dbd7626285429a130e51c7f.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 2,
+    "max_level": 70
+  },
+  {
+    "id": 15101,
+    "name": "狩猟弓",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/aa747f9ab5927b19dc81a84be429bbb1.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 1,
+    "max_level": 70
+  },
+  {
+    "id": 14101,
+    "name": "生徒ノート",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/e57d965de3b2e07fdd3f24c185f25b51.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 1,
+    "max_level": 70
+  },
+  {
+    "id": 13101,
+    "name": "新米の長槍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6a45a00a1978bfad12e75d804eb326c1.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 1,
+    "max_level": 70
+  },
+  {
+    "id": 12101,
+    "name": "訓練用大剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/a06d0fdc1d2f6ef376935388f0962fe6.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 1,
+    "max_level": 70
+  },
+  {
+    "id": 11101,
+    "name": "無鋒の剣",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/d1130e6606f4565cb7603e4858c8734c.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 1,
+    "max_level": 70
+  }
+]

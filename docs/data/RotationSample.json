@@ -1,0 +1,17 @@
+[
+    {
+        "name": "岩単",
+        "rotation": "鍾離 E.HOLD > ゴロー /*先生こっちです*/ Q > アルベド E > ゴロー E > ノエル /*騎士の風格に気を付けます*/ EQ 3N3D > ゴロー E > ノエル 2N3D",
+        "description": "> キャラクター切り替え\nE.HOLD 元素スキル長押し\n/**/ コメント\n 3N3D 通常攻撃3段後ダッシュを3回繰り返し"
+    },
+    {
+        "name": "岩3+1",
+        "rotation": "Yelan E.HOLD\nGorou Q /*先生こっちです*/\nAlbedo E\nYelan Q /*糸よ、交錯せよ*/ N1 \nNoelle Q /*戦場のお掃除の時間です*/ N3\nYelan EN\nGorou EN\nNoelle 4N3D",
+        "description": "キャラクター名は英語表記も可(大文字小文字は問いません)\n一部キャラクターは姓のみ名のみの指定も可ですが、Kamisatoは兄の方になります\nキャラクター切り替えは改行も可"
+    },
+    {
+        "name": "綾人 瞬水剣",
+        "rotation": "甘雨 Q > ウェンティ Q > 神里綾人 Q E(6s)",
+        "description": "アクション時間は秒数またはフレーム数で指定できます\n(6)または(6s) 6秒\n(180f) 180フレーム=6秒"
+    }
+]

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - 保存構成リンク集</title>
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="js/gencalc_var.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        #main {
+            padding: 2rem;
+        }
+
+        #savedata-list {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <p style="text-align: left;"><a href="/gencalc/">げんかるく</a> </p>
+
+        <div id="savedata-list-area">
+            <h2>保存構成リンク集</h2>
+            <div id="savedata-list">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function init() {
+            const responses = await Promise.all([
+                'data/CharacterMaster.json',
+                'data/SwordMaster.json',
+                'data/ClaymoreMaster.json',
+                'data/PolearmMaster.json',
+                'data/BowMaster.json',
+                'data/CatalystMaster.json',
+                'data/ArtifactSetMaster.json',
+                'data/ArtifactMainMaster.json',
+                'data/ArtifactSubMaster.json',
+                'data/EnemyMaster.json',
+                'data/ElementalResonanceMaster.json',
+                'data/ElementalReactionMaster.json',
+                'data/OptionMaster1.json',
+                'data/OptionMaster2.json',
+                'data/TeamOptionMaster.json'
+            ].map(url => fetch(url).then(resp => resp.json())));
+
+            キャラクターリストMasterVar = responses[0];
+            武器リストMasterVar['片手剣'] = responses[1];
+            武器リストMasterVar['両手剣'] = responses[2];
+            武器リストMasterVar['長柄武器'] = responses[3];
+            武器リストMasterVar['弓'] = responses[4];
+            武器リストMasterVar['法器'] = responses[5];
+            聖遺物セット効果MasterVar = responses[6];
+            聖遺物メイン効果MasterVar = responses[7];
+            聖遺物サブ効果MasterVar = responses[8];
+            敵MasterVar = responses[9];
+            元素共鳴MasterVar = responses[10];
+            元素反応MasterVar = responses[11];
+            オプション1MasterVar = responses[12];
+            オプション2MasterVar = responses[13];
+            チームオプションMasterVar = responses[14];
+
+            const LINK_ARR_MAP = new Map();
+            Object.keys(localStorage).filter(s => s.startsWith('構成_')).forEach(key => {
+                const name = key.replace(/^構成_/, '');
+                const value = JSON.parse(localStorage[key]);
+                const encoded = encodeURI(makeShareData(value));
+                const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
+
+                let myHtml = '';
+                myHtml += ((name in キャラクターリストMasterVar) ? 'あなたの' + name : name) + '<br>\n';
+                myHtml += '<a href="' + url + '">' + url + '</a><br>\n';
+                myHtml += '<br>\n'
+
+                let newArr = [];
+                if (LINK_ARR_MAP.has(value['キャラクター'])) {
+                    newArr = LINK_ARR_MAP.get(value['キャラクター']);
+                }
+                newArr.push(myHtml);
+                LINK_ARR_MAP.set(value['キャラクター'], newArr);
+            });
+
+            let html = '';
+            Object.keys(キャラクターリストMasterVar).forEach(key => {
+                if (LINK_ARR_MAP.has(key)) {
+                    LINK_ARR_MAP.get(key).forEach(value => {
+                        html += value;
+                    });
+                }
+            });
+
+            $('#savedata-list').html(html);
+        };
+
+        window.onload = () => {
+            init();
+        };
+    </script>
+</body>
+
+</html>

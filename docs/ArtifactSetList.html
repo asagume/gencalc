@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLF3R2FB5T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BLF3R2FB5T');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - 聖遺物セット効果一覧</title>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <reference path="JQuery.d.ts"></reference>
+    <style type="text/css">
+        body {
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        table th {
+            background-color: khaki;
+        }
+
+        table tbody tr.odd {
+            background-color: #FFFFFF;
+        }
+
+        table tbody tr.even {
+            background-color: #EEEEEE;
+        }
+
+        td {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <p style="text-align: left; margin-left: 1rem;"><a href="/gencalc/">げんかるく</a> </p>
+
+        <div id="artifact-set-list-area">
+            <h2>聖遺物セット効果一覧</h2>
+            <table id="artifact-set-list">
+            </table>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            fetch('data/ArtifactSetMaster.json').then(resp => resp.json()).then(json => {
+                const columns = [
+                    { title: 'Icon', width: '50px' },
+                    { title: '聖遺物' },
+                    { title: '★' },
+                    { title: '2セット効果' },
+                    { title: '4セット効果', width: '50%' }
+                ];
+
+                let data = [];
+                Object.keys(json).forEach(name => {
+                    let dataArr = [];
+                    dataArr.push('<img width="50" height="50" src="' + json[name]['image'] + '" alt="' + name + '">');
+                    dataArr.push(name);
+                    dataArr.push(json[name]['レアリティ']);
+                    let desc2 = json[name]['2セット効果']['説明'];
+                    if ($.isArray(desc2)) {
+                        desc2 = desc2.join('');
+                    }
+                    dataArr.push(desc2);
+                    let desc4 = null;
+                    if ('4セット効果' in json[name]) {
+                        desc4 = json[name]['4セット効果']['説明'];
+                        if ($.isArray(desc4)) {
+                            desc4 = desc4.join('');
+                        }
+                    }
+                    dataArr.push(desc4);
+
+                    data.push(dataArr);
+                });
+
+                $('#artifact-set-list').DataTable({
+                    data: data,
+                    columns: columns,
+                    autoWidth: true,
+                    info: false,
+                    paging: false,
+                    searching: true,
+                    scrollX: true,
+                    scrollY: true
+                });
+            });
+        };
+    </script>
+</body>
+
+</html>

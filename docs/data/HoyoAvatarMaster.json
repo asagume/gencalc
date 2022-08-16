@@ -1,0 +1,497 @@
+[
+  {
+    "id": 10000066,
+    "name": "神里綾人",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/edfb4a85cbc50f130cd37d1c9d4b11cc.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000063,
+    "name": "申鶴",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b54fe0d23b2c62beb158f58fa42a48fa.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000060,
+    "name": "夜蘭",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1456a2f72ed0da832bc993934c6e44f1.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000058,
+    "name": "八重神子",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/32407f4cdbfcd53b1a02e86d11506909.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000057,
+    "name": "荒瀧一斗",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/f14d4c67b3b1d070bd82b7fc7b163ef9.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000054,
+    "name": "珊瑚宮心海",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c41cddb210bcef6868e0572ce7b3f5ed.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000052,
+    "name": "雷電将軍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c93394752d31c72cfc2e09e330ccc61f.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000051,
+    "name": "エウルア",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3f875f08031fa4151edf47232b201f5e.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000049,
+    "name": "宵宮",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c7936644bf4a05d354e609e3b0c9b47c.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000047,
+    "name": "楓原万葉",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6b2e47597f4bd1df7c0cfc9dcb184f51.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000046,
+    "name": "胡桃",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/fbbe32f3484443e499e00728fd4f060e.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000042,
+    "name": "刻晴",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/26af5a9a7d1f30cd3eb4989e5b93d0ea.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000041,
+    "name": "モナ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/4b6c635804e587615e572cb4a588e7ec.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000038,
+    "name": "アルベド",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/29219076cea605b47f30c91af0164e77.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000037,
+    "name": "甘雨",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/c3b1da6d73975848737d174620fc57b1.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000035,
+    "name": "七七",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ae7da3f2c3b3019dfef1ae97f162f37a.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000033,
+    "name": "タルタリヤ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/65faecc165583620bec9a0e6e70d8019.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000030,
+    "name": "鍾離",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/71c2b8dea8ed248e398e7aca55e3c965.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000029,
+    "name": "クレー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b0e2dbabe936d0445063be09a9118227.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000026,
+    "name": "魈",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1d6fbc2649521c984846c097402a8917.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000022,
+    "name": "ウェンティ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/2a28ee964397cc2a72d51af7a5a9998c.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000016,
+    "name": "ディルック",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/082bb5ce7e14bb3caaf44d046586c058.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000003,
+    "name": "ジン",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/9e95bdb1efbecdf1d65e76c623e0930f.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000002,
+    "name": "神里綾華",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/d4ed9467de732b191c7ec0a8d751a651.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000062,
+    "name": "アーロイ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ac299621007fba795b129f60296c2c86.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000065,
+    "name": "久岐忍",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/fdec3226a965b5d7e6c2774377030abf.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000064,
+    "name": "雲菫",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/040b6cd373523cf8581c163603f39eda.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000056,
+    "name": "九条裟羅",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/1f2e60ceb7cfcba76339fad5ffee4993.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000055,
+    "name": "ゴロー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/969b9968c3ade92700b0e26344f18893.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000053,
+    "name": "早柚",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/38321e1c0d15b86610a78f65b6403eed.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000050,
+    "name": "トーマ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/56b5e4f08c87be9fbfd0e1d42da00f09.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000048,
+    "name": "煙緋",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/097f3ddf0a24ef7c9b40762389669e4c.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000045,
+    "name": "ロサリア",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/683cc562967302cc40acb9a9ac6ff15f.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000044,
+    "name": "辛炎",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/63cf4a136114795db9b405fa2d5b3b07.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000043,
+    "name": "スクロース",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/b0a53f80af38bede118dd0cadc430334.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000039,
+    "name": "ディオナ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/386fe5649390c55b9c4395c90f42e2d6.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000036,
+    "name": "重雲",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/61119a567754ce243f08de6e5b127ddd.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000034,
+    "name": "ノエル",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/3d94e32fe300ef756ec0d8f5cf9a9eaf.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000032,
+    "name": "ベネット",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/54c03cf38f7a47c727251085798ba964.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000031,
+    "name": "フィッシュル",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/0d25a0396dbb9c79a76d434d051b70dc.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000027,
+    "name": "凝光",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/92111fa86c462ff62a9fabaa9bf6abf8.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000025,
+    "name": "行秋",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/90677f8b15d83561e9df992246385fe8.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000024,
+    "name": "北斗",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/5cc316afc200dc897c706855b977bf33.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000023,
+    "name": "香菱",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/ba627c1ab4834e0cc6976f59c404f236.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000021,
+    "name": "アンバー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/acee1a4319ef37a982034deee61d7389.png",
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
+    "id": 10000020,
+    "name": "レザー",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/02969035452bc4d4704562dbee5580ba.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000015,
+    "name": "ガイア",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/6488ade3e490d213db90d536d62e00e8.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000014,
+    "name": "バーバラ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/76061fdcc751f6b47e6e2656a946d011.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
+    "id": 10000006,
+    "name": "リサ",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/item_icon_u68dmc/27cd17bc073dc675bcecbaa80f79627a.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000007,
+    "name": "旅人(雷)",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/character_icon/UI_AvatarIcon_PlayerGirl.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000007,
+    "name": "旅人(岩)",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/character_icon/UI_AvatarIcon_PlayerGirl.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000007,
+    "name": "旅人(風)",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/character_icon/UI_AvatarIcon_PlayerGirl.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
+    "id": 10000005,
+    "name": "旅人(雷)",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/character_icon/UI_AvatarIcon_PlayerBoy.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90
+  },
+  {
+    "id": 10000005,
+    "name": "旅人(岩)",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/character_icon/UI_AvatarIcon_PlayerBoy.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90
+  },
+  {
+    "id": 10000005,
+    "name": "旅人(風)",
+    "icon": "https://upload-static.hoyoverse.com/hk4e/e20200928calculate/character_icon/UI_AvatarIcon_PlayerBoy.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  }
+]

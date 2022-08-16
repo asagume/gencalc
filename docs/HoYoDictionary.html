@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>原神の辞書 - Gencalc</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link href="favicon.ico" rel="shortcut icon" />
+    <link href="styles/base-style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vue-good-table@2.18.0/dist/vue-good-table.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue-good-table@2.18.0/dist/vue-good-table.js"></script>
+    <style>
+        body {
+            color: blanchedalmond;
+            background-color: black;
+            font-size: 2.4rem;
+        }
+
+        #main {
+            background: linear-gradient(to top, #3d3d3b, #141414);
+            margin: 0 auto;
+            font-family: 'Yusei Magic', sans-serif;
+        }
+
+        a:link {
+            color: chocolate;
+        }
+
+        a:visited {
+            color: chocolate;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 100%;
+            border-radius: 5px;
+        }
+
+        label {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        th,
+        td {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div style="text-align: left; position: relative;">
+            <p><a href="./index.html">Back to GENCALC</a></p>
+            <p style="position: absolute; right: 1rem; top: 0;">
+                <a href="https://wiki.hoyolab.com/pc/genshin/aggregate/character">HoYoWiki</a>
+            </p>
+        </div>
+
+        <h1>原神の辞書</h1>
+
+        <div id="hoyo-dictionary-table">
+            <div>
+                if check, hide column.
+            </div>
+            <select v-model="menuSelectedIndex" @change="menuOnChange">
+                <option v-for="(value, index) in menus" :value="index" :key="value">{{value}}</option>
+            </select>
+            <label v-for="column in columns">
+                <input type="checkbox" v-model="column.hidden" @click="hiddenOnChange">
+                {{column.label}}
+            </label>
+
+            <vue-good-table :columns="columns" :rows="rows" :line-numbers="true"
+                :pagination-options="{enabled: true, mode: 'pages', perPage: 10, perPageDropdown: [10, 25, 50, 100, 200], dropdownAllowAll: true, position: 'bottom', jumpFirstOrLast : true}"
+                :search-options="{enabled: true, trigger: 'enter', placeholder: 'Search this table'}"
+                :sort-options="{enabled: true, multipleColumns: true}" styleclass="vgt-table striped">
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'id'">
+                        <a :href="'https://wiki.hoyolab.com/pc/genshin/entry/' + props.row.id"
+                            target="_blank">HoYoWiKi</a>
+                    </span>
+                    <span v-else>
+                        {{props.formattedRow[props.column.field]}}
+                    </span>
+                </template>
+            </vue-good-table>
+        </div>
+
+        <hr>
+        <div style="padding-bottom: 4rem;">
+            HoYoWikiから抽出した原神ワード辞書です。正確であるかは保証いたしません。
+            <p><span class="material-symbols-outlined"> copyright </span> asagume</p>
+        </div>
+    </div>
+
+    <script>
+        var HoYoDictionaryVm;
+
+        const DICTIONARY_URIS = [
+            'data/HoYoDictionary2.json',
+            'data/HoYoDictionary4.json',
+            'data/HoYoDictionary5.json',
+            'data/HoYoDictionary7.json',
+            'data/HoYoDictionary9.json',
+        ];
+        const MENUS = [
+            'character',
+            'weapon',
+            'artifact',
+            'enemy and monster',
+            'object',
+        ];
+        var columns = [
+            { label: '日本語', field: 'ja-jp', hidden: false },
+            { label: 'English', field: 'en-us', hidden: false },
+            { label: '简体中文', field: 'zh-cn', hidden: false },
+            { label: '繁體中文', field: 'zh-tw', hidden: false },
+            { label: '한국어', field: 'ko-kr', hidden: false },
+            { label: 'Deutsch', field: 'de-de', hidden: false },
+            { label: 'Español', field: 'es-es', hidden: false },
+            { label: 'Français', field: 'fr-fr', hidden: false },
+            { label: 'Indonesia', field: 'id-id', hidden: false },
+            { label: 'Português', field: 'pt-pt', hidden: false },
+            { label: 'Pусский', field: 'ru-ru', hidden: false },
+            { label: 'ภาษาไทย', field: 'th-th', hidden: false },
+            { label: 'Tiếng Việt', field: 'vi-vn', hidden: false },
+            { label: 'SOURCE', field: 'name', hidden: false },
+            { label: 'HoYoWiki', field: 'id', hidden: false },
+        ];
+        const STORAGE_KEY = 'hoyoDictionaryHidden';
+
+        async function onLoad() {
+            if (localStorage[STORAGE_KEY]) {
+                const hoyoDictionaryHidden = JSON.parse(localStorage[STORAGE_KEY]);
+                hoyoDictionaryHidden.forEach(entry => {
+                    columns.filter(s => s.label == entry.label).forEach(column => {
+                        column.hidden = entry.hidden;
+                    })
+                });
+            }
+
+            HoYoDictionaryVm = new Vue({
+                el: '#hoyo-dictionary-table',
+                data: {
+                    menus: MENUS,
+                    menuSelectedIndex: 0,
+                    columns: columns,
+                    rows: []
+                },
+                created() {
+                    this.menuOnChange();
+                },
+                methods: {
+                    hiddenOnChange: function () {
+                        if (this.columns.filter(s => s.hidden).length > 0) {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.columns));
+                        } else {
+                            localStorage.removeItem(STORAGE_KEY);
+                        }
+                    },
+                    menuOnChange: function () {
+                        fetch(DICTIONARY_URIS[this.menuSelectedIndex]).then(resp => resp.json()).then(json => {
+                            const newRows = [];
+                            Object.keys(json).forEach(key => {
+                                const entry = json[key];
+                                entry['ja-jp'] = key;
+                                newRows.push(entry);
+                            });
+                            this.rows.splice(0, this.rows.length, ...newRows);
+                        });
+                    }
+                }
+            });
+        }
+
+        onLoad();
+    </script>
+</body>
+
+</html>
