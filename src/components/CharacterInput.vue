@@ -156,7 +156,7 @@
     <tr v-show="storageOrRecommendationRef == '1'">
       <td colspan="6">
         <select v-model="selectedRecommendation" @change="recommendationOnChange(targetValue($event))">
-          <option v-for="item in recommendationList" :value="item.name" :key="item.name">
+          <option v-for="(item, index) in recommendationList" :value="index" :key="index">
             {{ displayBuildName(item) }}
           </option>
         </select>
@@ -275,7 +275,7 @@ export default defineComponent({
 
     /** おすすめセットが選択されました */
     const recommendationOnChange = (value: string | undefined) => {
-      if (!props.recommendationList || value) return;
+      if (!props.recommendationList || !value) return;
       const recommendation = props.recommendationList[Number(value)];
       console.debug(recommendation.name);
       context.emit("update:recommendation", recommendation);
