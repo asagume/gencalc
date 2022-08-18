@@ -1,7 +1,7 @@
 {
     "名前": "匣中滅龍",
     "説明": "金の龍の装飾を施した長槍。軽くて鋭い。龍が相手でも楽勝である。",
-    "icon_url": "public/images/weapons/polearm/4_Dragon'sBane.png",
+    "icon_url": "images/weapons/polearm/4_Dragon'sBane.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

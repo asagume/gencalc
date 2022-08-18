@@ -1,7 +1,7 @@
 {
     "名前": "フィッシュル",
     "説明": "自称「断罪の皇女」、オズという漆黒の鴉とともに行動する謎の少女。",
-    "icon_url": "public/images/characters/face/electro_4_bow_Fischl.png",
+    "icon_url": "images/characters/face/electro_4_bow_Fischl.png",
     "レアリティ": 4,
     "武器": "弓",
     "元素": "雷",
@@ -168,7 +168,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/electro_4_bow_Fischl/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_bow_Fischl/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -249,7 +249,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
@@ -266,7 +266,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
@@ -327,7 +327,7 @@
         ],
         "継続時間": 10,
         "クールタイム": 25,
-        "icon_url": "public/images/characters/electro_4_bow_Fischl/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_bow_Fischl/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "夜の幻現",
@@ -367,14 +367,14 @@
         ],
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/electro_4_bow_Fischl/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_bow_Fischl/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "種類": "固有天賦",
             "名前": "星喰いの鴉",
             "説明": "フィッシュルのチャージした狙い撃ち射撃がオズに命中すると、オズは周囲の敵に聖裁の雷を放ち、射撃ダメージ152.7%分の<span style=\"color:#FFACFFFF\">雷元素範囲ダメージ</span>を与える。",
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_bow_Fischl/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -388,13 +388,13 @@
                     "元素": "雷"
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_bow_Fischl/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "吾の裏庭",
             "説明": "モンドの探索任務の所要時間-25%。",
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_bow_Fischl/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -409,7 +409,7 @@
                     "元素": "物理"
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/constellation_1.png"
+            "icon_url": "images/characters/electro_4_bow_Fischl/constellation_1.png"
         },
         "2": {
             "名前": "聖裁の羽根",
@@ -421,24 +421,24 @@
                     "数値": "200%攻撃力"
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/constellation_2.png"
+            "icon_url": "images/characters/electro_4_bow_Fischl/constellation_2.png"
         },
         "3": {
             "名前": "黒き翼",
             "説明": "<span style=\"color:#FFD780FF\">夜巡りの翼</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/constellation_3.png",
+            "icon_url": "images/characters/electro_4_bow_Fischl/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "皇女綺譚集",
             "説明": "<span style=\"color:#FFD780FF\">夜の幻現</span>発動時、周囲の敵に攻撃力222%分の<span style=\"color:#FFACFFFF\">雷元素ダメージ</span>を与える。<br/>スキル終了時、フィッシュルのHPを20%回復する。",
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/constellation_4.png",
+            "icon_url": "images/characters/electro_4_bow_Fischl/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "夜の黙示録",
             "説明": "<span style=\"color:#FFD780FF\">夜の幻現</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/constellation_5.png",
+            "icon_url": "images/characters/electro_4_bow_Fischl/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -452,7 +452,7 @@
                     "元素": "雷"
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_bow_Fischl/constellation_6.png"
+            "icon_url": "images/characters/electro_4_bow_Fischl/constellation_6.png"
         }
     },
     "おすすめセット": [

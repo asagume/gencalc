@@ -1,7 +1,7 @@
 {
     "名前": "西風秘典",
     "説明": "西風騎士団の錬金学者の間に伝わる秘典。元素と物質の理論と力が記されている。",
-    "icon_url": "public/images/weapons/catalyst/4_FavoniusCodex.png",
+    "icon_url": "images/weapons/catalyst/4_FavoniusCodex.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

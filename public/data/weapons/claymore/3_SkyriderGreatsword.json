@@ -1,7 +1,7 @@
 {
     "名前": "飛天大御剣",
     "説明": "頼もしい鋼の剣、伝説の中で「御剣公子」はこれの力を借りて二度目の飛天を試したらしい。",
-    "icon_url": "public/images/weapons/claymore/3_SkyriderGreatsword.png",
+    "icon_url": "images/weapons/claymore/3_SkyriderGreatsword.png",
     "レアリティ": 3,
     "種類": "両手剣",
     "ステータス": {

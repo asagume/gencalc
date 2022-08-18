@@ -1,7 +1,7 @@
 {
     "名前": "破魔の弓",
     "説明": "ある巫女の所有物だった戦弓。優れた技術で作られ、精巧で強靭である。",
-    "icon_url": "public/images/weapons/bow/4_Hamayumi.png",
+    "icon_url": "images/weapons/bow/4_Hamayumi.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

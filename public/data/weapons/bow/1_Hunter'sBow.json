@@ -1,7 +1,7 @@
 {
     "名前": "狩猟弓",
     "説明": "狩人が奏でる音楽は二つの音色で構成される。弦が震える音と矢が空気を破る唸り声である。",
-    "icon_url": "public/images/weapons/bow/1_Hunter'sBow.png",
+    "icon_url": "images/weapons/bow/1_Hunter'sBow.png",
     "レアリティ": 1,
     "種類": "弓",
     "ステータス": {

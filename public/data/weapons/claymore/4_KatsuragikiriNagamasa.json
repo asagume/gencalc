@@ -1,7 +1,7 @@
 {
     "名前": "桂木斬長正",
     "説明": "たたら砂で鍛えられた刀。重くて強靭である。",
-    "icon_url": "public/images/weapons/claymore/4_KatsuragikiriNagamasa.png",
+    "icon_url": "images/weapons/claymore/4_KatsuragikiriNagamasa.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

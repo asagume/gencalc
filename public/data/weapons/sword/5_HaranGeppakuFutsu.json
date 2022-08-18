@@ -1,7 +1,7 @@
 {
     "名前": "波乱月白経津",
     "説明": "経津伝が命を受けて鍛造した名刀。その波濤を彷彿させる佇まいから、「波乱」と名付けられた。",
-    "icon_url": "public/images/weapons/sword/5_HaranGeppakuFutsu.png",
+    "icon_url": "images/weapons/sword/5_HaranGeppakuFutsu.png",
     "レアリティ": 5,
     "種類": "片手剣",
     "ステータス": {

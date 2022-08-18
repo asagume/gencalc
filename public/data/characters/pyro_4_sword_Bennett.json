@@ -1,7 +1,7 @@
 {
     "名前": "ベネット",
     "説明": "モンドの冒険者少年、その優しさとそぐわない不運を持っている。",
-    "icon_url": "public/images/characters/face/pyro_4_sword_Bennett.png",
+    "icon_url": "images/characters/face/pyro_4_sword_Bennett.png",
     "レアリティ": 4,
     "武器": "片手剣",
     "元素": "炎",
@@ -171,7 +171,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_4_sword_Bennett/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_4_sword_Bennett/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、前方に斬撃を2回放つ。",
@@ -217,7 +217,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -234,7 +234,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -353,7 +353,7 @@
         "一回押しクールタイム": 6,
         "1段チャージクールタイム": 7.5,
         "2段チャージクールタイム": 10,
-        "icon_url": "public/images/characters/pyro_4_sword_Bennett/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_4_sword_Bennett/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "素晴らしい旅",
@@ -442,26 +442,26 @@
         "継続時間": 12,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/pyro_4_sword_Bennett/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_4_sword_Bennett/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "情熱復活",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">溢れる情熱</span>のクールタイム-20%。",
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/const_talent_0.png"
+            "icon_url": "images/characters/pyro_4_sword_Bennett/const_talent_0.png"
         },
         {
             "名前": "恐れなき熱血",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">素晴らしい旅</span>エリア内にいると、<span style=\"color:#FFD780FF\">溢れる情熱</span>が以下の効果を持つ。<br/>·クールタイム-50%。<br/>·2段チャージによるベネット自身のノックバックが発生しない。",
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/const_talent_1.png"
+            "icon_url": "images/characters/pyro_4_sword_Bennett/const_talent_1.png"
         },
         {
             "名前": "多分安全",
             "種類": "固有天賦",
             "説明": "モンドの探索任務の所要時間-25%。",
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/const_talent_2.png"
+            "icon_url": "images/characters/pyro_4_sword_Bennett/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -480,7 +480,7 @@
                     "数値": "20%基礎攻撃力"
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/constellation_1.png"
+            "icon_url": "images/characters/pyro_4_sword_Bennett/constellation_1.png"
         },
         "2": {
             "名前": "絶境踏破",
@@ -492,24 +492,24 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/constellation_2.png"
+            "icon_url": "images/characters/pyro_4_sword_Bennett/constellation_2.png"
         },
         "3": {
             "名前": "炎のような情熱",
             "説明": "<span style=\"color:#FFD780FF\">溢れる情熱</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/constellation_3.png",
+            "icon_url": "images/characters/pyro_4_sword_Bennett/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "消えない情熱",
             "説明": "1段チャージ<span style=\"color:#FFD780FF\">溢れる情熱</span>を発動する時、二段目攻撃中に通常攻撃をすると追加攻撃を発動できる。<br/>二段目攻撃の135%の追加ダメージを与える。",
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/constellation_4.png",
+            "icon_url": "images/characters/pyro_4_sword_Bennett/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "開拓の心意気",
             "説明": "<span style=\"color:#FFD780FF\">素晴らしい旅</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/constellation_5.png",
+            "icon_url": "images/characters/pyro_4_sword_Bennett/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -526,7 +526,7 @@
                     "種類": "炎元素付与"
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_sword_Bennett/constellation_6.png"
+            "icon_url": "images/characters/pyro_4_sword_Bennett/constellation_6.png"
         }
     },
     "おすすめセット": [

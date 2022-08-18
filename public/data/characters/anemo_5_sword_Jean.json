@@ -1,7 +1,7 @@
 {
     "名前": "ジン",
     "説明": "正直で真面目な蒲公英騎士、モンド西風騎士団の代理団長。",
-    "icon_url": "public/images/characters/face/anemo_5_sword_Jean.png",
+    "icon_url": "images/characters/face/anemo_5_sword_Jean.png",
     "レアリティ": 5,
     "武器": "片手剣",
     "元素": "風",
@@ -168,7 +168,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/anemo_5_sword_Jean/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_5_sword_Jean/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -214,7 +214,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -231,7 +231,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -274,7 +274,7 @@
         ],
         "最大継続時間": 5,
         "クールタイム": 6,
-        "icon_url": "public/images/characters/anemo_5_sword_Jean/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_5_sword_Jean/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "蒲公英の風",
@@ -363,7 +363,7 @@
         ],
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/anemo_5_sword_Jean/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_5_sword_Jean/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -384,18 +384,18 @@
             "名前": "風の導くままに",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">蒲公英の風</span>発動後、元素エネルギーが20%回復する。",
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/const_talent_1.png"
+            "icon_url": "images/characters/anemo_5_sword_Jean/const_talent_1.png"
         },
         {
             "名前": "導きの風",
             "種類": "固有天賦",
             "説明": "回復系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/const_talent_2.png"
+            "icon_url": "images/characters/anemo_5_sword_Jean/const_talent_2.png"
         },
         {
             "名前": "風の赴くままに",
             "説明": "ジンの通常攻撃が命中する時、50%の確率でチーム全員のHPを回復する。回復量はジンの攻撃力の15%に相当する。",
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/const_talent_0.png",
+            "icon_url": "images/characters/anemo_5_sword_Jean/const_talent_0.png",
             "詳細": []
         }
     ],
@@ -411,18 +411,18 @@
                     "数値": 40
                 }
             ],
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/constellation_1.png"
+            "icon_url": "images/characters/anemo_5_sword_Jean/constellation_1.png"
         },
         "2": {
             "名前": "人々を守る盾",
             "説明": "ジンが元素オーブまたは元素粒子を獲得した時、チームにいる全てのキャラクターの移動速度+15%、攻撃速度+15%、継続時間15秒。",
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/constellation_2.png",
+            "icon_url": "images/characters/anemo_5_sword_Jean/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "西風が吹く時",
             "説明": "<span style=\"color:#FFD780FF\">蒲公英の風</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/constellation_3.png",
+            "icon_url": "images/characters/anemo_5_sword_Jean/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -435,12 +435,12 @@
                     "数値": -40
                 }
             ],
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/constellation_4.png"
+            "icon_url": "images/characters/anemo_5_sword_Jean/constellation_4.png"
         },
         "5": {
             "名前": "しばしの烈風",
             "説明": "<span style=\"color:#FFD780FF\">風圧剣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/constellation_5.png",
+            "icon_url": "images/characters/anemo_5_sword_Jean/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -453,7 +453,7 @@
                     "数値": 35
                 }
             ],
-            "icon_url": "public/images/characters/anemo_5_sword_Jean/constellation_6.png"
+            "icon_url": "images/characters/anemo_5_sword_Jean/constellation_6.png"
         }
     },
     "おすすめセット": [

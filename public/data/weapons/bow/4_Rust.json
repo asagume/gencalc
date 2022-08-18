@@ -1,7 +1,7 @@
 {
     "名前": "弓蔵",
     "説明": "錆だらけの鉄の弓。かなり重いため、矢を射るどころか、持ち上げることも困難である。",
-    "icon_url": "public/images/weapons/bow/4_Rust.png",
+    "icon_url": "images/weapons/bow/4_Rust.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "草薙の稲光",
     "説明": "「草斬り」に使われる薙刀。この武器の前に立ちはだかる軍隊は、草のように刈られるだろう…",
-    "icon_url": "public/images/weapons/polearm/5_EngulfingLightning.png",
+    "icon_url": "images/weapons/polearm/5_EngulfingLightning.png",
     "レアリティ": 5,
     "種類": "長柄武器",
     "ステータス": {

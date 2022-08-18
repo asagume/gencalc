@@ -1,7 +1,7 @@
 {
     "名前": "リカーブボウ",
     "説明": "蒼鷹を射る狩弓だが、本当に射られるかどうかは弓使いの腕次第である。",
-    "icon_url": "public/images/weapons/bow/3_RecurveBow.png",
+    "icon_url": "images/weapons/bow/3_RecurveBow.png",
     "レアリティ": 3,
     "種類": "弓",
     "ステータス": {

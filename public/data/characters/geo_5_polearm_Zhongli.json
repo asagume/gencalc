@@ -1,7 +1,7 @@
 {
     "名前": "鍾離",
     "説明": "「往生堂」に招かれた謎の客卿、博識であり、あらゆることに精通している。",
-    "icon_url": "public/images/characters/face/geo_5_polearm_Zhongli.png",
+    "icon_url": "images/characters/face/geo_5_polearm_Zhongli.png",
     "レアリティ": 5,
     "武器": "長柄武器",
     "元素": "岩",
@@ -15,7 +15,8 @@
         "中国語 CV": "彭博",
         "英語 CV": "Keith Silverstein",
         "日本語 CV": "前野智昭",
-        "韓国語 CV": "표영재"
+        "韓国語 CV": "표영재",
+        "神の心": "岩"
     },
     "ステータス": {
         "基礎HP": {
@@ -185,7 +186,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/geo_5_polearm_Zhongli/battle_talent_0.png"
+        "icon_url": "images/characters/geo_5_polearm_Zhongli/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に疾行し、行動経路上と終着点に雨のような岩槍を投下する。",
@@ -229,7 +230,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -246,7 +247,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -356,7 +357,7 @@
         "一回押しクールタイム": 4,
         "長押しクールタイム": 12,
         "粒子生成数": "0.5個/原岩共鳴",
-        "icon_url": "public/images/characters/geo_5_polearm_Zhongli/battle_talent_1.png"
+        "icon_url": "images/characters/geo_5_polearm_Zhongli/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "天星",
@@ -384,7 +385,7 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "public/images/characters/geo_5_polearm_Zhongli/battle_talent_2.png"
+        "icon_url": "images/characters/geo_5_polearm_Zhongli/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -398,7 +399,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/const_talent_0.png"
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -426,50 +427,50 @@
                     "数値": "33%HP上限"
                 }
             ],
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/const_talent_1.png"
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "結晶推命",
             "説明": "長柄武器を鍛造する時、消費した鉱石の15%が返還される。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/const_talent_2.png"
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "岩、天下の骨なり",
             "説明": "<span style=\"color:#FFD780FF\">地心</span>の岩柱が同時に最大2つまで存在可能になる。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/constellation_1.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_1.png",
             "詳細": []
         },
         "2": {
             "名前": "石、玉の揺りかご",
             "説明": "<span style=\"color:#FFD780FF\">天星</span>落下時、近くにいる出場中のキャラクターに玉璋シールドを付与する。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/constellation_2.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "圭璋、闇の中で輝く",
             "説明": "<span style=\"color:#FFD780FF\">地心</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/constellation_3.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "黄玉、破れぬ堅さ",
             "説明": "<span style=\"color:#FFD780FF\">天星</span>の影響範囲+20%。<br/>さらに天星の石化効果の継続時間+2秒。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/constellation_4.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "璧、天理を守る",
             "説明": "<span style=\"color:#FFD780FF\">天星</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/constellation_5.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "金、天地の恵み",
             "説明": "玉璋シールドがダメージを受けた時、そのダメージ量の40%分のHPを回復する。<br/>一回の回復上限はキャラクターのHP上限の8%。",
-            "icon_url": "public/images/characters/geo_5_polearm_Zhongli/constellation_6.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_6.png",
             "詳細": []
         }
     },

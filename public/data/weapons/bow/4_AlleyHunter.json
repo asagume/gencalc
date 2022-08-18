@@ -1,7 +1,7 @@
 {
     "名前": "ダークアレイの狩人",
     "説明": "豪華な装飾が施された長弓。一度も捕らえられたことのない義賊が所持していた。",
-    "icon_url": "public/images/weapons/bow/4_AlleyHunter.png",
+    "icon_url": "images/weapons/bow/4_AlleyHunter.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

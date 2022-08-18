@@ -1,7 +1,7 @@
 {
     "名前": "「漁獲」",
     "説明": "遠い昔、稲妻に名を轟かせた大泥棒が愛用していた槍。",
-    "icon_url": "public/images/weapons/polearm/4_TheCatch.png",
+    "icon_url": "images/weapons/polearm/4_TheCatch.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

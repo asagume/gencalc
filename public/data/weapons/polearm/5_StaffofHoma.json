@@ -1,7 +1,7 @@
 {
     "名前": "護摩の杖",
     "説明": "既に廃れた過去の祭儀で使われていた朱色の杖。",
-    "icon_url": "public/images/weapons/polearm/5_StaffofHoma.png",
+    "icon_url": "images/weapons/polearm/5_StaffofHoma.png",
     "レアリティ": 5,
     "種類": "長柄武器",
     "ステータス": {

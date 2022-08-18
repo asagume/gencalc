@@ -1,7 +1,7 @@
 {
     "名前": "旧貴族長弓",
     "説明": "かつてモンドを支配していた旧貴族の長弓。無数の世代を経たが、弦はまだ鈍っておらず、素早く弓を射ることができる。",
-    "icon_url": "public/images/weapons/bow/4_RoyalBow.png",
+    "icon_url": "images/weapons/bow/4_RoyalBow.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

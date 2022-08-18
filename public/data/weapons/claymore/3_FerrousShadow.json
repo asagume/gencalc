@@ -1,7 +1,7 @@
 {
     "名前": "鉄影段平",
     "説明": "この剣はかの光の獅子エレンドリンの佩剣の模造品。これを握って、伝説の英雄の力を感じよう！注意：妄想はほどほどに。",
-    "icon_url": "public/images/weapons/claymore/3_FerrousShadow.png",
+    "icon_url": "images/weapons/claymore/3_FerrousShadow.png",
     "レアリティ": 3,
     "種類": "両手剣",
     "ステータス": {

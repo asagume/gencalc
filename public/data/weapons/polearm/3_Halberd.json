@@ -1,7 +1,7 @@
 {
     "名前": "鉾槍",
     "説明": "矛の先に斧の刃を追加した兵器。悪くない破壊力を持つ。千岩軍兵士にも愛された武器である。",
-    "icon_url": "public/images/weapons/polearm/3_Halberd.png",
+    "icon_url": "images/weapons/polearm/3_Halberd.png",
     "レアリティ": 3,
     "種類": "長柄武器",
     "ステータス": {

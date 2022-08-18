@@ -1,7 +1,7 @@
 {
     "名前": "ガイア",
     "説明": "異国の顔を持つ剣士、西風騎士団の頭脳派である。",
-    "icon_url": "public/images/characters/face/cryo_4_sword_Kaeya.png",
+    "icon_url": "images/characters/face/cryo_4_sword_Kaeya.png",
     "レアリティ": 4,
     "武器": "片手剣",
     "元素": "氷",
@@ -168,7 +168,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/cryo_4_sword_Kaeya/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_4_sword_Kaeya/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -215,7 +215,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -232,7 +232,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -274,7 +274,7 @@
             }
         ],
         "クールタイム": 6,
-        "icon_url": "public/images/characters/cryo_4_sword_Kaeya/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_4_sword_Kaeya/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "凛冽なる輪舞",
@@ -302,26 +302,26 @@
         "継続時間": 8,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/cryo_4_sword_Kaeya/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_4_sword_Kaeya/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "冷血の剣",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">霜の襲撃</span>が敵1体に命中する度、攻撃力15%分のHPを回復する。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/const_talent_0.png"
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/const_talent_0.png"
         },
         {
             "名前": "氷淵の心",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">霜の襲撃</span>が敵を<span style=\"color:#99FFFFFF\">凍結</span>状態にした場合、凍結された敵から追加の元素粒子が落ちる。<br/>1回の霜襲は2つの元素粒子が追加で発生する。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/const_talent_1.png"
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/const_talent_1.png"
         },
         {
             "名前": "秘められた実力",
             "種類": "固有天賦",
             "説明": "チーム内の自身のキャラクター全員がダッシュに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/const_talent_2.png"
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -342,18 +342,18 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/constellation_1.png"
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/constellation_1.png"
         },
         "2": {
             "名前": "無尽なる霜舞",
             "説明": "<span style=\"color:#FFD780FF\">凛冽なる輪舞</span>継続中に敵を撃破した時、継続時間+2.5秒。最大15秒まで。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/constellation_2.png",
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "凛冽なる戯れ",
             "説明": "<span style=\"color:#FFD780FF\">霜の襲撃</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/constellation_3.png",
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -368,18 +368,18 @@
                     "元素": "氷"
                 }
             ],
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/constellation_4.png"
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/constellation_4.png"
         },
         "5": {
             "名前": "冷たい抱擁",
             "説明": "<span style=\"color:#FFD780FF\">凛冽なる輪舞</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/constellation_5.png",
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "輪旋の氷",
             "説明": "<span style=\"color:#FFD780FF\">凛冽なる輪舞</span>の氷柱が1本追加され、発動時に元素エネルギーが15回復する。",
-            "icon_url": "public/images/characters/cryo_4_sword_Kaeya/constellation_6.png",
+            "icon_url": "images/characters/cryo_4_sword_Kaeya/constellation_6.png",
             "詳細": []
         }
     },

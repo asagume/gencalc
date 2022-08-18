@@ -16,17 +16,20 @@
             <a href="RandomTeam.html">ランダムチーム編成メーカー</a>
             <a href="HoYoDictionary.html">原神の辞書</a>
         </p>
-        <div>&emsp;</div>
-        <div style="position: absolute; right: 1rem; top: 0">
-            <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告·要望</a>
-        </div>
-        <div style="position: absolute; left: 1rem; top: 0">
+
+        <div class="top-left">
             <a href="history.html">更新履歴</a>
         </div>
-        <div style="position: absolute; left: 1rem; bottom: 1rem">
+
+        <div class="top-right">
+            <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告·要望</a>
+        </div>
+
+        <div class="bottom-left">
             <a href="RotationVisualizer.html">げんろーて</a>
         </div>
-        <label style="position: absolute; right: 1rem; bottom: 1rem">
+
+        <label class="bottom-right">
             Language:
             <select v-model="locale" @change="localeOnChange(targetValue($event))">
                 <option v-for="item in localeList" :value="item.value" :key="item.value">
@@ -63,3 +66,28 @@ export default defineComponent({
     }
 });
 </script>
+<style scoped>
+.top-left {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+}
+
+.top-right {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+}
+
+.bottom-left {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+</style>

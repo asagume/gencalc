@@ -1,7 +1,7 @@
 {
     "名前": "天空の巻",
     "説明": "風龍とその主である風の神を象徴した図表集。北の風と雲が詳しく記載されており、蒼空と長風の力が秘められている。",
-    "icon_url": "public/images/weapons/catalyst/5_SkywardAtlas.png",
+    "icon_url": "images/weapons/catalyst/5_SkywardAtlas.png",
     "レアリティ": 5,
     "種類": "法器",
     "ステータス": {

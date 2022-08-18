@@ -1,6 +1,6 @@
 <template>
     <h2>げんかるく</h2>
-    <fieldset style="text-align: center; margin: 1rem; padding: 1rem;">
+    <fieldset>
         <legend>構成保存の対象範囲</legend>
         <button type="button">キャラクター</button>
         <button type="button">武器</button>
@@ -37,6 +37,17 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+fieldset {
+    margin-bottom: 15px;
+    padding: 1rem 1.5rem;
+}
+
+legend {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: orange;
+}
+
 .description {
     text-align: left;
 }

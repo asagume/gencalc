@@ -1,7 +1,7 @@
 {
     "名前": "誓いの明瞳",
     "説明": "大日御輿に収蔵されている白夜国の宝。蛇神が訪れた後、淵下宮の大いなる誓いと願いの公証として使われていた。",
-    "icon_url": "public/images/weapons/catalyst/4_OathswornEye.png",
+    "icon_url": "images/weapons/catalyst/4_OathswornEye.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

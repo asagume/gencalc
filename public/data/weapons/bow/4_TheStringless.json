@@ -1,7 +1,7 @@
 {
     "名前": "絶弦",
     "説明": "かつて楽器として有名だった弓。今はもう踊りに使われることはない。",
-    "icon_url": "public/images/weapons/bow/4_TheStringless.png",
+    "icon_url": "images/weapons/bow/4_TheStringless.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

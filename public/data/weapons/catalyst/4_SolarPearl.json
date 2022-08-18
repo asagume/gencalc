@@ -1,7 +1,7 @@
 {
     "名前": "匣中日月",
     "説明": "素材の解析が難しい宝珠。太陽と月の光に満ちており、暖かい力が秘められている。",
-    "icon_url": "public/images/weapons/catalyst/4_SolarPearl.png",
+    "icon_url": "images/weapons/catalyst/4_SolarPearl.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

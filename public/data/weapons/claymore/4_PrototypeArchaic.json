@@ -1,7 +1,7 @@
 {
     "名前": "古華·試作",
     "説明": "黒岩場の中に隠されていた古い大剣、振り回す時の圧は空間さえも切り裂くようだ。",
-    "icon_url": "public/images/weapons/claymore/4_PrototypeArchaic.png",
+    "icon_url": "images/weapons/claymore/4_PrototypeArchaic.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

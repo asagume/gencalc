@@ -1,7 +1,7 @@
 {
     "名前": "万国諸海の図譜",
     "説明": "大陸周辺の海流気候を詳しく記載した海図、貿易ルートを経て異国から璃月に渡った。",
-    "icon_url": "public/images/weapons/catalyst/4_MappaMare.png",
+    "icon_url": "images/weapons/catalyst/4_MappaMare.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

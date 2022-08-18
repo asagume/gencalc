@@ -1,7 +1,7 @@
 {
     "名前": "西風大剣",
     "説明": "西風騎士団でよく使われる重剣。元素の力を簡単に引き出すことができ、優れた破壊力を持つ。",
-    "icon_url": "public/images/weapons/claymore/4_FavoniusGreatsword.png",
+    "icon_url": "images/weapons/claymore/4_FavoniusGreatsword.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "破天の槍",
     "説明": "あらゆるものを貫く鋭い長槍。空気に裂け目を開けるほど、その一振りは凄まじい。",
-    "icon_url": "public/images/weapons/polearm/5_VortexVanquisher.png",
+    "icon_url": "images/weapons/polearm/5_VortexVanquisher.png",
     "レアリティ": 5,
     "種類": "長柄武器",
     "ステータス": {

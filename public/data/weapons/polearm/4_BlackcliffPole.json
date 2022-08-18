@@ -1,7 +1,7 @@
 {
     "名前": "黒岩の突槍",
     "説明": "黒岩と隕石でできた兵器。黒い剣先にある輝きの中で微かに血の色が見える。",
-    "icon_url": "public/images/weapons/polearm/4_BlackcliffPole.png",
+    "icon_url": "images/weapons/polearm/4_BlackcliffPole.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "喜多院十文字槍",
     "説明": "ヤシオリ島で「祟り神」を見守る槍術の名士が使っていた特殊な長槍。",
-    "icon_url": "public/images/weapons/polearm/4_KitainCrossSpear.png",
+    "icon_url": "images/weapons/polearm/4_KitainCrossSpear.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

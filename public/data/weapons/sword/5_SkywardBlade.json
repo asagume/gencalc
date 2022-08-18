@@ -1,7 +1,7 @@
 {
     "名前": "天空の刃",
     "説明": "風龍の栄誉を象徴する騎士剣。風神の祝福を受けた剣身に、蒼空と長風の力が秘められている。",
-    "icon_url": "public/images/weapons/sword/5_SkywardBlade.png",
+    "icon_url": "images/weapons/sword/5_SkywardBlade.png",
     "レアリティ": 5,
     "種類": "片手剣",
     "ステータス": {

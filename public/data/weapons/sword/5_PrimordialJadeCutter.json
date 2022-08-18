@@ -1,7 +1,7 @@
 {
     "名前": "磐岩結緑",
     "説明": "穢れの無い翠玉によって彫られた宝剣。振るうと、嘆息が漏れ出るかのような風音が聞こえる。",
-    "icon_url": "public/images/weapons/sword/5_PrimordialJadeCutter.png",
+    "icon_url": "images/weapons/sword/5_PrimordialJadeCutter.png",
     "レアリティ": 5,
     "種類": "片手剣",
     "ステータス": {

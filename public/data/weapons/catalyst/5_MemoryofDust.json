@@ -1,7 +1,7 @@
 {
     "名前": "浮世の錠",
     "説明": "ある遠い昔の記憶が秘められている石の錠。窮まりない変化の中からその力が伺える。",
-    "icon_url": "public/images/weapons/catalyst/5_MemoryofDust.png",
+    "icon_url": "images/weapons/catalyst/5_MemoryofDust.png",
     "レアリティ": 5,
     "種類": "法器",
     "ステータス": {

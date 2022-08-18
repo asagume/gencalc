@@ -1,7 +1,7 @@
 {
     "名前": "西風剣",
     "説明": "西風騎士団でよく使われる長剣。軽くて鋭い上、元素の力が集まりやすい。",
-    "icon_url": "public/images/weapons/sword/4_FavoniusSword.png",
+    "icon_url": "images/weapons/sword/4_FavoniusSword.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

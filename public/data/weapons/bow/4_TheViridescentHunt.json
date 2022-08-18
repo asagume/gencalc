@@ -1,7 +1,7 @@
 {
     "名前": "蒼翠の狩猟弓",
     "説明": "青緑色をした高潔な狩猟弓。かつて森を行き交う狩人が所持していた。",
-    "icon_url": "public/images/weapons/bow/4_TheViridescentHunt.png",
+    "icon_url": "images/weapons/bow/4_TheViridescentHunt.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

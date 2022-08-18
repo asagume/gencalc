@@ -1,7 +1,7 @@
 {
     "名前": "死闘の槍",
     "説明": "血のように赤くて鋭い長槍。かつてはある剣闘士が重宝したものである。槍先は無数の野獣と人の血で染められていた。",
-    "icon_url": "public/images/weapons/polearm/4_Deathmatch.png",
+    "icon_url": "images/weapons/polearm/4_Deathmatch.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

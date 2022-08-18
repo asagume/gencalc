@@ -1,7 +1,7 @@
 {
     "名前": "特級の宝玉",
     "説明": "二つの玉石でできた精巧な玉佩。",
-    "icon_url": "public/images/weapons/catalyst/3_TwinNephrite.png",
+    "icon_url": "images/weapons/catalyst/3_TwinNephrite.png",
     "レアリティ": 3,
     "種類": "法器",
     "ステータス": {

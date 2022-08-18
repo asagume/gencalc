@@ -1,7 +1,7 @@
 {
     "名前": "旧貴族猟槍",
     "説明": "かつてモンドを支配していた旧貴族が愛用していた長槍。長く封印されていたが、槍先は未だ鋭い。",
-    "icon_url": "public/images/weapons/polearm/4_RoyalSpear.png",
+    "icon_url": "images/weapons/polearm/4_RoyalSpear.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

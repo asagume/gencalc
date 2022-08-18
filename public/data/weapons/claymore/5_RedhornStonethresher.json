@@ -1,7 +1,7 @@
 {
     "名前": "赤角石塵滅砕",
     "説明": "かつての持ち主によると、これはあらゆる魑魅魍魎を打ち払うことのできる金剛杵——「赤角石塵滅砕金塗金嚼獅子」だそうだ。",
-    "icon_url": "public/images/weapons/claymore/5_RedhornStonethresher.png",
+    "icon_url": "images/weapons/claymore/5_RedhornStonethresher.png",
     "レアリティ": 5,
     "種類": "両手剣",
     "ステータス": {

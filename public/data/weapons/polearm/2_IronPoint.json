@@ -1,7 +1,7 @@
 {
     "名前": "鉄尖槍",
     "説明": "片方が尖っている、攻撃も防御もできる護身用武器。旅人の間で流行っているもの。",
-    "icon_url": "public/images/weapons/polearm/2_IronPoint.png",
+    "icon_url": "images/weapons/polearm/2_IronPoint.png",
     "レアリティ": 2,
     "種類": "長柄武器",
     "ステータス": {

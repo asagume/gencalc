@@ -1,7 +1,7 @@
 {
     "名前": "千岩長槍",
     "説明": "孤雲閣の岩の欠片を使って丹念に仕上げた長槍。槍先は非常に鋭い。",
-    "icon_url": "public/images/weapons/polearm/4_LithicSpear.png",
+    "icon_url": "images/weapons/polearm/4_LithicSpear.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

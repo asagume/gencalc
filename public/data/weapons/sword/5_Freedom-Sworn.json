@@ -1,7 +1,7 @@
 {
     "名前": "蒼古なる自由への誓い",
     "説明": "悠久なる歌声のように青く、真っすぐな直剣。風の国を代表する自由の誓いのように、その切っ先は鋭い。",
-    "icon_url": "public/images/weapons/sword/5_Freedom-Sworn.png",
+    "icon_url": "images/weapons/sword/5_Freedom-Sworn.png",
     "レアリティ": 5,
     "種類": "片手剣",
     "ステータス": {

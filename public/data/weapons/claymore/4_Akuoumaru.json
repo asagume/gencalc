@@ -1,7 +1,7 @@
 {
     "名前": "惡王丸",
     "説明": "伝説の「惡王」がかつて愛用していた刀。刀身が大きく威厳があるが、振るうと驚くほど軽い。",
-    "icon_url": "public/images/weapons/claymore/4_Akuoumaru.png",
+    "icon_url": "images/weapons/claymore/4_Akuoumaru.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

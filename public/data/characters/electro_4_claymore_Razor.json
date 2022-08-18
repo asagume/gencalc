@@ -1,7 +1,7 @@
 {
     "名前": "レザー",
     "説明": "人間の町から離れて、モンド地域の奔狼領で狼と暮らす少年。勘が鋭く、動きが俊敏。",
-    "icon_url": "public/images/characters/face/electro_4_claymore_Razor.png",
+    "icon_url": "images/characters/face/electro_4_claymore_Razor.png",
     "レアリティ": 4,
     "武器": "両手剣",
     "元素": "雷",
@@ -227,7 +227,7 @@
                 "ダメージバフ": "元素爆発ダメージバフ"
             }
         ],
-        "icon_url": "public/images/characters/electro_4_claymore_Razor/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_claymore_Razor/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -290,7 +290,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "164%",
@@ -307,7 +307,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "204%",
@@ -368,7 +368,7 @@
         ],
         "一回押しクールタイム": 6,
         "長押しクールタイム": 10,
-        "icon_url": "public/images/characters/electro_4_claymore_Razor/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_claymore_Razor/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "雷牙",
@@ -477,26 +477,26 @@
         "継続時間": 15,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/electro_4_claymore_Razor/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_claymore_Razor/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "覚醒",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">鋭い爪と蒼雷</span>のクールタイム-18%。<br/><span style=\"color:#FFD780FF\">雷牙</span>を放つ時、<span style=\"color:#FFD780FF\">鋭い爪と蒼雷</span>のクールタイムをリセットする。",
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/const_talent_0.png"
         },
         {
             "名前": "飢餓",
             "種類": "固有天賦",
             "説明": "レザーの元素エネルギーが50%以下になると、元素チャージ効率+30%。",
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/const_talent_1.png"
         },
         {
             "名前": "奔狼",
             "種類": "固有天賦",
             "説明": "チーム内の自身のキャラクター全員がダッシュに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -510,7 +510,7 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/constellation_1.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_1.png"
         },
         "2": {
             "名前": "制圧",
@@ -522,12 +522,12 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/constellation_2.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_2.png"
         },
         "3": {
             "名前": "獣の魂",
             "説明": "<span style=\"color:#FFD780FF\">雷牙</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/constellation_3.png",
+            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -540,12 +540,12 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/constellation_4.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_4.png"
         },
         "5": {
             "名前": "鋭い爪",
             "説明": "<span style=\"color:#FFD780FF\">鋭い爪と蒼雷</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/constellation_5.png",
+            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -559,7 +559,7 @@
                     "数値": "100%攻撃力"
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_claymore_Razor/constellation_6.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_6.png"
         }
     },
     "おすすめセット": [

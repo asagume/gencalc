@@ -1,7 +1,7 @@
 {
     "名前": "異世界旅行記",
     "説明": "ファンタジー小説。参考の価値はない。法器としての力ももちろん幻想から来ている。",
-    "icon_url": "public/images/weapons/catalyst/3_OtherworldlyStory.png",
+    "icon_url": "images/weapons/catalyst/3_OtherworldlyStory.png",
     "レアリティ": 3,
     "種類": "法器",
     "ステータス": {

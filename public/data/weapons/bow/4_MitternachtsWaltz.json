@@ -1,7 +1,7 @@
 {
     "名前": "幽夜のワルツ",
     "説明": "罪と幻想の夜を想起させる色をした弓。",
-    "icon_url": "public/images/weapons/bow/4_MitternachtsWaltz.png",
+    "icon_url": "images/weapons/bow/4_MitternachtsWaltz.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

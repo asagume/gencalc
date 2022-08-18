@@ -1,7 +1,7 @@
 {
     "名前": "終焉を嘆く詩",
     "説明": "詩人の楽器のような美しい弓。放った矢は嘆き声のように心に響く。",
-    "icon_url": "public/images/weapons/bow/5_ElegyfortheEnd.png",
+    "icon_url": "images/weapons/bow/5_ElegyfortheEnd.png",
     "レアリティ": 5,
     "種類": "弓",
     "ステータス": {

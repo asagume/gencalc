@@ -1,7 +1,64 @@
 {
+    "深林の記憶": {
+        "レアリティ": 5,
+        "image": "images/artifacts/5_DeepwoodMemories.png",
+        "2セット効果": {
+            "説明": "",
+            "詳細": [
+                {
+                    "種類": "草元素ダメージバフ",
+                    "数値": 15
+                }
+            ]
+        },
+        "4セット効果": {
+            "説明": "",
+            "詳細": [
+                {
+                    "条件": "[深林の記憶]4セット効果",
+                    "種類": "敵草元素耐性",
+                    "数値": -30
+                }
+            ]
+        },
+        "artifact_list": []
+    },
+    "金メッキの夢": {
+        "レアリティ": 5,
+        "image": "images/artifacts/5_GildedDreams.png",
+        "2セット効果": {
+            "説明": "",
+            "詳細": [
+                {
+                    "種類": "元素熟知",
+                    "数値": 80
+                }
+            ]
+        },
+        "4セット効果": {
+            "説明": "",
+            "詳細": [
+                {
+                    "条件": "[金メッキの夢]4セット効果 同じ元素タイプ@1-3人",
+                    "種類": "攻撃力%",
+                    "数値": 14
+                },
+                {
+                    "条件": "[金メッキの夢]4セット効果 異なる元素タイプ@1-3人",
+                    "種類": "元素熟知",
+                    "数値": 50
+                }
+            ],
+            "オプション初期値": {
+                "[金メッキの夢]4セット効果 同じ元素タイプ": 0,
+                "[金メッキの夢]4セット効果 異なる元素タイプ": 3
+            }
+        },
+        "artifact_list": []
+    },
     "来歆の余響": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_EchoesofAnOffering.png",
+        "image": "images/artifacts/5_EchoesofAnOffering.png",
         "2セット効果": {
             "説明": "攻撃力+18%。",
             "詳細": [
@@ -36,7 +93,7 @@
     },
     "辰砂往生録": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_VermillionHereafter.png",
+        "image": "images/artifacts/5_VermillionHereafter.png",
         "2セット効果": {
             "説明": "攻撃力+18%。",
             "詳細": [
@@ -66,7 +123,7 @@
     },
     "海染硨磲": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_Ocean-HuedClam.png",
+        "image": "images/artifacts/5_Ocean-HuedClam.png",
         "2セット効果": {
             "説明": "与える治療効果+15%。",
             "詳細": [
@@ -89,7 +146,7 @@
     },
     "華館夢醒形骸記": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_HuskofOpulentDreams.png",
+        "image": "images/artifacts/5_HuskofOpulentDreams.png",
         "2セット効果": {
             "説明": "防御力+30%。",
             "詳細": [
@@ -124,7 +181,7 @@
     },
     "絶縁の旗印": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_EmblemofSeveredFate.png",
+        "image": "images/artifacts/5_EmblemofSeveredFate.png",
         "2セット効果": {
             "説明": "元素チャージ効率+20%。",
             "詳細": [
@@ -154,7 +211,7 @@
     },
     "追憶のしめ縄": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_ShimenawasReminiscence.png",
+        "image": "images/artifacts/5_ShimenawasReminiscence.png",
         "2セット効果": {
             "説明": "攻撃力+18%。",
             "詳細": [
@@ -194,7 +251,7 @@
     },
     "蒼白の炎": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_PaleFlame.png",
+        "image": "images/artifacts/5_PaleFlame.png",
         "2セット効果": {
             "説明": "物理ダメージ+25%。",
             "詳細": [
@@ -229,7 +286,7 @@
     },
     "千岩牢固": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_TenacityoftheMillelith.png",
+        "image": "images/artifacts/5_TenacityoftheMillelith.png",
         "2セット効果": {
             "説明": "HP+20%。",
             "詳細": [
@@ -264,7 +321,7 @@
     },
     "沈淪の心": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_HeartofDepth.png",
+        "image": "images/artifacts/5_HeartofDepth.png",
         "2セット効果": {
             "説明": "水元素ダメージ+15%。",
             "詳細": [
@@ -299,7 +356,7 @@
     },
     "氷風を彷徨う勇士": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_BlizzardStrayer.png",
+        "image": "images/artifacts/5_BlizzardStrayer.png",
         "2セット効果": {
             "説明": "氷元素ダメージ+15%。",
             "詳細": [
@@ -332,7 +389,7 @@
     },
     "燃え盛る炎の魔女": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_CrimsonWitchofFlames.png",
+        "image": "images/artifacts/5_CrimsonWitchofFlames.png",
         "2セット効果": {
             "説明": "炎元素ダメージ+15%。",
             "詳細": [
@@ -381,7 +438,7 @@
     },
     "烈火を渡る賢者": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_Lavawalker.png",
+        "image": "images/artifacts/5_Lavawalker.png",
         "2セット効果": {
             "説明": "炎元素耐性+40%。",
             "詳細": [
@@ -411,7 +468,7 @@
     },
     "雷のような怒り": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_ThunderingFury.png",
+        "image": "images/artifacts/5_ThunderingFury.png",
         "2セット効果": {
             "説明": "雷元素ダメージ+15%。",
             "詳細": [
@@ -448,7 +505,7 @@
     },
     "雷を鎮める尊者": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_Thundersoother.png",
+        "image": "images/artifacts/5_Thundersoother.png",
         "2セット効果": {
             "説明": "雷元素耐性+40%。",
             "詳細": [
@@ -478,7 +535,7 @@
     },
     "逆飛びの流星": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_RetracingBolide.png",
+        "image": "images/artifacts/5_RetracingBolide.png",
         "2セット効果": {
             "説明": "シールド強化+35%",
             "詳細": [
@@ -513,7 +570,7 @@
     },
     "悠久の磐岩": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_ArchaicPetra.png",
+        "image": "images/artifacts/5_ArchaicPetra.png",
         "2セット効果": {
             "説明": "岩元素ダメージ+15%。",
             "詳細": [
@@ -561,7 +618,7 @@
     },
     "翠緑の影": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_ViridescentVenerer.png",
+        "image": "images/artifacts/5_ViridescentVenerer.png",
         "2セット効果": {
             "説明": "風元素ダメージ+15%。",
             "詳細": [
@@ -610,7 +667,7 @@
     },
     "愛される少女": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_MaidenBeloved.png",
+        "image": "images/artifacts/5_MaidenBeloved.png",
         "2セット効果": {
             "説明": "与える治療効果+15%。",
             "詳細": [
@@ -640,7 +697,7 @@
     },
     "血染めの騎士道": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_BloodstainedChvalry.png",
+        "image": "images/artifacts/5_BloodstainedChvalry.png",
         "2セット効果": {
             "説明": "物理ダメージ+25%。",
             "詳細": [
@@ -670,7 +727,7 @@
     },
     "旧貴族のしつけ": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_NoblesseOblige.png",
+        "image": "images/artifacts/5_NoblesseOblige.png",
         "2セット効果": {
             "説明": "元素爆発のダメージ+20%。",
             "詳細": [
@@ -700,7 +757,7 @@
     },
     "大地を流浪する楽団": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_WonderersTroupe.png",
+        "image": "images/artifacts/5_WonderersTroupe.png",
         "2セット効果": {
             "説明": "元素熟知+80。",
             "詳細": [
@@ -729,7 +786,7 @@
     },
     "剣闘士のフィナーレ": {
         "レアリティ": 5,
-        "image": "public/images/artifacts/5_GradiatorsFinale.png",
+        "image": "images/artifacts/5_GradiatorsFinale.png",
         "2セット効果": {
             "説明": "攻撃力+18%。",
             "詳細": [
@@ -758,7 +815,7 @@
     },
     "学者": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_Scholar.png",
+        "image": "images/artifacts/4_Scholar.png",
         "2セット効果": {
             "説明": "元素チャージ効率+20%。",
             "詳細": [
@@ -782,7 +839,7 @@
     },
     "亡命者": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_TheExile.png",
+        "image": "images/artifacts/4_TheExile.png",
         "2セット効果": {
             "説明": "元素チャージ効率+20%。",
             "詳細": [
@@ -806,7 +863,7 @@
     },
     "博徒": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_Gambler.png",
+        "image": "images/artifacts/4_Gambler.png",
         "2セット効果": {
             "説明": "元素スキルのダメージ+20%。",
             "詳細": [
@@ -830,7 +887,7 @@
     },
     "教官": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_Instructor.png",
+        "image": "images/artifacts/4_Instructor.png",
         "2セット効果": {
             "説明": "元素熟知+80。",
             "詳細": [
@@ -860,7 +917,7 @@
     },
     "武人": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_MartialArtist.png",
+        "image": "images/artifacts/4_MartialArtist.png",
         "2セット効果": {
             "説明": "通常攻撃と重撃のダメージ+15%。",
             "詳細": [
@@ -899,7 +956,7 @@
     },
     "狂戦士": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_Berserker.png",
+        "image": "images/artifacts/4_Berserker.png",
         "2セット効果": {
             "説明": "会心率+12%。",
             "詳細": [
@@ -929,7 +986,7 @@
     },
     "奇跡": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_TinyMiracle.png",
+        "image": "images/artifacts/4_TinyMiracle.png",
         "2セット効果": {
             "説明": "全ての元素耐性+20%。",
             "詳細": [
@@ -953,7 +1010,7 @@
     },
     "守護の心": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_DefendersWill.png",
+        "image": "images/artifacts/4_DefendersWill.png",
         "2セット効果": {
             "説明": "防御力+30%。",
             "詳細": [
@@ -977,7 +1034,7 @@
     },
     "勇士の心": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_BraveHeart.png",
+        "image": "images/artifacts/4_BraveHeart.png",
         "2セット効果": {
             "説明": "攻撃力+18%。",
             "詳細": [
@@ -1007,7 +1064,7 @@
     },
     "旅人の心": {
         "レアリティ": 4,
-        "image": "public/images/artifacts/4_ResolutionofSojourner.png",
+        "image": "images/artifacts/4_ResolutionofSojourner.png",
         "2セット効果": {
             "説明": "攻撃力+18%。",
             "詳細": [

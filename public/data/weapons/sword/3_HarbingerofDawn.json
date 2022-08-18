@@ -1,7 +1,7 @@
 {
     "名前": "黎明の神剣",
     "説明": "かつて朝日のように輝いていた宝剣。手にした人は「自己悦楽」の力を身に宿す。剣身にあった発光素材は既に失われている。",
-    "icon_url": "public/images/weapons/sword/3_HarbingerofDawn.png",
+    "icon_url": "images/weapons/sword/3_HarbingerofDawn.png",
     "レアリティ": 3,
     "種類": "片手剣",
     "ステータス": {

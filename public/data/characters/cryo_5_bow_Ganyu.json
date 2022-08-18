@@ -1,7 +1,7 @@
 {
     "名前": "甘雨",
     "説明": "月海亭の秘書、その身には仙獣「麒麟」の血が流れている。",
-    "icon_url": "public/images/characters/face/cryo_5_bow_Ganyu.png",
+    "icon_url": "images/characters/face/cryo_5_bow_Ganyu.png",
     "レアリティ": 5,
     "武器": "弓",
     "元素": "氷",
@@ -188,7 +188,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/cryo_5_bow_Ganyu/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_bow_Ganyu/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -298,7 +298,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "113.63%",
@@ -315,7 +315,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "141.93%",
@@ -377,7 +377,7 @@
         ],
         "継続時間": 6,
         "クールタイム": 10,
-        "icon_url": "public/images/characters/cryo_5_bow_Ganyu/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_bow_Ganyu/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "降衆天華",
@@ -405,7 +405,7 @@
         "継続時間": 15,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/cryo_5_bow_Ganyu/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_5_bow_Ganyu/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -426,7 +426,7 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -439,13 +439,13 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "弓蔵待命",
             "説明": "弓を鍛造する時、消費した鉱石の15%が返還される。",
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -460,18 +460,18 @@
                     "継続時間": 6
                 }
             ],
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/constellation_1.png"
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/constellation_1.png"
         },
         "2": {
             "名前": "獲麟",
             "説明": "<span style=\"color:#FFD780FF\">山沢麟跡</span>の使用可能回数+1。",
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/constellation_2.png",
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "雲行",
             "説明": "<span style=\"color:#FFD780FF\">降衆天華</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -485,18 +485,18 @@
                     "継続時間": 3
                 }
             ],
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/constellation_4.png"
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/constellation_4.png"
         },
         "5": {
             "名前": "折草",
             "説明": "<span style=\"color:#FFD780FF\">山沢麟跡</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "履虫",
             "説明": "<span style=\"color:#FFD780FF\">山沢麟跡</span>を発動すると、30秒以内に放つ最初の霜華の矢が、チャージせずに発動可能になる。",
-            "icon_url": "public/images/characters/cryo_5_bow_Ganyu/constellation_6.png",
+            "icon_url": "images/characters/cryo_5_bow_Ganyu/constellation_6.png",
             "詳細": []
         }
     },

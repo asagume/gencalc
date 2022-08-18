@@ -1,7 +1,7 @@
 {
     "名前": "クレー",
     "説明": "西風騎士団反省室の常連、モンドの爆破スペシャリスト。人呼んで「逃げ回る太陽」。",
-    "icon_url": "public/images/characters/face/pyro_5_catalyst_Klee.png",
+    "icon_url": "images/characters/face/pyro_5_catalyst_Klee.png",
     "レアリティ": 5,
     "武器": "法器",
     "元素": "炎",
@@ -139,7 +139,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_5_catalyst_Klee/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_5_catalyst_Klee/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -186,7 +186,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
@@ -203,7 +203,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
@@ -265,7 +265,7 @@
         "ブービートラップ継続時間": 15,
         "クールタイム": 20,
         "使用回数": 2,
-        "icon_url": "public/images/characters/pyro_5_catalyst_Klee/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_5_catalyst_Klee/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "ドッカン花火",
@@ -300,7 +300,7 @@
         "継続時間": 10,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/pyro_5_catalyst_Klee/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_5_catalyst_Klee/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -313,17 +313,17 @@
                     "数値": 50
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/const_talent_0.png"
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/const_talent_0.png"
         },
         {
             "名前": "無限花火",
             "説明": "クレーの重撃が会心を発生すると、チーム全員の元素エネルギーが2回復する。",
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/const_talent_1.png"
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/const_talent_1.png"
         },
         {
             "名前": "宝物揃い",
             "説明": "ミニマップで周囲の<span style=\"color:#FFD780FF\">モンド地域の特産</span>の位置を表示する。",
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/const_talent_2.png"
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -338,7 +338,7 @@
                     "数値": "120%元素爆発#ドッカン花火ダメージ"
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/constellation_1.png"
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/constellation_1.png"
         },
         "2": {
             "名前": "弾丸の破片",
@@ -350,24 +350,24 @@
                     "数値": -23
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/constellation_2.png"
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/constellation_2.png"
         },
         "3": {
             "名前": "クレー特製",
             "説明": "<span style=\"color:#FFD780FF\">ボンボン爆弾</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/constellation_3.png",
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "一触即発",
             "説明": "<span style=\"color:#FFD780FF\">ドッカン花火</span>継続中にキャラクターを切り替えると、爆発が発生し、攻撃力555%分の<span style=\"color:#FF9999FF\">炎元素範囲ダメージ</span>を与える。",
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/constellation_4.png",
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "轟撃の星",
             "説明": "<span style=\"color:#FFD780FF\">ドッカン花火</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/constellation_5.png",
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -380,7 +380,7 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_catalyst_Klee/constellation_6.png"
+            "icon_url": "images/characters/pyro_5_catalyst_Klee/constellation_6.png"
         }
     },
     "おすすめセット": [

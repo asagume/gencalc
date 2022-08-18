@@ -1,7 +1,7 @@
 {
     "名前": "文使い",
     "説明": "デザインがシンプルな木弓。かつて遠隔通信の道具として使われていたらしい。",
-    "icon_url": "public/images/weapons/bow/3_Messenger.png",
+    "icon_url": "images/weapons/bow/3_Messenger.png",
     "レアリティ": 3,
     "種類": "弓",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "白纓槍",
     "説明": "千岩軍兵士の制式装備。槍身は丈夫で槍先が鋭い頼もしい武器。",
-    "icon_url": "public/images/weapons/polearm/3_WhiteTassel.png",
+    "icon_url": "images/weapons/polearm/3_WhiteTassel.png",
     "レアリティ": 3,
     "種類": "長柄武器",
     "ステータス": {

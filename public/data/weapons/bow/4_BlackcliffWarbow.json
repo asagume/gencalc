@@ -1,7 +1,7 @@
 {
     "名前": "黒岩の戦弓",
     "説明": "黒岩でできた弓。かなり硬いため、腕に自信のある射手だけが思うままに使いこなせられる。",
-    "icon_url": "public/images/weapons/bow/4_BlackcliffWarbow.png",
+    "icon_url": "images/weapons/bow/4_BlackcliffWarbow.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

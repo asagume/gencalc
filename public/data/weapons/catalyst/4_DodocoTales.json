@@ -1,7 +1,7 @@
 {
     "名前": "ドドコの物語",
     "説明": "豪華な表紙の児童書、子供向けの短いストーリーで構成されている。読むと心がリラックスできるものばかり。<br/>その無邪気な冒険物語を読めば、たとえ大人でも夢中になるだろう。",
-    "icon_url": "public/images/weapons/catalyst/4_DodocoTales.png",
+    "icon_url": "images/weapons/catalyst/4_DodocoTales.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

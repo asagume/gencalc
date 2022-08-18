@@ -1,7 +1,7 @@
 {
     "名前": "冬極の白星",
     "説明": "真冬の堅氷の如く、鋭き無垢なる弓。",
-    "icon_url": "public/images/weapons/bow/5_PolarStar.png",
+    "icon_url": "images/weapons/bow/5_PolarStar.png",
     "レアリティ": 5,
     "種類": "弓",
     "ステータス": {

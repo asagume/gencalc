@@ -1,7 +1,7 @@
 {
     "名前": "千岩古剣",
     "説明": "璃月の基盤岩を原材料として作った重厚な大剣。",
-    "icon_url": "public/images/weapons/claymore/4_LithicBlade.png",
+    "icon_url": "images/weapons/claymore/4_LithicBlade.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

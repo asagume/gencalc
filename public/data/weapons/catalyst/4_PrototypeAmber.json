@@ -1,7 +1,7 @@
 {
     "名前": "金珀·試作",
     "説明": "黒岩場の中に隠されていた金珀法器。微かに太陽と月と星の光を放っている。",
-    "icon_url": "public/images/weapons/catalyst/4_PrototypeAmber.png",
+    "icon_url": "images/weapons/catalyst/4_PrototypeAmber.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

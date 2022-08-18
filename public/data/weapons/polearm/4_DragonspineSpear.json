@@ -1,7 +1,7 @@
 {
     "名前": "ドラゴンスピア",
     "説明": "龍の牙で作られた長槍。妙に暖かさを感じる。",
-    "icon_url": "public/images/weapons/polearm/4_DragonspineSpear.png",
+    "icon_url": "images/weapons/polearm/4_DragonspineSpear.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "飛雷の鳴弦",
     "説明": "将軍から賜わった長弓。消えぬ雷光が輝いている。",
-    "icon_url": "public/images/weapons/bow/5_ThunderingPulse.png",
+    "icon_url": "images/weapons/bow/5_ThunderingPulse.png",
     "レアリティ": 5,
     "種類": "弓",
     "ステータス": {

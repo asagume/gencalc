@@ -1,7 +1,7 @@
 {
     "名前": "鉄蜂の刺し",
     "説明": "外形が細長い剣、異国から貿易ルートを経て璃月に渡った変わった兵器。とても軽く、刃先が鋭い。",
-    "icon_url": "public/images/weapons/sword/4_IronSting.png",
+    "icon_url": "images/weapons/sword/4_IronSting.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

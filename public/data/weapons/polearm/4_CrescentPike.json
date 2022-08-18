@@ -1,7 +1,7 @@
 {
     "名前": "流月の針",
     "説明": "槍の先端は細く、根元には半月の形をした刃がある異国の兵器。貿易ルートを経て異国から璃月に渡った。少し練習すれば、かなりの破壊力を出せる優れもの。",
-    "icon_url": "public/images/weapons/polearm/4_CrescentPike.png",
+    "icon_url": "images/weapons/polearm/4_CrescentPike.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

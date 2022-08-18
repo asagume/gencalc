@@ -3,9 +3,7 @@
     <template v-if="mode == 1">
       <table class="character-info status">
         <caption>
-          {{
-              displayName("ステータス")
-          }}
+          {{ displayName("ステータス") }}
         </caption>
         <template v-for="(item, index) in statsInfoList" :key="index">
           <tr>
@@ -16,9 +14,7 @@
       </table>
       <table class="character-info">
         <caption>
-          {{
-              displayName("命ノ星座")
-          }}
+          {{ displayName("命ノ星座") }}
         </caption>
         <template v-for="(item, index) in constellationInfoList" :key="index">
           <tr>
@@ -36,9 +32,7 @@
       </table>
       <table class="character-info">
         <caption>
-          {{
-              displayName("固有天賦")
-          }}
+          {{ displayName("固有天賦") }}
         </caption>
         <template v-for="(item, index) in passiveTalentInfoList" :key="index">
           <tr>
@@ -92,6 +86,14 @@
             {{ displayName(characterMaster.元素スキル.名前) }}
           </th>
         </tr>
+        <tr v-for="(item, index) in talentAttributes(characterMaster.元素スキル)" :key="index">
+          <th class="title">
+            {{ displayName(item[0]) }}
+          </th>
+          <td>
+            {{ item[1] }}
+          </td>
+        </tr>
         <tr>
           <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
         </tr>
@@ -110,6 +112,14 @@
           <th colspan="2" class="title">
             {{ displayName(characterMaster.元素爆発.名前) }}
           </th>
+        </tr>
+        <tr v-for="(item, index) in talentAttributes(characterMaster.元素爆発)" :key="index">
+          <th class="title">
+            {{ displayName(item[0]) }}
+          </th>
+          <td>
+            {{ item[1] }}
+          </td>
         </tr>
         <tr>
           <td colspan="2" class="description" v-html="characterMaster.元素爆発.説明"></td>
@@ -216,9 +226,20 @@ export default defineComponent({
       }
       return result;
     });
+
+    const talentAttributes = (talentObj: TTalentInfo) => {
+      const result = [] as any[];
+      ['継続時間', 'クールタイム', '元素エネルギー'].forEach(suffix => {
+        const keyArr = Object.keys(talentObj).filter(s => s.endsWith(suffix));
+        for (const key of keyArr) {
+          result.push([key, talentObj[key]]);
+        }
+      });
+      return result;
+    };
+
     const talentValue = (valueObj: any, level: number) => {
       if (isPlainObject(valueObj)) {
-        console.log(valueObj, level);
         return valueObj[String(level)];
       }
       return valueObj;
@@ -230,6 +251,9 @@ export default defineComponent({
       statsInfoList,
       constellationInfoList,
       passiveTalentInfoList,
+
+      talentAttributes,
+
       talentValue,
     };
   },

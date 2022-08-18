@@ -1,7 +1,7 @@
 {
     "名前": "匣中龍吟",
     "説明": "華やかな模様が、その鋭さを損なうことはない。空を裂く時の音はまるで龍の咆哮のようだ。",
-    "icon_url": "public/images/weapons/sword/4_Lion'sRoar.png",
+    "icon_url": "images/weapons/sword/4_Lion'sRoar.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

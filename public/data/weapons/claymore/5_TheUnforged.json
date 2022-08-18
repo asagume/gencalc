@@ -1,7 +1,7 @@
 {
     "名前": "無工の剣",
     "説明": "悪人を討ち、妖魔を退治する大剣。刃はないが、その力は神を彷彿させる。",
-    "icon_url": "public/images/weapons/claymore/5_TheUnforged.png",
+    "icon_url": "images/weapons/claymore/5_TheUnforged.png",
     "レアリティ": 5,
     "種類": "両手剣",
     "ステータス": {

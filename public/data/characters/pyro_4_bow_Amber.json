@@ -1,7 +1,7 @@
 {
     "名前": "アンバー",
     "説明": "元気満々な女の子、騎士団で最も優秀で、最後の偵察騎士である。",
-    "icon_url": "public/images/characters/face/pyro_4_bow_Amber.png",
+    "icon_url": "images/characters/face/pyro_4_bow_Amber.png",
     "レアリティ": 4,
     "武器": "弓",
     "元素": "炎",
@@ -168,7 +168,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_4_bow_Amber/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_4_bow_Amber/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -250,7 +250,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
@@ -267,7 +267,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
@@ -328,7 +328,7 @@
             }
         ],
         "クールタイム": 15,
-        "icon_url": "public/images/characters/pyro_4_bow_Amber/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_4_bow_Amber/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "矢の雨",
@@ -374,7 +374,7 @@
         "継続時間": 2,
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "public/images/characters/pyro_4_bow_Amber/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_4_bow_Amber/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -388,7 +388,7 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/const_talent_0.png"
+            "icon_url": "images/characters/pyro_4_bow_Amber/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -401,20 +401,20 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/const_talent_1.png"
+            "icon_url": "images/characters/pyro_4_bow_Amber/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "飛行チャンピオン",
             "説明": "チーム内の自身のキャラクター全員が滑翔に消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/const_talent_2.png"
+            "icon_url": "images/characters/pyro_4_bow_Amber/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "一挙双擒！",
             "説明": "<span style=\"color:#FFD780FF\">狙い撃ち</span>する時、矢を連続で2本放つ。2本目の矢は元の矢の20%のダメージを与える。",
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/constellation_1.png",
+            "icon_url": "images/characters/pyro_4_bow_Amber/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -428,24 +428,24 @@
                     "元素": "炎"
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/constellation_2.png"
+            "icon_url": "images/characters/pyro_4_bow_Amber/constellation_2.png"
         },
         "3": {
             "名前": "燃やせ！",
             "説明": "<span style=\"color:#FFD780FF\">矢の雨</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/constellation_3.png",
+            "icon_url": "images/characters/pyro_4_bow_Amber/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "ただの人形じゃない",
             "説明": "<span style=\"color:#FFD780FF\">爆弾人形</span>のクールタイム-20%、使用可能回数+1。",
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/constellation_4.png",
+            "icon_url": "images/characters/pyro_4_bow_Amber/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "ウサギ伯爵だよ！",
             "説明": "<span style=\"color:#FFD780FF\">爆弾人形</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/constellation_5.png",
+            "icon_url": "images/characters/pyro_4_bow_Amber/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -458,7 +458,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_bow_Amber/constellation_6.png"
+            "icon_url": "images/characters/pyro_4_bow_Amber/constellation_6.png"
         }
     },
     "おすすめセット": [

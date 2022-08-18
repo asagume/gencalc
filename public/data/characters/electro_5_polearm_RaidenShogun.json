@@ -1,7 +1,7 @@
 {
     "名前": "雷電将軍",
     "説明": "御建鳴神主尊大御所様。永劫不変の「永遠」を稲妻の民に約束する。",
-    "icon_url": "public/images/characters/face/electro_5_polearm_RaidenShogun.png",
+    "icon_url": "images/characters/face/electro_5_polearm_RaidenShogun.png",
     "レアリティ": 5,
     "武器": "長柄武器",
     "元素": "雷",
@@ -15,7 +15,8 @@
         "中国語 CV": "菊花花",
         "英語 CV": "Anne Yatco",
         "日本語 CV": "沢城みゆき",
-        "韓国語 CV": "박지윤"
+        "韓国語 CV": "박지윤",
+        "神の心": "雷"
     },
     "ステータス": {
         "基礎HP": {
@@ -176,7 +177,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/battle_talent_0.png"
+        "icon_url": "images/characters/electro_5_polearm_RaidenShogun/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、切り上げ攻撃を発動する。",
@@ -223,7 +224,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "127.84%",
@@ -240,7 +241,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "159.68%",
@@ -341,7 +342,7 @@
         "継続時間": 25,
         "クールタイム": 10,
         "粒子生成数": "初撃 0個\n連携攻撃 0.5個/HIT",
-        "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/battle_talent_1.png"
+        "icon_url": "images/characters/electro_5_polearm_RaidenShogun/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "奥義·夢想真説",
@@ -473,7 +474,7 @@
         "継続時間": 7,
         "クールタイム": 18,
         "元素エネルギー": 90,
-        "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/battle_talent_2.png"
+        "icon_url": "images/characters/electro_5_polearm_RaidenShogun/battle_talent_2.png"
     },
     "特殊通常攻撃": {
         "条件": "夢想の一心",
@@ -642,7 +643,7 @@
                 "ダメージバフ": "元素爆発ダメージバフ"
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "127.84%",
@@ -663,7 +664,7 @@
                 "ダメージバフ": "元素爆発ダメージバフ"
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "159.68%",
@@ -690,7 +691,7 @@
             "種類": "固有天賦",
             "名前": "千万の願望",
             "説明": "周囲にいるチーム中キャラクターが元素オーブまたは元素粒子を獲得した時、<span style=\"color:#FFD780FF\">諸願百目の輪</span>に願力を2層蓄積する。<br/>この効果は3秒毎に1回のみ発動可能。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/const_talent_0.png"
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -707,20 +708,20 @@
                     "数値": "100%元素チャージ効率-100*0.006*元素爆発#非表示_夢想の一心 エネルギー回復"
                 }
             ],
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/const_talent_1.png"
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "天下名物狩り",
             "説明": "片手剣と長柄武器を突破する時、消費するモラ-50%。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/const_talent_2.png"
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "悪曜の呪詛",
             "説明": "<span style=\"color:#FFD780FF\">諸願百目の輪</span>の願力をより早く蓄積できるようになる。<span style=\"color:#FFACFFFF\">雷元素</span>タイプのキャラクターによる元素爆発が蓄積する願力+80%。他の元素タイプのキャラクターによる元素爆発が蓄積する願力+20%。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/constellation_1.png",
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -751,30 +752,30 @@
                     "数値": 60
                 }
             ],
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/constellation_2.png"
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/constellation_2.png"
         },
         "3": {
             "名前": "眞影旧事",
             "説明": "<span style=\"color:#FFD780FF\">奥義·夢想真説</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/constellation_3.png",
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "常道への誓い",
             "説明": "<span style=\"color:#FFD780FF\">奥義·夢想真説</span>による<span style=\"color:#FFD780FF\">夢想の一心</span>状態終了後、周囲のチーム全員（雷電将軍自身を除く）の攻撃力+30%、持続時間10秒。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/constellation_4.png",
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "凶将の顕現",
             "説明": "<span style=\"color:#FFD780FF\">神変·悪曜開眼</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/constellation_5.png",
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "願いの代行者",
             "説明": "<span style=\"color:#FFD780FF\">奥義·夢想真説</span>による<span style=\"color:#FFD780FF\">夢想の一心</span>状態の時、雷電将軍の元素爆発ダメージが敵に命中すると、周囲のチーム全員（雷電将軍自身を除く）の元素爆発のクールタイム-1秒。<br/>この効果は1秒毎に1回のみ発動可能で、継続時間内に最大5回まで発動できる。",
-            "icon_url": "public/images/characters/electro_5_polearm_RaidenShogun/constellation_6.png",
+            "icon_url": "images/characters/electro_5_polearm_RaidenShogun/constellation_6.png",
             "詳細": []
         }
     },

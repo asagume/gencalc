@@ -1,7 +1,7 @@
 {
     "名前": "飛天御剣",
     "説明": "頼もしい鋼の剣、伝説の中で「御剣公子」はこれの力を借りて飛天しようとしたらしい。",
-    "icon_url": "public/images/weapons/sword/3_SkyriderSword.png",
+    "icon_url": "images/weapons/sword/3_SkyriderSword.png",
     "レアリティ": 3,
     "種類": "片手剣",
     "ステータス": {

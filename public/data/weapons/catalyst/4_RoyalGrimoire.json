@@ -1,7 +1,7 @@
 {
     "名前": "旧貴族秘法録",
     "説明": "かつてモンドを支配していた旧貴族配下の魔導師が持っていたもの。中には法術書と同等に詳しい史話が記録されている。",
-    "icon_url": "public/images/weapons/catalyst/4_RoyalGrimoire.png",
+    "icon_url": "images/weapons/catalyst/4_RoyalGrimoire.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

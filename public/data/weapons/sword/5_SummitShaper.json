@@ -1,7 +1,7 @@
 {
     "名前": "斬山の刃",
     "説明": "とある特別な契約を象徴する剣、昔この剣は山頂を削り平らにしたらしい。",
-    "icon_url": "public/images/weapons/sword/5_SummitShaper.png",
+    "icon_url": "images/weapons/sword/5_SummitShaper.png",
     "レアリティ": 5,
     "種類": "片手剣",
     "ステータス": {

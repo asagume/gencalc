@@ -1,7 +1,7 @@
 {
     "名前": "冬忍びの実",
     "説明": "冷徹な意志がこもった奇妙な果実。微かな苦渋を醸し出している。",
-    "icon_url": "public/images/weapons/catalyst/4_Frostbearer.png",
+    "icon_url": "images/weapons/catalyst/4_Frostbearer.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

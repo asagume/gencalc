@@ -1,7 +1,7 @@
 {
     "名前": "煙緋",
     "説明": "仙獣の血が流れる聡明な少女。璃月港で有名な法律家として活躍している。",
-    "icon_url": "public/images/characters/face/pyro_4_catalyst_Yanfei.png",
+    "icon_url": "images/characters/face/pyro_4_catalyst_Yanfei.png",
     "レアリティ": 4,
     "武器": "法器",
     "元素": "炎",
@@ -84,8 +84,8 @@
         }
     },
     "オプション初期値": {
-        "丹火の印消費 炎元素ダメージ+": 3,
-        "敵のHP50%未満 重撃の会心率+20%": false
+        "関連条約": 3,
+        "最終解釈権": false
     },
     "通常攻撃": {
         "名前": "通常攻撃·封蝋の印",
@@ -140,7 +140,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_4_catalyst_Yanfei/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -149,7 +149,7 @@
         ],
         "詳細": [
             {
-                "名前": "丹火の印なし",
+                "名前": "重撃ダメージ",
                 "数値": {
                     "1": "98%",
                     "2": "104%",
@@ -165,7 +165,7 @@
                 }
             },
             {
-                "名前": "丹火の印1",
+                "名前": "重撃ダメージ",
                 "数値": {
                     "1": "116%",
                     "2": "122%",
@@ -181,7 +181,7 @@
                 }
             },
             {
-                "名前": "丹火の印2",
+                "名前": "重撃ダメージ",
                 "数値": {
                     "1": "133%",
                     "2": "141%",
@@ -197,7 +197,7 @@
                 }
             },
             {
-                "名前": "丹火の印3",
+                "名前": "重撃ダメージ",
                 "数値": {
                     "1": "150%",
                     "2": "159%",
@@ -213,7 +213,7 @@
                 }
             },
             {
-                "名前": "丹火の印4",
+                "名前": "重撃ダメージ",
                 "数値": {
                     "1": "168%",
                     "2": "178%",
@@ -229,7 +229,7 @@
                 }
             },
             {
-                "名前": "法獣の灼眼ダメージ",
+                "名前": "法獣の灼眼",
                 "数値": "80%"
             }
         ],
@@ -256,7 +256,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
@@ -273,7 +273,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
@@ -315,7 +315,7 @@
             }
         ],
         "クールタイム": 9,
-        "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_4_catalyst_Yanfei/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "契約成立",
@@ -340,7 +340,8 @@
                 }
             },
             {
-                "条件": "契約成立による重撃ダメージ+",
+                "条件": "契約成立",
+                "名前": "重撃ダメージアップ",
                 "種類": "重撃ダメージバフ",
                 "数値": {
                     "1": 33,
@@ -368,7 +369,7 @@
         "継続時間": 15,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_4_catalyst_Yanfei/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -376,29 +377,29 @@
             "説明": "煙緋が重撃で丹火の印を消費した時、丹火の印1枚につき<span style=\"color:#FF9999FF\">炎元素ダメージ</span>+5%、継続時間6秒。効果持続中に再び重撃を放つと、既存の効果が先にクリアされる。",
             "詳細": [
                 {
-                    "条件": "丹火の印消費 炎元素ダメージ+@5-20%",
+                    "条件": "関連条約@丹火の印1-4",
                     "種類": "炎元素ダメージバフ",
-                    "数値": 1
+                    "数値": 5
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/const_talent_0.png"
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/const_talent_0.png"
         },
         {
             "名前": "法獣の灼眼",
             "説明": "煙緋が自ら発動した重撃が敵に対して会心した時、追加で自身の攻撃力80%分の<span style=\"color:#FF9999FF\">炎元素範囲ダメージ</span>を与える。このダメージは重撃ダメージとみなされる。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/const_talent_1.png"
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/const_talent_1.png"
         },
         {
             "名前": "法律百科",
             "説明": "ミニマップで周囲の<span style=\"color:#FFD780FF\">璃月地域の特産</span>の位置を表示する。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/const_talent_2.png"
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "法からは逃れられない",
             "説明": "煙緋が丹火の印を1枚所持するごとに、重撃を詠唱している間の中断耐性がアップ、さらに重撃のスタミナ消費-10%。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/constellation_1.png",
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -406,36 +407,36 @@
             "説明": "煙緋の重撃がHP50%未満の敵に対して、会心率+20%。",
             "詳細": [
                 {
-                    "条件": "敵のHP50%未満 重撃の会心率+20%",
+                    "条件": "最終解釈権",
                     "対象": "重撃ダメージ",
                     "種類": "会心率",
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/constellation_2.png"
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/constellation_2.png"
         },
         "3": {
             "名前": "真火の宝印",
             "説明": "<span style=\"color:#FFD780FF\">丹書契約</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/constellation_3.png",
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "丹書金鉄券",
             "説明": "<span style=\"color:#FFD780FF\">契約成立</span>を発動した時、下記の効果を発動する。<br/>ダメージ吸収量がHP上限の45%に相当するシールドを生成する。持続時間15秒。<br/>このシールドは<span style=\"color:#FF9999FF\">炎元素ダメージ</span>に対して250%の吸収効果がある。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/constellation_4.png",
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "遵法誓約書",
             "説明": "<span style=\"color:#FFD780FF\">契約成立</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/constellation_5.png",
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "追加条項だよ",
             "説明": "煙緋が所持できる丹火の印の最大枚数+1。",
-            "icon_url": "public/images/characters/pyro_4_catalyst_Yanfei/constellation_6.png",
+            "icon_url": "images/characters/pyro_4_catalyst_Yanfei/constellation_6.png",
             "詳細": []
         }
     },

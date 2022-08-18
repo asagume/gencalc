@@ -1,7 +1,7 @@
 {
     "名前": "旅人",
     "説明": "世界の外から漂流してきた旅人。肉親が見知らぬ神に連れ去られたため、七神を探す旅に出た。",
-    "icon_url": "public/images/characters/face/electro_5_sword_Traveler.png",
+    "icon_url": "images/characters/face/electro_5_sword_Traveler.png",
     "レアリティ": 5,
     "武器": "片手剣",
     "元素": "雷",
@@ -165,7 +165,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/electro_5_sword_Traveler/battle_talent_0.png"
+        "icon_url": "images/characters/electro_5_sword_Traveler/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -212,7 +212,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -229,7 +229,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -297,7 +297,7 @@
         "継続時間": 6,
         "豊穣の勾玉の存在時間": 15,
         "クールタイム": 13.5,
-        "icon_url": "public/images/characters/electro_5_sword_Traveler/battle_talent_1.png"
+        "icon_url": "images/characters/electro_5_sword_Traveler/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "電光雷轟",
@@ -362,14 +362,14 @@
         "継続時間": 12,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/electro_5_sword_Traveler/battle_talent_2.png"
+        "icon_url": "images/characters/electro_5_sword_Traveler/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "転瞬の迅雷",
             "種類": "固有天賦",
             "説明": "周囲のチームメンバー（旅人自身を除く）が<span style=\"color:#FFD780FF\">雷影剣</span>で生成された豊穰の勾玉を拾うと、<span style=\"color:#FFD780FF\">雷影剣</span>のクールタイム-1.5秒。",
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/const_talent_0.png"
+            "icon_url": "images/characters/electro_5_sword_Traveler/const_talent_0.png"
         },
         {
             "名前": "轟く雷鳴",
@@ -382,14 +382,14 @@
                     "数値": "10%元素チャージ効率"
                 }
             ],
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/const_talent_1.png"
+            "icon_url": "images/characters/electro_5_sword_Traveler/const_talent_1.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "豊穰の春雷",
             "説明": "<span style=\"color:#FFD780FF\">雷影剣</span>発動時に生成する豊穰の勾玉の数を3つにアップ。",
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/constellation_1.png",
+            "icon_url": "images/characters/electro_5_sword_Traveler/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -402,30 +402,30 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/constellation_2.png"
+            "icon_url": "images/characters/electro_5_sword_Traveler/constellation_2.png"
         },
         "3": {
             "名前": "連延の遠雷",
             "説明": "<span style=\"color:#FFD780FF\">電光雷轟</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/constellation_3.png",
+            "icon_url": "images/characters/electro_5_sword_Traveler/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "予測不能な雷雲",
             "説明": "キャラクターが<span style=\"color:#FFD780FF\">雷影剣</span>で生成した豊穰の勾玉を獲得した時、該当キャラクターの元素エネルギーが35%未満の場合、豊穰の勾玉で回復できる元素エネルギー+100%。",
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/constellation_4.png",
+            "icon_url": "images/characters/electro_5_sword_Traveler/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "荒野の雷鳴",
             "説明": "<span style=\"color:#FFD780FF\">雷影剣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/constellation_5.png",
+            "icon_url": "images/characters/electro_5_sword_Traveler/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "世を揺るがす神雷",
             "説明": "<span style=\"color:#FFD780FF\">電光雷轟</span>が威光の落雷を2回引き起こすたび、次の威光の落雷を大幅に強化し、本来の200%分のダメージを与え、さらに現在のキャラクターの元素エネルギーを1ポイント回復する。",
-            "icon_url": "public/images/characters/electro_5_sword_Traveler/constellation_6.png",
+            "icon_url": "images/characters/electro_5_sword_Traveler/constellation_6.png",
             "詳細": []
         }
     },

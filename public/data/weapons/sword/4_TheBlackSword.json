@@ -1,7 +1,7 @@
 {
     "名前": "黒剣",
     "説明": "紛争と殺戮を渇望する漆黒の剣。手にした人は殺戮の悦びに溺れてしまうらしい。",
-    "icon_url": "public/images/weapons/sword/4_TheBlackSword.png",
+    "icon_url": "images/weapons/sword/4_TheBlackSword.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

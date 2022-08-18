@@ -1,7 +1,7 @@
 {
     "名前": "旧貴族長剣",
     "説明": "かつてモンドを支配した旧貴族の佩剣。精巧に作られており、装飾や花の彫刻が持ち主の身分を表している。",
-    "icon_url": "public/images/weapons/sword/4_RoyalLongsword.png",
+    "icon_url": "images/weapons/sword/4_RoyalLongsword.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "冷刃",
     "説明": "精巧な鋼を折り返し鍛錬により仕上げた心強い武器。かつての持ち主の冒険を見守ってきた。",
-    "icon_url": "public/images/weapons/sword/3_CoolSteel.png",
+    "icon_url": "images/weapons/sword/3_CoolSteel.png",
     "レアリティ": 3,
     "種類": "片手剣",
     "ステータス": {

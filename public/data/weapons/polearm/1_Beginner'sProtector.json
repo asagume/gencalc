@@ -1,7 +1,7 @@
 {
     "名前": "新米の長槍",
     "説明": "旗竿のように真っすぐで、舞うと勢いがある。多くの状況に対応できる。",
-    "icon_url": "public/images/weapons/polearm/1_Beginner'sProtector.png",
+    "icon_url": "images/weapons/polearm/1_Beginner'sProtector.png",
     "レアリティ": 1,
     "種類": "長柄武器",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "腐植の剣",
     "説明": "命に飢える不気味な直剣。龍さえも侵食する腐植の毒を持っている。",
-    "icon_url": "public/images/weapons/sword/4_FesteringDesire.png",
+    "icon_url": "images/weapons/sword/4_FesteringDesire.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

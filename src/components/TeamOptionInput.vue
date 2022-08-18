@@ -38,6 +38,12 @@
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
   </fieldset>
+
+  <p class="notice">
+    キャラクターの天賦レベルやステータスによって効果量が変動する種類のオプションはデフォルト名称の構成保存データが存在する場合に選択可能になります。
+    <br />
+    構成保存データのデフォルト名称：あなたの{キャラクターの名前}
+  </p>
 </template>
 
 <script lang="ts">
@@ -84,13 +90,13 @@ import CompositionFunction from "./CompositionFunction.vue";
 export default defineComponent({
   name: "TeamOptionInput",
   props: {
+    character: { type: String as PropType<TCharacterKey>, required: true },
     savedSupporters: { type: Object as PropType<{ key: string; value: string }[]>, required: true },
   },
   emits: ["update:team-option"],
   setup(props, context) {
     const { displayName, displayOptionName } = CompositionFunction();
 
-    const savedSupportersRea = reactive(props.savedSupporters);
     const supporterKeyList = reactive([] as string[]);
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
 
@@ -139,14 +145,14 @@ export default defineComponent({
     };
 
     const loadSupporterData = async () => {
-      for (const savedSupporter of savedSupportersRea) {
+      for (const savedSupporter of props.savedSupporters) {
         const damageResult = await setupSupporterDamageResult(savedSupporter);
         supporterDamageResult.set(savedSupporter.key, damageResult);
       }
     };
     loadSupporterData();
 
-    watch(savedSupportersRea, async (newVal, oldVal) => {
+    watch(props.savedSupporters, async (newVal, oldVal) => {
       for (const entry of newVal) {
         const changed = oldVal.filter(s => s.key == entry.key && s.value == entry.value).length > 0;
         if (changed) {
@@ -269,8 +275,8 @@ export default defineComponent({
 
     const conditionDisabled = (item: any): boolean => {
       const supporter = item.name.split("_")[0];
+      if (supporter == props.character) return true;
       if (supporterDamageResult.has(supporter)) return false;
-      // if (savedSupportersRea.includes(supporter)) return false;
       for (const myDetailObj of statusChangeDetailObjArr) {
         if (myDetailObj.条件.startsWith(item.name)) {
           if (isUseReference(myDetailObj.数値)) {
@@ -320,6 +326,7 @@ export default defineComponent({
       return workObj;
     });
 
+    // TODO 多言語対応
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
@@ -393,5 +400,10 @@ legend label.toggle-switch {
 
 label.condition {
   min-width: calc(100% / 3 - 1rem - 4px);
+}
+
+p.notice {
+  text-align: left;
+  color: chocolate;
 }
 </style>

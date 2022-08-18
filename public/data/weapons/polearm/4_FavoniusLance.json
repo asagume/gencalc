@@ -1,7 +1,7 @@
 {
     "名前": "西風長槍",
     "説明": "西風騎士団でよく使われる長槍。身が真っ直ぐで、槍先からそよ風が溢れている。",
-    "icon_url": "public/images/weapons/polearm/4_FavoniusLance.png",
+    "icon_url": "images/weapons/polearm/4_FavoniusLance.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

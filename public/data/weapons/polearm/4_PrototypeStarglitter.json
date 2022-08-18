@@ -1,7 +1,7 @@
 {
     "名前": "星鎌·試作",
     "説明": "黒岩場の中に隠されていた古い鉤槍。槍先の輝きはまるで夜空の星のようだ。",
-    "icon_url": "public/images/weapons/polearm/4_PrototypeStarglitter.png",
+    "icon_url": "images/weapons/polearm/4_PrototypeStarglitter.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "雲菫",
     "説明": "演技と創作の二つの才を持つ璃月劇の看板役者。雲菫の演じる姿は優雅でたおやかであり、まるで彼女の風格を表しているかのようである。",
-    "icon_url": "public/images/characters/face/geo_4_polearm_YunJin.png",
+    "icon_url": "images/characters/face/geo_4_polearm_YunJin.png",
     "レアリティ": 4,
     "武器": "長柄武器",
     "元素": "岩",
@@ -170,7 +170,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/geo_4_polearm_YunJin/battle_talent_0.png"
+        "icon_url": "images/characters/geo_4_polearm_YunJin/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。",
@@ -216,7 +216,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "127.84%",
@@ -233,7 +233,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "159.68%",
@@ -331,7 +331,7 @@
         ],
         "クールタイム": 9,
         "粒子生成数": "2/2.5/3個",
-        "icon_url": "public/images/characters/geo_4_polearm_YunJin/battle_talent_1.png"
+        "icon_url": "images/characters/geo_4_polearm_YunJin/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "破嶂の旌儀",
@@ -403,14 +403,14 @@
         "発動回数": 30,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/geo_4_polearm_YunJin/battle_talent_2.png"
+        "icon_url": "images/characters/geo_4_polearm_YunJin/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "自我堅守",
             "種類": "固有天賦",
             "説明": "攻撃された瞬間に発動する<span style=\"color:#FFD780FF\">旋雲開相</span>は、長押しの2段チャージ状態になる。",
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/const_talent_0.png"
+            "icon_url": "images/characters/geo_4_polearm_YunJin/const_talent_0.png"
         },
         {
             "名前": "独立嶄然",
@@ -440,20 +440,20 @@
                     "数値": "1.5%防御力"
                 }
             ],
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/const_talent_1.png"
+            "icon_url": "images/characters/geo_4_polearm_YunJin/const_talent_1.png"
         },
         {
             "名前": "清食養性",
             "種類": "固有天賦",
             "説明": "冒険系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/const_talent_2.png"
+            "icon_url": "images/characters/geo_4_polearm_YunJin/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "飛身趟馬",
             "説明": "<span style=\"color:#FFD780FF\">旋雲開相</span>のクールタイム-18%。",
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/constellation_1.png",
+            "icon_url": "images/characters/geo_4_polearm_YunJin/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -466,12 +466,12 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/constellation_2.png"
+            "icon_url": "images/characters/geo_4_polearm_YunJin/constellation_2.png"
         },
         "3": {
             "名前": "牙纛探海",
             "説明": "<span style=\"color:#FFD780FF\">破嶂の旌儀</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/constellation_3.png",
+            "icon_url": "images/characters/geo_4_polearm_YunJin/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -484,18 +484,18 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/constellation_4.png"
+            "icon_url": "images/characters/geo_4_polearm_YunJin/constellation_4.png"
         },
         "5": {
             "名前": "翹楚名坤",
             "説明": "<span style=\"color:#FFD780FF\">旋雲開相</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/constellation_5.png",
+            "icon_url": "images/characters/geo_4_polearm_YunJin/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "荘諧併持",
             "説明": "<span style=\"color:#FFD780FF\">「飛雲旗陣」</span>状態のキャラクターの通常攻撃の攻撃速度+12%。",
-            "icon_url": "public/images/characters/geo_4_polearm_YunJin/constellation_6.png",
+            "icon_url": "images/characters/geo_4_polearm_YunJin/constellation_6.png",
             "詳細": []
         }
     },

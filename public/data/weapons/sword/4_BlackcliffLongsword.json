@@ -1,7 +1,7 @@
 {
     "名前": "黒岩の長剣",
     "説明": "黒岩でできた長剣。黒い剣身には微かに血の光が見える。",
-    "icon_url": "public/images/weapons/sword/4_BlackcliffLongsword.png",
+    "icon_url": "images/weapons/sword/4_BlackcliffLongsword.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

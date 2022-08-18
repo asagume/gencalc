@@ -1,7 +1,7 @@
 {
     "名前": "ダークアレイの酒と詩",
     "説明": "貴族時代に流行った楽譜、作曲家は不明。とある義賊のことを描いた物語である。",
-    "icon_url": "public/images/weapons/catalyst/4_WineandSong.png",
+    "icon_url": "images/weapons/catalyst/4_WineandSong.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

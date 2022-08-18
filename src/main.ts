@@ -161,6 +161,8 @@ async function main() {
     const recommendation = recommendationList[0];
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendationList[0].build);
 
+    console.log('main', artifactDetailInput);
+
     createApp(App, {
         characterInput: characterInput,
         artifactDetailInput: artifactDetailInput,

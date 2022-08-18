@@ -1,7 +1,7 @@
 {
     "名前": "若水",
     "説明": "色の流れが予測不能な長弓。光りの下では、水のような藍の輝きを見せる。",
-    "icon_url": "public/images/weapons/bow/5_AquaSimulacra.png",
+    "icon_url": "images/weapons/bow/5_AquaSimulacra.png",
     "レアリティ": 5,
     "種類": "弓",
     "ステータス": {

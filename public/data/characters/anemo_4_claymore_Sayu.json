@@ -1,7 +1,7 @@
 {
     "名前": "早柚",
     "説明": "「終末番」に所属する忍。小柄で、いつも眠たそうにしている。",
-    "icon_url": "public/images/characters/face/anemo_4_claymore_Sayu.png",
+    "icon_url": "images/characters/face/anemo_4_claymore_Sayu.png",
     "レアリティ": 4,
     "武器": "両手剣",
     "元素": "風",
@@ -156,7 +156,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/anemo_4_claymore_Sayu/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_4_claymore_Sayu/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -219,7 +219,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "149%",
@@ -236,7 +236,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "186%",
@@ -491,11 +491,11 @@
         ],
         "長押し最大継続時間": 10,
         "クールタイム": "6.0～11.0",
-        "icon_url": "public/images/characters/anemo_4_claymore_Sayu/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_4_claymore_Sayu/battle_talent_1.png"
     },
     "元素爆発": {
-        "名前": "嗚呼流·風隠急進",
-        "説明": "風々輪状態を解除する。",
+        "名前": "嗚呼流·影貉繚乱",
+        "説明": "<p>忍法·嗚呼流のもう一つの独創奥義！早柚に代わって仕事をこなしてくれる助っ人を創造する！</p><p>近くの敵に<span style=\"color: #33D7A0\">風元素ダメージ</span>を与え、周囲のチーム全員のHPを回復し、「むじむじだるま」を召喚する。HPの回復量は早柚の攻撃力によって決まる。</p><p></p><p><span style=\"color: #D3BC8E\">むじむじだるま</span></p><p>周期的に周囲の状況に基づいて、下記の行動を1つ行う。</p><p>·周囲のキャラクター全員のHPが70%を超えている場合、むじむじだるまは近くの敵1体を攻撃し、<span style=\"color: #33D7A0\">風元素ダメージ</span>を与える。</p><p>·フィールド上の周囲にHP70%以下のキャラクターがいる場合、そのうちHPの割合が最も低いキャラクターのHPを回復する。回復量は早柚の攻撃力によって決まる。周囲に敵がいない場合、周囲のキャラクター全員のHPが70%を超えていても、キャラクターのHPを回復する。</p><p>  </p><p><em>忍術に詳しくない人たちは早柚に忍術を披露してほしく、またさらには早柚に教えてもらおうとする人もいた。しかし、早柚はただ眠たく、邪魔をされたくないだけなのだ。</em></p>",
         "詳細": [
             {
                 "名前": "スキル発動ダメージ",
@@ -575,7 +575,7 @@
         "継続時間": 12,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/anemo_4_claymore_Sayu/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_4_claymore_Sayu/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -589,26 +589,24 @@
                     "数値": "120%元素熟知+300"
                 }
             ],
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/const_talent_0.png"
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/const_talent_0.png"
         },
         {
             "名前": "仕事をサボるのだ",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">嗚呼流·影貉繚乱</span>のむじむじだるまは下記効果を獲得する。<br/>·キャラクターのHPを回復する時、該当キャラクターの近くに出場している他キャラクターも回復量20%に相当するHPを回復する。<br/>·敵を攻撃する時、与えるダメージの範囲を拡大する。",
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/const_talent_1.png"
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/const_talent_1.png"
         },
         {
             "名前": "嗚呼流·屏息秘伝",
             "種類": "固有天賦",
-            "説明": [
-                "チーム内に早柚がいる時、チーム内の自身のキャラクターが晶蝶などの一部生物に近づいても気付かれなくなる。",
-                "効果のある生物は図鑑の「生物誌―野生生物」の「その他」分類から確認できる。"
-            ]
+            "説明": "チーム内に早柚がいる時、チーム内の自身のキャラクターが晶蝶などの一部生物に近づいても気付かれなくなる。<br/>効果のある生物は図鑑の「生物誌-野生生物」の「その他」分類から確認できる。",
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/const_talent_2.png"
         },
         {
             "名前": "嗚呼流·屏息秘伝",
             "説明": "チーム内に早柚がいる時、チーム内の自身のキャラクターが晶蝶などの一部生物に近づいても気付かれなくなる。<br/>効果のある生物は図鑑の「生物誌-野生生物」の「その他」分類から確認できる。",
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/const_talent_2.png",
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/const_talent_2.png",
             "詳細": []
         }
     ],
@@ -616,7 +614,7 @@
         "1": {
             "名前": "一心二用の術",
             "説明": "<span style=\"color:#FFD780FF\">嗚呼流·影貉繚乱</span>のむじむじだるまは、キャラクターのHPを無視し、周囲の敵への攻撃とキャラクターへのHP回復行動の2つを同時に行う。",
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/constellation_1.png",
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -635,24 +633,24 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/constellation_2.png"
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/constellation_2.png"
         },
         "3": {
             "名前": "分身に任せる",
             "説明": "<span style=\"color:#FFD780FF\">嗚呼流·影貉繚乱</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/constellation_3.png",
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "新しいサボる方法",
             "説明": "早柚がフィールド上で拡散反応を起こした時、元素エネルギーを1.2ポイント回復する。<br/>この効果は2秒毎に1回のみ発動可能。",
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/constellation_4.png",
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "素早さ最優先",
             "説明": "<span style=\"color:#FFD780FF\">嗚呼流·風隠急進</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/constellation_5.png",
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -670,7 +668,7 @@
                     "数値": "3*元素熟知"
                 }
             ],
-            "icon_url": "public/images/characters/anemo_4_claymore_Sayu/constellation_6.png"
+            "icon_url": "images/characters/anemo_4_claymore_Sayu/constellation_6.png"
         }
     },
     "おすすめセット": [

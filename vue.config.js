@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  indexPath: 'index.html',
+  indexPath: 'index3.html',
 
   pages: {
     index: {
@@ -11,7 +11,7 @@ module.exports = defineConfig({
   },
 
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/gencalc3-test/'
+    ? '/gencalc/'
     : '/',
   outputDir: 'docs',
   assetsDir: './',
@@ -19,8 +19,8 @@ module.exports = defineConfig({
 
   pluginOptions: {
     i18n: {
-      locale: 'ja',
-      fallbackLocale: 'ja',
+      locale: 'ja-jp',
+      fallbackLocale: 'en-us',
       localeDir: 'locales',
       enableLegacy: false,
       runtimeOnly: false,

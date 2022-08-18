@@ -1,7 +1,7 @@
 {
     "名前": "雨裁",
     "説明": "ホタルの光を放つ大剣、その勢いと力で敵を捻りつぶす。",
-    "icon_url": "public/images/weapons/claymore/4_Rainslasher.png",
+    "icon_url": "images/weapons/claymore/4_Rainslasher.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

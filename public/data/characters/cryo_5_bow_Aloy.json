@@ -1,7 +1,7 @@
 {
     "名前": "アーロイ",
     "説明": "かつては異端者であったが、今は機敏で腕の立つ狩人。いついかなる時も、正確無比な矢を放つことができる。",
-    "icon_url": "public/images/characters/face/cryo_5_bow_Aloy.png",
+    "icon_url": "images/characters/face/cryo_5_bow_Aloy.png",
     "レアリティ": 5,
     "武器": "弓",
     "元素": "氷",
@@ -156,7 +156,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/cryo_5_bow_Aloy/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_bow_Aloy/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -220,7 +220,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
@@ -237,7 +237,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
@@ -328,7 +328,7 @@
                 "種類": "氷元素付与"
             }
         ],
-        "icon_url": "public/images/characters/cryo_5_bow_Aloy/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_bow_Aloy/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "ドーンプロフェシー",
@@ -352,7 +352,7 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "public/images/characters/cryo_5_bow_Aloy/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_5_bow_Aloy/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -366,7 +366,7 @@
                     "数値": 16
                 }
             ],
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_bow_Aloy/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -379,50 +379,50 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_bow_Aloy/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "まあまあ落ち着け",
             "説明": "アーロイがチーム内にいる時、チーム内の自身のキャラクターが鳥肉、獣肉、冷製鮮肉をドロップする動物に近づいても気付かれなくなる。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_bow_Aloy/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/constellation_1.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_1.png",
             "詳細": []
         },
         "2": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/constellation_2.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/constellation_4.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "public/images/characters/cryo_5_bow_Aloy/constellation_6.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_6.png",
             "詳細": []
         }
     },

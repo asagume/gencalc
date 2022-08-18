@@ -1,7 +1,7 @@
 {
     "名前": "プレデター",
     "説明": "ユニークなデザインの弓。恐らくこの世界のものではない。",
-    "icon_url": "public/images/weapons/bow/4_Predator.png",
+    "icon_url": "images/weapons/bow/4_Predator.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "アモスの弓",
     "説明": "極めて古い弓。元の主がいなくても、その力は変わらない。それは万物の中にある力であり、欲するものから遠くなるほど、その力は強くなる。",
-    "icon_url": "public/images/weapons/bow/5_Amos'Bow.png",
+    "icon_url": "images/weapons/bow/5_Amos'Bow.png",
     "レアリティ": 5,
     "種類": "弓",
     "ステータス": {

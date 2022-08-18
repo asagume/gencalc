@@ -1,7 +1,7 @@
 {
     "名前": "雪葬の星銀",
     "説明": "壁画の間に保存されていた太古の大剣。星銀で鍛錬された刀身は、氷雪をも切り裂く力がある。",
-    "icon_url": "public/images/weapons/claymore/4_Snow-TombedStarsilver.png",
+    "icon_url": "images/weapons/claymore/4_Snow-TombedStarsilver.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

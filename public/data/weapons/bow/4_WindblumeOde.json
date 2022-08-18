@@ -1,7 +1,7 @@
 {
     "名前": "風花の頌歌",
     "説明": "名も無き花で飾られた弓、名も無き者の強き希望を宿している。",
-    "icon_url": "public/images/weapons/bow/4_WindblumeOde.png",
+    "icon_url": "images/weapons/bow/4_WindblumeOde.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

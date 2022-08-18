@@ -1,7 +1,7 @@
 {
     "名前": "胡桃",
     "説明": "「往生堂」七十七代目堂主、若くして璃月の葬儀を仕切り、責任を持ってそれを執り行っている。",
-    "icon_url": "public/images/characters/face/pyro_5_polearm_HuTao.png",
+    "icon_url": "images/characters/face/pyro_5_polearm_HuTao.png",
     "レアリティ": 5,
     "武器": "長柄武器",
     "元素": "炎",
@@ -185,7 +185,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_5_polearm_HuTao/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_5_polearm_HuTao/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。",
@@ -229,7 +229,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "127.84%",
@@ -246,7 +246,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "159.68%",
@@ -314,7 +314,7 @@
         "血梅香継続時間": 8,
         "継続時間": 9,
         "クールタイム": 16,
-        "icon_url": "public/images/characters/pyro_5_polearm_HuTao/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_5_polearm_HuTao/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "安神秘法",
@@ -397,14 +397,14 @@
         ],
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/pyro_5_polearm_HuTao/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_5_polearm_HuTao/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "種類": "固有天賦",
             "名前": "蝶隠の時",
             "説明": "<span style=\"color:#FFD780FF\">蝶導来世</span>による<span style=\"color:#FFD780FF\">冥蝶の舞</span>状態終了後、チーム全員（胡桃自身を除く）の会心率+12%、継続時間8秒。",
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/const_talent_0.png"
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/const_talent_0.png"
         },
         {
             "種類": "固有天賦",
@@ -417,20 +417,20 @@
                     "数値": 33
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/const_talent_1.png"
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/const_talent_1.png"
         },
         {
             "種類": "固有天賦",
             "名前": "多々益善",
             "説明": "料理を完璧調理した時、18%の確率で「微妙な」品質の同一料理を獲得する。",
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/const_talent_2.png"
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "朱色の花束",
             "説明": "<span style=\"color:#FFD780FF\">蝶導来世</span>による<span style=\"color:#FFD780FF\">冥蝶の舞</span>状態の時、胡桃の重撃はスタミナを消費しない。",
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/constellation_1.png",
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -442,24 +442,24 @@
                     "数値": "10%HP上限"
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/constellation_2.png"
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/constellation_2.png"
         },
         "3": {
             "名前": "血色の儀",
             "説明": "<span style=\"color:#FFD780FF\">蝶導来世</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/constellation_3.png",
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "花室の添い寝",
             "説明": "胡桃自ら与えた<span style=\"color:#FFD780FF\">血梅香</span>状態の敵が倒されると、周囲のチーム全員（胡桃自身を除く）の会心率+12%、継続時間15秒。",
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/constellation_4.png",
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "漂う花の香り",
             "説明": "<span style=\"color:#FFD780FF\">安神秘法</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/constellation_5.png",
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -482,7 +482,7 @@
                     "数値": 100
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_polearm_HuTao/constellation_6.png"
+            "icon_url": "images/characters/pyro_5_polearm_HuTao/constellation_6.png"
         }
     },
     "おすすめセット": [

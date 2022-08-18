@@ -1,7 +1,7 @@
 {
     "名前": "黒岩の斬刀",
     "説明": "とても丈夫な黒岩大刀、刀身は暗赤色。",
-    "icon_url": "public/images/weapons/claymore/4_BlackcliffSlasher.png",
+    "icon_url": "images/weapons/claymore/4_BlackcliffSlasher.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

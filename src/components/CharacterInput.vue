@@ -14,17 +14,17 @@
     </tr>
     <tr>
       <td style="width: 20%">
-        <select v-model="ascension" @change="ascensionOnChange">
+        <select v-model="characterInputRea.突破レベル" @change="ascensionOnChange">
           <option v-for="item in ascensionRange" :value="item" :key="item">
             A{{ item }}
           </option>
         </select>
-        <select v-model="level" @change="characterOnChange">
+        <select v-model="characterInputRea.レベル" @change="characterOnChange">
           <option v-for="item in levelRange" :value="item" :key="item">
             Lv.{{ item }}
           </option>
         </select>
-        <select v-model="constellation" @change="characterOnChange">
+        <select v-model="characterInputRea.命ノ星座" @change="characterOnChange">
           <option v-for="item in constellationRange" :value="item" :key="item">
             C{{ item }}
           </option>
@@ -41,17 +41,17 @@
         <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
       </td>
       <td style="width: 20%">
-        <select v-model="weaponAscension" @change="weaponAscensionOnChange">
+        <select v-model="characterInputRea.武器突破レベル" @change="weaponAscensionOnChange">
           <option v-for="item in weaponAscensionRange" :value="item" :key="item">
             A{{ item }}
           </option>
         </select>
-        <select v-model="weaponLevel" @change="weaponOnChange">
+        <select v-model="characterInputRea.武器レベル" @change="weaponOnChange">
           <option v-for="item in weaponLevelRange" :value="item" :key="item">
             Lv.{{ item }}
           </option>
         </select>
-        <select v-model="weaponRefine" @change="weaponOnChange">
+        <select v-model="characterInputRea.武器精錬ランク" @change="weaponOnChange">
           <option v-for="item in weaponRefineRange" :value="item" :key="item">
             R{{ item }}
           </option>
@@ -104,21 +104,21 @@
     </tr>
     <tr>
       <td>
-        <select v-model="normalAttackLevel" @change="characterOnChange">
+        <select v-model="characterInputRea.通常攻撃レベル" @change="characterOnChange">
           <option v-for="item in normalAttackLevelRange" :value="item" :key="item">
             Lv.{{ item }}
           </option>
         </select>
       </td>
       <td>
-        <select v-model="elementalSkillLevel" @change="characterOnChange">
+        <select v-model="characterInputRea.元素スキルレベル" @change="characterOnChange">
           <option v-for="item in elementalSkillLevelRange" :value="item" :key="item">
             Lv.{{ item }}
           </option>
         </select>
       </td>
       <td>
-        <select v-model="elementalBurstLevel" @change="characterOnChange">
+        <select v-model="characterInputRea.元素爆発レベル" @change="characterOnChange">
           <option v-for="item in elementalBurstLevelRange" :value="item" :key="item">
             Lv.{{ item }}
           </option>
@@ -136,18 +136,18 @@
     <tr v-show="storageOrRecommendationRef == '0'">
       <td colspan="4">
         <label>
-          <input class="save-name" type="text" v-model="buildname" maxlength="20" placeholder="input build name"
-            @change="saveDisabled = false" />
+          <input class="save-name" type="text" v-model="characterInputRea.buildname" maxlength="20"
+            placeholder="input build name" @change="characterInputRea.saveDisabled = false" />
         </label>
       </td>
       <td>
-        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
+        <button type="button" :disabled="characterInputRea.saveDisabled" @click="saveOnClick">
           Save
           <!-- <span class="material-symbols-outlined"> save </span> -->
         </button>
       </td>
       <td>
-        <button type="button" :disabled="removeDisabled" @click="removeOnClick">
+        <button type="button" :disabled="characterInputRea.removeDisabled" @click="removeOnClick">
           Remove
           <!-- <span class="material-symbols-outlined"> delete </span> -->
         </button>
@@ -155,7 +155,7 @@
     </tr>
     <tr v-show="storageOrRecommendationRef == '1'">
       <td colspan="6">
-        <select v-model="selectedRecommendation" @change="recommendationOnChange($event)">
+        <select v-model="selectedRecommendation" @change="recommendationOnChange(targetValue($event))">
           <option v-for="item in recommendationList" :value="item.name" :key="item.name">
             {{ displayBuildName(item) }}
           </option>
@@ -168,6 +168,7 @@
 <script lang="ts">
 import {
   ARTIFACT_SET_MASTER_DUMMY,
+  TCharacterInput,
   TRecommendation,
   突破レベルレベルARRAY,
 } from "@/input";
@@ -178,14 +179,15 @@ import {
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
   TCharacterDetail,
+  TWeaponDetail,
 } from "@/master";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
   name: "CharacterInput",
   props: {
-    characterInput: { type: Object, required: true },
+    characterInput: { type: Object as PropType<TCharacterInput>, required: true },
     recommendationList: { type: Array as PropType<TRecommendation[]>, required: true },
     recommendation: { type: Object as PropType<TRecommendation>, required: true },
     artifactSetSelectVisible: { type: Boolean },
@@ -194,6 +196,8 @@ export default defineComponent({
     "open:character-select",
     "open:character-info",
     "update:recommendation",
+    'saveToStorage',
+    'removeFromStorage',
     "open:weapon-select",
     "open:artifact-set-select",
     "open:artifact-detail-input",
@@ -204,112 +208,147 @@ export default defineComponent({
   setup(props, context) {
     const { displayName, targetValue } = CompositionFunction();
 
-    const ascensionRef = ref(props.characterInput.突破レベル);
-    const levelRef = ref(props.characterInput.レベル);
-    const constellationRef = ref(props.characterInput.命ノ星座);
-    const normalAttackLevelRef = ref(props.characterInput.通常攻撃レベル);
-    const elementalSkillLevelRef = ref(props.characterInput.元素スキルレベル);
-    const elementalBurstLevelRef = ref(props.characterInput.元素爆発レベル);
-    const weaponAscensionRef = ref(props.characterInput.武器突破レベル);
-    const weaponLevelRef = ref(props.characterInput.武器レベル);
-    const weaponRefineRef = ref(props.characterInput.武器精錬ランク);
+    const characterInputRea = reactive(props.characterInput);
 
     const storageOrRecommendationRef = ref("0");
 
     const displayBuildName = (item: TRecommendation) => item.name;
 
     const selectedRecommendationRef = ref(props.recommendation.name);
-    const characterMaster = computed(() => props.characterInput.characterMaster);
-    const weaponMaster = computed(() => props.characterInput.weaponMaster);
-    const artifactSetMasters = computed(
-      () =>
-        props.characterInput?.artifactSetMasters ?? [
-          ARTIFACT_SET_MASTER_DUMMY,
-          ARTIFACT_SET_MASTER_DUMMY,
-        ]
-    );
+    const characterMaster = computed(() => characterInputRea.characterMaster);
+    const weaponMaster = computed(() => characterInputRea.weaponMaster);
+    const artifactSetMasters = computed(() => characterInputRea.artifactSetMasters ?? [
+      ARTIFACT_SET_MASTER_DUMMY,
+      ARTIFACT_SET_MASTER_DUMMY,
+    ]);
 
     const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
-    const bgImageClass = (item: TCharacterDetail) =>
+    const bgImageClass = (item: TCharacterDetail | TWeaponDetail) =>
       (" " + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
     const colorClass = (item: TCharacterDetail) =>
       ELEMENT_COLOR_CLASS[item.元素] as string;
     const bgColorClass = (item: TCharacterDetail) =>
       ELEMENT_BG_COLOR_CLASS[item.元素] as string;
-    let saveDisabled = false;
-    let removeDisabled = false;
-    const buildnameRef = ref(props.recommendation.name);
+
+    /** 構成データを保存します */
     const saveOnClick = () => {
-      if (buildnameRef.value) {
-        console.log(buildnameRef.value);
-      }
+      characterInputRea.saveDisabled = false;   // 保存不可
+      characterInputRea.removeDisabled = true;  // 削除可能
+      context.emit('saveToStorage', characterInputRea.buildname);
     };
+
+    /** 構成データを削除します */
     const removeOnClick = () => {
-      if (props.characterInput && buildnameRef.value) {
-        localStorage.removeItem(
-          "構成_" + props.characterInput.character + "_" + buildnameRef.value
-        );
-      }
-    };
-    const ascensionRange = computed(() => {
-      return [0, 1, 2, 3, 4, 5, 6];
+      characterInputRea.removeDisabled = false; // 削除不可
+      characterInputRea.saveDisabled = true;    // 保存可能
+      context.emit('removeFromStorage', characterInputRea.buildname);
+    }
+
+    /** 突破レベルの範囲 */
+    const ascensionRange = computed((): number[] => {
+      return [0, 1, 2, 3, 4, 5, 6]; // 0-
     });
-    const levelRange = computed(() => {
-      return 突破レベルレベルARRAY[ascensionRef.value];
+
+    /** レベルの範囲 */
+    const levelRange = computed((): number[] => {
+      return 突破レベルレベルARRAY[characterInputRea.突破レベル];
     });
-    const constellationRange = computed(() => {
+
+    /** 命ノ星座が変更されました */
+    const constellationRange = computed((): number[] => {
       let max = 0;
       if ("命ノ星座" in characterMaster.value) {
         max = Object.keys(characterMaster.value["命ノ星座"]).length;
       }
-      return Array.from({ length: max + 1 }, (_, i) => i);
+      return Array.from({ length: max + 1 }, (_, i) => i);  // 0-
     });
+
+    /** 突破レベルが変更されました */
     const ascensionOnChange = () => {
-      if (levelRef.value < levelRange.value[0]) {
-        levelRef.value = levelRange.value[0];
-      } else if (levelRef.value > levelRange.value[levelRange.value.length - 1]) {
-        levelRef.value = levelRange.value[levelRange.value.length - 1];
+      if (characterInputRea.レベル < levelRange.value[0]) {
+        characterInputRea.レベル = levelRange.value[0];
+      } else if (characterInputRea.レベル > levelRange.value[levelRange.value.length - 1]) {
+        characterInputRea.レベル = levelRange.value[levelRange.value.length - 1];
       }
       characterOnChange();
     };
-    const recommendationOnChange = (event: Event) => {
-      if (!props.recommendationList) return;
-      if (event.target instanceof HTMLSelectElement) {
-        console.log(event.target.value);
-        context.emit(
-          "update:recommendation",
-          props.recommendationList[event.target.selectedIndex]
-        );
-      }
+
+    /** おすすめセットが選択されました */
+    const recommendationOnChange = (value: string | undefined) => {
+      if (!props.recommendationList || value) return;
+      const recommendation = props.recommendationList[Number(value)];
+      console.debug(recommendation.name);
+      context.emit("update:recommendation", recommendation);
     };
+
+    /** 通常攻撃レベルの範囲 */
     const normalAttackLevelRange = computed(() => {
-      return Array.from({ length: 10 }, (_, i) => i + 1);
+      let max = 10;
+      if ("通常攻撃" in characterMaster.value) {
+        const talentObj = characterMaster.value["通常攻撃"];
+        if ("詳細" in talentObj && "数値" in talentObj["詳細"] && Array.isArray(talentObj["詳細"]["数値"])) {
+          const work = talentObj["詳細"]["数値"].length;
+          if (max < work) max = work;
+        }
+      }
+      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
     });
+
+    /** 元素スキルレベルの範囲 命ノ星座は考慮しません */
     const elementalSkillLevelRange = computed(() => {
-      return Array.from({ length: 13 }, (_, i) => i + 1);
+      let max = 10;
+      if ("元素スキル" in characterMaster.value) {
+        const talentObj = characterMaster.value["元素スキル"];
+        if ("詳細" in talentObj && "数値" in talentObj["詳細"] && Array.isArray(talentObj["詳細"]["数値"])) {
+          const work = talentObj["詳細"]["数値"].length;
+          if (max < work) max = work;
+        }
+      }
+      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
     });
+
+    /** 元素爆発レベルの範囲 命ノ星座は考慮しません */
     const elementalBurstLevelRange = computed(() => {
-      return Array.from({ length: 13 }, (_, i) => i + 1);
+      let max = 10;
+      if ("元素爆発" in characterMaster.value) {
+        const talentObj = characterMaster.value["元素爆発"];
+        if ("詳細" in talentObj && "数値" in talentObj["詳細"] && Array.isArray(talentObj["詳細"]["数値"])) {
+          const work = talentObj["詳細"]["数値"].length;
+          if (max < work) max = work;
+        }
+      }
+      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
     });
+
+    /** 武器突破レベルの範囲 */
     const weaponAscensionRange = computed(() => {
-      return [0, 1, 2, 3, 4, 5, 6];
+      let max = 6;
+      if (weaponMaster.value.レアリティ < 3) max = 4;
+      return Array.from({ length: max + 1 }, (_, i) => i); // 0-
     });
-    const weaponLevelRange = computed(() => {
-      return 突破レベルレベルARRAY[weaponAscensionRef.value];
+
+    /** 武器レベルの範囲 */
+    const weaponLevelRange = computed((): number[] => {
+      return 突破レベルレベルARRAY[characterInputRea.武器突破レベル];
     });
-    const weaponRefineRange = computed(() => {
-      return [1, 2, 3, 4, 5];
+
+    /** 武器精錬ランクの範囲 */
+    const weaponRefineRange = computed((): number[] => {
+      let max = 5;
+      if (weaponMaster.value.レアリティ < 3) max = 1;
+      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
     });
+
+    /** 武器突破レベルが変更されました */
     const weaponAscensionOnChange = () => {
-      if (weaponLevelRef.value < weaponLevelRange.value[0]) {
-        weaponLevelRef.value = weaponLevelRange.value[0];
-      } else if (
-        weaponLevelRef.value > weaponLevelRange.value[weaponLevelRange.value.length - 1]
-      ) {
-        weaponLevelRef.value = weaponLevelRange.value[weaponLevelRange.value.length - 1];
+      if (characterInputRea.武器レベル < weaponLevelRange.value[0]) {
+        characterInputRea.武器レベル = weaponLevelRange.value[0];
+      } else if (characterInputRea.武器レベル > weaponLevelRange.value[weaponLevelRange.value.length - 1]) {
+        characterInputRea.武器レベル = weaponLevelRange.value[weaponLevelRange.value.length - 1];
       }
       weaponOnChange();
     };
+
     const artifactSetIndexRef = ref(0);
     const artifactSetSelectClass = (index: number) =>
       props.artifactSetSelectVisible && index == artifactSetIndexRef.value
@@ -319,21 +358,25 @@ export default defineComponent({
       artifactSetIndexRef.value = index;
       context.emit("open:artifact-set-select", index);
     };
+
+    /** キャラクター情報を変更しました */
     const characterOnChange = () => {
       const workInput = {} as any;
-      workInput.突破レベル = ascensionRef.value;
-      workInput.レベル = levelRef.value;
-      workInput.命ノ星座 = constellationRef.value;
-      workInput.通常攻撃レベル = normalAttackLevelRef.value;
-      workInput.元素スキルレベル = elementalSkillLevelRef.value;
-      workInput.元素爆発レベル = elementalBurstLevelRef.value;
+      workInput.突破レベル = characterInputRea.突破レベル;
+      workInput.レベル = characterInputRea.レベル;
+      workInput.命ノ星座 = characterInputRea.命ノ星座;
+      workInput.通常攻撃レベル = characterInputRea.通常攻撃レベル;
+      workInput.元素スキルレベル = characterInputRea.元素スキルレベル;
+      workInput.元素爆発レベル = characterInputRea.元素爆発レベル;
       context.emit("update:character-input-character", workInput);
     };
+
+    /** 武器情報を変更しました */
     const weaponOnChange = () => {
       const workInput = {} as any;
-      workInput.武器突破レベル = weaponAscensionRef.value;
-      workInput.武器レベル = weaponLevelRef.value;
-      workInput.武器精錬ランク = weaponRefineRef.value;
+      workInput.武器突破レベル = characterInputRea.武器突破レベル;
+      workInput.武器レベル = characterInputRea.武器レベル;
+      workInput.武器精錬ランク = characterInputRea.武器精錬ランク;
       context.emit("update:character-input-weapon", workInput);
     };
 
@@ -345,23 +388,13 @@ export default defineComponent({
       bgImageClass,
       colorClass,
       bgColorClass,
+
+      characterInputRea,
       selectedRecommendation: selectedRecommendationRef,
       characterMaster,
       weaponMaster,
       artifactSetMasters,
-      ascension: ascensionRef,
-      level: levelRef,
-      constellation: constellationRef,
       recommendationOnChange,
-      normalAttackLevel: normalAttackLevelRef,
-      elementalSkillLevel: elementalSkillLevelRef,
-      elementalBurstLevel: elementalBurstLevelRef,
-      weaponAscension: weaponAscensionRef,
-      weaponLevel: weaponLevelRef,
-      weaponRefine: weaponRefineRef,
-      saveDisabled,
-      removeDisabled,
-      buildname: buildnameRef,
       saveOnClick,
       removeOnClick,
       ascensionRange,

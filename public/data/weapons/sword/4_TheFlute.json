@@ -1,7 +1,7 @@
 {
     "名前": "笛の剣",
     "説明": "剣の錆跡から本来の華やかな装飾が透けて見える。風のように軽い。",
-    "icon_url": "public/images/weapons/sword/4_TheFlute.png",
+    "icon_url": "images/weapons/sword/4_TheFlute.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

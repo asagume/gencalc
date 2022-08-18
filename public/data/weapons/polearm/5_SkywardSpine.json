@@ -1,7 +1,7 @@
 {
     "名前": "天空の脊",
     "説明": "風龍の堅い決心を象徴する長槍。真っ直ぐに空を指し、蒼空と長風の力が秘められている。",
-    "icon_url": "public/images/weapons/polearm/5_SkywardSpine.png",
+    "icon_url": "images/weapons/polearm/5_SkywardSpine.png",
     "レアリティ": 5,
     "種類": "長柄武器",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "北斗",
     "説明": "武装船隊「南十字」の頭領、豪快な姉貴。",
-    "icon_url": "public/images/characters/face/electro_4_claymore_Beidou.png",
+    "icon_url": "images/characters/face/electro_4_claymore_Beidou.png",
     "レアリティ": 4,
     "武器": "両手剣",
     "元素": "雷",
@@ -175,7 +175,7 @@
                 "元素": "雷"
             }
         ],
-        "icon_url": "public/images/characters/electro_4_claymore_Beidou/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_claymore_Beidou/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -238,7 +238,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "149%",
@@ -255,7 +255,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "186%",
@@ -334,7 +334,7 @@
             }
         ],
         "クールタイム": 7.5,
-        "icon_url": "public/images/characters/electro_4_claymore_Beidou/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_claymore_Beidou/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "雷斫り",
@@ -419,26 +419,26 @@
         "継続時間": 15,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/electro_4_claymore_Beidou/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_claymore_Beidou/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "完全なる霊光",
             "種類": "固有天賦",
             "説明": "攻撃された瞬間に発動した<span style=\"color:#FFD780FF\">浪追い</span>の反撃は最大ダメージアップ効果を得る。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_claymore_Beidou/const_talent_0.png"
         },
         {
             "名前": "満天の霹靂",
             "種類": "固有天賦",
             "説明": "最大ダメージアップ効果のある<span style=\"color:#FFD780FF\">浪追い</span>を発動した後の10秒間、下記の効果が発動される。<br/>·通常攻撃と重撃の攻撃速度+15%、攻撃ダメージ+15%。<br/>·重撃に必要な時間が大幅に減少する。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_claymore_Beidou/const_talent_1.png"
         },
         {
             "名前": "怒濤踏み",
             "種類": "固有天賦",
             "説明": "チーム内の自身のキャラクター全員が泳ぎに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_claymore_Beidou/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -453,30 +453,30 @@
                     "元素": "雷"
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/constellation_1.png"
+            "icon_url": "images/characters/electro_4_claymore_Beidou/constellation_1.png"
         },
         "2": {
             "名前": "沸き上がる雷",
             "説明": "<span style=\"color:#FFD780FF\">雷斫り</span>の稲妻が2体の敵を追加で攻撃可能になる。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/constellation_2.png",
+            "icon_url": "images/characters/electro_4_claymore_Beidou/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "雷引きの潮",
             "説明": "<span style=\"color:#FFD780FF\">浪追い</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/constellation_3.png",
+            "icon_url": "images/characters/electro_4_claymore_Beidou/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "星に導かれた岸線",
             "説明": "攻撃を受けた後の10秒間、北斗の通常攻撃に追加で20%の<span style=\"color:#FFACFFFF\">雷元素ダメージ</span>が付与される。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/constellation_4.png",
+            "icon_url": "images/characters/electro_4_claymore_Beidou/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "白波に映る霞光",
             "説明": "<span style=\"color:#FFD780FF\">雷斫り</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/constellation_5.png",
+            "icon_url": "images/characters/electro_4_claymore_Beidou/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -489,7 +489,7 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "public/images/characters/electro_4_claymore_Beidou/constellation_6.png"
+            "icon_url": "images/characters/electro_4_claymore_Beidou/constellation_6.png"
         }
     },
     "おすすめセット": [

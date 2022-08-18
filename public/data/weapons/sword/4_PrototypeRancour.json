@@ -1,7 +1,7 @@
 {
     "名前": "斬岩·試作",
     "説明": "黒岩場の中に隠されていた古い長剣、岩を斬っても傷つかない。",
-    "icon_url": "public/images/weapons/sword/4_PrototypeRancour.png",
+    "icon_url": "images/weapons/sword/4_PrototypeRancour.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "理屈責め",
     "説明": "精密な鋼鉄で作った棒、最高な理屈となるだろう。",
-    "icon_url": "public/images/weapons/claymore/3_DebateClub.png",
+    "icon_url": "images/weapons/claymore/3_DebateClub.png",
     "レアリティ": 3,
     "種類": "両手剣",
     "ステータス": {

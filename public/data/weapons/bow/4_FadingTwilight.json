@@ -1,7 +1,7 @@
 {
     "名前": "落霞",
     "説明": "白金から作られた無二の弓。輝く霞光を放つ宝珠が嵌め込まれている。",
-    "icon_url": "public/images/weapons/bow/4_FadingTwilight.png",
+    "icon_url": "images/weapons/bow/4_FadingTwilight.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

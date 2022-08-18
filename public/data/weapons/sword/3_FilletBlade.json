@@ -1,7 +1,7 @@
 {
     "名前": "チ虎魚の刀",
     "説明": "魚を捌く鉄刀。刀身は細く、非常に鋭い。",
-    "icon_url": "public/images/weapons/sword/3_FilletBlade.png",
+    "icon_url": "images/weapons/sword/3_FilletBlade.png",
     "レアリティ": 3,
     "種類": "片手剣",
     "ステータス": {

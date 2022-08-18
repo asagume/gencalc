@@ -1,7 +1,7 @@
 {
     "名前": "昭心",
     "説明": "幽闇な琉璃宝玉。伝説によると、人の心を読める力を持っているらしい。",
-    "icon_url": "public/images/weapons/catalyst/4_EyeofPerception.png",
+    "icon_url": "images/weapons/catalyst/4_EyeofPerception.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

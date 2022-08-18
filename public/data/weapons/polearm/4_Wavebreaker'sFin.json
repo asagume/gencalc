@@ -1,7 +1,7 @@
 {
     "名前": "斬波のひれ長",
     "説明": "海淵の底にある光り輝く素材によって作り上げられた薙刀。かつては天狗一族が所有していた。",
-    "icon_url": "public/images/weapons/polearm/4_Wavebreaker'sFin.png",
+    "icon_url": "images/weapons/polearm/4_Wavebreaker'sFin.png",
     "レアリティ": 4,
     "種類": "長柄武器",
     "ステータス": {

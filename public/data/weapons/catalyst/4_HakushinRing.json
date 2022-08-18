@@ -1,7 +1,7 @@
 {
     "名前": "白辰の輪",
     "説明": "過去の「狐斎宮」の想いが込められた法器。しかし、彼女の想いの大きさでは、この小さな器に入りきらない。",
-    "icon_url": "public/images/weapons/catalyst/4_HakushinRing.png",
+    "icon_url": "images/weapons/catalyst/4_HakushinRing.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

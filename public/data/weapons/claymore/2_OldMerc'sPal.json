@@ -1,7 +1,7 @@
 {
     "名前": "傭兵の重剣",
     "説明": "重くてしっかりしている古い大剣、戦火と歳月の洗練を経た優れもの。",
-    "icon_url": "public/images/weapons/claymore/2_OldMerc'sPal.png",
+    "icon_url": "images/weapons/claymore/2_OldMerc'sPal.png",
     "レアリティ": 2,
     "種類": "両手剣",
     "ステータス": {

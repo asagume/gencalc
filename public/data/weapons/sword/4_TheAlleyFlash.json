@@ -1,7 +1,7 @@
 {
     "名前": "ダークアレイの閃光",
     "説明": "夜の色をした真っ直ぐな長剣。かつては町に潜む盗賊が所持していた。",
-    "icon_url": "public/images/weapons/sword/4_TheAlleyFlash.png",
+    "icon_url": "images/weapons/sword/4_TheAlleyFlash.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

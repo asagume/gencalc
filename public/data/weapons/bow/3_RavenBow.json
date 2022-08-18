@@ -1,7 +1,7 @@
 {
     "名前": "鴉羽の弓",
     "説明": "鴉は死の使者だと言われている。鴉の羽の弓は獲物に終末を告げる。",
-    "icon_url": "public/images/weapons/bow/3_RavenBow.png",
+    "icon_url": "images/weapons/bow/3_RavenBow.png",
     "レアリティ": 3,
     "種類": "弓",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "行秋",
     "説明": "よく本売り場で見かける少年。手には剣を、胸の中には義侠心を。",
-    "icon_url": "public/images/characters/face/hydro_4_sword_Xingqiu.png",
+    "icon_url": "images/characters/face/hydro_4_sword_Xingqiu.png",
     "レアリティ": 4,
     "武器": "片手剣",
     "元素": "水",
@@ -170,7 +170,7 @@
                 "HIT数": 2
             }
         ],
-        "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/battle_talent_0.png"
+        "icon_url": "images/characters/hydro_4_sword_Xingqiu/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -217,7 +217,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -234,7 +234,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -329,7 +329,7 @@
         ],
         "継続時間": 15,
         "クールタイム": 21,
-        "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/battle_talent_1.png"
+        "icon_url": "images/characters/hydro_4_sword_Xingqiu/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "古華剣·裁雨留虹",
@@ -357,14 +357,14 @@
         "継続時間": 15,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/battle_talent_2.png"
+        "icon_url": "images/characters/hydro_4_sword_Xingqiu/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "水生みの要訣",
             "種類": "固有天賦",
             "説明": "雨すだれの剣が破壊、または継続時間終了時に、キャラクターのHPを行秋のHP上限の6%分回復する。",
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/const_talent_0.png"
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/const_talent_0.png"
         },
         {
             "名前": "虚実の筆",
@@ -376,20 +376,20 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/const_talent_1.png"
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/const_talent_1.png"
         },
         {
             "名前": "靈光突如",
             "種類": "固有天賦",
             "説明": "キャラクター天賦素材を合成する時、25%の確率で一部の材料が返還される。",
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/const_talent_2.png"
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "すだれの残香",
             "説明": "雨すだれの剣の最大本数+1。",
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/constellation_1.png",
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/constellation_1.png",
             "詳細": []
         },
         "2": {
@@ -402,12 +402,12 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/constellation_2.png"
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/constellation_2.png"
         },
         "3": {
             "名前": "詩の錦",
             "説明": "<span style=\"color:#FFD780FF\">古華剣·裁雨留虹</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/constellation_3.png",
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -421,18 +421,18 @@
                     "数値": "150"
                 }
             ],
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/constellation_4.png"
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/constellation_4.png"
         },
         "5": {
             "名前": "雨深閉門",
             "説明": "<span style=\"color:#FFD780FF\">古華剣·画雨籠山</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/constellation_5.png",
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/constellation_5.png",
             "詳細": []
         },
         "6": {
             "名前": "万文ここにあり",
             "説明": "<span style=\"color:#FFD780FF\">古華剣·裁雨留虹</span>が剣雨攻撃を2回発動する度に、次の剣雨攻撃が大幅に強化され、敵に命中する時行秋の元素エネルギーを3回復する。",
-            "icon_url": "public/images/characters/hydro_4_sword_Xingqiu/constellation_6.png",
+            "icon_url": "images/characters/hydro_4_sword_Xingqiu/constellation_6.png",
             "詳細": []
         }
     },

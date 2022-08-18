@@ -1,7 +1,7 @@
 {
     "名前": "天目影打",
     "説明": "神速で名を馳せる天狗をも斬り墜とすという伝説を持つ、名士が発注した刀。",
-    "icon_url": "public/images/weapons/claymore/4_AmenomaKageuchi.png",
+    "icon_url": "images/weapons/claymore/4_AmenomaKageuchi.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

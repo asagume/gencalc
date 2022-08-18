@@ -1,7 +1,7 @@
 {
     "名前": "生徒ノート",
     "説明": "ある優等生が残したノート。字がとても綺麗。実用性のあるまじないがたくさん記されている。",
-    "icon_url": "public/images/weapons/catalyst/1_Apprentice'sNotes.png",
+    "icon_url": "images/weapons/catalyst/1_Apprentice'sNotes.png",
     "レアリティ": 1,
     "種類": "法器",
     "ステータス": {

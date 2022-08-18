@@ -1,7 +1,7 @@
 {
     "名前": "旅道の剣",
     "説明": "使いやすい鋼剣。柄にはハサミ、虫眼鏡、点火具など旅の必須品が隠されている。",
-    "icon_url": "public/images/weapons/sword/3_Traveler'sHandySword.png",
+    "icon_url": "images/weapons/sword/3_Traveler'sHandySword.png",
     "レアリティ": 3,
     "種類": "片手剣",
     "ステータス": {

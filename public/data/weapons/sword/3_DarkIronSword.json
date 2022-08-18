@@ -1,7 +1,7 @@
 {
     "名前": "暗鉄剣",
     "説明": "実はただちょっと黒いだけの鉄剣。",
-    "icon_url": "public/images/weapons/sword/3_DarkIronSword.png",
+    "icon_url": "images/weapons/sword/3_DarkIronSword.png",
     "レアリティ": 3,
     "種類": "片手剣",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "松韻の響く頃",
     "説明": "草木を撫でる風のように軽い大剣だが、その破壊力は木々を吹き飛ばす竜巻を想起させるほど強大なものである。",
-    "icon_url": "public/images/weapons/claymore/5_SongofBrokenPines.png",
+    "icon_url": "images/weapons/claymore/5_SongofBrokenPines.png",
     "レアリティ": 5,
     "種類": "両手剣",
     "ステータス": {

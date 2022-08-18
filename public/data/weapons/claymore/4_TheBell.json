@@ -1,7 +1,7 @@
 {
     "名前": "鐘の剣",
     "説明": "時計が飾られた大剣、その中の時計はすでに壊れている。",
-    "icon_url": "public/images/weapons/claymore/4_TheBell.png",
+    "icon_url": "images/weapons/claymore/4_TheBell.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

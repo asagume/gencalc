@@ -1,7 +1,7 @@
 {
     "名前": "旧貴族大剣",
     "説明": "かつてモンドを支配した旧貴族の大剣。高級素材が使われているため、長い年月が経っても新しいまま。貴族が戦闘時に使う武器である。",
-    "icon_url": "public/images/weapons/claymore/4_RoyalGreatsword.png",
+    "icon_url": "images/weapons/claymore/4_RoyalGreatsword.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

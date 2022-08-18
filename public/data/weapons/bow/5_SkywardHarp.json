@@ -1,7 +1,7 @@
 {
     "名前": "天空の翼",
     "説明": "風龍が風の神の眷属であることを象徴する大弓。矢を放つの音は風の神の偏愛であり、蒼空と長風の力が秘められている。",
-    "icon_url": "public/images/weapons/bow/5_SkywardHarp.png",
+    "icon_url": "images/weapons/bow/5_SkywardHarp.png",
     "レアリティ": 5,
     "種類": "弓",
     "ステータス": {

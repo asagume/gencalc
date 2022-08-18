@@ -1,7 +1,7 @@
 {
     "名前": "籠釣瓶一心",
     "説明": "遠い北国で造られた名刀。かつて「一心」という言葉のために、帰郷の途上、無数の罪に染まった。",
-    "icon_url": "public/images/weapons/sword/4_KagotsurubeIsshin.png",
+    "icon_url": "images/weapons/sword/4_KagotsurubeIsshin.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

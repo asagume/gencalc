@@ -1,7 +1,7 @@
 {
     "名前": "銜玉の海皇",
     "説明": "海の王様。風乾を経た今、武器としてはもちろん、非常食としても使える。",
-    "icon_url": "public/images/weapons/claymore/4_LuxuriousSea-Lord.png",
+    "icon_url": "images/weapons/claymore/4_LuxuriousSea-Lord.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

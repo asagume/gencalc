@@ -1,7 +1,7 @@
 {
     "名前": "翡玉法珠",
     "説明": "璃月北部にある絶雲の間の硬玉で出来た法器。小さくて軽い上、かなり長持ちする。",
-    "icon_url": "public/images/weapons/catalyst/3_EmeraldOrb.png",
+    "icon_url": "images/weapons/catalyst/3_EmeraldOrb.png",
     "レアリティ": 3,
     "種類": "法器",
     "ステータス": {

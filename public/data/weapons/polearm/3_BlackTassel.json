@@ -1,7 +1,7 @@
 {
     "名前": "黒纓槍",
     "説明": "白紐の汚れやすい問題を解決した絶世の良槍。",
-    "icon_url": "public/images/weapons/polearm/3_BlackTassel.png",
+    "icon_url": "images/weapons/polearm/3_BlackTassel.png",
     "レアリティ": 3,
     "種類": "長柄武器",
     "ステータス": {

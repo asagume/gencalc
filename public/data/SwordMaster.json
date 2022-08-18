@@ -1,106 +1,106 @@
 {
     "波乱月白経津": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_HaranGeppakuFutsu.json"
+        "import": "data/weapons/sword/5_HaranGeppakuFutsu.json"
     },
     "霧切の廻光": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_MistsplitterReforged.json"
+        "import": "data/weapons/sword/5_MistsplitterReforged.json"
     },
     "蒼古なる自由への誓い": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_Freedom-Sworn.json"
+        "import": "data/weapons/sword/5_Freedom-Sworn.json"
     },
     "磐岩結緑": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_PrimordialJadeCutter.json"
+        "import": "data/weapons/sword/5_PrimordialJadeCutter.json"
     },
     "斬山の刃": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_SummitShaper.json"
+        "import": "data/weapons/sword/5_SummitShaper.json"
     },
     "天空の刃": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_SkywardBlade.json"
+        "import": "data/weapons/sword/5_SkywardBlade.json"
     },
     "風鷹剣": {
         "レアリティ": 5,
-        "import": "public/data/weapons/sword/5_AquilaFavonia.json"
+        "import": "data/weapons/sword/5_AquilaFavonia.json"
     },
     "籠釣瓶一心": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_KagotsurubeIsshin.json"
+        "import": "data/weapons/sword/4_KagotsurubeIsshin.json"
     },
     "シナバースピンドル": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_CinnabarSpindle.json"
+        "import": "data/weapons/sword/4_CinnabarSpindle.json"
     },
     "天目影打": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_AmenomaKageuchi.json"
+        "import": "data/weapons/sword/4_AmenomaKageuchi.json"
     },
     "ダークアレイの閃光": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_TheAlleyFlash.json"
+        "import": "data/weapons/sword/4_TheAlleyFlash.json"
     },
     "腐植の剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_FesteringDesire.json"
+        "import": "data/weapons/sword/4_FesteringDesire.json"
     },
     "黒剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_TheBlackSword.json"
+        "import": "data/weapons/sword/4_TheBlackSword.json"
     },
     "黒岩の長剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_BlackcliffLongsword.json"
+        "import": "data/weapons/sword/4_BlackcliffLongsword.json"
     },
     "鉄蜂の刺し": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_IronSting.json"
+        "import": "data/weapons/sword/4_IronSting.json"
     },
     "斬岩·試作": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_PrototypeRancour.json"
+        "import": "data/weapons/sword/4_PrototypeRancour.json"
     },
     "匣中龍吟": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_Lion'sRoar.json"
+        "import": "data/weapons/sword/4_Lion'sRoar.json"
     },
     "旧貴族長剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_RoyalLongsword.json"
+        "import": "data/weapons/sword/4_RoyalLongsword.json"
     },
     "祭礼の剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_SacrificialSword.json"
+        "import": "data/weapons/sword/4_SacrificialSword.json"
     },
     "笛の剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_TheFlute.json"
+        "import": "data/weapons/sword/4_TheFlute.json"
     },
     "西風剣": {
         "レアリティ": 4,
-        "import": "public/data/weapons/sword/4_FavoniusSword.json"
+        "import": "data/weapons/sword/4_FavoniusSword.json"
     },
     "飛天御剣": {
         "レアリティ": 3,
-        "import": "public/data/weapons/sword/3_SkyriderSword.json"
+        "import": "data/weapons/sword/3_SkyriderSword.json"
     },
     "チ虎魚の刀": {
         "レアリティ": 3,
-        "import": "public/data/weapons/sword/3_FilletBlade.json"
+        "import": "data/weapons/sword/3_FilletBlade.json"
     },
     "暗鉄剣": {
         "レアリティ": 3,
-        "import": "public/data/weapons/sword/3_DarkIronSword.json"
+        "import": "data/weapons/sword/3_DarkIronSword.json"
     },
     "黎明の神剣": {
         "レアリティ": 3,
-        "import": "public/data/weapons/sword/3_HarbingerofDawn.json"
+        "import": "data/weapons/sword/3_HarbingerofDawn.json"
     },
     "冷刃": {
         "レアリティ": 3,
-        "import": "public/data/weapons/sword/3_CoolSteel.json"
+        "import": "data/weapons/sword/3_CoolSteel.json"
     }
 }

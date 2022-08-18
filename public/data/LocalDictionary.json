@@ -1,344 +1,394 @@
 {
-    "聖遺物メイン効果": {
-        "en-us": "Artifact Main-Stats"
-    },
-    "聖遺物サブ効果": {
-        "en-us": "Artifact Sub-Stats"
-    },
-    "直接入力モード": {
-        "en-us": "Edit"
-    },
-    "補正値入力モード": {
-        "en-us": "Edit"
-    },
-    "生の花": {
-        "en-us": "Flower"
-    },
-    "死の羽": {
-        "en-us": "Plume"
-    },
-    "時の砂": {
-        "en-us": "Sands"
-    },
-    "空の杯": {
-        "en-us": "Goblet"
-    },
-    "理の冠": {
-        "en-us": "Circlet"
-    },
-    "熱誠の炎": {
-        "en-us": "Fervent Flames"
-    },
-    "治療の水": {
-        "en-us": "Soothing Water"
-    },
-    "迅速の風": {
-        "en-us": "Impetuous Winds"
-    },
-    "強権の雷": {
-        "en-us": "High Voltage"
-    },
-    "粉砕の氷": {
-        "en-us": "Shattering Ice"
-    },
-    "不動の岩": {
-        "en-us": "Enduring Rock"
-    },
-    "交錯の護り": {
-        "en-us": "Protective Canopy"
-    },
-    "ステータス1": {
-        "en-us": "CHARACTER 1"
-    },
-    "ステータス2": {
-        "en-us": "CHARACTER 2"
-    },
-    "敵": {
-        "en-us": "ENEMY"
-    },
-    "元素共鳴": {
-        "en-us": "Resonance"
-    },
-    "キャラ": {
-        "en-us": "TEAM"
-    },
-    "基本ステータス": {
-        "en-us": "Base Stats"
-    },
-    "高級ステータス": {
-        "en-us": "Advanced Stats"
-    },
-    "元素ステータス·ダメージ": {
-        "en-us": "Elemental Type[Bonus]"
-    },
-    "元素ステータス·耐性": {
-        "en-us": "Elemental Type[RES]"
-    },
-    "その他": {
-        "en-us": "Misc"
-    },
-    "基礎HP": {
-        "en-us": "Base HP"
-    },
-    "基礎攻撃力": {
-        "en-us": "Base ATK"
-    },
-    "基礎防御力": {
-        "en-us": "Base DEF"
-    },
-    "HP上限": {
-        "en-us": "Max HP"
-    },
-    "攻撃力": {
-        "en-us": "ATK"
-    },
-    "防御力": {
-        "en-us": "DEF"
-    },
-    "元素熟知": {
-        "en-us": "Elemental Mastery"
-    },
-    "HP%": {
-        "en-us": "HP%"
-    },
-    "攻撃力%": {
-        "en-us": "ATK%"
-    },
-    "防御力%": {
-        "en-us": "DEF%"
-    },
-    "会心率": {
-        "en-us": "CRIT Rate"
-    },
-    "会心ダメージ": {
-        "en-us": "CRIT DMG"
-    },
-    "元素チャージ効率": {
-        "en-us": "Energy Recharge"
-    },
-    "与える治療効果": {
-        "en-us": "Healing Bonus"
-    },
-    "受ける治療効果": {
-        "en-us": "Incoming Healing Bonus"
-    },
-    "シールド強化": {
-        "en-us": "Shield Strength"
-    },
-    "炎元素": {
-        "en-us": "Pyro"
-    },
-    "水元素": {
-        "en-us": "Hydro"
-    },
-    "風元素": {
-        "en-us": "Anemo"
-    },
-    "雷元素": {
-        "en-us": "Electro"
-    },
-    "草元素": {
-        "en-us": "Dendro"
-    },
-    "氷元素": {
-        "en-us": "Cryo"
-    },
-    "岩元素": {
-        "en-us": "Geo"
-    },
-    "物理": {
-        "en-us": "Physical"
-    },
-    "5_HP": {
-        "en-us": "5_HP"
-    },
-    "5_攻撃力": {
-        "en-us": "5_ATK"
-    },
-    "5_防御力": {
-        "en-us": "5_DEF"
-    },
-    "5_元素熟知": {
-        "en-us": "5_Elemental Mastery"
-    },
-    "5_HP%": {
-        "en-us": "5_HP%"
-    },
-    "5_攻撃力%": {
-        "en-us": "5_ATK%"
-    },
-    "5_防御力%": {
-        "en-us": "5_DEF%"
-    },
-    "5_会心率": {
-        "en-us": "5_CRIT Rate"
-    },
-    "5_会心ダメージ": {
-        "en-us": "5_CRIT DMG"
-    },
-    "5_元素チャージ効率": {
-        "en-us": "5_Energy Recharge"
-    },
-    "5_与える治療効果": {
-        "en-us": "5_Healing Bonus"
-    },
-    "5_炎元素ダメージバフ": {
-        "en-us": "5_Pyro DMG Bonus"
-    },
-    "5_水元素ダメージバフ": {
-        "en-us": "5_Hydro DMG Bonus"
-    },
-    "5_風元素ダメージバフ": {
-        "en-us": "5_Anemo DMG Bonus"
-    },
-    "5_雷元素ダメージバフ": {
-        "en-us": "5_Electro DMG Bonus"
-    },
-    "5_草元素ダメージバフ": {
-        "en-us": "5_Dendro DMG Bonus"
-    },
-    "5_氷元素ダメージバフ": {
-        "en-us": "5_Cryo DMG Bonus"
-    },
-    "5_岩元素ダメージバフ": {
-        "en-us": "5_Geo DMG Bonus"
-    },
-    "5_物理ダメージバフ": {
-        "en-us": "5_Physical DMG Bonus"
-    },
-    "4_HP": {
-        "en-us": "4_HP"
-    },
-    "4_攻撃力": {
-        "en-us": "4_ATK"
-    },
-    "4_防御力": {
-        "en-us": "4_DEF"
-    },
-    "4_元素熟知": {
-        "en-us": "4_Elemental Mastery"
-    },
-    "4_HP%": {
-        "en-us": "4_HP%"
-    },
-    "4_攻撃力%": {
-        "en-us": "4_ATK%"
-    },
-    "4_防御力%": {
-        "en-us": "4_DEF%"
-    },
-    "4_会心率": {
-        "en-us": "4_CRIT Rate"
-    },
-    "4_会心ダメージ": {
-        "en-us": "4_CRIT DMG"
-    },
-    "4_元素チャージ効率": {
-        "en-us": "4_Energy Recharge"
-    },
-    "4_与える治療効果": {
-        "en-us": "4_Healing Bonus"
-    },
-    "4_炎元素ダメージバフ": {
-        "en-us": "4_Pyro DMG Bonus"
-    },
-    "4_水元素ダメージバフ": {
-        "en-us": "4_Hydro DMG Bonus"
-    },
-    "4_風元素ダメージバフ": {
-        "en-us": "4_Anemo DMG Bonus"
-    },
-    "4_雷元素ダメージバフ": {
-        "en-us": "4_Electro DMG Bonus"
-    },
-    "4_草元素ダメージバフ": {
-        "en-us": "4_Dendro DMG Bonus"
-    },
-    "4_氷元素ダメージバフ": {
-        "en-us": "4_Cryo DMG Bonus"
-    },
-    "4_岩元素ダメージバフ": {
-        "en-us": "4_Geo DMG Bonus"
-    },
-    "4_物理ダメージバフ": {
-        "en-us": "4_Physical DMG Bonus"
-    },
-    "期待値": {
-        "en-us": "Expect"
-    },
-    "会心": {
-        "en-us": "CRIT"
-    },
-    "非会心": {
-        "en-us": "non-CRIT"
-    },
-    "通常攻撃": {
-        "en-us": "Normal Attack"
-    },
-    "重撃": {
-        "en-us": "Charged Attack"
-    },
-    "落下攻撃": {
-        "en-us": "Plunging Attack"
-    },
-    "元素スキル": {
-        "en-us": "Elemental Skill"
-    },
-    "元素爆発": {
-        "en-us": "Elemental Burst"
-    },
-    "炎元素ダメージバフ": {
-        "en-us": "Pyro DMG Bonus"
-    },
-    "水元素ダメージバフ": {
-        "en-us": "Hydro DMG Bonus"
-    },
-    "風元素ダメージバフ": {
-        "en-us": "Anemo DMG Bonus"
-    },
-    "雷元素ダメージバフ": {
-        "en-us": "Electro DMG Bonus"
-    },
-    "草元素ダメージバフ": {
-        "en-us": "Dendro DMG Bonus"
-    },
-    "氷元素ダメージバフ": {
-        "en-us": "Cryo DMG Bonus"
-    },
-    "岩元素ダメージバフ": {
-        "en-us": "Geo DMG Bonus"
-    },
-    "物理ダメージバフ": {
-        "en-us": "Physical DMG Bonus"
-    },
-    "炎元素耐性": {
-        "en-us": "Pyro RES"
-    },
-    "水元素耐性": {
-        "en-us": "Hydro RES"
-    },
-    "風元素耐性": {
-        "en-us": "Anemo RES"
-    },
-    "雷元素耐性": {
-        "en-us": "Electro RES"
-    },
-    "草元素耐性": {
-        "en-us": "Dendro RES"
-    },
-    "氷元素耐性": {
-        "en-us": "Cryo RES"
-    },
-    "岩元素耐性": {
-        "en-us": "Geo RES"
-    },
-    "物理耐性": {
-        "en-us": "Physical RES"
-    },
-    "低空落下攻撃ダメージ": {
-        "en-us": "Low Plunge DMG"
-    },
-    "高空落下攻撃ダメージ": {
-        "en-us": "High Plunge DMG"
-    }
+  "実行": {
+    "en-us": "Execute"
+  },
+  "炎元素": {
+    "en-us": "Pyro"
+  },
+  "水元素": {
+    "en-us": "Hydro"
+  },
+  "風元素": {
+    "en-us": "Anemo"
+  },
+  "雷元素": {
+    "en-us": "Electro"
+  },
+  "草元素": {
+    "en-us": "Dendro"
+  },
+  "氷元素": {
+    "en-us": "Cryo"
+  },
+  "岩元素": {
+    "en-us": "Geo"
+  },
+  "物理": {
+    "en-us": "Physical"
+  },
+  "炎": {
+    "en-us": "Pyro"
+  },
+  "水": {
+    "en-us": "Hydro"
+  },
+  "風": {
+    "en-us": "Anemo"
+  },
+  "雷": {
+    "en-us": "Electro"
+  },
+  "草": {
+    "en-us": "Dendro"
+  },
+  "氷": {
+    "en-us": "Cryo"
+  },
+  "岩": {
+    "en-us": "Geo"
+  },
+  "蒸発": {
+    "en-us": "Vaporize",
+    "zh-cn": "蒸发"
+  },
+  "溶解": {
+    "en-us": "Melt",
+    "zh-cn": "融化"
+  },
+  "過負荷": {
+    "en-us": "Overloaded",
+    "zh-cn": "超载"
+  },
+  "燃焼": {
+    "en-us": "Burning",
+    "zh-cn": "燃烧"
+  },
+  "感電": {
+    "en-us": "Electro-Charged",
+    "zh-cn": "感电"
+  },
+  "凍結": {
+    "en-us": "Frozen",
+    "zh-cn": "冻结"
+  },
+  "超電導": {
+    "en-us": "Superconduct",
+    "zh-cn": "超导"
+  },
+  "拡散": {
+    "en-us": "Swirl",
+    "zh-cn": "扩散"
+  },
+  "結晶": {
+    "en-us": "Crystalize",
+    "zh-cn": "结晶"
+  },
+  "開花": {
+    "en-us": "Bloom",
+    "zh-cn": "绽放"
+  },
+  "激化": {
+    "en-us": "Catalyze",
+    "zh-cn": "激化"
+  },
+  "聖遺物メイン効果": {
+    "en-us": "Artifact Main-Stats"
+  },
+  "聖遺物サブ効果": {
+    "en-us": "Artifact Sub-Stats"
+  },
+  "直接入力モード": {
+    "en-us": "Edit"
+  },
+  "補正値入力モード": {
+    "en-us": "Edit"
+  },
+  "補正値0初期化": {
+    "en-us": "Clear"
+  },
+  "生の花": {
+    "en-us": "Flower"
+  },
+  "死の羽": {
+    "en-us": "Plume"
+  },
+  "時の砂": {
+    "en-us": "Sands"
+  },
+  "空の杯": {
+    "en-us": "Goblet"
+  },
+  "理の冠": {
+    "en-us": "Circlet"
+  },
+  "熱誠の炎": {
+    "en-us": "Fervent Flames"
+  },
+  "治療の水": {
+    "en-us": "Soothing Water"
+  },
+  "迅速の風": {
+    "en-us": "Impetuous Winds"
+  },
+  "強権の雷": {
+    "en-us": "High Voltage"
+  },
+  "粉砕の氷": {
+    "en-us": "Shattering Ice"
+  },
+  "不動の岩": {
+    "en-us": "Enduring Rock"
+  },
+  "交錯の護り": {
+    "en-us": "Protective Canopy"
+  },
+  "ステータス1": {
+    "en-us": "CHARACTER 1"
+  },
+  "ステータス2": {
+    "en-us": "CHARACTER 2"
+  },
+  "敵": {
+    "en-us": "ENEMY"
+  },
+  "元素共鳴": {
+    "en-us": "Resonance"
+  },
+  "キャラ": {
+    "en-us": "TEAM"
+  },
+  "基本ステータス": {
+    "en-us": "Base Stats"
+  },
+  "高級ステータス": {
+    "en-us": "Advanced Stats"
+  },
+  "元素ステータス·ダメージ": {
+    "en-us": "Elemental Type[Bonus]"
+  },
+  "元素ステータス·耐性": {
+    "en-us": "Elemental Type[RES]"
+  },
+  "その他": {
+    "en-us": "Misc"
+  },
+  "基礎HP": {
+    "en-us": "Base HP"
+  },
+  "基礎攻撃力": {
+    "en-us": "Base ATK"
+  },
+  "基礎防御力": {
+    "en-us": "Base DEF"
+  },
+  "HP上限": {
+    "en-us": "Max HP"
+  },
+  "攻撃力": {
+    "en-us": "ATK"
+  },
+  "防御力": {
+    "en-us": "DEF"
+  },
+  "元素熟知": {
+    "en-us": "Elemental Mastery"
+  },
+  "HP%": {
+    "en-us": "HP%"
+  },
+  "攻撃力%": {
+    "en-us": "ATK%"
+  },
+  "防御力%": {
+    "en-us": "DEF%"
+  },
+  "会心率": {
+    "en-us": "CRIT Rate"
+  },
+  "会心ダメージ": {
+    "en-us": "CRIT DMG"
+  },
+  "元素チャージ効率": {
+    "en-us": "Energy Recharge"
+  },
+  "与える治療効果": {
+    "en-us": "Healing Bonus"
+  },
+  "受ける治療効果": {
+    "en-us": "Incoming Healing Bonus"
+  },
+  "シールド強化": {
+    "en-us": "Shield Strength"
+  },
+  "期待値": {
+    "en-us": "Expect"
+  },
+  "会心": {
+    "en-us": "CRIT"
+  },
+  "非会心": {
+    "en-us": "non-CRIT"
+  },
+  "通常攻撃": {
+    "en-us": "Normal Attack"
+  },
+  "重撃": {
+    "en-us": "Charged Attack"
+  },
+  "落下攻撃": {
+    "en-us": "Plunging Attack"
+  },
+  "元素スキル": {
+    "en-us": "Elemental Skill"
+  },
+  "元素爆発": {
+    "en-us": "Elemental Burst"
+  },
+  "炎元素ダメージバフ": {
+    "en-us": "Pyro DMG Bonus"
+  },
+  "水元素ダメージバフ": {
+    "en-us": "Hydro DMG Bonus"
+  },
+  "風元素ダメージバフ": {
+    "en-us": "Anemo DMG Bonus"
+  },
+  "雷元素ダメージバフ": {
+    "en-us": "Electro DMG Bonus"
+  },
+  "草元素ダメージバフ": {
+    "en-us": "Dendro DMG Bonus"
+  },
+  "氷元素ダメージバフ": {
+    "en-us": "Cryo DMG Bonus"
+  },
+  "岩元素ダメージバフ": {
+    "en-us": "Geo DMG Bonus"
+  },
+  "物理ダメージバフ": {
+    "en-us": "Physical DMG Bonus"
+  },
+  "通常攻撃ダメージバフ": {
+    "en-us": "Normal Attack DMG Bonus"
+  },
+  "重撃ダメージバフ": {
+    "en-us": "Charged Attack DMG Bonus"
+  },
+  "落下攻撃ダメージバフ": {
+    "en-us": "Plunging Attack DMG Bonus"
+  },
+  "元素スキルダメージバフ": {
+    "en-us": "Elemental Skill DMG Bonus"
+  },
+  "元素爆発ダメージバフ": {
+    "en-us": "Elemental Burst DMG Bonus"
+  },
+  "与えるダメージ": {
+    "en-us": "DMG Bonus"
+  },
+  "炎元素ダメージアップ": {
+    "en-us": "Pyro DMG Bonus"
+  },
+  "水元素ダメージアップ": {
+    "en-us": "Hydro DMG Bonus"
+  },
+  "風元素ダメージアップ": {
+    "en-us": "Anemo DMG Bonus"
+  },
+  "雷元素ダメージアップ": {
+    "en-us": "Electro DMG Bonus"
+  },
+  "草元素ダメージアップ": {
+    "en-us": "Dendro DMG Bonus"
+  },
+  "氷元素ダメージアップ": {
+    "en-us": "Cryo DMG Bonus"
+  },
+  "岩元素ダメージアップ": {
+    "en-us": "Geo DMG Bonus"
+  },
+  "物理ダメージアップ": {
+    "en-us": "Physical DMG Bonus"
+  },
+  "通常攻撃ダメージアップ": {
+    "en-us": "Normal Attack DMG Bonus"
+  },
+  "重撃ダメージアップ": {
+    "en-us": "Charged Attack DMG Bonus"
+  },
+  "落下攻撃ダメージアップ": {
+    "en-us": "Plunging Attack DMG Bonus"
+  },
+  "元素スキルダメージアップ": {
+    "en-us": "Elemental Skill DMG Bonus"
+  },
+  "元素爆発ダメージアップ": {
+    "en-us": "Elemental Burst DMG Bonus"
+  },
+  "炎元素耐性": {
+    "en-us": "Pyro RES"
+  },
+  "水元素耐性": {
+    "en-us": "Hydro RES"
+  },
+  "風元素耐性": {
+    "en-us": "Anemo RES"
+  },
+  "雷元素耐性": {
+    "en-us": "Electro RES"
+  },
+  "草元素耐性": {
+    "en-us": "Dendro RES"
+  },
+  "氷元素耐性": {
+    "en-us": "Cryo RES"
+  },
+  "岩元素耐性": {
+    "en-us": "Geo RES"
+  },
+  "物理耐性": {
+    "en-us": "Physical RES"
+  },
+  "聖遺物詳細": {
+    "en-us": "Artifacts Details"
+  },
+  "基礎ステータス": {
+    "en-us": "Base Stats"
+  },
+  "HP+": {
+    "en-us": "HP+"
+  },
+  "攻撃力+": {
+    "en-us": "ATK+"
+  },
+  "防御力+": {
+    "en-us": "DEF+"
+  },
+  "ダメージバフ": {
+    "en-us": "DMG Bonus"
+  },
+  "実数ダメージ加算": {
+    "en-us": "Flat DMG Bonus"
+  },
+  "元素反応バフ": {
+    "en-us": "Elemental Reaction Bonus"
+  },
+  "第1重": {
+    "en-us": "C1"
+  },
+  "第2重": {
+    "en-us": "C2"
+  },
+  "第3重": {
+    "en-us": "C3"
+  },
+  "第4重": {
+    "en-us": "C4"
+  },
+  "第5重": {
+    "en-us": "C5"
+  },
+  "第6重": {
+    "en-us": "C6"
+  }
 }

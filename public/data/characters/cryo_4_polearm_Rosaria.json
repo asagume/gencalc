@@ -1,7 +1,7 @@
 {
     "名前": "ロサリア",
     "説明": "身にまとう服装以外、何ひとつとして聖職者とは思えないシスター。冷たい言動の中には、相手を見透かす鋭さが隠されている。また、いつも一人で行動をしている。",
-    "icon_url": "public/images/characters/face/cryo_4_polearm_Rosaria.png",
+    "icon_url": "images/characters/face/cryo_4_polearm_Rosaria.png",
     "レアリティ": 4,
     "武器": "長柄武器",
     "元素": "氷",
@@ -170,7 +170,7 @@
                 "HIT数": 2
             }
         ],
-        "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_4_polearm_Rosaria/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。",
@@ -216,7 +216,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -233,7 +233,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -276,7 +276,7 @@
             }
         ],
         "クールタイム": 6,
-        "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_4_polearm_Rosaria/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "臨終の聖礼",
@@ -323,7 +323,7 @@
         "継続時間": 8,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_4_polearm_Rosaria/battle_talent_2.png"
     },
     "固有天賦": [
         {
@@ -337,7 +337,7 @@
                     "数値": 12
                 }
             ],
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/const_talent_0.png"
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/const_talent_0.png"
         },
         {
             "名前": "影から支える暗色",
@@ -351,12 +351,12 @@
             "名前": "夜行",
             "種類": "固有天賦",
             "説明": "夜間（18時から6時まで）になると、チーム内自身のキャラクターの移動速度+10%。<br/>この効果は秘境、征討領域、深境螺旋では発動されない。また、同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/const_talent_2.png"
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/const_talent_2.png"
         },
         {
             "名前": "陰から支える暗色",
             "説明": "<span style=\"color:#FFD780FF\">臨終の聖礼</span>発動時、自身の会心率の15%分、周囲のチーム全員（ロサリア自身を除く）の会心率をアップさせる、継続時間10秒。<br/>この方法で獲得できる会心率アップ効果は、最大15%まで。",
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/const_talent_1.png",
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/const_talent_1.png",
             "詳細": []
         }
     ],
@@ -371,30 +371,30 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/constellation_1.png"
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/constellation_1.png"
         },
         "2": {
             "名前": "無福の地",
             "説明": "<span style=\"color:#FFD780FF\">臨終の聖礼</span>で創られる氷槍の継続時間+4秒。",
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/constellation_2.png",
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "懺悔の儀",
             "説明": "<span style=\"color:#FFD780FF\">罪喰いの懺悔</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/constellation_3.png",
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "苦痛の恩典",
             "説明": "<span style=\"color:#FFD780FF\">罪喰いの懺悔</span>で会心が発生すると、ロサリア自身の元素エネルギーが5回復する。<br/>この効果は、1回の罪喰いの懺悔で1度のみ発動可能。",
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/constellation_4.png",
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "臨終の祈り",
             "説明": "<span style=\"color:#FFD780FF\">臨終の聖礼</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/constellation_5.png",
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -407,7 +407,7 @@
                     "数値": -20
                 }
             ],
-            "icon_url": "public/images/characters/cryo_4_polearm_Rosaria/constellation_6.png"
+            "icon_url": "images/characters/cryo_4_polearm_Rosaria/constellation_6.png"
         }
     },
     "おすすめセット": [

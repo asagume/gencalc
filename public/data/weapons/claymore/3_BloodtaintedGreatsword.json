@@ -1,7 +1,7 @@
 {
     "名前": "龍血を浴びた剣",
     "説明": "噂によると、北方の英雄がこの剣を龍血に浸してから、どんなダメージを受けても壊れなくなった……ただ、この加護は使用者には共有されない。",
-    "icon_url": "public/images/weapons/claymore/3_BloodtaintedGreatsword.png",
+    "icon_url": "images/weapons/claymore/3_BloodtaintedGreatsword.png",
     "レアリティ": 3,
     "種類": "両手剣",
     "ステータス": {

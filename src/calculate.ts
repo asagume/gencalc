@@ -148,181 +148,186 @@ export const calculateStats = function (
     if (!artifactDetailInput) return;
     if (!conditionInput) return;
 
-    const characterMaster = characterInput.characterMaster;
-    const ascension = characterInput.突破レベル;
-    const level = characterInput.レベル;
-    const constellation = characterInput.命ノ星座;
-    const weaponMaster = characterInput.weaponMaster;
-    const weaponAscension = characterInput.武器突破レベル;
-    const weaponLevel = characterInput.武器レベル;
+    try {
+        const characterMaster = characterInput.characterMaster;
+        const ascension = characterInput.突破レベル;
+        const level = characterInput.レベル;
+        const constellation = characterInput.命ノ星座;
+        const weaponMaster = characterInput.weaponMaster;
+        const weaponAscension = characterInput.武器突破レベル;
+        const weaponLevel = characterInput.武器レベル;
 
-    const workStatsObj = deepcopy(ステータスTEMPLATE);
+        const workStatsObj = deepcopy(ステータスTEMPLATE);
 
-    workStatsObj['突破レベル'] = ascension;
-    workStatsObj['レベル'] = level;
-    workStatsObj['命ノ星座'] = constellation;
+        workStatsObj['突破レベル'] = ascension;
+        workStatsObj['レベル'] = level;
+        workStatsObj['命ノ星座'] = constellation;
 
-    // キャラクターマスターから元素エネルギーを設定します
-    if ('元素エネルギー' in characterMaster['元素爆発']) {
-        workStatsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
-    }
-    if ('固有変数' in characterMaster) {
-        for (const name of Object.keys(characterMaster['固有変数'])) {
-            if (name in conditionInput.conditionValues) {
-                workStatsObj[name] = Number(conditionInput.conditionValues[name]);
-            } else {
-                workStatsObj[name] = characterMaster['固有変数'][name];
-            }
+        // キャラクターマスターから元素エネルギーを設定します
+        if ('元素エネルギー' in characterMaster['元素爆発']) {
+            workStatsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
         }
-    }
-
-    // 敵マスターから敵のステータス（耐性）を設定します
-    for (const stat of Object.keys(statsInput.enemyMaster).filter(s => s != 'key')) {
-        const toStat = '敵' + stat;
-        workStatsObj[toStat] = statsInput.enemyMaster[stat];
-    }
-
-    // ステータス補正を計上します
-    Object.keys(statsInput.statAdjustments).forEach(stat => {
-        if (stat in workStatsObj) workStatsObj[stat] += statsInput.statAdjustments[stat];
-    });
-
-    // キャラクターの基礎ステータスと突破ステータスを計上します
-    for (const stat of Object.keys(characterMaster['ステータス'])) {
-        if (基礎ステータスARRAY.includes(stat)) {
-            workStatsObj[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], ascension, level);
-        } else {
-            const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
-            if (toStat in workStatsObj) {
-                workStatsObj[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension);
-            }
-        }
-    }
-
-    // 武器の基礎ステータスと突破ステータスを計上します
-    for (const stat of Object.keys(weaponMaster['ステータス'])) {
-        workStatsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
-    }
-
-    // 聖遺物のステータスを計上します
-    const artifactStats = artifactDetailInput.聖遺物ステータス;
-    for (const stat of Object.keys(artifactStats)) {
-        const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
-        workStatsObj[toStat] += artifactStats[stat];
-    }
-
-    if (optionInput) {
-        // 元素共鳴を計上します
-        Object.keys(optionInput.elementalResonanceStatAdjustments).forEach(stat => {
-            if (stat in workStatsObj) workStatsObj[stat] += optionInput.elementalResonanceStatAdjustments[stat];
-        });
-        // チームオプションを計上します
-        Object.keys(optionInput.teamOptionStatAdjustments).forEach(stat => {
-            if (stat in workStatsObj) workStatsObj[stat] += optionInput.teamOptionStatAdjustments[stat];
-        });
-        // その他オプションを計上します
-        Object.keys(optionInput.miscOptionStatAdjustments).forEach(stat => {
-            if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOptionStatAdjustments[stat];
-        });
-    }
-
-    const validConditionValueArr = makeValidConditionValueArr(conditionInput);
-
-    // ステータス変化
-    const myPriority1KindArr = ['元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
-    const myPriority1KindFormulaArr = [] as any[];
-    const myPriority2KindFormulaArr = [] as any[];
-    const myKindFormulaArr = [] as any[];
-    for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-        if (myDamageDetail && CHANGE_KIND_STATUS in myDamageDetail) {
-            for (const myDetailObj of myDamageDetail[CHANGE_KIND_STATUS]) {
-                let myNew数値 = myDetailObj['数値'];
-                if (myDetailObj['条件']) {
-                    const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
-                    if (number == 0) continue;
-                    if (number != 1) {
-                        myNew数値 = (myNew数値 as any).concat(['*', number]);
-                    }
+        if ('固有変数' in characterMaster) {
+            for (const name of Object.keys(characterMaster['固有変数'])) {
+                if (name in conditionInput.conditionValues) {
+                    workStatsObj[name] = Number(conditionInput.conditionValues[name]);
+                } else {
+                    workStatsObj[name] = characterMaster['固有変数'][name];
                 }
-                if (myDetailObj['対象']) {
-                    const workArr = myDetailObj['対象'].split('.');
-                    if (['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'].includes(workArr[0])) {
-                        if (workArr.length > 1) {
-                            // FIXME
-                        } else {
-                            const myNew種類 = myDetailObj['種類'] + '.' + myDetailObj['対象'];
-                            myKindFormulaArr.push([myNew種類, myNew数値, myDetailObj['上限']]);
+            }
+        }
+
+        // 敵マスターから敵のステータス（耐性）を設定します
+        for (const stat of Object.keys(statsInput.enemyMaster).filter(s => s != 'key')) {
+            const toStat = '敵' + stat;
+            workStatsObj[toStat] = statsInput.enemyMaster[stat];
+        }
+
+        // ステータス補正を計上します
+        Object.keys(statsInput.statAdjustments).forEach(stat => {
+            if (stat in workStatsObj) workStatsObj[stat] += statsInput.statAdjustments[stat];
+        });
+
+        // キャラクターの基礎ステータスと突破ステータスを計上します
+        for (const stat of Object.keys(characterMaster['ステータス'])) {
+            if (基礎ステータスARRAY.includes(stat)) {
+                workStatsObj[stat] += getStatValueByLevel(characterMaster['ステータス'][stat], ascension, level);
+            } else {
+                const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
+                if (toStat in workStatsObj) {
+                    workStatsObj[toStat] += getPropertyValueByLevel(characterMaster['ステータス'][stat], ascension);
+                }
+            }
+        }
+
+        // 武器の基礎ステータスと突破ステータスを計上します
+        for (const stat of Object.keys(weaponMaster['ステータス'])) {
+            workStatsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
+        }
+
+        // 聖遺物のステータスを計上します
+        const artifactStats = artifactDetailInput.聖遺物ステータス;
+        for (const stat of Object.keys(artifactStats)) {
+            const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
+            workStatsObj[toStat] += artifactStats[stat];
+        }
+
+        if (optionInput) {
+            // 元素共鳴を計上します
+            Object.keys(optionInput.elementalResonanceStatAdjustments).forEach(stat => {
+                if (stat in workStatsObj) workStatsObj[stat] += optionInput.elementalResonanceStatAdjustments[stat];
+            });
+            // チームオプションを計上します
+            Object.keys(optionInput.teamOptionStatAdjustments).forEach(stat => {
+                if (stat in workStatsObj) workStatsObj[stat] += optionInput.teamOptionStatAdjustments[stat];
+            });
+            // その他オプションを計上します
+            Object.keys(optionInput.miscOptionStatAdjustments).forEach(stat => {
+                if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOptionStatAdjustments[stat];
+            });
+        }
+
+        const validConditionValueArr = makeValidConditionValueArr(conditionInput);
+
+        // ステータス変化
+        const myPriority1KindArr = ['元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
+        const myPriority1KindFormulaArr = [] as any[];
+        const myPriority2KindFormulaArr = [] as any[];
+        const myKindFormulaArr = [] as any[];
+        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
+            if (myDamageDetail && CHANGE_KIND_STATUS in myDamageDetail) {
+                for (const myDetailObj of myDamageDetail[CHANGE_KIND_STATUS]) {
+                    let myNew数値 = myDetailObj['数値'];
+                    if (myDetailObj['条件']) {
+                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
+                        if (number == 0) continue;
+                        if (number != 1) {
+                            myNew数値 = (myNew数値 as any).concat(['*', number]);
                         }
                     }
-                    continue;  // 対象指定ありのものはスキップします
-                }
-                if (myDetailObj['種類']) {
-                    if (myPriority1KindArr.includes(myDetailObj['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
-                        myPriority1KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
-                    } else if (myDetailObj['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
-                        myPriority2KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
-                    } else {
-                        myKindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                    if (myDetailObj['対象']) {
+                        const workArr = myDetailObj['対象'].split('.');
+                        if (['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発'].includes(workArr[0])) {
+                            if (workArr.length > 1) {
+                                // FIXME
+                            } else {
+                                const myNew種類 = myDetailObj['種類'] + '.' + myDetailObj['対象'];
+                                myKindFormulaArr.push([myNew種類, myNew数値, myDetailObj['上限']]);
+                            }
+                        }
+                        continue;  // 対象指定ありのものはスキップします
+                    }
+                    if (myDetailObj['種類']) {
+                        if (myPriority1KindArr.includes(myDetailObj['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
+                            myPriority1KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                        } else if (myDetailObj['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
+                            myPriority2KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                        } else {
+                            myKindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                        }
                     }
                 }
             }
         }
-    }
-    // 攻撃力の計算で参照されるステータスアップを先に計上します
-    myPriority1KindFormulaArr.forEach(entry => {
-        updateStats(workStatsObj, entry[0], entry[1], entry[2]);
-    });
-    // 乗算系のステータスアップを計上します HP% 攻撃力% 防御力%
-    myPriority2KindFormulaArr.sort(compareFunction);
-    myPriority2KindFormulaArr.forEach(entry => {
-        updateStats(workStatsObj, entry[0], entry[1], entry[2]);
-    });
+        // 攻撃力の計算で参照されるステータスアップを先に計上します
+        myPriority1KindFormulaArr.forEach(entry => {
+            updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+        });
+        // 乗算系のステータスアップを計上します HP% 攻撃力% 防御力%
+        myPriority2KindFormulaArr.sort(compareFunction);
+        myPriority2KindFormulaArr.forEach(entry => {
+            updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+        });
 
-    // HP, 攻撃力, 防御力を計算します
-    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
-    workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
-    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
-    workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
-    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
-    workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
+        // HP, 攻撃力, 防御力を計算します
+        workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
+        workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
+        workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
+        workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
+        workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
+        workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
 
-    // それ以外のステータスアップを計上します
-    myKindFormulaArr.sort(compareFunction);
-    myKindFormulaArr.forEach(entry => {
-        updateStats(workStatsObj, entry[0], entry[1], entry[2]);
-    });
+        // それ以外のステータスアップを計上します
+        myKindFormulaArr.sort(compareFunction);
+        myKindFormulaArr.forEach(entry => {
+            updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+        });
 
-    // 天賦性能変化
-    let 通常攻撃_元素Var = null;
-    let 重撃_元素Var = null;
-    let 落下攻撃_元素Var = null;
-    for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-        if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
-            for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
-                if (myDetailObj['条件']) {
-                    const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
-                    if (number == 0) continue;
-                }
-                if (myDetailObj['種類'] && myDetailObj['種類'].endsWith('元素付与')) {
-                    const my元素 = myDetailObj['種類'].replace('元素付与', '');
-                    if (!myDetailObj['対象']) {
-                        通常攻撃_元素Var = my元素;
-                        重撃_元素Var = my元素;
-                        落下攻撃_元素Var = my元素;
-                    } else if (myDetailObj['対象'] == '通常攻撃ダメージ') {
-                        通常攻撃_元素Var = my元素;
-                    } else if (myDetailObj['対象'] == '重撃ダメージ') {
-                        重撃_元素Var = my元素;
-                    } else if (myDetailObj['対象'] == '落下攻撃ダメージ') {
-                        落下攻撃_元素Var = my元素;
+        // 天賦性能変化
+        let 通常攻撃_元素Var = null;
+        let 重撃_元素Var = null;
+        let 落下攻撃_元素Var = null;
+        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
+            if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
+                for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
+                    if (myDetailObj['条件']) {
+                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
+                        if (number == 0) continue;
+                    }
+                    if (myDetailObj['種類'] && myDetailObj['種類'].endsWith('元素付与')) {
+                        const my元素 = myDetailObj['種類'].replace('元素付与', '');
+                        if (!myDetailObj['対象']) {
+                            通常攻撃_元素Var = my元素;
+                            重撃_元素Var = my元素;
+                            落下攻撃_元素Var = my元素;
+                        } else if (myDetailObj['対象'] == '通常攻撃ダメージ') {
+                            通常攻撃_元素Var = my元素;
+                        } else if (myDetailObj['対象'] == '重撃ダメージ') {
+                            重撃_元素Var = my元素;
+                        } else if (myDetailObj['対象'] == '落下攻撃ダメージ') {
+                            落下攻撃_元素Var = my元素;
+                        }
                     }
                 }
             }
         }
-    }
-    conditionInput.攻撃元素 = [通常攻撃_元素Var, 重撃_元素Var, 落下攻撃_元素Var];
+        conditionInput.攻撃元素 = [通常攻撃_元素Var, 重撃_元素Var, 落下攻撃_元素Var];
 
-    overwriteObject(statsInput.statsObj, workStatsObj);
+        overwriteObject(statsInput.statsObj, workStatsObj);
+    } catch (error) {
+        console.error(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
+        throw error;
+    }
 }
 
 function compareFunction(a: string, b: string) {

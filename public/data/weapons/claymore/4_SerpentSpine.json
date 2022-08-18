@@ -1,7 +1,7 @@
 {
     "名前": "螭龍の剣",
     "説明": "古代の海から発見された希少な武器。剣を振るうと、太古の波音が響く。",
-    "icon_url": "public/images/weapons/claymore/4_SerpentSpine.png",
+    "icon_url": "images/weapons/claymore/4_SerpentSpine.png",
     "レアリティ": 4,
     "種類": "両手剣",
     "ステータス": {

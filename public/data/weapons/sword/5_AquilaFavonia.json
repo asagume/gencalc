@@ -1,7 +1,7 @@
 {
     "名前": "風鷹剣",
     "説明": "西風騎士団の魂。この剣を振り回していた女傑と同じように、千年経っても未だ正義の風を巻き起こし、悪を排除しようとする。",
-    "icon_url": "public/images/weapons/sword/5_AquilaFavonia.png",
+    "icon_url": "images/weapons/sword/5_AquilaFavonia.png",
     "レアリティ": 5,
     "種類": "片手剣",
     "ステータス": {

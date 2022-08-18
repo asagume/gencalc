@@ -356,6 +356,9 @@ export const CHARACTER_INPUT_TEMPLATE = {
     damageDetailMyCharacter: null as TDamageDetail | null,
     damageDetailMyWeapon: null as TDamageDetail | null,
     damageDetailMyArtifactSets: null as TDamageDetail | null,
+    buildname: '',
+    saveDisabled: true,     // ローカルストレージへの構成保存不可か？
+    removeDisabled: true,   // ローカルストレージの構成削除不可か？
 };
 export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 
@@ -637,12 +640,12 @@ export async function loadRecommendation(
             artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
         });
         ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
-            if (!(key in build)) return;
+            if (!(key in build) && build[key] != -1) return;
             const substatValue = build[key];
             artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = substatValue;
         });
         ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
-            if (!(key in build)) return;
+            if (!(key in build) && build[key] != -1) return;
             const substatCount = build[key];
             artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = substatCount;
         });
@@ -659,6 +662,94 @@ export async function loadRecommendation(
         console.error(characterInput, artifactDetailInput, conditionInput, build);
         throw error;
     }
+}
+
+export function makeSavedata(characterInput: TCharacterInput, artifactDetailInput: TArtifactDetailInput, conditionInput: TConditionInput) {
+    const resultObj = {} as any;
+
+    // キャラクター
+    resultObj['キャラクター'] = characterInput.character;
+    // レベル
+    resultObj['レベル'] = characterInput.レベル + (突破レベルレベルARRAY[characterInput.突破レベル][0] == characterInput.レベル ? '+' : '');
+    // 命ノ星座
+    resultObj['命ノ星座'] = characterInput.命ノ星座;
+    // 通常攻撃レベル
+    resultObj['通常攻撃レベル'] = characterInput.通常攻撃レベル;
+    // 元素スキルレベル
+    resultObj['元素スキルレベル'] = characterInput.元素スキルレベル;
+    // 元素爆発レベル
+    resultObj['元素爆発レベル'] = characterInput.元素爆発レベル;
+    // 武器
+    resultObj['武器'] = characterInput.weapon;
+    // 武器レベル
+    resultObj['武器レベル'] = characterInput.武器レベル + (突破レベルレベルARRAY[characterInput.突破レベル][0] == characterInput.武器レベル ? '+' : '');
+    // 精錬ランク
+    resultObj['精錬ランク'] = characterInput.武器精錬ランク;
+    // 聖遺物セット効果1
+    resultObj['聖遺物セット効果1'] = characterInput.artifactSets[0];
+    // 聖遺物セット効果2
+    resultObj['聖遺物セット効果2'] = characterInput.artifactSets[1];
+    // 聖遺物メイン効果1
+    resultObj['聖遺物メイン効果1'] = artifactDetailInput.聖遺物メイン効果[0];
+    // 聖遺物メイン効果2
+    resultObj['聖遺物メイン効果2'] = artifactDetailInput.聖遺物メイン効果[1];
+    // 聖遺物メイン効果3
+    resultObj['聖遺物メイン効果3'] = artifactDetailInput.聖遺物メイン効果[2];
+    // 聖遺物メイン効果4
+    resultObj['聖遺物メイン効果4'] = artifactDetailInput.聖遺物メイン効果[3];
+    // 聖遺物メイン効果5
+    resultObj['聖遺物メイン効果5'] = artifactDetailInput.聖遺物メイン効果[4];
+    // 聖遺物サブ効果HP
+    resultObj['聖遺物サブ効果HP'] = artifactDetailInput.聖遺物ステータスサブ効果['HP'];
+    // 聖遺物サブ効果攻撃力
+    resultObj['聖遺物サブ効果攻撃力'] = artifactDetailInput.聖遺物ステータスサブ効果['攻撃力'];
+    // 聖遺物サブ効果防御力
+    resultObj['聖遺物サブ効果防御力'] = artifactDetailInput.聖遺物ステータスサブ効果['防御力'];
+    // 聖遺物サブ効果元素熟知
+    resultObj['聖遺物サブ効果元素熟知'] = artifactDetailInput.聖遺物ステータスサブ効果['元素熟知'];
+    // 聖遺物サブ効果会心率
+    resultObj['聖遺物サブ効果会心率'] = artifactDetailInput.聖遺物ステータスサブ効果['会心率'];
+    // 聖遺物サブ効果会心ダメージ
+    resultObj['聖遺物サブ効果会心ダメージ'] = artifactDetailInput.聖遺物ステータスサブ効果['会心ダメージ'];
+    // 聖遺物サブ効果元素チャージ効率
+    resultObj['聖遺物サブ効果元素チャージ効率'] = artifactDetailInput.聖遺物ステータスサブ効果['元素チャージ効率'];
+    // 聖遺物サブ効果HPP
+    resultObj['聖遺物サブ効果HPP'] = artifactDetailInput.聖遺物ステータスサブ効果['HP%'];
+    // 聖遺物サブ効果攻撃力P
+    resultObj['聖遺物サブ効果攻撃力P'] = artifactDetailInput.聖遺物ステータスサブ効果['攻撃力%'];
+    // 聖遺物サブ効果防御力P
+    resultObj['聖遺物サブ効果防御力P'] = artifactDetailInput.聖遺物ステータスサブ効果['防御力%'];
+    // 聖遺物優先するサブ効果1
+    resultObj['聖遺物優先するサブ効果1'] = artifactDetailInput.聖遺物優先するサブ効果[0];
+    // 聖遺物優先するサブ効果1上昇値
+    resultObj['聖遺物優先するサブ効果1上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[0];
+    // 聖遺物優先するサブ効果1上昇回数
+    resultObj['聖遺物優先するサブ効果1上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[0];
+    // 聖遺物優先するサブ効果2
+    resultObj['聖遺物優先するサブ効果2'] = artifactDetailInput.聖遺物優先するサブ効果[1];
+    // 聖遺物優先するサブ効果2上昇値
+    resultObj['聖遺物優先するサブ効果2上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[1];
+    // 聖遺物優先するサブ効果2上昇回数
+    resultObj['聖遺物優先するサブ効果2上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[1];
+    // 聖遺物優先するサブ効果3
+    resultObj['聖遺物優先するサブ効果3'] = artifactDetailInput.聖遺物優先するサブ効果[2];
+    // 聖遺物優先するサブ効果3上昇値
+    resultObj['聖遺物優先するサブ効果3上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[2];
+    // 聖遺物優先するサブ効果3上昇回数
+    resultObj['聖遺物優先するサブ効果3上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[2];
+
+    for (const entry of conditionInput.checkboxList) {
+        if (conditionInput.conditionValues[entry.name]) {
+            resultObj[entry.name] = true;
+        }
+    }
+    for (const entry of conditionInput.selectList) {
+        if (conditionInput.conditionValues[entry.name]) {
+            resultObj[entry.name] = conditionInput.conditionValues[entry.name];
+        }
+    }
+
+    return resultObj;
 }
 
 export const CHANGE_KIND_STATUS = 'ステータス変更系詳細';
@@ -1143,6 +1234,14 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                     }
                 }
             }
+            // 聖遺物セット効果のオプション初期値は変な位置にあります
+            if ('4セット効果' in master && 'オプション初期値' in (master as any)['4セット効果']) {
+                for (const key of Object.keys((master as any)['4セット効果']['オプション初期値'])) {
+                    if (!(key in conditionInput.conditionValues)) {
+                        conditionInput.conditionValues[key] = (master as any)['4セット効果']['オプション初期値'][key];
+                    }
+                }
+            }
         }
 
         const conditionValues = conditionInput.conditionValues;
@@ -1176,7 +1275,7 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                 const conditionMap: Map<string, any[] | null> = myDamageDetail.条件;
                 const exclusionMap: Map<string, string[] | null> = myDamageDetail.排他;
                 conditionMap.forEach((value, key) => {
-                    if (key in conditionValues && conditionValues[key]) {
+                    if (key in conditionValues && conditionValues[key] != null) {
                         const exclusions = exclusionMap.get(key);
                         if (exclusions) {
                             for (const exclusion of exclusions) {

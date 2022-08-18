@@ -1,7 +1,7 @@
 {
     "名前": "西風猟弓",
     "説明": "西風騎士団でよく使われる弓。優れた弓使いだけがその優れた性能を発揮できる。",
-    "icon_url": "public/images/weapons/bow/4_FavoniusWarbow.png",
+    "icon_url": "images/weapons/bow/4_FavoniusWarbow.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

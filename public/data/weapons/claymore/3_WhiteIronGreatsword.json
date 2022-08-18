@@ -1,7 +1,7 @@
 {
     "名前": "白鉄の大剣",
     "説明": "白鉄でできた両手剣、重量と強度を兼ね備えている。普通の腕力でも簡単に振ることができ、力の強い人が持つと威力が更に倍増する。",
-    "icon_url": "public/images/weapons/claymore/3_WhiteIronGreatsword.png",
+    "icon_url": "images/weapons/claymore/3_WhiteIronGreatsword.png",
     "レアリティ": 3,
     "種類": "両手剣",
     "ステータス": {

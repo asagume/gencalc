@@ -1,7 +1,7 @@
 {
     "名前": "流浪楽章",
     "説明": "楽譜が記されているノート。風化と虫の侵食はあるが、それでも筆跡から力を感じられる。",
-    "icon_url": "public/images/weapons/catalyst/4_TheWidsith.png",
+    "icon_url": "images/weapons/catalyst/4_TheWidsith.png",
     "レアリティ": 4,
     "種類": "法器",
     "ステータス": {

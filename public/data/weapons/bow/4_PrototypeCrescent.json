@@ -1,7 +1,7 @@
 {
     "名前": "澹月·試作",
     "説明": "黒岩場の中に隠されていた長弓の原形。矢を放つ時の姿は夕方の月と似ている。",
-    "icon_url": "public/images/weapons/bow/4_PrototypeCrescent.png",
+    "icon_url": "images/weapons/bow/4_PrototypeCrescent.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {

@@ -1,7 +1,7 @@
 {
     "名前": "トーマ",
     "説明": "神里家の家司。稲妻で活躍する「顔役」でもある。",
-    "icon_url": "public/images/characters/face/pyro_4_polearm_Thoma.png",
+    "icon_url": "images/characters/face/pyro_4_polearm_Thoma.png",
     "レアリティ": 4,
     "武器": "長柄武器",
     "元素": "炎",
@@ -153,7 +153,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_4_polearm_Thoma/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_4_polearm_Thoma/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。",
@@ -199,7 +199,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "127.84%",
@@ -216,7 +216,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "159.68%",
@@ -297,7 +297,7 @@
         ],
         "シールド継続時間": 8,
         "クールタイム": 15,
-        "icon_url": "public/images/characters/pyro_4_polearm_Thoma/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_4_polearm_Thoma/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "真紅熾炎の大鎧",
@@ -363,14 +363,14 @@
         "熾炎の大鎧継続時間": 8,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/pyro_4_polearm_Thoma/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_4_polearm_Thoma/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "懸鯛狩り",
             "種類": "固有天賦",
             "説明": "旅人が稲妻地域で<span style=\"color:#FFD780FF\">釣り</span>に成功した時、トーマの協力によって20%の確率で魚を2倍獲得する。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/const_talent_2.png"
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/const_talent_2.png"
         },
         {
             "名前": "重装甲冑",
@@ -398,12 +398,12 @@
                     "数値": "2.2%HP上限"
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/const_talent_1.png"
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/const_talent_1.png"
         },
         {
             "名前": "重装甲胄",
             "説明": "フィールド上キャラクターが<span style=\"color:#FFD780FF\">烈炎侍立シールド</span>を獲得または更新した時、シールド強化+5%、継続時間6秒。<br/>この効果は0.3秒毎に1回のみ発動可能、最大5重まで。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/const_talent_0.png",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/const_talent_0.png",
             "詳細": []
         }
     ],
@@ -411,31 +411,31 @@
         "1": {
             "名前": "同袍の義理",
             "説明": "トーマ自身の<span style=\"color:#FFD780FF\">烈炎侍立シールド</span>に守られたキャラクター（トーマ自身を除く）が攻撃を受けた時、トーマ自身の<span style=\"color:#FFD780FF\">烈炎侍立</span>のクールタイム-3秒、<span style=\"color:#FFD780FF\">真紅熾炎の大鎧</span>のクールタイム-3秒。<br/>この効果は20秒毎に1回のみ発動可能。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/constellation_1.png",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/constellation_1.png",
             "詳細": []
         },
         "2": {
             "名前": "官吏の才知",
             "説明": "<span style=\"color:#FFD780FF\">真紅熾炎の大鎧</span>の継続時間+3秒。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/constellation_2.png",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "揺るがぬ用心",
             "説明": "<span style=\"color:#FFD780FF\">烈炎侍立</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/constellation_3.png",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "家臣の方策",
             "説明": "<span style=\"color:#FFD780FF\">真紅熾炎の大鎧</span>を発動すると、トーマの元素エネルギーを15ポイント回復する。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/constellation_4.png",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "烈々たる野火",
             "説明": "<span style=\"color:#FFD780FF\">真紅熾炎の大鎧</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/constellation_5.png",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -458,7 +458,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_polearm_Thoma/constellation_6.png"
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/constellation_6.png"
         }
     },
     "おすすめセット": [

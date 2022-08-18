@@ -4,366 +4,366 @@
         "元素": "水",
         "武器": "弓",
         "誕生日": "4/20",
-        "import": "public/data/characters/hydro_5_bow_Yelan.json"
+        "import": "data/characters/hydro_5_bow_Yelan.json"
     },
     "神里綾人": {
         "レアリティ": 5,
         "元素": "水",
         "武器": "片手剣",
         "誕生日": "3/26",
-        "import": "public/data/characters/hydro_5_sword_KamisatoAyato.json"
+        "import": "data/characters/hydro_5_sword_KamisatoAyato.json"
     },
     "八重神子": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "法器",
         "誕生日": "6/27",
-        "import": "public/data/characters/electro_5_catalyst_YaeMiko.json"
+        "import": "data/characters/electro_5_catalyst_YaeMiko.json"
     },
     "申鶴": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "長柄武器",
         "誕生日": "3/10",
-        "import": "public/data/characters/cryo_5_polearm_Shenhe.json"
+        "import": "data/characters/cryo_5_polearm_Shenhe.json"
     },
     "荒瀧一斗": {
         "レアリティ": 5,
         "元素": "岩",
         "武器": "両手剣",
         "誕生日": "6/1",
-        "import": "public/data/characters/geo_5_claymore_AratakiItto.json"
+        "import": "data/characters/geo_5_claymore_AratakiItto.json"
     },
     "珊瑚宮心海": {
         "レアリティ": 5,
         "元素": "水",
         "武器": "法器",
         "誕生日": "2/22",
-        "import": "public/data/characters/hydro_5_catalyst_SangonomiyaKokomi.json"
+        "import": "data/characters/hydro_5_catalyst_SangonomiyaKokomi.json"
     },
     "雷電将軍": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "長柄武器",
         "誕生日": "6/26",
-        "import": "public/data/characters/electro_5_polearm_RaidenShogun.json"
+        "import": "data/characters/electro_5_polearm_RaidenShogun.json"
     },
     "アーロイ": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "弓",
-        "import": "public/data/characters/cryo_5_bow_Aloy.json"
+        "import": "data/characters/cryo_5_bow_Aloy.json"
     },
     "宵宮": {
         "レアリティ": 5,
         "元素": "炎",
         "武器": "弓",
         "誕生日": "6/21",
-        "import": "public/data/characters/pyro_5_bow_Yoimiya.json"
+        "import": "data/characters/pyro_5_bow_Yoimiya.json"
     },
     "神里綾華": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "片手剣",
         "誕生日": "9/28",
-        "import": "public/data/characters/cryo_5_sword_KamisatoAyaka.json"
+        "import": "data/characters/cryo_5_sword_KamisatoAyaka.json"
     },
     "楓原万葉": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "片手剣",
         "誕生日": "10/29",
-        "import": "public/data/characters/anemo_5_sword_KaedeharaKazuha.json"
+        "import": "data/characters/anemo_5_sword_KaedeharaKazuha.json"
     },
     "エウルア": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "両手剣",
         "誕生日": "10/25",
-        "import": "public/data/characters/cryo_5_claymore_Eula.json"
+        "import": "data/characters/cryo_5_claymore_Eula.json"
     },
     "胡桃": {
         "レアリティ": 5,
         "元素": "炎",
         "武器": "長柄武器",
         "誕生日": "7/15",
-        "import": "public/data/characters/pyro_5_polearm_HuTao.json"
+        "import": "data/characters/pyro_5_polearm_HuTao.json"
     },
     "魈": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "長柄武器",
         "誕生日": "4/17",
-        "import": "public/data/characters/anemo_5_polearm_Xiao.json"
+        "import": "data/characters/anemo_5_polearm_Xiao.json"
     },
     "甘雨": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "弓",
         "誕生日": "12/2",
-        "import": "public/data/characters/cryo_5_bow_Ganyu.json"
+        "import": "data/characters/cryo_5_bow_Ganyu.json"
     },
     "アルベド": {
         "レアリティ": 5,
         "元素": "岩",
         "武器": "片手剣",
         "誕生日": "9/13",
-        "import": "public/data/characters/geo_5_sword_Albedo.json"
+        "import": "data/characters/geo_5_sword_Albedo.json"
     },
     "鍾離": {
         "レアリティ": 5,
         "元素": "岩",
         "武器": "長柄武器",
         "誕生日": "12/31",
-        "import": "public/data/characters/geo_5_polearm_Zhongli.json"
+        "import": "data/characters/geo_5_polearm_Zhongli.json"
     },
     "タルタリヤ": {
         "レアリティ": 5,
         "元素": "水",
         "武器": "弓",
         "誕生日": "7/20",
-        "import": "public/data/characters/hydro_5_bow_Tartaglia.json"
+        "import": "data/characters/hydro_5_bow_Tartaglia.json"
     },
     "クレー": {
         "レアリティ": 5,
         "元素": "炎",
         "武器": "法器",
         "誕生日": "7/27",
-        "import": "public/data/characters/pyro_5_catalyst_Klee.json"
+        "import": "data/characters/pyro_5_catalyst_Klee.json"
     },
     "ウェンティ": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "弓",
         "誕生日": "6/16",
-        "import": "public/data/characters/anemo_5_bow_Venti.json"
+        "import": "data/characters/anemo_5_bow_Venti.json"
     },
     "刻晴": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "片手剣",
         "誕生日": "11/20",
-        "import": "public/data/characters/electro_5_sword_Keqing.json"
+        "import": "data/characters/electro_5_sword_Keqing.json"
     },
     "モナ": {
         "レアリティ": 5,
         "元素": "水",
         "武器": "法器",
         "誕生日": "8/31",
-        "import": "public/data/characters/hydro_5_catalyst_Mona.json"
+        "import": "data/characters/hydro_5_catalyst_Mona.json"
     },
     "七七": {
         "レアリティ": 5,
         "元素": "氷",
         "武器": "片手剣",
         "誕生日": "3/3",
-        "import": "public/data/characters/cryo_5_sword_Qiqi.json"
+        "import": "data/characters/cryo_5_sword_Qiqi.json"
     },
     "ディルック": {
         "レアリティ": 5,
         "元素": "炎",
         "武器": "両手剣",
         "誕生日": "4/30",
-        "import": "public/data/characters/pyro_5_claymore_Diluc.json"
+        "import": "data/characters/pyro_5_claymore_Diluc.json"
     },
     "ジン": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "片手剣",
         "誕生日": "3/14",
-        "import": "public/data/characters/anemo_5_sword_Jean.json"
+        "import": "data/characters/anemo_5_sword_Jean.json"
     },
     "鹿野院平蔵": {
         "レアリティ": 4,
         "元素": "風",
         "武器": "法器",
         "誕生日": "7/24",
-        "import": "public/data/characters/anemo_4_catalyst_ShikanoinHeizou.json"
+        "import": "data/characters/anemo_4_catalyst_ShikanoinHeizou.json"
     },
     "久岐忍": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "片手剣",
         "誕生日": "7/27",
-        "import": "public/data/characters/electro_4_sword_KukiShinobu.json"
+        "import": "data/characters/electro_4_sword_KukiShinobu.json"
     },
     "雲菫": {
         "レアリティ": 4,
         "元素": "岩",
         "武器": "長柄武器",
         "誕生日": "5/21",
-        "import": "public/data/characters/geo_4_polearm_YunJin.json"
+        "import": "data/characters/geo_4_polearm_YunJin.json"
     },
     "ゴロー": {
         "レアリティ": 4,
         "元素": "岩",
         "武器": "弓",
         "誕生日": "5/18",
-        "import": "public/data/characters/geo_4_bow_Gorou.json"
+        "import": "data/characters/geo_4_bow_Gorou.json"
     },
     "トーマ": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "長柄武器",
         "誕生日": "1/9",
-        "import": "public/data/characters/pyro_4_polearm_Thoma.json"
+        "import": "data/characters/pyro_4_polearm_Thoma.json"
     },
     "九条裟羅": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "弓",
         "誕生日": "7/14",
-        "import": "public/data/characters/electro_4_bow_KujouSara.json"
+        "import": "data/characters/electro_4_bow_KujouSara.json"
     },
     "早柚": {
         "レアリティ": 4,
         "元素": "風",
         "武器": "両手剣",
         "誕生日": "10/19",
-        "import": "public/data/characters/anemo_4_claymore_Sayu.json"
+        "import": "data/characters/anemo_4_claymore_Sayu.json"
     },
     "煙緋": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "法器",
         "誕生日": "7/28",
-        "import": "public/data/characters/pyro_4_catalyst_Yanfei.json"
+        "import": "data/characters/pyro_4_catalyst_Yanfei.json"
     },
     "ロサリア": {
         "レアリティ": 4,
         "元素": "氷",
         "武器": "長柄武器",
         "誕生日": "1/24",
-        "import": "public/data/characters/cryo_4_polearm_Rosaria.json"
+        "import": "data/characters/cryo_4_polearm_Rosaria.json"
     },
     "辛炎": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "両手剣",
         "誕生日": "10/16",
-        "import": "public/data/characters/pyro_4_claymore_Xinyan.json"
+        "import": "data/characters/pyro_4_claymore_Xinyan.json"
     },
     "ディオナ": {
         "レアリティ": 4,
         "元素": "氷",
         "武器": "弓",
         "誕生日": "1/18",
-        "import": "public/data/characters/cryo_4_bow_Diona.json"
+        "import": "data/characters/cryo_4_bow_Diona.json"
     },
     "スクロース": {
         "レアリティ": 4,
         "元素": "風",
         "武器": "法器",
         "誕生日": "11/26",
-        "import": "public/data/characters/anemo_4_catalyst_Sucrose.json"
+        "import": "data/characters/anemo_4_catalyst_Sucrose.json"
     },
     "重雲": {
         "レアリティ": 4,
         "元素": "氷",
         "武器": "両手剣",
         "誕生日": "9/7",
-        "import": "public/data/characters/cryo_4_claymore_Chongyun.json"
+        "import": "data/characters/cryo_4_claymore_Chongyun.json"
     },
     "ノエル": {
         "レアリティ": 4,
         "元素": "岩",
         "武器": "両手剣",
         "誕生日": "3/21",
-        "import": "public/data/characters/geo_4_claymore_Noelle.json"
+        "import": "data/characters/geo_4_claymore_Noelle.json"
     },
     "ベネット": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "片手剣",
         "誕生日": "2/29",
-        "import": "public/data/characters/pyro_4_sword_Bennett.json"
+        "import": "data/characters/pyro_4_sword_Bennett.json"
     },
     "フィッシュル": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "弓",
         "誕生日": "5/27",
-        "import": "public/data/characters/electro_4_bow_Fischl.json"
+        "import": "data/characters/electro_4_bow_Fischl.json"
     },
     "凝光": {
         "レアリティ": 4,
         "元素": "岩",
         "武器": "法器",
         "誕生日": "8/26",
-        "import": "public/data/characters/geo_4_catalyst_Ningguang.json"
+        "import": "data/characters/geo_4_catalyst_Ningguang.json"
     },
     "行秋": {
         "レアリティ": 4,
         "元素": "水",
         "武器": "片手剣",
         "誕生日": "10/9",
-        "import": "public/data/characters/hydro_4_sword_Xingqiu.json"
+        "import": "data/characters/hydro_4_sword_Xingqiu.json"
     },
     "北斗": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "両手剣",
         "誕生日": "2/14",
-        "import": "public/data/characters/electro_4_claymore_Beidou.json"
+        "import": "data/characters/electro_4_claymore_Beidou.json"
     },
     "香菱": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "長柄武器",
         "誕生日": "11/2",
-        "import": "public/data/characters/pyro_4_polearm_Xiangling.json"
+        "import": "data/characters/pyro_4_polearm_Xiangling.json"
     },
     "レザー": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "両手剣",
         "誕生日": "9/9",
-        "import": "public/data/characters/electro_4_claymore_Razor.json"
+        "import": "data/characters/electro_4_claymore_Razor.json"
     },
     "バーバラ": {
         "レアリティ": 4,
         "元素": "水",
         "武器": "法器",
         "誕生日": "7/5",
-        "import": "public/data/characters/hydro_4_catalyst_Barbara.json"
+        "import": "data/characters/hydro_4_catalyst_Barbara.json"
     },
     "リサ": {
         "レアリティ": 4,
         "元素": "雷",
         "武器": "法器",
         "誕生日": "6/9",
-        "import": "public/data/characters/electro_4_catalyst_Lisa.json"
+        "import": "data/characters/electro_4_catalyst_Lisa.json"
     },
     "ガイア": {
         "レアリティ": 4,
         "元素": "氷",
         "武器": "片手剣",
         "誕生日": "11/30",
-        "import": "public/data/characters/cryo_4_sword_Kaeya.json"
+        "import": "data/characters/cryo_4_sword_Kaeya.json"
     },
     "アンバー": {
         "レアリティ": 4,
         "元素": "炎",
         "武器": "弓",
         "誕生日": "8/10",
-        "import": "public/data/characters/pyro_4_bow_Amber.json"
+        "import": "data/characters/pyro_4_bow_Amber.json"
     },
     "旅人(雷)": {
         "レアリティ": 5,
         "元素": "雷",
         "武器": "片手剣",
-        "import": "public/data/characters/electro_5_sword_Traveler.json"
+        "import": "data/characters/electro_5_sword_Traveler.json"
     },
     "旅人(岩)": {
         "レアリティ": 5,
         "元素": "岩",
         "武器": "片手剣",
-        "import": "public/data/characters/geo_5_sword_Traveler.json"
+        "import": "data/characters/geo_5_sword_Traveler.json"
     },
     "旅人(風)": {
         "レアリティ": 5,
         "元素": "風",
         "武器": "片手剣",
-        "import": "public/data/characters/anemo_5_sword_Traveler.json"
+        "import": "data/characters/anemo_5_sword_Traveler.json"
     }
 }

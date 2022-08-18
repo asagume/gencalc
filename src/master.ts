@@ -23,10 +23,10 @@ import OPTION2_MASTER from '../public/data/OptionMaster2.json'// assert {type: '
 
 import ELEMENTAL_REACTION_MASTER from '../public/data/ElementalReactionMaster.json'// assert {type: 'json'}
 
-import HOYO_DICTIONARY2 from '../public/data/HoYoDictionary2.json'// assert {type: 'json'}
-import HOYO_DICTIONARY4 from '../public/data/HoYoDictionary4.json'// assert {type: 'json'}
-import HOYO_DICTIONARY5 from '../public/data/HoYoDictionary5.json'// assert {type: 'json'}
-import LOCAL_DICTIONARY from '../public/data/LocalDictionary.json'// assert {type: 'json'}
+// import HOYO_DICTIONARY2 from '../public/data/HoYoDictionary2.json'// assert {type: 'json'}
+// import HOYO_DICTIONARY4 from '../public/data/HoYoDictionary4.json'// assert {type: 'json'}
+// import HOYO_DICTIONARY5 from '../public/data/HoYoDictionary5.json'// assert {type: 'json'}
+// import LOCAL_DICTIONARY from '../public/data/LocalDictionary.json'// assert {type: 'json'}
 // import { isPlainObject, isString } from './common'
 
 export {
@@ -311,7 +311,7 @@ export type TElementalReactionKey = keyof typeof ELEMENTAL_REACTION_MASTER;
 export const ELEMENTAL_REACTION_MASTER_LIST = (Object.keys(ELEMENTAL_REACTION_MASTER) as TElementalReactionKey[])
     .map(key => ({ key: key, ...ELEMENTAL_REACTION_MASTER[key] }));
 
-export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...HOYO_DICTIONARY5, ...LOCAL_DICTIONARY };
+// export const DICTIONARY_MASTER = { ...HOYO_DICTIONARY2, ...HOYO_DICTIONARY4, ...HOYO_DICTIONARY5, ...LOCAL_DICTIONARY };
 
 ////////////////
 ////////////////
@@ -442,14 +442,14 @@ export const キャラクター構成PROPERTY_MAP = new Map([
     ['聖遺物サブ効果攻撃力P', 0],
     ['聖遺物サブ効果防御力P', 0],
     ['聖遺物優先するサブ効果1', null],
-    ['聖遺物優先するサブ効果1上昇値', 0],
-    ['聖遺物優先するサブ効果1上昇回数', 0],
+    ['聖遺物優先するサブ効果1上昇値', -1],
+    ['聖遺物優先するサブ効果1上昇回数', -1],
     ['聖遺物優先するサブ効果2', null],
-    ['聖遺物優先するサブ効果2上昇値', 0],
-    ['聖遺物優先するサブ効果2上昇回数', 0],
+    ['聖遺物優先するサブ効果2上昇値', -1],
+    ['聖遺物優先するサブ効果2上昇回数', -1],
     ['聖遺物優先するサブ効果3', null],
-    ['聖遺物優先するサブ効果3上昇値', 0],
-    ['聖遺物優先するサブ効果3上昇回数', 0]
+    ['聖遺物優先するサブ効果3上昇値', -1],
+    ['聖遺物優先するサブ効果3上昇回数', -1]
 ]);
 
 export const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];

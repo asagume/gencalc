@@ -1,7 +1,7 @@
 {
     "名前": "香菱",
     "説明": "璃月出身の少女シェフ。料理に対して人一倍情熱を持っており、激辛料理を得意とする。",
-    "icon_url": "public/images/characters/face/pyro_4_polearm_Xiangling.png",
+    "icon_url": "images/characters/face/pyro_4_polearm_Xiangling.png",
     "レアリティ": 4,
     "武器": "長柄武器",
     "元素": "炎",
@@ -176,7 +176,7 @@
                 "数値": "75%"
             }
         ],
-        "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_4_polearm_Xiangling/battle_talent_0.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。",
@@ -222,7 +222,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "128%",
@@ -239,7 +239,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "160%",
@@ -281,7 +281,7 @@
             }
         ],
         "クールタイム": 12,
-        "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_4_polearm_Xiangling/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "旋火輪",
@@ -387,14 +387,14 @@
         "継続時間": 10,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_4_polearm_Xiangling/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "交差する炎",
             "種類": "固有天賦",
             "説明": "グゥオパァーの噴火距離+20%。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/const_talent_0.png"
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/const_talent_0.png"
         },
         {
             "名前": "激辛唐辛子",
@@ -407,13 +407,13 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/const_talent_1.png"
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/const_talent_1.png"
         },
         {
             "名前": "万民堂のシェフ",
             "種類": "固有天賦",
             "説明": "攻撃系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/const_talent_2.png"
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -427,30 +427,30 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/constellation_1.png"
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/constellation_1.png"
         },
         "2": {
             "名前": "強火と油",
             "説明": "通常攻撃の最後の1撃で敵に2秒継続する爆縮効果を与える。効果終了時に爆発し、敵に攻撃力75%分の<span style=\"color:#FF9999FF\">炎元素範囲ダメージ</span>を与える。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/constellation_2.png",
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "武火調理",
             "説明": "<span style=\"color:#FFD780FF\">旋火輪</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/constellation_3.png",
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "弱火でじっくり",
             "説明": "<span style=\"color:#FFD780FF\">旋火輪</span>の継続時間+40%。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/constellation_4.png",
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "凶猛なグゥオパァー",
             "説明": "<span style=\"color:#FFD780FF\">グゥオパァー出撃</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/constellation_5.png",
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -463,7 +463,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/pyro_4_polearm_Xiangling/constellation_6.png"
+            "icon_url": "images/characters/pyro_4_polearm_Xiangling/constellation_6.png"
         }
     },
     "おすすめセット": [

@@ -1,7 +1,7 @@
 {
     "名前": "ディルック",
     "説明": "モンドの半数以上の造酒業を掌握する貴公子、財力も人望も実力も見くびってはならない。",
-    "icon_url": "public/images/characters/face/pyro_5_claymore_Diluc.png",
+    "icon_url": "images/characters/face/pyro_5_claymore_Diluc.png",
     "レアリティ": 5,
     "武器": "両手剣",
     "元素": "炎",
@@ -155,7 +155,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/pyro_5_claymore_Diluc/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_5_claymore_Diluc/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -218,7 +218,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "179%",
@@ -235,7 +235,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "224%",
@@ -313,7 +313,7 @@
             }
         ],
         "クールタイム": 10,
-        "icon_url": "public/images/characters/pyro_5_claymore_Diluc/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_5_claymore_Diluc/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "黎明",
@@ -381,14 +381,14 @@
         "バフ継続時間": 8,
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "public/images/characters/pyro_5_claymore_Diluc/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_5_claymore_Diluc/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "ノンストップ",
             "種類": "固有天賦",
             "説明": "重撃のスタミナ消費-50%、最大継続時間+3秒。",
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/const_talent_0.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/const_talent_0.png"
         },
         {
             "名前": "溶融の翼",
@@ -401,13 +401,13 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/const_talent_1.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/const_talent_1.png"
         },
         {
             "名前": "アカツキの伝統",
             "種類": "固有天賦",
             "説明": "両手剣を鍛造する時、消費した鉱石の15%が返還される。",
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/const_talent_2.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/const_talent_2.png"
         }
     ],
     "命ノ星座": {
@@ -421,7 +421,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/constellation_1.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_1.png"
         },
         "2": {
             "名前": "灼熱余燼",
@@ -433,12 +433,12 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/constellation_2.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_2.png"
         },
         "3": {
             "名前": "鋼鉄の熾焔",
             "説明": "<span style=\"color:#FFD780FF\">逆焔の刃</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/constellation_3.png",
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -458,12 +458,12 @@
                     "数値": 40
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/constellation_4.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_4.png"
         },
         "5": {
             "名前": "朝を告げる炎の鳥",
             "説明": "<span style=\"color:#FFD780FF\">黎明</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/constellation_5.png",
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -477,7 +477,7 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "public/images/characters/pyro_5_claymore_Diluc/constellation_6.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_6.png"
         }
     },
     "おすすめセット": [

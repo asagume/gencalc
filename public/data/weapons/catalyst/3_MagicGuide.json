@@ -1,7 +1,7 @@
 {
     "名前": "魔導緒論",
     "説明": "Ver.12。時代発展などの内容が追加され、Ver.11の誤字を修正したもの。",
-    "icon_url": "public/images/weapons/catalyst/3_MagicGuide.png",
+    "icon_url": "images/weapons/catalyst/3_MagicGuide.png",
     "レアリティ": 3,
     "種類": "法器",
     "ステータス": {

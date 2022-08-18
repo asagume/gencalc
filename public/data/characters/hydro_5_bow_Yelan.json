@@ -1,7 +1,7 @@
 {
     "名前": "夜蘭",
     "説明": "総務司所属を称する謎の人物。しかし、総務司の名簿上では「存在しない人」となっている。",
-    "icon_url": "public/images/characters/face/hydro_5_bow_Yelan.png",
+    "icon_url": "images/characters/face/hydro_5_bow_Yelan.png",
     "レアリティ": 5,
     "武器": "弓",
     "元素": "水",
@@ -157,7 +157,7 @@
                 "HIT数": 2
             }
         ],
-        "icon_url": "public/images/characters/hydro_5_bow_Yelan/battle_talent_0.png"
+        "icon_url": "images/characters/hydro_5_bow_Yelan/battle_talent_0.png"
     },
     "重撃": {
         "詳細": [
@@ -232,7 +232,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
                     "2": "123%",
@@ -248,7 +248,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
                     "2": "154%",
@@ -290,7 +290,7 @@
         ],
         "長押し最大継続時間": 3,
         "クールタイム": 10,
-        "icon_url": "public/images/characters/hydro_5_bow_Yelan/battle_talent_1.png"
+        "icon_url": "images/characters/hydro_5_bow_Yelan/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "深謀玲瓏賽",
@@ -342,7 +342,7 @@
         "継続時間": 15,
         "クールタイム": 18,
         "元素エネルギー": 70,
-        "icon_url": "public/images/characters/hydro_5_bow_Yelan/battle_talent_2.png"
+        "icon_url": "images/characters/hydro_5_bow_Yelan/battle_talent_2.png"
     },
     "特殊通常攻撃": {
         "条件": "権謀術数",
@@ -384,7 +384,7 @@
                     "数値": 7.5
                 }
             ],
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/const_talent_0.png"
+            "icon_url": "images/characters/hydro_5_bow_Yelan/const_talent_0.png"
         },
         {
             "名前": "気随気儘",
@@ -396,31 +396,31 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/const_talent_1.png"
+            "icon_url": "images/characters/hydro_5_bow_Yelan/const_talent_1.png"
         },
         {
             "名前": "長考一手",
             "説明": "璃月で20時間かかる探索任務を完了した時、獲得する報酬+25%。",
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/const_talent_2.png"
+            "icon_url": "images/characters/hydro_5_bow_Yelan/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "共謀する者、以局征局",
             "説明": "<span style=\"color:#FFD780FF\">絡み合う命の糸</span>の使用可能回数+1。",
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/constellation_1.png",
+            "icon_url": "images/characters/hydro_5_bow_Yelan/constellation_1.png",
             "詳細": []
         },
         "2": {
             "名前": "罠に陥る者、多々益善",
             "説明": "<span style=\"color:#FFD780FF\">「玲瓏一擲」</span>による連携攻撃を行った時、追加で水の矢を1本発射し、夜蘭のHP上限の14%に相当する水元素ダメージを与える。<br/>1.8秒毎に1回のみ発動可能。",
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/constellation_2.png",
+            "icon_url": "images/characters/hydro_5_bow_Yelan/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "壺振り師、賽子詭計",
             "説明": "<span style=\"color:#FFD780FF\">深謀玲瓏賽</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/constellation_3.png",
+            "icon_url": "images/characters/hydro_5_bow_Yelan/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -433,12 +433,12 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/constellation_4.png"
+            "icon_url": "images/characters/hydro_5_bow_Yelan/constellation_4.png"
         },
         "5": {
             "名前": "胴元になる者、三仙奇術",
             "説明": "<span style=\"color:#FFD780FF\">絡み合う命の糸</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/constellation_5.png",
+            "icon_url": "images/characters/hydro_5_bow_Yelan/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -451,7 +451,7 @@
                     "数値": 0
                 }
             ],
-            "icon_url": "public/images/characters/hydro_5_bow_Yelan/constellation_6.png"
+            "icon_url": "images/characters/hydro_5_bow_Yelan/constellation_6.png"
         }
     },
     "おすすめセット": [

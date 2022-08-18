@@ -1,7 +1,7 @@
 {
     "名前": "狼の末路",
     "説明": "狼の騎士が使っていた大剣。本来は鉄工房の職人に贈られた鉄の塊だったが、狼との絆によって神話のような力を得た。",
-    "icon_url": "public/images/weapons/claymore/5_Wolf'sGravestone.png",
+    "icon_url": "images/weapons/claymore/5_Wolf'sGravestone.png",
     "レアリティ": 5,
     "種類": "両手剣",
     "ステータス": {

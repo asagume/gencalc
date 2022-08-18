@@ -1,7 +1,7 @@
 {
     "名前": "降臨の剣",
     "説明": "独特な形をした剣。この世界の物ではないようだ。",
-    "icon_url": "public/images/weapons/sword/4_SwordofDescension.png",
+    "icon_url": "images/weapons/sword/4_SwordofDescension.png",
     "レアリティ": 4,
     "種類": "片手剣",
     "ステータス": {

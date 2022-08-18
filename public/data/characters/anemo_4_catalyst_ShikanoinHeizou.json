@@ -1,7 +1,7 @@
 {
     "名前": "鹿野院平蔵",
     "説明": "天領奉行の天才少年探偵。直感が鋭く、洞察力に優れている。",
-    "icon_url": "public/images/characters/face/anemo_4_catalyst_ShikanoinHeizou.png",
+    "icon_url": "images/characters/face/anemo_4_catalyst_ShikanoinHeizou.png",
     "レアリティ": 4,
     "武器": "法器",
     "元素": "風",
@@ -172,7 +172,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/battle_talent_0.png"
     },
     "重撃": {
         "詳細": [
@@ -214,7 +214,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "数値": {
                     "1": "114%",
                     "2": "123%",
@@ -230,7 +230,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "数値": {
                     "1": "142%",
                     "2": "153%",
@@ -312,7 +312,7 @@
         ],
         "変格継続時間": 60,
         "クールタイム": 10,
-        "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "廻風蹴",
@@ -435,54 +435,54 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "反論稽古",
             "説明": "鹿野院平蔵がフィールド上で拡散反応を起こした時、<span style=\"color:#FFD780FF\">戮心拳</span>の「変格」効果を1層獲得する。この効果は0.1秒毎に1回のみ発動可能。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/const_talent_0.png"
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/const_talent_0.png"
         },
         {
             "名前": "因由勘破",
             "説明": "<span style=\"color:#FFD780FF\">戮心拳</span>が敵に命中すると、チーム全員（鹿野院平蔵自身を除く）の元素熟知+80、継続時間10秒。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/const_talent_1.png"
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/const_talent_1.png"
         },
         {
             "名前": "罪より前に",
             "説明": "チーム内の自身のキャラクター全員がダッシュに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/const_talent_2.png"
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "通称少年事件簿",
             "説明": "鹿野院平蔵が登場してから5秒間、通常攻撃の攻撃速度+15%、また<span style=\"color:#FFD780FF\">戮心拳</span>の「変格」効果を1層獲得する。この効果は10秒毎に1回のみ発動可能。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_1.png",
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_1.png",
             "詳細": []
         },
         "2": {
             "名前": "真相究明捜査集",
             "説明": "<span style=\"color:#FFD780FF\">廻風蹴</span>で生成した捕縛の風穴による引き寄せ効果が強化され、継続時間が延長され1秒になる。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_2.png",
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "暗号隠語難問集",
             "説明": "<span style=\"color:#FFD780FF\">戮心拳</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_3.png",
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_3.png",
             "詳細": []
         },
         "4": {
             "名前": "荒唐無稽百物語",
             "説明": "一回の<span style=\"color:#FFD780FF\">廻風蹴</span>で発生した「廻風真眼」が初めて爆発する時、鹿野院平蔵自身の元素エネルギーを9回復する。その後、爆発するたびに追加で元素エネルギーを1.5回復する。<br/>この方法により一回の<span style=\"color:#FFD780FF\">廻風蹴</span>で回復できる元素エネルギーは、最大13.5まで。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_4.png",
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_4.png",
             "詳細": []
         },
         "5": {
             "名前": "屏禁密室大図鑑",
             "説明": "<span style=\"color:#FFD780FF\">廻風蹴</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_5.png",
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -502,7 +502,7 @@
                     "数値": 32
                 }
             ],
-            "icon_url": "public/images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_6.png"
+            "icon_url": "images/characters/anemo_4_catalyst_ShikanoinHeizou/constellation_6.png"
         }
     },
     "おすすめセット": [

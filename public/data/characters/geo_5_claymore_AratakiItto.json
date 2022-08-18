@@ -1,7 +1,7 @@
 {
     "名前": "荒瀧一斗",
     "説明": "稲妻城の花見坂で活動する「荒瀧派」の初代親分。なにっ！？荒瀧派なんて聞いたこともないだと？喧嘩売ってんのか、コラァ！？",
-    "icon_url": "public/images/characters/face/geo_5_claymore_AratakiItto.png",
+    "icon_url": "images/characters/face/geo_5_claymore_AratakiItto.png",
     "レアリティ": 5,
     "武器": "両手剣",
     "元素": "岩",
@@ -152,7 +152,7 @@
                 }
             }
         ],
-        "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/battle_talent_0.png"
+        "icon_url": "images/characters/geo_5_claymore_AratakiItto/battle_talent_0.png"
     },
     "重撃": {
         "説明": [
@@ -231,7 +231,7 @@
                 }
             },
             {
-                "名前": "低空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "163.63%",
@@ -248,7 +248,7 @@
                 }
             },
             {
-                "名前": "高空落下攻撃ダメージ",
+                "名前": "低空/高空落下攻撃ダメージ",
                 "種類": "落下攻撃ダメージ",
                 "数値": {
                     "1": "204.39%",
@@ -297,7 +297,7 @@
         "粒子生成数": "2～4個",
         "継続時間": 6,
         "クールタイム": 10,
-        "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/battle_talent_1.png"
+        "icon_url": "images/characters/geo_5_claymore_AratakiItto/battle_talent_1.png"
     },
     "元素爆発": {
         "名前": "最凶鬼王·一斗轟臨！！",
@@ -342,14 +342,14 @@
         "継続時間": 11,
         "クールタイム": 18,
         "元素エネルギー": 70,
-        "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/battle_talent_2.png"
+        "icon_url": "images/characters/geo_5_claymore_AratakiItto/battle_talent_2.png"
     },
     "固有天賦": [
         {
             "名前": "荒瀧第一",
             "種類": "固有天賦",
             "説明": "荒瀧一斗が連続で「荒瀧逆袈裟」を発動した時、下記効果を獲得する。<br/>·斬撃を繰り出すたびに、その後の斬撃の攻撃速度+10%。この方式でアップできる攻撃速度は30%まで。<br/>·中断耐性がアップ。<br/><br/>これらの効果は連続斬撃が終了した時にクリアされる。",
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/const_talent_0.png"
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/const_talent_0.png"
         },
         {
             "名前": "赤鬼の血",
@@ -367,32 +367,32 @@
                     "数値": "35%防御力"
                 }
             ],
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/const_talent_1.png"
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/const_talent_1.png"
         },
         {
             "名前": "乾裂枝砕き",
             "種類": "固有天賦",
             "説明": "チーム中自身のキャラクターが木を攻撃し木材を獲得する時、25%の確率で木材を追加で獲得できる。",
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/const_talent_2.png"
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/const_talent_2.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "知らぬなら、聞かせてやろう",
             "説明": "<span style=\"color:#FFD780FF\">最凶鬼王·一斗轟臨！！</span>発動後、荒瀧一斗は「乱神の怪力」効果を2層獲得する。発動1秒後、1.5秒の間、荒瀧一斗は0.5秒毎に「乱神の怪力」効果をさらに1層獲得する。",
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/constellation_1.png",
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/constellation_1.png",
             "詳細": []
         },
         "2": {
             "名前": "衆よ集いて、山岳倒し",
             "説明": "<span style=\"color:#FFD780FF\">最凶鬼王·一斗轟臨！！</span>を発動した後、チーム内に<span style=\"color:#FFE699FF\">岩元素</span>タイプキャラクターが1人いる毎に、クールタイム-1.5秒、荒瀧一斗の元素エネルギーを6ポイント回復する。<br/>この方式で短縮できるクールタイムは4.5秒までとなり、回復できる元素エネルギーは18ポイントまでとなる。",
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/constellation_2.png",
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/constellation_2.png",
             "詳細": []
         },
         "3": {
             "名前": "牛王跨げば、水陸自在",
             "説明": "<span style=\"color:#FFD780FF\">魔殺絶技·岩牛発破！</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/constellation_3.png",
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/constellation_3.png",
             "詳細": []
         },
         "4": {
@@ -410,12 +410,12 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/constellation_4.png"
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/constellation_4.png"
         },
         "5": {
             "名前": "花坂十年、轟く我が名",
             "説明": "<span style=\"color:#FFD780FF\">最凶鬼王·一斗轟臨！！</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/constellation_5.png",
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/constellation_5.png",
             "詳細": []
         },
         "6": {
@@ -428,7 +428,7 @@
                     "数値": 70
                 }
             ],
-            "icon_url": "public/images/characters/geo_5_claymore_AratakiItto/constellation_6.png"
+            "icon_url": "images/characters/geo_5_claymore_AratakiItto/constellation_6.png"
         }
     },
     "おすすめセット": [

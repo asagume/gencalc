@@ -1,4 +1,4 @@
-# vue-test
+# gencalc
 
 ## Project setup
 ```
@@ -23,6 +23,3 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-
-### Add
-npm install --save-dev @babel/plugin-syntax-top-level-await

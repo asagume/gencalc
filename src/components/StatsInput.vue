@@ -18,13 +18,13 @@
       </tr>
     </template>
     <tr>
-      <td>
+      <td class="control-left">
         <label>
           <input type="checkbox" v-model="editable" />
           {{ displayName("補正値入力モード") }}
         </label>
       </td>
-      <td :colspan="editable ? 2 : 1">
+      <td :colspan="editable ? 2 : 1" class="control-right">
         <label>
           <input type="checkbox" v-model="initializable" />
           {{ displayName("補正値0初期化") }}
@@ -74,13 +74,12 @@ export default defineComponent({
           (statsInputRea.statsObj && statsInputRea.statsObj[stat])
       ) ?? [];
 
-    //
+    /** 補正値が変更されました */
     const adjustmentsOnChange = () => {
-      console.log(statsInputRea.statAdjustments);
       context.emit("update:stat-adjustments", statsInputRea.statAdjustments);
     };
 
-    // 補正値を0クリアします
+    /** 補正値を0クリアします */
     const initializeAdjustments = () => {
       if (!props.categoryList) return;
       for (const category of props.categoryList) {
@@ -152,5 +151,13 @@ button {
 
 .stat-value {
   padding-right: 1rem;
+}
+
+.control-left {
+  text-align: left;
+}
+
+.control-right {
+  text-align: right;
 }
 </style>

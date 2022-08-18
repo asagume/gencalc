@@ -1,7 +1,7 @@
 {
     "名前": "曚雲の月",
     "説明": "螺鈿と珊瑚でできた精巧な弓。月色の弓幹には凄然たる光沢を放っている。",
-    "icon_url": "public/images/weapons/bow/4_Mouun'sMoon.png",
+    "icon_url": "images/weapons/bow/4_Mouun'sMoon.png",
     "レアリティ": 4,
     "種類": "弓",
     "ステータス": {
