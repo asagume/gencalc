@@ -24,7 +24,8 @@
       <CharacterInfo :visible="characterInfoVisibleRef" :mode="characterInfoModeRef"
         :characterMaster="characterInputRea.characterMaster" :ascension="characterInputRea.突破レベル"
         :level="characterInputRea.レベル" :normalAttackLevel="characterInputRea.通常攻撃レベル"
-        :elementalSkillLevel="characterInputRea.元素スキルレベル" :elementalBurstLevel="characterInputRea.元素爆発レベル" />
+        :elementalSkillLevel="characterInputRea.元素スキルレベル" :elementalBurstLevel="characterInputRea.元素爆発レベル"
+        :normalAttackReplacing="normalAttackReplacing" />
       <WeaponSelect :visible="weaponSelectVisibleRef" :weapon="weapon" :weaponType="weaponType"
         :weaponMaster="characterInputRea.weaponMaster" :ascension="characterInputRea.武器突破レベル"
         :level="characterInputRea.武器レベル" @update:weapon="updateWeapon($event)" />
@@ -340,6 +341,22 @@ export default defineComponent({
 
     // ダメージ計算結果
     const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
+
+    const normalAttackReplacing = computed((): boolean[] => {
+      const KEY_ARR = ['特殊通常攻撃', '特殊重撃', '特殊落下攻撃'];
+      const result = [false, false, false];
+      const talentObjArr = Object.keys(characterInputRea.characterMaster).filter(s => KEY_ARR.includes(s)).map(s => [s, characterInputRea.characterMaster[s]]);
+      if (talentObjArr.length > 0) {
+        for (const entry of talentObjArr) {
+          const index = KEY_ARR.indexOf(entry[0]);
+          const talentObj = entry[1];
+          if (talentObj.条件 in conditionInputRea.conditionValues && conditionInputRea.conditionValues[talentObj.条件]) {
+            result[index] = true;
+          }
+        }
+      }
+      return result;
+    });
 
     const pane6Toggle1Ref = ref(true);
     const pane6Toggle2Ref = ref(true);
@@ -872,6 +889,7 @@ export default defineComponent({
       optionInputRea,
       damageResult,
       savedSupporters,
+      normalAttackReplacing,
 
       pane6Toggle1Ref,
       pane6Toggle2Ref,
