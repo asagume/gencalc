@@ -610,7 +610,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
         // 耐久スコアを計算します
         const resScoreArr = [] as any;
         for (const damageTaken of damageTakenArr) {
-            resScoreArr.push({ key: damageTaken.key, value: statsInput.statsObj['HP上限'] / damageTaken.value });
+            resScoreArr.push({ key: damageTaken.key, value: statsInput.statsObj['HP上限'] * 10000 / damageTaken.value });
         }
         damageResult['耐久スコア'] = resScoreArr;
 
