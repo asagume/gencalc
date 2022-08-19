@@ -9,7 +9,8 @@
       </td>
       <td colspan="2" :class="'title ' + colorClass(characterMaster)">
         <span v-show="characterMaster.baseInfo.称号">
-          {{ displayName(characterMaster.baseInfo.称号) }}</span>
+          {{ displayName(characterMaster.baseInfo.称号) }}</span
+        >
       </td>
     </tr>
     <tr>
@@ -31,17 +32,32 @@
         </select>
       </td>
       <td style="position: relative; width: 30%">
-        <img :class="'character' + bgImageClass(characterMaster)" :src="characterMaster.icon_url"
-          :alt="characterMaster.名前" @click="$emit('open:character-select')" />
-        <img class="vision" :src="visionSrc(characterMaster)" :alt="characterMaster.元素" />
+        <img
+          :class="'character' + bgImageClass(characterMaster)"
+          :src="characterMaster.icon_url"
+          :alt="characterMaster.名前"
+          @click="$emit('open:character-select')"
+        />
+        <img
+          class="vision"
+          :src="visionSrc(characterMaster)"
+          :alt="characterMaster.元素"
+        />
       </td>
       <td class="icon">
-        <img :class="'weapon' + bgImageClass(weaponMaster)" :src="weaponMaster['icon_url']" :alt="weaponMaster.名前"
-          @click="$emit('open:weapon-select')" />
+        <img
+          :class="'weapon' + bgImageClass(weaponMaster)"
+          :src="weaponMaster['icon_url']"
+          :alt="weaponMaster.名前"
+          @click="$emit('open:weapon-select')"
+        />
         <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
       </td>
       <td style="width: 20%">
-        <select v-model="characterInputRea.武器突破レベル" @change="weaponAscensionOnChange">
+        <select
+          v-model="characterInputRea.武器突破レベル"
+          @change="weaponAscensionOnChange"
+        >
           <option v-for="item in weaponAscensionRange" :value="item" :key="item">
             A{{ item }}
           </option>
@@ -62,39 +78,61 @@
   <table class="talent-and-artifact">
     <tr>
       <td class="icon">
-        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['通常攻撃']['icon_url']"
-          :alt="characterMaster['通常攻撃']['名前']" @click="$emit('open:character-info', 2)" />
+        <img
+          :class="'talent ' + bgColorClass(characterMaster)"
+          :src="characterMaster['通常攻撃']['icon_url']"
+          :alt="characterMaster['通常攻撃']['名前']"
+          @click="$emit('open:character-info', 2)"
+        />
         <div class="tooltip">{{ displayName(characterMaster["通常攻撃"]["名前"]) }}</div>
       </td>
       <td class="icon">
-        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素スキル']['icon_url']"
-          :alt="characterMaster['元素スキル']['名前']" @click="$emit('open:character-info', 3)" />
+        <img
+          :class="'talent ' + bgColorClass(characterMaster)"
+          :src="characterMaster['元素スキル']['icon_url']"
+          :alt="characterMaster['元素スキル']['名前']"
+          @click="$emit('open:character-info', 3)"
+        />
         <div class="tooltip">
           {{ displayName(characterMaster["元素スキル"]["名前"]) }}
         </div>
       </td>
       <td class="icon">
-        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素爆発']['icon_url']"
-          :alt="characterMaster['元素爆発']['名前']" @click="$emit('open:character-info', 4)" />
+        <img
+          :class="'talent ' + bgColorClass(characterMaster)"
+          :src="characterMaster['元素爆発']['icon_url']"
+          :alt="characterMaster['元素爆発']['名前']"
+          @click="$emit('open:character-info', 4)"
+        />
         <div class="tooltip">{{ displayName(characterMaster["元素爆発"]["名前"]) }}</div>
       </td>
       <td class="icon">
         <label @click="openArtifactSetSelect(0)">
-          <img :class="'artifact-set' + artifactSetSelectClass(0)" :src="artifactSetMasters[0].image"
-            :alt="artifactSetMasters[0].key" />
+          <img
+            :class="'artifact-set' + artifactSetSelectClass(0)"
+            :src="artifactSetMasters[0].image"
+            :alt="artifactSetMasters[0].key"
+          />
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
       </td>
       <td class="icon">
         <label @click="openArtifactSetSelect(1)">
-          <img :class="'artifact-set' + artifactSetSelectClass(1)" :src="artifactSetMasters[1].image"
-            :alt="artifactSetMasters[1].key" />
+          <img
+            :class="'artifact-set' + artifactSetSelectClass(1)"
+            :src="artifactSetMasters[1].image"
+            :alt="artifactSetMasters[1].key"
+          />
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
       </td>
       <td class="artifact-detail-button icon">
         <label @click="$emit('open:artifact-detail-input')">
-          <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')" />
+          <img
+            class="artifact-set"
+            :src="IMG_SRC_DUMMY"
+            :alt="displayName('聖遺物ステータス')"
+          />
           <img class="left-icon" src="images/artifact.png" alt="artifact" />
           <img class="right-icon" src="images/artifact.png" alt="artifact" />
           <div class="absolute-center">{{ "000" }}</div>
@@ -136,18 +174,32 @@
     <tr v-show="storageOrRecommendationRef == '0'">
       <td colspan="4">
         <label>
-          <input class="save-name" type="text" v-model="characterInputRea.buildname" maxlength="20"
-            placeholder="input build name" @change="characterInputRea.saveDisabled = false" />
+          <input
+            class="save-name"
+            type="text"
+            v-model="characterInputRea.buildname"
+            maxlength="20"
+            placeholder="input build name"
+            @change="characterInputRea.saveDisabled = false"
+          />
         </label>
       </td>
       <td>
-        <button type="button" :disabled="characterInputRea.saveDisabled" @click="saveOnClick">
+        <button
+          type="button"
+          :disabled="characterInputRea.saveDisabled"
+          @click="saveOnClick"
+        >
           Save
           <!-- <span class="material-symbols-outlined"> save </span> -->
         </button>
       </td>
       <td>
-        <button type="button" :disabled="characterInputRea.removeDisabled" @click="removeOnClick">
+        <button
+          type="button"
+          :disabled="characterInputRea.removeDisabled"
+          @click="removeOnClick"
+        >
           Remove
           <!-- <span class="material-symbols-outlined"> delete </span> -->
         </button>
@@ -155,7 +207,10 @@
     </tr>
     <tr v-show="storageOrRecommendationRef == '1'">
       <td colspan="6">
-        <select v-model="selectedRecommendation" @change="recommendationOnChange(targetValue($event))">
+        <select
+          v-model="selectedRecommendation"
+          @change="recommendationOnChange(targetValue($event))"
+        >
           <option v-for="(item, index) in recommendationList" :value="index" :key="index">
             {{ displayBuildName(item) }}
           </option>
@@ -166,6 +221,7 @@
 </template>
 
 <script lang="ts">
+import { isPlainObject } from "@/common";
 import {
   ARTIFACT_SET_MASTER_DUMMY,
   TCharacterInput,
@@ -182,7 +238,7 @@ import {
   TWeaponDetail,
 } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref } from "vue";
-import CompositionFunction from './CompositionFunction.vue';
+import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
   name: "CharacterInput",
@@ -196,8 +252,8 @@ export default defineComponent({
     "open:character-select",
     "open:character-info",
     "update:recommendation",
-    'saveToStorage',
-    'removeFromStorage',
+    "saveToStorage",
+    "removeFromStorage",
     "open:weapon-select",
     "open:artifact-set-select",
     "open:artifact-detail-input",
@@ -217,10 +273,13 @@ export default defineComponent({
     const selectedRecommendationRef = ref(props.recommendation.name);
     const characterMaster = computed(() => characterInputRea.characterMaster);
     const weaponMaster = computed(() => characterInputRea.weaponMaster);
-    const artifactSetMasters = computed(() => characterInputRea.artifactSetMasters ?? [
-      ARTIFACT_SET_MASTER_DUMMY,
-      ARTIFACT_SET_MASTER_DUMMY,
-    ]);
+    const artifactSetMasters = computed(
+      () =>
+        characterInputRea.artifactSetMasters ?? [
+          ARTIFACT_SET_MASTER_DUMMY,
+          ARTIFACT_SET_MASTER_DUMMY,
+        ]
+    );
 
     const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
     const bgImageClass = (item: TCharacterDetail | TWeaponDetail) =>
@@ -232,17 +291,17 @@ export default defineComponent({
 
     /** 構成データを保存します */
     const saveOnClick = () => {
-      characterInputRea.saveDisabled = false;   // 保存不可
-      characterInputRea.removeDisabled = true;  // 削除可能
-      context.emit('saveToStorage', characterInputRea.buildname);
+      characterInputRea.saveDisabled = false; // 保存不可
+      characterInputRea.removeDisabled = true; // 削除可能
+      context.emit("saveToStorage", characterInputRea.buildname);
     };
 
     /** 構成データを削除します */
     const removeOnClick = () => {
       characterInputRea.removeDisabled = false; // 削除不可
-      characterInputRea.saveDisabled = true;    // 保存可能
-      context.emit('removeFromStorage', characterInputRea.buildname);
-    }
+      characterInputRea.saveDisabled = true; // 保存可能
+      context.emit("removeFromStorage", characterInputRea.buildname);
+    };
 
     /** 突破レベルの範囲 */
     const ascensionRange = computed((): number[] => {
@@ -260,14 +319,16 @@ export default defineComponent({
       if ("命ノ星座" in characterMaster.value) {
         max = Object.keys(characterMaster.value["命ノ星座"]).length;
       }
-      return Array.from({ length: max + 1 }, (_, i) => i);  // 0-
+      return Array.from({ length: max + 1 }, (_, i) => i); // 0-
     });
 
     /** 突破レベルが変更されました */
     const ascensionOnChange = () => {
       if (characterInputRea.レベル < levelRange.value[0]) {
         characterInputRea.レベル = levelRange.value[0];
-      } else if (characterInputRea.レベル > levelRange.value[levelRange.value.length - 1]) {
+      } else if (
+        characterInputRea.レベル > levelRange.value[levelRange.value.length - 1]
+      ) {
         characterInputRea.レベル = levelRange.value[levelRange.value.length - 1];
       }
       characterOnChange();
@@ -286,12 +347,16 @@ export default defineComponent({
       let max = 10;
       if ("通常攻撃" in characterMaster.value) {
         const talentObj = characterMaster.value["通常攻撃"];
-        if ("詳細" in talentObj && "数値" in talentObj["詳細"] && Array.isArray(talentObj["詳細"]["数値"])) {
-          const work = talentObj["詳細"]["数値"].length;
-          if (max < work) max = work;
+        if ("詳細" in talentObj) {
+          for (const detailObj of talentObj.詳細) {
+            if ("数値" in detailObj && isPlainObject(detailObj.数値)) {
+              const work = Object.keys(detailObj.数値).length;
+              if (max < work) max = work;
+            }
+          }
         }
       }
-      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
+      return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
     /** 元素スキルレベルの範囲 命ノ星座は考慮しません */
@@ -299,12 +364,16 @@ export default defineComponent({
       let max = 10;
       if ("元素スキル" in characterMaster.value) {
         const talentObj = characterMaster.value["元素スキル"];
-        if ("詳細" in talentObj && "数値" in talentObj["詳細"] && Array.isArray(talentObj["詳細"]["数値"])) {
-          const work = talentObj["詳細"]["数値"].length;
-          if (max < work) max = work;
+        if ("詳細" in talentObj) {
+          for (const detailObj of talentObj.詳細) {
+            if ("数値" in detailObj && isPlainObject(detailObj.数値)) {
+              const work = Object.keys(detailObj.数値).length;
+              if (max < work) max = work;
+            }
+          }
         }
       }
-      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
+      return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
     /** 元素爆発レベルの範囲 命ノ星座は考慮しません */
@@ -312,12 +381,16 @@ export default defineComponent({
       let max = 10;
       if ("元素爆発" in characterMaster.value) {
         const talentObj = characterMaster.value["元素爆発"];
-        if ("詳細" in talentObj && "数値" in talentObj["詳細"] && Array.isArray(talentObj["詳細"]["数値"])) {
-          const work = talentObj["詳細"]["数値"].length;
-          if (max < work) max = work;
+        if ("詳細" in talentObj) {
+          for (const detailObj of talentObj.詳細) {
+            if ("数値" in detailObj && isPlainObject(detailObj.数値)) {
+              const work = Object.keys(detailObj.数値).length;
+              if (max < work) max = work;
+            }
+          }
         }
       }
-      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
+      return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
     /** 武器突破レベルの範囲 */
@@ -336,15 +409,19 @@ export default defineComponent({
     const weaponRefineRange = computed((): number[] => {
       let max = 5;
       if (weaponMaster.value.レアリティ < 3) max = 1;
-      return Array.from({ length: max }, (_, i) => i + 1);  // 1-
+      return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
     /** 武器突破レベルが変更されました */
     const weaponAscensionOnChange = () => {
       if (characterInputRea.武器レベル < weaponLevelRange.value[0]) {
         characterInputRea.武器レベル = weaponLevelRange.value[0];
-      } else if (characterInputRea.武器レベル > weaponLevelRange.value[weaponLevelRange.value.length - 1]) {
-        characterInputRea.武器レベル = weaponLevelRange.value[weaponLevelRange.value.length - 1];
+      } else if (
+        characterInputRea.武器レベル >
+        weaponLevelRange.value[weaponLevelRange.value.length - 1]
+      ) {
+        characterInputRea.武器レベル =
+          weaponLevelRange.value[weaponLevelRange.value.length - 1];
       }
       weaponOnChange();
     };
@@ -381,7 +458,8 @@ export default defineComponent({
     };
 
     return {
-      displayName, targetValue,
+      displayName,
+      targetValue,
 
       displayBuildName,
       visionSrc,
@@ -474,7 +552,7 @@ img.vision {
   top: 5%;
 }
 
-:checked+img {
+:checked + img {
   background-color: gold;
 }
 
