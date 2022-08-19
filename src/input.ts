@@ -262,8 +262,11 @@ export const 元素反応TEMPLATE = {
     結晶吸収量: 0,
     結晶元素: '炎',
     燃焼ダメージ: 0,
-    激化ダメージ: 0,
-    開花ダメージ: 0
+    開花ダメージ: 0,
+    烈開花ダメージ: 0,
+    ヴァインショットダメージ: 0,
+    超激化ダメージ: 0,
+    草激化ダメージ: 0,
 };
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;

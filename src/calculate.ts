@@ -1,5 +1,5 @@
 import { deepcopy, isNumber, isPlainObject, overwriteObject } from "./common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "./input";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "./input";
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
 
 /** [突破レベル, レベル] => レベル\+?  */
@@ -496,6 +496,17 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
             let resultValue = 0;
             if (reaction == '結晶') {
                 resultValue = calculate結晶シールド吸収量(vision, statsInput.statsObj);
+            } else if (reaction == '拡散') {
+                let dmgElement = '炎';
+                for (const entry of conditionInput.selectList) {
+                    if (entry.name == '拡散') {
+                        const optionValue = entry.options[Number(conditionInput.conditionValues['拡散'])];
+                        if (optionValue) dmgElement = optionValue.replace(/元素$/, '');
+                        break;
+                    }
+                }
+                reactionResult['拡散元素'] = dmgElement;
+                resultValue = calculate固定値系元素反応ダメージ(reaction, vision, statsInput.statsObj, dmgElement);
             } else {
                 switch (reactionObj['種類']) {
                     case '乗算':
@@ -507,13 +518,13 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                 }
             }
             Object.keys(reactionResult).forEach(key => {
-                if (key.startsWith(reaction)) {
+                if (key.startsWith(reaction) && isNumber(reactionResult[key])) {
                     reactionResult[key] = resultValue;
                 }
             });
         });
-        overwriteObject(damageResult['元素反応'], reactionResult);
-        console.debug('元素反応', damageResult);
+        overwriteObject(damageResult.元素反応, reactionResult);
+        console.debug('元素反応', damageResult.元素反応);
 
         // 戦闘天賦およびその他のダメージを計算します
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
@@ -588,7 +599,20 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
         }
 
         // 被ダメージを計算します
-        // TODO
+        const damageTakenArr = [] as any;
+        for (const stat of 元素ステータス_耐性ARRAY) {
+            const element = stat.replace(/元素耐性$/, '').replace(/耐性$/, '');
+            const damageTaken = calculateDamageTaken(statsInput.statsObj, 10000, element);
+            damageTakenArr.push({ key: element, value: damageTaken });
+        }
+        damageResult['被ダメージ'] = damageTakenArr;
+
+        // 耐久スコアを計算します
+        const resScoreArr = [] as any;
+        for (const damageTaken of damageTakenArr) {
+            resScoreArr.push({ key: damageTaken.key, value: statsInput.statsObj['HP上限'] / damageTaken.value });
+        }
+        damageResult['耐久スコア'] = resScoreArr;
 
         console.debug(damageResult);
     } catch (error) {
@@ -712,22 +736,19 @@ export function calculate乗算系元素反応倍率(reaction: any, element: str
 /**
  * 過負荷 感電 超電導 拡散ダメージを計算します
  */
-export function calculate固定値系元素反応ダメージ(reaction: any, element: string, statsObj: TStats) {
+export function calculate固定値系元素反応ダメージ(reaction: any, element: string, statsObj: TStats, opt_dmgElement?: string) {
     try {
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
         const dmgBuff = statsObj[reaction];
-        const dmgElement = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
-        if (reaction == '拡散') {
-            //TODO
-        }
+        const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
         result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {
-        console.error(reaction, element, statsObj);
+        console.error(reaction, element, statsObj, opt_dmgElement);
         throw error;
     }
 }
@@ -760,18 +781,23 @@ export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防�
     }
 }
 
+function calculateRes(res: number) {
+    let result = res;
+    if (result < 0) {
+        result = 100 - result / 2;
+    } else if (result < 75) {
+        result = 100 - result;
+    } else {
+        result = 10000 / (4 * result + 100)
+    }
+    result /= 100;
+    return result;
+}
+
 export function calculateEnemyRes(element: string, statsObj: TStats) {
     try {
         const statName = '敵' + element + (element != '物理' ? '元素' : '') + '耐性';
-        let result = statsObj[statName] ?? 0;
-        if (result < 0) {
-            result = 100 - result / 2;
-        } else if (result < 75) {
-            result = 100 - result;
-        } else {
-            result = 10000 / (4 * result + 100)
-        }
-        result /= 100;
+        const result = calculateRes(statsObj[statName] ?? 0);
         return result;
     } catch (error) {
         console.error(element, statsObj);
@@ -787,7 +813,7 @@ function calculateDamageFromDetail(
     damageResult: TDamageResult,
     opt_element: string | null = null): TDamageResultEntry {
     try {
-        console.debug(calculateDamageFromDetail.name, detailObj, characterInput, conditionInput, statsObj, opt_element);
+        console.debug('calculateDamageFromDetail', detailObj, characterInput, conditionInput, statsObj, opt_element);
 
         const myバフArr = [] as Array<string>;
         let is会心Calc = true;
@@ -999,13 +1025,7 @@ function calculateDamageFromDetail(
                     }
                 } else {
                     const my対象カテゴリArr = valueObj['対象'].split('.');
-                    let my種類 = detailObj['種類'];
-                    if (detailObj['ダメージバフ']) {
-                        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['ダメージバフ'].replace('バフ', ''))) {
-                            my種類 = detailObj['ダメージバフ'].replace('バフ', '');
-                        }
-                    }
-                    if (my対象カテゴリArr[0] != my種類) {
+                    if (my対象カテゴリArr[0] != detailObj['種類']) {
                         return;
                     }
                     if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
@@ -1183,27 +1203,36 @@ function calculateDamageFromDetail(
             }
         });
 
-        if (statsObj[detailObj['種類'] + 'アップ'] > 0) {
+        let myダメージ種類 = detailObj['種類'];
+        if (detailObj['ダメージバフ']) {    // for 夢想の一心状態の時、雷電将軍の通常攻撃、重撃、落下攻撃のダメージは元素爆発ダメージと見なす
+            const temp = detailObj['ダメージバフ'].replace(/バフ$/, '');
+            if (DAMAGE_CATEGORY_ARRAY.includes(temp)) {
+                myダメージ種類 = temp;
+            }
+        }
+        if (statsObj[myダメージ種類 + 'アップ'] > 0) {
             if (detailObj['名前'].startsWith('非表示_狼の魂基礎')) {    // レザー
                 // nop
-            } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-                const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
-                // 複数回HITするダメージについては、HIT数を乗算します
-                if (myHIT数 > 1) {
-                    myResultWork[2] *= myHIT数;
-                    if (myResultWork[3] != null) {
-                        myResultWork[3] *= myHIT数;
+            } else {
+                if (DAMAGE_CATEGORY_ARRAY.includes(myダメージ種類)) {
+                    const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[myダメージ種類 + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
+                    // 複数回HITするダメージについては、HIT数を乗算します
+                    if (myHIT数 > 1) {
+                        myResultWork[2] *= myHIT数;
+                        if (myResultWork[3] != null) {
+                            myResultWork[3] *= myHIT数;
+                        }
+                        if (myResultWork[4] != null) {
+                            myResultWork[4] *= myHIT数;
+                        }
                     }
-                    if (myResultWork[4] != null) {
-                        myResultWork[4] *= myHIT数;
+                    my計算Result[2] += myResultWork[2];
+                    if (my計算Result[3] != null && myResultWork[3]) {
+                        my計算Result[3] += myResultWork[3];
                     }
-                }
-                my計算Result[2] += myResultWork[2];
-                if (my計算Result[3] != null && myResultWork[3]) {
-                    my計算Result[3] += myResultWork[3];
-                }
-                if (my計算Result[4] != null) {
-                    my計算Result[4] += myResultWork[4];
+                    if (my計算Result[4] != null) {
+                        my計算Result[4] += myResultWork[4];
+                    }
                 }
             }
         }
@@ -1472,4 +1501,14 @@ function updateStats(
     }
     statsObj[statName] += result;
     console.debug(updateStats.name, null, statName, formulaArr, '=>', result, statsObj[statName]);
+}
+
+function calculateDamageTaken(statsObj: TStats, damage: number, element: string) {
+    const def = statsObj['防御力'];
+    const enemyLevel = statsObj['敵レベル'];
+    const dmgReduction = statsObj['ダメージ軽減'];
+    const res = calculateRes(statsObj[element == '物理' ? '物理耐性' : element + '元素耐性']);
+    let result = damage * (1 - def / (def + 5 * enemyLevel + 501)) * (100 - dmgReduction) / 100 * res;
+    result = Math.max(0, result);
+    return result;
 }

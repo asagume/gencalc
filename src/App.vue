@@ -24,7 +24,8 @@
       <CharacterInfo :visible="characterInfoVisibleRef" :mode="characterInfoModeRef"
         :characterMaster="characterInputRea.characterMaster" :ascension="characterInputRea.突破レベル"
         :level="characterInputRea.レベル" :normalAttackLevel="characterInputRea.通常攻撃レベル"
-        :elementalSkillLevel="characterInputRea.元素スキルレベル" :elementalBurstLevel="characterInputRea.元素爆発レベル" />
+        :elementalSkillLevel="characterInputRea.元素スキルレベル" :elementalBurstLevel="characterInputRea.元素爆発レベル"
+        :normalAttackReplacing="normalAttackReplacing" />
       <WeaponSelect :visible="weaponSelectVisibleRef" :weapon="weapon" :weaponType="weaponType"
         :weaponMaster="characterInputRea.weaponMaster" :ascension="characterInputRea.武器突破レベル"
         :level="characterInputRea.武器レベル" @update:weapon="updateWeapon($event)" />
@@ -141,7 +142,7 @@
     <div class="footer">
       <hr />
       <p>© 2021 asagume</p>
-      <p>
+      <p class="left">
         本サイト内の画像はHoYoverse/COGNOSPHEREの著作物です。
         Copyright © COGNOSPHERE. All Rights Reserved.
       </p>
@@ -149,7 +150,7 @@
 
   </div>
 
-  <div id="debug-info" v-if="true">
+  <div id="debug-info" v-if="false">
     <hr />
     <h2>DEBUG</h2>
     <template v-if="characterInputRea">
@@ -325,10 +326,11 @@ export default defineComponent({
     const setupSavedSupporters = () => {
       const work = Object.keys(localStorage)
         .filter((s) => s.startsWith("構成_") && s.split("_").length == 2)
-        .map((s) => ({ key: s, value: localStorage[s] }));
+        .map((s) => ({ key: s.replace(/^構成_/, ''), value: localStorage[s] }));
       savedSupporters.splice(0, savedSupporters.length, ...work);
     };
     setupSavedSupporters();
+    console.log('App', 'savedSupporters', savedSupporters);
 
     // 元素共鳴, チーム, その他
     const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
@@ -339,6 +341,22 @@ export default defineComponent({
 
     // ダメージ計算結果
     const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
+
+    const normalAttackReplacing = computed((): boolean[] => {
+      const KEY_ARR = ['特殊通常攻撃', '特殊重撃', '特殊落下攻撃'];
+      const result = [false, false, false];
+      const talentObjArr = Object.keys(characterInputRea.characterMaster).filter(s => KEY_ARR.includes(s)).map(s => [s, characterInputRea.characterMaster[s]]);
+      if (talentObjArr.length > 0) {
+        for (const entry of talentObjArr) {
+          const index = KEY_ARR.indexOf(entry[0]);
+          const talentObj = entry[1];
+          if (talentObj.条件 in conditionInputRea.conditionValues && conditionInputRea.conditionValues[talentObj.条件]) {
+            result[index] = true;
+          }
+        }
+      }
+      return result;
+    });
 
     const pane6Toggle1Ref = ref(true);
     const pane6Toggle2Ref = ref(true);
@@ -871,6 +889,7 @@ export default defineComponent({
       optionInputRea,
       damageResult,
       savedSupporters,
+      normalAttackReplacing,
 
       pane6Toggle1Ref,
       pane6Toggle2Ref,
@@ -938,6 +957,10 @@ label.enemy-level input {
 
 h2 label.toggle-switch {
   min-width: 75% !important;
+}
+
+p.left {
+  text-align: left;
 }
 
 #debug-info dl dt,

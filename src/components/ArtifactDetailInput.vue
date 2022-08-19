@@ -332,7 +332,6 @@ export default defineComponent({
       gensenEnabledRef.value = false;
       if (!gensenRef.value) return;
       if (!gensenRef.value.key) return;
-      prioritySubstatsDisabledRef.value = false;
       prioritySubstatIndices.splice(
         0,
         prioritySubstatIndices.length,
@@ -360,7 +359,19 @@ export default defineComponent({
 
     /** 聖遺物詳細OCR機能 */
     const loadArtifactStatsByOcr = async (event: Event) => {
-      resizePinnedImage(event);
+      const ocrStats = await resizePinnedImage(event);
+      if (ocrStats) {
+        prioritySubstatsDisabledRef.value = true;
+        for (const stat of Object.keys(artifactStatsSub)) {
+          if (stat in ocrStats) artifactStatsSub[stat] = ocrStats[stat];
+          else artifactStatsSub[stat] = 0;
+        }
+        for (const [index, stat] of mainstats.entries()) {
+          if (stat.endsWith('ダメージバフ') || stat == '与える治療効果') continue;
+          mainstats.splice(index, 1, '');
+        }
+        updateMainstats();
+      }
     }
     document.getElementById('artifact-stats-image')?.addEventListener('click', loadArtifactStatsByOcr);
     const loadArtifactStatsByOcrOnClick = async () => {

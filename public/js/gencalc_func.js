@@ -1403,13 +1403,7 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
                 }
             } else {
                 let my対象カテゴリArr = valueObj['対象'].split('.');
-                let my種類 = detailObj['種類'];
-                if (detailObj['ダメージバフ']) {
-                    if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['ダメージバフ'].replace('バフ', ''))) {
-                        my種類 = detailObj['ダメージバフ'].replace('バフ', '');
-                    }
-                }
-                if (my対象カテゴリArr[0] != my種類) {
+                if (my対象カテゴリArr[0] != detailObj['種類']) {
                     return;
                 }
                 if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
@@ -1580,11 +1574,18 @@ function calculateDamageFromDetail(statusObj, detailObj, opt_element = null) {
         }
     });
 
-    if (statusObj[detailObj['種類'] + 'アップ'] > 0) {
+    let myダメージ種類 = detailObj['種類'];
+    if (detailObj['ダメージバフ']) {    // for 夢想の一心状態の時、雷電将軍の通常攻撃、重撃、落下攻撃のダメージは元素爆発ダメージと見なす
+        const temp = detailObj['ダメージバフ'].replace(/バフ$/, '');
+        if (DAMAGE_CATEGORY_ARRAY.includes(temp)) {
+            myダメージ種類 = temp;
+        }
+    }
+    if (statusObj[myダメージ種類 + 'アップ'] > 0) {
         if (detailObj['名前'].startsWith('非表示_狼の魂基礎')) {    // レザー
             // nop
-        } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[detailObj['種類'] + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
+        } else if (DAMAGE_CATEGORY_ARRAY.includes(myダメージ種類)) {
+            let myResultWork = calculateDamageFromDetailSub(statusObj, statusObj[myダメージ種類 + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
             // 複数回HITするダメージについては、HIT数を乗算します
             if (myHIT数 > 1) {
                 myResultWork[1] *= myHIT数;
