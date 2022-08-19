@@ -6,13 +6,11 @@
     </label>
     <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name" />
     <label for="増幅反応-蒸発" v-if="damageResult.元素反応.蒸発倍率">
-      {{ displayName("蒸発") }} ×
-      {{ Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100 }}
+      {{ displayName("蒸発") }}×{{ Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100 }}
     </label>
     <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name" />
     <label for="増幅反応-溶解" v-if="damageResult.元素反応.溶解倍率">
-      {{ displayName("溶解") }} ×
-      {{ Math.round(damageResult.元素反応.溶解倍率 * 100) / 100 }}
+      {{ displayName("溶解") }}×{{ Math.round(damageResult.元素反応.溶解倍率 * 100) / 100 }}
     </label>
     <span></span>
     <label v-if="damageResult.元素反応.過負荷ダメージ" class="pyro">
@@ -35,11 +33,20 @@
     <label v-if="damageResult.元素反応.燃焼ダメージ" class="pyro">
       {{ displayName("燃焼") }} {{ Math.round(damageResult.元素反応.燃焼ダメージ) }}
     </label>
-    <label v-if="damageResult.元素反応.開花ダメージ">
+    <label v-if="damageResult.元素反応.開花ダメージ" class="dendro">
       {{ displayName("開花") }} {{ Math.round(damageResult.元素反応.開花ダメージ) }}
     </label>
-    <label v-if="damageResult.元素反応.激化ダメージ">
-      {{ displayName("激化") }} {{ Math.round(damageResult.元素反応.激化ダメージ) }}
+    <label v-if="damageResult.元素反応.烈開花ダメージ" class="dendro">
+      {{ displayName("烈開花") }} {{ Math.round(damageResult.元素反応.烈開花ダメージ) }}
+    </label>
+    <label v-if="damageResult.元素反応.ヴァインショットダメージ" class="dendro">
+      {{ displayName("ヴァインショット") }} {{ Math.round(damageResult.元素反応.ヴァインショットダメージ) }}
+    </label>
+    <label v-if="damageResult.元素反応.超激化ダメージ" class="dendro">
+      {{ displayName("超激化") }} {{ Math.round(damageResult.元素反応.超激化ダメージ) }}
+    </label>
+    <label v-if="damageResult.元素反応.草激化ダメージ" class="dendro">
+      {{ displayName("草激化") }} {{ Math.round(damageResult.元素反応.草激化ダメージ) }}
     </label>
   </div>
   <template v-for="category in CATEGORY_LIST" :key="category">
@@ -97,6 +104,24 @@
       </table>
     </template>
   </template>
+  <table class="result">
+    <tr>
+      <th> {{ displayName('被ダメージ') }} </th>
+      <td v-for="item in damageTakenList" :key="item.key">
+        <span :class="elementClass(item.key)">
+          {{ Math.round(item.value) }}
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th> {{ displayName('耐久スコア') }} </th>
+      <td v-for="item in resScoreList" :key="item.key">
+        <span :class="elementClass(item.key)">
+          {{ Math.round(item.value * 100) / 100 }}
+        </span>
+      </td>
+    </tr>
+  </table>
   <div v-if="damageResult.キャラクター注釈.length > 0">
     <ul>
       <li v-for="(item, index) in damageResult.キャラクター注釈" :key="index">
@@ -116,7 +141,7 @@
 <script lang="ts">
 import i18n from "@/i18n";
 import { ELEMENT_COLOR_CLASS, TElementColorClassKey } from "@/master";
-import { defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
@@ -212,6 +237,30 @@ export default defineComponent({
       return displayName(key);
     }
 
+    /** 被ダメージのリストを作成します（同値を省略したリスト） */
+    const damageTakenList = computed(() => {
+      const result = props.damageResult.被ダメージ.filter((s: any) => s.key == '物理') as any;
+      const valueArr = result.map((s: any) => s.value);
+      for (const entry of props.damageResult.被ダメージ.filter((s: any) => s.key != '物理')) {
+        if (!valueArr.includes(entry.value)) {
+          result.push(entry);
+        }
+      }
+      return result;
+    });
+
+    /** 耐久スコアのリストを作成します（同値を省略したリスト） */
+    const resScoreList = computed(() => {
+      const result = props.damageResult.耐久スコア.filter((s: any) => s.key == '物理') as any;
+      const valueArr = result.map((s: any) => s.value);
+      for (const entry of props.damageResult.耐久スコア.filter((s: any) => s.key != '物理')) {
+        if (!valueArr.includes(entry.value)) {
+          result.push(entry);
+        }
+      }
+      return result;
+    });
+
     return {
       displayName, displayNameV, displayNameH,
 
@@ -225,6 +274,8 @@ export default defineComponent({
       categoryOnClick,
       displayDamageValueH,
       resultStyleRef,
+
+      damageTakenList, resScoreList,
     };
   },
 });

@@ -142,7 +142,7 @@
     <div class="footer">
       <hr />
       <p>© 2021 asagume</p>
-      <p>
+      <p class="left">
         本サイト内の画像はHoYoverse/COGNOSPHEREの著作物です。
         Copyright © COGNOSPHERE. All Rights Reserved.
       </p>
@@ -150,7 +150,7 @@
 
   </div>
 
-  <div id="debug-info" v-if="true">
+  <div id="debug-info" v-if="false">
     <hr />
     <h2>DEBUG</h2>
     <template v-if="characterInputRea">
@@ -957,6 +957,10 @@ label.enemy-level input {
 
 h2 label.toggle-switch {
   min-width: 75% !important;
+}
+
+p.left {
+  text-align: left;
 }
 
 #debug-info dl dt,
