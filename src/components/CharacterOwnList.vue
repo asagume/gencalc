@@ -124,4 +124,9 @@ div.constellation {
 .not-owned {
   opacity: 50%;
 }
+
+.tooltip {
+  top: unset;
+  bottom: 0.5rem;
+}
 </style>
