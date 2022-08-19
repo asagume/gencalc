@@ -655,6 +655,14 @@ export default defineComponent({
       characterSelectVisibleRef.value = false;
       characterInputRea.character = character;
       characterInputRea.characterMaster = await getCharacterMasterDetail(character);
+      let constellation = 0;
+      if ("キャラクター所持状況" in localStorage) {
+        const myCharacterOwnObj = JSON.parse(localStorage["キャラクター所持状況"]);
+        if (character in myCharacterOwnObj && myCharacterOwnObj[character]) {
+          constellation = Number(myCharacterOwnObj[character]);
+        }
+      }
+      characterInputRea.命ノ星座 = constellation;
       let opt_buildData;
       if (props.urldata && props.urldata.キャラクター == character)
         opt_buildData = props.urldata;
@@ -714,6 +722,20 @@ export default defineComponent({
         weapon,
         characterInputRea.characterMaster.武器
       );
+      let refine = 1;
+      if ("武器所持状況" in localStorage) {
+        const myWeaponOwnObj = JSON.parse(localStorage["武器所持状況"]);
+        if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon] != null) {
+          refine = myWeaponOwnObj[weapon];
+        } else if (characterInputRea.weaponMaster.レアリティ == 4) {
+          refine = 3;
+        } else if (characterInputRea.weaponMaster.レアリティ == 3) {
+          refine = 5;
+        } else {
+          refine = 1;
+        }
+      }
+      characterInputRea.武器精錬ランク = Number(refine);
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea);
