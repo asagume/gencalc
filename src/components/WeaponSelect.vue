@@ -2,14 +2,19 @@
   <div v-if="visible">
     <table>
       <tr>
-        <th class="title">{{ displayName(weaponMasterRef.名前) }}</th>
+        <th class="title">{{ displayName(weaponMaster.名前) }}</th>
         <th class="stat">{{ displayName("基礎攻撃力") }}</th>
         <td class="stat-value">{{ displayStatValue("基礎攻撃力", stats[0].value) }}</td>
       </tr>
       <tr>
         <td>
-          <img v-for="i in Array.from({ length: weaponMasterRef.レアリティ }, (_, i) => i)" class="star"
-            src="images/star.png" alt="star" :key="i" />
+          <img
+            v-for="i in Array.from({ length: weaponMaster.レアリティ }, (_, i) => i)"
+            class="star"
+            src="images/star.png"
+            alt="star"
+            :key="i"
+          />
         </td>
         <th class="stat">
           <template v-if="stats[1]"> {{ displayName(stats[1].key) }} </template>
@@ -20,20 +25,24 @@
           </template>
         </td>
       </tr>
-      <template v-if="weaponMasterRef.武器スキル">
+      <template v-if="weaponMaster.武器スキル">
         <tr>
-          <th class="title" colspan="3">{{ weaponMasterRef.武器スキル.名前 }}</th>
+          <th class="title" colspan="3">{{ weaponMaster.武器スキル.名前 }}</th>
         </tr>
         <tr>
-          <td colspan="3" class="description" v-html="weaponMasterRef.武器スキル.説明"></td>
+          <td colspan="3" class="description" v-html="weaponMaster.武器スキル.説明"></td>
         </tr>
       </template>
     </table>
 
     <ul class="select-list">
       <li class="icon" v-for="item in filteredList" :key="item.key">
-        <img :class="'weapon' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url" :alt="item.key"
-          @click="updateWeapon(item.key)" />
+        <img
+          :class="'weapon' + bgImageClass(item) + selectedClass(item)"
+          :src="item.icon_url"
+          :alt="item.key"
+          @click="updateWeapon(item.key)"
+        />
         <div class="tooltip">{{ displayName(item.key) }}</div>
       </li>
     </ul>
@@ -74,22 +83,20 @@ export default defineComponent({
       return item.key == props.weapon ? " selected" : "";
     };
     const weaponRef = ref(props.weapon);
-    const weaponTypeRef = ref(props.weaponType);
-    const weaponMasterRef = ref(props.weaponMaster);
 
     const stats = computed(() => {
       const result = [] as { key: string; value: number }[];
       if (
-        weaponMasterRef.value &&
-        weaponMasterRef.value.ステータス &&
+        props.weaponMaster &&
+        props.weaponMaster.ステータス &&
         props.ascension !== undefined &&
         props.level !== undefined
       ) {
-        for (const statName of Object.keys(weaponMasterRef.value.ステータス)) {
+        for (const statName of Object.keys(props.weaponMaster.ステータス)) {
           result.push({
             key: statName,
             value: getStatValueByLevel(
-              weaponMasterRef.value.ステータス[statName],
+              props.weaponMaster.ステータス[statName],
               props.ascension,
               props.level
             ),
@@ -100,8 +107,8 @@ export default defineComponent({
     });
 
     const filteredList = computed(() => {
-      if (weaponTypeRef.value) {
-        return WEAPON_MASTER_LIST[weaponTypeRef.value] as TWeaponEntry[];
+      if (props.weaponType) {
+        return WEAPON_MASTER_LIST[props.weaponType] as TWeaponEntry[];
       }
       const result: TWeaponEntry[] = [];
       (Object.keys(WEAPON_MASTER_LIST) as TWeaponTypeKey[]).forEach((weaponType) => {
@@ -117,11 +124,11 @@ export default defineComponent({
     };
 
     return {
-      displayName, displayStatValue,
+      displayName,
+      displayStatValue,
 
       bgImageClass,
       selectedClass,
-      weaponMasterRef,
       filteredList,
       updateWeapon,
       stats,
