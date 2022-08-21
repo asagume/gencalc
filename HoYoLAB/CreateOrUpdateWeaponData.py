@@ -7,10 +7,10 @@ import os
 import os.path
 import re
 
-SRC_PATH = './RawData/data/weapons'
+SRC_PATH = './RawData/data/weapon'
 ORG_PATH = '../public/data/weapons'
 DST_PATH = '../public/data/weapons'
-ICON_URL_PATH = 'public/images/weapons'
+ICON_URL_PATH = 'images/weapons'
 
 os.chdir(os.path.dirname(__file__))
 
@@ -62,8 +62,8 @@ def suppressNull(d):
         return {k: v for k, v in ((k, suppressNull(v)) for k, v in d.items()) if not empty(v)}
 
 
-files = glob.glob(SRC_PATH + '/*/*.json', recursive=True)
-print(files)
+files = glob.glob(SRC_PATH + '/*/ja-jp/*.json', recursive=True)
+# print(files)
 for filepath in files:
     print(filepath)
 
@@ -76,7 +76,7 @@ for filepath in files:
     dirnameSplitted = re.split('[\\/\\\\]', dirname)
 
     dstFilepath = os.path.join(
-        DST_PATH, dirnameSplitted[len(dirnameSplitted) - 1], filename)
+        DST_PATH, dirnameSplitted[len(dirnameSplitted) - 2], filename)
     if os.path.exists(dstFilepath):
         srcStat = os.stat(filepath)
         dstStat = os.stat(dstFilepath)
@@ -86,9 +86,10 @@ for filepath in files:
     dstJson = copy.deepcopy(templateJson)
     try:
         orgFilepath = os.path.join(
-            ORG_PATH, dirnameSplitted[len(dirnameSplitted) - 1], filename)
+            ORG_PATH, dirnameSplitted[len(dirnameSplitted) - 2], filename)
         with open(orgFilepath, 'r', encoding='utf_8') as f:
             orgJson = json.load(f)
+            print(json.dumps(orgJson, indent=2, ensure_ascii=False))
             for key in orgJson.keys():
                 dstJson[key] = orgJson[key]
     except Exception as e:
@@ -97,7 +98,7 @@ for filepath in files:
     dstJson['名前'] = srcJson['name']
     dstJson['説明'] = srcJson['desc']
     dstJson['icon_url'] = ICON_URL_PATH + '/' + \
-        dirnameSplitted[len(dirnameSplitted) - 1] + '/' + \
+        dirnameSplitted[len(dirnameSplitted) - 2] + '/' + \
         filename.replace('.json', '.png')
     for value in srcJson['filter_values']['weapon_rarity']['values']:
         dstJson['レアリティ'] = int(value.replace('★', ''))

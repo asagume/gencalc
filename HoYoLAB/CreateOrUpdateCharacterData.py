@@ -7,12 +7,13 @@ import os
 import os.path
 import re
 
-SRC_PATH = './RawData/data/characters'
+SRC_PATH = './RawData/data/character/ja-jp'
 ORG_PATH = '../public/data/characters'
 DST_PATH = '../public/data/characters'
-ICON_URL_PATH = 'public/images/characters'
+ICON_URL_PATH = 'images/characters'
 
 os.chdir(os.path.dirname(__file__))
+print(os.getcwd())
 
 templateJson = {
     '名前': None,
@@ -362,7 +363,8 @@ for filepath in files:
                                 detailJson['数値'][str(index + 1)] = newValue
                                 if str(newValue).find('*') != -1:
                                     splitted = str(newValue).split('*')
-                                    hitCount = normalizeFormulaValue(splitted[len(splitted) - 1])   
+                                    hitCount = normalizeFormulaValue(
+                                        splitted[len(splitted) - 1])
                                 elif str(newValue).find('+') != -1:
                                     hitCount = item.count('+') + 1
                                 if attribute['key'].find('回復量') != -1:

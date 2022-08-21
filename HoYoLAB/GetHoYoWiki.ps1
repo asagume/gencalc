@@ -7,17 +7,16 @@ $pageIds = @()
 # $pageIds += 2256   # 久岐忍
 # $pageIds += 2263   # 鹿野院平蔵
 # 武器
-# $pageIds += @(1930..2060)
-# $pageIds += 2254   # 若水
-# $pageIds += 2255   # 落霞
-# $pageIds += 2264   # 籠釣瓶一心
+$pageIds += @(1930..2060)
+$pageIds += 2254   # 若水
+$pageIds += 2255   # 落霞
+$pageIds += 2264   # 籠釣瓶一心
 # 聖遺物
 # $pageIds += @(2061..2099)
 # 生物誌
 #$pageIds += @(2100..2251)
 # 物産誌
 # $pageIds += @(52..1929)
-$pageIds += @(1523..1929)
 # $pageIds += 2253
 # $pageIds += 2254
 # $pageIds += 2257
