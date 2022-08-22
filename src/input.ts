@@ -435,12 +435,11 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
             level = Number(levelStr);
         }
         let ascension = 0;
-        for (let i = 突破レベルレベルARRAY.length - 1; i >= 0; i--) {
-            if (突破レベルレベルARRAY[i][0] > level) continue;
-            if (突破レベルレベルARRAY[i][突破レベルレベルARRAY[i].length - 1] < level) continue;
+        for (let i = (突破レベルレベルARRAY.length - 1); i >= 0; i--) {
             ascension = i;
-            if (String(levelStr).endsWith('+')) {
-                ascension++;
+            if (突破レベルレベルARRAY[i][0] > level) continue;
+            if (突破レベルレベルARRAY[i][0] == level && !String(levelStr).endsWith('+')) {
+                ascension--;
             }
             break;
         }
