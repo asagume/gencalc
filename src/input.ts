@@ -603,7 +603,6 @@ export async function loadRecommendation(
             }
         }
         artifactDetailInput.聖遺物優先するサブ効果Disabled = prioritySubstatsDisabled;
-        overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
 
         ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
             if (!(key in build)) return;
@@ -654,6 +653,8 @@ export async function loadRecommendation(
             conditionInput.conditionValues[key] = build[key];
         });
 
+        overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
+        
         console.log('loadRecommendation', characterInput, artifactDetailInput, conditionInput, build);
     }
     catch (error) {
