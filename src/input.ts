@@ -264,14 +264,14 @@ export const 元素反応TEMPLATE = {
     燃焼ダメージ: 0,
     開花ダメージ: 0,
     烈開花ダメージ: 0,
-    ヴァインショットダメージ: 0,
+    超開花ダメージ: 0,
     超激化ダメージ: 0,
     草激化ダメージ: 0,
 };
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
 
-export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類
+export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類, HIT数
 export type TDamageResult = {
     元素反応: TDamageResultElementalReaction,
     通常攻撃: TDamageResultEntry[],

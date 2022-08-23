@@ -279,6 +279,7 @@ export type TEnemy = {
     水元素耐性: number,
     風元素耐性: number,
     雷元素耐性: number,
+    草元素耐性: number,
     氷元素耐性: number,
     岩元素耐性: number,
     物理耐性: number,

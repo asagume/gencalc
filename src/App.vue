@@ -132,7 +132,8 @@
 
     <div class="pane7">
       <AboutMyApp />
-      <ConfigurationInput @update:configuration-input="updateConfigurationInput"
+      <ConfigurationInput :configurationInput="configurationInputRea"
+        @update:configuration-input="updateConfigurationInput"
         @order:initialize-artifact-stats-sub="orderInitializeArtifactStatsSub" />
     </div>
 
@@ -302,9 +303,13 @@ export default defineComponent({
     const characterInfoVisibleRef = ref(false);
     const characterInfoModeRef = ref(0);
 
-    // Englishの辞書データをロードします
-    setI18nLanguage("en-us");
-    setI18nLanguage("ja-jp");
+    const configurationInputRea = reactive({
+      '全武器解放': false,
+      '聖遺物サブ効果計算停止': false,
+    } as TAnyObject);
+
+    setI18nLanguage('en-us');
+    setI18nLanguage('ja-jp');
 
     // ステータス1, ステータス2, 敵
     const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput);
@@ -485,7 +490,11 @@ export default defineComponent({
         artifactDetailInputRea.聖遺物ステータスメイン効果,
         artifactDetailInputRea.聖遺物メイン効果
       );
-      if (!artifactDetailInputRea.聖遺物優先するサブ効果Disabled) {
+      let doCalculate = !artifactDetailInputRea.聖遺物優先するサブ効果Disable;
+      if ('聖遺物サブ効果計算停止' in configurationInputRea && configurationInputRea.聖遺物サブ効果計算停止) {
+        doCalculate = false;
+      }
+      if (doCalculate) {
         const prioritySubstatValueArr = [
           makePrioritySubstatValueList(
             artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
@@ -743,6 +752,8 @@ export default defineComponent({
       );
       calculateResult(damageResult, characterInputRea, conditionInputRea, statsInput);
 
+      configurationInputRea.聖遺物サブ効果計算停止 = artifactDetailInput.聖遺物優先するサブ効果Disabled;
+
       characterInputRea.saveDisabled = false;
     };
 
@@ -881,14 +892,12 @@ export default defineComponent({
 
     /** コンフィグレーションが変更されました */
     const updateConfigurationInput = (configurationInput: TAnyObject) => {
-      console.log(configurationInput);
-      if ("全武器解放" in configurationInput && configurationInput.全武器解放) {
+      console.debug(configurationInput);
+      // overwriteObject(configurationInputRea, configurationInput);
+      if (configurationInput.全武器解放) {
         console.log("全武器解放");
       }
-      if (
-        "聖遺物サブ効果計算停止" in configurationInput &&
-        configurationInput.聖遺物サブ効果計算停止
-      ) {
+      if (configurationInput.聖遺物サブ効果計算停止) {
         artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
       }
     };
@@ -935,6 +944,8 @@ export default defineComponent({
       damageResult,
       savedSupporters,
       normalAttackReplacing,
+
+      configurationInputRea,
 
       pane6Toggle1Ref,
       pane6Toggle2Ref,

@@ -241,9 +241,6 @@ export default defineComponent({
     const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
     const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
-    const prioritySubstatsDisabledRef = ref(
-      artifactDetailInputRea.聖遺物優先するサブ効果Disabled
-    );
 
     const editableRef = ref(false);
     const gensenEnabledRef = ref(false);
@@ -273,7 +270,7 @@ export default defineComponent({
 
     /** 聖遺物ステータスを計算します（優先するサブ効果） */
     const _calculateArtifactStatsPrioritySub = () => {
-      if (prioritySubstatsDisabledRef.value) return;
+      if (artifactDetailInputRea.聖遺物優先するサブ効果Disabled) return;
       const prioritySubstatValues = [
         prioritySubstatValueList(0),
         prioritySubstatValueList(1),
@@ -320,7 +317,7 @@ export default defineComponent({
 
     /** 優先するサブ効果が更新されました */
     const updatePrioritySubstats = () => {
-      prioritySubstatsDisabledRef.value = false;
+      artifactDetailInputRea.聖遺物優先するサブ効果Disabled = false;
       _calculateArtifactStatsPrioritySub();
       calculateArtifactStats(artifactDetailInputRea);
       context.emit("update:artifact-detail", artifactDetailInputRea);
@@ -328,7 +325,7 @@ export default defineComponent({
 
     /** 厳選目安が選択されました */
     const gensenOnChange = () => {
-      prioritySubstatsDisabledRef.value = false;
+      artifactDetailInputRea.聖遺物優先するサブ効果Disabled = false;
       gensenEnabledRef.value = false;
       if (!gensenRef.value) return;
       if (!gensenRef.value.key) return;
@@ -349,7 +346,7 @@ export default defineComponent({
 
     /** 聖遺物ステータスサブ効果をクリアします */
     const initializeArtifactStatsSub = () => {
-      prioritySubstatsDisabledRef.value = true;
+      artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
       for (const stat of Object.keys(artifactStatsSub)) {
         artifactStatsSub[stat] = 0;
       }
@@ -361,7 +358,7 @@ export default defineComponent({
     const loadArtifactStatsByOcr = async (event: Event) => {
       const ocrStats = await resizePinnedImage(event);
       if (ocrStats) {
-        prioritySubstatsDisabledRef.value = true;
+        artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
         for (const stat of Object.keys(artifactStatsSub)) {
           if (stat in ocrStats) artifactStatsSub[stat] = ocrStats[stat];
           else artifactStatsSub[stat] = 0;
@@ -438,7 +435,6 @@ export default defineComponent({
       prioritySubstatIndices,
       prioritySubstatCounts,
       artifactStats,
-      prioritySubstatsDisabledRef,
       upTotalCount,
       editableRef,
       gensenEnabledRef,

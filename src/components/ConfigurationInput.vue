@@ -5,8 +5,8 @@
         <div class="left">
             <article>
                 <label>
-                    <input type="checkbox" v-model="configurationInput['全武器解放']"
-                        @change="$emit('update:configuration-input', configurationInput)">
+                    <input type="checkbox" v-model="configurationInputRea['全武器解放']"
+                        @change="$emit('update:configuration-input', configurationInputRea)">
                     <span>全ての武器が選択可能になる</span>
                 </label>
                 <div class="notice">
@@ -16,8 +16,8 @@
 
             <article>
                 <label>
-                    <input type="checkbox" v-model="configurationInput['聖遺物サブ効果計算停止']"
-                        @change="$emit('update:configuration-input', configurationInput)">
+                    <input type="checkbox" v-model="configurationInputRea['聖遺物サブ効果計算停止']"
+                        @change="$emit('update:configuration-input', configurationInputRea)">
                     <span>聖遺物サブ効果の自動計算を止める</span>
                 </label>
                 <div class="notice">
@@ -28,10 +28,10 @@
 
             <article>
                 <label>
-                    <input type="checkbox" v-model="initializeArtifactStatsSubClickable">
+                    <input type="checkbox" v-model="initializeArtifactStatsSubClickableRef">
                     <span>聖遺物サブ効果0初期化</span>
                 </label>
-                <button type="button" :disabled="!initializeArtifactStatsSubClickable"
+                <button type="button" :disabled="!initializeArtifactStatsSubClickableRef"
                     @click="initializeArtifactStatsSub">
                     {{ displayName('実行') }}
                 </button>
@@ -41,18 +41,21 @@
 </template>
 <script lang="ts">
 import { TAnyObject } from "@/master";
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, PropType, reactive, ref } from "vue";
 import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
     name: 'ConfigurationInput',
+    props: {
+        configurationInput: { type: Object as PropType<TAnyObject>, required: true },
+    },
     emits: ['update:configuration-input', 'order:initialize-artifact-stats-sub'],
     setup(props, context) {
         const { displayName } = CompositionFunction();
 
-        const configurationInput = reactive({} as TAnyObject);
-        configurationInput['全武器解放'] = false;
-        configurationInput['聖遺物サブ効果計算停止'] = false;
+        const configurationInputRea = reactive(props.configurationInput);
+        // configurationInputRea['全武器解放'] = false;
+        // configurationInputRea['聖遺物サブ効果計算停止'] = false;
         const initializeArtifactStatsSubClickableRef = ref(false);
 
         const initializeArtifactStatsSub = () => {
@@ -62,8 +65,8 @@ export default defineComponent({
 
         return {
             displayName,
-            configurationInput,
-            initializeArtifactStatsSubClickable: initializeArtifactStatsSubClickableRef,
+            configurationInputRea,
+            initializeArtifactStatsSubClickableRef,
             initializeArtifactStatsSub,
         }
     },
