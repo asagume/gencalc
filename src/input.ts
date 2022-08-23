@@ -565,8 +565,6 @@ export async function loadRecommendation(
     conditionInput: TConditionInput,
     build: { [key: string]: any }
 ) {
-    console.log(loadRecommendation.name, build);
-
     try {
         const character = characterInput.character;
         const characterMaster = await getCharacterMasterDetail(character);
@@ -656,9 +654,7 @@ export async function loadRecommendation(
             conditionInput.conditionValues[key] = build[key];
         });
 
-        console.log('build', build);
-        console.log('聖遺物ステータスメイン効果', artifactDetailInput.聖遺物ステータスメイン効果, artifactStatsMain);
-        console.log('聖遺物ステータスサブ効果', artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
+        console.log('loadRecommendation', characterInput, artifactDetailInput, conditionInput, build);
     }
     catch (error) {
         console.error(characterInput, artifactDetailInput, conditionInput, build);
