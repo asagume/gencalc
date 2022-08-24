@@ -37,7 +37,7 @@ $pageIds += 2673   # 金メッキの夢
 # $pageIds += 2259
 # $pageIds += 2260
 
-$doDownloadImg = $false
+$doDownloadImg = $true
 
 $categoryMap = @{
     "2" = "character"
