@@ -17,8 +17,6 @@ LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es", "ja-jp",
 
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-os.chdir(os.path.dirname(__file__))
-
 for lang in LANGUAGES:
     dstJson = {}
 

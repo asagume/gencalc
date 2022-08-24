@@ -25,9 +25,9 @@
         :level="characterInputRea.レベル" :normalAttackLevel="characterInputRea.通常攻撃レベル"
         :elementalSkillLevel="characterInputRea.元素スキルレベル" :elementalBurstLevel="characterInputRea.元素爆発レベル"
         :normalAttackReplacing="normalAttackReplacing" />
-      <WeaponSelect :visible="weaponSelectVisibleRef" :weapon="characterInputRea.weapon"
-        :weaponType="characterInputRea.characterMaster.武器" :weaponMaster="characterInputRea.weaponMaster"
-        :ascension="characterInputRea.武器突破レベル" :level="characterInputRea.武器レベル" @update:weapon="updateWeapon($event)" />
+      <WeaponSelect :visible="weaponSelectVisibleRef" :weapon="characterInputRea.weapon" :weaponType="weaponType"
+        :weaponMaster="characterInputRea.weaponMaster" :ascension="characterInputRea.武器突破レベル"
+        :level="characterInputRea.武器レベル" @update:weapon="updateWeapon($event)" />
       <ArtifactSetSelect :visible="artifactSetSelectVisibleRef" :index="artifactSetIndexRef"
         :artifactSet="artifactSets[artifactSetIndexRef]" :artifactSetMasters="characterInputRea.artifactSetMasters"
         @update:artifact-set="updateArtifactSet($event)" />
@@ -608,6 +608,14 @@ export default defineComponent({
       characterInputRea.saveDisabled = false;
     };
 
+    const weaponType = computed(() => {
+      let result = characterInputRea.characterMaster.武器;
+      if (configurationInputRea.全武器解放) {
+        result = null;
+      }
+      return result;
+    });
+
     /** 武器選択画面を開きます/閉じます */
     const openWeaponSelect = () => {
       weaponSelectVisibleRef.value = !weaponSelectVisibleRef.value;
@@ -939,6 +947,7 @@ export default defineComponent({
 
       characterSelectVisibleRef,
       weaponSelectVisibleRef,
+      weaponType,
       artifactSetSelectVisibleRef,
       artifactSetIndexRef,
       artifactSets,

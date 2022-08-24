@@ -357,7 +357,7 @@ export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?:
                     const typedMaster: any = WEAPON_MASTER[weaponType as TWeaponTypeKey];
                     const url = typedMaster[weapon]['import'];
                     const weaponMaster: any = await fetch(url).then(resp => resp.json());
-                    // removeStrFromUrl(weaponMaster, '');
+                    weaponMaster.種類 = weaponType; // 上書き
                     WEAPON_MASTER_DETAIL_MAP.set(weapon, weaponMaster);
                     break;
                 }
