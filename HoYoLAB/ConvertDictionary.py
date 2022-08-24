@@ -2,23 +2,20 @@ import json
 from operator import indexOf
 import os
 import os.path
-import pathlib
 import re
-import sys
-import io
 
 SRC_DIR = '../public/data'
-DST_DIR = '../src/locales'
+DST_DIR = '../public/locales'
 
-SRC_DICTIONARIES = ['HoYoDictionary2.json',
-                    'HoYoDictionary4.json', 'HoYoDictionary5.json']
+os.chdir(os.path.dirname(__file__))
+
+SRC_DICTIONARIES = ['HoYoDictionary2.json', 'HoYoDictionary4.json', 'HoYoDictionary5.json',
+                    'LocalDictionary.json']
 
 LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es", "ja-jp",
              "fr-fr", "id-id", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn"]
 
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
-os.chdir(os.path.dirname(__file__))
 
 for lang in LANGUAGES:
     dstJson = {}
@@ -37,7 +34,8 @@ for lang in LANGUAGES:
                 dstJson[k] = newK
         else:
             for k, v in srcJson.items():
-                dstJson[k] = v[lang]
+                if lang in v:
+                    dstJson[k] = v[lang]
 
     dstPath = os.path.join(DST_DIR, lang + '.json')
     with open(dstPath, 'w', encoding='utf_8') as f:

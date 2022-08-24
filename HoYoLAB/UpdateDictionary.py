@@ -9,6 +9,8 @@ SRC_PATH = './RawData/data'
 ORG_PATH = '../public/data/HoYoDictionary'
 DST_PATH = '../public/data/HoYoDictionary'
 
+os.chdir(os.path.dirname(__file__))
+
 #CATEGORY_DIRS = ['characters', 'weapons', 'artifacts']
 CATEGORY_DIRS = [['character', 2], ['weapon', 4],
                  ['reliquary', 5], ['enemy_and_monster', 7], ['object', 9]]

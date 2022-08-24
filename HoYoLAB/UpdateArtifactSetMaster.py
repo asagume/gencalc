@@ -9,6 +9,8 @@ SOURCE_PATH = './RawData'
 FILTER = '[5]_*.json'
 UPDATE_PATH = '../public/data/ArtifactSetMaster.json'
 
+os.chdir(os.path.dirname(__file__))
+
 with open(UPDATE_PATH, 'r', encoding='utf_8_sig') as f:
     updateJson = json.load(f)
 
@@ -43,10 +45,10 @@ for filepath in files:
                 for key in ['flower_of_life', 'plume_of_death', 'sands_of_eon', 'goblet_of_eonothem', 'circlet_of_logos']:
                     if key in component['data']:
                         if 'title' in component['data'][key]:
-                            artifact_list.append(component['data'][key]['title'])
+                            artifact_list.append(
+                                component['data'][key]['title'])
                         else:
                             artifact_list.append(None)
-
 
     if name in updateJson:
         updateJson[name]['artifact_list'] = artifact_list

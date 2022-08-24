@@ -1,5 +1,5 @@
-import { ARTIFACT_SET_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, キャラクター構成PROPERTY_MAP } from '@/master';
-import { deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
+import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { basename, deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -569,7 +569,6 @@ export async function loadRecommendation(
         const character = characterInput.character;
         const characterMaster = await getCharacterMasterDetail(character);
         characterInput.characterMaster = characterMaster;
-        const artifactStatsMain = deepcopy(聖遺物ステータスTEMPLATE);
         const artifactStatsSub = deepcopy(聖遺物ステータスTEMPLATE);
 
         if ('レベル' in build) {
@@ -654,7 +653,7 @@ export async function loadRecommendation(
         });
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
-        
+
         console.log('loadRecommendation', characterInput, artifactDetailInput, conditionInput, build);
     }
     catch (error) {
@@ -1383,4 +1382,90 @@ function analyzeFormulaStrSub(formulaStr: string, opt_defaultItem: string | null
         }
     }
     return resultArr;
+}
+
+function makeSharedata(savedata: TAnyObject) {
+    const sharedataArr = [] as any[];
+
+    let character: TCharacterKey;
+    let weaponType: TWeaponTypeKey;
+
+    キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+        let newValue = savedata[key];
+        let myBasename;
+        switch (key) {
+            case 'キャラクター':
+                character = newValue as TCharacterKey;
+                myBasename = basename(CHARACTER_MASTER[character]['import']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '武器':
+                weaponType = CHARACTER_MASTER[character]['武器'] as TWeaponTypeKey;
+                myBasename = basename((WEAPON_MASTER as any)[weaponType][newValue]['import']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '聖遺物セット効果1':
+            case '聖遺物セット効果2':
+                if (newValue == 'NONE') {
+                    newValue = '';  // 聖遺物セット効果なし
+                } else {
+                    myBasename = basename(ARTIFACT_SET_MASTER[newValue as TArtifactSetKey]['image']);
+                    newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                }
+                break;
+            case '聖遺物メイン効果1':
+            case '聖遺物メイン効果2':
+            case '聖遺物メイン効果3':
+            case '聖遺物メイン効果4':
+            case '聖遺物メイン効果5':
+                if (newValue) {
+                    newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue.split('_')[1]);
+                }
+                break;
+            case '聖遺物優先するサブ効果1':
+            case '聖遺物優先するサブ効果2':
+            case '聖遺物優先するサブ効果3':
+                if (newValue) {
+                    newValue = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue);
+                }
+                break;
+        }
+        sharedataArr.push(newValue);
+    });
+    Object.keys(savedata).forEach(key => {
+        if (!キャラクター構成PROPERTY_MAP.has(key)) {
+            sharedataArr.push(key + '=' + savedata[key]);
+        }
+    });
+
+    return sharedataArr.join(',');
+}
+
+function openTwitter(text: string, url: string, opt_hashtags?: string, opt_via?: string) {
+    const baseUrl = 'https://twitter.com/intent/tweet?';
+    const params = new URLSearchParams();
+    params.append('text', text);
+    params.append('url', url);
+    if (opt_hashtags) {
+        params.append('hashtags', opt_hashtags);
+    }
+    if (opt_via) {
+        params.append('via', opt_via);
+    }
+    const query = params.toString();
+    const shareUrl = `${baseUrl}${query}`;
+    console.log(params);
+    console.log(shareUrl);
+    window.open(shareUrl);
+}
+
+export function shareByTwitter(characterInput: TCharacterInput, artifactDetailInput: TArtifactDetailInput, conditionInput: TConditionInput) {
+    const savedata = makeSavedata(characterInput, artifactDetailInput, conditionInput);
+    const sharedata = makeSharedata(savedata);
+
+    const text = characterInput.buildname;
+    const encoded = encodeURI(sharedata);
+    const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
+
+    openTwitter(text, url);
 }

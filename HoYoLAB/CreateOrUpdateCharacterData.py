@@ -13,7 +13,6 @@ DST_PATH = '../public/data/characters'
 ICON_URL_PATH = 'images/characters'
 
 os.chdir(os.path.dirname(__file__))
-print(os.getcwd())
 
 templateJson = {
     '名前': None,

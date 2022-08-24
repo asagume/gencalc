@@ -137,7 +137,7 @@
           placeholder="input build name" @change="characterInputRea.saveDisabled = false" />
       </td>
       <td>
-        <button type="button" :disabled="characterInputRea.saveDisabled" @click="saveOnClick">
+        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
           Save
           <!-- <span class="material-symbols-outlined"> save </span> -->
         </button>
@@ -255,6 +255,14 @@ export default defineComponent({
       ELEMENT_COLOR_CLASS[item.元素] as string;
     const bgColorClass = (item: TCharacterDetail) =>
       ELEMENT_BG_COLOR_CLASS[item.元素] as string;
+
+    const saveDisabled = computed(() => {
+      let result = characterInputRea.saveDisabled;
+      if (characterInputRea.characterMaster.武器 != characterInputRea.weaponMaster.種類) {
+        result = true;
+      }
+      return result;
+    });
 
     /** 構成データを保存します */
     const saveOnClick = () => {
@@ -440,6 +448,7 @@ export default defineComponent({
       weaponMaster,
       artifactSetMasters,
       recommendationOnChange,
+      saveDisabled,
       saveOnClick,
       removeOnClick,
       ascensionRange,

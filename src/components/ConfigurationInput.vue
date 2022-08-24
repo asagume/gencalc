@@ -10,7 +10,7 @@
                     <span>全ての武器が選択可能になる</span>
                 </label>
                 <div class="notice">
-                    キャラクター再選択後に有効になります。
+                    ※
                 </div>
             </article>
 

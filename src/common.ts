@@ -29,3 +29,6 @@ export function overwriteObject(dst: any, src: any) {
     }
     return dst;
 }
+
+// eslint-disable-next-line
+export const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;

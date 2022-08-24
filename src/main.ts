@@ -1,13 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { basename } from '@/common';
 import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { deepcopy, isNumber } from './common';
 import i18n from './i18n';
 
-
-// eslint-disable-next-line
-const basename = (path: string) => path!.split('/')!.pop()!.split('.')!.shift()!;
 
 function makeSaveDataFromShareData(shareData: string) {
     const savedata = {} as {

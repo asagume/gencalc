@@ -8,13 +8,8 @@
       </tr>
       <tr>
         <td>
-          <img
-            v-for="i in Array.from({ length: weaponMaster.レアリティ }, (_, i) => i)"
-            class="star"
-            src="images/star.png"
-            alt="star"
-            :key="i"
-          />
+          <img v-for="i in Array.from({ length: weaponMaster.レアリティ }, (_, i) => i)" class="star" src="images/star.png"
+            alt="star" :key="i" />
         </td>
         <th class="stat">
           <template v-if="stats[1]"> {{ displayName(stats[1].key) }} </template>
@@ -37,12 +32,8 @@
 
     <ul class="select-list">
       <li class="icon" v-for="item in filteredList" :key="item.key">
-        <img
-          :class="'weapon' + bgImageClass(item) + selectedClass(item)"
-          :src="item.icon_url"
-          :alt="item.key"
-          @click="updateWeapon(item.key)"
-        />
+        <img :class="'weapon' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url" :alt="item.key"
+          @click="updateWeapon(item.key)" />
         <div class="tooltip">{{ displayName(item.key) }}</div>
       </li>
     </ul>
@@ -68,7 +59,7 @@ export default defineComponent({
   props: {
     visible: { type: Boolean, required: true },
     weapon: { type: String as PropType<TWeaponKey>, required: true },
-    weaponType: { type: String as PropType<TWeaponTypeKey>, required: true },
+    weaponType: { type: String as PropType<TWeaponTypeKey | null>, required: true },
     weaponMaster: { type: Object as PropType<TWeaponDetail>, required: true },
     ascension: { type: Number, required: true },
     level: { type: Number, required: true },

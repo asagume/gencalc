@@ -327,7 +327,9 @@ export async function getCharacterMasterDetail(character: TCharacterKey): Promis
         if (!CHARACTER_MASTER_DETAIL_MAP.has(character)) {
             const url = CHARACTER_MASTER[character]['import'].replace(/^\//, '');
             const characterMaster = await fetch(url).then(resp => resp.json());
-            // removeStrFromUrl(characterMaster, '');
+            // 通常攻撃の画像URLを共用のURLに差し替えます
+            const weaponType = CHARACTER_MASTER[character].武器 as TWeaponTypeKey;
+            characterMaster.通常攻撃.icon_url = WEAPON_IMG_SRC[weaponType];
             CHARACTER_MASTER_DETAIL_MAP.set(character, characterMaster);
         }
         return CHARACTER_MASTER_DETAIL_MAP.get(character);
@@ -355,7 +357,7 @@ export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?:
                     const typedMaster: any = WEAPON_MASTER[weaponType as TWeaponTypeKey];
                     const url = typedMaster[weapon]['import'];
                     const weaponMaster: any = await fetch(url).then(resp => resp.json());
-                    // removeStrFromUrl(weaponMaster, '');
+                    weaponMaster.種類 = weaponType; // 上書き
                     WEAPON_MASTER_DETAIL_MAP.set(weapon, weaponMaster);
                     break;
                 }
@@ -475,7 +477,7 @@ export const ARTIFACT_STAT_JA_EN_ABBREV_MAP = new Map([
     ['元素チャージ効率', 'EnergyRecharge'],
     ['炎元素ダメージバフ', 'Pyro'],
     ['水元素ダメージバフ', 'Hydro'],
-    ['風元素ダメージバフ', 'anemo'],
+    ['風元素ダメージバフ', 'Anemo'],
     ['雷元素ダメージバフ', 'Electro'],
     ['草元素ダメージバフ', 'Dendro'],
     ['氷元素ダメージバフ', 'Cryo'],
