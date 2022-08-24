@@ -396,7 +396,7 @@ export const ELEMENT_IMG_SRC = {
     水: 'images/element_hydro.png',
     風: 'images/element_anemo.png',
     雷: 'images/element_electro.png',
-    草: IMG_SRC_DUMMY,
+    草: 'images/element_dendro.png',
     氷: 'images/element_cryo.png',
     岩: 'images/element_geo.png'
 };
