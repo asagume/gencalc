@@ -187,52 +187,69 @@ button {
     margin-bottom: 0.5rem;
 }
 
+/* HoYoWikiの色
+FF9999
+80C0FF
+80FFD7
+FFACFF
+99FF88
+99FFFF
+FFE699
+*/
 .pyro {
-    color: #d2655a;
+    color: #FF7A7A;
 }
 
 .hydro {
-    color: #559cc9;
+    color: #66ADFF;
 }
 
 .anemo {
-    color: #3aaf7a;
+    color: #66FFC2;
 }
 
 .electro {
-    color: #b681df;
+    color: #FF8AFF;
+}
+
+.dendro {
+    color: #8AFF6D;
 }
 
 .cryo {
-    color: #63beb4;
+    color: #7AFFFF;
 }
 
 .geo {
-    color: #df8f37;
+    color: #FFCF7A;
 }
 
 .pyro-bg {
-    background-color: #d2655a;
+    background-color: #FF7A7A;
 }
 
 .hydro-bg {
-    background-color: #559cc9;
+    background-color: #66ADFF;
 }
 
 .anemo-bg {
-    background-color: #3aaf7a;
+    background-color: #66FFC2;
 }
 
 .electro-bg {
-    background-color: #b681df;
+    background-color: #FF8AFF;
+}
+
+.dendro-bg {
+    background-color: #8AFF6D;
 }
 
 .cryo-bg {
-    background-color: #63beb4;
+    background-color: #7AFFFF;
 }
 
 .geo-bg {
-    background-color: #df8f37;
+    background-color: #FFCF7A;
 }
 
 .star1-bg {

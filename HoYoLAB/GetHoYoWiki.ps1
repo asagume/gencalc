@@ -15,17 +15,17 @@ $pageIds += 2674   # 旅人(草)
 # $pageIds += 2254   # 若水
 # $pageIds += 2255   # 落霞
 # $pageIds += 2264   # 籠釣瓶一心
-$pageIds += 2665   # 狩人の道
-$pageIds += 2666   # 竭沢
-$pageIds += 2667   # 原木刀
-$pageIds += 2668   # ムーンピアサー
-$pageIds += 2669   # 満悦の実
-$pageIds += 2670   # 王の近侍
-$pageIds += 2671   # 森林のレガリア
+# $pageIds += 2665   # 狩人の道
+# $pageIds += 2666   # 竭沢
+# $pageIds += 2667   # 原木刀
+# $pageIds += 2668   # ムーンピアサー
+# $pageIds += 2669   # 満悦の実
+# $pageIds += 2670   # 王の近侍
+# $pageIds += 2671   # 森林のレガリア
 # 聖遺物
 # $pageIds += @(2061..2099)
-$pageIds += 2672   # 深林の記憶
-$pageIds += 2673   # 金メッキの夢
+# $pageIds += 2672   # 深林の記憶
+# $pageIds += 2673   # 金メッキの夢
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌
@@ -37,7 +37,7 @@ $pageIds += 2673   # 金メッキの夢
 # $pageIds += 2259
 # $pageIds += 2260
 
-$doDownloadImg = $true
+$doDownloadImg = $false
 
 $categoryMap = @{
     "2" = "character"
@@ -139,14 +139,23 @@ foreach ($pageId in $pageIds) {
         if (-not (Test-Path $outDirPath)) {
             New-Item -Path $outDirPath -ItemType Directory -Force
         }
-        foreach ($module in $contentMLang."en-us".modules) {
-            foreach ($component in $module.components) {
-                if ($component.data -and $doDownloadImg) {
-                    if ($component.data.list) {
-                        foreach ($entry in $component.data.list) {
-                            if ($entry.icon_url) {
-                                $workArr = $entry.icon_url -split "/"
-                                Invoke-WebRequest -URI $entry.icon_url -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $workArr[$workArr.Length - 1]) -Verbose
+        foreach ($xRpcLanguage in $xRpcLanguages) {
+            foreach ($module in $contentMLang[$xRpcLanguage].modules) {
+                foreach ($component in $module.components) {
+                    if ($component.data) {
+                        if ($component.data.list) {
+                            $index = 0
+                            foreach ($entry in $component.data.list) {
+                                if ($entry.icon_url) {
+                                    $imageFile = $component.component_id + "_" + ($index + 1) + ".png"
+                                    if ($xRpcLanguage -eq "en-us" -and $doDownloadImg) {
+                                        $outFile = (Join-Path $outDirPath -ChildPath $imageFile)
+                                        Invoke-WebRequest -URI $entry.icon_url -Headers $headers -OutFile $outFile -Verbose
+                                    }
+                                    $entry.icon_url = $imageFile
+                                    $entry.icon_url
+                                }
+                                $index++
                             }
                         }
                     }
@@ -226,7 +235,8 @@ foreach ($pageId in $pageIds) {
             $outFilePath
     
             $UTF8NoBomEnc = New-Object System.Text.UTF8Encoding $False
-            [System.IO.File]::WriteAllLines($outFilePath, (ConvertTo-Json -InputObject $contentMLang.$xRpcLanguage -Depth 100), $UTF8NoBomEnc)        
+            $outData = (ConvertTo-Json -InputObject $contentMLang.$xRpcLanguage -Depth 100).replace("`u{00a0}", " ");
+            [System.IO.File]::WriteAllLines($outFilePath, $outData, $UTF8NoBomEnc)        
         }
     }
 }

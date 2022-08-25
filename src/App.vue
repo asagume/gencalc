@@ -151,7 +151,7 @@
     </div>
   </div>
 
-  <div id="debug-info" v-if="false">
+  <div id="debug-info" v-if="true">
     <hr />
     <h2>DEBUG</h2>
     <template v-if="characterInputRea">
@@ -611,7 +611,7 @@ export default defineComponent({
     const weaponType = computed(() => {
       let result = characterInputRea.characterMaster.武器;
       if (configurationInputRea.全武器解放) {
-        result = null;
+        result = undefined;
       }
       return result;
     });
@@ -633,7 +633,7 @@ export default defineComponent({
       characterInputRea.weapon = weapon;
       characterInputRea.weaponMaster = await getWeaponMasterDetail(
         weapon,
-        characterInputRea.characterMaster.武器
+        // characterInputRea.characterMaster.武器
       );
       let refine = 1;
       if ("武器所持状況" in localStorage) {

@@ -62,6 +62,19 @@ def suppressNull(d):
         return {k: v for k, v in ((k, suppressNull(v)) for k, v in d.items()) if not empty(v)}
 
 
+def normalizeObject(d):
+    if type(d) == str:
+        return d.replace('<p>', '').replace('</p>', '')
+    if not isinstance(d, (dict, list)):
+        return d
+    if isinstance(d, list):
+        return [v for v in (normalizeObject(v) for v in d)]
+    result = {}
+    for k, v in d.items():
+        result[k] = normalizeObject(v)
+    return result
+
+
 files = glob.glob(SRC_PATH + '/*/ja-jp/*.json', recursive=True)
 # print(files)
 for filepath in files:
@@ -96,7 +109,7 @@ for filepath in files:
         None
 
     dstJson['名前'] = srcJson['name']
-    dstJson['説明'] = srcJson['desc']
+    dstJson['説明'] = re.sub('<.*?>', '', srcJson['desc'])
     dstJson['icon_url'] = ICON_URL_PATH + '/' + \
         dirnameSplitted[len(dirnameSplitted) - 2] + '/' + \
         filename.replace('.json', '.png')
@@ -121,7 +134,8 @@ for filepath in files:
                     #                     ] = ','.join(entry['value'])
                     if entry['key'] not in ['名称', '入手方法', '種類', 'サブステータス', '精錬素材', '鍛造素材']:
                         dstJson['武器スキル']['名前'] = entry['key']
-                        dstJson['武器スキル']['説明'] = ','.join(entry['value'])
+                        dstJson['武器スキル']['説明'] = re.sub(
+                            '<.*?>', '', ','.join(entry['value']))
 
             elif module['name'] == '突破' and component['component_id'] == 'ascension':
                 # 突破
@@ -143,6 +157,7 @@ for filepath in files:
                                 entry['combatList'][1]['values'][2])
 
     dstJson = suppressNull(dstJson)
+    dstJson = normalizeObject(dstJson)
 
     # print(json.dumps(dstJson, ensure_ascii=False, indent=2))
 

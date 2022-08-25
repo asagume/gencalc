@@ -1,17 +1,31 @@
 <template>
   <div class="elemental-reaction">
     <input id="増幅反応-なし" type="radio" v-model="増幅反応" value="なし" name="増幅反応-name" />
-    <label for="増幅反応-なし">
-      {{ displayName("反応なし") }}
-    </label>
-    <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name" />
-    <label for="増幅反応-蒸発" v-if="damageResult.元素反応.蒸発倍率">
-      {{ displayName("蒸発") }}×<span>{{ Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100 }}</span>
-    </label>
-    <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name" />
-    <label for="増幅反応-溶解" v-if="damageResult.元素反応.溶解倍率">
-      {{ displayName("溶解") }}×<span>{{ Math.round(damageResult.元素反応.溶解倍率 * 100) / 100 }}</span>
-    </label>
+    <label for="増幅反応-なし"> {{ displayName("反応なし") }} </label>
+    <template v-if="damageResult.元素反応.蒸発倍率">
+      <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name" />
+      <label for="増幅反応-蒸発">
+        {{ displayName("蒸発") }}×<span>{{ Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100 }}</span>
+      </label>
+    </template>
+    <template v-if="damageResult.元素反応.溶解倍率">
+      <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name" />
+      <label for="増幅反応-溶解">
+        {{ displayName("溶解") }}×<span>{{ Math.round(damageResult.元素反応.溶解倍率 * 100) / 100 }}</span>
+      </label>
+    </template>
+    <template v-if="damageResult.元素反応.超激化ダメージ">
+      <input id="増幅反応-超激化" type="radio" v-model="増幅反応" value="超激化" name="増幅反応-name" />
+      <label for="増幅反応-超激化" class="electro">
+        {{ displayName("超激化") }} <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
+      </label>
+    </template>
+    <template v-if="damageResult.元素反応.草激化ダメージ">
+      <input id="増幅反応-草激化" type="radio" v-model="増幅反応" value="草激化" name="増幅反応-name" />
+      <label for="増幅反応-草激化" class="dendro">
+        {{ displayName("草激化") }} <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
+      </label>
+    </template>
     <label v-if="damageResult.元素反応.過負荷ダメージ" class="pyro">
       {{ displayName("過負荷") }}
       <span>{{ Math.round(damageResult.元素反応.過負荷ダメージ) }}</span>
@@ -28,7 +42,7 @@
       {{ displayName("拡散") }}
       <span>{{ Math.round(damageResult.元素反応.拡散ダメージ) }}</span>
     </label>
-    <label v-if="damageResult.元素反応.結晶吸収量" :class="elementClass(damageResult.元素反応.結晶元素)">
+    <label v-if="damageResult.元素反応.結晶吸収量">
       {{ displayName("結晶") }}
       <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
     </label>
@@ -47,16 +61,6 @@
     <label v-if="damageResult.元素反応.超開花ダメージ" class="dendro">
       {{ displayName("超開花") }}
       <span>{{ Math.round(damageResult.元素反応.超開花ダメージ) }}</span>
-    </label>
-    <input id="増幅反応-超激化" type="radio" v-model="増幅反応" value="超激化" name="増幅反応-name" />
-    <label v-if="damageResult.元素反応.超激化ダメージ" class="electro">
-      {{ displayName("超激化") }}
-      <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
-    </label>
-    <input id="増幅反応-草激化" type="radio" v-model="増幅反応" value="草激化" name="増幅反応-name" />
-    <label v-if="damageResult.元素反応.草激化ダメージ" class="dendro">
-      {{ displayName("草激化") }}
-      <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
     </label>
   </div>
   <template v-for="category in CATEGORY_LIST" :key="category">
@@ -184,9 +188,17 @@ export default defineComponent({
         } else if (増幅反応.value == "溶解" && ["炎", "氷"].includes(item[1])) {
           value *= 元素反応.溶解倍率;
         } else if (増幅反応.value == "超激化" && ["雷"].includes(item[1])) {
-          value *= 1;
+          let addValue = 元素反応.超激化ダメージ;
+          // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
+          if (item[7]) addValue *= (100 + item[7]) / 100; // ダメージバフ補正
+          addValue *= item[index] / item[4];  // 2:期待値/3:会心/4:非会心
+          value += addValue;
         } else if (増幅反応.value == "草激化" && ["草"].includes(item[1])) {
-          value *= 1;
+          let addValue = 元素反応.草激化ダメージ;
+          // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
+          if (item[7]) addValue *= (100 + item[7]) / 100; // ダメージバフ補正
+          addValue *= item[index] / item[4];  // 2:期待値/3:会心/4:非会心
+          value += addValue;
         }
       }
       if (value < 10) value = Math.round(value * 100) / 100;

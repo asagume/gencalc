@@ -74,8 +74,6 @@ export const 元素反応バフARRAY = [
     '拡散',
     '結晶',
     '燃焼',
-    '開花',
-    '激化'
 ];
 export const ステータスその他ARRAY = [
     'ダメージ軽減',
@@ -260,7 +258,6 @@ export const 元素反応TEMPLATE = {
     拡散ダメージ: 0,
     拡散元素: '炎',
     結晶吸収量: 0,
-    結晶元素: '炎',
     燃焼ダメージ: 0,
     開花ダメージ: 0,
     烈開花ダメージ: 0,
@@ -271,7 +268,7 @@ export const 元素反応TEMPLATE = {
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
 
-export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類, HIT数
+export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類, HIT数, ダメージバフ
 export type TDamageResult = {
     元素反応: TDamageResultElementalReaction,
     通常攻撃: TDamageResultEntry[],
@@ -815,51 +812,29 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         myDefaultElement = characterMaster['元素'];
         result['元素爆発'] = makeDamageDetailObjArr(characterMaster['元素爆発'], myTalentLevel, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
 
+        result['その他'] = [] as TDamageDetailObj[];
+
         // その他戦闘天賦
         if ('その他戦闘天賦' in characterMaster) {
             characterMaster['その他戦闘天賦'].forEach((myTalentDetail: any) => {
-                let workArr = [];
-                if ('その他' in result) {
-                    workArr = result['その他'];
-                }
-                workArr.concat(makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
-                result['その他'] = workArr;
+                const workArr = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                if (workArr.length > 0) result['その他'].push(...workArr);
             });
         }
 
         // 固有天賦
         characterMaster['固有天賦'].forEach((myTalentDetail: any) => {
-            let workArr = [];
-            if ('その他' in result) {
-                workArr = result['その他'];
-            }
-            workArr.concat(makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
-            result['その他'] = workArr;
+            const workArr = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+            if (workArr.length > 0) result['その他'].push(...workArr);
         });
 
         // 命ノ星座
         if ('命ノ星座' in characterMaster) {
-            let c = 0;
             Object.keys(characterMaster['命ノ星座']).forEach(key => {
-                if (c++ > characterInput.命ノ星座) return;
+                if (Number(key) > characterInput.命ノ星座) return;
                 myTalentDetail = characterMaster['命ノ星座'][key];
-                // if ('詳細' in myTalentDetail) {
-                //     myTalentDetail['詳細'].forEach((detailObj: { [x: string]: string; }) => {
-                //         if ('条件' in detailObj && detailObj['条件']) {
-                //             if (detailObj['条件'].indexOf('命ノ星座') == -1) {
-                //                 detailObj['条件'] = '命ノ星座@' + key + '&' + detailObj['条件'];
-                //             }
-                //         } else {
-                //             detailObj['条件'] = '命ノ星座@' + key;
-                //         }
-                //     });
-                // }
-                let workArr = [];
-                if ('その他' in result) {
-                    workArr = result['その他'];
-                }
-                workArr.concat(makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
-                result['その他'] = workArr;
+                const workArr = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                if (workArr.length > 0) result['その他'].push(...workArr);
             });
         }
 
@@ -941,7 +916,7 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
 
         if ('武器スキル' in weaponMaster) {
             myTalentDetail = weaponMaster['武器スキル'];
-            result['武器'] = makeDamageDetailObjArr(myTalentDetail, myLevel, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+            result['その他'] = makeDamageDetailObjArr(myTalentDetail, myLevel, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
         }
 
         result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
@@ -995,19 +970,21 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
         const artifactSetMasters = characterInput.artifactSetMasters.filter((s: any) => s);
 
         if (artifactSetMasters.length > 0) {
+            const damageDetailObjArr = [] as TDamageDetailObj[];
             if ('2セット効果' in artifactSetMasters[0]) {
                 myTalentDetail = artifactSetMasters[0]['2セット効果'];
-                result['聖遺物セット効果1'] = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                damageDetailObjArr.push(...makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
             }
             if (artifactSetMasters.length == 2) {
                 if (artifactSetMasters[0] == artifactSetMasters[1]) {
                     myTalentDetail = artifactSetMasters[0]['4セット効果'];
-                    result['聖遺物セット効果2'] = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                    damageDetailObjArr.push(...makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
                 } else {
                     myTalentDetail = artifactSetMasters[1]['2セット効果'];
-                    result['聖遺物セット効果2'] = makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+                    damageDetailObjArr.push(...makeDamageDetailObjArr(myTalentDetail, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
                 }
             }
+            result['その他'] = damageDetailObjArr;
         }
 
         result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;

@@ -515,6 +515,9 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                     case '固定':    // 過負荷 感電 超電導
                         resultValue = calculate固定値系元素反応ダメージ(reaction, vision, statsInput.statsObj);
                         break;
+                    case '加算':    // 超激化 草激化
+                        resultValue = calculate加算系元素反応ダメージ(reaction, vision, statsInput.statsObj);
+                        break;
                 }
             }
             Object.keys(reactionResult).forEach(key => {
@@ -554,7 +557,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                 }
                 if (category == '通常攻撃') {
                     let n = 0;
-                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0] as TDamageResultEntry;
+                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0] as TDamageResultEntry;
                     for (const entry of damageResult[category]) {
                         if (entry[0].endsWith('段ダメージ')) {
                             sum[1] = entry[1];
@@ -562,7 +565,11 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                             if (entry[3] == null) sum[3] = null;
                             else if (sum[3] != null) sum[3] += entry[3];
                             sum[4] += entry[4];
-                            if (sum[6] != null && entry[6]) sum[6] += entry[6]; // HIT数
+                            if (sum[6] != null) {   // HIT数
+                                if (entry[6]) sum[6] += entry[6];
+                                else sum[6]++;
+                            }
+                            sum[7] = entry[7];  // ダメージバフ
                             n++;
                         }
                     }
@@ -721,13 +728,13 @@ function checkConditionMatchesSub(conditionStr: string, validConditionValueArr: 
 }
 
 /** 蒸発、溶解のダメージを計算します */
-export function calculate乗算系元素反応倍率(reaction: any, element: string, statsObj: any) {
+function calculate乗算系元素反応倍率(reaction: any, element: string, statsObj: any) {
     try {
         if (!element || element == '物理') return 0;
         const elementalMastery = statsObj['元素熟知'];
-        const dmgBuff = statsObj[reaction];
+        const dmgBuff = statsObj[reaction] ?? 0;
         let result = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
-        result *= 1 + 25 * elementalMastery / (9 * (elementalMastery + 1400)) + dmgBuff / 100;
+        result *= 1 + (25 * elementalMastery / (9 * (elementalMastery + 1400)) + dmgBuff / 100);
         return result;
     } catch (error) {
         console.error(reaction, element, statsObj);
@@ -738,15 +745,15 @@ export function calculate乗算系元素反応倍率(reaction: any, element: str
 /**
  * 過負荷、感電、超電導、拡散のダメージを計算します
  */
-export function calculate固定値系元素反応ダメージ(reaction: any, element: string, statsObj: TStats, opt_dmgElement?: string) {
+function calculate固定値系元素反応ダメージ(reaction: any, element: string, statsObj: TStats, opt_dmgElement?: string) {
     try {
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
-        const dmgBuff = statsObj[reaction];
+        const dmgBuff = statsObj[reaction] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
-        result *= 1 + 16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100;
+        result *= 1 + (16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100);
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {
@@ -756,13 +763,13 @@ export function calculate固定値系元素反応ダメージ(reaction: any, ele
 }
 
 /** 結晶シールドの吸収量を計算します */
-export function calculate結晶シールド吸収量(element: string, statsObj: TStats) {
+function calculate結晶シールド吸収量(element: string, statsObj: TStats) {
     try {
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
         let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element]['結晶']['数値']);
-        result *= 1 + 40 * elementalMastery / (9 * (elementalMastery + 1400));
+        result *= 1 + (40 * elementalMastery / (9 * (elementalMastery + 1400)));
         return result;
     } catch (error) {
         console.error(element, statsObj);
@@ -770,13 +777,31 @@ export function calculate結晶シールド吸収量(element: string, statsObj: 
     }
 }
 
+/** 超激化、草激化のダメージを計算します */
+function calculate加算系元素反応ダメージ(reaction: any, element: string, statsObj: TStats) {
+    try {
+        if (!element || element == '物理') return 0;
+        const level = statsObj['レベル'];
+        const elementalMastery = statsObj['元素熟知'];
+        // const dmgBuff = statsObj[reaction] ?? 0;
+        const dmgElement = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
+        let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
+        result *= 1 + (5 * elementalMastery) / (elementalMastery + 1200);
+        result *= calculateEnemyRes(dmgElement, statsObj);
+        return result;
+    } catch (error) {
+        console.error(reaction, element, statsObj);
+        throw error;
+    }
+}
+
 /** 防御力補正を計算します */
-export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防御力,防御無視
+export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防御力, 防御無視
     try {
         const level = statsObj['レベル'] ?? 0;
         const enemyLevel = statsObj['敵レベル'] ?? 0;
         const calcIgnoreDef = opt_ignoreDef / 100;
-        const calcDef = (statsObj['敵防御力'] ?? 0) / 100;
+        const calcDef = Math.max(-100, statsObj['敵防御力'] ?? 0) / 100;    // 下限 -100%
         const result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
         return result;
     } catch (error) {
@@ -1276,7 +1301,7 @@ function calculateDamageFromDetail(
             }
         }
 
-        const resultArr = [detailObj['名前'], my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj['種類'], detailObj['HIT数']] as TDamageResultEntry;
+        const resultArr = [detailObj['名前'], my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj['種類'], detailObj['HIT数'], my計算Result[7]] as TDamageResultEntry;
         console.debug('calculateDamageFromDetail', detailObj, characterInput, conditionInput, statsObj, opt_element, resultArr);
         return resultArr;
     } catch (error) {
@@ -1341,7 +1366,7 @@ export function calculateDamageFromDetailSub(
         }
     }
     console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
-    return ['未設定', 元素, my期待値Result, my会心Result, my非会心Result, null, null];
+    return ['未設定', 元素, my期待値Result, my会心Result, my非会心Result, null, null, myバフ];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {
@@ -1450,6 +1475,8 @@ export function isUseReference(formulaArr: number | string | Array<number | stri
     return result;
 }
 
+const ALL_ELEMENTS = ['炎', '水', '風', '雷', '草', '氷', '岩'];
+
 /**
  * ステータスを更新します
  */
@@ -1472,7 +1499,7 @@ function updateStats(
                 statName = statsObj['元素'] + '元素ダメージバフ';
                 break;
             case '全元素ダメージバフ':
-                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                ALL_ELEMENTS.forEach(entry => {
                     const workStatName = entry + '元素ダメージバフ';
                     if (!(workStatName in statsObj)) {
                         statsObj[workStatName] = 0;
@@ -1484,7 +1511,7 @@ function updateStats(
                 statName = '敵' + statsObj['元素'] + '元素耐性';
                 break;
             case '敵全元素耐性':
-                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                ALL_ELEMENTS.forEach(entry => {
                     const workStatName = '敵' + entry + '元素耐性';
                     if (!(workStatName in statsObj)) {
                         statsObj[workStatName] = 0;
@@ -1493,7 +1520,7 @@ function updateStats(
                 });
                 return;
             case '全元素耐性':
-                ['炎', '水', '風', '雷', '草', '氷', '岩'].forEach(entry => {
+                ALL_ELEMENTS.forEach(entry => {
                     const workStatName = entry + '元素耐性';
                     if (!(workStatName in statsObj)) {
                         statsObj[workStatName] = 0;
@@ -1510,6 +1537,7 @@ function updateStats(
     console.debug(updateStats.name, null, statName, formulaArr, '=>', result, statsObj[statName]);
 }
 
+/** 被ダメージを計算します */
 function calculateDamageTaken(statsObj: TStats, damage: number, element: string) {
     const def = statsObj['防御力'];
     const enemyLevel = statsObj['敵レベル'];

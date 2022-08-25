@@ -59,7 +59,7 @@ export default defineComponent({
   props: {
     visible: { type: Boolean, required: true },
     weapon: { type: String as PropType<TWeaponKey>, required: true },
-    weaponType: { type: String as PropType<TWeaponTypeKey | null>, required: true },
+    weaponType: { type: String as PropType<TWeaponTypeKey> },
     weaponMaster: { type: Object as PropType<TWeaponDetail>, required: true },
     ascension: { type: Number, required: true },
     level: { type: Number, required: true },
