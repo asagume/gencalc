@@ -42,7 +42,7 @@
       {{ displayName("拡散") }}
       <span>{{ Math.round(damageResult.元素反応.拡散ダメージ) }}</span>
     </label>
-    <label v-if="damageResult.元素反応.結晶吸収量" :class="elementClass(damageResult.元素反応.結晶元素)">
+    <label v-if="damageResult.元素反応.結晶吸収量">
       {{ displayName("結晶") }}
       <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
     </label>
@@ -189,13 +189,15 @@ export default defineComponent({
           value *= 元素反応.溶解倍率;
         } else if (増幅反応.value == "超激化" && ["雷"].includes(item[1])) {
           let addValue = 元素反応.超激化ダメージ;
-          if (item[6]) addValue *= item[6]; // HIT数
+          // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
           if (item[7]) addValue *= (100 + item[7]) / 100; // ダメージバフ補正
+          addValue *= item[index] / item[4];  // 2:期待値/3:会心/4:非会心
           value += addValue;
         } else if (増幅反応.value == "草激化" && ["草"].includes(item[1])) {
           let addValue = 元素反応.草激化ダメージ;
-          if (item[6]) addValue *= item[6]; // HIT数
+          // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
           if (item[7]) addValue *= (100 + item[7]) / 100; // ダメージバフ補正
+          addValue *= item[index] / item[4];  // 2:期待値/3:会心/4:非会心
           value += addValue;
         }
       }
