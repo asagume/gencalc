@@ -120,6 +120,7 @@ def normalizeFormulaValue(value):
     value = value.replace(' ', '').replace('×', '*').replace('％', '%')
     value = re.sub('^.*につき', '', value)
     value = re.sub('秒$', '', value)
+    value = re.sub('s$', '', value)
     try:
         if value.isdecimal():
             return int(value)
