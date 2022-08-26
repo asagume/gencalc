@@ -3698,13 +3698,13 @@ function build天賦詳細() {
     $('#talent1-desc').html('');
 
     $('#talent2-name').html(元素スキル名称Var);
-    $('#talent2-img').prop('src', 'images/characters/' + dirName + '/ElementalSkill.png');
+    $('#talent2-img').prop('src', 選択中キャラクターデータVar['元素スキル']['icon_url']);
     $('#talent2-img').prop('alt', 元素スキル名称Var);
     // $('#talent2-particle').html('');
     $('#talent2-desc').html('');
 
     $('#talent3-name').html(元素爆発名称Var);
-    $('#talent3-img').prop('src', 'images/characters/' + dirName + '/ElementalBurst.png');
+    $('#talent3-img').prop('src', 選択中キャラクターデータVar['元素爆発']['icon_url']);
     $('#talent3-img').prop('alt', 元素爆発名称Var);
     $('#talent3-energy-cost').html('');
     $('#talent3-desc').html('');
@@ -4123,7 +4123,7 @@ function setupTalentButton(url, characterData) {
     // $('#talent1-button .tooltip').html(通常攻撃名称Var);
 
     // 元素スキル
-    $('#talent2-button img').attr('src', 'images/characters/' + dirName + '/ElementalSkill.png');
+    $('#talent2-button img').attr('src', 選択中キャラクターデータVar['元素スキル']['icon_url']);
     $('#talent2-button img').attr('alt', characterData['元素スキル']['名前']);
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
         if (key == characterData['元素']) {
@@ -4135,7 +4135,7 @@ function setupTalentButton(url, characterData) {
     // $('#talent2-button .tooltip').html(元素スキル名称Var);
 
     // 元素爆発
-    $('#talent3-button img').attr('src', 'images/characters/' + dirName + '/ElementalBurst.png');
+    $('#talent3-button img').attr('src', 選択中キャラクターデータVar['元素爆発']['icon_url']);
     $('#talent3-button img').attr('alt', characterData['元素爆発']['名前']);
     ELEMENT_TD_CLASS_MAP.forEach((value, key) => {
         if (key == characterData['元素']) {
