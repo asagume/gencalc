@@ -12,7 +12,11 @@
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayName(stat) }}</th>
         <td v-if="editable">
-          <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange" />
+          <input
+            type="number"
+            v-model="statAdjustments[stat]"
+            @change="adjustmentsOnChange"
+          />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
@@ -40,7 +44,7 @@
 <script lang="ts">
 import { TStatsInput, ステータスARRAY_MAP } from "@/input";
 import { defineComponent, PropType, reactive, ref } from "vue";
-import CompositionFunction from './CompositionFunction.vue';
+import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
   name: "StatsInput",
@@ -89,11 +93,13 @@ export default defineComponent({
           statsInputRea.statAdjustments[stat] = 0;
         }
       }
+      adjustmentsOnChange();
     };
     initializeAdjustments();
 
     return {
-      displayName, displayStatValue,
+      displayName,
+      displayStatValue,
 
       statList,
       visibleStatList,

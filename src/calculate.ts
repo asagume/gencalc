@@ -812,6 +812,7 @@ export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防�
 
 /** 元素(物理)耐性補正を計算します */
 function calculateRes(res: number) {
+    if (res == Infinity) return 0;  // 完全耐性
     let result = res;
     if (result < 0) {
         result = 100 - result / 2;
@@ -1177,7 +1178,9 @@ function calculateDamageFromDetail(
                 my元素 = null;
                 break;
             case '付加元素ダメージ':    // for 風キャラ
-                my元素 = '炎';
+                if (!['炎', '水', '雷', '氷'].includes(my元素)) {
+                    my元素 = '炎';
+                }
                 break;
             default:
                 if (detailObj['種類'].startsWith('表示') || detailObj['種類'].startsWith('非表示')) {
@@ -1354,9 +1357,21 @@ export function calculateDamageFromDetailSub(
         my非会心Result *= 別枠乗算 / 100;
     }
     my期待値Result = my非会心Result;
-    const my会心率 = Math.min(100, Math.max(0, statsObj['会心率']));    // 0≦会心率≦100
+    let my会心率 = statsObj['会心率'];
+    if (元素 == '物理') {
+        if ('物理ダメージ会心率' in statsObj) {
+            my会心率 += statsObj['物理ダメージ会心率'];
+        }
+    } else if ((元素 + '元素ダメージ会心率') in statsObj) {
+        my会心率 += statsObj[元素 + '元素ダメージ会心率'];
+    }
+    my会心率 = Math.min(100, Math.max(0, my会心率));    // 0≦会心率≦100
     let my会心ダメージ = statsObj['会心ダメージ'];
-    if ((元素 + '元素ダメージ会心ダメージ') in statsObj) {
+    if (元素 == '物理') {
+        if ('物理ダメージ会心ダメージ' in statsObj) {
+            my会心ダメージ += statsObj['物理ダメージ会心ダメージ'];
+        }
+    } else if ((元素 + '元素ダメージ会心ダメージ') in statsObj) {
         my会心ダメージ += statsObj[元素 + '元素ダメージ会心ダメージ'];
     }
     if (is会心Calc) {

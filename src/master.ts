@@ -289,6 +289,13 @@ export type TEnemyKey = keyof typeof ENEMY_MASTER;
 export type TEnemyEntry = TEnemy & {
     key: TEnemyKey,
 };
+for (const key of Object.keys(ENEMY_MASTER)) {
+    for (const stat of Object.keys((ENEMY_MASTER as any)[key])) {
+        if ((ENEMY_MASTER as any)[key][stat] >= 1000) { // 完全耐性
+            (ENEMY_MASTER as any)[key][stat] = Infinity;
+        }
+    }
+}
 export const ENEMY_MASTER_LIST = (Object.keys(ENEMY_MASTER) as TEnemyKey[])
     .map(key => ({ key: key, ...ENEMY_MASTER[key] }));
 

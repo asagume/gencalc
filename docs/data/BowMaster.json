@@ -27,6 +27,14 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "王の近侍": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_King'sSquire.json"
+  },
+  "竭沢": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_EndoftheLine.json"
+  },
   "落霞": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_FadingTwilight.json"

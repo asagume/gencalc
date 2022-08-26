@@ -329,6 +329,16 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.elemental-reaction {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.elemental-reaction label {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
 .elemental-reaction [type="radio"]+label {
   background-color: black;
 }

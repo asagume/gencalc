@@ -15,17 +15,17 @@ $pageIds += 2674   # 旅人(草)
 # $pageIds += 2254   # 若水
 # $pageIds += 2255   # 落霞
 # $pageIds += 2264   # 籠釣瓶一心
-# $pageIds += 2665   # 狩人の道
-# $pageIds += 2666   # 竭沢
-# $pageIds += 2667   # 原木刀
-# $pageIds += 2668   # ムーンピアサー
-# $pageIds += 2669   # 満悦の実
-# $pageIds += 2670   # 王の近侍
-# $pageIds += 2671   # 森林のレガリア
+$pageIds += 2665   # 狩人の道
+$pageIds += 2666   # 竭沢
+$pageIds += 2667   # 原木刀
+$pageIds += 2668   # ムーンピアサー
+$pageIds += 2669   # 満悦の実
+$pageIds += 2670   # 王の近侍
+$pageIds += 2671   # 森林のレガリア
 # 聖遺物
 # $pageIds += @(2061..2099)
-# $pageIds += 2672   # 深林の記憶
-# $pageIds += 2673   # 金メッキの夢
+$pageIds += 2672   # 深林の記憶
+$pageIds += 2673   # 金メッキの夢
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌
@@ -37,7 +37,7 @@ $pageIds += 2674   # 旅人(草)
 # $pageIds += 2259
 # $pageIds += 2260
 
-$doDownloadImg = $false
+$doDownloadImg = $true
 
 $categoryMap = @{
     "2" = "character"
