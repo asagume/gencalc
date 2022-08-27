@@ -756,7 +756,7 @@ export default defineComponent({
       if ("武器所持状況" in localStorage) {
         const myWeaponOwnObj = JSON.parse(localStorage["武器所持状況"]);
         if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon] != null) {
-          refine = myWeaponOwnObj[weapon];
+          refine = Number(myWeaponOwnObj[weapon]);
         } else if (characterInputRea.weaponMaster.レアリティ == 4) {
           refine = 3;
         } else if (characterInputRea.weaponMaster.レアリティ == 3) {

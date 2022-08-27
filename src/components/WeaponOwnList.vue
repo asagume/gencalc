@@ -98,7 +98,7 @@ export default defineComponent({
       Object.keys(refineObj)
         .filter((s) => refineObj[s] !== null)
         .forEach((key) => {
-          saveObj[key] = refineObj[key];
+          saveObj[key] = Number(refineObj[key]);
         });
       localStorage.setItem("武器所持状況", JSON.stringify(saveObj));
       savable.value = false;
