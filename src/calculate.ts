@@ -574,7 +574,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
         for (const myDamageDetail of [damageDetailMyWeapon, damageDetailMyArtifactSets]) {
             const category = 'その他';
             if (!myDamageDetail || !(category in myDamageDetail)) continue;
-            const talentDetailArr = (damageDetailMyWeapon as any)[category];
+            const talentDetailArr = (myDamageDetail as any)[category];
             for (const talentDetail of talentDetailArr) {
                 if (talentDetail['条件'] && !checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation)) {
                     continue;
