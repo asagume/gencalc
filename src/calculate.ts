@@ -732,7 +732,7 @@ function calculate乗算系元素反応倍率(reaction: any, element: string, st
     try {
         if (!element || element == '物理') return 0;
         const elementalMastery = statsObj['元素熟知'];
-        const dmgBuff = statsObj[reaction] ?? 0;
+        const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         let result = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
         result *= 1 + (25 * elementalMastery / (9 * (elementalMastery + 1400)) + dmgBuff / 100);
         return result;
@@ -750,7 +750,7 @@ function calculate固定値系元素反応ダメージ(reaction: any, element: s
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
-        const dmgBuff = statsObj[reaction] ?? 0;
+        const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
         result *= 1 + (16 * elementalMastery / (elementalMastery + 2000) + dmgBuff / 100);
@@ -783,10 +783,10 @@ function calculate加算系元素反応ダメージ(reaction: any, element: stri
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
-        // const dmgBuff = statsObj[reaction] ?? 0;
+        const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgElement = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
-        result *= 1 + (5 * elementalMastery) / (elementalMastery + 1200);
+        result *= 1 + (5 * elementalMastery / (elementalMastery + 1200) + dmgBuff / 100);
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {

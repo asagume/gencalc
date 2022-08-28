@@ -10,7 +10,7 @@
         </th>
       </tr>
       <tr v-for="stat in visibleStatList(category)" :key="stat">
-        <th>{{ displayName(stat) }}</th>
+        <th>{{ displayStatName(stat) }}</th>
         <td v-if="editable">
           <input
             type="number"
@@ -65,6 +65,11 @@ export default defineComponent({
     const statsObj = statsInputRea.statsObj;
     const statAdjustments = statsInputRea.statAdjustments;
 
+    const displayStatName = (name: string) => {
+      if (name.endsWith("反応ボーナス")) name = name.replace(/反応ボーナス$/, "");
+      return displayName(name);
+    };
+
     const categoryOpenClose = ref({} as any);
     if (props.categoryList) {
       for (const category of props.categoryList) {
@@ -102,6 +107,7 @@ export default defineComponent({
       displayStatValue,
 
       statList,
+      displayStatName,
       visibleStatList,
       statsObj,
       statAdjustments,
