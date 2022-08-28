@@ -126,7 +126,7 @@
   <table class="result">
     <tr>
       <th>{{ displayName("被ダメージ") }}</th>
-      <td v-for="item in damageTakenList" :key="item.key">
+      <td class="damage-value" v-for="item in damageTakenList" :key="item.key">
         <span :class="elementClass(item.key)">
           {{ Math.round(item.value) }}
         </span>
@@ -134,7 +134,7 @@
     </tr>
     <tr>
       <th>{{ displayName("耐久スコア") }}</th>
-      <td v-for="item in resScoreList" :key="item.key">
+      <td class="damage-value" v-for="item in resScoreList" :key="item.key">
         <span :class="elementClass(item.key)">
           {{ Math.round(item.value) }}
         </span>

@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { basename, deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -560,6 +560,28 @@ function makeArtifactSetAbbrev(name: string): string {
     return abbr;
 }
 
+export function makePrioritySubstatValueList(
+    prioritySubstats: TArtifactSubKey[],
+    index: number,
+    opt_substat?: TArtifactSubKey
+) {
+    const result: number[] = [];
+    if (prioritySubstats[index]) {
+        if (!opt_substat) opt_substat = prioritySubstats[index];
+        if (opt_substat && opt_substat in ARTIFACT_SUB_MASTER) {
+            const valueArr = ARTIFACT_SUB_MASTER[opt_substat];
+            for (let i = 0; i < valueArr.length; i++) {
+                result.push(valueArr[i]);
+                if (i < valueArr.length - 1) {
+                    const diff = valueArr[i + 1] - valueArr[i];
+                    result.push(valueArr[i] + diff / 2);
+                }
+            }
+        }
+    }
+    return result;
+}
+
 /** おすすめセットをロードします */
 export async function loadRecommendation(
     characterInput: TCharacterInput,
@@ -639,16 +661,29 @@ export async function loadRecommendation(
             const substat = build[key];
             artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
         });
-        ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
-            if (!(key in build) && build[key] != -1) return;
-            const substatValue = build[key];
-            artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = substatValue;
-        });
-        ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
-            if (!(key in build) && build[key] != -1) return;
-            const substatCount = build[key];
-            artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = substatCount;
-        });
+
+        if (prioritySubstatsDisabled) {
+            ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
+                if (!(key in build) && build[key] != -1) return;
+                const substatValue = build[key];
+                if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
+                    const substat = artifactDetailInput['聖遺物優先するサブ効果'][index] as TArtifactSubKey;
+                    const prioritySubstatValueList = makePrioritySubstatValueList([substat], 0);
+                    prioritySubstatValueList.forEach((v, i) => {
+                        if (substatValue <= v) {
+                            artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = i;
+                        }
+                    })
+                } else {
+                    artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = 3;
+                }
+            });
+            ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
+                if (!(key in build) && build[key] != -1) return;
+                const substatCount = build[key];
+                artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = substatCount;
+            });
+        }
 
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s)).forEach(key => {
             conditionInput.conditionValues[key] = build[key];

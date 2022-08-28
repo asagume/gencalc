@@ -57,28 +57,6 @@ export function calculateArtifactStatsMain(artifactStatsMain: any, mainstats: st
     }
 }
 
-export function makePrioritySubstatValueList(
-    prioritySubstats: TArtifactSubKey[],
-    index: number,
-    opt_substat?: TArtifactSubKey
-) {
-    const result: number[] = [];
-    if (prioritySubstats[index]) {
-        if (!opt_substat) opt_substat = prioritySubstats[index];
-        if (opt_substat && opt_substat in ARTIFACT_SUB_MASTER) {
-            const valueArr = ARTIFACT_SUB_MASTER[opt_substat];
-            for (let i = 0; i < valueArr.length; i++) {
-                result.push(valueArr[i]);
-                if (i < valueArr.length - 1) {
-                    const diff = valueArr[i + 1] - valueArr[i];
-                    result.push(valueArr[i] + diff / 2);
-                }
-            }
-        }
-    }
-    return result;
-}
-
 /** 聖遺物優先するサブ効果のステータスを算出します */
 export function calculateArtifactSubStatByPriority(
     artifactStatsSub: any,

@@ -510,7 +510,7 @@ export const GENSEN_MASTER_LIST = [
     {
         key: "厳選初心者",
         values: [4, 4, 4],
-        counts: [4, 4, 4],
+        counts: [5, 4, 4],
     },
     {
         key: "厳選1ヶ月",

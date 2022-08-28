@@ -315,6 +315,7 @@ import WeaponOwnList from "@/components/WeaponOwnList.vue";
 import {
   TRecommendation,
   makeRecommendationList,
+  makePrioritySubstatValueList,
   loadRecommendation,
   makeDamageDetailObjArrObjCharacter,
   makeDamageDetailObjArrObjWeapon,
@@ -355,7 +356,6 @@ import {
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
   calculateStats,
-  makePrioritySubstatValueList,
 } from "@/calculate";
 import { deepcopy, isPlainObject, overwriteObject } from "./common";
 import { calculateResult } from "./calculate";
