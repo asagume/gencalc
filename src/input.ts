@@ -362,6 +362,7 @@ export const CHARACTER_INPUT_TEMPLATE = {
     damageDetailMyWeapon: null as TDamageDetail | null,
     damageDetailMyArtifactSets: null as TDamageDetail | null,
     buildname: '',
+    recommendationSelectedIndex: 0,
     saveDisabled: true,     // ローカルストレージへの構成保存不可か？
     removeDisabled: true,   // ローカルストレージの構成削除不可か？
 };

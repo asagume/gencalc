@@ -694,6 +694,7 @@ export default defineComponent({
         ...makeRecommendationList(characterInputRea.characterMaster, opt_buildData)
       );
       recommendationRef.value = recommendationListRea[0];
+      characterInputRea.recommendationSelectedIndex = 0;
       await updateRecommendation(recommendationRef.value);
     };
 
