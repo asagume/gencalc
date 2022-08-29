@@ -10,7 +10,7 @@
                     <span>全ての武器が選択可能になる</span>
                 </label>
                 <div class="notice">
-                    ※
+                    ※正規の武器タイプ以外の武器を選択した場合、構成保存できなくなります。
                 </div>
             </article>
 
@@ -33,7 +33,7 @@
                 </label>
                 <button type="button" :disabled="!initializeArtifactStatsSubClickableRef"
                     @click="initializeArtifactStatsSub">
-                    {{ displayName('実行') }}
+                    {{  displayName('実行')  }}
                 </button>
             </article>
         </div>

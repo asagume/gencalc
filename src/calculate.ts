@@ -1,6 +1,6 @@
 import { deepcopy, isNumber, isPlainObject, overwriteObject } from "./common";
 import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "./input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat, TArtifactSubKey } from "./master";
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat } from "./master";
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -1173,10 +1173,12 @@ function calculateDamageFromDetail(
                     // }
                 } else {
                     myバフArr.push('与えるダメージ');
-                    if (detailObj['ダメージバフ'] != null) {
-                        myバフArr.push(detailObj['ダメージバフ']);
-                    } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
-                        myバフArr.push(detailObj['種類'] + 'バフ');
+                    if (detailObj['ダメージバフ'] != 'NONE') {
+                        if (detailObj['ダメージバフ']) {
+                            myバフArr.push(detailObj['ダメージバフ']);
+                        } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+                            myバフArr.push(detailObj['種類'] + 'バフ');
+                        }
                     }
                     if (my元素 != null) {
                         myバフArr.push(my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ');

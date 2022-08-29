@@ -509,8 +509,8 @@ export const GENSEN_MASTER_LIST = [
     },
     {
         key: "厳選初心者",
-        values: [4, 4, 4],
-        counts: [5, 4, 4],
+        values: [3, 3, 3],
+        counts: [7, 4, 4],
     },
     {
         key: "厳選1ヶ月",
@@ -519,13 +519,13 @@ export const GENSEN_MASTER_LIST = [
     },
     {
         key: "厳選3ヶ月",
-        values: [2, 2, 2],
-        counts: [11, 7, 7],
+        values: [3, 3, 3],
+        counts: [11, 8, 7],
     },
     {
         key: "日々石割り",
         values: [1, 1, 1],
-        counts: [15, 10, 10],
+        counts: [14, 11, 10],
     },
 ];
 export type TGensen = { key: string; values: number[]; counts: number[] };

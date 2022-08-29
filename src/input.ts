@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { basename, deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -371,8 +371,8 @@ export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物メイン効果: ['', '', '', '', ''],
     聖遺物優先するサブ効果: ['', '', ''],
-    聖遺物優先するサブ効果上昇値: [4, 4, 4],
-    聖遺物優先するサブ効果上昇回数: [4, 4, 4],
+    聖遺物優先するサブ効果上昇値: Array.from(GENSEN_MASTER_LIST[2].values),     // 厳選1ヶ月
+    聖遺物優先するサブ効果上昇回数: Array.from(GENSEN_MASTER_LIST[2].counts),   // 厳選1ヶ月
     聖遺物ステータス: deepcopy(聖遺物ステータスTEMPLATE),
     聖遺物ステータスメイン効果: deepcopy(聖遺物ステータスTEMPLATE),
     聖遺物ステータスサブ効果: deepcopy(聖遺物ステータスTEMPLATE),
@@ -1486,4 +1486,28 @@ export function shareByTwitter(characterInput: TCharacterInput, artifactDetailIn
     const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
 
     openTwitter(text, url);
+}
+
+export function getMaxConstellation(characterMaster: TCharacterDetail) {
+    let max = 0;
+    if ('命ノ星座' in characterMaster) {
+        max = Object.keys(characterMaster.命ノ星座).length;
+    }
+    return max;
+}
+
+export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string) {
+    let max = 10;
+    if (key in characterMaster) {
+        const talentObj = (characterMaster as any)[key];
+        if ("詳細" in talentObj) {
+            for (const detailObj of talentObj.詳細) {
+                if ("数値" in detailObj && isPlainObject(detailObj.数値)) {
+                    const work = Object.keys(detailObj.数値).length;
+                    if (max < work) max = work;
+                }
+            }
+        }
+    }
+    return max;
 }

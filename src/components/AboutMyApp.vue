@@ -28,6 +28,10 @@
             基礎ダメージはざっくり防御力0の場合の被ダメージです。
         </div>
     </fieldset>
+
+    <p>
+        <a href="index2.html">旧バージョン(V2)</a>
+    </p>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";

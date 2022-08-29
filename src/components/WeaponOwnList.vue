@@ -2,26 +2,16 @@
   <ul class="select-list">
     <li v-for="item in weaponTypeList" :key="item">
       <label>
-        <input
-          class="hidden"
-          type="radio"
-          v-model="selectedWeaponType"
-          name="weapon-own-list-type"
-          :value="item"
-        />
+        <input class="hidden" type="radio" v-model="selectedWeaponType" name="weapon-own-list-type" :value="item" />
         <img class="filter" :src="weaponSrc(item)" :alt="item" />
       </label>
     </li>
   </ul>
   <div v-for="weaponType in weaponTypeList" :key="weaponType">
-    <ul class="select-list" v-if="weaponType == selectedWeaponType">
+    <ul class="own-list" v-if="weaponType == selectedWeaponType">
       <li v-for="item in weaponList(weaponType)" :key="item.key">
-        <img
-          :class="'weapon' + bgImageClass(item) + notOwnedClass(item)"
-          :src="item.icon_url"
-          :alt="item.key"
-          @click="onClick(item)"
-        />
+        <img :class="'weapon' + bgImageClass(item) + notOwnedClass(item)" :src="item.icon_url" :alt="item.key"
+          @click="onClick(item)" />
         <div class="tooltip">{{ displayName(item.key) }}</div>
         <div class="refine">{{ refineObj[item.key] }}</div>
       </li>
@@ -141,7 +131,7 @@ img.filter {
   border-radius: 50%;
 }
 
-:checked + img {
+:checked+img {
   background-color: rgb(156, 140, 49);
 }
 

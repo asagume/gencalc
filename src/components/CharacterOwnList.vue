@@ -1,12 +1,8 @@
 <template>
-  <ul class="select-list">
+  <ul class="own-list">
     <li v-for="item in characterList" :key="item.key">
-      <img
-        :class="'character' + bgImageClass(item) + notOwnedClass(item)"
-        :src="item.icon_url"
-        :alt="item.key"
-        @click="onClick(item)"
-      />
+      <img :class="'character' + bgImageClass(item) + notOwnedClass(item)" :src="item.icon_url" :alt="item.key"
+        @click="onClick(item)" />
       <div class="tooltip">{{ displayName(item.key) }}</div>
       <img class="vision" :src="visionSrc(item)" :alt="item.元素" />
       <div class="constellation">{{ constellationObj[item.key] }}</div>

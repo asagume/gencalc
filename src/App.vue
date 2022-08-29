@@ -5,208 +5,103 @@
     </div>
 
     <div class="pane2">
-      <CharacterSelect
-        :character="characterInputRea.character"
-        :visible="characterSelectVisibleRef"
-        @update:character="updateCharacter($event)"
-      />
+      <CharacterSelect :character="characterInputRea.character" :visible="characterSelectVisibleRef"
+        @update:character="updateCharacter($event)" />
     </div>
 
     <div class="pane3" style="margin-bottom: 15px">
-      <CharacterInput
-        ref="characterInputVmRef"
-        :characterInput="characterInputRea"
-        :recommendationList="recommendationListRea"
-        :recommendation="recommendationRef"
-        :artifactSetSelectVisible="artifactSetSelectVisibleRef"
+      <CharacterInput ref="characterInputVmRef" :characterInput="characterInputRea"
+        :recommendationList="recommendationListRea" :recommendation="recommendationRef"
+        :artifactSetSelectVisible="artifactSetSelectVisibleRef" :artifactScore="artifactScore"
         @open:character-select="characterSelectVisibleRef = !characterSelectVisibleRef"
-        @saveToStorage="saveToStorage($event)"
-        @removeFromStorage="removeFromStorage($event)"
-        @update:recommendation="updateRecommendation($event)"
-        @open:weapon-select="openWeaponSelect"
-        @open:artifact-set-select="openArtifactSetSelect($event)"
-        @open:artifact-detail-input="openArtifactDetailInput"
+        @saveToStorage="saveToStorage($event)" @removeFromStorage="removeFromStorage($event)"
+        @update:recommendation="updateRecommendation($event)" @open:weapon-select="openWeaponSelect"
+        @open:artifact-set-select="openArtifactSetSelect($event)" @open:artifact-detail-input="openArtifactDetailInput"
         @update:character-input-character="updateCharacterInputCharacter($event)"
         @update:character-input-weapon="updateCharacterInputWeapon($event)"
-        @open:character-info="openCharacterInfo($event)"
-      />
-      <CharacterInfo
-        :visible="characterInfoVisibleRef"
-        :mode="characterInfoModeRef"
-        :characterMaster="characterInputRea.characterMaster"
-        :ascension="characterInputRea.突破レベル"
-        :level="characterInputRea.レベル"
-        :normalAttackLevel="characterInputRea.通常攻撃レベル"
-        :elementalSkillLevel="characterInputRea.元素スキルレベル"
-        :elementalBurstLevel="characterInputRea.元素爆発レベル"
-        :normalAttackReplacing="normalAttackReplacing"
-      />
-      <WeaponSelect
-        :visible="weaponSelectVisibleRef"
-        :weapon="characterInputRea.weapon"
-        :weaponType="weaponType"
-        :weaponMaster="characterInputRea.weaponMaster"
-        :ascension="characterInputRea.武器突破レベル"
-        :level="characterInputRea.武器レベル"
-        @update:weapon="updateWeapon($event)"
-      />
-      <ArtifactSetSelect
-        :visible="artifactSetSelectVisibleRef"
-        :index="artifactSetIndexRef"
-        :artifactSet="artifactSets[artifactSetIndexRef]"
-        :artifactSetMasters="characterInputRea.artifactSetMasters"
-        @update:artifact-set="updateArtifactSet($event)"
-      />
-      <ArtifactDetailInput
-        ref="artifactDetailInputVmRef"
-        :visible="artifactDetailInputVisibleRef"
-        :artifactDetailInput="artifactDetailInputRea"
-        @update:artifact-detail="updateArtifactDetail($event)"
-      />
+        @open:character-info="openCharacterInfo($event)" />
+      <CharacterInfo :visible="characterInfoVisibleRef" :mode="characterInfoModeRef"
+        :characterMaster="characterInputRea.characterMaster" :ascension="characterInputRea.突破レベル"
+        :level="characterInputRea.レベル" :normalAttackLevel="characterInputRea.通常攻撃レベル"
+        :elementalSkillLevel="characterInputRea.元素スキルレベル" :elementalBurstLevel="characterInputRea.元素爆発レベル"
+        :normalAttackReplacing="normalAttackReplacing" />
+      <WeaponSelect :visible="weaponSelectVisibleRef" :weapon="characterInputRea.weapon" :weaponType="weaponType"
+        :weaponMaster="characterInputRea.weaponMaster" :ascension="characterInputRea.武器突破レベル"
+        :level="characterInputRea.武器レベル" @update:weapon="updateWeapon($event)" />
+      <ArtifactSetSelect :visible="artifactSetSelectVisibleRef" :index="artifactSetIndexRef"
+        :artifactSet="artifactSets[artifactSetIndexRef]" :artifactSetMasters="characterInputRea.artifactSetMasters"
+        @update:artifact-set="updateArtifactSet($event)" />
+      <ArtifactDetailInput ref="artifactDetailInputVmRef" :visible="artifactDetailInputVisibleRef"
+        :artifactDetailInput="artifactDetailInputRea" @update:artifact-detail="updateArtifactDetail($event)" />
     </div>
 
     <div class="pane6">
       <div>
-        <input
-          class="hidden"
-          id="pane6-toggle-1"
-          type="checkbox"
-          v-model="pane6Toggle1Ref"
-        />
+        <input class="hidden" id="pane6-toggle-1" type="checkbox" v-model="pane6Toggle1Ref" />
         <label class="toggle-switch" for="pane6-toggle-1">
-          {{ displayName("オプション条件") }}
+          {{  displayName("オプション条件")  }}
         </label>
-        <input
-          class="hidden"
-          id="pane6-toggle-2"
-          type="checkbox"
-          v-model="pane6Toggle2Ref"
-        />
+        <input class="hidden" id="pane6-toggle-2" type="checkbox" v-model="pane6Toggle2Ref" />
         <label class="toggle-switch" for="pane6-toggle-2">
-          {{ displayName("ステータス") }}
+          {{  displayName("ステータス")  }}
         </label>
-        <input
-          class="hidden"
-          id="pane6-toggle-3"
-          type="checkbox"
-          v-model="pane6Toggle3Ref"
-        />
+        <input class="hidden" id="pane6-toggle-3" type="checkbox" v-model="pane6Toggle3Ref" />
         <label class="toggle-switch" for="pane6-toggle-3">
-          {{ displayName("バフ/デバフ") }}
+          {{  displayName("バフ/デバフ")  }}
         </label>
       </div>
       <div v-if="pane6Toggle1Ref" style="margin-bottom: 10px">
-        <ConditionInput
-          ref="conditionInputVmRef"
-          :characterInput="characterInputRea"
-          :conditionInput="conditionInputRea"
-          @update:condition="updateCondition"
-        />
+        <ConditionInput ref="conditionInputVmRef" :characterInput="characterInputRea"
+          :conditionInput="conditionInputRea" @update:condition="updateCondition" />
       </div>
       <div v-if="pane6Toggle2Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
-          <input
-            id="status-input-tab-1"
-            type="radio"
-            v-model="statInputTabRef"
-            name="stat-input-tab"
-            value="1"
-          />
-          <label for="status-input-tab-1"> {{ displayName("ステータス1") }} </label>
-          <input
-            id="status-input-tab-2"
-            type="radio"
-            v-model="statInputTabRef"
-            name="stat-input-tab"
-            value="2"
-          />
-          <label for="status-input-tab-2"> {{ displayName("ステータス2") }} </label>
-          <input
-            id="status-input-tab-3"
-            type="radio"
-            v-model="statInputTabRef"
-            name="stat-input-tab"
-            value="3"
-          />
-          <label for="status-input-tab-3"> {{ displayName("敵") }} </label>
+          <input id="status-input-tab-1" type="radio" value="1" v-model="statInputTabRef" />
+          <label for="status-input-tab-1"> {{  displayName("ステータス1")  }} </label>
+          <input id="status-input-tab-2" type="radio" value="2" v-model="statInputTabRef" />
+          <label for="status-input-tab-2"> {{  displayName("ステータス2")  }} </label>
+          <input id="status-input-tab-3" type="radio" value="3" v-model="statInputTabRef" />
+          <label for="status-input-tab-3"> {{  displayName("敵")  }} </label>
         </div>
         <template v-if="statInputTabRef == 1">
-          <StatsInput
-            :statsInput="statsInput"
-            :categoryList="characterStats1CategoryList"
-            @update:stat-adjustments="updateStatAdjustments($event)"
-          />
+          <StatsInput :statsInput="statsInput" :categoryList="characterStats1CategoryList"
+            @update:stat-adjustments="updateStatAdjustments($event)" />
         </template>
         <template v-if="statInputTabRef == 2">
-          <StatsInput
-            :statsInput="statsInput"
-            :categoryList="characterStats2CategoryList"
-            @update:stat-adjustments="updateStatAdjustments($event)"
-          />
+          <StatsInput :statsInput="statsInput" :categoryList="characterStats2CategoryList"
+            @update:stat-adjustments="updateStatAdjustments($event)" />
         </template>
         <template v-if="statInputTabRef == 3">
-          <label class="enemy"
-            >{{ displayName("敵") }}
+          <label class="enemy">{{  displayName("敵")  }}
             <select v-model="selectedEnemyRef" @change="updateEnemy">
               <option v-for="item in enemyList" :value="item" :key="item.key">
-                {{ displayName(item.key) }}
+                {{  displayName(item.key)  }}
               </option>
             </select>
           </label>
-          <label class="enemy-level"
-            >Lv.
-            <input
-              type="number"
-              v-model="statsInput.statAdjustments['敵レベル']"
-              min="1"
-            />
+          <label class="enemy-level">Lv.
+            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" />
           </label>
-          <StatsInput
-            :statsInput="statsInput"
-            :categoryList="enemyStatsCategoryList"
-            @update:stat-adjustments="updateStatAdjustments($event)"
-          />
+          <StatsInput :statsInput="statsInput" :categoryList="enemyStatsCategoryList"
+            @update:stat-adjustments="updateStatAdjustments($event)" />
         </template>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
-          <input
-            id="option-input-tab-1"
-            type="radio"
-            v-model="optionInputTabRef"
-            name="option-input-tab"
-            value="1"
-          />
-          <label for="option-input-tab-1"> {{ displayName("元素共鳴") }} </label>
-          <input
-            id="option-input-tab-2"
-            type="radio"
-            v-model="optionInputTabRef"
-            name="option-input-tab"
-            value="2"
-          />
-          <label for="option-input-tab-2"> {{ displayName("チーム") }} </label>
-          <input
-            id="option-input-tab-3"
-            type="radio"
-            v-model="optionInputTabRef"
-            name="option-input-tab"
-            value="3"
-          />
-          <label for="option-input-tab-3"> {{ displayName("その他") }} </label>
+          <input id="option-input-tab-1" type="radio" value="1" v-model="optionInputTabRef" />
+          <label for="option-input-tab-1"> {{  displayName("元素共鳴")  }} </label>
+          <input id="option-input-tab-2" type="radio" value="2" v-model="optionInputTabRef" />
+          <label for="option-input-tab-2"> {{  displayName("チーム")  }} </label>
+          <input id="option-input-tab-3" type="radio" value="3" v-model="optionInputTabRef" />
+          <label for="option-input-tab-3"> {{  displayName("その他")  }} </label>
         </div>
         <template v-if="optionInputTabRef == 1">
-          <ElementalResonanceInput
-            :elementalResonanceChecked="optionInputRea.elementalResonanceChecked"
-            @update:elemental-resonance="updateElementalResonance($event)"
-          />
+          <ElementalResonanceInput :elementalResonanceChecked="optionInputRea.elementalResonanceChecked"
+            @update:elemental-resonance="updateElementalResonance($event)" />
         </template>
         <template v-if="optionInputTabRef == 2">
-          <TeamOptionInput
-            :character="characterInputRea.character"
-            :savedSupporters="savedSupporters"
-            @update:team-option="updateTeamOption"
-          />
+          <TeamOptionInput :character="characterInputRea.character" :savedSupporters="savedSupporters"
+            @update:team-option="updateTeamOption" />
         </template>
         <template v-if="optionInputTabRef == 3">
           <MiscOptionInput @update:misc-option="updateMiscOption" />
@@ -222,26 +117,16 @@
 
     <div class="bottom-pane">
       <h2>
-        <input
-          class="hidden"
-          id="own-list-toggle-1"
-          type="checkbox"
-          v-model="ownListToggle1Ref"
-        />
+        <input class="hidden" id="own-list-toggle-1" type="checkbox" v-model="ownListToggle1Ref" />
         <label class="toggle-switch no-border" for="own-list-toggle-1">
-          {{ displayName("キャラクター所持状況") }}
+          {{  displayName("キャラクター所持状況")  }}
         </label>
       </h2>
       <CharacterOwnList v-if="ownListToggle1Ref" />
       <h2>
-        <input
-          class="hidden"
-          id="own-list-toggle-2"
-          type="checkbox"
-          v-model="ownListToggle2Ref"
-        />
+        <input class="hidden" id="own-list-toggle-2" type="checkbox" v-model="ownListToggle2Ref" />
         <label class="toggle-switch no-border" for="own-list-toggle-2">
-          {{ displayName("武器所持状況") }}
+          {{  displayName("武器所持状況")  }}
         </label>
       </h2>
       <WeaponOwnList v-if="ownListToggle2Ref" />
@@ -249,11 +134,9 @@
 
     <div class="pane7">
       <AboutMyApp />
-      <ConfigurationInput
-        :configurationInput="configurationInputRea"
+      <ConfigurationInput :configurationInput="configurationInputRea"
         @update:configuration-input="updateConfigurationInput"
-        @order:initialize-artifact-stats-sub="orderInitializeArtifactStatsSub"
-      />
+        @order:initialize-artifact-stats-sub="orderInitializeArtifactStatsSub" />
     </div>
 
     <hr />
@@ -275,13 +158,13 @@
       <dl v-for="(dd, index) in myDamageDatailArr.filter((s) => s)" :key="index">
         <template v-for="key in objectKeys(dd)" :key="key">
           <template v-if="getValue(dd, key)">
-            <dt>{{ key }}</dt>
+            <dt>{{  key  }}</dt>
             <dd>
               <ol v-if="Array.isArray(getValue(dd, key))">
-                <li v-for="item in getValue(dd, key)" :key="item">{{ item }}</li>
+                <li v-for="item in getValue(dd, key)" :key="item">{{  item  }}</li>
               </ol>
               <div v-else>
-                {{ getValue(dd, key) }}
+                {{  getValue(dd, key)  }}
               </div>
             </dd>
           </template>
@@ -336,8 +219,11 @@ import {
   CONDITION_INPUT_TEMPLATE,
   makeSavedata,
   shareByTwitter,
+  getMaxTalentLevel,
+  getMaxConstellation,
 } from "@/input";
 import {
+  ARTIFACT_MAIN_MASTER,
   ARTIFACT_SET_MASTER,
   ELEMENTAL_RESONANCE_MASTER,
   ENEMY_MASTER_LIST,
@@ -413,8 +299,34 @@ export default defineComponent({
     const recommendationListRea = reactive([...props.recommendationList]);
     const recommendationRef = ref(props.recommendation);
 
-    const characterSelectVisibleRef = ref(false);
+    /** 聖遺物スコアを計算します（簡易版） */
+    const artifactScore = computed(() => {
+      let result = 0;
+      for (const substat of Object.keys(artifactDetailInputRea.聖遺物ステータスサブ効果)) {
+        if (artifactDetailInputRea.聖遺物ステータスサブ効果[substat]) {
+          if (substat == '会心率') result += artifactDetailInputRea.聖遺物ステータスサブ効果[substat] * 2;
+          if (substat == '会心ダメージ') result += artifactDetailInputRea.聖遺物ステータスサブ効果[substat];
+          if (substat == '攻撃力%') result += artifactDetailInputRea.聖遺物ステータスサブ効果[substat];
+        }
+      }
+      // 時の砂未設定時は攻撃力%とみなします
+      if (!artifactDetailInputRea.聖遺物メイン効果[1] && !artifactDetailInputRea.聖遺物ステータスメイン効果['攻撃力%']) {
+        if (artifactDetailInputRea.聖遺物ステータスサブ効果['攻撃力%'] > ARTIFACT_MAIN_MASTER['5']['攻撃力%']) {
+          result -= ARTIFACT_MAIN_MASTER['5']['攻撃力%'];
+        }
+      }
+      // 理の冠未設定時は会心率または会心ダメージとみなします
+      if (!artifactDetailInputRea.聖遺物メイン効果[2] && !artifactDetailInputRea.聖遺物ステータスメイン効果['会心率'] && !artifactDetailInputRea.聖遺物ステータスメイン効果['会心ダメージ']) {
+        if (artifactDetailInputRea.聖遺物ステータスサブ効果['会心率'] > ARTIFACT_MAIN_MASTER['5']['会心率']) {
+          result -= ARTIFACT_MAIN_MASTER['5']['会心率'] * 2;
+        } else if (artifactDetailInputRea.聖遺物ステータスサブ効果['会心ダメージ'] > ARTIFACT_MAIN_MASTER['5']['会心ダメージ']) {
+          result -= ARTIFACT_MAIN_MASTER['5']['会心ダメージ'];
+        }
+      }
+      return result;
+    })
 
+    const characterSelectVisibleRef = ref(false);
     const weaponSelectVisibleRef = ref(false);
 
     const artifactSetSelectVisibleRef = ref(false);
@@ -684,7 +596,23 @@ export default defineComponent({
           constellation = Number(myCharacterOwnObj[character]);
         }
       }
+      const maxConstellation = getMaxConstellation(characterInputRea.characterMaster);
+      if (constellation > maxConstellation) {
+        constellation = maxConstellation;
+      }
       characterInputRea.命ノ星座 = constellation;
+      const maxNormalAttack = getMaxTalentLevel(characterInputRea.characterMaster, '通常攻撃');
+      if (characterInputRea.通常攻撃レベル > maxNormalAttack) {
+        characterInputRea.通常攻撃レベル = maxNormalAttack;
+      }
+      const maxElementalSkill = getMaxTalentLevel(characterInputRea.characterMaster, '元素スキル');
+      if (characterInputRea.元素スキルレベル > maxElementalSkill) {
+        characterInputRea.元素スキルレベル = maxElementalSkill;
+      }
+      const maxElementalBurst = getMaxTalentLevel(characterInputRea.characterMaster, '元素爆発');
+      if (characterInputRea.元素爆発レベル > maxElementalBurst) {
+        characterInputRea.元素爆発レベル = maxElementalBurst;
+      }
       let opt_buildData;
       if (props.urldata && props.urldata.キャラクター == character)
         opt_buildData = props.urldata;
@@ -1062,6 +990,7 @@ export default defineComponent({
       conditionInputRea,
       recommendationListRea,
       recommendationRef,
+      artifactScore,
 
       characterSelectVisibleRef,
       weaponSelectVisibleRef,
