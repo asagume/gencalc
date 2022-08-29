@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>げんかるく - 更新履歴</title>
+    <link href="css/base-style.css" rel="stylesheet" />
+    <link href="css/gencalc3.css" rel="stylesheet" />
+    <style>
+        p {
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        dl {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        dt {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <h2>更新履歴</h2>
+
+        <p><a href="./">Back to げんかるく</a> </p>
+
+        <dl>
+            <dt>3.0.0.pre3 (2022/08/29)</dt>
+            <dd>
+                <ul>
+                    <li>聖遺物スコア簡易計算実装</li>
+                    <li>厳選基準調整（下位をすこし強めに調整）</li>
+                    <li>天賦レベル11以降のデータを入力<br>
+                        ティナリ
+                    </li>
+                    <li>1列レイアウト（スマートフォン用）調整</li>
+                    <li>コレイC6のフォーリングアローを元素スキルカテゴリに戻した<br>
+                        元素スキルカテゴリかつカテゴリバフ対象外は新しい表現になるので、旧バージョンだとエラーになります
+                    </li>
+                    <li>オプションその他に3.0鍛造武器を追加<br>
+                        原木刀、森林のレガリア、ムーンピアサー</li>
+                    <li>その他細かい修正</li>
+                </ul>
+            </dd>
+            <dt>3.0.0.pre2 (2022/08/29)</dt>
+            <dd>
+                <ul>
+                    <li>各種の元素反応ボーナスをステータスに反映するように修正</li>
+                    <li>超激化、草激化のダメージ計算式に元素反応ボーナスの項を追加</li>
+                    <li>雷のような怒り4セット効果を3.0仕様にアップデート</li>
+                    <li>コレイC6のフォーリングアローをその他カテゴリに移動<br>
+                        元素爆発ダメージバフが乗らなくなります
+                    </li>
+                </ul>
+            </dd>
+            <dt>3.0.0.pre1 (2022/08/26)</dt>
+            <dd>
+                <ul>
+                    <li>HoYoWikiの日本語ページが更新されない（数値が入ってない）ため手作業多め。入力ミスの懸念あり</li>
+                    <li>キャラクターを追加<br>
+                        ティナリ、コレイ、旅人(草)
+                    </li>
+                    <li>武器を追加<br>
+                        狩人の道、竭沢、原木刀、森林のレガリア、ムーンピアサー、王の近侍、満悦の実
+                    </li>
+                    <li>元素反応を追加<br>
+                        燃焼、開花、烈開花、超開花、超激化、草激化<br>
+                        ※数値は暫定
+                    </li>
+                    <li>チームオプションを追加<br>
+                        ティナリ、コレイ、旅人(草)
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+
+        <fieldset>
+            <legend>V3について</legend>
+            <p>
+                旧げんかるく（V2）が場当たり的なアップデートの果てにメンテナンス困難な△○コードになったため、全面的にリライトしたものです。
+                基本的な機能やUIは旧バージョンを踏襲しています。
+            </p>
+            旧：javascript + jquery<br>
+            新：typescript + vue3 (vue-cli)<br>
+        </fieldset>
+
+        <p><a href="history2.html">Version 2 以前の更新履歴</a></p>
+    </div>
+</body>
+
+</html>

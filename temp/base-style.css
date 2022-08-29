@@ -1,0 +1,61 @@
+@media all and (min-width: 1251px) {
+    html {
+        font-size: calc(100vw / 72 / 3);
+    }
+
+    body {
+        font-size: calc(100vw / 72 / 3);
+    }
+
+    .main {
+        max-width: 1536px;
+    }
+}
+
+@media all and (min-width: 769px) and (max-width: 1250px) {
+    html {
+        font-size: calc(100vw / 72 / 2);
+    }
+
+    body {
+        font-size: calc(100vw / 72 / 2);
+    }
+}
+
+@media all and (max-width: 768px) {
+    html {
+        font-size: calc(100vw / 72);
+    }
+
+    body {
+        font-size: calc(100vw / 72);
+    }
+
+    .main {
+        min-width: 360px;
+    }
+}
+
+body {
+    width: 100%;
+    color: blanchedalmond;
+    background-color: black;
+    box-sizing: border-box;
+    margin: 0;
+    font-size: 2.3rem;
+    font-family: "Helvetica Neue",
+        "Helvetica",
+        "Hiragino Sans",
+        "Hiragino Kaku Gothic ProN",
+        "Arial",
+        "BIZ UDGothic",
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+    text-align: center;
+}
+
+.main {
+    margin: 0 auto;
+    background: linear-gradient(to top, #3d3d3b, #141414);
+}
