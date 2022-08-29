@@ -273,7 +273,7 @@ export const 元素反応TEMPLATE = {
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
 
-export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類, HIT数, ダメージバフ
+export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null, number | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類, HIT数, ダメージバフ, 敵の防御補正
 export type TDamageResult = {
     元素反応: TDamageResultElementalReaction,
     通常攻撃: TDamageResultEntry[],

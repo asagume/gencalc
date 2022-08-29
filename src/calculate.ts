@@ -535,7 +535,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                 }
                 if (category == '通常攻撃') {
                     let n = 0;
-                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0] as TDamageResultEntry;
+                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1] as TDamageResultEntry;
                     for (const entry of damageResult[category]) {
                         if (entry[0].endsWith('段ダメージ')) {
                             sum[1] = entry[1];
@@ -548,6 +548,7 @@ export function calculateResult(damageResult: TDamageResult, characterInput: TCh
                                 else sum[6]++;
                             }
                             sum[7] = entry[7];  // ダメージバフ
+                            sum[8] = entry[8];  // 敵の防御補正
                             n++;
                         }
                     }
@@ -1285,7 +1286,7 @@ function calculateDamageFromDetail(
             }
         }
 
-        const resultArr = [detailObj['名前'], my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj['種類'], detailObj['HIT数'], my計算Result[7]] as TDamageResultEntry;
+        const resultArr = [detailObj['名前'], my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj['種類'], detailObj['HIT数'], my計算Result[7], my計算Result[8]] as TDamageResultEntry;
         console.debug('calculateDamageFromDetail', detailObj, characterInput, conditionInput, statsObj, opt_element, resultArr);
         return resultArr;
     } catch (error) {
@@ -1317,6 +1318,7 @@ export function calculateDamageFromDetailSub(
         is耐性補正Calc = false;
     }
 
+    let my防御補正 = 1;
     let my会心Result = null;
     let my期待値Result;
     let myバフ = 0;
@@ -1329,7 +1331,8 @@ export function calculateDamageFromDetailSub(
         my非会心Result *= (100 + myバフ) / 100;
     }
     if (is防御補正Calc) {
-        my非会心Result *= calculateEnemyDef(statsObj, 防御無視);
+        my防御補正 = calculateEnemyDef(statsObj, 防御無視);
+        my非会心Result *= my防御補正;
     }
     if (is耐性補正Calc && 元素) {
         my非会心Result *= calculateEnemyRes(元素, statsObj);
@@ -1362,7 +1365,7 @@ export function calculateDamageFromDetailSub(
         }
     }
     console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
-    return ['未設定', 元素, my期待値Result, my会心Result, my非会心Result, null, null, myバフ];
+    return ['未設定', 元素, my期待値Result, my会心Result, my非会心Result, null, null, myバフ, my防御補正];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {
