@@ -37,15 +37,20 @@ function makeSaveDataFromShareData(shareData: string) {
                     if (character) {
                         const weaponType = CHARACTER_MASTER[character]['武器'] as TWeaponTypeKey;
                         const typedWeaponMaster = WEAPON_MASTER[weaponType];
+                        let weapon;
                         (Object.keys(typedWeaponMaster) as (keyof typeof typedWeaponMaster)[]).forEach(key2 => {
                             if ('import' in WEAPON_MASTER[weaponType][key2]) {
                                 const myBasename = basename(WEAPON_MASTER[weaponType][key2]['import']);
                                 const myAbbrev = myBasename.split('_')[myBasename.split('_').length - 1];
                                 if (newValue == myAbbrev) {
-                                    newValue = key2;
+                                    weapon = key2;
                                 }
                             }
                         });
+                        if (!weapon) {
+                            weapon = Object.keys(WEAPON_MASTER[weaponType]).filter(s => s.startsWith('西風'))[0];
+                        }
+                        newValue = weapon;
                     }
                     break;
                 case '聖遺物セット効果1':

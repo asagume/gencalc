@@ -272,9 +272,9 @@ export const calculateStats = function (
         });
 
         // 天賦性能変化
-        let 通常攻撃_元素Var = null;
-        let 重撃_元素Var = null;
-        let 落下攻撃_元素Var = null;
+        let 通常攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
+        let 重撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
+        let 落下攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
         for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
             if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
@@ -835,7 +835,6 @@ function calculateDamageFromDetail(
         let my別枠乗算 = 0; // for 宵宮
         const myHIT数 = detailObj['HIT数'] != null ? Number(detailObj['HIT数']) : 1;
         const myステータス補正 = {} as { [key: string]: number };
-        // let my精度 = 0;
 
         const constellation = statsObj['命ノ星座'];
 
@@ -1121,9 +1120,9 @@ function calculateDamageFromDetail(
         }
 
         // 一時的にステータスを書き換えます。
-        Object.keys(myステータス補正).forEach(statusName => {
-            statsObj[statusName] += myステータス補正[statusName];
-            console.debug('ステータス補正', statusName, myステータス補正[statusName]);
+        Object.keys(myステータス補正).forEach(statName => {
+            statsObj[statName] += myステータス補正[statName];
+            console.debug('ステータス補正', statName, myステータス補正[statName]);
         });
 
         switch (detailObj['種類']) {
@@ -1168,34 +1167,27 @@ function calculateDamageFromDetail(
                     is防御補正Calc = false;
                     is耐性補正Calc = false;
                     my元素 = null;
-                    // const 種類SplitArr = detailObj['種類'].split('_');
-                    // if (種類SplitArr.length > 1) {
-                    //     my精度 = Number(種類SplitArr[1]);
-                    // }
                 } else {
                     myバフArr.push('与えるダメージ');
-                    if (detailObj['ダメージバフ'] != 'NONE') {
+                    if (detailObj['ダメージバフ'] != 'NONE') {  // for コレイ
                         if (detailObj['ダメージバフ']) {
                             myバフArr.push(detailObj['ダメージバフ']);
                         } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                             myバフArr.push(detailObj['種類'] + 'バフ');
                         }
                     }
-                    if (my元素 != null) {
+                    if (my元素) {
                         myバフArr.push(my元素 == '物理' ? '物理ダメージバフ' : my元素 + '元素ダメージバフ');
                     }
                 }
                 break;
         }
         const my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, detailObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj['上限']);
-        console.debug(my計算Result);
 
         myTalentChangeDetailObjArr.forEach(valueObj => {
-            const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, valueObj['上限']);
-            if (valueObj['種類'].endsWith('ダメージアップ')) {
-                if (detailObj['名前'] == 'ダメージアップ') {    // for 申鶴
-                    return;
-                }
+            const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, valueObj['数値'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, null, valueObj['上限']);
+            if (valueObj['種類'].endsWith('ダメージアップ')) {  // 実数ダメージ加算
+                if (detailObj['名前'] == 'ダメージアップ') return;  // for 申鶴
                 if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
                     // 複数回HITするダメージについては、HIT数を乗算します
                     if (myHIT数 > 1) {
@@ -1203,9 +1195,7 @@ function calculateDamageFromDetail(
                         if (myResultWork[3] != null) {
                             myResultWork[3] *= myHIT数;
                         }
-                        if (myResultWork[4] != null) {
-                            myResultWork[4] *= myHIT数;
-                        }
+                        myResultWork[4] *= myHIT数;
                     }
                 }
             }
@@ -1213,70 +1203,50 @@ function calculateDamageFromDetail(
             if (my計算Result[3] != null && myResultWork[3]) {
                 my計算Result[3] += myResultWork[3];
             }
-            if (my計算Result[4] != null) {
-                my計算Result[4] += myResultWork[4];
-            }
+            my計算Result[4] += myResultWork[4];
         });
 
-        let myダメージ種類 = detailObj['種類'];
-        if (detailObj['ダメージバフ']) {    // for 夢想の一心状態の時、雷電将軍の通常攻撃、重撃、落下攻撃のダメージは元素爆発ダメージと見なす
-            const temp = detailObj['ダメージバフ'].replace(/バフ$/, '');
-            if (DAMAGE_CATEGORY_ARRAY.includes(temp)) {
-                myダメージ種類 = temp;
-            }
-        }
-        if (statsObj[myダメージ種類 + 'アップ'] > 0) {
-            if (detailObj['名前'].startsWith('非表示_狼の魂基礎')) {    // レザー
-                // nop
-            } else {
-                if (DAMAGE_CATEGORY_ARRAY.includes(myダメージ種類)) {
-                    const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[myダメージ種類 + 'アップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
-                    // 複数回HITするダメージについては、HIT数を乗算します
-                    if (myHIT数 > 1) {
-                        myResultWork[2] *= myHIT数;
-                        if (myResultWork[3] != null) {
-                            myResultWork[3] *= myHIT数;
-                        }
-                        if (myResultWork[4] != null) {
-                            myResultWork[4] *= myHIT数;
-                        }
-                    }
-                    my計算Result[2] += myResultWork[2];
-                    if (my計算Result[3] != null && myResultWork[3]) {
-                        my計算Result[3] += myResultWork[3];
-                    }
-                    if (my計算Result[4] != null) {
-                        my計算Result[4] += myResultWork[4];
-                    }
+        // ステータスによる実数ダメージ加算を計算します
+        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj['種類'])) {
+            let myダメージ種類 = detailObj['種類'];
+            if (detailObj['ダメージバフ']) {    // for 夢想の一心状態の時、雷電将軍の通常攻撃、重撃、落下攻撃のダメージは元素爆発ダメージと見なす
+                const temp = detailObj['ダメージバフ'].replace(/バフ$/, '');
+                if (DAMAGE_CATEGORY_ARRAY.includes(temp)) {
+                    myダメージ種類 = temp;
                 }
             }
-        }
-        if (my元素 + '元素ダメージアップ' in statsObj && statsObj[my元素 + '元素ダメージアップ'] > 0) {
-            if (is防御補正Calc && is耐性補正Calc) {
-                const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[my元素 + '元素ダメージアップ'], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, 0);
+
+            const dmgUpStatArr = [];
+            dmgUpStatArr.push(myダメージ種類 + 'アップ');
+            if (my元素) {
+                dmgUpStatArr.push(my元素 == '物理' ? '物理ダメージアップ' : my元素 + '元素ダメージアップ');
+            }
+            dmgUpStatArr.forEach(dmgUpStat => {
+                if (!statsObj[dmgUpStat]) return;
+                if (!is防御補正Calc || !is耐性補正Calc) return;
+
+                if (detailObj['名前'].startsWith('非表示_狼の魂基礎')) return;    // for レザー
+
+                const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[dmgUpStat], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, null);
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
                     myResultWork[2] *= myHIT数;
                     if (myResultWork[3] != null) {
                         myResultWork[3] *= myHIT数;
                     }
-                    if (myResultWork[4] != null) {
-                        myResultWork[4] *= myHIT数;
-                    }
+                    myResultWork[4] *= myHIT数;
                 }
                 my計算Result[2] += myResultWork[2];
                 if (my計算Result[3] != null && myResultWork[3]) {
                     my計算Result[3] += myResultWork[3];
                 }
-                if (my計算Result[4] != null) {
-                    my計算Result[4] += myResultWork[4];
-                }
-            }
+                my計算Result[4] += myResultWork[4];
+            });
         }
 
         // 書き換えたステータスを元に戻します。
-        Object.keys(myステータス補正).forEach(statusName => {
-            statsObj[statusName] -= myステータス補正[statusName];
+        Object.keys(myステータス補正).forEach(statName => {
+            statsObj[statName] -= myステータス補正[statName];
         });
 
         if (detailObj['種類'] == 'シールド') {
@@ -1295,7 +1265,7 @@ function calculateDamageFromDetail(
     }
 }
 
-export function calculateDamageFromDetailSub(
+function calculateDamageFromDetailSub(
     statsObj: TStats,
     damageResult: TDamageResult,
     formula: number | string | (number | string)[],
@@ -1305,11 +1275,17 @@ export function calculateDamageFromDetailSub(
     is耐性補正Calc: boolean,
     元素: string,
     防御無視: number,
-    別枠乗算: number,
+    別枠乗算: number | null,
     opt_max: number | string | Array<number | string> | null = null
 ): TDamageResultEntry {
-    let my非会心Result = calculateFormulaArray(formula, statsObj, damageResult, opt_max);
-    console.debug("%o => %o", formula, my非会心Result);
+    const myダメージ基礎値 = calculateFormulaArray(formula, statsObj, damageResult, opt_max);
+    let myダメージ = myダメージ基礎値;
+
+    if (別枠乗算) { // 別枠乗算 for 宵宮
+        myダメージ *= 別枠乗算 / 100;
+    } else {
+        別枠乗算 = 1;
+    }
 
     // 計算済みの値を参照する場合は、バフと防御、耐性補正の計算を省略します
     if (isUseReference(formula)) {
@@ -1318,29 +1294,28 @@ export function calculateDamageFromDetailSub(
         is耐性補正Calc = false;
     }
 
-    let my防御補正 = 1;
-    let my会心Result = null;
-    let my期待値Result;
-    let myバフ = 0;
+    let myダメージバフ補正 = 1;
     if (buffArr) {
+        myダメージバフ補正 = 100;   // percent
         buffArr.forEach(buff => {
-            myバフ += statsObj[buff];
+            myダメージバフ補正 += statsObj[buff];
         });
+        myダメージバフ補正 = myダメージバフ補正 / 100;
+        myダメージ *= myダメージバフ補正;
     }
-    if (myバフ != 0) {
-        my非会心Result *= (100 + myバフ) / 100;
-    }
+
+    let my防御補正 = 1;
     if (is防御補正Calc) {
         my防御補正 = calculateEnemyDef(statsObj, 防御無視);
-        my非会心Result *= my防御補正;
+        myダメージ *= my防御補正;
     }
+
+    let my耐性補正 = 1;
     if (is耐性補正Calc && 元素) {
-        my非会心Result *= calculateEnemyRes(元素, statsObj);
+        my耐性補正 = calculateEnemyRes(元素, statsObj);
+        myダメージ *= my耐性補正;
     }
-    if (別枠乗算) {    // 別枠乗算 for 宵宮
-        my非会心Result *= 別枠乗算 / 100;
-    }
-    my期待値Result = my非会心Result;
+
     let my会心率 = statsObj['会心率'];
     if (元素 == '物理') {
         if ('物理ダメージ会心率' in statsObj) {
@@ -1349,7 +1324,8 @@ export function calculateDamageFromDetailSub(
     } else if ((元素 + '元素ダメージ会心率') in statsObj) {
         my会心率 += statsObj[元素 + '元素ダメージ会心率'];
     }
-    my会心率 = Math.min(100, Math.max(0, my会心率));    // 0≦会心率≦100
+    my会心率 = Math.min(100, Math.max(0, my会心率)) / 100;    // 0≦会心率≦1
+
     let my会心ダメージ = statsObj['会心ダメージ'];
     if (元素 == '物理') {
         if ('物理ダメージ会心ダメージ' in statsObj) {
@@ -1358,14 +1334,17 @@ export function calculateDamageFromDetailSub(
     } else if ((元素 + '元素ダメージ会心ダメージ') in statsObj) {
         my会心ダメージ += statsObj[元素 + '元素ダメージ会心ダメージ'];
     }
-    if (is会心Calc) {
-        if (my会心率 > 0) {
-            my会心Result = my非会心Result * (100 + my会心ダメージ) / 100;
-            my期待値Result = (my会心Result * my会心率 / 100) + (my非会心Result * (100 - my会心率) / 100);
-        }
+    my会心ダメージ = (100 + my会心ダメージ) / 100;
+
+    let my会心Result = null;
+    let my期待値Result = myダメージ;
+    if (is会心Calc && my会心率 > 0) {
+        my会心Result = myダメージ * my会心ダメージ;
+        my期待値Result = (my会心Result * my会心率) + (myダメージ * (1 - my会心率));
     }
-    console.debug(buffArr, '=>', myバフ, is会心Calc, '=> [', my会心率, my会心ダメージ, ']', is防御補正Calc, is耐性補正Calc, 元素, 防御無視, 別枠乗算, '=>', my期待値Result, my会心Result, my非会心Result);
-    return ['未設定', 元素, my期待値Result, my会心Result, my非会心Result, null, null, myバフ, my防御補正];
+
+    console.debug('%f * %f * [%o]=%f * [%f,%f] * %f * %f => %f,%f,%f', myダメージ基礎値, 別枠乗算, buffArr, myダメージバフ補正, my会心率, my会心ダメージ, my防御補正, my耐性補正, my期待値Result, my会心Result, myダメージ);
+    return ['未設定', 元素, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, my防御補正];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {
