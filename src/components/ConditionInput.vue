@@ -34,7 +34,7 @@ import {
   makeValidConditionValueArr,
   ALL_ELEMENTS,
 } from "@/calculate";
-import { deepcopy } from "@/common";
+import { deepcopy, isNumber } from "@/common";
 import {
   DAMAGE_RESULT_TEMPLATE,
   STAT_PERCENT_LIST,
@@ -146,10 +146,21 @@ export default defineComponent({
         result = result.replace("凍結反応ボーナス", "凍結反応の継続時間");
         result = result.replace(/反応ボーナス$/, "反応ダメージ");
         result = result.replace(/ダメージ会心/, "ダメージの会心");
-        result += conditionInputRea.conditionAdjustments[stat] >= 0 ? "+" : "";
-        result += conditionInputRea.conditionAdjustments[stat];
-        if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) result += "%";
-        else if (stat.endsWith("会心率") || stat.endsWith("会心ダメージ")) result += "%";
+        if (isNumber(conditionInputRea.conditionAdjustments[stat])) {
+          let value = conditionInputRea.conditionAdjustments[stat];
+          if (value < 10) {
+            value = Math.round(value * 100) / 100;
+          } else {
+            value = Math.round(value * 10) / 10;
+          }
+          result += value >= 0 ? "+" : "";
+          result += value;
+          if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) result += "%";
+          else if (stat.endsWith("会心率") || stat.endsWith("会心ダメージ"))
+            result += "%";
+        } else {
+          result += "=" + conditionInputRea.conditionAdjustments[stat];
+        }
         resultArr.push(result);
       }
       return resultArr;
