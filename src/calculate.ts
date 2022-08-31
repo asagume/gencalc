@@ -216,9 +216,9 @@ export const calculateStats = function (
         const myPriority2KindFormulaArr = [] as any[];
         const myKindFormulaArr = [] as any[];
         for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-            let hasCondition = false;
             if (myDamageDetail && CHANGE_KIND_STATUS in myDamageDetail) {
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_STATUS]) {
+                    let hasCondition = false;
                     let myNew数値 = myDetailObj['数値'];
                     if (myDetailObj['条件']) {
                         const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
@@ -252,6 +252,9 @@ export const calculateStats = function (
                 }
             }
         }
+        // console.log('myPriority1KindFormulaArr', myPriority1KindFormulaArr);
+        // console.log('myPriority2KindFormulaArr', myPriority2KindFormulaArr);
+        // console.log('myKindFormulaArr', myKindFormulaArr);
         // 攻撃力の計算で参照されるステータスアップを先に計上します
         myPriority1KindFormulaArr.forEach(entry => {
             const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
