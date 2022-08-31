@@ -3,7 +3,9 @@
     <template v-if="mode == 1">
       <table class="character-info status">
         <caption>
-          {{ displayName("ステータス") }}
+          {{
+            displayName("ステータス")
+          }}
         </caption>
         <template v-for="(item, index) in statsInfoList" :key="index">
           <tr>
@@ -14,7 +16,9 @@
       </table>
       <table class="character-info">
         <caption>
-          {{ displayName("命ノ星座") }}
+          {{
+            displayName("命ノ星座")
+          }}
         </caption>
         <template v-for="(item, index) in constellationInfoList" :key="index">
           <tr>
@@ -32,7 +36,9 @@
       </table>
       <table class="character-info">
         <caption>
-          {{ displayName("固有天賦") }}
+          {{
+            displayName("固有天賦")
+          }}
         </caption>
         <template v-for="(item, index) in passiveTalentInfoList" :key="index">
           <tr>
@@ -58,22 +64,32 @@
         <tr>
           <td colspan="2" class="description" v-html="characterMaster.通常攻撃.説明"></td>
         </tr>
-        <template v-for="(item, index) in talentNormalAttack('通常攻撃').詳細" :key="index">
+        <template
+          v-for="(item, index) in talentNormalAttack('通常攻撃').詳細"
+          :key="index"
+        >
           <tr>
             <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">{{ talentValue(item.数値, levelNormalAttack('通常攻撃')) }}</td>
+            <td class="value">
+              {{ talentValue(item.数値, levelNormalAttack("通常攻撃")) }}
+            </td>
           </tr>
         </template>
         <template v-for="(item, index) in talentNormalAttack('重撃').詳細" :key="index">
           <tr>
             <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">{{ talentValue(item.数値, levelNormalAttack('重撃')) }}</td>
+            <td class="value">{{ talentValue(item.数値, levelNormalAttack("重撃")) }}</td>
           </tr>
         </template>
-        <template v-for="(item, index) in talentNormalAttack('落下攻撃').詳細" :key="index">
+        <template
+          v-for="(item, index) in talentNormalAttack('落下攻撃').詳細"
+          :key="index"
+        >
           <tr>
             <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">{{ talentValue(item.数値, levelNormalAttack('落下攻撃')) }}</td>
+            <td class="value">
+              {{ talentValue(item.数値, levelNormalAttack("落下攻撃")) }}
+            </td>
           </tr>
         </template>
       </table>
@@ -86,12 +102,22 @@
             {{ displayName(characterMaster.元素スキル.名前) }}
           </th>
         </tr>
-        <tr v-for="(item, index) in talentAttributes(characterMaster.元素スキル)" :key="index">
-          <th class="key"> {{ displayName(item[0]) }} </th>
-          <td class="value"> {{ item[1] }} </td>
+        <tr
+          v-for="(item, index) in talentAttributes(
+            characterMaster.元素スキル,
+            elementalSkillLevel
+          )"
+          :key="index"
+        >
+          <th class="key">{{ displayName(item[0]) }}</th>
+          <td class="value">{{ item[1] }}</td>
         </tr>
         <tr>
-          <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
+          <td
+            colspan="2"
+            class="description"
+            v-html="characterMaster.元素スキル.説明"
+          ></td>
         </tr>
         <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
           <tr>
@@ -109,9 +135,15 @@
             {{ displayName(characterMaster.元素爆発.名前) }}
           </th>
         </tr>
-        <tr v-for="(item, index) in talentAttributes(characterMaster.元素爆発)" :key="index">
-          <th class="key"> {{ displayName(item[0]) }} </th>
-          <td class="value"> {{ item[1] }} </td>
+        <tr
+          v-for="(item, index) in talentAttributes(
+            characterMaster.元素爆発,
+            elementalBurstLevel
+          )"
+          :key="index"
+        >
+          <th class="key">{{ displayName(item[0]) }}</th>
+          <td class="value">{{ item[1] }}</td>
         </tr>
         <tr>
           <td colspan="2" class="description" v-html="characterMaster.元素爆発.説明"></td>
@@ -151,15 +183,15 @@ type TTalentInfo = {
 export default defineComponent({
   name: "CharacterInfo",
   props: {
-    visible: { type: Boolean, required: true, },
-    mode: { type: Number, required: true, },
-    characterMaster: { type: Object as PropType<TCharacterDetail>, required: true, },
-    ascension: { type: Number, required: true, },
-    level: { type: Number, required: true, },
-    normalAttackLevel: { type: Number, required: true, },
-    elementalSkillLevel: { type: Number, required: true, },
-    elementalBurstLevel: { type: Number, required: true, },
-    normalAttackReplacing: { type: Array as PropType<boolean[]>, required: true, }
+    visible: { type: Boolean, required: true },
+    mode: { type: Number, required: true },
+    characterMaster: { type: Object as PropType<TCharacterDetail>, required: true },
+    ascension: { type: Number, required: true },
+    level: { type: Number, required: true },
+    normalAttackLevel: { type: Number, required: true },
+    elementalSkillLevel: { type: Number, required: true },
+    elementalBurstLevel: { type: Number, required: true },
+    normalAttackReplacing: { type: Array as PropType<boolean[]>, required: true },
   },
   setup(props) {
     const { displayName, displayStatValue } = CompositionFunction();
@@ -199,37 +231,47 @@ export default defineComponent({
     const talentNormalAttack = (key: string) => {
       let talentObj;
       if (key == "通常攻撃") {
-        talentObj = props.normalAttackReplacing[0] ? props.characterMaster.特殊通常攻撃 : props.characterMaster.通常攻撃;
+        talentObj = props.normalAttackReplacing[0]
+          ? props.characterMaster.特殊通常攻撃
+          : props.characterMaster.通常攻撃;
       } else if (key == "重撃") {
-        talentObj = props.normalAttackReplacing[1] ? props.characterMaster.特殊重撃 : props.characterMaster.重撃;
+        talentObj = props.normalAttackReplacing[1]
+          ? props.characterMaster.特殊重撃
+          : props.characterMaster.重撃;
       } else if (key == "落下攻撃") {
-        talentObj = props.normalAttackReplacing[2] ? props.characterMaster.特殊落下攻撃 : props.characterMaster.落下攻撃;
+        talentObj = props.normalAttackReplacing[2]
+          ? props.characterMaster.特殊落下攻撃
+          : props.characterMaster.落下攻撃;
       }
       return talentObj;
-    }
+    };
 
     const levelNormalAttack = (key: string) => {
       let level = props.normalAttackLevel;
       const talentObj = talentNormalAttack(key);
-      if ('種類' in talentObj) {
-        switch (talentObj['種類']) {
-          case '元素スキルダメージ':
+      if ("種類" in talentObj) {
+        switch (talentObj["種類"]) {
+          case "元素スキルダメージ":
             level = props.elementalSkillLevel;
             break;
-          case '元素爆発ダメージ':
+          case "元素爆発ダメージ":
             level = props.elementalBurstLevel;
             break;
         }
       }
       return level;
-    }
+    };
 
-    const talentAttributes = (talentObj: TTalentInfo) => {
+    const talentAttributes = (talentObj: TTalentInfo, level: number) => {
       const result = [] as any[];
-      ['継続時間', 'クールタイム', '元素エネルギー'].forEach(suffix => {
-        const keyArr = Object.keys(talentObj).filter(s => s.endsWith(suffix));
+      ["継続時間", "クールタイム", "元素エネルギー"].forEach((suffix) => {
+        const keyArr = Object.keys(talentObj).filter((s) => s.endsWith(suffix));
         for (const key of keyArr) {
-          result.push([key, talentObj[key]]);
+          let value = talentObj[key];
+          if (isPlainObject(value)) {
+            value = value[String(level)];
+          }
+          result.push([key, value]);
         }
       });
       return result;
@@ -243,13 +285,15 @@ export default defineComponent({
     };
 
     return {
-      displayName, displayStatValue,
+      displayName,
+      displayStatValue,
 
       statsInfoList,
       constellationInfoList,
       passiveTalentInfoList,
 
-      talentNormalAttack, levelNormalAttack,
+      talentNormalAttack,
+      levelNormalAttack,
       talentAttributes,
 
       talentValue,
