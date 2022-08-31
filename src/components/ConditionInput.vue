@@ -28,19 +28,11 @@
 </template>
 
 <script lang="ts">
+import { isNumber } from "@/common";
 import {
-  calculateFormulaArray,
-  checkConditionMatches,
-  makeValidConditionValueArr,
-  ALL_ELEMENTS,
-} from "@/calculate";
-import { deepcopy, isNumber } from "@/common";
-import {
-  DAMAGE_RESULT_TEMPLATE,
   STAT_PERCENT_LIST,
   TCharacterInput,
   TConditionInput,
-  TStats,
 } from "@/input";
 import { computed, defineComponent, PropType, reactive } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
@@ -59,7 +51,6 @@ export default defineComponent({
     const conditionValues = conditionInputRea.conditionValues as any;
     const checkboxList = conditionInputRea.checkboxList;
     const selectList = conditionInputRea.selectList;
-    const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
 
     const exclusionMap = computed(() => {
       const result = new Map() as Map<string, string[] | null>;
@@ -100,42 +91,6 @@ export default defineComponent({
       }
       context.emit("update:condition");
     };
-
-    const statusChangeDetailObjArr = computed(() => {
-      const result = [] as any[];
-      [
-        props.characterInput.damageDetailMyCharacter,
-        props.characterInput.damageDetailMyWeapon,
-        props.characterInput.damageDetailMyArtifactSets,
-      ].forEach((damageDetail) => {
-        if (damageDetail && damageDetail.ステータス変更系詳細) {
-          damageDetail.ステータス変更系詳細.forEach((damageDetailObj) => {
-            if (damageDetailObj.条件) {
-              result.push(damageDetailObj);
-            }
-          });
-        }
-      });
-      return result;
-    });
-
-    const talentChangeDetailObjArr = computed(() => {
-      const result = [] as any[];
-      [
-        props.characterInput.damageDetailMyCharacter,
-        props.characterInput.damageDetailMyWeapon,
-        props.characterInput.damageDetailMyArtifactSets,
-      ].forEach((damageDetail) => {
-        if (damageDetail && damageDetail.天賦性能変更系詳細) {
-          damageDetail.天賦性能変更系詳細.forEach((damageDetailObj) => {
-            if (damageDetailObj.条件) {
-              result.push(damageDetailObj);
-            }
-          });
-        }
-      });
-      return result;
-    });
 
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
