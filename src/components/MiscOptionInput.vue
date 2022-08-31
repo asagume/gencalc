@@ -2,19 +2,19 @@
   <fieldset>
     <label v-for="item in checkboxList" :key="item.name">
       <input type="checkbox" v-model="conditionValues[item.name]" :value="item" @change="onChange" />
-      <span> {{ displayName(item.name) }}</span>
+      <span> {{  displayName(item.name)  }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
-      <span> {{ displayName(item.name) }} </span>
+      <span> {{  displayName(item.name)  }} </span>
       <select v-model="conditionValues[item.name]" @change="onChange">
         <option v-for="(option, index) in item.options" :value="index" :key="option">
-          {{ displayOptionName(option) }}
+          {{  displayOptionName(option)  }}
         </option>
       </select>
     </label>
     <hr />
     <ul class="option-description">
-      <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
+      <li v-for="item in displayStatAjustmentList" :key="item">{{  item  }}</li>
     </ul>
   </fieldset>
 </template>
@@ -48,8 +48,8 @@ export default defineComponent({
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr = [] as any[];
     const talentChangeDetailObjArr = [] as any[];
-    const conditionMap = new Map() as Map<string, any[] | null>;
-    const exclusionMap = new Map() as Map<string, string[] | null>;
+    const conditionMap = new Map() as Map<string, string[]>;
+    const exclusionMap = new Map() as Map<string, string[]>;
     const conditionInput = reactive({
       conditionValues: {} as { [key: string]: any },
       checkboxList: [] as TCheckboxEntry[],

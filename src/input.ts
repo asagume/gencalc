@@ -332,8 +332,8 @@ export type TDamageDetail = {
     その他?: TDamageDetailObj[],
     ステータス変更系詳細: TDamageDetailObj[],
     天賦性能変更系詳細: TDamageDetailObj[],
-    条件: Map<string, string[] | null>,
-    排他: Map<string, string[] | null>,
+    条件: Map<string, string[]>,
+    排他: Map<string, string[]>,
 };
 
 export const ARTIFACT_SET_MASTER_DUMMY = {
@@ -1165,7 +1165,7 @@ export const makeDamageDetailObjArr = function (
     return resultArr;
 }
 
-export const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>) {
+export const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[]>, exclusionMap: Map<string, string[]>) {
     // 排他条件を抽出します
     let exclusionCond: string | null = null;
     let myCondStrArr = conditionStr.split('^');
@@ -1188,7 +1188,7 @@ export const makeConditionExclusionMapFromStr = function (conditionStr: string, 
     }
 }
 
-function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>, exclusion: string | null) {
+function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap: Map<string, string[]>, exclusionMap: Map<string, string[]>, exclusion: string | null) {
     const myCondStrArr = conditionStr.split('@');
     const myName = myCondStrArr[0];
     if (myCondStrArr.length == 1) {

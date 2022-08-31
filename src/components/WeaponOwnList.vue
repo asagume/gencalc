@@ -2,7 +2,8 @@
   <ul class="select-list">
     <li v-for="item in weaponTypeList" :key="item">
       <label>
-        <input class="hidden" type="radio" v-model="selectedWeaponType" name="weapon-own-list-type" :value="item" />
+        <input class="hidden" type="radio" :value="item" name="weapon-own-list-type"
+          @change="selectedWeaponType = targetValue($event)" />
         <img class="filter" :src="weaponSrc(item)" :alt="item" />
       </label>
     </li>
@@ -12,17 +13,17 @@
       <li v-for="item in weaponList(weaponType)" :key="item.key">
         <img :class="'weapon' + bgImageClass(item) + notOwnedClass(item)" :src="item.icon_url" :alt="item.key"
           @click="onClick(item)" />
-        <div class="tooltip">{{ displayName(item.key) }}</div>
-        <div class="refine">{{ refineObj[item.key] }}</div>
+        <div class="tooltip">{{  displayName(item.key)  }}</div>
+        <div class="refine">{{  refineObj[item.key]  }}</div>
       </li>
     </ul>
   </div>
   <label>
     <input type="checkbox" v-model="savable" :disabled="!changed" />
-    <span>{{ displayName("武器所持状況を保存する") }}</span>
+    <span>{{  displayName("武器所持状況を保存する")  }}</span>
   </label>
   <button type="button" @click="save" :disabled="!savable">
-    {{ displayName("実行") }}
+    {{  displayName("実行")  }}
   </button>
 </template>
 
@@ -40,7 +41,7 @@ import CompositionFunction from "./CompositionFunction.vue";
 export default defineComponent({
   name: "WeaponOwnList",
   setup() {
-    const { displayName } = CompositionFunction();
+    const { displayName, targetValue } = CompositionFunction();
 
     const bgImageClass = (item: TWeaponEntry) =>
       (" " + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
@@ -51,7 +52,7 @@ export default defineComponent({
     const weaponSrc = (weapon: TWeaponTypeKey) => WEAPON_IMG_SRC[weapon] as string;
     const weaponList = (weaponType: TWeaponTypeKey) =>
       WEAPON_MASTER_LIST[weaponType] as any[];
-    const selectedWeaponType = ref(weaponTypeList.value[0]);
+    const selectedWeaponType = ref(weaponTypeList.value[0] as any);
 
     const refineObj = reactive({} as { [key: string]: number | null });
     for (const weaponType of weaponTypeList.value) {
@@ -97,6 +98,7 @@ export default defineComponent({
 
     return {
       displayName,
+      targetValue,
 
       bgImageClass,
       weaponTypeList,

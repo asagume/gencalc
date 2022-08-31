@@ -1,9 +1,9 @@
 <template>
   <div class="elemental-reaction">
-    <input id="増幅反応-なし" type="radio" v-model="増幅反応" value="なし" name="増幅反応-name" />
+    <input id="増幅反応-なし" type="radio" value="なし" name="増幅反応-name" @change="増幅反応 = 'なし'" />
     <label for="増幅反応-なし"> {{  displayName("反応なし")  }} </label>
     <template v-if="damageResult.元素反応.蒸発倍率">
-      <input id="増幅反応-蒸発" type="radio" v-model="増幅反応" value="蒸発" name="増幅反応-name" />
+      <input id="増幅反応-蒸発" type="radio" value="蒸発" name="増幅反応-name" @change="増幅反応 = '蒸発'" />
       <label for="増幅反応-蒸発">
         {{  displayName("蒸発")  }}×<span>{{
            Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100 
@@ -11,7 +11,7 @@
       </label>
     </template>
     <template v-if="damageResult.元素反応.溶解倍率">
-      <input id="増幅反応-溶解" type="radio" v-model="増幅反応" value="溶解" name="増幅反応-name" />
+      <input id="増幅反応-溶解" type="radio" value="溶解" name="増幅反応-name" @change="増幅反応 = '溶解'" />
       <label for="増幅反応-溶解">
         {{  displayName("溶解")  }}×<span>{{
            Math.round(damageResult.元素反応.溶解倍率 * 100) / 100 
@@ -19,14 +19,14 @@
       </label>
     </template>
     <template v-if="damageResult.元素反応.超激化ダメージ">
-      <input id="増幅反応-超激化" type="radio" v-model="増幅反応" value="超激化" name="増幅反応-name" />
+      <input id="増幅反応-超激化" type="radio" value="超激化" name="増幅反応-name" @change="増幅反応 = '超激化'" />
       <label for="増幅反応-超激化" class="electro">
         {{  displayName("超激化")  }}
         <span>{{  Math.round(damageResult.元素反応.超激化ダメージ)  }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.草激化ダメージ">
-      <input id="増幅反応-草激化" type="radio" v-model="増幅反応" value="草激化" name="増幅反応-name" />
+      <input id="増幅反応-草激化" type="radio" value="草激化" name="増幅反応-name" @change="増幅反応 = '草激化'" />
       <label for="増幅反応-草激化" class="dendro">
         {{  displayName("草激化")  }}
         <span>{{  Math.round(damageResult.元素反応.草激化ダメージ)  }}</span>
@@ -380,5 +380,9 @@ table.result.h-style thead th:first-child {
 .right {
   text-align: right;
   margin: 1rem;
+}
+
+ul {
+  list-style-type: none;
 }
 </style>

@@ -456,7 +456,7 @@ export const analyzeFormulaStr = function (formulaStr: string, opt_defaultItem?:
 }
 
 /** ダメージ計算を実施します */
-export function calculateResult(damageResult: TDamageResult, characterInput: TCharacterInput, conditionInput: TConditionInput, statsInput: TStatsInput) {
+export function calculateDamageResult(damageResult: TDamageResult, characterInput: TCharacterInput, conditionInput: TConditionInput, statsInput: TStatsInput) {
     try {
         if (!characterInput) return;
         if (!conditionInput) return;
@@ -1453,7 +1453,7 @@ export function isUseReference(formulaArr: number | string | Array<number | stri
     return result;
 }
 
-const ALL_ELEMENTS = ['炎', '水', '風', '雷', '草', '氷', '岩'];
+export const ALL_ELEMENTS = ['炎', '水', '風', '雷', '草', '氷', '岩'];
 
 /**
  * ステータスを更新します

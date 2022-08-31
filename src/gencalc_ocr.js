@@ -2,6 +2,21 @@ import Tesseract from 'tesseract.js'
 
 const { createWorker } = Tesseract;
 
+var WHITELIST = '0123456789.%+';
+[
+    'HP上限', '攻撃力', '防御力', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率',
+    '基本ステータス', '高級ステータス', '元素ステータス',
+    'スタミナ上限',
+    '元素熟知が高いほど、強力な元素の力を発動できる。',
+    '蒸発、溶解反応によるダメージ',
+    '過負荷、超電導、感電、氷砕き拡散反応によるダメージ',
+    '結晶反応が結晶シールドを生成し、ダメージ吸収量'
+].forEach(stat => {
+    stat.split('').forEach(ch => {
+        if (WHITELIST.indexOf(ch) == -1) WHITELIST += ch;
+    })
+})
+
 function readImage(image) {
     return new Promise(function (resolve, reject) {
         const reader = new FileReader();
@@ -23,7 +38,7 @@ function loadImage(src) {
 async function imageToCanvas(imageFile) {
     const src = await readImage(imageFile);
     const image = await loadImage(src);
-    const canvas = document.getElementById('artifactDetailCanvas');
+    const canvas = document.getElementById('artifact-stats-canvas');
     const ctx = canvas.getContext('2d');
     const scale = 2;
     canvas.width = image.width * scale;
@@ -71,13 +86,16 @@ function setArtifactDetail(text) {
     const artifactStats = {};
     ['HP上限', '攻撃力', '防御力', '元素.知', '会心率', '会心ダメージ', '元素チャージ効率'].forEach(stat => {
         let toStat = stat;
+        if (stat == 'HP上限') {
+            toStat = 'HP';
+        }
         if (stat == '元素.知') {
             toStat = '元素熟知';
         }
         let re = new RegExp(stat + '\\+([0-9\\.]+)');
         let reRet = re.exec(text);
         if (reRet) {
-            if (['HP上限', '攻撃力', '防御力', '元素熟知'].includes(toStat)) {
+            if (['HP', '攻撃力', '防御力', '元素熟知'].includes(toStat)) {
                 artifactStats[toStat] = Number(reRet[1].replace('.', ''));
             } else {
                 artifactStats[toStat] = Number(reRet[1]);
@@ -91,10 +109,10 @@ function setArtifactDetail(text) {
     return artifactStats;
 }
 
-export async function resize(file) {
+async function resize(file) {
     const canvas = await imageToCanvas(file);
     const worker = createWorker({
-        langPath: 'tessdata/4.0.0_fast',
+        langPath: 'tessdata/4.0.0_best',
         logger: m => console.debug(m)
     });
     await worker.load();
@@ -103,9 +121,9 @@ export async function resize(file) {
     //await worker.setParameters({
     //    tessedit_char_blacklist: '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳',
     //});
-    //await worker.setParameters({
-    //    tessedit_char_whitelist: '0123456789+,.%HP上限攻撃力防御元素熟知会心率ダメージチャ効',
-    //});
+    // await worker.setParameters({
+    //     tessedit_char_whitelist: WHITELIST,
+    // });
     // 基本ステータス
     // 元素熟知が高いほど、強力な元素の力を発動できる。
     // 蒸発、溶解反応によるダメージ+10.7%。
@@ -115,6 +133,7 @@ export async function resize(file) {
     // 高級ステータス
     // 元素ステータス
     await worker.setParameters({
+        tessedit_char_whitelist: WHITELIST,
         preserve_interword_spaces: '1'
     });
     const { data: { text } } = await worker.recognize(canvas);

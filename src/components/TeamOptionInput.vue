@@ -62,7 +62,7 @@ import {
   calculateArtifactStats,
   calculateArtifactStatsMain,
   calculateFormulaArray,
-  calculateResult,
+  calculateDamageResult,
   calculateStats,
   checkConditionMatches,
   makeValidConditionValueArr,
@@ -112,8 +112,8 @@ export default defineComponent({
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr = [] as any[];
     const talentChangeDetailObjArr = [] as any[];
-    const conditionMap = new Map() as Map<string, any[] | null>;
-    const exclusionMap = new Map() as Map<string, string[] | null>;
+    const conditionMap = new Map() as Map<string, string[]>;
+    const exclusionMap = new Map() as Map<string, string[]>;
     const conditionInput = reactive({
       conditionValues: {} as { [key: string]: any },
       checkboxList: [] as (TCheckboxEntry & { displayName: string })[],
@@ -249,7 +249,7 @@ export default defineComponent({
         statsInput.statsObj['元素エネルギー'] = myCharacterMaster['元素爆発']['元素エネルギー'];
       }
 
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInput,
         conditionInput,

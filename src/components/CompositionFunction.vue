@@ -42,7 +42,12 @@ export default function CompositionFunction() {
     const displayName = function (key: any): string {
         if (!key) return key;
         if (i18n.global.locale.value === 'ja-jp') { // 日本語はtranslateしません
-            return String(key).replace(/ダメージバフ$/, 'ダメージ');
+            let result = String(key);
+            result = result.replace(/ダメージバフ$/, 'ダメージ');
+            result = result.replace(/ダメージアップ$/, 'ダメージ');
+            result = result.replace('凍結反応ボーナス', '凍結反応の継続時間');
+            result = result.replace(/反応ボーナス$/, '反応ダメージ');
+            return result;
         }
         if (te(key)) return t(key);
         const re = new RegExp('(.*?)([\\s_\\(\\)/]+)(.*)');

@@ -39,15 +39,15 @@
       <div>
         <input class="hidden" id="pane6-toggle-1" type="checkbox" v-model="pane6Toggle1Ref" />
         <label class="toggle-switch" for="pane6-toggle-1">
-          {{  displayName("オプション条件")  }}
+          {{ displayName("オプション条件") }}
         </label>
         <input class="hidden" id="pane6-toggle-2" type="checkbox" v-model="pane6Toggle2Ref" />
         <label class="toggle-switch" for="pane6-toggle-2">
-          {{  displayName("ステータス")  }}
+          {{ displayName("ステータス") }}
         </label>
         <input class="hidden" id="pane6-toggle-3" type="checkbox" v-model="pane6Toggle3Ref" />
         <label class="toggle-switch" for="pane6-toggle-3">
-          {{  displayName("バフ/デバフ")  }}
+          {{ displayName("バフ/デバフ") }}
         </label>
       </div>
       <div v-if="pane6Toggle1Ref" style="margin-bottom: 10px">
@@ -57,11 +57,11 @@
       <div v-if="pane6Toggle2Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
           <input id="status-input-tab-1" type="radio" value="1" v-model="statInputTabRef" />
-          <label for="status-input-tab-1"> {{  displayName("ステータス1")  }} </label>
+          <label for="status-input-tab-1"> {{ displayName("ステータス1") }} </label>
           <input id="status-input-tab-2" type="radio" value="2" v-model="statInputTabRef" />
-          <label for="status-input-tab-2"> {{  displayName("ステータス2")  }} </label>
+          <label for="status-input-tab-2"> {{ displayName("ステータス2") }} </label>
           <input id="status-input-tab-3" type="radio" value="3" v-model="statInputTabRef" />
-          <label for="status-input-tab-3"> {{  displayName("敵")  }} </label>
+          <label for="status-input-tab-3"> {{ displayName("敵") }} </label>
         </div>
         <template v-if="statInputTabRef == 1">
           <StatsInput :statsInput="statsInput" :categoryList="characterStats1CategoryList"
@@ -72,10 +72,10 @@
             @update:stat-adjustments="updateStatAdjustments($event)" />
         </template>
         <template v-if="statInputTabRef == 3">
-          <label class="enemy">{{  displayName("敵")  }}
+          <label class="enemy">{{ displayName("敵") }}
             <select v-model="selectedEnemyRef" @change="updateEnemy">
               <option v-for="item in enemyList" :value="item" :key="item.key">
-                {{  displayName(item.key)  }}
+                {{ displayName(item.key) }}
               </option>
             </select>
           </label>
@@ -89,11 +89,11 @@
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
           <input id="option-input-tab-1" type="radio" value="1" v-model="optionInputTabRef" />
-          <label for="option-input-tab-1"> {{  displayName("元素共鳴")  }} </label>
+          <label for="option-input-tab-1"> {{ displayName("元素共鳴") }} </label>
           <input id="option-input-tab-2" type="radio" value="2" v-model="optionInputTabRef" />
-          <label for="option-input-tab-2"> {{  displayName("チーム")  }} </label>
+          <label for="option-input-tab-2"> {{ displayName("チーム") }} </label>
           <input id="option-input-tab-3" type="radio" value="3" v-model="optionInputTabRef" />
-          <label for="option-input-tab-3"> {{  displayName("その他")  }} </label>
+          <label for="option-input-tab-3"> {{ displayName("その他") }} </label>
         </div>
         <template v-if="optionInputTabRef == 1">
           <ElementalResonanceInput :elementalResonanceChecked="optionInputRea.elementalResonanceChecked"
@@ -119,17 +119,27 @@
       <h2>
         <input class="hidden" id="own-list-toggle-1" type="checkbox" v-model="ownListToggle1Ref" />
         <label class="toggle-switch no-border" for="own-list-toggle-1">
-          {{  displayName("キャラクター所持状況")  }}
+          {{ displayName("キャラクター所持状況") }}
         </label>
       </h2>
       <CharacterOwnList v-if="ownListToggle1Ref" />
       <h2>
         <input class="hidden" id="own-list-toggle-2" type="checkbox" v-model="ownListToggle2Ref" />
         <label class="toggle-switch no-border" for="own-list-toggle-2">
-          {{  displayName("武器所持状況")  }}
+          {{ displayName("武器所持状況") }}
         </label>
       </h2>
       <WeaponOwnList v-if="ownListToggle2Ref" />
+
+      <hr />
+      <label>
+        <input type="checkbox" v-model="enableClearLocalStorage" />
+        <span>{{ displayName("ローカルストレージをクリアする") }}</span>
+      </label>
+      <button type="button" @click="clearLocalStorage" :disabled="!enableClearLocalStorage">
+        {{ displayName("実行") }}
+      </button>
+      <p>{{ displayName('全ての保存データを削除します') }}</p>
     </div>
 
     <div class="pane7">
@@ -158,13 +168,13 @@
       <dl v-for="(dd, index) in myDamageDatailArr.filter((s) => s)" :key="index">
         <template v-for="key in objectKeys(dd)" :key="key">
           <template v-if="getValue(dd, key)">
-            <dt>{{  key  }}</dt>
+            <dt>{{ key }}</dt>
             <dd>
               <ol v-if="Array.isArray(getValue(dd, key))">
-                <li v-for="item in getValue(dd, key)" :key="item">{{  item  }}</li>
+                <li v-for="item in getValue(dd, key)" :key="item">{{ item }}</li>
               </ol>
               <div v-else>
-                {{  getValue(dd, key)  }}
+                {{ getValue(dd, key) }}
               </div>
             </dd>
           </template>
@@ -244,7 +254,7 @@ import {
   calculateStats,
 } from "@/calculate";
 import { deepcopy, isPlainObject, overwriteObject } from "./common";
-import { calculateResult } from "./calculate";
+import { calculateDamageResult } from "./calculate";
 import CompositionFunction from "./components/CompositionFunction.vue";
 
 export default defineComponent({
@@ -427,7 +437,7 @@ export default defineComponent({
         optionInputRea
       );
       // ダメージ計算を実行します
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -565,7 +575,7 @@ export default defineComponent({
         optionInputRea
       );
       // ダメージ計算を実行します
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -644,7 +654,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -705,7 +715,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -732,7 +742,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -778,7 +788,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -812,7 +822,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(damageResult, characterInputRea, conditionInputRea, statsInput);
+      calculateDamageResult(damageResult, characterInputRea, conditionInputRea, statsInput);
 
       configurationInputRea.聖遺物サブ効果計算停止 =
         artifactDetailInput.聖遺物優先するサブ効果Disabled;
@@ -845,7 +855,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -890,7 +900,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -908,7 +918,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -926,7 +936,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -945,7 +955,7 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
-      calculateResult(
+      calculateDamageResult(
         damageResult,
         characterInputRea as any,
         conditionInputRea as any,
@@ -977,6 +987,12 @@ export default defineComponent({
     };
 
     updateCharacter(characterInputRea.character);
+
+    const enableClearLocalStorage = ref(false);
+    const clearLocalStorage = () => {
+      localStorage.clear();
+      enableClearLocalStorage.value = false;
+    }
 
     return {
       displayName,
@@ -1050,6 +1066,9 @@ export default defineComponent({
       myDamageDatailArr,
       objectKeys,
       getValue,
+
+      enableClearLocalStorage,
+      clearLocalStorage,
     };
   },
 });
