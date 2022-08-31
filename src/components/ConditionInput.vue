@@ -21,7 +21,7 @@
       </select>
     </label>
     <hr />
-    <ul class="option-description" style="display: none">
+    <ul class="option-description" v-if="true">
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
   </fieldset>
@@ -145,31 +145,12 @@ export default defineComponent({
         result = result.replace(/ダメージアップ$/, "ダメージ");
         result = result.replace("凍結反応ボーナス", "凍結反応の継続時間");
         result = result.replace(/反応ボーナス$/, "反応ダメージ");
+        result = result.replace(/ダメージ会心/, "ダメージの会心");
         result += conditionInputRea.conditionAdjustments[stat] >= 0 ? "+" : "";
         result += conditionInputRea.conditionAdjustments[stat];
         if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) result += "%";
+        else if (stat.endsWith("会心率") || stat.endsWith("会心ダメージ")) result += "%";
         resultArr.push(result);
-      }
-      const validConditionValueArr = makeValidConditionValueArr(conditionInputRea);
-      for (const myDetailObj of talentChangeDetailObjArr.value) {
-        if (myDetailObj["条件"]) {
-          const number = checkConditionMatches(
-            myDetailObj["条件"],
-            validConditionValueArr,
-            0
-          );
-          if (number == 0) continue;
-          let str = "";
-          if (myDetailObj["対象"]) continue;
-          if (myDetailObj["数値"]) continue;
-          if (myDetailObj["種類"]) {
-            str += " ";
-            str += myDetailObj["種類"];
-          }
-          if (str) {
-            resultArr.push(str.trim());
-          }
-        }
       }
       return resultArr;
     });

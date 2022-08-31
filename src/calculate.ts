@@ -1,3 +1,4 @@
+import { defineSSRCustomElement } from "vue";
 import { deepcopy, isNumber, isPlainObject, overwriteObject } from "./common";
 import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "./input";
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat } from "./master";
@@ -136,10 +137,12 @@ export const calculateStats = function (
         const weaponLevel = characterInput.武器レベル;
 
         const workStatsObj = deepcopy(ステータスTEMPLATE);
+        const workConditionAdjustments = {} as { [key: string]: number };
 
         workStatsObj['突破レベル'] = ascension;
         workStatsObj['レベル'] = level;
         workStatsObj['命ノ星座'] = constellation;
+        workStatsObj['元素'] = characterMaster.元素;
 
         // キャラクターマスターから元素エネルギーを設定します
         if ('元素エネルギー' in characterMaster['元素爆発']) {
@@ -213,6 +216,7 @@ export const calculateStats = function (
         const myPriority2KindFormulaArr = [] as any[];
         const myKindFormulaArr = [] as any[];
         for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
+            let hasCondition = false;
             if (myDamageDetail && CHANGE_KIND_STATUS in myDamageDetail) {
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_STATUS]) {
                     let myNew数値 = myDetailObj['数値'];
@@ -222,6 +226,7 @@ export const calculateStats = function (
                         if (number != 1) {
                             myNew数値 = (myNew数値 as any).concat(['*', number]);
                         }
+                        hasCondition = true;
                     }
                     if (myDetailObj['対象']) {
                         const workArr = myDetailObj['対象'].split('.');
@@ -230,18 +235,18 @@ export const calculateStats = function (
                                 // FIXME
                             } else {
                                 const myNew種類 = myDetailObj['種類'] + '.' + myDetailObj['対象'];
-                                myKindFormulaArr.push([myNew種類, myNew数値, myDetailObj['上限']]);
+                                myKindFormulaArr.push([myNew種類, myNew数値, myDetailObj['上限'], hasCondition]);
                             }
                         }
                         continue;  // 対象指定ありのものはスキップします
                     }
                     if (myDetailObj['種類']) {
                         if (myPriority1KindArr.includes(myDetailObj['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
-                            myPriority1KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                            myPriority1KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限'], hasCondition]);
                         } else if (myDetailObj['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
-                            myPriority2KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                            myPriority2KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限'], hasCondition]);
                         } else {
-                            myKindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限']]);
+                            myKindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限'], hasCondition]);
                         }
                     }
                 }
@@ -249,12 +254,30 @@ export const calculateStats = function (
         }
         // 攻撃力の計算で参照されるステータスアップを先に計上します
         myPriority1KindFormulaArr.forEach(entry => {
-            updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+            const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+            if (entry[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
+                }
+            }
         });
         // 乗算系のステータスアップを計上します HP% 攻撃力% 防御力%
         myPriority2KindFormulaArr.sort(compareFunction);
         myPriority2KindFormulaArr.forEach(entry => {
-            updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+            const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+            if (entry[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
+                }
+            }
         });
 
         // HP, 攻撃力, 防御力を計算します
@@ -268,7 +291,16 @@ export const calculateStats = function (
         // それ以外のステータスアップを計上します
         myKindFormulaArr.sort(compareFunction);
         myKindFormulaArr.forEach(entry => {
-            updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+            const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
+            if (entry[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
+                }
+            }
         });
 
         // 天賦性能変化
@@ -302,6 +334,7 @@ export const calculateStats = function (
         conditionInput.攻撃元素 = [通常攻撃_元素Var, 重撃_元素Var, 落下攻撃_元素Var];
 
         overwriteObject(statsInput.statsObj, workStatsObj);
+        overwriteObject(conditionInput.conditionAdjustments, workConditionAdjustments);
     } catch (error) {
         console.error(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
         throw error;
@@ -1464,55 +1497,55 @@ function updateStats(
     formulaArr: number | string | Array<number | string>,
     opt_max: number | string | Array<number | string> | null = null
 ) {
-    const result = calculateFormulaArray(formulaArr, statsObj, DAMAGE_RESULT_TEMPLATE, opt_max);    // DAMAGE_RESULT_TEMPLATEは参照しない想定なのでダミーです
-    if (!isNumber(result)) {
-        console.error(statsObj, statName, formulaArr, result);
+    const diffStats = {} as { [key: string]: number };
+    const value = calculateFormulaArray(formulaArr, statsObj, DAMAGE_RESULT_TEMPLATE, opt_max);    // DAMAGE_RESULT_TEMPLATEは参照しない想定なのでダミーです
+    if (!isNumber(value)) {
+        console.error(statsObj, statName, formulaArr, value);
     }
     if (statName == 'HP') {
         statName = 'HP上限';
-        // } else if (statName.indexOf('.') != -1) {
+        diffStats[statName] = value;
     } else {
         switch (statName) {
             case '自元素ダメージバフ':
                 statName = statsObj['元素'] + '元素ダメージバフ';
+                diffStats[statName] = value;
                 break;
             case '全元素ダメージバフ':
                 ALL_ELEMENTS.forEach(entry => {
                     const workStatName = entry + '元素ダメージバフ';
-                    if (!(workStatName in statsObj)) {
-                        statsObj[workStatName] = 0;
-                    }
-                    statsObj[workStatName] += result;
+                    diffStats[workStatName] = value;
                 });
-                return;
+                break;
             case '敵自元素耐性':
                 statName = '敵' + statsObj['元素'] + '元素耐性';
+                diffStats[statName] = value;
                 break;
             case '敵全元素耐性':
                 ALL_ELEMENTS.forEach(entry => {
                     const workStatName = '敵' + entry + '元素耐性';
-                    if (!(workStatName in statsObj)) {
-                        statsObj[workStatName] = 0;
-                    }
-                    statsObj[workStatName] += result;
+                    diffStats[workStatName] = value;
                 });
-                return;
+                break;
             case '全元素耐性':
                 ALL_ELEMENTS.forEach(entry => {
                     const workStatName = entry + '元素耐性';
-                    if (!(workStatName in statsObj)) {
-                        statsObj[workStatName] = 0;
-                    }
-                    statsObj[workStatName] += result;
+                    diffStats[workStatName] = value;
                 });
-                return;
+                break;
+            default:
+                diffStats[statName] = value;
+                break;
         }
     }
-    if (!(statName in statsObj)) {
-        statsObj[statName] = 0;
+    for (const statName of Object.keys(diffStats)) {
+        if (!(statName in statsObj)) {
+            statsObj[statName] = 0;
+        }
+        statsObj[statName] += diffStats[statName];
     }
-    statsObj[statName] += result;
-    console.debug(updateStats.name, null, statName, formulaArr, '=>', result, statsObj[statName]);
+    console.debug(updateStats.name, null, statName, formulaArr, '=>', value, statsObj[statName]);
+    return diffStats;
 }
 
 /** 被ダメージを計算します */
