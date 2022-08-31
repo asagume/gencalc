@@ -137,53 +137,16 @@ export default defineComponent({
       return result;
     });
 
-    const statAdjustments = computed(() => {
-      const workObj = {} as TStats;
-      const validConditionValueArr = makeValidConditionValueArr(conditionInputRea);
-      for (const myDetailObj of statusChangeDetailObjArr.value) {
-        let myNew数値 = myDetailObj["数値"];
-        if (myDetailObj["条件"]) {
-          const number = checkConditionMatches(
-            myDetailObj["条件"],
-            validConditionValueArr,
-            0
-          );
-          if (number == 0) continue;
-          if (number != 1) {
-            myNew数値 = (myNew数値 as any).concat(["*", number]);
-          }
-        }
-        const myValue = calculateFormulaArray(myNew数値, workObj, damageResultDummy);
-        if (myDetailObj["種類"].indexOf("全元素") != -1) {
-          ALL_ELEMENTS.forEach((element: string) => {
-            const kind = myDetailObj["種類"].replace("全元素", element + "元素");
-            if (kind in workObj) {
-              workObj[kind] += myValue;
-            } else {
-              workObj[kind] = myValue;
-            }
-          });
-        } else {
-          if (myDetailObj["種類"] in workObj) {
-            workObj[myDetailObj["種類"]] += myValue;
-          } else {
-            workObj[myDetailObj["種類"]] = myValue;
-          }
-        }
-      }
-      return workObj;
-    });
-
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
-      for (const stat of Object.keys(statAdjustments.value)) {
+      for (const stat of Object.keys(conditionInputRea.conditionAdjustments)) {
         let result = stat.replace("%", "").replace(/^敵/, "敵の");
         result = result.replace(/ダメージバフ$/, "ダメージ");
         result = result.replace(/ダメージアップ$/, "ダメージ");
         result = result.replace("凍結反応ボーナス", "凍結反応の継続時間");
         result = result.replace(/反応ボーナス$/, "反応ダメージ");
-        result += statAdjustments.value[stat] >= 0 ? "+" : "";
-        result += statAdjustments.value[stat];
+        result += conditionInputRea.conditionAdjustments[stat] >= 0 ? "+" : "";
+        result += conditionInputRea.conditionAdjustments[stat];
         if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) result += "%";
         resultArr.push(result);
       }
