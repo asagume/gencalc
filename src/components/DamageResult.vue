@@ -1,72 +1,72 @@
 <template>
   <div class="elemental-reaction">
     <input id="増幅反応-なし" type="radio" value="なし" name="増幅反応-name" @change="増幅反応 = 'なし'" />
-    <label for="増幅反応-なし"> {{  displayName("反応なし")  }} </label>
+    <label for="増幅反応-なし"> {{ displayName("反応なし") }} </label>
     <template v-if="damageResult.元素反応.蒸発倍率">
       <input id="増幅反応-蒸発" type="radio" value="蒸発" name="増幅反応-name" @change="増幅反応 = '蒸発'" />
       <label for="増幅反応-蒸発">
-        {{  displayName("蒸発")  }}×<span>{{
-           Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100 
-          }}</span>
+        {{ displayName("蒸発") }}×<span>{{
+            Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
+        }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.溶解倍率">
       <input id="増幅反応-溶解" type="radio" value="溶解" name="増幅反応-name" @change="増幅反応 = '溶解'" />
       <label for="増幅反応-溶解">
-        {{  displayName("溶解")  }}×<span>{{
-           Math.round(damageResult.元素反応.溶解倍率 * 100) / 100 
-          }}</span>
+        {{ displayName("溶解") }}×<span>{{
+            Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
+        }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.超激化ダメージ">
       <input id="増幅反応-超激化" type="radio" value="超激化" name="増幅反応-name" @change="増幅反応 = '超激化'" />
       <label for="増幅反応-超激化" class="electro">
-        {{  displayName("超激化")  }}
-        <span>{{  Math.round(damageResult.元素反応.超激化ダメージ)  }}</span>
+        {{ displayName("超激化") }}
+        <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.草激化ダメージ">
       <input id="増幅反応-草激化" type="radio" value="草激化" name="増幅反応-name" @change="増幅反応 = '草激化'" />
       <label for="増幅反応-草激化" class="dendro">
-        {{  displayName("草激化")  }}
-        <span>{{  Math.round(damageResult.元素反応.草激化ダメージ)  }}</span>
+        {{ displayName("草激化") }}
+        <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
       </label>
     </template>
     <label v-if="damageResult.元素反応.過負荷ダメージ" class="pyro">
-      {{  displayName("過負荷")  }}
-      <span>{{  Math.round(damageResult.元素反応.過負荷ダメージ)  }}</span>
+      {{ displayName("過負荷") }}
+      <span>{{ Math.round(damageResult.元素反応.過負荷ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.感電ダメージ" class="electro">
-      {{  displayName("感電")  }}
-      <span>{{  Math.round(damageResult.元素反応.感電ダメージ)  }}</span>
+      {{ displayName("感電") }}
+      <span>{{ Math.round(damageResult.元素反応.感電ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.超電導ダメージ" class="cryo">
-      {{  displayName("超電導")  }}
-      <span>{{  Math.round(damageResult.元素反応.超電導ダメージ)  }}</span>
+      {{ displayName("超電導") }}
+      <span>{{ Math.round(damageResult.元素反応.超電導ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.拡散ダメージ" :class="elementClass(元素反応.拡散元素)">
-      {{  displayName("拡散")  }}
-      <span>{{  Math.round(damageResult.元素反応.拡散ダメージ)  }}</span>
+      {{ displayName("拡散") }}
+      <span>{{ Math.round(damageResult.元素反応.拡散ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.結晶吸収量">
-      {{  displayName("結晶")  }}
-      <span>{{  Math.round(damageResult.元素反応.結晶吸収量)  }}</span>
+      {{ displayName("結晶") }}
+      <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
     </label>
     <label v-if="damageResult.元素反応.燃焼ダメージ" class="pyro">
-      {{  displayName("燃焼")  }}
-      <span>{{  Math.round(damageResult.元素反応.燃焼ダメージ)  }}</span>
+      {{ displayName("燃焼") }}
+      <span>{{ Math.round(damageResult.元素反応.燃焼ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.開花ダメージ" class="dendro">
-      {{  displayName("開花")  }}
-      <span>{{  Math.round(damageResult.元素反応.開花ダメージ)  }}</span>
+      {{ displayName("開花") }}
+      <span>{{ Math.round(damageResult.元素反応.開花ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.烈開花ダメージ" class="dendro">
-      {{  displayName("烈開花")  }}
-      <span>{{  Math.round(damageResult.元素反応.烈開花ダメージ)  }}</span>
+      {{ displayName("烈開花") }}
+      <span>{{ Math.round(damageResult.元素反応.烈開花ダメージ) }}</span>
     </label>
     <label v-if="damageResult.元素反応.超開花ダメージ" class="dendro">
-      {{  displayName("超開花")  }}
-      <span>{{  Math.round(damageResult.元素反応.超開花ダメージ)  }}</span>
+      {{ displayName("超開花") }}
+      <span>{{ Math.round(damageResult.元素反応.超開花ダメージ) }}</span>
     </label>
   </div>
   <template v-for="category in CATEGORY_LIST" :key="category">
@@ -74,25 +74,25 @@
       <table v-if="resultStyleRef == '1'" class="result v-style">
         <thead>
           <tr @click="categoryOnClick(category)">
-            <th>{{  displayName(category)  }}</th>
-            <th>{{  displayName("期待値")  }}</th>
-            <th>{{  displayName("会心")  }}</th>
-            <th>{{  displayName("非会心")  }}</th>
+            <th>{{ displayName(category) }}</th>
+            <th>{{ displayName("期待値") }}</th>
+            <th>{{ displayName("会心") }}</th>
+            <th>{{ displayName("非会心") }}</th>
           </tr>
         </thead>
         <template v-if="categoryOpenClose[category]">
           <tr v-for="item in itemList(category)" :key="item[0]">
             <th v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
-              {{  displayNameV(item[0])  }}
+              {{ displayNameV(item[0]) }}
             </th>
             <td :class="'damage-value ' + elementClass(item[1])">
-              {{  displayDamageValue(item, 2)  }}
+              {{ displayDamageValue(item, 2) }}
             </td>
             <td :class="'damage-value ' + elementClass(item[1])">
-              {{  displayDamageValue(item, 3)  }}
+              {{ displayDamageValue(item, 3) }}
             </td>
             <td :class="'damage-value ' + elementClass(item[1])">
-              {{  displayDamageValue(item, 4)  }}
+              {{ displayDamageValue(item, 4) }}
             </td>
           </tr>
         </template>
@@ -100,31 +100,31 @@
       <table v-if="resultStyleRef == '0'" class="result h-style">
         <thead>
           <tr @click="categoryOnClick(category)">
-            <th>{{  displayName(category)  }}</th>
+            <th>{{ displayName(category) }}</th>
             <template v-for="item in itemList(category)" :key="item[0]">
               <th v-if="item[item.length - 1]" :colspan="item[item.length - 1]">
-                {{  displayNameH(item[0], category)  }}
+                {{ displayNameH(item[0], category) }}
               </th>
             </template>
           </tr>
         </thead>
         <tr>
-          <th>{{  displayName("期待値")  }}</th>
+          <th>{{ displayName("期待値") }}</th>
           <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
-            {{  displayDamageValue(item, 2)  }}
+            {{ displayDamageValue(item, 2) }}
           </td>
         </tr>
         <template v-if="categoryOpenClose[category]">
           <tr>
-            <th>{{  displayName("会心")  }}</th>
+            <th>{{ displayName("会心") }}</th>
             <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
-              {{  displayDamageValue(item, 3)  }}
+              {{ displayDamageValue(item, 3) }}
             </td>
           </tr>
           <tr>
-            <th>{{  displayName("非会心")  }}</th>
+            <th>{{ displayName("非会心") }}</th>
             <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
-              {{  displayDamageValue(item, 4)  }}
+              {{ displayDamageValue(item, 4) }}
             </td>
           </tr>
         </template>
@@ -133,26 +133,26 @@
   </template>
   <table class="result">
     <tr>
-      <th>{{  displayName("被ダメージ")  }}</th>
+      <th>{{ displayName("被ダメージ") }}</th>
       <td class="damage-value" v-for="item in damageTakenList" :key="item.key">
         <span :class="elementClass(item.key)">
-          {{  Math.round(item.value)  }}
+          {{ Math.round(item.value) }}
         </span>
       </td>
     </tr>
     <tr>
-      <th>{{  displayName("耐久スコア")  }}</th>
+      <th>{{ displayName("耐久スコア") }}</th>
       <td class="damage-value" v-for="item in resScoreList" :key="item.key">
         <span :class="elementClass(item.key)">
-          {{  Math.round(item.value)  }}
+          {{ Math.round(item.value) }}
         </span>
       </td>
     </tr>
   </table>
   <div v-if="damageResult.キャラクター注釈.length > 0">
-    <ul>
+    <ul class="notes">
       <li v-for="(item, index) in damageResult.キャラクター注釈" :key="index">
-        {{  item  }}
+        {{ item }}
       </li>
     </ul>
   </div>
@@ -382,7 +382,8 @@ table.result.h-style thead th:first-child {
   margin: 1rem;
 }
 
-ul {
+ul.notes {
   list-style-type: none;
+  text-align: left;
 }
 </style>

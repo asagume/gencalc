@@ -2,19 +2,19 @@
   <fieldset>
     <label v-for="item in checkboxList" :key="item.name">
       <input type="checkbox" v-model="conditionValues[item.name]" :value="item" @change="onChange" />
-      <span> {{  displayName(item.name)  }}</span>
+      <span> {{ displayName(item.name) }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
-      <span> {{  displayName(item.name)  }} </span>
+      <span> {{ displayName(item.name) }} </span>
       <select v-model="conditionValues[item.name]" @change="onChange">
         <option v-for="(option, index) in item.options" :value="index" :key="option">
-          {{  displayOptionName(option)  }}
+          {{ displayOptionName(option) }}
         </option>
       </select>
     </label>
     <hr />
     <ul class="option-description">
-      <li v-for="item in displayStatAjustmentList" :key="item">{{  item  }}</li>
+      <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
   </fieldset>
 </template>
@@ -25,12 +25,11 @@ import {
   checkConditionMatches,
   makeValidConditionValueArr,
 } from "@/calculate";
-import { deepcopy } from "@/common";
+import { deepcopy, isNumber } from "@/common";
 import {
   DAMAGE_RESULT_TEMPLATE,
   makeConditionExclusionMapFromStr,
   makeDamageDetailObjArr,
-  STAT_PERCENT_LIST,
   TCheckboxEntry,
   TSelectEntry,
   TStats,
@@ -43,7 +42,7 @@ export default defineComponent({
   name: "MiscOptionInput",
   emits: ["update:misc-option"],
   setup(props, context) {
-    const { displayName, displayOptionName } = CompositionFunction();
+    const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr = [] as any[];
@@ -156,11 +155,18 @@ export default defineComponent({
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
-        let str = stat.replace("%", "").replace(/^敵/, "敵の");
-        str += statAdjustments.value[stat] >= 0 ? "+" : "";
-        str += statAdjustments.value[stat];
-        if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) str += "%";
-        resultArr.push(str);
+        const value = statAdjustments.value[stat];
+        let result = displayStatName(stat);
+        if (isNumber(value)) {
+          if (value >= 0) {
+            if (stat.split('.')[0] == '別枠乗算') result += '=';
+            else result += '+';
+          }
+          result += displayStatValue(stat, value);
+        } else if (value) {
+          result += '=' + value;
+        }
+        resultArr.push(result);
       }
       return resultArr;
     });

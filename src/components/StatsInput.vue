@@ -12,11 +12,7 @@
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayStatName(stat) }}</th>
         <td v-if="editable">
-          <input
-            type="number"
-            v-model="statAdjustments[stat]"
-            @change="adjustmentsOnChange"
-          />
+          <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange" />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
@@ -54,7 +50,7 @@ export default defineComponent({
   },
   emits: ["update:stat-adjustments"],
   setup(props, context) {
-    const { displayName, displayStatValue } = CompositionFunction();
+    const { displayName, displayStatName, displayStatValue } = CompositionFunction();
 
     const statsInputRea = reactive(props.statsInput);
 
@@ -64,11 +60,6 @@ export default defineComponent({
     const statList = (category: string) => ステータスARRAY_MAP.get(category);
     const statsObj = statsInputRea.statsObj;
     const statAdjustments = statsInputRea.statAdjustments;
-
-    const displayStatName = (name: string) => {
-      if (name.endsWith("反応ボーナス")) name = name.replace(/反応ボーナス$/, "");
-      return displayName(name);
-    };
 
     const categoryOpenClose = ref({} as any);
     if (props.categoryList) {

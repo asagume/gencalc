@@ -1,20 +1,13 @@
 <template>
   <fieldset>
     <label v-for="item in checkboxList" :key="item.name">
-      <input
-        type="checkbox"
-        v-model="conditionValues[item.name]"
-        :value="item.name"
-        @change="updateCondition($event, item)"
-      />
+      <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
+        @change="updateCondition($event, item)" />
       <span>{{ displayName(item.name) }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
       <span>{{ displayName(item.name) }}</span>
-      <select
-        v-model="conditionValues[item.name]"
-        @change="updateCondition($event, item)"
-      >
+      <select v-model="conditionValues[item.name]" @change="updateCondition($event, item)">
         <option v-for="(option, index) in item.options" :value="index" :key="index">
           {{ displayOptionName(option) }}
         </option>
@@ -30,7 +23,6 @@
 <script lang="ts">
 import { isNumber } from "@/common";
 import {
-  STAT_PERCENT_LIST,
   TCharacterInput,
   TConditionInput,
 } from "@/input";
@@ -45,7 +37,7 @@ export default defineComponent({
   },
   emits: ["update:condition"],
   setup(props, context) {
-    const { displayName, displayOptionName } = CompositionFunction();
+    const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
     const conditionInputRea = reactive(props.conditionInput);
     const conditionValues = conditionInputRea.conditionValues as any;
@@ -95,26 +87,16 @@ export default defineComponent({
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
       for (const stat of Object.keys(conditionInputRea.conditionAdjustments)) {
-        let result = stat.replace("%", "").replace(/^敵/, "敵の");
-        result = result.replace(/ダメージバフ$/, "ダメージ");
-        result = result.replace(/ダメージアップ$/, "ダメージ");
-        result = result.replace("凍結反応ボーナス", "凍結反応の継続時間");
-        result = result.replace(/反応ボーナス$/, "反応ダメージ");
-        result = result.replace(/ダメージ会心/, "ダメージの会心");
-        if (isNumber(conditionInputRea.conditionAdjustments[stat])) {
-          let value = conditionInputRea.conditionAdjustments[stat];
-          if (value < 10) {
-            value = Math.round(value * 100) / 100;
-          } else {
-            value = Math.round(value * 10) / 10;
+        const value = conditionInputRea.conditionAdjustments[stat];
+        let result = displayStatName(stat);
+        if (isNumber(value)) {
+          if (value >= 0) {
+            if (stat.split('.')[0] == '別枠乗算') result += '=';
+            else result += '+';
           }
-          result += value >= 0 ? "+" : "";
-          result += value;
-          if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) result += "%";
-          else if (stat.endsWith("会心率") || stat.endsWith("会心ダメージ"))
-            result += "%";
-        } else {
-          result += "=" + conditionInputRea.conditionAdjustments[stat];
+          result += displayStatValue(stat, value);
+        } else if (value) {
+          result += '=' + value;
         }
         resultArr.push(result);
       }
@@ -148,7 +130,7 @@ label select {
   margin: 0 0.5rem;
 }
 
-:checked + span {
+:checked+span {
   color: palevioletred;
 }
 </style>

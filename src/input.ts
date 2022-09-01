@@ -114,7 +114,8 @@ export const ステータスARRAY_MAP = new Map([
 ]);
 
 export const STAT_PERCENT_LIST = [
-    ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵元素ステータス_耐性ARRAY
+    ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵元素ステータス_耐性ARRAY,
+    '別枠乗算',
 ];
 
 function makeStatusTenmplate() {
@@ -319,8 +320,8 @@ export type TDamageDetailObj = {
     HIT数: number | null,
     ダメージバフ: string | null,
     元素付与無効: boolean | null,
-    除外条件: string | null,
-    適用条件: string | null,
+    除外条件: (string | object)[] | null,
+    適用条件: (string | object)[] | null,
 };
 
 export type TDamageDetail = {

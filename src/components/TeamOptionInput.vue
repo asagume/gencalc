@@ -104,7 +104,7 @@ export default defineComponent({
   },
   emits: ["update:team-option"],
   setup(props, context) {
-    const { displayName, displayStatValue, displayOptionName } = CompositionFunction();
+    const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
     const supporterKeyList = reactive([] as string[]);
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
@@ -349,16 +349,20 @@ export default defineComponent({
 
     /** ステータス補正値を表示用の形式に編集します */
     const displayStatAjustmentList = computed(() => {
-      // TODO 多言語対応
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
-        let str = stat
-          .replace("%", "")
-          .replace(/^敵/, "敵の")
-          .replace("ダメージ会心", "ダメージの会心");
-        str += statAdjustments.value[stat] >= 0 ? "+" : "";
-        str += displayStatValue(stat, statAdjustments.value[stat]);
-        resultArr.push(str);
+        const value = statAdjustments.value[stat];
+        let result = displayStatName(stat);
+        if (isNumber(value)) {
+          if (value >= 0) {
+            if (stat.split('.')[0] == '別枠乗算') result += '=';
+            else result += '+';
+          }
+          result += displayStatValue(stat, value);
+        } else if (value) {
+          result += '=' + value;
+        }
+        resultArr.push(result);
       }
       return resultArr;
     });

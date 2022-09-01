@@ -43,10 +43,14 @@ export default function CompositionFunction() {
         if (!key) return key;
         if (i18n.global.locale.value === 'ja-jp') { // 日本語はtranslateしません
             let result = String(key);
+            if (['ダメージバフ', 'ダメージアップ', '反応ボーナス', '敵'].includes(result)) {
+                return result;
+            }
             result = result.replace(/ダメージバフ$/, 'ダメージ');
             result = result.replace(/ダメージアップ$/, 'ダメージ');
             result = result.replace('凍結反応ボーナス', '凍結反応の継続時間');
             result = result.replace(/反応ボーナス$/, '反応ダメージ');
+            result = result.replace(/^敵/, '敵の');
             return result;
         }
         if (te(key)) return t(key);
@@ -67,8 +71,28 @@ export default function CompositionFunction() {
     }
 
     const percent = function (stat: string) {
-        if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) return "%";
-        return "";
+        const tempArr = stat.split('.');
+        let work = tempArr[0];
+        let hasPercent = work.endsWith("%") || STAT_PERCENT_LIST.includes(work);
+        if (!hasPercent) {
+            ['会心率', '会心ダメージ'].forEach(postfix => {
+                if (work.endsWith(postfix)) hasPercent = true;
+            })
+        }
+        return hasPercent ? '%' : '';
+    }
+
+    const displayStatName = function (stat: string) {
+        let result = stat;
+        const tempArr = stat.split('.');
+        if (tempArr.length == 1) {
+            result = displayName(stat);
+        } else if (i18n.global.locale.value === 'ja-jp') {
+            result = tempArr[tempArr.length - 1] + 'の' + displayName(tempArr[0]);
+        } else {
+            result = displayName(tempArr[tempArr.length - 1]) + ' ' + displayName(tempArr[0]);
+        }
+        return result;
     }
 
     const displayStatValue = function (stat: string, value: number, opt_s?: number): string {
@@ -92,7 +116,7 @@ export default function CompositionFunction() {
     return {
         localeList,
         setI18nLanguage, loadLocaleMessages,
-        displayName, displayStatValue, targetValue, displayOptionName,
+        displayName, displayStatName, displayStatValue, targetValue, displayOptionName,
     }
 }
 </script>

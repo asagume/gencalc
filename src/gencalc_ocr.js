@@ -143,6 +143,7 @@ async function resize(file) {
 }
 
 export async function resizePinnedImage(e) {
+    console.log(e);
     const target = e.currentTarget;
     const file = target.files[0];
     if (!file.type.match('image.*')) { return undefined }
