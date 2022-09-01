@@ -551,6 +551,25 @@ export default defineComponent({
         characterInputRea.buildname = "";
       }
       console.debug("updateRecommendation", characterInputRea);
+      if (!('精錬ランク' in recommendation.build)) {
+        const weapon = characterInputRea.weapon;
+        let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
+        let savedRefine;
+        if ('武器所持状況' in localStorage) {
+          const myWeaponOwnObj = JSON.parse(localStorage["武器所持状況"]);
+          if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon]) {
+            savedRefine = Number(myWeaponOwnObj[weapon]);
+          }
+        }
+        if (savedRefine) {
+          refine = savedRefine;
+        } else if ('精錬ランク' in characterInputRea.weaponMaster) {
+          refine = characterInputRea.weaponMaster.精錬ランク;
+        }
+        const maxRefine = characterInputRea.weaponMaster.レアリティ < 3 ? 1 : 5;
+        if (refine > maxRefine) refine = maxRefine;
+        characterInputRea.武器精錬ランク = Number(refine);
+      }
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
       // 武器のダメージ計算式を再抽出します
@@ -729,19 +748,21 @@ export default defineComponent({
         weapon
         // characterInputRea.characterMaster.武器
       );
-      let refine = 1;
-      if ("武器所持状況" in localStorage) {
+      let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
+      let savedRefine;
+      if ('武器所持状況' in localStorage) {
         const myWeaponOwnObj = JSON.parse(localStorage["武器所持状況"]);
-        if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon] != null) {
-          refine = Number(myWeaponOwnObj[weapon]);
-        } else if (characterInputRea.weaponMaster.レアリティ == 4) {
-          refine = 3;
-        } else if (characterInputRea.weaponMaster.レアリティ == 3) {
-          refine = 5;
-        } else {
-          refine = 1;
+        if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon]) {
+          savedRefine = Number(myWeaponOwnObj[weapon]);
         }
       }
+      if (savedRefine) {
+        refine = savedRefine;
+      } else if ('精錬ランク' in characterInputRea.weaponMaster) {
+        refine = characterInputRea.weaponMaster.精錬ランク;
+      }
+      const maxRefine = characterInputRea.weaponMaster.レアリティ < 3 ? 1 : 5;
+      if (refine > maxRefine) refine = maxRefine;
       characterInputRea.武器精錬ランク = Number(refine);
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
