@@ -45,7 +45,7 @@
         name="増幅反応-name"
         @change="増幅反応 = '超激化'"
       />
-      <label for="増幅反応-超激化" class="electro">
+      <label for="増幅反応-超激化">
         {{ displayName("超激化") }}
         <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
       </label>
@@ -58,7 +58,7 @@
         name="増幅反応-name"
         @change="増幅反応 = '草激化'"
       />
-      <label for="増幅反応-草激化" class="dendro">
+      <label for="増幅反応-草激化">
         {{ displayName("草激化") }}
         <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
       </label>
