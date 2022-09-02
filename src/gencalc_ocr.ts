@@ -113,7 +113,7 @@ function setArtifactDetail(text: string) {
 async function resize(file: File) {
     const canvas = await imageToCanvas(file);
     const worker = createWorker({
-        langPath: 'tessdata/4.0.0_best',
+        // langPath: 'tessdata/4.0.0_best',
         logger: m => console.debug(m)
     });
     await worker.load();
@@ -147,15 +147,14 @@ export async function resizePinnedImage(ev: Event): Promise<{ [key: string]: num
     let result = undefined;
     const target = ev.currentTarget as HTMLInputElement;
     const fileList = target.files;
-    console.log('resizePinnedImage', ev.currentTarget, fileList);
     if (fileList && fileList[0]) {
         const file = fileList[0];
-        console.log('resizePinnedImage', file, file.type);
         if (file.type.match('image.*')) {
             target.files = null;
             target.value = '';
             result = await resize(file);
         }
     }
+    console.log('resizePinnedImage', result);
     return result;
 }
