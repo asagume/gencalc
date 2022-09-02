@@ -7,7 +7,7 @@ let WHITELIST = '0123456789.%+';
     'HP上限', '攻撃力', '防御力', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率',
     '基本ステータス', '高級ステータス', '元素ステータス',
     'スタミナ上限', '与える治療効果', '受ける治療効果', 'クールタイム短縮', 'シールド強化',
-    '炎元素ダメージ', '水元素ダメージ', '風元素ダメージ', '雷元素ダメージ', '草元素ダメージ', '氷元素ダメージ', '岩元素ダメージ', '物理ダメージ', 
+    '炎元素ダメージ', '水元素ダメージ', '風元素ダメージ', '雷元素ダメージ', '草元素ダメージ', '氷元素ダメージ', '岩元素ダメージ', '物理ダメージ',
     '元素熟知が高いほど、強力な元素の力を発動できる。',
     '蒸発、溶解反応によるダメージ',
     '過負荷、超電導、感電、氷砕き拡散反応によるダメージ',
@@ -144,12 +144,13 @@ async function resize(file: File) {
 }
 
 export async function resizePinnedImage(ev: Event): Promise<{ [key: string]: number } | undefined> {
-    console.log(ev);
     let result = undefined;
     const target = ev.currentTarget as HTMLInputElement;
     const fileList = target.files;
+    console.log('resizePinnedImage', ev.currentTarget, fileList);
     if (fileList && fileList[0]) {
         const file = fileList[0];
+        console.log('resizePinnedImage', file, file.type);
         if (file.type.match('image.*')) {
             target.files = null;
             target.value = '';

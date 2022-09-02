@@ -267,11 +267,11 @@ export default defineComponent({
     loadSupporterData();
 
     const supporterCheckboxList = (supporter: any) => {
-      return checkboxList.filter((s) => s.name.startsWith(supporter));
+      return checkboxList.filter((s) => s.name.startsWith(supporter + '*'));
     };
 
     const supporterSelectList = (supporter: any) => {
-      return selectList.filter((s) => s.name.startsWith(supporter));
+      return selectList.filter((s) => s.name.startsWith(supporter + '*'));
     };
 
     /** 選択中のキャラクターのオプションは無効です */
@@ -315,6 +315,7 @@ export default defineComponent({
         let myNew数値 = myDetailObj["数値"];
         if (myDetailObj["条件"]) {
           supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf('*'));
+          if (supporter == props.character) continue;
           const number = checkConditionMatches(
             myDetailObj["条件"],
             validConditionValueArr,

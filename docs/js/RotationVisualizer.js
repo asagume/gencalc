@@ -20,7 +20,7 @@ var ParticleMaster;
 /** キャラクター名候補Map <キャラクター名, [候補]> */
 var CharacterNameMatchMap;
 
-const DUMMY_IMG_SRC = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+// const DUMMY_IMG_SRC = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
 
 const DEFAULT_ROTATION_TIME = 20;
 const DEFAULT_ENERGY_BY_ENEMY = 0;
@@ -85,7 +85,7 @@ const displayTypeNameMap = new Map([
 const CONTAIN_KANJI_RE = /([\u{3005}\u{3007}\u{303b}\u{3400}-\u{9FFF}\u{F900}-\u{FAFF}\u{20000}-\u{2FFFF}][\u{E0100}-\u{E01EF}\u{FE00}-\u{FE02}]?)/mu;
 
 const KQM_SPLIT_RE1 = new RegExp(/\s+>\s+/);
-const KQM_SPLIT_RE2 = new RegExp(/(\/\*.*\*\/|\S+\.\S+|\S+)/);
+// const KQM_SPLIT_RE2 = new RegExp(/(\/\*.*\*\/|\S+\.\S+|\S+)/);
 
 const X_SCALE = 30; // px per second (1sencod = 60frames)
 
@@ -375,14 +375,14 @@ function getCharacterElementImgSrc(characterMaster) {
     return ELEMENT_IMG_SRC[characterMaster['元素']];
 }
 
-function getElementalSkillImgSrc(characterMaster) {
-    const imgDir = characterMaster['import'].replace(/data\/characters/, 'images/characters').replace(/.json$/, '/');
-    return imgDir + 'ElementalSkill.png';
+function getElementalSkillImgSrc(character) {
+    const characterMasterDetail = CharacterMasterMap.get(character);
+    return characterMasterDetail.元素スキル.icon_url;
 }
 
-function getElementalBurstImgSrc(characterMaster) {
-    const imgDir = characterMaster['import'].replace(/data\/characters/, 'images/characters').replace(/.json$/, '/');
-    return imgDir + 'ElementalBurst.png';
+function getElementalBurstImgSrc(character) {
+    const characterMasterDetail = CharacterMasterMap.get(character);
+    return characterMasterDetail.元素爆発.icon_url;
 }
 
 function getTimeNumber(time, opt_default) {
@@ -460,11 +460,13 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                         }
                         break;
                 }
+                break;
             case 'P':   // 落下攻撃
                 if (!type) {
                     type = '低空落下';
                 }
                 time = -9999;
+                break;
             case 'E':   // 元素スキル
                 time = -9999;
                 if (!type) {
@@ -512,8 +514,10 @@ function getActionTime(rotationMaster, action, n, type, opt_nextAction = null) {
                 break;
             case 'C':
                 time = 90;
+                break;
             case 'P':
                 time = 60;
+                break;
             case 'E':
                 time = 60;
                 break;
@@ -540,7 +544,7 @@ function makeRotation4v(rotationStr) {
 
     analyzedMap.forEach((value, key) => {
         const character = key;
-        const characterMasterDetail = CharacterMasterMap.get(character);
+        // const characterMasterDetail = CharacterMasterMap.get(character);
         const rotationMaster = RotationMaster[character];
 
         value.forEach(actionGroupObj => {
@@ -553,9 +557,9 @@ function makeRotation4v(rotationStr) {
                     if (i + 1 < actionGroupObj['actionList'].length) {
                         nextAction = actionGroupObj['actionList'][i + 1]['action'];
                     }
+                    const timeArr = [];
                     switch (actionObj['action']) {
                         case 'N':   // 通常攻撃
-                            let timeArr = [];
                             for (let j = 0; j < actionObj['numberOfAttack'] - 1; j++) {
                                 frames = getActionTime(rotationMaster, actionObj['action'], j, null, 'N');
                                 timeArr.push(frames);
@@ -695,7 +699,7 @@ function makeRotation4v(rotationStr) {
                         }
                     }
                     width = actionObj['time'];
-                    iconObj['imgSrc'] = getElementalSkillImgSrc(characterMaster);
+                    iconObj['imgSrc'] = getElementalSkillImgSrc(character);
                     iconObj['width'] = width;
                     nextIconX += width;
                 } else if (actionObj['action'] == 'Q') {    // 元素爆発
@@ -708,7 +712,7 @@ function makeRotation4v(rotationStr) {
                         iconObj['energyCost'] = characterMasterDetail['元素爆発']['元素エネルギー'];
                     }
                     width = actionObj['time'];
-                    iconObj['imgSrc'] = getElementalBurstImgSrc(characterMaster);
+                    iconObj['imgSrc'] = getElementalBurstImgSrc(character);
                     iconObj['width'] = width;
                     nextIconX += width;
                 } else if (['W', 'D', 'J'].includes(actionObj['action'])) {    // 歩き ダッシュ ジャンプ

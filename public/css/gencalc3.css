@@ -321,18 +321,8 @@ input[type="checkbox"]:disabled+span {
     color: gray;
 }
 
-td button, td label.button {
+td button {
     width: calc(100% - 4px);
-}
-
-label.button {
-    border: 2px solid gray;
-    border-radius: 15px;
-}
-
-label.checkbox {
-    margin-right: 1rem;
-    white-space: nowrap;
 }
 
 div.filter img.filter {
@@ -477,23 +467,6 @@ input[type="number"].level {
 
 table th {
     font-weight: normal;
-}
-
-label.expandable-option {
-    display: inline-block;
-    margin: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    border-bottom: 2px solid gray;
-    border-radius: 10px;
-}
-
-div.misc-option-list {
-    text-align: left;
-}
-
-div.misc-option-list label.condition {
-    min-width: calc(50% - 2rem);
 }
 
 table.status {
