@@ -505,43 +505,55 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
 
         // 元素反応を計算します
         const reactionResult = deepcopy(元素反応TEMPLATE);
-        const reactionMaster = (ELEMENTAL_REACTION_MASTER as any)[vision];
+        const reactionMasterArr = [[vision, (ELEMENTAL_REACTION_MASTER as any)[vision]]];
+        if (conditionInput.selectList.filter(s => s.name == '元素変化').length) {
+            const selectEntry = conditionInput.selectList.filter(s => s.name == '元素変化')[0];
+            const selectedIndex = conditionInput.conditionValues['元素変化'] as number;
+            if (selectedIndex) {
+                const 付加元素 = selectEntry.options[selectedIndex].replace(/元素$/, '');
+                reactionMasterArr.push([付加元素, (ELEMENTAL_REACTION_MASTER as any)[付加元素]]);
+            }
+        }
         reactionResult['元素'] = vision;
-        Object.keys(reactionMaster).forEach(reaction => {
-            const reactionObj = reactionMaster[reaction];
-            let resultValue = 0;
-            if (reaction == '結晶') {
-                resultValue = calculate結晶シールド吸収量(vision, statsInput.statsObj);
-            } else if (reaction == '拡散') {
-                let dmgElement = '炎';
-                for (const entry of conditionInput.selectList) {
-                    if (entry.name == '拡散') {
-                        const optionValue = entry.options[Number(conditionInput.conditionValues['拡散'])];
-                        if (optionValue) dmgElement = optionValue.replace(/元素$/, '');
-                        break;
+        reactionMasterArr.forEach(entry => {
+            const element = entry[0];
+            const reactionMaster = entry[1];
+            Object.keys(reactionMaster).forEach(reaction => {
+                const reactionObj = reactionMaster[reaction];
+                let resultValue = 0;
+                if (reaction == '結晶') {
+                    resultValue = calculate結晶シールド吸収量(element, statsInput.statsObj);
+                } else if (reaction == '拡散') {
+                    let dmgElement = '炎';
+                    for (const entry of conditionInput.selectList) {
+                        if (entry.name == '拡散') {
+                            const optionValue = entry.options[Number(conditionInput.conditionValues['拡散'])];
+                            if (optionValue) dmgElement = optionValue.replace(/元素$/, '');
+                            break;
+                        }
+                    }
+                    reactionResult['拡散元素'] = dmgElement;
+                    resultValue = calculate固定値系元素反応ダメージ(reaction, element, statsInput.statsObj, dmgElement);
+                } else {
+                    switch (reactionObj['種類']) {
+                        case '乗算':    // 蒸発 溶解
+                            resultValue = calculate乗算系元素反応倍率(reaction, element, statsInput.statsObj);
+                            break;
+                        case '固定':    // 過負荷 感電 超電導
+                            resultValue = calculate固定値系元素反応ダメージ(reaction, element, statsInput.statsObj);
+                            break;
+                        case '加算':    // 超激化 草激化
+                            resultValue = calculate加算系元素反応ダメージ(reaction, element, statsInput.statsObj);
+                            break;
                     }
                 }
-                reactionResult['拡散元素'] = dmgElement;
-                resultValue = calculate固定値系元素反応ダメージ(reaction, vision, statsInput.statsObj, dmgElement);
-            } else {
-                switch (reactionObj['種類']) {
-                    case '乗算':    // 蒸発 溶解
-                        resultValue = calculate乗算系元素反応倍率(reaction, vision, statsInput.statsObj);
-                        break;
-                    case '固定':    // 過負荷 感電 超電導
-                        resultValue = calculate固定値系元素反応ダメージ(reaction, vision, statsInput.statsObj);
-                        break;
-                    case '加算':    // 超激化 草激化
-                        resultValue = calculate加算系元素反応ダメージ(reaction, vision, statsInput.statsObj);
-                        break;
-                }
-            }
-            Object.keys(reactionResult).forEach(key => {
-                if (key.startsWith(reaction) && isNumber(reactionResult[key])) {
-                    reactionResult[key] = resultValue;
-                }
+                Object.keys(reactionResult).forEach(key => {
+                    if (key.startsWith(reaction) && isNumber(reactionResult[key])) {
+                        reactionResult[key] = resultValue;
+                    }
+                });
             });
-        });
+        })
         overwriteObject(damageResult.元素反応, reactionResult);
         console.debug('元素反応', damageResult.元素反応);
 
