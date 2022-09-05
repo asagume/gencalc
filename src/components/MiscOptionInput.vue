@@ -35,7 +35,7 @@ import {
   TStats,
 } from "@/input";
 import { OPTION1_MASTER_LIST, OPTION2_MASTER_LIST } from "@/master";
-import { computed, defineComponent, reactive } from "vue";
+import { computed, defineComponent, nextTick, reactive } from "vue";
 import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
@@ -171,7 +171,8 @@ export default defineComponent({
       return resultArr;
     });
 
-    const onChange = () => {
+    const onChange = async () => {
+      await nextTick();
       context.emit("update:misc-option", statAdjustments.value);
     };
 

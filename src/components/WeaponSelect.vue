@@ -51,7 +51,7 @@ import {
   TWeaponTypeKey,
   WEAPON_MASTER_LIST,
 } from "@/master";
-import { defineComponent, computed, ref, PropType } from "vue";
+import { defineComponent, computed, ref, PropType, nextTick } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -109,8 +109,9 @@ export default defineComponent({
       return result;
     });
 
-    const updateWeapon = (key: TWeaponKey) => {
+    const updateWeapon = async (key: TWeaponKey) => {
       weaponRef.value = key;
+      await nextTick();
       context.emit("update:weapon", key);
     };
 

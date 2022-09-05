@@ -13,21 +13,22 @@
       <li v-for="item in weaponList(weaponType)" :key="item.key">
         <img :class="'weapon' + bgImageClass(item) + notOwnedClass(item)" :src="item.icon_url" :alt="item.key"
           @click="onClick(item)" />
-        <div class="tooltip">{{  displayName(item.key)  }}</div>
-        <div class="refine">{{  refineObj[item.key]  }}</div>
+        <div class="tooltip">{{ displayName(item.key) }}</div>
+        <div class="refine">{{ refineObj[item.key] }}</div>
       </li>
     </ul>
   </div>
   <label>
     <input type="checkbox" v-model="savable" :disabled="!changed" />
-    <span>{{  displayName("武器所持状況を保存する")  }}</span>
+    <span>{{ displayName("武器所持状況を保存する") }}</span>
   </label>
   <button type="button" @click="save" :disabled="!savable">
-    {{  displayName("実行")  }}
+    {{ displayName("実行") }}
   </button>
 </template>
 
 <script lang="ts">
+import { isNumber } from "@/common";
 import {
   STAR_BACKGROUND_IMAGE_CLASS,
   TWeaponEntry,
@@ -63,7 +64,9 @@ export default defineComponent({
     if (localStorage["武器所持状況"]) {
       const savedObj = JSON.parse(localStorage["武器所持状況"]);
       Object.keys(savedObj).forEach((key) => {
-        refineObj[key] = savedObj[key];
+        if (isNumber(savedObj[key])) {
+          refineObj[key] = Number(savedObj[key]);
+        }
       });
     }
     const changed = ref(false);
@@ -89,7 +92,7 @@ export default defineComponent({
       Object.keys(refineObj)
         .filter((s) => refineObj[s] !== null)
         .forEach((key) => {
-          saveObj[key] = Number(refineObj[key]);
+          saveObj[key] = refineObj[key];
         });
       localStorage.setItem("武器所持状況", JSON.stringify(saveObj));
       savable.value = false;

@@ -93,7 +93,7 @@ import {
   TStats,
 } from "@/input";
 import { getCharacterMasterDetail, TCharacterKey, TEAM_OPTION_MASTER_LIST } from "@/master";
-import { computed, defineComponent, PropType, reactive, watch } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -369,7 +369,8 @@ export default defineComponent({
     });
 
     /** オプションが変更されたことを上位に通知します */
-    const onChange = () => {
+    const onChange = async () => {
+      await nextTick();
       context.emit("update:team-option", statAdjustments.value);
     };
 

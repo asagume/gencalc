@@ -74,7 +74,7 @@
             <input v-if="editableRef" type="number" v-model="artifactStats['攻撃力%']" :min="substatMin('攻撃力%')"
               :step="substatStep('攻撃力%')" @change="artifactStatsOnChange('攻撃力%', targetValue($event))" />
             <span v-else>{{
-                displayStatValue("攻撃力%", artifactStats["攻撃力%"])
+            displayStatValue("攻撃力%", artifactStats["攻撃力%"])
             }}</span>
           </td>
         </tr>
@@ -90,7 +90,7 @@
             <input v-if="editableRef" type="number" v-model="artifactStats['防御力%']" :min="substatMin('防御力%')"
               :step="substatStep('防御力%')" @change="artifactStatsOnChange('防御力%', targetValue($event))" />
             <span v-else>{{
-                displayStatValue("防御力%", artifactStats["防御力%"])
+            displayStatValue("防御力%", artifactStats["防御力%"])
             }}</span>
           </td>
         </tr>
@@ -116,7 +116,7 @@
             <input v-if="editableRef" type="number" v-model="artifactStats.会心ダメージ" :min="substatMin('会心ダメージ')"
               :step="substatStep('会心ダメージ')" @change="artifactStatsOnChange('会心ダメージ', targetValue($event))" />
             <span v-else>{{
-                displayStatValue("会心ダメージ", artifactStats.会心ダメージ)
+            displayStatValue("会心ダメージ", artifactStats.会心ダメージ)
             }}</span>
           </td>
           <td colspan="2" style="border-color: transparent">
@@ -132,7 +132,7 @@
             <input v-if="editableRef" type="number" v-model="artifactStats.元素チャージ効率" :min="substatMin('元素チャージ効率')"
               :step="substatStep('元素チャージ効率')" @change="artifactStatsOnChange('元素チャージ効率', targetValue($event))" />
             <span v-else>{{
-                displayStatValue("元素チャージ効率", artifactStats.元素チャージ効率)
+            displayStatValue("元素チャージ効率", artifactStats.元素チャージ効率)
             }}</span>
           </td>
           <td colspan="2" style="border-color: transparent">
@@ -224,7 +224,7 @@ import {
   calculateArtifactSubStatByPriority,
 } from "@/calculate";
 import { GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
-import { computed, defineComponent, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { resizePinnedImage } from "@/gencalc_ocr";
 import { overwriteObject } from "@/common";
@@ -311,14 +311,15 @@ export default defineComponent({
     calculateArtifactStats(artifactDetailInputRea);
 
     /** メイン効果が更新されました */
-    const updateMainstats = () => {
+    const updateMainstats = async () => {
       _calculateArtifactStatsMain();
       calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
       context.emit("update:artifact-detail", artifactDetailInputRea);
     };
 
     /** サブ効果が更新されました */
-    const artifactStatsOnChange = (opt_stat?: any, opt_value?: string) => {
+    const artifactStatsOnChange = async (opt_stat?: any, opt_value?: string) => {
       Object.keys(artifactStats)
         .filter((s) => !opt_stat || s == opt_stat)
         .forEach((key) => {
@@ -331,19 +332,21 @@ export default defineComponent({
           }
         });
       calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
       context.emit("update:artifact-detail", artifactDetailInputRea);
     };
 
     /** 優先するサブ効果が更新されました */
-    const updatePrioritySubstats = () => {
+    const updatePrioritySubstats = async () => {
       artifactDetailInputRea.聖遺物優先するサブ効果Disabled = false;
       _calculateArtifactStatsPrioritySub();
       calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
       context.emit("update:artifact-detail", artifactDetailInputRea);
     };
 
     /** 厳選目安が選択されました */
-    const gensenOnChange = () => {
+    const gensenOnChange = async () => {
       artifactDetailInputRea.聖遺物優先するサブ効果Disabled = false;
       gensenEnabledRef.value = false;
       if (!gensenRef.value) return;
@@ -360,16 +363,18 @@ export default defineComponent({
       );
       _calculateArtifactStatsPrioritySub();
       calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
       context.emit("update:artifact-detail", artifactDetailInputRea);
     };
 
     /** 聖遺物ステータスサブ効果をクリアします */
-    const initializeArtifactStatsSub = () => {
+    const initializeArtifactStatsSub = async () => {
       artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
       for (const stat of Object.keys(artifactStatsSub)) {
         artifactStatsSub[stat] = 0;
       }
       calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
       context.emit("update:artifact-detail", artifactDetailInputRea);
     };
 
@@ -385,9 +390,6 @@ export default defineComponent({
         overwriteObject(ocrResult, workOcrResult);
         ocrResultVisible.value = true;
       }
-    };
-    const loadArtifactStatsByOcrOnClick = async () => {
-      document.getElementById("artifact-stats-image")?.click();
     };
     const cancelArtifactDetailOcrResult = () => {
       ocrResultVisible.value = false;
@@ -444,7 +446,6 @@ export default defineComponent({
       updateMainstats,
       updatePrioritySubstats,
 
-      loadArtifactStatsByOcrOnClick,
       loadArtifactStatsByOcr,
       isScanning,
       ocrResultVisible,

@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { TStatsInput, ステータスARRAY_MAP } from "@/input";
-import { defineComponent, PropType, reactive, ref } from "vue";
+import { defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -75,7 +75,8 @@ export default defineComponent({
       ) ?? [];
 
     /** 補正値が変更されました */
-    const adjustmentsOnChange = () => {
+    const adjustmentsOnChange = async () => {
+      await nextTick();
       context.emit("update:stat-adjustments", statsInputRea.statAdjustments);
     };
 

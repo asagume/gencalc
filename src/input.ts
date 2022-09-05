@@ -602,7 +602,7 @@ export async function loadRecommendation(
         }
         ['命ノ星座', '通常攻撃レベル', '元素スキルレベル', '元素爆発レベル'].forEach(key => {
             if (key in build) {
-                (characterInput as any)[key] = build[key];
+                (characterInput as any)[key] = Number(build[key]);
             }
         });
 
@@ -619,7 +619,7 @@ export async function loadRecommendation(
             [characterInput.武器突破レベル, characterInput.武器レベル] = parseLevelStr(build['武器レベル']);
         }
         if ('精錬ランク' in build) {
-            characterInput.武器精錬ランク = build['精錬ランク'];
+            characterInput.武器精錬ランク = Number(build['精錬ランク']);
         }
 
         let prioritySubstatsDisabled = false;
@@ -669,9 +669,14 @@ export async function loadRecommendation(
                 artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
             });
             ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
-                if (!(key in build) && build[key] != -1) return;
-                const substatValue = build[key];
+                let doUpdate = false;
                 if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
+                    if ((key in build) && isNumber(build[key])) {
+                        doUpdate = true;
+                    }
+                }
+                if (doUpdate) {
+                    const substatValue = Number(build[key]);
                     const substat = artifactDetailInput['聖遺物優先するサブ効果'][index] as TArtifactSubKey;
                     const prioritySubstatValueList = makePrioritySubstatValueList([substat], 0);
                     prioritySubstatValueList.forEach((v, i) => {
@@ -680,18 +685,37 @@ export async function loadRecommendation(
                         }
                     })
                 } else {
-                    artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = 3;
+                    if (artifactDetailInput['聖遺物優先するサブ効果'][index] && !artifactDetailInput['聖遺物優先するサブ効果上昇値'][index]) {
+                        artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = GENSEN_MASTER_LIST[2].values[index];
+                    }
                 }
             });
             ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
-                if (!(key in build) && build[key] != -1) return;
-                const substatCount = build[key];
-                artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = substatCount;
+                let doUpdate = false;
+                if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
+                    if ((key in build) && isNumber(build[key])) {
+                        doUpdate = true;
+                    }
+                }
+                if (doUpdate) {
+                    const substatCount = Number(build[key]);
+                    artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = substatCount;
+                } else {
+                    if (artifactDetailInput['聖遺物優先するサブ効果'][index] && !artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index]) {
+                        artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = GENSEN_MASTER_LIST[2].counts[index];
+                    }
+                }
             });
         }
 
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s)).forEach(key => {
-            conditionInput.conditionValues[key] = build[key];
+            if (build[key] == null) {
+                conditionInput.conditionValues[key] = build[key];   // null
+            } else if (isNumber(build[key])) {
+                conditionInput.conditionValues[key] = Number(build[key]);
+            } else {
+                conditionInput.conditionValues[key] = Boolean(build[key]);
+            }
         });
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
@@ -779,14 +803,10 @@ export function makeSavedata(characterInput: TCharacterInput, artifactDetailInpu
     resultObj['聖遺物優先するサブ効果3上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[2];
 
     for (const entry of conditionInput.checkboxList) {
-        if (conditionInput.conditionValues[entry.name]) {
-            resultObj[entry.name] = true;
-        }
+        resultObj[entry.name] = conditionInput.conditionValues[entry.name];
     }
     for (const entry of conditionInput.selectList) {
-        if (conditionInput.conditionValues[entry.name]) {
-            resultObj[entry.name] = conditionInput.conditionValues[entry.name];
-        }
+        resultObj[entry.name] = conditionInput.conditionValues[entry.name];
     }
 
     return resultObj;

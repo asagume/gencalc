@@ -26,7 +26,7 @@ import {
   TCharacterInput,
   TConditionInput,
 } from "@/input";
-import { computed, defineComponent, PropType, reactive } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -60,7 +60,7 @@ export default defineComponent({
       return result;
     });
 
-    const updateCondition = (event: Event, item: any) => {
+    const updateCondition = async (event: Event, item: any) => {
       let exclusionArr;
       if (event.currentTarget instanceof HTMLInputElement) {
         if (event.currentTarget.checked) {
@@ -81,6 +81,7 @@ export default defineComponent({
           }
         });
       }
+      await nextTick();
       context.emit("update:condition");
     };
 
