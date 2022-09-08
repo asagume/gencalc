@@ -12,7 +12,8 @@
     "core-js": "^3.8.3",
     "tesseract.js": "^2.1.5",
     "vue": "^3.2.13",
-    "vue-i18n": "^9.2.0"
+    "vue-i18n": "^9.2.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^3.0.0",

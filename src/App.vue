@@ -56,7 +56,8 @@
       </div>
       <div v-if="pane6Toggle1Ref" style="margin-bottom: 10px">
         <ConditionInput ref="conditionInputVmRef" :characterInput="characterInputRea"
-          :conditionInput="conditionInputRea" @update:condition="updateCondition" />
+          :conditionInput="conditionInputRea" :conditionAdjustments="conditionInputRea.conditionAdjustments"
+          @update:condition="updateCondition" />
       </div>
       <div v-if="pane6Toggle2Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
@@ -122,6 +123,10 @@
 
     <div class="result-pane">
       <DamageResult :damageResult="damageResult" />
+
+      <hr />
+
+      <RotationDamage :characterMaster="characterInputRea.characterMaster" :damageResult="damageResult" />
 
       <ShareSns @share:twitter="openTwitter" />
     </div>
@@ -227,6 +232,7 @@ import ElementalResonanceInput from "@/components/ElementalResonanceInput.vue";
 import TeamOptionInput from "@/components/TeamOptionInput.vue";
 import MiscOptionInput from "@/components/MiscOptionInput.vue";
 import DamageResult from "@/components/DamageResult.vue";
+import RotationDamage from "@/components/RotationDamage.vue";
 import ShareSns from "@/components/ShareSns.vue";
 import AboutMyApp from "@/components/AboutMyApp.vue";
 import ConfigurationInput from "@/components/ConfigurationInput.vue";
@@ -258,6 +264,7 @@ import {
   shareByTwitter,
   getMaxTalentLevel,
   getMaxConstellation,
+  TConditionValues,
 } from "@/input";
 import {
   ARTIFACT_MAIN_MASTER,
@@ -323,6 +330,7 @@ export default defineComponent({
     TeamOptionInput,
     MiscOptionInput,
     DamageResult,
+    RotationDamage,
     ShareSns,
     AboutMyApp,
     ConfigurationInput,
@@ -668,6 +676,7 @@ export default defineComponent({
         );
       }
       calculateArtifactStats(artifactDetailInputRea);
+      conditionInputVmRef.value.initialize(conditionInputRea);
       // ステータスを計算します
       calculateStats(
         statsInput,
@@ -767,6 +776,7 @@ export default defineComponent({
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea);
+      conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
         characterInputRea,
@@ -832,6 +842,7 @@ export default defineComponent({
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea);
+      conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
         characterInputRea,
@@ -859,6 +870,7 @@ export default defineComponent({
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea);
+      conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
         characterInputRea,
@@ -892,7 +904,7 @@ export default defineComponent({
     };
 
     /** 聖遺物セット効果を選択しました */
-    const updateArtifactSet =(artifactSet: TArtifactSetKey) => {
+    const updateArtifactSet = (artifactSet: TArtifactSetKey) => {
       if (!characterInputRea) return;
       artifactSets[artifactSetIndexRef.value] = artifactSet;
       const tempMaster = ARTIFACT_SET_MASTER[artifactSet] as TArtifactSet;
@@ -905,6 +917,7 @@ export default defineComponent({
       // 聖遺物セット効果のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjArtifactSets(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea);
+      conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
         characterInputRea,
@@ -983,7 +996,8 @@ export default defineComponent({
     };
 
     /** オプション条件が変更されました。ステータスおよびダメージを再計算します */
-    const updateCondition = () => {
+    const updateCondition = (conditionValues: TConditionValues) => {
+      overwriteObject(conditionInputRea.conditionValues, conditionValues);
       calculateStats(
         statsInput,
         characterInputRea,

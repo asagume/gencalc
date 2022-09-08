@@ -389,11 +389,17 @@ export type TSelectEntry = {
     options: string[];
     required: boolean;
 };
+export type TConditionValues = {
+    [key: string]: boolean | number | null,
+};
+export type TConditionAdjustments = {
+    [key: string]: number | null,
+};
 export const CONDITION_INPUT_TEMPLATE = {
     checkboxList: [] as TCheckboxEntry[],
     selectList: [] as TSelectEntry[],
-    conditionValues: {} as { [key: string]: boolean | number | null },
-    conditionAdjustments: {} as { [key: string]: number },
+    conditionValues: {} as TConditionValues,
+    conditionAdjustments: {} as TConditionAdjustments,
     攻撃元素: [null, null, null] as (string | null)[],
 };
 export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
@@ -711,16 +717,16 @@ export async function loadRecommendation(
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s)).forEach(key => {
             if (build[key] == null) {
                 conditionInput.conditionValues[key] = build[key];   // null
-            } else if (isNumber(build[key])) {
+            } else if (isString(build[key])) {
                 conditionInput.conditionValues[key] = Number(build[key]);
             } else {
-                conditionInput.conditionValues[key] = Boolean(build[key]);
+                conditionInput.conditionValues[key] = build[key];
             }
         });
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
 
-        console.log('loadRecommendation', characterInput, artifactDetailInput, conditionInput, build);
+        console.debug('loadRecommendation', characterInput, artifactDetailInput, conditionInput, build);
     }
     catch (error) {
         console.error(characterInput, artifactDetailInput, conditionInput, build);
@@ -958,7 +964,7 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
 
         return result;
     } catch (error) {
-        console.log(characterInput);
+        console.error(characterInput);
         throw error;
     }
 }
@@ -1017,7 +1023,7 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
 
         return result;
     } catch (error) {
-        console.log(characterInput);
+        console.error(characterInput);
         throw error;
     }
 }
@@ -1077,7 +1083,7 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
 
         return result;
     } catch (error) {
-        console.log(characterInput);
+        console.error(characterInput);
         throw error;
     }
 }
@@ -1265,25 +1271,6 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
 
 export function setupConditionValues(conditionInput: TConditionInput, characterInput: TCharacterInput) {
     try {
-        const masters = [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters];
-        for (const master of masters.filter(s => s)) {
-            if ('オプション初期値' in master) {
-                for (const key of Object.keys((master as any)['オプション初期値'])) {
-                    if (!(key in conditionInput.conditionValues)) {
-                        conditionInput.conditionValues[key] = (master as any)['オプション初期値'][key];
-                    }
-                }
-            }
-            // 聖遺物セット効果のオプション初期値は変な位置にあります
-            if ('4セット効果' in master && 'オプション初期値' in (master as any)['4セット効果']) {
-                for (const key of Object.keys((master as any)['4セット効果']['オプション初期値'])) {
-                    if (!(key in conditionInput.conditionValues)) {
-                        conditionInput.conditionValues[key] = (master as any)['4セット効果']['オプション初期値'][key];
-                    }
-                }
-            }
-        }
-
         const conditionValues = conditionInput.conditionValues;
         const checkboxList = conditionInput.checkboxList as TCheckboxEntry[];
         const selectList = conditionInput.selectList as TSelectEntry[];
@@ -1291,30 +1278,46 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
         checkboxList.splice(0, checkboxList.length);
         selectList.splice(0, selectList.length);
 
-        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-            if (myDamageDetail && myDamageDetail.条件 && myDamageDetail.排他) {
-                if (myDamageDetail && myDamageDetail.条件) {
-                    myDamageDetail.条件.forEach((value: string[] | null, key: string) => {
-                        if (value) {
-                            if (selectList.filter(s => s.name == key).length == 0) {
-                                const required = value[0].startsWith("required_");
-                                selectList.push({
-                                    name: key,
-                                    options: value,
-                                    required: required,
-                                });
-                            }
-                        } else {
-                            if (checkboxList.filter(s => s.name == key).length == 0) {
-                                checkboxList.push({ name: key });
-                            }
-                        }
-                    });
+        const masters = [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters];
+        for (const master of masters.filter(s => s)) {
+            if ('オプション初期値' in master) {
+                for (const key of Object.keys((master as any)['オプション初期値'])) {
+                    if (!(key in conditionValues)) {
+                        conditionValues[key] = (master as any)['オプション初期値'][key];
+                    }
                 }
+            }
+            // 聖遺物セット効果のオプション初期値は変な位置にあります
+            if ('4セット効果' in master && 'オプション初期値' in (master as any)['4セット効果']) {
+                for (const key of Object.keys((master as any)['4セット効果']['オプション初期値'])) {
+                    if (!(key in conditionValues)) {
+                        conditionValues[key] = (master as any)['4セット効果']['オプション初期値'][key];
+                    }
+                }
+            }
+        }
 
+        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
+            if (myDamageDetail) {
                 const conditionMap: Map<string, any[] | null> = myDamageDetail.条件;
                 const exclusionMap: Map<string, string[] | null> = myDamageDetail.排他;
-                conditionMap.forEach((value, key) => {
+
+                conditionMap.forEach((value: string[] | null, key: string) => {
+                    if (value == null) {
+                        if (checkboxList.filter(s => s.name == key).length == 0) {
+                            checkboxList.push({ name: key });
+                        }
+                    } else {
+                        if (selectList.filter(s => s.name == key).length == 0) {
+                            const required = value[0].startsWith("required_");
+                            selectList.push({
+                                name: key,
+                                options: value,
+                                required: required,
+                            });
+                        }
+                    }
+
                     if (key in conditionValues && conditionValues[key] != null) {
                         const exclusions = exclusionMap.get(key);
                         if (exclusions) {

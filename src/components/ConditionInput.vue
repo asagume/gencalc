@@ -21,10 +21,13 @@
 </template>
 
 <script lang="ts">
-import { isNumber } from "@/common";
+import { deepcopy, isNumber, overwriteObject } from "@/common";
 import {
   TCharacterInput,
+  TCheckboxEntry,
+  TConditionAdjustments,
   TConditionInput,
+  TSelectEntry,
 } from "@/input";
 import { computed, defineComponent, nextTick, PropType, reactive } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
@@ -34,15 +37,21 @@ export default defineComponent({
   props: {
     characterInput: { type: Object as PropType<TCharacterInput>, required: true },
     conditionInput: { type: Object as PropType<TConditionInput>, required: true },
+    conditionAdjustments: { type: Object as PropType<TConditionAdjustments>, required: true },
   },
   emits: ["update:condition"],
   setup(props, context) {
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
-    const conditionInputRea = reactive(props.conditionInput);
-    const conditionValues = conditionInputRea.conditionValues as any;
-    const checkboxList = conditionInputRea.checkboxList;
-    const selectList = conditionInputRea.selectList;
+    const checkboxList = reactive(deepcopy(props.conditionInput.checkboxList) as TCheckboxEntry[]);
+    const selectList = reactive(deepcopy(props.conditionInput.selectList) as TSelectEntry[]);
+    const conditionValues = reactive(deepcopy(props.conditionInput.conditionValues) as any);  // TConditionValues
+
+    const initialize = (conditionInput: TConditionInput) => {
+      checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
+      selectList.splice(0, selectList.length, ...conditionInput.selectList);
+      overwriteObject(conditionValues, conditionInput.conditionValues);
+    };
 
     const exclusionMap = computed(() => {
       const result = new Map() as Map<string, string[] | null>;
@@ -74,23 +83,25 @@ export default defineComponent({
       if (exclusionArr) {
         exclusionArr.forEach((exclusion) => {
           if (checkboxList.filter((s) => s.name == exclusion).length > 0) {
-            conditionInputRea.conditionValues[exclusion] = false;
+            conditionValues[exclusion] = false;
           }
           if (selectList.filter((s) => s.name == exclusion).length > 0) {
-            conditionInputRea.conditionValues[exclusion] = 0;
+            conditionValues[exclusion] = 0;
           }
         });
       }
       await nextTick();
-      context.emit("update:condition");
+      context.emit("update:condition", conditionValues);
     };
 
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
-      for (const stat of Object.keys(conditionInputRea.conditionAdjustments)) {
-        const value = conditionInputRea.conditionAdjustments[stat];
+      for (const stat of Object.keys(props.conditionAdjustments)) {
+        const value = props.conditionAdjustments[stat];
         let result = displayStatName(stat);
-        if (isNumber(value)) {
+        if (value == null) {
+          // nop
+        } else if (isNumber(value)) {
           if (value >= 0) {
             if (stat.split('.')[0] == '別枠乗算') result += '=';
             else result += '+';
@@ -107,6 +118,8 @@ export default defineComponent({
     return {
       displayName,
       displayOptionName,
+
+      initialize,
 
       checkboxList,
       selectList,
