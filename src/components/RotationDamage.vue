@@ -6,6 +6,7 @@
         item-key="id"
         :group="{ name: 'action', pull: 'clone', put: false }"
         :sort="false"
+        :clone="clone"
       >
         <template #item="{ element }">
           <li>
@@ -112,6 +113,7 @@ import {
   watch,
 } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
+import { deepcopy } from "@/common";
 
 type TCustomizedDamageResultEntry = {
   id: number;
@@ -260,6 +262,11 @@ export default defineComponent({
       return result;
     });
 
+    const clone = ({ id }: { id: number }) => {
+      const org = actionList.value.filter((s) => s.id == id)[0];
+      return deepcopy(org);
+    };
+
     const customizedResultList = reactive([] as TCustomizedDamageResultEntry[]);
 
     const amplifyingReactionList = (
@@ -365,6 +372,7 @@ export default defineComponent({
       displayName,
 
       actionList,
+      clone,
       damageResultEntryList,
       customizedResultList,
       amplifyingReactionList,
