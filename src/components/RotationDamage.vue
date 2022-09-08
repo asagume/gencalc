@@ -402,7 +402,7 @@ ul.action-list li {
 }
 
 img.action {
-  width: 50px;
+  width: 40px;
   object-fit: fill;
   border: none;
 }
@@ -418,7 +418,7 @@ table.customized-result {
 }
 
 .category {
-  width: 50px;
+  width: 40px;
   text-align: left;
 }
 
