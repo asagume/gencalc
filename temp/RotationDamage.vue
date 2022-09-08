@@ -342,5 +342,11 @@ table.total-damage td {
 
 .total-damage-value {
     text-align: left;
+    font-size: 2.8rem;
+    color: gold;
+}
+
+button {
+    font-size: smaller;
 }
 </style>
