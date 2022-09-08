@@ -1019,8 +1019,9 @@ function calculateDamageFromDetail(
                         }
                     } else {
                         // 大分類 or 大分類.小分類
+                        const myダメージ種類 = detailObj.種類;
                         const my対象カテゴリArr = valueObj['対象'].split('.');
-                        if (my対象カテゴリArr[0] != detailObj['種類']) {
+                        if (my対象カテゴリArr[0] != myダメージ種類) {
                             return;
                         }
                         if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj['名前']) {
@@ -1091,17 +1092,18 @@ function calculateDamageFromDetail(
             if (stat in myステータス補正) {
                 if (stat === '別枠乗算') {
                     if (myステータス補正[stat] > 0) {
-                        myステータス補正[stat] *= statsObj[stat] / 100;   // for ディオナ
+                        myステータス補正[stat] *= tempStatsObj[stat] / 100;   // for ディオナ
                     } else {
-                        myステータス補正[stat] += statsObj[stat];
+                        myステータス補正[stat] += tempStatsObj[stat];
                     }
                 } else {
-                    myステータス補正[stat] += statsObj[stat];
+                    myステータス補正[stat] += tempStatsObj[stat];
                 }
             } else {
-                myステータス補正[stat] = statsObj[stat];
+                myステータス補正[stat] = tempStatsObj[stat];
             }
-        })
+        });
+        console.log('myステータス補正', myステータス補正);
 
         // for 来歆の余響 「ダメージを与えた0.05秒後にクリアされる」
         const damageDetailMyArtifactSets = characterInput.damageDetailMyArtifactSets;
