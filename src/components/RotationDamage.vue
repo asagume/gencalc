@@ -10,31 +10,18 @@
       >
         <template #item="{ element }">
           <li>
-            <img
-              class="action"
-              :src="element.src"
-              :alt="displayName(element.name)"
-            />
+            <img class="action" :src="element.src" :alt="displayName(element.name)" />
             <div>{{ displayName(element.name) }}</div>
           </li>
         </template>
       </draggable>
     </ul>
     <table class="customized-result">
-      <draggable
-        :list="customizedResultList"
-        item-key="id"
-        group="action"
-        :sort="true"
-      >
+      <draggable :list="customizedResultList" item-key="id" group="action" :sort="true">
         <template #item="{ element, index }">
           <tr>
             <th class="category">
-              <img
-                class="action"
-                :src="element.src"
-                :alt="displayName(element.name)"
-              />
+              <img class="action" :src="element.src" :alt="displayName(element.name)" />
             </th>
             <td class="damage">
               <table>
@@ -47,10 +34,7 @@
                     <select v-model="element.reactions[index2]">
                       <option value=""></option>
                       <option
-                        v-for="reaction in amplifyingReactionList(
-                          element,
-                          index2
-                        )"
+                        v-for="reaction in amplifyingReactionList(element, index2)"
                         :value="reaction"
                         :key="reaction"
                       >
@@ -59,15 +43,10 @@
                     </select>
                   </td>
                   <td>
-                    <input
-                      type="number"
-                      v-model="element.counts[index2]"
-                      min="0"
-                    />
+                    ×
+                    <input type="number" v-model="element.counts[index2]" min="0" />
                   </td>
-                  <td
-                    :class="'damage-value' + elementColorClass(element, index2)"
-                  >
+                  <td :class="'damage-value' + elementColorClass(element, index2)">
                     {{ Math.round(damageValue(element, index2)) }}
                   </td>
                 </tr>
@@ -89,9 +68,7 @@
       </tr>
     </table>
   </fieldset>
-  <p>
-    天賦アイコンをドラッグ&amp;ドロップしてスキルローテーションを設定してください。
-  </p>
+  <p>天賦アイコンをドラッグ&amp;ドロップしてスキルローテーションを設定してください。</p>
 </template>
 <script lang="ts">
 import draggable from "vuedraggable";
@@ -103,15 +80,7 @@ import {
   TCharacterDetail,
   TElementColorClassKey,
 } from "@/master";
-import {
-  computed,
-  defineComponent,
-  PropType,
-  reactive,
-  toRef,
-  toRefs,
-  watch,
-} from "vue";
+import { computed, defineComponent, PropType, reactive, toRefs, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { deepcopy } from "@/common";
 
@@ -192,7 +161,8 @@ export default defineComponent({
         );
       } else {
         result = (props.damageResult[category] as any).filter(
-          (s: TDamageResultEntry) => !s[0].startsWith("非表示")
+          (s: TDamageResultEntry) =>
+            !s[0].startsWith("非表示") && s[5]?.endsWith("ダメージ")
         );
       }
       return result;
@@ -219,11 +189,7 @@ export default defineComponent({
             reactions: reactions,
             counts: counts,
           };
-          for (
-            let i = 0;
-            i < damageResultEntryList(customizedEntry).length;
-            i++
-          ) {
+          for (let i = 0; i < damageResultEntryList(customizedEntry).length; i++) {
             reactions.push("");
             counts.push(1);
           }
@@ -248,11 +214,7 @@ export default defineComponent({
             reactions: reactions,
             counts: counts,
           };
-          for (
-            let i = 0;
-            i < damageResultEntryList(customizedEntry).length;
-            i++
-          ) {
+          for (let i = 0; i < damageResultEntryList(customizedEntry).length; i++) {
             reactions.push("");
             counts.push(1);
           }
@@ -319,9 +281,7 @@ export default defineComponent({
         if (["蒸発", "溶解"].includes(reaction)) {
           result *= (props.damageResult.元素反応 as any)[reaction + "倍率"];
         } else if (["超激化", "草激化"].includes(reaction)) {
-          let reactionDmg = (props.damageResult.元素反応 as any)[
-            reaction + "ダメージ"
-          ];
+          let reactionDmg = (props.damageResult.元素反応 as any)[reaction + "ダメージ"];
           if (entry[3]) {
             reactionDmg *= entry[3] / entry[4];
           }
@@ -443,7 +403,7 @@ select {
 }
 
 input[type="number"] {
-  width: 100%;
+  width: calc(100% - 3rem);
 }
 
 table.total-damage th,
