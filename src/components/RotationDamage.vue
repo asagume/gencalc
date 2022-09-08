@@ -189,7 +189,9 @@ export default defineComponent({
           (s: TDamageResultEntry) => s[0] != "合計ダメージ"
         );
       } else {
-        result = props.damageResult[category] as TDamageResultEntry[];
+        result = (props.damageResult[category] as any).filter(
+          (s: TDamageResultEntry) => !s[0].startsWith("非表示")
+        );
       }
       return result;
     };
