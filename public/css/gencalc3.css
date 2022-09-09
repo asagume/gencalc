@@ -9,6 +9,7 @@
             "pane2 pane2 pane2"
             "pane3 pane6 result-pane"
             "pane4 pane6 result-pane"
+            "pane4 pane6 pane5"
             "bottom-pane bottom-pane pane7"
             "footer footer footer";
     }
@@ -26,6 +27,7 @@
             "pane3 pane4"
             "pane3 result-pane"
             "pane6 result-pane"
+            "pane6 pane5"
             "bottom-pane bottom-pane"
             "pane7 pane7"
             "footer footer";
@@ -45,6 +47,7 @@
             "pane4"
             "pane6"
             "result-pane"
+            "pane5"
             "bottom-pane"
             "pane7"
             "footer";
@@ -97,6 +100,12 @@ button {
 
 .pane4 {
     grid-area: pane4;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+.pane5 {
+    grid-area: pane5;
     vertical-align: top;
     margin-bottom: 20px;
 }
@@ -625,6 +634,7 @@ td.description {
 ul.option-description {
     list-style-type: none;
     padding: 0;
+    text-align: center;
 }
 
 ul.option-description li {

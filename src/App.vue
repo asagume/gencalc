@@ -220,9 +220,9 @@
 
     <div class="result-pane">
       <DamageResult :damageResult="damageResult" />
+    </div>
 
-      <hr />
-
+    <div class="pane5">
       <RotationDamage
         :characterMaster="characterInputRea.characterMaster"
         :damageResult="damageResult"
@@ -321,6 +321,15 @@
         <tr v-for="stat in Object.keys(statsInput.statsObj)" :key="stat">
           <th style="text-align: right">{{ stat }}</th>
           <td style="text-align: right">{{ statsInput.statsObj[stat] }}</td>
+        </tr>
+      </table>
+    </template>
+    <hr />
+    <template v-if="damageResult">
+      <table>
+        <tr v-for="dmg in Object.keys(damageResult.通常攻撃)" :key="dmg">
+          <th style="text-align: right">{{ dmg }}</th>
+          <td style="text-align: right">{{ damageResult.通常攻撃[dmg] }}</td>
         </tr>
       </table>
     </template>

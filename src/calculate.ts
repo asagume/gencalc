@@ -407,11 +407,11 @@ export const calculateFormulaArray = function (
                             if (damage != null) {
                                 subResult = damage;
                             } else {
-                                console.error(statsObj, formulaArr, opt_max, entry);
+                                console.error(formulaArr, statsObj, damageResult, opt_max, entry);
                             }
                         }
                     } else {
-                        console.error(statsObj, formulaArr, opt_max);
+                        console.error(formulaArr, statsObj, damageResult, opt_max, entry);
                     }
                 }
                 if (operator == null) {
@@ -591,7 +591,7 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
                     let n = 0;
                     const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1] as TDamageResultEntry;
                     for (const entry of damageResult[category]) {
-                        if (entry[0].endsWith('段ダメージ')) {
+                        if (entry[0].endsWith('段ダメージ') && !entry[0].startsWith('非表示_')) {
                             sum[1] = entry[1];
                             sum[2] += entry[2];
                             if (entry[3] == null) sum[3] = null;
@@ -607,7 +607,7 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
                         }
                     }
                     if (n > 0) {
-                        damageResult[category].splice(n, 1, sum);
+                        damageResult[category].splice(n, 0, sum);
                     }
                 }
             }

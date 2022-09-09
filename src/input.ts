@@ -322,6 +322,7 @@ export type TDamageDetailObj = {
     元素付与無効: boolean | null,
     除外条件: (string | object)[] | null,
     適用条件: (string | object)[] | null,
+    チーム: string | null,
 };
 
 export type TDamageDetail = {
@@ -1156,7 +1157,8 @@ export const makeDamageDetailObjArr = function (
             ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
             元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
             除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
-            適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null
+            適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null,
+            チーム: null,
         }
         if (statusChangeDetailObjArr != null) {
             if (resultObj['種類'] in ステータスTEMPLATE

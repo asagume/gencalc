@@ -194,15 +194,23 @@ fieldset {
 }
 
 label {
+  position: relative;
   display: inline-block;
   margin: 2px 1rem;
   min-width: calc(100% / 2 - 2rem);
+  height: 3.8rem;
   text-align: left;
+  vertical-align: middle;
 }
 
-label input,
-label select {
+label input {
   margin: 0 0.5rem;
+}
+
+label select {
+  position: absolute;
+  right: 0;
+  top: -0.5rem;
 }
 
 :checked+span {

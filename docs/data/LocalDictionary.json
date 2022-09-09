@@ -84,12 +84,22 @@
     "zh-cn": "结晶"
   },
   "開花": {
-    "en-us": "Bloom",
-    "zh-cn": "绽放"
+    "en-us": "Bloom"
   },
-  "激化": {
-    "en-us": "Catalyze",
-    "zh-cn": "激化"
+  "超開花": {
+    "en-us": "Hyperbloom"
+  },
+  "烈開花": {
+    "en-us": "Burgeon"
+  },
+  "原激化": {
+    "en-us": "Quicken"
+  },
+  "超激化": {
+    "en-us": "Aggravate"
+  },
+  "草激化": {
+    "en-us": "Spread"
   },
   "聖遺物メイン効果": {
     "en-us": "Artifact Main-Stats"

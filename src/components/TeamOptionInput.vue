@@ -91,6 +91,7 @@ import {
   makeDamageDetailObjArr,
   makeConditionExclusionMapFromStr,
   TStats,
+  TDamageDetail,
 } from "@/input";
 import { getCharacterMasterDetail, TCharacterKey, TEAM_OPTION_MASTER_LIST } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
@@ -255,6 +256,22 @@ export default defineComponent({
         conditionInput,
         statsInput
       );
+
+      [
+        [characterInput.character, characterInput.damageDetailMyCharacter],
+        [characterInput.weapon, characterInput.damageDetailMyWeapon],
+        [characterInput.artifactSets[0], characterInput.damageDetailMyArtifactSets],
+      ].forEach(element => {
+        const [name, damageDetail] = element as [string, TDamageDetail];
+        if (damageDetail && damageDetail.ステータス変更系詳細) {
+          damageDetail.ステータス変更系詳細.forEach(damageDetailObj => {
+            if (damageDetailObj.チーム) {
+              console.log(name);
+            }
+          });
+        }
+      });
+
       return damageResult;
     };
 
