@@ -256,7 +256,7 @@ export default defineComponent({
                 const c = SAVEDATA_NICKNAME_MAP.get(element.name) as string;
                 nickname += c;
                 if (['N', 'C', 'P'].includes(c)) {
-                  const n = Math.max(element.counts);
+                  const n = Math.max(...element.counts);
                   if (n) {
                     nickname += n;
                   }
@@ -581,7 +581,7 @@ select {
 }
 
 td.reaction-list {
-  width: 40px;
+  width: 6rem;
 }
 
 div.reaction {
@@ -590,7 +590,7 @@ div.reaction {
 }
 
 img.reaction {
-  width: 20px;
+  width: 3rem;
 }
 
 div.reaction span {
