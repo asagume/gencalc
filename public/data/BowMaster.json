@@ -101,7 +101,7 @@
   },
   "弾弓": {
     "レアリティ": 3,
-    "import": "data/weapons/bow/3_SlingShot.json"
+    "import": "data/weapons/bow/3_Slingshot.json"
   },
   "リカーブボウ": {
     "レアリティ": 3,
