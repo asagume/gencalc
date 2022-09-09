@@ -145,7 +145,8 @@ def suppressNull(d):
 
 def normalizeObject(d):
     if type(d) == str:
-        return d.replace('<p>', '').replace('</p>', '')
+        return d.replace('<p>', '').replace('</p>', '<br>')
+        #  return d
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):

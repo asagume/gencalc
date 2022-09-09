@@ -180,6 +180,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "ドリー": {
+    "レアリティ": 4,
+    "元素": "雷",
+    "武器": "両手剣",
+    "誕生日": "12/21",
+    "import": "data/characters/electro_4_claymore_Dori.json"
+  },
   "コレイ": {
     "レアリティ": 4,
     "元素": "草",
