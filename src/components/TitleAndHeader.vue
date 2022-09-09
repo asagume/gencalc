@@ -17,6 +17,10 @@
       <a href="HoYoDictionary.html">原神の辞書</a>
     </p>
 
+    <p>
+      <a href="index2.html">旧バージョン(V2)</a>
+    </p>
+
     <div class="top-left">
       <a href="history.html">更新履歴</a>
     </div>

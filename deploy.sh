@@ -11,7 +11,7 @@ npm run build
 # navigate into the build output directory
 cd docs
 
-cp -f ../public/index2.html index.html
+# cp -f ../public/index2.html index.html
 
 # if you are deploying to a custom domain
 # echo 'www.example.com' > CNAME
