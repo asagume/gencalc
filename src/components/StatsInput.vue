@@ -1,10 +1,14 @@
 <template>
-  <table>
+  <table class="stats" v-if="!twoColumnMode">
     <template v-for="category in categoryList" :key="category">
       <tr>
         <th :colspan="editable ? 3 : 2">
           <label class="open-close">
-            <input class="hidden" type="checkbox" v-model="categoryOpenClose[category]" />
+            <input
+              class="hidden"
+              type="checkbox"
+              v-model="categoryOpenClose[category]"
+            />
             <span> {{ displayName(category) }} </span>
           </label>
         </th>
@@ -12,25 +16,94 @@
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayStatName(stat) }}</th>
         <td v-if="editable">
-          <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange" />
+          <input
+            type="number"
+            v-model="statAdjustments[stat]"
+            @change="adjustmentsOnChange"
+          />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
     </template>
     <tr>
-      <td class="control-left">
+      <td :colspan="editable ? 3 : 2" class="control-left">
+        <button type="button" @click="twoColumnMode = !twoColumnMode">
+          {{ displayName("切替") }}
+        </button>
         <label>
           <input type="checkbox" v-model="editable" />
           {{ displayName("補正値入力モード") }}
         </label>
-      </td>
-      <td :colspan="editable ? 2 : 1" class="control-right">
         <label>
           <input type="checkbox" v-model="initializable" />
           {{ displayName("補正値0初期化") }}
         </label>
-        <button type="button" :disabled="!initializable" @click="initializeAdjustments">
+        <button
+          type="button"
+          :disabled="!initializable"
+          @click="initializeAdjustments"
+        >
           {{ displayName("実行") }}
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <table class="two-table" v-if="twoColumnMode">
+    <tr>
+      <td>
+        <table class="stats">
+          <template v-for="category in category1List" :key="category">
+            <tr>
+              <th colspan="2">
+                <label class="open-close">
+                  <input
+                    class="hidden"
+                    type="checkbox"
+                    v-model="categoryOpenClose[category]"
+                  />
+                  <span> {{ displayName(category) }} </span>
+                </label>
+              </th>
+            </tr>
+            <tr v-for="stat in visibleStatList(category)" :key="stat">
+              <th>{{ displayStatName(stat) }}</th>
+              <td class="stat-value">
+                {{ displayStatValue(stat, statsObj[stat]) }}
+              </td>
+            </tr>
+          </template>
+        </table>
+      </td>
+      <td>
+        <table class="stats">
+          <template v-for="category in category2List" :key="category">
+            <tr>
+              <th colspan="2">
+                <label class="open-close">
+                  <input
+                    class="hidden"
+                    type="checkbox"
+                    v-model="categoryOpenClose[category]"
+                  />
+                  <span> {{ displayName(category) }} </span>
+                </label>
+              </th>
+            </tr>
+            <tr v-for="stat in visibleStatList(category)" :key="stat">
+              <th>{{ displayStatName(stat) }}</th>
+              <td class="stat-value">
+                {{ displayStatValue(stat, statsObj[stat]) }}
+              </td>
+            </tr>
+          </template>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="control-left">
+        <button type="button" @click="twoColumnMode = !twoColumnMode">
+          {{ displayName("切替") }}
         </button>
       </td>
     </tr>
@@ -43,17 +116,20 @@ import { defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
-  name: "StatsInput",
+  name: "StatsInput1",
   props: {
     statsInput: { type: Object as PropType<TStatsInput>, required: true },
-    categoryList: { type: Array as PropType<Array<string>>, required: true },
+    category1List: { type: Array as PropType<Array<string>>, required: true },
+    category2List: { type: Array as PropType<Array<string>>, required: true },
   },
   emits: ["update:stat-adjustments"],
   setup(props, context) {
-    const { displayName, displayStatName, displayStatValue } = CompositionFunction();
+    const { displayName, displayStatName, displayStatValue } =
+      CompositionFunction();
 
     const statsInputRea = reactive(props.statsInput);
 
+    const twoColumnMode = ref(true);
     const editable = ref(false);
     const initializable = ref(false);
 
@@ -61,11 +137,11 @@ export default defineComponent({
     const statsObj = statsInputRea.statsObj;
     const statAdjustments = statsInputRea.statAdjustments;
 
+    const categoryList = [...props.category1List, ...props.category2List];
+
     const categoryOpenClose = ref({} as any);
-    if (props.categoryList) {
-      for (const category of props.categoryList) {
-        categoryOpenClose.value[category] = false;
-      }
+    for (const category of categoryList) {
+      categoryOpenClose.value[category] = false;
     }
     const visibleStatList = (category: string) =>
       statList(category)?.filter(
@@ -82,8 +158,7 @@ export default defineComponent({
 
     /** 補正値を0クリアします */
     const initializeAdjustments = () => {
-      if (!props.categoryList) return;
-      for (const category of props.categoryList) {
+      for (const category of categoryList) {
         const list = statList(category);
         if (!list) continue;
         for (const stat of list) {
@@ -98,6 +173,7 @@ export default defineComponent({
       displayName,
       displayStatValue,
 
+      categoryList,
       statList,
       displayStatName,
       visibleStatList,
@@ -106,6 +182,7 @@ export default defineComponent({
       categoryOpenClose,
 
       adjustmentsOnChange,
+      twoColumnMode,
       editable,
       initializable,
       initializeAdjustments,
@@ -117,29 +194,32 @@ export default defineComponent({
 <style scoped>
 label {
   display: inline-block;
+  margin-left: 15px;
 }
 
-table {
+table.stats {
   width: 100%;
   table-layout: fixed;
   border-top: 2px solid gray;
+  border-spacing: 1px;
   margin-top: 10px;
 }
 
-th,
-td {
+table.stats th,
+table.stats td {
   text-align: right;
   white-space: nowrap;
   border-bottom: 2px solid gray;
   padding-right: 4px;
+  line-height: 3rem;
 }
 
-th {
+table.stats th {
   color: #df8f37;
 }
 
-th[colspan="2"],
-th[colspan="3"] {
+table.stats th[colspan="2"],
+table.stats th[colspan="3"] {
   text-align: center;
   color: #e8d14e;
   background-color: #333;
@@ -157,11 +237,26 @@ button {
   padding-right: 1rem;
 }
 
-.control-left {
-  text-align: left;
+td.control-left {
+  text-align: left !important;
 }
 
-.control-right {
-  text-align: right;
+td.control-right {
+  text-align: right !important;
+}
+
+table.two-table {
+  width: 100%;
+  table-layout: fixed;
+  border: none;
+  border-spacing: 0;
+}
+
+table.two-table tr {
+  border: none;
+}
+
+table.two-table td {
+  vertical-align: top;
 }
 </style>

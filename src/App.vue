@@ -136,21 +136,23 @@
           />
           <label for="status-input-tab-3"> {{ displayName("敵") }} </label>
         </div>
-        <template v-if="statInputTabRef == 1">
+        <div v-show="statInputTabRef == 1">
           <StatsInput
             :statsInput="statsInput"
-            :categoryList="characterStats1CategoryList"
+            :category1List="characterStats1Category1List"
+            :category2List="characterStats1Category2List"
             @update:stat-adjustments="updateStatAdjustments($event)"
           />
-        </template>
-        <template v-if="statInputTabRef == 2">
+        </div>
+        <div v-show="statInputTabRef == 2">
           <StatsInput
             :statsInput="statsInput"
-            :categoryList="characterStats2CategoryList"
+            :category1List="characterStats2Category1List"
+            :category2List="characterStats2Category2List"
             @update:stat-adjustments="updateStatAdjustments($event)"
           />
-        </template>
-        <template v-if="statInputTabRef == 3">
+        </div>
+        <div v-show="statInputTabRef == 3">
           <label class="enemy">
             <select v-model="selectedEnemyRef" @change="updateEnemy">
               <option v-for="item in enemyList" :value="item" :key="item.key">
@@ -168,10 +170,11 @@
           </label>
           <StatsInput
             :statsInput="statsInput"
-            :categoryList="enemyStatsCategoryList"
+            :category1List="enemyStatsCategory1List"
+            :category2List="enemyStatsCategory2List"
             @update:stat-adjustments="updateStatAdjustments($event)"
           />
-        </template>
+        </div>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
@@ -544,20 +547,25 @@ export default defineComponent({
 
     // ステータス1, ステータス2, 敵
     const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput);
-    const characterStats1CategoryList = [
+    const characterStats1Category1List = [
       "基本ステータス",
       "高級ステータス",
+    ];
+    const characterStats1Category2List = [
       "元素ステータス·ダメージ",
       "ダメージバフ",
       "実数ダメージ加算",
       "元素反応バフ",
     ];
-    const characterStats2CategoryList = [
+    const characterStats2Category1List = [
       "元素ステータス·耐性",
+    ];
+    const characterStats2Category2List = [
       "基礎ステータス",
       "その他",
     ];
-    const enemyStatsCategoryList = ["敵元素ステータス·耐性"];
+    const enemyStatsCategory1List = ["敵元素ステータス·耐性"];
+    const enemyStatsCategory2List = [] as string[]; 
     const enemyList = ENEMY_MASTER_LIST;
     const selectedEnemyRef = ref(enemyList[0]);
     statsInput.statAdjustments["敵レベル"] = 90;
@@ -1247,9 +1255,12 @@ export default defineComponent({
       characterInfoModeRef,
       updateCondition,
       statsInput,
-      characterStats1CategoryList,
-      characterStats2CategoryList,
-      enemyStatsCategoryList,
+      characterStats1Category1List,
+      characterStats1Category2List,
+      characterStats2Category1List,
+      characterStats2Category2List,
+      enemyStatsCategory1List,
+      enemyStatsCategory2List,
       enemyList,
       selectedEnemyRef,
       updateEnemy,
