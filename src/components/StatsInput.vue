@@ -4,23 +4,15 @@
       <tr>
         <th :colspan="editable ? 3 : 2">
           <label class="open-close">
-            <input
-              class="hidden"
-              type="checkbox"
-              v-model="categoryOpenClose[category]"
-            />
+            <input class="hidden" type="checkbox" v-model="categoryOpenClose[category]" />
             <span> {{ displayName(category) }} </span>
           </label>
         </th>
       </tr>
       <tr v-for="stat in visibleStatList(category)" :key="stat">
-        <th>{{ displayStatName(stat) }}</th>
+        <th>{{ displayStatAbbrev(stat) }}</th>
         <td v-if="editable">
-          <input
-            type="number"
-            v-model="statAdjustments[stat]"
-            @change="adjustmentsOnChange"
-          />
+          <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange" />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
@@ -38,11 +30,7 @@
           <input type="checkbox" v-model="initializable" />
           {{ displayName("補正値0初期化") }}
         </label>
-        <button
-          type="button"
-          :disabled="!initializable"
-          @click="initializeAdjustments"
-        >
+        <button type="button" :disabled="!initializable" @click="initializeAdjustments">
           {{ displayName("実行") }}
         </button>
       </td>
@@ -57,17 +45,13 @@
             <tr>
               <th colspan="2">
                 <label class="open-close">
-                  <input
-                    class="hidden"
-                    type="checkbox"
-                    v-model="categoryOpenClose[category]"
-                  />
+                  <input class="hidden" type="checkbox" v-model="categoryOpenClose[category]" />
                   <span> {{ displayName(category) }} </span>
                 </label>
               </th>
             </tr>
             <tr v-for="stat in visibleStatList(category)" :key="stat">
-              <th>{{ displayStatName(stat) }}</th>
+              <th>{{ displayStatAbbrev(stat) }}</th>
               <td class="stat-value">
                 {{ displayStatValue(stat, statsObj[stat]) }}
               </td>
@@ -81,17 +65,13 @@
             <tr>
               <th colspan="2">
                 <label class="open-close">
-                  <input
-                    class="hidden"
-                    type="checkbox"
-                    v-model="categoryOpenClose[category]"
-                  />
+                  <input class="hidden" type="checkbox" v-model="categoryOpenClose[category]" />
                   <span> {{ displayName(category) }} </span>
                 </label>
               </th>
             </tr>
             <tr v-for="stat in visibleStatList(category)" :key="stat">
-              <th>{{ displayStatName(stat) }}</th>
+              <th>{{ displayStatAbbrev(stat) }}</th>
               <td class="stat-value">
                 {{ displayStatValue(stat, statsObj[stat]) }}
               </td>
@@ -124,7 +104,7 @@ export default defineComponent({
   },
   emits: ["update:stat-adjustments"],
   setup(props, context) {
-    const { displayName, displayStatName, displayStatValue } =
+    const { displayName, displayStatAbbrev, displayStatValue } =
       CompositionFunction();
 
     const statsInputRea = reactive(props.statsInput);
@@ -171,11 +151,11 @@ export default defineComponent({
 
     return {
       displayName,
+      displayStatAbbrev,
       displayStatValue,
 
       categoryList,
       statList,
-      displayStatName,
       visibleStatList,
       statsObj,
       statAdjustments,

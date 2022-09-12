@@ -102,6 +102,24 @@ export default function CompositionFunction() {
         return String(Math.round(value * p) / p) + myPercent;
     }
 
+    const displayStatAbbrev = function (stat: string) {
+        let result = stat;
+        const tempArr = stat.split('.');
+        if (tempArr.length == 1) {
+            if (stat.startsWith('敵')) stat = stat.replace(/^敵/, '');
+            if (stat.endsWith('ダメージバフ')) stat = stat.replace(/ダメージバフ$/, '');
+            else if (stat.endsWith('ダメージアップ')) stat = stat.replace(/ダメージアップ$/, '');
+            else if (stat.endsWith('元素ダメージ')) stat = stat.replace(/元素ダメージ$/, '');
+            else if (stat.endsWith('物理ダメージ')) stat = stat.replace(/ダメージ$/, '');
+            else if (stat.endsWith('反応ボーナス')) stat = stat.replace(/反応ボーナス$/, '');
+            else if (stat.endsWith('耐性')) stat = stat.replace(/耐性$/, '');
+            result = displayName(stat);
+        } else {
+            result = displayStatName(stat);
+        }
+        return result;
+    }
+
     /** $event.target.valueでのtypescriptエラー回避のために */
     const targetValue = function (event: Event) {
         if (event.target instanceof HTMLInputElement) return event.target.value;
@@ -115,8 +133,14 @@ export default function CompositionFunction() {
 
     return {
         localeList,
-        setI18nLanguage, loadLocaleMessages,
-        displayName, displayStatName, displayStatValue, targetValue, displayOptionName,
+        setI18nLanguage,
+        loadLocaleMessages,
+        displayName,
+        displayStatName,
+        displayStatValue,
+        displayStatAbbrev,
+        targetValue,
+        displayOptionName,
     }
 }
 </script>

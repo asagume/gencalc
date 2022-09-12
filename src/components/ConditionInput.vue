@@ -98,7 +98,7 @@ export default defineComponent({
       const resultArr = [];
       for (const stat of Object.keys(props.conditionAdjustments)) {
         const value = props.conditionAdjustments[stat];
-        let result = displayStatName(stat);
+        let result: string = displayStatName(stat).replace('%', '');
         if (value == null) {
           // nop
         } else if (isNumber(value)) {

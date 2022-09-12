@@ -370,7 +370,7 @@ export default defineComponent({
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
         const value = statAdjustments.value[stat];
-        let result = displayStatName(stat);
+        let result: string = displayStatName(stat).replace('%', '');
         if (isNumber(value)) {
           if (value >= 0) {
             if (stat.split('.')[0] == '別枠乗算') result += '=';
