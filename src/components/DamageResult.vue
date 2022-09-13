@@ -1,32 +1,63 @@
 <template>
   <div class="elemental-reaction">
-    <input id="増幅反応-なし" type="radio" value="なし" name="増幅反応-name" @change="増幅反応 = 'なし'" checked />
+    <input
+      id="増幅反応-なし"
+      type="radio"
+      value="なし"
+      name="増幅反応-name"
+      @change="増幅反応 = 'なし'"
+      checked
+    />
     <label for="増幅反応-なし"> {{ displayName("反応なし") }} </label>
     <template v-if="damageResult.元素反応.蒸発倍率">
-      <input id="増幅反応-蒸発" type="radio" value="蒸発" name="増幅反応-name" @change="増幅反応 = '蒸発'" />
+      <input
+        id="増幅反応-蒸発"
+        type="radio"
+        value="蒸発"
+        name="増幅反応-name"
+        @change="増幅反応 = '蒸発'"
+      />
       <label for="増幅反応-蒸発">
         {{ displayName("蒸発") }}×<span>{{
-        Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
+          Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
         }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.溶解倍率">
-      <input id="増幅反応-溶解" type="radio" value="溶解" name="増幅反応-name" @change="増幅反応 = '溶解'" />
+      <input
+        id="増幅反応-溶解"
+        type="radio"
+        value="溶解"
+        name="増幅反応-name"
+        @change="増幅反応 = '溶解'"
+      />
       <label for="増幅反応-溶解">
         {{ displayName("溶解") }}×<span>{{
-        Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
+          Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
         }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.超激化ダメージ">
-      <input id="増幅反応-超激化" type="radio" value="超激化" name="増幅反応-name" @change="増幅反応 = '超激化'" />
+      <input
+        id="増幅反応-超激化"
+        type="radio"
+        value="超激化"
+        name="増幅反応-name"
+        @change="増幅反応 = '超激化'"
+      />
       <label for="増幅反応-超激化">
         {{ displayName("超激化") }}
         <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.草激化ダメージ">
-      <input id="増幅反応-草激化" type="radio" value="草激化" name="増幅反応-name" @change="増幅反応 = '草激化'" />
+      <input
+        id="増幅反応-草激化"
+        type="radio"
+        value="草激化"
+        name="増幅反応-name"
+        @change="増幅反応 = '草激化'"
+      />
       <label for="増幅反応-草激化">
         {{ displayName("草激化") }}
         <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
@@ -44,7 +75,10 @@
       {{ displayName("超電導") }}
       <span>{{ Math.round(damageResult.元素反応.超電導ダメージ) }}</span>
     </label>
-    <label v-if="damageResult.元素反応.拡散ダメージ" :class="elementClass(元素反応.拡散元素)">
+    <label
+      v-if="damageResult.元素反応.拡散ダメージ"
+      :class="elementClass(元素反応.拡散元素)"
+    >
       {{ displayName("拡散") }}
       <span>{{ Math.round(swirlDmg) }}</span>
     </label>
@@ -69,86 +103,101 @@
       <span>{{ Math.round(damageResult.元素反応.超開花ダメージ) }}</span>
     </label>
   </div>
-  <template v-for="category in CATEGORY_LIST" :key="category">
-    <template v-if="damageResult[category] && damageResult[category].length > 0">
-      <table v-if="resultStyleRef == '1'" class="result v-style">
-        <thead>
-          <tr @click="categoryOnClick(category)">
-            <th>{{ displayName(category) }}</th>
+  <fieldset>
+    <template v-for="category in CATEGORY_LIST" :key="category">
+      <template v-if="damageResult[category] && damageResult[category].length > 0">
+        <table v-if="resultStyleRef == '1'" class="result v-style">
+          <thead>
+            <tr @click="categoryOnClick(category)">
+              <th>{{ displayName(category) }}</th>
+              <th>{{ displayName("期待値") }}</th>
+              <th>{{ displayName("会心") }}</th>
+              <th>{{ displayName("非会心") }}</th>
+            </tr>
+          </thead>
+          <template v-if="categoryOpenClose[category]">
+            <tr v-for="item in itemList(category)" :key="item[0]">
+              <th v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
+                {{ displayNameV(item[0]) }}
+              </th>
+              <td :class="'damage-value ' + elementClass(item[1])">
+                {{ displayDamageValue(item, 2) }}
+              </td>
+              <td :class="'damage-value ' + elementClass(item[1])">
+                {{ displayDamageValue(item, 3) }}
+              </td>
+              <td :class="'damage-value ' + elementClass(item[1])">
+                {{ displayDamageValue(item, 4) }}
+              </td>
+            </tr>
+          </template>
+        </table>
+        <table v-if="resultStyleRef == '0'" class="result h-style">
+          <thead>
+            <tr @click="categoryOnClick(category)">
+              <th>{{ displayName(category) }}</th>
+              <template v-for="item in itemList(category)" :key="item[0]">
+                <th v-if="item[item.length - 1]" :colspan="item[item.length - 1]">
+                  {{ displayNameH(item[0], category) }}
+                </th>
+              </template>
+            </tr>
+          </thead>
+          <tr>
             <th>{{ displayName("期待値") }}</th>
-            <th>{{ displayName("会心") }}</th>
-            <th>{{ displayName("非会心") }}</th>
-          </tr>
-        </thead>
-        <template v-if="categoryOpenClose[category]">
-          <tr v-for="item in itemList(category)" :key="item[0]">
-            <th v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
-              {{ displayNameV(item[0]) }}
-            </th>
-            <td :class="'damage-value ' + elementClass(item[1])">
+            <td
+              v-for="item in itemList(category)"
+              :key="item[0]"
+              :class="'damage-value ' + elementClass(item[1])"
+            >
               {{ displayDamageValue(item, 2) }}
             </td>
-            <td :class="'damage-value ' + elementClass(item[1])">
-              {{ displayDamageValue(item, 3) }}
-            </td>
-            <td :class="'damage-value ' + elementClass(item[1])">
-              {{ displayDamageValue(item, 4) }}
-            </td>
           </tr>
-        </template>
-      </table>
-      <table v-if="resultStyleRef == '0'" class="result h-style">
-        <thead>
-          <tr @click="categoryOnClick(category)">
-            <th>{{ displayName(category) }}</th>
-            <template v-for="item in itemList(category)" :key="item[0]">
-              <th v-if="item[item.length - 1]" :colspan="item[item.length - 1]">
-                {{ displayNameH(item[0], category) }}
-              </th>
-            </template>
-          </tr>
-        </thead>
-        <tr>
-          <th>{{ displayName("期待値") }}</th>
-          <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
-            {{ displayDamageValue(item, 2) }}
-          </td>
-        </tr>
-        <template v-if="categoryOpenClose[category]">
-          <tr>
-            <th>{{ displayName("会心") }}</th>
-            <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
-              {{ displayDamageValue(item, 3) }}
-            </td>
-          </tr>
-          <tr>
-            <th>{{ displayName("非会心") }}</th>
-            <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
-              {{ displayDamageValue(item, 4) }}
-            </td>
-          </tr>
-        </template>
-      </table>
+          <template v-if="categoryOpenClose[category]">
+            <tr>
+              <th>{{ displayName("会心") }}</th>
+              <td
+                v-for="item in itemList(category)"
+                :key="item[0]"
+                :class="'damage-value ' + elementClass(item[1])"
+              >
+                {{ displayDamageValue(item, 3) }}
+              </td>
+            </tr>
+            <tr>
+              <th>{{ displayName("非会心") }}</th>
+              <td
+                v-for="item in itemList(category)"
+                :key="item[0]"
+                :class="'damage-value ' + elementClass(item[1])"
+              >
+                {{ displayDamageValue(item, 4) }}
+              </td>
+            </tr>
+          </template>
+        </table>
+      </template>
     </template>
-  </template>
-  <table class="result">
-    <tr>
-      <th>{{ displayName("被ダメージ") }}</th>
-      <td class="damage-value" v-for="item in damageTakenList" :key="item.key">
-        <span :class="elementClass(item.key)">
-          {{ Math.round(item.value) }}
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <th>{{ displayName("耐久スコア") }}</th>
-      <td class="damage-value" v-for="item in resScoreList" :key="item.key">
-        <span :class="elementClass(item.key)">
-          {{ Math.round(item.value) }}
-        </span>
-      </td>
-    </tr>
-  </table>
+    <hr />
+    <table class="result damage-result">
+      <tr>
+        <th>{{ displayName("被ダメージ") }}</th>
+        <td class="damage-value" v-for="item in damageTakenList" :key="item.key">
+          <span :class="elementClass(item.key)">
+            {{ Math.round(item.value) }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th>{{ displayName("耐久スコア") }}</th>
+        <td class="damage-value" v-for="item in resScoreList" :key="item.key">
+          <span :class="elementClass(item.key)">
+            {{ Math.round(item.value) }}
+          </span>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
   <div v-if="damageResult.キャラクター注釈.length > 0">
     <ul class="notes">
       <li v-for="(item, index) in damageResult.キャラクター注釈" :key="index">
@@ -202,7 +251,7 @@ export default defineComponent({
 
     const swirlDmg = computed(() => {
       let result = 元素反応.拡散ダメージ;
-      if (元素反応.拡散元素 == '雷' && 増幅反応.value == "超激化") {
+      if (元素反応.拡散元素 == "雷" && 増幅反応.value == "超激化") {
         result += 元素反応.超激化ダメージ;
       }
       return result;
@@ -279,8 +328,8 @@ export default defineComponent({
 
     const categoryOpenClose = reactive({} as { [key: string]: boolean });
     for (const key of CATEGORY_LIST) {
-      if (["落下攻撃"].includes(key)) categoryOpenClose[key] = false;
-      else categoryOpenClose[key] = true;
+      categoryOpenClose[key] = true;
+      // if (["落下攻撃"].includes(key)) categoryOpenClose[key] = false;
     }
 
     const categoryOnClick = (category: string) => {
@@ -371,7 +420,7 @@ export default defineComponent({
   margin-bottom: 2px;
 }
 
-.elemental-reaction [type="radio"]+label {
+.elemental-reaction [type="radio"] + label {
   background-color: black;
 }
 
@@ -380,13 +429,10 @@ export default defineComponent({
 }
 
 table.result {
-  width: calc(100% - 6px);
+  width: 100%;
   margin: 1px auto;
   table-layout: fixed;
   border-spacing: 1px;
-  border-width: 1px 2px;
-  border-style: solid;
-  border-color: gray;
   border-collapse: collapse;
 }
 
@@ -435,6 +481,10 @@ table.result.h-style th:first-child {
 table.result.h-style thead th:first-child {
   text-align: left;
   padding-left: 1rem;
+}
+
+table.damage-result tr:last-child {
+  border-bottom: none;
 }
 
 .right {

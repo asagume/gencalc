@@ -10,7 +10,11 @@
     <ul class="action-list">
       <li v-for="item in itemList" :key="item.id">
         <div class="add-item" @click="addItem(item)">
-          <img class="action" :src="item.src" :alt="displayName(item.name)" />
+          <img
+            :class="'action' + itemImgClass(item)"
+            :src="item.src"
+            :alt="displayName(item.name)"
+          />
         </div>
         <div>{{ displayName(item.name) }}</div>
       </li>
@@ -27,7 +31,11 @@
         <template #item="{ element, index }">
           <tr>
             <th class="category handle">
-              <img class="action" :src="element.src" :alt="displayName(element.name)" />
+              <img
+                :class="'action' + itemImgClass(element)"
+                :src="element.src"
+                :alt="displayName(element.name)"
+              />
             </th>
             <td class="damage">
               <table>
@@ -256,6 +264,9 @@ export default defineComponent({
       });
       return result;
     });
+    const itemImgClass = (item: TCustomizedDamageResultEntry) => {
+      return REACTION_DMG_ARR.includes(item.category) ? " reaction " : "";
+    };
 
     const customizedResultList = reactive([] as TCustomizedDamageResultEntry[]);
 
@@ -531,6 +542,7 @@ export default defineComponent({
       targetValue,
 
       itemList,
+      itemImgClass,
       addItem,
 
       clone,
@@ -561,6 +573,10 @@ ul.action-list {
   width: 100%;
   list-style-type: none;
   padding: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
 }
 
 ul.action-list li {
@@ -576,6 +592,11 @@ img.action {
   width: 40px;
   object-fit: fill;
   border: none;
+}
+
+img.action.reaction {
+  width: 30px;
+  margin: 5px;
 }
 
 .add-item {
@@ -602,10 +623,11 @@ img.action {
 
 table {
   width: 100%;
+  border-spacing: 0;
 }
 
 table.customized-result {
-  padding: 10px 0;
+  padding: 5px 0;
   font-size: 2rem;
 }
 
@@ -674,7 +696,7 @@ table.total-damage {
 
 table.total-damage th,
 table.total-damage td {
-  padding: 5px;
+  padding: 2px;
 }
 
 .total-damage-value {
