@@ -3,22 +3,47 @@
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter">
         <legend>
-          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
+          <input
+            class="hidden"
+            :id="'supporter-' + supporter"
+            type="checkbox"
+            v-model="supporterOpenClose[supporter]"
+          />
           <label class="toggle-switch" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </legend>
         <div class="left">
-          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
-            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+          <label
+            class="condition"
+            v-for="item in supporterCheckboxList(supporter)"
+            :key="item.name"
+          >
+            <input
+              type="checkbox"
+              v-model="conditionValues[item.name]"
+              :value="item.name"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
+          <label
+            class="condition"
+            v-for="item in supporterSelectList(supporter)"
+            :key="item.name"
+          >
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
-              <option v-for="(option, index) in item.options" :value="index" :key="option">
+            <select
+              v-model="conditionValues[item.name]"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            >
+              <option
+                v-for="(option, index) in item.options"
+                :value="index"
+                :key="option"
+              >
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -26,9 +51,17 @@
         </div>
       </fieldset>
       <template v-else>
-        <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
-          v-model="supporterOpenClose[supporter]" :disabled="supporterDisabled(supporter)" />
-        <label :class="'toggle-switch' + supporterOptionSelectedClass(supporter)" :for="'supporter-else-' + supporter">
+        <input
+          class="hidden"
+          :id="'supporter-else-' + supporter"
+          type="checkbox"
+          v-model="supporterOpenClose[supporter]"
+          :disabled="supporterDisabled(supporter)"
+        />
+        <label
+          :class="'toggle-switch' + supporterOptionSelectedClass(supporter)"
+          :for="'supporter-else-' + supporter"
+        >
           <span>{{ displayName(supporter) }}</span>
         </label>
       </template>
@@ -42,11 +75,13 @@
 
     <label>
       {{ displayName("すべて閉じる") }}
-      <button type="button" @click="closeAllSupporters"> {{ displayName("実行") }} </button>
+      <button type="button" @click="closeAllSupporters">{{ displayName("実行") }}</button>
     </label>
     <label>
       {{ displayName("すべてクリア") }}
-      <button type="button" @click="clearAllSupporterOptions"> {{ displayName("実行") }} </button>
+      <button type="button" @click="clearAllSupporterOptions">
+        {{ displayName("実行") }}
+      </button>
     </label>
   </fieldset>
 
@@ -94,7 +129,11 @@ import {
   makeTeamOptionDetailObjArr,
   TDamageDetailObj,
 } from "@/input";
-import { getCharacterMasterDetail, TCharacterKey, TEAM_OPTION_MASTER_LIST } from "@/master";
+import {
+  getCharacterMasterDetail,
+  TCharacterKey,
+  TEAM_OPTION_MASTER_LIST,
+} from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
@@ -102,11 +141,19 @@ export default defineComponent({
   name: "TeamOptionInput",
   props: {
     character: { type: String as PropType<TCharacterKey>, required: true },
-    savedSupporters: { type: Object as PropType<{ key: string; value: string }[]>, required: true },
+    savedSupporters: {
+      type: Object as PropType<{ key: string; value: string }[]>,
+      required: true,
+    },
   },
   emits: ["update:team-option"],
   setup(props, context) {
-    const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
+    const {
+      displayName,
+      displayStatName,
+      displayStatValue,
+      displayOptionName,
+    } = CompositionFunction();
 
     const supporterKeyList = reactive([] as string[]);
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
@@ -200,50 +247,65 @@ export default defineComponent({
         }
       });
       conditionMap.forEach((value, key) => {
-        if (value === null) { // checkbox
+        if (value === null) {
+          // checkbox
           if (!(key in conditionValues)) conditionValues[key] = false;
-        } else {              // select
+        } else {
+          // select
           if (!(key in conditionValues)) conditionValues[key] = 0;
         }
       });
-    }
+    };
     updateConditionList();
 
     for (const key of supporterKeyList) {
       supporterOpenClose[key] = false;
     }
 
-    const supporterDamageResult = reactive(new Map() as Map<string, TDamageResult>);
+    const supporterDamageResult = reactive(new Map() as Map<string, any[]>);
 
     const takeMasterTeamOption = (character: string, master: any) => {
-      if ('チームバフ' in master) {
+      if ("チームバフ" in master) {
         const detailObjArr = master.チームバフ as any[];
-        const damageDetailObjArr: TDamageDetailObj[] = makeTeamOptionDetailObjArr(detailObjArr);
-        damageDetailObjArr.forEach(damageDetailObj => {
-          const condition = character + '*' + damageDetailObj.名前;
+        const damageDetailObjArr: TDamageDetailObj[] = makeTeamOptionDetailObjArr(
+          detailObjArr
+        );
+        damageDetailObjArr.forEach((damageDetailObj) => {
+          const condition = character + "*" + damageDetailObj.名前;
           damageDetailObj.条件 = condition;
           if (!additionalConditions.includes(condition)) {
             additionalConditions.push(condition);
           }
-          if (statusChangeDetailObjArr.filter(s => s.条件 == condition).length == 0) {
-            statusChangeDetailObjArr.splice(statusChangeDetailObjArr.length, 0, damageDetailObj);
+          if (statusChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+            statusChangeDetailObjArr.splice(
+              statusChangeDetailObjArr.length,
+              0,
+              damageDetailObj
+            );
           }
           makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
         updateConditionList();
       }
-    }
+    };
 
-    const setupSupporterDamageResult = async (savedSupporter: { key: string, value: string }) => {
+    const setupSupporterDamageResult = async (savedSupporter: {
+      key: string;
+      value: string;
+    }) => {
       const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-      const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
+      const artifactDetailInput = deepcopy(
+        ARTIFACT_DETAIL_INPUT_TEMPLATE
+      ) as TArtifactDetailInput;
       const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
       const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
       const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
       const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
 
       characterInput.character = savedSupporter.key as TCharacterKey;
-      characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
+      characterInput.characterMaster = await getCharacterMasterDetail(
+        characterInput.character
+      );
 
       const builddata = JSON.parse(savedSupporter.value);
 
@@ -270,30 +332,45 @@ export default defineComponent({
         optionInput
       );
 
-      if (characterInput.character == '雷電将軍') { // for 雷罰悪曜の眼
+      if (characterInput.character == "雷電将軍") {
+        // for 雷罰悪曜の眼
         const myCharacterMaster = await getCharacterMasterDetail(props.character);
-        statsInput.statsObj['元素エネルギー'] = myCharacterMaster['元素爆発']['元素エネルギー'];
+        statsInput.statsObj["元素エネルギー"] =
+          myCharacterMaster["元素爆発"]["元素エネルギー"];
       }
 
-      calculateDamageResult(
-        damageResult,
-        characterInput,
-        conditionInput,
-        statsInput
-      );
+      calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
 
       // マスターから取り込んだチームバフを削除します
-      const removeConditions: string[] = additionalConditions.filter(s => s.startsWith(characterInput.character + '*'));
+      const removeConditions: string[] = additionalConditions.filter((s) =>
+        s.startsWith(characterInput.character + "*")
+      );
       if (removeConditions.length > 0) {
-        statusChangeDetailObjArr.splice(0, statusChangeDetailObjArr.length, ...statusChangeDetailObjArr.filter(s => !removeConditions.includes(s.条件)));
-        removeConditions.forEach(condition => {
+        statusChangeDetailObjArr.splice(
+          0,
+          statusChangeDetailObjArr.length,
+          ...statusChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件))
+        );
+        removeConditions.forEach((condition) => {
           if (conditionMap.has(condition)) {
             conditionMap.delete(condition);
           }
         });
-        checkboxList.splice(0, checkboxList.length, ...checkboxList.filter(s => !removeConditions.includes(s.name)));
-        selectList.splice(0, selectList.length, ...selectList.filter(s => !removeConditions.includes(s.name)));
-        additionalConditions.splice(0, additionalConditions.length, ...additionalConditions.filter(s => !removeConditions.includes(s)));
+        checkboxList.splice(
+          0,
+          checkboxList.length,
+          ...checkboxList.filter((s) => !removeConditions.includes(s.name))
+        );
+        selectList.splice(
+          0,
+          selectList.length,
+          ...selectList.filter((s) => !removeConditions.includes(s.name))
+        );
+        additionalConditions.splice(
+          0,
+          additionalConditions.length,
+          ...additionalConditions.filter((s) => !removeConditions.includes(s))
+        );
       }
 
       // キャラクターマスターに記述したチームバフを取り込みます
@@ -302,50 +379,53 @@ export default defineComponent({
       // 武器マスターに記述したチームバフを取り込みます
       takeMasterTeamOption(characterInput.character, characterInput.weaponMaster);
 
-      return damageResult;
+      return [statsInput, damageResult];
     };
 
     const loadSupporterData = async () => {
       for (const savedSupporter of props.savedSupporters) {
-        const damageResult = await setupSupporterDamageResult(savedSupporter);
-        supporterDamageResult.set(savedSupporter.key, damageResult);
+        const [statsInput, damageResult] = await setupSupporterDamageResult(
+          savedSupporter
+        );
+        supporterDamageResult.set(savedSupporter.key, [statsInput, damageResult]);
       }
     };
     loadSupporterData();
 
     const supporterCheckboxList = (supporter: any) => {
-      return checkboxList.filter((s) => s.name.startsWith(supporter + '*'));
+      return checkboxList.filter((s) => s.name.startsWith(supporter + "*"));
     };
 
     const supporterSelectList = (supporter: any) => {
-      return selectList.filter((s) => s.name.startsWith(supporter + '*'));
+      return selectList.filter((s) => s.name.startsWith(supporter + "*"));
     };
 
     /** 選択中のキャラクターのオプションは無効です */
     const supporterDisabled = (supporter: any) => {
       return supporter == props.character;
-    }
+    };
 
     const supporterOptionSelectedClass = (supporter: any) => {
       for (const entry of supporterCheckboxList(supporter)) {
-        if (conditionValues[entry.name]) return ' selected';
+        if (conditionValues[entry.name]) return " selected";
       }
       for (const entry of supporterSelectList(supporter)) {
-        if (!entry.required && conditionValues[entry.name]) return ' selected';
+        if (!entry.required && conditionValues[entry.name]) return " selected";
       }
-      return '';
-    }
+      return "";
+    };
 
     /** サポーターのステータス（天賦レベル）を参照するオプションには保存データが必要です */
     const conditionDisabled = (item: any): boolean => {
       const supporter = item.name.split("*")[0];
-      if (props.savedSupporters.filter(s => s.key == supporter).length > 0) return false;
+      if (props.savedSupporters.filter((s) => s.key == supporter).length > 0)
+        return false;
       for (const myDetailObj of statusChangeDetailObjArr) {
         if (myDetailObj.条件.startsWith(item.name)) {
           if (isNumber(myDetailObj.数値)) return false;
           if (Array.isArray(myDetailObj.数値)) {
             for (const entry of myDetailObj.数値) {
-              if (!isNumber(entry) && !['+', '-', '*', '/'].includes(entry)) return true;
+              if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry)) return true;
             }
           }
         }
@@ -361,7 +441,7 @@ export default defineComponent({
         let supporter;
         let myNew数値 = myDetailObj["数値"];
         if (myDetailObj["条件"]) {
-          supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf('*'));
+          supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf("*"));
           if (supporter == props.character) continue;
           const number = checkConditionMatches(
             myDetailObj["条件"],
@@ -373,12 +453,26 @@ export default defineComponent({
             myNew数値 = (myNew数値 as any).concat(["*", number]);
           }
         }
-        const damageResult = supporter ? supporterDamageResult.get(supporter) : damageResultDummy;
-        const myValue = calculateFormulaArray(myNew数値, workObj, damageResult);
+        let statsInput: TStatsInput = deepcopy(STATS_INPUT_TEMPLATE);
+        let damageResult: TDamageResult = damageResultDummy;
+        if (supporter) {
+          const temp: any[] | undefined = supporterDamageResult.get(supporter);
+          if (temp) {
+            [statsInput, damageResult] = temp;
+          }
+        }
+        const myValue = calculateFormulaArray(
+          myNew数値,
+          statsInput.statsObj,
+          damageResult
+        );
         const kinds = [] as string[];
-        if (myDetailObj["種類"].startsWith('全') || myDetailObj["種類"].startsWith('敵全')) {
-          for (const elem of ['炎', '水', '風', '雷', '草', '氷', '岩']) {
-            kinds.push(myDetailObj["種類"].replace('全', elem))
+        if (
+          myDetailObj["種類"].startsWith("全") ||
+          myDetailObj["種類"].startsWith("敵全")
+        ) {
+          for (const elem of ["炎", "水", "風", "雷", "草", "氷", "岩"]) {
+            kinds.push(myDetailObj["種類"].replace("全", elem));
           }
         } else {
           kinds.push(myDetailObj["種類"]);
@@ -400,15 +494,15 @@ export default defineComponent({
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
         const value = statAdjustments.value[stat];
-        let result: string = displayStatName(stat).replace('%', '');
+        let result: string = displayStatName(stat).replace("%", "");
         if (isNumber(value)) {
           if (value >= 0) {
-            if (stat.split('.')[0] == '別枠乗算') result += '=';
-            else result += '+';
+            if (stat.split(".")[0] == "別枠乗算") result += "=";
+            else result += "+";
           }
           result += displayStatValue(stat, value);
         } else if (value) {
-          result += '=' + value;
+          result += "=" + value;
         }
         resultArr.push(result);
       }
@@ -438,16 +532,21 @@ export default defineComponent({
 
     watch(props, async (newVal, oldVal) => {
       for (const entry of newVal.savedSupporters) {
-        const changed = oldVal.savedSupporters.filter(s => s.key == entry.key && s.value == entry.value).length > 0;
-        if (changed
-          || entry.key == '雷電将軍' // for 雷罰悪曜の眼
+        const changed =
+          oldVal.savedSupporters.filter(
+            (s) => s.key == entry.key && s.value == entry.value
+          ).length > 0;
+        if (
+          changed ||
+          entry.key == "雷電将軍" // for 雷罰悪曜の眼
         ) {
           const damageResult = await setupSupporterDamageResult(entry);
           supporterDamageResult.set(entry.key, damageResult);
         }
       }
       for (const entry of oldVal.savedSupporters) {
-        const absent = newVal.savedSupporters.filter(s => s.key == entry.key).length == 0;
+        const absent =
+          newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
         if (absent) {
           supporterDamageResult.delete(entry.key);
         }
@@ -455,7 +554,8 @@ export default defineComponent({
     });
 
     return {
-      displayName, displayOptionName,
+      displayName,
+      displayOptionName,
 
       supporterKeyList,
       supporterCheckboxList,
@@ -508,7 +608,7 @@ label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled+label {
+:disabled + label {
   color: gray;
 }
 
