@@ -52,7 +52,7 @@ export default defineComponent({
     const selectList = reactive(deepcopy(props.conditionInput.selectList) as TSelectEntry[]);
     const conditionValues = reactive(deepcopy(props.conditionInput.conditionValues) as any);  // TConditionValues
 
-    const isDisplayDescription = ref(true);
+    const isDisplayDescription = ref(false);
 
     const initialize = (conditionInput: TConditionInput) => {
       checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
