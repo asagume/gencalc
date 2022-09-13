@@ -316,13 +316,12 @@ export type TDamageDetailObj = {
     数値: number | string | Array<any> | null,
     条件: string | null,
     対象: string | null,
-    上限: number | string | null,
+    上限: number | string | Array<any> | null,
     HIT数: number | null,
     ダメージバフ: string | null,
     元素付与無効: boolean | null,
     除外条件: (string | object)[] | null,
     適用条件: (string | object)[] | null,
-    チーム: string | null,
 };
 
 export type TDamageDetail = {
@@ -1089,6 +1088,73 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
     }
 }
 
+const makeDetailObj = function (
+    detailObj: any,
+    level: number | null,
+    defaultKind: string | null,
+    defaultElement: string | null,
+    inputCategory: string | null,
+    opt_condition?: string,
+): TDamageDetailObj {
+    let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
+    let my対象 = null;
+    if (my種類.indexOf('.') != -1) {
+        my対象 = my種類.substring(my種類.indexOf('.') + 1);
+        my種類 = my種類.substring(0, my種類.indexOf('.'));
+    } else if ('対象' in detailObj) {
+        my対象 = detailObj['対象'];
+    }
+    let my数値 = null;
+    if ('数値' in detailObj) {
+        my数値 = detailObj['数値'];
+        if (isNumber(my数値) || isString(my数値)) {
+            // nop
+        } else if (isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
+            my数値 = my数値[level];
+        } else {
+            console.error(detailObj, level, defaultKind, defaultElement, my数値);
+        }
+        if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
+            my数値 = analyzeFormulaStr(my数値, '攻撃力');
+        } else {
+            my数値 = analyzeFormulaStr(my数値, my種類);
+        }
+    }
+    let my条件 = null;
+    if ('条件' in detailObj) {
+        if (isPlainObject(detailObj['条件']) && level && level in detailObj['条件']) {  // 武器は精錬ランクによって数値を変えたいときがあるので
+            my条件 = detailObj['条件'][level];
+        } else {
+            my条件 = detailObj['条件'];
+        }
+    } else {
+        my条件 = opt_condition ?? null;
+    }
+    let my上限 = null;
+    if ('上限' in detailObj) {
+        my上限 = detailObj['上限'];
+        if (isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
+            my上限 = my上限[level];
+        }
+        my上限 = analyzeFormulaStr(my上限);
+    }
+    const resultObj: TDamageDetailObj = {
+        名前: detailObj['名前'],
+        種類: my種類,
+        元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
+        数値: my数値,
+        条件: my条件,
+        対象: my対象,
+        上限: my上限,
+        HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
+        ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
+        元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
+        除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
+        適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null,
+    }
+    return resultObj;
+}
+
 export const makeDamageDetailObjArr = function (
     talentDataObj: any,
     level: number | null,
@@ -1097,77 +1163,22 @@ export const makeDamageDetailObjArr = function (
     statusChangeDetailObjArr: any[],
     talentChangeDetailObjArr: any[],
     inputCategory: string,
-    opt_condition = null): TDamageDetailObj[] {
-
+    opt_condition?: string,
+): TDamageDetailObj[] {
     const resultArr = [] as any[];
     if (!('詳細' in talentDataObj)) return resultArr;
 
     talentDataObj['詳細'].forEach((detailObj: { [x: string]: any; }) => {
-        let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
-        let my対象 = null;
-        if (my種類.indexOf('.') != -1) {
-            my対象 = my種類.substring(my種類.indexOf('.') + 1);
-            my種類 = my種類.substring(0, my種類.indexOf('.'));
-        } else if ('対象' in detailObj) {
-            my対象 = detailObj['対象'];
-        }
-        let my数値 = null;
-        if ('数値' in detailObj) {
-            my数値 = detailObj['数値'];
-            if (isNumber(my数値) || isString(my数値)) {
-                // nop
-            } else if (isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
-                my数値 = my数値[level];
-            } else {
-                console.error(talentDataObj, level, defaultKind, defaultElement, my数値);
-            }
-            if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
-                my数値 = analyzeFormulaStr(my数値, '攻撃力');
-            } else {
-                my数値 = analyzeFormulaStr(my数値, my種類);
-            }
-        }
-        let my条件 = null;
-        if ('条件' in detailObj) {
-            if (isPlainObject(detailObj['条件']) && level && level in detailObj['条件']) {  // 武器は精錬ランクによって数値を変えたいときがあるので
-                my条件 = detailObj['条件'][level];
-            } else {
-                my条件 = detailObj['条件'];
-            }
-        } else {
-            my条件 = opt_condition;
-        }
-        let my上限 = null;
-        if ('上限' in detailObj) {
-            my上限 = detailObj['上限'];
-            if (isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
-                my上限 = my上限[level];
-            }
-            my上限 = analyzeFormulaStr(my上限);
-        }
-        const resultObj = {
-            名前: detailObj['名前'],
-            種類: my種類,
-            元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
-            数値: my数値,
-            条件: my条件,
-            対象: my対象,
-            上限: my上限,
-            HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
-            ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
-            元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
-            除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
-            適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null,
-            チーム: null,
-        }
+        const resultObj = makeDetailObj(detailObj, level, defaultKind, defaultElement, inputCategory, opt_condition);
+        const my種類 = resultObj.種類 as string;
         if (statusChangeDetailObjArr != null) {
-            if (resultObj['種類'] in ステータスTEMPLATE
-                || resultObj['種類'].endsWith('%')
-                || new RegExp('[自全].+バフ').exec(resultObj['種類'])
-                || new RegExp('敵?[自全]元素耐性').exec(resultObj['種類'])
-                || resultObj['種類'] == '別枠乗算'
-                || ['継続時間', '発動回数', 'クールタイム', '使用回数'].includes(my種類)
-                || ['敵防御力', '移動速度', '攻撃速度', '通常攻撃速度'].includes(my種類)
+            if (my種類 in ステータスTEMPLATE
+                || new RegExp('[自全].+(バフ|アップ)').exec(my種類)
+                || new RegExp('敵?[自全]元素耐性').exec(my種類)
+                || ['別枠乗算', '回復量アップ'].includes(my種類)
+                || ['敵防御力'].includes(my種類)
+                || ['発動回数', '使用回数'].includes(my種類)
+                || ['攻撃速度', '通常攻撃速度', '移動速度'].includes(my種類)
                 || my種類.endsWith('継続時間')
                 || my種類.endsWith('クールタイム')
                 || my種類.endsWith('会心率')
@@ -1179,11 +1190,10 @@ export const makeDamageDetailObjArr = function (
             }
         }
         if (talentChangeDetailObjArr != null) {
-            if (resultObj['種類'].endsWith('強化')
-                || resultObj['種類'].endsWith('付与')
-                || resultObj['種類'].endsWith('アップ')
-                || resultObj['種類'] == '防御無視' ||
-                resultObj['種類'] == '固有変数') {   // ex.元素爆発強化,氷元素付与
+            if (my種類.endsWith('強化')
+                || my種類.endsWith('付与')
+                || my種類 == '防御無視' ||
+                my種類 == '固有変数') {   // ex.元素爆発強化,氷元素付与
                 resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
                 talentChangeDetailObjArr.push(resultObj);
                 return;
@@ -1191,6 +1201,22 @@ export const makeDamageDetailObjArr = function (
         }
         resultArr.push(resultObj);
     });
+
+    return resultArr;
+}
+
+export const makeTeamOptionDetailObjArr = function (
+    detailObjArr: any[],
+): TDamageDetailObj[] {
+    const resultArr = [] as any[];
+
+    detailObjArr.forEach((detailObj: { [x: string]: any; }) => {
+        const resultObj = makeDetailObj(detailObj, null, null, null, null);
+        if (resultObj) {
+            resultArr.push(resultObj);
+        }
+    });
+
     return resultArr;
 }
 

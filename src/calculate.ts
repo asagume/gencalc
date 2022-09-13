@@ -255,7 +255,7 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
 
     const workConditionAdjustments = {} as { [key: string]: number };
 
-    const myPriority1KindArr = ['元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
+    const myPriority1KindArr = ['元素熟知', '元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
     const myPriority1KindFormulaArr = [] as any[];
     const myPriority2KindFormulaArr = [] as any[];
     const myKindFormulaArr = [] as any[];
@@ -1103,7 +1103,7 @@ function calculateDamageFromDetail(
                 myステータス補正[stat] = tempStatsObj[stat];
             }
         });
-        console.log('myステータス補正', myステータス補正);
+        console.debug('myステータス補正', myステータス補正);
 
         // for 来歆の余響 「ダメージを与えた0.05秒後にクリアされる」
         const damageDetailMyArtifactSets = characterInput.damageDetailMyArtifactSets;

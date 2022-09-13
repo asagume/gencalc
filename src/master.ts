@@ -111,6 +111,7 @@ export type TCharacterDetail = {
     特殊重撃?: any,
     特殊落下攻撃?: any,
     その他天賦?: any,
+    チームバフ?: any[],
     オプション初期値?: any,
     固有変数?: any,
     おすすめセット: any[],
@@ -181,6 +182,7 @@ export type TWeaponDetail = {
     種類: TWeaponTypeKey,
     ステータス: TWeaponStats,
     武器スキル?: any,
+    チームバフ?: any[],
     オプション初期値?: any,
     固有変数?: any,
 };
@@ -209,7 +211,6 @@ export type TArtifactMain = {
     5: TArtifactMainStat,
     4: TArtifactMainStat,
 };
-
 
 function getIconUrl(master: TAnyObject) {
     if (master.icon_url) return master.icon_url;

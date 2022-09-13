@@ -1,8 +1,8 @@
 <template>
-  <table class="stats" v-if="!twoColumnMode">
+  <table class="stats" v-if="editable">
     <template v-for="category in categoryList" :key="category">
       <tr>
-        <th :colspan="editable ? 3 : 2">
+        <th colspan="3">
           <label class="open-close">
             <input class="hidden" type="checkbox" v-model="categoryOpenClose[category]" />
             <span> {{ displayName(category) }} </span>
@@ -11,21 +11,20 @@
       </tr>
       <tr v-for="stat in visibleStatList(category)" :key="stat">
         <th>{{ displayStatAbbrev(stat) }}</th>
-        <td v-if="editable">
+        <td>
           <input type="number" v-model="statAdjustments[stat]" @change="adjustmentsOnChange" />
         </td>
         <td class="stat-value">{{ displayStatValue(stat, statsObj[stat]) }}</td>
       </tr>
     </template>
     <tr>
-      <td :colspan="editable ? 3 : 2" class="control-left">
-        <button type="button" @click="twoColumnMode = !twoColumnMode">
-          {{ displayName("切替") }}
-        </button>
+      <td class="left">
         <label>
           <input type="checkbox" v-model="editable" />
           {{ displayName("補正値入力モード") }}
         </label>
+      </td>
+      <td colspan="2" class="right">
         <label>
           <input type="checkbox" v-model="initializable" />
           {{ displayName("補正値0初期化") }}
@@ -37,7 +36,7 @@
     </tr>
   </table>
 
-  <table class="two-table" v-if="twoColumnMode">
+  <table class="two-table" v-if="!editable">
     <tr>
       <td>
         <table class="stats">
@@ -81,10 +80,11 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2" class="control-left">
-        <button type="button" @click="twoColumnMode = !twoColumnMode">
-          {{ displayName("切替") }}
-        </button>
+      <td class="left">
+        <label>
+          <input type="checkbox" v-model="editable" />
+          {{ displayName("補正値入力モード") }}
+        </label>
       </td>
     </tr>
   </table>
@@ -109,7 +109,6 @@ export default defineComponent({
 
     const statsInputRea = reactive(props.statsInput);
 
-    const twoColumnMode = ref(true);
     const editable = ref(false);
     const initializable = ref(false);
 
@@ -162,7 +161,6 @@ export default defineComponent({
       categoryOpenClose,
 
       adjustmentsOnChange,
-      twoColumnMode,
       editable,
       initializable,
       initializeAdjustments,
@@ -177,21 +175,38 @@ label {
   margin-left: 15px;
 }
 
-table.stats {
+table.two-table {
   width: 100%;
   table-layout: fixed;
-  border-top: 2px solid gray;
+  border: none;
+  border-spacing: 0;
+}
+
+table.two-table td {
+  vertical-align: top;
+}
+
+table.stats {
+  width: calc(100% - 1px);
+  margin: 1px auto;
+  table-layout: fixed;
   border-spacing: 1px;
-  margin-top: 10px;
+  border-width: 1px 2px;
+  border-style: solid;
+  border-color: gray;
+  border-collapse: collapse;
+}
+
+table.stats tr {
+  border-bottom: 1px solid gray;
 }
 
 table.stats th,
 table.stats td {
   text-align: right;
   white-space: nowrap;
-  border-bottom: 2px solid gray;
   padding-right: 4px;
-  line-height: 3rem;
+  line-height: 3.3rem;
 }
 
 table.stats th {
@@ -215,28 +230,5 @@ button {
 
 .stat-value {
   padding-right: 1rem;
-}
-
-td.control-left {
-  text-align: left !important;
-}
-
-td.control-right {
-  text-align: right !important;
-}
-
-table.two-table {
-  width: 100%;
-  table-layout: fixed;
-  border: none;
-  border-spacing: 0;
-}
-
-table.two-table tr {
-  border: none;
-}
-
-table.two-table td {
-  vertical-align: top;
 }
 </style>

@@ -278,6 +278,14 @@ fieldset {
     padding: 5px 3px;
 }
 
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
 img.star {
     width: 2.4rem;
 }
@@ -479,109 +487,6 @@ table th {
     font-weight: normal;
 }
 
-table.status {
-    width: 98%;
-    margin-left: auto;
-    margin-right: auto;
-    table-layout: fixed;
-    border-spacing: 0;
-    border: 2px solid gray;
-    border-radius: 10px;
-}
-
-table.status th,
-table.status td {
-    min-width: 10rem;
-    text-align: right;
-    white-space: nowrap;
-    border-bottom: 1px solid gray;
-    padding-right: 1rem;
-    font-weight: normal;
-}
-
-table.status th {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-table.status td {
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-
-table.status th {
-    color: #df8f37;
-}
-
-table.status th[colspan="2"],
-table.status th[colspan="3"] {
-    text-align: center;
-    background-color: #333;
-    color: #e8d14e;
-}
-
-table.status td[colspan="2"],
-table.status td[colspan="3"] {
-    border-color: transparent;
-}
-
-table.status td input[type="number"] {
-    width: calc(100% - 8px);
-}
-
-table.result {
-    width: calc(100% - 6px);
-    margin: 1px auto;
-    table-layout: fixed;
-    border-spacing: 0;
-    border-width: 1px 2px;
-    border-style: solid;
-    border-color: gray;
-    border-collapse: collapse;
-}
-
-table tr {
-    border-bottom: 1px solid gray;
-}
-
-table.result th,
-table.result td {
-    min-width: 10rem;
-    text-align: right;
-    white-space: nowrap;
-    padding-right: 1rem;
-    font-weight: normal;
-}
-
-
-
-table.result th {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-table.result td {
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-
-
-table.result th:first-child {
-    width: 24rem;
-    text-align: right;
-    color: #df8f37;
-    white-space: nowrap;
-}
-
-table.result thead th {
-    color: #df8f37;
-    background-color: #333;
-}
-
-table.result thead th:first-child {
-    color: gold;
-}
-
 .tab-switch,
 .elemental-reaction {
     width: 100%;
@@ -642,6 +547,10 @@ ul.option-description {
     list-style-type: none;
     padding: 0;
     text-align: center;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
 }
 
 ul.option-description li {

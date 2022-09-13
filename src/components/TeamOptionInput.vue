@@ -91,7 +91,8 @@ import {
   makeDamageDetailObjArr,
   makeConditionExclusionMapFromStr,
   TStats,
-  TDamageDetail,
+  makeTeamOptionDetailObjArr,
+  TDamageDetailObj,
 } from "@/input";
 import { getCharacterMasterDetail, TCharacterKey, TEAM_OPTION_MASTER_LIST } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
@@ -124,6 +125,8 @@ export default defineComponent({
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
     const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
+
+    const additionalConditions: string[] = [];
 
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
@@ -177,37 +180,59 @@ export default defineComponent({
         }
       }
     });
-    conditionMap.forEach((value: string[] | null, key: string) => {
-      if (value) {
-        if (selectList.filter((s) => s.name == key).length == 0) {
-          const required = value[0].startsWith("required_");
-          selectList.push({
-            name: key,
-            options: value,
-            required: required,
-            displayName: key.replace(/^.+\*/, ""),
-          });
+
+    const updateConditionList = () => {
+      conditionMap.forEach((value: string[] | null, key: string) => {
+        if (value) {
+          if (selectList.filter((s) => s.name == key).length == 0) {
+            const required = value[0].startsWith("required_");
+            selectList.push({
+              name: key,
+              options: value,
+              required: required,
+              displayName: key.replace(/^.+\*/, ""),
+            });
+          }
+        } else {
+          if (checkboxList.filter((s) => s.name == key).length == 0) {
+            checkboxList.push({ name: key, displayName: key.replace(/^.+\*/, "") });
+          }
         }
-      } else {
-        if (checkboxList.filter((s) => s.name == key).length == 0) {
-          checkboxList.push({ name: key, displayName: key.replace(/^.+\*/, "") });
+      });
+      conditionMap.forEach((value, key) => {
+        if (value === null) { // checkbox
+          if (!(key in conditionValues)) conditionValues[key] = false;
+        } else {              // select
+          if (!(key in conditionValues)) conditionValues[key] = 0;
         }
-      }
-    });
-    conditionMap.forEach((value, key) => {
-      if (value === null) {
-        // checkbox
-        conditionValues[key] = false;
-      } else {
-        // select
-        conditionValues[key] = 0;
-      }
-    });
+      });
+    }
+    updateConditionList();
+
     for (const key of supporterKeyList) {
       supporterOpenClose[key] = false;
     }
 
     const supporterDamageResult = reactive(new Map() as Map<string, TDamageResult>);
+
+    const takeMasterTeamOption = (character: string, master: any) => {
+      if ('チームバフ' in master) {
+        const detailObjArr = master.チームバフ as any[];
+        const damageDetailObjArr: TDamageDetailObj[] = makeTeamOptionDetailObjArr(detailObjArr);
+        damageDetailObjArr.forEach(damageDetailObj => {
+          const condition = character + '*' + damageDetailObj.名前;
+          damageDetailObj.条件 = condition;
+          if (!additionalConditions.includes(condition)) {
+            additionalConditions.push(condition);
+          }
+          if (statusChangeDetailObjArr.filter(s => s.条件 == condition).length == 0) {
+            statusChangeDetailObjArr.splice(statusChangeDetailObjArr.length, 0, damageDetailObj);
+          }
+          makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
+        });
+        updateConditionList();
+      }
+    }
 
     const setupSupporterDamageResult = async (savedSupporter: { key: string, value: string }) => {
       const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
@@ -257,20 +282,25 @@ export default defineComponent({
         statsInput
       );
 
-      [
-        [characterInput.character, characterInput.damageDetailMyCharacter],
-        [characterInput.weapon, characterInput.damageDetailMyWeapon],
-        [characterInput.artifactSets[0], characterInput.damageDetailMyArtifactSets],
-      ].forEach(element => {
-        const [name, damageDetail] = element as [string, TDamageDetail];
-        if (damageDetail && damageDetail.ステータス変更系詳細) {
-          damageDetail.ステータス変更系詳細.forEach(damageDetailObj => {
-            if (damageDetailObj.チーム) {
-              console.log(name);
-            }
-          });
-        }
-      });
+      // マスターから取り込んだチームバフを削除します
+      const removeConditions: string[] = additionalConditions.filter(s => s.startsWith(characterInput.character + '*'));
+      if (removeConditions.length > 0) {
+        statusChangeDetailObjArr.splice(0, statusChangeDetailObjArr.length, ...statusChangeDetailObjArr.filter(s => !removeConditions.includes(s.条件)));
+        removeConditions.forEach(condition => {
+          if (conditionMap.has(condition)) {
+            conditionMap.delete(condition);
+          }
+        });
+        checkboxList.splice(0, checkboxList.length, ...checkboxList.filter(s => !removeConditions.includes(s.name)));
+        selectList.splice(0, selectList.length, ...selectList.filter(s => !removeConditions.includes(s.name)));
+        additionalConditions.splice(0, additionalConditions.length, ...additionalConditions.filter(s => !removeConditions.includes(s)));
+      }
+
+      // キャラクターマスターに記述したチームバフを取り込みます
+      takeMasterTeamOption(characterInput.character, characterInput.characterMaster);
+
+      // 武器マスターに記述したチームバフを取り込みます
+      takeMasterTeamOption(characterInput.character, characterInput.weaponMaster);
 
       return damageResult;
     };
@@ -462,7 +492,7 @@ label {
 
 label.toggle-switch {
   text-align: center;
-  width: calc(100% / 3 - 3rem - 4px);
+  width: calc(100% / 3 - 3rem - 6px);
   min-width: none;
 }
 
@@ -475,7 +505,7 @@ legend label.toggle-switch {
 }
 
 label.condition {
-  min-width: calc(100% / 3 - 1rem - 4px);
+  min-width: calc(100% / 3 - 1rem - 6px);
 }
 
 :disabled+label {

@@ -6,7 +6,7 @@
       <input id="増幅反応-蒸発" type="radio" value="蒸発" name="増幅反応-name" @change="増幅反応 = '蒸発'" />
       <label for="増幅反応-蒸発">
         {{ displayName("蒸発") }}×<span>{{
-            Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
+        Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
         }}</span>
       </label>
     </template>
@@ -14,7 +14,7 @@
       <input id="増幅反応-溶解" type="radio" value="溶解" name="増幅反応-name" @change="増幅反応 = '溶解'" />
       <label for="増幅反応-溶解">
         {{ displayName("溶解") }}×<span>{{
-            Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
+        Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
         }}</span>
       </label>
     </template>
@@ -377,6 +377,45 @@ export default defineComponent({
 
 .elemental-reaction label span {
   white-space: nowrap;
+}
+
+table.result {
+  width: calc(100% - 6px);
+  margin: 1px auto;
+  table-layout: fixed;
+  border-spacing: 1px;
+  border-width: 1px 2px;
+  border-style: solid;
+  border-color: gray;
+  border-collapse: collapse;
+}
+
+table.result tr {
+  border-bottom: 1px solid gray;
+}
+
+table.result th,
+table.result td {
+  text-align: right;
+  white-space: nowrap;
+  padding-right: 4px;
+  line-height: 3.3rem;
+}
+
+table.result th:first-child {
+  width: 24rem;
+  text-align: right;
+  color: #df8f37;
+  white-space: nowrap;
+}
+
+table.result thead th {
+  color: #df8f37;
+  background-color: #333;
+}
+
+table.result thead th:first-child {
+  color: gold;
 }
 
 table.result.h-style th {

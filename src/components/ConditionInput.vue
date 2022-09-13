@@ -13,8 +13,13 @@
         </option>
       </select>
     </label>
-    <hr />
-    <ul class="option-description" v-if="true">
+    <div style="text-align: center">
+      <label class="open-close">
+        <input class="hidden" type="checkbox" v-model="isDisplayDescription">
+        <span></span>
+      </label>
+    </div>
+    <ul class="option-description" v-if="isDisplayDescription">
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
   </fieldset>
@@ -29,7 +34,7 @@ import {
   TConditionInput,
   TSelectEntry,
 } from "@/input";
-import { computed, defineComponent, nextTick, PropType, reactive } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -46,6 +51,8 @@ export default defineComponent({
     const checkboxList = reactive(deepcopy(props.conditionInput.checkboxList) as TCheckboxEntry[]);
     const selectList = reactive(deepcopy(props.conditionInput.selectList) as TSelectEntry[]);
     const conditionValues = reactive(deepcopy(props.conditionInput.conditionValues) as any);  // TConditionValues
+
+    const isDisplayDescription = ref(true);
 
     const initialize = (conditionInput: TConditionInput) => {
       checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
@@ -127,6 +134,7 @@ export default defineComponent({
 
       updateCondition,
 
+      isDisplayDescription,
       displayStatAjustmentList,
     };
   },
@@ -146,5 +154,15 @@ label select {
 
 :checked+span {
   color: palevioletred;
+}
+
+label.open-close {
+  padding: 0;
+  width: calc(100% - 1rem);
+  background-color: transparent;
+}
+
+label.open-close input[type="checkbox"]+span::before {
+  width: 100%;
 }
 </style>
