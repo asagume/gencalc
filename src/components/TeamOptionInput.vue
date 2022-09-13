@@ -439,7 +439,8 @@ export default defineComponent({
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
       for (const myDetailObj of statusChangeDetailObjArr) {
         let supporter;
-        let myNew数値 = myDetailObj["数値"];
+        let myNew数値 = myDetailObj.数値;
+        let my上限 = myDetailObj.上限;
         if (myDetailObj["条件"]) {
           supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf("*"));
           if (supporter == props.character) continue;
@@ -464,7 +465,8 @@ export default defineComponent({
         const myValue = calculateFormulaArray(
           myNew数値,
           statsInput.statsObj,
-          damageResult
+          damageResult,
+          my上限
         );
         const kinds = [] as string[];
         if (
