@@ -492,7 +492,7 @@ label {
 
 label.toggle-switch {
   text-align: center;
-  width: calc(100% / 3 - 3rem - 4px);
+  width: calc(100% / 3 - 3rem - 6px);
   min-width: none;
 }
 
@@ -505,7 +505,7 @@ legend label.toggle-switch {
 }
 
 label.condition {
-  min-width: calc(100% / 3 - 1rem - 4px);
+  min-width: calc(100% / 3 - 1rem - 6px);
 }
 
 :disabled+label {

@@ -547,6 +547,10 @@ ul.option-description {
     list-style-type: none;
     padding: 0;
     text-align: center;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
 }
 
 ul.option-description li {
