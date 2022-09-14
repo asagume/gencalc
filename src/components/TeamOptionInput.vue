@@ -3,47 +3,22 @@
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter">
         <legend>
-          <input
-            class="hidden"
-            :id="'supporter-' + supporter"
-            type="checkbox"
-            v-model="supporterOpenClose[supporter]"
-          />
+          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
+            v-model="supporterOpenClose[supporter]" />
           <label class="toggle-switch" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </legend>
         <div class="left">
-          <label
-            class="condition"
-            v-for="item in supporterCheckboxList(supporter)"
-            :key="item.name"
-          >
-            <input
-              type="checkbox"
-              v-model="conditionValues[item.name]"
-              :value="item.name"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            />
+          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
+              :disabled="conditionDisabled(item)" @change="onChange" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label
-            class="condition"
-            v-for="item in supporterSelectList(supporter)"
-            :key="item.name"
-          >
+          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select
-              v-model="conditionValues[item.name]"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            >
-              <option
-                v-for="(option, index) in item.options"
-                :value="index"
-                :key="option"
-              >
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
+              <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -51,17 +26,9 @@
         </div>
       </fieldset>
       <template v-else>
-        <input
-          class="hidden"
-          :id="'supporter-else-' + supporter"
-          type="checkbox"
-          v-model="supporterOpenClose[supporter]"
-          :disabled="supporterDisabled(supporter)"
-        />
-        <label
-          :class="'toggle-switch' + supporterOptionSelectedClass(supporter)"
-          :for="'supporter-else-' + supporter"
-        >
+        <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
+          v-model="supporterOpenClose[supporter]" :disabled="supporterDisabled(supporter)" />
+        <label :class="'toggle-switch' + supporterOptionSelectedClass(supporter)" :for="'supporter-else-' + supporter">
           <span>{{ displayName(supporter) }}</span>
         </label>
       </template>
@@ -128,6 +95,7 @@ import {
   TStats,
   makeTeamOptionDetailObjArr,
   TDamageDetailObj,
+  ステータスTEMPLATE,
 } from "@/input";
 import {
   getCharacterMasterDetail,
@@ -171,6 +139,7 @@ export default defineComponent({
     const conditionValues = conditionInput.conditionValues;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
+    const statsObjDummy = deepcopy(ステータスTEMPLATE);
     const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
 
     const additionalConditions: string[] = [];
@@ -262,7 +231,7 @@ export default defineComponent({
       supporterOpenClose[key] = false;
     }
 
-    const supporterDamageResult = reactive(new Map() as Map<string, any[]>);
+    const supporterDamageResult = reactive(new Map() as Map<string, [TStats, TDamageResult]>);
 
     const takeMasterTeamOption = (character: string, master: any) => {
       if ("チームバフ" in master) {
@@ -292,7 +261,7 @@ export default defineComponent({
     const setupSupporterDamageResult = async (savedSupporter: {
       key: string;
       value: string;
-    }) => {
+    }): Promise<[TStats, TDamageResult]> => {
       const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
       const artifactDetailInput = deepcopy(
         ARTIFACT_DETAIL_INPUT_TEMPLATE
@@ -379,15 +348,15 @@ export default defineComponent({
       // 武器マスターに記述したチームバフを取り込みます
       takeMasterTeamOption(characterInput.character, characterInput.weaponMaster);
 
-      return [statsInput, damageResult];
+      return [statsInput.statsObj, damageResult];
     };
 
     const loadSupporterData = async () => {
       for (const savedSupporter of props.savedSupporters) {
-        const [statsInput, damageResult] = await setupSupporterDamageResult(
+        const [statsObj, damageResult] = await setupSupporterDamageResult(
           savedSupporter
         );
-        supporterDamageResult.set(savedSupporter.key, [statsInput, damageResult]);
+        supporterDamageResult.set(savedSupporter.key, [statsObj, damageResult]);
       }
     };
     loadSupporterData();
@@ -454,17 +423,18 @@ export default defineComponent({
             myNew数値 = (myNew数値 as any).concat(["*", number]);
           }
         }
-        let statsInput: TStatsInput = deepcopy(STATS_INPUT_TEMPLATE);
+        let statsObj: TStats = statsObjDummy;
         let damageResult: TDamageResult = damageResultDummy;
         if (supporter) {
-          const temp: any[] | undefined = supporterDamageResult.get(supporter);
+          const temp = supporterDamageResult.get(supporter);
           if (temp) {
-            [statsInput, damageResult] = temp;
+            statsObj = temp[0];
+            damageResult = temp[1];
           }
         }
         const myValue = calculateFormulaArray(
           myNew数値,
-          statsInput.statsObj,
+          statsObj,
           damageResult,
           my上限
         );
@@ -542,8 +512,8 @@ export default defineComponent({
           changed ||
           entry.key == "雷電将軍" // for 雷罰悪曜の眼
         ) {
-          const damageResult = await setupSupporterDamageResult(entry);
-          supporterDamageResult.set(entry.key, damageResult);
+          const temp = await setupSupporterDamageResult(entry);
+          supporterDamageResult.set(entry.key, temp);
         }
       }
       for (const entry of oldVal.savedSupporters) {
@@ -610,7 +580,7 @@ label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled + label {
+:disabled+label {
   color: gray;
 }
 
