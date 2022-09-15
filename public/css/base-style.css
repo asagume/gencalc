@@ -1,4 +1,18 @@
-@media all and (min-width: 1251px) {
+@media all and (min-width: 1536px) {
+    html {
+        font-size: 7.1px;
+    }
+
+    body {
+        font-size: 7.1px;
+    }
+
+    .main {
+        width: 1536px;
+    }
+}
+
+@media all and (min-width: 1251px) and (max-width: 1535px) {
     html {
         font-size: calc(100vw / 72 / 3);
     }
