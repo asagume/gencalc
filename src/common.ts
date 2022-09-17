@@ -6,6 +6,10 @@ export function isNumber(value: any): boolean {
     return isFinite(value) && value != null;
 }
 
+export function isBoolean(value: any): boolean {
+    return value === true || value === false;
+}
+
 export function isPlainObject(value: any): boolean {
     const myType = Object.prototype.toString.call(value);
     return myType === '[object Object]';

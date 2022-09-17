@@ -1,7 +1,6 @@
-import { isBoolean } from "@intlify/shared";
-import { deepcopy, isNumber, isPlainObject, isString, overwriteObject } from "./common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "./input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat } from "./master";
+import { deepcopy, isNumber, isBoolean, isPlainObject, isString, overwriteObject } from "@/common";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 基礎ステータスARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -126,6 +125,7 @@ export const calculateStats = function (
     if (!characterInput) return;
     if (!artifactDetailInput) return;
     if (!conditionInput) return;
+    if (!optionInput) return;
 
     try {
         const characterMaster = characterInput.characterMaster;
@@ -198,13 +198,17 @@ export const calculateStats = function (
                 if (stat in workStatsObj) workStatsObj[stat] += optionInput.elementalResonanceStatAdjustments[stat];
             });
             // チームオプションを計上します
-            Object.keys(optionInput.teamOptionStatAdjustments).forEach(stat => {
-                if (stat in workStatsObj) workStatsObj[stat] += optionInput.teamOptionStatAdjustments[stat];
-            });
+            if (optionInput.teamOption) {
+                Object.keys(optionInput.teamOption.conditionAdjustments).forEach(stat => {
+                    if (stat in workStatsObj) workStatsObj[stat] += optionInput.teamOption.conditionAdjustments[stat];
+                });
+            }
             // その他オプションを計上します
-            Object.keys(optionInput.miscOptionStatAdjustments).forEach(stat => {
-                if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOptionStatAdjustments[stat];
-            });
+            if (optionInput.miscOption) {
+                Object.keys(optionInput.miscOption.conditionAdjustments).forEach(stat => {
+                    if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOption.conditionAdjustments[stat];
+                });
+            }
         }
 
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
@@ -1074,7 +1078,7 @@ function calculateDamageFromDetail(
                     const toStat = tempArr[0];
                     if (toStat in tempStatsObj) {
                         if (toStat === '別枠乗算') {
-                            if (tempStatsObj[toStat] > 0) {
+                            if (tempStatsObj[toStat]) {
                                 tempStatsObj[toStat] *= entryObj[stat] / 100;   // for ディオナ
                             } else {
                                 tempStatsObj[toStat] += entryObj[stat];
@@ -1135,7 +1139,11 @@ function calculateDamageFromDetail(
 
         // 一時的にステータスを書き換えます。
         Object.keys(myステータス補正).forEach(statName => {
-            statsObj[statName] += myステータス補正[statName];
+            if (statName in statsObj) {
+                statsObj[statName] += myステータス補正[statName];
+            } else {
+                statsObj[statName] = myステータス補正[statName];
+            }
             console.debug('ステータス補正', statName, myステータス補正[statName]);
         });
 

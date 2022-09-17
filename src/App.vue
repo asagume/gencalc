@@ -110,11 +110,11 @@
             @update:elemental-resonance="updateElementalResonance($event)" />
         </div>
         <div v-show="optionInputTabRef == 2">
-          <TeamOptionInput :character="characterInputRea.character" :savedSupporters="savedSupporters"
-            @update:team-option="updateTeamOption" />
+          <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
+            :savedSupporters="savedSupporters" @update:team-option="updateTeamOption" />
         </div>
         <div v-show="optionInputTabRef == 3">
-          <MiscOptionInput @update:misc-option="updateMiscOption" />
+          <MiscOptionInput ref="miscOptionInputVmRef" @update:misc-option="updateMiscOption" />
         </div>
       </div>
     </div>
@@ -258,6 +258,7 @@ import {
   getMaxTalentLevel,
   getMaxConstellation,
   TConditionValues,
+  makeOptionsSavedata,
 } from "@/input";
 import {
   ARTIFACT_MAIN_MASTER,
@@ -280,9 +281,9 @@ import {
   calculateArtifactSubStatByPriority,
   calculateStats,
 } from "@/calculate";
-import { deepcopy, isPlainObject, overwriteObject } from "./common";
-import { calculateDamageResult } from "./calculate";
-import CompositionFunction from "./components/CompositionFunction.vue";
+import { deepcopy, isPlainObject, overwriteObject } from "@/common";
+import { calculateDamageResult } from "@/calculate";
+import CompositionFunction from "@/components/CompositionFunction.vue";
 
 export default defineComponent({
   name: "App",
@@ -336,6 +337,8 @@ export default defineComponent({
     const characterInputVmRef = ref();
     const artifactDetailInputVmRef = ref();
     const conditionInputVmRef = ref();
+    const teamOptionInputVmRef = ref();
+    const miscOptionInputVmRef = ref();
 
     const characterInputRea = reactive(
       overwriteObject(deepcopy(CHARACTER_INPUT_TEMPLATE), props.characterInput)
@@ -514,17 +517,17 @@ export default defineComponent({
 
     /** 構成情報をローカルストレージに保存します */
     const saveToStorage = (buildname: string) => {
-      let storageKey = "構成_" + characterInputRea.character;
+      let storageKey = '構成_' + characterInputRea.character;
       const defaultBuildname = ["あなたの" + characterInputRea.character];
       if (buildname && !defaultBuildname.includes(buildname)) {
         storageKey += "_" + buildname;
       }
-      const savedata = makeSavedata(
-        characterInputRea,
-        artifactDetailInputRea,
-        conditionInputRea
-      );
+      const savedata = makeSavedata(characterInputRea, artifactDetailInputRea, conditionInputRea);
       localStorage.setItem(storageKey, JSON.stringify(savedata));
+
+      const optionsSavedata = makeOptionsSavedata(characterInputRea.character, optionInputRea);
+      const storageKey2 = 'オプション' + storageKey;
+      localStorage.setItem(storageKey2, JSON.stringify(optionsSavedata));
 
       // おすすめセットのリストを更新します
       let opt_buildData;
@@ -549,11 +552,15 @@ export default defineComponent({
 
     /** ローカルストレージの構成情報を削除します */
     const removeFromStorage = (buildname: string) => {
-      let storageKey = "構成_" + characterInputRea.character;
-      if (buildname && buildname != "あなたの" + characterInputRea.character) {
+      let storageKey = '構成_' + characterInputRea.character;
+      const defaultBuildname = ["あなたの" + characterInputRea.character];
+      if (buildname && !defaultBuildname.includes(buildname)) {
         storageKey += "_" + buildname;
       }
       localStorage.removeItem(storageKey);
+
+      const storageKey2 = 'オプション' + storageKey;
+      localStorage.removeItem(storageKey2);
 
       // おすすめセットのリストを更新します
       let opt_buildData;
@@ -580,6 +587,7 @@ export default defineComponent({
         characterInputRea,
         artifactDetailInputRea,
         conditionInputRea,
+        optionInputRea,
         recommendation.build
       );
       if (recommendation.overwrite) {
@@ -670,6 +678,13 @@ export default defineComponent({
 
       characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = !recommendation.overwrite;
+
+      if ('options' in recommendation.build) {
+        // チーム
+        teamOptionInputVmRef.value.initializeValues(optionInputRea.teamOption);
+        // その他
+        miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
+      }
     };
 
     /** キャラクターを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
@@ -1034,40 +1049,44 @@ export default defineComponent({
     };
 
     /** その他オプションが変更されました。ステータスおよびダメージを再計算します */
-    const updateMiscOption = (statAdjustments: TStats) => {
-      overwriteObject(optionInputRea.miscOptionStatAdjustments, statAdjustments);
-      calculateStats(
-        statsInput,
-        characterInputRea,
-        artifactDetailInputRea,
-        conditionInputRea,
-        optionInputRea
-      );
-      calculateDamageResult(
-        damageResult,
-        characterInputRea as any,
-        conditionInputRea as any,
-        statsInput
-      );
+    const updateMiscOption = (conditionInput: TConditionInput) => {
+      if (conditionInput && Object.keys(conditionInput).length) {
+        overwriteObject(optionInputRea.miscOption, conditionInput);
+        calculateStats(
+          statsInput,
+          characterInputRea,
+          artifactDetailInputRea,
+          conditionInputRea,
+          optionInputRea
+        );
+        calculateDamageResult(
+          damageResult,
+          characterInputRea as any,
+          conditionInputRea as any,
+          statsInput
+        );
+      }
     };
 
     /** チームオプションが変更されました。ステータスおよびダメージを再計算します */
-    const updateTeamOption = (statAdjustments: TStats) => {
-      overwriteObject(optionInputRea.teamOptionStatAdjustments, statAdjustments);
-      console.log(statAdjustments);
-      calculateStats(
-        statsInput,
-        characterInputRea,
-        artifactDetailInputRea,
-        conditionInputRea,
-        optionInputRea
-      );
-      calculateDamageResult(
-        damageResult,
-        characterInputRea as any,
-        conditionInputRea as any,
-        statsInput
-      );
+    const updateTeamOption = (conditionInput: TConditionInput) => {
+      console.log('updateTeamOption', conditionInput);
+      if (conditionInput && Object.keys(conditionInput).length) {
+        overwriteObject(optionInputRea.teamOption, conditionInput);
+        calculateStats(
+          statsInput,
+          characterInputRea,
+          artifactDetailInputRea,
+          conditionInputRea,
+          optionInputRea
+        );
+        calculateDamageResult(
+          damageResult,
+          characterInputRea as any,
+          conditionInputRea as any,
+          statsInput
+        );
+      }
     };
 
     const openTwitter = () => {
@@ -1107,6 +1126,8 @@ export default defineComponent({
       characterInputVmRef,
       artifactDetailInputVmRef,
       conditionInputVmRef,
+      teamOptionInputVmRef,
+      miscOptionInputVmRef,
 
       characterInputRea,
       artifactDetailInputRea,
@@ -1189,6 +1210,72 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+/* 3 Columns */
+@media all and (min-width: 1251px) {
+  .base-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "pane1 pane1 pane1"
+      "pane2 pane2 pane2"
+      "pane3 pane6 result-pane"
+      "pane4 pane6 result-pane"
+      "pane4 pane6 pane5"
+      "bottom-pane bottom-pane pane7"
+      "footer footer footer";
+  }
+}
+
+/* 2 Columns */
+@media all and (min-width: 769px) and (max-width: 1250px) {
+  .base-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "pane1 pane1"
+      "pane2 pane2"
+      "pane3 pane4"
+      "pane3 result-pane"
+      "pane6 result-pane"
+      "pane6 result-pane"
+      "pane6 pane5"
+      "bottom-pane bottom-pane"
+      "pane7 pane7"
+      "footer footer";
+  }
+}
+
+/* 1 Column */
+@media all and (max-width: 768px) {
+  .base-container {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "pane1"
+      "pane2"
+      "pane3"
+      "pane4"
+      "pane6"
+      "result-pane"
+      "pane5"
+      "bottom-pane"
+      "pane7"
+      "footer";
+  }
+
+  .pane1 fieldset {
+    padding-bottom: 2.4rem;
+  }
+
+  ul.select-list {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 </style>
 <style scoped>

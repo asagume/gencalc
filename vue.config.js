@@ -1,12 +1,12 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  indexPath: 'index.html',
 
   pages: {
     index: {
       entry: 'src/main.ts',
       template: 'public/index3.html',
+      filename: 'index.html',
     },
   },
 
@@ -15,7 +15,6 @@ module.exports = defineConfig({
     : '/',
   outputDir: 'docs',
   assetsDir: './',
-  publicPath: './',
 
   pluginOptions: {
     i18n: {

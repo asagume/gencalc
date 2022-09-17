@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { basename } from '@/common';
-import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput } from '@/input';
+import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput, OPTION_INPUT_TEMPLATE, TArtifactDetailInput, TConditionInput, TOptionInput } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { deepcopy, isNumber } from './common';
 import i18n from './i18n';
@@ -142,8 +142,9 @@ function getCharacterByBirthday(): TCharacterKey {
 
 async function main() {
     const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-    const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE);
-    const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE);
+    const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
+    const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
+    const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
 
     const searchParams = new URLSearchParams(window.location.search);
     let urldata;
@@ -162,9 +163,7 @@ async function main() {
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
     const recommendationList = makeRecommendationList(characterInput.characterMaster, urldata);
     const recommendation = recommendationList[0];
-    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, recommendationList[0].build);
-
-    console.log('main', artifactDetailInput);
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendationList[0].build);
 
     createApp(App, {
         characterInput: characterInput,

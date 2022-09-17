@@ -41,7 +41,7 @@ interface ICheckList {
 export default defineComponent({
     name: 'CharacterSelect',
     props: {
-        character: { type: String, required: true },
+        character: { type: String },
         visible: { type: Boolean, required: true },
     },
     emits: ['update:character'],

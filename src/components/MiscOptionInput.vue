@@ -25,18 +25,23 @@ import {
   checkConditionMatches,
   makeValidConditionValueArr,
 } from "@/calculate";
-import { deepcopy, isNumber } from "@/common";
+import { deepcopy, isNumber, overwriteObject } from "@/common";
 import {
+  CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
   makeConditionExclusionMapFromStr,
   makeDamageDetailObjArr,
-  TCheckboxEntry,
-  TSelectEntry,
+  TConditionInput,
+  TDamageDetailObj,
   TStats,
 } from "@/input";
 import { OPTION1_MASTER_LIST, OPTION2_MASTER_LIST } from "@/master";
 import { computed, defineComponent, nextTick, reactive } from "vue";
 import CompositionFunction from './CompositionFunction.vue';
+
+type TConditionValuesAny = {
+  [key: string]: any;
+}
 
 export default defineComponent({
   name: "MiscOptionInput",
@@ -45,16 +50,12 @@ export default defineComponent({
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
     const damageDetailArr = [] as any[];
-    const statusChangeDetailObjArr = [] as any[];
-    const talentChangeDetailObjArr = [] as any[];
-    const conditionMap = new Map() as Map<string, string[]>;
-    const exclusionMap = new Map() as Map<string, string[]>;
-    const conditionInput = reactive({
-      conditionValues: {} as { [key: string]: any },
-      checkboxList: [] as TCheckboxEntry[],
-      selectList: [] as TSelectEntry[],
-    });
-    const conditionValues = conditionInput.conditionValues;
+    const statusChangeDetailObjArr: TDamageDetailObj[] = [];
+    const talentChangeDetailObjArr: TDamageDetailObj[] = [];
+    const conditionMap = new Map() as Map<string, string[] | null>;
+    const exclusionMap = new Map() as Map<string, string[] | null>;
+    const conditionInput = reactive(deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput);
+    const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
     const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
@@ -86,12 +87,12 @@ export default defineComponent({
     statusChangeDetailObjArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"], conditionMap, exclusionMap);
+        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
       });
     talentChangeDetailObjArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"], conditionMap, exclusionMap);
+        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
       });
     conditionMap.forEach((value, key) => {
       if (value && Array.isArray(value)) {
@@ -143,10 +144,12 @@ export default defineComponent({
           }
         }
         const myValue = calculateFormulaArray(myNew数値, workObj, damageResultDummy);
-        if (myDetailObj["種類"] in workObj) {
-          workObj[myDetailObj["種類"]] += myValue;
-        } else {
-          workObj[myDetailObj["種類"]] = myValue;
+        if (myDetailObj["種類"]) {
+          if (myDetailObj["種類"] in workObj) {
+            workObj[myDetailObj["種類"]] += myValue;
+          } else {
+            workObj[myDetailObj["種類"]] = myValue;
+          }
         }
       }
       return workObj;
@@ -173,7 +176,25 @@ export default defineComponent({
 
     const onChange = async () => {
       await nextTick();
-      context.emit("update:misc-option", statAdjustments.value);
+      overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
+      context.emit("update:misc-option", conditionInput);
+    };
+
+    const initializeValues = (initialObj: TConditionInput) => {
+      Object.keys(conditionValues).forEach(key => {
+        if (key in initialObj.conditionValues) {
+          conditionValues[key] = initialObj.conditionValues[key];
+        } else {
+          if (conditionMap.has(key)) {
+            if (conditionMap.get(key)) {
+              conditionValues[key] = 0;
+            } else {
+              conditionValues[key] = false;
+            }
+          }
+        }
+      });
+      onChange();
     };
 
     return {
@@ -182,8 +203,10 @@ export default defineComponent({
       checkboxList,
       selectList,
       conditionValues,
-      onChange,
       displayStatAjustmentList,
+
+      onChange,
+      initializeValues,
     };
   },
 });
@@ -217,3 +240,7 @@ label select {
   color: palevioletred;
 }
 </style>
+
+function OPTION_INPUT_CHILD_TEMPLATE(OPTION_INPUT_CHILD_TEMPLATE: any): any {
+  throw new Error("Function not implemented.");
+}

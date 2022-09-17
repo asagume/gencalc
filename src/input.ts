@@ -383,9 +383,11 @@ export type TArtifactDetailInput = typeof ARTIFACT_DETAIL_INPUT_TEMPLATE;
 
 export type TCheckboxEntry = {
     name: string;
+    displayName?: string,
 };
 export type TSelectEntry = {
     name: string;
+    displayName?: string,
     options: string[];
     required: boolean;
 };
@@ -419,11 +421,8 @@ export const OPTION_INPUT_TEMPLATE = {
     elementalResonanceStatAdjustments: {} as TStats,
     supporterList: [],
     isSupporterOptionOpened: {} as { [key: string]: boolean },
-    teamOptionConditionMap: {},
-    teamOptionConditionValues: {},
-    teamOptionStatAdjustments: {} as TStats,
-    miscOptionConditionValues: {},
-    miscOptionStatAdjustments: {} as TStats,
+    teamOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
+    miscOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
 };
 export type TOptionInput = typeof OPTION_INPUT_TEMPLATE;
 
@@ -497,7 +496,13 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
         } else {
             buildname = key.replace(re, '');
         }
-        result.push({ name: buildname, build: JSON.parse(localStorage[key]), overwrite: true });
+        const buildObj = JSON.parse(localStorage[key]);
+        const key2 = 'オプション' + key;
+        if (key2 in localStorage) {
+            const optionsObj = JSON.parse(localStorage[key2]);
+            buildObj.options = optionsObj;
+        }
+        result.push({ name: buildname, build: buildObj, overwrite: true });
     });
 
     characterMaster['おすすめセット'].forEach((obj: { [key: string]: any }) => {
@@ -595,6 +600,7 @@ export async function loadRecommendation(
     characterInput: TCharacterInput,
     artifactDetailInput: TArtifactDetailInput,
     conditionInput: TConditionInput,
+    optionInput: TOptionInput,
     build: { [key: string]: any }
 ) {
     try {
@@ -714,7 +720,7 @@ export async function loadRecommendation(
             });
         }
 
-        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s)).forEach(key => {
+        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && s != 'options').forEach(key => {
             if (build[key] == null) {
                 conditionInput.conditionValues[key] = build[key];   // null
             } else if (isString(build[key])) {
@@ -723,6 +729,30 @@ export async function loadRecommendation(
                 conditionInput.conditionValues[key] = build[key];
             }
         });
+
+        if ('options' in build) {
+            const keys = Object.keys(build.options);
+            if (keys.length) {
+                overwriteObject(optionInput.teamOption.conditionValues, {});
+                overwriteObject(optionInput.miscOption.conditionValues, {});
+                keys.forEach(key => {
+                    const astarIndex = key.indexOf('*');
+                    if (astarIndex != -1) {
+                        const workCharacter = key.substring(0, astarIndex);
+                        if (workCharacter in CHARACTER_MASTER) {
+                            // チーム
+                            optionInput.teamOption.conditionValues[key] = build.options[key];
+                        } else {
+                            // その他
+                            optionInput.miscOption.conditionValues[key] = build.options[key];
+                        }
+                    } else {
+                        // その他
+                        optionInput.miscOption.conditionValues[key] = build.options[key];
+                    }
+                })
+            }
+        }
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
 
@@ -813,6 +843,35 @@ export function makeSavedata(characterInput: TCharacterInput, artifactDetailInpu
     }
     for (const entry of conditionInput.selectList) {
         resultObj[entry.name] = conditionInput.conditionValues[entry.name];
+    }
+
+    return resultObj;
+}
+
+export function makeOptionsSavedata(character: string, optionInput: TOptionInput) {
+    const resultObj = {} as any;
+
+    // 元素共鳴
+
+    // チーム
+    {
+        const conditionValues = optionInput.teamOption.conditionValues;
+        Object.keys(conditionValues).forEach(key => {
+            if (key.startsWith(character + '*')) return;
+            if (conditionValues[key]) {
+                resultObj[key] = conditionValues[key];
+            }
+        })
+    }
+
+    // その他
+    {
+        const conditionValues = optionInput.miscOption.conditionValues;
+        Object.keys(conditionValues).forEach(key => {
+            if (conditionValues[key]) {
+                resultObj[key] = conditionValues[key];
+            }
+        })
     }
 
     return resultObj;
@@ -1220,7 +1279,7 @@ export const makeTeamOptionDetailObjArr = function (
     return resultArr;
 }
 
-export const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[]>, exclusionMap: Map<string, string[]>) {
+export const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>) {
     // 排他条件を抽出します
     let exclusionCond: string | null = null;
     let myCondStrArr = conditionStr.split('^');
@@ -1243,7 +1302,7 @@ export const makeConditionExclusionMapFromStr = function (conditionStr: string, 
     }
 }
 
-function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap: Map<string, string[]>, exclusionMap: Map<string, string[]>, exclusion: string | null) {
+function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>, exclusion: string | null) {
     const myCondStrArr = conditionStr.split('@');
     const myName = myCondStrArr[0];
     if (myCondStrArr.length == 1) {
