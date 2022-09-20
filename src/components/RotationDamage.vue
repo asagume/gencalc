@@ -10,65 +10,37 @@
     <ul class="action-list">
       <li v-for="item in itemList" :key="item.id">
         <div class="add-item" @click="addItem(item)">
-          <img
-            :class="'action' + itemImgClass(item)"
-            :src="item.src"
-            :alt="displayName(item.name)"
-          />
+          <img :class="'action' + itemImgClass(item)" :src="item.src" :alt="displayName(item.name)" />
         </div>
         <div>{{ displayName(item.name) }}</div>
       </li>
     </ul>
     <hr />
     <table class="customized-result">
-      <draggable
-        :list="customizedResultList"
-        item-key="id"
-        group="action"
-        :sort="true"
-        handle=".handle"
-      >
+      <draggable :list="customizedResultList" item-key="id" group="action" :sort="true" handle=".handle">
         <template #item="{ element, index }">
           <tr>
-            <th class="category handle">
-              <img
-                :class="'action' + itemImgClass(element)"
-                :src="element.src"
-                :alt="displayName(element.name)"
-              />
+            <th class="category handle with-tooltip">
+              <img :class="'action' + itemImgClass(element)" :src="element.src" :alt="displayName(element.name)" />
+              <div class="tooltip">{{ displayName(element.name) }}</div>
             </th>
             <td class="damage">
               <table>
-                <tr
-                  v-for="(entry, index2) in damageResultEntryList(element)"
-                  :key="index2"
-                >
+                <tr v-for="(entry, index2) in damageResultEntryList(element)" :key="index2">
                   <th class="damage-name">{{ displayName(entry[0]) }}</th>
                   <td class="reaction-list">
-                    <div
-                      class="reaction"
-                      v-for="reaction in amplifyingReactionList(element, index2)"
-                      :key="reaction[0]"
-                      @click="reactionOnClick(element, index2, reaction)"
-                    >
+                    <div class="reaction with-tooltip" v-for="reaction in amplifyingReactionList(element, index2)"
+                      :key="reaction[0]" @click="reactionOnClick(element, index2, reaction)">
                       <span> {{ reactionCount(element, index2, reaction) }}</span>
-                      <img
-                        :class="
-                          'reaction' + reactionUnselectedClass(element, index2, reaction)
-                        "
-                        :src="reaction[1]"
-                        :alt="displayName(reaction[0])"
-                      />
+                      <img :class="'reaction' + reactionUnselectedClass(element, index2, reaction)" :src="reaction[1]"
+                        :alt="displayName(reaction[0])" />
+                      <div class="tooltip">{{ displayName(reaction[0]) }}</div>
                     </div>
                   </td>
                   <td>
                     ×
-                    <input
-                      type="number"
-                      v-model="element.counts[index2]"
-                      min="0"
-                      @change="countOnChange(element, index2)"
-                    />
+                    <input type="number" v-model="element.counts[index2]" min="0"
+                      @change="countOnChange(element, index2)" />
                   </td>
                   <td :class="'damage-value' + elementColorClass(element, index2)">
                     {{ Math.round(damageValue(element, index2)) }}

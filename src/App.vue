@@ -106,8 +106,8 @@
           <label for="option-input-tab-3"> {{ displayName("その他") }} </label>
         </div>
         <div v-show="optionInputTabRef == 1">
-          <ElementalResonanceInput :elementalResonanceChecked="optionInputRea.elementalResonanceChecked"
-            @update:elemental-resonance="updateElementalResonance($event)" />
+          <ElementalResonanceInput ref="elementalResonanceInputVmRef"
+            @update:elemental-resonance="updateElementalResonance" />
         </div>
         <div v-show="optionInputTabRef == 2">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
@@ -249,7 +249,6 @@ import {
   OPTION_INPUT_TEMPLATE,
   TOptionInput,
   TStatsInput,
-  TStats,
   CHARACTER_INPUT_TEMPLATE,
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
   CONDITION_INPUT_TEMPLATE,
@@ -263,7 +262,6 @@ import {
 import {
   ARTIFACT_MAIN_MASTER,
   ARTIFACT_SET_MASTER,
-  ELEMENTAL_RESONANCE_MASTER,
   ENEMY_MASTER_LIST,
   getCharacterMasterDetail,
   getWeaponMasterDetail,
@@ -337,6 +335,7 @@ export default defineComponent({
     const characterInputVmRef = ref();
     const artifactDetailInputVmRef = ref();
     const conditionInputVmRef = ref();
+    const elementalResonanceInputVmRef = ref();
     const teamOptionInputVmRef = ref();
     const miscOptionInputVmRef = ref();
 
@@ -457,10 +456,6 @@ export default defineComponent({
 
     // 元素共鳴, チーム, その他
     const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
-    // 元素共鳴
-    for (const name of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
-      optionInputRea.elementalResonanceChecked[name] = false;
-    }
 
     // ダメージ計算結果
     const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
@@ -680,6 +675,8 @@ export default defineComponent({
       characterInputRea.removeDisabled = !recommendation.overwrite;
 
       if ('options' in recommendation.build) {
+        // 元素共鳴
+        elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
         // チーム
         teamOptionInputVmRef.value.initializeValues(optionInputRea.teamOption);
         // その他
@@ -1031,21 +1028,23 @@ export default defineComponent({
     };
 
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
-    const updateElementalResonance = (statAdjustments: TStats) => {
-      overwriteObject(optionInputRea.elementalResonanceStatAdjustments, statAdjustments);
-      calculateStats(
-        statsInput,
-        characterInputRea,
-        artifactDetailInputRea,
-        conditionInputRea,
-        optionInputRea
-      );
-      calculateDamageResult(
-        damageResult,
-        characterInputRea as any,
-        conditionInputRea as any,
-        statsInput
-      );
+    const updateElementalResonance = (conditionInput: TConditionInput) => {
+      if (conditionInput && Object.keys(conditionInput).length) {
+        overwriteObject(optionInputRea.elementalResonance, conditionInput);
+        calculateStats(
+          statsInput,
+          characterInputRea,
+          artifactDetailInputRea,
+          conditionInputRea,
+          optionInputRea
+        );
+        calculateDamageResult(
+          damageResult,
+          characterInputRea as any,
+          conditionInputRea as any,
+          statsInput
+        );
+      }
     };
 
     /** その他オプションが変更されました。ステータスおよびダメージを再計算します */
@@ -1126,6 +1125,7 @@ export default defineComponent({
       characterInputVmRef,
       artifactDetailInputVmRef,
       conditionInputVmRef,
+      elementalResonanceInputVmRef,
       teamOptionInputVmRef,
       miscOptionInputVmRef,
 

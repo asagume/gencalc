@@ -131,24 +131,31 @@ export default defineComponent({
       const workObj = {} as TStats;
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
       for (const myDetailObj of statusChangeDetailObjArr) {
-        let myNew数値 = myDetailObj["数値"];
-        if (myDetailObj["条件"]) {
-          const number = checkConditionMatches(
-            myDetailObj["条件"],
-            validConditionValueArr,
-            0
-          );
-          if (number == 0) continue;
-          if (number != 1) {
-            myNew数値 = (myNew数値 as any).concat(["*", number]);
+        let myValue = undefined;
+        if (myDetailObj["数値"]) {
+          let myNew数値 = myDetailObj["数値"];
+          if (myDetailObj["条件"]) {
+            const number = checkConditionMatches(
+              myDetailObj["条件"],
+              validConditionValueArr,
+              0
+            );
+            if (number == 0) continue;
+            if (number != 1) {
+              myNew数値 = (myNew数値 as any).concat(["*", number]);
+            }
           }
+          myValue = calculateFormulaArray(myNew数値, workObj, damageResultDummy);
         }
-        const myValue = calculateFormulaArray(myNew数値, workObj, damageResultDummy);
         if (myDetailObj["種類"]) {
-          if (myDetailObj["種類"] in workObj) {
-            workObj[myDetailObj["種類"]] += myValue;
+          if (myValue === undefined) {
+            workObj[myDetailObj["種類"]] = 0;
           } else {
-            workObj[myDetailObj["種類"]] = myValue;
+            if (myDetailObj["種類"] in workObj) {
+              workObj[myDetailObj["種類"]] += myValue;
+            } else {
+              workObj[myDetailObj["種類"]] = myValue;
+            }
           }
         }
       }

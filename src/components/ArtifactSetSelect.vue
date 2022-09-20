@@ -12,9 +12,9 @@
     </table>
 
     <ul class="select-list">
-      <li v-for="item in filteredList" :key="item.key">
-        <img :class="'artifact-set with-tooltip' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url"
-          :alt="item.key" @click="$emit('update:artifact-set', item.key)" />
+      <li class="with-tooltip" v-for="item in filteredList" :key="item.key">
+        <img :class="'artifact-set' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url" :alt="item.key"
+          @click="$emit('update:artifact-set', item.key)" />
         <div class="tooltip">{{ displayName(item.key) }}</div>
       </li>
     </ul>

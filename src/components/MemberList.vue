@@ -2,8 +2,8 @@
     <div>
         <draggable :list="characterMasterList" item-key="id">
             <template #item="{ element, index }">
-                <div class="member">
-                    <img :class="'character with-tooltip' + bgImageClass(element.data) + selectedClass(index)"
+                <div class="member with-tooltip">
+                    <img :class="'character' + bgImageClass(element.data) + selectedClass(index)"
                         :src="element.data.icon_url" :alt="element.data.key" @click="openCharacterSelect(index)">
                     <div class="tooltip">{{ displayName(element.data.key) }}</div>
                     <img class="vision" :src="visionSrc(element.data)" :alt="element.data.元素">
@@ -117,7 +117,6 @@ export default defineComponent({
 div.member {
     display: inline-block;
 }
-
 
 img.character {
     width: 60px;

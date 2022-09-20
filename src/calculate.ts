@@ -192,23 +192,30 @@ export const calculateStats = function (
             workStatsObj[toStat] += artifactStats[stat];
         }
 
+        let 通常攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
+        let 重撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
+        let 落下攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
+
         if (optionInput) {
-            // 元素共鳴を計上します
-            Object.keys(optionInput.elementalResonanceStatAdjustments).forEach(stat => {
-                if (stat in workStatsObj) workStatsObj[stat] += optionInput.elementalResonanceStatAdjustments[stat];
-            });
-            // チームオプションを計上します
-            if (optionInput.teamOption) {
-                Object.keys(optionInput.teamOption.conditionAdjustments).forEach(stat => {
-                    if (stat in workStatsObj) workStatsObj[stat] += optionInput.teamOption.conditionAdjustments[stat];
-                });
-            }
-            // その他オプションを計上します
-            if (optionInput.miscOption) {
-                Object.keys(optionInput.miscOption.conditionAdjustments).forEach(stat => {
-                    if (stat in workStatsObj) workStatsObj[stat] += optionInput.miscOption.conditionAdjustments[stat];
-                });
-            }
+            // 元素共鳴、チームオプション、その他オプションを計上します
+            [optionInput.elementalResonance, optionInput.teamOption, optionInput.miscOption].forEach(optionObj => {
+                if (optionObj) {
+                    Object.keys(optionObj.conditionAdjustments).forEach(stat => {
+                        if (optionObj.conditionAdjustments[stat] === Infinity) {
+                            if (stat.endsWith('元素付与')) {
+                                if (['片手剣', '両手剣', '長柄武器'].includes(characterMaster.武器)) {
+                                    const my付与元素 = stat.replace(/元素付与$/, '');
+                                    通常攻撃_元素Var = my付与元素;
+                                    重撃_元素Var = my付与元素;
+                                    落下攻撃_元素Var = my付与元素;
+                                }
+                            }
+                        } else if (stat in workStatsObj) {
+                            workStatsObj[stat] += optionObj.conditionAdjustments[stat];
+                        }
+                    })
+                }
+            })
         }
 
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
@@ -217,9 +224,6 @@ export const calculateStats = function (
         const conditionAdjustments = updateStatsByCondition(characterInput, validConditionValueArr, workStatsObj);
 
         // 天賦性能変化
-        let 通常攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
-        let 重撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
-        let 落下攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
         for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
             if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {

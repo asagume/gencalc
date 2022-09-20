@@ -250,6 +250,13 @@ export default defineComponent({
               damageDetailObj
             );
           }
+          if (talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+            talentChangeDetailObjArr.splice(
+              talentChangeDetailObjArr.length,
+              0,
+              damageDetailObj
+            );
+          }
           makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
         updateConditionList();
@@ -318,6 +325,11 @@ export default defineComponent({
           0,
           statusChangeDetailObjArr.length,
           ...statusChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string))
+        );
+        talentChangeDetailObjArr.splice(
+          0,
+          talentChangeDetailObjArr.length,
+          ...talentChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string))
         );
         removeConditions.forEach((condition) => {
           if (conditionMap.has(condition)) {
@@ -400,6 +412,18 @@ export default defineComponent({
           }
         }
       }
+      for (const myDetailObj of talentChangeDetailObjArr) {
+        if (myDetailObj.条件) {
+          if (myDetailObj.条件.startsWith(item.name)) {
+            if (isNumber(myDetailObj.数値)) return false;
+            if (Array.isArray(myDetailObj.数値)) {
+              for (const entry of myDetailObj.数値) {
+                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry)) return true;
+              }
+            }
+          }
+        }
+      }
       return false;
     };
 
@@ -407,56 +431,63 @@ export default defineComponent({
     const statAdjustments = computed(() => {
       const workObj = {} as TStats;
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
-      for (const myDetailObj of statusChangeDetailObjArr) {
-        let supporter;
-        let myNew数値 = myDetailObj.数値;
-        let my上限 = myDetailObj.上限;
-        if (myDetailObj["条件"]) {
-          supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf("*"));
-          if (supporter == props.character) continue;
-          const number = checkConditionMatches(
-            myDetailObj["条件"],
-            validConditionValueArr,
-            0
-          );
-          if (number == 0) continue;
-          if (number != 1) {
-            myNew数値 = (myNew数値 as any).concat(["*", number]);
-          }
-        }
-        let statsObj: TStats = statsObjDummy;
-        let damageResult: TDamageResult = damageResultDummy;
-        if (supporter) {
-          const temp = supporterDamageResult.get(supporter);
-          if (temp) {
-            statsObj = temp[0];
-            damageResult = temp[1];
-          }
-        }
-        const myValue = calculateFormulaArray(
-          myNew数値,
-          statsObj,
-          damageResult,
-          my上限
-        );
-        const kinds = [] as string[];
-        if (myDetailObj["種類"]) {
-          if (myDetailObj["種類"].startsWith("全") || myDetailObj["種類"].startsWith("敵全")) {
-            for (const elem of ["炎", "水", "風", "雷", "草", "氷", "岩"]) {
-              kinds.push(myDetailObj["種類"].replace("全", elem));
+      [statusChangeDetailObjArr, talentChangeDetailObjArr].forEach(detailObjArr => {
+        if (detailObjArr) {
+          for (const myDetailObj of detailObjArr) {
+            let supporter;
+            let myNew数値 = myDetailObj.数値;
+            let my上限 = myDetailObj.上限;
+            if (myDetailObj["条件"]) {
+              supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf("*"));
+              if (supporter == props.character) continue;
+              const number = checkConditionMatches(
+                myDetailObj["条件"],
+                validConditionValueArr,
+                0
+              );
+              if (number == 0) continue;
+              if (number != 1 && myNew数値) {
+                myNew数値 = (myNew数値 as any).concat(["*", number]);
+              }
             }
-          } else {
-            kinds.push(myDetailObj["種類"]);
+            let statsObj: TStats = statsObjDummy;
+            let damageResult: TDamageResult = damageResultDummy;
+            if (supporter) {
+              const temp = supporterDamageResult.get(supporter);
+              if (temp) {
+                statsObj = temp[0];
+                damageResult = temp[1];
+              }
+            }
+            let myValue = Infinity;
+            if (myNew数値) {
+              myValue = calculateFormulaArray(
+                myNew数値,
+                statsObj,
+                damageResult,
+                my上限
+              );
+            }
+            const kinds = [] as string[];
+            if (myDetailObj["種類"]) {
+              if (myDetailObj["種類"].startsWith("全") || myDetailObj["種類"].startsWith("敵全")) {
+                for (const elem of ["炎", "水", "風", "雷", "草", "氷", "岩"]) {
+                  kinds.push(myDetailObj["種類"].replace("全", elem));
+                }
+              } else {
+                kinds.push(myDetailObj["種類"]);
+              }
+            }
+            for (const kind of kinds) {
+              if (kind in workObj) {
+                workObj[kind] += myValue;
+              } else {
+                workObj[kind] = myValue;
+              }
+            }
           }
         }
-        for (const kind of kinds) {
-          if (kind in workObj) {
-            workObj[kind] += myValue;
-          } else {
-            workObj[kind] = myValue;
-          }
-        }
-      }
+      })
       // context.emit("update:team-option", workObj);
       return workObj;
     });
@@ -465,16 +496,18 @@ export default defineComponent({
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
-        const value = statAdjustments.value[stat];
         let result: string = displayStatName(stat).replace("%", "");
-        if (isNumber(value)) {
-          if (value >= 0) {
-            if (stat.split(".")[0] == "別枠乗算") result += "=";
-            else result += "+";
+        const value = statAdjustments.value[stat];
+        if (value != Infinity) {
+          if (isNumber(value)) {
+            if (value >= 0) {
+              if (stat.split(".")[0] == "別枠乗算") result += "=";
+              else result += "+";
+            }
+            result += displayStatValue(stat, value);
+          } else if (value) {
+            result += "=" + value;
           }
-          result += displayStatValue(stat, value);
-        } else if (value) {
-          result += "=" + value;
         }
         resultArr.push(result);
       }

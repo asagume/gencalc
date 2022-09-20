@@ -19,8 +19,8 @@
             </li>
         </ul>
         <ul class="select-list">
-            <li v-for="item in filteredList" :key="item.key">
-                <img :class="'character with-tooltip' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url"
+            <li class="with-tooltip" v-for="item in filteredList" :key="item.key">
+                <img :class="'character' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url"
                     :alt="item.key" @click="$emit('update:character', item.key)">
                 <div class="tooltip">{{ displayName(item.key) }}</div>
                 <img class="vision" :src="visionSrc(item)" :alt="item.元素">

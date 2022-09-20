@@ -1,11 +1,7 @@
 <template>
   <fieldset class="elemental-resonance">
     <label v-for="item in elementalResonanceList" :key="item.key">
-      <input
-        type="checkbox"
-        v-model="elementalResonanceCheckedRea[item.key]"
-        @change="onChange(item.key)"
-      />
+      <input type="checkbox" v-model="elementalResonanceChecked[item.key]" @change="onChange(item.key)" />
       <span>{{ displayName(item.名前) }}</span>
       <template v-if="item.key == '草元素共鳴'">
         <select v-model="dendroOption" @change="onChange(item.key)">
@@ -21,49 +17,49 @@
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
     <hr />
-    <article
-      v-for="(item, index) in descriptionList"
-      :key="index"
-      :class="elementClass(item[0])"
-    >
+    <article v-for="(item, index) in descriptionList" :key="index" :class="elementClass(item[0])">
       {{ item[1] }}
     </article>
   </fieldset>
 </template>
 
 <script lang="ts">
-import { STAT_PERCENT_LIST, TStats } from "@/input";
+import { deepcopy, overwriteObject } from "@/common";
+import { CONDITION_INPUT_TEMPLATE, STAT_PERCENT_LIST, TConditionInput, TStats } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
   ELEMENTAL_RESONANCE_MASTER_LIST,
   ELEMENT_COLOR_CLASS,
   TElementalResonanceKey,
 } from "@/master";
-import { computed, defineComponent, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
+
+type TConditionValuesAny = {
+  [key: string]: any;
+}
 
 export default defineComponent({
   name: "ElementalResonanceInput",
   emits: ["update:elemental-resonance"],
-  props: {
-    elementalResonanceChecked: {
-      type: Object as PropType<{ [key: string]: boolean }>,
-      required: true,
-    },
-  },
   setup(props, context) {
     const { displayName } = CompositionFunction();
 
     const elementalResonanceList = ELEMENTAL_RESONANCE_MASTER_LIST;
-    const elementalResonanceCheckedRea = reactive(props.elementalResonanceChecked);
-
+    const elementalResonanceChecked = reactive({} as { [key: string]: boolean });
+    elementalResonanceList.forEach(entry => {
+      elementalResonanceChecked[entry.key] = false;
+    });
     // 燃焼、原激化、開花反応を発動すると、周囲チーム全員の元素熟知+30、継続時間6秒。超激化、草激化、超開花、烈開花反応を発動すると、周囲チーム全員の元素熟知+20、継続時間6秒。
     const dendroOption = ref(0);
 
+    const conditionInput = reactive(deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput);
+    const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
+
     const statAdjustments = computed(() => {
       const workObj = {} as TStats;
-      for (const name of Object.keys(elementalResonanceCheckedRea).filter(
-        (s) => elementalResonanceCheckedRea[s]
+      for (const name of Object.keys(elementalResonanceChecked).filter(
+        (s) => elementalResonanceChecked[s]
       )) {
         if ("詳細" in (ELEMENTAL_RESONANCE_MASTER as any)[name]) {
           const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[name].詳細;
@@ -100,32 +96,56 @@ export default defineComponent({
       return resultArr;
     });
 
-    const onChange = (key: string) => {
-      if (elementalResonanceCheckedRea[key]) {
-        if (key == "元素共鳴なし") {
-          for (const name of Object.keys(elementalResonanceCheckedRea).filter(
-            (s) => s != "元素共鳴なし"
-          )) {
-            elementalResonanceCheckedRea[name] = false;
+    const onChange = async (key?: string) => {
+      if (key) {
+        if (elementalResonanceChecked[key]) {
+          if (key == "元素共鳴なし") {
+            for (const name of Object.keys(elementalResonanceChecked).filter(
+              (s) => s != "元素共鳴なし"
+            )) {
+              elementalResonanceChecked[name] = false;
+            }
+          } else {
+            if (
+              Object.keys(elementalResonanceChecked).filter(
+                (s) => s != "元素共鳴なし" && elementalResonanceChecked[s]
+              ).length > 2
+            ) {
+              elementalResonanceChecked[key] = false;
+            }
+            elementalResonanceChecked["元素共鳴なし"] = false;
           }
-        } else {
-          if (
-            Object.keys(elementalResonanceCheckedRea).filter(
-              (s) => s != "元素共鳴なし" && elementalResonanceCheckedRea[s]
-            ).length > 2
-          ) {
-            elementalResonanceCheckedRea[key] = false;
-          }
-          elementalResonanceCheckedRea["元素共鳴なし"] = false;
         }
       }
-      context.emit("update:elemental-resonance", statAdjustments.value);
+      await nextTick();
+      Object.keys(elementalResonanceChecked).filter(s => s).forEach(key => {
+        conditionValues[key] = elementalResonanceChecked[key];
+      });
+      if (dendroOption.value) {
+        conditionValues['dendroOption'] = dendroOption.value;
+      }
+      overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
+      context.emit("update:elemental-resonance", conditionInput);
+    };
+
+    const initializeValues = (initialObj: TConditionInput) => {
+      Object.keys(elementalResonanceChecked).forEach(key => {
+        if (key in initialObj.conditionValues) {
+          elementalResonanceChecked[key] = Boolean(initialObj.conditionValues[key]);
+        } else {
+          elementalResonanceChecked[key] = false;
+        }
+      });
+      if ('dendroOption' in initialObj.conditionValues) {
+        dendroOption.value = Number(initialObj.conditionValues['dendroOption']);
+      }
+      onChange();
     };
 
     const descriptionList = computed(() => {
       const result = [] as any[];
-      for (const name of Object.keys(elementalResonanceCheckedRea).filter(
-        (s) => elementalResonanceCheckedRea[s]
+      for (const name of Object.keys(elementalResonanceChecked).filter(
+        (s) => elementalResonanceChecked[s]
       )) {
         result.push([
           name,
@@ -147,13 +167,15 @@ export default defineComponent({
       displayName,
 
       elementalResonanceList,
-      elementalResonanceCheckedRea,
-      onChange,
+      elementalResonanceChecked,
+      dendroOption,
+
       displayStatAjustmentList,
       descriptionList,
       elementClass,
 
-      dendroOption,
+      onChange,
+      initializeValues,
     };
   },
 });

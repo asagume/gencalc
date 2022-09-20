@@ -75,7 +75,7 @@ export default function CompositionFunction() {
         let work = tempArr[0];
         let hasPercent = work.endsWith("%") || STAT_PERCENT_LIST.includes(work);
         if (!hasPercent) {
-            ['会心率', '会心ダメージ'].forEach(postfix => {
+            ['会心率', '会心ダメージ', 'クールタイム'].forEach(postfix => {
                 if (work.endsWith(postfix)) hasPercent = true;
             })
         }

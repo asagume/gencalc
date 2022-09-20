@@ -250,6 +250,10 @@ ul.own-list li {
     position: relative;
 }
 
+.with-tooltip {
+    position: relative;
+}
+
 .tooltip {
     position: absolute;
     top: -0.5rem;

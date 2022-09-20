@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { basename, deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -417,8 +417,10 @@ for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {
 export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
 export const OPTION_INPUT_TEMPLATE = {
-    elementalResonanceChecked: {} as { [key: string]: boolean },
-    elementalResonanceStatAdjustments: {} as TStats,
+    elementalResonance: {
+        conditionValues: {} as TConditionValues,
+        conditionAdjustments: {} as TConditionAdjustments,
+    },
     supporterList: [],
     isSupporterOptionOpened: {} as { [key: string]: boolean },
     teamOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
@@ -733,22 +735,28 @@ export async function loadRecommendation(
         if ('options' in build) {
             const keys = Object.keys(build.options);
             if (keys.length) {
+                overwriteObject(optionInput.elementalResonance.conditionValues, {});
                 overwriteObject(optionInput.teamOption.conditionValues, {});
                 overwriteObject(optionInput.miscOption.conditionValues, {});
                 keys.forEach(key => {
-                    const astarIndex = key.indexOf('*');
-                    if (astarIndex != -1) {
-                        const workCharacter = key.substring(0, astarIndex);
-                        if (workCharacter in CHARACTER_MASTER) {
-                            // チーム
-                            optionInput.teamOption.conditionValues[key] = build.options[key];
+                    if (key in ELEMENTAL_RESONANCE_MASTER || key == 'dendroOption') {
+                        // 元素共鳴
+                        optionInput.elementalResonance.conditionValues[key] = build.options[key];
+                    } else {
+                        const astarIndex = key.indexOf('*');
+                        if (astarIndex != -1) {
+                            const workCharacter = key.substring(0, astarIndex);
+                            if (workCharacter in CHARACTER_MASTER) {
+                                // チーム
+                                optionInput.teamOption.conditionValues[key] = build.options[key];
+                            } else {
+                                // その他
+                                optionInput.miscOption.conditionValues[key] = build.options[key];
+                            }
                         } else {
                             // その他
                             optionInput.miscOption.conditionValues[key] = build.options[key];
                         }
-                    } else {
-                        // その他
-                        optionInput.miscOption.conditionValues[key] = build.options[key];
                     }
                 })
             }
@@ -852,6 +860,14 @@ export function makeOptionsSavedata(character: string, optionInput: TOptionInput
     const resultObj = {} as any;
 
     // 元素共鳴
+    {
+        const conditionValues = optionInput.elementalResonance.conditionValues;
+        Object.keys(conditionValues).forEach(key => {
+            if (conditionValues[key]) {
+                resultObj[key] = conditionValues[key];
+            }
+        })
+    }
 
     // チーム
     {
