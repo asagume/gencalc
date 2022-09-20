@@ -8,7 +8,7 @@
     }
 
     .main {
-        width: 1536px;
+        max-width: 1536px;
     }
 }
 
@@ -19,10 +19,6 @@
 
     body {
         font-size: calc(100vw / 72 / 3);
-    }
-
-    .main {
-        max-width: 1536px;
     }
 }
 
