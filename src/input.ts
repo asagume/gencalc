@@ -1319,7 +1319,7 @@ export const makeConditionExclusionMapFromStr = function (conditionStr: string, 
 }
 
 function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>, exclusion: string | null) {
-    const myCondStrArr = conditionStr.split('@');
+    const myCondStrArr = conditionStr.split(/[@=]/);
     const myName = myCondStrArr[0];
     if (myCondStrArr.length == 1) {
         pushToMapValueArray(conditionMap, myName, null);
