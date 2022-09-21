@@ -584,12 +584,12 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
                 let talentDetailArr = (damageDetailMyCharacter as any)[category];
                 if (('特殊' + category) in damageDetailMyCharacter) {
                     const workObj = (damageDetailMyCharacter as any)['特殊' + category];
-                    if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation)) {
+                    if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation) != 0) {
                         talentDetailArr = workObj['詳細'];
                     }
                 }
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && !checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation)) {
+                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) == 0) {
                         continue;
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult, element);
@@ -624,7 +624,7 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
                 if (!(category in damageDetailMyCharacter)) continue;
                 const talentDetailArr = (damageDetailMyCharacter as any)[category];
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && !checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation)) {
+                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) == 0) {
                         continue;
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
@@ -639,7 +639,7 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
             if (!myDamageDetail || !(category in myDamageDetail)) continue;
             const talentDetailArr = (myDamageDetail as any)[category];
             for (const talentDetail of talentDetailArr) {
-                if (talentDetail['条件'] && !checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation)) {
+                if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) == 0) {
                     continue;
                 }
                 const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
@@ -732,10 +732,9 @@ function checkConditionMatchesSub(conditionStr: string, validConditionValueArr: 
     const myCondArr = conditionStr.split('@');
     if (myCondArr[0] == '命ノ星座') {
         if (myCondArr.length == 2) {
-            const re = new RegExp('[^0-9]*([0-9\\.]+).*');
-            const reRet = re.exec(myCondArr[1]);
-            if (reRet) {
-                if (Number(reRet[1]) <= constellation) {
+            if (isNumber(myCondArr[1])) {
+                const work = Number(myCondArr[1]);
+                if (work <= constellation) {
                     return 1;
                 }
             }
@@ -743,26 +742,20 @@ function checkConditionMatchesSub(conditionStr: string, validConditionValueArr: 
         return 0;   // アンマッチ
     }
     if (validConditionValueArr.includes(conditionStr)) {
-        if (myCondArr.length == 1 || (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1)) {
-            return 1;   // マッチ 等倍
-        }
-    } else if (myCondArr.length == 1) {
-        if (validConditionValueArr.filter(s => s.startsWith(conditionStr + '@')).length > 0) {
-            return 1;   // マッチ 等倍
-        }
-        return 0;   // アンマッチ
-    } else if (myCondArr[1].indexOf('-') == -1 && myCondArr[1].indexOf(',') == -1) {
+        return 1;   // マッチ 等倍
+    }
+    if (myCondArr.length == 1) {
         return 0;   // アンマッチ
     }
-    const re = new RegExp('[^0-9]*([0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
+    const re = new RegExp('[^0-9]*?([\\-0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
     for (let i = 0; i < validConditionValueArr.length; i++) {
         if (validConditionValueArr[i].startsWith(myCondArr[0] + '@')) {
-            const workArr = validConditionValueArr[i].split('@');
-            const reRet = re.exec(workArr[1]);
+            const workCondArr = validConditionValueArr[i].split('@');
+            const reRet = re.exec(workCondArr[1]);
             if (reRet) {
-                return Number(reRet[1]);    // マッチ x倍
+                const work = Number(reRet[1]);
+                return work;    // マッチ 倍率
             }
-            console.error(conditionStr, validConditionValueArr[i]);
         }
     }
     return 0;   // アンマッチ
@@ -908,11 +901,15 @@ function calculateDamageFromDetail(
 
         if (detailObj['除外条件']) {
             for (const delCondition of detailObj['除外条件']) {
-                if (delCondition in myConditionValuesAfter) {
-                    if (isNumber(myConditionValuesAfter[delCondition])) {
-                        myConditionValuesAfter[delCondition] = 0;
-                    } else if (isBoolean(myConditionValuesAfter[delCondition])) {
-                        myConditionValuesAfter[delCondition] = false;
+                let work = delCondition;
+                if (isPlainObject(delCondition)) {
+                    work = delCondition.名前;
+                }
+                if (work in myConditionValuesAfter) {
+                    if (isNumber(myConditionValuesAfter[work])) {
+                        myConditionValuesAfter[work] = 0;
+                    } else if (isBoolean(myConditionValuesAfter[work])) {
+                        myConditionValuesAfter[work] = false;
                     }
                 }
             }
@@ -927,18 +924,31 @@ function calculateDamageFromDetail(
                     }
                 } else if (isPlainObject(addCondition)) {
                     if (addCondition.名前 in myConditionValuesAfter) {
-                        if (addCondition.種類 == 'selectedIndex') {
-                            let newValue = myConditionValuesAfter[addCondition.名前];
-                            if (isNumber(newValue)) {
-                                newValue += Number(String(addCondition.数値).replace('+', ''));
-                                conditionInput.selectList.filter(s => s.name == addCondition.名前).forEach(entry => {
-                                    if (newValue >= entry.options.length) {
-                                        newValue = entry.options.length - 1;
-                                    }
-                                })
+                        let newValue = myConditionValuesAfter[addCondition.名前];
+                        if ('数値' in addCondition) {
+                            if (isString(addCondition.数値)) {
+                                const work = String(addCondition.数値).replace(/^\+/, '');
+                                newValue += Number(work);
+                            } else if (isNumber(addCondition.数値)) {
+                                newValue = addCondition.数値;
+                            } else {
+                                newValue = addCondition.数値;
                             }
-                            myConditionValuesAfter[addCondition.名前] = newValue;
+                            if (isNumber(newValue)) {
+                                if (newValue < 0) {
+                                    newValue = 0;
+                                } else {
+                                    conditionInput.selectList.filter(s => s.name == addCondition.名前).forEach(entry => {
+                                        if (newValue >= entry.options.length) {
+                                            newValue = entry.options.length - 1;
+                                        }
+                                    })
+                                }
+                            }
+                        } else {
+                            newValue = true;
                         }
+                        myConditionValuesAfter[addCondition.名前] = newValue;
                     }
                     if (addCondition.説明) {
                         if (Array.isArray(addCondition.説明)) {
@@ -972,16 +982,16 @@ function calculateDamageFromDetail(
                     const matchesBefore = checkConditionMatches(conditionStr, validConditionValueArr, constellation);
                     const matchesAfter = checkConditionMatches(conditionStr, validConditionValueArrAfter, constellation);
                     if (matchesBefore == matchesAfter) return;
-                    if (matchesBefore) {
+                    if (matchesBefore != 0) {
                         let new数値 = damageDetailObj.数値;
-                        if (matchesBefore > 1) {
+                        if (matchesBefore != 1) {
                             new数値 = (new数値 as any[]).concat(['*', matchesBefore]);
                         }
                         valueBefore = calculateFormulaArray(new数値, statsObj, damageResult, damageDetailObj.上限);
                     }
-                    if (matchesAfter) {
+                    if (matchesAfter != 0) {
                         let new数値 = damageDetailObj.数値;
-                        if (matchesAfter > 1) {
+                        if (matchesAfter != 1) {
                             new数値 = (new数値 as any[]).concat(['*', matchesAfter]);
                         }
                         valueAfter = calculateFormulaArray(new数値, statsObj, damageResult, damageDetailObj.上限);
@@ -997,7 +1007,6 @@ function calculateDamageFromDetail(
                         } else {
                             myステータス補正[new種類] = diff;
                         }
-                        console.debug('除外条件 and 適用条件', new種類, diff);
                     }
                 })
             })
@@ -1123,7 +1132,7 @@ function calculateDamageFromDetail(
                     const my種類 = valueObj.種類 as string; // 通常攻撃ダメージアップ
                     const my条件 = valueObj.条件 as string;
                     const myHIT数 = detailObj.HIT数;
-                    if (checkConditionMatches(my条件, validConditionValueArr, constellation) > 0) {
+                    if (checkConditionMatches(my条件, validConditionValueArr, constellation) != 0) {
                         const myValue = calculateFormulaArray(valueObj.数値, statsObj, damageResult, valueObj.上限);
                         if (!(my種類 in myステータス補正)) {
                             myステータス補正[my種類] = 0;

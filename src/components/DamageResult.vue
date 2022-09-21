@@ -495,5 +495,6 @@ table.damage-result tr:last-child {
 ul.notes {
   list-style-type: none;
   text-align: left;
+  padding-inline-start: 0;
 }
 </style>

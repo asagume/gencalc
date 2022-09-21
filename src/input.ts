@@ -1324,8 +1324,19 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
     if (myCondStrArr.length == 1) {
         pushToMapValueArray(conditionMap, myName, null);
     } else if (myCondStrArr.length == 2) {
-        if (myCondStrArr[1].indexOf('-') != -1) {
-            const re = new RegExp('([^0-9\\.]*)([0-9\\.]+)-([0-9\\.]+)(.*)');
+        if (myCondStrArr[1].indexOf(',') != -1) {
+            const re = new RegExp('([^0-9]*?)([\\+\\-0-9\\.,]+)(.*)');  // 表現可能:-10,+60%
+            const reRet = re.exec(myCondStrArr[1]);
+            if (reRet) {
+                const prefix = reRet[1];
+                const condValueArr = reRet[2].split(',');
+                const postfix = reRet[3];
+                condValueArr.forEach(value => {
+                    pushToMapValueArray(conditionMap, myName, prefix + value + postfix);
+                });
+            }
+        } else if (myCondStrArr[1].indexOf('-') != -1) {
+            const re = new RegExp('([^0-9\\.]*)(-?[0-9\\.]+)-(-?[0-9\\.]+)(.*)');   // 数値部に+は含められない。prefixには含められる。
             const re2 = new RegExp('/([0-9\\.]+)(.*)');
             const reRet = re.exec(myCondStrArr[1]);
             if (reRet) {
@@ -1347,17 +1358,6 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
                 pushToMapValueArray(conditionMap, myName, prefix + String(rangeEnd) + postfix);
             } else {
                 pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
-            }
-        } else if (myCondStrArr[1].indexOf(',') != -1) {
-            const re = new RegExp('([^0-9\\.]*)([0-9\\.,]+)(.*)');
-            const reRet = re.exec(myCondStrArr[1]);
-            if (reRet) {
-                const prefix = reRet[1];
-                const condValurArr = reRet[2].split(',');
-                const postfix = reRet[3];
-                condValurArr.forEach(value => {
-                    pushToMapValueArray(conditionMap, myName, prefix + value + postfix);
-                });
             }
         } else {
             pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
