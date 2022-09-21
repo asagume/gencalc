@@ -443,7 +443,7 @@
       "icon_url": "images/characters/dendro_5_bow_Tighnari/summaryList_4.png",
       "詳細": [
         {
-          "条件": "葉から垣間見る盛衰@60,120",
+          "条件": "葉から垣間見る盛衰 元素熟知@60,120",
           "種類": "元素熟知",
           "数値": 1
         }
