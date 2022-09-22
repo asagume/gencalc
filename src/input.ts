@@ -1480,9 +1480,23 @@ function pushToMapValueArray(map: Map<any, any>, key: any, value: any) {
     }
 }
 
-const addDecimal = function (value1: number, value2: number, opt_max: number | null = null) {
-    let result = value1 + value2;
-    if (opt_max != null) {
+function getDecimalLength(value: number): number {
+    const arr = ('' + value).split('.');
+    return arr.length > 1 ? arr[1].length : 0;
+}
+
+export function multiplyDecimal(value1: number, value2: number): number {
+    const decimalLength = getDecimalLength(value1) + getDecimalLength(value2);
+    const intValue1 = Number(('' + value1).replace('.', ''));
+    const intValue2 = Number(('' + value2).replace('.', ''));
+    const result = (intValue1 * intValue2) / Math.pow(10, decimalLength);
+    return Number(result);
+}
+
+export function addDecimal(value1: number, value2: number, opt_max?: number): number {
+    const k = Math.pow(10, Math.max(getDecimalLength(value1), getDecimalLength(value2)));
+    let result = (multiplyDecimal(value1, k) + multiplyDecimal(value2, k)) / k;
+    if (opt_max != undefined) {
         result = Math.min(result, opt_max);
     }
     return result;
