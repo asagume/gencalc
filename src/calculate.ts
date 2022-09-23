@@ -744,7 +744,13 @@ function checkConditionMatchesSub(conditionStr: string, validConditionValueArr: 
     if (validConditionValueArr.includes(conditionStr) || validConditionValueArr.includes(conditionStr.replace('=', '@'))) {
         return 1;   // マッチ 等倍
     }
-    if (myCondArr.length == 1 || conditionStr.indexOf('=') != -1) {
+    if (myCondArr.length == 1) {
+        if (validConditionValueArr.filter(s => s.split('@')[0] == conditionStr).length > 0) {
+            return 1;   // マッチ 等倍
+        }
+        return 0;   // アンマッチ
+    }
+    if (conditionStr.indexOf('=') != -1) {
         return 0;   // アンマッチ
     }
     const re = new RegExp('[^0-9]*?([\\-0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
