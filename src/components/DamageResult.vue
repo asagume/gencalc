@@ -251,7 +251,11 @@ export default defineComponent({
 
     const swirlDmg = computed(() => {
       let result = 元素反応.拡散ダメージ;
-      if (元素反応.拡散元素 == "雷" && 増幅反応.value == "超激化") {
+      if (増幅反応.value == "蒸発" && ["炎", "水"].includes(元素反応.拡散元素)) {
+        result *= 元素反応.蒸発倍率;
+      } else if (増幅反応.value == "溶解" && ["炎", "氷"].includes(元素反応.拡散元素)) {
+        result *= 元素反応.溶解倍率;
+      } else if (増幅反応.value == "超激化" && 元素反応.拡散元素 == "雷") {
         result += 元素反応.超激化ダメージ;
       }
       return result;

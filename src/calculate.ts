@@ -518,8 +518,16 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
             const selectEntry = conditionInput.selectList.filter(s => s.name == '元素変化')[0];
             const selectedIndex = conditionInput.conditionValues['元素変化'] as number;
             if (selectedIndex) {
-                const 付加元素 = selectEntry.options[selectedIndex].replace(/元素$/, '');
-                reactionMasterArr.push([付加元素, (ELEMENTAL_REACTION_MASTER as any)[付加元素]]);
+                const dmgElement = selectEntry.options[selectedIndex].replace(/元素$/, '');
+                reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
+            }
+        }
+        if (conditionInput.selectList.filter(s => s.name == '拡散').length) {
+            const selectEntry = conditionInput.selectList.filter(s => s.name == '拡散')[0];
+            const selectedIndex = conditionInput.conditionValues['拡散'] as number;
+            if (selectedIndex) {
+                const dmgElement = selectEntry.options[selectedIndex].replace(/元素$/, '');
+                reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
             }
         }
         reactionResult['元素'] = vision;
