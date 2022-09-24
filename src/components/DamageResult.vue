@@ -267,8 +267,20 @@ export default defineComponent({
       if (!["シールド"].includes(item[5])) {
         if (増幅反応.value == "蒸発" && ["炎", "水"].includes(item[1])) {
           value *= 元素反応.蒸発倍率;
+          if (["炎", "水"].includes(item[1]) && ["炎", "水"].includes(元素反応.拡散元素) && item[1] != 元素反応.拡散元素) {
+            if (item[1] == '炎') value *= 1.5;
+            else if (item[1] == '水') value *= 2;
+            if (元素反応.拡散元素 == '炎') value /= 1.5;
+            else if (元素反応.拡散元素 == '水') value /= 2;
+          }
         } else if (増幅反応.value == "溶解" && ["炎", "氷"].includes(item[1])) {
           value *= 元素反応.溶解倍率;
+          if (["炎", "氷"].includes(item[1]) && ["炎", "氷"].includes(元素反応.拡散元素) && item[1] != 元素反応.拡散元素) {
+            if (item[1] == '炎') value *= 2;
+            else if (item[1] == '氷') value *= 1.5;
+            if (元素反応.拡散元素 == '炎') value /= 2;
+            else if (元素反応.拡散元素 == '氷') value /= 1.5;
+          }
         } else if (増幅反応.value == "超激化" && ["雷"].includes(item[1])) {
           let addValue = 元素反応.超激化ダメージ;
           // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
