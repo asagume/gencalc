@@ -1,49 +1,24 @@
 <template>
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
-      <fieldset v-if="supporterOpenClose[supporter]" class="supporter">
+      <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
         <legend>
-          <input
-            class="hidden"
-            :id="'supporter-' + supporter"
-            type="checkbox"
-            v-model="supporterOpenClose[supporter]"
-          />
-          <label class="toggle-switch" :for="'supporter-' + supporter">
+          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
+            v-model="supporterOpenClose[supporter]" />
+          <label class="toggle-switch unfold" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </legend>
         <div class="left">
-          <label
-            class="condition"
-            v-for="item in supporterCheckboxList(supporter)"
-            :key="item.name"
-          >
-            <input
-              type="checkbox"
-              v-model="conditionValues[item.name]"
-              :value="item.name"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            />
+          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
+              :disabled="conditionDisabled(item)" @change="onChange" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label
-            class="condition"
-            v-for="item in supporterSelectList(supporter)"
-            :key="item.name"
-          >
+          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select
-              v-model="conditionValues[item.name]"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            >
-              <option
-                v-for="(option, index) in item.options"
-                :value="index"
-                :key="option"
-              >
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
+              <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -51,19 +26,14 @@
         </div>
       </fieldset>
       <template v-else>
-        <input
-          class="hidden"
-          :id="'supporter-else-' + supporter"
-          type="checkbox"
-          v-model="supporterOpenClose[supporter]"
-          :disabled="supporterDisabled(supporter)"
-        />
-        <label
-          :class="'toggle-switch' + supporterOptionSelectedClass(supporter)"
-          :for="'supporter-else-' + supporter"
-        >
-          <span>{{ displayName(supporter) }}</span>
-        </label>
+        <div v-show="supporterVisible(supporter)" class="supporter-else">
+          <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
+            v-model="supporterOpenClose[supporter]" />
+          <label :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
+            :for="'supporter-else-' + supporter">
+            <span>{{ displayName(supporter) }}</span>
+          </label>
+        </div>
       </template>
     </template>
 
@@ -129,6 +99,7 @@ import {
   ステータスTEMPLATE,
 } from "@/input";
 import {
+  CHARACTER_MASTER,
   getCharacterMasterDetail,
   TCharacterKey,
   TEAM_OPTION_MASTER_LIST,
@@ -158,7 +129,7 @@ export default defineComponent({
       displayOptionName,
     } = CompositionFunction();
 
-    const supporterKeyList = reactive([] as string[]);
+    const supporterKeyList = Object.keys(CHARACTER_MASTER);
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
 
     const damageDetailArr = [] as any[];
@@ -180,7 +151,6 @@ export default defineComponent({
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
         const supporter = entry.key.split("_")[0];
-        if (!supporterKeyList.includes(supporter)) supporterKeyList.push(supporter);
         if ("詳細" in entry) {
           for (const detailObj of entry.詳細) {
             if ("条件" in detailObj) {
@@ -432,8 +402,11 @@ export default defineComponent({
     };
 
     /** 選択中のキャラクターのオプションは無効です */
-    const supporterDisabled = (supporter: any) => {
-      return supporter == props.character;
+    const supporterVisible = (supporter: any) => {
+      if (supporter == props.character) return false;
+      if (supporterCheckboxList(supporter).length) return true;
+      if (supporterSelectList(supporter).length) return true;
+      return false;
     };
 
     const supporterOptionSelectedClass = (supporter: any) => {
@@ -639,7 +612,7 @@ export default defineComponent({
       supporterCheckboxList,
       supporterSelectList,
       conditionValues,
-      supporterDisabled,
+      supporterVisible,
       supporterOptionSelectedClass,
       conditionDisabled,
       displayStatAjustmentList,
@@ -662,6 +635,7 @@ div.left {
 
 fieldset.supporter {
   margin-bottom: 10px;
+  padding-top: 0;
 }
 
 label {
@@ -670,25 +644,30 @@ label {
   text-align: left;
 }
 
-label.toggle-switch {
-  text-align: center;
-  width: calc(100% / 3 - 3rem - 6px);
-  min-width: none;
+div.supporter-else {
+  display: inline-block;
+  width: calc(100% / 3);
 }
 
-legend label.toggle-switch {
+.unfold {
+  text-align: center;
   padding: 0;
   background-color: transparent;
-  border-width: 0 0 1px 0;
+  border-width: 0 0 2px 0;
   border-radius: 0;
   width: 20rem;
+}
+
+.fold {
+  text-align: center;
+  width: calc(100% - 3rem - 6px);
 }
 
 label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled + label {
+:disabled+label {
   color: gray;
 }
 
