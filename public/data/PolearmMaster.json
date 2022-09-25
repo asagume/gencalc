@@ -1,4 +1,8 @@
 {
+  "赤砂の杖": {
+    "レアリティ": 5,
+    "import": "data/weapons/polearm/5_StaffoftheScarletSands.json"
+  },
   "息災": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_CalamityQueller.json"
@@ -22,6 +26,10 @@
   "和璞鳶": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
+  },
+  "風信の矛": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_MissiveWindspear.json"
   },
   "ムーンピアサー": {
     "レアリティ": 4,

@@ -3,22 +3,47 @@
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter">
         <legend>
-          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
+          <input
+            class="hidden"
+            :id="'supporter-' + supporter"
+            type="checkbox"
+            v-model="supporterOpenClose[supporter]"
+          />
           <label class="toggle-switch" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </legend>
         <div class="left">
-          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
-            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+          <label
+            class="condition"
+            v-for="item in supporterCheckboxList(supporter)"
+            :key="item.name"
+          >
+            <input
+              type="checkbox"
+              v-model="conditionValues[item.name]"
+              :value="item.name"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
+          <label
+            class="condition"
+            v-for="item in supporterSelectList(supporter)"
+            :key="item.name"
+          >
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
-              <option v-for="(option, index) in item.options" :value="index" :key="option">
+            <select
+              v-model="conditionValues[item.name]"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            >
+              <option
+                v-for="(option, index) in item.options"
+                :value="index"
+                :key="option"
+              >
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -26,9 +51,17 @@
         </div>
       </fieldset>
       <template v-else>
-        <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
-          v-model="supporterOpenClose[supporter]" :disabled="supporterDisabled(supporter)" />
-        <label :class="'toggle-switch' + supporterOptionSelectedClass(supporter)" :for="'supporter-else-' + supporter">
+        <input
+          class="hidden"
+          :id="'supporter-else-' + supporter"
+          type="checkbox"
+          v-model="supporterOpenClose[supporter]"
+          :disabled="supporterDisabled(supporter)"
+        />
+        <label
+          :class="'toggle-switch' + supporterOptionSelectedClass(supporter)"
+          :for="'supporter-else-' + supporter"
+        >
           <span>{{ displayName(supporter) }}</span>
         </label>
       </template>
@@ -105,7 +138,7 @@ import CompositionFunction from "./CompositionFunction.vue";
 
 type TConditionValuesAny = {
   [key: string]: any;
-}
+};
 
 export default defineComponent({
   name: "TeamOptionInput",
@@ -133,7 +166,9 @@ export default defineComponent({
     const talentChangeDetailObjArr: TDamageDetailObj[] = [];
     const conditionMap = new Map() as Map<string, string[] | null>;
     const exclusionMap = new Map() as Map<string, string[] | null>;
-    const conditionInput = reactive(deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput);
+    const conditionInput = reactive(
+      deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput
+    );
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
@@ -175,17 +210,29 @@ export default defineComponent({
     damageDetailArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
+        makeConditionExclusionMapFromStr(
+          detailObj["条件"] as string,
+          conditionMap,
+          exclusionMap
+        );
       });
     statusChangeDetailObjArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
+        makeConditionExclusionMapFromStr(
+          detailObj["条件"] as string,
+          conditionMap,
+          exclusionMap
+        );
       });
     talentChangeDetailObjArr
       .filter((s) => s["条件"])
       .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
+        makeConditionExclusionMapFromStr(
+          detailObj["条件"] as string,
+          conditionMap,
+          exclusionMap
+        );
       });
     conditionMap.forEach((value, key) => {
       if (value && Array.isArray(value)) {
@@ -229,7 +276,9 @@ export default defineComponent({
       supporterOpenClose[key] = false;
     }
 
-    const supporterDamageResult = reactive(new Map() as Map<string, [TStats, TDamageResult]>);
+    const supporterDamageResult = reactive(
+      new Map() as Map<string, [TStats, TDamageResult]>
+    );
 
     const takeMasterTeamOption = (character: string, master: any) => {
       if ("チームバフ" in master) {
@@ -250,13 +299,13 @@ export default defineComponent({
               damageDetailObj
             );
           }
-          if (talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
-            talentChangeDetailObjArr.splice(
-              talentChangeDetailObjArr.length,
-              0,
-              damageDetailObj
-            );
-          }
+          // if (talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+          //   talentChangeDetailObjArr.splice(
+          //     talentChangeDetailObjArr.length,
+          //     0,
+          //     damageDetailObj
+          //   );
+          // }
           makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
         updateConditionList();
@@ -324,12 +373,16 @@ export default defineComponent({
         statusChangeDetailObjArr.splice(
           0,
           statusChangeDetailObjArr.length,
-          ...statusChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string))
+          ...statusChangeDetailObjArr.filter(
+            (s) => !removeConditions.includes(s.条件 as string)
+          )
         );
         talentChangeDetailObjArr.splice(
           0,
           talentChangeDetailObjArr.length,
-          ...talentChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string))
+          ...talentChangeDetailObjArr.filter(
+            (s) => !removeConditions.includes(s.条件 as string)
+          )
         );
         removeConditions.forEach((condition) => {
           if (conditionMap.has(condition)) {
@@ -364,9 +417,7 @@ export default defineComponent({
 
     const loadSupporterData = async () => {
       for (const savedSupporter of props.savedSupporters) {
-        const [statsObj, damageResult] = await setupSupporterDamageResult(
-          savedSupporter
-        );
+        const [statsObj, damageResult] = await setupSupporterDamageResult(savedSupporter);
         supporterDamageResult.set(savedSupporter.key, [statsObj, damageResult]);
       }
     };
@@ -406,7 +457,8 @@ export default defineComponent({
             if (isNumber(myDetailObj.数値)) return false;
             if (Array.isArray(myDetailObj.数値)) {
               for (const entry of myDetailObj.数値) {
-                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry)) return true;
+                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry))
+                  return true;
               }
             }
           }
@@ -418,7 +470,8 @@ export default defineComponent({
             if (isNumber(myDetailObj.数値)) return false;
             if (Array.isArray(myDetailObj.数値)) {
               for (const entry of myDetailObj.数値) {
-                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry)) return true;
+                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry))
+                  return true;
               }
             }
           }
@@ -431,14 +484,18 @@ export default defineComponent({
     const statAdjustments = computed(() => {
       const workObj = {} as TStats;
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
-      [statusChangeDetailObjArr, talentChangeDetailObjArr].forEach(detailObjArr => {
+      console.log(statusChangeDetailObjArr, talentChangeDetailObjArr);
+      [statusChangeDetailObjArr, talentChangeDetailObjArr].forEach((detailObjArr) => {
         if (detailObjArr) {
           for (const myDetailObj of detailObjArr) {
             let supporter;
             let myNew数値 = myDetailObj.数値;
             let my上限 = myDetailObj.上限;
             if (myDetailObj["条件"]) {
-              supporter = myDetailObj["条件"].substring(0, myDetailObj["条件"].indexOf("*"));
+              supporter = myDetailObj["条件"].substring(
+                0,
+                myDetailObj["条件"].indexOf("*")
+              );
               if (supporter == props.character) continue;
               const number = checkConditionMatches(
                 myDetailObj["条件"],
@@ -461,16 +518,14 @@ export default defineComponent({
             }
             let myValue = Infinity;
             if (myNew数値) {
-              myValue = calculateFormulaArray(
-                myNew数値,
-                statsObj,
-                damageResult,
-                my上限
-              );
+              myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限);
             }
             const kinds = [] as string[];
             if (myDetailObj["種類"]) {
-              if (myDetailObj["種類"].startsWith("全") || myDetailObj["種類"].startsWith("敵全")) {
+              if (
+                myDetailObj["種類"].startsWith("全") ||
+                myDetailObj["種類"].startsWith("敵全")
+              ) {
                 for (const elem of ["炎", "水", "風", "雷", "草", "氷", "岩"]) {
                   kinds.push(myDetailObj["種類"].replace("全", elem));
                 }
@@ -487,7 +542,7 @@ export default defineComponent({
             }
           }
         }
-      })
+      });
       // context.emit("update:team-option", workObj);
       return workObj;
     });
@@ -522,7 +577,7 @@ export default defineComponent({
     };
 
     const initializeValues = (initialObj: TConditionInput) => {
-      Object.keys(conditionValues).forEach(key => {
+      Object.keys(conditionValues).forEach((key) => {
         if (key in initialObj.conditionValues) {
           conditionValues[key] = initialObj.conditionValues[key];
         } else {
@@ -633,7 +688,7 @@ label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled+label {
+:disabled + label {
   color: gray;
 }
 

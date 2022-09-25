@@ -19,6 +19,10 @@
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
   },
+  "マカイラの水色": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_MakhairaAquamarine.json"
+  },
   "森林のレガリア": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_ForestRegalia.json"
