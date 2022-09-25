@@ -1,24 +1,53 @@
 <template>
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
-      <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
+      <fieldset
+        v-if="supporterOpenClose[supporter]"
+        class="supporter"
+        v-show="supporterVisible(supporter)"
+      >
         <legend>
-          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
+          <input
+            class="hidden"
+            :id="'supporter-' + supporter"
+            type="checkbox"
+            v-model="supporterOpenClose[supporter]"
+          />
           <label class="toggle-switch unfold" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </legend>
         <div class="left">
-          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
-            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+          <label
+            class="condition"
+            v-for="item in supporterCheckboxList(supporter)"
+            :key="item.name"
+          >
+            <input
+              type="checkbox"
+              v-model="conditionValues[item.name]"
+              :value="item.name"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
+          <label
+            class="condition"
+            v-for="item in supporterSelectList(supporter)"
+            :key="item.name"
+          >
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
-              <option v-for="(option, index) in item.options" :value="index" :key="option">
+            <select
+              v-model="conditionValues[item.name]"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            >
+              <option
+                v-for="(option, index) in item.options"
+                :value="index"
+                :key="option"
+              >
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -27,10 +56,16 @@
       </fieldset>
       <template v-else>
         <div v-show="supporterVisible(supporter)" class="supporter-else">
-          <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
-          <label :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
-            :for="'supporter-else-' + supporter">
+          <input
+            class="hidden"
+            :id="'supporter-else-' + supporter"
+            type="checkbox"
+            v-model="supporterOpenClose[supporter]"
+          />
+          <label
+            :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
+            :for="'supporter-else-' + supporter"
+          >
             <span>{{ displayName(supporter) }}</span>
           </label>
         </div>
@@ -457,7 +492,6 @@ export default defineComponent({
     const statAdjustments = computed(() => {
       const workObj = {} as TStats;
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
-      console.log(statusChangeDetailObjArr, talentChangeDetailObjArr);
       [statusChangeDetailObjArr, talentChangeDetailObjArr].forEach((detailObjArr) => {
         if (detailObjArr) {
           for (const myDetailObj of detailObjArr) {
@@ -667,7 +701,7 @@ label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled+label {
+:disabled + label {
   color: gray;
 }
 

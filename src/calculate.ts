@@ -1104,12 +1104,8 @@ function calculateDamageFromDetail(
                 if (isValid) {
                     const toStat = tempArr[0];
                     if (toStat in tempStatsObj) {
-                        if (toStat === '別枠乗算') {
-                            if (tempStatsObj[toStat]) {
-                                tempStatsObj[toStat] *= entryObj[stat] / 100;   // for ディオナ
-                            } else {
-                                tempStatsObj[toStat] += entryObj[stat];
-                            }
+                        if (toStat == '別枠乗算' && tempStatsObj[toStat] > 0) {
+                            tempStatsObj[toStat] *= entryObj[stat] / 100;   // for ディオナ
                         } else {
                             tempStatsObj[toStat] += entryObj[stat];
                         }
@@ -1121,12 +1117,8 @@ function calculateDamageFromDetail(
         })
         Object.keys(tempStatsObj).forEach(stat => {
             if (stat in myステータス補正) {
-                if (stat === '別枠乗算') {
-                    if (myステータス補正[stat] > 0) {
-                        myステータス補正[stat] *= tempStatsObj[stat] / 100;   // for ディオナ
-                    } else {
-                        myステータス補正[stat] += tempStatsObj[stat];
-                    }
+                if (stat.startsWith('別枠乗算') && myステータス補正[stat] > 0) {
+                    myステータス補正[stat] *= tempStatsObj[stat] / 100;   // for ディオナ
                 } else {
                     myステータス補正[stat] += tempStatsObj[stat];
                 }
@@ -1165,13 +1157,17 @@ function calculateDamageFromDetail(
         }
 
         // 一時的にステータスを書き換えます。
-        Object.keys(myステータス補正).forEach(statName => {
-            if (statName in statsObj) {
-                statsObj[statName] += myステータス補正[statName];
+        Object.keys(myステータス補正).forEach(stat => {
+            if (stat in statsObj) {
+                if (stat.startsWith('別枠乗算') && statsObj[stat] > 0) {
+                    statsObj[stat] *= myステータス補正[stat];
+                } else {
+                    statsObj[stat] += myステータス補正[stat];
+                }
             } else {
-                statsObj[statName] = myステータス補正[statName];
+                statsObj[stat] = myステータス補正[stat];
             }
-            console.debug('ステータス補正', statName, myステータス補正[statName]);
+            console.debug('ステータス補正', stat, myステータス補正[stat]);
         });
 
         if (statsObj['別枠乗算']) {
@@ -1484,7 +1480,11 @@ function updateStats(
     });
     for (const name of Object.keys(diffStats)) {
         if (name in statsObj) {
-            statsObj[name] += diffStats[name];
+            if (name.startsWith('別枠乗算') && diffStats[name] > 0) {
+                statsObj[name] *= diffStats[name] / 100;    // for ディオナ
+            } else {
+                statsObj[name] += diffStats[name];
+            }
         } else {
             statsObj[name] = diffStats[name];
         }
