@@ -8,6 +8,11 @@ module.exports = defineConfig({
       template: 'public/index3.html',
       filename: 'index.html',
     },
+    EnergyRecharge: {
+      entry: 'src/pages/EnergyRecharge/main.ts',
+      template: 'public/EnergyRecharge.html',
+      filename: 'EnergyRecharge.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'
