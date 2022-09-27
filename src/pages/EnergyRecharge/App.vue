@@ -1,26 +1,14 @@
 <template>
   <div class="base-container">
-    <div class="pane1"></div>
-    <div class="pane2">
-      <ul class="select-list">
-        <li
-          class="item"
-          v-for="item in characterMasterList"
-          :key="item.名前"
-          @click="addMember(item.名前)"
-        >
-          <img
-            :class="'character ' + characterImgClass(item)"
-            :src="item.icon_url"
-            :alt="displayName(item.名前)"
-          />
-          <img class="vision" :src="visionImgSrc(item)" :alt="displayName(item.元素)" />
-          <p class="member-index">{{ memberIndex(item.名前) }}</p>
-        </li>
-      </ul>
+    <div class="pane1">
+
     </div>
-    <div class="pane3"></div>
-    <div class="pane4">
+
+    <div class="pane2">
+      <CharacterSelect :visible="true" @update:character="updateCharacter" />
+    </div>
+
+    <div class="pane3">
       <fieldset>
         <ul class="select-list">
           <draggable :list="memberList" item-key="id" :sort="true" handle=".handle">
@@ -30,41 +18,22 @@
                   <label class="role">MAIN DPS</label>
                 </div>
                 <div class="item handle">
-                  <img
-                    :class="'character ' + characterImgClass(element.detail)"
-                    :src="element.detail.icon_url"
-                    :alt="displayName(element.character)"
-                  />
-                  <img
-                    class="vision"
-                    :src="visionImgSrc(element.detail)"
-                    :alt="displayName(element.detail.元素)"
-                  />
+                  <img :class="'character ' + characterImgClass(element.detail)" :src="element.detail.icon_url"
+                    :alt="displayName(element.character)" />
+                  <img class="vision" :src="visionImgSrc(element.detail)" :alt="displayName(element.detail.元素)" />
                 </div>
                 <div>
-                  <img
-                    class="elemental-skill"
-                    :src="element.detail.元素スキル.icon_url"
-                    :alt="displayName(element.detail.元素スキル.名前)"
-                    @click="addAction(element, 'E')"
-                  />
+                  <img class="elemental-skill" :src="element.detail.元素スキル.icon_url"
+                    :alt="displayName(element.detail.元素スキル.名前)" @click="addAction(element, 'E')" />
                   {{ element.eCount }}
                 </div>
                 <div>
-                  <img
-                    class="elemental-burst"
-                    :src="element.detail.元素爆発.icon_url"
-                    :alt="displayName(element.detail.元素爆発.名前)"
-                    @click="addAction(element, 'Q')"
-                  />
+                  <img class="elemental-burst" :src="element.detail.元素爆発.icon_url"
+                    :alt="displayName(element.detail.元素爆発.名前)" @click="addAction(element, 'Q')" />
                   {{ element.qCount }}
                 </div>
                 <div>
-                  <img
-                    class="weapon"
-                    :src="favoniusImgSrc(element)"
-                    alt="favonius weapon"
-                  />
+                  <img class="weapon" :src="favoniusImgSrc(element)" alt="favonius weapon" />
                   {{ element.favoniusCount }}
                 </div>
               </li>
@@ -72,17 +41,15 @@
           </draggable>
         </ul>
       </fieldset>
+    </div>
 
+    <div class="pane4">
       <fieldset>
         <ol>
           <draggable :list="actionList" item-key="id" :sort="true" handle=".handle">
             <template #item="{ element, index }">
               <li :class="'action' + actionClass(index)">
-                <img
-                  class="action"
-                  :src="actionImgSrc(element)"
-                  @click="actionOnClick(index)"
-                />
+                <img class="action" :src="actionImgSrc(element)" @click="actionOnClick(index)" />
                 <span>{{ displayName(actionName(element)) }}</span>
                 <button type="button" @click="deleteAction(index)">
                   <span class="material-symbols-outlined"> close </span>
@@ -93,6 +60,7 @@
         </ol>
       </fieldset>
     </div>
+
     <div class="pane5">
       <table>
         <tr>
@@ -113,7 +81,10 @@
         </tr>
       </table>
     </div>
-    <div class="footer"></div>
+
+    <div class="footer">
+
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -121,20 +92,18 @@ import draggable from "vuedraggable";
 import { computed, defineComponent, reactive, ref } from "vue";
 import {
   CHARACTER_MASTER,
-  CHARACTER_MASTER_LIST,
   ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
   TCharacterDetail,
   TCharacterKey,
-  TWeapon,
   TWeaponEntry,
   TWeaponTypeKey,
-  WEAPON_IMG_SRC,
   WEAPON_MASTER,
 } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
+import CharacterSelect from "@/components/CharacterSelect.vue";
 
 type TMember = {
   id: number;
@@ -158,6 +127,7 @@ export default defineComponent({
   name: "EnergyRecharge",
   components: {
     draggable,
+    CharacterSelect
   },
   setup() {
     const { displayName } = CompositionFunction();
@@ -235,6 +205,10 @@ export default defineComponent({
         }
       }
       return result;
+    };
+
+    const updateCharacter = (character: string) => {
+      addMember(character);
     };
 
     const actionList = reactive([] as TAction[]);
@@ -316,6 +290,8 @@ export default defineComponent({
     return {
       displayName,
 
+      updateCharacter,
+
       characterMasterList,
       visionImgSrc,
       characterImgClass,
@@ -346,10 +322,16 @@ export default defineComponent({
 });
 </script>
 <style>
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
 .base-container {
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 330px auto auto auto;
   grid-template-areas:
     "pane1 pane1"
     "pane2 pane3"
@@ -359,6 +341,14 @@ export default defineComponent({
 }
 </style>
 <style scoped>
+.pane2 {
+  overflow-y: scroll;
+}
+
+.pane3 fieldset {
+  height: calc(100% - 20px);
+}
+
 .item {
   position: relative;
   display: inline-block;
