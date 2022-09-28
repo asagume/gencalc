@@ -36,6 +36,7 @@
         @update:artifact-set="updateArtifactSet($event)" />
       <ArtifactDetailInput ref="artifactDetailInputVmRef" :visible="artifactDetailInputVisibleRef"
         :artifactDetailInput="artifactDetailInputRea" @update:artifact-detail="updateArtifactDetail($event)" />
+      <ArtifactScoreFormula @apply:formula="applyArtifactScoreFormula" v-if="false" />
     </div>
 
     <div class="pane6">
@@ -260,7 +261,6 @@ import {
   makeOptionsSavedata,
 } from "@/input";
 import {
-  ARTIFACT_MAIN_MASTER,
   ARTIFACT_SET_MASTER,
   ENEMY_MASTER_LIST,
   getCharacterMasterDetail,
@@ -274,14 +274,18 @@ import {
   TWeaponKey,
 } from "@/master";
 import {
+  ARTIFACT_SCORE_FORMULA_TEMPLATE,
+  calculateArtifactScore,
   calculateArtifactStats,
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
   calculateStats,
+  TArtifactScoreFormula,
 } from "@/calculate";
 import { deepcopy, isPlainObject, overwriteObject } from "@/common";
 import { calculateDamageResult } from "@/calculate";
 import CompositionFunction from "@/components/CompositionFunction.vue";
+import ArtifactScoreFormula from "./components/ArtifactScoreFormula.vue";
 
 export default defineComponent({
   name: "App",
@@ -328,6 +332,7 @@ export default defineComponent({
     ConfigurationInput,
     CharacterOwnList,
     WeaponOwnList,
+    ArtifactScoreFormula
   },
   setup(props) {
     const { setI18nLanguage, displayName } = CompositionFunction();
@@ -352,51 +357,12 @@ export default defineComponent({
     const recommendationRef = ref(props.recommendation);
 
     /** 聖遺物スコアを計算します（簡易版） */
+    const scoringStats = reactive(deepcopy(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula);
+    const applyArtifactScoreFormula = (formula: TArtifactScoreFormula) => {
+      scoringStats.splice(0, scoringStats.length, ...formula);
+    }
     const artifactScore = computed(() => {
-      let result = 0;
-      for (const substat of Object.keys(
-        artifactDetailInputRea.聖遺物ステータスサブ効果
-      )) {
-        if (artifactDetailInputRea.聖遺物ステータスサブ効果[substat]) {
-          if (substat == "会心率")
-            result += artifactDetailInputRea.聖遺物ステータスサブ効果[substat] * 2;
-          if (substat == "会心ダメージ")
-            result += artifactDetailInputRea.聖遺物ステータスサブ効果[substat];
-          if (substat == "攻撃力%")
-            result += artifactDetailInputRea.聖遺物ステータスサブ効果[substat];
-        }
-      }
-      // 時の砂未設定時は攻撃力%とみなします
-      if (
-        !artifactDetailInputRea.聖遺物メイン効果[1] &&
-        !artifactDetailInputRea.聖遺物ステータスメイン効果["攻撃力%"]
-      ) {
-        if (
-          artifactDetailInputRea.聖遺物ステータスサブ効果["攻撃力%"] >
-          ARTIFACT_MAIN_MASTER["5"]["攻撃力%"]
-        ) {
-          result -= ARTIFACT_MAIN_MASTER["5"]["攻撃力%"];
-        }
-      }
-      // 理の冠未設定時は会心率または会心ダメージとみなします
-      if (
-        !artifactDetailInputRea.聖遺物メイン効果[2] &&
-        !artifactDetailInputRea.聖遺物ステータスメイン効果["会心率"] &&
-        !artifactDetailInputRea.聖遺物ステータスメイン効果["会心ダメージ"]
-      ) {
-        if (
-          artifactDetailInputRea.聖遺物ステータスサブ効果["会心率"] >
-          ARTIFACT_MAIN_MASTER["5"]["会心率"]
-        ) {
-          result -= ARTIFACT_MAIN_MASTER["5"]["会心率"] * 2;
-        } else if (
-          artifactDetailInputRea.聖遺物ステータスサブ効果["会心ダメージ"] >
-          ARTIFACT_MAIN_MASTER["5"]["会心ダメージ"]
-        ) {
-          result -= ARTIFACT_MAIN_MASTER["5"]["会心ダメージ"];
-        }
-      }
-      return result;
+      return calculateArtifactScore(characterInputRea, artifactDetailInputRea, scoringStats);
     });
 
     const characterSelectVisibleRef = ref(false);
@@ -1135,6 +1101,7 @@ export default defineComponent({
       recommendationListRea,
       recommendationRef,
       artifactScore,
+      applyArtifactScoreFormula,
 
       characterSelectVisibleRef,
       weaponSelectVisibleRef,

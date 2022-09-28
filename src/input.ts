@@ -467,6 +467,10 @@ export type TRecommendation = {
     overwrite: boolean
 }
 
+export function makeDefaultBuildname(character: any) {
+    return 'あなたの' + character;
+}
+
 /** おすすめセットのリストを作成します. [おすすめセットの名前, おすすめセットの内容, 上書き可不可][] */
 export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }): TRecommendation[] {
     const result: TRecommendation[] = [];
@@ -494,7 +498,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
     storageKeyArr.forEach(key => {
         let buildname;
         if (key == '構成_' + character) {
-            buildname = 'あなたの' + character;
+            buildname = makeDefaultBuildname(character);
         } else {
             buildname = key.replace(re, '');
         }
