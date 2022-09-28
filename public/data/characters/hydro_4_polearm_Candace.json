@@ -1,0 +1,308 @@
+{
+    "名前": "キャンディス",
+    "説明": "琥珀色の左目を持つ、キングデシェレトの末裔。アアル村のガーディアンをしている。",
+    "icon_url": "images/characters/face/hydro_4_polearm_Candace.png",
+    "レアリティ": 4,
+    "武器": "長柄武器",
+    "元素": "水",
+    "baseInfo": {
+        "名称": "キャンディス",
+        "誕生日": "5月3日",
+        "命ノ星座": "矢盾座",
+        "称号": "浮金の誓願",
+        "神の目": "水",
+        "所属": "アアル村",
+        "中国語 CV": "张琦",
+        "英語 CV": "Shara Kirby",
+        "日本語 CV": "柚木涼香",
+        "韓国語 CV": "전영수"
+    },
+    "通常攻撃": {
+        "名前": "通常攻撃・流耀槍術・守勢",
+        "説明": "<span style=\"color: rgb(255, 215, 128)\">通常攻撃</span><br>槍による最大4段の連続攻撃を行う。<br><br><span style=\"color: rgb(255, 215, 128)\">重撃</span><br>一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。<br><br><span style=\"color: rgb(255, 215, 128)\">落下攻撃</span><br>空中から落下し地面に衝撃を与える。経路上の敵を攻撃し、落下時に範囲ダメージを与える。",
+        "icon_url": "images/characters/hydro_4_polearm_Candace/talent_1.png",
+        "詳細": [
+            {
+                "名前": "1-Hit DMG",
+                "数値": {
+                    "1": "60.8%",
+                    "2": "65.8%",
+                    "3": "70.7%",
+                    "4": "77.8%",
+                    "5": "82.7%",
+                    "6": "88.4%",
+                    "7": "96.2%",
+                    "8": "103.9%",
+                    "9": "111.7%",
+                    "10": "120.2%"
+                }
+            }
+        ]
+    },
+    "元素スキル": {
+        "名前": "Sacred Rite: Heron's Sanctum",
+        "説明": "Candace's fighting style is capable of warding off an entire tide of foes.<br><br><span style=\"color: #FFD780\">Tap</span><br>Rushes forward with her shield, dealing <span style=\"color: rgb(128, 192, 255)\">Hydro DMG</span> to opponents in front of her.<br><br><span style=\"color: #FFD780\">Hold</span><br>Raises her shield to block incoming attacks from nearby opponents, forming a barrier that absorbs DMG based on her Max HP and absorbs <span style=\"color: rgb(128, 192, 255)\">Hydro DMG</span> 250% more effectively. This barrier lasts until the Elemental Skill is unleashed.<br>After holding for a certain period of time, Candace will finish charging, and when the skill button is released, the skill duration expires, or when the barrier is broken, she will perform a leaping strike that deals <span style=\"color: rgb(128, 192, 255)\">Hydro DMG</span> to opponents in front of her.<br><br><em>The oath of the guardians is more stalwart yet than the shields they inherit.</em>",
+        "icon_url": "images/characters/hydro_4_polearm_Candace/talent_2.png",
+        "詳細": [
+            {
+                "名前": "Shield DMG Absorption",
+                "数値": {
+                    "1": "12.0%HP上限+1,156",
+                    "2": "12.9%HP上限+1,271",
+                    "3": "13.8%HP上限+1,396",
+                    "4": "15.0%HP上限+1,531",
+                    "5": "15.9%HP上限+1,676",
+                    "6": "16.8%HP上限+1,830",
+                    "7": "18.0%HP上限+1,993",
+                    "8": "19.2%HP上限+2,167",
+                    "9": "20.4%HP上限+2,350",
+                    "10": "21.6%HP上限+2,542"
+                },
+                "HIT数": 2
+            },
+            {
+                "名前": "Basic DMG",
+                "数値": {
+                    "1": "12.0%HP上限",
+                    "2": "12.9%HP上限",
+                    "3": "13.8%HP上限",
+                    "4": "15.0%HP上限",
+                    "5": "15.9%HP上限",
+                    "6": "16.8%HP上限",
+                    "7": "18.0%HP上限",
+                    "8": "19.2%HP上限",
+                    "9": "20.4%HP上限",
+                    "10": "21.6%HP上限"
+                }
+            },
+            {
+                "名前": "Charged Up DMG",
+                "数値": {
+                    "1": "19.0%HP上限",
+                    "2": "20.5%HP上限",
+                    "3": "21.9%HP上限",
+                    "4": "23.8%HP上限",
+                    "5": "25.2%HP上限",
+                    "6": "26.7%HP上限",
+                    "7": "28.6%HP上限",
+                    "8": "30.5%HP上限",
+                    "9": "32.4%HP上限",
+                    "10": "34.3%HP上限"
+                }
+            },
+            {
+                "名前": "Press Cooldown",
+                "数値": {
+                    "1": 6.0,
+                    "2": 6.0,
+                    "3": 6.0,
+                    "4": 6.0,
+                    "5": 6.0,
+                    "6": 6.0,
+                    "7": 6.0,
+                    "8": 6.0,
+                    "9": 6.0,
+                    "10": 6.0
+                }
+            },
+            {
+                "名前": "Holding Cooldown",
+                "数値": {
+                    "1": 9.0,
+                    "2": 9.0,
+                    "3": 9.0,
+                    "4": 9.0,
+                    "5": 9.0,
+                    "6": 9.0,
+                    "7": 9.0,
+                    "8": 9.0,
+                    "9": 9.0,
+                    "10": 9.0
+                }
+            }
+        ]
+    },
+    "元素爆発": {
+        "名前": "Sacred Rite: Wagtail's Tide",
+        "説明": "Raising her weapon on high, Candace calls upon a divine blessing that deals AoE <span style=\"color: rgb(128, 192, 255)\">Hydro DMG</span> based on her Max HP and continuously confers the Prayer of the Crimson Crown on your active character.<br><br><span style=\"color: rgb(255, 215, 128)\">Prayer of the Crimson Crown</span><br>This effect has the following properties:<br>- Characters deal increased Elemental DMG with their Normal Attacks.<br>- Whenever a character takes the field, they will unleash a rippling wave of water that deals <span style=\"color: rgb(128, 192, 255)\">Hydro DMG</span> to nearby opponents. There is a limited number of waves that can be triggered in the duration of this skill.<br>- Sword, Claymore, and Polearm-wielding characters under this effect will obtain a <span style=\"color: rgb(128, 192, 255)\">Hydro Infusion</span>. This secret rite has been passed down through Candace's clan from generation to generation. Though the old faiths have become lost over the years, the sands still protect the heirs of the ancient realm.",
+        "icon_url": "images/characters/hydro_4_polearm_Candace/talent_3.png",
+        "詳細": [
+            {
+                "名前": "Skill DMG",
+                "数値": {
+                    "1": "6.6%HP上限",
+                    "2": "7.1%HP上限",
+                    "3": "7.6%HP上限",
+                    "4": "8.3%HP上限",
+                    "5": "8.8%HP上限",
+                    "6": "9.3%HP上限",
+                    "7": "9.9%HP上限",
+                    "8": "10.6%HP上限",
+                    "9": "11.2%HP上限",
+                    "10": "11.9%HP上限"
+                }
+            },
+            {
+                "名前": "Duration",
+                "数値": {
+                    "1": 9.0,
+                    "2": 9.0,
+                    "3": 9.0,
+                    "4": 9.0,
+                    "5": 9.0,
+                    "6": 9.0,
+                    "7": 9.0,
+                    "8": 9.0,
+                    "9": 9.0,
+                    "10": 9.0
+                }
+            },
+            {
+                "名前": "DMG Bonus",
+                "数値": {
+                    "1": "20.0%",
+                    "2": "20.0%",
+                    "3": "20.0%",
+                    "4": "20.0%",
+                    "5": "20.0%",
+                    "6": "20.0%",
+                    "7": "20.0%",
+                    "8": "20.0%",
+                    "9": "20.0%",
+                    "10": "20.0%"
+                }
+            },
+            {
+                "名前": "Wave Impact DMG",
+                "数値": {
+                    "1": "6.6%HP上限",
+                    "2": "7.1%HP上限",
+                    "3": "7.6%HP上限",
+                    "4": "8.3%HP上限",
+                    "5": "8.8%HP上限",
+                    "6": "9.3%HP上限",
+                    "7": "9.9%HP上限",
+                    "8": "10.6%HP上限",
+                    "9": "11.2%HP上限",
+                    "10": "11.9%HP上限"
+                }
+            },
+            {
+                "名前": "Wave Instances",
+                "数値": {
+                    "1": 3,
+                    "2": 3,
+                    "3": 3,
+                    "4": 3,
+                    "5": 3,
+                    "6": 3,
+                    "7": 3,
+                    "8": 3,
+                    "9": 3,
+                    "10": 3
+                }
+            },
+            {
+                "名前": "Cooldown",
+                "数値": {
+                    "1": 15.0,
+                    "2": 15.0,
+                    "3": 15.0,
+                    "4": 15.0,
+                    "5": 15.0,
+                    "6": 15.0,
+                    "7": 15.0,
+                    "8": 15.0,
+                    "9": 15.0,
+                    "10": 15.0
+                }
+            },
+            {
+                "名前": "Energy Cost",
+                "数値": {
+                    "1": 60,
+                    "2": 60,
+                    "3": 60,
+                    "4": 60,
+                    "5": 60,
+                    "6": 60,
+                    "7": 60,
+                    "8": 60,
+                    "9": 60,
+                    "10": 60
+                }
+            }
+        ]
+    },
+    "固有天賦": [
+        {
+            "名前": "聖儀・蒼鷺による庇護",
+            "説明": "キャンディスの戦闘スタイルは、洪水のような軍勢が迫ろうとも耐えられるものである。<br><br><span style=\"color: #FFD780\">一回押し</span><br>盾を持って衝撃を放ち、前方の敵に<span style=\"color: #80C0FF\">水元素ダメージ</span>を与える。<br><br><span style=\"color: #FFD780\">長押し</span><br>盾を構え、周囲の敵からの攻撃を防ぐシールドを形成する。シールドのダメージ吸収量はキャンディスのHP上限によって決まり、<span style=\"color: #80C0FF\">水元素ダメージ</span>に対しては250%の吸収効果を持つ。シールドは元素スキル発動完了まで継続する。<br>長押しして一定時間が過ぎると、キャンディスはチャージを完了し、元素スキルボタンを離した時、または継続時間の終了時やシールドが破壊された時にジャンプ攻撃を行い、前方の敵に<span style=\"color: #80C0FF\">水元素ダメージ</span>を与える。<br><br><em>ガーディアンたちが受け継いできた誓いは、受け継がれきてきた盾よりも堅固なものである。</em>",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/talent_2.png",
+            "詳細": []
+        },
+        {
+            "名前": "聖儀・灰鴒の呼び潮",
+            "説明": "武器を高く掲げて神佑を招来し、キャンディスのHP上限を基準に<span style=\"color: rgb(128, 192, 255)\">水元素範囲ダメージ</span>を与える。またフィールド上の自身のキャラクターに｢赤冠より授かりし祝福｣状態を継続的に付与する。<br><br><span style=\"color: rgb(255, 230, 153)\">赤冠より授かりし祝福</span><br>以下の特性を持つ。<br>・キャラクターの通常攻撃が敵に元素ダメージを与える時、そのダメージがアップする。<br>・キャラクター登場時、水波衝撃を発動し、周囲の敵に<span style=\"color: rgb(128, 192, 255)\">水元素ダメージ</span>を与える。継続時間中、この効果の発動可能回数には上限がある。<br>・この状態にある片手剣、両手剣、長柄武器キャラクターには<span style=\"color: rgb(128, 192, 255)\">水元素付与</span>状態を獲得する。<br><br><em>キャンディスの一族が代々受け継いできた秘儀。古い信仰は千年の時を経て消え去ってしまったが、砂海は今も古国の末裔を守っている。</em>",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/talent_3.png",
+            "詳細": []
+        },
+        {
+            "名前": "流羽の守り",
+            "説明": "<span style=\"color: #FFE699\">聖儀・蒼鷺による庇護</span>を長押ししている間に攻撃を受けると、チャージが瞬時に完了する。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/talent_4.png",
+            "詳細": []
+        },
+        {
+            "名前": "砂の円蓋",
+            "説明": "<span style=\"color: #FFE699\">聖儀・灰鴒の呼び潮</span>の赤冠より授かりし祝福状態にあるキャラクターが通常攻撃で敵に元素ダメージを与えると、キャンディのHP上限1000ごとにその時のダメージ+0.5%。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/talent_5.png",
+            "詳細": []
+        },
+        {
+            "名前": "暁の初陽へ",
+            "説明": "チーム内の自身のキャラクター全員が登りに消費するスタミナ-20%。<br>同じ効果を持つ固有天賦との重ね掛け不可。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/talent_6.png",
+            "詳細": []
+        }
+    ],
+    "命ノ星座": {
+        "1": {
+            "名前": "赤砂の後嗣",
+            "説明": "<span style=\"color: #FFE699\">聖儀・灰鴒の呼び潮</span>の赤冠より授かりし祝福状態の継続時間+3秒。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/summaryList_1.png",
+            "詳細": []
+        },
+        "2": {
+            "名前": "貫月の鋒芒",
+            "説明": "<span style=\"color: #FFE699\">聖儀・蒼鷺による庇護</span>が敵に命中すると、キャンディスのHP上限+20%、継続時間15秒。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/summaryList_2.png",
+            "詳細": []
+        },
+        "3": {
+            "名前": "織狩の奉祀",
+            "説明": "<span style=\"color: #FFE699\">聖儀・灰鴒の呼び潮</span>のスキルLv.+3。<br>最大Lv.15まで。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/summaryList_3.png",
+            "詳細": []
+        },
+        "4": {
+            "名前": "戌守の誓約",
+            "説明": "<span style=\"color: #FFE699\">聖儀・蒼鷺による庇護</span>の長押しのクールタイムを短縮し、一回押しと同じクールタイムにする。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/summaryList_4.png",
+            "詳細": []
+        },
+        "5": {
+            "名前": "金縷の蒼瞳",
+            "説明": "<span style=\"color: #FFE699\">聖儀・蒼鷺による庇護</span>のスキルLv.+3。<br>最大Lv.15まで。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/summaryList_5.png",
+            "詳細": []
+        },
+        "6": {
+            "名前": "満溢の潮汐",
+            "説明": "<span style=\"color: rgb(255, 230, 153)\">聖儀・灰鴒の呼び潮</span>の赤冠より授かりし祝福状態のフィールドキャラクター(キャンディス自身を除く)の通常攻撃が敵に元素ダメージを与えた時、氾濫する潮撃を放ち、キャンディスのHP上限の15%に相当する<span style=\"color: rgb(128, 192, 255)\">水元素範囲ダメージ</span>を与える。<br>この効果は2.3秒ごとに1回のみ発動でき、与えたダメージは元素爆発ダメージと見なされる。",
+            "icon_url": "images/characters/hydro_4_polearm_Candace/summaryList_6.png",
+            "詳細": []
+        }
+    },
+    "おすすめセット": []
+}
