@@ -1,29 +1,31 @@
 <template>
-    <input id="artifact-score-formula" type="checkbox" class="hidden" v-model="visible">
-    <label for="artifact-score-formula" class="toggle-switch header">
-        {{displayName('聖遺物スコア計算式')}}
-    </label>
-    <div v-show="visible">
-        <select v-model="selectedIndex" @change="selectOnChange">
-            <option class="placeholder" value="-1">
-                {{artifactScoreFormulaName(currentFormula)}}
-            </option>
-            <option class="template" v-for="(item, index) in artifactScoreFormulaList" :key="index" :value="index">
-                &nbsp; {{artifactScoreFormulaName(item)}}
-            </option>
-        </select>
+    <div v-if="visible">
+        <input id="artifact-score-formula" type="checkbox" class="hidden" v-model="expanded">
+        <label for="artifact-score-formula" class="toggle-switch header">
+            {{displayName('聖遺物スコア計算式')}}
+        </label>
+        <div v-show="expanded">
+            <select v-model="selectedIndex" @change="selectOnChange">
+                <option value="-1">
+                    {{artifactScoreFormulaName(currentFormula)}}
+                </option>
+                <option v-for="(item, index) in artifactScoreFormulaList" :key="index" :value="index">
+                    &nbsp; {{artifactScoreFormulaName(item)}}
+                </option>
+            </select>
 
-        <div class="formula-detail">
-            <div class="right" v-for="(item, index) in currentFormula" :key="index">
-                <label>
-                    {{item[0]}} ×
-                    <input type="number" min="0" v-model="item[1]" @change="changed = true" />
-                </label>
+            <div class="formula-detail">
+                <div class="right" v-for="(item, index) in currentFormula" :key="index">
+                    <label>
+                        {{displayName(item[0])}} ×
+                        <input type="number" min="0" v-model="item[1]" @change="changed = true" />
+                    </label>
+                </div>
             </div>
-        </div>
 
-        <div class="formula-detail">
-            <button type="button" :disabled="!changed" @click="applyFormula">Apply</button>
+            <div class="formula-detail">
+                <button type="button" :disabled="!changed" @click="applyFormula">Apply</button>
+            </div>
         </div>
     </div>
 </template>
@@ -36,9 +38,12 @@ import CompositionFunction from "./CompositionFunction.vue";
 export default defineComponent({
     name: 'ArtifactScoreFormula',
     emits: ['apply:formula'],
+    props: {
+        visible: Boolean,
+    },
     setup(props, context) {
         const { displayName } = CompositionFunction();
-        const visible = ref(false);
+        const expanded = ref(false);
         const changed = ref(false);
 
         const artifactScoreFormulaList = reactive([] as TArtifactScoreFormula[]);
@@ -59,7 +64,7 @@ export default defineComponent({
         const artifactScoreFormulaName = (formula: TArtifactScoreFormula) => {
             let result: string[] = [];
             formula.forEach(e => {
-                let work = e[0];
+                let work = displayName(e[0]);
                 if (e[1] != 1) work += '*' + e[1];
                 result.push(work);
             });
@@ -72,7 +77,7 @@ export default defineComponent({
         };
 
         const initialize = (formula: TArtifactScoreFormula) => {
-            currentFormula.splice(0, currentFormula.length, ...formula);
+            currentFormula.splice(0, currentFormula.length, ...deepcopy(formula));
             selectedIndex.value = -1;
             changed.value = false;
         };
@@ -80,7 +85,7 @@ export default defineComponent({
         return {
             displayName,
 
-            visible,
+            expanded,
 
             artifactScoreFormulaList,
             artifactScoreFormulaName,

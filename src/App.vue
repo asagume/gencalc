@@ -36,7 +36,7 @@
         @update:artifact-set="updateArtifactSet($event)" />
       <ArtifactDetailInput ref="artifactDetailInputVmRef" :visible="artifactDetailInputVisibleRef"
         :artifactDetailInput="artifactDetailInputRea" @update:artifact-detail="updateArtifactDetail($event)" />
-      <ArtifactScoreFormula @apply:formula="applyArtifactScoreFormula" v-if="false" />
+      <ArtifactScoreFormula ref="artifactScoreFormulaVmRef" :visible="artifactDetailInputVisibleRef" @apply:formula="applyArtifactScoreFormula" />
     </div>
 
     <div class="pane6">
@@ -259,6 +259,7 @@ import {
   getMaxConstellation,
   TConditionValues,
   makeOptionsSavedata,
+  makeDefaultBuildname,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -343,6 +344,7 @@ export default defineComponent({
     const elementalResonanceInputVmRef = ref();
     const teamOptionInputVmRef = ref();
     const miscOptionInputVmRef = ref();
+    const artifactScoreFormulaVmRef = ref();
 
     const characterInputRea = reactive(
       overwriteObject(deepcopy(CHARACTER_INPUT_TEMPLATE), props.characterInput)
@@ -357,12 +359,15 @@ export default defineComponent({
     const recommendationRef = ref(props.recommendation);
 
     /** 聖遺物スコアを計算します（簡易版） */
-    const scoringStats = reactive(deepcopy(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula);
+    const artifactScoringStats = reactive(deepcopy(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula);
+    if (props.recommendation?.build?.artifactScoring) {
+      artifactScoringStats.splice(0, artifactScoringStats.length, ...props.recommendation.build.artifactScoring);
+    }
     const applyArtifactScoreFormula = (formula: TArtifactScoreFormula) => {
-      scoringStats.splice(0, scoringStats.length, ...formula);
+      artifactScoringStats.splice(0, artifactScoringStats.length, ...formula);
     }
     const artifactScore = computed(() => {
-      return calculateArtifactScore(characterInputRea, artifactDetailInputRea, scoringStats);
+      return calculateArtifactScore(characterInputRea, artifactDetailInputRea, artifactScoringStats);
     });
 
     const characterSelectVisibleRef = ref(false);
@@ -478,17 +483,23 @@ export default defineComponent({
 
     /** 構成情報をローカルストレージに保存します */
     const saveToStorage = (buildname: string) => {
-      let storageKey = '構成_' + characterInputRea.character;
-      const defaultBuildname = ["あなたの" + characterInputRea.character];
+      let identifier = characterInputRea.character;
+      const defaultBuildname = [makeDefaultBuildname(characterInputRea.character)];
       if (buildname && !defaultBuildname.includes(buildname)) {
-        storageKey += "_" + buildname;
+        identifier += "_" + buildname;
       }
+
+      const storageKey = '構成_' + identifier;
       const savedata = makeSavedata(characterInputRea, artifactDetailInputRea, conditionInputRea);
       localStorage.setItem(storageKey, JSON.stringify(savedata));
 
       const optionsSavedata = makeOptionsSavedata(characterInputRea.character, optionInputRea);
-      const storageKey2 = 'オプション' + storageKey;
+      const storageKey2 = 'オプション構成_' + identifier;
       localStorage.setItem(storageKey2, JSON.stringify(optionsSavedata));
+
+      const artifactScoringSavedata = artifactScoringStats;
+      const storageKey3 = 'ArtifactScoring_' + identifier;
+      localStorage.setItem(storageKey3, JSON.stringify(artifactScoringSavedata));
 
       // おすすめセットのリストを更新します
       let opt_buildData;
@@ -513,15 +524,20 @@ export default defineComponent({
 
     /** ローカルストレージの構成情報を削除します */
     const removeFromStorage = (buildname: string) => {
-      let storageKey = '構成_' + characterInputRea.character;
-      const defaultBuildname = ["あなたの" + characterInputRea.character];
+      let identifier = characterInputRea.character;
+      const defaultBuildname = [makeDefaultBuildname(characterInputRea.character)];
       if (buildname && !defaultBuildname.includes(buildname)) {
-        storageKey += "_" + buildname;
+        identifier += "_" + buildname;
       }
+
+      const storageKey = '構成_' + identifier;
       localStorage.removeItem(storageKey);
 
-      const storageKey2 = 'オプション' + storageKey;
+      const storageKey2 = 'オプション構成_' + identifier;
       localStorage.removeItem(storageKey2);
+
+      const storageKey3 = 'ArtifactScoring_' + identifier;
+      localStorage.removeItem(storageKey3);
 
       // おすすめセットのリストを更新します
       let opt_buildData;
@@ -575,6 +591,11 @@ export default defineComponent({
         const maxRefine = characterInputRea.weaponMaster.レアリティ < 3 ? 1 : 5;
         if (refine > maxRefine) refine = maxRefine;
         characterInputRea.武器精錬ランク = Number(refine);
+      }
+      if ('artifactScoring' in recommendation.build) {
+        const work = recommendation.build.artifactScoring;
+        artifactScoringStats.splice(0, artifactScoringStats.length, ...work);
+        artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
       }
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
@@ -1094,6 +1115,7 @@ export default defineComponent({
       elementalResonanceInputVmRef,
       teamOptionInputVmRef,
       miscOptionInputVmRef,
+      artifactScoreFormulaVmRef,
 
       characterInputRea,
       artifactDetailInputRea,
@@ -1101,6 +1123,7 @@ export default defineComponent({
       recommendationListRea,
       recommendationRef,
       artifactScore,
+      artifactScoringStats,
       applyArtifactScoreFormula,
 
       characterSelectVisibleRef,

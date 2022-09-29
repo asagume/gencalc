@@ -1,4 +1,11 @@
 {
+  "セノ": {
+    "レアリティ": 5,
+    "元素": "雷",
+    "武器": "長柄武器",
+    "誕生日": "6/23",
+    "import": "data/characters/electro_5_polearm_Cyno.json"
+  },
   "ティナリ": {
     "レアリティ": 5,
     "元素": "草",
@@ -179,6 +186,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "キャンディス": {
+    "レアリティ": 4,
+    "元素": "水",
+    "武器": "長柄武器",
+    "誕生日": "5/3",
+    "import": "data/characters/hydro_4_polearm_Candace.json"
   },
   "ドリー": {
     "レアリティ": 4,

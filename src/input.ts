@@ -508,6 +508,11 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
             const optionsObj = JSON.parse(localStorage[key2]);
             buildObj.options = optionsObj;
         }
+        const key3 = key.replace(/^構成/, 'ArtifactScoring');
+        if (key3 in localStorage) {
+            const artifactScoringObj = JSON.parse(localStorage[key3]);
+            buildObj.artifactScoring = artifactScoringObj;
+        }
         result.push({ name: buildname, build: buildObj, overwrite: true });
     });
 
@@ -726,7 +731,7 @@ export async function loadRecommendation(
             });
         }
 
-        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && s != 'options').forEach(key => {
+        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring'].includes(s)).forEach(key => {
             if (build[key] == null) {
                 conditionInput.conditionValues[key] = build[key];   // null
             } else if (isString(build[key])) {
