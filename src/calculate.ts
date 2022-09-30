@@ -212,6 +212,8 @@ export const calculateStats = function (
                             }
                         } else if (stat in workStatsObj) {
                             workStatsObj[stat] += optionObj.conditionAdjustments[stat];
+                        } else {
+                            workStatsObj[stat] = optionObj.conditionAdjustments[stat];
                         }
                     })
                 }
@@ -1347,7 +1349,9 @@ function calculateDamageFromDetailSub(
     if (buffArr) {
         myダメージバフ補正 = 100;   // percent
         buffArr.forEach(buff => {
-            myダメージバフ補正 += statsObj[buff];
+            if (statsObj[buff]) {
+                myダメージバフ補正 += statsObj[buff];
+            }
         });
         myダメージバフ補正 = myダメージバフ補正 / 100;
         myダメージ *= myダメージバフ補正;

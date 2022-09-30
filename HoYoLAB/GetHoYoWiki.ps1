@@ -44,6 +44,7 @@ $pageIds += 2849   # 赤砂の杖
 # $pageIds += 2260
 
 $doDownloadImg = $true
+$imgLanguage = 'ja-jp'
 
 $categoryMap = @{
     "2" = "character"
@@ -128,8 +129,8 @@ foreach ($pageId in $pageIds) {
         $jsonFileName = $basename + ".json"
         $jsonFilePath = $outDirPath
 
-        if ($contentMLang."en-us"."icon_url" -and $doDownloadImg) {
-            $imageUrl = $contentMLang."en-us"."icon_url"
+        if ($contentMLang.$imgLanguage."icon_url" -and $doDownloadImg) {
+            $imageUrl = $contentMLang.$imgLanguage."icon_url"
             $imageFile = $basename + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\face")
             if (-not (Test-Path $outDirPath)) {
@@ -138,7 +139,7 @@ foreach ($pageId in $pageIds) {
             Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
         }
 
-        if ($contentMLang."en-us"."header_img_url") {
+        if ($contentMLang.$imgLanguage."header_img_url") {
         }
 
         $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\" + $basename)
@@ -154,7 +155,7 @@ foreach ($pageId in $pageIds) {
                             foreach ($entry in $component.data.list) {
                                 if ($entry.icon_url) {
                                     $imageFile = $component.component_id + "_" + ($index + 1) + ".png"
-                                    if ($xRpcLanguage -eq "en-us" -and $doDownloadImg) {
+                                    if ($xRpcLanguage -eq $imgLanguage -and $doDownloadImg) {
                                         $outFile = (Join-Path $outDirPath -ChildPath $imageFile)
                                         Invoke-WebRequest -URI $entry.icon_url -Headers $headers -OutFile $outFile -Verbose
                                     }
@@ -186,8 +187,8 @@ foreach ($pageId in $pageIds) {
         $jsonFileName = $rarity + "_" + $writableName + ".json"
         $jsonFilePath = $outDirPath
 
-        if ($contentMLang."en-us"."icon_url" -and $doDownloadImg) {
-            $imageUrl = $contentMLang."en-us"."icon_url"
+        if ($contentMLang.$imgLanguage."icon_url" -and $doDownloadImg) {
+            $imageUrl = $contentMLang.$imgLanguage."icon_url"
             $imageFile = $rarity + "_" + $writableName + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\" + $type)
             if (-not (Test-Path $outDirPath)) {
@@ -210,8 +211,8 @@ foreach ($pageId in $pageIds) {
         $jsonFileName = $rarity + "_" + $writableName + ".json"
         $jsonFilePath = $outDirPath
 
-        if ($contentMLang."en-us"."icon_url" -and $doDownloadImg) {
-            $imageUrl = $contentMLang."en-us"."icon_url"
+        if ($contentMLang.$imgLanguage."icon_url" -and $doDownloadImg) {
+            $imageUrl = $contentMLang.$imgLanguage."icon_url"
             $imageFile = $rarity + "_" + $writableName + ".png"
             $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId)
             if (-not (Test-Path $outDirPath)) {

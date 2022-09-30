@@ -1,53 +1,39 @@
 <template>
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
-      <fieldset
-        v-if="supporterOpenClose[supporter]"
-        class="supporter"
-        v-show="supporterVisible(supporter)"
-      >
-        <legend>
-          <input
-            class="hidden"
-            :id="'supporter-' + supporter"
-            type="checkbox"
-            v-model="supporterOpenClose[supporter]"
-          />
+      <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
+        <legend class="supporter">
+          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
+            v-model="supporterOpenClose[supporter]" />
           <label class="toggle-switch unfold" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
+          <template v-if="builddataSelectable(supporter)">
+            <span class="builddata-selector"
+              @click="builddataSelectorVisible[supporter] = !builddataSelectorVisible[supporter]">
+              <span class="material-symbols-outlined"> settings </span>
+            </span>
+          </template>
         </legend>
+        <div class="builddata-selector" v-show="builddataSelectorVisible[supporter]">
+          <label>buildname
+            <select v-model="selectedBuildname[supporter]">
+              <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
+                {{item}}
+              </option>
+            </select>
+          </label>
+        </div>
         <div class="left">
-          <label
-            class="condition"
-            v-for="item in supporterCheckboxList(supporter)"
-            :key="item.name"
-          >
-            <input
-              type="checkbox"
-              v-model="conditionValues[item.name]"
-              :value="item.name"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            />
+          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
+              :disabled="conditionDisabled(item)" @change="onChange" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label
-            class="condition"
-            v-for="item in supporterSelectList(supporter)"
-            :key="item.name"
-          >
+          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select
-              v-model="conditionValues[item.name]"
-              :disabled="conditionDisabled(item)"
-              @change="onChange"
-            >
-              <option
-                v-for="(option, index) in item.options"
-                :value="index"
-                :key="option"
-              >
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
+              <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -56,16 +42,10 @@
       </fieldset>
       <template v-else>
         <div v-show="supporterVisible(supporter)" class="supporter-else">
-          <input
-            class="hidden"
-            :id="'supporter-else-' + supporter"
-            type="checkbox"
-            v-model="supporterOpenClose[supporter]"
-          />
-          <label
-            :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
-            :for="'supporter-else-' + supporter"
-          >
+          <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
+            v-model="supporterOpenClose[supporter]" />
+          <label :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
+            :for="'supporter-else-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
         </div>
@@ -132,6 +112,8 @@ import {
   makeTeamOptionDetailObjArr,
   TDamageDetailObj,
   ステータスTEMPLATE,
+  getChangeKind,
+  makeDefaultBuildname,
 } from "@/input";
 import {
   CHARACTER_MASTER,
@@ -292,25 +274,28 @@ export default defineComponent({
           detailObjArr
         );
         damageDetailObjArr.forEach((damageDetailObj) => {
-          const condition = character + "*" + damageDetailObj.名前;
+          let condition = character + "*";
+          if (damageDetailObj.条件) condition += damageDetailObj.条件;
+          else condition += damageDetailObj.名前;
           damageDetailObj.条件 = condition;
           if (!additionalConditions.includes(condition)) {
             additionalConditions.push(condition);
           }
-          if (statusChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+          const changeKind = getChangeKind(damageDetailObj.種類 as string);
+          if (changeKind == 'STATUS' && statusChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
             statusChangeDetailObjArr.splice(
               statusChangeDetailObjArr.length,
               0,
               damageDetailObj
             );
           }
-          // if (talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
-          //   talentChangeDetailObjArr.splice(
-          //     talentChangeDetailObjArr.length,
-          //     0,
-          //     damageDetailObj
-          //   );
-          // }
+          if (changeKind == 'TALENT' && talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+            talentChangeDetailObjArr.splice(
+              talentChangeDetailObjArr.length,
+              0,
+              damageDetailObj
+            );
+          }
           makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
         updateConditionList();
@@ -498,14 +483,14 @@ export default defineComponent({
             let supporter;
             let myNew数値 = myDetailObj.数値;
             let my上限 = myDetailObj.上限;
-            if (myDetailObj["条件"]) {
-              supporter = myDetailObj["条件"].substring(
+            if (myDetailObj.条件) {
+              supporter = myDetailObj.条件.substring(
                 0,
-                myDetailObj["条件"].indexOf("*")
+                myDetailObj.条件.indexOf("*")
               );
               if (supporter == props.character) continue;
               const number = checkConditionMatches(
-                myDetailObj["条件"],
+                myDetailObj.条件,
                 validConditionValueArr,
                 0
               );
@@ -528,23 +513,25 @@ export default defineComponent({
               myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限);
             }
             const kinds = [] as string[];
-            if (myDetailObj["種類"]) {
+            if (myDetailObj.種類) {
               if (
-                myDetailObj["種類"].startsWith("全") ||
-                myDetailObj["種類"].startsWith("敵全")
+                myDetailObj.種類.startsWith("全") ||
+                myDetailObj.種類.startsWith("敵全")
               ) {
                 for (const elem of ["炎", "水", "風", "雷", "草", "氷", "岩"]) {
-                  kinds.push(myDetailObj["種類"].replace("全", elem));
+                  kinds.push(myDetailObj.種類.replace("全", elem));
                 }
               } else {
-                kinds.push(myDetailObj["種類"]);
+                kinds.push(myDetailObj.種類);
               }
             }
             for (const kind of kinds) {
-              if (kind in workObj) {
-                workObj[kind] += myValue;
+              let tempKind = kind;
+              if (myDetailObj.対象) tempKind += '.' + myDetailObj.対象;
+              if (tempKind in workObj) {
+                workObj[tempKind] += myValue;
               } else {
-                workObj[kind] = myValue;
+                workObj[tempKind] = myValue;
               }
             }
           }
@@ -615,6 +602,36 @@ export default defineComponent({
       }
     };
 
+    function convertBuildname(character: string, storageKey: string) {
+      const prefix = '構成_' + character;
+      if (storageKey == prefix) return makeDefaultBuildname(character);
+      return storageKey.replace(new RegExp('^' + prefix + '_'), '');
+    }
+
+    const buildnameList = (character: string) => {
+      const re = new RegExp('^構成_' + character + '(_|$)');
+      const storageKeys = Object.keys(localStorage).filter(s => re.test(s));
+      const list = storageKeys.map(s => convertBuildname(character, s));
+      const defaultBuildname = makeDefaultBuildname(character);
+      const result = list.filter(s => s != defaultBuildname).sort();
+      if (list.includes(defaultBuildname)) result.unshift(defaultBuildname);
+      return result;
+    };
+
+    const builddataSelectable = (character: string) => {
+      return buildnameList(character).length > 1;
+    };
+
+    const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
+    const selectedBuildname = reactive({} as { [key: string]: string | null });
+    supporterKeyList.forEach(supporter => {
+      builddataSelectorVisible[supporter] = false;
+      const list = buildnameList(supporter);
+      if (list.length > 0) {
+        selectedBuildname[supporter] = list[0];
+      }
+    });
+
     watch(props, async (newVal, oldVal) => {
       for (const entry of newVal.savedSupporters) {
         const changed =
@@ -657,6 +674,11 @@ export default defineComponent({
       supporterOpenClose,
       closeAllSupporters,
       clearAllSupporterOptions,
+
+      builddataSelectable,
+      builddataSelectorVisible,
+      buildnameList,
+      selectedBuildname,
     };
   },
 });
@@ -670,6 +692,11 @@ div.left {
 fieldset.supporter {
   margin-bottom: 10px;
   padding-top: 0;
+}
+
+legend.supporter {
+  border-width: 0 0 2px 0;
+  border-radius: 0;
 }
 
 label {
@@ -687,8 +714,7 @@ div.supporter-else {
   text-align: center;
   padding: 0;
   background-color: transparent;
-  border-width: 0 0 2px 0;
-  border-radius: 0;
+  border: none;
   width: 20rem;
 }
 
@@ -701,7 +727,7 @@ label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled + label {
+:disabled+label {
   color: gray;
 }
 
@@ -712,5 +738,19 @@ label.selected {
 p.notice {
   text-align: left;
   color: chocolate;
+}
+
+.builddata-selector {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.builddata-selector label {
+  width: 100%;
+}
+
+span.builddata-selector .material-symbols-outlined {
+  font-size: 2.4rem;
 }
 </style>

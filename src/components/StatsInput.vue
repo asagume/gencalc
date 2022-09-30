@@ -143,7 +143,8 @@ export default defineComponent({
       statList(category)?.filter(
         (stat) =>
           categoryOpenClose.value[category] ||
-          (statsInputRea.statsObj && statsInputRea.statsObj[stat])
+          (statsInputRea.statsObj && statsInputRea.statsObj[stat]) ||
+          (statsInputRea.statAdjustments && statsInputRea.statAdjustments[stat])
       ) ?? [];
 
     /** 補正値が変更されました */

@@ -1239,6 +1239,30 @@ const makeDetailObj = function (
     return resultObj;
 }
 
+export function getChangeKind(kind: string) {
+    if (kind in ステータスTEMPLATE
+        || new RegExp('[自全].+(バフ|アップ)').exec(kind)
+        || new RegExp('敵?[自全]元素耐性').exec(kind)
+        || ['別枠乗算', '回復量アップ'].includes(kind)
+        || ['敵防御力'].includes(kind)
+        || ['発動回数', '使用回数'].includes(kind)
+        || ['攻撃速度', '通常攻撃速度', '移動速度'].includes(kind)
+        || kind.endsWith('継続時間')
+        || kind.endsWith('クールタイム')
+        || kind.endsWith('会心率')
+        || kind.endsWith('会心ダメージ')
+    ) {
+        return 'STATUS';
+    } else if (kind.endsWith('強化')
+        || kind.endsWith('付与')
+        || kind == '防御無視' ||
+        kind == '固有変数'
+    ) {   // ex.元素爆発強化,氷元素付与
+        return 'TALENT';
+    }
+    return undefined;
+}
+
 export const makeDamageDetailObjArr = function (
     talentDataObj: any,
     level: number | null,
@@ -1255,33 +1279,15 @@ export const makeDamageDetailObjArr = function (
     talentDataObj['詳細'].forEach((detailObj: { [x: string]: any; }) => {
         const resultObj = makeDetailObj(detailObj, level, defaultKind, defaultElement, inputCategory, opt_condition);
         const my種類 = resultObj.種類 as string;
-        if (statusChangeDetailObjArr != null) {
-            if (my種類 in ステータスTEMPLATE
-                || new RegExp('[自全].+(バフ|アップ)').exec(my種類)
-                || new RegExp('敵?[自全]元素耐性').exec(my種類)
-                || ['別枠乗算', '回復量アップ'].includes(my種類)
-                || ['敵防御力'].includes(my種類)
-                || ['発動回数', '使用回数'].includes(my種類)
-                || ['攻撃速度', '通常攻撃速度', '移動速度'].includes(my種類)
-                || my種類.endsWith('継続時間')
-                || my種類.endsWith('クールタイム')
-                || my種類.endsWith('会心率')
-                || my種類.endsWith('会心ダメージ')
-            ) {
-                resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
-                statusChangeDetailObjArr.push(resultObj);
-                return;
-            }
+        if (statusChangeDetailObjArr != null && getChangeKind(my種類) == 'STATUS') {
+            resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+            statusChangeDetailObjArr.push(resultObj);
+            return;
         }
-        if (talentChangeDetailObjArr != null) {
-            if (my種類.endsWith('強化')
-                || my種類.endsWith('付与')
-                || my種類 == '防御無視' ||
-                my種類 == '固有変数') {   // ex.元素爆発強化,氷元素付与
-                resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
-                talentChangeDetailObjArr.push(resultObj);
-                return;
-            }
+        if (talentChangeDetailObjArr != null && getChangeKind(my種類) == 'TALENT') {
+            resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+            talentChangeDetailObjArr.push(resultObj);
+            return;
         }
         resultArr.push(resultObj);
     });
