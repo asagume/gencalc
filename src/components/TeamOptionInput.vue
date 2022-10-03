@@ -17,7 +17,7 @@
         </legend>
         <div class="builddata-selector" v-show="builddataSelectorVisible[supporter]">
           <label>buildname
-            <select v-model="selectedBuildname[supporter]">
+            <select v-model="selectedBuildname[supporter]" @change="buildnameSelectionOnChange">
               <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
                 {{item}}
               </option>
@@ -137,7 +137,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["update:team-option"],
+  emits: ["update:team-option", 'update:buildname-selection'],
   setup(props, context) {
     const {
       displayName,
@@ -631,6 +631,9 @@ export default defineComponent({
         selectedBuildname[supporter] = list[0];
       }
     });
+    const buildnameSelectionOnChange = () => {
+      context.emit('update:buildname-selection', selectedBuildname);
+    };
 
     watch(props, async (newVal, oldVal) => {
       for (const entry of newVal.savedSupporters) {
@@ -679,6 +682,7 @@ export default defineComponent({
       builddataSelectorVisible,
       buildnameList,
       selectedBuildname,
+      buildnameSelectionOnChange,
     };
   },
 });

@@ -36,7 +36,8 @@
         @update:artifact-set="updateArtifactSet($event)" />
       <ArtifactDetailInput ref="artifactDetailInputVmRef" :visible="artifactDetailInputVisibleRef"
         :artifactDetailInput="artifactDetailInputRea" @update:artifact-detail="updateArtifactDetail($event)" />
-      <ArtifactScoreFormula ref="artifactScoreFormulaVmRef" :visible="artifactDetailInputVisibleRef" @apply:formula="applyArtifactScoreFormula" />
+      <ArtifactScoreFormula ref="artifactScoreFormulaVmRef" :visible="artifactDetailInputVisibleRef"
+        @apply:formula="applyArtifactScoreFormula" />
     </div>
 
     <div class="pane6">
@@ -112,7 +113,8 @@
         </div>
         <div v-show="optionInputTabRef == 2">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
-            :savedSupporters="savedSupporters" @update:team-option="updateTeamOption" />
+            :savedSupporters="savedSupporters" @update:team-option="updateTeamOption"
+            @update:buildname-selection="updateBuildnameSelection" />
         </div>
         <div v-show="optionInputTabRef == 3">
           <MiscOptionInput ref="miscOptionInputVmRef" @update:misc-option="updateMiscOption" />
@@ -263,6 +265,7 @@ import {
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
+  CHARACTER_MASTER,
   ENEMY_MASTER_LIST,
   getCharacterMasterDetail,
   getWeaponMasterDetail,
@@ -378,6 +381,9 @@ export default defineComponent({
     const artifactSets = characterInputRea.artifactSets;
     const artifactDetailInputVisibleRef = ref(true);
 
+    const characterKeys = Object.keys(CHARACTER_MASTER);
+    const buildnameSelectionRea = reactive({} as TAnyObject);
+
     const characterInfoVisibleRef = ref(false);
     const characterInfoModeRef = ref(0);
 
@@ -417,9 +423,21 @@ export default defineComponent({
 
     const savedSupporters = reactive([] as { key: string; value: string }[]);
     const setupSavedSupporters = () => {
-      const work = Object.keys(localStorage)
-        .filter((s) => s.startsWith("構成_") && s.split("_").length == 2)
-        .map((s) => ({ key: s.replace(/^構成_/, ""), value: localStorage[s] }));
+      const buildnameKeys = Object.keys(buildnameSelectionRea);
+      const work: any[] = [];
+      characterKeys.forEach(character => {
+        let key = '構成_' + character;
+        if (buildnameKeys.includes(character)) {
+          const buildname = buildnameSelectionRea[character];
+          if (buildname != makeDefaultBuildname(character)) {
+            key += '_' + buildname;
+          }
+        }
+        const value = localStorage[key];
+        if (value) {
+          work.push({ key: character, value });
+        }
+      });
       savedSupporters.splice(0, savedSupporters.length, ...work);
     };
     setupSavedSupporters();
@@ -1075,6 +1093,11 @@ export default defineComponent({
       }
     };
 
+    const updateBuildnameSelection = (buildnameSelection: TAnyObject) => {
+      overwriteObject(buildnameSelectionRea, buildnameSelection);
+      setupSavedSupporters();
+    };
+
     const openTwitter = () => {
       shareByTwitter(characterInputRea, artifactDetailInputRea, conditionInputRea);
     };
@@ -1180,6 +1203,7 @@ export default defineComponent({
       updateElementalResonance,
       updateMiscOption,
       updateTeamOption,
+      updateBuildnameSelection,
 
       updateConfigurationInput,
       orderInitializeArtifactStatsSub,
