@@ -13,6 +13,11 @@ module.exports = defineConfig({
       template: 'public/EnergyRecharge.html',
       filename: 'EnergyRecharge.html',
     },
+    TeamManager: {
+      entry: 'src/pages/TeamManager/main.ts',
+      template: 'public/TeamManager.html',
+      filename: 'TeamManager.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'
