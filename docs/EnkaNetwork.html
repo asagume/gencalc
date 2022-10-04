@@ -571,11 +571,7 @@
                 methods: {
                     submit: function () {
                         if (!this.uid && !this.match(/^[0-9]{9}$/)) return;
-                        fetch('https://enka.shinshin.moe/u/' + this.uid).then(resp => resp.text()).then(text => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(text, 'text/html');
-                            console.log(doc, doc.scripts);
-                            const json = JSON.parse(doc.scripts[3].innerHTML);
+                        fetch('https://enka.network/u/' + this.uid + '/__data.json').then(resp => resp.json()).then(json => {
                             console.log(json);
 
                             enkaNetworkVue.u = json;
