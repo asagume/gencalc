@@ -649,7 +649,7 @@ export async function loadRecommendation(
         for (const key of Object.keys(build).filter((s: string) => s.startsWith('聖遺物サブ効果'))) {
             let toKey = key.replace(/^聖遺物サブ効果/, '');
             if (toKey != 'HP') toKey = toKey.replace(/P$/, '%');
-            if (build[key]) {
+            if (build[key] || build[key] == 0) {
                 prioritySubstatsDisabled = true;
                 artifactStatsSub[toKey] = Number(build[key]);
             }

@@ -18,6 +18,7 @@
     </p>
 
     <p>
+      <a href="EnkaNetwork3.html">DATA IMPORTER</a>
       <a href="index2.html">旧バージョン(V2)</a>
     </p>
 
