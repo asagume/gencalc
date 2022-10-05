@@ -1,12 +1,12 @@
 <template>
   <div class="base-container">
     <div class="pane1">
-      <div style="text-align: left; position: relative; width: 100%; min-height: 6rem;">
-            <p style="position: absolute; left: 0; top: 0;"><a href="./">Back to GENCALC</a></p>
-            <p style="position: absolute; right: 0; top: 0;"><a href="https://enka.shinshin.moe/">Enka.Network</a></p>
-        </div>
-
-      <h2>DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network</h2>
+      <div class="header">
+        <div class="top-left"><a href="./">GENCALC</a></div>
+        <div class="top-right"><a href="https://enka.shinshin.moe/">Enka.Network</a></div>
+        <p>&nbsp;</p>
+        <h3>DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network</h3>
+      </div>
     </div>
 
     <div class="pane2">
@@ -14,7 +14,7 @@
         <form @submit.prevent="submit">
           <label>
             UID:
-            <input v-model="uid" type="text" maxlength="9" placeholder="ENTER UID" pattern="[0-9]{9}">
+            <input v-model="uid" type="text" maxlength="9" placeholder="ENTER UID" pattern="[0-9]+">
           </label>
           <button type="submit" :disabled="timer > 0">
             <span class="material-symbols-outlined"> send </span></button>
@@ -25,23 +25,43 @@
 
     <div class="pane3">
       <template v-if="u">
-        <table style="margin-bottom: 4rem;">
+        <table>
           <tr>
-            <th>UID:</th>
+            <th>UID</th>
             <td>{{ u.uid }}</td>
           </tr>
           <tr>
-            <th>NICKNAME:</th>
+            <th>NICKNAME</th>
             <td>{{ u.playerInfo.nickname }}</td>
+          </tr>
+          <tr>
+            <th>AR</th>
+            <td>{{ u.playerInfo.level }}</td>
+          </tr>
+          <tr>
+            <th>WR</th>
+            <td>{{ u.playerInfo.worldLevel }}</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <p>{{ u.playerInfo.signature }}</p>
+            </td>
           </tr>
         </table>
 
         <ul>
           <li class="character" v-for="(characterInfo, index) in characterInfoList" :key="index">
             <template v-if="characterInfo.characterMaster">
-              <img :class="'character ' + characterBgClass(characterInfo)" :src="characterImgSrc(characterInfo)"
-                :alt="displayName(characterInfo.characterMaster.key)">
-              <img class="vision" :src="visionImgSrc(characterInfo)" alt="vision">
+              <div class="character">
+                <img :class="'character ' + characterBgClass(characterInfo)" :src="characterImgSrc(characterInfo)"
+                  :alt="displayName(characterInfo.characterMaster.key)">
+                <img class="vision" :src="visionImgSrc(characterInfo)" alt="vision">
+                <p class="constellation">{{ characterInfo.constellation }}</p>
+              </div>
+              <div class="level">Lv.{{ characterInfo.level }}</div>
+              <img class="weapon" :src="weaponImgSrc(characterInfo)" alt="weapon">
+              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 0)" alt="artifact-set">
+              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 1)" alt="artifact-set">
             </template>
             <div v-if="false">
               {{characterInfo.savedata}}
@@ -88,6 +108,7 @@ import {
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
   TAnyObject,
+  TArtifactSetEntry,
   TCharacterEntry,
   TCharacterKey,
   TWeaponEntry,
@@ -158,6 +179,7 @@ const CHARACTER_INFO_TEMPLATE = {
 type TCharacterInfo = typeof CHARACTER_INFO_TEMPLATE & {
   characterMaster?: TCharacterEntry,
   weaponMaster?: TWeaponEntry,
+  artifactSetMasters?: [TArtifactSetEntry?, TArtifactSetEntry?],
   savedata?: TAnyObject,
 };
 
@@ -285,6 +307,43 @@ export default defineComponent({
         }
       }
 
+      const artifactSetMasters: [(TArtifactSetEntry | undefined), (TArtifactSetEntry | undefined)] = [undefined, undefined];
+      const artifactNames: string[] = [];
+      result.reliq.itemIds.filter(s => s).forEach(itemId => {
+        itemId = Math.trunc(itemId / 10)
+        const work = HoyoArtifactMaster.filter(s => s.id == itemId);
+        if (work.length) {
+          artifactNames.push(work[0].name);
+        }
+      });
+      const artifactSetWork: TAnyObject = {};
+      Object.keys(ARTIFACT_SET_MASTER).forEach(key => {
+        const entry = (ARTIFACT_SET_MASTER as any)[key];
+        if ('artifact_list' in entry) {
+          artifactNames.forEach(artifactName => {
+            if (entry.artifact_list.includes(artifactName)) {
+              if (key in artifactSetWork) {
+                artifactSetWork[key]++;
+              } else {
+                artifactSetWork[key] = 1;
+              }
+            }
+          })
+        }
+      });
+      Object.keys(artifactSetWork).forEach(key => {
+        if (artifactSetWork[key] >= 4) {
+          artifactSetMasters[0] = (ARTIFACT_SET_MASTER as any)[key] as TArtifactSetEntry;
+          artifactSetMasters[1] = (ARTIFACT_SET_MASTER as any)[key] as TArtifactSetEntry;
+        } else if (artifactSetWork[key] >= 2) {
+          const index = artifactSetMasters.indexOf(undefined);
+          if (index != -1) {
+            artifactSetMasters[index] = (ARTIFACT_SET_MASTER as any)[key] as TArtifactSetEntry;
+          }
+        }
+      });
+      result.artifactSetMasters = artifactSetMasters;
+
       result.savedata = makeSavedata(result);
 
       return result;
@@ -312,41 +371,13 @@ export default defineComponent({
       // 精錬ランク
       result['精錬ランク'] = characterInfo.weapon.refine;
       // 聖遺物セット効果
-      const artifactNames: string[] = [];
-      characterInfo.reliq.itemIds.filter(s => s).forEach(itemId => {
-        itemId = Math.trunc(itemId / 10)
-        const work = HoyoArtifactMaster.filter(s => s.id == itemId);
-        if (work.length) {
-          artifactNames.push(work[0].name);
-        }
-        console.log(itemId, work);
-      });
-      const artifactSetWork: TAnyObject = {};
-      Object.keys(ARTIFACT_SET_MASTER).forEach(key => {
-        const entry = (ARTIFACT_SET_MASTER as any)[key];
-        if ('artifact_list' in entry) {
-          artifactNames.forEach(artifactName => {
-            if (entry.artifact_list.includes(artifactName)) {
-              if (key in artifactSetWork) {
-                artifactSetWork[key]++;
-              } else {
-                artifactSetWork[key] = 1;
-              }
-            }
-          })
-        }
-      });
-      const artifactSets: string[] = [];
-      Object.keys(artifactSetWork).forEach(key => {
-        if (artifactSetWork[key] >= 4) {
-          artifactSets.push(key);
-          artifactSets.push(key);
-        } else if (artifactSetWork[key] >= 2) {
-          artifactSets.push(key);
-        }
-      });
-      result['聖遺物セット効果1'] = artifactSets[0] ?? 'NONE';
-      result['聖遺物セット効果2'] = artifactSets[1] ?? 'NONE';
+      if (characterInfo.artifactSetMasters) {
+        result['聖遺物セット効果1'] = characterInfo.artifactSetMasters[0]?.key ?? 'NONE';
+        result['聖遺物セット効果2'] = characterInfo.artifactSetMasters[1]?.key ?? 'NONE';
+      } else {
+        result['聖遺物セット効果1'] = 'NONE';
+        result['聖遺物セット効果2'] = 'NONE';
+      }
       // 聖遺物メイン効果
       for (let i = 0; i < 5; i++) {
         if (characterInfo.reliq.mainStats[i]) {
@@ -439,6 +470,23 @@ export default defineComponent({
       return IMG_SRC_DUMMY;
     };
 
+    const weaponImgSrc = (characterInfo: TCharacterInfo) => {
+      if (characterInfo.weaponMaster) {
+        return characterInfo.weaponMaster.icon_url;
+      }
+      return IMG_SRC_DUMMY;
+    };
+
+    const artifactSetImgSrc = (characterInfo: TCharacterInfo, index: number) => {
+      let result = IMG_SRC_DUMMY;
+      if (characterInfo.artifactSetMasters) {
+        const work = characterInfo.artifactSetMasters[index];
+        if (work) {
+          result = work.icon_url;
+        }
+      }
+      return result;
+    };
 
     return {
       displayName,
@@ -457,6 +505,8 @@ export default defineComponent({
       characterImgSrc,
       characterBgClass,
       visionImgSrc,
+      weaponImgSrc,
+      artifactSetImgSrc,
     };
   },
 });
@@ -471,16 +521,44 @@ export default defineComponent({
 .base-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto;
   grid-template-areas:
     "pane1"
     "pane2"
     "pane3"
-    "pane4"
     "footer";
+}
+
+h3 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    color: #e8d14e;
+    text-shadow: 0 0 5px black;
+    border: 3px double gray;
+    border-radius: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #333;
 }
 </style>
 <style scoped>
+.header {
+  position: relative;
+}
+
+.top-left {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+}
+
 input {
   font-size: 3rem;
   font-family: monospace;
@@ -488,11 +566,16 @@ input {
 
 button {
   vertical-align: bottom;
+  font-size: 2.2rem;
 }
 
 table {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 40px;
+  table-layout: fixed;
+  border-spacing: 0;
+  width: 75%;
 }
 
 table th {
@@ -502,6 +585,17 @@ table th {
 
 table td {
   text-align: left;
+}
+
+table tr th,
+table tr td {
+  border-bottom: 2px solid whitesmoke;
+  padding: 3px 20px;
+}
+
+table tr:last-child th,
+table tr:last-child td {
+  border: none;
 }
 
 ul {
@@ -518,17 +612,19 @@ ul {
 }
 
 ul li.character {
-  position: relative;
   display: inline-block;
-  width: calc(100% / 4);
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  width: calc(100% / 4 - 10px);
+  padding: 10px 5px;
   margin-bottom: 2rem;
+}
+
+div.character {
+  position: relative;
 }
 
 img.character {
   width: 100%;
-  max-width: 256px;
+  max-width: 128px;
   background-size: contain;
 }
 
@@ -537,6 +633,26 @@ img.vision {
   left: 4%;
   top: 4%;
   max-width: 33%;
+}
+
+img.weapon,
+img.artifact-set {
+  width: calc(100% / 3 - 4px);
+  height: calc(100% / 3 - 4px);
+  border-radius: 50%;
+  border: 2px solid whitesmoke;
+}
+
+p.constellation {
+  position: absolute;
+  right: 10%;
+  top: 0;
+}
+
+div.level {
+  background-color: black;
+  border-radius: 5px;
+  padding: 2px;
 }
 </style>
   
