@@ -3,7 +3,7 @@
     <div class="pane1">
       <div class="header">
         <div class="top-left"><a href="./">GENCALC</a></div>
-        <div class="top-right"><a href="https://enka.shinshin.moe/">Enka.Network</a></div>
+        <div class="top-right"><a href="https://enka.network/">Enka.Network</a></div>
         <p>&nbsp;</p>
         <h3>DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network</h3>
       </div>
@@ -56,7 +56,7 @@
                 <img :class="'character ' + characterBgClass(characterInfo)" :src="characterImgSrc(characterInfo)"
                   :alt="displayName(characterInfo.characterMaster.key)">
                 <img class="vision" :src="visionImgSrc(characterInfo)" alt="vision">
-                <p class="constellation">{{ characterInfo.constellation }}</p>
+                <div class="constellation" v-if="characterInfo.constellation">{{ characterInfo.constellation }}</div>
               </div>
               <div class="level">Lv.{{ characterInfo.level }}</div>
               <img class="weapon" :src="weaponImgSrc(characterInfo)" alt="weapon">
@@ -395,8 +395,8 @@ export default defineComponent({
 
     const submit = () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
-      // const url = 'https://enka.network/u/' + uid.value + '/__data.json';
-      const url = 'data/__data.json';
+      const url = 'https://enka.network/u/' + uid.value + '/__data.json';
+      // const url = 'data/__data.json';
       fetch(url).then(resp => resp.json()).then(json => {
         console.log(json);
         overwriteObject(u, json);
@@ -422,6 +422,7 @@ export default defineComponent({
     const save = (index: number) => {
       const storageKey = '構成_' + characterInfoList[index].characterMaster.key;
       localStorage.setItem(storageKey, JSON.stringify(characterInfoList[index].savedata));
+      saveButtonDisabled(index);
     };
 
     const buttonDisabled = (index: number) => {
@@ -566,7 +567,9 @@ input {
 
 button {
   vertical-align: bottom;
-  font-size: 2.2rem;
+}
+button span {
+  font-size: 2.6rem;
 }
 
 table {
@@ -624,15 +627,14 @@ div.character {
 
 img.character {
   width: 100%;
-  max-width: 128px;
   background-size: contain;
 }
 
 img.vision {
   position: absolute;
-  left: 4%;
+  left: 6%;
   top: 4%;
-  max-width: 33%;
+  max-width: 25%;
 }
 
 img.weapon,
@@ -643,10 +645,15 @@ img.artifact-set {
   border: 2px solid whitesmoke;
 }
 
-p.constellation {
+div.constellation {
   position: absolute;
-  right: 10%;
-  top: 0;
+  font-size: 4rem;
+  right: 4%;
+  top: 4%;
+  background-color: black;
+  opacity: 50%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
 }
 
 div.level {

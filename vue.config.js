@@ -8,6 +8,11 @@ module.exports = defineConfig({
       template: 'public/index3.html',
       filename: 'index.html',
     },
+    EnkaNetwork: {
+      entry: 'src/pages/EnkaNetwork/main.ts',
+      template: 'public/EnkaNetwork3.html',
+      filename: 'EnkaNetwork3.html',
+    },
     EnergyRecharge: {
       entry: 'src/pages/EnergyRecharge/main.ts',
       template: 'public/EnergyRecharge.html',

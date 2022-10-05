@@ -1561,7 +1561,7 @@ function analyzeFormulaStrSub(formulaStr: string, opt_defaultItem: string | null
     return resultArr;
 }
 
-function makeSharedata(savedata: TAnyObject) {
+export function makeSharedata(savedata: TAnyObject) {
     const sharedataArr = [] as any[];
 
     let character: TCharacterKey;
