@@ -148,21 +148,36 @@ async function main() {
 
     const searchParams = new URLSearchParams(window.location.search);
     let urldata;
+    let character;
+    let buildname: string | null = null;
     if (searchParams.has('allin')) {
         const allin = searchParams.get('allin');
         if (allin) {
             urldata = makeSaveDataFromShareData(allin);
-            characterInput.character = urldata.キャラクター as TCharacterKey;
+            character = urldata.キャラクター as TCharacterKey;
         } else {
             console.error('query strings are not valid!');
         }
     } else {
-        characterInput.character = getCharacterByBirthday();
+        character = sessionStorage.getItem('character');
+        if (character) {
+            buildname = sessionStorage.getItem('buildname');
+            sessionStorage.removeItem('character');
+            sessionStorage.removeItem('buildname');
+        } else {
+            character = getCharacterByBirthday();
+        }
     }
-    console.log('url', urldata);
+    characterInput.character = character as TCharacterKey;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
     const recommendationList = makeRecommendationList(characterInput.characterMaster, urldata);
-    const recommendation = recommendationList[0];
+    let recommendation;
+    if (buildname) {
+        recommendation = recommendationList.filter(s => s.name == buildname)[0];
+    }
+    if (!recommendation) {
+        recommendation = recommendationList[0];
+    }
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendationList[0].build);
 
     createApp(App, {

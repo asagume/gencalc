@@ -1,8 +1,9 @@
 # 育成計算機のlistリクエストヘッダーのCookieの値を入力してください
-$Cookie = ""
+$Cookie = "_MHYUUID=a8da36fe-3357-4c7f-84e9-4eeb1e439f99; ltoken=JTwotZW80lEODK8IO3Alv2o7UN5M4KNlaStbOW1p; ltuid=7891322; DEVICEFP_SEED_ID=7b55adeeea8195a3; DEVICEFP_SEED_TIME=1660135400024; _ga_9TTX3TE5YL=GS1.1.1664290759.25.0.1664290759.0.0.0; DEVICEFP=38d7eabd9c835; mi18nLang=ja-jp; _gid=GA1.2.721579950.1664789372; _ga_QBR0VJWRTS=GS1.1.1664789382.1.0.1664789388.0.0.0; _ga_GEYW4HC0FV=GS1.1.1664877176.19.0.1664877178.0.0.0; _ga_BWRG3314Z0=GS1.1.1664962227.1.0.1664962227.0.0.0; _ga_54PBK3QDF4=GS1.1.1665047545.160.0.1665047545.0.0.0; _ga=GA1.2.779340027.1649600951; _gat_gtag_UA_206868027_5=1; _ga_1CHR121QPG=GS1.1.1665050504.7.1.1665050509.0.0.0"
 
 $OutputDir = "..\public\data"
 $AvatarListOutFile = "HoyoAvatarMaster.json"
+$SkillListOutFile = "HoyoSkillMaster.json"
 $WeaponListOutFile = "HoyoWeaponMaster.json"
 $ArtifactListOutFile = "HoyoArtifactMaster.json"
 
@@ -16,7 +17,7 @@ $ArtifactListOutFile = "HoyoArtifactMaster.json"
 # "is_all": true,
 # "lang": "ja-jp"
 # }
-# 
+#
 # Weapon
 # https://sg-public-api.hoyolab.com/event/calculateos/weapon/list
 # {
@@ -36,7 +37,9 @@ $ArtifactListOutFile = "HoyoArtifactMaster.json"
 #     "size": 20,
 #     "lang": "ja-jp"
 # }
-#
+# 
+# GET
+# https://sg-public-api.hoyolab.com/event/calculateos/avatar/skill_list?avatar_id=10000069&element_attr_id=4&lang=ja-jp
 
 $Headers = @{
     "Accept"          = "application/json, text/plain, */*"
@@ -47,6 +50,7 @@ $Headers = @{
 ########
 # キャラクター
 $AvatarList = @()
+$SkillList = @()
 
 $Uri = "https://sg-public-api.hoyolab.com/event/calculateos/avatar/list"
 $Body = @{
@@ -68,6 +72,8 @@ $Cookie -split ';' | ForEach-Object {
     $MySession.Cookies.Add($Uri, $MyCookie)
 } 
 
+$SkillListUri = "https://sg-public-api.hoyolab.com/event/calculateos/avatar/skill_list"
+
 while ($true) {
     $Body.page ++
     $BodyJson = $Body | ConvertTo-Json
@@ -86,6 +92,7 @@ while ($true) {
     }
 
     foreach ($entry in $ContentObj.data.list) {
+        $entry.icon = $null
         if ($entry.name -eq "旅人") {
             switch ($entry.element_attr_id) {
                 1 {
@@ -111,12 +118,30 @@ while ($true) {
                 }
             }
         }
-    }   
+
+        ###
+        # キャラクター 詳細
+        $GetUrl = $SkillListUri + "?avatar_id=" + $entry.id + "&element_attr_id=" + $entry.element_attr_id + "&lang=ja-jp"
+        $Response2 = Invoke-WebRequest -URI $GetUrl -Headers $Headers -WebSession $MySession -Verbose
+        $ContentObj2 = ConvertFrom-Json -InputObject $Response2.Content
+        if ($ContentObj2.data.list.Length -eq 0) {
+            continue;
+        }
+        foreach ($entry2 in $ContentObj2.data.list) {
+            $entry2.icon = $null
+        }
+        $Json2 = @{
+            avatar_id = $entry.id;
+            skill_list = $ContentObj2.data.list;
+        }
+        $SkillList = $SkillList + $Json2
+    }
 
     $AvatarList = $AvatarList + $ContentObj.data.list
 }
 
 $AvatarList | ConvertTo-Json -Depth 100 | Out-File -FilePath (Join-Path $OutputDir -ChildPath $AvatarListOutFile) -Encoding utf8
+$SkillList | ConvertTo-Json -Depth 100 | Out-File -FilePath (Join-Path $OutputDir -ChildPath $SkillListOutFile) -Encoding utf8
 
 ########
 # 武器
