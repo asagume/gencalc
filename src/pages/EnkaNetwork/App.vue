@@ -16,13 +16,7 @@
         <form @submit.prevent="submit">
           <label>
             UID:
-            <input
-              v-model="uid"
-              type="text"
-              maxlength="9"
-              placeholder="ENTER UID"
-              pattern="[0-9]+"
-            />
+            <input v-model="uid" type="text" maxlength="9" placeholder="ENTER UID" pattern="[0-9]+" />
           </label>
           <button type="submit" :disabled="timer > 0">
             <span class="material-symbols-outlined"> send </span>
@@ -59,18 +53,11 @@
         </table>
 
         <ul>
-          <li
-            class="character"
-            v-for="(characterInfo, index) in characterInfoList"
-            :key="index"
-          >
+          <li class="character" v-for="(characterInfo, index) in characterInfoList" :key="index">
             <template v-if="characterInfo.characterMaster">
               <div class="character">
-                <img
-                  :class="'character ' + characterBgClass(characterInfo)"
-                  :src="characterImgSrc(characterInfo)"
-                  :alt="displayName(characterInfo.characterMaster.key)"
-                />
+                <img :class="'character ' + characterBgClass(characterInfo)" :src="characterImgSrc(characterInfo)"
+                  :alt="displayName(characterInfo.characterMaster.key)" />
                 <img class="vision" :src="visionImgSrc(characterInfo)" alt="vision" />
                 <div class="constellation" v-if="characterInfo.constellation">
                   {{ characterInfo.constellation }}
@@ -78,16 +65,8 @@
               </div>
               <div class="level">Lv.{{ characterInfo.level }}</div>
               <img class="weapon" :src="weaponImgSrc(characterInfo)" alt="weapon" />
-              <img
-                class="artifact-set"
-                :src="artifactSetImgSrc(characterInfo, 0)"
-                alt="artifact-set"
-              />
-              <img
-                class="artifact-set"
-                :src="artifactSetImgSrc(characterInfo, 1)"
-                alt="artifact-set"
-              />
+              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 0)" alt="artifact-set" />
+              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 1)" alt="artifact-set" />
             </template>
             <div v-if="false">
               {{ characterInfo.savedata }}
@@ -113,8 +92,7 @@
       《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
       <ol style="text-align: left">
         <li>
-          UIDを入力後、<span class="material-symbols-outlined"> send </span
-          >をクリックしてください
+          UIDを入力後、<span class="material-symbols-outlined"> send </span>をクリックしてください
         </li>
       </ol>
       <hr />
@@ -136,6 +114,7 @@ import {
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
   ELEMENT_IMG_SRC,
+  getCharacterMasterDetail,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
   TAnyObject,
@@ -152,7 +131,7 @@ import { deepcopy, overwriteObject } from "@/common";
 type THoyoAvatarMasterValue = {
   id: number;
   name: string;
-  icon: string;
+  icon: string | null;
   weapon_cat_id: number;
   avatar_level: number;
   element_attr_id: number;
@@ -163,7 +142,7 @@ type THoyoAvatarMaster = THoyoAvatarMasterValue[];
 type THoyoWeaponMasterValue = {
   id: number;
   name: string;
-  icon: string;
+  icon: string | null;
   weapon_cat_id: number;
   weapon_level: number;
   max_level: number;
@@ -173,12 +152,26 @@ type THoyoWeaponMaster = THoyoWeaponMasterValue[];
 type THoyoArtifactMasterValue = {
   id: number;
   name: string;
-  icon: string;
+  icon: string | null;
   reliquary_cat_id: number;
   reliquary_level: number;
   max_level: number;
 };
 type THoyoArtifactMaster = THoyoArtifactMasterValue[];
+
+type THoyoSkillMasterValue = {
+  avatar_id: number;
+  skill_list: [
+    {
+      id: number,
+      group_id: number,
+      name: string,
+      icon: string | null;
+      max_level: number,
+    },
+  ],
+};
+type THoyoSkillMaster = THoyoSkillMasterValue[];
 
 const WEAPON_INFO_TEMPLATE = {
   itemId: 0,
@@ -203,7 +196,7 @@ const CHARACTER_INFO_TEMPLATE = {
   level: 1,
   ascension: 0,
   constellation: 0,
-  skillLevelList: [] as number[],
+  skillLevelList: [] as [string, number][],
   weapon: WEAPON_INFO_TEMPLATE,
   reliq: RELIQ_INFO_TEMPLATE,
 };
@@ -252,6 +245,7 @@ export default defineComponent({
     let HoyoAvatarMaster: THoyoAvatarMaster;
     let HoyoWeaponMaster: THoyoWeaponMaster;
     let HoyoArtifactMaster: THoyoArtifactMaster;
+    let HoyoSkillMaster: THoyoSkillMaster;
 
     async function onLoad() {
       const responses = await Promise.all(
@@ -259,11 +253,13 @@ export default defineComponent({
           "data/HoyoAvatarMaster.json",
           "data/HoyoWeaponMaster.json",
           "data/HoyoArtifactMaster.json",
+          "data/HoyoSkillMaster.json",
         ].map((s) => fetch(s).then((resp) => resp.json()))
       );
       HoyoAvatarMaster = responses[0];
       HoyoWeaponMaster = responses[1];
       HoyoArtifactMaster = responses[2];
+      HoyoSkillMaster = responses[3];
     }
     onLoad();
 
@@ -278,33 +274,33 @@ export default defineComponent({
     } as TAnyObject);
     const characterInfoList = reactive([] as any[]);
 
-    function makeCharacterInfo(u: TAnyObject, index: number) {
+    async function makeCharacterInfo(u: TAnyObject, index: number) {
       const result: TCharacterInfo = {
         avatarId: u.avatarInfoList[index].avatarId,
         level: u.playerInfo.showAvatarInfoList[index].level,
         ascension: u.avatarInfoList[index].propMap["1002"]?.ival ?? 0,
         constellation: u.avatarInfoList[index].talentIdList?.length ?? 0,
-        skillLevelList: [] as number[],
+        skillLevelList: [] as [string, number][],
         weapon: deepcopy(WEAPON_INFO_TEMPLATE),
         reliq: deepcopy(RELIQ_INFO_TEMPLATE),
       };
 
       Object.keys(u.avatarInfoList[index].skillLevelMap).forEach((key) => {
-        result.skillLevelList.push(u.avatarInfoList[index].skillLevelMap[key]);
+        result.skillLevelList.push([key, u.avatarInfoList[index].skillLevelMap[key]]);
       });
-      if ("proudSkillExtraLevelMap" in u.avatarInfoList[index]) {
-        Object.keys(u.avatarInfoList[index].proudSkillExtraLevelMap).forEach((key) => {
-          if (key.endsWith("2")) {
-            // 元素スキル？
-            result.skillLevelList[1] +=
-              u.avatarInfoList[index].proudSkillExtraLevelMap[key];
-          } else if (key.endsWith("9")) {
-            // 元素爆発？
-            result.skillLevelList[2] +=
-              u.avatarInfoList[index].proudSkillExtraLevelMap[key];
-          }
-        });
-      }
+      // if ("proudSkillExtraLevelMap" in u.avatarInfoList[index]) {
+      //   Object.keys(u.avatarInfoList[index].proudSkillExtraLevelMap).forEach((key) => {
+      //     if (key.endsWith("2")) {
+      //       // 元素スキル？
+      //       result.skillLevelList[1] +=
+      //         u.avatarInfoList[index].proudSkillExtraLevelMap[key];
+      //     } else if (key.endsWith("9")) {
+      //       // 元素爆発？
+      //       result.skillLevelList[2] +=
+      //         u.avatarInfoList[index].proudSkillExtraLevelMap[key];
+      //     }
+      //   });
+      // }
 
       for (const equip of u.avatarInfoList[index].equipList) {
         if (equip.flat.itemType == "ITEM_RELIQUARY") {
@@ -396,12 +392,12 @@ export default defineComponent({
       });
       result.artifactSetMasters = artifactSetMasters;
 
-      result.savedata = makeSavedata(result);
+      result.savedata = await makeSavedata(result);
 
       return result;
     }
 
-    function makeSavedata(characterInfo: TCharacterInfo) {
+    async function makeSavedata(characterInfo: TCharacterInfo) {
       const result = {} as TAnyObject;
 
       // キャラクター
@@ -414,19 +410,50 @@ export default defineComponent({
           : "");
       // 命ノ星座
       result["命ノ星座"] = characterInfo.constellation;
-      // 通常攻撃レベル
-      result["通常攻撃レベル"] = characterInfo.skillLevelList[0];
-      // 元素スキルレベル
-      result["元素スキルレベル"] = characterInfo.skillLevelList[1];
-      // 元素爆発レベル
-      result["元素爆発レベル"] = characterInfo.skillLevelList[2];
+
+      const skillList = HoyoSkillMaster.filter(s => s.avatar_id == characterInfo.avatarId)[0];
+      if (skillList) {
+        const characterMasterDetail = await getCharacterMasterDetail(result["キャラクター"]);
+        characterInfo.skillLevelList.forEach(skillLevel => {
+          const skill = skillList.skill_list.filter(s => s.id == Number(skillLevel[0]))[0];
+          if (skill) {
+            if (characterMasterDetail.通常攻撃.名前 == skill.name) {
+              result["通常攻撃レベル"] = skillLevel[1];
+            } else if (characterMasterDetail.元素スキル.名前 == skill.name) {
+              result["元素スキルレベル"] = skillLevel[1];
+            } else if (characterMasterDetail.元素爆発.名前 == skill.name) {
+              result["元素爆発レベル"] = skillLevel[1];
+            }
+          }
+        });
+        if (result["命ノ星座"] >= 3) {
+          const desc = characterMasterDetail.命ノ星座['3']?.説明;
+          if (desc) {
+            if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
+              result["元素スキルレベル"] += 3;
+            } else if (desc.indexOf(characterMasterDetail.元素爆発.名前) != -1) {
+              result["元素爆発レベル"] += 3;
+            }
+          }
+        }
+        if (result["命ノ星座"] >= 5) {
+          const desc = characterMasterDetail.命ノ星座['5']?.説明;
+          if (desc) {
+            if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
+              result["元素スキルレベル"] += 3;
+            } else if (desc.indexOf(characterMasterDetail.元素爆発.名前) != -1) {
+              result["元素爆発レベル"] += 3;
+            }
+          }
+        }
+      }
       // 武器
       result["武器"] = characterInfo.weaponMaster?.key;
       // 武器レベル
       result["武器レベル"] =
         characterInfo.weapon.level +
         (突破レベルレベルARRAY[characterInfo.weapon.ascension][0] ==
-        characterInfo.weapon.level
+          characterInfo.weapon.level
           ? "+"
           : "");
       // 精錬ランク
@@ -464,19 +491,19 @@ export default defineComponent({
       return result;
     }
 
-    const submit = () => {
+    const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
       const url = "https://enka.network/u/" + uid.value + "/__data.json";
       // const url = 'data/__data.json';
       fetch(url)
         .then((resp) => resp.json())
-        .then((json) => {
+        .then(async (json) => {
           console.log(json);
           overwriteObject(u, json);
 
           const work: any[] = [];
           for (let i = 0; i < u.playerInfo.showAvatarInfoList.length; i++) {
-            work.push(makeCharacterInfo(u, i));
+            work.push((await makeCharacterInfo(u, i)));
           }
           characterInfoList.splice(0, characterInfoList.length, ...work);
 
