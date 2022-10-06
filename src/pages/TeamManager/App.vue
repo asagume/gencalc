@@ -53,27 +53,42 @@
       <draggable :list="teams" item-key="index" :sort="true" handle=".handle">
         <template #item="{ element }">
           <div :class="'team' + teamSelected(element.id)">
-            <label class="name handle" @click="teamOnClick(element.id)">
-              <span>◇</span>
-              <span class="name" v-if="teamNameEditable[element.id]">
-                <input type="text" v-model="element.name" placeholder="input team name" />
-                <span
-                  class="button material-symbols-outlined"
-                  @click="teamNameEditable[element.id] = false"
-                >
-                  edit_off
+            <div class="title">
+              <label class="name handle" @click="teamOnClick(element.id)">
+                <span>◇</span>
+                <span class="name" v-if="teamNameEditable[element.id]">
+                  <input
+                    type="text"
+                    v-model="element.name"
+                    placeholder="input team name"
+                  />
+                  <span
+                    class="button material-symbols-outlined"
+                    @click="teamNameEditable[element.id] = false"
+                  >
+                    edit_off
+                  </span>
                 </span>
-              </span>
-              <span class="name" v-else>
-                <span>{{ element.name }}</span>
-                <span
-                  class="button material-symbols-outlined"
-                  @click="teamNameEditable[element.id] = true"
-                >
-                  edit
+                <span class="name" v-else>
+                  <span>{{ element.name }}</span>
+                  <span
+                    class="button material-symbols-outlined"
+                    @click="teamNameEditable[element.id] = true"
+                  >
+                    edit
+                  </span>
                 </span>
-              </span>
-            </label>
+              </label>
+              <div class="element-resonance">
+                <img
+                  class="element-resonance"
+                  v-for="src in resonanceElementImgSrcs(element)"
+                  :key="src"
+                  :src="src"
+                  alt="resonance"
+                />
+              </div>
+            </div>
             <table class="team-members">
               <tr>
                 <td
@@ -91,6 +106,9 @@
                     <div class="constellation" v-show="constellation(member)">
                       {{ constellation(member) }}
                     </div>
+                  </div>
+                  <div>
+                    {{ 0 }}
                   </div>
                   <div>
                     <img class="weapon" :src="imgWeaponSrc(member)" alt="weapon" />
@@ -148,6 +166,7 @@ import {
   ELEMENT_IMG_SRC,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
+  TAnyObject,
   TCharacterKey,
   WEAPON_MASTER,
 } from "@/master";
@@ -306,6 +325,37 @@ export default defineComponent({
       return member.savedata ? member.savedata.命ノ星座 : "";
     };
 
+    const resonanceElementImgSrcs = (team: TTeam) => {
+      const result: string[] = [];
+      const work: TAnyObject = {};
+      const members = team.members.filter((s) => s.name);
+      if (members.length == 4) {
+        members.forEach((member) => {
+          const master = characterMaster(member);
+          if (master) {
+            if (master.元素 in work) {
+              work[master.元素]++;
+            } else {
+              work[master.元素] = 1;
+            }
+          }
+        });
+        if (Object.keys(work).length == 4) {
+          Object.keys(work).forEach((key) => {
+            result.push((ELEMENT_IMG_SRC as any)[key]);
+          });
+        } else {
+          Object.keys(work).forEach((key) => {
+            if (work[key] >= 2) {
+              result.push((ELEMENT_IMG_SRC as any)[key]);
+              result.push((ELEMENT_IMG_SRC as any)[key]);
+            }
+          });
+        }
+      }
+      return result;
+    };
+
     const buildnames = (member: TMember) => {
       const result: string[] = [];
       const storageKeys = Object.keys(localStorage).filter((s) =>
@@ -423,6 +473,7 @@ export default defineComponent({
       constellation,
       imgWeaponSrc,
       imgArtifactSetSrc,
+      resonanceElementImgSrcs,
 
       buildnameOnChange,
       buildnames,
@@ -455,8 +506,8 @@ export default defineComponent({
 }
 
 div.team {
-  width: calc(100% - 10px);
-  margin: 5px 5px;
+  width: calc(100% - 6px);
+  margin: 3px 3px;
 }
 
 @media all and (max-width: 768px) {
@@ -474,7 +525,7 @@ div.team {
 
   div.team {
     width: 100%;
-    margin: 5px 0;
+    margin: 3px 0;
   }
 }
 </style>
@@ -485,18 +536,18 @@ div.team {
 }
 
 div.team {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
 label.name {
-  height: 40px;
+  height: 35px;
 }
 
 span.name {
   display: inline-block;
-  width: 240px;
-  height: 5rem;
+  width: 220px;
+  height: 4.5rem;
   position: relative;
   margin-left: 5px;
 }
@@ -537,6 +588,16 @@ img.artifact-set {
   border-radius: 50%;
 }
 
+div.element-resonance {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+img.element-resonance {
+  width: 20px;
+}
+
 div.constellation {
   position: absolute;
   font-size: 20px;
@@ -557,6 +618,10 @@ div.team {
   max-width: 342px;
   padding: 5px;
   border: 4px double whitesmoke;
+}
+
+div.team div.title {
+  position: relative;
 }
 
 div.team.selected {
