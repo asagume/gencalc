@@ -1,46 +1,73 @@
 <template>
   <div class="base-container">
-    <div class="pane1">
-
-    </div>
+    <div class="pane1"></div>
 
     <div class="pane2">
       <div class="character-select" v-show="characterSelectVisible">
-        <CharacterSelect :visible="true" :characters="memberNames" @update:characters="updateCharacters" />
-        <button type="button" @click="characterSelectVisible=false"> hide </button>
+        <CharacterSelect
+          :visible="true"
+          :characters="memberNames"
+          @update:characters="updateCharacters"
+        />
+        <button type="button" @click="characterSelectVisible = false">hide</button>
       </div>
     </div>
 
     <div class="pane3">
       <draggable :list="teams" item-key="index" :sort="true" handle=".handle">
         <template #item="{ element }">
-          <div :class="'team'+teamSelected(element.id)" @click="teamOnClick(element.id)">
+          <div :class="'team' + teamSelected(element.id)">
             <label class="name handle">
               <span>◇</span>
               <span class="name" v-if="teamNameEditable[element.id]">
                 <input type="text" v-model="element.name" placeholder="input team name" />
-                <span class="button material-symbols-outlined" @click="teamNameEditable[element.id]=false"> edit_off
+                <span
+                  class="button material-symbols-outlined"
+                  @click="teamNameEditable[element.id] = false"
+                >
+                  edit_off
                 </span>
               </span>
               <span class="name" v-else>
                 <span>{{ element.name }}</span>
-                <span class="button material-symbols-outlined" @click="teamNameEditable[element.id]=true"> edit
+                <span
+                  class="button material-symbols-outlined"
+                  @click="teamNameEditable[element.id] = true"
+                >
+                  edit
                 </span>
               </span>
             </label>
             <table class="team-members">
               <tr>
-                <td class="team-member" v-for="member in element.members" :key="member.id">
-                  <div class="member-img">
-                    <img :class="'character'+characterImgClass(member)" :src="characterImgSrc(member)"
-                      :alt="displayName(member.name)">
-                    <img class="vision" :src="visionImgSrc(member)" alt="vision">
-                    <div class="constellation" v-show="constellation(member)"> {{constellation(member)}} </div>
+                <td
+                  class="team-member"
+                  v-for="member in element.members"
+                  :key="member.id"
+                >
+                  <div class="member-img" @click="teamOnClick(element.id)">
+                    <img
+                      :class="'character' + characterImgClass(member)"
+                      :src="characterImgSrc(member)"
+                      :alt="displayName(member.name)"
+                    />
+                    <img class="vision" :src="visionImgSrc(member)" alt="vision" />
+                    <div class="constellation" v-show="constellation(member)">
+                      {{ constellation(member) }}
+                    </div>
                   </div>
                   <div>
-                    <img class="weapon" :src="imgWeaponSrc(member)" alt="weapon">
-                    <img class="artifact-set" :src="imgArtifactSetSrc(member, 0)" alt="artifact-set">
-                    <img class="artifact-set" :src="imgArtifactSetSrc(member, 1)" alt="artifact-set">
+                    <img class="weapon" :src="imgWeaponSrc(member)" alt="weapon" />
+                    <img
+                      class="artifact-set"
+                      :src="imgArtifactSetSrc(member, 0)"
+                      alt="artifact-set"
+                    />
+                    <img
+                      class="artifact-set"
+                      :src="imgArtifactSetSrc(member, 1)"
+                      alt="artifact-set"
+                    />
                   </div>
                   <!-- <div>
                     <span class="button material-symbols-outlined"> manage_accounts </span>
@@ -54,13 +81,12 @@
                     </select>
                   </div> -->
                   <div>
-                    <button type="button" @click="locate(member)"> open </button>
+                    <button type="button" @click="locate(member)">open</button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td :colspan="NUMBER_OF_MEMBERS">
-                </td>
+                <td :colspan="NUMBER_OF_MEMBERS"></td>
               </tr>
             </table>
           </div>
@@ -69,14 +95,12 @@
     </div>
 
     <div class="pane4">
-      <button type="button" @click="save"> Save </button>
-      <button type="button" @click="load"> Reset </button>
-      <button type="button" @click="clear"> Clear </button>
+      <button type="button" @click="save">Save</button>
+      <button type="button" @click="load">Reset</button>
+      <button type="button" @click="clear">Clear</button>
     </div>
 
-    <div class="footer">
-
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 <script lang="ts">
@@ -97,16 +121,16 @@ import { makeDefaultBuildname } from "@/input";
 import { deepcopy } from "@/common";
 
 type TMember = {
-  id: number,
-  name: string,
-  buildname: string | undefined,
-  savedata: any | undefined,
+  id: number;
+  name: string;
+  buildname: string | undefined;
+  savedata: any | undefined;
 };
 
 type TTeam = {
-  id: number,
-  name: string,
-  members: TMember[],
+  id: number;
+  name: string;
+  members: TMember[];
 };
 
 const NUMBER_OF_TEAMS = 10;
@@ -118,7 +142,7 @@ export default defineComponent({
   name: "TeamManager",
   components: {
     draggable,
-    CharacterSelect
+    CharacterSelect,
   },
   setup() {
     const { displayName } = CompositionFunction();
@@ -133,13 +157,13 @@ export default defineComponent({
     for (let i = 0; i < NUMBER_OF_TEAMS; i++) {
       const team: TTeam = {
         id: i,
-        name: '待機中のチーム',
+        name: "待機状態のチーム",
         members: [] as TMember[],
       };
       for (let j = 0; j < NUMBER_OF_MEMBERS; j++) {
         const member: TMember = {
           id: memberId++,
-          name: '',
+          name: "",
           buildname: undefined,
           savedata: undefined,
         };
@@ -152,17 +176,17 @@ export default defineComponent({
     const memberNames = computed(() => {
       let result = Array(NUMBER_OF_MEMBERS).fill(0);
       if (selectedTeamId.value != -1) {
-        const team = teams.filter(s => s.id == selectedTeamId.value)[0];
+        const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
         if (team) {
-          result = team.members.map(s => s.name);
+          result = team.members.map((s) => s.name);
         }
       }
       return result;
     });
 
     const teamSelected = (index: number) => {
-      if (index == selectedTeamId.value) return ' selected';
-      return '';
+      if (index == selectedTeamId.value) return " selected";
+      return "";
     };
 
     const teamOnClick = (index: number) => {
@@ -173,9 +197,9 @@ export default defineComponent({
     function getSavedata(member: TMember) {
       let result = undefined;
       if (member.name) {
-        let storageKey = '構成_' + member.name;
+        let storageKey = "構成_" + member.name;
         if (member.buildname != makeDefaultBuildname(member.name)) {
-          storageKey += '_' + member.buildname;
+          storageKey += "_" + member.buildname;
         }
         const storageValue = localStorage.getItem(storageKey);
         if (storageValue) {
@@ -188,7 +212,7 @@ export default defineComponent({
     const updateCharacters = (characters: string[]) => {
       console.log(characters);
       if (selectedTeamId.value != -1) {
-        const team = teams.filter(s => s.id == selectedTeamId.value)[0];
+        const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
         if (team) {
           const members = team.members;
           for (let i = 0; i < characters.length; i++) {
@@ -216,15 +240,15 @@ export default defineComponent({
         return (master as any).icon_url;
       }
       return IMG_SRC_DUMMY;
-    }
+    };
 
     const characterImgClass = (member: TMember) => {
       const master = characterMaster(member);
       if (master) {
-        return ' ' + (STAR_BACKGROUND_IMAGE_CLASS as any)[String(master.レアリティ)];
+        return " " + (STAR_BACKGROUND_IMAGE_CLASS as any)[String(master.レアリティ)];
       }
-      return '';
-    }
+      return "";
+    };
 
     const visionImgSrc = (member: TMember) => {
       const master = characterMaster(member);
@@ -236,15 +260,17 @@ export default defineComponent({
     };
 
     const constellation = (member: TMember) => {
-      return member.savedata ? member.savedata.命ノ星座 : '';
+      return member.savedata ? member.savedata.命ノ星座 : "";
     };
 
     const buildnames = (member: TMember) => {
       const result: string[] = [];
-      const storageKeys = Object.keys(localStorage).filter(s => s.startsWith('構成_' + member.name));
-      storageKeys.forEach(storageKey => {
+      const storageKeys = Object.keys(localStorage).filter((s) =>
+        s.startsWith("構成_" + member.name)
+      );
+      storageKeys.forEach((storageKey) => {
         const defaultBuildname = makeDefaultBuildname(member.name);
-        if (storageKey == '構成_' + member.name) {
+        if (storageKey == "構成_" + member.name) {
           result.push(defaultBuildname);
         }
       });
@@ -269,8 +295,8 @@ export default defineComponent({
       let result = IMG_SRC_DUMMY;
       if (member.savedata) {
         let key;
-        if (index == 0) key = '聖遺物セット効果1';
-        if (index == 1) key = '聖遺物セット効果2';
+        if (index == 0) key = "聖遺物セット効果1";
+        if (index == 1) key = "聖遺物セット効果2";
         if (key) {
           result = (ARTIFACT_SET_MASTER as any)[member.savedata[key]].icon_url;
         }
@@ -279,38 +305,38 @@ export default defineComponent({
     };
 
     const locate = (member: TMember) => {
-      sessionStorage.setItem('character', member.name);
+      sessionStorage.setItem("character", member.name);
       if (member.buildname) {
-        sessionStorage.setItem('buildname', member.buildname);
+        sessionStorage.setItem("buildname", member.buildname);
       } else {
-        sessionStorage.removeItem('buildname')
+        sessionStorage.removeItem("buildname");
       }
       window.open("./", "_blank");
     };
 
     const clear = () => {
-      teams.forEach(team => {
-        team.name = '';
-        team.members.forEach(member => {
-          member.name = '';
-          member.buildname = '';
+      teams.forEach((team) => {
+        team.name = "";
+        team.members.forEach((member) => {
+          member.name = "";
+          member.buildname = "";
           member.savedata = undefined;
         });
-      })
+      });
     };
 
     const save = () => {
       const work: TTeam[] = deepcopy(teams);
-      work.forEach(team => {
-        team.members.forEach(member => {
+      work.forEach((team) => {
+        team.members.forEach((member) => {
           member.savedata = undefined;
         });
       });
-      localStorage.setItem('teams', JSON.stringify(work));
+      localStorage.setItem("teams", JSON.stringify(work));
     };
 
     const load = () => {
-      const storageValue = localStorage.getItem('teams');
+      const storageValue = localStorage.getItem("teams");
       if (storageValue) {
         const work = JSON.parse(storageValue);
         for (let i = 0; i < teams.length; i++) {
@@ -426,7 +452,6 @@ span.name {
   width: 240px;
   height: 5rem;
   position: relative;
-  font-size: 2.6rem;
   margin-left: 5px;
 }
 
@@ -435,12 +460,10 @@ span.name span.button {
   position: absolute;
   right: 0px;
   top: 0px;
-  font-size: 2.6rem;
 }
 
 input.name {
   width: 180px;
-  font-size: 2.4rem;
 }
 
 div.member-img {
@@ -472,7 +495,7 @@ div.constellation {
   position: absolute;
   font-size: 20px;
   padding: 2px 5px;
-  right: 5px;
+  right: 2px;
   top: 2px;
   background-color: black;
   opacity: 50%;
@@ -501,4 +524,3 @@ table.team-members {
   text-align: center;
 }
 </style>
-  
