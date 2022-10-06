@@ -1,6 +1,42 @@
 <template>
   <div class="base-container">
-    <div class="pane1"></div>
+    <div class="pane1">
+      <div class="display-stat-select">
+        <label>
+          <input class="hidden" type="radio" name="display-stat" value="HP上限" />
+          <span>MaxHP</span>
+        </label>
+        <label>
+          <input class="hidden" type="radio" name="display-stat" value="攻撃力" />
+          <span>ATK</span>
+        </label>
+        <label>
+          <input class="hidden" type="radio" name="display-stat" value="防御力" />
+          <span>DEF</span>
+        </label>
+        <label>
+          <input class="hidden" type="radio" name="display-stat" value="元素熟知" />
+          <span>EM</span>
+        </label>
+        <label>
+          <input class="hidden" type="radio" name="display-stat" value="会心" />
+          <span>CRIT</span>
+        </label>
+        <label>
+          <input
+            class="hidden"
+            type="radio"
+            name="display-stat"
+            value="元素チャージ効率"
+          />
+          <span>ER</span>
+        </label>
+      </div>
+      <label>
+        Number of teams
+        <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" />
+      </label>
+    </div>
 
     <div class="pane2">
       <div class="character-select" v-show="characterSelectVisible">
@@ -17,7 +53,7 @@
       <draggable :list="teams" item-key="index" :sort="true" handle=".handle">
         <template #item="{ element }">
           <div :class="'team' + teamSelected(element.id)">
-            <label class="name handle">
+            <label class="name handle" @click="teamOnClick(element.id)">
               <span>◇</span>
               <span class="name" v-if="teamNameEditable[element.id]">
                 <input type="text" v-model="element.name" placeholder="input team name" />
@@ -45,7 +81,7 @@
                   v-for="member in element.members"
                   :key="member.id"
                 >
-                  <div class="member-img" @click="teamOnClick(element.id)">
+                  <div class="member-img" @click="memberOnClick(element.id)">
                     <img
                       :class="'character' + characterImgClass(member)"
                       :src="characterImgSrc(member)"
@@ -152,6 +188,7 @@ export default defineComponent({
       teamNameEditable.push(false);
     }
     const characterSelectVisible = ref(false);
+    const numberOfTeams = ref(NUMBER_OF_TEAMS);
 
     const teams = reactive([] as TTeam[]);
     for (let i = 0; i < NUMBER_OF_TEAMS; i++) {
@@ -191,7 +228,13 @@ export default defineComponent({
 
     const teamOnClick = (index: number) => {
       selectedTeamId.value = index;
-      characterSelectVisible.value = true;
+    };
+
+    const memberOnClick = (index: number) => {
+      if (selectedTeamId.value == index) {
+        characterSelectVisible.value = true;
+      }
+      selectedTeamId.value = index;
     };
 
     function getSavedata(member: TMember) {
@@ -362,12 +405,15 @@ export default defineComponent({
 
       teamNameEditable,
       characterSelectVisible,
+      NUMBER_OF_TEAMS,
       NUMBER_OF_MEMBERS,
+      numberOfTeams,
 
       teams,
       memberNames,
 
       teamOnClick,
+      memberOnClick,
       updateCharacters,
 
       teamSelected,
@@ -522,5 +568,19 @@ table.team-members {
   table-layout: fixed;
   border-spacing: 0;
   text-align: center;
+}
+
+input[type="radio"] + span {
+  display: inline-block;
+  width: 8rem;
+  font-size: 2rem;
+  color: black;
+  background-color: gray;
+  border-radius: 5px;
+  margin: 2px;
+}
+
+input[type="radio"]:checked + span {
+  background-color: whitesmoke;
 }
 </style>
