@@ -170,40 +170,40 @@ div.team {
 div.title {
     position: relative;
     text-align: left;
+    height: 4.5rem;
 }
 
 div.team.selected {
     border-color: gold;
 }
 
-div.title span.button {
+label.name {
+    font-size: 2.6rem;
+}
+
+label.name span {
+    margin-left: 0.5rem;
+}
+
+label.name span.button {
     display: inline-block;
     position: absolute;
     left: 220px;
     top: 0;
+    font-size: 2.6rem;
 }
 
-label.name {
-    height: 35px;
-}
-
-span.name {
-    display: inline-block;
-    width: 220px;
-    height: 4.5rem;
-    position: relative;
-    margin-left: 5px;
-}
-
-span.name span.button {
+label.name span.button {
     display: inline-block;
     position: absolute;
     right: 0px;
     top: 0px;
 }
 
-input.name {
+label.name input {
     width: 180px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 div.element-resonance {

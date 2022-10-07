@@ -19,13 +19,6 @@
     </div>
 
     <div class="pane2">
-      <div class="character-select" v-show="characterSelectVisible">
-        <CharacterSelect :visible="true" :characters="memberNames" @update:characters="updateCharacters" />
-        <button type="button" @click="characterSelectVisible = false">hide</button>
-      </div>
-    </div>
-
-    <div class="pane3">
       <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
         <template #item="{ element }">
           <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
@@ -33,6 +26,18 @@
             @click:character="characterOnClick(element)" />
         </template>
       </draggable>
+    </div>
+
+    <teleport to="body">
+      <div class="modal character-select" v-show="characterSelectVisible">
+        <div class="modal-content">
+          <CharacterSelect :visible="true" :characters="memberNames" @update:characters="updateCharacters" />
+          <button type="button" @click="characterSelectVisible = false">hide</button>
+        </div>
+      </div>
+    </teleport>
+
+    <div class="pane3">
     </div>
 
     <div class="pane4">
@@ -268,37 +273,48 @@ export default defineComponent({
 
 .base-container {
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto auto;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto auto auto;
   grid-template-areas:
-    "pane1 pane1"
-    "pane2 pane3"
-    "pane4 pane4"
-    "footer footer";
+    "pane1"
+    "pane2"
+    "pane3"
+    "pane4"
+    "footer";
+}
+
+.modals {
+  position: relative;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  /* background-color: rgba(0, 0, 0, .5); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(63, 10, 10);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+  z-index: 1000;
 }
 
 div.team {
-  width: calc(100% - 6px);
-  margin: 3px 3px;
-}
-
-@media all and (max-width: 768px) {
-  .base-container {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto auto auto;
-    grid-template-areas:
-      "pane1"
-      "pane2"
-      "pane3"
-      "pane4"
-      "footer";
-  }
-
-  div.team {
-    width: 100%;
-    margin: 3px 0;
-  }
+  width: calc(100% - 4px);
+  margin: 3px 2px;
 }
 </style>
 <style scoped>
