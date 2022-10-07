@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { basename } from '@/common';
-import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput, OPTION_INPUT_TEMPLATE, TArtifactDetailInput, TConditionInput, TOptionInput } from '@/input';
+import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput, OPTION_INPUT_TEMPLATE, TArtifactDetailInput, TConditionInput, TOptionInput, popBuildinfoFromSession } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { deepcopy, isNumber } from './common';
 import i18n from './i18n';
@@ -147,30 +147,26 @@ async function main() {
     const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
 
     const searchParams = new URLSearchParams(window.location.search);
-    let urldata;
     let character;
-    let buildname: string | null = null;
+    let buildname: string | undefined;
+    let builddata: any | undefined;
     if (searchParams.has('allin')) {
         const allin = searchParams.get('allin');
         if (allin) {
-            urldata = makeSaveDataFromShareData(allin);
-            character = urldata.キャラクター as TCharacterKey;
+            builddata = makeSaveDataFromShareData(allin);
+            character = builddata.キャラクター as TCharacterKey;
         } else {
             console.error('query strings are not valid!');
         }
     } else {
-        character = sessionStorage.getItem('character');
-        if (character) {
-            buildname = sessionStorage.getItem('buildname');
-            sessionStorage.removeItem('character');
-            sessionStorage.removeItem('buildname');
-        } else {
+        [character, buildname, builddata] = popBuildinfoFromSession();
+        if (!character) {
             character = getCharacterByBirthday();
         }
     }
     characterInput.character = character as TCharacterKey;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
-    const recommendationList = makeRecommendationList(characterInput.characterMaster, urldata);
+    const recommendationList = makeRecommendationList(characterInput.characterMaster, builddata);
     let recommendation;
     if (buildname) {
         recommendation = recommendationList.filter(s => s.name == buildname)[0];
@@ -186,7 +182,7 @@ async function main() {
         conditionInput: conditionInput,
         recommendationList: recommendationList,
         recommendation: recommendation,
-        urldata: urldata,
+        urldata: builddata,
     }).use(i18n).mount('#app')
 }
 

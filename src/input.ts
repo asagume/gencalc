@@ -471,6 +471,22 @@ export function makeDefaultBuildname(character: any) {
     return 'あなたの' + character;
 }
 
+export function makeBuildStorageKey(character: TCharacterKey | string, buildname?: string) {
+    let result = '構成_' + character;
+    if (buildname && buildname != makeDefaultBuildname(character)) {
+        result += '_' + buildname;
+    }
+    return result;
+}
+
+export function makeOptionStorageKey(character: TCharacterKey | string, buildname?: string) {
+    return 'オプション' + makeBuildStorageKey(character, buildname);
+}
+
+export function makeArtifactScoringStorageKey(character: TCharacterKey | string, buildname?: string) {
+    return makeBuildStorageKey(character, buildname).replace(/^構成/, 'ArtifactScoring');
+}
+
 /** おすすめセットのリストを作成します. [おすすめセットの名前, おすすめセットの内容, 上書き可不可][] */
 export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }): TRecommendation[] {
     const result: TRecommendation[] = [];
@@ -486,7 +502,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
 
     const storageKeyArr: string[] = [];
     Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('構成_' + character)) {
+        if (key.startsWith(makeBuildStorageKey(character))) {
             storageKeyArr.push(key);
             if (isSavable == null) {
                 isSavable = false;
@@ -497,7 +513,7 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
     const re = new RegExp('^構成_' + character + '_');
     storageKeyArr.forEach(key => {
         let buildname;
-        if (key == '構成_' + character) {
+        if (key == makeBuildStorageKey(character)) {
             buildname = makeDefaultBuildname(character);
         } else {
             buildname = key.replace(re, '');
@@ -1670,3 +1686,34 @@ export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string
     }
     return max;
 }
+
+export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any) {
+    sessionStorage.setItem('character', character);
+    if (buildname) {
+        sessionStorage.setItem('buildname', buildname);
+    }
+    if (builddata) {
+        sessionStorage.setItem('builddata', JSON.stringify(builddata));
+    }
+}
+
+export function popBuildinfoFromSession() {
+    const result: [string | undefined, string | undefined, TAnyObject | undefined] = [undefined, undefined, undefined];
+    const character = sessionStorage.getItem('character');
+    if (character) {
+        result[0] = character;
+        const buildname = sessionStorage.getItem('buildname');
+        if (buildname) {
+            result[1] = buildname;
+        }
+        const builddata = sessionStorage.getItem('builddata');
+        if (builddata) {
+            result[2] = JSON.parse(builddata);
+        }
+    }
+    sessionStorage.removeItem('character');
+    sessionStorage.removeItem('buildname');
+    sessionStorage.removeItem('builddata');
+    return result;
+}
+

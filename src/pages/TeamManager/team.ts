@@ -1,4 +1,4 @@
-import { makeDefaultBuildname } from "@/input";
+import { makeBuildStorageKey, makeDefaultBuildname } from "@/input";
 import { CHARACTER_MASTER, TCharacterKey } from "@/master";
 
 export type TMember = {
@@ -25,16 +25,6 @@ export function characterMaster(member: TMember) {
     return result;
 }
 
-const BUILD_STORAGE_KEY_PREFIX = '構成_';
-
-export function makeBuildStorageKey(character: string, buildname?: string) {
-    let result = BUILD_STORAGE_KEY_PREFIX + character;
-    if (buildname && buildname != makeDefaultBuildname(character)) {
-        result += '_' + buildname;
-    }
-    return result;
-}
-
 export function getBuildnameFromStorageKey(storageKey: string) {
     const work = storageKey.split('_');
     const character = work[1];
@@ -48,8 +38,8 @@ export function getBuildnameFromStorageKey(storageKey: string) {
     return result;
 }
 
-export function getBuildStorageKeys(character?: string) {
-    return Object.keys(localStorage).filter(s => s.startsWith(BUILD_STORAGE_KEY_PREFIX + (character ?? '')));
+export function getBuildStorageKeys(character: string) {
+    return Object.keys(localStorage).filter(s => s.startsWith(makeBuildStorageKey(character)));
 }
 
 export function getBuilddataFromStorage(character: string, buildname?: string) {

@@ -1,39 +1,76 @@
 <template>
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
-      <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
+      <fieldset
+        v-if="supporterOpenClose[supporter]"
+        class="supporter"
+        v-show="supporterVisible(supporter)"
+      >
         <legend class="supporter">
-          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
+          <input
+            class="hidden"
+            :id="'supporter-' + supporter"
+            type="checkbox"
+            v-model="supporterOpenClose[supporter]"
+          />
           <label class="toggle-switch unfold" :for="'supporter-' + supporter">
             <span>{{ displayName(supporter) }}</span>
           </label>
           <template v-if="builddataSelectable(supporter)">
-            <span class="builddata-selector"
-              @click="builddataSelectorVisible[supporter] = !builddataSelectorVisible[supporter]">
+            <span
+              class="builddata-selector"
+              @click="
+                builddataSelectorVisible[supporter] = !builddataSelectorVisible[supporter]
+              "
+            >
               <span class="material-symbols-outlined"> settings </span>
             </span>
           </template>
         </legend>
         <div class="builddata-selector" v-show="builddataSelectorVisible[supporter]">
-          <label>buildname
-            <select v-model="selectedBuildname[supporter]" @change="buildnameSelectionOnChange">
+          <label
+            >buildname
+            <select
+              v-model="selectedBuildname[supporter]"
+              @change="buildnameSelectionOnChange"
+            >
               <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
-                {{item}}
+                {{ item }}
               </option>
             </select>
           </label>
         </div>
         <div class="left">
-          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
-            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+          <label
+            class="condition"
+            v-for="item in supporterCheckboxList(supporter)"
+            :key="item.name"
+          >
+            <input
+              type="checkbox"
+              v-model="conditionValues[item.name]"
+              :value="item.name"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
-          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
+          <label
+            class="condition"
+            v-for="item in supporterSelectList(supporter)"
+            :key="item.name"
+          >
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
-              <option v-for="(option, index) in item.options" :value="index" :key="option">
+            <select
+              v-model="conditionValues[item.name]"
+              :disabled="conditionDisabled(item)"
+              @change="onChange"
+            >
+              <option
+                v-for="(option, index) in item.options"
+                :value="index"
+                :key="option"
+              >
                 {{ displayOptionName(option) }}
               </option>
             </select>
@@ -42,10 +79,16 @@
       </fieldset>
       <template v-else>
         <div v-show="supporterVisible(supporter)" class="supporter-else">
-          <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
-          <label :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
-            :for="'supporter-else-' + supporter">
+          <input
+            class="hidden"
+            :id="'supporter-else-' + supporter"
+            type="checkbox"
+            v-model="supporterOpenClose[supporter]"
+          />
+          <label
+            :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
+            :for="'supporter-else-' + supporter"
+          >
             <span>{{ displayName(supporter) }}</span>
           </label>
         </div>
@@ -114,6 +157,7 @@ import {
   ステータスTEMPLATE,
   getChangeKind,
   makeDefaultBuildname,
+  makeBuildStorageKey,
 } from "@/input";
 import {
   CHARACTER_MASTER,
@@ -137,7 +181,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["update:team-option", 'update:buildname-selection'],
+  emits: ["update:team-option", "update:buildname-selection"],
   setup(props, context) {
     const {
       displayName,
@@ -282,14 +326,20 @@ export default defineComponent({
             additionalConditions.push(condition);
           }
           const changeKind = getChangeKind(damageDetailObj.種類 as string);
-          if (changeKind == 'STATUS' && statusChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+          if (
+            changeKind == "STATUS" &&
+            statusChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0
+          ) {
             statusChangeDetailObjArr.splice(
               statusChangeDetailObjArr.length,
               0,
               damageDetailObj
             );
           }
-          if (changeKind == 'TALENT' && talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0) {
+          if (
+            changeKind == "TALENT" &&
+            talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0
+          ) {
             talentChangeDetailObjArr.splice(
               talentChangeDetailObjArr.length,
               0,
@@ -484,10 +534,7 @@ export default defineComponent({
             let myNew数値 = myDetailObj.数値;
             let my上限 = myDetailObj.上限;
             if (myDetailObj.条件) {
-              supporter = myDetailObj.条件.substring(
-                0,
-                myDetailObj.条件.indexOf("*")
-              );
+              supporter = myDetailObj.条件.substring(0, myDetailObj.条件.indexOf("*"));
               if (supporter == props.character) continue;
               const number = checkConditionMatches(
                 myDetailObj.条件,
@@ -527,7 +574,7 @@ export default defineComponent({
             }
             for (const kind of kinds) {
               let tempKind = kind;
-              if (myDetailObj.対象) tempKind += '.' + myDetailObj.対象;
+              if (myDetailObj.対象) tempKind += "." + myDetailObj.対象;
               if (tempKind in workObj) {
                 workObj[tempKind] += myValue;
               } else {
@@ -603,17 +650,17 @@ export default defineComponent({
     };
 
     function convertBuildname(character: string, storageKey: string) {
-      const prefix = '構成_' + character;
+      const prefix = makeBuildStorageKey(character);
       if (storageKey == prefix) return makeDefaultBuildname(character);
-      return storageKey.replace(new RegExp('^' + prefix + '_'), '');
+      return storageKey.replace(new RegExp("^" + prefix + "_"), "");
     }
 
     const buildnameList = (character: string) => {
-      const re = new RegExp('^構成_' + character + '(_|$)');
-      const storageKeys = Object.keys(localStorage).filter(s => re.test(s));
-      const list = storageKeys.map(s => convertBuildname(character, s));
+      const re = new RegExp("^構成_" + character + "(_|$)");
+      const storageKeys = Object.keys(localStorage).filter((s) => re.test(s));
+      const list = storageKeys.map((s) => convertBuildname(character, s));
       const defaultBuildname = makeDefaultBuildname(character);
-      const result = list.filter(s => s != defaultBuildname).sort();
+      const result = list.filter((s) => s != defaultBuildname).sort();
       if (list.includes(defaultBuildname)) result.unshift(defaultBuildname);
       return result;
     };
@@ -624,7 +671,7 @@ export default defineComponent({
 
     const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
     const selectedBuildname = reactive({} as { [key: string]: string | null });
-    supporterKeyList.forEach(supporter => {
+    supporterKeyList.forEach((supporter) => {
       builddataSelectorVisible[supporter] = false;
       const list = buildnameList(supporter);
       if (list.length > 0) {
@@ -632,7 +679,7 @@ export default defineComponent({
       }
     });
     const buildnameSelectionOnChange = () => {
-      context.emit('update:buildname-selection', selectedBuildname);
+      context.emit("update:buildname-selection", selectedBuildname);
     };
 
     watch(props, async (newVal, oldVal) => {
@@ -731,7 +778,7 @@ label.condition {
   min-width: calc(100% / 3 - 1rem - 6px);
 }
 
-:disabled+label {
+:disabled + label {
   color: gray;
 }
 

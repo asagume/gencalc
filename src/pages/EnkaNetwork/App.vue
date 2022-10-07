@@ -16,7 +16,13 @@
         <form @submit.prevent="submit">
           <label>
             UID:
-            <input v-model="uid" type="text" maxlength="9" placeholder="ENTER UID" pattern="[0-9]+" />
+            <input
+              v-model="uid"
+              type="text"
+              maxlength="9"
+              placeholder="ENTER UID"
+              pattern="[0-9]+"
+            />
           </label>
           <button type="submit" :disabled="timer > 0">
             <span class="material-symbols-outlined"> send </span>
@@ -53,11 +59,18 @@
         </table>
 
         <ul>
-          <li class="character" v-for="(characterInfo, index) in characterInfoList" :key="index">
+          <li
+            class="character"
+            v-for="(characterInfo, index) in characterInfoList"
+            :key="index"
+          >
             <template v-if="characterInfo.characterMaster">
               <div class="character">
-                <img :class="'character ' + characterBgClass(characterInfo)" :src="characterImgSrc(characterInfo)"
-                  :alt="displayName(characterInfo.characterMaster.key)" />
+                <img
+                  :class="'character ' + characterBgClass(characterInfo)"
+                  :src="characterImgSrc(characterInfo)"
+                  :alt="displayName(characterInfo.characterMaster.key)"
+                />
                 <img class="vision" :src="visionImgSrc(characterInfo)" alt="vision" />
                 <div class="constellation" v-if="characterInfo.constellation">
                   {{ characterInfo.constellation }}
@@ -65,8 +78,16 @@
               </div>
               <div class="level">Lv.{{ characterInfo.level }}</div>
               <img class="weapon" :src="weaponImgSrc(characterInfo)" alt="weapon" />
-              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 0)" alt="artifact-set" />
-              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 1)" alt="artifact-set" />
+              <img
+                class="artifact-set"
+                :src="artifactSetImgSrc(characterInfo, 0)"
+                alt="artifact-set"
+              />
+              <img
+                class="artifact-set"
+                :src="artifactSetImgSrc(characterInfo, 1)"
+                alt="artifact-set"
+              />
             </template>
             <div v-if="false">
               {{ characterInfo.savedata }}
@@ -92,7 +113,8 @@
       《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
       <ol style="text-align: left">
         <li>
-          UIDを入力後、<span class="material-symbols-outlined"> send </span>をクリックしてください
+          UIDを入力後、<span class="material-symbols-outlined"> send </span
+          >をクリックしてください
         </li>
       </ol>
       <hr />
@@ -125,7 +147,12 @@ import {
   WEAPON_MASTER,
 } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { makeSharedata, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
+import {
+  makeSharedata,
+  pushBuildinfoToSession,
+  突破レベルレベルARRAY,
+  聖遺物サブ効果ARRAY,
+} from "@/input";
 import { deepcopy, overwriteObject } from "@/common";
 
 type THoyoAvatarMasterValue = {
@@ -163,13 +190,13 @@ type THoyoSkillMasterValue = {
   avatar_id: number;
   skill_list: [
     {
-      id: number,
-      group_id: number,
-      name: string,
+      id: number;
+      group_id: number;
+      name: string;
       icon: string | null;
-      max_level: number,
-    },
-  ],
+      max_level: number;
+    }
+  ];
 };
 type THoyoSkillMaster = THoyoSkillMasterValue[];
 
@@ -411,11 +438,17 @@ export default defineComponent({
       // 命ノ星座
       result["命ノ星座"] = characterInfo.constellation;
 
-      const skillList = HoyoSkillMaster.filter(s => s.avatar_id == characterInfo.avatarId)[0];
+      const skillList = HoyoSkillMaster.filter(
+        (s) => s.avatar_id == characterInfo.avatarId
+      )[0];
       if (skillList) {
-        const characterMasterDetail = await getCharacterMasterDetail(result["キャラクター"]);
-        characterInfo.skillLevelList.forEach(skillLevel => {
-          const skill = skillList.skill_list.filter(s => s.id == Number(skillLevel[0]))[0];
+        const characterMasterDetail = await getCharacterMasterDetail(
+          result["キャラクター"]
+        );
+        characterInfo.skillLevelList.forEach((skillLevel) => {
+          const skill = skillList.skill_list.filter(
+            (s) => s.id == Number(skillLevel[0])
+          )[0];
           if (skill) {
             if (characterMasterDetail.通常攻撃.名前 == skill.name) {
               result["通常攻撃レベル"] = skillLevel[1];
@@ -427,7 +460,7 @@ export default defineComponent({
           }
         });
         if (result["命ノ星座"] >= 3) {
-          const desc = characterMasterDetail.命ノ星座['3']?.説明;
+          const desc = characterMasterDetail.命ノ星座["3"]?.説明;
           if (desc) {
             if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
               result["元素スキルレベル"] += 3;
@@ -437,7 +470,7 @@ export default defineComponent({
           }
         }
         if (result["命ノ星座"] >= 5) {
-          const desc = characterMasterDetail.命ノ星座['5']?.説明;
+          const desc = characterMasterDetail.命ノ星座["5"]?.説明;
           if (desc) {
             if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
               result["元素スキルレベル"] += 3;
@@ -453,7 +486,7 @@ export default defineComponent({
       result["武器レベル"] =
         characterInfo.weapon.level +
         (突破レベルレベルARRAY[characterInfo.weapon.ascension][0] ==
-          characterInfo.weapon.level
+        characterInfo.weapon.level
           ? "+"
           : "");
       // 精錬ランク
@@ -503,7 +536,7 @@ export default defineComponent({
 
           const work: any[] = [];
           for (let i = 0; i < u.playerInfo.showAvatarInfoList.length; i++) {
-            work.push((await makeCharacterInfo(u, i)));
+            work.push(await makeCharacterInfo(u, i));
           }
           characterInfoList.splice(0, characterInfoList.length, ...work);
 
@@ -517,9 +550,12 @@ export default defineComponent({
     };
 
     const locate = (index: number) => {
-      const sharedata = makeSharedata(characterInfoList[index].savedata);
-      const encoded = encodeURI(sharedata).replace("+", "%2B");
-      window.open("./?allin=" + encoded, "_blank");
+      // const sharedata = makeSharedata(characterInfoList[index].savedata);
+      // const encoded = encodeURI(sharedata).replace("+", "%2B");
+      // window.open("./?allin=" + encoded, "_blank");
+      const savedata = characterInfoList[index].savedata;
+      pushBuildinfoToSession(savedata.キャラクター, undefined, savedata);
+      window.open("./", "_blank");
     };
 
     const save = (index: number) => {
