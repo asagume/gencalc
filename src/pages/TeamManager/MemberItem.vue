@@ -172,7 +172,7 @@ export default defineComponent({
         ? (ELEMENT_IMG_SRC as any)[characterMaster.value.元素]
         : IMG_SRC_DUMMY
     );
-    const constellation = computed(() => characterInput.命ノ星座);
+    const constellation = computed(() => (savedata.value ? savedata.value.命ノ星座 : ""));
     const imgWeaponSrc = computed(() =>
       weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY
     );
