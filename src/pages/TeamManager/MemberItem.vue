@@ -1,7 +1,11 @@
 <template>
   <div class="member">
     <div class="member-img" @click="characterOnClick">
-      <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
+      <img
+        :class="'character' + characterImgClass"
+        :src="characterImgSrc"
+        :alt="displayName(member.name)"
+      />
       <img class="vision" :src="visionImgSrc" alt="vision" />
       <div class="constellation" v-show="constellation">
         {{ constellation }}
@@ -15,22 +19,7 @@
       <img class="artifact-set" :src="imgArtifactSetSrc(0)" alt="artifact-set" />
       <img class="artifact-set" :src="imgArtifactSetSrc(1)" alt="artifact-set" />
     </div>
-    <div>
-      <span class="button material-symbols-outlined" @click="extraControl = 'buildname'">
-        manage_accounts
-      </span>
-      <span class="button material-symbols-outlined" @click="extraControl = 'locate'">
-        edit_note
-      </span>
-    </div>
     <div class="extra-control">
-      <div v-if="extraControl == 'buildname'">
-        <select v-model="buildname" @change="buildnameOnChange">
-          <option v-for="value in buildnames" :key="value" :value="value">
-            {{ value }}
-          </option>
-        </select>
-      </div>
       <div v-if="extraControl == 'locate'">
         <button type="button" @click="locate">open</button>
       </div>
@@ -172,7 +161,7 @@ export default defineComponent({
     const characterMaster = computed(() =>
       props.member.name
         ? (CHARACTER_MASTER[props.member.name as TCharacterKey] as TCharacterEntry) ??
-        undefined
+          undefined
         : undefined
     );
     const characterImgSrc = computed(
@@ -188,8 +177,11 @@ export default defineComponent({
         : IMG_SRC_DUMMY
     );
     const constellation = computed(() => characterInput.命ノ星座);
-    const imgWeaponSrc = computed(() => weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY);
-    const imgArtifactSetSrc = (index: number) => artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
+    const imgWeaponSrc = computed(() =>
+      weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY
+    );
+    const imgArtifactSetSrc = (index: number) =>
+      artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
 
     const characterOnClick = () => {
       context.emit("click:character");
@@ -231,11 +223,11 @@ export default defineComponent({
     });
 
     const artifactSetMasters = computed(() => {
-      const result: (TArtifactSet)[] = [];
+      const result: TArtifactSet[] = [];
       if (savedata.value) {
         for (let i = 0; i < 2; i++) {
-          const key = '聖遺物セット効果' + (i + 1);
-          let value = savedata.value[key] ?? 'NONE';
+          const key = "聖遺物セット効果" + (i + 1);
+          let value = savedata.value[key] ?? "NONE";
           result.push((ARTIFACT_SET_MASTER as any)[value]);
         }
       }
