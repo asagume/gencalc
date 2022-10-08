@@ -3,13 +3,24 @@
     <div class="pane1">
       <div class="display-stat-select">
         <label v-for="item in DISPLAY_STAT_LIST" :key="item[1]">
-          <input class="hidden" type="radio" name="display-stat" v-model="displayStat" :value="item[0]" />
-          <span>{{item[1]}}</span>
+          <input
+            class="hidden"
+            type="radio"
+            name="display-stat"
+            v-model="displayStat"
+            :value="item[0]"
+          />
+          <span>{{ item[1] }}</span>
         </label>
       </div>
       <label class="number-of-teams">
         Number of teams
-        <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" @change="numberOfTeamsOnChange" />
+        <input
+          type="number"
+          :min="NUMBER_OF_TEAMS"
+          v-model="numberOfTeams"
+          @change="numberOfTeamsOnChange"
+        />
       </label>
       <div>
         <button type="button" @click="save">Save</button>
@@ -21,21 +32,29 @@
     <div class="pane2">
       <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
         <template #item="{ element }">
-          <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-            @click="teamOnClick(element.id)" @change:name="teamNameOnChange" @change:buildname="buildnameOnChange"
-            @click:character="characterOnClick(element)" />
+          <TeamItem
+            :team="element"
+            :selected="teamSelected(element.id)"
+            :displayStat="displayStat"
+            @click="teamOnClick(element.id)"
+            @change:name="teamNameOnChange"
+            @change:buildname="buildnameOnChange"
+            @click:character="characterOnClick(element)"
+          />
         </template>
       </draggable>
     </div>
 
-    <CharacterSelectModal :visible="characterSelectVisible" :memberNames="memberNames"
-      @click:cancel="characterSelectVisible=false" @click:ok="updateCharacters" />
+    <CharacterSelectModal
+      :visible="characterSelectVisible"
+      :memberNames="memberNames"
+      @click:cancel="characterSelectVisible = false"
+      @click:ok="updateCharacters"
+    />
 
-    <div class="pane3">
-    </div>
+    <div class="pane3"></div>
 
-    <div class="pane4">
-    </div>
+    <div class="pane4"></div>
 
     <div class="footer"></div>
   </div>
@@ -57,7 +76,7 @@ export default defineComponent({
   components: {
     draggable,
     TeamItem,
-    CharacterSelectModal
+    CharacterSelectModal,
   },
   setup() {
     const { displayName } = CompositionFunction();
@@ -65,15 +84,15 @@ export default defineComponent({
     const characterSelectVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const DISPLAY_STAT_LIST = [
-      ['レベル', 'Lv.'],
-      ['HP上限', 'Max HP'],
-      ['攻撃力', 'ATK'],
-      ['防御力', 'DEF'],
-      ['元素熟知', 'EM'],
-      ['会心率/ダメージ', 'CRIT'],
-      ['元素チャージ効率', 'ER'],
+      ["レベル", "Lv."],
+      ["HP上限", "Max HP"],
+      ["攻撃力", "ATK"],
+      ["防御力", "DEF"],
+      ["元素熟知", "EM"],
+      ["会心率/ダメージ", "CRIT"],
+      ["元素チャージ効率", "ER"],
     ];
-    const displayStat = ref('元素チャージ効率');
+    const displayStat = ref("元素チャージ効率");
 
     const selectedTeamId = ref(0);
     const teamSelected = (index: number) => index == selectedTeamId.value;
@@ -84,13 +103,13 @@ export default defineComponent({
         name: "",
         buildname: undefined,
         savedata: undefined,
-      }
+      };
     }
 
     function makeBlankTeam(index: number) {
       const team: TTeam = {
         id: index,
-        name: 'チーム' + (index + 1),
+        name: "チーム" + (index + 1),
         members: [] as TMember[],
       };
       for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
@@ -100,14 +119,14 @@ export default defineComponent({
     }
 
     function initializeMember(member: TMember) {
-      member.name = '';
+      member.name = "";
       member.buildname = undefined;
       member.savedata = undefined;
     }
 
     function initializeTeam(team: TTeam) {
-      team.name = '';
-      team.members.forEach(member => {
+      team.name = "チーム" + (team.id + 1);
+      team.members.forEach((member) => {
         initializeMember(member);
       });
     }
@@ -180,9 +199,9 @@ export default defineComponent({
     };
 
     const memberNames = computed(() => {
-      let result = Array(NUMBER_OF_MEMBERS).fill('');
-      const team = teams.filter(s => s.id == selectedTeamId.value)[0];
-      if (team) result = team.members.map(s => s.name);
+      let result = Array(NUMBER_OF_MEMBERS).fill("");
+      const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
+      if (team) result = team.members.map((s) => s.name);
       return result;
     });
 
@@ -195,7 +214,7 @@ export default defineComponent({
             if (members[i].name != characters[i]) {
               members[i].name = characters[i];
               members[i].buildname = makeDefaultBuildname(members[i].name);
-              members[i].savedata = undefined;  // TODO
+              members[i].savedata = undefined; // TODO
             }
           }
         }
@@ -212,16 +231,16 @@ export default defineComponent({
     };
 
     const teamNameOnChange = (id: number, name: string) => {
-      const team = teams.filter(s => s.id == id)[0];
+      const team = teams.filter((s) => s.id == id)[0];
       if (team) {
         team.name = name;
       }
-    }
+    };
 
     const buildnameOnChange = (teamId: number, memberId: number, buildname: string) => {
-      const team = teams.filter(s => s.id == teamId)[0];
+      const team = teams.filter((s) => s.id == teamId)[0];
       if (team) {
-        const member = team.members.filter(s => s.id == memberId)[0];
+        const member = team.members.filter((s) => s.id == memberId)[0];
         if (member) {
           member.buildname = buildname;
         }
@@ -288,7 +307,7 @@ div.team {
 }
 </style>
 <style scoped>
-input[type="radio"]+span {
+input[type="radio"] + span {
   display: inline-block;
   width: 8rem;
   font-size: 2rem;
@@ -298,7 +317,7 @@ input[type="radio"]+span {
   margin: 2px;
 }
 
-input[type="radio"]:checked+span {
+input[type="radio"]:checked + span {
   background-color: whitesmoke;
 }
 
