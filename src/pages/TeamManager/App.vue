@@ -14,7 +14,6 @@
         </label>
         <div class="data-control">
           <button type="button" :disabled="saveDisabled" @click="saveOnClick">Save</button>
-          <button type="button" @click="loadOnClick">Reload</button>
           <button type="button" @click="clearOnClick">Clear</button>
         </div>
       </fieldset>
