@@ -1,34 +1,30 @@
 <template>
   <div class="member">
     <div class="member-img" @click="characterOnClick">
-      <img
-        :class="'character' + characterImgClass"
-        :src="characterImgSrc"
-        :alt="displayName(member.name)"
-      />
+      <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
       <img class="vision" :src="visionImgSrc" alt="vision" />
       <div class="constellation" v-show="constellation">
         {{ constellation }}
       </div>
     </div>
-    <div>
+    <div class="stat-value" v-if="displayStat">
       {{ statValue }}
     </div>
-    <div>
+    <div v-if="showEquipment">
       <img class="weapon" :src="imgWeaponSrc" alt="weapon" />
       <img class="artifact-set" :src="imgArtifactSetSrc(0)" alt="artifact-set" />
       <img class="artifact-set" :src="imgArtifactSetSrc(1)" alt="artifact-set" />
     </div>
     <div class="extra-control">
-      <div v-if="extraControl == 'locate'">
-        <button type="button" @click="locate">open</button>
+      <div v-if="viewable && extraControl == 'locate'">
+        <button type="button" @click="locate">view</button>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { deepcopy, overwriteObject } from "@/common";
+import { deepcopy } from "@/common";
 import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
   CHARACTER_INPUT_TEMPLATE,
@@ -56,12 +52,8 @@ import {
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
   TArtifactSet,
-  TCharacterDetail,
   TCharacterEntry,
   TCharacterKey,
-  TWeaponDetail,
-  TWeaponKey,
-  TWeaponTypeKey,
   WEAPON_MASTER,
 } from "@/master";
 import { computed, defineComponent, PropType, ref, watch } from "vue";
@@ -82,6 +74,9 @@ export default defineComponent({
   props: {
     member: { type: Object as PropType<TMember>, required: true },
     displayStat: { type: String },
+    showEquipment: { type: Boolean },
+    viewable: { type: Boolean },
+    tags: { type: Array as PropType<any[]> },
   },
   emits: ["click:character", "change:buildname"],
   setup(props, context) {
@@ -108,28 +103,15 @@ export default defineComponent({
     });
 
     const setupMemberStats = async () => {
-      overwriteObject(characterInput, CHARACTER_INPUT_TEMPLATE);
-      overwriteObject(artifactDetailInput, ARTIFACT_DETAIL_INPUT_TEMPLATE);
-      overwriteObject(conditionInput, CONDITION_INPUT_TEMPLATE);
-      overwriteObject(optionInput, OPTION_INPUT_TEMPLATE);
-      overwriteObject(statsInput, STATS_INPUT_TEMPLATE);
+      if (!props.member.name) return;
 
-      if (props.member.name) {
-        characterInput.character = props.member.name as TCharacterKey;
-        characterInput.characterMaster = await getCharacterMasterDetail(
-          characterInput.character
-        );
-      } else {
-        characterInput.characterMaster = {} as TCharacterDetail;
-        characterInput.weaponMaster = {} as TWeaponDetail;
-        return;
-      }
+      characterInput.character = props.member.name as TCharacterKey;
+      characterInput.characterMaster = await getCharacterMasterDetail(
+        characterInput.character
+      );
 
       const builddata = savedata.value;
-      if (!builddata) {
-        characterInput.weaponMaster = {} as TWeaponDetail;
-        return;
-      }
+      if (!builddata) return;
 
       await loadRecommendation(
         characterInput,
@@ -138,6 +120,14 @@ export default defineComponent({
         optionInput,
         builddata
       );
+
+      conditionInput.checkboxList.forEach(entry => {
+        conditionInput.conditionValues[entry.name] = false;
+      });
+      conditionInput.selectList.forEach(entry => {
+        conditionInput.conditionValues[entry.name] = 0;
+      });
+
       makeDamageDetailObjArrObjCharacter(characterInput);
       makeDamageDetailObjArrObjWeapon(characterInput);
       makeDamageDetailObjArrObjArtifactSets(characterInput);
@@ -155,13 +145,16 @@ export default defineComponent({
         optionInput
       );
 
+      console.log(props.member.name, props.member.buildname, props.displayStat, statValue.value);
+
       return statsInput.statsObj;
     };
+    setupMemberStats();
 
     const characterMaster = computed(() =>
       props.member.name
         ? (CHARACTER_MASTER[props.member.name as TCharacterKey] as TCharacterEntry) ??
-          undefined
+        undefined
         : undefined
     );
     const characterImgSrc = computed(
@@ -235,15 +228,17 @@ export default defineComponent({
     });
 
     const statValue = computed(() => {
-      let result = "0";
-      let stat = props.displayStat;
-      if (stat) {
-        if (stat === "会心率/ダメージ") {
-          result += displayStatValue("会心率", statsInput.statsObj["会心率"]);
-          result += "/";
-          result += displayStatValue("会心ダメージ", statsInput.statsObj["会心ダメージ"]);
-        } else {
-          result += displayStatValue(stat, statsInput.statsObj[stat]);
+      let result = "-";
+      if (savedata.value) {
+        let stat = props.displayStat;
+        if (stat) {
+          if (stat === "会心率/ダメージ") {
+            result = displayStatValue("会心率", statsInput.statsObj["会心率"]);
+            result += "/";
+            result += displayStatValue("会心ダメージ", statsInput.statsObj["会心ダメージ"]);
+          } else {
+            result = displayStatValue(stat, statsInput.statsObj[stat]);
+          }
         }
       }
       return result;
@@ -313,5 +308,11 @@ img.artifact-set {
   height: calc(100% / 3 - 4px);
   border: 2px solid silver;
   border-radius: 50%;
+}
+
+div.stat-value {
+  font-size: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 </style>

@@ -2,16 +2,10 @@
   <div :class="'team' + selectedClass">
     <div class="title">
       <label class="name">
-        <span class="handle">◇</span>
+        <span class="handle">◆</span>
         <span v-if="editable">
-          <input
-            type="text"
-            minlength="1"
-            maxlength="16"
-            v-model="name"
-            placeholder="INPUT TEAM NAME"
-            @change="nameOnChange"
-          />
+          <input type="text" minlength="1" maxlength="16" v-model="name" placeholder="INPUT TEAM NAME"
+            @change="nameOnChange" />
           <span class="button material-symbols-outlined" @click="editable = false">
             edit_off
           </span>
@@ -24,24 +18,15 @@
         </span>
       </label>
       <div class="element-resonance">
-        <img
-          class="element-resonance"
-          v-for="src in resonanceElementImgSrcs"
-          :key="src"
-          :src="src"
-          alt="resonance"
-        />
+        <img class="element-resonance" v-for="src in resonanceElementImgSrcs" :key="src" :src="src" alt="resonance" />
       </div>
     </div>
     <div class="members">
       <table>
         <tr>
           <td v-for="member in team.members" :key="member.id">
-            <MemberItem
-              :member="member"
-              @click:character="characterOnClick"
-              @change:buildname="changeBuildname"
-            />
+            <MemberItem :member="member" :displayStat="displayStat" :showEquipment="true" :viewable="true"
+              @click:character="characterOnClick" @change:buildname="changeBuildname" />
           </td>
         </tr>
       </table>
@@ -183,6 +168,7 @@ div.team {
   max-width: 342px;
   padding: 5px;
   border: 4px double silver;
+  border-radius: 10px;
   margin-bottom: 10px;
 }
 
@@ -190,6 +176,10 @@ div.title {
   position: relative;
   text-align: left;
   height: 4.5rem;
+}
+
+.handle {
+  color: darkorange;
 }
 
 div.team.selected {

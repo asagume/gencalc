@@ -1,41 +1,38 @@
 <template>
-  <teleport to="body">
-    <div class="modal character-select" v-show="visible">
-      <div class="modal-content">
-        <CharacterSelect
-          :visible="true"
-          :characters="characters"
-          @update:characters="updateCharacters"
-        />
+  <CharacterSelect :visible="true" :characters="characters" @update:characters="updateCharacters" />
 
-        <div class="tags">
-          <span class="tag">MAIN DPS</span>
-          <span class="tag">SUB DPS</span>
-          <span class="tag">SUPPORTER</span>
-          <span class="tag">FREE</span>
-        </div>
+  <hr />
 
-        <div>
-          <div v-for="character in characters" :key="character">{{ character }}</div>
-        </div>
+  <div class="tags">
+    <span class="tag">MAIN DPS</span>
+    <span class="tag">SUB DPS</span>
+    <span class="tag">SUPPORTER</span>
+    <span class="tag">FREE</span>
+  </div>
 
-        <div>
-          <button type="button" @click="cancelOnClick">cancel</button>
-          <button type="button" @click="okOnClick">ok</button>
-        </div>
-      </div>
+  <div>
+    <div class="member" v-for="member in members" :key="member.id">
+      <MemberItem :member="member" />
     </div>
-  </teleport>
+  </div>
+
+  <div>
+    <button type="button" @click="cancelOnClick">cancel</button>
+    <button type="button" @click="okOnClick">ok</button>
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from "vue";
+import { computed, defineComponent, PropType, reactive, watch } from "vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
+import { TMember } from "./team";
+import MemberItem from "./MemberItem.vue";
 
 export default defineComponent({
   name: "CharacterSelectModal",
   components: {
     CharacterSelect,
-  },
+    MemberItem
+},
   props: {
     visible: { type: Boolean, required: true },
     memberNames: { type: Array as PropType<string[]>, required: true },
@@ -58,6 +55,20 @@ export default defineComponent({
       characters.splice(0, characters.length, ...newCharacters);
     };
 
+    const members = computed(() => {
+      const result: TMember[] = [];
+      let id = 0;
+      characters.forEach(character => {
+        result.push({
+          id: id++,
+          name: character,
+          buildname: undefined,
+          savedata: undefined,
+        });
+      });
+      return result;
+    });
+
     const cancelOnClick = () => {
       context.emit("click:cancel");
     };
@@ -68,6 +79,7 @@ export default defineComponent({
 
     return {
       characters,
+      members,
 
       updateCharacters,
       cancelOnClick,
@@ -101,6 +113,7 @@ export default defineComponent({
   border: 3px double gold;
   border-radius: 20px;
   z-index: 1000;
+  overflow-y: auto;
 }
 
 button {
@@ -111,11 +124,17 @@ button {
 
 span.tag {
   display: inline-block;
-  width: 80px;
-  height: 15px;
-  font-size: 12px;
+  width: 70px;
+  height: 12px;
+  font-size: 10px;
+  background-color: dimgray;
   border: 2px solid whitesmoke;
   border-radius: 3px;
   margin: 1px 3px;
+}
+
+div.member {
+  display: inline-block;
+  width: 90px;
 }
 </style>

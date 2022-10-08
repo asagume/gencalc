@@ -1,62 +1,48 @@
 <template>
   <div class="base-container">
     <div class="pane1">
-      <div class="display-stat-select">
-        <label v-for="item in DISPLAY_STAT_LIST" :key="item[1]">
-          <input
-            class="hidden"
-            type="radio"
-            name="display-stat"
-            v-model="displayStat"
-            :value="item[0]"
-          />
-          <span>{{ item[1] }}</span>
+      <fieldset>
+        <div class="display-stat-select">
+          <label class="display-stat" v-for="item in DISPLAY_STAT_LIST" :key="item[1]">
+            <input class="hidden" type="radio" name="display-stat" v-model="displayStat" :value="item[0]" />
+            <span>{{ item[1] }}</span>
+          </label>
+        </div>
+        <label class="number-of-teams">
+          Number of teams
+          <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" @change="numberOfTeamsOnChange" />
         </label>
-      </div>
-      <label class="number-of-teams">
-        Number of teams
-        <input
-          type="number"
-          :min="NUMBER_OF_TEAMS"
-          v-model="numberOfTeams"
-          @change="numberOfTeamsOnChange"
-        />
-      </label>
-      <div class="data-control">
-        <button type="button" :disabled="saveDisabled"  @click="saveOnClick">Save</button>
-        <button type="button" @click="loadOnClick">Reload</button>
-        <button type="button" @click="clearOnClick">Clear</button>
-      </div>
+        <div class="data-control">
+          <button type="button" :disabled="saveDisabled" @click="saveOnClick">Save</button>
+          <button type="button" @click="loadOnClick">Reload</button>
+          <button type="button" @click="clearOnClick">Clear</button>
+        </div>
+      </fieldset>
     </div>
 
     <div class="pane2">
-      <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
-        <template #item="{ element }">
-          <TeamItem
-            :team="element"
-            :selected="teamSelected(element.id)"
-            :displayStat="displayStat"
-            @click="teamOnClick(element.id)"
-            @change:name="teamNameOnChange"
-            @change:buildname="buildnameOnChange"
-            @click:character="characterOnClick(element)"
-          />
-        </template>
-      </draggable>
+      <div v-show="!characterSelectVisible">
+        <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
+          <template #item="{ element }">
+            <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
+              @click="teamOnClick(element.id)" @change:name="teamNameOnChange" @change:buildname="buildnameOnChange"
+              @click:character="characterOnClick(element)" />
+          </template>
+        </draggable>
+      </div>
+      <div v-show="characterSelectVisible">
+        <CharacterSelectModal :visible="characterSelectVisible" :memberNames="memberNames"
+          @click:cancel="characterSelectVisible = false" @click:ok="updateCharacters" />
+      </div>
     </div>
-
-    <CharacterSelectModal
-      :visible="characterSelectVisible"
-      :memberNames="memberNames"
-      @click:cancel="characterSelectVisible = false"
-      @click:ok="updateCharacters"
-    />
 
     <div class="pane3"></div>
 
     <div class="pane4"></div>
 
-    <div class="footer"></div>
+    <div class="footer">
+      <hr />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -84,6 +70,7 @@ export default defineComponent({
     const characterSelectVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const DISPLAY_STAT_LIST = [
+      ["", "None"],
       ["レベル", "Lv."],
       ["HP上限", "Max HP"],
       ["攻撃力", "ATK"],
@@ -92,7 +79,7 @@ export default defineComponent({
       ["会心率/ダメージ", "CRIT"],
       ["元素チャージ効率", "ER"],
     ];
-    const displayStat = ref("元素チャージ効率");
+    const displayStat = ref("");
 
     const selectedTeamId = ref(0);
     const teamSelected = (index: number) => index == selectedTeamId.value;
@@ -306,27 +293,24 @@ export default defineComponent({
     "footer";
 }
 
-.modals {
-  position: relative;
-}
-
 div.team {
   width: calc(100% - 4px);
   margin: 3px 2px;
 }
 </style>
 <style scoped>
-input[type="radio"] + span {
+input[type="radio"]+span {
   display: inline-block;
-  width: 8rem;
-  font-size: 2rem;
+  width: 45px;
+  font-size: 11px;
   color: black;
   background-color: gray;
   border-radius: 5px;
-  margin: 2px;
+  padding: 2px 0;
+  margin: 2px 1px;
 }
 
-input[type="radio"]:checked + span {
+input[type="radio"]:checked+span {
   background-color: whitesmoke;
 }
 
