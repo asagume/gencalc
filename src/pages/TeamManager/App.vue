@@ -4,24 +4,13 @@
       <fieldset>
         <div class="display-stat-select">
           <label class="display-stat" v-for="item in DISPLAY_STAT_LIST" :key="item[1]">
-            <input
-              class="hidden"
-              type="radio"
-              name="display-stat"
-              v-model="displayStat"
-              :value="item[0]"
-            />
+            <input class="hidden" type="radio" name="display-stat" v-model="displayStat" :value="item[0]" />
             <span>{{ item[1] }}</span>
           </label>
         </div>
         <label class="number-of-teams">
           Number of teams
-          <input
-            type="number"
-            :min="NUMBER_OF_TEAMS"
-            v-model="numberOfTeams"
-            @change="numberOfTeamsOnChange"
-          />
+          <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" @change="numberOfTeamsOnChange" />
         </label>
         <div class="data-control">
           <button type="button" :disabled="saveDisabled" @click="saveOnClick">
@@ -36,25 +25,15 @@
       <div v-show="!characterSelectVisible">
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
-            <TeamItem
-              :team="element"
-              :selected="teamSelected(element.id)"
-              :displayStat="displayStat"
-              @click="teamOnClick(element.id)"
-              @change:name="teamNameOnChange"
-              @change:buildname="buildnameOnChange"
-              @click:character="characterOnClick(element)"
-            />
+            <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
+              @click="teamOnClick(element.id)" @change:name="teamNameOnChange" @change:buildname="buildnameOnChange"
+              @click:character="characterOnClick(element)" />
           </template>
         </draggable>
       </div>
       <div v-show="characterSelectVisible">
-        <CharacterSelectModal
-          :visible="characterSelectVisible"
-          :members="forcusedMembers"
-          @click:cancel="characterSelectVisible = false"
-          @click:ok="updateCharacters"
-        />
+        <CharacterSelectModal :visible="characterSelectVisible" :members="forcusedMembers"
+          @click:cancel="characterSelectVisible = false" @click:ok="updateCharacters" />
       </div>
     </div>
 
@@ -64,6 +43,13 @@
 
     <div class="footer">
       <hr />
+      <h2>チーム編成 Ver.0.1.0</h2>
+      <ul class="usage">
+        <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
+      </ul>
+      <p>
+        <a href="./">げんかるく - 原神ダメージシミュレーター</a>
+      </p>
     </div>
   </div>
 </template>
@@ -325,9 +311,13 @@ div.team {
   width: calc(100% - 4px);
   margin: 3px 2px;
 }
+
+.footer {
+  padding-bottom: 20px;
+}
 </style>
 <style scoped>
-input[type="radio"] + span {
+input[type="radio"]+span {
   display: inline-block;
   width: 45px;
   font-size: 11px;
@@ -338,7 +328,7 @@ input[type="radio"] + span {
   margin: 2px 1px;
 }
 
-input[type="radio"]:checked + span {
+input[type="radio"]:checked+span {
   background-color: whitesmoke;
 }
 
@@ -349,5 +339,9 @@ label.number-of-teams input[type="number"] {
 
 .data-control button {
   width: 11rem;
+}
+
+ul.usage {
+  text-align: left;
 }
 </style>
