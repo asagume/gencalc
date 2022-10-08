@@ -319,7 +319,7 @@ img.weapon,
 img.artifact-set {
   width: calc(100% / 3 - 4px);
   height: calc(100% / 3 - 4px);
-  border: 2px solid whitesmoke;
+  border: 2px solid silver;
   border-radius: 50%;
 }
 </style>

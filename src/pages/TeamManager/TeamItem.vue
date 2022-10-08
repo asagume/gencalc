@@ -6,6 +6,8 @@
         <span v-if="editable">
           <input
             type="text"
+            minlength="1"
+            maxlength="16"
             v-model="name"
             placeholder="INPUT TEAM NAME"
             @change="nameOnChange"
@@ -49,7 +51,7 @@
 <script lang="ts">
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey } from "@/master";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref, watch } from "vue";
 import { characterMaster, TTeam } from "./team";
 import MemberItem from "./MemberItem.vue";
 import { TStats } from "@/input";
@@ -69,11 +71,15 @@ export default defineComponent({
   setup(props, context) {
     const { displayName } = CompositionFunction();
 
+    watch(props, (newVal) => {
+      name.value = newVal.team.name;
+    });
+
     const selectedClass = computed(() => (props.selected ? " selected" : ""));
     const editable = ref(false);
     const name = ref(props.team.name);
     const nameOnChange = () => {
-      context.emit("change:name", name);
+      context.emit("change:name", props.team.id, name);
     };
 
     const elementalResonance = computed(() => {
@@ -176,7 +182,7 @@ div.team {
   display: inline-block;
   max-width: 342px;
   padding: 5px;
-  border: 4px double whitesmoke;
+  border: 4px double silver;
   margin-bottom: 10px;
 }
 

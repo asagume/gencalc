@@ -22,10 +22,10 @@
           @change="numberOfTeamsOnChange"
         />
       </label>
-      <div>
-        <button type="button" @click="save">Save</button>
-        <button type="button" @click="load">Reset</button>
-        <button type="button" @click="clear">Clear</button>
+      <div class="data-control">
+        <button type="button" :disabled="saveDisabled"  @click="saveOnClick">Save</button>
+        <button type="button" @click="loadOnClick">Reload</button>
+        <button type="button" @click="clearOnClick">Clear</button>
       </div>
     </div>
 
@@ -147,23 +147,31 @@ export default defineComponent({
       selectedTeamId.value = index;
     };
 
-    const clear = () => {
+    const clearOnClick = () => {
       teams.forEach((team) => {
         initializeTeam(team);
       });
     };
 
-    const save = () => {
+    const savedataStr = computed(() => {
       const work: TTeam[] = deepcopy(teams);
       work.forEach((team) => {
         team.members.forEach((member) => {
           member.savedata = undefined;
         });
       });
-      localStorage.setItem("teams", JSON.stringify(work));
+      return JSON.stringify(work);
+    });
+    const saveddataStr = ref('');
+
+    const saveOnClick = () => {
+      localStorage.setItem("teams", savedataStr.value);
+      saveddataStr.value = savedataStr.value;
     };
 
-    const load = () => {
+    const saveDisabled = computed(() => savedataStr.value == saveddataStr.value);
+
+    const loadOnClick = () => {
       const storageValue = localStorage.getItem("teams");
       if (storageValue) {
         const work = JSON.parse(storageValue);
@@ -183,7 +191,7 @@ export default defineComponent({
         }
       }
     };
-    load();
+    loadOnClick();
 
     const numberOfTeamsOnChange = () => {
       if (numberOfTeams.value > teams.length) {
@@ -258,9 +266,10 @@ export default defineComponent({
       DISPLAY_STAT_LIST,
       displayStat,
 
-      clear,
-      save,
-      load,
+      clearOnClick,
+      saveOnClick,
+      loadOnClick,
+      saveDisabled,
 
       teamSelected,
       teams,
@@ -322,6 +331,11 @@ input[type="radio"]:checked + span {
 }
 
 label.number-of-teams input[type="number"] {
-  width: 5rem;
+  padding-left: 1rem;
+  width: 6rem;
+}
+
+.data-control button {
+  width: 11rem;
 }
 </style>
