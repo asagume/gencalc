@@ -193,9 +193,17 @@ export default defineComponent({
             for (let j = 0; j < members.length; j++) {
               if (work[i].members[j]) {
                 members[j].name = work[i].members[j].name;
-                members[j].buildname = work[i].members[j].buildname;
+                if (work[i].members[j].buildname) {
+                  members[j].buildname = work[i].members[j].buildname;
+                } else {
+                  members[j].buildname = undefined;
+                }
                 members[j].savedata = undefined; // TODO
-                members[j].tags = work[i].members[j].tags;
+                if (work[i].members[j].tags) {
+                  members[j].tags = work[i].members[j].tags;
+                } else {
+                  members[j].tags = [] as string[];
+                }
               }
             }
           }
