@@ -10,7 +10,10 @@
       <div class="constellation" v-show="constellation">
         {{ constellation }}
       </div>
-      <div class="tag-0" v-if="member.tags[0]">{{ member.tags[0] }}</div>
+      <div class="tag tag-3" v-if="member.tags[3]">{{ member.tags[3] }}</div>
+      <div class="tag tag-2" v-if="member.tags[2]">{{ member.tags[2] }}</div>
+      <div class="tag tag-1" v-if="member.tags[1]">{{ member.tags[1] }}</div>
+      <div class="tag tag-0" v-if="member.tags[0]">{{ member.tags[0] }}</div>
     </div>
     <div class="stat-value" v-if="displayStat">
       {{ statValue }}
@@ -305,10 +308,11 @@ div.constellation {
   right: 2px;
   top: 2px;
   background-color: black;
-  opacity: 50%;
+  border-radius: 50%;
+  opacity: 75%;
 }
 
-div.tag-0 {
+div.tag {
   position: absolute;
   left: 50%;
   bottom: 1px;
@@ -320,6 +324,22 @@ div.tag-0 {
   border: 2px solid whitesmoke;
   border-radius: 3px;
   padding-top: 1px;
+}
+
+div.tag-0 {
+  bottom: 1px;
+}
+
+div.tag-1 {
+  bottom: 19px;
+}
+
+div.tag-2 {
+  bottom: 37px;
+}
+
+div.tag-3 {
+  bottom: 55px;
 }
 
 img.weapon,

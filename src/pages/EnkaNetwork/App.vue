@@ -148,7 +148,6 @@ import {
 } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import {
-  makeSharedata,
   pushBuildinfoToSession,
   突破レベルレベルARRAY,
   聖遺物サブ効果ARRAY,
