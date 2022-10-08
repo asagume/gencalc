@@ -1,11 +1,7 @@
 <template>
   <div class="member">
     <div class="member-img" @click="characterOnClick">
-      <img
-        :class="'character' + characterImgClass"
-        :src="characterImgSrc"
-        :alt="displayName(member.name)"
-      />
+      <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
       <img class="vision" :src="visionImgSrc" alt="vision" />
       <div class="constellation" v-show="constellation">
         {{ constellation }}
@@ -70,10 +66,14 @@ import {
   getCharacterMasterDetail,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
+  TArtifactSet,
   TCharacterDetail,
   TCharacterEntry,
   TCharacterKey,
   TWeaponDetail,
+  TWeaponKey,
+  TWeaponTypeKey,
+  WEAPON_MASTER,
 } from "@/master";
 import { computed, defineComponent, PropType, ref, watch } from "vue";
 import {
@@ -172,7 +172,7 @@ export default defineComponent({
     const characterMaster = computed(() =>
       props.member.name
         ? (CHARACTER_MASTER[props.member.name as TCharacterKey] as TCharacterEntry) ??
-          undefined
+        undefined
         : undefined
     );
     const characterImgSrc = computed(
@@ -188,17 +188,8 @@ export default defineComponent({
         : IMG_SRC_DUMMY
     );
     const constellation = computed(() => characterInput.命ノ星座);
-    const imgWeaponSrc = computed(
-      () => characterInput.weaponMaster?.icon_url ?? IMG_SRC_DUMMY
-    );
-    const imgArtifactSetSrc = (index: number) => {
-      let result = IMG_SRC_DUMMY;
-      const artifactSet = characterInput.artifactSets[index];
-      if (artifactSet && artifactSet in ARTIFACT_SET_MASTER) {
-        result = (ARTIFACT_SET_MASTER as any)[artifactSet].icon_url;
-      }
-      return result;
-    };
+    const imgWeaponSrc = computed(() => weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY);
+    const imgArtifactSetSrc = (index: number) => artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
 
     const characterOnClick = () => {
       context.emit("click:character");
@@ -228,8 +219,31 @@ export default defineComponent({
       return result;
     });
 
+    const weaponMaster = computed(() => {
+      let result = undefined;
+      if (savedata.value) {
+        const weapon = savedata.value.武器;
+        if (weapon && characterMaster.value) {
+          result = (WEAPON_MASTER as any)[characterMaster.value.武器][weapon];
+        }
+      }
+      return result;
+    });
+
+    const artifactSetMasters = computed(() => {
+      const result: (TArtifactSet)[] = [];
+      if (savedata.value) {
+        for (let i = 0; i < 2; i++) {
+          const key = '聖遺物セット効果' + (i + 1);
+          let value = savedata.value[key] ?? 'NONE';
+          result.push((ARTIFACT_SET_MASTER as any)[value]);
+        }
+      }
+      return result;
+    });
+
     const statValue = computed(() => {
-      let result = "";
+      let result = "0";
       let stat = props.displayStat;
       if (stat) {
         if (stat === "会心率/ダメージ") {

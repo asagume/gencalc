@@ -172,6 +172,10 @@ div.selection-number {
     position: absolute;
     right: 3px;
     top: 3px;
+    background-color: black;
+    padding: 1px 8px;
+    opacity: 75%;
+    border-radius: 50%;
 }
 
 img.filter {

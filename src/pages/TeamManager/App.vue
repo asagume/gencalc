@@ -28,14 +28,8 @@
       </draggable>
     </div>
 
-    <teleport to="body">
-      <div class="modal character-select" v-show="characterSelectVisible">
-        <div class="modal-content">
-          <CharacterSelect :visible="true" :characters="memberNames" @update:characters="updateCharacters" />
-          <button type="button" @click="characterSelectVisible = false">hide</button>
-        </div>
-      </div>
-    </teleport>
+    <CharacterSelectModal :visible="characterSelectVisible" :memberNames="memberNames"
+      @click:cancel="characterSelectVisible=false" @click:ok="updateCharacters" />
 
     <div class="pane3">
     </div>
@@ -50,11 +44,11 @@
 import draggable from "vuedraggable";
 import { computed, defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import CharacterSelect from "@/components/CharacterSelect.vue";
 import { makeDefaultBuildname } from "@/input";
 import { deepcopy } from "@/common";
 import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from "./team";
 import TeamItem from "./TeamItem.vue";
+import CharacterSelectModal from "./CharacterSelectModal.vue";
 
 let memberId = 1;
 
@@ -62,8 +56,8 @@ export default defineComponent({
   name: "TeamManager",
   components: {
     draggable,
-    CharacterSelect,
     TeamItem,
+    CharacterSelectModal
   },
   setup() {
     const { displayName } = CompositionFunction();
@@ -96,7 +90,7 @@ export default defineComponent({
     function makeBlankTeam(index: number) {
       const team: TTeam = {
         id: index,
-        name: index < 4 ? 'チーム' + (index + 1) : "待機状態のチーム",
+        name: 'チーム' + (index + 1),
         members: [] as TMember[],
       };
       for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
@@ -206,6 +200,7 @@ export default defineComponent({
           }
         }
       }
+      characterSelectVisible.value = false;
     };
 
     const characterOnClick = (team: TTeam) => {
@@ -287,42 +282,12 @@ export default defineComponent({
   position: relative;
 }
 
-.modal {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  /* background-color: rgba(0, 0, 0, .5); */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  background-color: rgb(63, 10, 10);
-}
-
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-  border-radius: 20px;
-  padding: 20px;
-  z-index: 1000;
-}
-
 div.team {
   width: calc(100% - 4px);
   margin: 3px 2px;
 }
 </style>
 <style scoped>
-.character-select {
-  min-width: 360px;
-  overflow-y: scroll;
-}
-
 input[type="radio"]+span {
   display: inline-block;
   width: 8rem;
