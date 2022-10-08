@@ -6,6 +6,7 @@ export type TMember = {
     name: string;
     buildname: string | undefined;
     savedata: any | undefined;
+    tags: string[],
 };
 
 export type TTeam = {

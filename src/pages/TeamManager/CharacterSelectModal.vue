@@ -1,85 +1,126 @@
 <template>
-  <CharacterSelect :visible="true" :characters="characters" @update:characters="updateCharacters" />
+  <CharacterSelect
+    :visible="true"
+    :characters="characters"
+    @update:characters="updateCharacters"
+  />
 
   <hr />
 
   <div class="tags">
-    <span class="tag">MAIN DPS</span>
-    <span class="tag">SUB DPS</span>
-    <span class="tag">SUPPORTER</span>
-    <span class="tag">FREE</span>
+    <span class="tag" v-for="tag in TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
+      tag
+    }}</span>
   </div>
 
   <div>
-    <div class="member" v-for="member in members" :key="member.id">
-      <MemberItem :member="member" />
+    <div
+      :class="'member' + memberSelectedClass(member.id)"
+      v-for="member in workMembers"
+      :key="member.id"
+    >
+      <MemberItem :member="member" @click="memberOnClick(member.id)" />
     </div>
   </div>
 
-  <div>
+  <div class="buttons">
     <button type="button" @click="cancelOnClick">cancel</button>
     <button type="button" @click="okOnClick">ok</button>
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive, watch } from "vue";
+import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
 import { TMember } from "./team";
 import MemberItem from "./MemberItem.vue";
+import { deepcopy } from "@/common";
 
 export default defineComponent({
   name: "CharacterSelectModal",
   components: {
     CharacterSelect,
-    MemberItem
-},
+    MemberItem,
+  },
   props: {
     visible: { type: Boolean, required: true },
-    memberNames: { type: Array as PropType<string[]>, required: true },
+    members: { type: Array as PropType<TMember[]>, required: true },
   },
   emits: ["click:cancel", "click:ok"],
   setup(props, context) {
-    const characters = reactive(props.memberNames);
+    const workMembers = reactive([] as TMember[]);
+    const selectedMemberId = ref(-1);
+    const TAG_LIST = ["FREE"];
+
+    function duplicateMembers() {
+      const work: TMember[] = [];
+      for (let i = 0; i < props.members.length; i++) {
+        work.push({
+          id: i,
+          name: props.members[i].name,
+          buildname: props.members[i].buildname,
+          savedata: props.members[i].savedata,
+          tags: deepcopy(props.members[i].tags),
+        });
+      }
+      workMembers.splice(0, workMembers.length, ...work);
+    }
+    duplicateMembers();
 
     watch(props, (newVal) => {
-      if (newVal.memberNames) {
-        const newValStr = JSON.stringify(newVal.memberNames);
-        const oldValStr = JSON.stringify(characters);
-        if (newValStr != oldValStr) {
-          characters.splice(0, characters.length, ...newVal.memberNames);
-        }
+      if (newVal.members) {
+        duplicateMembers();
       }
     });
 
+    const characters = computed(() => workMembers.map((s) => s.name));
+
     const updateCharacters = (newCharacters: string[]) => {
-      characters.splice(0, characters.length, ...newCharacters);
+      for (let i = 0; i < newCharacters.length; i++) {
+        workMembers[i].name = newCharacters[i];
+      }
     };
 
-    const members = computed(() => {
-      const result: TMember[] = [];
-      let id = 0;
-      characters.forEach(character => {
-        result.push({
-          id: id++,
-          name: character,
-          buildname: undefined,
-          savedata: undefined,
-        });
-      });
-      return result;
-    });
+    const memberOnClick = (id: number) => {
+      selectedMemberId.value = id;
+    };
+    const memberSelectedClass = (id: number) =>
+      id == selectedMemberId.value ? " selected" : "";
+
+    const tagOnClick = (tag: string) => {
+      console.log(tag, selectedMemberId.value);
+      if (selectedMemberId.value < 0 || selectedMemberId.value >= workMembers.length)
+        return;
+      const member = workMembers[selectedMemberId.value];
+      console.log(tag, member);
+      if (member && member.name) {
+        const tags = member.tags;
+        if (tags) {
+          if (tags.includes(tag)) {
+            tags.splice(0, tags.length, ...tags.filter((s) => s != tag));
+          } else {
+            tags.push(tag);
+          }
+        }
+      }
+    };
 
     const cancelOnClick = () => {
       context.emit("click:cancel");
     };
 
     const okOnClick = () => {
-      context.emit("click:ok", characters);
+      context.emit("click:ok", workMembers);
     };
 
     return {
       characters,
-      members,
+      TAG_LIST,
+
+      tagOnClick,
+
+      workMembers,
+      memberOnClick,
+      memberSelectedClass,
 
       updateCharacters,
       cancelOnClick,
@@ -130,11 +171,19 @@ span.tag {
   background-color: dimgray;
   border: 2px solid whitesmoke;
   border-radius: 3px;
-  margin: 1px 3px;
+  margin: 10px 3px;
 }
 
 div.member {
   display: inline-block;
   width: 90px;
+}
+
+div.member.selected {
+  background-color: gold;
+}
+
+div.buttons {
+  margin: 20px;
 }
 </style>

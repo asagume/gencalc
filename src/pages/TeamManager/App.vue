@@ -4,16 +4,29 @@
       <fieldset>
         <div class="display-stat-select">
           <label class="display-stat" v-for="item in DISPLAY_STAT_LIST" :key="item[1]">
-            <input class="hidden" type="radio" name="display-stat" v-model="displayStat" :value="item[0]" />
+            <input
+              class="hidden"
+              type="radio"
+              name="display-stat"
+              v-model="displayStat"
+              :value="item[0]"
+            />
             <span>{{ item[1] }}</span>
           </label>
         </div>
         <label class="number-of-teams">
           Number of teams
-          <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" @change="numberOfTeamsOnChange" />
+          <input
+            type="number"
+            :min="NUMBER_OF_TEAMS"
+            v-model="numberOfTeams"
+            @change="numberOfTeamsOnChange"
+          />
         </label>
         <div class="data-control">
-          <button type="button" :disabled="saveDisabled" @click="saveOnClick">Save</button>
+          <button type="button" :disabled="saveDisabled" @click="saveOnClick">
+            Save
+          </button>
           <button type="button" @click="clearOnClick">Clear</button>
         </div>
       </fieldset>
@@ -23,15 +36,25 @@
       <div v-show="!characterSelectVisible">
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
-            <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-              @click="teamOnClick(element.id)" @change:name="teamNameOnChange" @change:buildname="buildnameOnChange"
-              @click:character="characterOnClick(element)" />
+            <TeamItem
+              :team="element"
+              :selected="teamSelected(element.id)"
+              :displayStat="displayStat"
+              @click="teamOnClick(element.id)"
+              @change:name="teamNameOnChange"
+              @change:buildname="buildnameOnChange"
+              @click:character="characterOnClick(element)"
+            />
           </template>
         </draggable>
       </div>
       <div v-show="characterSelectVisible">
-        <CharacterSelectModal :visible="characterSelectVisible" :memberNames="memberNames"
-          @click:cancel="characterSelectVisible = false" @click:ok="updateCharacters" />
+        <CharacterSelectModal
+          :visible="characterSelectVisible"
+          :members="forcusedMembers"
+          @click:cancel="characterSelectVisible = false"
+          @click:ok="updateCharacters"
+        />
       </div>
     </div>
 
@@ -89,6 +112,7 @@ export default defineComponent({
         name: "",
         buildname: undefined,
         savedata: undefined,
+        tags: [],
       };
     }
 
@@ -148,7 +172,7 @@ export default defineComponent({
       });
       return JSON.stringify(work);
     });
-    const saveddataStr = ref('');
+    const saveddataStr = ref("");
 
     const saveOnClick = () => {
       localStorage.setItem("teams", savedataStr.value);
@@ -171,6 +195,7 @@ export default defineComponent({
                 members[j].name = work[i].members[j].name;
                 members[j].buildname = work[i].members[j].buildname;
                 members[j].savedata = undefined; // TODO
+                members[j].tags = work[i].members[j].tags;
               }
             }
           }
@@ -192,24 +217,20 @@ export default defineComponent({
       }
     };
 
-    const memberNames = computed(() => {
-      let result = Array(NUMBER_OF_MEMBERS).fill("");
-      const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
-      if (team) result = team.members.map((s) => s.name);
-      return result;
-    });
+    const forcusedMembers = computed(() => teams[selectedTeamId.value].members);
 
-    const updateCharacters = (characters: string[]) => {
+    const updateCharacters = (newMembers: TMember[]) => {
       if (selectedTeamId.value != -1) {
         const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
         if (team) {
           const members = team.members;
-          for (let i = 0; i < characters.length; i++) {
-            if (members[i].name != characters[i]) {
-              members[i].name = characters[i];
+          for (let i = 0; i < newMembers.length; i++) {
+            if (members[i].name != newMembers[i].name) {
+              members[i].name = newMembers[i].name;
               members[i].buildname = makeDefaultBuildname(members[i].name);
               members[i].savedata = undefined; // TODO
             }
+            members[i].tags.splice(0, members[i].tags.length, ...newMembers[i].tags);
           }
         }
       }
@@ -259,7 +280,7 @@ export default defineComponent({
 
       teamSelected,
       teams,
-      memberNames,
+      forcusedMembers,
 
       teamOnClick,
       characterOnClick,
@@ -298,7 +319,7 @@ div.team {
 }
 </style>
 <style scoped>
-input[type="radio"]+span {
+input[type="radio"] + span {
   display: inline-block;
   width: 45px;
   font-size: 11px;
@@ -309,7 +330,7 @@ input[type="radio"]+span {
   margin: 2px 1px;
 }
 
-input[type="radio"]:checked+span {
+input[type="radio"]:checked + span {
   background-color: whitesmoke;
 }
 

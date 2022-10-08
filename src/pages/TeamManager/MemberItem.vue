@@ -1,11 +1,16 @@
 <template>
   <div class="member">
     <div class="member-img" @click="characterOnClick">
-      <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
+      <img
+        :class="'character' + characterImgClass"
+        :src="characterImgSrc"
+        :alt="displayName(member.name)"
+      />
       <img class="vision" :src="visionImgSrc" alt="vision" />
       <div class="constellation" v-show="constellation">
         {{ constellation }}
       </div>
+      <div class="tag-0" v-if="member.tags[0]">{{ member.tags[0] }}</div>
     </div>
     <div class="stat-value" v-if="displayStat">
       {{ statValue }}
@@ -121,10 +126,10 @@ export default defineComponent({
         builddata
       );
 
-      conditionInput.checkboxList.forEach(entry => {
+      conditionInput.checkboxList.forEach((entry) => {
         conditionInput.conditionValues[entry.name] = false;
       });
-      conditionInput.selectList.forEach(entry => {
+      conditionInput.selectList.forEach((entry) => {
         conditionInput.conditionValues[entry.name] = 0;
       });
 
@@ -145,8 +150,6 @@ export default defineComponent({
         optionInput
       );
 
-      console.log(props.member.name, props.member.buildname, props.displayStat, statValue.value);
-
       return statsInput.statsObj;
     };
     setupMemberStats();
@@ -154,7 +157,7 @@ export default defineComponent({
     const characterMaster = computed(() =>
       props.member.name
         ? (CHARACTER_MASTER[props.member.name as TCharacterKey] as TCharacterEntry) ??
-        undefined
+          undefined
         : undefined
     );
     const characterImgSrc = computed(
@@ -235,7 +238,10 @@ export default defineComponent({
           if (stat === "会心率/ダメージ") {
             result = displayStatValue("会心率", statsInput.statsObj["会心率"]);
             result += "/";
-            result += displayStatValue("会心ダメージ", statsInput.statsObj["会心ダメージ"]);
+            result += displayStatValue(
+              "会心ダメージ",
+              statsInput.statsObj["会心ダメージ"]
+            );
           } else {
             result = displayStatValue(stat, statsInput.statsObj[stat]);
           }
@@ -300,6 +306,20 @@ div.constellation {
   top: 2px;
   background-color: black;
   opacity: 50%;
+}
+
+div.tag-0 {
+  position: absolute;
+  left: 50%;
+  bottom: 1px;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 12px;
+  font-size: 10px;
+  background-color: dimgray;
+  border: 2px solid whitesmoke;
+  border-radius: 3px;
+  padding-top: 1px;
 }
 
 img.weapon,
