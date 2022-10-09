@@ -17,8 +17,8 @@
           </span>
         </span>
       </label>
-      <div class="element-resonance">
-        <img class="element-resonance" v-for="src in resonanceElementImgSrcs" :key="src" :src="src" alt="resonance" />
+      <div class="elemental-resonance">
+        <img class="elemental-resonance" v-for="src in resonanceElementImgSrcs" :key="src" :src="src" alt="resonance" />
       </div>
     </div>
     <div class="members">
@@ -26,6 +26,7 @@
         <tr>
           <td v-for="member in team.members" :key="member.id">
             <MemberItem :member="member" :displayStat="displayStat" :showEquipment="true" :viewable="true"
+              :members="team.members.map(s => s.name)" :elementalResonance="elementalResonance"
               @click:character="characterOnClick" @change:buildname="changeBuildname" />
           </td>
         </tr>
@@ -39,8 +40,6 @@ import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey } from "@/
 import { computed, defineComponent, PropType, ref, watch } from "vue";
 import { characterMaster, TTeam } from "./team";
 import MemberItem from "./MemberItem.vue";
-import { TStats } from "@/input";
-import { ALL_ELEMENTS } from "@/calculate";
 
 export default defineComponent({
   name: "TeamItem",
@@ -114,30 +113,6 @@ export default defineComponent({
       return result;
     });
 
-    const elementalResonanceAdjustments = computed(() => {
-      const result: TStats = {};
-      elementalResonance.value.forEach((entry) => {
-        switch (entry) {
-          case "炎元素共鳴":
-            result["攻撃力%"] = 25;
-            break;
-          case "水元素共鳴":
-            result["HP%"] = 25;
-            break;
-          case "草元素共鳴":
-            result["元素熟知"] = 50;
-            break;
-          case "元素共鳴なし":
-            ALL_ELEMENTS.forEach((element) => {
-              result[element + "元素耐性"] = 15;
-            });
-            result["物理耐性"] = 15;
-            break;
-        }
-      });
-      return result;
-    });
-
     const characterOnClick = () => {
       context.emit("click:character");
     };
@@ -152,8 +127,8 @@ export default defineComponent({
       selectedClass,
       editable,
       name,
+      elementalResonance,
       resonanceElementImgSrcs,
-      elementalResonanceAdjustments,
 
       nameOnChange,
       characterOnClick,
@@ -215,13 +190,13 @@ label.name input {
   padding-bottom: 0;
 }
 
-div.element-resonance {
+div.elemental-resonance {
   position: absolute;
   right: 0;
   top: 0;
 }
 
-img.element-resonance {
+img.elemental-resonance {
   width: 20px;
 }
 

@@ -1,25 +1,23 @@
 <template>
-  <CharacterSelect
-    :visible="true"
-    :characters="characters"
-    @update:characters="updateCharacters"
-  />
+  <CharacterSelect :visible="true" :characters="characters" @update:characters="updateCharacters" />
 
   <hr />
 
   <div class="tags">
     <span class="tag" v-for="tag in TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
-      tag
+    tag
     }}</span>
   </div>
 
   <div>
-    <div
-      :class="'member' + memberSelectedClass(member.id)"
-      v-for="member in workMembers"
-      :key="member.id"
-    >
+    <div :class="'member' + memberSelectedClass(member.id)" v-for="member in workMembers" :key="member.id">
       <MemberItem :member="member" @click="memberOnClick(member.id)" />
+    </div>
+
+    <div class="buildname-select">
+      <select v-show="buildnames.length" v-model="selectedMemberBuildname" @change="buildnameOnChange">
+        <option v-for="value in buildnames" :key="value" :value="value">{{value}}</option>
+      </select>
     </div>
   </div>
 
@@ -31,9 +29,10 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
-import { TMember } from "./team";
+import { getBuildnameFromStorageKey, getBuildStorageKeys, TMember } from "./team";
 import MemberItem from "./MemberItem.vue";
 import { deepcopy } from "@/common";
+import { makeDefaultBuildname } from "@/input";
 
 export default defineComponent({
   name: "CharacterSelectModal",
@@ -50,6 +49,7 @@ export default defineComponent({
     const workMembers = reactive([] as TMember[]);
     const selectedMemberId = ref(-1);
     const TAG_LIST = ["FREE"];
+    const selectedMemberBuildname = ref('' as string | undefined);
 
     function duplicateMembers() {
       const work: TMember[] = [];
@@ -69,6 +69,9 @@ export default defineComponent({
     watch(props, (newVal) => {
       if (newVal.members) {
         duplicateMembers();
+        if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length) {
+          selectedMemberBuildname.value = workMembers[selectedMemberId.value].buildname;
+        }
       }
     });
 
@@ -77,17 +80,33 @@ export default defineComponent({
     const updateCharacters = (newCharacters: string[]) => {
       for (let i = 0; i < newCharacters.length; i++) {
         workMembers[i].name = newCharacters[i];
+        if (workMembers[i].name) {
+          const workBuildnames = getBuildStorageKeys(workMembers[i].name).map(s => getBuildnameFromStorageKey(s));
+          if (workBuildnames.length) {
+            if (!workMembers[i].buildname || !workBuildnames.includes(workMembers[i].buildname as string)) {
+              workMembers[i].buildname = makeDefaultBuildname(workMembers[i].name);
+            }
+            if (i == selectedMemberId.value) {
+              selectedMemberBuildname.value = workMembers[i].buildname;
+            }
+          } else {
+            workMembers[i].buildname = undefined;
+          }
+        }
       }
     };
 
     const memberOnClick = (id: number) => {
       selectedMemberId.value = id;
+      if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length) {
+        const member = workMembers[selectedMemberId.value];
+        selectedMemberBuildname.value = member.buildname;
+      }
     };
     const memberSelectedClass = (id: number) =>
       id == selectedMemberId.value ? " selected" : "";
 
     const tagOnClick = (tag: string) => {
-      console.log(tag, selectedMemberId.value);
       if (selectedMemberId.value < 0 || selectedMemberId.value >= workMembers.length)
         return;
       const member = workMembers[selectedMemberId.value];
@@ -102,6 +121,33 @@ export default defineComponent({
           }
         }
       }
+    };
+
+    const buildnames = computed(() => {
+      let result: string[] = [];
+      if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length) {
+        const member = workMembers[selectedMemberId.value];
+        const character = member.name;
+        if (character) {
+          result = getBuildStorageKeys(character).map((s) =>
+            getBuildnameFromStorageKey(s)
+          );
+          const defaultBuildname = makeDefaultBuildname(character);
+          if (result.includes(defaultBuildname)) {
+            const others = result.filter((s) => s != defaultBuildname).sort();
+            if (others.length) {
+              result = [defaultBuildname, ...others];
+            }
+          }
+        }
+      }
+      return result;
+    });
+
+    const buildnameOnChange = () => {
+      if (selectedMemberId.value < 0 || selectedMemberId.value >= workMembers.length) return;
+      const member = workMembers[selectedMemberId.value];
+      member.buildname = selectedMemberBuildname.value;
     };
 
     const cancelOnClick = () => {
@@ -121,6 +167,9 @@ export default defineComponent({
       workMembers,
       memberOnClick,
       memberSelectedClass,
+      selectedMemberBuildname,
+      buildnames,
+      buildnameOnChange,
 
       updateCharacters,
       cancelOnClick,
@@ -181,6 +230,15 @@ div.member {
 
 div.member.selected {
   background-color: gold;
+}
+
+div.buildname-select {
+  height: 40px;
+  padding-top: 10px;
+}
+
+div.buildname-select select {
+  width: 220px;
 }
 
 div.buttons {

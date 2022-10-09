@@ -43,7 +43,7 @@
 
     <div class="footer">
       <hr />
-      <h2>チーム編成 Ver.0.1.0</h2>
+      <h2>チーム編成 Ver.0.1.1</h2>
       <ul class="usage">
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
@@ -57,7 +57,6 @@
 import draggable from "vuedraggable";
 import { computed, defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { makeDefaultBuildname } from "@/input";
 import { deepcopy } from "@/common";
 import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from "./team";
 import TeamItem from "./TeamItem.vue";
@@ -92,7 +91,7 @@ export default defineComponent({
     const selectedTeamId = ref(0);
     const teamSelected = (index: number) => index == selectedTeamId.value;
 
-    function makeBlankMember(index: number) {
+    function makeBlankMember(index: number): TMember {
       return {
         id: index,
         name: "",
@@ -217,15 +216,16 @@ export default defineComponent({
       if (selectedTeamId.value != -1) {
         const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
         if (team) {
-          const members = team.members;
+          const workMembers: TMember[] = [];
           for (let i = 0; i < newMembers.length; i++) {
-            if (members[i].name != newMembers[i].name) {
-              members[i].name = newMembers[i].name;
-              members[i].buildname = makeDefaultBuildname(members[i].name);
-              members[i].savedata = undefined; // TODO
-            }
-            members[i].tags.splice(0, members[i].tags.length, ...newMembers[i].tags);
+            const workMember = makeBlankMember(team.members[i].id);
+            workMember.name = newMembers[i].name;
+            workMember.buildname = newMembers[i].buildname;
+            workMember.savedata = undefined; // TODO
+            workMember.tags.splice(0, workMember.tags.length, ...newMembers[i].tags);
+            workMembers.push(workMember);
           }
+          team.members.splice(0, team.members.length, ...workMembers);
         }
       }
       characterSelectVisible.value = false;

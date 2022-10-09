@@ -1,11 +1,7 @@
 <template>
   <div class="member">
     <div class="member-img" @click="characterOnClick">
-      <img
-        :class="'character' + characterImgClass"
-        :src="characterImgSrc"
-        :alt="displayName(member.name)"
-      />
+      <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
       <img class="vision" :src="visionImgSrc" alt="vision" />
       <div class="constellation" v-show="constellation">
         {{ constellation }}
@@ -32,12 +28,11 @@
 </template>
 <script lang="ts">
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { deepcopy } from "@/common";
+import { deepcopy, overwriteObject } from "@/common";
 import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
   CHARACTER_INPUT_TEMPLATE,
   CONDITION_INPUT_TEMPLATE,
-  makeDefaultBuildname,
   OPTION_INPUT_TEMPLATE,
   STATS_INPUT_TEMPLATE,
   TArtifactDetailInput,
@@ -51,14 +46,17 @@ import {
   makeDamageDetailObjArrObjArtifactSets,
   setupConditionValues,
   pushBuildinfoToSession,
+  TStats,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
+  ELEMENTAL_RESONANCE_MASTER,
   ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
+  TAnyObject,
   TArtifactSet,
   TCharacterEntry,
   TCharacterKey,
@@ -67,8 +65,6 @@ import {
 import { computed, defineComponent, PropType, ref, watch } from "vue";
 import {
   getBuilddataFromStorage,
-  getBuildnameFromStorageKey,
-  getBuildStorageKeys,
   TMember,
 } from "./team";
 import {
@@ -85,15 +81,20 @@ export default defineComponent({
     showEquipment: { type: Boolean },
     viewable: { type: Boolean },
     tags: { type: Array as PropType<any[]> },
+    members: { type: Array as PropType<string[]> },
+    elementalResonance: { type: Array as PropType<string[]> },
   },
   emits: ["click:character", "change:buildname"],
   setup(props, context) {
     const { displayName, displayStatValue } = CompositionFunction();
 
-    const buildname = ref(props.member.buildname);
-    const buildnameOnChange = () => {
-      context.emit("change:buildname", props.member.id, buildname.value);
-    };
+    const extraControl = ref("locate");
+
+    const watchCount = ref(0);
+    watch(props, async () => {
+      await calculateMemberStats();
+      watchCount.value++;
+    });
 
     const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
     const artifactDetailInput = deepcopy(
@@ -103,14 +104,7 @@ export default defineComponent({
     const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
     const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
 
-    const extraControl = ref("locate");
-
-    watch(props, (newVal) => {
-      buildname.value = newVal.member.buildname;
-      setupMemberStats();
-    });
-
-    const setupMemberStats = async () => {
+    const calculateMemberStats = async () => {
       if (!props.member.name) return;
 
       characterInput.character = props.member.name as TCharacterKey;
@@ -119,7 +113,7 @@ export default defineComponent({
       );
 
       const builddata = savedata.value;
-      if (!builddata) return;
+      if (!builddata) return {};
 
       await loadRecommendation(
         characterInput,
@@ -128,13 +122,6 @@ export default defineComponent({
         optionInput,
         builddata
       );
-
-      conditionInput.checkboxList.forEach((entry) => {
-        conditionInput.conditionValues[entry.name] = false;
-      });
-      conditionInput.selectList.forEach((entry) => {
-        conditionInput.conditionValues[entry.name] = 0;
-      });
 
       makeDamageDetailObjArrObjCharacter(characterInput);
       makeDamageDetailObjArrObjWeapon(characterInput);
@@ -145,6 +132,64 @@ export default defineComponent({
         artifactDetailInput.聖遺物メイン効果
       );
       calculateArtifactStats(artifactDetailInput);
+
+      conditionInput.checkboxList.forEach((entry) => {
+        conditionInput.conditionValues[entry.name] = false;
+      });
+      conditionInput.selectList.forEach((entry) => {
+        conditionInput.conditionValues[entry.name] = 0;
+      });
+
+      const myVision = characterInput.characterMaster.元素;
+      const teamElements: TAnyObject = {};
+      if (props.members) {
+        props.members.filter(s => s).forEach(entry => {
+          const vision = CHARACTER_MASTER[entry as TCharacterKey].元素;
+          if (vision in teamElements) {
+            teamElements[vision]++;
+          } else {
+            teamElements[vision] = 1;
+          }
+        })
+      }
+
+      // 金メッキの夢
+      const gildedDreamsSet = characterInput.artifactSets.filter(s => s == '金メッキの夢').length;
+      if (gildedDreamsSet == 2) {
+        let sameCount = (teamElements[myVision] - 1);
+        let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a+ b);
+        conditionInput.conditionValues['[金メッキの夢4]同じ元素タイプ'] = sameCount;
+        conditionInput.conditionValues['[金メッキの夢4]異なる元素タイプ'] = otherCount;
+      }
+
+      // 夜蘭
+      if (characterInput.character == '夜蘭') {
+        conditionInput.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
+      }
+
+      // 元素共鳴
+      if (props.elementalResonance) {
+        const workObj = {} as TStats;
+        props.elementalResonance.forEach(entry => {
+          optionInput.elementalResonance.conditionValues[entry] = true;
+          if ("詳細" in (ELEMENTAL_RESONANCE_MASTER as any)[entry]) {
+            const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[entry].詳細;
+            if (detailObjArr) {
+              for (const detailObj of detailObjArr) {
+                if ("種類" in detailObj && "数値" in detailObj) {
+                  if (detailObj.種類 in workObj) {
+                    workObj[detailObj.種類] += detailObj.数値;
+                  } else {
+                    workObj[detailObj.種類] = detailObj.数値;
+                  }
+                }
+              }
+            }
+          }
+        });
+        overwriteObject(optionInput.elementalResonance.conditionAdjustments, workObj);
+      }
+
       calculateStats(
         statsInput,
         characterInput,
@@ -152,15 +197,13 @@ export default defineComponent({
         conditionInput,
         optionInput
       );
-
-      return statsInput.statsObj;
-    };
-    setupMemberStats();
+    }
+    calculateMemberStats();
 
     const characterMaster = computed(() =>
       props.member.name
         ? (CHARACTER_MASTER[props.member.name as TCharacterKey] as TCharacterEntry) ??
-          undefined
+        undefined
         : undefined
     );
     const characterImgSrc = computed(
@@ -186,26 +229,11 @@ export default defineComponent({
       context.emit("click:character");
     };
 
-    const buildnames = computed(() => {
-      const character = props.member.name;
-      let result = getBuildStorageKeys(character).map((s) =>
-        getBuildnameFromStorageKey(s)
-      );
-      const defaultBuildname = makeDefaultBuildname(character);
-      if (result.includes(defaultBuildname)) {
-        const others = result.filter((s) => s != defaultBuildname).sort();
-        if (others.length) {
-          result = [defaultBuildname, ...others];
-        }
-      }
-      return result;
-    });
-
     const savedata = computed(() => {
       let result = undefined;
       const character = props.member.name;
-      if (character && buildname.value) {
-        result = getBuilddataFromStorage(character, buildname.value);
+      if (character && props.member.buildname) {
+        result = getBuilddataFromStorage(character, props.member.buildname);
       }
       return result;
     });
@@ -234,6 +262,7 @@ export default defineComponent({
     });
 
     const statValue = computed(() => {
+      watchCount.value;
       let result = "-";
       if (savedata.value) {
         let stat = props.displayStat;
@@ -241,10 +270,7 @@ export default defineComponent({
           if (stat === "会心率/ダメージ") {
             result = displayStatValue("会心率", statsInput.statsObj["会心率"]);
             result += "/";
-            result += displayStatValue(
-              "会心ダメージ",
-              statsInput.statsObj["会心ダメージ"]
-            );
+            result += displayStatValue("会心ダメージ", statsInput.statsObj["会心ダメージ"]);
           } else {
             result = displayStatValue(stat, statsInput.statsObj[stat]);
           }
@@ -255,7 +281,7 @@ export default defineComponent({
 
     const locate = () => {
       const member = props.member;
-      pushBuildinfoToSession(member.name, buildname.value);
+      pushBuildinfoToSession(member.name, props.member.buildname);
       window.open("./", "_blank");
     };
 
@@ -273,9 +299,6 @@ export default defineComponent({
 
       extraControl,
 
-      buildname,
-      buildnameOnChange,
-      buildnames,
       locate,
 
       characterOnClick,
