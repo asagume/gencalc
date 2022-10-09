@@ -4,10 +4,6 @@
       <div class="header">
         <div class="top-left"><a href="./">げんかるく</a></div>
         <div class="top-right"><a href="https://enka.network/">Enka.Network</a></div>
-        <p>&nbsp;</p>
-        <h3>
-          DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network
-        </h3>
       </div>
     </div>
 
@@ -109,7 +105,10 @@
 
     <div class="footer">
       <hr />
-
+      <h2>
+        DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network
+        Ver.0.2.2
+      </h2>
       《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
       <ol style="text-align: left">
         <li>
@@ -127,6 +126,19 @@
           制限：げんかるくに実装されていない聖遺物セット効果はセット効果なし（NONE）に置き換えられる
         </li>
       </ol>
+      <hr />
+      <dl class="history">
+        <dt>0.2.2</dt>
+        <dd>
+          突破していない武器を装備したキャラクターが含まれる場合に処理が止まる問題に対処。
+        </dd>
+        <dt>0.2.1</dt>
+        <dd>
+          げんかるくを開く際のデータの受け渡し方法を変更（クエリストリングからセッションストレージへ）
+        </dd>
+        <dt>0.2.0</dt>
+        <dd>Enka.NetworkのAPI(URL)変更に追従。機能復活。</dd>
+      </dl>
     </div>
   </div>
 </template>
@@ -354,9 +366,15 @@ export default defineComponent({
             Object.keys(equip.weapon.affixMap).forEach((key) => {
               result.weapon.refine = equip.weapon.affixMap[key] + 1; // 精錬ランク？
             });
+          } else {
+            result.weapon.refine = 1;
           }
           result.weapon.level = equip.weapon.level;
-          result.weapon.ascension = equip.weapon.promoteLevel;
+          if (equip.weapon.promoteLevel) {
+            result.weapon.ascension = equip.weapon.promoteLevel;
+          } else {
+            result.weapon.ascension = 1;
+          }
         }
       }
 
@@ -687,17 +705,18 @@ h3 {
 <style scoped>
 .header {
   position: relative;
+  height: 30px;
 }
 
 .top-left {
   position: absolute;
-  top: 0;
+  top: 5px;
   left: 1rem;
 }
 
 .top-right {
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 1rem;
 }
 
@@ -804,5 +823,10 @@ div.level {
   background-color: black;
   border-radius: 5px;
   padding: 2px;
+}
+
+dl.history {
+  text-align: left;
+  padding-left: 2rem;
 }
 </style>
