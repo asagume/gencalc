@@ -4,13 +4,24 @@
       <fieldset>
         <div class="display-stat-select">
           <label class="display-stat" v-for="item in DISPLAY_STAT_LIST" :key="item[1]">
-            <input class="hidden" type="radio" name="display-stat" v-model="displayStat" :value="item[0]" />
+            <input
+              class="hidden"
+              type="radio"
+              name="display-stat"
+              v-model="displayStat"
+              :value="item[0]"
+            />
             <span>{{ item[1] }}</span>
           </label>
         </div>
         <label class="number-of-teams">
           Number of teams
-          <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" @change="numberOfTeamsOnChange" />
+          <input
+            type="number"
+            :min="NUMBER_OF_TEAMS"
+            v-model="numberOfTeams"
+            @change="numberOfTeamsOnChange"
+          />
         </label>
         <div class="data-control">
           <button type="button" :disabled="saveDisabled" @click="saveOnClick">
@@ -25,19 +36,32 @@
       <div v-show="!characterSelectVisible">
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
-            <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-              @click="teamOnClick(element.id)" @change:name="teamNameOnChange" @change:buildname="buildnameOnChange"
-              @click:character="characterOnClick(element)" />
+            <TeamItem
+              :team="element"
+              :selected="teamSelected(element.id)"
+              :displayStat="displayStat"
+              @click="teamOnClick(element.id)"
+              @change:name="teamNameOnChange"
+              @change:buildname="buildnameOnChange"
+              @click:character="characterOnClick(element)"
+            />
           </template>
         </draggable>
       </div>
       <div v-show="characterSelectVisible">
-        <CharacterSelectModal :visible="characterSelectVisible" :members="forcusedMembers"
-          @click:cancel="characterSelectVisible = false" @click:ok="updateCharacters" />
+        <CharacterSelectModal
+          :visible="characterSelectVisible"
+          :members="forcusedMembers"
+          @click:cancel="characterSelectVisible = false"
+          @click:ok="updateCharacters"
+        />
       </div>
     </div>
 
-    <div class="pane3"></div>
+    <div class="pane3">
+      <hr />
+      <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" />
+    </div>
 
     <div class="pane4"></div>
 
@@ -61,6 +85,7 @@ import { deepcopy } from "@/common";
 import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from "./team";
 import TeamItem from "./TeamItem.vue";
 import CharacterSelectModal from "./CharacterSelectModal.vue";
+import TeamRotation from "./TeamRotation.vue";
 
 let memberId = 1;
 
@@ -70,6 +95,7 @@ export default defineComponent({
     draggable,
     TeamItem,
     CharacterSelectModal,
+    TeamRotation,
   },
   setup() {
     const { displayName } = CompositionFunction();
@@ -272,6 +298,7 @@ export default defineComponent({
       loadOnClick,
       saveDisabled,
 
+      selectedTeamId,
       teamSelected,
       teams,
       forcusedMembers,
@@ -317,7 +344,7 @@ div.team {
 }
 </style>
 <style scoped>
-input[type="radio"]+span {
+input[type="radio"] + span {
   display: inline-block;
   width: 45px;
   font-size: 11px;
@@ -328,7 +355,7 @@ input[type="radio"]+span {
   margin: 2px 1px;
 }
 
-input[type="radio"]:checked+span {
+input[type="radio"]:checked + span {
   background-color: whitesmoke;
 }
 
