@@ -89,7 +89,7 @@ export const ステータスその他ARRAY = [
     '攻撃力+',
     '防御力+'
 ];
-export const 敵元素ステータス_耐性ARRAY = [
+export const 敵ステータス_元素耐性ARRAY = [
     '敵炎元素耐性',
     '敵水元素耐性',
     '敵風元素耐性',
@@ -98,6 +98,9 @@ export const 敵元素ステータス_耐性ARRAY = [
     '敵氷元素耐性',
     '敵岩元素耐性',
     '敵物理耐性'
+];
+export const 敵ステータス_その他ARRAY = [
+    '敵防御力'
 ];
 
 export const ステータスARRAY_MAP = new Map([
@@ -110,11 +113,12 @@ export const ステータスARRAY_MAP = new Map([
     ['実数ダメージ加算', 実数ダメージ加算ARRAY],
     ['元素反応バフ', 元素反応バフARRAY],
     ['その他', ステータスその他ARRAY],
-    ['敵元素ステータス·耐性', 敵元素ステータス_耐性ARRAY],
+    ['敵ステータス·元素耐性', 敵ステータス_元素耐性ARRAY],
+    ['敵ステータス·その他', 敵ステータス_その他ARRAY],
 ]);
 
 export const STAT_PERCENT_LIST = [
-    ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵元素ステータス_耐性ARRAY,
+    ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵ステータス_元素耐性ARRAY,
     '別枠乗算',
 ];
 

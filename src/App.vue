@@ -420,8 +420,8 @@ export default defineComponent({
     ];
     const characterStats2Category1List = ["元素ステータス·耐性"];
     const characterStats2Category2List = ["基礎ステータス", "その他"];
-    const enemyStatsCategory1List = ["敵元素ステータス·耐性"];
-    const enemyStatsCategory2List = [] as string[];
+    const enemyStatsCategory1List = ["敵ステータス·元素耐性"];
+    const enemyStatsCategory2List = ["敵ステータス·その他"];
     const enemyList = ENEMY_MASTER_LIST;
     const selectedEnemyRef = ref(enemyList[0]);
     statsInput.statAdjustments["敵レベル"] = 90;
