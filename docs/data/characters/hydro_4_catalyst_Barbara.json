@@ -17,6 +17,7 @@
         "日本語 CV": "鬼頭明里",
         "韓国語 CV": "윤아영"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 821,
@@ -152,7 +153,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/hydro_4_catalyst_Barbara/battle_talent_0.png"
+        "icon_url": "images/characters/hydro_4_catalyst_Barbara/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、短い詠唱をした後、敵に水元素範囲ダメージを与える。",
@@ -300,7 +301,7 @@
         ],
         "継続時間": 15,
         "クールタイム": 32,
-        "icon_url": "images/characters/hydro_4_catalyst_Barbara/battle_talent_1.png"
+        "icon_url": "images/characters/hydro_4_catalyst_Barbara/talent_2.png"
     },
     "元素爆発": {
         "名前": "シャイニングミラクル♪",
@@ -328,30 +329,30 @@
         ],
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/hydro_4_catalyst_Barbara/battle_talent_2.png"
+        "icon_url": "images/characters/hydro_4_catalyst_Barbara/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "輝く季節",
             "説明": "<span style=\"color:#FFD780FF\">公演、開始♪</span>歌声の輪が継続している間、スタミナ消費-12%。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/const_talent_0.png"
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/talent_4.png"
         },
         {
             "名前": "アンコール",
             "説明": "出場している自身のキャラクターが元素オーブまたは元素粒子を獲得した時、<span style=\"color:#FFD780FF\">公演、開始♪</span>の歌声の輪の継続時間+1秒。<br/>この方法で最大5秒まで延長可能。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/const_talent_1.png"
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/talent_5.png"
         },
         {
             "名前": "気持ち♪注入",
             "説明": "回復系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/const_talent_2.png"
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "虹色の歌",
             "説明": "10秒毎に元素エネルギーを1回復する。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/constellation_1.png",
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -369,30 +370,30 @@
                     "数値": "-15%"
                 }
             ],
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/constellation_2.png"
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/summaryList_2.png"
         },
         "3": {
             "名前": "明日の星",
             "説明": "<span style=\"color:#FFD780FF\">シャイニングミラクル♪</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/constellation_3.png",
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "努力が魔法なの",
             "説明": "重撃が敵に命中する度に、バーバラの元素エネルギーが1回復する。<br/>一回で最大元素エネルギーが5まで回復できる。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/constellation_4.png",
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "純真な絆",
             "説明": "<span style=\"color:#FFD780FF\">公演、開始♪</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/constellation_5.png",
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "美しいものをあなたに",
             "説明": "バーバラ待機中に出場している自身のキャラクターが戦闘不能になると、下記の効果が発動される。<br/>·戦闘不能になったキャラクターを復活させる。<br/>·該当キャラクターのHPが100%回復される。<br/>この効果は15分毎に1回のみ発動可能。",
-            "icon_url": "images/characters/hydro_4_catalyst_Barbara/constellation_6.png",
+            "icon_url": "images/characters/hydro_4_catalyst_Barbara/summaryList_6.png",
             "詳細": []
         }
     },

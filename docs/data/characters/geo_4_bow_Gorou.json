@@ -17,6 +17,7 @@
         "日本語 CV": "畠中祐",
         "韓国語 CV": "이새벽"
     },
+    "region": "稲妻城",
     "ステータス": {
         "基礎HP": {
             "1+": 802,
@@ -152,7 +153,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/geo_4_bow_Gorou/battle_talent_0.png"
+        "icon_url": "images/characters/geo_4_bow_Gorou/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -325,7 +326,7 @@
         "継続時間": 10,
         "クールタイム": 10,
         "粒子生成数": "2個",
-        "icon_url": "images/characters/geo_4_bow_Gorou/battle_talent_1.png"
+        "icon_url": "images/characters/geo_4_bow_Gorou/talent_2.png"
     },
     "元素爆発": {
         "名前": "獣牙突撃陣形戦法",
@@ -371,7 +372,7 @@
         "継続時間": 9,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/geo_4_bow_Gorou/battle_talent_2.png"
+        "icon_url": "images/characters/geo_4_bow_Gorou/talent_3.png"
     },
     "固有天賦": [
         {
@@ -385,12 +386,12 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/geo_4_bow_Gorou/const_talent_0.png"
+            "icon_url": "images/characters/geo_4_bow_Gorou/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "報恩の守護",
-            "説明": "防御力を基にゴローの以下攻撃のダメージが増加する。<br/>·<span style=\"color:#FFD780FF\">犬坂の遠吠え方円陣</span>のスキルダメージが防御力156%分アップする。<br/>·<span style=\"color:#FFD780FF\">獣牙突撃陣形戦法</span>のスキルダメージと岩晶崩滅のダメージが防御力15.6%分アップする。",
+            "説明": "防御力を基準に、ゴローの下記攻撃のダメージが増加する。<br>·<span style=\"color: #FFD780\">犬坂の遠吠え方円陣</span>のスキルダメージが防御力156%分アップする。<br>·<span style=\"color: #FFD780\">獣牙突撃陣形戦法</span>のスキルダメージと岩晶崩滅のダメージが防御力15.6%分アップする。",
             "詳細": [
                 {
                     "種類": "元素スキルダメージアップ",
@@ -405,32 +406,32 @@
                     "数値": "15.6%防御力"
                 }
             ],
-            "icon_url": "images/characters/geo_4_bow_Gorou/const_talent_1.png"
+            "icon_url": "images/characters/geo_4_bow_Gorou/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "キラキラ発見術",
             "説明": "ミニマップで周囲の<span style=\"color:#FFD780FF\">稲妻地域の特産</span>の位置を表示する。",
-            "icon_url": "images/characters/geo_4_bow_Gorou/const_talent_2.png"
+            "icon_url": "images/characters/geo_4_bow_Gorou/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "犬瞬·疾きこと風の如く",
             "説明": "ゴロー自身による<span style=\"color:#FFD780FF\">大将の旗指物</span>または<span style=\"color:#FFD780FF\">大将威儀</span>の領域にいるフィールド上キャラクター（ゴロー自身を除く）が敵に岩元素ダメージを与えると、ゴロー自身の<span style=\"color:#FFD780FF\">犬坂の遠吠え方円陣</span>のクールタイム-2秒。<br/>この効果は10秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/geo_4_bow_Gorou/constellation_1.png",
+            "icon_url": "images/characters/geo_4_bow_Gorou/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "犬座·確固たること鐘の如く",
             "説明": "<span style=\"color:#FFD780FF\">大将威儀</span>の持続時間内、近くのフィールド上キャラクターが結晶反応による結晶の欠片を獲得すると、ゴロー自身の大将威儀の継続時間+1秒。<br/>0.1秒毎に1回のみ発動可能、この方式で最大3秒まで延長できる。",
-            "icon_url": "images/characters/geo_4_bow_Gorou/constellation_2.png",
+            "icon_url": "images/characters/geo_4_bow_Gorou/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "犬爪·圧すること火の如く",
             "説明": "<span style=\"color:#FFD780FF\">犬坂の遠吠え方円陣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_4_bow_Gorou/constellation_3.png",
+            "icon_url": "images/characters/geo_4_bow_Gorou/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -443,12 +444,12 @@
                     "数値": "50%防御力"
                 }
             ],
-            "icon_url": "images/characters/geo_4_bow_Gorou/constellation_4.png"
+            "icon_url": "images/characters/geo_4_bow_Gorou/summaryList_4.png"
         },
         "5": {
             "名前": "犬突·動くこと雷の如く",
             "説明": "<span style=\"color:#FFD780FF\">獣牙突撃陣形戦法</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_4_bow_Gorou/constellation_5.png",
+            "icon_url": "images/characters/geo_4_bow_Gorou/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -461,7 +462,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/geo_4_bow_Gorou/constellation_6.png"
+            "icon_url": "images/characters/geo_4_bow_Gorou/summaryList_6.png"
         }
     },
     "おすすめセット": [

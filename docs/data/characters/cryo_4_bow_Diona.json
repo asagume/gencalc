@@ -17,6 +17,7 @@
         "日本語 CV": "井澤詩織",
         "韓国語 CV": "우정신"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 802,
@@ -168,7 +169,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/cryo_4_bow_Diona/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_4_bow_Diona/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -350,7 +351,7 @@
         },
         "一回押しクールタイム": 6,
         "長押しクールタイム": 15,
-        "icon_url": "images/characters/cryo_4_bow_Diona/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_4_bow_Diona/talent_2.png"
     },
     "元素爆発": {
         "名前": "特製スピリッツ",
@@ -415,33 +416,33 @@
         "継続時間": 12,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/cryo_4_bow_Diona/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_4_bow_Diona/talent_3.png"
     },
     "固有天賦": [
         {
             "種類": "固有天賦",
             "名前": "キャッツテールの裏メニュー",
             "説明": "<span style=\"color:#FFD780FF\">フリーズキャッツクロー</span>のシールドが存在する時、キャラクターの移動速度+10%、スタミナ消費-10%。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/const_talent_0.png"
+            "icon_url": "images/characters/cryo_4_bow_Diona/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "滑稽な酔態",
             "説明": "<span style=\"color:#FFD780FF\">特製スピリッツ</span>のエリアに入った敵の攻撃力が15秒間-10%。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/const_talent_1.png"
+            "icon_url": "images/characters/cryo_4_bow_Diona/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "おまけのおつまみ",
             "説明": "回復系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/const_talent_2.png"
+            "icon_url": "images/characters/cryo_4_bow_Diona/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "特製の余韻",
             "説明": "<span style=\"color:#FFD780FF\">特製スピリッツ</span>の効果終了時、ディオナの元素エネルギーを15回復する。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/constellation_1.png",
+            "icon_url": "images/characters/cryo_4_bow_Diona/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -464,24 +465,24 @@
                     "数値": "115"
                 }
             ],
-            "icon_url": "images/characters/cryo_4_bow_Diona/constellation_2.png"
+            "icon_url": "images/characters/cryo_4_bow_Diona/summaryList_2.png"
         },
         "3": {
             "名前": "お、おかわり？",
             "説明": "<span style=\"color:#FFD780FF\">特製スピリッツ</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/constellation_3.png",
+            "icon_url": "images/characters/cryo_4_bow_Diona/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "「酒造業キラー」",
             "説明": "<span style=\"color:#FFD780FF\">特製スピリッツ</span>のエリアにいる時、ディオナの狙い撃ちのチャージ時間-60%。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/constellation_4.png",
+            "icon_url": "images/characters/cryo_4_bow_Diona/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "エクストラアイス",
             "説明": "<span style=\"color:#FFD780FF\">フリーズキャッツクロー</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_4_bow_Diona/constellation_5.png",
+            "icon_url": "images/characters/cryo_4_bow_Diona/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -499,7 +500,7 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "images/characters/cryo_4_bow_Diona/constellation_6.png"
+            "icon_url": "images/characters/cryo_4_bow_Diona/summaryList_6.png"
         }
     },
     "おすすめセット": [

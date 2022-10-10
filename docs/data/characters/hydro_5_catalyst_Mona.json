@@ -17,6 +17,7 @@
         "日本語 CV": "小原好美",
         "韓国語 CV": "우정신"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 810,
@@ -156,7 +157,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/hydro_5_catalyst_Mona/battle_talent_0.png"
+        "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、短い詠唱をした後、敵に水元素範囲ダメージを与える。",
@@ -278,7 +279,7 @@
             }
         ],
         "クールタイム": 12,
-        "icon_url": "images/characters/hydro_5_catalyst_Mona/battle_talent_1.png"
+        "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_2.png"
     },
     "元素爆発": {
         "名前": "星命定軌",
@@ -361,20 +362,20 @@
         },
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/hydro_5_catalyst_Mona/battle_talent_3.png"
+        "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_4.png"
     },
     "その他戦闘天賦": [
         {
             "名前": "虚実流動",
             "説明": "<span style=\"color:#FFD780FF\">ダッシュの代わりに発動する</span><br/>水流に隠れて激流となり、スタミナを消費して素早く移動する。<br/><br/>虚実流動状態のモナは水面上を高速移動できる。<br/>虚実流動状態が終了し、姿を現した時に、周囲の敵に<span style=\"color:#80C0FFFF\">湿潤</span>状態を与える。<br/><br/><i>これは彼女の先生にすらできない、モナだけの技だ。水元素の神の目のおかげではない。しつこく叱ってくる先生から逃げた結果である。</i>",
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/battle_talent_2.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_3.png"
         }
     ],
     "固有天賦": [
         {
             "名前": "「おばば、私を捕まえられますか～」",
             "説明": "<span style=\"color:#FFD780FF\">虚実流動</span>状態に入った2秒後、周囲に敵がいる場合、自動的に虚影を1つ生成する。<br/>虚影は2秒間存在した後に破裂する。破裂ダメージは<span style=\"color:#FFD780FF\">水中幻願</span>のダメージの50%に相当する。",
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/const_talent_0.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_5.png"
         },
         {
             "名前": "「運命の流れに任せましょう！」",
@@ -385,12 +386,12 @@
                     "数値": "20%元素チャージ効率"
                 }
             ],
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/const_talent_1.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_6.png"
         },
         {
             "名前": "運行原理",
             "説明": "武器突破素材を合成する時、25%の確率で一部の材料が返還される。",
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/const_talent_2.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/talent_7.png"
         }
     ],
     "命ノ星座": {
@@ -419,18 +420,18 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/constellation_1.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/summaryList_1.png"
         },
         "2": {
             "名前": "星月の連珠",
             "説明": "通常攻撃が命中した時、20%の確率で自動的に重撃を発動する。<br/>5秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/constellation_2.png",
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "果てしない天象",
             "説明": "<span style=\"color:#FFD780FF\">星命定軌</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/constellation_3.png",
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -443,12 +444,12 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/constellation_4.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/summaryList_4.png"
         },
         "5": {
             "名前": "運命の愚弄",
             "説明": "<span style=\"color:#FFD780FF\">水中幻願</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/constellation_5.png",
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -461,7 +462,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/hydro_5_catalyst_Mona/constellation_6.png"
+            "icon_url": "images/characters/hydro_5_catalyst_Mona/summaryList_6.png"
         }
     },
     "おすすめセット": [

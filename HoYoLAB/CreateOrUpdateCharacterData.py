@@ -28,6 +28,7 @@ templateJson = {
     '元素': None,
     'baseInfo': {
     },
+    'region': None,
     'ステータス': {
         '基礎HP': {},
         '基礎攻撃力': {},
@@ -197,6 +198,8 @@ for filepath in files:
         dstJson['武器'] = t(value)
     for value in srcJson['filter_values']['character_vision']['values']:
         dstJson['元素'] = t(value.replace('元素', ''))
+    for value in srcJson['filter_values']['character_region']['values']:
+        dstJson['region'] = t(value)
 
     dstJson['ステータス'] = copy.deepcopy(templateJson['ステータス'])
     # for value in srcJson['filter_values']['character_property']['values']:

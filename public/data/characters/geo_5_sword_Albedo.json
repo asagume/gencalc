@@ -17,6 +17,7 @@
         "日本語 CV": "野島健児",
         "韓国語 CV": "김명준"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 1030,
@@ -171,7 +172,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/geo_5_sword_Albedo/battle_talent_0.png"
+        "icon_url": "images/characters/geo_5_sword_Albedo/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、前方に斬撃を2回放つ。",
@@ -297,7 +298,7 @@
         "継続時間": 30,
         "クールタイム": 4,
         "粒子生成数": "0.7個/追撃",
-        "icon_url": "images/characters/geo_5_sword_Albedo/battle_talent_1.png"
+        "icon_url": "images/characters/geo_5_sword_Albedo/talent_2.png"
     },
     "元素爆発": {
         "名前": "誕生式·大地の潮",
@@ -342,7 +343,7 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/geo_5_sword_Albedo/battle_talent_2.png"
+        "icon_url": "images/characters/geo_5_sword_Albedo/talent_3.png"
     },
     "固有天賦": [
         {
@@ -357,7 +358,7 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/geo_5_sword_Albedo/const_talent_0.png"
+            "icon_url": "images/characters/geo_5_sword_Albedo/talent_4.png"
         },
         {
             "名前": "ホムンクルスの天智",
@@ -370,20 +371,20 @@
                     "数値": 125
                 }
             ],
-            "icon_url": "images/characters/geo_5_sword_Albedo/const_talent_1.png"
+            "icon_url": "images/characters/geo_5_sword_Albedo/talent_5.png"
         },
         {
             "名前": "天才の気付き",
             "種類": "固有天賦",
             "説明": "武器突破素材を合成する時、10%の確率でアイテムを2倍獲得する。",
-            "icon_url": "images/characters/geo_5_sword_Albedo/const_talent_2.png"
+            "icon_url": "images/characters/geo_5_sword_Albedo/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "エデンの花",
             "説明": "アルベドの<span style=\"color:#FFD780FF\">創生術·擬似陽華</span>の刹那の花が放たれた時、アルベド自身の元素エネルギーが1.2回復する。",
-            "icon_url": "images/characters/geo_5_sword_Albedo/constellation_1.png",
+            "icon_url": "images/characters/geo_5_sword_Albedo/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -396,12 +397,12 @@
                     "数値": "30%防御力"
                 }
             ],
-            "icon_url": "images/characters/geo_5_sword_Albedo/constellation_2.png"
+            "icon_url": "images/characters/geo_5_sword_Albedo/summaryList_2.png"
         },
         "3": {
             "名前": "太陽の華",
             "説明": "<span style=\"color:#FFD780FF\">創生術·擬似陽華</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_5_sword_Albedo/constellation_3.png",
+            "icon_url": "images/characters/geo_5_sword_Albedo/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -414,12 +415,12 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "images/characters/geo_5_sword_Albedo/constellation_4.png"
+            "icon_url": "images/characters/geo_5_sword_Albedo/summaryList_4.png"
         },
         "5": {
             "名前": "太古の潮",
             "説明": "<span style=\"color:#FFD780FF\">誕生式·大地の潮</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_5_sword_Albedo/constellation_5.png",
+            "icon_url": "images/characters/geo_5_sword_Albedo/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -432,7 +433,7 @@
                     "数値": 17
                 }
             ],
-            "icon_url": "images/characters/geo_5_sword_Albedo/constellation_6.png"
+            "icon_url": "images/characters/geo_5_sword_Albedo/summaryList_6.png"
         }
     },
     "おすすめセット": [

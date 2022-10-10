@@ -156,7 +156,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/cryo_5_bow_Aloy/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_bow_Aloy/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -328,7 +328,7 @@
                 "種類": "氷元素付与"
             }
         ],
-        "icon_url": "images/characters/cryo_5_bow_Aloy/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_bow_Aloy/talent_2.png"
     },
     "元素爆発": {
         "名前": "ドーンプロフェシー",
@@ -352,7 +352,7 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/cryo_5_bow_Aloy/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_5_bow_Aloy/talent_3.png"
     },
     "固有天賦": [
         {
@@ -366,7 +366,7 @@
                     "数値": 16
                 }
             ],
-            "icon_url": "images/characters/cryo_5_bow_Aloy/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_bow_Aloy/talent_4.png"
         },
         {
             "種類": "固有天賦",
@@ -379,50 +379,50 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/cryo_5_bow_Aloy/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_bow_Aloy/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "まあまあ落ち着け",
             "説明": "アーロイがチーム内にいる時、チーム内の自身のキャラクターが鳥肉、獣肉、冷製鮮肉をドロップする動物に近づいても気付かれなくなる。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_bow_Aloy/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_1.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_2.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_4.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "異界の星",
             "説明": "この者の星空を灯す時は、まだ訪れていない。",
-            "icon_url": "images/characters/cryo_5_bow_Aloy/constellation_6.png",
+            "icon_url": "images/characters/cryo_5_bow_Aloy/summaryList_6.png",
             "詳細": []
         }
     },

@@ -17,6 +17,7 @@
         "日本語 CV": "高尾奏音",
         "韓国語 CV": "이보희"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 1012,
@@ -152,7 +153,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/geo_4_claymore_Noelle/battle_talent_0.png"
+        "icon_url": "images/characters/geo_4_claymore_Noelle/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -313,7 +314,7 @@
         ],
         "継続時間": 12,
         "クールタイム": 24,
-        "icon_url": "images/characters/geo_4_claymore_Noelle/battle_talent_1.png"
+        "icon_url": "images/characters/geo_4_claymore_Noelle/talent_2.png"
     },
     "元素爆発": {
         "名前": "大掃除",
@@ -392,7 +393,7 @@
         "継続時間": 15,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/geo_4_claymore_Noelle/battle_talent_2.png"
+        "icon_url": "images/characters/geo_4_claymore_Noelle/talent_3.png"
     },
     "固有天賦": [
         {
@@ -407,26 +408,26 @@
                     "元素": "岩"
                 }
             ],
-            "icon_url": "images/characters/geo_4_claymore_Noelle/const_talent_0.png"
+            "icon_url": "images/characters/geo_4_claymore_Noelle/talent_4.png"
         },
         {
             "名前": "きれいさっぱり",
             "種類": "固有天賦",
             "説明": "ノエルの通常攻撃または重撃が敵に累計4回命中すると、<span style=\"color:#FFD780FF\">護心鎧</span>のクールタイム-1秒。<br/>0.1秒毎に1回のみカウント可能。",
-            "icon_url": "images/characters/geo_4_claymore_Noelle/const_talent_1.png"
+            "icon_url": "images/characters/geo_4_claymore_Noelle/talent_5.png"
         },
         {
             "名前": "メイドの仕草",
             "種類": "固有天賦",
             "説明": "防御系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "images/characters/geo_4_claymore_Noelle/const_talent_2.png"
+            "icon_url": "images/characters/geo_4_claymore_Noelle/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "支援はお任せください",
             "説明": "同時に<span style=\"color:#FFD780FF\">大掃除</span>と<span style=\"color:#FFD780FF\">護心鎧</span>状態にいる時、護心鎧のHP回復効果の発動率が100%になる。",
-            "icon_url": "images/characters/geo_4_claymore_Noelle/constellation_1.png",
+            "icon_url": "images/characters/geo_4_claymore_Noelle/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -438,12 +439,12 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/geo_4_claymore_Noelle/constellation_2.png"
+            "icon_url": "images/characters/geo_4_claymore_Noelle/summaryList_2.png"
         },
         "3": {
             "名前": "怪我はしません",
             "説明": "<span style=\"color:#FFD780FF\">護心鎧</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_4_claymore_Noelle/constellation_3.png",
+            "icon_url": "images/characters/geo_4_claymore_Noelle/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -457,12 +458,12 @@
                     "元素": "岩"
                 }
             ],
-            "icon_url": "images/characters/geo_4_claymore_Noelle/constellation_4.png"
+            "icon_url": "images/characters/geo_4_claymore_Noelle/summaryList_4.png"
         },
         "5": {
             "名前": "騎士団の掃除達人",
             "説明": "<span style=\"color:#FFD780FF\">大掃除</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_4_claymore_Noelle/constellation_5.png",
+            "icon_url": "images/characters/geo_4_claymore_Noelle/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -475,7 +476,7 @@
                     "数値": "50%防御力"
                 }
             ],
-            "icon_url": "images/characters/geo_4_claymore_Noelle/constellation_6.png"
+            "icon_url": "images/characters/geo_4_claymore_Noelle/summaryList_6.png"
         }
     },
     "おすすめセット": [

@@ -17,6 +17,7 @@
         "日本語 CV": "瀬戸麻沙美",
         "韓国語 CV": "문지영"
     },
+    "region": "稲妻城",
     "ステータス": {
         "基礎HP": {
             "1+": 802,
@@ -168,7 +169,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/electro_4_bow_KujouSara/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_bow_KujouSara/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -332,7 +333,7 @@
         ],
         "継続時間": 6,
         "クールタイム": 10,
-        "icon_url": "images/characters/electro_4_bow_KujouSara/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_bow_KujouSara/talent_2.png"
     },
     "元素爆発": {
         "名前": "煌煌千道鎮式",
@@ -377,57 +378,57 @@
         ],
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/electro_4_bow_KujouSara/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_bow_KujouSara/talent_3.png"
     },
     "固有天賦": [
         {
             "種類": "固有天賦",
             "名前": "不動心",
             "説明": "<span style=\"color:#FFD780FF\">烏天狗雷霆召呪</span>による「烏羽護持」の時、狙い撃ちのチャージ時間-60%。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_bow_KujouSara/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "御公儀",
             "説明": "天狗呪雷·伏は敵に命中すると、九条裟羅の元素チャージ効率を基準にし、その100%の元素チャージ効率毎に、チーム全員の元素エネルギーを1.2回復する。この効果は3秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_bow_KujouSara/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "検地",
             "説明": "稲妻の探索任務の所要時間-25%。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_bow_KujouSara/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "烏目",
             "説明": "天狗呪雷がキャラクターに攻撃力アップ効果を付与、または敵に命中すると、<span style=\"color:#FFD780FF\">烏天狗雷霆召呪</span>のクールタイム-1秒。<br/>この効果は3秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/constellation_1.png",
+            "icon_url": "images/characters/electro_4_bow_KujouSara/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "鴉の羽",
             "説明": "<span style=\"color:#FFD780FF\">烏天狗雷霆召呪</span>を発動した時、九条裟羅が元々いた位置に微弱な天狗呪雷·伏の「烏羽」を発動し、本来の30%のダメージを与える。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/constellation_2.png",
+            "icon_url": "images/characters/electro_4_bow_KujouSara/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "心魔",
             "説明": "<span style=\"color:#FFD780FF\">煌煌千道鎮式</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/constellation_3.png",
+            "icon_url": "images/characters/electro_4_bow_KujouSara/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "徹証",
             "説明": "<span style=\"color:#FFD780FF\">煌煌千道鎮式</span>による天狗呪雷·雷礫の数が6つに増加する。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/constellation_4.png",
+            "icon_url": "images/characters/electro_4_bow_KujouSara/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "呪詠",
             "説明": "<span style=\"color:#FFD780FF\">烏天狗雷霆召呪</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_bow_KujouSara/constellation_5.png",
+            "icon_url": "images/characters/electro_4_bow_KujouSara/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -440,7 +441,7 @@
                     "数値": 60
                 }
             ],
-            "icon_url": "images/characters/electro_4_bow_KujouSara/constellation_6.png"
+            "icon_url": "images/characters/electro_4_bow_KujouSara/summaryList_6.png"
         }
     },
     "おすすめセット": [

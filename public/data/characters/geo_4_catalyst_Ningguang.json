@@ -17,6 +17,7 @@
         "日本語 CV": "大原さやか",
         "韓国語 CV": "곽규미"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 821,
@@ -114,7 +115,7 @@
                 "数値": "通常攻撃#通常攻撃ダメージ*2"
             }
         ],
-        "icon_url": "images/characters/geo_4_catalyst_Ningguang/battle_talent_0.png"
+        "icon_url": "images/characters/geo_4_catalyst_Ningguang/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -257,7 +258,7 @@
         ],
         "クールタイム": 12,
         "粒子生成数": 3.5,
-        "icon_url": "images/characters/geo_4_catalyst_Ningguang/battle_talent_1.png"
+        "icon_url": "images/characters/geo_4_catalyst_Ningguang/talent_2.png"
     },
     "元素爆発": {
         "名前": "天権崩玉",
@@ -294,13 +295,13 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/geo_4_catalyst_Ningguang/battle_talent_2.png"
+        "icon_url": "images/characters/geo_4_catalyst_Ningguang/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "物換星移",
             "説明": "星璇がついている間、凝光の重撃はスタミナを消費しない。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/const_talent_0.png"
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/talent_4.png"
         },
         {
             "名前": "備えあれば憂いなし",
@@ -312,31 +313,31 @@
                     "数値": 12
                 }
             ],
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/const_talent_1.png"
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/talent_5.png"
         },
         {
             "名前": "奇石宝物録",
             "説明": "ミニマップで周囲の<span style=\"color:#FFD780FF\">鍛造に使われる鉱石の鉱脈</span>の位置を表示する。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/const_talent_2.png"
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "散る星の破片",
             "説明": "通常攻撃が命中すると範囲ダメージを与える。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/constellation_1.png",
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "璇璣、崑崙を鎮める",
             "説明": "<span style=\"color:#FFD780FF\">璇璣屏</span>が破裂した時、クールタイムがリセットする。<br/>6秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/constellation_2.png",
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "森羅星列の囲い",
             "説明": "<span style=\"color:#FFD780FF\">天権崩玉</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/constellation_3.png",
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -349,18 +350,18 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/constellation_4.png"
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/summaryList_4.png"
         },
         "5": {
             "名前": "瓊屏と千扇の守り",
             "説明": "<span style=\"color:#FFD780FF\">璇璣屏</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/constellation_5.png",
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "燦々たる七星",
             "説明": "<span style=\"color:#FFD780FF\">天権崩玉</span>を放つ時、凝光に七枚の星璇を生成する。",
-            "icon_url": "images/characters/geo_4_catalyst_Ningguang/constellation_6.png",
+            "icon_url": "images/characters/geo_4_catalyst_Ningguang/summaryList_6.png",
             "詳細": []
         }
     },

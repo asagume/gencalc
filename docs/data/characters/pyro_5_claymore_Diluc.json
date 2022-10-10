@@ -17,6 +17,7 @@
         "日本語 CV": "小野賢章",
         "韓国語 CV": "최승훈"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 1011,
@@ -155,7 +156,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/pyro_5_claymore_Diluc/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_5_claymore_Diluc/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -313,7 +314,7 @@
             }
         ],
         "クールタイム": 10,
-        "icon_url": "images/characters/pyro_5_claymore_Diluc/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_5_claymore_Diluc/talent_2.png"
     },
     "元素爆発": {
         "名前": "黎明",
@@ -381,14 +382,14 @@
         "バフ継続時間": 8,
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/pyro_5_claymore_Diluc/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_5_claymore_Diluc/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "ノンストップ",
             "種類": "固有天賦",
             "説明": "重撃のスタミナ消費-50%、最大継続時間+3秒。",
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/const_talent_0.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/talent_4.png"
         },
         {
             "名前": "溶融の翼",
@@ -401,13 +402,13 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/const_talent_1.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/talent_5.png"
         },
         {
             "名前": "アカツキの伝統",
             "種類": "固有天賦",
             "説明": "両手剣を鍛造する時、消費した鉱石の15%が返還される。",
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/const_talent_2.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -421,7 +422,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_1.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/summaryList_1.png"
         },
         "2": {
             "名前": "灼熱余燼",
@@ -438,12 +439,12 @@
                     "数値": 5
                 }
             ],
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_2.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/summaryList_2.png"
         },
         "3": {
             "名前": "鋼鉄の熾焔",
             "説明": "<span style=\"color:#FFD780FF\">逆焔の刃</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_3.png",
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -463,12 +464,12 @@
                     "数値": 40
                 }
             ],
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_4.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/summaryList_4.png"
         },
         "5": {
             "名前": "朝を告げる炎の鳥",
             "説明": "<span style=\"color:#FFD780FF\">黎明</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_5.png",
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -481,7 +482,7 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "images/characters/pyro_5_claymore_Diluc/constellation_6.png"
+            "icon_url": "images/characters/pyro_5_claymore_Diluc/summaryList_6.png"
         }
     },
     "おすすめセット": [

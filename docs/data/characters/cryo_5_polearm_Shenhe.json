@@ -17,6 +17,7 @@
         "日本語 CV": "川澄綾子",
         "韓国語 CV": "이현진"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 1011,
@@ -172,7 +173,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/cryo_5_polearm_Shenhe/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_polearm_Shenhe/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に突進し、経路上の敵にダメージを与える。",
@@ -336,7 +337,7 @@
         "長押し発動回数": 7,
         "一回押しクールタイム": 10,
         "長押しクールタイム": 15,
-        "icon_url": "images/characters/cryo_5_polearm_Shenhe/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_polearm_Shenhe/talent_2.png"
     },
     "元素爆発": {
         "名前": "神女遣霊真訣",
@@ -441,7 +442,7 @@
         "継続時間": 12,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/cryo_5_polearm_Shenhe/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_5_polearm_Shenhe/talent_3.png"
     },
     "固有天賦": [
         {
@@ -455,7 +456,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/talent_4.png"
         },
         {
             "種類": "固有天賦",
@@ -488,13 +489,13 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "往来通暁",
             "説明": "璃月で20時間かかる探索任務を完了した時、獲得する報酬+25%。",
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -507,7 +508,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/constellation_1.png"
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/summaryList_1.png"
         },
         "2": {
             "名前": "定蒙",
@@ -523,12 +524,12 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/constellation_2.png"
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/summaryList_2.png"
         },
         "3": {
             "名前": "潜虚",
             "説明": "<span style=\"color:#FFD780FF\">仰霊威召将役呪</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -541,18 +542,18 @@
                     "数値": 5
                 }
             ],
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/constellation_4.png"
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/summaryList_4.png"
         },
         "5": {
             "名前": "化神",
             "説明": "<span style=\"color:#FFD780FF\">神女遣霊真訣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "忘玄",
             "説明": "キャラクターが通常攻撃および重撃で<span style=\"color:#FFD780FF\">「氷翎」</span>効果を発動した時、「氷翎」の発動回数が消費されなくなる。",
-            "icon_url": "images/characters/cryo_5_polearm_Shenhe/constellation_6.png",
+            "icon_url": "images/characters/cryo_5_polearm_Shenhe/summaryList_6.png",
             "詳細": []
         }
     },

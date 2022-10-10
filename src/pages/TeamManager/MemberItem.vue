@@ -153,18 +153,35 @@ export default defineComponent({
         })
       }
 
+      // 夜蘭
+      if (characterInput.character == '夜蘭') {
+        conditionInput.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
+      }
+
+      // 千岩古剣、千岩長槍
+      if (['千岩古剣', '千岩長槍'].includes(characterInput.weapon)) {
+        if (props.members) {
+          let liyueCount = 0;
+          for (const member of props.members.filter(s => s)) {
+            const characterDetail = await getCharacterMasterDetail(member as TCharacterKey);
+            if (characterDetail.region) {
+              if (['璃月港'].includes(characterDetail.region)) {
+                liyueCount++;
+              }
+            }
+          }
+          const conditionKey = '[' + characterInput.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
+          conditionInput.conditionValues[conditionKey] = liyueCount;
+        }
+      }
+
       // 金メッキの夢
       const gildedDreamsSet = characterInput.artifactSets.filter(s => s == '金メッキの夢').length;
       if (gildedDreamsSet == 2) {
         let sameCount = (teamElements[myVision] - 1);
-        let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a+ b);
+        let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
         conditionInput.conditionValues['[金メッキの夢4]同じ元素タイプ'] = sameCount;
         conditionInput.conditionValues['[金メッキの夢4]異なる元素タイプ'] = otherCount;
-      }
-
-      // 夜蘭
-      if (characterInput.character == '夜蘭') {
-        conditionInput.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
       }
 
       // 元素共鳴

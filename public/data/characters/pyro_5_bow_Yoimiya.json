@@ -17,6 +17,7 @@
         "日本語 CV": "植田佳奈",
         "韓国語 CV": "박신희"
     },
+    "region": "稲妻城",
     "ステータス": {
         "基礎HP": {
             "1+": 792,
@@ -170,7 +171,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/pyro_5_bow_Yoimiya/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_5_bow_Yoimiya/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -322,7 +323,7 @@
         ],
         "継続時間": 10,
         "クールタイム": 18,
-        "icon_url": "images/characters/pyro_5_bow_Yoimiya/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_5_bow_Yoimiya/talent_2.png"
     },
     "元素爆発": {
         "名前": "琉金の雲間草",
@@ -368,7 +369,7 @@
         "継続時間": 10,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/pyro_5_bow_Yoimiya/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_5_bow_Yoimiya/talent_3.png"
     },
     "固有天賦": [
         {
@@ -382,19 +383,19 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/const_talent_0.png"
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "炎昼の風物詩",
             "説明": "<span style=\"color:#FFD780FF\">琉金の雲間草</span>を発動した後の15秒内、周囲のチーム全員（宵宮自身を除く）の攻撃力+10%。また、宵宮が<span style=\"color:#FFD780FF\">琉金の雲間草</span>を発動時に固有天賦「袖火百景図」の重ねた数をもとに、1重ごとにさらに攻撃力を1%アップする。",
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/const_talent_1.png"
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "炎色の配合法",
             "説明": "建材、置物、景観などの調度品を製作する時、100%の確率で一部の材料が返還される。",
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/const_talent_2.png"
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -408,7 +409,7 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/constellation_1.png"
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/summaryList_1.png"
         },
         "2": {
             "名前": "万燈の火",
@@ -420,30 +421,30 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/constellation_2.png"
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/summaryList_2.png"
         },
         "3": {
             "名前": "鼠花火の手品",
             "説明": "<span style=\"color:#FFD780FF\">焔硝の庭火舞い</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/constellation_3.png",
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "花火職人の心得",
             "説明": "宵宮自身が発動した琉金の炎が爆発を起こすと、<span style=\"color:#FFD780FF\">焔硝の庭火舞い</span>のクールタイム-1.2秒。",
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/constellation_4.png",
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "真夏の宵祭り錦絵",
             "説明": "<span style=\"color:#FFD780FF\">琉金の雲間草</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/constellation_5.png",
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "長野原龍勢流星群",
             "説明": "<span style=\"color:#FFD780FF\">焔硝の庭火舞い</span>の継続時間中、宵宮自身の通常攻撃は50%の確率で熾焔の矢を1本追加で発射し、本来の60%分のダメージを与える。このダメージは通常攻撃ダメージとみなされる。",
-            "icon_url": "images/characters/pyro_5_bow_Yoimiya/constellation_6.png",
+            "icon_url": "images/characters/pyro_5_bow_Yoimiya/summaryList_6.png",
             "詳細": []
         }
     },

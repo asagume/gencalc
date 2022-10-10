@@ -17,6 +17,7 @@
         "日本語 CV": "田中理恵",
         "韓国語 CV": "박고운"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 802,
@@ -152,7 +153,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/electro_4_catalyst_Lisa/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_catalyst_Lisa/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -331,7 +332,7 @@
         ],
         "一回押しクールタイム": 1,
         "長押しクールタイム": 16,
-        "icon_url": "images/characters/electro_4_catalyst_Lisa/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_catalyst_Lisa/talent_2.png"
     },
     "元素爆発": {
         "名前": "薔薇の雷光",
@@ -359,13 +360,13 @@
         "継続時間": 15,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/electro_4_catalyst_Lisa/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_catalyst_Lisa/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "感電余震",
             "説明": "重撃が命中した時、敵に<span style=\"color:#FFD780FF\">蒼雷</span>の誘雷効果を付与する。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/talent_4.png"
         },
         {
             "名前": "静電気フィールド",
@@ -377,19 +378,19 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/talent_5.png"
         },
         {
             "名前": "薬剤の知識",
             "説明": "薬剤を合成する時、20%の確率で材料が返還される。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "無限の電気回路",
             "説明": "<span style=\"color:#FFD780FF\">蒼雷</span>を長押しで発動した後、敵に命中する度にリサの元素エネルギーが2回復する。<br/>一回で最大10まで回復可能。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/constellation_1.png",
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -402,30 +403,30 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/constellation_2.png"
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/summaryList_2.png"
         },
         "3": {
             "名前": "共振の雷光",
             "説明": "<span style=\"color:#FFD780FF\">薔薇の雷光</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/constellation_3.png",
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "雨の如くプラズマ",
             "説明": "<span style=\"color:#FFD780FF\">薔薇の雷光</span>が攻撃する時、放つ稲妻が1~3本に増加する。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/constellation_4.png",
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "プラズマ落雷",
             "説明": "<span style=\"color:#FFD780FF\">蒼雷</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/constellation_5.png",
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "パルスの魔女",
             "説明": "登場時、周囲の敵に<span style=\"color:#FFD780FF\">蒼雷</span>の誘雷効果を3重付与する。<br/>この効果は5秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/electro_4_catalyst_Lisa/constellation_6.png",
+            "icon_url": "images/characters/electro_4_catalyst_Lisa/summaryList_6.png",
             "詳細": []
         }
     },

@@ -17,6 +17,7 @@
         "日本語 CV": "たかはし智秋",
         "韓国語 CV": "김채하"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 939,
@@ -152,7 +153,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/pyro_4_claymore_Xinyan/battle_talent_0.png"
+        "icon_url": "images/characters/pyro_4_claymore_Xinyan/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -350,7 +351,7 @@
         ],
         "シールド継続時間": 12,
         "クールタイム": 18,
-        "icon_url": "images/characters/pyro_4_claymore_Xinyan/battle_talent_1.png"
+        "icon_url": "images/characters/pyro_4_claymore_Xinyan/talent_2.png"
     },
     "元素爆発": {
         "名前": "反逆の弾き",
@@ -397,14 +398,14 @@
         "継続時間": 2,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/pyro_4_claymore_Xinyan/battle_talent_2.png"
+        "icon_url": "images/characters/pyro_4_claymore_Xinyan/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "「観客いなくても演奏するのだ…」",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">情熱の薙ぎ払い</span>のシールド発動に必要な命中数を減少する。<br/>·Lv.2シールド·指揮のリズム：1名の敵に命中する。<br/>·Lv.3シールド·舞のリズム：2名の敵に命中する。",
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/const_talent_0.png"
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/talent_4.png"
         },
         {
             "名前": "「…これこそがロックだ！」",
@@ -417,20 +418,20 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/const_talent_1.png"
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/talent_5.png"
         },
         {
             "名前": "タフレシピ",
             "種類": "固有天賦",
             "説明": "防御系料理を完璧調理した時、12%の確率で料理を2倍獲得する。",
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/const_talent_2.png"
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "絶命の加速",
             "説明": "会心攻撃が発生した5秒間、通常攻撃と重撃の攻撃速度+12%。<br/>5秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/constellation_1.png",
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -443,12 +444,12 @@
                     "数値": 100
                 }
             ],
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/constellation_2.png"
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/summaryList_2.png"
         },
         "3": {
             "名前": "摭分の運指",
             "説明": "<span style=\"color:#FFD780FF\">情熱の薙ぎ払い</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/constellation_3.png",
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -461,12 +462,12 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/constellation_4.png"
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/summaryList_4.png"
         },
         "5": {
             "名前": "アンコールの叫び",
             "説明": "<span style=\"color:#FFD780FF\">反逆の弾き</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/constellation_5.png",
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -479,7 +480,7 @@
                     "数値": "50%防御力"
                 }
             ],
-            "icon_url": "images/characters/pyro_4_claymore_Xinyan/constellation_6.png"
+            "icon_url": "images/characters/pyro_4_claymore_Xinyan/summaryList_6.png"
         }
     },
     "おすすめセット": [

@@ -18,6 +18,7 @@
         "韓国語 CV": "표영재",
         "神の心": "岩"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 1144,
@@ -186,7 +187,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/geo_5_polearm_Zhongli/battle_talent_0.png"
+        "icon_url": "images/characters/geo_5_polearm_Zhongli/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費して前方に疾行し、行動経路上と終着点に雨のような岩槍を投下する。",
@@ -357,7 +358,7 @@
         "一回押しクールタイム": 4,
         "長押しクールタイム": 12,
         "粒子生成数": "0.5個/原岩共鳴",
-        "icon_url": "images/characters/geo_5_polearm_Zhongli/battle_talent_1.png"
+        "icon_url": "images/characters/geo_5_polearm_Zhongli/talent_2.png"
     },
     "元素爆発": {
         "名前": "天星",
@@ -385,7 +386,7 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/geo_5_polearm_Zhongli/battle_talent_2.png"
+        "icon_url": "images/characters/geo_5_polearm_Zhongli/talent_3.png"
     },
     "固有天賦": [
         {
@@ -399,12 +400,12 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/const_talent_0.png"
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "贅沢な食饌",
-            "説明": "HP上限を基に、鍾離の下記攻撃のダメージが増加する。<br/>·通常攻撃、重撃と落下攻撃のダメージ増加量：HP上限の1.39%<br/>·<span style=\"color:#FFD780FF\">地心</span>の岩柱、共鳴と長押しダメージ増加量：HP上限の1.9%<br/>·<span style=\"color:#FFD780FF\">天星</span>ダメージ増加量：HP上限の33%",
+            "説明": "HP上限を基準に、鍾離の下記攻撃のダメージが増加する。<br>·通常攻撃、重撃と落下攻撃のダメージ増加量：HP上限の1.39%<br>·<span style=\"color: #FFD780\">地心</span>の岩柱、共鳴と長押しダメージ増加量：HP上限の1.9%<br>·<span style=\"color: #FFD780\">天星</span>ダメージ増加量：HP上限の33%",
             "詳細": [
                 {
                     "種類": "通常攻撃ダメージアップ",
@@ -427,50 +428,50 @@
                     "数値": "33%HP上限"
                 }
             ],
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/const_talent_1.png"
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "結晶推命",
             "説明": "長柄武器を鍛造する時、消費した鉱石の15%が返還される。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/const_talent_2.png"
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "岩、天下の骨なり",
             "説明": "<span style=\"color:#FFD780FF\">地心</span>の岩柱が同時に最大2つまで存在可能になる。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_1.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "石、玉の揺りかご",
             "説明": "<span style=\"color:#FFD780FF\">天星</span>落下時、近くにいる出場中のキャラクターに玉璋シールドを付与する。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_2.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "圭璋、闇の中で輝く",
             "説明": "<span style=\"color:#FFD780FF\">地心</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_3.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "黄玉、破れぬ堅さ",
             "説明": "<span style=\"color:#FFD780FF\">天星</span>の影響範囲+20%。<br/>さらに天星の石化効果の継続時間+2秒。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_4.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "璧、天理を守る",
             "説明": "<span style=\"color:#FFD780FF\">天星</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_5.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "金、天地の恵み",
             "説明": "玉璋シールドがダメージを受けた時、そのダメージ量の40%分のHPを回復する。<br/>一回の回復上限はキャラクターのHP上限の8%。",
-            "icon_url": "images/characters/geo_5_polearm_Zhongli/constellation_6.png",
+            "icon_url": "images/characters/geo_5_polearm_Zhongli/summaryList_6.png",
             "詳細": []
         }
     },

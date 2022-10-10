@@ -17,6 +17,7 @@
         "日本語 CV": "木村良平",
         "韓国語 CV": "남도형"
     },
+    "region": "スネージナヤ",
     "ステータス": {
         "基礎HP": {
             "1+": 1020,
@@ -184,7 +185,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/hydro_5_bow_Tartaglia/battle_talent_0.png"
+        "icon_url": "images/characters/hydro_5_bow_Tartaglia/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -351,7 +352,7 @@
         "最大継続時間": 30,
         "クールタイム": "6.0～36.0",
         "継続時間終了後のクールタイム": 45,
-        "icon_url": "images/characters/hydro_5_bow_Tartaglia/battle_talent_1.png"
+        "icon_url": "images/characters/hydro_5_bow_Tartaglia/talent_2.png"
     },
     "元素爆発": {
         "名前": "極悪技·尽滅閃",
@@ -414,7 +415,7 @@
         ],
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/hydro_5_bow_Tartaglia/battle_talent_2.png"
+        "icon_url": "images/characters/hydro_5_bow_Tartaglia/talent_3.png"
     },
     "特殊通常攻撃": {
         "条件": "魔王の武装·荒波による近接モード",
@@ -602,56 +603,56 @@
             "種類": "固有天賦",
             "名前": "無尽蔵",
             "説明": "断流効果の継続時間+8秒。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/const_talent_0.png"
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "水形剣",
             "説明": "<span style=\"color:#FFD780FF\">魔王の武装·荒波</span>の近接モード時、通常攻撃と重撃が会心を発生すると、命中した敵に断流効果を付与する。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/const_talent_1.png"
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "武芸マスター",
             "説明": "チーム内の自身のキャラクター全員の<span style=\"color:#FFD780FF\">通常攻撃</span>Lv.+1。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/const_talent_2.png"
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "魔王の武装·押波",
             "説明": "<span style=\"color:#FFD780FF\">魔王の武装·荒波</span>のクールタイム-20%。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/constellation_1.png",
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "魔王の武装·暗流",
             "説明": "断流効果の影響を受けた敵が倒されると、タルタリヤの元素エネルギーが4回復する。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/constellation_2.png",
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "淵の災い·紛争の源",
             "説明": "<span style=\"color:#FFD780FF\">魔王の武装·荒波</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/constellation_3.png",
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "淵の災い·復水放流",
             "説明": "4秒毎に、タルタリヤによって発動された断流効果がフィールドに存在する時、タルタリヤが<span style=\"color:#FFD780FF\">魔王の武装·荒波</span>の近接モードの場合、断流·斬を発動する。それ以外の場合、断流·閃を発動する。<br/>この効果によって発動された断流·斬と断流·閃は、この二つのスキル本来の発動時間制限を受けない。また、本来のスキルへの発動時間制限にも影響を与えない。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/constellation_4.png",
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "極悪技·雨斬り",
             "説明": "<span style=\"color:#FFD780FF\">極悪技·尽滅閃</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/constellation_5.png",
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "極悪技·天使の滅び",
             "説明": "<span style=\"color:#FFD780FF\">極悪技·尽滅閃</span>発動時、<span style=\"color:#FFD780FF\">魔王の武装·荒波</span>のクールタイムをリセットする。<br/>この効果は遠隔モードに戻った後に発動する。",
-            "icon_url": "images/characters/hydro_5_bow_Tartaglia/constellation_6.png",
+            "icon_url": "images/characters/hydro_5_bow_Tartaglia/summaryList_6.png",
             "詳細": []
         }
     },

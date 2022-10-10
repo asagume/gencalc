@@ -17,6 +17,7 @@
         "日本語 CV": "喜多村英梨",
         "韓国語 CV": "이보희"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 1020,
@@ -172,7 +173,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/electro_5_sword_Keqing/battle_talent_0.png"
+        "icon_url": "images/characters/electro_5_sword_Keqing/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -315,7 +316,7 @@
             }
         ],
         "クールタイム": 7.5,
-        "icon_url": "images/characters/electro_5_sword_Keqing/battle_talent_1.png"
+        "icon_url": "images/characters/electro_5_sword_Keqing/talent_2.png"
     },
     "元素爆発": {
         "名前": "天街巡遊",
@@ -378,7 +379,7 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/electro_5_sword_Keqing/battle_talent_2.png"
+        "icon_url": "images/characters/electro_5_sword_Keqing/talent_3.png"
     },
     "固有天賦": [
         {
@@ -391,7 +392,7 @@
                     "種類": "雷元素付与"
                 }
             ],
-            "icon_url": "images/characters/electro_5_sword_Keqing/const_talent_0.png"
+            "icon_url": "images/characters/electro_5_sword_Keqing/talent_4.png"
         },
         {
             "名前": "玉衡の貴",
@@ -409,13 +410,13 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/electro_5_sword_Keqing/const_talent_1.png"
+            "icon_url": "images/characters/electro_5_sword_Keqing/talent_5.png"
         },
         {
             "名前": "総務土地",
             "種類": "固有天賦",
             "説明": "璃月の探索任務の所要時間-25%。",
-            "icon_url": "images/characters/electro_5_sword_Keqing/const_talent_2.png"
+            "icon_url": "images/characters/electro_5_sword_Keqing/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -430,18 +431,18 @@
                     "元素": "雷"
                 }
             ],
-            "icon_url": "images/characters/electro_5_sword_Keqing/constellation_1.png"
+            "icon_url": "images/characters/electro_5_sword_Keqing/summaryList_1.png"
         },
         "2": {
             "名前": "苛捐",
             "説明": "刻晴の通常攻撃と重撃が<span style=\"color:#FFACFFFF\">雷元素</span>の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。<br/>5秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/electro_5_sword_Keqing/constellation_2.png",
+            "icon_url": "images/characters/electro_5_sword_Keqing/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "登楼",
             "説明": "<span style=\"color:#FFD780FF\">天街巡遊</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_5_sword_Keqing/constellation_3.png",
+            "icon_url": "images/characters/electro_5_sword_Keqing/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -454,12 +455,12 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/electro_5_sword_Keqing/constellation_4.png"
+            "icon_url": "images/characters/electro_5_sword_Keqing/summaryList_4.png"
         },
         "5": {
             "名前": "移燈",
             "説明": "<span style=\"color:#FFD780FF\">星辰帰位</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_5_sword_Keqing/constellation_5.png",
+            "icon_url": "images/characters/electro_5_sword_Keqing/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -472,7 +473,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/electro_5_sword_Keqing/constellation_6.png"
+            "icon_url": "images/characters/electro_5_sword_Keqing/summaryList_6.png"
         }
     },
     "おすすめセット": [

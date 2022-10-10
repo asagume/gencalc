@@ -17,6 +17,7 @@
         "日本語 CV": "水橋かおり",
         "韓国語 CV": "김율"
     },
+    "region": "稲妻城",
     "ステータス": {
         "基礎HP": {
             "1+": 1030,
@@ -156,7 +157,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/electro_4_sword_KukiShinobu/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_sword_KukiShinobu/talent_1.png"
     },
     "重撃": {
         "詳細": [
@@ -299,7 +300,7 @@
         ],
         "継続時間": 12,
         "クールタイム": 15,
-        "icon_url": "images/characters/electro_4_sword_KukiShinobu/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_sword_KukiShinobu/talent_2.png"
     },
     "元素爆発": {
         "名前": "御詠鳴神刈山祭",
@@ -370,7 +371,7 @@
         "継続時間": 2,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/electro_4_sword_KukiShinobu/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_sword_KukiShinobu/talent_3.png"
     },
     "固有天賦": [
         {
@@ -383,7 +384,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/talent_4.png"
         },
         {
             "名前": "安心の処",
@@ -400,19 +401,19 @@
                     "数値": "25%元素熟知"
                 }
             ],
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/talent_5.png"
         },
         {
             "名前": "永き刻の祈り",
             "説明": "稲妻で20時間かかる探索任務を完了した時、獲得する報酬+25%。",
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "捨て去りし憐憫の心",
             "説明": "<span style=\"color:#FFD780FF\">御詠鳴神刈山祭</span>の影響範囲+50%。",
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/constellation_1.png",
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -424,24 +425,24 @@
                     "数値": 3
                 }
             ],
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/constellation_2.png"
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/summaryList_2.png"
         },
         "3": {
             "名前": "捨て去りし苦痛の心",
             "説明": "<span style=\"color:#FFD780FF\">越祓雷草の輪</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/constellation_3.png",
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "捨て去りし閉鎖の心",
             "説明": "久岐忍自身の<span style=\"color:#FFD780FF\">越祓草輪</span>を受けたキャラクターの通常攻撃、重撃、落下攻撃が敵に命中すると、雷草が敵の位置に落ち、久岐忍のHP上限の9.7%を基準に<span style=\"color:#FFACFFFF\">雷元素範囲ダメージ</span>を与える。<br/>5秒毎に1回のみ発動可能。",
             "詳細": [],
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/constellation_4.png"
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/summaryList_4.png"
         },
         "5": {
             "名前": "捨て去りし阿諛の心",
             "説明": "<span style=\"color:#FFD780FF\">御詠鳴神刈山祭</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/constellation_5.png",
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -454,7 +455,7 @@
                     "数値": 150
                 }
             ],
-            "icon_url": "images/characters/electro_4_sword_KukiShinobu/constellation_6.png"
+            "icon_url": "images/characters/electro_4_sword_KukiShinobu/summaryList_6.png"
         }
     },
     "おすすめセット": [

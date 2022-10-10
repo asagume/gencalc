@@ -17,6 +17,7 @@
         "日本語 CV": "早見沙織",
         "韓国語 CV": "이유리"
     },
+    "region": "稲妻城",
     "ステータス": {
         "基礎HP": {
             "1+": 1001,
@@ -175,7 +176,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、居合で連続した剣風を放つ。",
@@ -281,7 +282,7 @@
             }
         ],
         "クールタイム": 10,
-        "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_2.png"
     },
     "元素爆発": {
         "名前": "神里流·霜滅",
@@ -348,7 +349,7 @@
         "継続時間": 5,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/battle_talent_3.png"
+        "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_4.png"
     },
     "その他戦闘天賦": [
         {
@@ -361,7 +362,7 @@
                     "継続時間": 5
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/battle_talent_2.png"
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_3.png"
         },
         {
             "名前": "神里流·霰歩",
@@ -387,7 +388,7 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_5.png"
         },
         {
             "種類": "固有天賦",
@@ -400,13 +401,13 @@
                     "数値": 18
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_6.png"
         },
         {
             "種類": "固有天賦",
             "名前": "鑑査の心得",
             "説明": "武器突破素材を合成する時、10%の確率でアイテムを2倍獲得する。",
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/talent_7.png"
         },
         {
             "名前": "天つ罪·国つ罪の鎮詞",
@@ -419,19 +420,19 @@
         "1": {
             "名前": "霜枯れの墨染櫻",
             "説明": "神里綾華の通常攻撃または重撃が敵に<span style=\"color:#99FFFFFF\">氷元素ダメージ</span>を与えた時、50%の確率で<span style=\"color:#FFD780FF\">神里流·氷華</span>のクールタイム-0.3秒。この効果は0.1秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/constellation_1.png",
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "三重雪関扉",
             "説明": "<span style=\"color:#FFD780FF\">神里流·霜滅</span>発動時、追加で2つの小さい霜見雪関扉を放ち、それぞれ本来の20%分のダメージを与える。",
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/constellation_2.png",
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "花白錦画紙吹雪",
             "説明": "<span style=\"color:#FFD780FF\">神里流·霜滅</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -445,12 +446,12 @@
                     "継続時間": 6
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/constellation_4.png"
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/summaryList_4.png"
         },
         "5": {
             "名前": "花雲鐘入月",
             "説明": "<span style=\"color:#FFD780FF\">神里流·氷華</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -463,7 +464,7 @@
                     "数値": 298
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/constellation_6.png"
+            "icon_url": "images/characters/cryo_5_sword_KamisatoAyaka/summaryList_6.png"
         }
     },
     "おすすめセット": [

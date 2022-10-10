@@ -17,6 +17,7 @@
         "日本語 CV": "島﨑信長",
         "韓国語 CV": "김신우"
     },
+    "region": "稲妻城",
     "ステータス": {
         "基礎HP": {
             "1+": 1039,
@@ -173,7 +174,7 @@
                 "HIT数": 3
             }
         ],
-        "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -351,7 +352,7 @@
         ],
         "一回押しクールタイム": 6,
         "長押しクールタイム": 9,
-        "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/talent_2.png"
     },
     "元素爆発": {
         "名前": "万葉の一刀",
@@ -477,14 +478,14 @@
         "継続時間": 8,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "相聞剣法",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">千早振る</span>を発動時、<span style=\"color:#80C0FFFF\">水元素</span>/<span style=\"color:#FF9999FF\">炎元素</span>/<span style=\"color:#99FFFFFF\">氷元素</span>/<span style=\"color:#FFACFFFF\">雷元素</span>と接触した場合、その<span style=\"color:#FFD780FF\">千早振る</span>後の落下攻撃·乱れ嵐斬に元素変化が起き、攻撃力200%分の該当元素ダメージを追加で与える。このダメージは落下攻撃とみなされる。<span style=\"color:#FFD780FF\">千早振る</span>のスキル効果中、元素変化は1回のみ発生する。",
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/const_talent_0.png"
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/talent_4.png"
         },
         {
             "名前": "風物の詩吟",
@@ -512,20 +513,20 @@
                     "数値": "4%元素熟知"
                 }
             ],
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/const_talent_1.png"
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/talent_5.png"
         },
         {
             "名前": "霞立つ松風",
             "種類": "固有天賦",
             "説明": "チーム内の自身のキャラクター全員がダッシュに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/const_talent_2.png"
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "千山紅葉",
             "説明": "<span style=\"color:#FFD780FF\">千早振る</span>のクールタイム-10%。<br/><span style=\"color:#FFD780FF\">万葉の一刀</span>を発動した時、<span style=\"color:#FFD780FF\">千早振る</span>のクールタイムがリセットされる。",
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/constellation_1.png",
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -538,24 +539,24 @@
                     "数値": 200
                 }
             ],
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/constellation_2.png"
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/summaryList_2.png"
         },
         "3": {
             "名前": "楓袖奇譚",
             "説明": "<span style=\"color:#FFD780FF\">千早振る</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/constellation_3.png",
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "大空幻法",
             "説明": "楓原万葉の元素エネルギーが45以下の時、下記の効果を獲得する。<br/>·一回押し/長押しで<span style=\"color:#FFD780FF\">千早振る</span>を発動した時、元素エネルギーを3/4回復する。<br/>·滑翔状態の時、1秒毎に元素エネルギーを2回復する。",
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/constellation_4.png",
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "万世集",
             "説明": "<span style=\"color:#FFD780FF\">万葉の一刀</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/constellation_5.png",
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -582,7 +583,7 @@
                     "数値": "0.2*元素熟知"
                 }
             ],
-            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/constellation_6.png"
+            "icon_url": "images/characters/anemo_5_sword_KaedeharaKazuha/summaryList_6.png"
         }
     },
     "おすすめセット": [

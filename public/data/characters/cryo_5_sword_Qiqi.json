@@ -17,6 +17,7 @@
         "日本語 CV": "田村ゆかり",
         "韓国語 CV": "이슬"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 963,
@@ -173,7 +174,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/cryo_5_sword_Qiqi/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -334,7 +335,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/cryo_5_sword_Qiqi/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_2.png"
     },
     "元素爆発": {
         "名前": "仙法·救苦度厄",
@@ -380,7 +381,7 @@
         ],
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/cryo_5_sword_Qiqi/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_3.png"
     },
     "固有天賦": [
         {
@@ -394,26 +395,26 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_4.png"
         },
         {
             "名前": "玉籤偶開",
             "種類": "固有天賦",
             "説明": "七七の通常攻撃と重撃が敵に命中した時、50%の確率で敵に度厄のお札を1枚付与する、継続時間6秒、30秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_5.png"
         },
         {
             "名前": "往事記憶",
             "種類": "固有天賦",
             "説明": "ミニマップで周囲の<span style=\"color:#FFD780FF\">璃月地域の特産</span>の位置を表示する。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "寒苦回向",
             "説明": "度厄のお札マークがついている敵に寒病鬼差が命中した時、七七の元素エネルギーを2回復する。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/constellation_1.png",
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -431,30 +432,30 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/constellation_2.png"
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/summaryList_2.png"
         },
         "3": {
             "名前": "昇天宝誥",
             "説明": "<span style=\"color:#FFD780FF\">仙法·救苦度厄</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "天威圧衆",
             "説明": "度厄のお札マークがついている敵の攻撃力-20%。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/constellation_4.png",
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "紅蓮開花",
             "説明": "<span style=\"color:#FFD780FF\">仙法·寒病鬼差</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "起死回骸",
             "説明": "<span style=\"color:#FFD780FF\">仙法·救苦度厄</span>を発動する時、近くにいるチーム内全ての戦闘不能状態のキャラクターを復活し、HPを50%まで回復させる。<br/>この効果は15分毎に1回のみ発動可能。",
-            "icon_url": "images/characters/cryo_5_sword_Qiqi/constellation_6.png",
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/summaryList_6.png",
             "詳細": []
         }
     },

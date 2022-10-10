@@ -17,6 +17,7 @@
         "日本語 CV": "松岡禎丞",
         "韓国語 CV": "심규혁"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 991,
@@ -190,7 +191,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/anemo_5_polearm_Xiao/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_5_polearm_Xiao/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、斬り上げ攻撃を発動する。",
@@ -297,7 +298,7 @@
         ],
         "クールタイム": 10,
         "使用回数": 2,
-        "icon_url": "images/characters/anemo_5_polearm_Xiao/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_5_polearm_Xiao/talent_2.png"
     },
     "元素爆発": {
         "名前": "靖妖儺舞",
@@ -368,7 +369,7 @@
         "継続時間": 15,
         "クールタイム": 18,
         "元素エネルギー": 70,
-        "icon_url": "images/characters/anemo_5_polearm_Xiao/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_5_polearm_Xiao/talent_3.png"
     },
     "固有天賦": [
         {
@@ -382,7 +383,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/const_talent_0.png"
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/talent_4.png"
         },
         {
             "種類": "固有天賦",
@@ -396,13 +397,13 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/const_talent_1.png"
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "神通·空中自在法",
             "説明": "チーム内の自身のキャラクター全員が登りに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/const_talent_2.png"
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/talent_6.png"
         },
         {
             "名前": "降魔·平妖大聖",
@@ -433,36 +434,36 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/constellation_1.png"
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/summaryList_1.png"
         },
         "2": {
             "名前": "空劫·虚空開敷の変",
             "説明": "フィールド上にいない時、魈自身の元素チャージ効率+25%。",
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/constellation_2.png",
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "降魔·憤怒の相",
             "説明": "<span style=\"color:#FFD780FF\">風輪両立</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/constellation_3.png",
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "神通·諸苦滅尽",
             "説明": "魈のHPが50%未満の時、防御力+100%。",
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/constellation_4.png",
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "成劫·無明増長",
             "説明": "<span style=\"color:#FFD780FF\">靖妖儺舞</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/constellation_5.png",
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "降魔·護法夜叉",
             "説明": "<span style=\"color:#FFD780FF\">靖妖儺舞</span>状態の時、落下攻撃が2体以上の敵に命中すると、<span style=\"color:#FFD780FF\">風輪両立</span>の使用可能回数+1。その後の1秒間以内は、クールタイム関係なく風輪両立を発動できる。",
-            "icon_url": "images/characters/anemo_5_polearm_Xiao/constellation_6.png",
+            "icon_url": "images/characters/anemo_5_polearm_Xiao/summaryList_6.png",
             "詳細": []
         }
     },

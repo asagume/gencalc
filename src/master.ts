@@ -99,6 +99,7 @@ export type TCharacterDetail = {
     武器: TWeaponTypeKey,
     元素: TVisionKey,
     baseInfo: any,
+    region?: string,
     ステータス: TCharacterStats,
     通常攻撃: any,
     重撃: any,

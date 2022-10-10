@@ -18,6 +18,7 @@
         "韓国語 CV": "정유정",
         "神の心": "風"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 820,
@@ -194,7 +195,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/anemo_5_bow_Venti/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_5_bow_Venti/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -336,7 +337,7 @@
         ],
         "一回押しクールタイム": 6,
         "長押しクールタイム": 15,
-        "icon_url": "images/characters/anemo_5_bow_Venti/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_5_bow_Venti/talent_2.png"
     },
     "元素爆発": {
         "名前": "風神の詩",
@@ -464,33 +465,33 @@
         "継続時間": 8,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/anemo_5_bow_Venti/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_5_bow_Venti/talent_3.png"
     },
     "固有天賦": [
         {
             "種類": "固有天賦",
             "名前": "余風の抱擁",
             "説明": "<span style=\"color:#FFD780FF\">高天の歌</span>を長押しした後、上昇気流が発生する、継続時間20秒。",
-            "icon_url": "images/characters/anemo_5_bow_Venti/const_talent_0.png"
+            "icon_url": "images/characters/anemo_5_bow_Venti/talent_4.png"
         },
         {
             "種類": "固有天賦",
             "名前": "暴風の目",
             "説明": "<span style=\"color:#FFD780FF\">風神の詩</span>効果終了後、ウェンティの元素エネルギーを15回復する。<br/>元素変化があった場合、該当元素のチームメンバーの元素エネルギーを15回復する。",
-            "icon_url": "images/characters/anemo_5_bow_Venti/const_talent_1.png"
+            "icon_url": "images/characters/anemo_5_bow_Venti/talent_5.png"
         },
         {
             "種類": "固有天賦",
             "名前": "恒風と共に",
             "説明": "チーム内の自身のキャラクター全員が滑翔に消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "images/characters/anemo_5_bow_Venti/const_talent_2.png"
+            "icon_url": "images/characters/anemo_5_bow_Venti/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "矢先の蒼風",
             "説明": "<span style=\"color:#FFD780FF\">狙い撃ち</span>する時、分裂した矢を追加で2本放つ。それぞれ元の矢の33%のダメージを与える。",
-            "icon_url": "images/characters/anemo_5_bow_Venti/constellation_1.png",
+            "icon_url": "images/characters/anemo_5_bow_Venti/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -508,12 +509,12 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/anemo_5_bow_Venti/constellation_2.png"
+            "icon_url": "images/characters/anemo_5_bow_Venti/summaryList_2.png"
         },
         "3": {
             "名前": "千の風の詩",
             "説明": "<span style=\"color:#FFD780FF\">風神の詩</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_bow_Venti/constellation_3.png",
+            "icon_url": "images/characters/anemo_5_bow_Venti/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -526,12 +527,12 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/anemo_5_bow_Venti/constellation_4.png"
+            "icon_url": "images/characters/anemo_5_bow_Venti/summaryList_4.png"
         },
         "5": {
             "名前": "高天の協奏",
             "説明": "<span style=\"color:#FFD780FF\">高天の歌</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_bow_Venti/constellation_5.png",
+            "icon_url": "images/characters/anemo_5_bow_Venti/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -564,7 +565,7 @@
                     "数値": -20
                 }
             ],
-            "icon_url": "images/characters/anemo_5_bow_Venti/constellation_6.png"
+            "icon_url": "images/characters/anemo_5_bow_Venti/summaryList_6.png"
         }
     },
     "おすすめセット": [

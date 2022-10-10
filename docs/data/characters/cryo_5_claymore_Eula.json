@@ -17,6 +17,7 @@
         "日本語 CV": "佐藤利奈",
         "韓国語 CV": "김현지"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 1030,
@@ -178,7 +179,7 @@
                 "HIT数": 2
             }
         ],
-        "icon_url": "images/characters/cryo_5_claymore_Eula/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_5_claymore_Eula/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -402,7 +403,7 @@
         "耐性ダウン継続時間": 7,
         "一回押しクールタイム": 4,
         "長押しクールタイム": 10,
-        "icon_url": "images/characters/cryo_5_claymore_Eula/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_5_claymore_Eula/talent_2.png"
     },
     "元素爆発": {
         "名前": "氷浪の光剣",
@@ -469,26 +470,26 @@
         ],
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/cryo_5_claymore_Eula/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_5_claymore_Eula/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "氷の残剣",
             "種類": "固有天賦",
             "説明": "長押しで<span style=\"color:#FFD780FF\">氷潮の渦</span>を発動した時、一度に冷酷な心を2つ消費すると、直ちに爆発する光臨の剣の欠片を創造する。光臨の剣の欠片は、<span style=\"color:#FFD780FF\">氷浪の光剣</span>で創造される光臨の剣の基礎ダメージ50%分の物理ダメージを与える。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/const_talent_0.png"
+            "icon_url": "images/characters/cryo_5_claymore_Eula/talent_4.png"
         },
         {
             "名前": "戦意の表れ",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">氷浪の光剣</span>を発動した時、<span style=\"color:#FFD780FF\">氷潮の渦</span>のクールタイムがリセットされ、冷酷な心を1つ獲得する。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/const_talent_1.png"
+            "icon_url": "images/characters/cryo_5_claymore_Eula/talent_5.png"
         },
         {
             "名前": "貴族の省察",
             "種類": "固有天賦",
             "説明": "キャラクター天賦素材を合成する時、10%の確率でアイテムを2倍獲得する。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/const_talent_2.png"
+            "icon_url": "images/characters/cryo_5_claymore_Eula/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -502,18 +503,18 @@
                     "数値": 30
                 }
             ],
-            "icon_url": "images/characters/cryo_5_claymore_Eula/constellation_1.png"
+            "icon_url": "images/characters/cryo_5_claymore_Eula/summaryList_1.png"
         },
         "2": {
             "名前": "波花の淑女",
             "説明": "<span style=\"color:#FFD780FF\">氷潮の渦</span>の長押しのクールタイムを短縮し、一回押しと同じクールタイムにする。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/constellation_2.png",
+            "icon_url": "images/characters/cryo_5_claymore_Eula/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "ローレンスの血統",
             "説明": "<span style=\"color:#FFD780FF\">氷浪の光剣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/constellation_3.png",
+            "icon_url": "images/characters/cryo_5_claymore_Eula/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -527,18 +528,18 @@
                     "数値": 25
                 }
             ],
-            "icon_url": "images/characters/cryo_5_claymore_Eula/constellation_4.png"
+            "icon_url": "images/characters/cryo_5_claymore_Eula/summaryList_4.png"
         },
         "5": {
             "名前": "騎士の素質",
             "説明": "<span style=\"color:#FFD780FF\">氷潮の渦</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/constellation_5.png",
+            "icon_url": "images/characters/cryo_5_claymore_Eula/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "高貴なる者の義務",
             "説明": "<span style=\"color:#FFD780FF\">氷浪の光剣</span>で創造した光臨の剣は、直ちにエネルギーを5つ獲得する。通常攻撃、元素スキルまたは元素爆発によりエネルギーを獲得する際、50%の確率でさらに1つ獲得する。",
-            "icon_url": "images/characters/cryo_5_claymore_Eula/constellation_6.png",
+            "icon_url": "images/characters/cryo_5_claymore_Eula/summaryList_6.png",
             "詳細": []
         }
     },

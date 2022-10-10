@@ -1,5 +1,5 @@
 {
-    "名前": "旅人",
+    "名前": "旅人(岩)",
     "説明": "世界の外から漂流してきた旅人。肉親が見知らぬ神に連れ去られたため、七神を探す旅に出た。",
     "icon_url": "images/characters/face/geo_5_sword_Traveler.png",
     "レアリティ": 5,
@@ -170,7 +170,7 @@
                 "元素": "岩"
             }
         ],
-        "icon_url": "images/characters/geo_5_sword_Traveler/battle_talent_0.png"
+        "icon_url": "images/characters/geo_5_sword_Traveler/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -277,7 +277,7 @@
         ],
         "荒星の継続時間": 30,
         "クールタイム": 8,
-        "icon_url": "images/characters/geo_5_sword_Traveler/battle_talent_1.png"
+        "icon_url": "images/characters/geo_5_sword_Traveler/talent_2.png"
     },
     "元素爆発": {
         "名前": "岩潮幾重",
@@ -305,20 +305,20 @@
         "岩の山の継続時間": 15,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/geo_5_sword_Traveler/battle_talent_2.png"
+        "icon_url": "images/characters/geo_5_sword_Traveler/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "破れた断崖",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">星落としの剣</span>のクールタイム-2秒。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/const_talent_0.png"
+            "icon_url": "images/characters/geo_5_sword_Traveler/talent_4.png"
         },
         {
             "名前": "狂乱の岩崩れ",
             "種類": "固有天賦",
             "説明": "通常攻撃の最後の1撃が岩崩れを起こすようになり、範囲内の敵に攻撃力60%分の<span style=\"color:#FFE699FF\">岩元素ダメージ</span>を与える。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/const_talent_1.png"
+            "icon_url": "images/characters/geo_5_sword_Traveler/talent_5.png"
         }
     ],
     "命ノ星座": {
@@ -332,36 +332,36 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "images/characters/geo_5_sword_Traveler/constellation_1.png"
+            "icon_url": "images/characters/geo_5_sword_Traveler/summaryList_1.png"
         },
         "2": {
             "名前": "不穏な溶岩",
             "説明": "<span style=\"color:#FFD780FF\">星落としの剣</span>の荒星が破壊される時に爆破が再び発生し、周囲の敵に星落としの剣のダメージに相当する<span style=\"color:#FFE699FF\">岩元素範囲ダメージ</span>を与える。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/constellation_2.png",
+            "icon_url": "images/characters/geo_5_sword_Traveler/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "八方の岩",
             "説明": "<span style=\"color:#FFD780FF\">岩潮幾重</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/constellation_3.png",
+            "icon_url": "images/characters/geo_5_sword_Traveler/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "険しい重岩",
             "説明": "<span style=\"color:#FFD780FF\">岩潮幾重</span>が引き起こす振動波が敵に命中する度に、元素エネルギーが5回復する。<br/>この方法で一回で最大25まで回復可能。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/constellation_4.png",
+            "icon_url": "images/characters/geo_5_sword_Traveler/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "天墜の岩",
             "説明": "<span style=\"color:#FFD780FF\">星落としの剣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/constellation_5.png",
+            "icon_url": "images/characters/geo_5_sword_Traveler/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "永世の磐岩",
             "説明": "<span style=\"color:#FFD780FF\">岩潮幾重</span>の岩の山の継続時間+5秒。<br/><span style=\"color:#FFD780FF\">星落としの剣</span>荒星の継続時間+10秒。",
-            "icon_url": "images/characters/geo_5_sword_Traveler/constellation_6.png",
+            "icon_url": "images/characters/geo_5_sword_Traveler/summaryList_6.png",
             "詳細": []
         }
     },

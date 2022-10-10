@@ -17,6 +17,7 @@
         "日本語 CV": "藤田茜",
         "韓国語 CV": "김하영"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 775,
@@ -155,7 +156,7 @@
                 }
             }
         ],
-        "icon_url": "images/characters/anemo_4_catalyst_Sucrose/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_4_catalyst_Sucrose/talent_1.png"
     },
     "重撃": {
         "説明": "一定のスタミナを消費し、短い詠唱した後、敵に風元素範囲ダメージを与える。",
@@ -259,7 +260,7 @@
             }
         ],
         "クールタイム": 15,
-        "icon_url": "images/characters/anemo_4_catalyst_Sucrose/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_4_catalyst_Sucrose/talent_2.png"
     },
     "元素爆発": {
         "名前": "禁·風霊作成·七五同構弐型",
@@ -383,13 +384,13 @@
         "継続時間": 6,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/anemo_4_catalyst_Sucrose/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_4_catalyst_Sucrose/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "触媒置換術",
             "説明": "スクロースが拡散反応を起こした時、該当元素のチームメンバー全員（スクロース自身を除く）の元素熟知+50、継続時間8秒。",
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/const_talent_0.png"
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/talent_4.png"
         },
         {
             "名前": "小さな恵風",
@@ -401,12 +402,12 @@
                     "数値": "20%元素熟知"
                 }
             ],
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/const_talent_1.png"
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/talent_5.png"
         },
         {
             "名前": "不安定な発見",
             "説明": "キャラクターと武器の育成素材を合成する時、10%の確率でアイテムを2倍獲得する。",
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/const_talent_2.png"
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -419,7 +420,7 @@
                     "数値": 1
                 }
             ],
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/constellation_1.png"
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/summaryList_1.png"
         },
         "2": {
             "名前": "不羈型ベト",
@@ -430,24 +431,24 @@
                     "数値": 2
                 }
             ],
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/constellation_2.png"
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/summaryList_2.png"
         },
         "3": {
             "名前": "ゼロミス少女",
             "説明": "<span style=\"color:#FFD780FF\">風霊作成·六三〇八</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/constellation_3.png",
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "錬金の偏執",
             "説明": "スクロースの通常攻撃または重撃が敵に累計7回命中すると、<span style=\"color:#FFD780FF\">風霊作成·六三〇八</span>のクールタイムがランダムに1~7秒減少する。<br/>0.1秒毎に1回のみカウント可能。",
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/constellation_4.png",
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "真面目な普通瓶",
             "説明": "<span style=\"color:#FFD780FF\">禁·風霊作成·七五同構弐型</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/constellation_5.png",
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -475,7 +476,7 @@
                     "数値": 20
                 }
             ],
-            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/constellation_6.png"
+            "icon_url": "images/characters/anemo_4_catalyst_Sucrose/summaryList_6.png"
         }
     },
     "おすすめセット": [

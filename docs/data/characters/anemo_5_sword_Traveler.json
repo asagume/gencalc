@@ -1,5 +1,5 @@
 {
-    "名前": "旅人",
+    "名前": "旅人(風)",
     "説明": "世界の外から漂流してきた旅人。肉親が見知らぬ神に連れ去られたため、七神を探す旅に出た。",
     "icon_url": "images/characters/face/anemo_5_sword_Traveler.png",
     "レアリティ": 5,
@@ -173,7 +173,7 @@
                 "元素": "風"
             }
         ],
-        "icon_url": "images/characters/anemo_5_sword_Traveler/battle_talent_0.png"
+        "icon_url": "images/characters/anemo_5_sword_Traveler/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -334,7 +334,7 @@
         ],
         "基本クールタイム": 5,
         "最大チャージクールタイム": 8,
-        "icon_url": "images/characters/anemo_5_sword_Traveler/battle_talent_1.png"
+        "icon_url": "images/characters/anemo_5_sword_Traveler/talent_2.png"
     },
     "元素爆発": {
         "名前": "激風の息",
@@ -458,27 +458,27 @@
         "継続時間": 6,
         "クールタイム": 15,
         "元素エネルギー": 60,
-        "icon_url": "images/characters/anemo_5_sword_Traveler/battle_talent_2.png"
+        "icon_url": "images/characters/anemo_5_sword_Traveler/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "空を裂く風",
             "種類": "固有天賦",
             "説明": "通常攻撃の最後の1撃が風の刃を放つようになり、経路上の敵に攻撃力60%分の<span style=\"color:#80FFD7FF\">風元素ダメージ</span>を与える。",
-            "icon_url": "images/characters/anemo_5_sword_Traveler/const_talent_0.png"
+            "icon_url": "images/characters/anemo_5_sword_Traveler/talent_4.png"
         },
         {
             "名前": "蘇生の風",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">旋風の剣</span>で敵を倒した後、1秒毎にHPを2%回復する、継続時間5秒。<br/>5秒に1回のみ発動可能。",
-            "icon_url": "images/characters/anemo_5_sword_Traveler/const_talent_1.png"
+            "icon_url": "images/characters/anemo_5_sword_Traveler/talent_5.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "回転する怒風",
             "説明": "<span style=\"color:#FFD780FF\">旋風の剣</span>は周囲5メートル以内の敵と物体をゆっくりと自分の前に吸い寄せることができる。",
-            "icon_url": "images/characters/anemo_5_sword_Traveler/constellation_1.png",
+            "icon_url": "images/characters/anemo_5_sword_Traveler/summaryList_1.png",
             "詳細": []
         },
         "2": {
@@ -490,12 +490,12 @@
                     "数値": 16
                 }
             ],
-            "icon_url": "images/characters/anemo_5_sword_Traveler/constellation_2.png"
+            "icon_url": "images/characters/anemo_5_sword_Traveler/summaryList_2.png"
         },
         "3": {
             "名前": "天地の剛風",
             "説明": "<span style=\"color:#FFD780FF\">激風の息</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_sword_Traveler/constellation_3.png",
+            "icon_url": "images/characters/anemo_5_sword_Traveler/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -508,12 +508,12 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "images/characters/anemo_5_sword_Traveler/constellation_4.png"
+            "icon_url": "images/characters/anemo_5_sword_Traveler/summaryList_4.png"
         },
         "5": {
             "名前": "群星の渦風",
             "説明": "<span style=\"color:#FFD780FF\">旋風の剣</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/anemo_5_sword_Traveler/constellation_5.png",
+            "icon_url": "images/characters/anemo_5_sword_Traveler/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -526,7 +526,7 @@
                     "数値": -20
                 }
             ],
-            "icon_url": "images/characters/anemo_5_sword_Traveler/constellation_6.png"
+            "icon_url": "images/characters/anemo_5_sword_Traveler/summaryList_6.png"
         }
     },
     "おすすめセット": [

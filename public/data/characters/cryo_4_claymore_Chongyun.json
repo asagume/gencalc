@@ -17,6 +17,7 @@
         "日本語 CV": "斉藤壮馬",
         "韓国語 CV": "양정화"
     },
+    "region": "璃月港",
     "ステータス": {
         "基礎HP": {
             "1+": 921,
@@ -159,7 +160,7 @@
                 "元素": "氷"
             }
         ],
-        "icon_url": "images/characters/cryo_4_claymore_Chongyun/battle_talent_0.png"
+        "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -290,7 +291,7 @@
         ],
         "エリア継続時間": 10,
         "クールタイム": 15,
-        "icon_url": "images/characters/cryo_4_claymore_Chongyun/battle_talent_1.png"
+        "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_2.png"
     },
     "元素爆発": {
         "名前": "霊刃·雲開星落",
@@ -317,14 +318,14 @@
         ],
         "クールタイム": 12,
         "元素エネルギー": 40,
-        "icon_url": "images/characters/cryo_4_claymore_Chongyun/battle_talent_2.png"
+        "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "吐納真定",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>エリア内にいる時、片手剣、両手剣、長柄武器キャラクターの通常攻撃の攻撃速度+8%。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/const_talent_0.png"
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_4.png"
         },
         {
             "名前": "追氷剣訣",
@@ -337,44 +338,44 @@
                     "数値": -10
                 }
             ],
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/const_talent_1.png"
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_5.png"
         },
         {
             "名前": "雲遊山海",
             "種類": "固有天賦",
             "説明": "璃月の探索任務の所要時間-25%。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/const_talent_2.png"
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_6.png"
         }
     ],
     "命ノ星座": {
         "1": {
             "名前": "釈凌詠氷",
             "説明": "通常攻撃の最後の一撃が前方に3つの氷の刃を放ち、経路上の敵に重雲の攻撃力50%分の<span style=\"color:#99FFFFFF\">氷元素ダメージ</span>を与える。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/constellation_1.png",
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_1.png",
             "詳細": []
         },
         "2": {
             "名前": "周天の回転",
             "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>エリア内で発動した元素スキルと元素爆発のクールタイム-15%。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/constellation_2.png",
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "雲の果てに光あり",
             "説明": "<span style=\"color:#FFD780FF\">霊刃·雲開星落</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/constellation_3.png",
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "浮雲霜天",
             "説明": "重雲の攻撃が<span style=\"color:#99FFFFFF\">氷元素</span>の影響を受けた敵に命中した時、自身の元素エネルギーを1回復する。<br/>この効果は2秒毎に1回のみ発動可能。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/constellation_4.png",
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "真道の正理",
             "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/constellation_5.png",
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -388,7 +389,7 @@
                     "数値": 15
                 }
             ],
-            "icon_url": "images/characters/cryo_4_claymore_Chongyun/constellation_6.png"
+            "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_6.png"
         }
     },
     "おすすめセット": [

@@ -17,6 +17,7 @@
         "日本語 CV": "内山昂輝",
         "韓国語 CV": "김서영"
     },
+    "region": "モンド城",
     "ステータス": {
         "基礎HP": {
             "1+": 1003,
@@ -227,7 +228,7 @@
                 "ダメージバフ": "元素爆発ダメージバフ"
             }
         ],
-        "icon_url": "images/characters/electro_4_claymore_Razor/battle_talent_0.png"
+        "icon_url": "images/characters/electro_4_claymore_Razor/talent_1.png"
     },
     "重撃": {
         "説明": [
@@ -368,7 +369,7 @@
         ],
         "一回押しクールタイム": 6,
         "長押しクールタイム": 10,
-        "icon_url": "images/characters/electro_4_claymore_Razor/battle_talent_1.png"
+        "icon_url": "images/characters/electro_4_claymore_Razor/talent_2.png"
     },
     "元素爆発": {
         "名前": "雷牙",
@@ -477,26 +478,26 @@
         "継続時間": 15,
         "クールタイム": 20,
         "元素エネルギー": 80,
-        "icon_url": "images/characters/electro_4_claymore_Razor/battle_talent_2.png"
+        "icon_url": "images/characters/electro_4_claymore_Razor/talent_3.png"
     },
     "固有天賦": [
         {
             "名前": "覚醒",
             "種類": "固有天賦",
             "説明": "<span style=\"color:#FFD780FF\">鋭い爪と蒼雷</span>のクールタイム-18%。<br/><span style=\"color:#FFD780FF\">雷牙</span>を放つ時、<span style=\"color:#FFD780FF\">鋭い爪と蒼雷</span>のクールタイムをリセットする。",
-            "icon_url": "images/characters/electro_4_claymore_Razor/const_talent_0.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/talent_4.png"
         },
         {
             "名前": "飢餓",
             "種類": "固有天賦",
             "説明": "レザーの元素エネルギーが50%以下になると、元素チャージ効率+30%。",
-            "icon_url": "images/characters/electro_4_claymore_Razor/const_talent_1.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/talent_5.png"
         },
         {
             "名前": "奔狼",
             "種類": "固有天賦",
             "説明": "チーム内の自身のキャラクター全員がダッシュに消費するスタミナ-20%。<br/>同じ効果を持つ固有天賦との重ね掛け不可。",
-            "icon_url": "images/characters/electro_4_claymore_Razor/const_talent_2.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/talent_6.png"
         }
     ],
     "命ノ星座": {
@@ -510,7 +511,7 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_1.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/summaryList_1.png"
         },
         "2": {
             "名前": "制圧",
@@ -522,12 +523,12 @@
                     "数値": 10
                 }
             ],
-            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_2.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/summaryList_2.png"
         },
         "3": {
             "名前": "獣の魂",
             "説明": "<span style=\"color:#FFD780FF\">雷牙</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_3.png",
+            "icon_url": "images/characters/electro_4_claymore_Razor/summaryList_3.png",
             "詳細": []
         },
         "4": {
@@ -540,12 +541,12 @@
                     "数値": -15
                 }
             ],
-            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_4.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/summaryList_4.png"
         },
         "5": {
             "名前": "鋭い爪",
             "説明": "<span style=\"color:#FFD780FF\">鋭い爪と蒼雷</span>のスキルLv.+3。<br/>最大Lv.15まで。",
-            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_5.png",
+            "icon_url": "images/characters/electro_4_claymore_Razor/summaryList_5.png",
             "詳細": []
         },
         "6": {
@@ -559,7 +560,7 @@
                     "数値": "100%攻撃力"
                 }
             ],
-            "icon_url": "images/characters/electro_4_claymore_Razor/constellation_6.png"
+            "icon_url": "images/characters/electro_4_claymore_Razor/summaryList_6.png"
         }
     },
     "おすすめセット": [
