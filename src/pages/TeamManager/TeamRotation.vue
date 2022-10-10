@@ -206,7 +206,7 @@ div.information {
 
 div.rotation-item div.control {
     position: absolute;
-    left: 330px;
+    left: 320px;
     top: 5px;
     height: 30px;
 }
