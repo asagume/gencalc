@@ -258,7 +258,7 @@ export default defineComponent({
           if (item[0] == '合計ダメージ' && category == '通常攻撃') {
             addValue *= danCount.value;
           }
-          value += addValue * danCount.value;
+          value += addValue;
         }
       }
       if (value < 10) value = Math.round(value * 100) / 100;
