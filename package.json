@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "tesseract.js": "^2.1.5",
     "vue": "^3.2.13",
+    "vue-good-table-next": "^0.2.1",
     "vue-i18n": "^9.2.0",
     "vuedraggable": "^4.1.0"
   },

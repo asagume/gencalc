@@ -73,6 +73,8 @@
       </ul>
       <p>
         <a href="./">げんかるく - 原神ダメージシミュレーター</a>
+        &nbsp;
+        <a href="./TeamOptionList.html">バフ/デバフ一覧</a>
       </p>
     </div>
   </div>

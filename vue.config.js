@@ -23,6 +23,11 @@ module.exports = defineConfig({
       template: 'public/TeamManager.html',
       filename: 'TeamManager.html',
     },
+    TeamOptionList: {
+      entry: 'src/pages/TeamOptionList/main.ts',
+      template: 'public/TeamOptionList.html',
+      filename: 'TeamOptionList.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'

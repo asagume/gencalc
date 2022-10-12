@@ -1,6 +1,9 @@
 <template>
   <div class="base-container">
     <div class="pane1">
+      <p class="left-top"><a href="./">Back to GENCALC</a></p>
+      <p>&nbsp;</p>
+      <h2>バフ/デバフ一覧 - 原神</h2>
     </div>
 
     <div class="pane2">
@@ -223,6 +226,16 @@ export default defineComponent({
 }
 </style>
 <style scoped>
+
+.pane1 {
+  position: relative;
+}
+
+.left-top {
+  position: absolute;
+  left: 5px;
+  top: 0;
+}
 .pane2 {
   text-align: left;
 }

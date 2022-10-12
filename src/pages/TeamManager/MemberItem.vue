@@ -1,7 +1,10 @@
 <template>
   <div class="member">
     <div class="member-img" @click="characterOnClick">
-      <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
+      <div class="with-tooltip">
+        <img :class="'character'+characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
+        <span class="tooltip">{{ displayName(member.name) }}</span>
+      </div>
       <img class="vision" :src="visionImgSrc" alt="vision" />
       <div class="constellation" v-show="constellation">
         {{ constellation }}
@@ -57,9 +60,10 @@ import {
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
   TAnyObject,
-  TArtifactSet,
+  TArtifactSetEntry,
   TCharacterEntry,
   TCharacterKey,
+  TWeaponEntry,
   WEAPON_MASTER,
 } from "@/master";
 import { computed, defineComponent, PropType, ref, watch } from "vue";
@@ -153,12 +157,17 @@ export default defineComponent({
         })
       }
 
-      // 夜蘭
+      // キャラクター
       if (characterInput.character == '夜蘭') {
         conditionInput.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
+      } else if (characterInput.character == '雲菫') {
+        conditionInput.conditionValues['独立嶄然'] = Object.keys(teamElements).length - 1;
+      } else if (characterInput.character == 'ゴロー') {
+        const geoCount = Math.min(3, teamElements[myVision]);
+        conditionInput.conditionValues['犬勇·忠に厚きこと山の如く 岩元素ダメージ 会心ダメージ'] = geoCount;
       }
 
-      // 千岩古剣、千岩長槍
+      // 武器
       if (['千岩古剣', '千岩長槍'].includes(characterInput.weapon)) {
         if (props.members) {
           let liyueCount = 0;
@@ -173,16 +182,32 @@ export default defineComponent({
           const conditionKey = '[' + characterInput.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
           conditionInput.conditionValues[conditionKey] = liyueCount;
         }
+      } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(characterInput.weapon)) {
+        if (props.members) {
+          let totalEnergyCost = 0;
+          for (const member of props.members.filter(s => s)) {
+            const characterDetail = await getCharacterMasterDetail(member as TCharacterKey);
+            if ('元素エネルギー' in characterDetail.元素爆発) {
+              totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
+            }
+          }
+          if (totalEnergyCost >= 40) {
+            ['0.12', '0.15', '0.18', '0.21', '0.24'].forEach(entry => {
+              const conditionKey = '[' + characterInput.weapon + ']元素爆発ダメージ+' + entry + '%×元素エネルギー';
+              conditionInput.conditionValues[conditionKey] = Math.round((totalEnergyCost - 40) / 10) + 1;
+            });
+          }
+        }
       }
 
-      // 金メッキの夢
-      const gildedDreamsSet = characterInput.artifactSets.filter(s => s == '金メッキの夢').length;
-      if (gildedDreamsSet == 2) {
-        let sameCount = (teamElements[myVision] - 1);
-        let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
-        conditionInput.conditionValues['[金メッキの夢4]同じ元素タイプ'] = sameCount;
-        conditionInput.conditionValues['[金メッキの夢4]異なる元素タイプ'] = otherCount;
-      }
+      // 聖遺物セット効果
+      // const gildedDreamsSet = characterInput.artifactSets.filter(s => s == '金メッキの夢').length;
+      // if (gildedDreamsSet == 2) {
+      //   let sameCount = (teamElements[myVision] - 1);
+      //   let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
+      //   conditionInput.conditionValues['[金メッキの夢4]同じ元素タイプ'] = sameCount;
+      //   conditionInput.conditionValues['[金メッキの夢4]異なる元素タイプ'] = otherCount;
+      // }
 
       // 元素共鳴
       if (props.elementalResonance) {
@@ -239,8 +264,13 @@ export default defineComponent({
     const imgWeaponSrc = computed(() =>
       weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY
     );
+    const weaponName = computed(() =>
+      weaponMaster.value ? weaponMaster.value.key : ''
+    );
     const imgArtifactSetSrc = (index: number) =>
       artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
+    const artifactSetName = (index: number) =>
+      artifactSetMasters.value[index]?.key ?? '';
 
     const characterOnClick = () => {
       context.emit("click:character");
@@ -255,7 +285,7 @@ export default defineComponent({
       return result;
     });
 
-    const weaponMaster = computed(() => {
+    const weaponMaster = computed((): TWeaponEntry => {
       let result = undefined;
       if (savedata.value) {
         const weapon = savedata.value.武器;
@@ -266,8 +296,8 @@ export default defineComponent({
       return result;
     });
 
-    const artifactSetMasters = computed(() => {
-      const result: TArtifactSet[] = [];
+    const artifactSetMasters = computed((): TArtifactSetEntry[] => {
+      const result: TArtifactSetEntry[] = [];
       if (savedata.value) {
         for (let i = 0; i < 2; i++) {
           const key = "聖遺物セット効果" + (i + 1);
@@ -310,7 +340,9 @@ export default defineComponent({
       visionImgSrc,
       constellation,
       imgWeaponSrc,
+      weaponName,
       imgArtifactSetSrc,
+      artifactSetName,
 
       statValue,
 
