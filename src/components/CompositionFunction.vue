@@ -87,6 +87,7 @@ export default function CompositionFunction() {
         const tempArr = stat.split('.');
         if (tempArr.length == 1) {
             result = displayName(stat);
+            result = result.replace('ダメージ会心', 'ダメージの会心')
         } else if (i18n.global.locale.value === 'ja-jp') {
             result = tempArr[tempArr.length - 1] + 'の' + displayName(tempArr[0]);
         } else {

@@ -53,7 +53,7 @@
       <p>
         <a href="./">げんかるく - 原神ダメージシミュレーター</a>
         &nbsp;
-        <a href="./TeamOptionList.html">バフ/デバフ一覧</a>
+        <a href="./TeamOptionList.html">強化・弱体効果一覧</a>
       </p>
     </div>
   </div>
