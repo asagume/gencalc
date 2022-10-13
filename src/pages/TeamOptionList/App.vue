@@ -38,14 +38,11 @@ import { computed, defineComponent, reactive, ref } from "vue";
 import {
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
-  getCharacterMasterDetail,
-  getWeaponMasterDetail,
   OPTION1_MASTER,
   OPTION2_MASTER,
   TCharacterDetail,
-  TCharacterKey,
   TEAM_OPTION_MASTER,
-  TWeaponKey,
+  TWeaponDetail,
   WEAPON_MASTER,
 } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
@@ -196,10 +193,10 @@ export default defineComponent({
       return [category, name, description];
     }
 
-    async function makeRowsByCharacter() {
+    function makeRowsByCharacter(characterMasterMap: Map<string, TCharacterDetail>) {
       const result: TTeamOption[] = [];
       for (const source of Object.keys(CHARACTER_MASTER)) {
-        const characterDetail = await getCharacterMasterDetail(source as TCharacterKey);
+        const characterDetail = characterMasterMap.get(source);
         if (!characterDetail) continue;
         let category: string;
         let name: string;
@@ -253,12 +250,12 @@ export default defineComponent({
       return result;
     }
 
-    async function makeRowsByWeapon() {
+    function makeRowsByWeapon(weaponMasterMap: Map<string, TWeaponDetail>) {
       const result: TTeamOption[] = [];
       for (const weaponMasterKey of Object.keys(WEAPON_MASTER)) {
         const weaponMaster = (WEAPON_MASTER as any)[weaponMasterKey];
         for (const weapon of Object.keys(weaponMaster)) {
-          const weaponDetail = await getWeaponMasterDetail(weapon as TWeaponKey);
+          const weaponDetail = weaponMasterMap.get(weapon);
           if (!weaponDetail) continue;
           let source: string = weapon;
           const category = '武器';
@@ -280,7 +277,6 @@ export default defineComponent({
               description: description,
             });
           }
-          console.log(source);
           for (const key of Object.keys(OPTION2_MASTER).filter(s => s == source)) {
             const optionMaster = (OPTION2_MASTER as any)[key];
             statArr = [];
@@ -303,7 +299,7 @@ export default defineComponent({
       return result;
     }
 
-    async function makeRowsByArtifactSet() {
+    function makeRowsByArtifactSet() {
       const result: TTeamOption[] = [];
       for (const artifactSetKey of Object.keys(ARTIFACT_SET_MASTER)) {
         const artifactSetEntry = (ARTIFACT_SET_MASTER as any)[artifactSetKey];
@@ -334,13 +330,31 @@ export default defineComponent({
     }
 
     async function initialize() {
-      const rowsByCharacter = await makeRowsByCharacter();
-      const rowsByWeapon = await makeRowsByWeapon();
-      const rowsByArtifactSet = await makeRowsByArtifactSet();
-      TEAM_OPTION_LIST.push(...rowsByCharacter);
-      TEAM_OPTION_LIST.push(...rowsByWeapon);
-      TEAM_OPTION_LIST.push(...rowsByArtifactSet);
-      initialized.value = true;
+      const characterMasterMap: Map<string, TCharacterDetail> = new Map();
+      const weaponMasterMap: Map<string, TWeaponDetail> = new Map();
+      const promiseValues1 = Object.keys(CHARACTER_MASTER).map(key => fetch((CHARACTER_MASTER as any)[key].import)
+        .then(resp => resp.json())
+        .then(json => {
+          characterMasterMap.set(key, json);
+        }));
+      const promiseValues2: Promise<void>[] = [];
+      Object.keys(WEAPON_MASTER).forEach(weaponType => {
+        promiseValues2.push(
+          ...Object.keys((WEAPON_MASTER as any)[weaponType]).map(key => fetch((WEAPON_MASTER as any)[weaponType][key].import)
+            .then(resp => resp.json())
+            .then(json => {
+              weaponMasterMap.set(key, json);
+            })));
+      });
+      Promise.all([...promiseValues1, ...promiseValues2]).then(() => {
+        const rowsByCharacter = makeRowsByCharacter(characterMasterMap);
+        const rowsByWeapon = makeRowsByWeapon(weaponMasterMap);
+        const rowsByArtifactSet = makeRowsByArtifactSet();
+        TEAM_OPTION_LIST.push(...rowsByCharacter);
+        TEAM_OPTION_LIST.push(...rowsByWeapon);
+        TEAM_OPTION_LIST.push(...rowsByArtifactSet);
+        initialized.value = true;
+      });
     }
     initialize();
 
