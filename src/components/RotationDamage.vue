@@ -422,7 +422,9 @@ export default defineComponent({
       reaction: [string, string]
     ) => {
       const reactionObj: any = customizedEntry.reactions[index];
-      const count = customizedEntry.counts[index];
+      let count = customizedEntry.counts[index];
+      const damageResultEntry = damageResultEntryList(customizedEntry)[index];
+      if (damageResultEntry[6]) count *= damageResultEntry[6];
       if (reaction[0] in reactionObj) {
         if (reactionObj[reaction[0]] < count) {
           reactionObj[reaction[0]]++;
