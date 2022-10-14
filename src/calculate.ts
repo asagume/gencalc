@@ -265,10 +265,8 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
 
     const workConditionAdjustments = {} as { [key: string]: number };
 
-    const myPriority1KindArr = ['元素熟知', '元素チャージ効率'];    // 攻撃力の計算で参照するステータス 草薙の稲光
-    const myPriority1KindFormulaArr = [] as any[];
-    const myPriority2KindFormulaArr = [] as any[];
-    const myKindFormulaArr = [] as any[];
+    const statFormulaMap: Map<string, any[]> = new Map();
+
     for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
         if (myDamageDetail && CHANGE_KIND_STATUS in myDamageDetail) {
             for (const myDetailObj of myDamageDetail[CHANGE_KIND_STATUS]) {
@@ -282,87 +280,116 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
                     }
                     hasCondition = true;
                 }
-                if (myDetailObj['種類']) {
+                let myNew種類 = myDetailObj['種類'];
+                if (myNew種類) {
                     if (myDetailObj['対象']) {
-                        const myNew種類 = myDetailObj['種類'] + '.' + myDetailObj['対象'];
-                        myKindFormulaArr.push([myNew種類, myNew数値, myDetailObj['上限'], hasCondition]);
-                    } else {
-                        if (myPriority1KindArr.includes(myDetailObj['種類'])) { // 攻撃力の計算で参照されるものを先に計上するため…
-                            myPriority1KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限'], hasCondition]);
-                        } else if (myDetailObj['種類'].endsWith('%')) {  // 乗算系(%付き)のステータスアップを先回しします HP 攻撃力 防御力しかないはず
-                            myPriority2KindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限'], hasCondition]);
-                        } else {
-                            myKindFormulaArr.push([myDetailObj['種類'], myNew数値, myDetailObj['上限'], hasCondition]);
-                        }
+                        myNew種類 += '.' + myDetailObj['対象'];
                     }
+                    if (!statFormulaMap.has(myNew種類)) {
+                        statFormulaMap.set(myNew種類, []);
+                    }
+                    statFormulaMap.get(myNew種類)?.push([myNew種類, myNew数値, myDetailObj['上限'], hasCondition]);
                 }
             }
         }
     }
+
+    const hpStatArr = ['HP%', 'HP+', '基礎HP', 'HP上限'];
+    const defStatArr = ['防御力%', '防御力+', '基礎防御力', '防御力'];
+    const atkStatArr = ['攻撃力%', '攻撃力+', '基礎攻撃力', '攻撃力'];
+
+    const formulaStatArr = Array.from(statFormulaMap.keys()).filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr].includes(s));
+    formulaStatArr.sort(compareFunction);
+
     // HPを計算します
+    for (const formulaKey of hpStatArr) {
+        const formulaArr = statFormulaMap.get(formulaKey);
+        if (!formulaArr) continue;
+        formulaArr.forEach(formula => {
+            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2]);
+            if (formula[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
+                }
+            }
+        })
+    }
     workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
     workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
-    // 攻撃力の計算で参照されるステータスアップを先に計上します
-    myPriority1KindFormulaArr.forEach(entry => {
-        const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
-        if (entry[3]) {
-            for (const stat of Object.keys(diffStats)) {
-                if (stat in workConditionAdjustments) {
-                    workConditionAdjustments[stat] += diffStats[stat];
-                } else {
-                    workConditionAdjustments[stat] = diffStats[stat];
-                }
-            }
-        }
-    });
-    // 乗算系のステータスアップを計上します HP% 攻撃力% 防御力%
-    myPriority2KindFormulaArr.sort(compareFunction);
-    myPriority2KindFormulaArr.forEach(entry => {
-        const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
-        if (entry[3]) {
-            for (const stat of Object.keys(diffStats)) {
-                if (stat in workConditionAdjustments) {
-                    workConditionAdjustments[stat] += diffStats[stat];
-                } else {
-                    workConditionAdjustments[stat] = diffStats[stat];
-                }
-            }
-        }
-    });
 
-    // 攻撃力, 防御力を計算します
-    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
-    workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
+    for (const formulaKey of formulaStatArr) {
+        const formulaArr = statFormulaMap.get(formulaKey);
+        if (!formulaArr) continue;
+        formulaArr.forEach(formula => {
+            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2]);
+            if (formula[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
+                }
+            }
+        })
+    }
+
+    // 防御力を計算します
+    for (const formulaKey of defStatArr) {
+        const formulaArr = statFormulaMap.get(formulaKey);
+        if (!formulaArr) continue;
+        formulaArr.forEach(formula => {
+            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2]);
+            if (formula[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
+                }
+            }
+        })
+    }
     workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
     workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
 
-    // それ以外のステータスアップを計上します
-    myKindFormulaArr.sort(compareFunction);
-    myKindFormulaArr.forEach(entry => {
-        const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
-        if (entry[3]) {
-            for (const stat of Object.keys(diffStats)) {
-                if (stat in workConditionAdjustments) {
-                    workConditionAdjustments[stat] += diffStats[stat];
-                } else {
-                    workConditionAdjustments[stat] = diffStats[stat];
+    // 攻撃力を計算します
+    for (const formulaKey of atkStatArr) {
+        const formulaArr = statFormulaMap.get(formulaKey);
+        if (!formulaArr) continue;
+        formulaArr.forEach(formula => {
+            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2]);
+            if (formula[3]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
                 }
             }
-        }
-    });
+        })
+    }
+    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
+    workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
 
     return workConditionAdjustments;
 }
 
 function compareFunction(a: string, b: string) {
-    const arr = ['HP%', 'HP', 'HP上限', '防御力%', '防御力', '元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', '攻撃力%', '攻撃力'];
+    const arr = ['元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', 'シールド強化'];
     const lowestArr = ['ダメージ軽減'];
-    let aIndex = arr.indexOf(a[0]);
-    if (lowestArr.indexOf(a[0]) >= 0) {
+    let aIndex = arr.indexOf(a);
+    if (lowestArr.indexOf(a) >= 0) {
         aIndex = arr.length + 1;
     }
-    let bIndex = arr.indexOf(b[0]);
-    if (lowestArr.indexOf(b[0]) >= 0) {
+    let bIndex = arr.indexOf(b);
+    if (lowestArr.indexOf(b) >= 0) {
         bIndex = arr.length + 1;
     }
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
