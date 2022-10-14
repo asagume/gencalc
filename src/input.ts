@@ -321,6 +321,7 @@ export type TDamageDetailObj = {
     条件: string | null,
     対象: string | null,
     上限: number | string | Array<any> | null,
+    下限: number | string | Array<any> | null,
     HIT数: number | null,
     ダメージバフ: string | null,
     元素付与無効: boolean | null,
@@ -1242,6 +1243,14 @@ const makeDetailObj = function (
         }
         my上限 = analyzeFormulaStr(my上限);
     }
+    let my下限 = null;
+    if ('下限' in detailObj) {  // ニィロウ
+        my下限 = detailObj['下限'];
+        if (isPlainObject(my下限) && level && level in my下限) {
+            my下限 = my下限[level];
+        }
+        my下限 = analyzeFormulaStr(my下限);
+    }
     const resultObj: TDamageDetailObj = {
         名前: detailObj['名前'],
         種類: my種類,
@@ -1250,6 +1259,7 @@ const makeDetailObj = function (
         条件: my条件,
         対象: my対象,
         上限: my上限,
+        下限: my下限,
         HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
         ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
         元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
