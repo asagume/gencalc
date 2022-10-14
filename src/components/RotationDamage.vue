@@ -465,23 +465,23 @@ export default defineComponent({
             workDmg *= (props.damageResult.元素反応 as any)[reaction + "倍率"];
           }
         });
-        ["超激化", "草激化"].forEach((reaction) => {
-          if (reaction in reactionObj && n < reactionObj[reaction]) {
-            let reactionDmg = (props.damageResult.元素反応 as any)[reaction + "ダメージ"];
-            if (entry[2]) {
-              reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
-            }
-            if (entry[7]) {
-              reactionDmg *= entry[7]; // ダメージバフ
-            }
-            if (entry[8]) {
-              reactionDmg *= entry[8]; // 敵の防御補正
-            }
-            workDmg += reactionDmg;
-          }
-        });
         result += workDmg;
       }
+      ["超激化", "草激化"].forEach((reaction) => {
+        if (reaction in reactionObj) {
+          let reactionDmg = (props.damageResult.元素反応 as any)[reaction + "ダメージ"];
+          if (entry[2]) {
+            reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
+          }
+          if (entry[7]) {
+            reactionDmg *= entry[7]; // ダメージバフ
+          }
+          if (entry[8]) {
+            reactionDmg *= entry[8]; // 敵の防御補正
+          }
+          result += reactionDmg * reactionObj[reaction];
+        }
+      });
       return result;
     };
 
