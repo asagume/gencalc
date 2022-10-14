@@ -19,6 +19,10 @@
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
   },
+  "彷徨える星": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_WanderingEvenstar.json"
+  },
   "満悦の実": {
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_FruitofFulfillment.json"

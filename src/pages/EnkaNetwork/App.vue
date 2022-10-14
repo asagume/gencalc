@@ -12,13 +12,7 @@
         <form @submit.prevent="submit">
           <label>
             UID:
-            <input
-              v-model="uid"
-              type="text"
-              maxlength="9"
-              placeholder="ENTER UID"
-              pattern="[0-9]+"
-            />
+            <input v-model="uid" type="text" maxlength="9" placeholder="ENTER UID" pattern="[0-9]+" />
           </label>
           <button type="submit" :disabled="timer > 0">
             <span class="material-symbols-outlined"> send </span>
@@ -55,18 +49,11 @@
         </table>
 
         <ul>
-          <li
-            class="character"
-            v-for="(characterInfo, index) in characterInfoList"
-            :key="index"
-          >
+          <li class="character" v-for="(characterInfo, index) in characterInfoList" :key="index">
             <template v-if="characterInfo.characterMaster">
               <div class="character">
-                <img
-                  :class="'character ' + characterBgClass(characterInfo)"
-                  :src="characterImgSrc(characterInfo)"
-                  :alt="displayName(characterInfo.characterMaster.key)"
-                />
+                <img :class="'character ' + characterBgClass(characterInfo)" :src="characterImgSrc(characterInfo)"
+                  :alt="displayName(characterInfo.characterMaster.key)" />
                 <img class="vision" :src="visionImgSrc(characterInfo)" alt="vision" />
                 <div class="constellation" v-if="characterInfo.constellation">
                   {{ characterInfo.constellation }}
@@ -74,16 +61,8 @@
               </div>
               <div class="level">Lv.{{ characterInfo.level }}</div>
               <img class="weapon" :src="weaponImgSrc(characterInfo)" alt="weapon" />
-              <img
-                class="artifact-set"
-                :src="artifactSetImgSrc(characterInfo, 0)"
-                alt="artifact-set"
-              />
-              <img
-                class="artifact-set"
-                :src="artifactSetImgSrc(characterInfo, 1)"
-                alt="artifact-set"
-              />
+              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 0)" alt="artifact-set" />
+              <img class="artifact-set" :src="artifactSetImgSrc(characterInfo, 1)" alt="artifact-set" />
             </template>
             <div v-if="false">
               {{ characterInfo.savedata }}
@@ -107,19 +86,17 @@
       <hr />
       <h2>
         DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network
-        Ver.0.2.2
+        Ver.0.2.3
       </h2>
       《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
       <ol style="text-align: left">
         <li>
-          UIDを入力後、<span class="material-symbols-outlined"> send </span
-          >をクリックしてください
+          UIDを入力後、<span class="material-symbols-outlined"> send </span>をクリックしてください
         </li>
       </ol>
       <hr />
       <p>下記の制約があります。</p>
       <ol style="text-align: left">
-        <li>不可：旅人</li>
         <li>不可：げんかるくに実装されていないキャラクター</li>
         <li>不可：げんかるくに実装されていない武器を装備しているデータ</li>
         <li>
@@ -128,6 +105,10 @@
       </ol>
       <hr />
       <dl class="history">
+        <dt>0.2.3</dt>
+        <dd>
+          旅人対応。
+        </dd>
         <dt>0.2.2</dt>
         <dd>
           突破していない武器を装備したキャラクターが含まれる場合に処理が止まる問題に対処。
@@ -380,9 +361,27 @@ export default defineComponent({
 
       const avatarWork = HoyoAvatarMaster.filter((s) => s.id == result.avatarId);
       if (avatarWork.length) {
-        result.characterMaster = CHARACTER_MASTER[
-          avatarWork[0].name as TCharacterKey
-        ] as TCharacterEntry;
+        let name: TCharacterKey = avatarWork[0].name as TCharacterKey;
+        if (avatarWork.length > 1) {
+          const skillWorkArr = HoyoSkillMaster.filter(s => s.avatar_id == result.avatarId);
+          let skillEntry;
+          for (skillEntry of skillWorkArr) {
+            if (skillEntry.skill_list.filter(s => String(s.id) == result.skillLevelList[0][0]).length) {
+              break;
+            }
+          }
+          if (skillEntry) {
+            for (const character of Object.keys(CHARACTER_MASTER).filter(s => s.startsWith('旅人'))) {
+              const characterDetail = await getCharacterMasterDetail(character as TCharacterKey);
+              const talentName = characterDetail.通常攻撃.名前;
+              if (skillEntry.skill_list.filter(s => s.name == talentName).length) {
+                name = character as TCharacterKey;
+                break;
+              }
+            }
+          }
+        }
+        result.characterMaster = CHARACTER_MASTER[name] as TCharacterEntry;
 
         const weaponWork = HoyoWeaponMaster.filter((s) => s.id == result.weapon.itemId);
         if (weaponWork.length) {
@@ -447,31 +446,28 @@ export default defineComponent({
       // キャラクター
       result["キャラクター"] = characterInfo.characterMaster?.key;
       // レベル
-      result["レベル"] =
-        characterInfo.level +
-        (突破レベルレベルARRAY[characterInfo.ascension][0] == characterInfo.level
-          ? "+"
-          : "");
+      result["レベル"] = characterInfo.level + (突破レベルレベルARRAY[characterInfo.ascension][0] == characterInfo.level ? "+" : "");
       // 命ノ星座
       result["命ノ星座"] = characterInfo.constellation;
 
-      const skillList = HoyoSkillMaster.filter(
-        (s) => s.avatar_id == characterInfo.avatarId
-      )[0];
-      if (skillList) {
-        const characterMasterDetail = await getCharacterMasterDetail(
-          result["キャラクター"]
-        );
+      const workSkillArr = HoyoSkillMaster.filter((s) => s.avatar_id == characterInfo.avatarId);
+      if (workSkillArr.length) {
+        const characterMasterDetail = await getCharacterMasterDetail(result["キャラクター"]);
         characterInfo.skillLevelList.forEach((skillLevel) => {
-          const skill = skillList.skill_list.filter(
-            (s) => s.id == Number(skillLevel[0])
-          )[0];
-          if (skill) {
-            if (characterMasterDetail.通常攻撃.名前 == skill.name) {
+          let skillInfo;
+          for (const skillEntry of workSkillArr) {
+            const workArr = skillEntry.skill_list.filter((s) => s.id == Number(skillLevel[0]));
+            if (workArr.length) {
+              skillInfo = workArr[0];
+              break;
+            }
+          }
+          if (skillInfo) {
+            if (characterMasterDetail.通常攻撃.名前 == skillInfo.name) {
               result["通常攻撃レベル"] = skillLevel[1];
-            } else if (characterMasterDetail.元素スキル.名前 == skill.name) {
+            } else if (characterMasterDetail.元素スキル.名前 == skillInfo.name) {
               result["元素スキルレベル"] = skillLevel[1];
-            } else if (characterMasterDetail.元素爆発.名前 == skill.name) {
+            } else if (characterMasterDetail.元素爆発.名前 == skillInfo.name) {
               result["元素爆発レベル"] = skillLevel[1];
             }
           }
@@ -503,7 +499,7 @@ export default defineComponent({
       result["武器レベル"] =
         characterInfo.weapon.level +
         (突破レベルレベルARRAY[characterInfo.weapon.ascension][0] ==
-        characterInfo.weapon.level
+          characterInfo.weapon.level
           ? "+"
           : "");
       // 精錬ランク
@@ -544,7 +540,7 @@ export default defineComponent({
     const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
       const url = "https://enka.network/u/" + uid.value + "/__data.json";
-      // const url = 'data/__data.json';
+      // const url = 'data/__data_2.json';
       fetch(url)
         .then((resp) => resp.json())
         .then(async (json) => {

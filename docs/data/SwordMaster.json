@@ -1,4 +1,8 @@
 {
+  "聖顕の鍵": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_KeyofKhaj-Nisut.json"
+  },
   "波乱月白経津": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_HaranGeppakuFutsu.json"
@@ -26,6 +30,10 @@
   "風鷹剣": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
+  },
+  "サイフォスの月明かり": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_Xiphos'Moonlight.json"
   },
   "原木刀": {
     "レアリティ": 4,

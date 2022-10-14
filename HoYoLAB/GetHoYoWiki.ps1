@@ -3,16 +3,17 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 
 $pageIds = @()
 # キャラクター
-$pageIds += @(1..51)
-$pageIds += 2252   # 夜蘭
-$pageIds += 2256   # 久岐忍
-$pageIds += 2263   # 鹿野院平蔵
-$pageIds += 2265   # ティナリ
-$pageIds += 2268   # コレイ
-$pageIds += 2269   # ドリー
-$pageIds += 2674   # 旅人(草)
-$pageIds += 2813   # セノ
-$pageIds += 2815   # キャンディス
+# $pageIds += @(1..51)
+# $pageIds += 2252   # 夜蘭
+# $pageIds += 2256   # 久岐忍
+# $pageIds += 2263   # 鹿野院平蔵
+# $pageIds += 2265   # ティナリ
+# $pageIds += 2268   # コレイ
+# $pageIds += 2269   # ドリー
+# $pageIds += 2674   # 旅人(草)
+$pageIds += 2812   # ニィロウ
+# $pageIds += 2813   # セノ
+# $pageIds += 2815   # キャンディス
 # 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -28,6 +29,9 @@ $pageIds += 2815   # キャンディス
 # $pageIds += 2847   # 風信の矛
 # $pageIds += 2848   # マカイラの水色
 # $pageIds += 2849   # 赤砂の杖
+$pageIds += 2908   # 聖顕の鍵
+$pageIds += 2909   # サイフォスの月明かり
+$pageIds += 2910   # 彷徨える星
 # 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

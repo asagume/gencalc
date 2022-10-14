@@ -299,9 +299,9 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
             }
         }
     }
-    // console.log('myPriority1KindFormulaArr', myPriority1KindFormulaArr);
-    // console.log('myPriority2KindFormulaArr', myPriority2KindFormulaArr);
-    // console.log('myKindFormulaArr', myKindFormulaArr);
+    // HPを計算します
+    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
+    workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
     // 攻撃力の計算で参照されるステータスアップを先に計上します
     myPriority1KindFormulaArr.forEach(entry => {
         const diffStats = updateStats(workStatsObj, entry[0], entry[1], entry[2]);
@@ -330,9 +330,7 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
         }
     });
 
-    // HP, 攻撃力, 防御力を計算します
-    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
-    workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
+    // 攻撃力, 防御力を計算します
     workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
     workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
     workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
@@ -609,7 +607,7 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
                     let n = 0;
                     const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1] as TDamageResultEntry;
                     for (const entry of damageResult[category]) {
-                        if (entry[0].endsWith('段ダメージ') && !entry[0].startsWith('非表示_')) {
+                        if ((entry[0].endsWith('段ダメージ') || ['水月ダメージ'].includes(entry[0])) && !entry[0].startsWith('非表示_')) {  // ニィロウ
                             sum[1] = entry[1];
                             sum[2] += entry[2];
                             if (entry[3] == null) sum[3] = null;
