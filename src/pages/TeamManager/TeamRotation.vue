@@ -66,7 +66,7 @@ export default defineComponent({
   props: {
     team: { type: Object as PropType<TTeam>, required: true },
   },
-  setup(props, context) {
+  setup(props) {
     const { displayName } = CompositionFunction();
 
     const characterDetailMap = new Map();

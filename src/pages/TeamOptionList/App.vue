@@ -182,7 +182,7 @@ export default defineComponent({
             statArr = [];
             name = teamBuffArr[i].名前 ?? teamBuffArr[i].条件;
             newName = name;
-            ステータスARRAY_MAP.forEach((value, key) => {
+            ステータスARRAY_MAP.forEach((value) => {
               for (const stat of value) {
                 if (newName.endsWith(' ' + stat)) {
                   const re = new RegExp(' +' + stat + '$');

@@ -214,7 +214,7 @@ export default defineComponent({
             const required = value[0].startsWith("required_");
             selectList.push({
               name: key,
-              options: required ? value : ['', ...value],
+              options: (required || !value[0]) ? value : ['', ...value],
               required: required,
               displayName: key.replace(/^.+\*/, ""),
             });
