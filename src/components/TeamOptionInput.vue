@@ -532,7 +532,8 @@ export default defineComponent({
           for (const myDetailObj of detailObjArr) {
             let supporter;
             let myNew数値 = myDetailObj.数値;
-            let my上限 = myDetailObj.上限;
+            const my上限 = myDetailObj.上限;
+            const my下限 = myDetailObj.下限;
             if (myDetailObj.条件) {
               supporter = myDetailObj.条件.substring(0, myDetailObj.条件.indexOf("*"));
               if (supporter == props.character) continue;
@@ -557,7 +558,7 @@ export default defineComponent({
             }
             let myValue = Infinity;
             if (myNew数値) {
-              myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限);
+              myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限, my下限);
             }
             const kinds = [] as string[];
             if (myDetailObj.種類) {

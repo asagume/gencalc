@@ -212,7 +212,7 @@ export default defineComponent({
       // 元素共鳴
       if (props.elementalResonance) {
         const workObj = {} as TStats;
-        props.elementalResonance.forEach(entry => {
+        props.elementalResonance.filter(s => ['炎元素共鳴', '水元素共鳴', '草元素共鳴', '元素共鳴なし'].includes(s)).forEach(entry => {
           optionInput.elementalResonance.conditionValues[entry] = true;
           if ("詳細" in (ELEMENTAL_RESONANCE_MASTER as any)[entry]) {
             const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[entry].詳細;

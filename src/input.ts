@@ -1306,7 +1306,7 @@ export const makeDamageDetailObjArr = function (
     const resultArr = [] as any[];
     if (!('詳細' in talentDataObj)) return resultArr;
 
-    talentDataObj['詳細'].forEach((detailObj: { [x: string]: any; }) => {
+    talentDataObj['詳細'].forEach((detailObj: TAnyObject) => {
         const resultObj = makeDetailObj(detailObj, level, defaultKind, defaultElement, inputCategory, opt_condition);
         const my種類 = resultObj.種類 as string;
         if (statusChangeDetailObjArr != null && getChangeKind(my種類) == 'STATUS') {
