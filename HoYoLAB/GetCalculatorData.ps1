@@ -183,6 +183,10 @@ while ($true) {
         break;
     }
 
+    foreach ($entry in $ContentObj.data.list) {
+        $entry.icon = $null
+    }
+
     $WeaponList = $WeaponList + $ContentObj.data.list
 }
 
@@ -231,6 +235,10 @@ for ($reliquary_cat_id = 1; $reliquary_cat_id -le 5; $reliquary_cat_id++) {
             break;
         }
 
+        foreach ($entry in $ContentObj.data.list) {
+            $entry.icon = $null
+        }
+        
         $ArtifactList = $ArtifactList + $ContentObj.data.list
     }
 }

@@ -9,6 +9,15 @@
     "max_level": 90
   },
   {
+    "id": 10000070,
+    "name": "ニィロウ",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90
+  },
+  {
     "id": 10000069,
     "name": "ティナリ",
     "icon": null,

@@ -49,6 +49,53 @@
   {
     "skill_list": [
       {
+        "id": 10701,
+        "group_id": 7031,
+        "name": "通常攻撃·弦月のダンス",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10702,
+        "group_id": 7032,
+        "name": "七域のダンス",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10705,
+        "group_id": 7039,
+        "name": "浮蓮のダンス·遠夢聆泉",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 7021,
+        "group_id": 7021,
+        "name": "落花廻旋の庭",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7022,
+        "group_id": 7022,
+        "name": "軽やかに舞う永世の夢",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7023,
+        "group_id": 7023,
+        "name": "白き玉蓮の盃",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000070
+  },
+  {
+    "skill_list": [
+      {
         "id": 10691,
         "group_id": 6931,
         "name": "通常攻撃·蔵蘊散悩",
