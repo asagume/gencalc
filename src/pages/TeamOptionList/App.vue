@@ -46,6 +46,7 @@ import {
   WEAPON_MASTER,
 } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
+import { ステータスARRAY_MAP, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素反応バフARRAY, 実数ダメージ加算ARRAY, } from '@/input';
 
 type TTeamOption = {
   source: string,
@@ -73,39 +74,10 @@ export default defineComponent({
       '会心率, 会心ダメージ': ['会心率', '会心ダメージ'],
       '与える治療効果, 受ける治療効果': ['与える治療効果', '受ける治療効果'],
       '元素チャージ効率, 元素エネルギー': ['元素チャージ効率', '元素エネルギー'],
-      'ダメージバフ': [
-        '通常攻撃ダメージバフ',
-        '重撃ダメージバフ',
-        '落下攻撃ダメージバフ',
-        '元素スキルダメージバフ',
-        '元素爆発ダメージバフ',
-        '与えるダメージバフ',
-      ],
-      '元素ダメージバフ': [
-        '炎元素ダメージバフ',
-        '水元素ダメージバフ',
-        '風元素ダメージバフ',
-        '雷元素ダメージバフ',
-        '草元素ダメージバフ',
-        '氷元素ダメージバフ',
-        '岩元素ダメージバフ',
-        '物理ダメージバフ',
-      ],
-      '実数ダメージ加算': [
-        '通常攻撃ダメージアップ',
-        '重撃ダメージアップ',
-        '落下攻撃ダメージアップ',
-        '元素スキルダメージアップ',
-        '元素爆発ダメージアップ',
-        '炎元素ダメージアップ',
-        '水元素ダメージアップ',
-        '風元素ダメージアップ',
-        '雷元素ダメージアップ',
-        '草元素ダメージアップ',
-        '氷元素ダメージアップ',
-        '岩元素ダメージアップ',
-        '物理ダメージアップ',
-      ],
+      '元素ダメージバフ': 元素ステータス_ダメージARRAY,
+      'ダメージバフ': ダメージバフARRAY,
+      '実数ダメージ加算': 実数ダメージ加算ARRAY,
+      '元素反応バフ': 元素反応バフARRAY,
       '攻撃速度, 移動速度': [
         '攻撃速度',
         '移動速度',
@@ -200,6 +172,7 @@ export default defineComponent({
         if (!characterDetail) continue;
         let category: string;
         let name: string;
+        let newName: string;
         let description: string;
         let statArr: string[];
         if (characterDetail.チームバフ) {
@@ -208,18 +181,28 @@ export default defineComponent({
             if (!teamBuffArr[i].名前 && !teamBuffArr[i].条件) continue;
             statArr = [];
             name = teamBuffArr[i].名前 ?? teamBuffArr[i].条件;
-            const sameNameObjArr = teamBuffArr.slice(i).filter(s => (s.名前 ?? s.条件) == name);
+            newName = name;
+            ステータスARRAY_MAP.forEach((value, key) => {
+              for (const stat of value) {
+                if (newName.endsWith(' ' + stat)) {
+                  const re = new RegExp(' +' + stat + '$');
+                  newName = newName.replace(re, '');
+                  break;
+                }
+              }
+            });
+            const sameNameObjArr = teamBuffArr.slice(i).filter(s => (s.名前 ?? s.条件).startsWith(newName));
             i += sameNameObjArr.length - 1;
             for (const obj of sameNameObjArr) {
               const stat = obj.種類;
               if (!statArr.includes(stat)) statArr.push(stat);
             }
-            [category, name, description] = find(name, characterDetail);
+            [category, newName, description] = find(newName, characterDetail);
             result.push({
               source: displayName(source),
               category: category,
-              name: displayName(name),
-              nameWithCategory: category + '<br>' + name,
+              name: displayName(newName),
+              nameWithCategory: category + '<br>' + newName,
               statArr: statArr,
               stats: statArr.map(s => displayStatName(s)).join('<br>'),
               description: description,
