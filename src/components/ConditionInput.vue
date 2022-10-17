@@ -77,6 +77,7 @@ export default defineComponent({
     });
 
     const updateCondition = async (event: Event, item: any) => {
+      console.log(event, item);
       let exclusionArr;
       if (event.currentTarget instanceof HTMLInputElement) {
         if (event.currentTarget.checked) {

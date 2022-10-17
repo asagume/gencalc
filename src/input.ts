@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { basename, deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
@@ -87,7 +87,16 @@ export const ステータスその他ARRAY = [
     '防御力%',
     'HP+',
     '攻撃力+',
-    '防御力+'
+    '防御力+',
+    'HP上限EX',
+    '攻撃力EX',
+    '防御力EX',
+    '元素熟知EX',
+    '会心率EX',
+    '会心ダメージEX',
+    '与える治療効果EX',
+    '受ける治療効果EX',
+    '元素チャージ効率EX',
 ];
 export const 敵ステータス_元素耐性ARRAY = [
     '敵炎元素耐性',
@@ -367,6 +376,7 @@ export const CHARACTER_INPUT_TEMPLATE = {
     damageDetailMyCharacter: null as TDamageDetail | null,
     damageDetailMyWeapon: null as TDamageDetail | null,
     damageDetailMyArtifactSets: null as TDamageDetail | null,
+    damageDetailElementalResonance: null as TDamageDetail | null,
     buildname: '',
     recommendationSelectedIndex: 0,
     saveDisabled: true,     // ローカルストレージへの構成保存不可か？
@@ -421,11 +431,16 @@ for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {
 }
 export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
+export type TElementalResonance = {
+    conditionValues: TConditionValues,
+    conditionAdjustments: TConditionAdjustments,
+  };
+  
 export const OPTION_INPUT_TEMPLATE = {
     elementalResonance: {
-        conditionValues: {} as TConditionValues,
-        conditionAdjustments: {} as TConditionAdjustments,
-    },
+        conditionValues: {},
+        conditionAdjustments: {},
+    } as TElementalResonance,
     supporterList: [],
     isSupporterOptionOpened: {} as { [key: string]: boolean },
     teamOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
@@ -1193,6 +1208,52 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
     }
 }
 
+export function makeDamageDetailObjArrObjElementalResonance(characterInput: any) {
+    try {
+        const result = [] as any;
+
+        const myInputCategory = '元素共鳴';
+        const damageDetailObjArr = [] as TDamageDetailObj[];
+        const myStatusChangeDetailObjArr = [] as any[];
+        const myTalentChangeDetailObjArr = [] as any[];
+        for (const myTalentDetail of ELEMENTAL_RESONANCE_MASTER_LIST) {
+            const workObj = deepcopy(myTalentDetail);
+            if (workObj.詳細) {
+                workObj.詳細.forEach((detailObj: TAnyObject) => {
+                    detailObj.名前 = myTalentDetail.key;
+                });
+            }
+            damageDetailObjArr.push(...makeDamageDetailObjArr(workObj, null, null, null, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory));
+        }
+        result['その他'] = damageDetailObjArr;
+        result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
+        result[CHANGE_KIND_TALENT] = myTalentChangeDetailObjArr;
+
+        const conditionMap = new Map();
+        const exclusionMap = new Map();
+        myStatusChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
+            makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+        });
+        myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
+            makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
+        });
+        conditionMap.forEach((value, key) => {
+            if (value && Array.isArray(value)) {
+                if (!value[0].startsWith('required_')) {
+                    conditionMap.set(key, ['', ...value]);
+                }
+            }
+        });
+        result['条件'] = conditionMap;
+        result['排他'] = exclusionMap;
+
+        characterInput.damageDetailElementalResonance = result;
+    } catch (error) {
+        console.error(characterInput);
+        throw error;
+    }
+}
+
 const makeDetailObj = function (
     detailObj: any,
     level: number | null,
@@ -1417,7 +1478,7 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
     }
 }
 
-export function setupConditionValues(conditionInput: TConditionInput, characterInput: TCharacterInput) {
+export function setupConditionValues(conditionInput: TConditionInput, characterInput: TCharacterInput, optionInput: TOptionInput) {
     try {
         const conditionValues = conditionInput.conditionValues;
         const checkboxList = conditionInput.checkboxList as TCheckboxEntry[];
@@ -1502,6 +1563,71 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                 });
             }
         }
+
+        if (optionInput.elementalResonance) {
+            const conditionMap: Map<string, any[] | null> = new Map();
+            const exclusionMap: Map<string, string[] | null> = new Map();
+            for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
+                if (!optionInput.elementalResonance.conditionValues[key]) continue;
+                const master = (ELEMENTAL_RESONANCE_MASTER as any)[key];
+                if (!master.詳細) continue;
+                for (const detailObj of master.詳細) {
+                    if (!detailObj.条件) continue;
+                    makeConditionExclusionMapFromStr(detailObj.条件, conditionMap, exclusionMap);
+                }
+            }
+            conditionMap.forEach((value: string[] | null, key: string) => {
+                if (value == null) {
+                    if (checkboxList.filter(s => s.name == key).length == 0) {
+                        checkboxList.push({ name: key });
+                    }
+                } else {
+                    if (selectList.filter(s => s.name == key).length == 0) {
+                        const required = value[0].startsWith("required_");
+                        selectList.push({
+                            name: key,
+                            options: value,
+                            required: required,
+                        });
+                    }
+                }
+
+                if (key in conditionValues && conditionValues[key] != null) {
+                    const exclusions = exclusionMap.get(key);
+                    if (exclusions) {
+                        for (const exclusion of exclusions) {
+                            if (exclusion in conditionValues) {
+                                const conditionValue = conditionMap.get(exclusion);
+                                if (conditionValue !== undefined) {
+                                    if (conditionValue === null) {  // checkbox
+                                        conditionValues[exclusion] = false;
+                                    } else {    // select
+                                        conditionValues[exclusion] = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (value === null) {   // checkbox
+                        let checked = true;
+                        const arr = exclusionMap.get(key);
+                        if (arr && arr.filter(s => conditionValues[s]).length > 0) {
+                            checked = false;
+                        }
+                        conditionValues[key] = checked;
+                    } else {   // select
+                        let selectedIndex = value.length - 1;
+                        const arr = exclusionMap.get(key);
+                        if (arr && arr.filter(s => conditionValues[s]).length > 0) {
+                            selectedIndex = 0;
+                        }
+                        conditionValues[key] = selectedIndex;
+                    }
+                }
+            });
+        }
+        console.log(conditionValues, checkboxList, selectList);
     } catch (error) {
         console.error(conditionInput, characterInput);
         throw error;

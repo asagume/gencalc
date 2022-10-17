@@ -79,6 +79,7 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash';
 import {
   calculateArtifactStats,
   calculateArtifactStatsMain,
@@ -87,6 +88,7 @@ import {
   calculateStats,
   checkConditionMatches,
   makeValidConditionValueArr,
+  calculateElementalResonance,
 } from "@/calculate";
 import { deepcopy, isNumber, overwriteObject } from "@/common";
 import {
@@ -116,6 +118,7 @@ import {
   getChangeKind,
   makeDefaultBuildname,
   makeBuildStorageKey,
+  TConditionValues,
 } from "@/input";
 import {
   CHARACTER_MASTER,
@@ -126,9 +129,7 @@ import {
 import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
-type TConditionValuesAny = {
-  [key: string]: any;
-};
+type TCOnditionValuesAny = { [key: string]: any };
 
 export default defineComponent({
   name: "TeamOptionInput",
@@ -137,6 +138,9 @@ export default defineComponent({
     savedSupporters: {
       type: Object as PropType<{ key: string; value: string }[]>,
       required: true,
+    },
+    elementalResonance: {
+      type: Object as PropType<TConditionValues>,
     },
   },
   emits: ["update:team-option", "update:buildname-selection"],
@@ -159,7 +163,7 @@ export default defineComponent({
     const conditionInput = reactive(
       deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput
     );
-    const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
+    const conditionValues = conditionInput.conditionValues as TCOnditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
     const statsObjDummy = deepcopy(ステータスTEMPLATE);
@@ -296,9 +300,13 @@ export default defineComponent({
       makeDamageDetailObjArrObjCharacter(characterInput);
       makeDamageDetailObjArrObjWeapon(characterInput);
       makeDamageDetailObjArrObjArtifactSets(characterInput);
-      setupConditionValues(conditionInput, characterInput);
+      setupConditionValues(conditionInput, characterInput, optionInput);
       calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
       calculateArtifactStats(artifactDetailInput);
+      if (props.elementalResonance) {
+        optionInput.elementalResonance.conditionValues = props.elementalResonance;
+        optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(props.elementalResonance, conditionInput);
+      }
       calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
 
       if (characterInput.character == "雷電将軍") {
@@ -560,8 +568,10 @@ export default defineComponent({
 
     watch(props, async (newVal, oldVal) => {
       for (const entry of newVal.savedSupporters) {
-        const changed =
-          oldVal.savedSupporters.filter((s) => s.key == entry.key && s.value == entry.value).length > 0;
+        let changed = oldVal.savedSupporters.filter((s) => s.key == entry.key && s.value == entry.value).length > 0;
+        if (!_.isEqual(newVal.elementalResonance, oldVal.elementalResonance)) {
+          changed = true;
+        }
         if (
           changed ||
           entry.key == "雷電将軍" // for 雷罰悪曜の眼

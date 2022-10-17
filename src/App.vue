@@ -110,6 +110,7 @@
         </div>
         <div v-show="optionInputTabRef == 1">
           <ElementalResonanceInput ref="elementalResonanceInputVmRef"
+            :elementalResonance="optionInputRea.elementalResonance"
             @update:elemental-resonance="updateElementalResonance" />
         </div>
         <div v-show="optionInputTabRef == 2">
@@ -266,6 +267,7 @@ import {
   makeOptionStorageKey,
   makeArtifactScoringStorageKey,
   makeBuildStorageKey,
+  makeDamageDetailObjArrObjElementalResonance,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -287,6 +289,7 @@ import {
   calculateArtifactStats,
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
+  calculateElementalResonance,
   calculateStats,
   TArtifactScoreFormula,
 } from "@/calculate";
@@ -598,7 +601,6 @@ export default defineComponent({
       } else {
         characterInputRea.buildname = "";
       }
-      console.debug("updateRecommendation", characterInputRea);
       if (!("精錬ランク" in recommendation.build)) {
         const weapon = characterInputRea.weapon;
         let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
@@ -629,7 +631,9 @@ export default defineComponent({
       makeDamageDetailObjArrObjWeapon(characterInputRea);
       // 聖遺物セット効果のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjArtifactSets(characterInputRea);
-      setupConditionValues(conditionInputRea, characterInputRea);
+      // 元素共鳴のダメージ計算式を再抽出します
+      makeDamageDetailObjArrObjElementalResonance(characterInputRea);
+      setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       // 聖遺物ステータスを計算します
       calculateArtifactStatsMain(
         artifactDetailInputRea.聖遺物ステータスメイン効果,
@@ -668,6 +672,8 @@ export default defineComponent({
       }
       calculateArtifactStats(artifactDetailInputRea);
       conditionInputVmRef.value.initialize(conditionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
+      overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスを計算します
       calculateStats(
         statsInput,
@@ -768,7 +774,7 @@ export default defineComponent({
       });
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
-      setupConditionValues(conditionInputRea, characterInputRea);
+      setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
@@ -832,7 +838,7 @@ export default defineComponent({
       characterInputRea.武器精錬ランク = Number(refine);
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
-      setupConditionValues(conditionInputRea, characterInputRea);
+      setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
@@ -860,7 +866,7 @@ export default defineComponent({
       });
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
-      setupConditionValues(conditionInputRea, characterInputRea);
+      setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
@@ -907,7 +913,7 @@ export default defineComponent({
       artifactSetSelectVisibleRef.value = false;
       // 聖遺物セット効果のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjArtifactSets(characterInputRea);
-      setupConditionValues(conditionInputRea, characterInputRea);
+      setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       conditionInputVmRef.value.initialize(conditionInputRea);
       calculateStats(
         statsInput,
@@ -982,6 +988,8 @@ export default defineComponent({
     /** オプション条件が変更されました。ステータスおよびダメージを再計算します */
     const updateCondition = (conditionValues: TConditionValues) => {
       overwriteObject(conditionInputRea.conditionValues, conditionValues);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
+      overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       calculateStats(
         statsInput,
         characterInputRea,
@@ -1045,9 +1053,12 @@ export default defineComponent({
     };
 
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
-    const updateElementalResonance = (conditionInput: TConditionInput) => {
-      if (conditionInput && Object.keys(conditionInput).length) {
-        overwriteObject(optionInputRea.elementalResonance, conditionInput);
+    const updateElementalResonance = (conditionValues: TConditionValues) => {
+      if (conditionValues && Object.keys(conditionValues).length) {
+        overwriteObject(optionInputRea.elementalResonance.conditionValues, conditionValues);
+        setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+        const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
+        overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
         calculateStats(
           statsInput,
           characterInputRea,
@@ -1061,6 +1072,7 @@ export default defineComponent({
           conditionInputRea as any,
           statsInput
         );
+        conditionInputVmRef.value.initialize(conditionInputRea);
       }
     };
 

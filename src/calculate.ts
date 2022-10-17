@@ -1,6 +1,6 @@
 import { deepcopy, isNumber, isBoolean, isPlainObject, isString, overwriteObject } from "@/common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -294,9 +294,9 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
         }
     }
 
-    const hpStatArr = ['HP%', 'HP+', '基礎HP', 'HP上限'];
-    const defStatArr = ['防御力%', '防御力+', '基礎防御力', '防御力'];
-    const atkStatArr = ['攻撃力%', '攻撃力+', '基礎攻撃力', '攻撃力'];
+    const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限EX', 'HP上限'];
+    const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力EX', '防御力'];
+    const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力EX', '攻撃力'];
     const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
 
     const formulaStatArr = Array.from(statFormulaMap.keys()).filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
@@ -319,7 +319,7 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
             }
         })
     }
-    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
+    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'] + workStatsObj['HP上限EX'];
     workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
 
     for (const formulaKey of formulaStatArr) {
@@ -356,7 +356,7 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
             }
         })
     }
-    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
+    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'] + workStatsObj['防御力EX'];
     workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
 
     // 攻撃力を計算します
@@ -376,7 +376,7 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
             }
         })
     }
-    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
+    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'] + workStatsObj['攻撃力EX'];
     workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
 
     // 元素ステータスおよび隠しステータスを計算します
@@ -412,6 +412,35 @@ function compareFunction(a: string, b: string) {
         bIndex = arr.length + 1;
     }
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
+}
+
+export function calculateElementalResonance(conditionValues: TConditionValues, conditionInput: TConditionInput): TStats {
+    const result: TStats = {};
+    const validConditionValueArr = makeValidConditionValueArr(conditionInput);
+    for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER) ) {
+        if (!conditionValues[key]) continue;
+        const master = (ELEMENTAL_RESONANCE_MASTER as any)[key];
+        if (master.詳細) {
+            for (const detailObj of master.詳細) {
+                if (detailObj.条件) {
+                    const matchRet = checkConditionMatches(detailObj.条件, validConditionValueArr, 0);
+                    console.log(detailObj.条件, validConditionValueArr, matchRet);
+                    if (matchRet == 0) continue;
+                }
+                if (detailObj.種類 && detailObj.数値) {
+                    if (detailObj.種類 in result) {
+                        result[detailObj.種類] += detailObj.数値;
+                    } else {
+                        result[detailObj.種類] = detailObj.数値;
+                    }
+                }
+            }
+        }
+        if (key == '草元素共鳴' && conditionValues.dendroOption) {
+            result["元素熟知"] += Number(conditionValues.dendroOption);
+        }
+    }
+    return result;
 }
 
 /** げんかるくスタイルの式データから結果（数値）を計算します */

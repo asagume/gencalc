@@ -130,7 +130,7 @@ export default defineComponent({
       makeDamageDetailObjArrObjCharacter(characterInput);
       makeDamageDetailObjArrObjWeapon(characterInput);
       makeDamageDetailObjArrObjArtifactSets(characterInput);
-      setupConditionValues(conditionInput, characterInput);
+      setupConditionValues(conditionInput, characterInput, optionInput);
       calculateArtifactStatsMain(
         artifactDetailInput.聖遺物ステータスメイン効果,
         artifactDetailInput.聖遺物メイン効果

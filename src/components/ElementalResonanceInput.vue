@@ -24,15 +24,15 @@
 </template>
 
 <script lang="ts">
-import { deepcopy, overwriteObject } from "@/common";
-import { CONDITION_INPUT_TEMPLATE, STAT_PERCENT_LIST, TConditionInput, TStats } from "@/input";
+import { deepcopy } from "@/common";
+import { CONDITION_INPUT_TEMPLATE, STAT_PERCENT_LIST, TConditionInput, TElementalResonance, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
   ELEMENTAL_RESONANCE_MASTER_LIST,
   ELEMENT_COLOR_CLASS,
   TElementalResonanceKey,
 } from "@/master";
-import { computed, defineComponent, nextTick, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 type TConditionValuesAny = {
@@ -41,6 +41,11 @@ type TConditionValuesAny = {
 
 export default defineComponent({
   name: "ElementalResonanceInput",
+  props: {
+    elementalResonance: {
+      type: Object as PropType<TElementalResonance>,
+    }
+  },
   emits: ["update:elemental-resonance"],
   setup(props, context) {
     const { displayName } = CompositionFunction();
@@ -57,41 +62,22 @@ export default defineComponent({
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
 
     const statAdjustments = computed(() => {
-      const workObj = {} as TStats;
-      for (const name of Object.keys(elementalResonanceChecked).filter(
-        (s) => elementalResonanceChecked[s]
-      )) {
-        if ("詳細" in (ELEMENTAL_RESONANCE_MASTER as any)[name]) {
-          const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[name].詳細;
-          if (detailObjArr) {
-            for (const detailObj of detailObjArr) {
-              if ("種類" in detailObj && "数値" in detailObj) {
-                if (detailObj.種類 in workObj) {
-                  workObj[detailObj.種類] += detailObj.数値;
-                } else {
-                  workObj[detailObj.種類] = detailObj.数値;
-                }
-              }
-            }
-          }
-        }
-        if (name === "草元素共鳴") {
-          if (dendroOption.value) {
-            workObj["元素熟知"] += Number(dendroOption.value);
-          }
-        }
-      }
-      return workObj;
+      return props.elementalResonance?.conditionAdjustments ?? {};
     });
 
     const displayStatAjustmentList = computed(() => {
-      const resultArr = [];
-      for (const stat of Object.keys(statAdjustments.value)) {
-        let str = stat.replace("%", "").replace(/^敵/, "敵の");
-        str += statAdjustments.value[stat] >= 0 ? "+" : "";
-        str += statAdjustments.value[stat];
-        if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) str += "%";
-        resultArr.push(str);
+      const resultArr: string[] = [];
+      const conditionAdjustments = props.elementalResonance?.conditionAdjustments;
+      if (conditionAdjustments) {
+        for (const stat of Object.keys(conditionAdjustments)) {
+          const val = statAdjustments.value[stat];
+          if (!val) continue;
+          let str = stat.replace("%", "").replace(/^敵/, "敵の");
+          str += val >= 0 ? "+" : "";
+          str += val;
+          if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) str += "%";
+          resultArr.push(str);
+        }
       }
       return resultArr;
     });
@@ -118,14 +104,13 @@ export default defineComponent({
         }
       }
       await nextTick();
-      Object.keys(elementalResonanceChecked).filter(s => s).forEach(key => {
+      Object.keys(elementalResonanceChecked).forEach(key => {
         conditionValues[key] = elementalResonanceChecked[key];
       });
       if (dendroOption.value) {
         conditionValues['dendroOption'] = dendroOption.value;
       }
-      overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
-      context.emit("update:elemental-resonance", conditionInput);
+      context.emit("update:elemental-resonance", conditionValues);
     };
 
     const initializeValues = (initialObj: TConditionInput) => {
@@ -153,6 +138,10 @@ export default defineComponent({
         ]);
       }
       return result;
+    });
+
+    watch(props, () => {
+      displayStatAjustmentList.value;
     });
 
     const elementClass = (item: string) => {
