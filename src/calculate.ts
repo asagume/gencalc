@@ -424,7 +424,6 @@ export function calculateElementalResonance(conditionValues: TConditionValues, c
             for (const detailObj of master.詳細) {
                 if (detailObj.条件) {
                     const matchRet = checkConditionMatches(detailObj.条件, validConditionValueArr, 0);
-                    console.log(detailObj.条件, validConditionValueArr, matchRet);
                     if (matchRet == 0) continue;
                 }
                 if (detailObj.種類 && detailObj.数値) {
@@ -1058,7 +1057,6 @@ function calculateDamageFromDetail(
                     }
                 }
             }
-            console.log('myConditionValuesAfter', myConditionValuesAfter);
         }
         if (detailObj['除外条件'] || detailObj['適用条件']) {
             const myConditionInputAfter: TConditionInput = deepcopy(conditionInput);

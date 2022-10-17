@@ -567,9 +567,10 @@ export default defineComponent({
     };
 
     watch(props, async (newVal, oldVal) => {
+      const isElementalResonanceChanged = !_.isEqual(newVal.elementalResonance?.conditionAdjustments, oldVal.elementalResonance?.conditionAdjustments);
       for (const entry of newVal.savedSupporters) {
         let changed = oldVal.savedSupporters.filter((s) => s.key == entry.key && s.value == entry.value).length > 0;
-        if (!_.isEqual(newVal.elementalResonance, oldVal.elementalResonance)) {
+        if (isElementalResonanceChanged) {
           changed = true;
         }
         if (
@@ -586,6 +587,7 @@ export default defineComponent({
           supporterDamageResult.delete(entry.key);
         }
       }
+      onChange();
     });
 
     return {

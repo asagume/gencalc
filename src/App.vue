@@ -90,8 +90,7 @@
             </select>
           </label>
           <label class="enemy-level">Lv.
-            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1"
-              @change="updateStatAdjustments" />
+            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" @change="updateStatAdjustments" />
           </label>
           <StatsInput :statsInput="statsInput" :category1List="enemyStatsCategory1List"
             :category2List="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments($event)" />
@@ -115,8 +114,8 @@
         </div>
         <div v-show="optionInputTabRef == 2">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
-            :savedSupporters="savedSupporters" @update:team-option="updateTeamOption"
-            @update:buildname-selection="updateBuildnameSelection" />
+            :savedSupporters="savedSupporters" :elementalResonance="optionInputRea.elementalResonance.conditionValues"
+            @update:team-option="updateTeamOption" @update:buildname-selection="updateBuildnameSelection" />
         </div>
         <div v-show="optionInputTabRef == 3">
           <MiscOptionInput ref="miscOptionInputVmRef" @update:misc-option="updateMiscOption" />
@@ -1034,8 +1033,8 @@ export default defineComponent({
     const updateStatAdjustments = (argStatAdjustments?: any) => {
       if (argStatAdjustments) {
         Object.keys(argStatAdjustments).forEach((key) => {
-        statsInput.statAdjustments[key] = argStatAdjustments[key];
-      });
+          statsInput.statAdjustments[key] = argStatAdjustments[key];
+        });
       }
       calculateStats(
         statsInput,
@@ -1098,7 +1097,6 @@ export default defineComponent({
 
     /** チームオプションが変更されました。ステータスおよびダメージを再計算します */
     const updateTeamOption = (conditionInput: TConditionInput) => {
-      console.log("updateTeamOption", conditionInput);
       if (conditionInput && Object.keys(conditionInput).length) {
         overwriteObject(optionInputRea.teamOption, conditionInput);
         calculateStats(

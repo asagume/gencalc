@@ -1627,7 +1627,6 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
                 }
             });
         }
-        console.log(conditionValues, checkboxList, selectList);
     } catch (error) {
         console.error(conditionInput, characterInput);
         throw error;
