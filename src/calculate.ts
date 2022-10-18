@@ -306,8 +306,12 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限'];
     const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力'];
     const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力'];
-    const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
-
+    const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY];
+    otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('ダメージバフ.') != -1));
+    otherStatArr.push(...実数ダメージ加算ARRAY);
+    otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('ダメージアップ.') != -1));
+    otherStatArr.push(...元素反応バフARRAY, 'ダメージ軽減');
+    
     const formulaStatArr = Array.from(statFormulaMap.keys()).filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
     formulaStatArr.sort(compareFunction);
 
