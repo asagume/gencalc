@@ -31,35 +31,16 @@
 </template>
 <script lang="ts">
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { deepcopy, overwriteObject } from "@/common";
 import {
-  ARTIFACT_DETAIL_INPUT_TEMPLATE,
-  CHARACTER_INPUT_TEMPLATE,
-  CONDITION_INPUT_TEMPLATE,
-  OPTION_INPUT_TEMPLATE,
-  STATS_INPUT_TEMPLATE,
-  TArtifactDetailInput,
-  TCharacterInput,
-  TConditionInput,
-  TOptionInput,
-  TStatsInput,
-  loadRecommendation,
-  makeDamageDetailObjArrObjCharacter,
-  makeDamageDetailObjArrObjWeapon,
-  makeDamageDetailObjArrObjArtifactSets,
-  setupConditionValues,
   pushBuildinfoToSession,
   TStats,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
-  ELEMENTAL_RESONANCE_MASTER,
   ELEMENT_IMG_SRC,
-  getCharacterMasterDetail,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
-  TAnyObject,
   TArtifactSetEntry,
   TCharacterEntry,
   TCharacterKey,
@@ -71,16 +52,12 @@ import {
   getBuilddataFromStorage,
   TMember,
 } from "./team";
-import {
-  calculateArtifactStats,
-  calculateArtifactStatsMain,
-  calculateStats,
-} from "@/calculate";
 
 export default defineComponent({
   name: "MemberItem",
   props: {
     member: { type: Object as PropType<TMember>, required: true },
+    statsObj: { type: Object as PropType<TStats> },
     displayStat: { type: String },
     showEquipment: { type: Boolean },
     viewable: { type: Boolean },
@@ -95,152 +72,10 @@ export default defineComponent({
     const extraControl = ref("locate");
 
     const watchCount = ref(0);
-    watch(props, async () => {
-      await calculateMemberStats();
+    watch(props, async (newVal) => {
+      console.log(newVal.statsObj);
       watchCount.value++;
     });
-
-    const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-    const artifactDetailInput = deepcopy(
-      ARTIFACT_DETAIL_INPUT_TEMPLATE
-    ) as TArtifactDetailInput;
-    const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-    const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
-    const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
-
-    const calculateMemberStats = async () => {
-      if (!props.member.name) return;
-
-      characterInput.character = props.member.name as TCharacterKey;
-      characterInput.characterMaster = await getCharacterMasterDetail(
-        characterInput.character
-      );
-
-      const builddata = savedata.value;
-      if (!builddata) return {};
-
-      await loadRecommendation(
-        characterInput,
-        artifactDetailInput,
-        conditionInput,
-        optionInput,
-        builddata
-      );
-
-      makeDamageDetailObjArrObjCharacter(characterInput);
-      makeDamageDetailObjArrObjWeapon(characterInput);
-      makeDamageDetailObjArrObjArtifactSets(characterInput);
-      setupConditionValues(conditionInput, characterInput, optionInput);
-      calculateArtifactStatsMain(
-        artifactDetailInput.聖遺物ステータスメイン効果,
-        artifactDetailInput.聖遺物メイン効果
-      );
-      calculateArtifactStats(artifactDetailInput);
-
-      conditionInput.checkboxList.forEach((entry) => {
-        conditionInput.conditionValues[entry.name] = false;
-      });
-      conditionInput.selectList.forEach((entry) => {
-        conditionInput.conditionValues[entry.name] = 0;
-      });
-
-      const myVision = characterInput.characterMaster.元素;
-      const teamElements: TAnyObject = {};
-      if (props.members) {
-        props.members.filter(s => s).forEach(entry => {
-          const vision = CHARACTER_MASTER[entry as TCharacterKey].元素;
-          if (vision in teamElements) {
-            teamElements[vision]++;
-          } else {
-            teamElements[vision] = 1;
-          }
-        })
-      }
-
-      // キャラクター
-      if (characterInput.character == '夜蘭') {
-        conditionInput.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
-      } else if (characterInput.character == '雲菫') {
-        conditionInput.conditionValues['独立嶄然'] = Object.keys(teamElements).length - 1;
-      } else if (characterInput.character == 'ゴロー') {
-        const geoCount = Math.min(3, teamElements[myVision]);
-        conditionInput.conditionValues['犬勇·忠に厚きこと山の如く 岩元素ダメージ 会心ダメージ'] = geoCount;
-      }
-
-      // 武器
-      if (['千岩古剣', '千岩長槍'].includes(characterInput.weapon)) {
-        if (props.members) {
-          let liyueCount = 0;
-          for (const member of props.members.filter(s => s)) {
-            const characterDetail = await getCharacterMasterDetail(member as TCharacterKey);
-            if (characterDetail.region) {
-              if (['璃月港'].includes(characterDetail.region)) {
-                liyueCount++;
-              }
-            }
-          }
-          const conditionKey = '[' + characterInput.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
-          conditionInput.conditionValues[conditionKey] = liyueCount;
-        }
-      } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(characterInput.weapon)) {
-        if (props.members) {
-          let totalEnergyCost = 0;
-          for (const member of props.members.filter(s => s)) {
-            const characterDetail = await getCharacterMasterDetail(member as TCharacterKey);
-            if ('元素エネルギー' in characterDetail.元素爆発) {
-              totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
-            }
-          }
-          if (totalEnergyCost >= 40) {
-            ['0.12', '0.15', '0.18', '0.21', '0.24'].forEach(entry => {
-              const conditionKey = '[' + characterInput.weapon + ']元素爆発ダメージ+' + entry + '%×元素エネルギー';
-              conditionInput.conditionValues[conditionKey] = Math.round((totalEnergyCost - 40) / 10) + 1;
-            });
-          }
-        }
-      }
-
-      // 聖遺物セット効果
-      // const gildedDreamsSet = characterInput.artifactSets.filter(s => s == '金メッキの夢').length;
-      // if (gildedDreamsSet == 2) {
-      //   let sameCount = (teamElements[myVision] - 1);
-      //   let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
-      //   conditionInput.conditionValues['[金メッキの夢4]同じ元素タイプ'] = sameCount;
-      //   conditionInput.conditionValues['[金メッキの夢4]異なる元素タイプ'] = otherCount;
-      // }
-
-      // 元素共鳴
-      if (props.elementalResonance) {
-        const workObj = {} as TStats;
-        props.elementalResonance.filter(s => ['炎元素共鳴', '水元素共鳴', '草元素共鳴', '元素共鳴なし'].includes(s)).forEach(entry => {
-          optionInput.elementalResonance.conditionValues[entry] = true;
-          if ("詳細" in (ELEMENTAL_RESONANCE_MASTER as any)[entry]) {
-            const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[entry].詳細;
-            if (detailObjArr) {
-              for (const detailObj of detailObjArr) {
-                if ("種類" in detailObj && "数値" in detailObj) {
-                  if (detailObj.種類 in workObj) {
-                    workObj[detailObj.種類] += detailObj.数値;
-                  } else {
-                    workObj[detailObj.種類] = detailObj.数値;
-                  }
-                }
-              }
-            }
-          }
-        });
-        overwriteObject(optionInput.elementalResonance.conditionAdjustments, workObj);
-      }
-
-      calculateStats(
-        statsInput,
-        characterInput,
-        artifactDetailInput,
-        conditionInput,
-        optionInput
-      );
-    }
-    calculateMemberStats();
 
     const characterMaster = computed(() =>
       props.member.name
@@ -313,13 +148,13 @@ export default defineComponent({
       let result = "-";
       if (savedata.value) {
         let stat = props.displayStat;
-        if (stat) {
+        if (props.statsObj && stat) {
           if (stat === "会心率/ダメージ") {
-            result = displayStatValue("会心率", statsInput.statsObj["会心率"]);
+            result = displayStatValue("会心率", props.statsObj["会心率"]);
             result += "/";
-            result += displayStatValue("会心ダメージ", statsInput.statsObj["会心ダメージ"]);
+            result += displayStatValue("会心ダメージ", props.statsObj["会心ダメージ"]);
           } else {
-            result = displayStatValue(stat, statsInput.statsObj[stat]);
+            result = displayStatValue(stat, props.statsObj[stat]);
           }
         }
       }

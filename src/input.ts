@@ -88,15 +88,24 @@ export const ステータスその他ARRAY = [
     'HP+',
     '攻撃力+',
     '防御力+',
-    'HP上限EX',
-    '攻撃力EX',
-    '防御力EX',
-    '元素熟知EX',
-    '会心率EX',
-    '会心ダメージEX',
-    '与える治療効果EX',
-    '受ける治療効果EX',
-    '元素チャージ効率EX',
+    'HP上限CV',
+    '攻撃力CV',
+    '防御力CV',
+    '元素熟知CV',
+    '会心率CV',
+    '会心ダメージCV',
+    '与える治療効果CV',
+    '受ける治療効果CV',
+    '元素チャージ効率CV',
+    'HP上限WV',
+    '攻撃力WV',
+    '防御力WV',
+    '元素熟知WV',
+    '会心率WV',
+    '会心ダメージWV',
+    '与える治療効果WV',
+    '受ける治療効果WV',
+    '元素チャージ効率WV',
 ];
 export const 敵ステータス_元素耐性ARRAY = [
     '敵炎元素耐性',
@@ -441,8 +450,7 @@ export const OPTION_INPUT_TEMPLATE = {
         conditionValues: {},
         conditionAdjustments: {},
     } as TElementalResonance,
-    supporterList: [],
-    isSupporterOptionOpened: {} as { [key: string]: boolean },
+    supporterBuildname: {} as TAnyObject,
     teamOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
     miscOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
 };
@@ -507,6 +515,10 @@ export function makeArtifactScoringStorageKey(character: TCharacterKey | string,
     return makeBuildStorageKey(character, buildname).replace(/^構成/, 'ArtifactScoring');
 }
 
+export function makeSupporterBuildnameStorageKey(character: TCharacterKey | string, buildname?: string) {
+    return makeBuildStorageKey(character, buildname).replace(/^構成/, 'SupporterBuildname');
+}
+
 /** おすすめセットのリストを作成します. [おすすめセットの名前, おすすめセットの内容, 上書き可不可][] */
 export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }): TRecommendation[] {
     const result: TRecommendation[] = [];
@@ -548,6 +560,12 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
         if (key3 in localStorage) {
             const artifactScoringObj = JSON.parse(localStorage[key3]);
             buildObj.artifactScoring = artifactScoringObj;
+        }
+        result.push({ name: buildname, build: buildObj, overwrite: true });
+        const key4 = key.replace(/^構成/, 'SupporterBuildname');
+        if (key4 in localStorage) {
+            const supporterBuildnameObj = JSON.parse(localStorage[key4]);
+            buildObj.supporterBuildname = supporterBuildnameObj;
         }
         result.push({ name: buildname, build: buildObj, overwrite: true });
     });
@@ -767,7 +785,7 @@ export async function loadRecommendation(
             });
         }
 
-        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring'].includes(s)).forEach(key => {
+        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring', 'supporterBuildname'].includes(s)).forEach(key => {
             if (build[key] == null) {
                 conditionInput.conditionValues[key] = build[key];   // null
             } else if (isString(build[key])) {
@@ -804,6 +822,16 @@ export async function loadRecommendation(
                         }
                     }
                 })
+            }
+        }
+
+        if ('supporterBuildname' in build) {
+            const keys = Object.keys(build.supporterBuildname);
+            if (keys.length) {
+                overwriteObject(optionInput.supporterBuildname, {});
+                keys.forEach(key => {
+                    optionInput.supporterBuildname[key] = build.supporterBuildname[key];
+                });
             }
         }
 
@@ -936,6 +964,17 @@ export function makeOptionsSavedata(character: string, optionInput: TOptionInput
     }
 
     return resultObj;
+}
+
+export function makeSupporterBuildnameSavedata(buildnameSelection: TAnyObject, optionInput: TOptionInput) {
+    const result: TAnyObject = {};
+    const conditionKeys = Object.keys(optionInput.teamOption.conditionValues);
+    for (const supporter of Object.keys(buildnameSelection)) {
+        if (!buildnameSelection[supporter]) continue;
+        if (conditionKeys.filter(s => s.startsWith(supporter + '*')).length == 0) continue;
+        result[supporter] = buildnameSelection[supporter];
+    }
+    return result;
 }
 
 export const CHANGE_KIND_STATUS = 'ステータス変更系詳細';

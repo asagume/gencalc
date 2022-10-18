@@ -28,12 +28,13 @@
         <div class="left">
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
             <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+              :disabled="conditionDisabled(item)" @change="onChange(supporter)" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
           <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
+              @change="onChange(supporter)">
               <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
@@ -248,6 +249,7 @@ export default defineComponent({
     const supporterDamageResult = reactive(
       new Map() as Map<string, [TStats, TDamageResult]>
     );
+    const damageResultCalculationWaitingSet: Set<string> = new Set();
 
     const takeMasterTeamOption = (character: string, master: any) => {
       if ("チームバフ" in master) {
@@ -264,13 +266,13 @@ export default defineComponent({
           const changeKind = getChangeKind(damageDetailObj.種類 as string);
           if (
             changeKind == "STATUS" &&
-            statusChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0
+            statusChangeDetailObjArr.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length == 0
           ) {
             statusChangeDetailObjArr.splice(statusChangeDetailObjArr.length, 0, damageDetailObj);
           }
           if (
             changeKind == "TALENT" &&
-            talentChangeDetailObjArr.filter((s) => s.条件 == condition).length == 0
+            talentChangeDetailObjArr.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length == 0
           ) {
             talentChangeDetailObjArr.splice(talentChangeDetailObjArr.length, 0, damageDetailObj);
           }
@@ -344,6 +346,7 @@ export default defineComponent({
     };
 
     const loadSupporterData = async () => {
+      damageResultCalculationWaitingSet.clear();
       for (const savedSupporter of props.savedSupporters) {
         const [statsObj, damageResult] = await setupSupporterDamageResult(savedSupporter);
         supporterDamageResult.set(savedSupporter.key, [statsObj, damageResult]);
@@ -425,7 +428,6 @@ export default defineComponent({
               if (supporter == props.character) continue;
               const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, 0);
               if (number == 0) continue;
-              console.log(supporter, myDetailObj);
               if (number != 1 && myNew数値) {
                 myNew数値 = (myNew数値 as any).concat(["*", number]);
               }
@@ -495,13 +497,23 @@ export default defineComponent({
     });
 
     /** オプションが変更されたことを上位に通知します */
-    const onChange = async () => {
+    const onChange = async (supporter?: string) => {
+      if (supporter) {
+        if (damageResultCalculationWaitingSet.has(supporter)) {
+          damageResultCalculationWaitingSet.delete(supporter);
+          const workArr = props.savedSupporters.filter(s => s.key == supporter);
+          if (workArr.length) {
+            const temp = await setupSupporterDamageResult(workArr[0]);
+            supporterDamageResult.set(supporter, temp);
+          }
+        }
+      }
       await nextTick();
       overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
       context.emit("update:team-option", conditionInput);
     };
 
-    const initializeValues = (initialObj: TConditionInput) => {
+    const initializeValues = async (initialObj: TConditionInput) => {
       Object.keys(conditionValues).forEach((key) => {
         if (key in initialObj.conditionValues) {
           conditionValues[key] = initialObj.conditionValues[key];
@@ -515,6 +527,11 @@ export default defineComponent({
           }
         }
       });
+      for (const entry of props.savedSupporters) {
+        damageResultCalculationWaitingSet.delete(entry.key);
+        const temp = await setupSupporterDamageResult(entry);
+        supporterDamageResult.set(entry.key, temp);
+      }
       onChange();
     };
 
@@ -569,22 +586,25 @@ export default defineComponent({
     watch(props, async (newVal, oldVal) => {
       const isElementalResonanceChanged = !_.isEqual(newVal.elementalResonance?.conditionAdjustments, oldVal.elementalResonance?.conditionAdjustments);
       for (const entry of newVal.savedSupporters) {
-        let changed = oldVal.savedSupporters.filter((s) => s.key == entry.key && s.value == entry.value).length > 0;
+        let changed;
         if (isElementalResonanceChanged) {
           changed = true;
+        } else if (entry.key == "雷電将軍") { // for 雷罰悪曜の眼
+          changed = true;
+        } else {
+          changed = oldVal.savedSupporters.filter((s) => s.key == entry.key && s.value == entry.value).length > 0;
         }
-        if (
-          changed ||
-          entry.key == "雷電将軍" // for 雷罰悪曜の眼
-        ) {
+        if (changed) {
           const temp = await setupSupporterDamageResult(entry);
           supporterDamageResult.set(entry.key, temp);
+          damageResultCalculationWaitingSet.delete(entry.key);
         }
       }
       for (const entry of oldVal.savedSupporters) {
         const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
         if (absent) {
           supporterDamageResult.delete(entry.key);
+          damageResultCalculationWaitingSet.delete(entry.key);
         }
       }
       onChange();

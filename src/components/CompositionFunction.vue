@@ -72,7 +72,7 @@ export default function CompositionFunction() {
 
     const percent = function (stat: string) {
         const tempArr = stat.split('.');
-        let work = tempArr[0];
+        let work = tempArr[0].replace(/[CWA]V$/, '');
         let hasPercent = work.endsWith("%") || STAT_PERCENT_LIST.includes(work);
         if (!hasPercent) {
             ['会心率', '会心ダメージ', 'クールタイム'].forEach(postfix => {
@@ -83,10 +83,10 @@ export default function CompositionFunction() {
     }
 
     const displayStatName = function (stat: string) {
-        let result = stat;
-        const tempArr = stat.split('.');
+        let result = stat.replace(/[CWA]V$/, '');
+        const tempArr = result.split('.');
         if (tempArr.length == 1) {
-            result = displayName(stat);
+            result = displayName(result);
             result = result.replace('ダメージ会心', 'ダメージの会心')
         } else if (i18n.global.locale.value === 'ja-jp') {
             result = tempArr[tempArr.length - 1] + 'の' + displayName(tempArr[0]);

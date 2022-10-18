@@ -210,10 +210,19 @@ export const calculateStats = function (
                                     落下攻撃_元素Var = my付与元素;
                                 }
                             }
-                        } else if (stat in workStatsObj) {
+                        }
+                        if (stat in workStatsObj) {
                             workStatsObj[stat] += optionObj.conditionAdjustments[stat];
                         } else {
                             workStatsObj[stat] = optionObj.conditionAdjustments[stat];
+                        }
+                        if (stat.endsWith('CV') || stat.endsWith('WV') || stat.endsWith('AV')) {
+                            const toStat = stat.replace(/[CWA]V$/, '');
+                            if (toStat in workStatsObj) {
+                                workStatsObj[toStat] += optionObj.conditionAdjustments[stat];
+                            } else {
+                                workStatsObj[toStat] = optionObj.conditionAdjustments[stat];
+                            }
                         }
                     })
                 }
@@ -223,7 +232,7 @@ export const calculateStats = function (
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
 
         // ステータス変化
-        const conditionAdjustments = updateStatsByCondition(characterInput, validConditionValueArr, workStatsObj);
+        const conditionAdjustments = updateStatsWithCondition(characterInput, validConditionValueArr, workStatsObj);
 
         // 天賦性能変化
         for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
@@ -260,7 +269,7 @@ export const calculateStats = function (
     }
 }
 
-function updateStatsByCondition(characterInput: TCharacterInput, validConditionValueArr: string[], workStatsObj: TStats) {
+function updateStatsWithCondition(characterInput: TCharacterInput, validConditionValueArr: string[], workStatsObj: TStats) {
     const constellation = characterInput.命ノ星座;
 
     const workConditionAdjustments = {} as { [key: string]: number };
@@ -294,111 +303,105 @@ function updateStatsByCondition(characterInput: TCharacterInput, validConditionV
         }
     }
 
-    const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限EX', 'HP上限'];
-    const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力EX', '防御力'];
-    const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力EX', '攻撃力'];
+    const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限'];
+    const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力'];
+    const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力'];
     const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
 
     const formulaStatArr = Array.from(statFormulaMap.keys()).filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
     formulaStatArr.sort(compareFunction);
 
     // HPを計算します
-    for (const formulaKey of hpStatArr) {
-        const formulaArr = statFormulaMap.get(formulaKey);
-        if (!formulaArr) continue;
-        formulaArr.forEach(formula => {
-            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
-            if (formula[4]) {
-                for (const stat of Object.keys(diffStats)) {
-                    if (stat in workConditionAdjustments) {
-                        workConditionAdjustments[stat] += diffStats[stat];
-                    } else {
-                        workConditionAdjustments[stat] = diffStats[stat];
-                    }
-                }
+    for (const stat of hpStatArr) {
+        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['CV', 'WV', 'AV'].forEach(postfix => {
+            const fromStat = stat + postfix;
+            if (fromStat in workStatsObj) {
+                workStatsObj[stat] += workStatsObj[fromStat];
             }
-        })
+        });
     }
-    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'] + workStatsObj['HP上限EX'];
+    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
     workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
 
-    for (const formulaKey of formulaStatArr) {
-        const formulaArr = statFormulaMap.get(formulaKey);
-        if (!formulaArr) continue;
-        formulaArr.forEach(formula => {
-            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
-            if (formula[4]) {
-                for (const stat of Object.keys(diffStats)) {
-                    if (stat in workConditionAdjustments) {
-                        workConditionAdjustments[stat] += diffStats[stat];
+    for (const stat of formulaStatArr) {
+        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['CV', 'WV', 'AV'].forEach(postfix => {
+            if (stat.endsWith(postfix)) {
+                if (stat in workConditionAdjustments) {
+                    const toStat = stat.replace(new RegExp(postfix + '$'), '');
+                    if (toStat in workStatsObj) {
+                        workStatsObj[toStat] += workConditionAdjustments[stat];
                     } else {
-                        workConditionAdjustments[stat] = diffStats[stat];
+                        workStatsObj[toStat] = workConditionAdjustments[stat];
                     }
                 }
             }
-        })
+        });
     }
 
     // 防御力を計算します
-    for (const formulaKey of defStatArr) {
-        const formulaArr = statFormulaMap.get(formulaKey);
-        if (!formulaArr) continue;
-        formulaArr.forEach(formula => {
-            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
-            if (formula[4]) {
-                for (const stat of Object.keys(diffStats)) {
-                    if (stat in workConditionAdjustments) {
-                        workConditionAdjustments[stat] += diffStats[stat];
-                    } else {
-                        workConditionAdjustments[stat] = diffStats[stat];
-                    }
-                }
+    for (const stat of defStatArr) {
+        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['CV', 'WV', 'AV'].forEach(postfix => {
+            const fromStat = stat + postfix;
+            if (fromStat in workStatsObj) {
+                workStatsObj[stat] += workStatsObj[fromStat];
             }
-        })
+        });
     }
-    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'] + workStatsObj['防御力EX'];
+    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
     workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
 
     // 攻撃力を計算します
-    for (const formulaKey of atkStatArr) {
-        const formulaArr = statFormulaMap.get(formulaKey);
-        if (!formulaArr) continue;
-        formulaArr.forEach(formula => {
-            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
-            if (formula[4]) {
-                for (const stat of Object.keys(diffStats)) {
-                    if (stat in workConditionAdjustments) {
-                        workConditionAdjustments[stat] += diffStats[stat];
-                    } else {
-                        workConditionAdjustments[stat] = diffStats[stat];
-                    }
-                }
+    for (const stat of atkStatArr) {
+        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['CV', 'WV', 'AV'].forEach(postfix => {
+            const fromStat = stat + postfix;
+            if (fromStat in workStatsObj) {
+                workStatsObj[stat] += workStatsObj[fromStat];
             }
-        })
+        });
     }
-    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'] + workStatsObj['攻撃力EX'];
+    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
     workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
 
     // 元素ステータスおよび隠しステータスを計算します
-    for (const formulaKey of otherStatArr) {
-        const formulaArr = statFormulaMap.get(formulaKey);
-        if (!formulaArr) continue;
-        formulaArr.forEach(formula => {
-            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
-            if (formula[4]) {
-                for (const stat of Object.keys(diffStats)) {
-                    if (stat in workConditionAdjustments) {
-                        workConditionAdjustments[stat] += diffStats[stat];
+    for (const stat of otherStatArr) {
+        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['CV', 'WV', 'AV'].forEach(postfix => {
+            if (stat.endsWith(postfix)) {
+                if (stat in workConditionAdjustments) {
+                    const toStat = stat.replace(new RegExp(postfix + '$'), '');
+                    if (toStat in workStatsObj) {
+                        workStatsObj[toStat] += workConditionAdjustments[stat];
                     } else {
-                        workConditionAdjustments[stat] = diffStats[stat];
+                        workStatsObj[toStat] = workConditionAdjustments[stat];
                     }
                 }
             }
-        })
+        });
     }
 
     return workConditionAdjustments;
 }
+
+function updateStatsByConditionSub(workConditionAdjustments: { [key: string]: number }, workStatsObj: TStats, statFormulaMap: Map<string, any[]>, formulaKey: string) {
+    for (const formulaArr of [statFormulaMap.get(formulaKey), ...['CV', 'WV', 'AV'].map(s => statFormulaMap.get(formulaKey + s))]) {
+        if (!formulaArr) continue;
+        formulaArr.forEach(formula => {
+            const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
+            for (const stat of Object.keys(diffStats)) {
+                if (stat in workConditionAdjustments) {
+                    workConditionAdjustments[stat] += diffStats[stat];
+                } else {
+                    workConditionAdjustments[stat] = diffStats[stat];
+                }
+            }
+        })
+    }
+}
+
 
 function compareFunction(a: string, b: string) {
     const arr = ['元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', 'シールド強化'];
@@ -417,7 +420,7 @@ function compareFunction(a: string, b: string) {
 export function calculateElementalResonance(conditionValues: TConditionValues, conditionInput: TConditionInput): TStats {
     const result: TStats = {};
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
-    for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER) ) {
+    for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
         if (!conditionValues[key]) continue;
         const master = (ELEMENTAL_RESONANCE_MASTER as any)[key];
         if (master.詳細) {
