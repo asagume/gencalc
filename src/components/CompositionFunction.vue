@@ -72,7 +72,7 @@ export default function CompositionFunction() {
 
     const percent = function (stat: string) {
         const tempArr = stat.split('.');
-        let work = tempArr[0].replace(/[CWA]V$/, '');
+        let work = tempArr[0].replace(/V[1-3]$/, '');
         let hasPercent = work.endsWith("%") || STAT_PERCENT_LIST.includes(work);
         if (!hasPercent) {
             ['会心率', '会心ダメージ', 'クールタイム'].forEach(postfix => {
@@ -83,7 +83,7 @@ export default function CompositionFunction() {
     }
 
     const displayStatName = function (stat: string) {
-        let result = stat.replace(/[CWA]V$/, '');
+        let result = stat.replace(/V[1-3]$/, '');
         const tempArr = result.split('.');
         if (tempArr.length == 1) {
             result = displayName(result);

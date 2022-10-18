@@ -216,8 +216,8 @@ export const calculateStats = function (
                         } else {
                             workStatsObj[stat] = optionObj.conditionAdjustments[stat];
                         }
-                        if (stat.endsWith('CV') || stat.endsWith('WV') || stat.endsWith('AV')) {
-                            const toStat = stat.replace(/[CWA]V$/, '');
+                        if (stat.endsWith('V1') || stat.endsWith('V2') || stat.endsWith('V3')) {
+                            const toStat = stat.replace(/V[1-3]$/, '');
                             if (toStat in workStatsObj) {
                                 workStatsObj[toStat] += optionObj.conditionAdjustments[stat];
                             } else {
@@ -314,7 +314,7 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     // HPを計算します
     for (const stat of hpStatArr) {
         updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
-        ['CV', 'WV', 'AV'].forEach(postfix => {
+        ['V1', 'V2', 'V3'].forEach(postfix => {
             const fromStat = stat + postfix;
             if (fromStat in workStatsObj) {
                 workStatsObj[stat] += workStatsObj[fromStat];
@@ -326,7 +326,7 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
 
     for (const stat of formulaStatArr) {
         updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
-        ['CV', 'WV', 'AV'].forEach(postfix => {
+        ['V1', 'V2', 'V3'].forEach(postfix => {
             if (stat.endsWith(postfix)) {
                 if (stat in workConditionAdjustments) {
                     const toStat = stat.replace(new RegExp(postfix + '$'), '');
@@ -343,7 +343,7 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     // 防御力を計算します
     for (const stat of defStatArr) {
         updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
-        ['CV', 'WV', 'AV'].forEach(postfix => {
+        ['V1', 'V2', 'V3'].forEach(postfix => {
             const fromStat = stat + postfix;
             if (fromStat in workStatsObj) {
                 workStatsObj[stat] += workStatsObj[fromStat];
@@ -356,7 +356,7 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     // 攻撃力を計算します
     for (const stat of atkStatArr) {
         updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
-        ['CV', 'WV', 'AV'].forEach(postfix => {
+        ['V1', 'V2', 'V3'].forEach(postfix => {
             const fromStat = stat + postfix;
             if (fromStat in workStatsObj) {
                 workStatsObj[stat] += workStatsObj[fromStat];
@@ -369,7 +369,7 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     // 元素ステータスおよび隠しステータスを計算します
     for (const stat of otherStatArr) {
         updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
-        ['CV', 'WV', 'AV'].forEach(postfix => {
+        ['V1', 'V2', 'V3'].forEach(postfix => {
             if (stat.endsWith(postfix)) {
                 if (stat in workConditionAdjustments) {
                     const toStat = stat.replace(new RegExp(postfix + '$'), '');
@@ -387,7 +387,7 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
 }
 
 function updateStatsByConditionSub(workConditionAdjustments: { [key: string]: number }, workStatsObj: TStats, statFormulaMap: Map<string, any[]>, formulaKey: string) {
-    for (const formulaArr of [statFormulaMap.get(formulaKey), ...['CV', 'WV', 'AV'].map(s => statFormulaMap.get(formulaKey + s))]) {
+    for (const formulaArr of [statFormulaMap.get(formulaKey), ...['V1', 'V2', 'V3'].map(s => statFormulaMap.get(formulaKey + s))]) {
         if (!formulaArr) continue;
         formulaArr.forEach(formula => {
             const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
@@ -455,14 +455,41 @@ export const calculateFormulaArray = function (
 ): number {
     try {
         let result = 0;
+        const re = /(.+)X([0-8])$/;
         if (!Array.isArray(formulaArr)) {
             if (isNumber(formulaArr)) {
                 result = Number(formulaArr);
             } else {
-                if (formulaArr in statsObj) {
+                const reRet = re.exec(formulaArr);
+                if (reRet) {
+                    const stat = reRet[1];
+                    if (stat in statsObj) {
+                        result = statsObj[stat];
+                        let n = Number(reRet[2]);
+                        if ((n % 2) == 1) {
+                            if ((stat + 'V1') in statsObj) {
+                                result -= statsObj[stat + 'V1'];
+                            }
+                        }
+                        n = Math.trunc(n / 2);
+                        if ((n % 2) == 1) {
+                            if ((stat + 'V2') in statsObj) {
+                                result -= statsObj[stat + 'V2'];
+                            }
+                        }
+                        n = Math.trunc(n / 2);
+                        if ((n % 2) == 1) {
+                            if ((stat + 'V3') in statsObj) {
+                                result -= statsObj[stat + 'V3'];
+                            }
+                        }
+                    } else {
+                        console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                    }
+                } else if (formulaArr in statsObj) {
                     result = statsObj[formulaArr];
                 } else {
-                    console.error(statsObj, formulaArr, opt_max);
+                    console.error(formulaArr, statsObj, null, opt_max, opt_min);
                 }
             }
         } else {
@@ -476,28 +503,54 @@ export const calculateFormulaArray = function (
                     subResult = Number(entry);
                 } else if (Array.isArray(entry)) {
                     subResult = calculateFormulaArray(entry, statsObj, damageResult);
-                } else {
-                    if (entry in statsObj) {
-                        subResult = Number(statsObj[entry]);
-                    } else if (entry.indexOf('#') != -1) {
-                        const nameArr = entry.split('#');
-                        if (damageResult && nameArr[0] in damageResult) {
-                            const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
-                            let damage = null;
-                            for (const damageArr of damageArrArr) {
-                                if (nameArr[1] == damageArr[0]) {
-                                    damage = damageArr[4];  // 非会心
-                                    break;
-                                }
-                            }
-                            if (damage != null) {
-                                subResult = damage;
-                            } else {
-                                console.error(formulaArr, statsObj, damageResult, opt_max, entry);
+                } else if (entry.indexOf('#') != -1) {
+                    const nameArr = entry.split('#');
+                    if (damageResult && nameArr[0] in damageResult) {
+                        const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
+                        let damage = null;
+                        for (const damageArr of damageArrArr) {
+                            if (nameArr[1] == damageArr[0]) {
+                                damage = damageArr[4];  // 非会心
+                                break;
                             }
                         }
+                        if (damage != null) {
+                            subResult = damage;
+                        } else {
+                            console.error(formulaArr, statsObj, damageResult, opt_max, opt_min, entry);
+                        }
+                    }
+                } else {
+                    const reRet = re.exec(entry);
+                    if (reRet) {
+                        const stat = reRet[1];
+                        if (stat in statsObj) {
+                            subResult = statsObj[stat];
+                            let n = Number(reRet[2]);
+                            if ((n % 2) == 1) {
+                                if ((stat + 'V1') in statsObj) {
+                                    subResult -= statsObj[stat + 'V1'];
+                                }
+                            }
+                            n = Math.trunc(n / 2);
+                            if ((n % 2) == 1) {
+                                if ((stat + 'V2') in statsObj) {
+                                    subResult -= statsObj[stat + 'V2'];
+                                }
+                            }
+                            n = Math.trunc(n / 2);
+                            if ((n % 2) == 1) {
+                                if ((stat + 'V3') in statsObj) {
+                                    subResult -= statsObj[stat + 'V3'];
+                                }
+                            }
+                        } else {
+                            console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                        }
+                    } else if (entry in statsObj) {
+                        subResult = statsObj[entry];
                     } else {
-                        console.error(formulaArr, statsObj, damageResult, opt_max, entry);
+                        console.error(formulaArr, statsObj, null, opt_max, opt_min);
                     }
                 }
                 if (operator == null) {
