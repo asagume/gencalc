@@ -28,13 +28,13 @@
         <div class="left">
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
             <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange(supporter)" />
+              :disabled="conditionDisabled(item)" @change="onChange" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
           <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
             <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
-              @change="onChange(supporter)">
+              @change="onChange">
               <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
@@ -172,6 +172,9 @@ export default defineComponent({
 
     const additionalConditions: string[] = [];
 
+    const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
+    const selectedBuildname = reactive({} as { [key: string]: string | null });
+
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
         const supporter = entry.key.split("_")[0];
@@ -249,7 +252,6 @@ export default defineComponent({
     const supporterDamageResult = reactive(
       new Map() as Map<string, [TStats, TDamageResult]>
     );
-    const damageResultCalculationWaitingSet: Set<string> = new Set();
 
     const takeMasterTeamOption = (character: string, master: any) => {
       if ("チームバフ" in master) {
@@ -346,11 +348,16 @@ export default defineComponent({
     };
 
     const loadSupporterData = async () => {
-      damageResultCalculationWaitingSet.clear();
-      for (const savedSupporter of props.savedSupporters) {
-        const [statsObj, damageResult] = await setupSupporterDamageResult(savedSupporter);
-        supporterDamageResult.set(savedSupporter.key, [statsObj, damageResult]);
+      const list = [];
+      for (const entry of props.savedSupporters) {
+        selectedBuildname[entry.key] = entry.buildname;
+        list.push(setupSupporterDamageResult(entry).then(result => ({key: entry.key, value: result})));
       }
+      await Promise.all(list).then(results => {
+        results.forEach(entry => {
+          supporterDamageResult.set(entry.key, entry.value);
+        })
+      });
     };
     loadSupporterData();
 
@@ -497,17 +504,7 @@ export default defineComponent({
     });
 
     /** オプションが変更されたことを上位に通知します */
-    const onChange = async (supporter?: string) => {
-      if (supporter) {
-        if (damageResultCalculationWaitingSet.has(supporter)) {
-          damageResultCalculationWaitingSet.delete(supporter);
-          const workArr = props.savedSupporters.filter(s => s.key == supporter);
-          if (workArr.length) {
-            const temp = await setupSupporterDamageResult(workArr[0]);
-            supporterDamageResult.set(supporter, temp);
-          }
-        }
-      }
+    const onChange = async () => {
       await nextTick();
       overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
       context.emit("update:team-option", conditionInput);
@@ -527,12 +524,16 @@ export default defineComponent({
           }
         }
       });
+      const list = [];
       for (const entry of props.savedSupporters) {
-        damageResultCalculationWaitingSet.delete(entry.key);
-        const temp = await setupSupporterDamageResult(entry);
-        supporterDamageResult.set(entry.key, temp);
         selectedBuildname[entry.key] = entry.buildname;
+        list.push(setupSupporterDamageResult(entry).then(result => ({key: entry.key, value: result})));
       }
+      await Promise.all(list).then(results => {
+        results.forEach(entry => {
+          supporterDamageResult.set(entry.key, entry.value);
+        })
+      });
       onChange();
     };
 
@@ -571,8 +572,6 @@ export default defineComponent({
       return buildnameList(character).length > 0;
     };
 
-    const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
-    const selectedBuildname = reactive({} as { [key: string]: string | null });
     supporterKeyList.forEach((supporter) => {
       builddataSelectorVisible[supporter] = false;
       const list = buildnameList(supporter);
@@ -591,6 +590,7 @@ export default defineComponent({
 
     watch(props, async (newVal, oldVal) => {
       const isElementalResonanceChanged = !_.isEqual(newVal.elementalResonance?.conditionAdjustments, oldVal.elementalResonance?.conditionAdjustments);
+      const list = [];
       if (_.isEqual(newVal.savedSupporters, oldVal.savedSupporters)) {
         for (const entry of newVal.savedSupporters) {
           let changed;
@@ -602,9 +602,7 @@ export default defineComponent({
             changed = oldVal.savedSupporters.filter((s) => _.isEqual(s, entry)).length == 0;
           }
           if (changed) {
-            const temp = await setupSupporterDamageResult(entry);
-            supporterDamageResult.set(entry.key, temp);
-            damageResultCalculationWaitingSet.delete(entry.key);
+            list.push(setupSupporterDamageResult(entry).then(result => ({key: entry.key, value: result})));
           }
           selectedBuildname[entry.key] = entry.buildname;
         }
@@ -612,10 +610,14 @@ export default defineComponent({
           const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
           if (absent) {
             supporterDamageResult.delete(entry.key);
-            damageResultCalculationWaitingSet.delete(entry.key);
             delete selectedBuildname[entry.key];
           }
         }
+        await Promise.all(list).then(results => {
+          results.forEach(entry => {
+            supporterDamageResult.set(entry.key, entry.value);
+          });
+        });
       }
       onChange();
     });
