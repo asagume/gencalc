@@ -207,7 +207,7 @@ export default defineComponent({
       const myVision = characterInput.characterMaster.元素;
       const teamElements: TAnyObject = {};
       if (props.team.members) {
-        props.team.members.filter(s => s).forEach(entry => {
+        props.team.members.filter(s => s.name).forEach(entry => {
           const vision = CHARACTER_MASTER[entry.name as TCharacterKey].元素;
           if (vision in teamElements) {
             teamElements[vision]++;
