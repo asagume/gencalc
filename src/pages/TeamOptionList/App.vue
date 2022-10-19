@@ -104,65 +104,75 @@ export default defineComponent({
     const initialized = ref(false);
     const TEAM_OPTION_LIST = reactive([] as TTeamOption[]);
 
-    function find(name: string, characterDetail: TCharacterDetail) {
-      let category = '';
-      let description = '';
-      if (/^第\d重 /.test(name)) {
-        category = '命ノ星座 ';
-        name = name.replace(/^第\d重 /, '');
-        for (const key of Object.keys(characterDetail.命ノ星座)) {
-          const obj = characterDetail.命ノ星座[key];
-          if (obj && name == obj.名前) {
-            category += '第' + key + '重'
-            description = obj.説明;
-          }
-        }
-      } else {
-        ['元素スキル', '元素爆発'].forEach(entry => {
-          const obj = (characterDetail as any)[entry];
-          if (obj && name == obj.名前) {
-            category = entry;
-            description = obj.説明;
-          }
-        });
-        if (!category) {
-          ['固有天賦'].forEach(entry => {
-            for (const obj of (characterDetail as any)[entry]) {
-              if (obj && name == obj.名前) {
-                category = entry;
-                description = obj.説明;
-              }
+    function find(name: string, characterDetail: TCharacterDetail, statArr: string[]) {
+      const result: string[][] = [[], [], []];
+      ['元素スキル', '元素爆発'].forEach(entry => {
+        const obj = (characterDetail as any)[entry];
+        if (!obj) return;
+        let doAdd = false;
+        if (name == obj.名前) {
+          doAdd = true;
+        } else if (obj.説明.indexOf('>' + name + '<') != -1 || obj.説明.indexOf('「' + name + '」') != -1) {
+          statArr.forEach(stat => {
+            const statWork = stat.replace(/%$/, '').replace(/バフ$/, '');
+            if (obj.説明.indexOf(statWork) != -1) {
+              doAdd = true;
             }
           });
         }
-        if (!category) {
-          for (const entry of ['元素スキル', '元素爆発']) {
-            const obj = (characterDetail as any)[entry];
-            if (obj) {
-              if (obj.説明.indexOf('>' + name + '<') != -1 || obj.説明.indexOf('「' + name + '」') != -1) {
-                category = entry;
-                name = obj.名前;
-                description = obj.説明;
-                break;
-              }
+        if (doAdd) {
+          result[0].push(entry);
+          result[1].push(obj.名前);
+          result[2].push(obj.説明);
+        }
+      });
+      ['固有天賦'].forEach(entry => {
+        for (const obj of (characterDetail as any)[entry]) {
+          if (!obj) continue;
+          let doAdd = false;
+          if (name == obj.名前) {
+            doAdd = true;
+          } else if (obj.説明.indexOf('>' + name + '<') != -1 || obj.説明.indexOf('「' + name + '」') != -1) {
+            if (['金盃の豊穣'].includes(name)) {
+              doAdd = true;
+            } else {
+              statArr.forEach(stat => {
+                const statWork = stat.replace(/%$/, '').replace(/バフ$/, '');
+                if (obj.説明.indexOf(statWork) != -1) {
+                  doAdd = true;
+                }
+              });
             }
+          }
+          if (doAdd) {
+            result[0].push(entry);
+            result[1].push(obj.名前);
+            result[2].push(obj.説明);
           }
         }
-        if (!category) {
-          for (const entry of ['元素スキル', '元素爆発']) {
-            const obj = (characterDetail as any)[entry];
-            if (obj) {
-              if (obj.説明.indexOf(name) != -1) {
-                category = entry;
-                name = obj.名前;
-                description = obj.説明;
-                break;
-              }
+      });
+      for (const key of Object.keys(characterDetail.命ノ星座)) {
+        const obj = characterDetail.命ノ星座[key];
+        if (!obj) continue;
+        const nameWork = name.replace(/^第\d重 /, '');
+        let doAdd = false;
+        if (nameWork == obj.名前) {
+          doAdd = true;
+        } else if (obj.説明.indexOf('>' + nameWork + '<') != -1 || obj.説明.indexOf('「' + nameWork + '」') != -1) {
+          statArr.forEach(stat => {
+            const statWork = stat.replace(/%$/, '').replace(/バフ$/, '');
+            if (obj.説明.indexOf(statWork) != -1) {
+              doAdd = true;
             }
-          }
+          });
+        }
+        if (doAdd) {
+          result[0].push('命ノ星座 第' + key + '重');
+          result[1].push(obj.名前);
+          result[2].push(obj.説明);
         }
       }
-      return [category, name, description];
+      return result;
     }
 
     function makeRowsByCharacter(characterMasterMap: Map<string, TCharacterDetail>) {
@@ -170,10 +180,8 @@ export default defineComponent({
       for (const source of Object.keys(CHARACTER_MASTER)) {
         const characterDetail = characterMasterMap.get(source);
         if (!characterDetail) continue;
-        let category: string;
         let name: string;
         let newName: string;
-        let description: string;
         let statArr: string[];
         if (characterDetail.チームバフ) {
           let teamBuffArr = characterDetail.チームバフ;
@@ -197,16 +205,18 @@ export default defineComponent({
               const stat = obj.種類;
               if (!statArr.includes(stat)) statArr.push(stat);
             }
-            [category, newName, description] = find(newName, characterDetail);
-            result.push({
-              source: displayName(source),
-              category: category,
-              name: displayName(newName),
-              nameWithCategory: category + '<br>' + newName,
-              statArr: statArr,
-              stats: statArr.map(s => displayStatName(s)).join('<br>'),
-              description: description,
-            });
+            const [categoryArr, nameArr, descriptionArr] = find(newName, characterDetail, statArr);
+            for (let i = 0; i < categoryArr.length; i++) {
+              result.push({
+                source: displayName(source),
+                category: categoryArr[i],
+                name: displayName(nameArr[i]),
+                nameWithCategory: categoryArr[i] + '<br>' + nameArr[i],
+                statArr: statArr,
+                stats: statArr.map(s => displayStatName(s)).join('<br>'),
+                description: descriptionArr[i],
+              });
+            }
           }
         }
         for (const key of Object.keys(TEAM_OPTION_MASTER).filter(key => key.startsWith(source + '_'))) {
@@ -214,20 +224,22 @@ export default defineComponent({
           const workArr = key.split('_');
           name = workArr.slice(1).join('_');
           statArr = [];
-          [category, name, description] = find(name.replace(/｜.+/, ''), characterDetail);
           for (const obj of teamOptionMaster.詳細) {
             const stat = obj.種類;
             if (!statArr.includes(stat)) statArr.push(stat);
           }
-          result.push({
-            source: displayName(source),
-            category: category,
-            name: displayName(name),
-            nameWithCategory: category + '<br>' + name,
-            statArr: statArr,
-            stats: statArr.map(s => displayStatName(s)).join('<br>'),
-            description: description,
-          });
+          const [categoryArr, nameArr, descriptionArr] = find(name.replace(/｜.+/, ''), characterDetail, statArr);
+          for (let i = 0; i < categoryArr.length; i++) {
+            result.push({
+              source: displayName(source),
+              category: categoryArr[i],
+              name: displayName(nameArr[i]),
+              nameWithCategory: categoryArr[i] + '<br>' + nameArr[i],
+              statArr: statArr,
+              stats: statArr.map(s => displayStatName(s)).join('<br>'),
+              description: descriptionArr[i],
+            });
+          }
         }
       }
       return result;
@@ -357,7 +369,8 @@ export default defineComponent({
       const result: TTeamOption[] = [];
       for (const entry of characterBuffRows.value) {
         for (const stat of statArr) {
-          if (entry.statArr.filter(s => s.endsWith(stat)).length > 0) {
+          const re = new RegExp('.*' + stat + '(V[1-3])?$');
+          if (entry.statArr.filter(s => re.test(s)).length > 0) {
             result.push(entry);
             break;
           }
