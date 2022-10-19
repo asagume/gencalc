@@ -306,22 +306,33 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限'];
     const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力'];
     const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力'];
-    const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY];
+    const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
     otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('ダメージバフ.') != -1));
-    otherStatArr.push(...実数ダメージ加算ARRAY);
     otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('ダメージアップ.') != -1));
-    otherStatArr.push(...元素反応バフARRAY, 'ダメージ軽減');
-    
-    const formulaStatArr = Array.from(statFormulaMap.keys()).filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
+
+    const formulaStatArr = [...new Set(Array.from(statFormulaMap.keys()).map(s => s.replace(/V[1-3]$/, '')))].filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
     formulaStatArr.sort(compareFunction);
 
     // HPを計算します
     for (const stat of hpStatArr) {
-        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        const oldStatsObj: TStats = {};
+        ['V1', 'V2', 'V3'].forEach(postfix => {
+            const workStat = stat + postfix;
+            if (workStat in workStatsObj) {
+                oldStatsObj[workStat] = workStatsObj[workStat];
+            } else {
+                oldStatsObj[workStat] = 0;
+            }
+        });
+        updateStatsWithConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
         ['V1', 'V2', 'V3'].forEach(postfix => {
             const fromStat = stat + postfix;
-            if (fromStat in workStatsObj) {
-                workStatsObj[stat] += workStatsObj[fromStat];
+            if (workStatsObj[fromStat]) {
+                if (stat in workStatsObj) {
+                    workStatsObj[stat] += workStatsObj[fromStat] - oldStatsObj[fromStat];
+                } else {
+                    workStatsObj[stat] = workStatsObj[fromStat] - oldStatsObj[fromStat];
+                }
             }
         });
     }
@@ -329,16 +340,23 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
 
     for (const stat of formulaStatArr) {
-        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        const oldStatsObj: TStats = {};
         ['V1', 'V2', 'V3'].forEach(postfix => {
-            if (stat.endsWith(postfix)) {
-                if (stat in workConditionAdjustments) {
-                    const toStat = stat.replace(new RegExp(postfix + '$'), '');
-                    if (toStat in workStatsObj) {
-                        workStatsObj[toStat] += workConditionAdjustments[stat];
-                    } else {
-                        workStatsObj[toStat] = workConditionAdjustments[stat];
-                    }
+            const workStat = stat + postfix;
+            if (workStat in workStatsObj) {
+                oldStatsObj[workStat] = workStatsObj[workStat];
+            } else {
+                oldStatsObj[workStat] = 0;
+            }
+        });
+        updateStatsWithConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['V1', 'V2', 'V3'].forEach(postfix => {
+            const fromStat = stat + postfix;
+            if (workStatsObj[fromStat]) {
+                if (stat in workStatsObj) {
+                    workStatsObj[stat] += workStatsObj[fromStat] - oldStatsObj[fromStat];
+                } else {
+                    workStatsObj[stat] = workStatsObj[fromStat] - oldStatsObj[fromStat];
                 }
             }
         });
@@ -346,11 +364,24 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
 
     // 防御力を計算します
     for (const stat of defStatArr) {
-        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        const oldStatsObj: TStats = {};
+        ['V1', 'V2', 'V3'].forEach(postfix => {
+            const workStat = stat + postfix;
+            if (workStat in workStatsObj) {
+                oldStatsObj[workStat] = workStatsObj[workStat];
+            } else {
+                oldStatsObj[workStat] = 0;
+            }
+        });
+        updateStatsWithConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
         ['V1', 'V2', 'V3'].forEach(postfix => {
             const fromStat = stat + postfix;
-            if (fromStat in workStatsObj) {
-                workStatsObj[stat] += workStatsObj[fromStat];
+            if (workStatsObj[fromStat]) {
+                if (stat in workStatsObj) {
+                    workStatsObj[stat] += workStatsObj[fromStat] - oldStatsObj[fromStat];
+                } else {
+                    workStatsObj[stat] = workStatsObj[fromStat] - oldStatsObj[fromStat];
+                }
             }
         });
     }
@@ -359,11 +390,24 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
 
     // 攻撃力を計算します
     for (const stat of atkStatArr) {
-        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        const oldStatsObj: TStats = {};
+        ['V1', 'V2', 'V3'].forEach(postfix => {
+            const workStat = stat + postfix;
+            if (workStat in workStatsObj) {
+                oldStatsObj[workStat] = workStatsObj[workStat];
+            } else {
+                oldStatsObj[workStat] = 0;
+            }
+        });
+        updateStatsWithConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
         ['V1', 'V2', 'V3'].forEach(postfix => {
             const fromStat = stat + postfix;
-            if (fromStat in workStatsObj) {
-                workStatsObj[stat] += workStatsObj[fromStat];
+            if (workStatsObj[fromStat]) {
+                if (stat in workStatsObj) {
+                    workStatsObj[stat] += workStatsObj[fromStat] - oldStatsObj[fromStat];
+                } else {
+                    workStatsObj[stat] = workStatsObj[fromStat] - oldStatsObj[fromStat];
+                }
             }
         });
     }
@@ -372,16 +416,23 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
 
     // 元素ステータスおよび隠しステータスを計算します
     for (const stat of otherStatArr) {
-        updateStatsByConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        const oldStatsObj: TStats = {};
         ['V1', 'V2', 'V3'].forEach(postfix => {
-            if (stat.endsWith(postfix)) {
-                if (stat in workConditionAdjustments) {
-                    const toStat = stat.replace(new RegExp(postfix + '$'), '');
-                    if (toStat in workStatsObj) {
-                        workStatsObj[toStat] += workConditionAdjustments[stat];
-                    } else {
-                        workStatsObj[toStat] = workConditionAdjustments[stat];
-                    }
+            const workStat = stat + postfix;
+            if (workStat in workStatsObj) {
+                oldStatsObj[workStat] = workStatsObj[workStat];
+            } else {
+                oldStatsObj[workStat] = 0;
+            }
+        });
+        updateStatsWithConditionSub(workConditionAdjustments, workStatsObj, statFormulaMap, stat);
+        ['V1', 'V2', 'V3'].forEach(postfix => {
+            const fromStat = stat + postfix;
+            if (workStatsObj[fromStat]) {
+                if (stat in workStatsObj) {
+                    workStatsObj[stat] += workStatsObj[fromStat] - oldStatsObj[fromStat];
+                } else {
+                    workStatsObj[stat] = workStatsObj[fromStat] - oldStatsObj[fromStat];
                 }
             }
         });
@@ -390,16 +441,18 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     return workConditionAdjustments;
 }
 
-function updateStatsByConditionSub(workConditionAdjustments: { [key: string]: number }, workStatsObj: TStats, statFormulaMap: Map<string, any[]>, formulaKey: string) {
+function updateStatsWithConditionSub(workConditionAdjustments: { [key: string]: number }, workStatsObj: TStats, statFormulaMap: Map<string, any[]>, formulaKey: string) {
     for (const formulaArr of [statFormulaMap.get(formulaKey), ...['V1', 'V2', 'V3'].map(s => statFormulaMap.get(formulaKey + s))]) {
         if (!formulaArr) continue;
         formulaArr.forEach(formula => {
             const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
-            for (const stat of Object.keys(diffStats)) {
-                if (stat in workConditionAdjustments) {
-                    workConditionAdjustments[stat] += diffStats[stat];
-                } else {
-                    workConditionAdjustments[stat] = diffStats[stat];
+            if (formula[4]) {
+                for (const stat of Object.keys(diffStats)) {
+                    if (stat in workConditionAdjustments) {
+                        workConditionAdjustments[stat] += diffStats[stat];
+                    } else {
+                        workConditionAdjustments[stat] = diffStats[stat];
+                    }
                 }
             }
         })

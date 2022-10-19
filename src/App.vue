@@ -429,19 +429,30 @@ export default defineComponent({
     statsInput.statAdjustments["敵レベル"] = 90;
     statsInput.statAdjustments["敵防御力"] = 0;
 
-    const savedSupporters = reactive([] as { key: string; value: string }[]);
+    const savedSupporters = reactive([] as { key: string; value: string, buildname: string }[]);
     const setupSavedSupporters = () => {
       const buildnameKeys = Object.keys(buildnameSelectionRea);
       const work: any[] = [];
       characterKeys.forEach((character) => {
-        let key = makeBuildStorageKey(character);
+        const keyPrefix = makeBuildStorageKey(character);
+        let key = keyPrefix;
+        let buildname = makeDefaultBuildname(character);
         if (buildnameKeys.includes(character)) {
-          const buildname = buildnameSelectionRea[character];
+          buildname = buildnameSelectionRea[character];
           key = makeBuildStorageKey(character, buildname);
         }
-        const value = localStorage[key];
+        let value = localStorage[key];
         if (value) {
-          work.push({ key: character, value });
+          work.push({ key: character, value: value, buildname: buildname });
+        } else {
+          const workKeyArr = Object.keys(localStorage).filter(s => s.startsWith(keyPrefix));
+          if (workKeyArr.length) {
+            key = workKeyArr.sort()[0];
+            value = localStorage[key];
+            buildname = key.replace(new RegExp('^' + keyPrefix + '_'), '');
+            work.push({ key: character, value: value, buildname: buildname });
+            buildnameSelectionRea[character] = buildname;
+          }
         }
       });
       savedSupporters.splice(0, savedSupporters.length, ...work);

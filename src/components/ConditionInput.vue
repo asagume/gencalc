@@ -109,7 +109,8 @@ export default defineComponent({
         if (value == null) {
           // nop
         } else if (isNumber(value)) {
-          if (value >= 0) {
+          if (value == 0) continue;
+          else if (value >= 0) {
             if (stat.split('.')[0] == '別枠乗算') result += '=';
             else result += '+';
           }
