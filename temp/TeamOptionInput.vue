@@ -137,7 +137,7 @@ export default defineComponent({
   props: {
     character: { type: String as PropType<TCharacterKey>, required: true },
     savedSupporters: {
-      type: Object as PropType<{ key: string; value: string }[]>,
+      type: Object as PropType<{ key: string; value: string, buildname: string }[]>,
       required: true,
     },
     elementalResonance: {
@@ -531,6 +531,7 @@ export default defineComponent({
         damageResultCalculationWaitingSet.delete(entry.key);
         const temp = await setupSupporterDamageResult(entry);
         supporterDamageResult.set(entry.key, temp);
+        selectedBuildname[entry.key] = entry.buildname;
       }
       onChange();
     };
@@ -576,7 +577,12 @@ export default defineComponent({
       builddataSelectorVisible[supporter] = false;
       const list = buildnameList(supporter);
       if (list.length > 0) {
-        selectedBuildname[supporter] = list[0];
+        let buildname = list[0];
+        const workArr = props.savedSupporters.filter(s => s.key == supporter);
+        if (workArr.length) {
+          buildname = workArr[0].buildname;
+        }
+        selectedBuildname[supporter] = buildname;
       }
     });
     const buildnameSelectionOnChange = () => {
@@ -585,26 +591,30 @@ export default defineComponent({
 
     watch(props, async (newVal, oldVal) => {
       const isElementalResonanceChanged = !_.isEqual(newVal.elementalResonance?.conditionAdjustments, oldVal.elementalResonance?.conditionAdjustments);
-      for (const entry of newVal.savedSupporters) {
-        let changed;
-        if (isElementalResonanceChanged) {
-          changed = true;
-        } else if (entry.key == "雷電将軍") { // for 雷罰悪曜の眼
-          changed = true;
-        } else {
-          changed = oldVal.savedSupporters.filter((s) => s.key == entry.key && s.value == entry.value).length > 0;
+      if (_.isEqual(newVal.savedSupporters, oldVal.savedSupporters)) {
+        for (const entry of newVal.savedSupporters) {
+          let changed;
+          if (isElementalResonanceChanged) {
+            changed = true;
+          } else if (entry.key == "雷電将軍") { // for 雷罰悪曜の眼
+            changed = true;
+          } else {
+            changed = oldVal.savedSupporters.filter((s) => _.isEqual(s, entry)).length == 0;
+          }
+          if (changed) {
+            const temp = await setupSupporterDamageResult(entry);
+            supporterDamageResult.set(entry.key, temp);
+            damageResultCalculationWaitingSet.delete(entry.key);
+          }
+          selectedBuildname[entry.key] = entry.buildname;
         }
-        if (changed) {
-          const temp = await setupSupporterDamageResult(entry);
-          supporterDamageResult.set(entry.key, temp);
-          damageResultCalculationWaitingSet.delete(entry.key);
-        }
-      }
-      for (const entry of oldVal.savedSupporters) {
-        const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
-        if (absent) {
-          supporterDamageResult.delete(entry.key);
-          damageResultCalculationWaitingSet.delete(entry.key);
+        for (const entry of oldVal.savedSupporters) {
+          const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
+          if (absent) {
+            supporterDamageResult.delete(entry.key);
+            damageResultCalculationWaitingSet.delete(entry.key);
+            delete selectedBuildname[entry.key];
+          }
         }
       }
       onChange();
