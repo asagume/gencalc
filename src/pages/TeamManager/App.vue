@@ -177,6 +177,8 @@ export default defineComponent({
       const storageValue = localStorage.getItem("teams");
       if (storageValue) {
         const work = JSON.parse(storageValue);
+        numberOfTeams.value = work.length;
+        numberOfTeamsOnChange();
         for (let i = 0; i < teams.length; i++) {
           const team = teams[i];
           if (work[i]) {
