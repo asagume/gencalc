@@ -46,7 +46,7 @@
 
     <div class="footer">
       <hr />
-      <h2>チーム編成 Ver.0.1.1</h2>
+      <h2>チーム編成 Ver.0.1.2</h2>
       <ul class="usage">
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
@@ -173,6 +173,19 @@ export default defineComponent({
 
     const saveDisabled = computed(() => savedataStr.value == saveddataStr.value);
 
+    const numberOfTeamsOnChange = () => {
+      if (numberOfTeams.value > teams.length) {
+        for (let i = teams.length; i < numberOfTeams.value; i++) {
+          teams.push(makeBlankTeam(i));
+        }
+      } else if (numberOfTeams.value < teams.length) {
+        if (selectedTeamId.value > numberOfTeams.value) {
+          selectedTeamId.value = 0;
+        }
+        teams.splice(numberOfTeams.value);
+      }
+    };
+
     const loadOnClick = () => {
       const storageValue = localStorage.getItem("teams");
       if (storageValue) {
@@ -205,19 +218,6 @@ export default defineComponent({
       }
     };
     loadOnClick();
-
-    const numberOfTeamsOnChange = () => {
-      if (numberOfTeams.value > teams.length) {
-        for (let i = teams.length; i < numberOfTeams.value; i++) {
-          teams.push(makeBlankTeam(i));
-        }
-      } else if (numberOfTeams.value < teams.length) {
-        if (selectedTeamId.value > numberOfTeams.value) {
-          selectedTeamId.value = 0;
-        }
-        teams.splice(numberOfTeams.value);
-      }
-    };
 
     const forcusedMembers = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0].members ?? []);
 
