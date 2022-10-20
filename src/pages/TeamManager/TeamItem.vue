@@ -89,10 +89,15 @@ export default defineComponent({
     const watchCount = ref(0);
     watch(props, async (newVal) => {
       name.value = newVal.team.name;
+      const list = [];
       for (const member of newVal.team.members) {
-        const temp = await calculateMemberResult(member);
-        memberStats[member.id] = temp.statsInput?.statsObj;
+        list.push(calculateMemberResult(member).then(result => ({ key: member.id, value: result })));
       }
+      await Promise.all(list).then(results => {
+        results.forEach(entry => {
+          memberStats[entry.key] = entry.value.statsInput?.statsObj;
+        });
+      });
       watchCount.value++;
     });
 
