@@ -2,8 +2,7 @@
   <ul class="select-list">
     <li v-for="item in weaponTypeList" :key="item">
       <label>
-        <input class="hidden" type="radio" :value="item" name="weapon-own-list-type"
-          @change="selectedWeaponType = targetValue($event)" />
+        <input class="hidden" type="radio" v-model="selectedWeaponType" :value="item" name="weapon-own-list-type" />
         <img class="filter" :src="weaponSrc(item)" :alt="item" />
       </label>
     </li>

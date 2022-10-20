@@ -561,7 +561,6 @@ export function makeRecommendationList(characterMaster: { [key: string]: any }, 
             const artifactScoringObj = JSON.parse(localStorage[key3]);
             buildObj.artifactScoring = artifactScoringObj;
         }
-        result.push({ name: buildname, build: buildObj, overwrite: true });
         const key4 = key.replace(/^構成/, 'SupporterBuildname');
         if (key4 in localStorage) {
             const supporterBuildnameObj = JSON.parse(localStorage[key4]);
