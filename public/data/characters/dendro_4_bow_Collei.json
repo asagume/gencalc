@@ -88,7 +88,7 @@
         "ディープウッドパトロール 元素チャージ効率+20%": false
     },
     "通常攻撃": {
-        "名前": "通常攻撃・祈りの射技",
+        "名前": "通常攻撃·祈りの射技",
         "説明": "<span style=\"color: rgb(255, 215, 128)\">通常攻撃</span><br><span style=\"color: rgba(255, 255, 255, 0.85)\">最大4段の連射攻撃を行う。</span><br><br><span style=\"color: rgb(255, 215, 128)\">重撃</span><br><span style=\"color: rgba(255, 255, 255, 0.85)\">ダメージがより高く、より精確な</span><span style=\"color: #FFD780\">狙い撃ち</span><span style=\"color: rgba(255, 255, 255, 0.85)\">を発動する。</span><br><span style=\"color: rgba(255, 255, 255, 0.85)\">標準時、草元素が矢先に付着する。草元素に満ちた矢は敵に</span><span style=\"color: rgb(153, 255, 136)\">草元素ダメージ</span><span style=\"color: rgba(255, 255, 255, 0.85)\">を与える。</span><br><br><span style=\"color: rgb(255, 215, 128)\">落下攻撃</span><br><span style=\"color: rgba(255, 255, 255, 0.85)\">空中から矢の雨を放ち、凄まじいスピードで落下し地面に衝撃を与え、落下時に範囲ダメージを与える。</span><br>",
         "icon_url": "images/characters/dendro_4_bow_Collei/talent_1.png",
         "詳細": [
