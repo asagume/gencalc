@@ -482,7 +482,7 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
             }
             break;
         }
-        return [ascension, level];
+        return [Math.max(0, ascension), level];
     } catch (error) {
         console.error(levelStr);
         throw error;
