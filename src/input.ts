@@ -443,8 +443,8 @@ export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 export type TElementalResonance = {
     conditionValues: TConditionValues,
     conditionAdjustments: TConditionAdjustments,
-  };
-  
+};
+
 export const OPTION_INPUT_TEMPLATE = {
     elementalResonance: {
         conditionValues: {},
@@ -465,7 +465,8 @@ export const SUPPORTER_INPUT_TEMPLATE = {
 export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
 /** レベル文字列（1+,20,20+,...,90）を突破レベルとレベルに分割します */
-export function parseLevelStr(levelStr: number | string): [number, number] {
+function parseLevelStr(levelStr: number | string): [number, number] {
+    let result: [number, number] = [0, 1];
     try {
         let level: number;
         if (isString(levelStr)) {
@@ -482,11 +483,12 @@ export function parseLevelStr(levelStr: number | string): [number, number] {
             }
             break;
         }
-        return [Math.max(0, ascension), level];
+        result = [Math.max(0, ascension), level];
     } catch (error) {
         console.error(levelStr);
-        throw error;
+        // throw error;
     }
+    return result;
 }
 
 export type TRecommendation = {
@@ -520,7 +522,10 @@ export function makeSupporterBuildnameStorageKey(character: TCharacterKey | stri
 }
 
 /** おすすめセットのリストを作成します. [おすすめセットの名前, おすすめセットの内容, 上書き可不可][] */
-export function makeRecommendationList(characterMaster: { [key: string]: any }, opt_buildData?: { [key: string]: any }): TRecommendation[] {
+export function makeRecommendationList(
+    characterMaster: TAnyObject,
+    opt_buildData?: TAnyObject,
+): TRecommendation[] {
     const result: TRecommendation[] = [];
 
     const character = characterMaster['名前'];
@@ -840,7 +845,7 @@ export async function loadRecommendation(
     }
     catch (error) {
         console.error(characterInput, artifactDetailInput, conditionInput, build);
-        throw error;
+        // throw error;
     }
 }
 
@@ -980,10 +985,9 @@ export const CHANGE_KIND_STATUS = 'ステータス変更系詳細';
 export const CHANGE_KIND_TALENT = '天賦性能変更系詳細';
 
 export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInput): TDamageDetail {
+    const result = {} as any;
     try {
         const characterMaster = characterInput.characterMaster as any;
-
-        const result = {} as any;
 
         let myTalentDetail;
         let myTalentLevel: number;
@@ -1119,21 +1123,18 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         result['排他'] = exclusionMap;
 
         characterInput.damageDetailMyCharacter = result;
-
-        return result;
     } catch (error) {
-        console.error(characterInput);
-        throw error;
+        console.error(characterInput, result);
+        // throw error;
     }
+    return result;
 }
 
 export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
+    const result = {} as any;
     try {
         const name = characterInput.weapon;
         const weaponMaster = characterInput.weaponMaster;
-
-        const result = {} as any;
-
         if (!name || !weaponMaster) return result;
 
         let myTalentDetail;
@@ -1178,18 +1179,16 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
         result['排他'] = exclusionMap;
 
         characterInput.damageDetailMyWeapon = result;
-
-        return result;
     } catch (error) {
-        console.error(characterInput);
-        throw error;
+        console.error(characterInput, result);
+        // throw error;
     }
+    return result;
 }
 
 export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
+    const result = [] as any;
     try {
-        const result = [] as any;
-
         let myTalentDetail;
         const myInputCategory = '聖遺物セット効果';
 
@@ -1238,18 +1237,16 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
         result['排他'] = exclusionMap;
 
         characterInput.damageDetailMyArtifactSets = result;
-
-        return result;
     } catch (error) {
-        console.error(characterInput);
-        throw error;
+        console.error(characterInput, result);
+        // throw error;
     }
+    return result;
 }
 
 export function makeDamageDetailObjArrObjElementalResonance(characterInput: any) {
+    const result = [] as any;
     try {
-        const result = [] as any;
-
         const myInputCategory = '元素共鳴';
         const damageDetailObjArr = [] as TDamageDetailObj[];
         const myStatusChangeDetailObjArr = [] as any[];
@@ -1287,12 +1284,13 @@ export function makeDamageDetailObjArrObjElementalResonance(characterInput: any)
 
         characterInput.damageDetailElementalResonance = result;
     } catch (error) {
-        console.error(characterInput);
-        throw error;
+        console.error(characterInput, result);
+        // throw error;
     }
+    return result;
 }
 
-const makeDetailObj = function (
+function makeDetailObj(
     detailObj: any,
     level: number | null,
     defaultKind: string | null,
@@ -1392,7 +1390,7 @@ export function getChangeKind(kind: string) {
     return undefined;
 }
 
-export const makeDamageDetailObjArr = function (
+export function makeDamageDetailObjArr(
     talentDataObj: any,
     level: number | null,
     defaultKind: string | null,
@@ -1424,7 +1422,7 @@ export const makeDamageDetailObjArr = function (
     return resultArr;
 }
 
-export const makeTeamOptionDetailObjArr = function (
+export function makeTeamOptionDetailObjArr(
     detailObjArr: any[],
 ): TDamageDetailObj[] {
     const resultArr = [] as any[];
@@ -1439,7 +1437,11 @@ export const makeTeamOptionDetailObjArr = function (
     return resultArr;
 }
 
-export const makeConditionExclusionMapFromStr = function (conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>) {
+export function makeConditionExclusionMapFromStr(
+    conditionStr: string,
+    conditionMap: Map<string, string[] | null>,
+    exclusionMap: Map<string, string[] | null>
+) {
     // 排他条件を抽出します
     let exclusionCond: string | null = null;
     let myCondStrArr = conditionStr.split('^');
@@ -1462,7 +1464,12 @@ export const makeConditionExclusionMapFromStr = function (conditionStr: string, 
     }
 }
 
-function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap: Map<string, string[] | null>, exclusionMap: Map<string, string[] | null>, exclusion: string | null) {
+function makeConditionExclusionMapFromStrSub(
+    conditionStr: string,
+    conditionMap: Map<string, string[] | null>,
+    exclusionMap: Map<string, string[] | null>,
+    exclusion: string | null
+) {
     const myCondStrArr = conditionStr.split(/[@=]/);
     const myName = myCondStrArr[0];
     if (myCondStrArr.length == 1) {
@@ -1516,7 +1523,11 @@ function makeConditionExclusionMapFromStrSub(conditionStr: string, conditionMap:
     }
 }
 
-export function setupConditionValues(conditionInput: TConditionInput, characterInput: TCharacterInput, optionInput: TOptionInput) {
+export function setupConditionValues(
+    conditionInput: TConditionInput,
+    characterInput: TCharacterInput,
+    optionInput: TOptionInput
+) {
     try {
         const conditionValues = conditionInput.conditionValues;
         const checkboxList = conditionInput.checkboxList as TCheckboxEntry[];
@@ -1667,7 +1678,7 @@ export function setupConditionValues(conditionInput: TConditionInput, characterI
         }
     } catch (error) {
         console.error(conditionInput, characterInput);
-        throw error;
+        // throw error;
     }
 }
 
@@ -1710,7 +1721,10 @@ export function addDecimal(value1: number, value2: number, opt_max?: number): nu
     return result;
 }
 
-const analyzeFormulaStr = function (formulaStr: number | string, opt_defaultItem: string | null = null) {
+function analyzeFormulaStr(
+    formulaStr: number | string,
+    opt_defaultItem: string | null = null
+) {
     const resultArr = [] as any[];
     const re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
     let workStr = String(formulaStr);
@@ -1733,7 +1747,10 @@ const analyzeFormulaStr = function (formulaStr: number | string, opt_defaultItem
     return resultArr;
 }
 
-function analyzeFormulaStrSub(formulaStr: string, opt_defaultItem: string | null = null) {
+function analyzeFormulaStrSub(
+    formulaStr: string,
+    opt_defaultItem: string | null = null
+) {
     const resultArr = [] as any;
     if (isNumber(formulaStr)) {
         resultArr.push(Number(formulaStr));
@@ -1829,7 +1846,11 @@ function openTwitter(text: string, url: string, opt_hashtags?: string, opt_via?:
     window.open(shareUrl);
 }
 
-export function shareByTwitter(characterInput: TCharacterInput, artifactDetailInput: TArtifactDetailInput, conditionInput: TConditionInput) {
+export function shareByTwitter(
+    characterInput: TCharacterInput,
+    artifactDetailInput: TArtifactDetailInput,
+    conditionInput: TConditionInput
+) {
     const savedata = makeSavedata(characterInput, artifactDetailInput, conditionInput);
     const sharedata = makeSharedata(savedata);
 
@@ -1893,4 +1914,3 @@ export function popBuildinfoFromSession() {
     sessionStorage.removeItem('builddata');
     return result;
 }
-

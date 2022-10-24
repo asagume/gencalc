@@ -121,7 +121,8 @@ export const calculateStats = function (
     characterInput: TCharacterInput,
     artifactDetailInput: TArtifactDetailInput,
     conditionInput: TConditionInput,
-    optionInput: TOptionInput) {
+    optionInput: TOptionInput
+) {
     if (!characterInput) return;
     if (!artifactDetailInput) return;
     if (!conditionInput) return;
@@ -265,15 +266,17 @@ export const calculateStats = function (
         overwriteObject(conditionInput.conditionAdjustments, conditionAdjustments);
     } catch (error) {
         console.error(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
-        throw error;
+        // throw error;
     }
 }
 
-function updateStatsWithCondition(characterInput: TCharacterInput, validConditionValueArr: string[], workStatsObj: TStats) {
+function updateStatsWithCondition(
+    characterInput: TCharacterInput,
+    validConditionValueArr: string[],
+    workStatsObj: TStats
+) {
     const constellation = characterInput.命ノ星座;
-
     const workConditionAdjustments = {} as { [key: string]: number };
-
     const statFormulaMap: Map<string, any[]> = new Map();
 
     for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
@@ -441,7 +444,12 @@ function updateStatsWithCondition(characterInput: TCharacterInput, validConditio
     return workConditionAdjustments;
 }
 
-function updateStatsWithConditionSub(workConditionAdjustments: { [key: string]: number }, workStatsObj: TStats, statFormulaMap: Map<string, any[]>, formulaKey: string) {
+function updateStatsWithConditionSub(
+    workConditionAdjustments: TStats,
+    workStatsObj: TStats,
+    statFormulaMap: Map<string, any[]>,
+    formulaKey: string
+) {
     for (const formulaArr of [statFormulaMap.get(formulaKey), ...['V1', 'V2', 'V3'].map(s => statFormulaMap.get(formulaKey + s))]) {
         if (!formulaArr) continue;
         formulaArr.forEach(formula => {
@@ -459,7 +467,6 @@ function updateStatsWithConditionSub(workConditionAdjustments: { [key: string]: 
     }
 }
 
-
 function compareFunction(a: string, b: string) {
     const arr = ['元素熟知', '会心率', '会心ダメージ', '与える治療効果', '受ける治療効果', '元素チャージ効率', 'シールド強化'];
     const lowestArr = ['ダメージ軽減'];
@@ -474,7 +481,10 @@ function compareFunction(a: string, b: string) {
     return (aIndex != -1 ? aIndex : arr.length) - (bIndex != -1 ? bIndex : arr.length);
 }
 
-export function calculateElementalResonance(conditionValues: TConditionValues, conditionInput: TConditionInput): TStats {
+export function calculateElementalResonance(
+    conditionValues: TConditionValues,
+    conditionInput: TConditionInput,
+): TStats {
     const result: TStats = {};
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
     for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
@@ -503,7 +513,7 @@ export function calculateElementalResonance(conditionValues: TConditionValues, c
 }
 
 /** げんかるくスタイルの式データから結果（数値）を計算します */
-export const calculateFormulaArray = function (
+export function calculateFormulaArray(
     formulaArr: any,
     statsObj: TStats,
     damageResult: TDamageResult,
@@ -646,53 +656,13 @@ export const calculateFormulaArray = function (
     }
 }
 
-/** 文字列からげんかるくスタイルの計算式を生成します（サブ） */
-export function analyzeFormulaStrSub(formulaStr: string, opt_defaultItem?: string): any[] {
-    const resultArr: any[] = [];
-    if (isNumber(formulaStr)) {
-        resultArr.push(Number(formulaStr));
-    } else {
-        const strArr = formulaStr.split('%');
-        if (strArr.length == 1) {
-            resultArr.push(strArr[0]);
-        } else {
-            resultArr.push(Number(strArr[0]) / 100);
-            resultArr.push('*');
-            if (strArr[1].length > 0) {
-                resultArr.push(strArr[1]);
-            } else if (opt_defaultItem != null) {
-                resultArr.push(opt_defaultItem);
-            }
-        }
-    }
-    return resultArr;
-}
-
-/** 文字列からげんかるくスタイルの計算式を生成します */
-export const analyzeFormulaStr = function (formulaStr: string, opt_defaultItem?: string) {
-    const resultArr: any[] = [];
-    const re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
-    let workStr = formulaStr;
-    while (workStr) {
-        const reRet = re.exec(workStr);
-        if (!reRet) {
-            resultArr.push(workStr);
-            break;
-        }
-        if (reRet[1]) { // + - * /
-            resultArr.push(reRet[1]);
-        }
-        resultArr.push(analyzeFormulaStrSub(reRet[2], opt_defaultItem));
-        if (!reRet[3]) {
-            break;
-        }
-        workStr = reRet[3];
-    }
-    return resultArr;
-}
-
 /** ダメージ計算を実施します */
-export function calculateDamageResult(damageResult: TDamageResult, characterInput: TCharacterInput, conditionInput: TConditionInput, statsInput: TStatsInput) {
+export function calculateDamageResult(
+    damageResult: TDamageResult,
+    characterInput: TCharacterInput,
+    conditionInput: TConditionInput,
+    statsInput: TStatsInput,
+) {
     try {
         if (!characterInput) return;
         if (!conditionInput) return;
@@ -864,7 +834,7 @@ export function calculateDamageResult(damageResult: TDamageResult, characterInpu
         console.debug(damageResult);
     } catch (error) {
         console.error(damageResult, characterInput, conditionInput, statsInput);
-        throw error;
+        // throw error;
     }
 }
 
@@ -898,7 +868,11 @@ export function makeValidConditionValueArr(conditionInput: any) {
     }
 }
 
-export const checkConditionMatches = function (conditionStr: string, validConditionValueArr: string[], constellation: number): number {
+export function checkConditionMatches(
+    conditionStr: string,
+    validConditionValueArr: string[],
+    constellation: number,
+): number {
     const myCondStr = conditionStr.split('^')[0];
 
     if (myCondStr.indexOf('|') != -1) {  // |はOR条件です
@@ -926,7 +900,11 @@ export const checkConditionMatches = function (conditionStr: string, validCondit
     return result;
 }
 
-function checkConditionMatchesSub(conditionStr: string, validConditionValueArr: string[], constellation: number): number {
+function checkConditionMatchesSub(
+    conditionStr: string,
+    validConditionValueArr: string[],
+    constellation: number,
+): number {
     const myCondArr = conditionStr.split(/[@=]/);
     if (myCondArr[0] == '命ノ星座') {
         if (myCondArr.length == 2) {
@@ -966,7 +944,11 @@ function checkConditionMatchesSub(conditionStr: string, validConditionValueArr: 
 }
 
 /** 蒸発、溶解のダメージを計算します */
-function calculate乗算系元素反応倍率(reaction: any, element: string, statsObj: any) {
+function calculate乗算系元素反応倍率(
+    reaction: any,
+    element: string,
+    statsObj: any,
+) {
     try {
         if (!element || element == '物理') return 0;
         const elementalMastery = statsObj['元素熟知'];
@@ -983,7 +965,12 @@ function calculate乗算系元素反応倍率(reaction: any, element: string, st
 /**
  * 過負荷、感電、超電導、拡散のダメージを計算します
  */
-function calculate固定値系元素反応ダメージ(reaction: any, element: string, statsObj: TStats, opt_dmgElement?: string) {
+function calculate固定値系元素反応ダメージ(
+    reaction: any,
+    element: string,
+    statsObj: TStats,
+    opt_dmgElement?: string,
+) {
     try {
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
@@ -1083,7 +1070,8 @@ function calculateDamageFromDetail(
     conditionInput: TConditionInput,
     statsObj: TStats,
     damageResult: TDamageResult,
-    opt_element: string | null = null): TDamageResultEntry {
+    opt_element: string | null = null
+): TDamageResultEntry {
     try {
         const myバフArr = [] as Array<string>;
         let is会心Calc = true;
@@ -1096,11 +1084,9 @@ function calculateDamageFromDetail(
         const myステータス補正 = {} as { [key: string]: number };
 
         const constellation = statsObj['命ノ星座'];
-
         const talentChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_TALENT);
 
         let validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
-
         const myConditionValuesAfter = deepcopy(conditionInput.conditionValues);
 
         if (detailObj['除外条件']) {
@@ -1727,7 +1713,11 @@ export const ARTIFACT_SCORE_FORMULA_TEMPLATE: TArtifactScoreFormula[] = [
     [['攻撃力%', 0.5], ['元素熟知', 0.125], ['会心率', 2], ['会心ダメージ', 1]],
 ];
 
-export function calculateArtifactScore(characterInput: TCharacterInput, artifactDetailInput: TArtifactDetailInput, scoringStats: [string, number][]) {
+export function calculateArtifactScore(
+    characterInput: TCharacterInput,
+    artifactDetailInput: TArtifactDetailInput,
+    scoringStats: [string, number][]
+) {
     let result = 0;
     for (const scoringStat of scoringStats) {
         const stat = scoringStat[0];
