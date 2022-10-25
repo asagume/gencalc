@@ -28,6 +28,11 @@ module.exports = defineConfig({
       template: 'public/TeamOptionList.html',
       filename: 'TeamOptionList.html',
     },
+    CritTarget: {
+      entry: 'src/pages/CritTarget/main.ts',
+      template: 'public/CritTarget.html',
+      filename: 'CritTarget.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'

@@ -5,6 +5,8 @@
       <p>&nbsp;</p>
       <h2>会心率と会心ダメージの目標値</h2>
       <p>&nbsp;</p>
+      会心率とダメージの比率と聖遺物のみ（キャラクターと武器の双方に会心系の突破ステータスなし）の場合の基準値を設定すると、
+      キャラクターや武器に会心系の突破ステータスがある場合に同レベルの会心スコアを持つ聖遺物を装備した時の会心率と会心ダメージの目安を計算します。
     </div>
 
     <div class="pane2">
@@ -37,8 +39,8 @@
           </td>
         </tr>
         <tr>
-          <th rowspan="2">初期スコア0時の目標値</th>
-          <td colspan="4">
+          <th rowspan="2">聖遺物のみの目標値</th>
+          <td colspan="3">
             <template v-for="(item, index) in TARGET_PRESET" :key="item[0]">
               <label>
                 <input type="radio" v-model="targetPresetSelected" :value="index" @change="targetPresetOnChange">
@@ -58,9 +60,6 @@
             <label>{{ displayName('会心ダメージ') }}
               <input type="number" v-model="critDmgTarget" min="0" @change="calculateCritTarget">
             </label>
-          </td>
-          <td class="expected-value">
-            期待値 {{ expectedDmg }}
           </td>
         </tr>
         <tr>
@@ -95,6 +94,7 @@
           </td>
         </tr>
       </table>
+      <p> デフォルトをだいぶん高い値に設定してあります。 </p>
     </div>
 
     <div class="footer">
@@ -103,8 +103,8 @@
   </div>
 </template>
 <script lang="ts">
-import 'vue-good-table-next/dist/vue-good-table-next.css'
-import { computed, defineComponent, reactive, ref } from "vue";
+import 'vue-good-table-next/dist/vue-good-table-next.css';
+import { defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 
 export default defineComponent({
@@ -124,29 +124,48 @@ export default defineComponent({
         label: displayName('キャラ会心'),
         field: 'hasCharacterCrit',
         formatFn: formatHasCrit,
+        thClass: 'text-center',
+        tdClass: 'text-center',
       },
       {
         label: displayName('武器会心'),
         field: 'hasWeaponCrit',
         formatFn: formatHasCrit,
+        thClass: 'text-center',
+        tdClass: 'text-center',
       },
       {
         label: displayName('武器レアリティ'),
         field: 'weaponRarity',
+        thClass: 'text-center',
+        tdClass: 'text-center',
       },
       {
         label: displayName('武器会心スコア'),
         field: 'weaponCritScore',
+        thClass: 'text-center',
+        tdClass: 'text-center',
       },
       {
         label: displayName('会心率'),
         field: 'targetCritRate',
-        width: '20%',
+        width: '15%',
+        thClass: 'text-center',
+        tdClass: 'text-center',
       },
       {
         label: displayName('会心ダメージ'),
         field: 'targetCritDmg',
-        width: '20%',
+        width: '15%',
+        thClass: 'text-center',
+        tdClass: 'text-center',
+      },
+      {
+        label: displayName('期待値'),
+        field: 'expectedDmg',
+        width: '15%',
+        thClass: 'text-center',
+        tdClass: 'text-center',
       }
     ];
     const rows = reactive([
@@ -159,6 +178,7 @@ export default defineComponent({
         weaponBaseAtk: null,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -169,6 +189,7 @@ export default defineComponent({
         weaponBaseAtk: null,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 0,
@@ -179,6 +200,7 @@ export default defineComponent({
         weaponBaseAtk: 44,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 0,
@@ -189,6 +211,7 @@ export default defineComponent({
         weaponBaseAtk: 42,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 0,
@@ -199,6 +222,7 @@ export default defineComponent({
         weaponBaseAtk: 41,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -209,6 +233,7 @@ export default defineComponent({
         weaponBaseAtk: 44,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -219,6 +244,7 @@ export default defineComponent({
         weaponBaseAtk: 42,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -229,6 +255,7 @@ export default defineComponent({
         weaponBaseAtk: 41,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 0,
@@ -239,6 +266,7 @@ export default defineComponent({
         weaponBaseAtk: 48,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 0,
@@ -249,6 +277,7 @@ export default defineComponent({
         weaponBaseAtk: 46,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 0,
@@ -259,6 +288,7 @@ export default defineComponent({
         weaponBaseAtk: 44,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -269,6 +299,7 @@ export default defineComponent({
         weaponBaseAtk: 48,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -279,6 +310,7 @@ export default defineComponent({
         weaponBaseAtk: 46,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       },
       {
         characterCritScore: 38.4,
@@ -289,6 +321,7 @@ export default defineComponent({
         weaponBaseAtk: 44,
         targetCritRate: '',
         targetCritDmg: '',
+        expectedDmg: '',
       }
     ]);
 
@@ -311,37 +344,11 @@ export default defineComponent({
     const cryoResonance = ref(0);     // 氷元素共鳴 会心率+15
     const artifact4BS = ref(0);       // 氷風を彷徨う勇士 4セット効果
 
-    const expectedDmg = computed(() => {
-      let result = 0;
-      let workRate = critRateTarget.value;
-      let workDmg = critDmgTarget.value;
-      let workAdd = 0;
-      if (cryoResonance.value) {
-        workAdd += Number(cryoResonance.value) * 2;
-      }
-      if (artifact4BS.value) {
-        workAdd += Number(artifact4BS.value) * 2;
-      }
-      if (workAdd) {
-        const ratioDenominator = critRateRatio.value * 2 + critDmgRatio.value;
-        workRate += workAdd * (critRateRatio.value / ratioDenominator);
-        workDmg += workAdd * (critDmgRatio.value / ratioDenominator);
-      }
-      if (workRate > 100) {
-        workDmg += (workRate - 100) * 2;
-        workRate = 100;
-      }
-      result += workRate / 100 * (100 + workDmg);
-      result += (100 - workRate) / 100 * 100;
-      result = Math.round(result * 10) / 10;
-      return result + '%';
-    });
-
     const calculateCritTarget = () => {
       rows.forEach(row => {
         let workRate = critRateTarget.value;
         let workDmg = critDmgTarget.value;
-        const workAdd = row.characterCritScore + row.weaponCritScore;
+        let workAdd = row.characterCritScore + row.weaponCritScore;
         const ratioDenominator = critRateRatio.value * 2 + critDmgRatio.value;
         workRate += workAdd * (critRateRatio.value / ratioDenominator);
         workDmg += workAdd * (critDmgRatio.value / ratioDenominator);
@@ -358,6 +365,18 @@ export default defineComponent({
         }
         row.targetCritRate = Math.round(workRate * 10) / 10 + '%';
         row.targetCritDmg = Math.round(workDmg * 10) / 10 + '%';
+        // 期待値を計算します
+        let expectedDmg = 0;
+        if (cryoResonance.value) {
+          workRate += Number(cryoResonance.value);
+        }
+        if (artifact4BS.value) {
+          workRate += Number(artifact4BS.value);
+        }
+        expectedDmg += workRate / 100 * (100 + workDmg);
+        expectedDmg += (100 - workRate) / 100 * 100;
+        expectedDmg = Math.round(expectedDmg * 10) / 10;
+        row.expectedDmg = expectedDmg + '%';
       });
     };
     calculateCritTarget();
@@ -384,8 +403,6 @@ export default defineComponent({
       TARGET_PRESET,
       targetPresetSelected,
 
-      expectedDmg,
-
       calculateCritTarget,
       targetPresetOnChange,
     };
@@ -408,6 +425,10 @@ export default defineComponent({
     "pane2"
     "pane3"
     "footer";
+}
+
+.text-center {
+  text-align: center;
 }
 </style>
 <style scoped>

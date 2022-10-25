@@ -29,9 +29,18 @@
         </div>
     </fieldset>
 
-    <p>
-        <a href="index2.html">旧バージョン(V2)</a>
-    </p>
+    <fieldset>
+        <legend>内部リンク</legend>
+        <p>
+            <a href="TeamOptionList.html">強化・弱体効果一覧</a>
+        </p>
+        <p>
+            <a href="CritTarget.html">会心目標</a>
+        </p>
+        <p>
+            <a href="index2.html">旧バージョン(V2)</a>
+        </p>
+    </fieldset>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
