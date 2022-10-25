@@ -94,7 +94,6 @@
           </td>
         </tr>
       </table>
-      <p> デフォルトをだいぶん高い値に設定してあります。 </p>
     </div>
 
     <div class="footer">
@@ -336,6 +335,9 @@ export default defineComponent({
       [85, 170],
     ];
     const targetPresetSelected = ref(4);
+    if (localStorage.getItem('CritTarget') != null) {
+      targetPresetSelected.value = Number(localStorage.getItem('CritTarget'));
+    }
     const critRateRatio = ref(1);     // 率ダメ比率の率
     const critDmgRatio = ref(2);      // 率ダメ比率のダメ
     const critRateTarget = ref(TARGET_PRESET[targetPresetSelected.value][0]);   // 会心率目標値
@@ -385,6 +387,7 @@ export default defineComponent({
       critRateTarget.value = TARGET_PRESET[targetPresetSelected.value][0];
       critDmgTarget.value = TARGET_PRESET[targetPresetSelected.value][1];
       calculateCritTarget();
+      localStorage.setItem('CritTarget', String(targetPresetSelected.value));
     };
 
     return {
