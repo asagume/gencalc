@@ -374,12 +374,9 @@
             "icon_url": "images/characters/pyro_4_polearm_Thoma/talent_6.png"
         },
         {
-            "名前": "重装甲冑",
-            "種類": "固有天賦",
-            "説明": [
-                "フィールド上キャラクターが烈炎侍立シールドを獲得または更新した時、シールド強化+5%、継続時間6秒。",
-                "この効果は0.3秒毎に1回のみ発動可能、最大5重まで。"
-            ],
+            "名前": "重装甲胄",
+            "説明": "フィールド上キャラクターが<span style=\"color:#FFD780FF\">烈炎侍立シールド</span>を獲得または更新した時、シールド強化+5%、継続時間6秒。<br/>この効果は0.3秒毎に1回のみ発動可能、最大5重まで。",
+            "icon_url": "images/characters/pyro_4_polearm_Thoma/talent_4.png",
             "詳細": [
                 {
                     "条件": "重装甲冑 シールド強化@+5-25%",
@@ -400,12 +397,6 @@
                 }
             ],
             "icon_url": "images/characters/pyro_4_polearm_Thoma/talent_5.png"
-        },
-        {
-            "名前": "重装甲胄",
-            "説明": "フィールド上キャラクターが<span style=\"color:#FFD780FF\">烈炎侍立シールド</span>を獲得または更新した時、シールド強化+5%、継続時間6秒。<br/>この効果は0.3秒毎に1回のみ発動可能、最大5重まで。",
-            "icon_url": "images/characters/pyro_4_polearm_Thoma/talent_4.png",
-            "詳細": []
         }
     ],
     "命ノ星座": {
