@@ -121,14 +121,14 @@ export default defineComponent({
     const columns = [
       {
         label: displayName('キャラ会心'),
-        field: 'hasCharacterCrit',
+        field: 'characterCritScore',
         formatFn: formatHasCrit,
         thClass: 'text-center',
         tdClass: 'text-center',
       },
       {
         label: displayName('武器会心'),
-        field: 'hasWeaponCrit',
+        field: 'weaponCritScore',
         formatFn: formatHasCrit,
         thClass: 'text-center',
         tdClass: 'text-center',
@@ -171,8 +171,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 0,
-        hasCharacterCrit: false,
-        hasWeaponCrit: false,
         weaponRarity: null,
         weaponBaseAtk: null,
         targetCritRate: '',
@@ -182,8 +180,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 0,
-        hasCharacterCrit: true,
-        hasWeaponCrit: false,
         weaponRarity: null,
         weaponBaseAtk: null,
         targetCritRate: '',
@@ -193,8 +189,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 36.8,
-        hasCharacterCrit: false,
-        hasWeaponCrit: true,
         weaponRarity: 4,
         weaponBaseAtk: 44,
         targetCritRate: '',
@@ -204,8 +198,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 55.1,
-        hasCharacterCrit: false,
-        hasWeaponCrit: true,
         weaponRarity: 4,
         weaponBaseAtk: 42,
         targetCritRate: '',
@@ -215,8 +207,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 73.6,
-        hasCharacterCrit: false,
-        hasWeaponCrit: true,
         weaponRarity: 4,
         weaponBaseAtk: 41,
         targetCritRate: '',
@@ -226,8 +216,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 36.8,
-        hasCharacterCrit: true,
-        hasWeaponCrit: true,
         weaponRarity: 4,
         weaponBaseAtk: 44,
         targetCritRate: '',
@@ -237,8 +225,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 55.1,
-        hasCharacterCrit: true,
-        hasWeaponCrit: true,
         weaponRarity: 4,
         weaponBaseAtk: 42,
         targetCritRate: '',
@@ -248,8 +234,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 73.6,
-        hasCharacterCrit: true,
-        hasWeaponCrit: true,
         weaponRarity: 4,
         weaponBaseAtk: 41,
         targetCritRate: '',
@@ -259,8 +243,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 44.1,
-        hasCharacterCrit: false,
-        hasWeaponCrit: true,
         weaponRarity: 5,
         weaponBaseAtk: 48,
         targetCritRate: '',
@@ -270,8 +252,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 66.2,
-        hasCharacterCrit: false,
-        hasWeaponCrit: true,
         weaponRarity: 5,
         weaponBaseAtk: 46,
         targetCritRate: '',
@@ -281,8 +261,6 @@ export default defineComponent({
       {
         characterCritScore: 0,
         weaponCritScore: 88.2,
-        hasCharacterCrit: false,
-        hasWeaponCrit: true,
         weaponRarity: 5,
         weaponBaseAtk: 44,
         targetCritRate: '',
@@ -292,8 +270,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 44.1,
-        hasCharacterCrit: true,
-        hasWeaponCrit: true,
         weaponRarity: 5,
         weaponBaseAtk: 48,
         targetCritRate: '',
@@ -303,8 +279,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 66.2,
-        hasCharacterCrit: true,
-        hasWeaponCrit: true,
         weaponRarity: 5,
         weaponBaseAtk: 46,
         targetCritRate: '',
@@ -314,8 +288,6 @@ export default defineComponent({
       {
         characterCritScore: 38.4,
         weaponCritScore: 88.2,
-        hasCharacterCrit: true,
-        hasWeaponCrit: true,
         weaponRarity: 5,
         weaponBaseAtk: 44,
         targetCritRate: '',
