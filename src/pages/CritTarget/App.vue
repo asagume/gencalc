@@ -13,8 +13,7 @@
       <vue-good-table :columns="columns" :rows="rows" theme="nocturnal" styleClass="vgt-table striped" :sort-options="{
         enabled: true,
         initialSortBy: [
-          { field: 'hasCharacterCrit', type: 'asc' },
-          { field: 'hasWeaponCrit', type: 'asc' },
+          { field: 'characterCritScore', type: 'asc' },
           { field: 'weaponRarity', type: 'asc' },
           { field: 'weaponCritScore', type: 'asc' },
         ]
