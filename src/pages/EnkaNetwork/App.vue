@@ -720,6 +720,7 @@ input {
   font-size: 3rem;
   font-family: monospace;
   padding-left: 1rem;
+  width: 24rem;
 }
 
 button {
