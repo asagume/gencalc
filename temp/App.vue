@@ -1019,7 +1019,7 @@ export default defineComponent({
       );
       // ステータス計算後、numberタイプの条件入力を更新します
       updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-      conditionInputRea.value.updateNumberList(conditionInputRea);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
       // 再度、ステータスを計算します
       calculateStats(
         statsInput,
@@ -1071,7 +1071,7 @@ export default defineComponent({
       );
       // ステータス計算後、numberタイプの条件入力を更新します
       updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-      conditionInputRea.value.updateNumberList(conditionInputRea);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
       // 再度、ステータスを計算します
       calculateStats(
         statsInput,
@@ -1129,7 +1129,7 @@ export default defineComponent({
       );
       // ステータス計算後、numberタイプの条件入力を更新します
       updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-      conditionInputRea.value.updateNumberList(conditionInputRea);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
       // 再度、ステータスを計算します
       calculateStats(
         statsInput,
@@ -1162,7 +1162,7 @@ export default defineComponent({
         );
         // ステータス計算後、numberタイプの条件入力を更新します
         updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-        conditionInputRea.value.updateNumberList(conditionInputRea);
+        conditionInputVmRef.value.updateNumberList(conditionInputRea);
         // 再度、ステータスを計算します
         calculateStats(
           statsInput,
@@ -1194,7 +1194,7 @@ export default defineComponent({
         );
         // ステータス計算後、numberタイプの条件入力を更新します
         updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-        conditionInputRea.value.updateNumberList(conditionInputRea);
+        conditionInputVmRef.value.updateNumberList(conditionInputRea);
         // 再度、ステータスを計算します
         calculateStats(
           statsInput,
@@ -1225,7 +1225,7 @@ export default defineComponent({
         );
         // ステータス計算後、numberタイプの条件入力を更新します
         updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-        conditionInputRea.value.updateNumberList(conditionInputRea);
+        conditionInputVmRef.value.updateNumberList(conditionInputRea);
         // 再度、ステータスを計算します
         calculateStats(
           statsInput,

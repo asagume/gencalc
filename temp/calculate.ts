@@ -1,5 +1,5 @@
 import { deepcopy, isNumber, isBoolean, isPlainObject, isString, overwriteObject } from "@/common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, NUMBER_CONDITION_VALUE_RE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
 
 /** [突破レベル, レベル] => レベル\+?  */
@@ -265,6 +265,7 @@ export const calculateStats = function (
         overwriteObject(statsInput.statsObj, workStatsObj);
         overwriteObject(conditionInput.conditionAdjustments, conditionAdjustments);
     } catch (error) {
+        console.error(error);
         console.error(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
         // throw error;
     }
@@ -651,6 +652,7 @@ export function calculateFormulaArray(
         }
         return result;
     } catch (error) {
+        console.error(error);
         console.error(formulaArr, statsObj, damageResult, opt_max, opt_min);
         throw error;
     }
@@ -833,6 +835,7 @@ export function calculateDamageResult(
 
         console.debug(damageResult);
     } catch (error) {
+        console.error(error);
         console.error(damageResult, characterInput, conditionInput, statsInput);
         // throw error;
     }
@@ -861,8 +864,18 @@ export function makeValidConditionValueArr(conditionInput: any) {
                 }
             });
         }
+        const numberList = conditionInput.numberList;
+        if (numberList) {
+            numberList.forEach((entry: any) => {
+                const value = conditionInput.conditionValues[entry.name];
+                if (value !== undefined && value !== null) {
+                    result.push(entry.name + '=' + value);
+                }
+            });
+        }
         return result;
     } catch (error) {
+        console.error(error);
         console.error(conditionInput);
         throw error;
     }
@@ -927,6 +940,12 @@ function checkConditionMatchesSub(
         return 0;   // アンマッチ
     }
     if (conditionStr.indexOf('=') != -1) {
+        if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
+            const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
+            if (workArr.length > 0) {
+                return Number(workArr[0].split('=')[1]);   // マッチ
+            }
+        }
         return 0;   // アンマッチ
     }
     const re = new RegExp('[^0-9]*?([\\-0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
@@ -957,6 +976,7 @@ function calculate乗算系元素反応倍率(
         result *= 1 + (25 * elementalMastery / (9 * (elementalMastery + 1400))) + dmgBuff / 100;
         return result;
     } catch (error) {
+        console.error(error);
         console.error(reaction, element, statsObj);
         throw error;
     }
@@ -982,6 +1002,7 @@ function calculate固定値系元素反応ダメージ(
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(reaction, element, statsObj, opt_dmgElement);
         throw error;
     }
@@ -998,6 +1019,7 @@ function calculate結晶シールド吸収量(element: string, statsObj: TStats)
         result *= 1 + (40 * elementalMastery / (9 * (elementalMastery + 1400))) + dmgBuff / 100;
         return result;
     } catch (error) {
+        console.error(error);
         console.error(element, statsObj);
         throw error;
     }
@@ -1016,6 +1038,7 @@ function calculate加算系元素反応ダメージ(reaction: any, element: stri
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(reaction, element, statsObj);
         throw error;
     }
@@ -1031,6 +1054,7 @@ export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防�
         const result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(statsObj, opt_ignoreDef);
         throw error;
     }
@@ -1058,6 +1082,7 @@ export function calculateEnemyRes(element: string, statsObj: TStats) {
         const result = calculateRes(statsObj[statName] ?? 0);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(element, statsObj);
         throw error;
     }
@@ -1484,6 +1509,7 @@ function calculateDamageFromDetail(
         console.debug('calculateDamageFromDetail', detailObj, characterInput, conditionInput, statsObj, opt_element, resultArr);
         return resultArr;
     } catch (error) {
+        console.error(error);
         console.error(detailObj, characterInput, conditionInput, statsObj, opt_element);
         throw error;
     }

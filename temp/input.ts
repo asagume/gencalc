@@ -1484,6 +1484,8 @@ export function makeConditionExclusionMapFromStr(
     }
 }
 
+export const NUMBER_CONDITION_VALUE_RE = /^\s*{.+}\s*$/;
+
 function makeConditionExclusionMapFromStrSub(
     conditionStr: string,
     conditionMap: Map<string, string[] | null | object>,
@@ -1495,8 +1497,7 @@ function makeConditionExclusionMapFromStrSub(
     if (myCondStrArr.length == 1) {
         pushToMapValueArray(conditionMap, myName, null);
     } else if (myCondStrArr.length == 2) {
-        const NUMBER_RE = /^\s*{.+}\s*$/;
-        if (NUMBER_RE.test(myCondStrArr[1])) {
+        if (NUMBER_CONDITION_VALUE_RE.test(myCondStrArr[1])) {
             try {
                 const workObj = JSON.parse(myCondStrArr[1]);
                 if ('min' in workObj) { // minは必須
