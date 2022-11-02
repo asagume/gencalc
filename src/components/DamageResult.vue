@@ -83,8 +83,9 @@
           </thead>
           <template v-if="categoryOpenClose[category]">
             <tr v-for="item in itemList(category)" :key="item[0]">
-              <th v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
-                {{ displayNameV(item[0]) }}
+              <th class="with-tooltip" v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
+                <span> {{ displayNameV(item[0]) }} </span>
+                <span class="tooltip" v-html="displayDamageParam(item)"></span>
               </th>
               <td :class="'damage-value ' + elementClass(item[1])">
                 {{ displayDamageValue(item, 2, category) }}
@@ -335,6 +336,29 @@ export default defineComponent({
       return displayName(key);
     };
 
+    const displayDamageParam = (item: any): string => {
+      let result = '';
+      let value = item;
+      if (!value) return "-";
+      result += displayName('ダメージバフ');
+      result += ':&nbsp;';
+      result += Math.round((item[7] - 1) * 1000) / 10;
+      result += '%<br>';
+      if (item[2] && item[3] && item[4]) {
+        let critRate = item[2] - item[4]; // 期待値 - 非会心
+        critRate /= item[3] - item[4]; // 会心 - 非会心
+        critRate = Math.round(critRate * 1000) / 10;
+        const critDmg = Math.round((item[3] / item[4] - 1) * 1000) / 10;
+        result += displayName('会心');
+        result += ':&nbsp;';
+        result += critRate;
+        result += '%/';
+        result += critDmg;
+        result += '%<br>';
+      }
+      return result;
+    };
+
     /** 被ダメージのリストを作成します（同値を省略したリスト） */
     const damageTakenList = computed(() => {
       const result = props.damageResult.被ダメージ.filter(
@@ -378,6 +402,7 @@ export default defineComponent({
       reactionDmg,
       elementClass,
       displayDamageValue,
+      displayDamageParam,
       CATEGORY_LIST,
       itemList,
       categoryOpenClose,
@@ -477,5 +502,13 @@ ul.notes {
   list-style-type: none;
   text-align: left;
   padding-inline-start: 0;
+}
+
+.tooltip {
+  left: calc(100% - 10px);
+  padding: 5px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: black;
 }
 </style>
