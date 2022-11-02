@@ -1,6 +1,6 @@
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
-import { basename, deepcopy, overwriteObject } from './common';
+import { basename, deepcopy, isNumber, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -293,6 +293,14 @@ export const 元素反応TEMPLATE = {
     超開花ダメージ: 0,
     超激化ダメージ: 0,
     草激化ダメージ: 0,
+    燃焼ダメージ会心率: 0,          // for ナヒーダ
+    燃焼ダメージ会心ダメージ: 0,    // for ナヒーダ
+    開花ダメージ会心率: 0,          // for ナヒーダ
+    開花ダメージ会心ダメージ: 0,    // for ナヒーダ
+    烈開花ダメージ会心率: 0,        // for ナヒーダ
+    烈開花ダメージ会心ダメージ: 0,  // for ナヒーダ
+    超開花ダメージ会心率: 0,        // for ナヒーダ
+    超開花ダメージ会心ダメージ: 0,  // for ナヒーダ
 };
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
@@ -761,7 +769,7 @@ export async function loadRecommendation(
             ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
                 let doUpdate = false;
                 if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
-                    if ((key in build) && _.isNumber(build[key])) {
+                    if ((key in build) && isNumber(build[key])) {
                         doUpdate = true;
                     }
                 }
@@ -783,7 +791,7 @@ export async function loadRecommendation(
             ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
                 let doUpdate = false;
                 if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
-                    if ((key in build) && _.isNumber(build[key])) {
+                    if ((key in build) && isNumber(build[key])) {
                         doUpdate = true;
                     }
                 }
@@ -1318,7 +1326,7 @@ function makeDetailObj(
     let my数値 = null;
     if ('数値' in detailObj) {
         my数値 = detailObj['数値'];
-        if (_.isNumber(my数値) || _.isString(my数値)) {
+        if (isNumber(my数値) || _.isString(my数値)) {
             // nop
         } else if (_.isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
             my数値 = my数値[level];
@@ -1637,7 +1645,7 @@ export function setupConditionValues(
                                         conditionValues[exclusion] = 0;
                                     } else if (_.isPlainObject(value)) {    // number
                                         const minValue = (value as any).min;
-                                        if (_.isNumber(minValue)) {
+                                        if (isNumber(minValue)) {
                                             conditionValues[exclusion] = minValue;
                                         } else {
                                             conditionValues[exclusion] = 0;
@@ -1663,7 +1671,7 @@ export function setupConditionValues(
                             conditionValues[key] = selectedIndex;
                         } else if (_.isPlainObject(value)) {    // number
                             const minValue = (value as any).min;
-                            if (_.isNumber(minValue)) {
+                            if (isNumber(minValue)) {
                                 conditionValues[key] = minValue;
                             } else {
                                 conditionValues[key] = 0;
@@ -1889,7 +1897,7 @@ function analyzeFormulaStrSub(
     opt_defaultItem: string | null = null
 ) {
     const resultArr = [] as any;
-    if (_.isNumber(formulaStr)) {
+    if (isNumber(formulaStr)) {
         resultArr.push(Number(formulaStr));
     } else {
         const strArr = (formulaStr as string).split('%');
