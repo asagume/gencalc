@@ -1,5 +1,14 @@
 [
   {
+    "id": 10000073,
+    "name": "ナヒーダ",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90
+  },
+  {
     "id": 10000071,
     "name": "セノ",
     "icon": null,

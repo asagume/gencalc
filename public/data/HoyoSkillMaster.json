@@ -1,6 +1,52 @@
 [
   {
-    "avatar_id": 10000071,
+    "skill_list": [
+      {
+        "id": 10731,
+        "group_id": 7331,
+        "name": "通常攻撃·行相",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10732,
+        "group_id": 7332,
+        "name": "所聞遍計",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10735,
+        "group_id": 7339,
+        "name": "心景幻成",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 7321,
+        "group_id": 7321,
+        "name": "浄善摂受明論",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7322,
+        "group_id": 7322,
+        "name": "慧明縁覚智論",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7323,
+        "group_id": 7323,
+        "name": "諸相随念浄行",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000073
+  },
+  {
     "skill_list": [
       {
         "id": 10711,
@@ -44,10 +90,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000071
   },
   {
-    "avatar_id": 10000070,
     "skill_list": [
       {
         "id": 10701,
@@ -91,10 +137,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000070
   },
   {
-    "avatar_id": 10000069,
     "skill_list": [
       {
         "id": 10691,
@@ -138,10 +184,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000069
   },
   {
-    "avatar_id": 10000066,
     "skill_list": [
       {
         "id": 10661,
@@ -185,10 +231,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000066
   },
   {
-    "avatar_id": 10000063,
     "skill_list": [
       {
         "id": 10631,
@@ -232,10 +278,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000063
   },
   {
-    "avatar_id": 10000060,
     "skill_list": [
       {
         "id": 10606,
@@ -279,10 +325,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000060
   },
   {
-    "avatar_id": 10000058,
     "skill_list": [
       {
         "id": 10581,
@@ -326,10 +372,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000058
   },
   {
-    "avatar_id": 10000057,
     "skill_list": [
       {
         "id": 10571,
@@ -373,10 +419,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000057
   },
   {
-    "avatar_id": 10000054,
     "skill_list": [
       {
         "id": 10541,
@@ -427,10 +473,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000054
   },
   {
-    "avatar_id": 10000052,
     "skill_list": [
       {
         "id": 10521,
@@ -474,10 +520,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000052
   },
   {
-    "avatar_id": 10000051,
     "skill_list": [
       {
         "id": 10511,
@@ -521,10 +567,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000051
   },
   {
-    "avatar_id": 10000049,
     "skill_list": [
       {
         "id": 10491,
@@ -568,10 +614,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000049
   },
   {
-    "avatar_id": 10000047,
     "skill_list": [
       {
         "id": 10471,
@@ -615,10 +661,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000047
   },
   {
-    "avatar_id": 10000046,
     "skill_list": [
       {
         "id": 10461,
@@ -662,10 +708,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000046
   },
   {
-    "avatar_id": 10000042,
     "skill_list": [
       {
         "id": 10421,
@@ -709,10 +755,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000042
   },
   {
-    "avatar_id": 10000041,
     "skill_list": [
       {
         "id": 10411,
@@ -763,10 +809,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000041
   },
   {
-    "avatar_id": 10000038,
     "skill_list": [
       {
         "id": 10386,
@@ -810,10 +856,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000038
   },
   {
-    "avatar_id": 10000037,
     "skill_list": [
       {
         "id": 10371,
@@ -857,10 +903,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000037
   },
   {
-    "avatar_id": 10000035,
     "skill_list": [
       {
         "id": 10351,
@@ -904,10 +950,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000035
   },
   {
-    "avatar_id": 10000033,
     "skill_list": [
       {
         "id": 10331,
@@ -951,10 +997,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000033
   },
   {
-    "avatar_id": 10000030,
     "skill_list": [
       {
         "id": 10301,
@@ -998,10 +1044,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000030
   },
   {
-    "avatar_id": 10000029,
     "skill_list": [
       {
         "id": 10291,
@@ -1045,10 +1091,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000029
   },
   {
-    "avatar_id": 10000026,
     "skill_list": [
       {
         "id": 10261,
@@ -1092,10 +1138,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000026
   },
   {
-    "avatar_id": 10000022,
     "skill_list": [
       {
         "id": 10221,
@@ -1139,10 +1185,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000022
   },
   {
-    "avatar_id": 10000016,
     "skill_list": [
       {
         "id": 10160,
@@ -1186,10 +1232,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000016
   },
   {
-    "avatar_id": 10000003,
     "skill_list": [
       {
         "id": 10031,
@@ -1233,10 +1279,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000003
   },
   {
-    "avatar_id": 10000002,
     "skill_list": [
       {
         "id": 10024,
@@ -1287,10 +1333,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000002
   },
   {
-    "avatar_id": 10000062,
     "skill_list": [
       {
         "id": 10621,
@@ -1334,10 +1380,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000062
   },
   {
-    "avatar_id": 10000072,
     "skill_list": [
       {
         "id": 10721,
@@ -1381,10 +1427,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000072
   },
   {
-    "avatar_id": 10000068,
     "skill_list": [
       {
         "id": 10681,
@@ -1428,10 +1474,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000068
   },
   {
-    "avatar_id": 10000067,
     "skill_list": [
       {
         "id": 10671,
@@ -1475,10 +1521,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000067
   },
   {
-    "avatar_id": 10000065,
     "skill_list": [
       {
         "id": 10651,
@@ -1522,10 +1568,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000065
   },
   {
-    "avatar_id": 10000064,
     "skill_list": [
       {
         "id": 10641,
@@ -1569,10 +1615,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000064
   },
   {
-    "avatar_id": 10000059,
     "skill_list": [
       {
         "id": 10591,
@@ -1616,10 +1662,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000059
   },
   {
-    "avatar_id": 10000056,
     "skill_list": [
       {
         "id": 10561,
@@ -1663,10 +1709,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000056
   },
   {
-    "avatar_id": 10000055,
     "skill_list": [
       {
         "id": 10551,
@@ -1710,10 +1756,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000055
   },
   {
-    "avatar_id": 10000053,
     "skill_list": [
       {
         "id": 10531,
@@ -1757,10 +1803,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000053
   },
   {
-    "avatar_id": 10000050,
     "skill_list": [
       {
         "id": 10501,
@@ -1804,10 +1850,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000050
   },
   {
-    "avatar_id": 10000048,
     "skill_list": [
       {
         "id": 10481,
@@ -1851,10 +1897,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000048
   },
   {
-    "avatar_id": 10000045,
     "skill_list": [
       {
         "id": 10451,
@@ -1898,10 +1944,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000045
   },
   {
-    "avatar_id": 10000044,
     "skill_list": [
       {
         "id": 10441,
@@ -1945,10 +1991,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000044
   },
   {
-    "avatar_id": 10000043,
     "skill_list": [
       {
         "id": 10431,
@@ -1992,10 +2038,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000043
   },
   {
-    "avatar_id": 10000039,
     "skill_list": [
       {
         "id": 10391,
@@ -2039,10 +2085,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000039
   },
   {
-    "avatar_id": 10000036,
     "skill_list": [
       {
         "id": 10401,
@@ -2086,10 +2132,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000036
   },
   {
-    "avatar_id": 10000034,
     "skill_list": [
       {
         "id": 10341,
@@ -2133,10 +2179,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000034
   },
   {
-    "avatar_id": 10000032,
     "skill_list": [
       {
         "id": 10321,
@@ -2180,10 +2226,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000032
   },
   {
-    "avatar_id": 10000031,
     "skill_list": [
       {
         "id": 10311,
@@ -2227,10 +2273,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000031
   },
   {
-    "avatar_id": 10000027,
     "skill_list": [
       {
         "id": 10271,
@@ -2274,10 +2320,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000027
   },
   {
-    "avatar_id": 10000025,
     "skill_list": [
       {
         "id": 10381,
@@ -2321,10 +2367,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000025
   },
   {
-    "avatar_id": 10000024,
     "skill_list": [
       {
         "id": 10241,
@@ -2368,10 +2414,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000024
   },
   {
-    "avatar_id": 10000023,
     "skill_list": [
       {
         "id": 10231,
@@ -2415,10 +2461,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000023
   },
   {
-    "avatar_id": 10000021,
     "skill_list": [
       {
         "id": 10041,
@@ -2462,10 +2508,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000021
   },
   {
-    "avatar_id": 10000020,
     "skill_list": [
       {
         "id": 10201,
@@ -2509,10 +2555,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000020
   },
   {
-    "avatar_id": 10000015,
     "skill_list": [
       {
         "id": 10073,
@@ -2556,10 +2602,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000015
   },
   {
-    "avatar_id": 10000014,
     "skill_list": [
       {
         "id": 10070,
@@ -2603,10 +2649,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000014
   },
   {
-    "avatar_id": 10000006,
     "skill_list": [
       {
         "id": 10060,
@@ -2650,10 +2696,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000006
   },
   {
-    "avatar_id": 10000007,
     "skill_list": [
       {
         "id": 100557,
@@ -2690,10 +2736,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000007
   },
   {
-    "avatar_id": 10000007,
     "skill_list": [
       {
         "id": 100556,
@@ -2730,10 +2776,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000007
   },
   {
-    "avatar_id": 10000007,
     "skill_list": [
       {
         "id": 100555,
@@ -2770,10 +2816,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000007
   },
   {
-    "avatar_id": 10000007,
     "skill_list": [
       {
         "id": 100553,
@@ -2810,10 +2856,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000007
   },
   {
-    "avatar_id": 10000005,
     "skill_list": [
       {
         "id": 100547,
@@ -2850,10 +2896,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000005
   },
   {
-    "avatar_id": 10000005,
     "skill_list": [
       {
         "id": 100546,
@@ -2890,10 +2936,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000005
   },
   {
-    "avatar_id": 10000005,
     "skill_list": [
       {
         "id": 100545,
@@ -2930,10 +2976,10 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000005
   },
   {
-    "avatar_id": 10000005,
     "skill_list": [
       {
         "id": 100543,
@@ -2970,6 +3016,7 @@
         "icon": null,
         "max_level": 1
       }
-    ]
+    ],
+    "avatar_id": 10000005
   }
 ]
