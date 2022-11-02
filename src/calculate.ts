@@ -534,6 +534,7 @@ export function calculateFormulaArray(
                     result = temp;
                 } else {
                     console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                    result = 0; // 暫定
                 }
             }
         } else {
