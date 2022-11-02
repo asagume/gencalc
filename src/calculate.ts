@@ -1,5 +1,6 @@
-import { deepcopy, isNumber, isBoolean, isPlainObject, isString, overwriteObject } from "@/common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
+import _ from "lodash";
+import { deepcopy, isNumber, overwriteObject } from "@/common";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, getStatValue, NUMBER_CONDITION_VALUE_RE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
 
 /** [突破レベル, レベル] => レベル\+?  */
@@ -265,6 +266,7 @@ export const calculateStats = function (
         overwriteObject(statsInput.statsObj, workStatsObj);
         overwriteObject(conditionInput.conditionAdjustments, conditionAdjustments);
     } catch (error) {
+        console.error(error);
         console.error(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
         // throw error;
     }
@@ -527,34 +529,9 @@ export function calculateFormulaArray(
             if (isNumber(formulaArr)) {
                 result = Number(formulaArr);
             } else {
-                const reRet = re.exec(formulaArr);
-                if (reRet) {
-                    const stat = reRet[1];
-                    if (stat in statsObj) {
-                        result = statsObj[stat];
-                        let n = Number(reRet[2]);
-                        if ((n % 2) == 1) {
-                            if ((stat + 'V1') in statsObj) {
-                                result -= statsObj[stat + 'V1'];
-                            }
-                        }
-                        n = Math.trunc(n / 2);
-                        if ((n % 2) == 1) {
-                            if ((stat + 'V2') in statsObj) {
-                                result -= statsObj[stat + 'V2'];
-                            }
-                        }
-                        n = Math.trunc(n / 2);
-                        if ((n % 2) == 1) {
-                            if ((stat + 'V3') in statsObj) {
-                                result -= statsObj[stat + 'V3'];
-                            }
-                        }
-                    } else {
-                        console.error(formulaArr, statsObj, null, opt_max, opt_min);
-                    }
-                } else if (formulaArr in statsObj) {
-                    result = statsObj[formulaArr];
+                const temp = getStatValue(formulaArr, statsObj);
+                if (temp !== undefined) {
+                    result = temp;
                 } else {
                     console.error(formulaArr, statsObj, null, opt_max, opt_min);
                 }
@@ -651,6 +628,7 @@ export function calculateFormulaArray(
         }
         return result;
     } catch (error) {
+        console.error(error);
         console.error(formulaArr, statsObj, damageResult, opt_max, opt_min);
         throw error;
     }
@@ -723,13 +701,22 @@ export function calculateDamageResult(
                             break;
                     }
                 }
-                Object.keys(reactionResult).forEach(key => {
-                    if (key.startsWith(reaction) && isNumber(reactionResult[key])) {
+                ['倍率', 'ダメージ', '吸収量'].forEach(suffix => {
+                    const key = reaction + suffix;
+                    if (key in reactionResult) {
                         reactionResult[key] = resultValue;
                     }
                 });
             });
-        })
+        });
+        Object.keys(reactionResult).filter(s => s.endsWith('ダメージ') && s.indexOf('会心') == -1).forEach(dmg => {
+            ['会心率', '会心ダメージ'].forEach(stat => {
+                const key = dmg + stat;
+                if (key in statsInput.statsObj) {
+                    reactionResult[key] = statsInput.statsObj[key];
+                }
+            });
+        });
         overwriteObject(damageResult.元素反応, reactionResult);
         console.debug('元素反応', damageResult.元素反応);
 
@@ -833,6 +820,7 @@ export function calculateDamageResult(
 
         console.debug(damageResult);
     } catch (error) {
+        console.error(error);
         console.error(damageResult, characterInput, conditionInput, statsInput);
         // throw error;
     }
@@ -861,8 +849,18 @@ export function makeValidConditionValueArr(conditionInput: any) {
                 }
             });
         }
+        const numberList = conditionInput.numberList;
+        if (numberList) {
+            numberList.forEach((entry: any) => {
+                const value = conditionInput.conditionValues[entry.name];
+                if (value !== undefined && value !== null) {
+                    result.push(entry.name + '=' + value);
+                }
+            });
+        }
         return result;
     } catch (error) {
+        console.error(error);
         console.error(conditionInput);
         throw error;
     }
@@ -927,6 +925,12 @@ function checkConditionMatchesSub(
         return 0;   // アンマッチ
     }
     if (conditionStr.indexOf('=') != -1) {
+        if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
+            const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
+            if (workArr.length > 0) {
+                return Number(workArr[0].split('=')[1]);   // マッチ
+            }
+        }
         return 0;   // アンマッチ
     }
     const re = new RegExp('[^0-9]*?([\\-0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
@@ -957,6 +961,7 @@ function calculate乗算系元素反応倍率(
         result *= 1 + (25 * elementalMastery / (9 * (elementalMastery + 1400))) + dmgBuff / 100;
         return result;
     } catch (error) {
+        console.error(error);
         console.error(reaction, element, statsObj);
         throw error;
     }
@@ -982,6 +987,7 @@ function calculate固定値系元素反応ダメージ(
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(reaction, element, statsObj, opt_dmgElement);
         throw error;
     }
@@ -998,6 +1004,7 @@ function calculate結晶シールド吸収量(element: string, statsObj: TStats)
         result *= 1 + (40 * elementalMastery / (9 * (elementalMastery + 1400))) + dmgBuff / 100;
         return result;
     } catch (error) {
+        console.error(error);
         console.error(element, statsObj);
         throw error;
     }
@@ -1016,6 +1023,7 @@ function calculate加算系元素反応ダメージ(reaction: any, element: stri
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(reaction, element, statsObj);
         throw error;
     }
@@ -1031,6 +1039,7 @@ export function calculateEnemyDef(statsObj: TStats, opt_ignoreDef = 0) { // 防�
         const result = (level + 100) / ((1 - calcIgnoreDef) * (1 + calcDef) * (enemyLevel + 100) + level + 100);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(statsObj, opt_ignoreDef);
         throw error;
     }
@@ -1058,6 +1067,7 @@ export function calculateEnemyRes(element: string, statsObj: TStats) {
         const result = calculateRes(statsObj[statName] ?? 0);
         return result;
     } catch (error) {
+        console.error(error);
         console.error(element, statsObj);
         throw error;
     }
@@ -1092,13 +1102,13 @@ function calculateDamageFromDetail(
         if (detailObj['除外条件']) {
             for (const delCondition of detailObj['除外条件']) {
                 let work = delCondition;
-                if (isPlainObject(delCondition)) {
+                if (_.isPlainObject(delCondition)) {
                     work = delCondition.名前;
                 }
                 if (work in myConditionValuesAfter) {
                     if (isNumber(myConditionValuesAfter[work])) {
                         myConditionValuesAfter[work] = 0;
-                    } else if (isBoolean(myConditionValuesAfter[work])) {
+                    } else if (_.isBoolean(myConditionValuesAfter[work])) {
                         myConditionValuesAfter[work] = false;
                     }
                 }
@@ -1106,17 +1116,17 @@ function calculateDamageFromDetail(
         }
         if (detailObj['適用条件']) {
             for (const addCondition of detailObj['適用条件']) {
-                if (isString(addCondition)) {
+                if (_.isString(addCondition)) {
                     if (addCondition in myConditionValuesAfter) {
-                        if (isBoolean(myConditionValuesAfter[addCondition])) {
+                        if (_.isBoolean(myConditionValuesAfter[addCondition])) {
                             myConditionValuesAfter[addCondition] = true;
                         }
                     }
-                } else if (isPlainObject(addCondition)) {
+                } else if (_.isPlainObject(addCondition)) {
                     if (addCondition.名前 in myConditionValuesAfter) {
                         let newValue = myConditionValuesAfter[addCondition.名前];
                         if ('数値' in addCondition) {
-                            if (isString(addCondition.数値)) {
+                            if (_.isString(addCondition.数値)) {
                                 const work = String(addCondition.数値).replace(/^\+/, '');
                                 newValue += Number(work);
                             } else if (isNumber(addCondition.数値)) {
@@ -1484,6 +1494,7 @@ function calculateDamageFromDetail(
         console.debug('calculateDamageFromDetail', detailObj, characterInput, conditionInput, statsObj, opt_element, resultArr);
         return resultArr;
     } catch (error) {
+        console.error(error);
         console.error(detailObj, characterInput, conditionInput, statsObj, opt_element);
         throw error;
     }

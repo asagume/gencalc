@@ -1,8 +1,7 @@
 <template>
   <fieldset>
     <label v-for="item in checkboxList" :key="item.name">
-      <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-        @change="updateCondition($event, item)" />
+      <input type="checkbox" v-model="conditionValues[item.name]" @change="updateCondition($event, item)" />
       <span>{{ displayName(item.name) }}</span>
     </label>
     <label v-for="item in selectList" :key="item.name">
@@ -12,6 +11,11 @@
           {{ displayOptionName(option) }}
         </option>
       </select>
+    </label>
+    <label v-for="item in numberList" :key="item.name">
+      <span>{{ displayName(item.name) }}</span>
+      <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max" :step="item.step"
+        @change="updateCondition($event, item)" />
     </label>
     <div style="text-align: center">
       <label class="open-close">
@@ -29,9 +33,11 @@
 import { deepcopy, isNumber, overwriteObject } from "@/common";
 import {
   TCharacterInput,
+  TStats,
   TCheckboxEntry,
   TConditionAdjustments,
   TConditionInput,
+  TNumberEntry,
   TSelectEntry,
 } from "@/input";
 import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
@@ -43,6 +49,7 @@ export default defineComponent({
     characterInput: { type: Object as PropType<TCharacterInput>, required: true },
     conditionInput: { type: Object as PropType<TConditionInput>, required: true },
     conditionAdjustments: { type: Object as PropType<TConditionAdjustments>, required: true },
+    statsObj: { type: Object as PropType<TStats>, }
   },
   emits: ["update:condition"],
   setup(props, context) {
@@ -50,14 +57,21 @@ export default defineComponent({
 
     const checkboxList = reactive(deepcopy(props.conditionInput.checkboxList) as TCheckboxEntry[]);
     const selectList = reactive(deepcopy(props.conditionInput.selectList) as TSelectEntry[]);
+    const numberList = reactive(deepcopy(props.conditionInput.numberList) as TNumberEntry[]);
     const conditionValues = reactive(deepcopy(props.conditionInput.conditionValues) as any);  // TConditionValues
 
     const isDisplayDescription = ref(false);
 
+    const updateNumberList = (conditionInput: TConditionInput) => {
+      numberList.splice(0, numberList.length, ...conditionInput.numberList);
+      overwriteObject(conditionValues, conditionInput.conditionValues);
+    };
+
     const initialize = (conditionInput: TConditionInput) => {
       checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
       selectList.splice(0, selectList.length, ...conditionInput.selectList);
-      overwriteObject(conditionValues, conditionInput.conditionValues);
+      numberList.splice(0, numberList.length, ...conditionInput.numberList);
+      updateNumberList(conditionInput);
     };
 
     const exclusionMap = computed(() => {
@@ -127,10 +141,12 @@ export default defineComponent({
       displayName,
       displayOptionName,
 
+      updateNumberList,
       initialize,
 
       checkboxList,
       selectList,
+      numberList,
       conditionValues,
 
       updateCondition,
@@ -165,5 +181,9 @@ label.open-close {
 
 label.open-close input[type="checkbox"]+span::before {
   width: 100%;
+}
+
+input[type=number] {
+  width: 10rem;
 }
 </style>

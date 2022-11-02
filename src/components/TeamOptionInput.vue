@@ -27,18 +27,22 @@
         </div>
         <div class="left">
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
-            <input type="checkbox" v-model="conditionValues[item.name]" :value="item.name"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+            <input type="checkbox" v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
+              @change="onChange" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
           <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
-              @change="onChange">
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
               <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
             </select>
+          </label>
+          <label class="condition" v-for="item in supporterNumberList(supporter)" :key="item.name">
+            <span> {{ displayName(item.displayName) }}</span>
+            <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max" :step="item.step"
+              :disabled="conditionDisabled(item)" @change="onChange" />
           </label>
         </div>
       </fieldset>
@@ -159,7 +163,7 @@ export default defineComponent({
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr: TDamageDetailObj[] = [];
     const talentChangeDetailObjArr: TDamageDetailObj[] = [];
-    const conditionMap = new Map() as Map<string, string[] | null>;
+    const conditionMap = new Map() as Map<string, string[] | null | object>;
     const exclusionMap = new Map() as Map<string, string[] | null>;
     const conditionInput = reactive(
       deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput
@@ -167,6 +171,7 @@ export default defineComponent({
     const conditionValues = conditionInput.conditionValues as TCOnditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
+    const numberList = conditionInput.numberList;
     const statsObjDummy = deepcopy(ステータスTEMPLATE);
     const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
 
@@ -216,30 +221,41 @@ export default defineComponent({
     });
 
     const updateConditionList = () => {
-      conditionMap.forEach((value: string[] | null, key: string) => {
-        if (value) {
+      conditionMap.forEach((value: string[] | null | object, key: string) => {
+        if (value === null) { // checkbox
+          if (checkboxList.filter((s) => s.name == key).length == 0) {
+            checkboxList.push({
+              name: key,
+              displayName: key.replace(/^.+\*/, "")
+            });
+          }
+        } else if (Array.isArray(value)) {  // select
           if (selectList.filter((s) => s.name == key).length == 0) {
             const required = value[0].startsWith("required_");
             selectList.push({
               name: key,
+              displayName: key.replace(/^.+\*/, ""),
               options: (required || !value[0]) ? value : ['', ...value],
               required: required,
-              displayName: key.replace(/^.+\*/, ""),
             });
           }
-        } else {
-          if (checkboxList.filter((s) => s.name == key).length == 0) {
-            checkboxList.push({ name: key, displayName: key.replace(/^.+\*/, "") });
-          }
+        } else if (_.isPlainObject(value)) {  // number
+          numberList.push({
+            name: key,
+            displayName: key.replace(/^.+\*/, ""),
+            min: (value as any).min,
+            max: (value as any).max,
+            step: (value as any).step,
+          });
         }
       });
       conditionMap.forEach((value, key) => {
-        if (value === null) {
-          // checkbox
+        if (value === null) { // checkbox
           if (!(key in conditionValues)) conditionValues[key] = false;
-        } else {
-          // select
+        } else if (Array.isArray(value)) {  // select
           if (!(key in conditionValues)) conditionValues[key] = 0;
+        } else if (_.isPlainObject(value)) {  // number
+          if (!(key in conditionValues)) conditionValues[key] = (value as any).min;
         }
       });
     };
@@ -335,6 +351,7 @@ export default defineComponent({
         });
         checkboxList.splice(0, checkboxList.length, ...checkboxList.filter((s) => !removeConditions.includes(s.name)));
         selectList.splice(0, selectList.length, ...selectList.filter((s) => !removeConditions.includes(s.name)));
+        numberList.splice(0, numberList.length, ...numberList.filter((s) => !removeConditions.includes(s.name)));
         additionalConditions.splice(0, additionalConditions.length, ...additionalConditions.filter((s) => !removeConditions.includes(s)));
       }
 
@@ -351,7 +368,7 @@ export default defineComponent({
       const list = [];
       for (const entry of props.savedSupporters) {
         selectedBuildname[entry.key] = entry.buildname;
-        list.push(setupSupporterDamageResult(entry).then(result => ({key: entry.key, value: result})));
+        list.push(setupSupporterDamageResult(entry).then(result => ({ key: entry.key, value: result })));
       }
       await Promise.all(list).then(results => {
         results.forEach(entry => {
@@ -369,11 +386,16 @@ export default defineComponent({
       return selectList.filter((s) => s.name.startsWith(supporter + "*"));
     };
 
+    const supporterNumberList = (supporter: any) => {
+      return numberList.filter((s) => s.name.startsWith(supporter + "*"));
+    };
+
     /** 選択中のキャラクターのオプションは無効です */
     const supporterVisible = (supporter: any) => {
       if (supporter == props.character) return false;
       if (supporterCheckboxList(supporter).length) return true;
       if (supporterSelectList(supporter).length) return true;
+      if (supporterNumberList(supporter).length) return true;
       return false;
     };
 
@@ -516,10 +538,13 @@ export default defineComponent({
           conditionValues[key] = initialObj.conditionValues[key];
         } else {
           if (conditionMap.has(key)) {
-            if (conditionMap.get(key)) {
-              conditionValues[key] = 0;
-            } else {
+            const value = conditionMap.get(key);
+            if (value === null) {
               conditionValues[key] = false;
+            } else if (Array.isArray(value)) {
+              conditionValues[key] = 0;
+            } else if (_.isPlainObject(value)) {
+              conditionValues[key] = (value as any).min;
             }
           }
         }
@@ -527,7 +552,7 @@ export default defineComponent({
       const list = [];
       for (const entry of props.savedSupporters) {
         selectedBuildname[entry.key] = entry.buildname;
-        list.push(setupSupporterDamageResult(entry).then(result => ({key: entry.key, value: result})));
+        list.push(setupSupporterDamageResult(entry).then(result => ({ key: entry.key, value: result })));
       }
       await Promise.all(list).then(results => {
         results.forEach(entry => {
@@ -549,6 +574,9 @@ export default defineComponent({
       }
       for (const entry of selectList) {
         conditionValues[entry.name] = 0;
+      }
+      for (const entry of numberList) {
+        conditionValues[entry.name] = entry.min;
       }
     };
 
@@ -602,7 +630,7 @@ export default defineComponent({
             changed = oldVal.savedSupporters.filter((s) => _.isEqual(s, entry)).length == 0;
           }
           if (changed) {
-            list.push(setupSupporterDamageResult(entry).then(result => ({key: entry.key, value: result})));
+            list.push(setupSupporterDamageResult(entry).then(result => ({ key: entry.key, value: result })));
           }
           selectedBuildname[entry.key] = entry.buildname;
         }
@@ -629,6 +657,7 @@ export default defineComponent({
       supporterKeyList,
       supporterCheckboxList,
       supporterSelectList,
+      supporterNumberList,
       conditionValues,
       supporterVisible,
       supporterOptionSelectedClass,

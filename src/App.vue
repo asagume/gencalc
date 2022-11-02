@@ -58,7 +58,7 @@
       <div v-if="pane6Toggle1Ref" style="margin-bottom: 10px">
         <ConditionInput ref="conditionInputVmRef" :characterInput="characterInputRea"
           :conditionInput="conditionInputRea" :conditionAdjustments="conditionInputRea.conditionAdjustments"
-          @update:condition="updateCondition" />
+          :statsObj="statsInput.statsObj" @update:condition="updateCondition" />
       </div>
       <div v-if="pane6Toggle2Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
@@ -215,6 +215,7 @@
 </template>
 
 <script lang="ts">
+import _ from "lodash";
 import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import TitleAndHeader from "@/components/TitleAndHeader.vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
@@ -267,6 +268,7 @@ import {
   makeArtifactScoringStorageKey,
   makeBuildStorageKey,
   makeDamageDetailObjArrObjElementalResonance,
+  updateNumberConditionValues,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -292,7 +294,7 @@ import {
   calculateStats,
   TArtifactScoreFormula,
 } from "@/calculate";
-import { deepcopy, isPlainObject, overwriteObject } from "@/common";
+import { deepcopy, overwriteObject } from "@/common";
 import { calculateDamageResult } from "@/calculate";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import ArtifactScoreFormula from "./components/ArtifactScoreFormula.vue";
@@ -681,10 +683,20 @@ export default defineComponent({
         );
       }
       calculateArtifactStats(artifactDetailInputRea);
-      conditionInputVmRef.value.initialize(conditionInputRea);
       const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスを計算します
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+      conditionInputVmRef.value.initialize(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -785,7 +797,17 @@ export default defineComponent({
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
       conditionInputVmRef.value.initialize(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -849,7 +871,17 @@ export default defineComponent({
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
       conditionInputVmRef.value.initialize(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -877,7 +909,17 @@ export default defineComponent({
       // 武器のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjWeapon(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
       conditionInputVmRef.value.initialize(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -924,7 +966,17 @@ export default defineComponent({
       // 聖遺物セット効果のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjArtifactSets(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
       conditionInputVmRef.value.initialize(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -959,6 +1011,17 @@ export default defineComponent({
         artifactDetailInputRea.聖遺物ステータス[stat] =
           artifactDetailInput.聖遺物ステータス[stat];
       }
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -1007,6 +1070,17 @@ export default defineComponent({
         conditionInputRea,
         optionInputRea
       );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
+      // 再度、ステータスを計算します
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
       calculateDamageResult(
         damageResult,
         characterInputRea as any,
@@ -1028,13 +1102,13 @@ export default defineComponent({
       return [];
     });
     const objectKeys = (obj: any) => {
-      if (obj && isPlainObject(obj)) {
+      if (obj && _.isPlainObject(obj)) {
         return Object.keys(obj);
       }
       return [];
     };
     const getValue = (obj: any, key: any) => {
-      if (obj && isPlainObject(obj)) {
+      if (obj && _.isPlainObject(obj)) {
         return obj[key];
       }
       return undefined;
@@ -1047,6 +1121,17 @@ export default defineComponent({
           statsInput.statAdjustments[key] = argStatAdjustments[key];
         });
       }
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
+      // 再度、ステータスを計算します
       calculateStats(
         statsInput,
         characterInputRea,
@@ -1076,6 +1161,17 @@ export default defineComponent({
           conditionInputRea,
           optionInputRea
         );
+        // ステータス計算後、numberタイプの条件入力を更新します
+        updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+        conditionInputVmRef.value.updateNumberList(conditionInputRea);
+        // 再度、ステータスを計算します
+        calculateStats(
+          statsInput,
+          characterInputRea,
+          artifactDetailInputRea,
+          conditionInputRea,
+          optionInputRea
+        );
         calculateDamageResult(
           damageResult,
           characterInputRea as any,
@@ -1097,6 +1193,17 @@ export default defineComponent({
           conditionInputRea,
           optionInputRea
         );
+        // ステータス計算後、numberタイプの条件入力を更新します
+        updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+        conditionInputVmRef.value.updateNumberList(conditionInputRea);
+        // 再度、ステータスを計算します
+        calculateStats(
+          statsInput,
+          characterInputRea,
+          artifactDetailInputRea,
+          conditionInputRea,
+          optionInputRea
+        );
         calculateDamageResult(
           damageResult,
           characterInputRea as any,
@@ -1110,6 +1217,17 @@ export default defineComponent({
     const updateTeamOption = (conditionInput: TConditionInput) => {
       if (conditionInput && Object.keys(conditionInput).length) {
         overwriteObject(optionInputRea.teamOption, conditionInput);
+        calculateStats(
+          statsInput,
+          characterInputRea,
+          artifactDetailInputRea,
+          conditionInputRea,
+          optionInputRea
+        );
+        // ステータス計算後、numberタイプの条件入力を更新します
+        updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+        conditionInputVmRef.value.updateNumberList(conditionInputRea);
+        // 再度、ステータスを計算します
         calculateStats(
           statsInput,
           characterInputRea,

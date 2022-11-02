@@ -2,7 +2,7 @@ Set-Location -Path $PSScriptRoot
 $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 
 $pageIds = @()
-# キャラクター
+### キャラクター
 # $pageIds += @(1..51)
 # $pageIds += 2252   # 夜蘭
 # $pageIds += 2256   # 久岐忍
@@ -11,10 +11,14 @@ $pageIds = @()
 # $pageIds += 2268   # コレイ
 # $pageIds += 2269   # ドリー
 # $pageIds += 2674   # 旅人(草)
-$pageIds += 2812   # ニィロウ
+# $pageIds += 2812   # ニィロウ
 # $pageIds += 2813   # セノ
 # $pageIds += 2815   # キャンディス
-# 武器
+$pageIds += 2850   # ナヒーダ
+# $pageIds += 2859   # レイラ
+# $pageIds += 2967   # ファルザン
+# $pageIds += 2968   # 放浪者
+### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
 # $pageIds += 2255   # 落霞
@@ -29,10 +33,11 @@ $pageIds += 2812   # ニィロウ
 # $pageIds += 2847   # 風信の矛
 # $pageIds += 2848   # マカイラの水色
 # $pageIds += 2849   # 赤砂の杖
-$pageIds += 2908   # 聖顕の鍵
-$pageIds += 2909   # サイフォスの月明かり
-$pageIds += 2910   # 彷徨える星
-# 聖遺物
+# $pageIds += 2908   # 聖顕の鍵
+# $pageIds += 2909   # サイフォスの月明かり
+# $pageIds += 2910   # 彷徨える星
+$pageIds += 2966   # 千夜に浮かぶ夢
+### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
 # $pageIds += 2673   # 金メッキの夢
@@ -48,7 +53,7 @@ $pageIds += 2910   # 彷徨える星
 # $pageIds += 2260
 
 $doDownloadImg = $true
-$imgLanguage = 'ja-jp'
+$imgLanguage = 'en-us'
 
 $categoryMap = @{
     "2" = "character"
@@ -58,8 +63,8 @@ $categoryMap = @{
     "9" = "object"
 }
 
-$xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
-# $xRpcLanguages = @("en-us", "ja-jp")
+# $xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
+$xRpcLanguages = @("en-us", "ja-jp")
 
 $ProgressPreference = 'SilentlyContinue'
 

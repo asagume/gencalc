@@ -1,4 +1,8 @@
 {
+  "千夜に浮かぶ夢": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_AThousandFloatingDreams.json"
+  },
   "神楽の真意": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Kagura'sVerity.json"

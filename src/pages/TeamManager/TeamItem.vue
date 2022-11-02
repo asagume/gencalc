@@ -41,7 +41,7 @@ import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENT_IMG_SRC, getChara
 import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import { characterMaster, getBuilddataFromStorage, TMember, TTeam } from "./team";
 import MemberItem from "./MemberItem.vue";
-import { calculateArtifactStats, calculateArtifactStatsMain, calculateStats } from "@/calculate";
+import { calculateArtifactStats, calculateArtifactStatsMain, calculateDamageResult, calculateFormulaArray, calculateStats } from "@/calculate";
 import { deepcopy, overwriteObject } from "@/common";
 import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
@@ -60,6 +60,8 @@ import {
   makeDamageDetailObjArrObjArtifactSets,
   setupConditionValues,
   TStats,
+  TDamageResult,
+  DAMAGE_RESULT_TEMPLATE,
 } from "@/input";
 
 type TMemberResult = {
@@ -68,6 +70,7 @@ type TMemberResult = {
   conditionInput: TConditionInput,
   optionInput: TOptionInput,
   statsInput: TStatsInput,
+  damageResult: TDamageResult,
 };
 
 export default defineComponent({
@@ -93,11 +96,47 @@ export default defineComponent({
       for (const member of newVal.team.members) {
         list.push(calculateMemberResult(member).then(result => ({ key: member.id, value: result })));
       }
+      const teamAdjustments: TStats = {};
       await Promise.all(list).then(results => {
         results.forEach(entry => {
           memberStats[entry.key] = entry.value.statsInput?.statsObj;
+
+          const characterMaster = entry.value.characterInput?.characterMaster;
+          const weaponMaster = entry.value.characterInput?.weaponMaster;
+          if (characterMaster && characterMaster.チームバフ) {
+            for (const damageDetail of characterMaster.チームバフ) {
+              if (damageDetail.条件) continue;
+              const value = calculateFormulaArray(damageDetail.数値, entry.value.statsInput.statsObj, entry.value.damageResult, damageDetail.最大値, damageDetail.最小値);
+              if (damageDetail.種類 in teamAdjustments) {
+                teamAdjustments[damageDetail.種類] += value;
+              } else {
+                teamAdjustments[damageDetail.種類] = value;
+              }
+            }
+          }
+          if (weaponMaster && weaponMaster.チームバフ) {
+            for (const damageDetail of weaponMaster.チームバフ) {
+              if (damageDetail.条件) continue;
+              const value = calculateFormulaArray(damageDetail.数値, entry.value.statsInput.statsObj, entry.value.damageResult, damageDetail.最大値, damageDetail.最小値);
+              if (damageDetail.種類 in teamAdjustments) {
+                teamAdjustments[damageDetail.種類] += value;
+              } else {
+                teamAdjustments[damageDetail.種類] = value;
+              }
+            }
+          }
         });
       });
+      for (const stat of Object.keys(teamAdjustments)) {
+        for (const memberKey of Object.keys(memberStats)) {
+          if (!memberStats[memberKey]) continue;
+          if (stat in memberStats[memberKey]) {
+            memberStats[memberKey][stat] += teamAdjustments[stat];
+          } else {
+            memberStats[memberKey][stat] = teamAdjustments[stat];
+          }
+        }
+      }
       watchCount.value++;
     });
 
@@ -161,6 +200,7 @@ export default defineComponent({
       const conditionInput: TConditionInput = deepcopy(CONDITION_INPUT_TEMPLATE);
       const optionInput: TOptionInput = deepcopy(OPTION_INPUT_TEMPLATE);
       const statsInput: TStatsInput = deepcopy(STATS_INPUT_TEMPLATE);
+      const damageResult: TDamageResult = deepcopy(DAMAGE_RESULT_TEMPLATE);
 
       const result: TMemberResult = {
         characterInput: characterInput,
@@ -168,6 +208,7 @@ export default defineComponent({
         conditionInput: conditionInput,
         optionInput: optionInput,
         statsInput: statsInput,
+        damageResult: damageResult,
       };
 
       if (!member.name) return result;
@@ -256,11 +297,8 @@ export default defineComponent({
               totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
             }
           }
-          if (totalEnergyCost >= 40) {
-            ['0.12', '0.15', '0.18', '0.21', '0.24'].forEach(entry => {
-              const conditionKey = '[' + characterInput.weapon + ']元素爆発ダメージ+' + entry + '%×元素エネルギー';
-              conditionInput.conditionValues[conditionKey] = Math.round((totalEnergyCost - 40) / 10) + 1;
-            });
+          if (totalEnergyCost) {
+            conditionInput.conditionValues['チーム全員の元素エネルギー上限の合計'] = totalEnergyCost;
           }
         }
       }
@@ -297,13 +335,8 @@ export default defineComponent({
         overwriteObject(optionInput.elementalResonance.conditionAdjustments, workObj);
       }
 
-      calculateStats(
-        statsInput,
-        characterInput,
-        artifactDetailInput,
-        conditionInput,
-        optionInput
-      );
+      calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
+      calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
 
       return {
         characterInput: characterInput,
@@ -311,6 +344,7 @@ export default defineComponent({
         conditionInput: conditionInput,
         optionInput: optionInput,
         statsInput: statsInput,
+        damageResult: damageResult,
       } as TMemberResult;
     }
 

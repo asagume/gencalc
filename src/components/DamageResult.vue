@@ -6,7 +6,7 @@
       <input id="増幅反応-蒸発" type="radio" value="蒸発" name="増幅反応-name" @change="増幅反応 = '蒸発'" />
       <label for="増幅反応-蒸発">
         {{ displayName("蒸発") }}×<span>{{
-        Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
+            Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
         }}</span>
       </label>
     </template>
@@ -14,7 +14,7 @@
       <input id="増幅反応-溶解" type="radio" value="溶解" name="増幅反応-name" @change="増幅反応 = '溶解'" />
       <label for="増幅反応-溶解">
         {{ displayName("溶解") }}×<span>{{
-        Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
+            Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
         }}</span>
       </label>
     </template>
@@ -54,19 +54,19 @@
     </label>
     <label v-if="damageResult.元素反応.燃焼ダメージ" class="pyro">
       {{ displayName("燃焼") }}
-      <span>{{ Math.round(damageResult.元素反応.燃焼ダメージ) }}</span>
+      <span>{{ Math.round(reactionDmg('燃焼ダメージ')) }}</span>
     </label>
     <label v-if="damageResult.元素反応.開花ダメージ" class="dendro">
       {{ displayName("開花") }}
-      <span>{{ Math.round(damageResult.元素反応.開花ダメージ) }}</span>
+      <span>{{ Math.round(reactionDmg('開花ダメージ')) }}</span>
     </label>
     <label v-if="damageResult.元素反応.烈開花ダメージ" class="dendro">
       {{ displayName("烈開花") }}
-      <span>{{ Math.round(damageResult.元素反応.烈開花ダメージ) }}</span>
+      <span>{{ Math.round(reactionDmg('烈開花ダメージ')) }}</span>
     </label>
     <label v-if="damageResult.元素反応.超開花ダメージ" class="dendro">
       {{ displayName("超開花") }}
-      <span>{{ Math.round(damageResult.元素反応.超開花ダメージ) }}</span>
+      <span>{{ Math.round(reactionDmg('超開花ダメージ')) }}</span>
     </label>
   </div>
   <fieldset>
@@ -215,6 +215,22 @@ export default defineComponent({
       return result;
     });
 
+    const reactionDmg = (reaction: string): number => {
+      let result = 元素反応[reaction];
+      if (result) {
+        const critRate = 元素反応[reaction + '会心率'];
+        if (critRate) {
+          const critDmg = 元素反応[reaction + '会心ダメージ'];
+          if (critDmg) {
+            result *= ((100 + critDmg) / 100 * critRate + (100 - critRate)) / 100;
+          }
+        }
+      } else {
+        result = 0;
+      }
+      return result;
+    };
+
     const danCount = computed(() => {
       return itemList('通常攻撃').filter(item => item[0].endsWith('段ダメージ') && !item[0].startsWith('非表示_')).length;
     });
@@ -359,6 +375,7 @@ export default defineComponent({
       元素反応,
       増幅反応,
       swirlDmg,
+      reactionDmg,
       elementClass,
       displayDamageValue,
       CATEGORY_LIST,
