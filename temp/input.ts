@@ -1,6 +1,6 @@
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
-import { basename, deepcopy, isNumber, isPlainObject, isString, overwriteObject } from './common';
+import { basename, deepcopy, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -478,7 +478,7 @@ function parseLevelStr(levelStr: number | string): [number, number] {
     let result: [number, number] = [0, 1];
     try {
         let level: number;
-        if (isString(levelStr)) {
+        if (_.isString(levelStr)) {
             level = Number(String(levelStr).replace('+', ''));
         } else {
             level = Number(levelStr);
@@ -761,7 +761,7 @@ export async function loadRecommendation(
             ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
                 let doUpdate = false;
                 if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
-                    if ((key in build) && isNumber(build[key])) {
+                    if ((key in build) && _.isNumber(build[key])) {
                         doUpdate = true;
                     }
                 }
@@ -783,7 +783,7 @@ export async function loadRecommendation(
             ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
                 let doUpdate = false;
                 if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
-                    if ((key in build) && isNumber(build[key])) {
+                    if ((key in build) && _.isNumber(build[key])) {
                         doUpdate = true;
                     }
                 }
@@ -801,7 +801,7 @@ export async function loadRecommendation(
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring', 'supporterBuildname'].includes(s)).forEach(key => {
             if (build[key] == null) {
                 conditionInput.conditionValues[key] = build[key];   // null
-            } else if (isString(build[key])) {
+            } else if (_.isString(build[key])) {
                 conditionInput.conditionValues[key] = Number(build[key]);
             } else {
                 conditionInput.conditionValues[key] = build[key];
@@ -1165,14 +1165,14 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
         const exclusionMap = new Map();
         myStatusChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
             let condition = detailObj['条件'];
-            if (isPlainObject(condition) && myLevel in condition) {
+            if (_.isPlainObject(condition) && myLevel in condition) {
                 condition = condition[myLevel];
             }
             makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
         myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
             let condition = detailObj['条件'];
-            if (isPlainObject(condition) && myLevel in condition) {
+            if (_.isPlainObject(condition) && myLevel in condition) {
                 condition = condition[myLevel];
             }
             makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
@@ -1318,9 +1318,9 @@ function makeDetailObj(
     let my数値 = null;
     if ('数値' in detailObj) {
         my数値 = detailObj['数値'];
-        if (isNumber(my数値) || isString(my数値)) {
+        if (_.isNumber(my数値) || _.isString(my数値)) {
             // nop
-        } else if (isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
+        } else if (_.isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
             my数値 = my数値[level];
         } else {
             console.error(detailObj, level, defaultKind, defaultElement, my数値);
@@ -1333,7 +1333,7 @@ function makeDetailObj(
     }
     let my条件 = null;
     if ('条件' in detailObj) {
-        if (isPlainObject(detailObj['条件']) && level && level in detailObj['条件']) {  // 武器は精錬ランクによって数値を変えたいときがあるので
+        if (_.isPlainObject(detailObj['条件']) && level && level in detailObj['条件']) {  // 武器は精錬ランクによって数値を変えたいときがあるので
             my条件 = detailObj['条件'][level];
         } else {
             my条件 = detailObj['条件'];
@@ -1344,7 +1344,7 @@ function makeDetailObj(
     let my上限 = null;
     if ('上限' in detailObj) {
         my上限 = detailObj['上限'];
-        if (isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
+        if (_.isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
             my上限 = my上限[level];
         }
         my上限 = analyzeFormulaStr(my上限);
@@ -1352,7 +1352,7 @@ function makeDetailObj(
     let my下限 = null;
     if ('下限' in detailObj) {  // ニィロウ
         my下限 = detailObj['下限'];
-        if (isPlainObject(my下限) && level && level in my下限) {
+        if (_.isPlainObject(my下限) && level && level in my下限) {
             my下限 = my下限[level];
         }
         my下限 = analyzeFormulaStr(my下限);
@@ -1741,6 +1741,35 @@ export function setupConditionValues(
     }
 }
 
+export function getStatValue(stat: string, statsObj: TStats) {
+    let result;
+    if (stat in statsObj) {
+        result = statsObj[stat];
+    } else {
+        const re = /(.+)X([0-7])$/;
+        const reRet = re.exec(stat);
+        if (reRet) {
+            if (reRet[1] in statsObj) {
+                result = statsObj[reRet[1]];
+                let n = Number(reRet[2]);
+                for (let i = 1; i <= 3; i++) {
+                    if ((n % 2) == 1) {
+                        const vStat: string = reRet[1] + 'V' + i;
+                        if (vStat in statsObj) {
+                            result -= statsObj[vStat];
+                        }
+                    }
+                    n = Math.trunc(n / 2);
+                }
+            }
+        }
+    }
+    if (result === undefined) {
+        console.error(stat, statsObj);
+    }
+    return result;
+}
+
 export function updateNumberConditionValues(
     conditionInput: TConditionInput,
     characterInput: TCharacterInput,
@@ -1749,28 +1778,18 @@ export function updateNumberConditionValues(
     for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
         if (myDamageDetail) {
             const conditionMap: Map<string, string[] | null | object> = myDamageDetail.条件;
-            console.log(conditionMap);
             conditionMap.forEach((value: string[] | null | object, key: string) => {
                 if (_.isPlainObject(value)) {
                     const numberEntryArr = conditionInput.numberList.filter(s => s.name == key);
                     if (numberEntryArr.length > 0) {
-                        console.log(value, numberEntryArr[0]);      // debug
                         let minValue = (value as any).min;
                         let maxValue = (value as any).max;
                         if (_.isString(minValue) || _.isString(maxValue)) {
                             if (_.isString(minValue)) {
-                                if (minValue in statsObj) {
-                                    minValue = statsObj[minValue];
-                                } else {
-                                    minValue = 0;
-                                }
+                                minValue = getStatValue(minValue, statsObj);
                             }
                             if (_.isString(maxValue)) {
-                                if (maxValue in statsObj) {
-                                    maxValue = statsObj[maxValue];
-                                } else {
-                                    maxValue = undefined;
-                                }
+                                maxValue = getStatValue(maxValue, statsObj);
                             }
                             numberEntryArr[0].min = minValue;
                             numberEntryArr[0].max = maxValue;
@@ -1870,7 +1889,7 @@ function analyzeFormulaStrSub(
     opt_defaultItem: string | null = null
 ) {
     const resultArr = [] as any;
-    if (isNumber(formulaStr)) {
+    if (_.isNumber(formulaStr)) {
         resultArr.push(Number(formulaStr));
     } else {
         const strArr = (formulaStr as string).split('%');
@@ -1993,7 +2012,7 @@ export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string
         const talentObj = (characterMaster as any)[key];
         if ("詳細" in talentObj) {
             for (const detailObj of talentObj.詳細) {
-                if ("数値" in detailObj && isPlainObject(detailObj.数値)) {
+                if ("数値" in detailObj && _.isPlainObject(detailObj.数値)) {
                     const work = Object.keys(detailObj.数値).length;
                     if (max < work) max = work;
                 }

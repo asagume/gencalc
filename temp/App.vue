@@ -215,6 +215,7 @@
 </template>
 
 <script lang="ts">
+import _ from "lodash";
 import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import TitleAndHeader from "@/components/TitleAndHeader.vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
@@ -293,7 +294,7 @@ import {
   calculateStats,
   TArtifactScoreFormula,
 } from "@/calculate";
-import { deepcopy, isPlainObject, overwriteObject } from "@/common";
+import { deepcopy, overwriteObject } from "@/common";
 import { calculateDamageResult } from "@/calculate";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import ArtifactScoreFormula from "./components/ArtifactScoreFormula.vue";
@@ -1101,13 +1102,13 @@ export default defineComponent({
       return [];
     });
     const objectKeys = (obj: any) => {
-      if (obj && isPlainObject(obj)) {
+      if (obj && _.isPlainObject(obj)) {
         return Object.keys(obj);
       }
       return [];
     };
     const getValue = (obj: any, key: any) => {
-      if (obj && isPlainObject(obj)) {
+      if (obj && _.isPlainObject(obj)) {
         return obj[key];
       }
       return undefined;

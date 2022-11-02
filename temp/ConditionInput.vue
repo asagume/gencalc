@@ -30,7 +30,8 @@
 </template>
 
 <script lang="ts">
-import { deepcopy, isNumber, overwriteObject } from "@/common";
+import _ from "lodash";
+import { deepcopy, overwriteObject } from "@/common";
 import {
   TCharacterInput,
   TStats,
@@ -122,7 +123,7 @@ export default defineComponent({
         let result: string = displayStatName(stat).replace('%', '');
         if (value == null) {
           // nop
-        } else if (isNumber(value)) {
+        } else if (_.isNumber(value)) {
           if (value == 0) continue;
           else if (value >= 0) {
             if (stat.split('.')[0] == '別枠乗算') result += '=';

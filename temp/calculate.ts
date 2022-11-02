@@ -1,5 +1,6 @@
-import { deepcopy, isNumber, isBoolean, isPlainObject, isString, overwriteObject } from "@/common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, NUMBER_CONDITION_VALUE_RE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
+import _ from "lodash";
+import { deepcopy, overwriteObject } from "@/common";
+import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, getStatValue, NUMBER_CONDITION_VALUE_RE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
 
 /** [突破レベル, レベル] => レベル\+?  */
@@ -525,37 +526,12 @@ export function calculateFormulaArray(
         let result = 0;
         const re = /(.+)X([0-8])$/;
         if (!Array.isArray(formulaArr)) {
-            if (isNumber(formulaArr)) {
+            if (_.isNumber(formulaArr)) {
                 result = Number(formulaArr);
             } else {
-                const reRet = re.exec(formulaArr);
-                if (reRet) {
-                    const stat = reRet[1];
-                    if (stat in statsObj) {
-                        result = statsObj[stat];
-                        let n = Number(reRet[2]);
-                        if ((n % 2) == 1) {
-                            if ((stat + 'V1') in statsObj) {
-                                result -= statsObj[stat + 'V1'];
-                            }
-                        }
-                        n = Math.trunc(n / 2);
-                        if ((n % 2) == 1) {
-                            if ((stat + 'V2') in statsObj) {
-                                result -= statsObj[stat + 'V2'];
-                            }
-                        }
-                        n = Math.trunc(n / 2);
-                        if ((n % 2) == 1) {
-                            if ((stat + 'V3') in statsObj) {
-                                result -= statsObj[stat + 'V3'];
-                            }
-                        }
-                    } else {
-                        console.error(formulaArr, statsObj, null, opt_max, opt_min);
-                    }
-                } else if (formulaArr in statsObj) {
-                    result = statsObj[formulaArr];
+                const temp = getStatValue(formulaArr, statsObj);
+                if (temp !== undefined) {
+                    result = temp;
                 } else {
                     console.error(formulaArr, statsObj, null, opt_max, opt_min);
                 }
@@ -567,7 +543,7 @@ export function calculateFormulaArray(
                 if (['+', '-', '*', '/'].includes(entry)) {
                     operator = entry;
                     continue;
-                } else if (isNumber(entry)) {
+                } else if (_.isNumber(entry)) {
                     subResult = Number(entry);
                 } else if (Array.isArray(entry)) {
                     subResult = calculateFormulaArray(entry, statsObj, damageResult);
@@ -726,7 +702,7 @@ export function calculateDamageResult(
                     }
                 }
                 Object.keys(reactionResult).forEach(key => {
-                    if (key.startsWith(reaction) && isNumber(reactionResult[key])) {
+                    if (key.startsWith(reaction) && _.isNumber(reactionResult[key])) {
                         reactionResult[key] = resultValue;
                     }
                 });
@@ -921,7 +897,7 @@ function checkConditionMatchesSub(
     const myCondArr = conditionStr.split(/[@=]/);
     if (myCondArr[0] == '命ノ星座') {
         if (myCondArr.length == 2) {
-            if (isNumber(myCondArr[1])) {
+            if (_.isNumber(myCondArr[1])) {
                 const work = Number(myCondArr[1]);
                 if (work <= constellation) {
                     return 1;
@@ -1117,13 +1093,13 @@ function calculateDamageFromDetail(
         if (detailObj['除外条件']) {
             for (const delCondition of detailObj['除外条件']) {
                 let work = delCondition;
-                if (isPlainObject(delCondition)) {
+                if (_.isPlainObject(delCondition)) {
                     work = delCondition.名前;
                 }
                 if (work in myConditionValuesAfter) {
-                    if (isNumber(myConditionValuesAfter[work])) {
+                    if (_.isNumber(myConditionValuesAfter[work])) {
                         myConditionValuesAfter[work] = 0;
-                    } else if (isBoolean(myConditionValuesAfter[work])) {
+                    } else if (_.isBoolean(myConditionValuesAfter[work])) {
                         myConditionValuesAfter[work] = false;
                     }
                 }
@@ -1131,25 +1107,25 @@ function calculateDamageFromDetail(
         }
         if (detailObj['適用条件']) {
             for (const addCondition of detailObj['適用条件']) {
-                if (isString(addCondition)) {
+                if (_.isString(addCondition)) {
                     if (addCondition in myConditionValuesAfter) {
-                        if (isBoolean(myConditionValuesAfter[addCondition])) {
+                        if (_.isBoolean(myConditionValuesAfter[addCondition])) {
                             myConditionValuesAfter[addCondition] = true;
                         }
                     }
-                } else if (isPlainObject(addCondition)) {
+                } else if (_.isPlainObject(addCondition)) {
                     if (addCondition.名前 in myConditionValuesAfter) {
                         let newValue = myConditionValuesAfter[addCondition.名前];
                         if ('数値' in addCondition) {
-                            if (isString(addCondition.数値)) {
+                            if (_.isString(addCondition.数値)) {
                                 const work = String(addCondition.数値).replace(/^\+/, '');
                                 newValue += Number(work);
-                            } else if (isNumber(addCondition.数値)) {
+                            } else if (_.isNumber(addCondition.数値)) {
                                 newValue = addCondition.数値;
                             } else {
                                 newValue = addCondition.数値;
                             }
-                            if (isNumber(newValue)) {
+                            if (_.isNumber(newValue)) {
                                 if (newValue < 0) {
                                     newValue = 0;
                                 } else {
@@ -1621,7 +1597,7 @@ function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: stri
  */
 export function isUseReference(formulaArr: number | string | Array<number | string>): boolean {
     if (!Array.isArray(formulaArr)) {
-        if (isNumber(formulaArr)) {
+        if (_.isNumber(formulaArr)) {
             return false;
         }
         return String(formulaArr).indexOf('#') != -1;
@@ -1630,7 +1606,7 @@ export function isUseReference(formulaArr: number | string | Array<number | stri
     formulaArr.forEach(entry => {
         if (['+', '-', '*', '/'].includes(String(entry))) {
             return;
-        } else if (isNumber(entry)) {
+        } else if (_.isNumber(entry)) {
             return;
         } else if (Array.isArray(entry)) {
             if (isUseReference(entry)) {
@@ -1658,7 +1634,7 @@ function updateStats(
     opt_min: number | string | Array<number | string> | null = null,
 ) {
     const value = calculateFormulaArray(formulaArr, statsObj, DAMAGE_RESULT_TEMPLATE, opt_max, opt_min);    // DAMAGE_RESULT_TEMPLATEは参照しない想定なのでダミーです
-    if (!isNumber(value)) {
+    if (!_.isNumber(value)) {
         console.error(statsObj, statName, formulaArr, value);
     }
     const nameArr = [];
