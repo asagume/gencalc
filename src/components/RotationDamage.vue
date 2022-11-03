@@ -453,10 +453,13 @@ export default defineComponent({
       customizedEntry: TCustomizedDamageResultEntry,
       index: number
     ) => {
-      const list = damageResultEntryList(customizedEntry);
-      const entry = list[index];
       let result = 0;
+      const list = damageResultEntryList(customizedEntry);
+      if (!list) return result;
+      const entry = list[index];
+      if (!entry) return result;
       const reactionObj: any = customizedEntry.reactions[index];
+      if (!reactionObj) return result;
       const count = customizedEntry.counts[index];
       for (let n = 0; n < count; n++) {
         let workDmg = entry[2]; // 期待値
