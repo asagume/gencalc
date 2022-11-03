@@ -456,7 +456,7 @@ export default defineComponent({
               supporter = myDetailObj.条件.substring(0, myDetailObj.条件.indexOf("*"));
               if (supporter == props.character) continue;
               const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, 6);
-              if (number == 0) continue;
+              if (!number || number == 0) continue;
               if (number != 1 && myNew数値) {
                 myNew数値 = (myNew数値 as any).concat(["*", number]);
               }
@@ -472,6 +472,7 @@ export default defineComponent({
             }
             let myValue = Infinity;
             if (myNew数値) {
+              console.log(detailObjArr, myDetailObj, validConditionValueArr);
               myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限, my下限);
             }
             const kinds = [] as string[];
