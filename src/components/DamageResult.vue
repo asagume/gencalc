@@ -355,6 +355,11 @@ export default defineComponent({
         result += critDmg;
         result += '%<br>';
       }
+      if (item[6]) {
+        result += item[6];
+        result += 'Hit' + (item[6] > 1 ? 's' : '');
+        result += '<br>';
+      }
       return result;
     };
 
