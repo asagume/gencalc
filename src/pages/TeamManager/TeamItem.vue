@@ -303,14 +303,10 @@ export default defineComponent({
         }
       }
 
-      // 聖遺物セット効果
-      // const gildedDreamsSet = characterInput.artifactSets.filter(s => s == '金メッキの夢').length;
-      // if (gildedDreamsSet == 2) {
-      //   let sameCount = (teamElements[myVision] - 1);
-      //   let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
-      //   conditionInput.conditionValues['[金メッキの夢4]同じ元素タイプ'] = sameCount;
-      //   conditionInput.conditionValues['[金メッキの夢4]異なる元素タイプ'] = otherCount;
-      // }
+      let sameCount = (teamElements[myVision] - 1);
+      let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
+      conditionInput.conditionValues['チーム内 同じ元素のキャラクター'] = sameCount;
+      conditionInput.conditionValues['チーム内 異なる元素のキャラクター'] = otherCount;
 
       // 元素共鳴
       if (elementalResonance.value) {
