@@ -85,7 +85,7 @@
             <tr v-for="item in itemList(category)" :key="item[0]">
               <th class="with-tooltip" v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
                 <span> {{ displayNameV(item[0]) }} </span>
-                <span class="tooltip" v-html="displayDamageParam(item)"></span>
+                <span class="tooltip" v-html="displayDamageParam(item)" v-if="displayDamageParam(item)"></span>
               </th>
               <td :class="'damage-value ' + elementClass(item[1])">
                 {{ displayDamageValue(item, 2, category) }}
@@ -338,8 +338,7 @@ export default defineComponent({
 
     const displayDamageParam = (item: any): string => {
       let result = '';
-      let value = item;
-      if (!value) return "-";
+      if (!item || !item[5] || ['HP回復', 'シールド', '表示'].includes(item[5])) return "";
       result += displayName('ダメージバフ');
       result += ':&nbsp;';
       result += Math.round((item[7] - 1) * 1000) / 10;
