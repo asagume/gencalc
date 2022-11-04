@@ -107,6 +107,8 @@
           <input id="option-input-tab-3" type="radio" value="3" v-model="optionInputTabRef" />
           <label for="option-input-tab-3"> {{ displayName("その他") }} </label>
         </div>
+        <EasyTeamInput :character="characterInputRea.character" :teamMembers="optionInputRea.teamMembers"
+          @update:team-members="updateTeamMembers" />
         <div v-show="optionInputTabRef == 1">
           <ElementalResonanceInput ref="elementalResonanceInputVmRef"
             :elementalResonance="optionInputRea.elementalResonance"
@@ -217,7 +219,7 @@
 
 <script lang="ts">
 import _ from "lodash";
-import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import TitleAndHeader from "@/components/TitleAndHeader.vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
 import CharacterInput from "@/components/CharacterInput.vue";
@@ -227,6 +229,7 @@ import ArtifactSetSelect from "@/components/ArtifactSetSelect.vue";
 import ArtifactDetailInput from "@/components/ArtifactDetailInput.vue";
 import ConditionInput from "@/components/ConditionInput.vue";
 import StatsInput from "@/components/StatsInput.vue";
+import EasyTeamInput from "@/components/EasyTeamInput.vue";
 import ElementalResonanceInput from "@/components/ElementalResonanceInput.vue";
 import TeamOptionInput from "@/components/TeamOptionInput.vue";
 import MiscOptionInput from "@/components/MiscOptionInput.vue";
@@ -339,6 +342,7 @@ export default defineComponent({
     ArtifactDetailInput,
     ConditionInput,
     StatsInput,
+    EasyTeamInput,
     ElementalResonanceInput,
     TeamOptionInput,
     MiscOptionInput,

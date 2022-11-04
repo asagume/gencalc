@@ -1,16 +1,4 @@
 <template>
-  <div class="member-area">
-    <div class="member">
-      <img class="character" :src="memberIconSrc(character)" :alt="displayName(character)">
-      <img class="vision" :src="memberVisionIconSrc(character)" alt="vision">
-    </div>
-    <div class="member" v-for="member in teamMembers" :key="member">
-      <img class="character" :src="memberIconSrc(member)" :alt="displayName(member)"
-        @click="removeFromTeamOnClick(member)">
-      <img class="vision" :src="memberVisionIconSrc(member)" alt="vision">
-    </div>
-  </div>
-
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
@@ -36,18 +24,6 @@
               </option>
             </select>
           </label>
-        </div>
-        <div class="team">
-          <template v-if="teamMembers.includes(supporter)">
-            <button type="button" @click="removeFromTeamOnClick(supporter)">
-              Remove from Team
-            </button>
-          </template>
-          <template v-else>
-            <button type="button" :disabled="teamMembers.length >= 3" @click="addToTeamOnClick(supporter)">
-              Add to Team
-            </button>
-          </template>
         </div>
         <div class="left">
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
@@ -75,10 +51,19 @@
         <div v-show="supporterVisible(supporter)" class="supporter-else">
           <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
             v-model="supporterOpenClose[supporter]" />
-          <label :class="'toggle-switch fold' + supporterOptionSelectedClass(supporter)"
-            :for="'supporter-else-' + supporter">
-            <span>{{ displayName(supporter) }}</span>
+          <label :class="'fold' + supporterOptionSelectedClass(supporter)" :for="'supporter-else-' + supporter">
+            <div class="character with-tooltip">
+              <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
+              <span class="tooltip"> {{ displayName(supporter) }} </span>
+              <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
+            </div>
           </label>
+          <button type="button" v-if="teamMembers.includes(supporter)" @click="removeFromTeamOnClick(supporter)">
+            <span class="material-symbols-outlined remove"> person_remove </span>
+          </button>
+          <button type="button" v-else :disabled="teamMembers.length >= 3" @click="addToTeamOnClick(supporter)">
+            <span class="material-symbols-outlined add"> person_add </span>
+          </button>
         </div>
       </template>
     </template>
@@ -142,7 +127,7 @@ import {
 import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
-type TCOnditionValuesAny = { [key: string]: any };
+type TConditionValuesAny = { [key: string]: any };
 
 export default defineComponent({
   name: "TeamOptionInput",
@@ -185,7 +170,7 @@ export default defineComponent({
     const conditionInput = reactive(
       deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput
     );
-    const conditionValues = conditionInput.conditionValues as TCOnditionValuesAny;
+    const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
     const numberList = conditionInput.numberList;
@@ -624,14 +609,6 @@ export default defineComponent({
       updateTeamMembers(props.teamMembers.filter(s => s != member));
     };
 
-    const memberIconSrc = (member: string) => {
-      return (CHARACTER_MASTER as any)[member].icon_url;
-    };
-
-    const memberVisionIconSrc = (member: string) => {
-      return (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[member].元素];
-    };
-
     watch(props, async (newVal, oldVal) => {
       for (const key of Object.keys(newVal.calculatedSupporters)) {
         const newWork = newVal.calculatedSupporters[key];
@@ -664,6 +641,14 @@ export default defineComponent({
       onChange();
     });
 
+    const characterIconSrc = (member: string) => {
+      return (CHARACTER_MASTER as any)[member].icon_url;
+    };
+
+    const characterVisionIconSrc = (member: string) => {
+      return (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[member].元素];
+    };
+
     return {
       displayName,
       displayOptionName,
@@ -694,8 +679,8 @@ export default defineComponent({
       addToTeamOnClick,
       removeFromTeamOnClick,
 
-      memberIconSrc,
-      memberVisionIconSrc,
+      characterIconSrc,
+      characterVisionIconSrc,
     };
   },
 });
@@ -718,13 +703,8 @@ legend.supporter {
 
 label {
   display: inline-block;
-  margin: 2px 0.5rem;
+  margin: 2px 3px;
   text-align: left;
-}
-
-div.supporter-else {
-  display: inline-block;
-  width: calc(100% / 3);
 }
 
 .unfold {
@@ -735,9 +715,45 @@ div.supporter-else {
   width: 20rem;
 }
 
+div.supporter-else {
+  display: inline-block;
+  min-width: 72px;
+  white-space: nowrap;
+  margin-right: 3px;
+}
+
 .fold {
   text-align: center;
-  width: calc(100% - 3rem - 6px);
+  width: 36px;
+}
+
+div.supporter-else label.fold {
+  padding: 0;
+  margin: 2px 3px;
+}
+
+div.supporter-else button {
+  display: inline-block;
+  padding: 0;
+  margin: 0 3px;
+  border: none;
+  background: transparent;
+  vertical-align: middle;
+  color: blanchedalmond;
+}
+
+span.remove {
+  color: goldenrod;
+}
+
+button:disabled span.add {
+  color: gray;
+}
+
+div.supporter-else button span {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
 }
 
 label.condition {
@@ -771,19 +787,19 @@ span.builddata-selector .material-symbols-outlined {
   font-size: 2.4rem;
 }
 
-.member-area .member {
+div.character {
   position: relative;
   display: inline-block;
   margin-left: 4px;
   margin-right: 4px;
 }
 
-.member img.character {
+div.character img.character {
   width: 36px;
   height: 36px;
 }
 
-.member img.vision {
+div.character img.vision {
   width: 12px;
   height: 12px;
   position: absolute;
