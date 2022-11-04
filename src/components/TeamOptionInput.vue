@@ -2,7 +2,7 @@
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
-        <legend class="supporter">
+        <legend class="supporter" v-if="false">
           <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
             v-model="supporterOpenClose[supporter]" />
           <label class="toggle-switch unfold" :for="'supporter-' + supporter">
@@ -16,16 +16,33 @@
             </span>
           </template>
         </legend>
-        <div class="builddata-selector" v-show="builddataSelectorVisible[supporter]">
-          <label>buildname
-            <select v-model="selectedBuildname[supporter]" @change="buildnameSelectionOnChange">
-              <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
-                {{ item }}
-              </option>
-            </select>
-          </label>
-        </div>
         <div class="left">
+          <div :class="'supporter-else' + supporterOptionSelectedClass(supporter)">
+            <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
+              v-model="supporterOpenClose[supporter]" />
+            <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
+              <div class="character">
+                <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
+                <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
+              </div>
+              <span class="tooltip"> {{ displayName(supporter) }} </span>
+            </label>
+            <button type="button" v-if="teamMembers.includes(supporter)" @click="removeFromTeamOnClick(supporter)">
+              <span class="material-symbols-outlined remove"> person_remove </span>
+            </button>
+            <button type="button" v-else :disabled="teamMembers.length >= 3" @click="addToTeamOnClick(supporter)">
+              <span class="material-symbols-outlined add"> person_add </span>
+            </button>
+          </div>
+          <div class="builddata-selector" v-if="buildnameList(supporter).length">
+            <label>
+              <select v-model="selectedBuildname[supporter]" @change="buildnameSelectionOnChange">
+                <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
+                  {{ item }}
+                </option>
+              </select>
+            </label>
+          </div>
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
             <input type="checkbox" v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
               @change="onChange(supporter, item)" />
@@ -51,12 +68,12 @@
         <div v-show="supporterVisible(supporter)" :class="'supporter-else' + supporterOptionSelectedClass(supporter)">
           <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
             v-model="supporterOpenClose[supporter]" />
-          <label class="fold" :for="'supporter-else-' + supporter">
-            <div class="character with-tooltip">
+          <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
+            <div class="character">
               <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
-              <span class="tooltip"> {{ displayName(supporter) }} </span>
               <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
             </div>
+            <span class="tooltip"> {{ displayName(supporter) }} </span>
           </label>
           <button type="button" v-if="teamMembers.includes(supporter)" @click="removeFromTeamOnClick(supporter)">
             <span class="material-symbols-outlined remove"> person_remove </span>
@@ -775,7 +792,7 @@ p.notice {
 }
 
 .builddata-selector {
-  width: 90%;
+  display: inline-block;
   margin-left: auto;
   margin-right: auto;
 }
