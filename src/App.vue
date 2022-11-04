@@ -428,7 +428,7 @@ export default defineComponent({
       "元素反応バフ",
     ];
     const characterStats2Category1List = ["元素ステータス·耐性"];
-    const characterStats2Category2List = ["基礎ステータス", "その他", '連動加算ステータス', 'チーム内最高値'];
+    const characterStats2Category2List = ["基礎ステータス", "その他", 'ステータス連動', 'チーム内最高値'];
     const enemyStatsCategory1List = ["敵ステータス·元素耐性"];
     const enemyStatsCategory2List = ["敵ステータス·その他"];
     const enemyList = ENEMY_MASTER_LIST;
