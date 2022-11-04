@@ -107,6 +107,8 @@ export default function CompositionFunction() {
         let result = stat;
         const tempArr = stat.split('.');
         if (tempArr.length == 1) {
+            stat = stat.replace(/V\d$/, '');
+            stat = stat.replace(/TOP$/, '');
             if (stat.startsWith('敵')) stat = stat.replace(/^敵/, '');
             if (stat.endsWith('ダメージバフ')) stat = stat.replace(/ダメージバフ$/, '');
             else if (stat.endsWith('ダメージアップ')) stat = stat.replace(/ダメージアップ$/, '');

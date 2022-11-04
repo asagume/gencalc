@@ -113,9 +113,10 @@
             @update:elemental-resonance="updateElementalResonance" />
         </div>
         <div v-show="optionInputTabRef == 2">
-          <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
-            :savedSupporters="savedSupporters" :elementalResonance="optionInputRea.elementalResonance.conditionValues"
-            @update:team-option="updateTeamOption" @update:buildname-selection="updateBuildnameSelection" />
+          <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character" :topStats="topStats"
+            :savedSupporters="savedSupporters" :calculatedSupporters="optionInputRea.supporters"
+            :teamMembers="optionInputRea.teamMembers" @update:team-option="updateTeamOption"
+            @update:buildname-selection="updateBuildnameSelection" @update:team-members="updateTeamMembers" />
         </div>
         <div v-show="optionInputTabRef == 3">
           <MiscOptionInput ref="miscOptionInputVmRef" @update:misc-option="updateMiscOption" />
@@ -269,6 +270,8 @@ import {
   makeBuildStorageKey,
   makeDamageDetailObjArrObjElementalResonance,
   updateNumberConditionValues,
+  ステータスチーム内最高ARRAY,
+  TStats,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -285,6 +288,7 @@ import {
   TWeaponKey,
 } from "@/master";
 import {
+  ALL_ELEMENTS,
   ARTIFACT_SCORE_FORMULA_TEMPLATE,
   calculateArtifactScore,
   calculateArtifactStats,
@@ -292,6 +296,7 @@ import {
   calculateArtifactSubStatByPriority,
   calculateElementalResonance,
   calculateStats,
+  calculateSupporter,
   TArtifactScoreFormula,
 } from "@/calculate";
 import { deepcopy, overwriteObject } from "@/common";
@@ -423,7 +428,7 @@ export default defineComponent({
       "元素反応バフ",
     ];
     const characterStats2Category1List = ["元素ステータス·耐性"];
-    const characterStats2Category2List = ["基礎ステータス", "その他"];
+    const characterStats2Category2List = ["基礎ステータス", "その他", '連動加算ステータス', 'チーム内最高値'];
     const enemyStatsCategory1List = ["敵ステータス·元素耐性"];
     const enemyStatsCategory2List = ["敵ステータス·その他"];
     const enemyList = ENEMY_MASTER_LIST;
@@ -431,8 +436,29 @@ export default defineComponent({
     statsInput.statAdjustments["敵レベル"] = 90;
     statsInput.statAdjustments["敵防御力"] = 0;
 
-    const savedSupporters = reactive([] as { key: string; value: string, buildname: string }[]);
-    const setupSavedSupporters = () => {
+    // 元素共鳴, チーム, その他
+    const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
+    const savedSupporters = reactive([] as { key: string, value: string, buildname: string }[]);
+
+    // ダメージ計算結果
+    const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
+
+    const pane6Toggle1Ref = ref(true);
+    const pane6Toggle2Ref = ref(true);
+    const pane6Toggle3Ref = ref(true);
+    const statInputTabRef = ref(1);
+    const optionInputTabRef = ref(1);
+    const ownListToggle1Ref = ref(false);
+    const ownListToggle2Ref = ref(false);
+
+    async function updateOptionInputSupporter(key: string) {
+      const savedSupporter = savedSupporters.filter(s => s.key == key);
+      if (savedSupporter.length) {
+        calculateSupporter(optionInputRea, savedSupporter[0].key as TCharacterKey, savedSupporter[0].value, characterInputRea.character as TCharacterKey);
+      }
+    }
+
+    async function setupSavedSupporters() {
       const buildnameKeys = Object.keys(buildnameSelectionRea);
       const work: any[] = [];
       characterKeys.forEach((character) => {
@@ -458,15 +484,15 @@ export default defineComponent({
         }
       });
       savedSupporters.splice(0, savedSupporters.length, ...work);
-    };
+      console.log("App", "savedSupporters", savedSupporters);
+
+      const list: Promise<void>[] = [];
+      savedSupporters.forEach(savedSupporter => {
+        list.push(updateOptionInputSupporter(savedSupporter.key as TCharacterKey));
+      });
+      await Promise.all(list);
+    }
     setupSavedSupporters();
-    console.log("App", "savedSupporters", savedSupporters);
-
-    // 元素共鳴, チーム, その他
-    const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
-
-    // ダメージ計算結果
-    const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
 
     const normalAttackReplacing = computed((): boolean[] => {
       const KEY_ARR = ["特殊通常攻撃", "特殊重撃", "特殊落下攻撃"];
@@ -488,14 +514,6 @@ export default defineComponent({
       }
       return result;
     });
-
-    const pane6Toggle1Ref = ref(true);
-    const pane6Toggle2Ref = ref(true);
-    const pane6Toggle3Ref = ref(true);
-    const statInputTabRef = ref(1);
-    const optionInputTabRef = ref(1);
-    const ownListToggle1Ref = ref(false);
-    const ownListToggle2Ref = ref(false);
 
     /** 敵が変更されました。ステータスおよびダメージを再計算します */
     const updateEnemy = () => {
@@ -553,7 +571,11 @@ export default defineComponent({
       );
 
       // サポーター情報を更新します
-      setupSavedSupporters();
+      const workArr = savedSupporters.filter(s => s.key == characterInputRea.character);
+      if (workArr.length === 0 || workArr[0].buildname == buildname) {
+        setupSavedSupporters();
+        updateOptionInputSupporter(characterInputRea.character);
+      }
 
       if (storageKey == makeBuildStorageKey(characterInputRea.character)) {
         characterInputRea.buildname = makeDefaultBuildname(characterInputRea.character);
@@ -783,6 +805,7 @@ export default defineComponent({
       );
       recommendationRef.value = recommendationListRea[0];
       characterInputRea.recommendationSelectedIndex = 0;
+      optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length);
       await updateRecommendation(recommendationRef.value);
     };
 
@@ -1114,6 +1137,14 @@ export default defineComponent({
       return undefined;
     };
 
+    const topStats = computed(() => {
+      const result: TStats = {};
+      ステータスチーム内最高ARRAY.forEach(stat => {
+        result[stat] = statsInput.statsObj[stat];
+      });
+      return result;
+    });
+
     /** ステータス補正値が変更されました。ステータスおよびダメージを再計算します */
     const updateStatAdjustments = (argStatAdjustments?: any) => {
       if (argStatAdjustments) {
@@ -1247,6 +1278,87 @@ export default defineComponent({
     const updateBuildnameSelection = (buildnameSelection: TAnyObject) => {
       overwriteObject(buildnameSelectionRea, buildnameSelection);
       setupSavedSupporters();
+      Object.keys(buildnameSelection).forEach(key => {
+        updateOptionInputSupporter(key);
+      })
+    };
+
+    const updateTeamMembers = (teamMembers: string[]) => {
+      optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length, ...teamMembers);
+      // 元素共鳴を調整します
+      const newElementResonance: TConditionValues = {};
+      const elementCountObj: TAnyObject = {};
+      elementCountObj[characterInputRea.characterMaster.元素] = 1;
+      optionInputRea.teamMembers.forEach(member => {
+        const characterMaster = CHARACTER_MASTER[member as TCharacterKey];
+        if (characterMaster.元素 in elementCountObj) {
+          elementCountObj[characterMaster.元素]++;
+        } else {
+          elementCountObj[characterMaster.元素] = 1;
+        }
+      });
+      const resonanceElementArr: string[] = Object.keys(elementCountObj).filter(s => elementCountObj[s] >= 2);
+      if (optionInputRea.teamMembers.length == 3) {
+        if (resonanceElementArr.length > 1) {
+          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
+          newElementResonance[resonanceElementArr[1] + '元素共鳴'] = true;
+        } else if (resonanceElementArr.length > 0) {
+          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
+        } else {
+          newElementResonance['元素共鳴なし'] = true;
+        }
+      } else if (resonanceElementArr.length > 0) {
+        const tempArr: string[] = [resonanceElementArr[0] + '元素共鳴'];
+        const restMemberElementArr = Object.keys(elementCountObj).filter(s => elementCountObj[s] == 1);
+        const currentElementArr = Object.keys(optionInputRea.elementalResonance.conditionValues).filter(s => optionInputRea.elementalResonance.conditionValues[s] && s != '元素共鳴なし').map(s => s.replace(/元素共鳴$/, ''));
+        currentElementArr.forEach(element => {
+          if (restMemberElementArr.includes(element)) {
+            tempArr.push(element + '元素共鳴');
+          }
+        });
+        if (tempArr.length < 2) {
+          ALL_ELEMENTS.forEach(element => {
+            const resonance = element + '元素共鳴';
+            if (optionInputRea.elementalResonance.conditionValues[resonance]) {
+              if (!tempArr.includes(resonance)) {
+                tempArr.push(resonance);
+              }
+            }
+          });
+        }
+        tempArr.forEach(resonance => {
+          newElementResonance[resonance] = true;
+        })
+      }
+      if (!_.isEqual(newElementResonance, optionInputRea.elementalResonance.conditionValues)) {
+        overwriteObject(optionInputRea.elementalResonance.conditionValues, newElementResonance);
+        elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
+      }
+
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      // ステータス計算後、numberタイプの条件入力を更新します
+      updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
+      conditionInputVmRef.value.updateNumberList(conditionInputRea);
+      // 再度、ステータスを計算します
+      calculateStats(
+        statsInput,
+        characterInputRea,
+        artifactDetailInputRea,
+        conditionInputRea,
+        optionInputRea
+      );
+      calculateDamageResult(
+        damageResult,
+        characterInputRea as any,
+        conditionInputRea as any,
+        statsInput
+      );
     };
 
     const openTwitter = () => {
@@ -1324,6 +1436,7 @@ export default defineComponent({
       damageResult,
       savedSupporters,
       normalAttackReplacing,
+      topStats,
 
       openTwitter,
 
@@ -1355,6 +1468,7 @@ export default defineComponent({
       updateMiscOption,
       updateTeamOption,
       updateBuildnameSelection,
+      updateTeamMembers,
 
       updateConfigurationInput,
       orderInitializeArtifactStatsSub,

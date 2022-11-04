@@ -1,4 +1,16 @@
 <template>
+  <div class="member-area">
+    <div class="member">
+      <img class="character" :src="memberIconSrc(character)" :alt="displayName(character)">
+      <img class="vision" :src="memberVisionIconSrc(character)" alt="vision">
+    </div>
+    <div class="member" v-for="member in teamMembers" :key="member">
+      <img class="character" :src="memberIconSrc(member)" :alt="displayName(member)"
+        @click="removeFromTeamOnClick(member)">
+      <img class="vision" :src="memberVisionIconSrc(member)" alt="vision">
+    </div>
+  </div>
+
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
@@ -25,15 +37,28 @@
             </select>
           </label>
         </div>
+        <div class="team">
+          <template v-if="teamMembers.includes(supporter)">
+            <button type="button" @click="removeFromTeamOnClick(supporter)">
+              Remove from Team
+            </button>
+          </template>
+          <template v-else>
+            <button type="button" :disabled="teamMembers.length >= 3" @click="addToTeamOnClick(supporter)">
+              Add to Team
+            </button>
+          </template>
+        </div>
         <div class="left">
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
             <input type="checkbox" v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
-              @change="onChange" />
+              @change="onChange(supporter, item)" />
             <span> {{ displayName(item.displayName) }}</span>
           </label>
           <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)" @change="onChange">
+            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
+              @change="onChange(supporter, item)">
               <option v-for="(option, index) in item.options" :value="index" :key="option">
                 {{ displayOptionName(option) }}
               </option>
@@ -42,7 +67,7 @@
           <label class="condition" v-for="item in supporterNumberList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }}</span>
             <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max" :step="item.step"
-              :disabled="conditionDisabled(item)" @change="onChange" />
+              :disabled="conditionDisabled(item)" @change="onChange(supporter, item)" />
           </label>
         </div>
       </fieldset>
@@ -86,34 +111,16 @@
 <script lang="ts">
 import _ from 'lodash';
 import {
-  calculateArtifactStats,
-  calculateArtifactStatsMain,
   calculateFormulaArray,
-  calculateDamageResult,
-  calculateStats,
   checkConditionMatches,
   makeValidConditionValueArr,
-  calculateElementalResonance,
 } from "@/calculate";
 import { deepcopy, isNumber, overwriteObject } from "@/common";
 import {
-  ARTIFACT_DETAIL_INPUT_TEMPLATE,
-  CHARACTER_INPUT_TEMPLATE,
   CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
-  loadRecommendation,
-  makeDamageDetailObjArrObjArtifactSets,
-  makeDamageDetailObjArrObjCharacter,
-  makeDamageDetailObjArrObjWeapon,
-  setupConditionValues,
-  OPTION_INPUT_TEMPLATE,
-  STATS_INPUT_TEMPLATE,
-  TArtifactDetailInput,
-  TCharacterInput,
   TConditionInput,
   TDamageResult,
-  TOptionInput,
-  TStatsInput,
   makeDamageDetailObjArr,
   makeConditionExclusionMapFromStr,
   TStats,
@@ -123,10 +130,11 @@ import {
   getChangeKind,
   makeDefaultBuildname,
   makeBuildStorageKey,
-  TConditionValues,
+  TSupporterInput,
 } from "@/input";
 import {
   CHARACTER_MASTER,
+  ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
   TCharacterKey,
   TEAM_OPTION_MASTER_LIST,
@@ -140,15 +148,24 @@ export default defineComponent({
   name: "TeamOptionInput",
   props: {
     character: { type: String as PropType<TCharacterKey>, required: true },
+    topStats: {
+      type: Object as PropType<TStats>,
+      required: true,
+    },
     savedSupporters: {
       type: Object as PropType<{ key: string; value: string, buildname: string }[]>,
       required: true,
     },
-    elementalResonance: {
-      type: Object as PropType<TConditionValues>,
+    calculatedSupporters: {
+      type: Object as PropType<{ [key: string]: TSupporterInput | undefined }>,
+      required: true,
     },
+    teamMembers: {
+      type: Array as PropType<string[]>,
+      required: true,
+    }
   },
-  emits: ["update:team-option", "update:buildname-selection"],
+  emits: ["update:team-option", "update:buildname-selection", 'update:team-members'],
   setup(props, context) {
     const {
       displayName,
@@ -179,6 +196,9 @@ export default defineComponent({
 
     const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
     const selectedBuildname = reactive({} as { [key: string]: string | null });
+    const supporterDamageResult = reactive(
+      new Map() as Map<string, [TStats, TDamageResult]>
+    );
 
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
@@ -259,15 +279,6 @@ export default defineComponent({
         }
       });
     };
-    updateConditionList();
-
-    for (const key of supporterKeyList) {
-      supporterOpenClose[key] = false;
-    }
-
-    const supporterDamageResult = reactive(
-      new Map() as Map<string, [TStats, TDamageResult]>
-    );
 
     const takeMasterTeamOption = (character: string, master: any) => {
       if ("チームバフ" in master) {
@@ -300,42 +311,24 @@ export default defineComponent({
       }
     };
 
-    const setupSupporterDamageResult = async (savedSupporter: {
+    async function setupFromCharacterMaster() {
+      for (const character of Object.keys(CHARACTER_MASTER)) {
+        const characterMaster = await getCharacterMasterDetail(character as TCharacterKey);
+        takeMasterTeamOption(character, characterMaster);
+      }
+    }
+
+    const setupSupporterDamageResult = (savedSupporter: {
       key: string;
       value: string;
-    }): Promise<[TStats, TDamageResult]> => {
-      const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-      const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
-      const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-      const optionInput = deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput;
-      const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
-      const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
-
-      characterInput.character = savedSupporter.key as TCharacterKey;
-      characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
-
-      const builddata = JSON.parse(savedSupporter.value);
-
-      await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, builddata);
-      makeDamageDetailObjArrObjCharacter(characterInput);
-      makeDamageDetailObjArrObjWeapon(characterInput);
-      makeDamageDetailObjArrObjArtifactSets(characterInput);
-      setupConditionValues(conditionInput, characterInput, optionInput);
-      calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
-      calculateArtifactStats(artifactDetailInput);
-      if (props.elementalResonance) {
-        optionInput.elementalResonance.conditionValues = props.elementalResonance;
-        optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(props.elementalResonance, conditionInput);
+    }): [TStats, TDamageResult] => {
+      const calculatedSupporter = props.calculatedSupporters[savedSupporter.key];
+      if (!calculatedSupporter) {
+        return [_.cloneDeep(ステータスTEMPLATE), _.cloneDeep(DAMAGE_RESULT_TEMPLATE)];
       }
-      calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
-
-      if (characterInput.character == "雷電将軍") {
-        // for 雷罰悪曜の眼
-        const myCharacterMaster = await getCharacterMasterDetail(props.character);
-        statsInput.statsObj["元素エネルギー"] = myCharacterMaster["元素爆発"]["元素エネルギー"];
-      }
-
-      calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
+      const characterInput = calculatedSupporter.characterInput;
+      const statsInput = calculatedSupporter.statsInput;
+      const damageResult = calculatedSupporter.damageResult;
 
       // マスターから取り込んだチームバフを削除します
       const removeConditions: string[] = additionalConditions.filter((s) =>
@@ -364,20 +357,6 @@ export default defineComponent({
       return [statsInput.statsObj, damageResult];
     };
 
-    const loadSupporterData = async () => {
-      const list = [];
-      for (const entry of props.savedSupporters) {
-        selectedBuildname[entry.key] = entry.buildname;
-        list.push(setupSupporterDamageResult(entry).then(result => ({ key: entry.key, value: result })));
-      }
-      await Promise.all(list).then(results => {
-        results.forEach(entry => {
-          supporterDamageResult.set(entry.key, entry.value);
-        })
-      });
-    };
-    loadSupporterData();
-
     const supporterCheckboxList = (supporter: any) => {
       return checkboxList.filter((s) => s.name.startsWith(supporter + "*"));
     };
@@ -393,10 +372,7 @@ export default defineComponent({
     /** 選択中のキャラクターのオプションは無効です */
     const supporterVisible = (supporter: any) => {
       if (supporter == props.character) return false;
-      if (supporterCheckboxList(supporter).length) return true;
-      if (supporterSelectList(supporter).length) return true;
-      if (supporterNumberList(supporter).length) return true;
-      return false;
+      return true;
     };
 
     const supporterOptionSelectedClass = (supporter: any) => {
@@ -470,9 +446,11 @@ export default defineComponent({
                 damageResult = temp[1];
               }
             }
+            Object.keys(props.topStats).forEach(stat => { // チーム内で最も高いステータスをセットします
+              statsObj[stat] = props.topStats[stat];
+            });
             let myValue = Infinity;
             if (myNew数値) {
-              console.log(detailObjArr, myDetailObj, validConditionValueArr);
               myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限, my下限);
             }
             const kinds = [] as string[];
@@ -500,7 +478,6 @@ export default defineComponent({
           }
         }
       });
-      // context.emit("update:team-option", workObj);
       return workObj;
     });
 
@@ -526,8 +503,26 @@ export default defineComponent({
       return resultArr;
     });
 
+    async function onLoad() {
+      updateConditionList();
+      setupFromCharacterMaster();
+
+      for (const key of supporterKeyList) {
+        supporterOpenClose[key] = false;
+      }
+
+      for (const entry of props.savedSupporters) {
+        selectedBuildname[entry.key] = entry.buildname;
+        supporterDamageResult.set(entry.key, setupSupporterDamageResult(entry));
+      }
+    }
+    onLoad();
+
     /** オプションが変更されたことを上位に通知します */
-    const onChange = async () => {
+    const onChange = async (supporter?: string, item?: any) => {
+      if (supporter && item) {
+        console.debug(supporter, item.name, conditionValues[item.name]);
+      }
       await nextTick();
       overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
       context.emit("update:team-option", conditionInput);
@@ -550,16 +545,10 @@ export default defineComponent({
           }
         }
       });
-      const list = [];
       for (const entry of props.savedSupporters) {
         selectedBuildname[entry.key] = entry.buildname;
-        list.push(setupSupporterDamageResult(entry).then(result => ({ key: entry.key, value: result })));
+        supporterDamageResult.set(entry.key, setupSupporterDamageResult(entry));
       }
-      await Promise.all(list).then(results => {
-        results.forEach(entry => {
-          supporterDamageResult.set(entry.key, entry.value);
-        })
-      });
       onChange();
     };
 
@@ -617,36 +606,54 @@ export default defineComponent({
       context.emit("update:buildname-selection", selectedBuildname);
     };
 
+    function updateTeamMembers(teamMembers: string[]) {
+      context.emit("update:team-members", teamMembers);
+    }
+
+    const addToTeamOnClick = (supporer: string) => {
+      updateTeamMembers([...props.teamMembers, supporer]);
+    };
+
+    const removeFromTeamOnClick = (member: string) => {
+      updateTeamMembers(props.teamMembers.filter(s => s != member));
+    };
+
+    const memberIconSrc = (member: string) => {
+      return (CHARACTER_MASTER as any)[member].icon_url;
+    };
+
+    const memberVisionIconSrc = (member: string) => {
+      return (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[member].元素];
+    };
+
     watch(props, async (newVal, oldVal) => {
-      const isElementalResonanceChanged = !_.isEqual(newVal.elementalResonance?.conditionAdjustments, oldVal.elementalResonance?.conditionAdjustments);
-      const list = [];
-      if (_.isEqual(newVal.savedSupporters, oldVal.savedSupporters)) {
-        for (const entry of newVal.savedSupporters) {
-          let changed;
-          if (isElementalResonanceChanged) {
+      for (const key of Object.keys(newVal.calculatedSupporters)) {
+        const newWork = newVal.calculatedSupporters[key];
+        const oldWork = oldVal.calculatedSupporters[key];
+        let changed;
+        if (oldWork) {
+          if (!_.isEqual(newWork?.statsInput, oldWork.statsInput)) {
             changed = true;
-          } else if (entry.key == "雷電将軍") { // for 雷罰悪曜の眼
+          } else if (!_.isEqual(newWork?.damageResult, oldWork.damageResult)) {
             changed = true;
-          } else {
-            changed = oldVal.savedSupporters.filter((s) => _.isEqual(s, entry)).length == 0;
           }
+        } else {
+          changed = true;
+        }
+        const savedSupporter = newVal.savedSupporters.filter(s => s.key == key);
+        if (savedSupporter.length) {
           if (changed) {
-            list.push(setupSupporterDamageResult(entry).then(result => ({ key: entry.key, value: result })));
+            setupSupporterDamageResult(savedSupporter[0]);
           }
-          selectedBuildname[entry.key] = entry.buildname;
+          selectedBuildname[key] = savedSupporter[0].buildname;
         }
-        for (const entry of oldVal.savedSupporters) {
-          const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
-          if (absent) {
-            supporterDamageResult.delete(entry.key);
-            delete selectedBuildname[entry.key];
-          }
+      }
+      for (const entry of oldVal.savedSupporters) {
+        const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
+        if (absent) {
+          supporterDamageResult.delete(entry.key);
+          delete selectedBuildname[entry.key];
         }
-        await Promise.all(list).then(results => {
-          results.forEach(entry => {
-            supporterDamageResult.set(entry.key, entry.value);
-          });
-        });
       }
       onChange();
     });
@@ -677,6 +684,11 @@ export default defineComponent({
       buildnameList,
       selectedBuildname,
       buildnameSelectionOnChange,
+      addToTeamOnClick,
+      removeFromTeamOnClick,
+
+      memberIconSrc,
+      memberVisionIconSrc,
     };
   },
 });
@@ -750,5 +762,25 @@ p.notice {
 
 span.builddata-selector .material-symbols-outlined {
   font-size: 2.4rem;
+}
+
+.member-area .member {
+  position: relative;
+  display: inline-block;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.member img.character {
+  width: 36px;
+  height: 36px;
+}
+
+.member img.vision {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
 }
 </style>

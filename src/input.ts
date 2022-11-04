@@ -89,6 +89,8 @@ export const ステータスその他ARRAY = [
     'HP+',
     '攻撃力+',
     '防御力+',
+];
+export const ステータス連動加算ARRAY = [
     'HP上限V1',
     '攻撃力V1',
     '防御力V1',
@@ -98,15 +100,9 @@ export const ステータスその他ARRAY = [
     '与える治療効果V1',
     '受ける治療効果V1',
     '元素チャージ効率V1',
-    'HP上限V2',
-    '攻撃力V2',
-    '防御力V2',
-    '元素熟知V2',
-    '会心率V2',
-    '会心ダメージV2',
-    '与える治療効果V2',
-    '受ける治療効果V2',
-    '元素チャージ効率V2',
+];
+export const ステータスチーム内最高ARRAY = [
+    '元素熟知TOP',
 ];
 export const 敵ステータス_元素耐性ARRAY = [
     '敵炎元素耐性',
@@ -132,13 +128,15 @@ export const ステータスARRAY_MAP = new Map([
     ['実数ダメージ加算', 実数ダメージ加算ARRAY],
     ['元素反応バフ', 元素反応バフARRAY],
     ['その他', ステータスその他ARRAY],
+    ['連動加算ステータス', ステータス連動加算ARRAY],
+    ['チーム内最高値', ステータスチーム内最高ARRAY],
     ['敵ステータス·元素耐性', 敵ステータス_元素耐性ARRAY],
     ['敵ステータス·その他', 敵ステータス_その他ARRAY],
 ]);
 
 export const STAT_PERCENT_LIST = [
     ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵ステータス_元素耐性ARRAY,
-    '別枠乗算',
+    '別枠乗算', '敵防御力',
 ];
 
 function makeStatusTenmplate() {
@@ -462,24 +460,27 @@ export type TElementalResonance = {
     conditionAdjustments: TConditionAdjustments,
 };
 
+export const SUPPORTER_INPUT_TEMPLATE = {
+    characterInput: deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput,
+    artifactDetailInput: deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput,
+    conditionInput: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
+    statsInput: deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput,
+    damageResult: deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult,
+};
+export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
+
 export const OPTION_INPUT_TEMPLATE = {
     elementalResonance: {
         conditionValues: {},
         conditionAdjustments: {},
     } as TElementalResonance,
-    supporterBuildname: {} as TAnyObject,
+    supporterBuildname: {} as { [key: string]: string | undefined },
+    supporters: {} as { [key: string]: TSupporterInput | undefined },
+    teamMembers: [] as string[],
     teamOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
     miscOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
 };
 export type TOptionInput = typeof OPTION_INPUT_TEMPLATE;
-
-export const SUPPORTER_INPUT_TEMPLATE = {
-    characterInput: deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput,
-    artifactDetailInput: deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput,
-    conditionInput: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
-    statusInput: deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput,
-};
-export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
 /** レベル文字列（1+,20,20+,...,90）を突破レベルとレベルに分割します */
 function parseLevelStr(levelStr: number | string): [number, number] {

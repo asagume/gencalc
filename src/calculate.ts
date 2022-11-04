@@ -1,7 +1,43 @@
 import _ from "lodash";
 import { deepcopy, isNumber, overwriteObject } from "@/common";
-import { CHANGE_KIND_STATUS, CHANGE_KIND_TALENT, DAMAGE_RESULT_TEMPLATE, getStatValue, NUMBER_CONDITION_VALUE_RE, TArtifactDetailInput, TCharacterInput, TConditionInput, TConditionValues, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput, ステータスTEMPLATE, ダメージバフARRAY, 元素ステータス_ダメージARRAY, 元素ステータス_耐性ARRAY, 元素反応TEMPLATE, 元素反応バフARRAY, 基礎ステータスARRAY, 実数ダメージ加算ARRAY, 突破レベルレベルARRAY, 聖遺物サブ効果ARRAY } from "@/input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, TArtifactMainRarity, TArtifactMainStat } from "@/master";
+import {
+    ARTIFACT_DETAIL_INPUT_TEMPLATE,
+    CHANGE_KIND_STATUS,
+    CHANGE_KIND_TALENT,
+    CHARACTER_INPUT_TEMPLATE,
+    CONDITION_INPUT_TEMPLATE,
+    DAMAGE_RESULT_TEMPLATE,
+    getStatValue,
+    NUMBER_CONDITION_VALUE_RE,
+    STATS_INPUT_TEMPLATE,
+    TArtifactDetailInput,
+    TCharacterInput,
+    TConditionInput,
+    TConditionValues,
+    TDamageResult,
+    TDamageResultEntry,
+    TOptionInput,
+    TStats,
+    TStatsInput,
+    ステータスTEMPLATE,
+    ステータスチーム内最高ARRAY,
+    ダメージバフARRAY,
+    元素ステータス_ダメージARRAY,
+    元素ステータス_耐性ARRAY,
+    元素反応TEMPLATE,
+    元素反応バフARRAY,
+    基礎ステータスARRAY,
+    実数ダメージ加算ARRAY,
+    突破レベルレベルARRAY,
+    聖遺物サブ効果ARRAY,
+    loadRecommendation,
+    makeDamageDetailObjArrObjCharacter,
+    makeDamageDetailObjArrObjWeapon,
+    makeDamageDetailObjArrObjArtifactSets,
+    setupConditionValues,
+    updateNumberConditionValues,
+} from "@/input";
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from "@/master";
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -166,7 +202,7 @@ export const calculateStats = function (
         }
 
         // ステータス補正を計上します
-        Object.keys(statsInput.statAdjustments).forEach(stat => {
+        Object.keys(statsInput.statAdjustments).filter(s => !ステータスチーム内最高ARRAY.includes(s)).forEach(stat => {
             if (stat in workStatsObj) workStatsObj[stat] += statsInput.statAdjustments[stat];
         });
 
@@ -232,6 +268,17 @@ export const calculateStats = function (
         }
 
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
+
+        // チーム内で最も高いステータス値を求めます
+        calculateStatsTop(workStatsObj, optionInput);
+        // ステータス補正を計上します
+        ステータスチーム内最高ARRAY.forEach(stat => {
+            if (stat in statsInput.statAdjustments) {
+                if (stat in workStatsObj) {
+                    workStatsObj[stat] += statsInput.statAdjustments[stat];
+                }
+            }
+        });
 
         // ステータス変化
         const conditionAdjustments = updateStatsWithCondition(characterInput, validConditionValueArr, workStatsObj);
@@ -456,6 +503,17 @@ function updateStatsWithConditionSub(
         if (!formulaArr) continue;
         formulaArr.forEach(formula => {
             const diffStats = updateStats(workStatsObj, formula[0], formula[1], formula[2], formula[3]);
+            for (const stat of Object.keys(diffStats)) {
+                if (ステータスチーム内最高ARRAY.includes(stat + 'TOP')) {
+                    const statValue = getStatValue(stat + 'X7', workStatsObj);
+                    const topValue = workStatsObj[stat + 'TOP'];
+                    if (statValue !== undefined && topValue !== undefined) {
+                        if (statValue > topValue) {
+                            workStatsObj[stat + 'TOP'] = statValue;
+                        }
+                    }
+                }
+            }
             if (formula[4]) {
                 for (const stat of Object.keys(diffStats)) {
                     if (stat in workConditionAdjustments) {
@@ -524,20 +582,7 @@ export function calculateFormulaArray(
 ): number {
     try {
         let result = 0;
-        const re = /(.+)X([0-8])$/;
-        if (!Array.isArray(formulaArr)) {
-            if (isNumber(formulaArr)) {
-                result = Number(formulaArr);
-            } else {
-                const temp = getStatValue(formulaArr, statsObj);
-                if (temp !== undefined) {
-                    result = temp;
-                } else {
-                    console.error(formulaArr, statsObj, null, opt_max, opt_min);
-                    result = 0; // 暫定
-                }
-            }
-        } else {
+        if (Array.isArray(formulaArr)) {
             let operator: string | null = null;
             for (const entry of formulaArr) {
                 let subResult = 0;
@@ -566,36 +611,11 @@ export function calculateFormulaArray(
                         }
                     }
                 } else {
-                    const reRet = re.exec(entry);
-                    if (reRet) {
-                        const stat = reRet[1];
-                        if (stat in statsObj) {
-                            subResult = statsObj[stat];
-                            let n = Number(reRet[2]);
-                            if ((n % 2) == 1) {
-                                if ((stat + 'V1') in statsObj) {
-                                    subResult -= statsObj[stat + 'V1'];
-                                }
-                            }
-                            n = Math.trunc(n / 2);
-                            if ((n % 2) == 1) {
-                                if ((stat + 'V2') in statsObj) {
-                                    subResult -= statsObj[stat + 'V2'];
-                                }
-                            }
-                            n = Math.trunc(n / 2);
-                            if ((n % 2) == 1) {
-                                if ((stat + 'V3') in statsObj) {
-                                    subResult -= statsObj[stat + 'V3'];
-                                }
-                            }
-                        } else {
-                            console.error(formulaArr, statsObj, null, opt_max, opt_min);
-                        }
-                    } else if (entry in statsObj) {
-                        subResult = statsObj[entry];
-                    } else {
+                    const temp = getStatValue(entry, statsObj);
+                    if (temp === undefined) {
                         console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                    } else {
+                        subResult = temp;
                     }
                 }
                 if (operator == null) {
@@ -616,6 +636,18 @@ export function calculateFormulaArray(
                             result /= subResult;
                             break;
                     }
+                }
+            }
+        } else {
+            if (isNumber(formulaArr)) {
+                result = Number(formulaArr);
+            } else {
+                const temp = getStatValue(formulaArr, statsObj);
+                if (temp !== undefined) {
+                    result = temp;
+                } else {
+                    console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                    result = 0; // 暫定
                 }
             }
         }
@@ -1739,4 +1771,77 @@ export function calculateArtifactScore(
         }
     }
     return result;
+}
+
+export function calculateStatsTop(
+    statsObj: TStats,
+    optionInput: TOptionInput,
+) {
+    ステータスチーム内最高ARRAY.forEach(stat => {
+        const srcStat = stat.replace(/TOP$/, 'X7');
+        let srcStatValue = getStatValue(srcStat, statsObj);
+        if (srcStatValue) {
+            statsObj[stat] = srcStatValue;
+        }
+        for (const member of optionInput.teamMembers) {
+            const calculatedSupporter = optionInput.supporters[member];
+            if (!calculatedSupporter?.statsInput?.statsObj) continue;
+            srcStatValue = getStatValue(srcStat, calculatedSupporter.statsInput.statsObj);
+            if (srcStatValue !== undefined) {
+                if (statsObj[stat] < srcStatValue) {
+                    statsObj[stat] = srcStatValue;
+                }
+            }
+        }
+    });
+}
+
+export async function calculateSupporter(
+    optionInput: TOptionInput,
+    supporter: TCharacterKey,
+    build: string,
+    character: TCharacterKey,
+): Promise<[TStats, TDamageResult]> {
+    const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
+    const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
+    const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
+    const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
+    const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
+
+    characterInput.character = supporter;
+    characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
+
+    const builddata = JSON.parse(build);
+
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, builddata);
+    makeDamageDetailObjArrObjCharacter(characterInput);
+    makeDamageDetailObjArrObjWeapon(characterInput);
+    makeDamageDetailObjArrObjArtifactSets(characterInput);
+    setupConditionValues(conditionInput, characterInput, optionInput);
+    calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
+    calculateArtifactStats(artifactDetailInput);
+    if (optionInput.elementalResonance) {
+        optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput.elementalResonance.conditionValues, conditionInput);
+    }
+    calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
+    updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);
+    calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
+
+    if (characterInput.character == "雷電将軍") {
+        // for 雷罰悪曜の眼
+        const myCharacterMaster = await getCharacterMasterDetail(character);
+        statsInput.statsObj["元素エネルギー"] = myCharacterMaster["元素爆発"]["元素エネルギー"];
+    }
+
+    calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
+
+    optionInput.supporters[supporter] = {
+        characterInput: characterInput,
+        artifactDetailInput: artifactDetailInput,
+        conditionInput: conditionInput,
+        statsInput: statsInput,
+        damageResult: damageResult,
+    };
+
+    return [statsInput.statsObj, damageResult];
 }
