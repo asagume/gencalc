@@ -217,7 +217,7 @@
 
 <script lang="ts">
 import _ from "lodash";
-import { computed, defineComponent, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import TitleAndHeader from "@/components/TitleAndHeader.vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
 import CharacterInput from "@/components/CharacterInput.vue";
@@ -454,7 +454,7 @@ export default defineComponent({
     async function updateOptionInputSupporter(key: string) {
       const savedSupporter = savedSupporters.filter(s => s.key == key);
       if (savedSupporter.length) {
-        calculateSupporter(optionInputRea, savedSupporter[0].key as TCharacterKey, savedSupporter[0].value, characterInputRea.character as TCharacterKey);
+        await calculateSupporter(optionInputRea, savedSupporter[0].key as TCharacterKey, savedSupporter[0].value, characterInputRea.character as TCharacterKey);
       }
     }
 
@@ -491,6 +491,7 @@ export default defineComponent({
         list.push(updateOptionInputSupporter(savedSupporter.key as TCharacterKey));
       });
       await Promise.all(list);
+      teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
     }
     setupSavedSupporters();
 

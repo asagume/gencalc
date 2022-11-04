@@ -503,18 +503,27 @@ export default defineComponent({
       return resultArr;
     });
 
+    const initializeSupporters = (calculatedSupporters: { [key: string]: TSupporterInput | undefined }) => {
+      for (const entry of props.savedSupporters) {
+        selectedBuildname[entry.key] = entry.buildname;
+        let result = setupSupporterDamageResult(entry);
+        supporterDamageResult.set(entry.key, result);
+      }
+      Object.keys(calculatedSupporters).forEach(key => {
+        const calculatedSupporter = calculatedSupporters[key];
+        if (calculatedSupporter) {
+          const result: [TStats, TDamageResult] = [calculatedSupporter.statsInput.statsObj, calculatedSupporter.damageResult];
+          supporterDamageResult.set(key, result);
+        }
+      });
+    };
+
     async function onLoad() {
       updateConditionList();
       setupFromCharacterMaster();
 
       for (const key of supporterKeyList) {
         supporterOpenClose[key] = false;
-      }
-
-      for (const entry of props.savedSupporters) {
-        selectedBuildname[entry.key] = entry.buildname;
-        supporterDamageResult.set(entry.key, setupSupporterDamageResult(entry));
-        console.log(entry.key, supporterDamageResult.get(entry.key));
       }
     }
     onLoad();
@@ -546,10 +555,6 @@ export default defineComponent({
           }
         }
       });
-      for (const entry of props.savedSupporters) {
-        selectedBuildname[entry.key] = entry.buildname;
-        supporterDamageResult.set(entry.key, setupSupporterDamageResult(entry));
-      }
       onChange();
     };
 
@@ -673,6 +678,7 @@ export default defineComponent({
       conditionDisabled,
       displayStatAjustmentList,
 
+      initializeSupporters,
       onChange,
       initializeValues,
 
