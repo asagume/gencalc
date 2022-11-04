@@ -514,6 +514,7 @@ export default defineComponent({
       for (const entry of props.savedSupporters) {
         selectedBuildname[entry.key] = entry.buildname;
         supporterDamageResult.set(entry.key, setupSupporterDamageResult(entry));
+        console.log(entry.key, supporterDamageResult.get(entry.key));
       }
     }
     onLoad();
