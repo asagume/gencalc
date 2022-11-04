@@ -48,10 +48,10 @@
         </div>
       </fieldset>
       <template v-else>
-        <div v-show="supporterVisible(supporter)" class="supporter-else">
+        <div v-show="supporterVisible(supporter)" :class="'supporter-else' + supporterOptionSelectedClass(supporter)">
           <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
             v-model="supporterOpenClose[supporter]" />
-          <label :class="'fold' + supporterOptionSelectedClass(supporter)" :for="'supporter-else-' + supporter">
+          <label class="fold" :for="'supporter-else-' + supporter">
             <div class="character with-tooltip">
               <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
               <span class="tooltip"> {{ displayName(supporter) }} </span>
@@ -720,6 +720,7 @@ div.supporter-else {
   min-width: 72px;
   white-space: nowrap;
   margin-right: 3px;
+  border-radius: 10px;
 }
 
 .fold {
@@ -764,8 +765,8 @@ label.condition {
   color: gray;
 }
 
-label.selected {
-  background-color: maroon;
+.selected {
+  background-color: darkgoldenrod;
 }
 
 p.notice {
