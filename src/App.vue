@@ -13,10 +13,10 @@
       <CharacterInput ref="characterInputVmRef" :characterInput="characterInputRea"
         :recommendationList="recommendationListRea" :recommendation="recommendationRef"
         :artifactSetSelectVisible="artifactSetSelectVisibleRef" :artifactScore="artifactScore"
-        @open:character-select="characterSelectVisibleRef = !characterSelectVisibleRef"
-        @saveToStorage="saveToStorage($event)" @removeFromStorage="removeFromStorage($event)"
-        @update:recommendation="updateRecommendation($event)" @open:weapon-select="openWeaponSelect"
-        @open:artifact-set-select="openArtifactSetSelect($event)" @open:artifact-detail-input="openArtifactDetailInput"
+        @open:character-select="openCharacterSelect" @saveToStorage="saveToStorage($event)"
+        @removeFromStorage="removeFromStorage($event)" @update:recommendation="updateRecommendation($event)"
+        @open:weapon-select="openWeaponSelect" @open:artifact-set-select="openArtifactSetSelect($event)"
+        @open:artifact-detail-input="openArtifactDetailInput"
         @update:character-input-character="updateCharacterInputCharacter($event)"
         @update:character-input-weapon="updateCharacterInputWeapon($event)"
         @open:character-info="openCharacterInfo($event)" />
@@ -219,7 +219,7 @@
 
 <script lang="ts">
 import _ from "lodash";
-import { computed, defineComponent, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import TitleAndHeader from "@/components/TitleAndHeader.vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
 import CharacterInput from "@/components/CharacterInput.vue";
@@ -358,6 +358,7 @@ export default defineComponent({
   setup(props) {
     const { setI18nLanguage, displayName } = CompositionFunction();
 
+    const characterSelectVmRef = ref();
     const characterInputVmRef = ref();
     const artifactDetailInputVmRef = ref();
     const conditionInputVmRef = ref();
@@ -764,7 +765,9 @@ export default defineComponent({
       )
         return;
       console.debug("updateCharacter", character);
+
       characterSelectVisibleRef.value = false;
+      
       characterInputRea.character = character;
       characterInputRea.characterMaster = await getCharacterMasterDetail(character);
       let constellation = 0;
@@ -812,6 +815,9 @@ export default defineComponent({
       characterInputRea.recommendationSelectedIndex = 0;
       optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length);
       await updateRecommendation(recommendationRef.value);
+
+      await nextTick();
+      document.querySelector('.pane3')?.scrollIntoView({ block: 'nearest' });
     };
 
     /** キャラクターのパラメータ（突破レベル、レベル、命ノ星座、通常攻撃レベル、元素スキルレベル、元素爆発レベル）を更新します */
@@ -861,13 +867,41 @@ export default defineComponent({
       return result;
     });
 
+    /** キャラクター選択画面を開きます/閉じます */
+    const openCharacterSelect = async () => {
+      characterSelectVisibleRef.value = !characterSelectVisibleRef.value;
+      if (characterSelectVisibleRef.value) {
+        await nextTick();
+        document.querySelector('.pane2')?.scrollIntoView({ block: 'nearest' });
+      }
+    };
+
     /** 武器選択画面を開きます/閉じます */
-    const openWeaponSelect = () => {
+    const openWeaponSelect = async () => {
       weaponSelectVisibleRef.value = !weaponSelectVisibleRef.value;
       if (weaponSelectVisibleRef.value) {
         artifactSetSelectVisibleRef.value = false;
         artifactDetailInputVisibleRef.value = false;
         characterInfoVisibleRef.value = false;
+        await nextTick();
+        document.querySelector('.pane4')?.scrollIntoView({ block: 'nearest' });
+      }
+    };
+
+    /** 聖遺物セット効果選択画面を開きます/閉じます */
+    const openArtifactSetSelect = async (index: number) => {
+      if (index == artifactSetIndexRef.value) {
+        artifactSetSelectVisibleRef.value = !artifactSetSelectVisibleRef.value;
+      } else {
+        artifactSetIndexRef.value = index;
+        artifactSetSelectVisibleRef.value = true;
+      }
+      if (artifactSetSelectVisibleRef.value) {
+        weaponSelectVisibleRef.value = false;
+        artifactDetailInputVisibleRef.value = false;
+        characterInfoVisibleRef.value = false;
+        await nextTick();
+        document.querySelector('.pane4')?.scrollIntoView({ block: 'nearest' });
       }
     };
 
@@ -925,6 +959,9 @@ export default defineComponent({
       );
 
       characterInputRea.saveDisabled = false;
+
+      await nextTick();
+      document.querySelector('.pane3')?.scrollIntoView({ block: 'nearest' });
     };
 
     /** 武器のパラメータ（突破レベル、レベル、精錬ランク）を更新します */
@@ -965,23 +1002,8 @@ export default defineComponent({
       characterInputRea.saveDisabled = false;
     };
 
-    /** 聖遺物セット効果選択画面を開きます/閉じます */
-    const openArtifactSetSelect = (index: number) => {
-      if (index == artifactSetIndexRef.value) {
-        artifactSetSelectVisibleRef.value = !artifactSetSelectVisibleRef.value;
-      } else {
-        artifactSetIndexRef.value = index;
-        artifactSetSelectVisibleRef.value = true;
-      }
-      if (artifactSetSelectVisibleRef.value) {
-        weaponSelectVisibleRef.value = false;
-        artifactDetailInputVisibleRef.value = false;
-        characterInfoVisibleRef.value = false;
-      }
-    };
-
     /** 聖遺物セット効果を選択しました */
-    const updateArtifactSet = (artifactSet: TArtifactSetKey) => {
+    const updateArtifactSet = async (artifactSet: TArtifactSetKey) => {
       if (!characterInputRea) return;
       artifactSets[artifactSetIndexRef.value] = artifactSet;
       const tempMaster = ARTIFACT_SET_MASTER[artifactSet] as TArtifactSet;
@@ -1020,6 +1042,9 @@ export default defineComponent({
       );
 
       characterInputRea.saveDisabled = false;
+
+      await nextTick();
+      document.querySelector('.pane3')?.scrollIntoView({ block: 'nearest' });
     };
 
     /** 聖遺物詳細画面を開きます/閉じます */
@@ -1400,6 +1425,7 @@ export default defineComponent({
     return {
       displayName,
 
+      characterSelectVmRef,
       characterInputVmRef,
       artifactDetailInputVmRef,
       conditionInputVmRef,
@@ -1454,6 +1480,8 @@ export default defineComponent({
       optionInputTabRef,
       ownListToggle1Ref,
       ownListToggle2Ref,
+
+      openCharacterSelect,
 
       saveToStorage,
       removeFromStorage,
