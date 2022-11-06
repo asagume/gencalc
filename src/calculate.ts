@@ -1749,6 +1749,7 @@ export const ARTIFACT_SCORE_FACTORS = [
 ];
 
 export const ARTIFACT_SCORE_FORMULA_TEMPLATE: TArtifactScoreFormula[] = [
+    [['会心率', 2], ['会心ダメージ', 1]],
     [['攻撃力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
     [['HP%', 1], ['会心率', 2], ['会心ダメージ', 1]],
     [['防御力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
