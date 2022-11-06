@@ -33,11 +33,15 @@
                 </label>
                 <button type="button" :disabled="!initializeArtifactStatsSubClickableRef"
                     @click="initializeArtifactStatsSub">
-                    {{  displayName('実行')  }}
+                    {{ displayName('実行') }}
                 </button>
             </article>
         </div>
     </fieldset>
+
+    <div>
+        {{ screen.width }} , {{ screen.height }}
+    </div>
 </template>
 <script lang="ts">
 import { TAnyObject } from "@/master";
@@ -68,6 +72,8 @@ export default defineComponent({
             configurationInputRea,
             initializeArtifactStatsSubClickableRef,
             initializeArtifactStatsSub,
+
+            screen,
         }
     },
 });
