@@ -42,7 +42,7 @@
     }
 
     .main {
-        min-width: 360px;
+        min-width: 342px;
     }
 }
 
@@ -68,4 +68,12 @@ body {
 .main {
     margin: 0 auto;
     background: linear-gradient(to top, #3d3d3b, #141414);
+}
+
+a:link {
+    color: blanchedalmond;
+}
+
+a:visited {
+    color: blanchedalmond;
 }

@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>げんかるく - 武器一覧</title>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
-    <link href="styles/base-style.css" rel="stylesheet" />
+    <link href="css/base-style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <reference path="JQuery.d.ts"></reference>
@@ -25,21 +25,25 @@
         }
 
         table th {
-            background-color: khaki;
+            background-color: #606;
         }
 
         table tbody tr.odd {
-            background-color: #FFFFFF;
+            background-color: #000;
         }
 
         table tbody tr.even {
-            background-color: #EEEEEE;
+            background-color: #222;
         }
 
         td {
             margin: 0;
-            padding: 0;
+            padding: 5px 0;
             text-align: center;
+        }
+
+        td:last-child {
+            text-align: left;
         }
 
         .var {
@@ -51,7 +55,7 @@
 
 <body>
     <div id="main">
-        <p style="text-align: left; margin-left: 1rem;"><a href="/gencalc/">げんかるく</a> </p>
+        <p style="text-align: left; margin-left: 1rem;"><a href="./">げんかるく</a> </p>
 
         <div id="weapon-list-area">
             <h2 id="weapon-list-h">武器一覧</h2>

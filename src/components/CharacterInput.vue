@@ -477,7 +477,6 @@ export default defineComponent({
 <style scoped>
 table {
   width: 100%;
-  min-width: 360px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
