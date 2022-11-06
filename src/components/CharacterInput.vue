@@ -103,7 +103,7 @@
           <img class="right-icon" src="images/artifact.png" alt="artifact" />
           <div class="artifact-score">
             score <br />
-            {{ Math.round(artifactScore) }}
+            {{ Math.round(artifactScore * 10) / 10 }}
           </div>
         </label>
         <div class="tooltip">{{ displayName("聖遺物詳細") }}</div>
