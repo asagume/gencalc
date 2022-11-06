@@ -133,6 +133,7 @@ import {
   makeDefaultBuildname,
   makeBuildStorageKey,
   TSupporterInput,
+SUPPORTER_INPUT_TEMPLATE,
 } from "@/input";
 import {
   CHARACTER_MASTER,
@@ -198,9 +199,7 @@ export default defineComponent({
 
     const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
     const selectedBuildname = reactive({} as { [key: string]: string | null });
-    const supporterDamageResult = reactive(
-      new Map() as Map<string, [TStats, TDamageResult]>
-    );
+    const supporterInputResultMap = reactive(new Map() as Map<string, TSupporterInput>);
 
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
@@ -323,14 +322,12 @@ export default defineComponent({
     const setupSupporterDamageResult = (savedSupporter: {
       key: string;
       value: string;
-    }): [TStats, TDamageResult] => {
-      const calculatedSupporter = props.calculatedSupporters[savedSupporter.key];
-      if (!calculatedSupporter) {
-        return [_.cloneDeep(ステータスTEMPLATE), _.cloneDeep(DAMAGE_RESULT_TEMPLATE)];
+    }): TSupporterInput => {
+      const supporterInputResult = props.calculatedSupporters[savedSupporter.key];
+      if (!supporterInputResult) {
+        return _.cloneDeep(SUPPORTER_INPUT_TEMPLATE);
       }
-      const characterInput = calculatedSupporter.characterInput;
-      const statsInput = calculatedSupporter.statsInput;
-      const damageResult = calculatedSupporter.damageResult;
+      const characterInput = supporterInputResult.characterInput;
 
       // マスターから取り込んだチームバフを削除します
       const removeConditions: string[] = additionalConditions.filter((s) =>
@@ -356,7 +353,7 @@ export default defineComponent({
       // 武器マスターに記述したチームバフを取り込みます
       takeMasterTeamOption(characterInput.character, characterInput.weaponMaster);
 
-      return [statsInput.statsObj, damageResult];
+      return supporterInputResult;
     };
 
     const supporterCheckboxList = (supporter: any) => {
@@ -442,10 +439,10 @@ export default defineComponent({
             let statsObj: TStats = statsObjDummy;
             let damageResult: TDamageResult = damageResultDummy;
             if (supporter) {
-              const temp = supporterDamageResult.get(supporter);
+              const temp = supporterInputResultMap.get(supporter);
               if (temp) {
-                statsObj = temp[0];
-                damageResult = temp[1];
+                statsObj = temp.statsInput.statsObj;
+                damageResult = temp.damageResult;
               }
             }
             Object.keys(props.topStats).forEach(stat => { // チーム内で最も高いステータスをセットします
@@ -509,13 +506,12 @@ export default defineComponent({
       for (const entry of props.savedSupporters) {
         selectedBuildname[entry.key] = entry.buildname;
         let result = setupSupporterDamageResult(entry);
-        supporterDamageResult.set(entry.key, result);
+        supporterInputResultMap.set(entry.key, result);
       }
       Object.keys(calculatedSupporters).forEach(key => {
-        const calculatedSupporter = calculatedSupporters[key];
-        if (calculatedSupporter) {
-          const result: [TStats, TDamageResult] = [calculatedSupporter.statsInput.statsObj, calculatedSupporter.damageResult];
-          supporterDamageResult.set(key, result);
+        const supporterInputResult = calculatedSupporters[key];
+        if (supporterInputResult) {
+          supporterInputResultMap.set(key, supporterInputResult);
         }
       });
     };
@@ -651,7 +647,7 @@ export default defineComponent({
       for (const entry of oldVal.savedSupporters) {
         const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
         if (absent) {
-          supporterDamageResult.delete(entry.key);
+          supporterInputResultMap.delete(entry.key);
           delete selectedBuildname[entry.key];
         }
       }
