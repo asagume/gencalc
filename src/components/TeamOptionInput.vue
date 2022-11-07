@@ -2,20 +2,6 @@
   <fieldset class="team-option">
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
-        <legend class="supporter" v-if="false">
-          <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
-          <label class="toggle-switch unfold" :for="'supporter-' + supporter">
-            <span>{{ displayName(supporter) }}</span>
-          </label>
-          <template v-if="builddataSelectable(supporter)">
-            <span class="builddata-selector" @click="
-              builddataSelectorVisible[supporter] = !builddataSelectorVisible[supporter]
-            ">
-              <span class="material-symbols-outlined"> settings </span>
-            </span>
-          </template>
-        </legend>
         <div class="left">
           <div :class="'supporter-else' + supporterOptionSelectedClass(supporter)">
             <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
@@ -42,6 +28,20 @@
                 </option>
               </select>
             </label>
+          </div>
+          <div class="equipment">
+            <div class="with-tooltip">
+              <img :src="weaponIconSrc(supporter)" alt="weapon" />
+              <span class="tooltip">{{ weaponName(supporter) }}</span>
+            </div>
+            <div class="with-tooltip">
+              <img :src="artifactSetIconSrc(supporter, 0)" alt="artifact set" />
+              <span class="tooltip">{{ artifactSetName(supporter, 0) }}</span>
+            </div>
+            <div class="with-tooltip">
+              <img :src="artifactSetIconSrc(supporter, 1)" alt="artifact set" />
+              <span class="tooltip">{{ artifactSetName(supporter, 1) }}</span>
+            </div>
           </div>
           <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
             <input type="checkbox" v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
@@ -133,12 +133,13 @@ import {
   makeDefaultBuildname,
   makeBuildStorageKey,
   TSupporterInput,
-SUPPORTER_INPUT_TEMPLATE,
+  SUPPORTER_INPUT_TEMPLATE,
 } from "@/input";
 import {
   CHARACTER_MASTER,
   ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
+  IMG_SRC_DUMMY,
   TCharacterKey,
   TEAM_OPTION_MASTER_LIST,
 } from "@/master";
@@ -581,7 +582,7 @@ export default defineComponent({
     }
 
     const buildnameList = (character: string) => {
-      const re = new RegExp("^構成_" + character + "(_|$)");
+      const re = new RegExp("^構成_" + character.replace('(', '\\(').replace(')', '\\)') + "(_|$)");
       const storageKeys = Object.keys(localStorage).filter((s) => re.test(s));
       const list = storageKeys.map((s) => convertBuildname(character, s));
       const defaultBuildname = makeDefaultBuildname(character);
@@ -654,12 +655,52 @@ export default defineComponent({
       onChange();
     });
 
-    const characterIconSrc = (member: string) => {
-      return (CHARACTER_MASTER as any)[member].icon_url;
+    const characterIconSrc = (character: string) => {
+      return (CHARACTER_MASTER as any)[character].icon_url;
     };
 
-    const characterVisionIconSrc = (member: string) => {
-      return (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[member].元素];
+    const characterVisionIconSrc = (character: string) => {
+      return (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[character].元素];
+    };
+
+    const weaponIconSrc = (character: string) => {
+      let result = IMG_SRC_DUMMY;
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.weaponMaster) {
+        result = inputResult.characterInput.weaponMaster.icon_url;
+      }
+      return result;
+    };
+
+    const weaponName = (character: string) => {
+      let result = '';
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.weaponMaster) {
+        result = inputResult.characterInput.weaponMaster.名前;
+      }
+      return result;
+    };
+
+    const artifactSetIconSrc = (character: string, index: number) => {
+      let result = IMG_SRC_DUMMY;
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
+        if (inputResult.characterInput.artifactSetMasters.length > index) {
+          result = inputResult.characterInput.artifactSetMasters[index].icon_url;
+        }
+      }
+      return result;
+    };
+
+    const artifactSetName = (character: string, index: number) => {
+      let result = '';
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
+        if (inputResult.characterInput.artifactSetMasters.length > index) {
+          result = inputResult.characterInput.artifactSetMasters[index].key;
+        }
+      }
+      return result;
     };
 
     return {
@@ -694,6 +735,10 @@ export default defineComponent({
 
       characterIconSrc,
       characterVisionIconSrc,
+      weaponIconSrc,
+      weaponName,
+      artifactSetIconSrc,
+      artifactSetName,
     };
   },
 });
@@ -789,13 +834,26 @@ p.notice {
 
 .builddata-selector {
   display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-right: 5px;
+  width: calc(100% - 190px);
 }
 
 .builddata-selector label {
   width: 100%;
 }
+
+.builddata-selector label select,
+.builddata-selector label select option {
+  width: 100%;
+  background: black;
+  color: blanchedalmond;
+}
+
+.builddata-selector label select option:focus {
+  background: linear-gradient(red, red);
+  color: blanchedalmond;
+}
+
 
 span.builddata-selector .material-symbols-outlined {
   font-size: 2.4rem;
@@ -819,5 +877,15 @@ div.character img.vision {
   position: absolute;
   left: 2px;
   top: 2px;
+}
+
+div.equipment,
+div.with-tooltip {
+  display: inline-block;
+}
+
+div.equipment img {
+  width: 36px;
+  height: 36px;
 }
 </style>
