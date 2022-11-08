@@ -448,7 +448,6 @@ export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
 export const STATS_INPUT_TEMPLATE = {
     statsObj: deepcopy(ステータスTEMPLATE) as TStats,
     statAdjustments: deepcopy(ステータスTEMPLATE) as TStats,
-    statAdjustmentsEx: deepcopy(ステータスTEMPLATE) as TStats,
     enemyMaster: ENEMY_MASTER_LIST[0] as TEnemyEntry,
 };
 for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {
@@ -2049,7 +2048,7 @@ export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string
     return max;
 }
 
-export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any) {
+export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any, teammembers?: string[]) {
     sessionStorage.setItem('character', character);
     if (buildname) {
         sessionStorage.setItem('buildname', buildname);
@@ -2057,10 +2056,13 @@ export function pushBuildinfoToSession(character: TCharacterKey | string, buildn
     if (builddata) {
         sessionStorage.setItem('builddata', JSON.stringify(builddata));
     }
+    if (teammembers) {
+        sessionStorage.setItem('teammembers', JSON.stringify(teammembers));
+    }
 }
 
 export function popBuildinfoFromSession() {
-    const result: [string | undefined, string | undefined, TAnyObject | undefined] = [undefined, undefined, undefined];
+    const result: [string | undefined, string | undefined, TAnyObject | undefined, string[] | undefined] = [undefined, undefined, undefined, undefined];
     const character = sessionStorage.getItem('character');
     if (character) {
         result[0] = character;
@@ -2072,9 +2074,14 @@ export function popBuildinfoFromSession() {
         if (builddata) {
             result[2] = JSON.parse(builddata);
         }
+        const teammembers = sessionStorage.getItem('teammembers');
+        if (teammembers) {
+            result[3] = JSON.parse(teammembers);
+        }
     }
     sessionStorage.removeItem('character');
-    sessionStorage.removeItem('buildname');
     sessionStorage.removeItem('builddata');
+    sessionStorage.removeItem('buildname');
+    sessionStorage.removeItem('teammember');
     return result;
 }

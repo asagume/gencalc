@@ -95,9 +95,6 @@
           <StatsInput :statsInput="statsInput" :category1List="enemyStatsCategory1List"
             :category2List="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments($event)" />
         </div>
-        <div>
-          <EasyStatAdjuster :visible="true" @update:stat-adjustments="updateStatAdjustmentsEx($event)" />
-        </div>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
@@ -232,7 +229,6 @@ import ArtifactSetSelect from "@/components/ArtifactSetSelect.vue";
 import ArtifactDetailInput from "@/components/ArtifactDetailInput.vue";
 import ConditionInput from "@/components/ConditionInput.vue";
 import StatsInput from "@/components/StatsInput.vue";
-import EasyStatAdjuster from "@/components/EasyStatAdjuster.vue";
 import EasyTeamInput from "@/components/EasyTeamInput.vue";
 import ElementalResonanceInput from "@/components/ElementalResonanceInput.vue";
 import TeamOptionInput from "@/components/TeamOptionInput.vue";
@@ -346,7 +342,6 @@ export default defineComponent({
     ArtifactDetailInput,
     ConditionInput,
     StatsInput,
-    EasyStatAdjuster,
     EasyTeamInput,
     ElementalResonanceInput,
     TeamOptionInput,
@@ -460,6 +455,7 @@ export default defineComponent({
     const optionInputTabRef = ref(1);
     const ownListToggle1Ref = ref(false);
     const ownListToggle2Ref = ref(false);
+    const enableClearLocalStorage = ref(false);
 
     async function updateOptionInputSupporter(key: string) {
       const savedSupporter = savedSupporters.filter(s => s.key == key);
@@ -630,6 +626,108 @@ export default defineComponent({
       characterInputRea.removeDisabled = true;
     };
 
+    /** チーム編成に依存するオプションの値を調整します */
+    async function updateConditionByTeamMembers() {
+      const teamMembers = optionInputRea?.teamMembers;
+      if (!teamMembers || teamMembers.length === 0) return;
+
+      const myVision = characterInputRea.characterMaster.元素;
+      const teamElements: TAnyObject = {};
+      teamElements[myVision] = 1;
+      teamMembers.forEach(entry => {
+        const vision = CHARACTER_MASTER[entry as TCharacterKey].元素;
+        if (vision in teamElements) {
+          teamElements[vision]++;
+        } else {
+          teamElements[vision] = 1;
+        }
+      });
+
+      // キャラクターのオプションを調整します
+      if (characterInputRea.character == '夜蘭') {
+        conditionInputRea.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
+      } else if (characterInputRea.character == '雲菫') {
+        conditionInputRea.conditionValues['独立嶄然'] = Object.keys(teamElements).length - 1;
+      } else if (characterInputRea.character == 'ゴロー') {
+        const geoCount = Math.min(3, teamElements[myVision]);
+        conditionInputRea.conditionValues['犬勇·忠に厚きこと山の如く 岩元素ダメージ 会心ダメージ'] = geoCount;
+      }
+
+      // 武器のオプションを調整します
+      if (['千岩古剣', '千岩長槍'].includes(characterInputRea.weapon)) {
+        let liyueCount = 0;
+        if (['璃月港'].includes(characterInputRea.characterMaster.region)) {
+          liyueCount++;
+        }
+        for (const entry of teamMembers.filter(s => s)) {
+          const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
+          if (characterDetail.region) {
+            if (['璃月港'].includes(characterDetail.region)) {
+              liyueCount++;
+            }
+          }
+        }
+        const conditionKey = '[' + characterInputRea.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
+        conditionInputRea.conditionValues[conditionKey] = liyueCount;
+      } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(characterInputRea.weapon)) {
+        let totalEnergyCost = 0;
+        for (const entry of teamMembers.filter(s => s)) {
+          const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
+          if ('元素エネルギー' in characterDetail.元素爆発) {
+            totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
+          }
+        }
+        if (totalEnergyCost) {
+          conditionInputRea.conditionValues['チーム全員の元素エネルギー上限の合計'] = totalEnergyCost;
+        }
+      }
+
+      const sameCount = teamElements[myVision] - 1;
+      const otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
+      conditionInputRea.conditionValues['チーム内 同じ元素のキャラクター'] = sameCount;
+      conditionInputRea.conditionValues['チーム内 異なる元素のキャラクター'] = otherCount;
+
+      // 元素共鳴を調整します
+      const newElementResonance: TConditionValues = {};
+      const resonanceElementArr: string[] = Object.keys(teamElements).filter(s => teamElements[s] >= 2);
+      if (optionInputRea.teamMembers.length == 3) {
+        if (resonanceElementArr.length > 1) {
+          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
+          newElementResonance[resonanceElementArr[1] + '元素共鳴'] = true;
+        } else if (resonanceElementArr.length > 0) {
+          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
+        } else {
+          newElementResonance['元素共鳴なし'] = true;
+        }
+      } else if (resonanceElementArr.length > 0) {
+        const tempArr: string[] = [resonanceElementArr[0] + '元素共鳴'];
+        const restMemberElementArr = Object.keys(teamElements).filter(s => teamElements[s] == 1);
+        const currentElementArr = Object.keys(optionInputRea.elementalResonance.conditionValues).filter(s => optionInputRea.elementalResonance.conditionValues[s] && s != '元素共鳴なし').map(s => s.replace(/元素共鳴$/, ''));
+        currentElementArr.forEach(element => {
+          if (restMemberElementArr.includes(element)) {
+            tempArr.push(element + '元素共鳴');
+          }
+        });
+        if (tempArr.length < 2) {
+          ALL_ELEMENTS.forEach(element => {
+            const resonance = element + '元素共鳴';
+            if (optionInputRea.elementalResonance.conditionValues[resonance]) {
+              if (!tempArr.includes(resonance)) {
+                tempArr.push(resonance);
+              }
+            }
+          });
+        }
+        tempArr.forEach(resonance => {
+          newElementResonance[resonance] = true;
+        })
+      }
+      if (!_.isEqual(newElementResonance, optionInputRea.elementalResonance.conditionValues)) {
+        overwriteObject(optionInputRea.elementalResonance.conditionValues, newElementResonance);
+        elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
+      }
+    }
+
     /** おすすめセットを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
     const updateRecommendation = async (recommendation: TRecommendation) => {
       console.debug("updateRecommendation", recommendation);
@@ -670,6 +768,8 @@ export default defineComponent({
         artifactScoringStats.splice(0, artifactScoringStats.length, ...work);
         artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
       }
+      // チーム編成を反映します
+      updateConditionByTeamMembers();
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
       // 武器のダメージ計算式を再抽出します
@@ -761,7 +861,7 @@ export default defineComponent({
     };
 
     /** キャラクターを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
-    const updateCharacter = async function (character: TCharacterKey) {
+    const updateCharacter = async function (character: TCharacterKey, teamMembers?: string[]) {
       if (
         !characterInputRea ||
         !recommendationListRea ||
@@ -818,7 +918,11 @@ export default defineComponent({
       );
       recommendationRef.value = recommendationListRea[0];
       characterInputRea.recommendationSelectedIndex = 0;
-      optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length);
+      if (teamMembers) {
+        optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length, ...teamMembers);
+      } else {
+        optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length);  // チーム編成を初期化します（解散）
+      }
       await updateRecommendation(recommendationRef.value);
 
       await nextTick();
@@ -1213,15 +1317,6 @@ export default defineComponent({
       );
     };
 
-    const updateStatAdjustmentsEx = (argStatAdjustments?: any) => {
-      if (argStatAdjustments) {
-        Object.keys(argStatAdjustments).forEach((key) => {
-          statsInput.statAdjustmentsEx[key] = argStatAdjustments[key];
-        });
-      }
-      updateStatAdjustments();
-    };
-
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
     const updateElementalResonance = (conditionValues: TConditionValues) => {
       if (conditionValues && Object.keys(conditionValues).length) {
@@ -1327,57 +1422,10 @@ export default defineComponent({
       })
     };
 
-    const updateTeamMembers = (teamMembers: string[]) => {
+    const updateTeamMembers = async (teamMembers: string[]) => {
       optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length, ...teamMembers);
-      // 元素共鳴を調整します
-      const newElementResonance: TConditionValues = {};
-      const elementCountObj: TAnyObject = {};
-      elementCountObj[characterInputRea.characterMaster.元素] = 1;
-      optionInputRea.teamMembers.forEach(member => {
-        const characterMaster = CHARACTER_MASTER[member as TCharacterKey];
-        if (characterMaster.元素 in elementCountObj) {
-          elementCountObj[characterMaster.元素]++;
-        } else {
-          elementCountObj[characterMaster.元素] = 1;
-        }
-      });
-      const resonanceElementArr: string[] = Object.keys(elementCountObj).filter(s => elementCountObj[s] >= 2);
-      if (optionInputRea.teamMembers.length == 3) {
-        if (resonanceElementArr.length > 1) {
-          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
-          newElementResonance[resonanceElementArr[1] + '元素共鳴'] = true;
-        } else if (resonanceElementArr.length > 0) {
-          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
-        } else {
-          newElementResonance['元素共鳴なし'] = true;
-        }
-      } else if (resonanceElementArr.length > 0) {
-        const tempArr: string[] = [resonanceElementArr[0] + '元素共鳴'];
-        const restMemberElementArr = Object.keys(elementCountObj).filter(s => elementCountObj[s] == 1);
-        const currentElementArr = Object.keys(optionInputRea.elementalResonance.conditionValues).filter(s => optionInputRea.elementalResonance.conditionValues[s] && s != '元素共鳴なし').map(s => s.replace(/元素共鳴$/, ''));
-        currentElementArr.forEach(element => {
-          if (restMemberElementArr.includes(element)) {
-            tempArr.push(element + '元素共鳴');
-          }
-        });
-        if (tempArr.length < 2) {
-          ALL_ELEMENTS.forEach(element => {
-            const resonance = element + '元素共鳴';
-            if (optionInputRea.elementalResonance.conditionValues[resonance]) {
-              if (!tempArr.includes(resonance)) {
-                tempArr.push(resonance);
-              }
-            }
-          });
-        }
-        tempArr.forEach(resonance => {
-          newElementResonance[resonance] = true;
-        })
-      }
-      if (!_.isEqual(newElementResonance, optionInputRea.elementalResonance.conditionValues)) {
-        overwriteObject(optionInputRea.elementalResonance.conditionValues, newElementResonance);
-        elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
-      }
+
+      await updateConditionByTeamMembers();
 
       calculateStats(
         statsInput,
@@ -1410,13 +1458,12 @@ export default defineComponent({
     };
 
     /** コンフィグレーションが変更されました */
-    const updateConfigurationInput = (configurationInput: TAnyObject) => {
-      console.debug(configurationInput);
-      // overwriteObject(configurationInputRea, configurationInput);
-      if (configurationInput.全武器解放) {
+    const updateConfigurationInput = (argConfigurationInput: TAnyObject) => {
+      console.debug(argConfigurationInput);
+      if (argConfigurationInput.全武器解放) {
         console.log("全武器解放");
       }
-      if (configurationInput.聖遺物サブ効果計算停止) {
+      if (argConfigurationInput.聖遺物サブ効果計算停止) {
         artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
       }
     };
@@ -1428,13 +1475,12 @@ export default defineComponent({
       characterInputRea.saveDisabled = false;
     };
 
-    updateCharacter(characterInputRea.character);
-
-    const enableClearLocalStorage = ref(false);
     const clearLocalStorage = () => {
       localStorage.clear();
       enableClearLocalStorage.value = false;
     };
+
+    updateCharacter(characterInputRea.character, optionInputRea.teamMembers);
 
     return {
       displayName,
@@ -1511,7 +1557,6 @@ export default defineComponent({
       updateArtifactDetail,
       openCharacterInfo,
       updateStatAdjustments,
-      updateStatAdjustmentsEx,
       updateElementalResonance,
       updateMiscOption,
       updateTeamOption,
