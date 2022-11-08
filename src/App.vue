@@ -635,7 +635,8 @@ export default defineComponent({
       const teamMembers = optionInputRea?.teamMembers;
       if (!teamMembers || teamMembers.length === 0) return;
 
-      const myVision = CHARACTER_MASTER[characterInputRea.character as TCharacterKey].元素;
+      const character = characterInputRea.character;
+      const myVision = CHARACTER_MASTER[character as TCharacterKey].元素;
       const teamElements: TAnyObject = {};
       teamElements[myVision] = 1;
       teamMembers.forEach(entry => {
@@ -688,6 +689,20 @@ export default defineComponent({
         const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
         conditionInputRea.conditionValues[key2] = (teamElements[vision] ?? 0) - (vision == myVision ? 1 : 0);
       });
+      if (character === 'ゴロー') {
+        const key = '[チーム]岩元素キャラクター';
+        let count = conditionInputRea.conditionValues[key];
+        conditionInputRea.conditionValues[key] = Math.min(3, count);
+      } else if (character === 'ナヒーダ') {
+        ['炎', '水', '雷'].forEach(vision => {
+          const key = '[チーム]' + vision + '元素キャラクター';
+          let count = conditionInputRea.conditionValues[key];
+          if (characterInputRea.命ノ星座 >= 1) {
+            count++;
+          }
+          conditionInputRea.conditionValues[key] = Math.min(2, count);
+        });
+      }
 
       // 元素共鳴を調整します
       const newElementResonance: TConditionValues = {};
@@ -729,7 +744,7 @@ export default defineComponent({
         elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
       }
 
-      console.log(characterInputRea.characterMaster,  conditionInputRea.conditionValues);
+      console.log(characterInputRea.characterMaster, conditionInputRea.conditionValues);
     }
 
     /** おすすめセットを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
