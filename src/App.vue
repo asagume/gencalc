@@ -695,12 +695,18 @@ export default defineComponent({
         conditionInputRea.conditionValues[key] = Math.min(3, count);
       } else if (character === 'ナヒーダ') {
         ['炎', '水', '雷'].forEach(vision => {
-          const key = '[チーム]' + vision + '元素キャラクター';
-          let count = conditionInputRea.conditionValues[key];
+          const key1 = '[チーム]' + vision + '元素キャラクター';
+          let count1 = conditionInputRea.conditionValues[key1];
           if (characterInputRea.命ノ星座 >= 1) {
-            count++;
+            count1++;
           }
-          conditionInputRea.conditionValues[key] = Math.min(2, count);
+          conditionInputRea.conditionValues[key1] = Math.min(2, count1);
+          const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
+          let count2 = conditionInputRea.conditionValues[key2];
+          if (characterInputRea.命ノ星座 >= 1) {
+            count2++;
+          }
+          conditionInputRea.conditionValues[key2] = Math.min(2, count2);
         });
       }
 
