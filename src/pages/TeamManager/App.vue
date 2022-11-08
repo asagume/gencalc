@@ -103,7 +103,7 @@ export default defineComponent({
         id: index,
         name: "",
         buildname: undefined,
-        savedata: undefined,
+        builddata: undefined,
         tags: [],
       };
     }
@@ -123,7 +123,7 @@ export default defineComponent({
     function initializeMember(member: TMember) {
       member.name = "";
       member.buildname = undefined;
-      member.savedata = undefined;
+      member.builddata = undefined;
     }
 
     function initializeTeam(team: TTeam) {
@@ -155,11 +155,11 @@ export default defineComponent({
       });
     };
 
-    const savedataStr = computed(() => {
+    const builddataStr = computed(() => {
       const work: TTeam[] = deepcopy(teams);
       work.forEach((team) => {
         team.members.forEach((member) => {
-          member.savedata = undefined;
+          member.builddata = undefined;
         });
       });
       return JSON.stringify(work);
@@ -167,11 +167,11 @@ export default defineComponent({
     const saveddataStr = ref("");
 
     const saveOnClick = () => {
-      localStorage.setItem("teams", savedataStr.value);
-      saveddataStr.value = savedataStr.value;
+      localStorage.setItem("teams", builddataStr.value);
+      saveddataStr.value = builddataStr.value;
     };
 
-    const saveDisabled = computed(() => savedataStr.value == saveddataStr.value);
+    const saveDisabled = computed(() => builddataStr.value == saveddataStr.value);
 
     const numberOfTeamsOnChange = () => {
       if (numberOfTeams.value > teams.length) {
@@ -205,7 +205,7 @@ export default defineComponent({
                 } else {
                   members[j].buildname = undefined;
                 }
-                members[j].savedata = undefined; // TODO
+                members[j].builddata = undefined; // TODO
                 if (work[i].members[j].tags) {
                   members[j].tags = work[i].members[j].tags;
                 } else {
@@ -230,7 +230,7 @@ export default defineComponent({
             const workMember = makeBlankMember(team.members[i].id);
             workMember.name = newMembers[i].name;
             workMember.buildname = newMembers[i].buildname;
-            workMember.savedata = undefined; // TODO
+            workMember.builddata = undefined; // TODO
             workMember.tags.splice(0, workMember.tags.length, ...newMembers[i].tags);
             workMembers.push(workMember);
           }

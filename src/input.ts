@@ -682,6 +682,23 @@ export function makePrioritySubstatValueList(
     return result;
 }
 
+export function makeEasyInputSubstatValueList(
+    substat: TArtifactSubKey
+) {
+    const result: number[] = [];
+    if (substat && substat in ARTIFACT_SUB_MASTER) {
+        const valueArr = ARTIFACT_SUB_MASTER[substat];
+        for (let i = 0; i < valueArr.length; i++) {
+            result.push(valueArr[i]);
+            if (i < valueArr.length - 1) {
+                const diff = valueArr[i + 1] - valueArr[i];
+                result.push(valueArr[i] + diff / 2);
+            }
+        }
+    }
+    return result;
+}
+
 /** おすすめセットをロードします */
 export async function loadRecommendation(
     characterInput: TCharacterInput,
@@ -2031,7 +2048,7 @@ export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string
     return max;
 }
 
-export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any) {
+export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any, teammembers?: string[]) {
     sessionStorage.setItem('character', character);
     if (buildname) {
         sessionStorage.setItem('buildname', buildname);
@@ -2039,10 +2056,13 @@ export function pushBuildinfoToSession(character: TCharacterKey | string, buildn
     if (builddata) {
         sessionStorage.setItem('builddata', JSON.stringify(builddata));
     }
+    if (teammembers) {
+        sessionStorage.setItem('teammembers', JSON.stringify(teammembers));
+    }
 }
 
 export function popBuildinfoFromSession() {
-    const result: [string | undefined, string | undefined, TAnyObject | undefined] = [undefined, undefined, undefined];
+    const result: [string | undefined, string | undefined, TAnyObject | undefined, string[] | undefined] = [undefined, undefined, undefined, undefined];
     const character = sessionStorage.getItem('character');
     if (character) {
         result[0] = character;
@@ -2054,9 +2074,15 @@ export function popBuildinfoFromSession() {
         if (builddata) {
             result[2] = JSON.parse(builddata);
         }
+        const teammembers = sessionStorage.getItem('teammembers');
+        if (teammembers) {
+            result[3] = JSON.parse(teammembers);
+        }
+        console.log(character, buildname, builddata, teammembers);
     }
     sessionStorage.removeItem('character');
-    sessionStorage.removeItem('buildname');
     sessionStorage.removeItem('builddata');
+    sessionStorage.removeItem('buildname');
+    sessionStorage.removeItem('teammembers');
     return result;
 }

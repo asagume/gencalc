@@ -41,7 +41,7 @@ import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENT_IMG_SRC, getChara
 import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import { characterMaster, getBuilddataFromStorage, TMember, TTeam } from "./team";
 import MemberItem from "./MemberItem.vue";
-import { calculateArtifactStats, calculateArtifactStatsMain, calculateDamageResult, calculateFormulaArray, calculateStats } from "@/calculate";
+import { ALL_ELEMENTS, calculateArtifactStats, calculateArtifactStatsMain, calculateDamageResult, calculateFormulaArray, calculateStats } from "@/calculate";
 import { deepcopy, overwriteObject } from "@/common";
 import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
@@ -263,16 +263,6 @@ export default defineComponent({
         })
       }
 
-      // キャラクター
-      if (characterInput.character == '夜蘭') {
-        conditionInput.conditionValues['先後の決め手'] = Object.keys(teamElements).length;
-      } else if (characterInput.character == '雲菫') {
-        conditionInput.conditionValues['独立嶄然'] = Object.keys(teamElements).length - 1;
-      } else if (characterInput.character == 'ゴロー') {
-        const geoCount = Math.min(3, teamElements[myVision]);
-        conditionInput.conditionValues['犬勇·忠に厚きこと山の如く 岩元素ダメージ 会心ダメージ'] = geoCount;
-      }
-
       // 武器
       if (['千岩古剣', '千岩長槍'].includes(characterInput.weapon)) {
         if (props.team.members) {
@@ -303,10 +293,18 @@ export default defineComponent({
         }
       }
 
-      let sameCount = (teamElements[myVision] - 1);
-      let otherCount = Object.keys(teamElements).filter(s => s != myVision).map(s => teamElements[s]).reduce((a, b) => a + b);
-      conditionInput.conditionValues['チーム内 同じ元素のキャラクター'] = sameCount;
-      conditionInput.conditionValues['チーム内 異なる元素のキャラクター'] = otherCount;
+      const sameCount = teamElements[myVision] - 1;
+      const otherElements = Object.keys(teamElements).filter(s => s != myVision);
+      const otherCount = otherElements.length ? otherElements.map(s => teamElements[s]).reduce((a, b) => a + b) : 0;
+      conditionInput.conditionValues['[チーム]同じ元素のキャラクター'] = sameCount;
+      conditionInput.conditionValues['[チーム]異なる元素のキャラクター'] = otherCount;
+      conditionInput.conditionValues['[チーム]キャラクターの元素タイプ'] = Object.keys(teamElements).length - 1; // requiredなので1減らします
+      ALL_ELEMENTS.forEach(vision => {
+        const key1 = '[チーム]' + vision + '元素キャラクター';
+        conditionInput.conditionValues[key1] = teamElements[vision] ?? 0;
+        const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
+        conditionInput.conditionValues[key2] = (teamElements[vision] ?? 0) - (vision == myVision ? 1 : 0);
+      });
 
       // 元素共鳴
       if (elementalResonance.value) {

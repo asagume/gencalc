@@ -150,6 +150,7 @@ async function main() {
     let character;
     let buildname: string | undefined;
     let builddata: any | undefined;
+    let teammembers: string[] | undefined;
     if (searchParams.has('allin')) {
         const allin = searchParams.get('allin');
         if (allin) {
@@ -159,7 +160,7 @@ async function main() {
             console.error('query strings are not valid!');
         }
     } else {
-        [character, buildname, builddata] = popBuildinfoFromSession();
+        [character, buildname, builddata, teammembers] = popBuildinfoFromSession();
         if (!character) {
             character = getCharacterByBirthday();
         }
@@ -174,6 +175,9 @@ async function main() {
     if (!recommendation) {
         recommendation = recommendationList[0];
     }
+    if (teammembers) {
+        optionInput.teamMembers = teammembers;
+    }
     await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendationList[0].build);
 
     createApp(App, {
@@ -183,6 +187,7 @@ async function main() {
         recommendationList: recommendationList,
         recommendation: recommendation,
         urldata: builddata,
+        teamMembers: optionInput.teamMembers,
     }).use(i18n).mount('#app')
 }
 

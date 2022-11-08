@@ -5,7 +5,7 @@ export type TMember = {
     id: number;
     name: string;
     buildname: string | undefined;
-    savedata: any | undefined;
+    builddata: any | undefined;
     tags: string[],
 };
 
@@ -50,4 +50,3 @@ export function getBuilddataFromStorage(character: string, buildname?: string) {
     if (storageValue) result = JSON.parse(storageValue);
     return result;
 }
-

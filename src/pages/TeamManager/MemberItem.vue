@@ -72,8 +72,7 @@ export default defineComponent({
     const extraControl = ref("locate");
 
     const watchCount = ref(0);
-    watch(props, async (newVal) => {
-      console.log(newVal.statsObj);
+    watch(props, () => {
       watchCount.value++;
     });
 
@@ -95,23 +94,9 @@ export default defineComponent({
         ? (ELEMENT_IMG_SRC as any)[characterMaster.value.元素]
         : IMG_SRC_DUMMY
     );
-    const constellation = computed(() => (savedata.value ? savedata.value.命ノ星座 : ""));
-    const imgWeaponSrc = computed(() =>
-      weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY
-    );
-    const weaponName = computed(() =>
-      weaponMaster.value ? weaponMaster.value.key : ''
-    );
-    const imgArtifactSetSrc = (index: number) =>
-      artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
-    const artifactSetName = (index: number) =>
-      artifactSetMasters.value[index]?.key ?? '';
+    const constellation = computed(() => (builddata.value ? builddata.value.命ノ星座 : ""));
 
-    const characterOnClick = () => {
-      context.emit("click:character");
-    };
-
-    const savedata = computed(() => {
+    const builddata = computed(() => {
       let result = undefined;
       const character = props.member.name;
       if (character && props.member.buildname) {
@@ -122,31 +107,45 @@ export default defineComponent({
 
     const weaponMaster = computed((): TWeaponEntry => {
       let result = undefined;
-      if (savedata.value) {
-        const weapon = savedata.value.武器;
+      if (builddata.value) {
+        const weapon = builddata.value.武器;
         if (weapon && characterMaster.value) {
           result = (WEAPON_MASTER as any)[characterMaster.value.武器][weapon];
         }
       }
       return result;
     });
+    const imgWeaponSrc = computed(() =>
+      weaponMaster.value ? weaponMaster.value.icon_url : IMG_SRC_DUMMY
+    );
+    const weaponName = computed(() =>
+      weaponMaster.value ? weaponMaster.value.key : ''
+    );
 
     const artifactSetMasters = computed((): TArtifactSetEntry[] => {
       const result: TArtifactSetEntry[] = [];
-      if (savedata.value) {
+      if (builddata.value) {
         for (let i = 0; i < 2; i++) {
           const key = "聖遺物セット効果" + (i + 1);
-          let value = savedata.value[key] ?? "NONE";
+          let value = builddata.value[key] ?? "NONE";
           result.push((ARTIFACT_SET_MASTER as any)[value]);
         }
       }
       return result;
     });
+    const imgArtifactSetSrc = (index: number) =>
+      artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
+    const artifactSetName = (index: number) =>
+      artifactSetMasters.value[index]?.key ?? '';
+
+    const characterOnClick = () => {
+      context.emit("click:character");
+    };
 
     const statValue = computed(() => {
       watchCount.value;
       let result = "-";
-      if (savedata.value) {
+      if (builddata.value) {
         let stat = props.displayStat;
         if (props.statsObj && stat) {
           if (stat === "会心率/ダメージ") {
@@ -163,7 +162,9 @@ export default defineComponent({
 
     const locate = () => {
       const member = props.member;
-      pushBuildinfoToSession(member.name, props.member.buildname);
+      const teammembers = props.members?.filter(s => s != member.name);
+      console.warn(props.members, teammembers);
+      pushBuildinfoToSession(member.name, member.buildname, undefined, teammembers);
       window.open("./", "_blank");
     };
 

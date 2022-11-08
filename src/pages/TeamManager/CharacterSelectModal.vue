@@ -58,7 +58,7 @@ export default defineComponent({
           id: i,
           name: props.members[i].name,
           buildname: props.members[i].buildname,
-          savedata: props.members[i].savedata,
+          builddata: props.members[i].builddata,
           tags: deepcopy(props.members[i].tags),
         });
       }
