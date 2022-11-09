@@ -74,6 +74,7 @@
   </p>
 </template>
 <script lang="ts">
+import _ from "lodash";
 import draggable from "vuedraggable";
 import {
   TDamageResult,
@@ -147,6 +148,18 @@ export default defineComponent({
       return result;
     });
 
+    function getCritFromResultEntry(item: TDamageResultEntry) {
+      let critRate = 0;
+      let critDmg = 0;
+      if (item[2] && item[3] && item[4]) {
+        critRate = item[2] - item[4]; // 期待値 - 非会心
+        critRate /= item[3] - item[4]; // 会心 - 非会心
+        critRate = Math.round(critRate * 1000) / 10;
+        critDmg = Math.round((item[3] / item[4] - 1) * 1000) / 10;
+      }
+      return [critRate, critDmg];
+    }
+
     const damageResultEntryList = (
       customizedEntry: TCustomizedDamageResultEntry
     ): TDamageResultEntry[] => {
@@ -164,20 +177,19 @@ export default defineComponent({
           null,
           null,
         ]);
-      } else if (category == "通常攻撃") {
-        result = props.damageResult[category].filter(
-          (s: TDamageResultEntry) =>
-            !s[0].startsWith("非表示") &&
-            !s[0].endsWith("合計ダメージ") &&
-            s[5]?.endsWith("ダメージ")
-        );
       } else {
-        result = (props.damageResult[category] as any).filter(
-          (s: TDamageResultEntry) =>
-            !s[0].startsWith("非表示") &&
-            !s[0].endsWith("合計ダメージ") &&
-            s[5]?.endsWith("ダメージ")
-        );
+        for (let entry of props.damageResult[category] as TDamageResultEntry[]) {
+          if (entry[0].startsWith('非表示')) continue;
+          if (entry[0].endsWith('合計ダメージ')) continue;
+          if (entry[5]?.endsWith('ダメージ')) {
+            if (entry[0].startsWith('法獣の灼眼')) {  // 会心した時の追加なので
+              entry = _.cloneDeep(entry);
+              const [critRate] = getCritFromResultEntry(entry);
+              entry[2] = entry[2] * critRate / 100;
+            }
+            result.push(entry);
+          }
+        }
       }
       return result;
     };
