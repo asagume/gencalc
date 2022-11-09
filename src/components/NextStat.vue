@@ -5,7 +5,7 @@
                 <legend @click="toggleSwitch = !toggleSwitch">&nbsp; {{ displayName("NEXT STEP") }} &nbsp;</legend>
                 <div class="right">
                     <select class="evaluation-item" v-model="evaluationItem" @change="evaluationItemOnChange">
-                        <option v-for="item in evaluationItemList" :key="item" :value="item">
+                        <option v-for="(item, index) in evaluationItemList" :key="index" :value="item">
                             {{ item.replace('.', ' ') }}
                         </option>
                     </select>
