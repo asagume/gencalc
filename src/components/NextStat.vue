@@ -12,7 +12,7 @@
                 </div>
                 <table class="next-stat">
                     <template v-for="row in nextStatRows" :key="row[0]">
-                        <tr v-if="row[4]">
+                        <tr v-if="row[3] || row[4]">
                             <th class="name">{{ displayName(row[0]) }}</th>
                             <td class="step">
                                 <select v-model="row[2]" @change="nextStatStepOnChange(row)">
@@ -25,7 +25,7 @@
                                 {{ Math.round(row[4] * 1000) / 1000 + '%' }}
                             </td>
                             <td class="count">
-                                <input type="range" min="-5" max="5" v-model="row[3]" @change="nextStatOnChange">
+                                <input type="range" min="0" max="5" v-model="row[3]" @change="nextStatOnChange">
                             </td>
                             <td>
                                 {{ displayNextStatValue(row) }}
