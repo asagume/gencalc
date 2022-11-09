@@ -75,11 +75,11 @@
         </div>
         <div v-show="statInputTabRef == 1">
           <StatsInput :statsInput="statsInput" :category1List="characterStats1Category1List"
-            :category2List="characterStats1Category2List" @update:stat-adjustments="updateStatAdjustments($event)" />
+            :category2List="characterStats1Category2List" @update:stat-adjustments="updateStatAdjustments" />
         </div>
         <div v-show="statInputTabRef == 2">
           <StatsInput :statsInput="statsInput" :category1List="characterStats2Category1List"
-            :category2List="characterStats2Category2List" @update:stat-adjustments="updateStatAdjustments($event)" />
+            :category2List="characterStats2Category2List" @update:stat-adjustments="updateStatAdjustments" />
         </div>
         <div v-show="statInputTabRef == 3">
           <label class="enemy">
@@ -90,10 +90,15 @@
             </select>
           </label>
           <label class="enemy-level">Lv.
-            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" @change="updateStatAdjustments" />
+            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" @change="updateStatAdjustments()" />
           </label>
           <StatsInput :statsInput="statsInput" :category1List="enemyStatsCategory1List"
-            :category2List="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments($event)" />
+            :category2List="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments" />
+        </div>
+        <div>
+          <NextStat :visible="true" :characterInput="characterInputRea" :artifactDetailInput="artifactDetailInputRea"
+            :conditionInput="conditionInputRea" :optionInput="optionInputRea" :statsInput="statsInput"
+            :damageResult="damageResult" @update:stat-adjustments="updateNextStatAdjustments"   />
         </div>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
@@ -230,6 +235,7 @@ import ArtifactSetSelect from "@/components/ArtifactSetSelect.vue";
 import ArtifactDetailInput from "@/components/ArtifactDetailInput.vue";
 import ConditionInput from "@/components/ConditionInput.vue";
 import StatsInput from "@/components/StatsInput.vue";
+import NextStat from "@/components/NextStat.vue";
 import EasyTeamInput from "@/components/EasyTeamInput.vue";
 import ElementalResonanceInput from "@/components/ElementalResonanceInput.vue";
 import TeamOptionInput from "@/components/TeamOptionInput.vue";
@@ -344,6 +350,7 @@ export default defineComponent({
     ArtifactDetailInput,
     ConditionInput,
     StatsInput,
+    NextStat,
     EasyTeamInput,
     ElementalResonanceInput,
     TeamOptionInput,
@@ -1309,7 +1316,7 @@ export default defineComponent({
     });
 
     /** ステータス補正値が変更されました。ステータスおよびダメージを再計算します */
-    const updateStatAdjustments = (argStatAdjustments?: any) => {
+    const updateStatAdjustments = (argStatAdjustments?: TStats) => {
       if (argStatAdjustments) {
         Object.keys(argStatAdjustments).forEach((key) => {
           statsInput.statAdjustments[key] = argStatAdjustments[key];
@@ -1339,6 +1346,14 @@ export default defineComponent({
         conditionInputRea as any,
         statsInput
       );
+    };
+
+    const updateNextStatAdjustments = (argStatAdjustments?: TStats) => {
+      if (argStatAdjustments) {
+        statsInput.statAdjustmentsEx = argStatAdjustments;
+        console.log(argStatAdjustments);
+        updateStatAdjustments();
+      }
     };
 
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
@@ -1583,6 +1598,7 @@ export default defineComponent({
       updateArtifactDetail,
       openCharacterInfo,
       updateStatAdjustments,
+      updateNextStatAdjustments,
       updateElementalResonance,
       updateMiscOption,
       updateTeamOption,

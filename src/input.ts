@@ -303,7 +303,7 @@ export const 元素反応TEMPLATE = {
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
 
-export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null, number | null];    // 名前, 元素, 期待値, 会心, 非会心, 種類, HIT数, ダメージバフ, 敵の防御補正
+export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null, number | null];    // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正
 export type TDamageResult = {
     元素反応: TDamageResultElementalReaction,
     通常攻撃: TDamageResultEntry[],
@@ -448,6 +448,7 @@ export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
 export const STATS_INPUT_TEMPLATE = {
     statsObj: deepcopy(ステータスTEMPLATE) as TStats,
     statAdjustments: deepcopy(ステータスTEMPLATE) as TStats,
+    statAdjustmentsEx: {} as TStats,
     enemyMaster: ENEMY_MASTER_LIST[0] as TEnemyEntry,
 };
 for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {

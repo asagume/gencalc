@@ -205,6 +205,9 @@ export const calculateStats = function (
         Object.keys(statsInput.statAdjustments).filter(s => !ステータスチーム内最高ARRAY.includes(s)).forEach(stat => {
             if (stat in workStatsObj) workStatsObj[stat] += statsInput.statAdjustments[stat];
         });
+        Object.keys(statsInput.statAdjustmentsEx).filter(s => !ステータスチーム内最高ARRAY.includes(s)).forEach(stat => {
+            if (stat in workStatsObj) workStatsObj[stat] += statsInput.statAdjustmentsEx[stat];
+        });
 
         // キャラクターの基礎ステータスと突破ステータスを計上します
         for (const stat of Object.keys(characterMaster['ステータス'])) {

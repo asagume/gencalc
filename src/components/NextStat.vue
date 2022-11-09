@@ -2,7 +2,7 @@
     <div class="next-step" v-if="visible">
         <template v-if="toggleSwitch">
             <fieldset>
-                <legend @click="toggleSwitch = !toggleSwitch">{{ displayName("NEXT STEP") }}</legend>
+                <legend @click="toggleSwitch = !toggleSwitch">&nbsp; {{ displayName("NEXT STEP") }} &nbsp;</legend>
                 <div class="right">
                     <select class="evaluation-item" v-model="evaluationItem" @change="evaluationItemOnChange">
                         <option v-for="item in evaluationItemList" :key="item" :value="item">
@@ -33,9 +33,7 @@
                         </tr>
                     </template>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="3"></td>
                         <td>
                             <button type="button" @click="resetButtonOnClick"> Reset </button>
                         </td>
@@ -43,9 +41,9 @@
                 </table>
             </fieldset>
         </template>
-        <template v-else>
-            <label @click="toggleSwitch = !toggleSwitch">{{ displayName("NEXT STEP") }}</label>
-        </template>
+        <div v-else>
+            <label @click="toggleSwitch = !toggleSwitch">{{ displayName("+ NEXT STEP +") }}</label>
+        </div>
     </div>
 </template>
   
@@ -75,7 +73,7 @@ export default defineComponent({
     setup(props, context) {
         const { displayName, displayStatValue } = CompositionFunction();
 
-        const NEXT_STAT_ARR = ['HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率'];
+        const NEXT_STAT_ARR = ['HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率', 'HP', '攻撃力', '防御力'];
         const toggleSwitch = ref(false);
         const evaluationItem = ref('');
         const nextStatRows = reactive([] as any[]); // 0:stat, 1:datalist, 2:index, 3:count, 4:evaluation value
@@ -89,6 +87,7 @@ export default defineComponent({
                     if (Array.isArray(damageResultValue)) {
                         for (const key2 of damageResultValue) {
                             if (key2[0].endsWith('合計ダメージ')) continue;
+                            if (!key2[5]?.endsWith('ダメージ')) continue;
                             const name = key1 + '.' + key2[0];
                             result.push(name);
                         }
@@ -141,6 +140,8 @@ export default defineComponent({
             const stat = row[0];
             const step = row[1][row[2]];
             if (step) {
+                const keyArr = evaluationItem.value.split('.');
+                const baseValue = (props.damageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
                 if (stat in workStatsInput.statAdjustmentsEx) {
                     workStatsInput.statAdjustmentsEx[stat] += step;
                 } else {
@@ -148,14 +149,13 @@ export default defineComponent({
                 }
                 calculateStats(workStatsInput, props.characterInput, props.artifactDetailInput, props.conditionInput, props.optionInput);
                 calculateDamageResult(workDamageResult, props.characterInput, props.conditionInput, workStatsInput);
-                workStatsInput.statAdjustmentsEx[stat] -= step;
-                const keyArr = evaluationItem.value.split('.');
                 const newValue = (workDamageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
-                const baseValue = (props.damageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
                 if (newValue.length && baseValue.length) {
                     evaluationValue = (newValue[0][2] / baseValue[0][2]) - 1;
                     evaluationValue *= 100;
                 }
+                console.log(stat, workStatsInput.statAdjustmentsEx[stat], evaluationValue, newValue, baseValue);
+                workStatsInput.statAdjustmentsEx[stat] -= step;
             }
             row[4] = evaluationValue;
         }
@@ -267,22 +267,25 @@ td {
 th.name {
     color: #df8f37;
     text-align: right;
-    width: 20%;
 }
 
 td {
-    text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 15%;
+    text-align: right;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
-td.step {
-    width: 20%;
+td select {
+    min-width: 8rem;
 }
 
 td.count {
-    width: calc(100% / 3);
+    width: calc(100% / 4);
+    min-width: 100px;
+}
+
+td:last-child {
+    width: 6rem;
 }
 
 input[type="range"]+span {
