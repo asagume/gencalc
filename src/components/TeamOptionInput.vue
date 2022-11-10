@@ -3,10 +3,10 @@
     <template v-for="supporter in supporterKeyList" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
         <div class="left">
-          <div :class="'supporter-else' + supporterOptionSelectedClass(supporter)">
-            <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
+          <div :class="'supporter' + supporterOptionSelectedClass(supporter)">
+            <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
               v-model="supporterOpenClose[supporter]" />
-            <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
+            <label class="fold with-tooltip" :for="'supporter-' + supporter">
               <div class="character">
                 <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
                 <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
@@ -65,7 +65,8 @@
         </div>
       </fieldset>
       <template v-else>
-        <div v-show="supporterVisible(supporter)" :class="'supporter-else' + supporterOptionSelectedClass(supporter)">
+        <div v-show="supporterVisible(supporter)"
+          :class="'supporter-else' + supporterOptionSelectedClass(supporter) + elementBgClass(supporter)">
           <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
             v-model="supporterOpenClose[supporter]" />
           <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
@@ -113,6 +114,7 @@
 <script lang="ts">
 import _ from 'lodash';
 import {
+  ALL_ELEMENTS,
   calculateFormulaArray,
   checkConditionMatches,
   makeValidConditionValueArr,
@@ -137,9 +139,11 @@ import {
 } from "@/input";
 import {
   CHARACTER_MASTER,
+  ELEMENT_BG_COLOR_CLASS,
   ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
   IMG_SRC_DUMMY,
+  TCharacterEntry,
   TCharacterKey,
   TEAM_OPTION_MASTER_LIST,
 } from "@/master";
@@ -179,6 +183,7 @@ export default defineComponent({
     } = CompositionFunction();
 
     const supporterKeyList = Object.keys(CHARACTER_MASTER);
+    supporterKeyList.sort((a, b) => ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[a].元素) - ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[b].元素));
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
 
     const damageDetailArr = [] as any[];
@@ -201,6 +206,10 @@ export default defineComponent({
     const builddataSelectorVisible = reactive({} as { [key: string]: boolean });
     const selectedBuildname = reactive({} as { [key: string]: string | null });
     const supporterInputResultMap = reactive(new Map() as Map<string, TSupporterInput>);
+
+    const elementBgClass = (supporter: string) => {
+      return ' ' + (ELEMENT_BG_COLOR_CLASS as any)[(CHARACTER_MASTER as any)[supporter].元素];
+    };
 
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
@@ -314,10 +323,13 @@ export default defineComponent({
     };
 
     async function setupFromCharacterMaster() {
-      for (const character of Object.keys(CHARACTER_MASTER)) {
-        const characterMaster = await getCharacterMasterDetail(character as TCharacterKey);
-        takeMasterTeamOption(character, characterMaster);
+      const list: Promise<void>[] = [];
+      for (const character of supporterKeyList) {
+        list.push(getCharacterMasterDetail(character as TCharacterKey).then(result => {
+          takeMasterTeamOption(character, result);
+        }));
       }
+      await Promise.all(list);
     }
 
     const setupSupporterDamageResult = (savedSupporter: {
@@ -716,6 +728,7 @@ export default defineComponent({
       supporterOptionSelectedClass,
       conditionDisabled,
       displayStatAjustmentList,
+      elementBgClass,
 
       initializeSupporters,
       onChange,
@@ -773,32 +786,9 @@ label {
   width: 20rem;
 }
 
-div.supporter-else {
-  display: inline-block;
-  min-width: 72px;
-  white-space: nowrap;
-  margin-right: 3px;
-  border-radius: 10px;
-}
-
 .fold {
   text-align: center;
   width: 36px;
-}
-
-div.supporter-else label.fold {
-  padding: 0;
-  margin: 2px 3px;
-}
-
-div.supporter-else button {
-  display: inline-block;
-  padding: 0;
-  margin: 0 3px;
-  border: none;
-  background: transparent;
-  vertical-align: middle;
-  color: blanchedalmond;
 }
 
 span.remove {
@@ -807,12 +797,6 @@ span.remove {
 
 button:disabled span.add {
   color: gray;
-}
-
-div.supporter-else button span {
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
 }
 
 label.condition {
@@ -830,6 +814,39 @@ label.condition {
 p.notice {
   text-align: left;
   color: chocolate;
+}
+
+div.supporter-else,
+div.supporter {
+  display: inline-block;
+  min-width: 72px;
+  white-space: nowrap;
+  margin-right: 3px;
+  border-radius: 10px;
+  margin-bottom: 2px;
+}
+
+div.supporter label.fold {
+  padding: 0;
+  margin: 2px 3px;
+}
+
+div.supporter button,
+div.supporter-else button {
+  display: inline-block;
+  padding: 0;
+  margin: 0 3px;
+  border: none;
+  background: transparent;
+  vertical-align: middle;
+  color: blanchedalmond;
+}
+
+div.supporter button span,
+div.supporter-else button span {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
 }
 
 .builddata-selector {
@@ -887,5 +904,33 @@ div.with-tooltip {
 div.equipment img {
   width: 36px;
   height: 36px;
+}
+
+.pyro-bg {
+  background: rgba(204, 98, 98, 0.7);
+}
+
+.hydro-bg {
+  background: rgba(80, 138, 204, 0.7);
+}
+
+.anemo-bg {
+  background: rgba(80, 204, 162, 0.7);
+}
+
+.electro-bg {
+  background: rgba(204, 110, 204, 0.7);
+}
+
+.dendro-bg {
+  background: rgba(110, 204, 88, 0.7);
+}
+
+.cryo-bg {
+  background: rgba(99, 204, 204, 0.7);
+}
+
+.geo-bg {
+  background: rgba(204, 166, 99, 0.7);
 }
 </style>
