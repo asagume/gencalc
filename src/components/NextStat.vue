@@ -56,7 +56,7 @@ import {
 import { TArtifactSubKey } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { calculateDamageResult, calculateStats } from "@/calculate";
+import { calculateDamageResult, calculateRotationTotalDamage, calculateStats, TRotationDamageEntry, TRotationDamageInfo } from "@/calculate";
 
 export default defineComponent({
     name: "NextStat",
@@ -68,11 +68,13 @@ export default defineComponent({
         optionInput: { type: Object as PropType<TOptionInput>, required: true, },
         statsInput: { type: Object as PropType<TStatsInput>, required: true, },
         damageResult: { type: Object as PropType<TDamageResult>, required: true, },
+        rotationDamageInfo: { type: Object as PropType<TRotationDamageInfo> },
     },
     emits: ["update:stat-adjustments"],
     setup(props, context) {
         const { displayName, displayStatValue } = CompositionFunction();
 
+        const ROTATION_TOTAL_DMG_NAME = 'ローテーション合計ダメージ';
         const NEXT_STAT_ARR = ['HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率', 'HP', '攻撃力', '防御力'];
         const toggleSwitch = ref(false);
         const evaluationItem = ref('');
@@ -80,17 +82,17 @@ export default defineComponent({
 
         const evaluationItemList = computed(() => {
             let result: string[] = [];
-            const damageResult = props.damageResult;
-            if (damageResult) {
-                for (const key1 of ['通常攻撃', '落下攻撃', '重撃', '元素スキル', '元素爆発']) {
-                    const damageResultValue = damageResult[key1];
-                    if (Array.isArray(damageResultValue)) {
-                        for (const key2 of damageResultValue) {
-                            if (key2[0].endsWith('合計ダメージ')) continue;
-                            if (!key2[5]?.endsWith('ダメージ')) continue;
-                            const name = key1 + '.' + key2[0];
-                            result.push(name);
-                        }
+            if (props.rotationDamageInfo?.rotationDamages) {
+                result.push(ROTATION_TOTAL_DMG_NAME);
+            }
+            for (const key1 of ['通常攻撃', '落下攻撃', '重撃', '元素スキル', '元素爆発']) {
+                const damageResultValue = props.damageResult[key1];
+                if (Array.isArray(damageResultValue)) {
+                    for (const key2 of damageResultValue) {
+                        if (key2[0].endsWith('合計ダメージ')) continue;
+                        if (!key2[5]?.endsWith('ダメージ')) continue;
+                        const name = key1 + '.' + key2[0];
+                        result.push(name);
                     }
                 }
             }
@@ -129,6 +131,22 @@ export default defineComponent({
             nextStatRows.splice(0, nextStatRows.length, ...newRows);
         }
 
+        function getDamageValue(itemName: string, damageResult: TDamageResult) {
+            let result = 0;
+            if (itemName == ROTATION_TOTAL_DMG_NAME) {
+                if (props.rotationDamageInfo) {
+                    result = calculateRotationTotalDamage(props.rotationDamageInfo.rotationDamages, damageResult);
+                }
+            } else {
+                const keyArr = itemName.split('.');
+                const work = (damageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
+                if (work.length) {
+                    result = work[0][2];
+                }
+            }
+            return result;
+        }
+
         function setupNextStatRow(row: any[], workDamageResult?: TDamageResult, workStatsInput?: TStatsInput) {
             if (!workDamageResult) {
                 workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
@@ -139,9 +157,8 @@ export default defineComponent({
             let evaluationValue = 0;
             const stat = row[0];
             const step = row[1][row[2]];
-            if (step) {
-                const keyArr = evaluationItem.value.split('.');
-                const baseValue = (props.damageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
+            if (step && props.rotationDamageInfo) {
+                const baseValue = getDamageValue(evaluationItem.value, props.damageResult);
                 if (stat in workStatsInput.statAdjustmentsEx) {
                     workStatsInput.statAdjustmentsEx[stat] += step;
                 } else {
@@ -149,12 +166,11 @@ export default defineComponent({
                 }
                 calculateStats(workStatsInput, props.characterInput, props.artifactDetailInput, props.conditionInput, props.optionInput);
                 calculateDamageResult(workDamageResult, props.characterInput, props.conditionInput, workStatsInput);
-                const newValue = (workDamageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
-                if (newValue.length && baseValue.length) {
-                    evaluationValue = (newValue[0][2] / baseValue[0][2]) - 1;
+                const newValue = getDamageValue(evaluationItem.value, workDamageResult);
+                if (newValue && baseValue) {
+                    evaluationValue = (newValue / baseValue) - 1;
                     evaluationValue *= 100;
                 }
-                console.log(stat, workStatsInput.statAdjustmentsEx[stat], evaluationValue, newValue, baseValue);
                 workStatsInput.statAdjustmentsEx[stat] -= step;
             }
             row[4] = evaluationValue;
@@ -171,9 +187,18 @@ export default defineComponent({
             nextStatRows.sort((a, b) => b[4] - a[4]);
         }
 
+        function initializeEvaluationItem() {
+            if (evaluationItemList.value.length) {
+                if (evaluationItemList.value.includes(ROTATION_TOTAL_DMG_NAME)) {
+                    evaluationItem.value = ROTATION_TOTAL_DMG_NAME;
+                } else {
+                    evaluationItem.value = evaluationItemList.value[evaluationItemList.value.length - 1];
+                }
+            }
+        }
+
         const evaluationItemOnChange = () => {
             setupNextStatRows();
-            console.log(nextStatRows);
         };
 
         const nextStatStepOnChange = (row: any[]) => {
@@ -197,12 +222,12 @@ export default defineComponent({
             await nextStatOnChange();
         };
 
-        watch([props.characterInput, props.statsInput], async (newVal, oldVal) => {
-            const newCharacterInput = newVal[0];
-            const oldCharacterInput = oldVal[0];
+        watch([props.characterInput, props.statsInput, props.rotationDamageInfo], async (newVal, oldVal) => {
+            const newCharacterInput = newVal[0] as TCharacterInput;
             if (newCharacterInput) {
+                const oldCharacterInput = oldVal[0] as TCharacterInput;
                 if (newCharacterInput.character != oldCharacterInput?.character) {
-                    resetButtonOnClick();
+                    await resetButtonOnClick();
                     return;
                 }
             }
@@ -210,11 +235,11 @@ export default defineComponent({
         });
 
         watch(evaluationItemList, () => {
-            evaluationItem.value = evaluationItemList.value[evaluationItemList.value.length - 1];
+            initializeEvaluationItem();
         });
 
         initializeNextStat();
-        evaluationItem.value = evaluationItemList.value[evaluationItemList.value.length - 1];
+        initializeEvaluationItem();
         setupNextStatRows();
 
         return {

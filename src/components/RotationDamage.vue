@@ -17,7 +17,7 @@
     </ul>
     <hr />
     <table class="customized-result">
-      <draggable :list="customizedResultList" item-key="id" group="action" :sort="true" handle=".handle">
+      <draggable :list="rotationDamageCustomList" item-key="id" group="action" :sort="true" handle=".handle">
         <template #item="{ element, index }">
           <tr>
             <th class="category handle with-tooltip">
@@ -26,7 +26,7 @@
             </th>
             <td class="damage">
               <table>
-                <tr v-for="(entry, index2) in damageResultEntryList(element)" :key="index2">
+                <tr v-for="(entry, index2) in getDamageResultArr(element, damageResult)" :key="index2">
                   <th class="damage-name">{{ displayName(entry[0]) }}</th>
                   <td class="reaction-list">
                     <div class="reaction with-tooltip" v-for="reaction in amplifyingReactionList(element, index2)"
@@ -76,14 +76,13 @@
 <script lang="ts">
 import _ from "lodash";
 import draggable from "vuedraggable";
+import { getDamageResultArr, TRotationDamageEntry, REACTION_DMG_ARR, REACTION_DMG_ELEMENT_MAP, calculateRotationTotalDamage, TRotationDamageInfo } from "@/calculate";
 import {
   TDamageResult,
   TDamageResultElementalReactionKey,
-  TDamageResultEntry,
 } from "@/input";
 import {
   DAMAGE_CATEGORY_ARRAY,
-  ELEMENTAL_REACTION_MASTER,
   ELEMENT_COLOR_CLASS,
   ELEMENT_IMG_SRC,
   TCharacterDetail,
@@ -91,15 +90,10 @@ import {
 } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref, toRefs, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { deepcopy } from "@/common";
 
-type TCustomizedDamageResultEntry = {
+type TRotationDamageEntryCustom = TRotationDamageEntry & {
   id: number;
-  name: string;
   src: string;
-  category: string;
-  reactions: object[];
-  counts: number[];
 };
 
 let id = 1;
@@ -116,99 +110,51 @@ export default defineComponent({
     },
     damageResult: { type: Object as PropType<TDamageResult>, required: true },
   },
-  setup(props) {
+  emits: ['update:rotation-damage'],
+  setup(props, context) {
     const { displayName, targetValue } = CompositionFunction();
 
     const { characterMaster } = toRefs(props);
-    const REACTION_DMG_ARR = [
-      "過負荷ダメージ",
-      "感電ダメージ",
-      "超電導ダメージ",
-      "拡散ダメージ",
-      "燃焼ダメージ",
-      "開花ダメージ",
-      "烈開花ダメージ",
-      "超開花ダメージ",
-    ];
+    const rotationDamageCustomList = reactive([] as TRotationDamageEntryCustom[]);
 
-    const reactionDmgElementMap = computed(() => {
-      const result = new Map();
-      REACTION_DMG_ARR.forEach((reactionDmg) => {
-        const reaction = reactionDmg.replace(/ダメージ$/, "");
-        Object.keys(ELEMENTAL_REACTION_MASTER).forEach((element) => {
-          const reactionMaster = (ELEMENTAL_REACTION_MASTER as any)[element];
-          const workArr = Object.keys(reactionMaster);
-          if (workArr.includes(reaction)) {
-            if ("元素" in reactionMaster[reaction]) {
-              result.set(reactionDmg, reactionMaster[reaction].元素);
-            }
-          }
+    const totalDamage = computed(() => calculateRotationTotalDamage(rotationDamageList.value, props.damageResult));
+
+    const rotationDamageList = computed(() => {
+      let result: TRotationDamageEntry[] = [];
+      for (const entry of rotationDamageCustomList) {
+        result.push({
+          name: entry.name,
+          category: entry.category,
+          reactions: entry.reactions,
+          counts: entry.counts,
         });
-      });
+      }
       return result;
     });
 
-    function getCritFromResultEntry(item: TDamageResultEntry) {
-      let critRate = 0;
-      let critDmg = 0;
-      if (item[2] && item[3] && item[4]) {
-        critRate = item[2] - item[4]; // 期待値 - 非会心
-        critRate /= item[3] - item[4]; // 会心 - 非会心
-        critRate = Math.round(critRate * 1000) / 10;
-        critDmg = Math.round((item[3] / item[4] - 1) * 1000) / 10;
-      }
-      return [critRate, critDmg];
+    function updateRotationDamage() {
+      const rotationDamageInfo: TRotationDamageInfo = {
+        totalDamage: totalDamage.value,
+        rotationDamages: rotationDamageList.value,
+      };
+      context.emit('update:rotation-damage', rotationDamageInfo);
     }
 
-    const damageResultEntryList = (
-      customizedEntry: TCustomizedDamageResultEntry
-    ): TDamageResultEntry[] => {
-      let result = [] as TDamageResultEntry[];
-      const category = customizedEntry.category;
-      if (REACTION_DMG_ARR.includes(category)) {
-        result.push([
-          category,
-          reactionDmgElementMap.value.get(category),
-          (props.damageResult.元素反応 as any)[category],
-          null,
-          (props.damageResult.元素反応 as any)[category],
-          null,
-          1,
-          null,
-          null,
-        ]);
-      } else {
-        for (let entry of props.damageResult[category] as TDamageResultEntry[]) {
-          if (entry[0].startsWith('非表示')) continue;
-          if (entry[0].endsWith('合計ダメージ')) continue;
-          if (entry[5]?.endsWith('ダメージ')) {
-            if (entry[0].startsWith('法獣の灼眼')) {  // 会心した時の追加なので
-              entry = _.cloneDeep(entry);
-              const [critRate] = getCritFromResultEntry(entry);
-              entry[2] = entry[2] * critRate / 100;
-            }
-            result.push(entry);
-          }
-        }
-      }
-      return result;
-    };
-
     const itemList = computed(() => {
-      const result = [] as TCustomizedDamageResultEntry[];
+      const result = [] as TRotationDamageEntryCustom[];
       DAMAGE_CATEGORY_ARRAY.forEach((categoryDmg) => {
         const category = categoryDmg.replace(/ダメージ$/, "");
         const iconCategory = ["重撃", "落下攻撃"].includes(category)
           ? "通常攻撃"
           : category;
-        const entry = {} as TCustomizedDamageResultEntry;
+        const entry = {} as TRotationDamageEntryCustom;
         entry.id = id++;
         entry.name = category;
         entry.src = (characterMaster.value as any)[iconCategory].icon_url;
         entry.category = category;
         entry.reactions = [] as object[];
         entry.counts = [] as number[];
-        const list = damageResultEntryList(entry);
+        const list = getDamageResultArr(entry, props.damageResult);
         for (let i = 0; i < list.length; i++) {
           entry.reactions.push({});
           if (["落下期間のダメージ"].includes(list[i][0])) {
@@ -234,9 +180,9 @@ export default defineComponent({
           if (reactionDmg == "拡散ダメージ") {
             dmgElement = props.damageResult.元素反応.拡散元素;
           } else {
-            dmgElement = reactionDmgElementMap.value.get(reactionDmg);
+            dmgElement = REACTION_DMG_ELEMENT_MAP.get(reactionDmg) as string;
           }
-          const entry = {} as TCustomizedDamageResultEntry;
+          const entry = {} as TRotationDamageEntryCustom;
           entry.id = id++;
           entry.name = reaction;
           entry.src = (ELEMENT_IMG_SRC as any)[dmgElement];
@@ -248,11 +194,9 @@ export default defineComponent({
       });
       return result;
     });
-    const itemImgClass = (item: TCustomizedDamageResultEntry) => {
+    const itemImgClass = (item: TRotationDamageEntryCustom) => {
       return REACTION_DMG_ARR.includes(item.category) ? " reaction " : "";
     };
-
-    const customizedResultList = reactive([] as TCustomizedDamageResultEntry[]);
 
     const storageKey = (index: number) => {
       const character = characterMaster.value.名前;
@@ -316,9 +260,9 @@ export default defineComponent({
     });
 
     const save = () => {
-      if (customizedResultList.length > 0) {
+      if (rotationDamageCustomList.length > 0) {
         const key = storageKey(savedataIndex.value);
-        const value = JSON.stringify(customizedResultList);
+        const value = JSON.stringify(rotationDamageCustomList);
         localStorage.setItem(key, value);
         localStorageUpdatedRef.value++;
       }
@@ -330,8 +274,9 @@ export default defineComponent({
         const valueStr = localStorage.getItem(key) as string;
         const value = JSON.parse(valueStr);
         if (Array.isArray(value)) {
-          customizedResultList.splice(0, customizedResultList.length, ...value);
+          rotationDamageCustomList.splice(0, rotationDamageCustomList.length, ...value);
         }
+        updateRotationDamage();
       }
     };
     load();
@@ -344,29 +289,23 @@ export default defineComponent({
       }
     };
 
-    watch(characterMaster, () => {
-      customizedResultList.splice(0, customizedResultList.length);
-      savedataIndex.value = 1;
-      load();
-    });
-
     const clone = ({ id }: { id: number }) => {
       const org = itemList.value.filter((s) => s.id == id)[0];
-      const dst = deepcopy(org);
+      const dst = _.cloneDeep(org);
       dst.id = id++;
       return dst;
     };
 
-    const addItem = (element: TCustomizedDamageResultEntry) => {
-      customizedResultList.push(clone(element));
+    const addItem = (element: TRotationDamageEntryCustom) => {
+      rotationDamageCustomList.push(clone(element));
     };
 
     const amplifyingReactionList = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number
     ) => {
       const result = [] as [string, string][];
-      const list = damageResultEntryList(customizedEntry);
+      const list = getDamageResultArr(customizedEntry, props.damageResult);
       const entry = list[index];
       const dmgElement = entry[1];
       if (dmgElement) {
@@ -405,7 +344,7 @@ export default defineComponent({
     };
 
     const reactionCount = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number,
       reaction: [string, string]
     ) => {
@@ -418,7 +357,7 @@ export default defineComponent({
     };
 
     const reactionUnselectedClass = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number,
       reaction: [string, string]
     ) => {
@@ -429,13 +368,13 @@ export default defineComponent({
     };
 
     const reactionOnClick = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number,
       reaction: [string, string]
     ) => {
       const reactionObj: any = customizedEntry.reactions[index];
       let count = customizedEntry.counts[index];
-      const damageResultEntry = damageResultEntryList(customizedEntry)[index];
+      const damageResultEntry = getDamageResultArr(customizedEntry, props.damageResult)[index];
       if (damageResultEntry[6]) count *= damageResultEntry[6];
       if (reaction[0] in reactionObj) {
         if (reactionObj[reaction[0]] < count) {
@@ -449,7 +388,7 @@ export default defineComponent({
     };
 
     const countOnChange = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number
     ) => {
       const reactionObj: any = customizedEntry.reactions[index];
@@ -462,11 +401,11 @@ export default defineComponent({
     };
 
     const damageValue = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number
     ) => {
       let result = 0;
-      const list = damageResultEntryList(customizedEntry);
+      const list = getDamageResultArr(customizedEntry, props.damageResult);
       if (!list) return result;
       const entry = list[index];
       if (!entry) return result;
@@ -501,30 +440,29 @@ export default defineComponent({
     };
 
     const elementColorClass = (
-      customizedEntry: TCustomizedDamageResultEntry,
+      customizedEntry: TRotationDamageEntryCustom,
       index: number
     ) => {
-      const list = damageResultEntryList(customizedEntry);
+      const list = getDamageResultArr(customizedEntry, props.damageResult);
       const entry = list[index];
       return entry[1]
         ? " " + ELEMENT_COLOR_CLASS[entry[1] as TElementColorClassKey] + " "
         : "";
     };
 
-    const totalDamage = computed(() => {
-      let result = 0;
-      customizedResultList.forEach((customizedEntry) => {
-        const list = damageResultEntryList(customizedEntry);
-        for (let i = 0; i < list.length; i++) {
-          result += damageValue(customizedEntry, i);
-        }
-      });
-      return result;
+    const doDelete = (index: number) => {
+      rotationDamageCustomList.splice(index, 1);
+    };
+
+    watch(rotationDamageCustomList, () => {
+      updateRotationDamage();
     });
 
-    const doDelete = (index: number) => {
-      customizedResultList.splice(index, 1);
-    };
+    watch(characterMaster, () => {
+      rotationDamageCustomList.splice(0, rotationDamageCustomList.length);
+      savedataIndex.value = 1;
+      load();
+    });
 
     return {
       displayName,
@@ -534,9 +472,9 @@ export default defineComponent({
       itemImgClass,
       addItem,
 
+      getDamageResultArr,
       clone,
-      damageResultEntryList,
-      customizedResultList,
+      rotationDamageCustomList,
       amplifyingReactionList,
       reactionCount,
       reactionUnselectedClass,

@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { deepcopy, isNumber, overwriteObject } from "@/common";
+import _ from 'lodash';
+import { deepcopy, isNumber, overwriteObject } from '@/common';
 import {
     ARTIFACT_DETAIL_INPUT_TEMPLATE,
     CHANGE_KIND_STATUS,
@@ -36,8 +36,8 @@ import {
     makeDamageDetailObjArrObjArtifactSets,
     setupConditionValues,
     updateNumberConditionValues,
-} from "@/input";
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from "@/master";
+} from '@/input';
+import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from '@/master';
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -89,7 +89,7 @@ export function calculateArtifactStatsMain(artifactStatsMain: any, mainstats: st
     );
     for (const statWithRarity of mainstats) {
         if (!statWithRarity) continue;
-        const stat: any[] = statWithRarity.split("_");
+        const stat: any[] = statWithRarity.split('_');
         artifactStatsMain[stat[1]] += ARTIFACT_MAIN_MASTER[stat[0] as TArtifactMainRarity][stat[1] as TArtifactMainStat];
     }
 }
@@ -569,7 +569,7 @@ export function calculateElementalResonance(
             }
         }
         if (key == '草元素共鳴' && conditionValues.dendroOption) {
-            result["元素熟知"] += Number(conditionValues.dendroOption);
+            result['元素熟知'] += Number(conditionValues.dendroOption);
         }
     }
     return result;
@@ -1831,10 +1831,10 @@ export async function calculateSupporter(
     updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);
     calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
 
-    if (characterInput.character == "雷電将軍") {
+    if (characterInput.character == '雷電将軍') {
         // for 雷罰悪曜の眼
         const myCharacterMaster = await getCharacterMasterDetail(character);
-        statsInput.statsObj["元素エネルギー"] = myCharacterMaster["元素爆発"]["元素エネルギー"];
+        statsInput.statsObj['元素エネルギー'] = myCharacterMaster['元素爆発']['元素エネルギー'];
     }
 
     calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
@@ -1848,4 +1848,185 @@ export async function calculateSupporter(
     };
 
     return [statsInput.statsObj, damageResult];
+}
+
+export type TRotationDamageEntry = {
+    name: string;
+    category: string;
+    reactions: object[];
+    counts: number[];
+};
+
+export type TRotationDamageInfo = {
+    totalDamage: number, 
+    rotationDamages: TRotationDamageEntry[],
+};
+
+export function getCritFromResultEntry(entry: TDamageResultEntry) {
+    let critRate = 0;
+    let critDmg = 0;
+    if (entry[2] && entry[3] && entry[4]) {
+        critRate = entry[2] - entry[4]; // 期待値 - 非会心
+        critRate /= entry[3] - entry[4]; // 会心 - 非会心
+        critRate = Math.round(critRate * 1000) / 10;
+        critDmg = Math.round((entry[3] / entry[4] - 1) * 1000) / 10;
+    }
+    return [critRate, critDmg];
+}
+
+export const REACTION_DMG_ARR = [
+    '過負荷ダメージ',
+    '感電ダメージ',
+    '超電導ダメージ',
+    '拡散ダメージ',
+    '燃焼ダメージ',
+    '開花ダメージ',
+    '烈開花ダメージ',
+    '超開花ダメージ',
+];
+
+export const REACTION_DMG_ELEMENT_MAP = new Map<string, string>();
+function setupReactionDmgElementMap() {
+    REACTION_DMG_ARR.forEach((reactionDmg) => {
+        const reaction = reactionDmg.replace(/ダメージ$/, '');
+        Object.keys(ELEMENTAL_REACTION_MASTER).forEach((element) => {
+            const reactionMaster = (ELEMENTAL_REACTION_MASTER as any)[element];
+            const workArr = Object.keys(reactionMaster);
+            if (workArr.includes(reaction)) {
+                if ('元素' in reactionMaster[reaction]) {
+                    REACTION_DMG_ELEMENT_MAP.set(reactionDmg, reactionMaster[reaction].元素);
+                }
+            }
+        });
+    });
+}
+setupReactionDmgElementMap();
+
+export function getDamageResultArr(
+    rotationDamageEntry: TRotationDamageEntry,
+    damageResult: TDamageResult,
+): TDamageResultEntry[] {
+    const result = [] as TDamageResultEntry[];
+    const category = rotationDamageEntry.category;
+    if (REACTION_DMG_ARR.includes(category)) {
+        result.push([
+            category,
+            REACTION_DMG_ELEMENT_MAP?.get(category) ?? null,
+            (damageResult.元素反応 as any)[category],
+            null,
+            (damageResult.元素反応 as any)[category],
+            null,
+            1,
+            null,
+            null,
+        ]);
+    } else {
+        for (let entry of damageResult[category] as TDamageResultEntry[]) {
+            if (entry[0].startsWith('非表示')) continue;
+            if (entry[0].endsWith('合計ダメージ')) continue;
+            if (entry[5]?.endsWith('ダメージ')) {
+                if (entry[0].startsWith('法獣の灼眼')) {  // 会心した時の追加なので
+                    entry = _.cloneDeep(entry);
+                    const [critRate] = getCritFromResultEntry(entry);
+                    entry[2] = entry[2] * critRate / 100;
+                }
+                result.push(entry);
+            }
+        }
+    }
+    return result;
+}
+
+export function calculateRotationDamageEntry(
+    rotationDamageEntry: TRotationDamageEntry,
+    index: number,
+    damageResult: TDamageResult,
+) {
+    let result = 0;
+    const list = getDamageResultArr(rotationDamageEntry, damageResult);
+    if (!list) return result;
+    const entry = list[index];
+    if (!entry) return result;
+    const reactionObj: any = rotationDamageEntry.reactions[index];
+    if (!reactionObj) return result;
+    const count = rotationDamageEntry.counts[index];
+    for (let n = 0; n < count; n++) {
+        let workDmg = entry[2]; // 期待値
+        ['蒸発', '溶解'].forEach((reaction) => {
+            if (reaction in reactionObj && n < reactionObj[reaction]) {
+                workDmg *= (damageResult.元素反応 as any)[reaction + '倍率'];
+            }
+        });
+        result += workDmg;
+    }
+    ['超激化', '草激化'].forEach((reaction) => {
+        if (reaction in reactionObj) {
+            let reactionDmg = (damageResult.元素反応 as any)[reaction + 'ダメージ'];
+            if (entry[2]) {
+                reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
+            }
+            if (entry[7]) {
+                reactionDmg *= entry[7]; // ダメージバフ
+            }
+            if (entry[8]) {
+                reactionDmg *= entry[8]; // 敵の防御補正
+            }
+            result += reactionDmg * reactionObj[reaction];
+        }
+    });
+    return result;
+}
+
+export function calculateDamageInRotation(
+    rotationDamageEntry: TRotationDamageEntry,
+    index: number,
+    damageResult: TDamageResult,
+) {
+    let result = 0;
+    const list = getDamageResultArr(rotationDamageEntry, damageResult);
+    if (!list) return result;
+    const entry = list[index];
+    if (!entry) return result;
+    const reactionObj: any = rotationDamageEntry.reactions[index];
+    if (!reactionObj) return result;
+    const count = rotationDamageEntry.counts[index];
+    for (let n = 0; n < count; n++) {
+        let workDmg = entry[2]; // 期待値
+        ['蒸発', '溶解'].forEach((reaction) => {
+            if (reaction in reactionObj && n < reactionObj[reaction]) {
+                workDmg *= (damageResult.元素反応 as any)[reaction + '倍率'];
+            }
+        });
+        result += workDmg;
+    }
+    ['超激化', '草激化'].forEach((reaction) => {
+        if (reaction in reactionObj) {
+            let reactionDmg = (damageResult.元素反応 as any)[reaction + 'ダメージ'];
+            if (entry[2]) {
+                reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
+            }
+            if (entry[7]) {
+                reactionDmg *= entry[7]; // ダメージバフ
+            }
+            if (entry[8]) {
+                reactionDmg *= entry[8]; // 敵の防御補正
+            }
+            result += reactionDmg * reactionObj[reaction];
+        }
+    });
+    return result;
+}
+
+export function calculateRotationTotalDamage(
+    rotationDamageArr: TRotationDamageEntry[],
+    damageResult: TDamageResult,
+) {
+    let result = 0;
+    rotationDamageArr.forEach((rotationDamageEntry) => {
+        const list = getDamageResultArr(rotationDamageEntry, damageResult);
+        for (let i = 0; i < list.length; i++) {
+            result += calculateDamageInRotation(rotationDamageEntry, i, damageResult);
+        }
+    });
+    return result;
 }

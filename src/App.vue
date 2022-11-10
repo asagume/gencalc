@@ -90,7 +90,8 @@
             </select>
           </label>
           <label class="enemy-level">Lv.
-            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" @change="updateStatAdjustments()" />
+            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1"
+              @change="updateStatAdjustments()" />
           </label>
           <StatsInput :statsInput="statsInput" :category1List="enemyStatsCategory1List"
             :category2List="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments" />
@@ -98,7 +99,8 @@
         <div>
           <NextStat :visible="true" :characterInput="characterInputRea" :artifactDetailInput="artifactDetailInputRea"
             :conditionInput="conditionInputRea" :optionInput="optionInputRea" :statsInput="statsInput"
-            :damageResult="damageResult" @update:stat-adjustments="updateNextStatAdjustments"   />
+            :damageResult="damageResult" :rotationDamageInfo="rotationDamageInfo"
+            @update:stat-adjustments="updateNextStatAdjustments" />
         </div>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
@@ -136,7 +138,8 @@
     </div>
 
     <div class="pane5">
-      <RotationDamage :characterMaster="characterInputRea.characterMaster" :damageResult="damageResult" />
+      <RotationDamage :characterMaster="characterInputRea.characterMaster" :damageResult="damageResult"
+        @update:rotation-damage="updateRotationDamage" />
 
       <ShareSns @share:twitter="openTwitter" />
     </div>
@@ -308,6 +311,7 @@ import {
   calculateStats,
   calculateSupporter,
   TArtifactScoreFormula,
+  TRotationDamageInfo,
 } from "@/calculate";
 import { deepcopy, overwriteObject } from "@/common";
 import { calculateDamageResult } from "@/calculate";
@@ -453,11 +457,16 @@ export default defineComponent({
     statsInput.statAdjustments["敵防御力"] = 0;
 
     // 元素共鳴, チーム, その他
-    const optionInputRea = reactive(deepcopy(OPTION_INPUT_TEMPLATE) as TOptionInput);
+    const optionInputRea = reactive(_.cloneDeep(OPTION_INPUT_TEMPLATE) as TOptionInput);
     const savedSupporters = reactive([] as { key: string, value: string, buildname: string }[]);
 
     // ダメージ計算結果
-    const damageResult = reactive(deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
+    const damageResult = reactive(_.cloneDeep(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
+
+    const rotationDamageInfo = reactive({
+      totalDamage: 0,
+      rotationDamages: [],
+    } as TRotationDamageInfo);
 
     const pane6Toggle1Ref = ref(true);
     const pane6Toggle2Ref = ref(true);
@@ -1351,9 +1360,13 @@ export default defineComponent({
     const updateNextStatAdjustments = (argStatAdjustments?: TStats) => {
       if (argStatAdjustments) {
         statsInput.statAdjustmentsEx = argStatAdjustments;
-        console.log(argStatAdjustments);
         updateStatAdjustments();
       }
+    };
+
+    const updateRotationDamage = (argRotationDamageInfo: TRotationDamageInfo) => {
+      rotationDamageInfo.totalDamage = argRotationDamageInfo.totalDamage;
+      rotationDamageInfo.rotationDamages.splice(0, rotationDamageInfo.rotationDamages.length, ...argRotationDamageInfo.rotationDamages);
     };
 
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
@@ -1569,6 +1582,7 @@ export default defineComponent({
       savedSupporters,
       normalAttackReplacing,
       topStats,
+      rotationDamageInfo,
 
       openTwitter,
 
@@ -1599,6 +1613,7 @@ export default defineComponent({
       openCharacterInfo,
       updateStatAdjustments,
       updateNextStatAdjustments,
+      updateRotationDamage,
       updateElementalResonance,
       updateMiscOption,
       updateTeamOption,
