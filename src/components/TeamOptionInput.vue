@@ -66,7 +66,7 @@
       </fieldset>
       <template v-else>
         <div v-show="supporterVisible(supporter)"
-          :class="'supporter-else' + supporterOptionSelectedClass(supporter) + elementBgClass(supporter)">
+          :class="'supporter-else' + elementBgClass(supporter) + supporterOptionSelectedClass(supporter)">
           <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
             v-model="supporterOpenClose[supporter]" />
           <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
@@ -94,11 +94,11 @@
 
     <label>
       {{ displayName("すべて閉じる") }}
-      <button type="button" @click="closeAllSupporters">{{ displayName("実行") }}</button>
+      <button class="execute" type="button" @click="closeAllSupporters">{{ displayName("実行") }}</button>
     </label>
     <label>
       {{ displayName("すべてクリア") }}
-      <button type="button" @click="clearAllSupporterOptions">
+      <button class="execute" type="button" @click="clearAllSupporterOptions">
         {{ displayName("実行") }}
       </button>
     </label>
@@ -143,7 +143,6 @@ import {
   ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
   IMG_SRC_DUMMY,
-  TCharacterEntry,
   TCharacterKey,
   TEAM_OPTION_MASTER_LIST,
 } from "@/master";
@@ -807,7 +806,8 @@ label.condition {
   color: gray;
 }
 
-.selected {
+.supporter-else.selected {
+  border: 1px solid white;
   background-color: darkgoldenrod;
 }
 
@@ -821,9 +821,13 @@ div.supporter {
   display: inline-block;
   min-width: 72px;
   white-space: nowrap;
-  margin-right: 3px;
+  margin-right: 1px;
   border-radius: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+}
+
+div.supporter-else {
+  border: 1px solid black;
 }
 
 div.supporter label.fold {
@@ -852,7 +856,7 @@ div.supporter-else button span {
 .builddata-selector {
   display: inline-block;
   margin-right: 5px;
-  width: calc(100% - 190px);
+  width: calc(100% - 194px);
 }
 
 .builddata-selector label {
@@ -932,5 +936,10 @@ div.equipment img {
 
 .geo-bg {
   background: rgba(204, 166, 99, 0.7);
+}
+
+button.execute {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 </style>

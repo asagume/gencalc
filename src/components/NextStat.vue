@@ -56,7 +56,7 @@ import {
 import { TArtifactSubKey } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { calculateDamageResult, calculateRotationTotalDamage, calculateStats, TRotationDamageEntry, TRotationDamageInfo } from "@/calculate";
+import { calculateDamageResult, calculateRotationTotalDamage, calculateStats, TRotationDamageInfo } from "@/calculate";
 
 export default defineComponent({
     name: "NextStat",
