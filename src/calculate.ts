@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { deepcopy, isNumber, overwriteObject } from '@/common';
+import { isNumber, overwriteObject } from '@/common';
 import {
     ARTIFACT_DETAIL_INPUT_TEMPLATE,
     CHANGE_KIND_STATUS,
@@ -140,15 +140,15 @@ export function calculateArtifactStats(artifactDetailInput: TArtifactDetailInput
     const artifactStatsMain = artifactDetailInput.聖遺物ステータスメイン効果;
     const artifactStatsSub = artifactDetailInput.聖遺物ステータスサブ効果;
     for (const stat of Object.keys(artifactStats)) {
-        artifactStats[stat] = 0;
+        (artifactStats as any)[stat] = 0;
     }
     for (const stat of Object.keys(artifactStatsMain)) {
-        if (stat in artifactStats) artifactStats[stat] += artifactStatsMain[stat];
-        else artifactStats[stat] = artifactStatsMain[stat];
+        if (stat in artifactStats) (artifactStats as any)[stat] += (artifactStatsMain as any)[stat];
+        else (artifactStats as any)[stat] = (artifactStatsMain as any)[stat];
     }
     for (const stat of Object.keys(artifactStatsSub)) {
-        if (stat in artifactStats) artifactStats[stat] += artifactStatsSub[stat];
-        else artifactStats[stat] = artifactStatsSub[stat];
+        if (stat in artifactStats) (artifactStats as any)[stat] += (artifactStatsSub as any)[stat];
+        else (artifactStats as any)[stat] = (artifactStatsSub as any)[stat];
     }
 }
 
@@ -174,12 +174,12 @@ export const calculateStats = function (
         const weaponAscension = characterInput.武器突破レベル;
         const weaponLevel = characterInput.武器レベル;
 
-        const workStatsObj = deepcopy(ステータスTEMPLATE);
+        const workStatsObj = _.cloneDeep(ステータスTEMPLATE);
 
         workStatsObj['突破レベル'] = ascension;
         workStatsObj['レベル'] = level;
         workStatsObj['命ノ星座'] = constellation;
-        workStatsObj['元素'] = characterMaster.元素;
+        (workStatsObj as any)['元素'] = characterMaster.元素;
 
         // キャラクターマスターから元素エネルギーを設定します
         if ('元素エネルギー' in characterMaster['元素爆発']) {
@@ -230,7 +230,7 @@ export const calculateStats = function (
         const artifactStats = artifactDetailInput.聖遺物ステータス;
         for (const stat of Object.keys(artifactStats)) {
             const toStat = ['HP', '攻撃力', '防御力'].includes(stat) ? stat + '+' : stat;
-            workStatsObj[toStat] += artifactStats[stat];
+            workStatsObj[toStat] += (artifactStats as any)[stat];
         }
 
         let 通常攻撃_元素Var = characterMaster.武器 == '法器' ? characterMaster.元素 : '物理';
@@ -240,9 +240,10 @@ export const calculateStats = function (
         if (optionInput) {
             // 元素共鳴、チームオプション、その他オプションを計上します
             [optionInput.elementalResonance, optionInput.teamOption, optionInput.miscOption].forEach(optionObj => {
-                if (optionObj) {
+                if (optionObj && optionObj.conditionAdjustments) {
                     Object.keys(optionObj.conditionAdjustments).forEach(stat => {
-                        if (optionObj.conditionAdjustments[stat] === Infinity) {
+                        const workValue = optionObj.conditionAdjustments[stat];
+                        if (workValue === Infinity) {
                             if (stat.endsWith('元素付与')) {
                                 if (['片手剣', '両手剣', '長柄武器'].includes(characterMaster.武器)) {
                                     const my付与元素 = stat.replace(/元素付与$/, '');
@@ -251,18 +252,19 @@ export const calculateStats = function (
                                     落下攻撃_元素Var = my付与元素;
                                 }
                             }
-                        }
-                        if (stat in workStatsObj) {
-                            workStatsObj[stat] += optionObj.conditionAdjustments[stat];
-                        } else {
-                            workStatsObj[stat] = optionObj.conditionAdjustments[stat];
-                        }
-                        if (stat.endsWith('V1') || stat.endsWith('V2') || stat.endsWith('V3')) {
-                            const toStat = stat.replace(/V[1-3]$/, '');
-                            if (toStat in workStatsObj) {
-                                workStatsObj[toStat] += optionObj.conditionAdjustments[stat];
+                        } else if (workValue !== null) {
+                            if (stat in workStatsObj) {
+                                workStatsObj[stat] += workValue;
                             } else {
-                                workStatsObj[toStat] = optionObj.conditionAdjustments[stat];
+                                workStatsObj[stat] = workValue;
+                            }
+                            if (stat.endsWith('V1') || stat.endsWith('V2') || stat.endsWith('V3')) {
+                                const toStat = stat.replace(/V[1-3]$/, '');
+                                if (toStat in workStatsObj) {
+                                    workStatsObj[toStat] += workValue;
+                                } else {
+                                    workStatsObj[toStat] = workValue;
+                                }
                             }
                         }
                     })
@@ -686,7 +688,7 @@ export function calculateDamageResult(
         const vision = characterMaster['元素'];
 
         // 元素反応を計算します
-        const reactionResult = deepcopy(元素反応TEMPLATE);
+        const reactionResult = _.cloneDeep(元素反応TEMPLATE);
         const reactionMasterArr = [[vision, (ELEMENTAL_REACTION_MASTER as any)[vision]]];
         if (conditionInput.selectList.filter(s => s.name == '元素変化').length) {
             const selectEntry = conditionInput.selectList.filter(s => s.name == '元素変化')[0];
@@ -740,7 +742,7 @@ export function calculateDamageResult(
                 ['倍率', 'ダメージ', '吸収量'].forEach(suffix => {
                     const key = reaction + suffix;
                     if (key in reactionResult) {
-                        reactionResult[key] = resultValue;
+                        (reactionResult as any)[key] = resultValue;
                     }
                 });
             });
@@ -749,7 +751,7 @@ export function calculateDamageResult(
             ['会心率', '会心ダメージ'].forEach(stat => {
                 const key = dmg + stat;
                 if (key in statsInput.statsObj) {
-                    reactionResult[key] = statsInput.statsObj[key];
+                    (reactionResult as any)[key] = statsInput.statsObj[key];
                 }
             });
         });
@@ -763,8 +765,8 @@ export function calculateDamageResult(
         const damageDetailMyWeapon = characterInput.damageDetailMyWeapon;
         const damageDetailMyArtifactSets = characterInput.damageDetailMyArtifactSets;
 
-        if (Array.isArray(damageResult.キャラクター注釈)) {
-            damageResult.キャラクター注釈.splice(0, damageResult.キャラクター注釈.length);
+        if (Array.isArray(damageResult['キャラクター注釈'])) {
+            damageResult['キャラクター注釈'].splice(0, damageResult['キャラクター注釈'].length);
         }
 
         if (damageDetailMyCharacter) {
@@ -1133,7 +1135,7 @@ function calculateDamageFromDetail(
         const talentChangeDetailObjArr = getChangeDetailObjArr(characterInput, CHANGE_KIND_TALENT);
 
         let validConditionValueArr = makeValidConditionValueArr(conditionInput);  // 有効な条件
-        const myConditionValuesAfter = deepcopy(conditionInput.conditionValues);
+        const myConditionValuesAfter = _.cloneDeep(conditionInput.conditionValues);
 
         if (detailObj['除外条件']) {
             for (const delCondition of detailObj['除外条件']) {
@@ -1164,18 +1166,18 @@ function calculateDamageFromDetail(
                         if ('数値' in addCondition) {
                             if (_.isString(addCondition.数値)) {
                                 const work = String(addCondition.数値).replace(/^\+/, '');
-                                newValue += Number(work);
+                                (newValue as number) += Number(work);
                             } else if (isNumber(addCondition.数値)) {
                                 newValue = addCondition.数値;
                             } else {
                                 newValue = addCondition.数値;
                             }
-                            if (isNumber(newValue)) {
+                            if (newValue !== null && isNumber(newValue)) {
                                 if (newValue < 0) {
                                     newValue = 0;
                                 } else {
                                     conditionInput.selectList.filter(s => s.name == addCondition.名前).forEach(entry => {
-                                        if (newValue >= entry.options.length) {
+                                        if (newValue !== null && newValue >= entry.options.length) {
                                             newValue = entry.options.length - 1;
                                         }
                                     })
@@ -1204,7 +1206,7 @@ function calculateDamageFromDetail(
             }
         }
         if (detailObj['除外条件'] || detailObj['適用条件']) {
-            const myConditionInputAfter: TConditionInput = deepcopy(conditionInput);
+            const myConditionInputAfter: TConditionInput = _.cloneDeep(conditionInput);
             myConditionInputAfter.conditionValues = myConditionValuesAfter;
             const validConditionValueArrAfter = makeValidConditionValueArr(myConditionInputAfter);
 
@@ -1294,7 +1296,7 @@ function calculateDamageFromDetail(
                     // nop
                 } else {
                     if (number != null && number != 1) {    // オプションの@以降の数値でスケールする場合あり
-                        const myNewValueObj = JSON.parse(JSON.stringify(valueObj)); // deepcopy
+                        const myNewValueObj = JSON.parse(JSON.stringify(valueObj)); // _.cloneDeep
                         myNewValueObj.数値 = myNewValueObj.数値.concat(['*', number]);
                         myTalentChangeDetailObjArr.push(myNewValueObj);
                     } else {
@@ -1770,8 +1772,9 @@ export function calculateArtifactScore(
     for (const scoringStat of scoringStats) {
         const stat = scoringStat[0];
         const magnification = scoringStat[1];
-        if (artifactDetailInput.聖遺物ステータスサブ効果[stat]) {
-            result += artifactDetailInput.聖遺物ステータスサブ効果[stat] * magnification;
+        const statValue = (artifactDetailInput.聖遺物ステータスサブ効果 as any)[stat];
+        if (statValue) {
+            result += statValue * magnification;
         }
     }
     return result;
@@ -1806,11 +1809,11 @@ export async function calculateSupporter(
     build: string,
     character: TCharacterKey,
 ): Promise<[TStats, TDamageResult]> {
-    const characterInput = deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-    const artifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
-    const conditionInput = deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-    const statsInput = deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput;
-    const damageResult = deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
+    const characterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
+    const artifactDetailInput = _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
+    const conditionInput = _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput;
+    const statsInput = _.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput;
+    const damageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
 
     characterInput.character = supporter;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
@@ -1858,7 +1861,7 @@ export type TRotationDamageEntry = {
 };
 
 export type TRotationDamageInfo = {
-    totalDamage: number, 
+    totalDamage: number,
     rotationDamages: TRotationDamageEntry[],
 };
 

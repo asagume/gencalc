@@ -313,7 +313,7 @@ import {
   TArtifactScoreFormula,
   TRotationDamageInfo,
 } from "@/calculate";
-import { deepcopy, overwriteObject } from "@/common";
+import { overwriteObject } from "@/common";
 import { calculateDamageResult } from "@/calculate";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import ArtifactScoreFormula from "./components/ArtifactScoreFormula.vue";
@@ -383,20 +383,20 @@ export default defineComponent({
     const artifactScoreFormulaVmRef = ref();
 
     const characterInputRea = reactive(
-      overwriteObject(deepcopy(CHARACTER_INPUT_TEMPLATE), props.characterInput)
+      overwriteObject(_.cloneDeep(CHARACTER_INPUT_TEMPLATE), props.characterInput)
     );
     const artifactDetailInputRea = reactive(
-      overwriteObject(deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE), props.artifactDetailInput)
+      overwriteObject(_.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE), props.artifactDetailInput)
     );
     const conditionInputRea = reactive(
-      overwriteObject(deepcopy(CONDITION_INPUT_TEMPLATE), props.conditionInput)
+      overwriteObject(_.cloneDeep(CONDITION_INPUT_TEMPLATE), props.conditionInput)
     );
     const recommendationListRea = reactive([...props.recommendationList]);
     const recommendationRef = ref(props.recommendation);
 
     /** 聖遺物スコアを計算します（簡易版） */
     const artifactScoringStats = reactive(
-      deepcopy(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula
+      _.cloneDeep(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula
     );
     if (props.recommendation?.build?.artifactScoring) {
       artifactScoringStats.splice(
@@ -439,7 +439,7 @@ export default defineComponent({
     setI18nLanguage("ja-jp");
 
     // ステータス1, ステータス2, 敵
-    const statsInput = reactive(deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput);
+    const statsInput = reactive(_.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput);
     const characterStats1Category1List = ["基本ステータス", "高級ステータス"];
     const characterStats1Category2List = [
       "元素ステータス·ダメージ",
@@ -1211,8 +1211,7 @@ export default defineComponent({
     const updateArtifactDetail = (artifactDetailInput: TArtifactDetailInput) => {
       if (!artifactDetailInputRea) return;
       for (const stat of Object.keys(artifactDetailInput.聖遺物ステータス)) {
-        artifactDetailInputRea.聖遺物ステータス[stat] =
-          artifactDetailInput.聖遺物ステータス[stat];
+        artifactDetailInputRea.聖遺物ステータス[stat] = (artifactDetailInput.聖遺物ステータス as any)[stat];
       }
       calculateStats(
         statsInput,

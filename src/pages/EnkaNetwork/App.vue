@@ -124,6 +124,7 @@
   </div>
 </template>
 <script lang="ts">
+import _ from 'lodash';
 import { defineComponent, reactive, ref } from "vue";
 import {
   ARTIFACT_SET_MASTER,
@@ -145,7 +146,7 @@ import {
   突破レベルレベルARRAY,
   聖遺物サブ効果ARRAY,
 } from "@/input";
-import { deepcopy, overwriteObject } from "@/common";
+import { overwriteObject } from "@/common";
 
 type THoyoAvatarMasterValue = {
   id: number;
@@ -300,8 +301,8 @@ export default defineComponent({
         ascension: u.avatarInfoList[index].propMap["1002"]?.ival ?? 0,
         constellation: u.avatarInfoList[index].talentIdList?.length ?? 0,
         skillLevelList: [] as [string, number][],
-        weapon: deepcopy(WEAPON_INFO_TEMPLATE),
-        reliq: deepcopy(RELIQ_INFO_TEMPLATE),
+        weapon: _.cloneDeep(WEAPON_INFO_TEMPLATE),
+        reliq: _.cloneDeep(RELIQ_INFO_TEMPLATE),
       };
 
       Object.keys(u.avatarInfoList[index].skillLevelMap).forEach((key) => {
@@ -725,6 +726,8 @@ input {
 
 button {
   vertical-align: bottom;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 button span {

@@ -30,9 +30,9 @@
     </div>
 </template>
 <script lang="ts">
+import _ from "lodash";
 import { ARTIFACT_SCORE_FORMULA_TEMPLATE, TArtifactScoreFormula } from "@/calculate";
 import { defineComponent, reactive, ref } from "vue";
-import { deepcopy } from "@/common";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -52,11 +52,11 @@ export default defineComponent({
         });
 
         const selectedIndex = ref(-1);
-        const currentFormula = reactive(deepcopy(artifactScoreFormulaList[0]) as TArtifactScoreFormula);
+        const currentFormula = reactive(_.cloneDeep(artifactScoreFormulaList[0]) as TArtifactScoreFormula);
 
         const selectOnChange = () => {
             if (selectedIndex.value == -1) return;
-            const newFormula = deepcopy(artifactScoreFormulaList[selectedIndex.value]);
+            const newFormula = _.cloneDeep(artifactScoreFormulaList[selectedIndex.value]);
             currentFormula.splice(0, currentFormula.length, ...newFormula);
             changed.value = true;
         };
@@ -77,7 +77,7 @@ export default defineComponent({
         };
 
         const initialize = (formula: TArtifactScoreFormula) => {
-            currentFormula.splice(0, currentFormula.length, ...deepcopy(formula));
+            currentFormula.splice(0, currentFormula.length, ..._.cloneDeep(formula));
             selectedIndex.value = -1;
             changed.value = false;
         };

@@ -30,7 +30,8 @@
 </template>
 
 <script lang="ts">
-import { deepcopy, isNumber, overwriteObject } from "@/common";
+import _ from "lodash";
+import { isNumber, overwriteObject } from "@/common";
 import {
   TCharacterInput,
   TStats,
@@ -55,10 +56,10 @@ export default defineComponent({
   setup(props, context) {
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
-    const checkboxList = reactive(deepcopy(props.conditionInput.checkboxList) as TCheckboxEntry[]);
-    const selectList = reactive(deepcopy(props.conditionInput.selectList) as TSelectEntry[]);
-    const numberList = reactive(deepcopy(props.conditionInput.numberList) as TNumberEntry[]);
-    const conditionValues = reactive(deepcopy(props.conditionInput.conditionValues) as any);  // TConditionValues
+    const checkboxList = reactive(_.cloneDeep(props.conditionInput.checkboxList) as TCheckboxEntry[]);
+    const selectList = reactive(_.cloneDeep(props.conditionInput.selectList) as TSelectEntry[]);
+    const numberList = reactive(_.cloneDeep(props.conditionInput.numberList) as TNumberEntry[]);
+    const conditionValues = reactive(_.cloneDeep(props.conditionInput.conditionValues) as any);  // TConditionValues
 
     const isDisplayDescription = ref(false);
 

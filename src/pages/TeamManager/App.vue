@@ -59,10 +59,10 @@
   </div>
 </template>
 <script lang="ts">
+import _ from 'lodash';
 import draggable from "vuedraggable";
 import { computed, defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { deepcopy } from "@/common";
 import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from "./team";
 import TeamItem from "./TeamItem.vue";
 import CharacterSelectModal from "./CharacterSelectModal.vue";
@@ -156,7 +156,7 @@ export default defineComponent({
     };
 
     const builddataStr = computed(() => {
-      const work: TTeam[] = deepcopy(teams);
+      const work: TTeam[] = _.cloneDeep(teams);
       work.forEach((team) => {
         team.members.forEach((member) => {
           member.builddata = undefined;

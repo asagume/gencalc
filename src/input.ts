@@ -1,6 +1,6 @@
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
-import { basename, deepcopy, isNumber, overwriteObject } from './common';
+import { basename, isNumber, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -139,8 +139,12 @@ export const STAT_PERCENT_LIST = [
     '別枠乗算', '敵防御力',
 ];
 
+export type TStats = {
+    [key: string]: number,
+};
+
 function makeStatusTenmplate() {
-    const statsObj = {} as { [key: string]: number };
+    const statsObj: TStats = {};
     ステータスARRAY_MAP.forEach((value) => {
         value.forEach(stat => {
             statsObj[stat] = 0;
@@ -154,12 +158,9 @@ function makeStatusTenmplate() {
     return statsObj;
 }
 export const ステータスTEMPLATE = makeStatusTenmplate();
-export type TStats = {
-    [key: string]: number,
-};
 
 function makeEnemyStatusTemplate() {
-    const statsObj = {} as { [key: string]: number };
+    const statsObj: TStats = {};
     [元素ステータス_耐性ARRAY].forEach((value) => {
         value.forEach(stat => {
             statsObj[stat] = 0;
@@ -317,7 +318,7 @@ export type TDamageResult = {
 };
 
 export const DAMAGE_RESULT_TEMPLATE = {
-    元素反応: deepcopy(元素反応TEMPLATE) as TDamageResultElementalReaction,
+    元素反応: _.cloneDeep(元素反応TEMPLATE) as TDamageResultElementalReaction,
     通常攻撃: [] as TDamageResultEntry[],
     重撃: [] as TDamageResultEntry[],
     落下攻撃: [] as TDamageResultEntry[],
@@ -405,9 +406,9 @@ export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物優先するサブ効果: ['', '', ''],
     聖遺物優先するサブ効果上昇値: Array.from(GENSEN_MASTER_LIST[2].values),     // 厳選1ヶ月
     聖遺物優先するサブ効果上昇回数: Array.from(GENSEN_MASTER_LIST[2].counts),   // 厳選1ヶ月
-    聖遺物ステータス: deepcopy(聖遺物ステータスTEMPLATE),
-    聖遺物ステータスメイン効果: deepcopy(聖遺物ステータスTEMPLATE),
-    聖遺物ステータスサブ効果: deepcopy(聖遺物ステータスTEMPLATE),
+    聖遺物ステータス: _.cloneDeep(聖遺物ステータスTEMPLATE),
+    聖遺物ステータスメイン効果: _.cloneDeep(聖遺物ステータスTEMPLATE),
+    聖遺物ステータスサブ効果: _.cloneDeep(聖遺物ステータスTEMPLATE),
     聖遺物優先するサブ効果Disabled: false,
 };
 export type TArtifactDetailInput = typeof ARTIFACT_DETAIL_INPUT_TEMPLATE;
@@ -446,8 +447,8 @@ export const CONDITION_INPUT_TEMPLATE = {
 export type TConditionInput = typeof CONDITION_INPUT_TEMPLATE;
 
 export const STATS_INPUT_TEMPLATE = {
-    statsObj: deepcopy(ステータスTEMPLATE) as TStats,
-    statAdjustments: deepcopy(ステータスTEMPLATE) as TStats,
+    statsObj: _.cloneDeep(ステータスTEMPLATE) as TStats,
+    statAdjustments: _.cloneDeep(ステータスTEMPLATE) as TStats,
     statAdjustmentsEx: {} as TStats,
     enemyMaster: ENEMY_MASTER_LIST[0] as TEnemyEntry,
 };
@@ -462,11 +463,11 @@ export type TElementalResonance = {
 };
 
 export const SUPPORTER_INPUT_TEMPLATE = {
-    characterInput: deepcopy(CHARACTER_INPUT_TEMPLATE) as TCharacterInput,
-    artifactDetailInput: deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput,
-    conditionInput: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
-    statsInput: deepcopy(STATS_INPUT_TEMPLATE) as TStatsInput,
-    damageResult: deepcopy(DAMAGE_RESULT_TEMPLATE) as TDamageResult,
+    characterInput: _.cloneDeep(CHARACTER_INPUT_TEMPLATE) as TCharacterInput,
+    artifactDetailInput: _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput,
+    conditionInput: _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput,
+    statsInput: _.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput,
+    damageResult: _.cloneDeep(DAMAGE_RESULT_TEMPLATE) as TDamageResult,
 };
 export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
@@ -478,8 +479,8 @@ export const OPTION_INPUT_TEMPLATE = {
     supporterBuildname: {} as { [key: string]: string | undefined },
     supporters: {} as { [key: string]: TSupporterInput | undefined },
     teamMembers: [] as string[],
-    teamOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
-    miscOption: deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput,
+    teamOption: _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput,
+    miscOption: _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput,
 };
 export type TOptionInput = typeof OPTION_INPUT_TEMPLATE;
 
@@ -712,7 +713,7 @@ export async function loadRecommendation(
         const character = characterInput.character;
         const characterMaster = await getCharacterMasterDetail(character);
         characterInput.characterMaster = characterMaster;
-        const artifactStatsSub = deepcopy(聖遺物ステータスTEMPLATE);
+        const artifactStatsSub = _.cloneDeep(聖遺物ステータスTEMPLATE);
 
         if ('レベル' in build) {
             [characterInput.突破レベル, characterInput.レベル] = parseLevelStr(build['レベル']);
@@ -745,7 +746,7 @@ export async function loadRecommendation(
             if (toKey != 'HP') toKey = toKey.replace(/P$/, '%');
             if (build[key] || build[key] == 0) {
                 prioritySubstatsDisabled = true;
-                artifactStatsSub[toKey] = Number(build[key]);
+                (artifactStatsSub as any)[toKey] = Number(build[key]);
             }
         }
         artifactDetailInput.聖遺物優先するサブ効果Disabled = prioritySubstatsDisabled;
@@ -1288,7 +1289,7 @@ export function makeDamageDetailObjArrObjElementalResonance(characterInput: any)
         const myStatusChangeDetailObjArr = [] as any[];
         const myTalentChangeDetailObjArr = [] as any[];
         for (const myTalentDetail of ELEMENTAL_RESONANCE_MASTER_LIST) {
-            const workObj = deepcopy(myTalentDetail);
+            const workObj = _.cloneDeep(myTalentDetail);
             if (workObj.詳細) {
                 workObj.詳細.forEach((detailObj: TAnyObject) => {
                     detailObj.名前 = myTalentDetail.key;

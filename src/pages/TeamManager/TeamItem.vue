@@ -36,13 +36,14 @@
   </div>
 </template>
 <script lang="ts">
+import _ from 'lodash';
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENT_IMG_SRC, getCharacterMasterDetail, TAnyObject, TCharacterKey } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import { characterMaster, getBuilddataFromStorage, TMember, TTeam } from "./team";
 import MemberItem from "./MemberItem.vue";
 import { ALL_ELEMENTS, calculateArtifactStats, calculateArtifactStatsMain, calculateDamageResult, calculateFormulaArray, calculateStats } from "@/calculate";
-import { deepcopy, overwriteObject } from "@/common";
+import { overwriteObject } from "@/common";
 import {
   ARTIFACT_DETAIL_INPUT_TEMPLATE,
   CHARACTER_INPUT_TEMPLATE,
@@ -195,12 +196,12 @@ export default defineComponent({
     });
 
     const calculateMemberResult = async (member: TMember): Promise<TMemberResult> => {
-      const characterInput: TCharacterInput = deepcopy(CHARACTER_INPUT_TEMPLATE);
-      const artifactDetailInput: TArtifactDetailInput = deepcopy(ARTIFACT_DETAIL_INPUT_TEMPLATE);
-      const conditionInput: TConditionInput = deepcopy(CONDITION_INPUT_TEMPLATE);
-      const optionInput: TOptionInput = deepcopy(OPTION_INPUT_TEMPLATE);
-      const statsInput: TStatsInput = deepcopy(STATS_INPUT_TEMPLATE);
-      const damageResult: TDamageResult = deepcopy(DAMAGE_RESULT_TEMPLATE);
+      const characterInput: TCharacterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE);
+      const artifactDetailInput: TArtifactDetailInput = _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE);
+      const conditionInput: TConditionInput = _.cloneDeep(CONDITION_INPUT_TEMPLATE);
+      const optionInput: TOptionInput = _.cloneDeep(OPTION_INPUT_TEMPLATE);
+      const statsInput: TStatsInput = _.cloneDeep(STATS_INPUT_TEMPLATE);
+      const damageResult: TDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
 
       const result: TMemberResult = {
         characterInput: characterInput,

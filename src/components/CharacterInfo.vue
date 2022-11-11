@@ -160,8 +160,8 @@
 </template>
 
 <script lang="ts">
+import _ from "lodash";
 import { getStatValueByLevel } from "@/calculate";
-import { isPlainObject } from "@/common";
 import { TCharacterDetail } from "@/master";
 import { computed, defineComponent, PropType } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
@@ -268,7 +268,7 @@ export default defineComponent({
         const keyArr = Object.keys(talentObj).filter((s) => s.endsWith(suffix));
         for (const key of keyArr) {
           let value = talentObj[key];
-          if (isPlainObject(value)) {
+          if (_.isPlainObject(value)) {
             value = value[String(level)];
           }
           result.push([key, value]);
@@ -278,7 +278,7 @@ export default defineComponent({
     };
 
     const talentValue = (valueObj: any, level: number) => {
-      if (isPlainObject(valueObj)) {
+      if (_.isPlainObject(valueObj)) {
         return valueObj[String(level)];
       }
       return valueObj;

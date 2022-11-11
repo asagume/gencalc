@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { deepcopy } from "@/common";
+import _ from "lodash";
 import { CONDITION_INPUT_TEMPLATE, STAT_PERCENT_LIST, TConditionInput, TElementalResonance, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
@@ -58,7 +58,7 @@ export default defineComponent({
     // 燃焼、原激化、開花反応を発動すると、周囲チーム全員の元素熟知+30、継続時間6秒。超激化、草激化、超開花、烈開花反応を発動すると、周囲チーム全員の元素熟知+20、継続時間6秒。
     const dendroOption = ref(0);
 
-    const conditionInput = reactive(deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput);
+    const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE));
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
 
     const statAdjustments = computed(() => {

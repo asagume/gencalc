@@ -27,11 +27,11 @@
   </div>
 </template>
 <script lang="ts">
+import _ from 'lodash';
 import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import CharacterSelect from "@/components/CharacterSelect.vue";
 import { getBuildnameFromStorageKey, getBuildStorageKeys, TMember } from "./team";
 import MemberItem from "./MemberItem.vue";
-import { deepcopy } from "@/common";
 import { makeDefaultBuildname } from "@/input";
 
 export default defineComponent({
@@ -59,7 +59,7 @@ export default defineComponent({
           name: props.members[i].name,
           buildname: props.members[i].buildname,
           builddata: props.members[i].builddata,
-          tags: deepcopy(props.members[i].tags),
+          tags: _.cloneDeep(props.members[i].tags),
         });
       }
       workMembers.splice(0, workMembers.length, ...work);

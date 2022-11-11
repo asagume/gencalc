@@ -20,12 +20,13 @@
 </template>
 
 <script lang="ts">
+import _ from "lodash";
 import {
   calculateFormulaArray,
   checkConditionMatches,
   makeValidConditionValueArr,
 } from "@/calculate";
-import { deepcopy, isNumber, overwriteObject } from "@/common";
+import { isNumber, overwriteObject } from "@/common";
 import {
   CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
@@ -54,11 +55,11 @@ export default defineComponent({
     const talentChangeDetailObjArr: TDamageDetailObj[] = [];
     const conditionMap = new Map() as Map<string, string[] | null>;
     const exclusionMap = new Map() as Map<string, string[] | null>;
-    const conditionInput = reactive(deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput);
+    const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput);
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
-    const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
+    const damageResultDummy = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
 
     for (const masterList of [OPTION1_MASTER_LIST, OPTION2_MASTER_LIST]) {
       for (const entry of masterList) {

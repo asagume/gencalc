@@ -17,11 +17,11 @@ export function isPlainObject(value: any): boolean {
     return myType === '[object Object]';
 }
 
-/** 簡易なdeep copy。undefinedなどは消失します */
-export function deepcopy(value: any): any {
-    const result = JSON.parse(JSON.stringify(value));
-    return result;
-}
+// /** 簡易なdeep copy。undefinedなどは消失します */
+// export function deepcopy(value: any): any {
+//     const result = JSON.parse(JSON.stringify(value));
+//     return result;
+// }
 
 export function overwriteObject(dst: any, src: any) {
     if (_.isPlainObject(src) && _.isPlainObject(dst)) {

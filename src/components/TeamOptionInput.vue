@@ -119,7 +119,7 @@ import {
   checkConditionMatches,
   makeValidConditionValueArr,
 } from "@/calculate";
-import { deepcopy, isNumber, overwriteObject } from "@/common";
+import { isNumber, overwriteObject } from "@/common";
 import {
   CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
@@ -191,14 +191,14 @@ export default defineComponent({
     const conditionMap = new Map() as Map<string, string[] | null | object>;
     const exclusionMap = new Map() as Map<string, string[] | null>;
     const conditionInput = reactive(
-      deepcopy(CONDITION_INPUT_TEMPLATE) as TConditionInput
+      _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput
     );
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
     const numberList = conditionInput.numberList;
-    const statsObjDummy = deepcopy(ステータスTEMPLATE);
-    const damageResultDummy = deepcopy(DAMAGE_RESULT_TEMPLATE);
+    const statsObjDummy = _.cloneDeep(ステータスTEMPLATE);
+    const damageResultDummy = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
 
     const additionalConditions: string[] = [];
 
