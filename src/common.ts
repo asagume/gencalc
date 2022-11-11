@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export function isString(value: any): boolean {
     return typeof value === 'string' || value instanceof String;
 }
@@ -22,7 +24,7 @@ export function deepcopy(value: any): any {
 }
 
 export function overwriteObject(dst: any, src: any) {
-    if (isPlainObject(src) && isPlainObject(dst)) {
+    if (_.isPlainObject(src) && _.isPlainObject(dst)) {
         const srcKeys = Object.keys(src);
         for (const key of srcKeys) {
             dst[key] = src[key];
