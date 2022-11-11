@@ -635,6 +635,7 @@ export default defineComponent({
     };
 
     watch(props, async (newVal, oldVal) => {
+      const workPromiseArr: any[] = [];
       for (const key of Object.keys(newVal.calculatedSupporters)) {
         const newWork = newVal.calculatedSupporters[key];
         const oldWork = oldVal.calculatedSupporters[key];
@@ -651,7 +652,7 @@ export default defineComponent({
         const savedSupporter = newVal.savedSupporters.filter(s => s.key == key);
         if (savedSupporter.length) {
           if (changed) {
-            setupSupporterDamageResult(savedSupporter[0]);
+            workPromiseArr.push(setupSupporterDamageResult(savedSupporter[0]));
           }
           selectedBuildname[key] = savedSupporter[0].buildname;
         }
@@ -663,6 +664,7 @@ export default defineComponent({
           delete selectedBuildname[entry.key];
         }
       }
+      await Promise.all(workPromiseArr);  // ここをPromise.allでやっちゃっていいかは…？
       onChange();
     });
 
