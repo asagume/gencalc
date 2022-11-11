@@ -120,8 +120,8 @@ export default defineComponent({
 
 <style scoped>
 img.weapon {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   background-size: contain;
 }
 
@@ -130,8 +130,8 @@ img.weapon {
 }
 
 img.filter {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 
@@ -140,7 +140,7 @@ img.filter {
 }
 
 div.refine {
-  font-size: 28px;
+  font-size: 25px;
   text-shadow: 0 0 3px black;
   position: absolute;
   right: 10px;

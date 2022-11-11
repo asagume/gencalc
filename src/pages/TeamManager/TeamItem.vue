@@ -370,8 +370,8 @@ export default defineComponent({
 <style>
 div.team {
   display: inline-block;
-  max-width: 342px;
-  padding: 5px;
+  max-width: 336px;
+  padding: 4px;
   border: 4px double silver;
   border-radius: 10px;
   margin-bottom: 10px;

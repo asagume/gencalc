@@ -176,8 +176,8 @@ export default defineComponent({
 
 <style scoped>
 img.character {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   background-size: contain;
 }
 
@@ -186,8 +186,8 @@ img.character {
 }
 
 img.vision {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   position: absolute;
   left: 3px;
   top: 3px;
@@ -197,8 +197,8 @@ div.selection-number {
   position: absolute;
   right: 3px;
   top: 3px;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   border: 2px solid whitesmoke;
   font-size: 25px;
@@ -207,8 +207,8 @@ div.selection-number {
 }
 
 img.filter {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 

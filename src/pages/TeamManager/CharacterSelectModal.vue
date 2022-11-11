@@ -225,7 +225,7 @@ span.tag {
 
 div.member {
   display: inline-block;
-  width: 90px;
+  width: 80px;
 }
 
 div.member.selected {

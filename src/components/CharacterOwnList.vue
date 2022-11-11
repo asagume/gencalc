@@ -99,21 +99,21 @@ export default defineComponent({
 
 <style scoped>
 img.character {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   background-size: contain;
 }
 
 img.vision {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   position: absolute;
   left: 3px;
   top: 3px;
 }
 
 div.constellation {
-  font-size: 28px;
+  font-size: 25px;
   text-shadow: 0 0 3px black;
   position: absolute;
   right: 10px;

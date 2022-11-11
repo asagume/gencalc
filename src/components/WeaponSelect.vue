@@ -131,8 +131,8 @@ export default defineComponent({
 
 <style scoped>
 img.weapon {
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   background-size: contain;
 }
 
