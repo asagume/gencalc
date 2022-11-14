@@ -443,7 +443,7 @@
       "icon_url": "images/characters/dendro_5_catalyst_Nahida/talent_4.png",
       "詳細": [
         {
-          "条件": "摩耶の宮殿",
+          "条件": "摩耶の宮殿&出場中",
           "種類": "元素熟知V1",
           "数値": "25%元素熟知TOP",
           "上限": 250
