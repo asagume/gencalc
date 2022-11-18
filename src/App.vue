@@ -928,27 +928,34 @@ export default defineComponent({
         constellation = maxConstellation;
       }
       characterInputRea.命ノ星座 = constellation;
-      const maxNormalAttack = getMaxTalentLevel(
-        characterInputRea.characterMaster,
-        "通常攻撃"
-      );
-      if (characterInputRea.通常攻撃レベル > maxNormalAttack) {
-        characterInputRea.通常攻撃レベル = maxNormalAttack;
+      characterInputRea.通常攻撃レベル = 8;
+      characterInputRea.元素スキルレベル = 8;
+      characterInputRea.元素爆発レベル = 8;
+      const eName = characterInputRea.characterMaster?.元素スキル?.名前;
+      const qName = characterInputRea.characterMaster?.元素爆発?.名前;
+      for (let i = 1; i <= constellation; i++) {
+        if (i != 3 && i != 5) continue;
+        const constellationObj = characterInputRea.characterMaster?.命ノ星座[String(i)];
+        if (constellationObj && constellationObj.説明) {
+          if (eName && constellationObj.説明.indexOf(eName) != -1) {
+            characterInputRea.元素スキルレベル += 3;
+          } else if (qName && constellationObj.説明.indexOf(qName) != -1) {
+            characterInputRea.元素爆発レベル += 3;
+          }
+        }
       }
-      const maxElementalSkill = getMaxTalentLevel(
-        characterInputRea.characterMaster,
-        "元素スキル"
-      );
-      if (characterInputRea.元素スキルレベル > maxElementalSkill) {
-        characterInputRea.元素スキルレベル = maxElementalSkill;
-      }
-      const maxElementalBurst = getMaxTalentLevel(
-        characterInputRea.characterMaster,
-        "元素爆発"
-      );
-      if (characterInputRea.元素爆発レベル > maxElementalBurst) {
-        characterInputRea.元素爆発レベル = maxElementalBurst;
-      }
+      // const maxNormalAttack = getMaxTalentLevel(characterInputRea.characterMaster, "通常攻撃");
+      // if (characterInputRea.通常攻撃レベル > maxNormalAttack) {
+      //   characterInputRea.通常攻撃レベル = maxNormalAttack;
+      // }
+      // const maxElementalSkill = getMaxTalentLevel(characterInputRea.characterMaster, "元素スキル");
+      // if (characterInputRea.元素スキルレベル > maxElementalSkill) {
+      //   characterInputRea.元素スキルレベル = maxElementalSkill;
+      // }
+      // const maxElementalBurst = getMaxTalentLevel(characterInputRea.characterMaster, "元素爆発");
+      // if (characterInputRea.元素爆発レベル > maxElementalBurst) {
+      //   characterInputRea.元素爆発レベル = maxElementalBurst;
+      // }
       let opt_buildData;
       if (props.urldata && props.urldata.キャラクター == character)
         opt_buildData = props.urldata;

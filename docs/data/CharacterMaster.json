@@ -201,6 +201,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "レイラ": {
+    "レアリティ": 4,
+    "元素": "氷",
+    "武器": "片手剣",
+    "誕生日": "12/19",
+    "import": "data/characters/cryo_4_sword_Layla.json"
+  },
   "キャンディス": {
     "レアリティ": 4,
     "元素": "水",
