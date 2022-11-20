@@ -110,7 +110,7 @@ export function calculateArtifactSubStatByPriority(
     let totalCount = 0;
     for (let i = 0; i < 3; i++) {
         if (!prioritySubstats[i]) continue;
-        if (!priotritySubstatIndices[i]) continue;
+        if (priotritySubstatIndices[i] === undefined || priotritySubstatIndices[i] < 0) continue;
         if (!prioritySubstatCounts[i]) continue;
         artifactStatsSub[prioritySubstats[i]] += priotritySubstatValues[i][priotritySubstatIndices[i]] * prioritySubstatCounts[i];
         totalCount += prioritySubstatCounts[i];
