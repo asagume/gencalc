@@ -16,6 +16,17 @@
 
             <article>
                 <label>
+                    <input type="checkbox" v-model="configurationInputRea['聖遺物詳細サブ効果オンリー']"
+                        @change="$emit('update:configuration-input', configurationInputRea)">
+                    <span>聖遺物詳細の表示値をサブ効果のみの合計にする</span>
+                </label>
+                <div class="notice">
+                    聖遺物詳細の表示値からメイン効果分が除外されます。<br>
+                </div>
+            </article>
+
+            <article>
+                <label>
                     <input type="checkbox" v-model="configurationInputRea['聖遺物サブ効果計算停止']"
                         @change="$emit('update:configuration-input', configurationInputRea)">
                     <span>聖遺物サブ効果の自動計算を止める</span>
