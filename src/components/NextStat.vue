@@ -33,7 +33,9 @@
                         </tr>
                     </template>
                     <tr>
-                        <td colspan="3"></td>
+                        <th class="damage"></th>
+                        <td></td>
+                        <td></td>
                         <td>
                             <button type="button" @click="resetButtonOnClick"> Reset </button>
                         </td>
@@ -85,7 +87,7 @@ export default defineComponent({
             if (props.rotationDamageInfo?.rotationDamages) {
                 result.push(ROTATION_TOTAL_DMG_NAME);
             }
-            for (const key1 of ['通常攻撃', '落下攻撃', '重撃', '元素スキル', '元素爆発']) {
+            for (const key1 of ['通常攻撃', '落下攻撃', '重撃', '元素スキル', '元素爆発', 'その他']) {
                 const damageResultValue = props.damageResult[key1];
                 if (Array.isArray(damageResultValue)) {
                     for (const key2 of damageResultValue) {
@@ -147,6 +149,10 @@ export default defineComponent({
             return result;
         }
 
+        const currentDamageValue = computed(() => {
+            return getDamageValue(evaluationItem.value, props.damageResult);
+        });
+
         function setupNextStatRow(row: any[], workDamageResult?: TDamageResult, workStatsInput?: TStatsInput) {
             if (!workDamageResult) {
                 workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
@@ -158,7 +164,7 @@ export default defineComponent({
             const stat = row[0];
             const step = row[1][row[2]];
             if (step && props.rotationDamageInfo) {
-                const baseValue = getDamageValue(evaluationItem.value, props.damageResult);
+                const baseValue = currentDamageValue.value;
                 if (stat in workStatsInput.statAdjustmentsEx) {
                     workStatsInput.statAdjustmentsEx[stat] += step;
                 } else {
@@ -189,10 +195,12 @@ export default defineComponent({
 
         function initializeEvaluationItem() {
             if (evaluationItemList.value.length) {
-                if (evaluationItemList.value.includes(ROTATION_TOTAL_DMG_NAME)) {
-                    evaluationItem.value = ROTATION_TOTAL_DMG_NAME;
-                } else {
-                    evaluationItem.value = evaluationItemList.value[evaluationItemList.value.length - 1];
+                if (!evaluationItemList.value.includes(evaluationItem.value)) {
+                    if (evaluationItemList.value.includes(ROTATION_TOTAL_DMG_NAME)) {
+                        evaluationItem.value = ROTATION_TOTAL_DMG_NAME;
+                    } else {
+                        evaluationItem.value = evaluationItemList.value[evaluationItemList.value.length - 1];
+                    }
                 }
             }
         }
@@ -255,6 +263,7 @@ export default defineComponent({
             nextStatRows,
             nextStatStepOnChange,
             displayNextStatValue,
+            currentDamageValue,
 
             nextStatOnChange,
             resetButtonOnClick,
@@ -311,6 +320,11 @@ td.count {
 
 td:last-child {
     width: 6rem;
+}
+
+th.damage {
+    text-align: right;
+    color: gold;
 }
 
 input[type="range"]+span {
