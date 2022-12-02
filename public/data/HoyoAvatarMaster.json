@@ -261,6 +261,15 @@
     "max_level": 90
   },
   {
+    "id": 10000074,
+    "name": "レイラ",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
     "id": 10000072,
     "name": "キャンディス",
     "icon": null,

@@ -1386,6 +1386,53 @@
   {
     "skill_list": [
       {
+        "id": 10741,
+        "group_id": 7431,
+        "name": "通常攻撃·煌めく軌跡の剣",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10742,
+        "group_id": 7432,
+        "name": "垂裳凛然の夜",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10745,
+        "group_id": 7439,
+        "name": "星流揺籠の夢",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 7421,
+        "group_id": 7421,
+        "name": "降って湧いた光のように",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7422,
+        "group_id": 7422,
+        "name": "熟睡妨害禁止！",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7423,
+        "group_id": 7423,
+        "name": "重なる影の夢兆",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000074
+  },
+  {
+    "skill_list": [
+      {
         "id": 10721,
         "group_id": 7231,
         "name": "通常攻撃·流耀槍術·守勢",
