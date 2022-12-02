@@ -8,6 +8,12 @@
         {{ displayName("蒸発") }}×<span>{{
             Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
         }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.蒸発倍率">
+          <br />
+          {{ displayName("蒸発") }}×<span>{{
+              Math.round(copiedDamageResult.元素反応.蒸発倍率 * 100) / 100
+          }}</span>
+        </span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.溶解倍率">
@@ -16,6 +22,12 @@
         {{ displayName("溶解") }}×<span>{{
             Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
         }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.溶解倍率">
+          <br />
+          {{ displayName("溶解") }}×<span>{{
+              Math.round(copiedDamageResult.元素反応.溶解倍率 * 100) / 100
+          }}</span>
+        </span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.超激化ダメージ">
@@ -23,6 +35,11 @@
       <label for="増幅反応-超激化">
         {{ displayName("超激化") }}
         <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超激化ダメージ">
+          <br />
+          {{ displayName("超激化") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.超激化ダメージ) }}</span>
+        </span>
       </label>
     </template>
     <template v-if="damageResult.元素反応.草激化ダメージ">
@@ -30,19 +47,39 @@
       <label for="増幅反応-草激化">
         {{ displayName("草激化") }}
         <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.草激化ダメージ">
+          <br />
+          {{ displayName("草激化") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.草激化ダメージ) }}</span>
+        </span>
       </label>
     </template>
     <label v-if="damageResult.元素反応.過負荷ダメージ" class="pyro">
       {{ displayName("過負荷") }}
       <span>{{ Math.round(damageResult.元素反応.過負荷ダメージ) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.過負荷ダメージ">
+        <br />
+        {{ displayName("過負荷") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.過負荷ダメージ) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.感電ダメージ" class="electro">
       {{ displayName("感電") }}
       <span>{{ Math.round(damageResult.元素反応.感電ダメージ) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.感電ダメージ">
+        <br />
+        {{ displayName("感電") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.感電ダメージ) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.超電導ダメージ" class="cryo">
       {{ displayName("超電導") }}
       <span>{{ Math.round(damageResult.元素反応.超電導ダメージ) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超電導ダメージ">
+        <br />
+        {{ displayName("超電導") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.超電導ダメージ) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.拡散ダメージ" :class="elementClass(元素反応.拡散元素)">
       {{ displayName("拡散") }}
@@ -51,22 +88,47 @@
     <label v-if="damageResult.元素反応.結晶吸収量">
       {{ displayName("結晶") }}
       <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.結晶吸収量">
+        <br />
+        {{ displayName("結晶") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.結晶吸収量) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.燃焼ダメージ" class="pyro">
       {{ displayName("燃焼") }}
       <span>{{ Math.round(reactionDmg('燃焼ダメージ')) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.燃焼ダメージ">
+        <br />
+        {{ displayName("燃焼") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.燃焼ダメージ) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.開花ダメージ" class="dendro">
       {{ displayName("開花") }}
       <span>{{ Math.round(reactionDmg('開花ダメージ')) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.開花ダメージ">
+        <br />
+        {{ displayName("開花") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.開花ダメージ) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.烈開花ダメージ" class="dendro">
       {{ displayName("烈開花") }}
       <span>{{ Math.round(reactionDmg('烈開花ダメージ')) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.烈開花ダメージ">
+        <br />
+        {{ displayName("烈開花") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.烈開花ダメージ) }}</span>
+      </span>
     </label>
     <label v-if="damageResult.元素反応.超開花ダメージ" class="dendro">
       {{ displayName("超開花") }}
       <span>{{ Math.round(reactionDmg('超開花ダメージ')) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超開花ダメージ">
+        <br />
+        {{ displayName("超開花") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.超開花ダメージ) }}</span>
+      </span>
     </label>
   </div>
   <fieldset>
@@ -82,19 +144,28 @@
             </tr>
           </thead>
           <template v-if="categoryOpenClose[category]">
-            <tr v-for="item in itemList(category)" :key="item[0]">
+            <tr v-for="(item, index) in itemList(category)" :key="index">
               <th class="with-tooltip" v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
                 <span> {{ displayNameV(item[0]) }} </span>
                 <span class="tooltip" v-html="displayDamageParam(item)" v-if="displayDamageParam(item)"></span>
               </th>
               <td :class="'damage-value ' + elementClass(item[1])">
                 {{ displayDamageValue(item, 2, category) }}
+                <span class="savepoint" v-if="displayCopiedDamageValue(index, 2, category)">
+                  <br /> {{ displayCopiedDamageValue(index, 2, category) }}
+                </span>
               </td>
               <td :class="'damage-value ' + elementClass(item[1])">
                 {{ displayDamageValue(item, 3, category) }}
+                <span class="savepoint" v-if="displayCopiedDamageValue(index, 3, category)">
+                  <br /> {{ displayCopiedDamageValue(index, 3, category) }}
+                </span>
               </td>
               <td :class="'damage-value ' + elementClass(item[1])">
                 {{ displayDamageValue(item, 4, category) }}
+                <span class="savepoint" v-if="displayCopiedDamageValue(index, 4, category)">
+                  <br /> {{ displayCopiedDamageValue(index, 4, category) }}
+                </span>
               </td>
             </tr>
           </template>
@@ -153,6 +224,10 @@
       </tr>
     </table>
   </fieldset>
+  <div>
+    <button type="button" @click="copyDamageResult">{{ displayName('比較用に現在値を記憶') }}</button>
+    <button type="button" @click="clearCopiedDamageResult">{{ displayName('削除') }}</button>
+  </div>
   <div v-if="damageResult.キャラクター注釈.length > 0">
     <ul class="notes">
       <li v-for="(item, index) in damageResult.キャラクター注釈" :key="index">
@@ -170,7 +245,10 @@
   </div>
 </template>
 <script lang="ts">
+import _ from "lodash";
 import i18n from "@/i18n";
+import { overwriteObject } from "@/common";
+import { TDamageResult, TDamageResultEntry } from "@/input";
 import { ELEMENT_COLOR_CLASS, TElementColorClassKey } from "@/master";
 import { computed, defineComponent, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
@@ -191,6 +269,8 @@ export default defineComponent({
     const elementClass = (item: string) =>
       ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
     const resultStyleRef = ref("1");
+
+    const copiedDamageResult = reactive({} as TDamageResult);
 
     watch(元素反応, () => {
       if (
@@ -281,6 +361,73 @@ export default defineComponent({
       if (value < 10) value = Math.round(value * 100) / 100;
       else if (value < 100) value = Math.round(value * 10) / 10;
       else value = Math.round(value);
+      return value;
+    };
+
+    const displayCopiedDamageValue = (listIndex: any, index: number, category: string) => {
+      let value = 0;
+      if (category in copiedDamageResult) {
+        const copied元素反応 = copiedDamageResult.元素反応;
+
+        const workResultEntryArr: TDamageResultEntry[] = (copiedDamageResult as any)[category];
+        const curItem = itemList(category)[listIndex];
+        const workList = workResultEntryArr.filter((s: any[]) => s[0] == curItem[0]);
+        if (workList.length == 0) return undefined;
+        let item = workList[0];
+        if (workList.length > 1) {
+          for (let i = 0; i < itemList(category).length; i++) {
+            if (itemList(category)[i][0] == curItem[0]) {
+              if (i < listIndex) {
+                item = workList[1];
+              }
+            }
+          }
+        }
+        value = item[index] as number;
+        if (!value) return "-";
+        if (!item[5] || !["シールド"].includes(item[5])) {
+          if (item[1] && 増幅反応.value == "蒸発" && ["炎", "水"].includes(item[1])) {
+            value *= copied元素反応.蒸発倍率;
+            if (copied元素反応.拡散ダメージ && ["炎", "水"].includes(copied元素反応.拡散元素) && item[1] != copied元素反応.拡散元素) {
+              if (item[1] == '炎') value *= 1.5;
+              else if (item[1] == '水') value *= 2;
+              if (copied元素反応.拡散元素 == '炎') value /= 1.5;
+              else if (copied元素反応.拡散元素 == '水') value /= 2;
+            }
+          } else if (item[1] && 増幅反応.value == "溶解" && ["炎", "氷"].includes(item[1])) {
+            value *= copied元素反応.溶解倍率;
+            if (copied元素反応.拡散ダメージ && ["炎", "氷"].includes(copied元素反応.拡散元素) && item[1] != copied元素反応.拡散元素) {
+              if (item[1] == '炎') value *= 2;
+              else if (item[1] == '氷') value *= 1.5;
+              if (copied元素反応.拡散元素 == '炎') value /= 2;
+              else if (copied元素反応.拡散元素 == '氷') value /= 1.5;
+            }
+          } else if (item[1] && 増幅反応.value == "超激化" && ["雷"].includes(item[1])) {
+            let addValue = copied元素反応.超激化ダメージ;
+            // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
+            if (item[7]) addValue *= item[7]; // ダメージバフ補正
+            if (item[8]) addValue *= item[8]; // 敵の防御補正
+            addValue *= (item[index] as number) / item[4]; // 2:期待値/3:会心/4:非会心
+            if (item[0] == '合計ダメージ' && category == '通常攻撃') {
+              addValue *= danCount.value;
+            }
+            value += addValue;
+          } else if (item[1] && 増幅反応.value == "草激化" && ["草"].includes(item[1])) {
+            let addValue = copied元素反応.草激化ダメージ;
+            // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
+            if (item[7]) addValue *= item[7]; // ダメージバフ補正
+            if (item[8]) addValue *= item[8]; // 敵の防御補正
+            addValue *= (item[index] as number) / item[4]; // 2:期待値/3:会心/4:非会心
+            if (item[0] == '合計ダメージ' && category == '通常攻撃') {
+              addValue *= danCount.value;
+            }
+            value += addValue;
+          }
+        }
+        if (value < 10) value = Math.round(value * 100) / 100;
+        else if (value < 100) value = Math.round(value * 10) / 10;
+        else value = Math.round(value);
+      }
       return value;
     };
 
@@ -395,6 +542,14 @@ export default defineComponent({
       return result;
     });
 
+    const copyDamageResult = () => {
+      overwriteObject(copiedDamageResult, _.cloneDeep(props.damageResult));
+    };
+
+    const clearCopiedDamageResult = () => {
+      overwriteObject(copiedDamageResult, {});
+    };
+
     return {
       displayName,
       displayNameV,
@@ -412,9 +567,14 @@ export default defineComponent({
       categoryOpenClose,
       categoryOnClick,
       resultStyleRef,
+      displayCopiedDamageValue,
+      copiedDamageResult,
 
       damageTakenList,
       resScoreList,
+
+      copyDamageResult,
+      clearCopiedDamageResult,
     };
   },
 });
@@ -514,5 +674,15 @@ ul.notes {
   border: 2px solid gray;
   border-radius: 10px;
   background-color: black;
+}
+
+span.savepoint {
+  opacity: 60%;
+}
+
+button {
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 </style>

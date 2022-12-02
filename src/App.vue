@@ -135,7 +135,7 @@
     </div>
 
     <div class="result-pane">
-      <DamageResult :damage-result="damageResult" />
+      <DamageResult ref="damageResultVmRef" :damage-result="damageResult" />
     </div>
 
     <div class="pane5">
@@ -274,7 +274,6 @@ import {
   CONDITION_INPUT_TEMPLATE,
   makeSavedata,
   shareByTwitter,
-  getMaxTalentLevel,
   getMaxConstellation,
   TConditionValues,
   makeOptionsSavedata,
@@ -382,6 +381,7 @@ export default defineComponent({
     const teamOptionInputVmRef = ref();
     const miscOptionInputVmRef = ref();
     const artifactScoreFormulaVmRef = ref();
+    const damageResultVmRef = ref();
 
     const characterInputRea = reactive(
       overwriteObject(_.cloneDeep(CHARACTER_INPUT_TEMPLATE), props.characterInput)
@@ -916,6 +916,10 @@ export default defineComponent({
       )
         return;
       console.debug("updateCharacter", character);
+
+      if (damageResultVmRef.value) {
+        damageResultVmRef.value.clearCopiedDamageResult();
+      }
 
       characterSelectVisibleRef.value = false;
 
@@ -1558,6 +1562,7 @@ export default defineComponent({
       teamOptionInputVmRef,
       miscOptionInputVmRef,
       artifactScoreFormulaVmRef,
+      damageResultVmRef,
 
       characterInputRea,
       artifactDetailInputRea,
