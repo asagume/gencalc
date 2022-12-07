@@ -1,4 +1,11 @@
 {
+  "放浪者": {
+    "レアリティ": 5,
+    "元素": "風",
+    "武器": "法器",
+    "誕生日": "1/3",
+    "import": "data/characters/anemo_5_catalyst_Wanderer.json"
+  },
   "ナヒーダ": {
     "レアリティ": 5,
     "元素": "草",
@@ -200,6 +207,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "ファルザン": {
+    "レアリティ": 4,
+    "元素": "風",
+    "武器": "弓",
+    "誕生日": "8/20",
+    "import": "data/characters/anemo_4_bow_Faruzan.json"
   },
   "レイラ": {
     "レアリティ": 4,

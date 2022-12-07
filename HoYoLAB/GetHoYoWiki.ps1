@@ -15,9 +15,9 @@ $pageIds = @()
 # $pageIds += 2813   # セノ
 # $pageIds += 2815   # キャンディス
 # $pageIds += 2850   # ナヒーダ
-$pageIds += 2859   # レイラ
-# $pageIds += 2967   # ファルザン
-# $pageIds += 2968   # 放浪者
+# $pageIds += 2859   # レイラ
+$pageIds += 2967   # ファルザン
+$pageIds += 2968   # 放浪者
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -37,10 +37,14 @@ $pageIds += 2859   # レイラ
 # $pageIds += 2909   # サイフォスの月明かり
 # $pageIds += 2910   # 彷徨える星
 # $pageIds += 2966   # 千夜に浮かぶ夢
+$pageIds += 3319   # 東花坊時雨
+$pageIds += 3320   # トゥライトゥーラの記憶
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
 # $pageIds += 2673   # 金メッキの夢
+$pageIds += 3321   # 楽園の絶花
+$pageIds += 3322   # 砂上の楼閣の史話
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌

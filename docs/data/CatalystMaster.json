@@ -1,4 +1,8 @@
 {
+  "トゥライトゥーラの記憶": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Tulaytullah'sRemembrance.json"
+  },
   "千夜に浮かぶ夢": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_AThousandFloatingDreams.json"
