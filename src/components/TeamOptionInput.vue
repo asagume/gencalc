@@ -210,18 +210,23 @@ export default defineComponent({
       return ' ' + (ELEMENT_BG_COLOR_CLASS as any)[(CHARACTER_MASTER as any)[supporter].元素];
     };
 
+    function formatCondition(supporter: string, name: string | null, condition: string | null | undefined) {
+      let result = supporter + '*';
+      if (condition) {
+        result += condition.replace(/([&|^])/g, '$1' + supporter + '*');
+      } else if (name) {
+        result += name;
+      }
+      result = result.replace(supporter + '*' + supporter + '*', supporter + '*');
+      return result;
+    }
+
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
         const supporter = entry.key.split("_")[0];
         if ("詳細" in entry) {
           for (const detailObj of entry.詳細) {
-            if ("条件" in detailObj) {
-              if (!(detailObj as any).条件.startsWith(supporter + "*")) {
-                (detailObj as any).条件 = supporter + "*" + detailObj.条件;
-              }
-            } else {
-              (detailObj as any).条件 = supporter + "*" + entry.名前;
-            }
+            (detailObj as any).条件 = formatCondition(supporter, entry.名前,  (detailObj as any).条件);
           }
         }
         damageDetailArr.splice(damageDetailArr.length, 0, ...makeDamageDetailObjArr(entry, null, null, null, statusChangeDetailObjArr, talentChangeDetailObjArr, "その他オプション"));
@@ -295,9 +300,7 @@ export default defineComponent({
         const detailObjArr = master.チームバフ as any[];
         const damageDetailObjArr: TDamageDetailObj[] = makeTeamOptionDetailObjArr(detailObjArr);
         damageDetailObjArr.forEach((damageDetailObj) => {
-          let condition = character + "*";
-          if (damageDetailObj.条件) condition += damageDetailObj.条件;
-          else condition += damageDetailObj.名前;
+          const condition = formatCondition(character, damageDetailObj.名前, damageDetailObj.条件);
           damageDetailObj.条件 = condition;
           if (!additionalConditions.includes(condition)) {
             additionalConditions.push(condition);

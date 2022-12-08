@@ -56,6 +56,14 @@
     "max_level": 90
   },
   {
+    "id": 14512,
+    "name": "トゥライトゥーラの記憶",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 14511,
     "name": "千夜に浮かぶ夢",
     "icon": null,

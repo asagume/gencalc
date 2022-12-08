@@ -91,6 +91,7 @@ export default defineComponent({
                 const damageResultValue = props.damageResult[key1];
                 if (Array.isArray(damageResultValue)) {
                     for (const key2 of damageResultValue) {
+                        if (!key2) continue;
                         if (key2[0].endsWith('合計ダメージ')) continue;
                         if (!key2[5]?.endsWith('ダメージ')) continue;
                         const name = key1 + '.' + key2[0];

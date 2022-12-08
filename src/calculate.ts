@@ -1323,6 +1323,14 @@ function calculateDamageFromDetail(
                             isValid = true;
                         }
                     }
+                } else if (tempArr[1] == (my元素 + '元素ダメージ')) {
+                    if (tempArr.length == 2) {
+                        isValid = true;
+                    }
+                } else if (tempArr[1] == '物理ダメージ' && my元素 == '物理') {
+                    if (tempArr.length == 2) {
+                        isValid = true;
+                    }
                 }
                 if (isValid) {
                     const toStat = tempArr[0];
@@ -1479,7 +1487,7 @@ function calculateDamageFromDetail(
         });
 
         // ステータスによる実数ダメージ加算を計算します
-        if (DAMAGE_CATEGORY_ARRAY.includes(detailObj.種類)) {
+        if ([...DAMAGE_CATEGORY_ARRAY, 'その他ダメージ'].includes(detailObj.種類)) {
             let myダメージ種類 = detailObj.種類;
             if (detailObj.ダメージバフ) {    // for 夢想の一心状態の時、雷電将軍の通常攻撃、重撃、落下攻撃のダメージは元素爆発ダメージと見なす
                 const temp = detailObj.ダメージバフ.replace(/バフ$/, '');

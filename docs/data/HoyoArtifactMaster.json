@@ -176,6 +176,22 @@
     "max_level": 20
   },
   {
+    "id": 2854,
+    "name": "月娘の華彩",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2754,
+    "name": "諸王の都の始まり",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2154,
     "name": "夢境の鉄花",
     "icon": null,
@@ -442,6 +458,22 @@
   {
     "id": 5144,
     "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2844,
+    "name": "月娘の華彩",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2744,
+    "name": "諸王の都の始まり",
     "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 4,
@@ -792,6 +824,22 @@
     "max_level": 20
   },
   {
+    "id": 2852,
+    "name": "落謝の宴席",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2752,
+    "name": "黄金の邦国の結末",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2152,
     "name": "裁断の羽根",
     "icon": null,
@@ -1058,6 +1106,22 @@
   {
     "id": 5142,
     "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2842,
+    "name": "落謝の宴席",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2742,
+    "name": "黄金の邦国の結末",
     "icon": null,
     "reliquary_cat_id": 2,
     "reliquary_level": 4,
@@ -1416,6 +1480,22 @@
     "max_level": 20
   },
   {
+    "id": 2855,
+    "name": "凝結の刹那",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2755,
+    "name": "没落迷途のコア",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2155,
     "name": "深金の歳月",
     "icon": null,
@@ -1682,6 +1762,22 @@
   {
     "id": 5145,
     "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2845,
+    "name": "凝結の刹那",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2745,
+    "name": "没落迷途のコア",
     "icon": null,
     "reliquary_cat_id": 3,
     "reliquary_level": 4,
@@ -2032,6 +2128,22 @@
     "max_level": 20
   },
   {
+    "id": 2851,
+    "name": "守秘の魔瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2751,
+    "name": "迷酔の長夢の守護",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2151,
     "name": "甘露の終宴",
     "icon": null,
@@ -2298,6 +2410,22 @@
   {
     "id": 5141,
     "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2841,
+    "name": "守秘の魔瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2741,
+    "name": "迷酔の長夢の守護",
     "icon": null,
     "reliquary_cat_id": 4,
     "reliquary_level": 4,
@@ -2648,6 +2776,22 @@
     "max_level": 20
   },
   {
+    "id": 2853,
+    "name": "紫晶の花冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2753,
+    "name": "流砂の嗣君の遺宝",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2153,
     "name": "砂王の投影",
     "icon": null,
@@ -2946,6 +3090,22 @@
   {
     "id": 5143,
     "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2843,
+    "name": "紫晶の花冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2743,
+    "name": "流砂の嗣君の遺宝",
     "icon": null,
     "reliquary_cat_id": 5,
     "reliquary_level": 4,

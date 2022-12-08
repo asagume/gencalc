@@ -1,5 +1,14 @@
 [
   {
+    "id": 10000075,
+    "name": "放浪者",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90
+  },
+  {
     "id": 10000073,
     "name": "ナヒーダ",
     "icon": null,
@@ -258,6 +267,15 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000076,
+    "name": "ファルザン",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 2,
     "max_level": 90
   },
   {

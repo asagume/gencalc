@@ -1406,11 +1406,12 @@ function makeDetailObj(
 export function getChangeKind(kind: string) {
     if (kind in ステータスTEMPLATE
         || new RegExp('[自全].+(バフ|アップ)').exec(kind)
+        || ['その他ダメージアップ'].includes(kind)  // for 放浪者
         || new RegExp('敵?[自全]元素耐性').exec(kind)
         || ['別枠乗算', '回復量アップ'].includes(kind)
         || ['敵防御力'].includes(kind)
         || ['発動回数', '使用回数'].includes(kind)
-        || ['攻撃速度', '通常攻撃速度', '移動速度'].includes(kind)
+        || ['攻撃速度', '通常攻撃速度', '重撃速度', '移動速度'].includes(kind)
         || kind.endsWith('継続時間')
         || kind.endsWith('クールタイム')
         || kind.endsWith('会心率')
