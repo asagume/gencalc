@@ -122,10 +122,11 @@
             :elemental-resonance="optionInputRea.elementalResonance"
             @update:elemental-resonance="updateElementalResonance" />
         </div>
-        <div v-show="optionInputTabRef == 2">
+        <div v-show="optionInputTabRef == 2" v-if="optionInputTabRef == 2 || isTeamOptionActivate">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character" :top-stats="topStats"
             :saved-supporters="savedSupporters" :calculated-supporters="optionInputRea.supporters"
-            :team-members="optionInputRea.teamMembers" @update:team-option="updateTeamOption"
+            :team-members="optionInputRea.teamMembers"
+            :initialConditionValue="optionInputRea.teamOption.conditionValues" @update:team-option="updateTeamOption"
             @update:buildname-selection="updateBuildnameSelection" @update:team-members="updateTeamMembers" />
         </div>
         <div v-show="optionInputTabRef == 3">
@@ -522,7 +523,9 @@ export default defineComponent({
         list.push(updateOptionInputSupporter(savedSupporter.key as TCharacterKey));
       });
       await Promise.all(list);
-      teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
+      if (teamOptionInputVmRef.value) {
+        teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
+      }
     }
     setupSavedSupporters();
 
@@ -900,7 +903,9 @@ export default defineComponent({
           optionInputRea.elementalResonance
         );
         // チーム
-        teamOptionInputVmRef.value.initializeValues(optionInputRea.teamOption);
+        if (teamOptionInputVmRef.value) {
+          teamOptionInputVmRef.value.initializeValues(optionInputRea.teamOption);
+        }
         // その他
         miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
       }
@@ -1547,6 +1552,12 @@ export default defineComponent({
       enableClearLocalStorage.value = false;
     };
 
+    const isTeamOptionActivate = computed(() => {
+      if (teamOptionInputVmRef.value) return true;
+      if (Object.keys(optionInputRea.teamOption.conditionValues).length > 0) return true;
+      return false;
+    });
+
     updateCharacter(characterInputRea.character, props.teamMembers);
 
     return {
@@ -1612,6 +1623,7 @@ export default defineComponent({
       optionInputTabRef,
       ownListToggle1Ref,
       ownListToggle2Ref,
+      isTeamOptionActivate,
 
       openCharacterSelect,
 

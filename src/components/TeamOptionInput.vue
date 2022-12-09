@@ -136,6 +136,7 @@ import {
   makeBuildStorageKey,
   TSupporterInput,
   SUPPORTER_INPUT_TEMPLATE,
+TConditionValues,
 } from "@/input";
 import {
   CHARACTER_MASTER,
@@ -170,6 +171,9 @@ export default defineComponent({
     teamMembers: {
       type: Array as PropType<string[]>,
       required: true,
+    },
+    initialConditionValue: {
+      type: Object as PropType<TConditionValues>,
     }
   },
   emits: ["update:team-option", "update:buildname-selection", 'update:team-members'],
@@ -190,9 +194,10 @@ export default defineComponent({
     const talentChangeDetailObjArr: TDamageDetailObj[] = [];
     const conditionMap = new Map() as Map<string, string[] | null | object>;
     const exclusionMap = new Map() as Map<string, string[] | null>;
-    const conditionInput = reactive(
-      _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput
-    );
+    const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput);
+    if (props.initialConditionValue) {
+      _.merge(conditionInput.conditionValues, props.initialConditionValue);
+    }
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
     const selectList = conditionInput.selectList;
