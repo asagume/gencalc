@@ -126,7 +126,7 @@
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character" :top-stats="topStats"
             :saved-supporters="savedSupporters" :calculated-supporters="optionInputRea.supporters"
             :team-members="optionInputRea.teamMembers"
-            :initialConditionValue="optionInputRea.teamOption.conditionValues" @update:team-option="updateTeamOption"
+            :initial-condition-value="optionInputRea.teamOption.conditionValues" @update:team-option="updateTeamOption"
             @update:buildname-selection="updateBuildnameSelection" @update:team-members="updateTeamMembers" />
         </div>
         <div v-show="optionInputTabRef == 3">

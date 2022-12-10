@@ -539,6 +539,7 @@ export default defineComponent({
     async function onLoad() {
       updateConditionList();
       setupFromCharacterMaster();
+      initializeSupporters(props.calculatedSupporters);
 
       for (const key of supporterKeyList) {
         supporterOpenClose[key] = false;
