@@ -3,9 +3,7 @@
     <template v-if="mode == 1">
       <table class="character-info status">
         <caption>
-          {{
-            displayName("ステータス")
-          }}
+          {{ displayName("ステータス") }}
         </caption>
         <template v-for="(item, index) in statsInfoList" :key="index">
           <tr>
@@ -16,9 +14,7 @@
       </table>
       <table class="character-info">
         <caption>
-          {{
-            displayName("命ノ星座")
-          }}
+          {{ displayName("命ノ星座") }}
         </caption>
         <template v-for="(item, index) in constellationInfoList" :key="index">
           <tr>
@@ -36,9 +32,7 @@
       </table>
       <table class="character-info">
         <caption>
-          {{
-            displayName("固有天賦")
-          }}
+          {{ displayName("固有天賦") }}
         </caption>
         <template v-for="(item, index) in passiveTalentInfoList" :key="index">
           <tr>
@@ -64,11 +58,8 @@
         <tr>
           <td colspan="2" class="description" v-html="characterMaster.通常攻撃.説明"></td>
         </tr>
-        <template
-          v-for="(item, index) in talentNormalAttack('通常攻撃').詳細"
-          :key="index"
-        >
-          <tr>
+        <template v-for="(item, index) in talentNormalAttack('通常攻撃').詳細" :key="index">
+          <tr v-if="item.名前">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">
               {{ talentValue(item.数値, levelNormalAttack("通常攻撃")) }}
@@ -76,16 +67,13 @@
           </tr>
         </template>
         <template v-for="(item, index) in talentNormalAttack('重撃').詳細" :key="index">
-          <tr>
+          <tr v-if="item.名前">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">{{ talentValue(item.数値, levelNormalAttack("重撃")) }}</td>
           </tr>
         </template>
-        <template
-          v-for="(item, index) in talentNormalAttack('落下攻撃').詳細"
-          :key="index"
-        >
-          <tr>
+        <template v-for="(item, index) in talentNormalAttack('落下攻撃').詳細" :key="index">
+          <tr v-if="item.名前">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">
               {{ talentValue(item.数値, levelNormalAttack("落下攻撃")) }}
@@ -102,25 +90,15 @@
             {{ displayName(characterMaster.元素スキル.名前) }}
           </th>
         </tr>
-        <tr
-          v-for="(item, index) in talentAttributes(
-            characterMaster.元素スキル,
-            elementalSkillLevel
-          )"
-          :key="index"
-        >
+        <tr v-for="(item, index) in talentAttributes(characterMaster.元素スキル, elementalSkillLevel)" :key="index">
           <th class="key">{{ displayName(item[0]) }}</th>
           <td class="value">{{ item[1] }}</td>
         </tr>
         <tr>
-          <td
-            colspan="2"
-            class="description"
-            v-html="characterMaster.元素スキル.説明"
-          ></td>
+          <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
         </tr>
         <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
-          <tr>
+          <tr v-if="item.名前">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">{{ talentValue(item.数値, elementalSkillLevel) }}</td>
           </tr>
@@ -135,13 +113,7 @@
             {{ displayName(characterMaster.元素爆発.名前) }}
           </th>
         </tr>
-        <tr
-          v-for="(item, index) in talentAttributes(
-            characterMaster.元素爆発,
-            elementalBurstLevel
-          )"
-          :key="index"
-        >
+        <tr v-for="(item, index) in talentAttributes(characterMaster.元素爆発, elementalBurstLevel)" :key="index">
           <th class="key">{{ displayName(item[0]) }}</th>
           <td class="value">{{ item[1] }}</td>
         </tr>
@@ -149,7 +121,7 @@
           <td colspan="2" class="description" v-html="characterMaster.元素爆発.説明"></td>
         </tr>
         <template v-for="(item, index) in characterMaster.元素爆発.詳細" :key="index">
-          <tr>
+          <tr v-if="item.名前">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">{{ talentValue(item.数値, elementalBurstLevel) }}</td>
           </tr>
