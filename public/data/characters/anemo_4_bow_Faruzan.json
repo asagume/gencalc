@@ -88,7 +88,7 @@
         "七窟遺智": false
     },
     "通常攻撃": {
-        "名前": "通常攻撃・転回弓術",
+        "名前": "通常攻撃·転回弓術",
         "説明": "<span style=\"color: rgb(255, 215, 128)\">通常攻撃</span><br>最大4段の連続射撃を行う。<br><br><span style=\"color: rgb(255, 215, 128)\">重撃</span><br>ダメージがより高く、より精確な<span style=\"color: rgb(255, 215, 128)\">狙い撃ち</span>を発動する。<br>照準時、強風を矢先に凝集させ、強風の力に満ちた矢で敵に<span style=\"color: rgb(128, 255, 215)\">風元素ダメージ</span>を与える。<br><br><span style=\"color: rgb(255, 215, 128)\">落下攻撃</span><br>空中から矢の雨を放ち、凄まじいスピードで落下し地面に衝撃を与える。経路上の敵を攻撃し、落下時に範囲ダメージを与える。",
         "icon_url": "images/characters/anemo_4_bow_Faruzan/talent_1.png",
         "詳細": [
