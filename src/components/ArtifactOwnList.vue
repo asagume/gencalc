@@ -21,30 +21,28 @@
       {{ displayName('理の冠') }}
     </label>
   </div>
-  <table class="artifact">
-    <thead>
+  <div class="artifact" v-for="(artifact, index) in getArtifactList(artifactPartSelectTab)" :key="index">
+    <table class="artifact">
       <tr>
-        <th></th>
-        <th></th>
-        <th>{{ displayName('メイン効果') }}</th>
-        <th>{{ displayName('サブ効果') }}</th>
+        <td>
+          <img class="artifact-icon" :src="artifactSetIconSrc(artifact.set)">
+          <br />
+          {{ displayName(artifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(artifact.mainStat,
+              artifact.mainStatValue)
+          }}
+        </td>
+        <td>
+          <table class="artifact-substat">
+            <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
+              <td>
+                {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value) }}
+              </td>
+            </tr>
+          </table>
+        </td>
       </tr>
-    </thead>
-    <tr v-for="(artifact, index) in getArtifactList(artifactPartSelectTab)" :key="index">
-      <td>{{ displayName(artifact.name) }}</td>
-      <td>
-        <img class="artifact-icon" :src="artifactSetIconSrc(artifact.set)">
-      </td>
-      <td>{{ displayName(artifact.mainStat) }}</td>
-      <td style="width: 50%">
-        <table class="artifact-substat">
-          <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
-            <td>{{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value) }}</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+    </table>
+  </div>
 </template>
 
 <script lang="ts">
@@ -53,7 +51,7 @@ import {
 } from "@/master";
 import { defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { TArtifact } from "@/input";
+import { TArtifact, 聖遺物ステータスTEMPLATE } from "@/input";
 
 export default defineComponent({
   name: "ArtifactOwnList",
@@ -64,8 +62,22 @@ export default defineComponent({
     const artifactList = reactive([] as TArtifact[]);
 
     const getArtifactList = (index: any) => {
-      console.log(index, artifactList.filter(s => s.cat_id == Number(index)));
-      return artifactList.filter(s => s.cat_id == Number(index));
+      const result = artifactList.filter(s => s.cat_id == Number(index))
+      return result.sort((a, b) => {
+        if (a.set != b.set) {
+          const setNameArr = Object.keys(ARTIFACT_SET_MASTER);
+          const aIndex = setNameArr.indexOf(a.set);
+          const bIndex = setNameArr.indexOf(b.set);
+          return aIndex - bIndex;
+        }
+        if (a.mainStat != b.mainStat) {
+          const statNameArr = Object.keys(聖遺物ステータスTEMPLATE);
+          const aIndex = statNameArr.indexOf(a.set);
+          const bIndex = statNameArr.indexOf(b.set);
+          return aIndex - bIndex;
+        }
+        return 0;
+      });
     };
 
     const artifactSetIconSrc = (setname: string) => {
@@ -101,11 +113,18 @@ export default defineComponent({
   background: linear-gradient(to top, #55290b, black);
 }
 
+div.artifact {
+  display: inline-block;
+  width: 45%;
+  min-width: 30rem;
+  margin: 2px;
+}
+
 table.artifact {
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
-  table-layout: auto;
+  width: 100%;
+  table-layout: fixed;
   border-spacing: 0;
 }
 
@@ -117,7 +136,6 @@ table.artifact thead th {
 table.artifact-substat {
   width: 100%;
   border-spacing: 0;
-  table-layout: fixed;
 }
 
 table.artifact tr td {
@@ -132,8 +150,13 @@ table.artifact-substat tr td {
   text-align: left;
 }
 
+table.artifact-substat tr:last-child td {
+  border-bottom: none;
+}
+
+
 img.artifact-icon {
-  width: 24px;
-  height: 24px;
+  width: 7.2rem;
+  height: 7.2rem;
 }
 </style>
