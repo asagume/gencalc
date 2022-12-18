@@ -86,23 +86,26 @@
             ARTIFACTS
           </label>
         </div>
-        <table class="artifact" v-if="artifactsToggle">
-          <tr v-for="(artifact, index) in artifacts" :key="index">
-            <td>{{ artifact.name }}</td>
-            <td>{{ artifact.set }}</td>
-            <td>{{ (RELIQUARY_CAT_NAME as any)[artifact.cat_id] }}</td>
-            <td>{{ artifact.mainStat }}</td>
-            <td>{{ artifact.mainStatValue }}</td>
-            <td style="width: 50%">
-              <table class="artifact-substat">
-                <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
-                  <td>{{ subStat.name }}</td>
-                  <td>{{ subStat.value }}</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
+        <div v-if="artifactsToggle">
+          <button type="button" @click="artifactsSaveOnClick" :disabled="artifactsSaveButtonDisabled()"> SAVE </button>
+          <table class="artifact">
+            <tr v-for="(artifact, index) in artifacts" :key="index">
+              <td>{{ artifact.name }}</td>
+              <td>{{ artifact.set }}</td>
+              <td>{{ (RELIQUARY_CAT_NAME as any)[artifact.cat_id] }}</td>
+              <td>{{ artifact.mainStat }}</td>
+              <td>{{ artifact.mainStatValue }}</td>
+              <td style="width: 50%">
+                <table class="artifact-substat">
+                  <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
+                    <td>{{ subStat.name }}</td>
+                    <td>{{ subStat.value }}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
       </template>
     </div>
 
@@ -171,7 +174,7 @@ import {
 } from '@/master';
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import {
-TArtifact,
+  TArtifact,
   pushBuildinfoToSession,
   突破レベルレベルARRAY,
   聖遺物サブ効果ARRAY,
@@ -630,6 +633,8 @@ export default defineComponent({
           }
           characterInfoList.splice(0, characterInfoList.length, ...work);
 
+          artifactsSaveButtonDisabled();
+
           if (json.ttl) {
             timer.value = Number(json.ttl);
             timerObj = setInterval(function () {
@@ -672,6 +677,36 @@ export default defineComponent({
         }
       }
       return result;
+    };
+
+    const artifactsSaveButtonDisabled = () => {
+      if (artifacts.value.length === 0) return true;
+      const storageKey = 'artifact_list';
+      let curValue: any[] = [];
+      if (storageKey in localStorage) {
+        curValue = JSON.parse(localStorage[storageKey]);
+      }
+      for (const artifact of artifacts.value) {
+        if (curValue.filter(s => _.isEqual(s, artifact)).length == 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const artifactsSaveOnClick = () => {
+      const storageKey = 'artifact_list';
+      let curValue: any[] = [];
+      if (storageKey in localStorage) {
+        curValue = JSON.parse(localStorage[storageKey]);
+      }
+      const newValue: any[] = _.cloneDeep(curValue);
+      for (const artifact of artifacts.value) {
+        if (curValue.filter(s => _.isEqual(s, artifact)).length > 0) continue;
+        newValue.push(artifact);
+      }
+      localStorage[storageKey] = JSON.stringify(newValue);
+      artifactsSaveButtonDisabled();
     };
 
     const count = () => {
@@ -734,6 +769,8 @@ export default defineComponent({
       save,
       buttonDisabled,
       saveButtonDisabled,
+      artifactsSaveOnClick,
+      artifactsSaveButtonDisabled,
 
       characterImgSrc,
       characterBgClass,

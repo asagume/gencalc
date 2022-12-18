@@ -161,6 +161,13 @@
         </label>
       </h2>
       <WeaponOwnList v-if="ownListToggle2Ref" />
+      <h2>
+        <input class="hidden" id="own-list-toggle-3" type="checkbox" v-model="ownListToggle3Ref" />
+        <label class="toggle-switch no-border" for="own-list-toggle-3">
+          {{ displayName("聖遺物所持状況") }}
+        </label>
+      </h2>
+      <ArtifactOwnList v-if="ownListToggle3Ref" />
 
       <hr />
       <label>
@@ -252,6 +259,7 @@ import AboutMyApp from "@/components/AboutMyApp.vue";
 import ConfigurationInput from "@/components/ConfigurationInput.vue";
 import CharacterOwnList from "@/components/CharacterOwnList.vue";
 import WeaponOwnList from "@/components/WeaponOwnList.vue";
+import ArtifactOwnList from "@/components/ArtifactOwnList.vue";
 import {
   TRecommendation,
   makeRecommendationList,
@@ -367,6 +375,7 @@ export default defineComponent({
     ConfigurationInput,
     CharacterOwnList,
     WeaponOwnList,
+    ArtifactOwnList,
     ArtifactScoreFormula,
   },
   setup(props) {
@@ -481,6 +490,7 @@ export default defineComponent({
     const optionInputTabRef = ref(1);
     const ownListToggle1Ref = ref(false);
     const ownListToggle2Ref = ref(false);
+    const ownListToggle3Ref = ref(false);
     const enableClearLocalStorage = ref(false);
 
     async function updateOptionInputSupporter(key: string) {
@@ -1623,6 +1633,7 @@ export default defineComponent({
       optionInputTabRef,
       ownListToggle1Ref,
       ownListToggle2Ref,
+      ownListToggle3Ref,
       isTeamOptionActivate,
 
       openCharacterSelect,
