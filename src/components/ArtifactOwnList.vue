@@ -116,7 +116,7 @@ export default defineComponent({
 div.artifact {
   display: inline-block;
   width: 45%;
-  min-width: 30rem;
+  min-width: 60rem;
   margin: 2px;
 }
 
