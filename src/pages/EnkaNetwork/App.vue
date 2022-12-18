@@ -79,6 +79,30 @@
             </div>
           </li>
         </ul>
+
+        <div>
+          <input class="hidden" id="artifacts-toggle" type="checkbox" v-model="artifactsToggle" />
+          <label class="toggle-switch no-border" for="artifacts-toggle" style="width: 30rem">
+            ARTIFACTS
+          </label>
+        </div>
+        <table class="artifact" v-if="artifactsToggle">
+          <tr v-for="(artifact, index) in artifacts" :key="index">
+            <td>{{ artifact.name }}</td>
+            <td>{{ artifact.set }}</td>
+            <td>{{ (RELIQUARY_CAT_NAME as any)[artifact.cat_id] }}</td>
+            <td>{{ artifact.mainStat }}</td>
+            <td>{{ artifact.mainStatValue }}</td>
+            <td style="width: 50%">
+              <table class="artifact-substat">
+                <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
+                  <td>{{ subStat.name }}</td>
+                  <td>{{ subStat.value }}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       </template>
     </div>
 
@@ -86,7 +110,7 @@
       <hr />
       <h2>
         DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network
-        Ver.0.2.3
+        Ver.0.2.4
       </h2>
       《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
       <ol style="text-align: left">
@@ -105,6 +129,10 @@
       </ol>
       <hr />
       <dl class="history">
+        <dt>0.2.4</dt>
+        <dd>
+          聖遺物の個別取込の準備
+        </dd>
         <dt>0.2.3</dt>
         <dd>
           旅人対応。
@@ -125,9 +153,10 @@
 </template>
 <script lang="ts">
 import _ from 'lodash';
-import { defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from 'vue';
 import {
   ARTIFACT_SET_MASTER,
+  ARTIFACT_SET_MASTER_LIST,
   CHARACTER_MASTER,
   ELEMENT_IMG_SRC,
   getCharacterMasterDetail,
@@ -139,14 +168,14 @@ import {
   TCharacterKey,
   TWeaponEntry,
   WEAPON_MASTER,
-} from "@/master";
-import CompositionFunction from "@/components/CompositionFunction.vue";
+} from '@/master';
+import CompositionFunction from '@/components/CompositionFunction.vue';
 import {
   pushBuildinfoToSession,
   突破レベルレベルARRAY,
   聖遺物サブ効果ARRAY,
-} from "@/input";
-import { overwriteObject } from "@/common";
+} from '@/input';
+import { overwriteObject } from '@/common';
 
 type THoyoAvatarMasterValue = {
   id: number;
@@ -207,7 +236,7 @@ type TReliqStat = {
 const RELIQ_INFO_TEMPLATE = {
   itemIds: [] as number[],
   rarities: [0, 0, 0, 0, 0],
-  mainStats: ["", "", "", "", ""],
+  mainStats: ['', '', '', '', ''],
   subStatObj: {} as TReliqStat,
 };
 
@@ -227,38 +256,57 @@ type TCharacterInfo = typeof CHARACTER_INFO_TEMPLATE & {
   savedata?: TAnyObject;
 };
 
+const ARTIFACT_TEMPLATE = {
+  name: '',
+  rarity: 5,
+  set: '',
+  cat_id: 1,
+  mainStat: '',
+  mainStatValue: 1,
+  subStats: [{ name: '', value: 1 }]
+};
+type TArtifact = typeof ARTIFACT_TEMPLATE;
+
+const RELIQUARY_CAT_NAME = {
+  '1': '生の花',
+  '2': '死の羽',
+  '3': '時の砂',
+  '4': '空の杯',
+  '5': '理の冠',
+};
+
 const RELIQ_EQUIP_TYPE = [
-  "EQUIP_BRACER", // 生の花
-  "EQUIP_NECKLACE", // 死の羽
-  "EQUIP_SHOES", // 時の砂
-  "EQUIP_RING", // 空の杯
-  "EQUIP_DRESS", // 理の冠
+  'EQUIP_BRACER', // 生の花
+  'EQUIP_NECKLACE', // 死の羽
+  'EQUIP_SHOES', // 時の砂
+  'EQUIP_RING', // 空の杯
+  'EQUIP_DRESS', // 理の冠
 ];
 
 const FIGHT_PROP_STAT_OBJ = {
-  FIGHT_PROP_HP: "HP",
-  FIGHT_PROP_ATTACK: "攻撃力",
-  FIGHT_PROP_DEFENSE: "防御力",
-  FIGHT_PROP_HP_PERCENT: "HP%",
-  FIGHT_PROP_ATTACK_PERCENT: "攻撃力%",
-  FIGHT_PROP_DEFENSE_PERCENT: "防御力%",
-  FIGHT_PROP_ELEMENT_MASTERY: "元素熟知",
-  FIGHT_PROP_CRITICAL: "会心率",
-  FIGHT_PROP_CRITICAL_HURT: "会心ダメージ",
-  FIGHT_PROP_CHARGE_EFFICIENCY: "元素チャージ効率",
-  FIGHT_PROP_FIRE_ADD_HURT: "炎元素ダメージバフ",
-  FIGHT_PROP_WATER_ADD_HURT: "水元素ダメージバフ",
-  FIGHT_PROP_WIND_ADD_HURT: "風元素ダメージバフ",
-  FIGHT_PROP_ELEC_ADD_HURT: "雷元素ダメージバフ",
-  FIGHT_PROP_GRASS_ADD_HURT: "草元素ダメージバフ",
-  FIGHT_PROP_ICE_ADD_HURT: "氷元素ダメージバフ",
-  FIGHT_PROP_ROCK_ADD_HURT: "岩元素ダメージバフ",
-  FIGHT_PROP_PHYSICAL_ADD_HURT: "物理ダメージバフ",
-  FIGHT_PROP_HEAL_ADD: "与える治療効果",
+  FIGHT_PROP_HP: 'HP',
+  FIGHT_PROP_ATTACK: '攻撃力',
+  FIGHT_PROP_DEFENSE: '防御力',
+  FIGHT_PROP_HP_PERCENT: 'HP%',
+  FIGHT_PROP_ATTACK_PERCENT: '攻撃力%',
+  FIGHT_PROP_DEFENSE_PERCENT: '防御力%',
+  FIGHT_PROP_ELEMENT_MASTERY: '元素熟知',
+  FIGHT_PROP_CRITICAL: '会心率',
+  FIGHT_PROP_CRITICAL_HURT: '会心ダメージ',
+  FIGHT_PROP_CHARGE_EFFICIENCY: '元素チャージ効率',
+  FIGHT_PROP_FIRE_ADD_HURT: '炎元素ダメージバフ',
+  FIGHT_PROP_WATER_ADD_HURT: '水元素ダメージバフ',
+  FIGHT_PROP_WIND_ADD_HURT: '風元素ダメージバフ',
+  FIGHT_PROP_ELEC_ADD_HURT: '雷元素ダメージバフ',
+  FIGHT_PROP_GRASS_ADD_HURT: '草元素ダメージバフ',
+  FIGHT_PROP_ICE_ADD_HURT: '氷元素ダメージバフ',
+  FIGHT_PROP_ROCK_ADD_HURT: '岩元素ダメージバフ',
+  FIGHT_PROP_PHYSICAL_ADD_HURT: '物理ダメージバフ',
+  FIGHT_PROP_HEAL_ADD: '与える治療効果',
 };
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   setup() {
     const { displayName } = CompositionFunction();
 
@@ -270,10 +318,10 @@ export default defineComponent({
     async function onLoad() {
       const responses = await Promise.all(
         [
-          "data/HoyoAvatarMaster.json",
-          "data/HoyoWeaponMaster.json",
-          "data/HoyoArtifactMaster.json",
-          "data/HoyoSkillMaster.json",
+          'data/HoyoAvatarMaster.json',
+          'data/HoyoWeaponMaster.json',
+          'data/HoyoArtifactMaster.json',
+          'data/HoyoSkillMaster.json',
         ].map((s) => fetch(s).then((resp) => resp.json()))
       );
       HoyoAvatarMaster = responses[0];
@@ -283,22 +331,69 @@ export default defineComponent({
     }
     onLoad();
 
-    const uid = ref("");
+    const uid = ref('');
     const timer = ref(0);
     let timerObj: number | undefined;
     const u = reactive({
-      uid: "",
+      uid: '',
       playerInfo: {
-        nickname: "",
+        nickname: '',
       },
     } as TAnyObject);
     const characterInfoList = reactive([] as any[]);
+    const artifactsToggle = ref(false);
+
+    function getHoyoArtifactValue(id: number) {
+      id = Math.trunc(id / 10);
+      const arr = HoyoArtifactMaster.filter(s => s.id == id);
+      return arr.length ? arr[0] : undefined;
+    }
+
+    function getArtifactSetName(name: string) {
+      const arr = ARTIFACT_SET_MASTER_LIST.filter(s => s?.artifact_list?.includes(name));
+      return arr.length ? arr[0].key : undefined;
+    }
+
+    const artifacts = computed(() => {
+      const result: TArtifact[] = [];
+      if (u?.avatarInfoList?.length) {
+        for (const avatarInfo of u.avatarInfoList) {
+          for (const equip of avatarInfo.equipList) {
+            if (equip.flat.itemType == 'ITEM_RELIQUARY') {
+              const hoyoArtifactMasterValue = getHoyoArtifactValue(equip.itemId);
+              console.log(hoyoArtifactMasterValue);
+              if (!hoyoArtifactMasterValue) continue;
+              const artifactSet = getArtifactSetName(hoyoArtifactMasterValue.name);
+              if (!artifactSet) continue;
+              const artifact: TArtifact = {
+                name: hoyoArtifactMasterValue.name,
+                rarity: equip.flat.rankLevel,
+                set: artifactSet,
+                cat_id: hoyoArtifactMasterValue.reliquary_cat_id,
+                mainStat: (FIGHT_PROP_STAT_OBJ as any)[equip.flat.reliquaryMainstat.mainPropId],
+                mainStatValue: equip.flat.reliquaryMainstat.statValue,
+                subStats: [],
+              };
+              for (const reliquarySubstat of equip.flat.reliquarySubstats) {
+                const subStat = {
+                  name: (FIGHT_PROP_STAT_OBJ as any)[reliquarySubstat.appendPropId],
+                  value: reliquarySubstat.statValue,
+                };
+                artifact.subStats.push(subStat);
+              }
+              result.push(artifact);
+            }
+          }
+        }
+      }
+      return result;
+    });
 
     async function makeCharacterInfo(u: TAnyObject, index: number) {
       const result: TCharacterInfo = {
         avatarId: u.avatarInfoList[index].avatarId,
         level: u.playerInfo.showAvatarInfoList[index].level,
-        ascension: u.avatarInfoList[index].propMap["1002"]?.ival ?? 0,
+        ascension: u.avatarInfoList[index].propMap['1002']?.ival ?? 0,
         constellation: u.avatarInfoList[index].talentIdList?.length ?? 0,
         skillLevelList: [] as [string, number][],
         weapon: _.cloneDeep(WEAPON_INFO_TEMPLATE),
@@ -308,13 +403,13 @@ export default defineComponent({
       Object.keys(u.avatarInfoList[index].skillLevelMap).forEach((key) => {
         result.skillLevelList.push([key, u.avatarInfoList[index].skillLevelMap[key]]);
       });
-      // if ("proudSkillExtraLevelMap" in u.avatarInfoList[index]) {
+      // if ('proudSkillExtraLevelMap' in u.avatarInfoList[index]) {
       //   Object.keys(u.avatarInfoList[index].proudSkillExtraLevelMap).forEach((key) => {
-      //     if (key.endsWith("2")) {
+      //     if (key.endsWith('2')) {
       //       // 元素スキル？
       //       result.skillLevelList[1] +=
       //         u.avatarInfoList[index].proudSkillExtraLevelMap[key];
-      //     } else if (key.endsWith("9")) {
+      //     } else if (key.endsWith('9')) {
       //       // 元素爆発？
       //       result.skillLevelList[2] +=
       //         u.avatarInfoList[index].proudSkillExtraLevelMap[key];
@@ -323,7 +418,7 @@ export default defineComponent({
       // }
 
       for (const equip of u.avatarInfoList[index].equipList) {
-        if (equip.flat.itemType == "ITEM_RELIQUARY") {
+        if (equip.flat.itemType == 'ITEM_RELIQUARY') {
           // 聖遺物
           result.reliq.itemIds.push(equip.itemId);
           // メイン効果
@@ -341,10 +436,10 @@ export default defineComponent({
                 reliquarySubstat.statValue;
             }
           }
-        } else if (equip.flat.itemType == "ITEM_WEAPON") {
+        } else if (equip.flat.itemType == 'ITEM_WEAPON') {
           // 武器
           result.weapon.itemId = equip.itemId;
-          if ("affixMap" in equip.weapon) {
+          if ('affixMap' in equip.weapon) {
             Object.keys(equip.weapon.affixMap).forEach((key) => {
               result.weapon.refine = equip.weapon.affixMap[key] + 1; // 精錬ランク？
             });
@@ -386,16 +481,13 @@ export default defineComponent({
 
         const weaponWork = HoyoWeaponMaster.filter((s) => s.id == result.weapon.itemId);
         if (weaponWork.length) {
-          result.weaponMaster = (WEAPON_MASTER as any)[result.characterMaster["武器"]][
+          result.weaponMaster = (WEAPON_MASTER as any)[result.characterMaster['武器']][
             weaponWork[0].name
           ];
         }
       }
 
-      const artifactSetMasters: [
-        TArtifactSetEntry | undefined,
-        TArtifactSetEntry | undefined
-      ] = [undefined, undefined];
+      const artifactSetMasters: [TArtifactSetEntry | undefined, TArtifactSetEntry | undefined] = [undefined, undefined];
       const artifactNames: string[] = [];
       result.reliq.itemIds
         .filter((s) => s)
@@ -409,7 +501,7 @@ export default defineComponent({
       const artifactSetWork: TAnyObject = {};
       Object.keys(ARTIFACT_SET_MASTER).forEach((key) => {
         const entry = (ARTIFACT_SET_MASTER as any)[key];
-        if ("artifact_list" in entry) {
+        if ('artifact_list' in entry) {
           artifactNames.forEach((artifactName) => {
             if (entry.artifact_list.includes(artifactName)) {
               if (key in artifactSetWork) {
@@ -445,15 +537,15 @@ export default defineComponent({
       const result = {} as TAnyObject;
 
       // キャラクター
-      result["キャラクター"] = characterInfo.characterMaster?.key;
+      result['キャラクター'] = characterInfo.characterMaster?.key;
       // レベル
-      result["レベル"] = characterInfo.level + (突破レベルレベルARRAY[characterInfo.ascension][0] == characterInfo.level ? "+" : "");
+      result['レベル'] = characterInfo.level + (突破レベルレベルARRAY[characterInfo.ascension][0] == characterInfo.level ? '+' : '');
       // 命ノ星座
-      result["命ノ星座"] = characterInfo.constellation;
+      result['命ノ星座'] = characterInfo.constellation;
 
       const workSkillArr = HoyoSkillMaster.filter((s) => s.avatar_id == characterInfo.avatarId);
       if (workSkillArr.length) {
-        const characterMasterDetail = await getCharacterMasterDetail(result["キャラクター"]);
+        const characterMasterDetail = await getCharacterMasterDetail(result['キャラクター']);
         characterInfo.skillLevelList.forEach((skillLevel) => {
           let skillInfo;
           for (const skillEntry of workSkillArr) {
@@ -465,73 +557,64 @@ export default defineComponent({
           }
           if (skillInfo) {
             if (characterMasterDetail.通常攻撃.名前 == skillInfo.name) {
-              result["通常攻撃レベル"] = skillLevel[1];
+              result['通常攻撃レベル'] = skillLevel[1];
             } else if (characterMasterDetail.元素スキル.名前 == skillInfo.name) {
-              result["元素スキルレベル"] = skillLevel[1];
+              result['元素スキルレベル'] = skillLevel[1];
             } else if (characterMasterDetail.元素爆発.名前 == skillInfo.name) {
-              result["元素爆発レベル"] = skillLevel[1];
+              result['元素爆発レベル'] = skillLevel[1];
             }
           }
         });
-        if (result["命ノ星座"] >= 3) {
-          const desc = characterMasterDetail.命ノ星座["3"]?.説明;
+        if (result['命ノ星座'] >= 3) {
+          const desc = characterMasterDetail.命ノ星座['3']?.説明;
           if (desc) {
             if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
-              result["元素スキルレベル"] += 3;
+              result['元素スキルレベル'] += 3;
             } else if (desc.indexOf(characterMasterDetail.元素爆発.名前) != -1) {
-              result["元素爆発レベル"] += 3;
+              result['元素爆発レベル'] += 3;
             }
           }
         }
-        if (result["命ノ星座"] >= 5) {
-          const desc = characterMasterDetail.命ノ星座["5"]?.説明;
+        if (result['命ノ星座'] >= 5) {
+          const desc = characterMasterDetail.命ノ星座['5']?.説明;
           if (desc) {
             if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
-              result["元素スキルレベル"] += 3;
+              result['元素スキルレベル'] += 3;
             } else if (desc.indexOf(characterMasterDetail.元素爆発.名前) != -1) {
-              result["元素爆発レベル"] += 3;
+              result['元素爆発レベル'] += 3;
             }
           }
         }
       }
       // 武器
-      result["武器"] = characterInfo.weaponMaster?.key;
+      result['武器'] = characterInfo.weaponMaster?.key;
       // 武器レベル
-      result["武器レベル"] =
-        characterInfo.weapon.level +
-        (突破レベルレベルARRAY[characterInfo.weapon.ascension][0] ==
-          characterInfo.weapon.level
-          ? "+"
-          : "");
+      result['武器レベル'] = characterInfo.weapon.level + (突破レベルレベルARRAY[characterInfo.weapon.ascension][0] == characterInfo.weapon.level ? '+' : '');
       // 精錬ランク
-      result["精錬ランク"] = characterInfo.weapon.refine;
+      result['精錬ランク'] = characterInfo.weapon.refine;
       // 聖遺物セット効果
       if (characterInfo.artifactSetMasters) {
-        result["聖遺物セット効果1"] = characterInfo.artifactSetMasters[0]?.key ?? "NONE";
-        result["聖遺物セット効果2"] = characterInfo.artifactSetMasters[1]?.key ?? "NONE";
+        result['聖遺物セット効果1'] = characterInfo.artifactSetMasters[0]?.key ?? 'NONE';
+        result['聖遺物セット効果2'] = characterInfo.artifactSetMasters[1]?.key ?? 'NONE';
       } else {
-        result["聖遺物セット効果1"] = "NONE";
-        result["聖遺物セット効果2"] = "NONE";
+        result['聖遺物セット効果1'] = 'NONE';
+        result['聖遺物セット効果2'] = 'NONE';
       }
       // 聖遺物メイン効果
       for (let i = 0; i < 5; i++) {
         if (characterInfo.reliq.mainStats[i]) {
-          result["聖遺物メイン効果" + (i + 1)] =
-            characterInfo.reliq.rarities[i] +
-            "_" +
-            (FIGHT_PROP_STAT_OBJ as any)[characterInfo.reliq.mainStats[i]];
+          result['聖遺物メイン効果' + (i + 1)] = characterInfo.reliq.rarities[i] + '_' + (FIGHT_PROP_STAT_OBJ as any)[characterInfo.reliq.mainStats[i]];
         } else {
-          result["聖遺物メイン効果" + (i + 1)] = null;
+          result['聖遺物メイン効果' + (i + 1)] = null;
         }
       }
       // 聖遺物サブ効果
       聖遺物サブ効果ARRAY.forEach((stat) => {
-        stat = "聖遺物サブ効果" + stat.replace("%", "P");
+        stat = '聖遺物サブ効果' + stat.replace('%', 'P');
         result[stat] = 0;
       });
       Object.keys(characterInfo.reliq.subStatObj).forEach((prop) => {
-        const stat =
-          "聖遺物サブ効果" + (FIGHT_PROP_STAT_OBJ as any)[prop].replace("%", "P");
+        const stat = '聖遺物サブ効果' + (FIGHT_PROP_STAT_OBJ as any)[prop].replace('%', 'P');
         result[stat] = characterInfo.reliq.subStatObj[prop];
       });
 
@@ -540,7 +623,7 @@ export default defineComponent({
 
     const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
-      const url = "https://enka.network/u/" + uid.value + "/__data.json";
+      const url = 'https://enka.network/u/' + uid.value + '/__data.json';
       // const url = 'data/__data_2.json';
       fetch(url)
         .then((resp) => resp.json())
@@ -565,15 +648,15 @@ export default defineComponent({
 
     const locate = (index: number) => {
       // const sharedata = makeSharedata(characterInfoList[index].savedata);
-      // const encoded = encodeURI(sharedata).replace("+", "%2B");
-      // window.open("./?allin=" + encoded, "_blank");
+      // const encoded = encodeURI(sharedata).replace('+', '%2B');
+      // window.open('./?allin=' + encoded, '_blank');
       const savedata = characterInfoList[index].savedata;
       pushBuildinfoToSession(savedata.キャラクター, undefined, savedata);
-      window.open("./", "_blank");
+      window.open('./', '_blank');
     };
 
     const save = (index: number) => {
-      const storageKey = "構成_" + characterInfoList[index].characterMaster.key;
+      const storageKey = '構成_' + characterInfoList[index].characterMaster.key;
       localStorage.setItem(storageKey, JSON.stringify(characterInfoList[index].savedata));
       saveButtonDisabled(index);
     };
@@ -588,7 +671,7 @@ export default defineComponent({
     const saveButtonDisabled = (index: number): boolean => {
       let result = buttonDisabled(index);
       if (!result) {
-        const storageKey = "構成_" + characterInfoList[index].characterMaster.key;
+        const storageKey = '構成_' + characterInfoList[index].characterMaster.key;
         if (storageKey in localStorage) {
           const newValue = JSON.stringify(characterInfoList[index].savedata);
           const curValue = localStorage[storageKey];
@@ -664,6 +747,10 @@ export default defineComponent({
       visionImgSrc,
       weaponImgSrc,
       artifactSetImgSrc,
+
+      artifactsToggle,
+      artifacts,
+      RELIQUARY_CAT_NAME,
     };
   },
 });
@@ -828,5 +915,30 @@ div.level {
 dl.history {
   text-align: left;
   padding-left: 2rem;
+}
+
+table.artifact {
+  width: 90%;
+  table-layout: auto;
+  margin-bottom: 0;
+}
+
+table.artifact-substat {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+table.artifact tr td {
+  border-bottom: 2px solid whitesmoke;
+  padding: 3px;
+}
+
+table.artifact-substat tr td {
+  border-bottom: 1px solid gray;
+  padding: 3px;
+}
+
+table.artifact-substat tr:last-child td {
+  border-bottom: none;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div v-if="visible">
     <fieldset>
-      <legend>{{ displayName("聖遺物詳細") }}</legend>
+      <legend>{{ displayName('聖遺物詳細') }}</legend>
       <label class="two">
-        {{ displayName("生の花") }}
+        {{ displayName('生の花') }}
         <select v-model="mainstats[0]" @change="updateMainstats">
           <option value=""></option>
           <option v-for="item in mainstat1List" :value="item" :key="item">
@@ -12,7 +12,7 @@
         </select>
       </label>
       <label class="two">
-        {{ displayName("死の羽") }}
+        {{ displayName('死の羽') }}
         <select v-model="mainstats[1]" @change="updateMainstats">
           <option value=""></option>
           <option v-for="item in mainstat2List" :value="item" :key="item">
@@ -21,7 +21,7 @@
         </select>
       </label>
       <label class="three">
-        {{ displayName("時の砂") }}
+        {{ displayName('時の砂') }}
         <select v-model="mainstats[2]" @change="updateMainstats">
           <option value=""></option>
           <option v-for="item in mainstat3List" :value="item" :key="item">
@@ -30,7 +30,7 @@
         </select>
       </label>
       <label class="three">
-        {{ displayName("空の杯") }}
+        {{ displayName('空の杯') }}
         <select v-model="mainstats[3]" @change="updateMainstats">
           <option value=""></option>
           <option v-for="item in mainstat4List" :value="item" :key="item">
@@ -39,7 +39,7 @@
         </select>
       </label>
       <label class="three">
-        {{ displayName("理の冠") }}
+        {{ displayName('理の冠') }}
         <select v-model="mainstats[4]" @change="updateMainstats">
           <option value=""></option>
           <option v-for="item in mainstat5List" :value="item" :key="item">
@@ -49,99 +49,113 @@
       </label>
       <table class="detail">
         <tr>
-          <th>{{ displayName("HP") }}</th>
+          <th>{{ displayName('HP') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("HP", artifactStatsSub.HP) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['HP']" :min="0"
+                :step="substatStep('HP')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('HP', artifactStatsSub['HP']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.HP" :min="substatMin('HP')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['HP']" :min="substatMin('HP')"
                 :step="substatStep('HP')" @change="artifactStatsOnChange('HP', targetValue($event))" />
-              <span v-else>{{ displayStatValue("HP", artifactStats.HP) }}</span>
+              <span v-else>{{ displayStatValue('HP', artifactStats['HP']) }}</span>
             </template>
           </td>
-          <th>{{ displayName("HP%") }}</th>
+          <th>{{ displayName('HP%') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("HP%", artifactStatsSub["HP%"]) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['HP%']" :min="0"
+                :step="substatStep('HP%')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('HP%', artifactStatsSub['HP%']) }}</span>
             </template>
             <template v-else>
               <input v-if="editableRef" type="number" v-model="artifactStats['HP%']" :min="substatMin('HP%')"
                 :step="substatStep('HP%')" @change="artifactStatsOnChange('HP%', targetValue($event))" />
-              <span v-else>{{ displayStatValue("HP%", artifactStats["HP%"]) }}</span>
+              <span v-else>{{ displayStatValue('HP%', artifactStats['HP%']) }}</span>
             </template>
           </td>
         </tr>
         <tr>
-          <th>{{ displayName("攻撃力") }}</th>
+          <th>{{ displayName('攻撃力') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("攻撃力", artifactStatsSub.攻撃力) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['攻撃力']" :min="0"
+                :step="substatStep('攻撃力')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('攻撃力', artifactStatsSub['攻撃力']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.攻撃力" :min="substatMin('攻撃力')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['攻撃力']" :min="substatMin('攻撃力')"
                 :step="substatStep('攻撃力')" @change="artifactStatsOnChange('攻撃力', targetValue($event))" />
-              <span v-else>{{ displayStatValue("攻撃力", artifactStats.攻撃力) }}</span>
+              <span v-else>{{ displayStatValue('攻撃力', artifactStats['攻撃力']) }}</span>
             </template>
           </td>
-          <th>{{ displayName("攻撃力%") }}</th>
+          <th>{{ displayName('攻撃力%') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("攻撃力%", artifactStatsSub["攻撃力%"]) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['攻撃力%']" :min="0"
+                :step="substatStep('攻撃力%')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('攻撃力%', artifactStatsSub['攻撃力%']) }}</span>
             </template>
             <template v-else>
               <input v-if="editableRef" type="number" v-model="artifactStats['攻撃力%']" :min="substatMin('攻撃力%')"
                 :step="substatStep('攻撃力%')" @change="artifactStatsOnChange('攻撃力%', targetValue($event))" />
-              <span v-else>{{ displayStatValue("攻撃力%", artifactStats["攻撃力%"]) }}</span>
+              <span v-else>{{ displayStatValue('攻撃力%', artifactStats['攻撃力%']) }}</span>
             </template>
           </td>
         </tr>
         <tr>
-          <th>{{ displayName("防御力") }}</th>
+          <th>{{ displayName('防御力') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("防御力", artifactStatsSub.防御力) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['防御力']" :min="0"
+                :step="substatStep('防御力')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('防御力', artifactStatsSub['防御力']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.防御力" :min="substatMin('防御力')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['防御力']" :min="substatMin('防御力')"
                 :step="substatStep('防御力')" @change="artifactStatsOnChange('防御力', targetValue($event))" />
-              <span v-else>{{ displayStatValue("防御力", artifactStats.防御力) }}</span>
+              <span v-else>{{ displayStatValue('防御力', artifactStats['防御力']) }}</span>
             </template>
           </td>
-          <th>{{ displayName("防御力%") }}</th>
+          <th>{{ displayName('防御力%') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("防御力%", artifactStatsSub["防御力%"]) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['防御力%']" :min="0"
+                :step="substatStep('防御力%')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('防御力%', artifactStatsSub['防御力%']) }}</span>
             </template>
             <template v-else>
               <input v-if="editableRef" type="number" v-model="artifactStats['防御力%']" :min="substatMin('防御力%')"
                 :step="substatStep('防御力%')" @change="artifactStatsOnChange('防御力%', targetValue($event))" />
-              <span v-else>{{ displayStatValue("防御力%", artifactStats["防御力%"]) }}</span>
+              <span v-else>{{ displayStatValue('防御力%', artifactStats['防御力%']) }}</span>
             </template>
           </td>
         </tr>
         <tr>
-          <th>{{ displayName("元素熟知") }}</th>
+          <th>{{ displayName('元素熟知') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("元素熟知", artifactStatsSub.元素熟知) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['元素熟知']" :min="0"
+                :step="substatStep('元素熟知')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('元素熟知', artifactStatsSub['元素熟知']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.元素熟知" :min="substatMin('元素熟知')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['元素熟知']" :min="substatMin('元素熟知')"
                 :step="substatStep('元素熟知')" @change="artifactStatsOnChange('元素熟知', targetValue($event))" />
-              <span v-else>{{ displayStatValue("元素熟知", artifactStats.元素熟知) }}</span>
+              <span v-else>{{ displayStatValue('元素熟知', artifactStats['元素熟知']) }}</span>
             </template>
           </td>
           <td rowspan="4" colspan="2" style="border-color: transparent">
             <div>
               <label>
                 <input type="checkbox" v-model="editableRef" />
-                {{ displayName("直接入力モード") }}
+                {{ displayName('直接入力モード') }}
               </label>
             </div>
             <div>
               <label class="button">
-                {{ displayName("聖遺物詳細画面OCR") }}
+                {{ displayName('聖遺物詳細画面OCR') }}
                 <input class="hidden" type="file" id="artifact-stats-image" @change="loadArtifactStatsByOcr($event)" />
               </label>
             </div>
@@ -151,53 +165,59 @@
           </td>
         </tr>
         <tr>
-          <th>{{ displayName("会心率") }}</th>
+          <th>{{ displayName('会心率') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("会心率", artifactStatsSub.会心率) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['会心率']" :min="0"
+                :step="substatStep('会心率')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('会心率', artifactStatsSub['会心率']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.会心率" :min="substatMin('会心率')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['会心率']" :min="substatMin('会心率')"
                 :step="substatStep('会心率')" @change="artifactStatsOnChange('会心率', targetValue($event))" />
-              <span v-else>{{ displayStatValue("会心率", artifactStats.会心率) }}</span>
+              <span v-else>{{ displayStatValue('会心率', artifactStats['会心率']) }}</span>
             </template>
           </td>
         </tr>
         <tr>
-          <th>{{ displayName("会心ダメージ") }}</th>
+          <th>{{ displayName('会心ダメージ') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span> {{ displayStatValue("会心ダメージ", artifactStatsSub.会心ダメージ) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['会心ダメージ']" :min="0"
+                :step="substatStep('会心ダメージ')" @change="artifactStatsSubOnChange" />
+              <span v-else> {{ displayStatValue('会心ダメージ', artifactStatsSub['会心ダメージ']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.会心ダメージ" :min="substatMin('会心ダメージ')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['会心ダメージ']" :min="substatMin('会心ダメージ')"
                 :step="substatStep('会心ダメージ')" @change="artifactStatsOnChange('会心ダメージ', targetValue($event))" />
-              <span v-else> {{ displayStatValue("会心ダメージ", artifactStats.会心ダメージ) }}</span>
+              <span v-else> {{ displayStatValue('会心ダメージ', artifactStats['会心ダメージ']) }}</span>
             </template>
           </td>
         </tr>
         <tr>
-          <th>{{ displayName("元素チャージ効率") }}</th>
+          <th>{{ displayName('元素チャージ効率') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <span>{{ displayStatValue("元素チャージ効率", artifactStatsSub.元素チャージ効率) }}</span>
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['元素チャージ効率']" :min="0"
+                :step="substatStep('元素チャージ効率')" @change="artifactStatsSubOnChange" />
+              <span v-else>{{ displayStatValue('元素チャージ効率', artifactStatsSub['元素チャージ効率']) }}</span>
             </template>
             <template v-else>
-              <input v-if="editableRef" type="number" v-model="artifactStats.元素チャージ効率" :min="substatMin('元素チャージ効率')"
+              <input v-if="editableRef" type="number" v-model="artifactStats['元素チャージ効率']" :min="substatMin('元素チャージ効率')"
                 :step="substatStep('元素チャージ効率')" @change="artifactStatsOnChange('元素チャージ効率', targetValue($event))" />
-              <span v-else>{{ displayStatValue("元素チャージ効率", artifactStats.元素チャージ効率) }}</span>
+              <span v-else>{{ displayStatValue('元素チャージ効率', artifactStats['元素チャージ効率']) }}</span>
             </template>
           </td>
         </tr>
       </table>
     </fieldset>
     <fieldset>
-      <legend>{{ displayName("聖遺物サブ効果 簡易設定") }}</legend>
+      <legend>{{ displayName('聖遺物サブ効果 簡易設定') }}</legend>
       <table class="priority-substat">
         <tr>
-          <th>{{ displayName("優先するサブ効果") }}</th>
-          <th>{{ displayName("上昇値") }}</th>
-          <th>{{ displayName("初期+強化") }}</th>
+          <th>{{ displayName('優先するサブ効果') }}</th>
+          <th>{{ displayName('上昇値') }}</th>
+          <th>{{ displayName('初期+強化') }}</th>
           <td style="border-color: transparent">合計 {{ upTotalCount }} 回</td>
         </tr>
         <tr v-for="i in [0, 1, 2]" :key="i">
@@ -226,7 +246,7 @@
           <td v-show="i == 0" style="border-color: transparent">
             <label>
               <input type="checkbox" v-model="gensenEnabledRef" />
-              {{ displayName("一括変更") }}
+              {{ displayName('一括変更') }}
             </label>
           </td>
           <td v-show="i == 1" style="border-color: transparent">
@@ -274,7 +294,7 @@ import { resizePinnedImage } from "@/gencalc_ocr";
 import { overwriteObject } from "@/common";
 
 export default defineComponent({
-  name: "ArtifactDetailInput",
+  name: 'ArtifactDetailInput',
   props: {
     visible: Boolean,
     artifactDetailInput: {
@@ -286,7 +306,7 @@ export default defineComponent({
   components: {
     ArtifactDetailOcrResult,
   },
-  emits: ["update:artifact-detail"],
+  emits: ['update:artifact-detail'],
   setup(props, context) {
     const { displayName, targetValue, displayStatValue } = CompositionFunction();
 
@@ -325,7 +345,7 @@ export default defineComponent({
     const substatMin = (substat: string) =>
       substat in artifactStatsMain ? (artifactStatsMain as any)[substat] : 0;
     const substatStep = (substat: string) =>
-      ["HP", "攻撃力", "防御力", "元素熟知"].includes(substat) ? 1 : 0.1;
+      ['HP', '攻撃力', '防御力', '元素熟知'].includes(substat) ? 1 : 0.1;
 
     /** 聖遺物ステータスを計算します（メイン効果） */
     const _calculateArtifactStatsMain = () => {
@@ -360,7 +380,7 @@ export default defineComponent({
       _calculateArtifactStatsMain();
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
-      context.emit("update:artifact-detail", artifactDetailInputRea);
+      context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
     /** サブ効果が更新されました */
@@ -378,7 +398,14 @@ export default defineComponent({
         });
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
-      context.emit("update:artifact-detail", artifactDetailInputRea);
+      context.emit('update:artifact-detail', artifactDetailInputRea);
+    };
+
+    /** サブ効果が更新されました */
+    const artifactStatsSubOnChange = async () => {
+      calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
+      context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
     /** 優先するサブ効果が更新されました */
@@ -387,7 +414,7 @@ export default defineComponent({
       _calculateArtifactStatsPrioritySub();
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
-      context.emit("update:artifact-detail", artifactDetailInputRea);
+      context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
     /** 厳選目安が選択されました */
@@ -409,7 +436,7 @@ export default defineComponent({
       _calculateArtifactStatsPrioritySub();
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
-      context.emit("update:artifact-detail", artifactDetailInputRea);
+      context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
     /** 聖遺物ステータスサブ効果をクリアします */
@@ -420,7 +447,7 @@ export default defineComponent({
       }
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
-      context.emit("update:artifact-detail", artifactDetailInputRea);
+      context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
     /** 聖遺物詳細OCR機能 */
@@ -448,8 +475,8 @@ export default defineComponent({
           else (artifactStatsSub as any)[stat] = 0;
         }
         for (const [index, stat] of mainstats.entries()) {
-          if (stat.endsWith("ダメージバフ") || stat == "与える治療効果") continue;
-          mainstats.splice(index, 1, "");
+          if (stat.endsWith('ダメージバフ') || stat == '与える治療効果') continue;
+          mainstats.splice(index, 1, '');
         }
         updateMainstats();
       }
@@ -457,8 +484,8 @@ export default defineComponent({
 
     // onMounted(() => {
     //   document
-    //     .getElementById("artifact-stats-image")
-    //     ?.addEventListener("click", loadArtifactStatsByOcr);
+    //     .getElementById('artifact-stats-image')
+    //     ?.addEventListener('click', loadArtifactStatsByOcr);
     // });
 
     return {
@@ -489,6 +516,7 @@ export default defineComponent({
       gensenMasterList,
       gensenOnChange,
       artifactStatsOnChange,
+      artifactStatsSubOnChange,
       updateMainstats,
       updatePrioritySubstats,
 
