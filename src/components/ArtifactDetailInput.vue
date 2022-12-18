@@ -211,54 +211,110 @@
         </tr>
       </table>
     </fieldset>
-    <fieldset>
-      <legend>{{ displayName('聖遺物サブ効果 簡易設定') }}</legend>
-      <table class="priority-substat">
-        <tr>
-          <th>{{ displayName('優先するサブ効果') }}</th>
-          <th>{{ displayName('上昇値') }}</th>
-          <th>{{ displayName('初期+強化') }}</th>
-          <td style="border-color: transparent">合計 {{ upTotalCount }} 回</td>
-        </tr>
-        <tr v-for="i in [0, 1, 2]" :key="i">
-          <td>
-            <select v-model="prioritySubstats[i]" @change="updatePrioritySubstats">
-              <option value=""></option>
-              <option v-for="item in prioritySubstatList" :value="item" :key="item">
-                {{ displayName(item) }}
-              </option>
-            </select>
-          </td>
-          <td>
-            <select v-model="prioritySubstatIndices[i]" @change="updatePrioritySubstats">
-              <option v-for="(item, index) in prioritySubstatValueList(i)" :value="index" :key="index">
-                {{ Math.round(item * 10) / 10 }}
-              </option>
-            </select>
-          </td>
-          <td>
-            <select v-model="prioritySubstatCounts[i]" @change="updatePrioritySubstats">
-              <option v-for="item in prioritySubstatCountList" :value="item" :key="item">
-                {{ " × " + item }}
-              </option>
-            </select>
-          </td>
-          <td v-show="i == 0" style="border-color: transparent">
-            <label>
-              <input type="checkbox" v-model="gensenEnabledRef" />
-              {{ displayName('一括変更') }}
-            </label>
-          </td>
-          <td v-show="i == 1" style="border-color: transparent">
-            <select class="gensen" v-model="gensenRef" @change="gensenOnChange" :disabled="!gensenEnabledRef">
-              <option v-for="item in gensenMasterList" :value="item" :key="item.key">
-                {{ displayName(item.key) }}
-              </option>
-            </select>
-          </td>
-        </tr>
-      </table>
-    </fieldset>
+
+    <div class="tab-switch">
+      <input class="hidden" id="input-mode-tab-1" type="radio" value="1" v-model="artifactInputModeTab">
+      <label for="input-mode-tab-1">
+        {{ displayName('簡易設定') }}
+      </label>
+      <input class="hidden" id="input-mode-tab-2" type="radio" value="2" v-model="artifactInputModeTab">
+      <label for="input-mode-tab-2">
+        {{ displayName('個別設定') }}
+      </label>
+    </div>
+
+    <div class="sub-input">
+      <fieldset v-if="artifactInputModeTab == '1'">
+        <table class="priority-substat">
+          <tr>
+            <th>{{ displayName('優先するサブ効果') }}</th>
+            <th>{{ displayName('上昇値') }}</th>
+            <th>{{ displayName('初期+強化') }}</th>
+            <td style="border-color: transparent">合計 {{ upTotalCount }} 回</td>
+          </tr>
+          <tr v-for="i in [0, 1, 2]" :key="i">
+            <td>
+              <select v-model="prioritySubstats[i]" @change="updatePrioritySubstats">
+                <option value=""></option>
+                <option v-for="item in prioritySubstatList" :value="item" :key="item">
+                  {{ displayName(item) }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select v-model="prioritySubstatIndices[i]" @change="updatePrioritySubstats">
+                <option v-for="(item, index) in prioritySubstatValueList(i)" :value="index" :key="index">
+                  {{ Math.round(item * 10) / 10 }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select v-model="prioritySubstatCounts[i]" @change="updatePrioritySubstats">
+                <option v-for="item in prioritySubstatCountList" :value="item" :key="item">
+                  {{ " × " + item }}
+                </option>
+              </select>
+            </td>
+            <td v-show="i == 0" style="border-color: transparent">
+              <label>
+                <input type="checkbox" v-model="gensenEnabledRef" />
+                {{ displayName('一括変更') }}
+              </label>
+            </td>
+            <td v-show="i == 1" style="border-color: transparent">
+              <select class="gensen" v-model="gensenRef" @change="gensenOnChange" :disabled="!gensenEnabledRef">
+                <option v-for="item in gensenMasterList" :value="item" :key="item.key">
+                  {{ displayName(item.key) }}
+                </option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <div v-if="artifactInputModeTab == '2'">
+        <div class="tab-switch part-select">
+          <input class="hidden" id="part-select-tab-1" type="radio" value="1" v-model="artifactPartSelectTab">
+          <label for="part-select-tab-1">
+            {{ displayName('生の花') }}
+          </label>
+          <input class="hidden" id="part-select-tab-2" type="radio" value="2" v-model="artifactPartSelectTab">
+          <label for="part-select-tab-2">
+            {{ displayName('死の羽') }}
+          </label>
+          <input class="hidden" id="part-select-tab-3" type="radio" value="3" v-model="artifactPartSelectTab">
+          <label for="part-select-tab-3">
+            {{ displayName('時の砂') }}
+          </label>
+          <input class="hidden" id="part-select-tab-4" type="radio" value="4" v-model="artifactPartSelectTab">
+          <label for="part-select-tab-4">
+            {{ displayName('空の杯') }}
+          </label>
+          <input class="hidden" id="part-select-tab-5" type="radio" value="5" v-model="artifactPartSelectTab">
+          <label for="part-select-tab-5">
+            {{ displayName('理の冠') }}
+          </label>
+        </div>
+        実装方式考え中
+        <table class="artifact" v-show="false">
+          <tr v-for="(artifact, index) in artifactList.filter(s => s.cat_id == Number(artifactPartSelectTab))"
+            :key="index">
+            <td>
+              <img class="artifact-icon" :src="artifactImgSrc(artifact.set)" alt="artifact set">
+            </td>
+            <td>{{ artifact.mainStat }}</td>
+            <td style="width: 50%">
+              <table class="artifact-substat">
+                <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
+                  <td>{{ subStat.name }}</td>
+                  <td>{{ subStat.value }}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
   <div>
     <ArtifactDetailOcrResult :visible="ocrResultVisible" :ocrResult="ocrResult"
@@ -287,7 +343,7 @@ import {
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
 } from "@/calculate";
-import { GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
+import { ARTIFACT_SET_MASTER, GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { resizePinnedImage } from "@/gencalc_ocr";
@@ -325,11 +381,15 @@ export default defineComponent({
     const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
     const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
+    const artifactList = reactive(artifactDetailInputRea.artifact_list);
 
     const editableRef = ref(false);
     const gensenEnabledRef = ref(false);
     const gensenMasterList = GENSEN_MASTER_LIST;
     const gensenRef = ref(GENSEN_MASTER_LIST[2] as TGensen);
+
+    const artifactInputModeTab = ref('1');
+    const artifactPartSelectTab = ref('1');
 
     const upTotalCount = computed(() => {
       let work = 0;
@@ -374,6 +434,10 @@ export default defineComponent({
     _calculateArtifactStatsMain();
     _calculateArtifactStatsPrioritySub();
     calculateArtifactStats(artifactDetailInputRea);
+
+    const artifactImgSrc = (name: string) => {
+      return (ARTIFACT_SET_MASTER as any)[name].icon_url;
+    };
 
     /** メイン効果が更新されました */
     const updateMainstats = async () => {
@@ -509,6 +573,7 @@ export default defineComponent({
       prioritySubstatCounts,
       artifactStats,
       artifactStatsSub,
+      artifactList,
       upTotalCount,
       editableRef,
       gensenEnabledRef,
@@ -519,6 +584,11 @@ export default defineComponent({
       artifactStatsSubOnChange,
       updateMainstats,
       updatePrioritySubstats,
+
+      artifactImgSrc,
+
+      artifactInputModeTab,
+      artifactPartSelectTab,
 
       loadArtifactStatsByOcr,
       isScanning,
@@ -623,5 +693,31 @@ label.button {
   padding: 2px 5px;
   border-radius: 5px;
   border: 2px gray solid;
+}
+
+.tab-switch label {
+  color: blanchedalmond;
+}
+
+.tab-switch.part-select label {
+  width: calc(100% / 5 - 20px);
+  background: linear-gradient(to top, #55290b, black);
+}
+
+.sub-input {
+  margin-bottom: 10px;
+}
+
+table.artifact {
+  width: 100%;
+}
+
+table.artifact tr td {
+  vertical-align: top;
+}
+
+img.artifact-icon {
+  width: 24px;
+  height: 24px;
 }
 </style>

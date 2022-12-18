@@ -401,6 +401,17 @@ export const CHARACTER_INPUT_TEMPLATE = {
 };
 export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 
+const ARTIFACT_TEMPLATE = {
+    name: '',
+    rarity: 5,
+    set: '',
+    cat_id: 1,
+    mainStat: '',
+    mainStatValue: 1,
+    subStats: [{ name: '', value: 1 }]
+};
+export type TArtifact = typeof ARTIFACT_TEMPLATE;
+
 export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物メイン効果: ['', '', '', '', ''],
     聖遺物優先するサブ効果: ['', '', ''],
@@ -410,6 +421,7 @@ export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物ステータスメイン効果: _.cloneDeep(聖遺物ステータスTEMPLATE),
     聖遺物ステータスサブ効果: _.cloneDeep(聖遺物ステータスTEMPLATE),
     聖遺物優先するサブ効果Disabled: false,
+    artifact_list: [] as TArtifact[],
 };
 export type TArtifactDetailInput = typeof ARTIFACT_DETAIL_INPUT_TEMPLATE;
 
@@ -826,7 +838,7 @@ export async function loadRecommendation(
             });
         }
 
-        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring', 'supporterBuildname'].includes(s)).forEach(key => {
+        Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring', 'supporterBuildname', 'artifact_list'].includes(s)).forEach(key => {
             if (build[key] == null) {
                 conditionInput.conditionValues[key] = build[key];   // null
             } else if (_.isString(build[key])) {
@@ -874,6 +886,10 @@ export async function loadRecommendation(
                     optionInput.supporterBuildname[key] = build.supporterBuildname[key];
                 });
             }
+        }
+
+        if ('artifact_list' in build) {
+            artifactDetailInput.artifact_list = build.artifact_list;
         }
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);

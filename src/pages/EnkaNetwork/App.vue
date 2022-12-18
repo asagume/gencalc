@@ -171,6 +171,7 @@ import {
 } from '@/master';
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import {
+TArtifact,
   pushBuildinfoToSession,
   突破レベルレベルARRAY,
   聖遺物サブ効果ARRAY,
@@ -248,6 +249,7 @@ const CHARACTER_INFO_TEMPLATE = {
   skillLevelList: [] as [string, number][],
   weapon: WEAPON_INFO_TEMPLATE,
   reliq: RELIQ_INFO_TEMPLATE,
+  artifacts: [] as TArtifact[],
 };
 type TCharacterInfo = typeof CHARACTER_INFO_TEMPLATE & {
   characterMaster?: TCharacterEntry;
@@ -255,17 +257,6 @@ type TCharacterInfo = typeof CHARACTER_INFO_TEMPLATE & {
   artifactSetMasters?: [TArtifactSetEntry?, TArtifactSetEntry?];
   savedata?: TAnyObject;
 };
-
-const ARTIFACT_TEMPLATE = {
-  name: '',
-  rarity: 5,
-  set: '',
-  cat_id: 1,
-  mainStat: '',
-  mainStatValue: 1,
-  subStats: [{ name: '', value: 1 }]
-};
-type TArtifact = typeof ARTIFACT_TEMPLATE;
 
 const RELIQUARY_CAT_NAME = {
   '1': '生の花',
@@ -354,70 +345,65 @@ export default defineComponent({
       return arr.length ? arr[0].key : undefined;
     }
 
+    function makeCharacterArtifacts(avatarInfo: any) {
+      const result: TArtifact[] = [];
+      for (const equip of avatarInfo.equipList) {
+        if (equip.flat.itemType == 'ITEM_RELIQUARY') {
+          const hoyoArtifactMasterValue = getHoyoArtifactValue(equip.itemId);
+          if (!hoyoArtifactMasterValue) continue;
+          const artifactSet = getArtifactSetName(hoyoArtifactMasterValue.name);
+          if (!artifactSet) continue;
+          const artifact: TArtifact = {
+            name: hoyoArtifactMasterValue.name,
+            rarity: equip.flat.rankLevel,
+            set: artifactSet,
+            cat_id: hoyoArtifactMasterValue.reliquary_cat_id,
+            mainStat: (FIGHT_PROP_STAT_OBJ as any)[equip.flat.reliquaryMainstat.mainPropId],
+            mainStatValue: equip.flat.reliquaryMainstat.statValue,
+            subStats: [],
+          };
+          for (const reliquarySubstat of equip.flat.reliquarySubstats) {
+            const subStat = {
+              name: (FIGHT_PROP_STAT_OBJ as any)[reliquarySubstat.appendPropId],
+              value: reliquarySubstat.statValue,
+            };
+            artifact.subStats.push(subStat);
+          }
+          result.push(artifact);
+        }
+      }
+      return result;
+    }
+
     const artifacts = computed(() => {
       const result: TArtifact[] = [];
       if (u?.avatarInfoList?.length) {
         for (const avatarInfo of u.avatarInfoList) {
-          for (const equip of avatarInfo.equipList) {
-            if (equip.flat.itemType == 'ITEM_RELIQUARY') {
-              const hoyoArtifactMasterValue = getHoyoArtifactValue(equip.itemId);
-              console.log(hoyoArtifactMasterValue);
-              if (!hoyoArtifactMasterValue) continue;
-              const artifactSet = getArtifactSetName(hoyoArtifactMasterValue.name);
-              if (!artifactSet) continue;
-              const artifact: TArtifact = {
-                name: hoyoArtifactMasterValue.name,
-                rarity: equip.flat.rankLevel,
-                set: artifactSet,
-                cat_id: hoyoArtifactMasterValue.reliquary_cat_id,
-                mainStat: (FIGHT_PROP_STAT_OBJ as any)[equip.flat.reliquaryMainstat.mainPropId],
-                mainStatValue: equip.flat.reliquaryMainstat.statValue,
-                subStats: [],
-              };
-              for (const reliquarySubstat of equip.flat.reliquarySubstats) {
-                const subStat = {
-                  name: (FIGHT_PROP_STAT_OBJ as any)[reliquarySubstat.appendPropId],
-                  value: reliquarySubstat.statValue,
-                };
-                artifact.subStats.push(subStat);
-              }
-              result.push(artifact);
-            }
-          }
+          result.push(...makeCharacterArtifacts(avatarInfo));
         }
       }
       return result;
     });
 
     async function makeCharacterInfo(u: TAnyObject, index: number) {
+      const avatarInfo = u.avatarInfoList[index];
+
       const result: TCharacterInfo = {
-        avatarId: u.avatarInfoList[index].avatarId,
+        avatarId: avatarInfo.avatarId,
         level: u.playerInfo.showAvatarInfoList[index].level,
-        ascension: u.avatarInfoList[index].propMap['1002']?.ival ?? 0,
-        constellation: u.avatarInfoList[index].talentIdList?.length ?? 0,
+        ascension: avatarInfo.propMap['1002']?.ival ?? 0,
+        constellation: avatarInfo.talentIdList?.length ?? 0,
         skillLevelList: [] as [string, number][],
         weapon: _.cloneDeep(WEAPON_INFO_TEMPLATE),
         reliq: _.cloneDeep(RELIQ_INFO_TEMPLATE),
+        artifacts: [],
       };
 
-      Object.keys(u.avatarInfoList[index].skillLevelMap).forEach((key) => {
-        result.skillLevelList.push([key, u.avatarInfoList[index].skillLevelMap[key]]);
+      Object.keys(avatarInfo.skillLevelMap).forEach((key) => {
+        result.skillLevelList.push([key, avatarInfo.skillLevelMap[key]]);
       });
-      // if ('proudSkillExtraLevelMap' in u.avatarInfoList[index]) {
-      //   Object.keys(u.avatarInfoList[index].proudSkillExtraLevelMap).forEach((key) => {
-      //     if (key.endsWith('2')) {
-      //       // 元素スキル？
-      //       result.skillLevelList[1] +=
-      //         u.avatarInfoList[index].proudSkillExtraLevelMap[key];
-      //     } else if (key.endsWith('9')) {
-      //       // 元素爆発？
-      //       result.skillLevelList[2] +=
-      //         u.avatarInfoList[index].proudSkillExtraLevelMap[key];
-      //     }
-      //   });
-      // }
 
-      for (const equip of u.avatarInfoList[index].equipList) {
+      for (const equip of avatarInfo.equipList) {
         if (equip.flat.itemType == 'ITEM_RELIQUARY') {
           // 聖遺物
           result.reliq.itemIds.push(equip.itemId);
@@ -454,6 +440,8 @@ export default defineComponent({
           }
         }
       }
+
+      result.artifacts.push(...makeCharacterArtifacts(avatarInfo));
 
       const avatarWork = HoyoAvatarMaster.filter((s) => s.id == result.avatarId);
       if (avatarWork.length) {
@@ -617,6 +605,11 @@ export default defineComponent({
         const stat = '聖遺物サブ効果' + (FIGHT_PROP_STAT_OBJ as any)[prop].replace('%', 'P');
         result[stat] = characterInfo.reliq.subStatObj[prop];
       });
+
+      // 聖遺物リスト
+      if (characterInfo.artifacts) {
+        result['artifact_list'] = characterInfo.artifacts;
+      }
 
       return result;
     }
