@@ -39,8 +39,7 @@
       <td style="width: 50%">
         <table class="artifact-substat">
           <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
-            <td>{{ displayName(subStat.name) }}</td>
-            <td>{{ subStat.value }}</td>
+            <td>{{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value) }}</td>
           </tr>
         </table>
       </td>
@@ -59,7 +58,7 @@ import { TArtifact } from "@/input";
 export default defineComponent({
   name: "ArtifactOwnList",
   setup() {
-    const { displayName, targetValue } = CompositionFunction();
+    const { displayName, displayStatValue, targetValue } = CompositionFunction();
 
     const artifactPartSelectTab = ref('1');
     const artifactList = reactive([] as TArtifact[]);
@@ -84,8 +83,7 @@ export default defineComponent({
     onLoad();
 
     return {
-      displayName,
-      targetValue,
+      displayName, displayStatValue, targetValue,
 
       artifactPartSelectTab,
       getArtifactList,
@@ -131,7 +129,7 @@ table.artifact tr td {
 table.artifact-substat tr td {
   border-bottom: 1px solid gray;
   padding: 3px;
-  text-align: right;
+  text-align: left;
 }
 
 img.artifact-icon {
