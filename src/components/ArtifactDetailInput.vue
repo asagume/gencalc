@@ -295,24 +295,32 @@
             {{ displayName('理の冠') }}
           </label>
         </div>
+        <div class="artifact" v-for="(artifact, index) in artifactList.filter(s => s.cat_id == artifactPartSelectTab)"
+          :key="index">
+          <table class="artifact">
+            <tr>
+              <td>
+                <img class="artifact-icon" :src="artifactImgSrc(artifact.set)">
+                <br />
+                {{ displayName(artifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(artifact.mainStat,
+                    artifact.mainStatValue)
+                }}
+              </td>
+              <td>
+                <table class="artifact-substat">
+                  <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
+                    <td>
+                      {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name,
+                          subStat.value)
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
         実装方式考え中
-        <table class="artifact" v-show="false">
-          <tr v-for="(artifact, index) in artifactList.filter(s => s.cat_id == Number(artifactPartSelectTab))"
-            :key="index">
-            <td>
-              <img class="artifact-icon" :src="artifactImgSrc(artifact.set)" alt="artifact set">
-            </td>
-            <td>{{ artifact.mainStat }}</td>
-            <td style="width: 50%">
-              <table class="artifact-substat">
-                <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
-                  <td>{{ subStat.name }}</td>
-                  <td>{{ subStat.value }}</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
       </div>
     </div>
   </div>
@@ -389,7 +397,7 @@ export default defineComponent({
     const gensenRef = ref(GENSEN_MASTER_LIST[2] as TGensen);
 
     const artifactInputModeTab = ref('1');
-    const artifactPartSelectTab = ref('1');
+    const artifactPartSelectTab = ref(1);
 
     const upTotalCount = computed(() => {
       let work = 0;
@@ -635,7 +643,7 @@ table.detail {
   border-collapse: collapse;
 }
 
-table tr {
+table.detail tr {
   border-bottom: 1px solid gray;
 }
 
@@ -646,15 +654,16 @@ table.priority-substat {
   border: none;
 }
 
-th,
-td {
+table.detail th,
+table.detail td {
   text-align: right;
   white-space: nowrap;
   padding-right: 4px;
   line-height: 3.3rem;
 }
 
-th {
+table.detail th,
+table.priority-substat th {
   color: #df8f37;
 }
 
@@ -708,16 +717,50 @@ label.button {
   margin-bottom: 10px;
 }
 
+div.artifact {
+  display: inline-block;
+  width: 45%;
+  min-width: 60rem;
+  margin: 2px;
+}
+
 table.artifact {
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+table.artifact thead th {
+  color: orange;
+  border-bottom: 2px solid whitesmoke;
+}
+
+table.artifact-substat {
+  width: 100%;
+  border-spacing: 0;
 }
 
 table.artifact tr td {
   vertical-align: top;
+  border-bottom: 2px solid whitesmoke;
+  padding: 3px;
 }
 
+table.artifact-substat tr td {
+  border-bottom: 1px solid gray;
+  padding: 3px;
+  text-align: left;
+}
+
+table.artifact-substat tr:last-child td {
+  border-bottom: none;
+}
+
+
 img.artifact-icon {
-  width: 24px;
-  height: 24px;
+  width: 7.2rem;
+  height: 7.2rem;
 }
 </style>

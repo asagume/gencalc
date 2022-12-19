@@ -1845,7 +1845,9 @@ export async function calculateSupporter(
     if (characterInput.character == '雷電将軍') {
         // for 雷罰悪曜の眼
         const myCharacterMaster = await getCharacterMasterDetail(character);
-        statsInput.statsObj['元素エネルギー'] = myCharacterMaster['元素爆発']['元素エネルギー'];
+        if ('元素エネルギー' in myCharacterMaster['元素爆発']) {
+            statsInput.statsObj['元素エネルギー'] = myCharacterMaster['元素爆発']['元素エネルギー'];
+        }
     }
 
     calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
