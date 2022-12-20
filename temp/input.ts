@@ -401,14 +401,14 @@ export const CHARACTER_INPUT_TEMPLATE = {
 };
 export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 
-export const ARTIFACT_TEMPLATE = {
+const ARTIFACT_TEMPLATE = {
     name: '',
     rarity: 5,
-    set: 'NONE',
+    setname: '',
     cat_id: 1,
-    mainStat: 'HP',
-    mainStatValue: 4780,
-    subStats: [{ name: 'HP', value: 0 }]
+    mainStat: '',
+    mainStatValue: 1,
+    subStats: [{ name: '', value: 1 }]
 };
 export type TArtifact = typeof ARTIFACT_TEMPLATE;
 
