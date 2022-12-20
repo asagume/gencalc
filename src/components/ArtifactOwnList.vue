@@ -23,8 +23,17 @@
   </div>
   <div class="artifact-list">
     <template v-for="(artifact, index) in getArtifactList(artifactCatSelectTab)" :key="index">
-      <ArtifactItem :artifact="artifact" />
+      <ArtifactItem :artifact="artifact" :id="index" :editable="true" @change:article="articleOnChange" />
     </template>
+  </div>
+  <div>
+    <label>
+      <input type="checkbox" v-model="savable" :disabled="!changed" />
+      <span>{{ displayName("聖遺物所持状況を保存する") }}</span>
+    </label>
+    <button type="button" @click="save" :disabled="!savable">
+      {{ displayName("実行") }}
+    </button>
   </div>
 </template>
 
@@ -45,8 +54,13 @@ export default defineComponent({
   setup() {
     const { displayName, displayStatValue, targetValue } = CompositionFunction();
 
+    const STORAGE_KEY = 'artifact_list';
+
     const artifactCatSelectTab = ref('1');
     const artifactList = reactive([] as TArtifact[]);
+
+    const changed = ref(false);
+    const savable = ref(false);
 
     const getArtifactList = (index: any) => {
       const result = artifactList.filter(s => s.cat_id == Number(index))
@@ -67,10 +81,19 @@ export default defineComponent({
       });
     };
 
+    const articleOnChange = () => {
+      changed.value = true;
+    };
+
+    const save = () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(artifactList));
+      changed.value = false;
+      savable.value = false;
+    };
+
     const onLoad = () => {
-      const storageKey = 'artifact_list';
-      if (storageKey in localStorage) {
-        const value = JSON.parse(localStorage[storageKey]);
+      if (STORAGE_KEY in localStorage) {
+        const value = JSON.parse(localStorage[STORAGE_KEY]);
         artifactList.splice(0, artifactList.length, ...value.filter((s: any) => 'setname' in s));
       }
       console.log(artifactList);
@@ -82,6 +105,11 @@ export default defineComponent({
 
       artifactCatSelectTab,
       getArtifactList,
+      articleOnChange,
+
+      changed,
+      savable,
+      save,
     };
   },
 });
