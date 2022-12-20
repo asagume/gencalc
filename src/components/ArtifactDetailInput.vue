@@ -272,55 +272,35 @@
         </table>
       </fieldset>
 
-      <div v-if="artifactInputModeTab == '2'">
+      <div class="artifact-part-select" v-if="artifactInputModeTab == '2'">
         <div class="tab-switch part-select">
-          <input class="hidden" id="part-select-tab-1" type="radio" value="1" v-model="artifactPartSelectTab">
-          <label for="part-select-tab-1">
+          <input class="hidden" id="artifact-cat-tab-1" type="radio" value="1" v-model="artifactPartSelectTab">
+          <label for="artifact-cat-tab-1">
             {{ displayName('生の花') }}
           </label>
-          <input class="hidden" id="part-select-tab-2" type="radio" value="2" v-model="artifactPartSelectTab">
-          <label for="part-select-tab-2">
+          <input class="hidden" id="artifact-cat-tab-2" type="radio" value="2" v-model="artifactPartSelectTab">
+          <label for="artifact-cat-tab-2">
             {{ displayName('死の羽') }}
           </label>
-          <input class="hidden" id="part-select-tab-3" type="radio" value="3" v-model="artifactPartSelectTab">
-          <label for="part-select-tab-3">
+          <input class="hidden" id="artifact-cat-tab-3" type="radio" value="3" v-model="artifactPartSelectTab">
+          <label for="artifact-cat-tab-3">
             {{ displayName('時の砂') }}
           </label>
-          <input class="hidden" id="part-select-tab-4" type="radio" value="4" v-model="artifactPartSelectTab">
-          <label for="part-select-tab-4">
+          <input class="hidden" id="artifact-cat-tab-4" type="radio" value="4" v-model="artifactPartSelectTab">
+          <label for="artifact-cat-tab-4">
             {{ displayName('空の杯') }}
           </label>
-          <input class="hidden" id="part-select-tab-5" type="radio" value="5" v-model="artifactPartSelectTab">
-          <label for="part-select-tab-5">
+          <input class="hidden" id="artifact-cat-tab-5" type="radio" value="5" v-model="artifactPartSelectTab">
+          <label for="artifact-cat-tab-5">
             {{ displayName('理の冠') }}
           </label>
         </div>
-        <div class="artifact" v-for="(artifact, index) in artifactList.filter(s => s.cat_id == artifactPartSelectTab)"
-          :key="index">
-          <table class="artifact">
-            <tr>
-              <td>
-                <img class="artifact-icon" :src="artifactImgSrc(artifact.set)">
-                <br />
-                {{ displayName(artifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(artifact.mainStat,
-                    artifact.mainStatValue)
-                }}
-              </td>
-              <td>
-                <table class="artifact-substat">
-                  <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
-                    <td>
-                      {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name,
-                          subStat.value)
-                      }}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
+        <template v-for="(artifact, index) in artifactCatList(artifactPartSelectTab)" :key="index">
+          <ArtifactItem :artifact="artifact" />
+        </template>
+        <div>
+          実装方式考え中
         </div>
-        実装方式考え中
       </div>
     </div>
   </div>
@@ -335,7 +315,9 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash';
 import ArtifactDetailOcrResult from "@/components/ArtifactDetailOcrResult.vue";
+import ArtifactItem from "@/components/ArtifactItem.vue";
 import {
   TArtifactDetailInput,
   聖遺物メイン効果_時の砂ARRAY,
@@ -351,8 +333,8 @@ import {
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
 } from "@/calculate";
-import { ARTIFACT_SET_MASTER, GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
-import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
+import { GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
+import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { resizePinnedImage } from "@/gencalc_ocr";
 import { overwriteObject } from "@/common";
@@ -369,12 +351,13 @@ export default defineComponent({
   },
   components: {
     ArtifactDetailOcrResult,
+    ArtifactItem,
   },
   emits: ['update:artifact-detail'],
   setup(props, context) {
     const { displayName, targetValue, displayStatValue } = CompositionFunction();
 
-    const artifactDetailInputRea = reactive(props.artifactDetailInput);
+    const artifactDetailInputRea = reactive(props.artifactDetailInput as TArtifactDetailInput);
 
     const mainstats = reactive(artifactDetailInputRea.聖遺物メイン効果);
     const prioritySubstats = reactive(
@@ -389,7 +372,6 @@ export default defineComponent({
     const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
     const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
-    const artifactList = reactive(artifactDetailInputRea.artifact_list);
 
     const editableRef = ref(false);
     const gensenEnabledRef = ref(false);
@@ -414,6 +396,11 @@ export default defineComponent({
       substat in artifactStatsMain ? (artifactStatsMain as any)[substat] : 0;
     const substatStep = (substat: string) =>
       ['HP', '攻撃力', '防御力', '元素熟知'].includes(substat) ? 1 : 0.1;
+
+    const artifactCatList = (cat_id: any) => {
+      const result = props.artifactDetailInput.artifact_list.filter(s => s.cat_id == Number(cat_id));
+      return result;
+    };
 
     /** 聖遺物ステータスを計算します（メイン効果） */
     const _calculateArtifactStatsMain = () => {
@@ -442,10 +429,6 @@ export default defineComponent({
     _calculateArtifactStatsMain();
     _calculateArtifactStatsPrioritySub();
     calculateArtifactStats(artifactDetailInputRea);
-
-    const artifactImgSrc = (name: string) => {
-      return (ARTIFACT_SET_MASTER as any)[name].icon_url;
-    };
 
     /** メイン効果が更新されました */
     const updateMainstats = async () => {
@@ -554,11 +537,13 @@ export default defineComponent({
       }
     };
 
-    // onMounted(() => {
-    //   document
-    //     .getElementById('artifact-stats-image')
-    //     ?.addEventListener('click', loadArtifactStatsByOcr);
-    // });
+    watch(props, (newVal, oldVal) => {
+      if (!_.isEqual(newVal.artifactDetailInput.artifact_list, oldVal?.artifactDetailInput?.artifact_list)) {
+        for (let i = 1; i <= 5; i++) {
+          artifactCatList(i);
+        }
+      }
+    });
 
     return {
       displayName,
@@ -581,7 +566,6 @@ export default defineComponent({
       prioritySubstatCounts,
       artifactStats,
       artifactStatsSub,
-      artifactList,
       upTotalCount,
       editableRef,
       gensenEnabledRef,
@@ -593,7 +577,7 @@ export default defineComponent({
       updateMainstats,
       updatePrioritySubstats,
 
-      artifactImgSrc,
+      artifactCatList,
 
       artifactInputModeTab,
       artifactPartSelectTab,
@@ -717,50 +701,8 @@ label.button {
   margin-bottom: 10px;
 }
 
-div.artifact {
-  display: inline-block;
-  width: 45%;
-  min-width: 60rem;
-  margin: 2px;
-}
-
-table.artifact {
+.artifact-part-select {
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
-  table-layout: fixed;
-  border-spacing: 0;
-}
-
-table.artifact thead th {
-  color: orange;
-  border-bottom: 2px solid whitesmoke;
-}
-
-table.artifact-substat {
-  width: 100%;
-  border-spacing: 0;
-}
-
-table.artifact tr td {
-  vertical-align: top;
-  border-bottom: 2px solid whitesmoke;
-  padding: 3px;
-}
-
-table.artifact-substat tr td {
-  border-bottom: 1px solid gray;
-  padding: 3px;
-  text-align: left;
-}
-
-table.artifact-substat tr:last-child td {
-  border-bottom: none;
-}
-
-
-img.artifact-icon {
-  width: 7.2rem;
-  height: 7.2rem;
 }
 </style>

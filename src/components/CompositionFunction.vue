@@ -144,6 +144,7 @@ export default function CompositionFunction() {
         displayStatAbbrev,
         targetValue,
         displayOptionName,
+        percent,
     }
 }
 </script>

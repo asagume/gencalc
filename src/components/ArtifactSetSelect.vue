@@ -13,7 +13,7 @@
 
     <ul class="select-list">
       <li class="with-tooltip" v-for="item in filteredList" :key="item.key">
-        <img :class="'artifact-set' + bgImageClass(item) + selectedClass(item)" :src="item.icon_url" :alt="item.key"
+        <img :class="'artifact-set' + bgImageClass(item) + selectedClass(item)" :src="getArtifactIconUrl(item.key)" :alt="item.key"
           @click="$emit('update:artifact-set', item.key)" />
         <div class="tooltip">{{ displayName(item.key) }}</div>
       </li>
@@ -24,6 +24,7 @@
 <script lang="ts">
 import {
   ARTIFACT_SET_MASTER_LIST,
+  getArtifactIconUrl,
   STAR_BACKGROUND_IMAGE_CLASS,
   TArtifactSetEntry,
 } from "@/master";
@@ -85,6 +86,7 @@ export default defineComponent({
 
     return {
       displayName,
+      getArtifactIconUrl,
 
       bgImageClass,
       selectedClass,
@@ -97,8 +99,8 @@ export default defineComponent({
 
 <style scoped>
 img.artifact-set {
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   background-size: contain;
 }
 

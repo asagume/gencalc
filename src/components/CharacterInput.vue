@@ -84,14 +84,14 @@
       </td>
       <td class="icon">
         <label @click="openArtifactSetSelect(0)">
-          <img :class="'artifact-set' + artifactSetSelectClass(0)" :src="artifactSetMasters[0].image"
+          <img :class="'artifact-set' + artifactSetSelectClass(0)" :src="getArtifactIconUrl(artifactSetMasters[0].key)"
             :alt="artifactSetMasters[0].key" />
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
       </td>
       <td class="icon">
         <label @click="openArtifactSetSelect(1)">
-          <img :class="'artifact-set' + artifactSetSelectClass(1)" :src="artifactSetMasters[1].image"
+          <img :class="'artifact-set' + artifactSetSelectClass(1)" :src="getArtifactIconUrl(artifactSetMasters[1].key)"
             :alt="artifactSetMasters[1].key" />
         </label>
         <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
@@ -181,6 +181,7 @@ import {
   ELEMENT_BG_COLOR_CLASS,
   ELEMENT_COLOR_CLASS,
   ELEMENT_IMG_SRC,
+  getArtifactIconUrl,
   IMG_SRC_DUMMY,
   RECOMMEND_ABBREV_EN_MAP,
   STAR_BACKGROUND_IMAGE_CLASS,
@@ -437,6 +438,7 @@ export default defineComponent({
     return {
       displayName,
       targetValue,
+      getArtifactIconUrl,
 
       displayBuildName,
       visionSrc,

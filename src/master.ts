@@ -215,17 +215,19 @@ export type TArtifactMain = {
 };
 
 function getIconUrl(master: TAnyObject) {
-    if (master.icon_url) return master.icon_url;
-    if (master.image) return master.image;
-    if (master.import) {
-        let result = master.import.replace('data/', 'images/');
+    let result = null;
+    if (master.icon_url) {
+        result = master.icon_url;
+    } else if (master.image) {
+        result = master.image;
+    } else if (master.import) {
+        result = master.import.replace('data/', 'images/');
         if (result.indexOf('characters/') != -1) {
             result = result.replace('characters/', 'characters/face/');
         }
         result = result.replace(/json$/, 'png');
-        return result;
     }
-    return null;
+    return result;
 }
 
 export const CHARACTER_MASTER_LIST: TCharacterEntry[] = [];
@@ -533,3 +535,22 @@ export const GENSEN_MASTER_LIST = [
 ];
 export type TGensen = { key: string; values: number[]; counts: number[] };
 
+export const ARTIFACT_CAT_NAMES = {
+    '1': 'flower_of_life',
+    '2': 'plume_of_death',
+    '3': 'sands_of_eon',
+    '4': 'goblet_of_eonothem',
+    '5': 'circlet_of_logos',
+};
+
+export function getArtifactIconUrl(setname: string, opt_cat_id: any = '1') {
+    let result = IMG_SRC_DUMMY;
+    if (setname in ARTIFACT_SET_MASTER) {
+        result = (ARTIFACT_SET_MASTER as any)[setname].icon_url;
+        if (!result.startsWith('data:image/gif;')) {
+            result = result.replace(/.png$/, '');
+            result += '/' + (ARTIFACT_CAT_NAMES as any)[String(opt_cat_id)] + '.png';
+        }
+    }
+    return result;
+}

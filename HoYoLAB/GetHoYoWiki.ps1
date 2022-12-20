@@ -37,13 +37,13 @@ $pageIds = @()
 # $pageIds += 2909   # サイフォスの月明かり
 # $pageIds += 2910   # 彷徨える星
 # $pageIds += 2966   # 千夜に浮かぶ夢
-$pageIds += 3319   # 東花坊時雨
+# $pageIds += 3319   # 東花坊時雨
 # $pageIds += 3320   # トゥライトゥーラの記憶
 ### 聖遺物
-# $pageIds += @(2061..2099)
-# $pageIds += 2672   # 深林の記憶
-# $pageIds += 2673   # 金メッキの夢
-# $pageIds += 3321   # 楽園の絶花
+$pageIds += @(2061..2099)
+$pageIds += 2672   # 深林の記憶
+$pageIds += 2673   # 金メッキの夢
+$pageIds += 3321   # 楽園の絶花
 # $pageIds += 3322   # 砂上の楼閣の史話
 # 生物誌
 # $pageIds += @(2100..2251)
@@ -212,26 +212,45 @@ foreach ($pageId in $pageIds) {
     }
     elseif ($menuId -eq 5) {
         # 聖遺物
-        # foreach ($value in $contentMLang."en-us"."filter_values"."weapon_rarity"."values") {
-        #     $rarity = $value -replace "[^0-9]", ""
-        # }
 
         $outDirPath = Join-Path $destFolder -ChildPath ("data\" + $categoryMap.$menuId)
         if (-not (Test-Path $outDirPath)) {
             New-Item -Path $outDirPath -ItemType Directory -Force
         }
         # $jsonFilePath = Join-Path $outDirPath -ChildPath $jsonFilePath
-        $jsonFileName = $rarity + "_" + $writableName + ".json"
+        $jsonFileName = $writableName + ".json"
         $jsonFilePath = $outDirPath
 
-        if ($contentMLang.$imgLanguage."icon_url" -and $doDownloadImg) {
-            $imageUrl = $contentMLang.$imgLanguage."icon_url"
-            $imageFile = $rarity + "_" + $writableName + ".png"
-            $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId)
-            if (-not (Test-Path $outDirPath)) {
-                New-Item -Path $outDirPath -ItemType Directory -Force
+        if ($doDownloadImg) {
+            if ($contentMLang.$imgLanguage."icon_url") {
+                $imageUrl = $contentMLang.$imgLanguage."icon_url"
+                $imageFile = $writableName + ".png"
+                $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId)
+                if (-not (Test-Path $outDirPath)) {
+                    New-Item -Path $outDirPath -ItemType Directory -Force
+                }
+                Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
             }
-            Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
+            foreach ($module in $contentMLang."en-us".modules) {
+                foreach ($component in $module.components) {
+                    if ($component.component_id -eq "artifact_list") {
+                        if ($component.data) {
+                            $cats = @("flower_of_life", "plume_of_death", "sands_of_eon", "goblet_of_eonothem", "circlet_of_logos")
+                            foreach ($cat in $cats) {
+                                if ($component.data.$cat.icon_url) {
+                                    $imageUrl = $component.data.$cat.icon_url
+                                    $imageFile = $cat + ".png"
+                                    $outDirPath = Join-Path $destFolder -ChildPath ("images\" + $categoryMap.$menuId + "\" + $writableName)
+                                    if (-not (Test-Path $outDirPath)) {
+                                        New-Item -Path $outDirPath -ItemType Directory -Force
+                                    }
+                                    Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     else {

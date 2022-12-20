@@ -88,23 +88,11 @@
         </div>
         <div v-if="artifactsToggle">
           <button type="button" @click="artifactsSaveOnClick" :disabled="artifactsSaveButtonDisabled()"> SAVE </button>
-          <table class="artifact">
-            <tr v-for="(artifact, index) in artifacts" :key="index">
-              <td>{{ artifact.name }}</td>
-              <td>{{ artifact.set }}</td>
-              <td>{{ (RELIQUARY_CAT_NAME as any)[artifact.cat_id] }}</td>
-              <td>{{ artifact.mainStat }}</td>
-              <td>{{ artifact.mainStatValue }}</td>
-              <td style="width: 50%">
-                <table class="artifact-substat">
-                  <tr v-for="(subStat, index2) in artifact.subStats" :key="index2">
-                    <td>{{ subStat.name }}</td>
-                    <td>{{ subStat.value }}</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
+          <div>
+            <template v-for="(artifact, index) in artifacts" :key="index">
+              <ArtifactItem :artifact="artifact" />
+            </template>
+          </div>
         </div>
       </template>
     </div>
@@ -162,6 +150,7 @@ import {
   ARTIFACT_SET_MASTER_LIST,
   CHARACTER_MASTER,
   ELEMENT_IMG_SRC,
+  getArtifactIconUrl,
   getCharacterMasterDetail,
   IMG_SRC_DUMMY,
   STAR_BACKGROUND_IMAGE_CLASS,
@@ -180,6 +169,7 @@ import {
   聖遺物サブ効果ARRAY,
 } from '@/input';
 import { overwriteObject } from '@/common';
+import ArtifactItem from '@/components/ArtifactItem.vue';
 
 type THoyoAvatarMasterValue = {
   id: number;
@@ -301,6 +291,9 @@ const FIGHT_PROP_STAT_OBJ = {
 
 export default defineComponent({
   name: 'App',
+  components: {
+    ArtifactItem,
+  },
   setup() {
     const { displayName } = CompositionFunction();
 
@@ -359,7 +352,7 @@ export default defineComponent({
           const artifact: TArtifact = {
             name: hoyoArtifactMasterValue.name,
             rarity: equip.flat.rankLevel,
-            set: artifactSet,
+            setname: artifactSet,
             cat_id: hoyoArtifactMasterValue.reliquary_cat_id,
             mainStat: (FIGHT_PROP_STAT_OBJ as any)[equip.flat.reliquaryMainstat.mainPropId],
             mainStatValue: equip.flat.reliquaryMainstat.statValue,
@@ -750,7 +743,7 @@ export default defineComponent({
       if (characterInfo.artifactSetMasters) {
         const work = characterInfo.artifactSetMasters[index];
         if (work) {
-          result = work.icon_url;
+          result = getArtifactIconUrl(work.key);
         }
       }
       return result;

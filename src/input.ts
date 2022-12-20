@@ -404,7 +404,7 @@ export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 const ARTIFACT_TEMPLATE = {
     name: '',
     rarity: 5,
-    set: '',
+    setname: '',
     cat_id: 1,
     mainStat: '',
     mainStatValue: 1,
@@ -889,7 +889,7 @@ export async function loadRecommendation(
         }
 
         if ('artifact_list' in build) {
-            artifactDetailInput.artifact_list = build.artifact_list;
+            artifactDetailInput.artifact_list.splice(0, artifactDetailInput.artifact_list.length, ...build.artifact_list);
         }
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);
