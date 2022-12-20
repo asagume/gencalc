@@ -71,7 +71,7 @@ export default defineComponent({
       const storageKey = 'artifact_list';
       if (storageKey in localStorage) {
         const value = JSON.parse(localStorage[storageKey]);
-        artifactList.splice(0, artifactList.length, ...value);
+        artifactList.splice(0, artifactList.length, ...value.filter((s: any) => 'setname' in s));
       }
       console.log(artifactList);
     };
