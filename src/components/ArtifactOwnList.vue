@@ -22,8 +22,8 @@
     </label>
   </div>
   <div class="artifact-list">
-    <template v-for="(artifact, index) in getArtifactList(artifactCatSelectTab)" :key="index">
-      <ArtifactItem :artifact="artifact" :id="index" :editable="true" @change:article="articleOnChange" />
+    <template v-for="item in getArtifactList(artifactCatSelectTab)" :key="item.id">
+      <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['edit']" @change:article="artifactOnChange" />
     </template>
   </div>
   <div>
@@ -46,6 +46,13 @@ import { defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { TArtifact, 聖遺物ステータスTEMPLATE } from "@/input";
 
+type TArtifactWithId = {
+  id: number,
+  artifact: TArtifact,
+};
+
+var nextId = 1;
+
 export default defineComponent({
   name: "ArtifactOwnList",
   components: {
@@ -56,45 +63,54 @@ export default defineComponent({
 
     const STORAGE_KEY = 'artifact_list';
 
-    const artifactCatSelectTab = ref('1');
-    const artifactList = reactive([] as TArtifact[]);
+    const artifactCatSelectTab = ref(1);
+    const artifactList = reactive([] as TArtifactWithId[]);
 
     const changed = ref(false);
     const savable = ref(false);
 
     const getArtifactList = (index: any) => {
-      const result = artifactList.filter(s => s.cat_id == Number(index))
+      const result = artifactList.filter(s => s.artifact.cat_id == Number(index))
       return result.sort((a, b) => {
-        if (a.setname != b.setname) {
+        if (a.artifact.setname != b.artifact.setname) {
           const setNameArr = Object.keys(ARTIFACT_SET_MASTER);
-          const aIndex = setNameArr.indexOf(a.setname);
-          const bIndex = setNameArr.indexOf(b.setname);
+          const aIndex = setNameArr.indexOf(a.artifact.setname);
+          const bIndex = setNameArr.indexOf(b.artifact.setname);
           return aIndex - bIndex;
         }
-        if (a.mainStat != b.mainStat) {
+        if (a.artifact.mainStat != b.artifact.mainStat) {
           const statNameArr = Object.keys(聖遺物ステータスTEMPLATE);
-          const aIndex = statNameArr.indexOf(a.mainStat);
-          const bIndex = statNameArr.indexOf(b.mainStat);
+          const aIndex = statNameArr.indexOf(a.artifact.mainStat);
+          const bIndex = statNameArr.indexOf(b.artifact.mainStat);
           return aIndex - bIndex;
         }
         return 0;
       });
     };
 
-    const articleOnChange = () => {
+    const artifactOnChange = (id: number, artifact: TArtifact) => {
+      let index = 0;
+      for (; index < artifactList.length; index++) {
+        if (artifactList[index].id == id) {
+          artifactList[index].artifact = artifact;
+          break;
+        }
+      }
       changed.value = true;
     };
 
     const save = () => {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(artifactList));
+      const work = artifactList.map(s => s.artifact);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(work));
       changed.value = false;
       savable.value = false;
     };
 
     const onLoad = () => {
       if (STORAGE_KEY in localStorage) {
-        const value = JSON.parse(localStorage[STORAGE_KEY]);
-        artifactList.splice(0, artifactList.length, ...value.filter((s: any) => 'setname' in s));
+        const value: any[] = JSON.parse(localStorage[STORAGE_KEY]);
+        const newList = value.filter(s => 'setname' in s).map(s => ({ id: nextId++, artifact: s }));
+        artifactList.splice(0, artifactList.length, ...newList);
       }
       console.log(artifactList);
     };
@@ -105,7 +121,7 @@ export default defineComponent({
 
       artifactCatSelectTab,
       getArtifactList,
-      articleOnChange,
+      artifactOnChange,
 
       changed,
       savable,

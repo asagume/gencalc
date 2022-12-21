@@ -399,6 +399,7 @@ export default defineComponent({
 
     const artifactCatList = (cat_id: any) => {
       const result = props.artifactDetailInput.artifact_list.filter(s => s.cat_id == Number(cat_id));
+      console.log(cat_id, props.artifactDetailInput.artifact_list, result);
       return result;
     };
 

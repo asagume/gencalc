@@ -4,31 +4,57 @@
       <tr>
         <td style="width: 45%">
           <div class="with-tooltip">
-            <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(artifact.name)">
-            <div class="tooltip">{{ displayName(artifact.name) }}</div>
+            <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)">
+            <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
           </div>
-          {{ displayName(artifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(artifact.mainStat,
-              artifact.mainStatValue)
-          }}
-          <div v-show="editable" style="margin-top: 5px">
-            <button class="control" type="button" @click="isEditing = !isEditing">
+          <table class="edit-mainstat" v-if="isEditing">
+            <tr>
+              <td style="width: 60%">
+                <select v-model="copiedArtifact.mainStat" @change="onChange">
+                  <option v-for="option in mainStatOptions" :key="option" :value="option">
+                    {{ displayName(option) }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <input type="number" v-model="copiedArtifact.mainStatValue" min="0" @change="onChange">
+              </td>
+            </tr>
+          </table>
+          <div v-else>
+            {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(copiedArtifact.mainStat,
+                copiedArtifact.mainStatValue)
+            }}
+          </div>
+          <div style="margin-top: 5px">
+            <button v-show="controls?.includes('edit')" class="control" type="button" @click="isEditing = !isEditing">
               <span v-if="isEditing" class="material-symbols-outlined"> edit_off </span>
               <span v-else class="material-symbols-outlined"> edit </span>
             </button>
-            <!-- <button class="control" type="button">
-              <span class="material-symbols-outlined"> delete </span>
-            </button> -->
+            <button v-show="controls?.includes('change')" class="control" type="button">
+              <span class="material-symbols-outlined"> change_circle </span>
+            </button>
+            <div v-show="controls?.includes('remove')">
+              <button class="control" type="button">
+                <span class="material-symbols-outlined"> delete </span>
+              </button>
+            </div>
           </div>
         </td>
         <td style="width: 55%">
           <table class="artifact-substat">
-            <tr v-for="(subStat, index) in artifact.subStats" :key="index">
+            <tr v-for="(subStat, index) in copiedArtifact.subStats" :key="index">
               <template v-if="isEditing">
                 <td class="right">
-                  {{ displayName(subStat.name) }}
+                  <select v-model="subStat.name" @change="onChange">
+                    <option v-for="option in subStatOptions" :key="option" :value="option"
+                      :disabled="subStatOptionDisabled(option, subStat.name)">
+                      {{ displayName(option) }}
+                    </option>
+                  </select>
                 </td>
                 <td class="right">
-                  <input type="number" v-model="subStat.value" @change="onChange">
+                  <input type="number" v-model="subStat.value" min="0" @change="onChange">
                 </td>
               </template>
               <td v-else>
@@ -43,37 +69,72 @@
 </template>
 
 <script lang="ts">
-import { TArtifact } from "@/input";
+import _ from 'lodash';
+import { overwriteObject } from "@/common";
+import { TArtifact, 聖遺物サブ効果ARRAY, 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY } from "@/input";
 import { getArtifactIconUrl } from "@/master";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
   name: 'ArtifactItem',
   props: {
-    artifact: { type: Object as PropType<TArtifact>, required: true, },
-    editable: { type: Boolean },
+    artifact: { type: Object as PropType<TArtifact>, required: true },
+    id: { type: Number },
+    controls: { type: Array as PropType<string[]> }
   },
   emits: ['change:article'],
   setup(props, context) {
     const { displayName, displayStatValue } = CompositionFunction();
 
+    const copiedArtifact = reactive(_.cloneDeep(props.artifact));
     const isEditing = ref(false);
 
     const artifactImgSrc = computed(() => {
-      return getArtifactIconUrl(props.artifact.setname, props.artifact.cat_id);
+      return getArtifactIconUrl(copiedArtifact.setname, copiedArtifact.cat_id);
+    });
+
+    const MAINSTAT_CAT_ARR = {
+      '1': Array.from(new Set(聖遺物メイン効果_生の花ARRAY.map(s => s.replace(/^\d_/, '')))),
+      '2': Array.from(new Set(聖遺物メイン効果_死の羽ARRAY.map(s => s.replace(/^\d_/, '')))),
+      '3': Array.from(new Set(聖遺物メイン効果_時の砂ARRAY.map(s => s.replace(/^\d_/, '')))),
+      '4': Array.from(new Set(聖遺物メイン効果_空の杯ARRAY.map(s => s.replace(/^\d_/, '')))),
+      '5': Array.from(new Set(聖遺物メイン効果_理の冠ARRAY.map(s => s.replace(/^\d_/, '')))),
+    };
+
+    const mainStatOptions = computed(() => {
+      return (MAINSTAT_CAT_ARR as any)[copiedArtifact.cat_id];
+    });
+
+    const subStatOptions = computed(() => {
+      return 聖遺物サブ効果ARRAY;
+    });
+
+    const subStatOptionDisabled = ((value: string, selected: string) => {
+      if (value == selected) return false;
+      const work = copiedArtifact.subStats.map(s => s.name);
+      return work.includes(value);
     });
 
     const onChange = () => {
-      context.emit('change:article');
+      context.emit('change:article', props.id, copiedArtifact);
     };
+
+    watch(props, (newVal) => {
+      overwriteObject(copiedArtifact, newVal.artifact);
+    });
 
     return {
       displayName, displayStatValue,
 
+      copiedArtifact,
       isEditing,
 
       artifactImgSrc,
+      mainStatOptions,
+      subStatOptions,
+      subStatOptionDisabled,
+
       onChange,
     }
   }
@@ -129,10 +190,35 @@ table.artifact-substat td.right {
   text-align: right;
 }
 
+table.edit-mainstat {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+table.edit-mainstat tr td {
+  border: none;
+}
+
+select {
+  margin: auto;
+  padding: 0 1px;
+  border: none;
+}
+
 input[type="number"] {
   width: 10rem;
   margin: auto;
   padding: 0 1px;
+  border: none;
+}
+
+table.edit-mainstat select {
+  width: calc(100% - 2px);
+}
+
+table.edit-mainstat input[type="number"] {
+  width: calc(100% - 2px);
 }
 
 img.artifact-icon {
