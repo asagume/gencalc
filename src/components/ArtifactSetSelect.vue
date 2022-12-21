@@ -13,8 +13,8 @@
 
     <ul class="select-list">
       <li class="with-tooltip" v-for="item in filteredList" :key="item.key">
-        <img :class="'artifact-set' + bgImageClass(item) + selectedClass(item)" :src="getArtifactIconUrl(item.key)" :alt="item.key"
-          @click="$emit('update:artifact-set', item.key)" />
+        <img :class="'artifact-set' + bgImageClass(item) + selectedClass(item)" :src="getArtifactIconUrl(item.key, cat_id)"
+          :alt="item.key" @click="$emit('update:artifact-set', item.key)" />
         <div class="tooltip">{{ displayName(item.key) }}</div>
       </li>
     </ul>
@@ -38,6 +38,7 @@ export default defineComponent({
     index: { type: Number, required: true },
     artifactSet: { type: String, required: true },
     artifactSetMasters: { type: Array as PropType<TArtifactSetEntry[]>, required: true },
+    cat_id: { type: Number },
   },
   emits: ["update:artifact-set"],
   setup(props) {

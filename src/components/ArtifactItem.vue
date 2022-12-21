@@ -4,7 +4,8 @@
       <tr>
         <td style="width: 45%">
           <div class="with-tooltip">
-            <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)">
+            <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)"
+              @click="artifactIconOnClick()">
             <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
           </div>
           <table class="edit-mainstat" v-if="isEditing">
@@ -34,8 +35,9 @@
             <button v-show="controls?.includes('change')" class="control" type="button">
               <span class="material-symbols-outlined"> change_circle </span>
             </button>
-            <div v-show="controls?.includes('remove')">
-              <button class="control" type="button">
+            <div class="control-remove" v-if="controls?.includes('remove')">
+              <input type="checkbox" v-model="removable">
+              <button class="control" type="button" @click="removeOnClick" :disabled="!removable">
                 <span class="material-symbols-outlined"> delete </span>
               </button>
             </div>
@@ -65,30 +67,50 @@
         </td>
       </tr>
     </table>
+    <div v-show="isSelecting">
+      <ArtifactSetSelect :visible="true" :index="1" :artifact-set="artifact.setname"
+        :artifact-set-masters="artifactSetMasters" :cat_id="artifact.cat_id" @update:artifact-set="updateArtifactSet" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import _ from 'lodash';
 import { overwriteObject } from "@/common";
-import { TArtifact, 聖遺物サブ効果ARRAY, 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY } from "@/input";
-import { getArtifactIconUrl } from "@/master";
+import { ARTIFACT_SET_MASTER_DUMMY, TArtifact, 聖遺物サブ効果ARRAY, 聖遺物メイン効果_時の砂ARRAY, 聖遺物メイン効果_死の羽ARRAY, 聖遺物メイン効果_理の冠ARRAY, 聖遺物メイン効果_生の花ARRAY, 聖遺物メイン効果_空の杯ARRAY } from "@/input";
+import { ARTIFACT_SET_MASTER, TArtifactSetEntry, TArtifactSetKey, getArtifactIconUrl } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
+import ArtifactSetSelect from "./ArtifactSetSelect.vue";
 
 export default defineComponent({
   name: 'ArtifactItem',
   props: {
     artifact: { type: Object as PropType<TArtifact>, required: true },
     id: { type: Number },
-    controls: { type: Array as PropType<string[]> }
+    controls: { type: Array as PropType<string[]> },
+    initials: { type: Array as PropType<string[]> },
   },
-  emits: ['change:article'],
+  components: {
+    ArtifactSetSelect,
+  },
+  emits: ['update:artifact', 'remove:artifact'],
   setup(props, context) {
     const { displayName, displayStatValue } = CompositionFunction();
 
     const copiedArtifact = reactive(_.cloneDeep(props.artifact));
     const isEditing = ref(false);
+    const artifactSetMasters = reactive([ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY] as TArtifactSetEntry[]);
+    const isSelecting = ref(false);
+    const removable = ref(false);
+
+    if (props.initials) {
+      for (const initial of props.initials) {
+        if (initial === 'edit') {
+          isEditing.value = true;
+        }
+      }
+    }
 
     const artifactImgSrc = computed(() => {
       return getArtifactIconUrl(copiedArtifact.setname, copiedArtifact.cat_id);
@@ -117,8 +139,31 @@ export default defineComponent({
     });
 
     const onChange = () => {
-      context.emit('change:article', props.id, copiedArtifact);
+      context.emit('update:artifact', props.id, copiedArtifact);
     };
+
+    const artifactIconOnClick = () => {
+      if (isEditing.value) {
+        isSelecting.value = !isSelecting.value;
+      } else {
+        isSelecting.value = false;
+      }
+    };
+
+    const updateArtifactSet = (artifactSet: TArtifactSetKey) => {
+      copiedArtifact.setname = artifactSet;
+      const master = ARTIFACT_SET_MASTER[artifactSet];
+      copiedArtifact.rarity = master.レアリティ;
+      if ('artifact_list' in master) {
+        copiedArtifact.name = master.artifact_list[copiedArtifact.cat_id - 1];
+      }
+      isSelecting.value = false;
+      onChange();
+    };
+
+    const removeOnClick = () => {
+      context.emit('remove:artifact', props.id);
+    }
 
     watch(props, (newVal) => {
       overwriteObject(copiedArtifact, newVal.artifact);
@@ -129,6 +174,9 @@ export default defineComponent({
 
       copiedArtifact,
       isEditing,
+      artifactSetMasters,
+      isSelecting,
+      removable,
 
       artifactImgSrc,
       mainStatOptions,
@@ -136,6 +184,9 @@ export default defineComponent({
       subStatOptionDisabled,
 
       onChange,
+      artifactIconOnClick,
+      updateArtifactSet,
+      removeOnClick,
     }
   }
 });
@@ -213,6 +264,12 @@ input[type="number"] {
   border: none;
 }
 
+input[type="checkbox"] {
+  transform: scale(0.75);
+  padding: 0;
+  margin: 0;
+}
+
 table.edit-mainstat select {
   width: calc(100% - 2px);
 }
@@ -224,13 +281,16 @@ table.edit-mainstat input[type="number"] {
 img.artifact-icon {
   width: 7.2rem;
   height: 7.2rem;
+  border: 1px solid gray;
+  border-radius: 50%;
 }
 
 button.control {
   display: inline-block;
   width: calc(100% / 6);
-  padding: 1px;
-  margin: 1px;
+  padding: 0 1px;
+  padding-right: 5px;
+  margin: 0 1px;
   border: none;
   background-color: transparent;
   color: gray;
@@ -238,5 +298,17 @@ button.control {
 
 button.control span {
   font-size: 2.4rem;
+  color: blanchedalmond;
+}
+
+button.control:disabled span {
+  color: gray;
+}
+
+div.control-remove {
+  display: inline-block;
+  border: 1px solid gray;
+  padding: 0 3px 0 0;
+  border-radius: 3px;
 }
 </style>

@@ -8,6 +8,11 @@ textarea {
     padding: 2px 1px;
 }
 
+button[type="button"] {
+    padding-left: 3px;    
+    padding-right: 3px;    
+}
+
 .stat-value, .damage-value {
     font-size: 2.6rem;
 }
