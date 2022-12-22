@@ -274,32 +274,50 @@
 
       <div class="artifact-part-select" v-if="artifactInputModeTab == '2'">
         <div class="tab-switch part-select">
-          <input class="hidden" id="artifact-cat-tab-1" type="radio" value="1" v-model="artifactPartSelectTab">
+          <input class="hidden" id="artifact-cat-tab-1" type="radio" value="1" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
           <label for="artifact-cat-tab-1">
             {{ displayName('生の花') }}
           </label>
-          <input class="hidden" id="artifact-cat-tab-2" type="radio" value="2" v-model="artifactPartSelectTab">
+          <input class="hidden" id="artifact-cat-tab-2" type="radio" value="2" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
           <label for="artifact-cat-tab-2">
             {{ displayName('死の羽') }}
           </label>
-          <input class="hidden" id="artifact-cat-tab-3" type="radio" value="3" v-model="artifactPartSelectTab">
+          <input class="hidden" id="artifact-cat-tab-3" type="radio" value="3" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
           <label for="artifact-cat-tab-3">
             {{ displayName('時の砂') }}
           </label>
-          <input class="hidden" id="artifact-cat-tab-4" type="radio" value="4" v-model="artifactPartSelectTab">
+          <input class="hidden" id="artifact-cat-tab-4" type="radio" value="4" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
           <label for="artifact-cat-tab-4">
             {{ displayName('空の杯') }}
           </label>
-          <input class="hidden" id="artifact-cat-tab-5" type="radio" value="5" v-model="artifactPartSelectTab">
+          <input class="hidden" id="artifact-cat-tab-5" type="radio" value="5" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
           <label for="artifact-cat-tab-5">
             {{ displayName('理の冠') }}
           </label>
         </div>
-        <template v-for="(artifact, index) in artifactCatList(artifactPartSelectTab)" :key="index">
+        <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
           <ArtifactItem :artifact="artifact" />
         </template>
         <div>
-          実装方式考え中
+          <template v-if="artifactListCat(artifactCatTabSelected).length">
+            <button type="button" @click="artifactEquipOnClick">
+              {{ displayName('装備') }}
+            </button>
+            <button type="button" @click="artifactRemoveOnClick">
+              {{ displayName('解除') }}
+            </button>
+          </template>
+          <template v-else>
+            <button type="button" @click="artifactReplaceOnClick">
+              {{ displayName('変更') }}
+            </button>
+          </template>
+        </div>
+        <div v-if="isArtifactSelectListShow" class="artifact-select-list">
+          <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
+            <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['select']"
+              @select:artifact="selectArtifact" />
+          </template>
         </div>
       </div>
     </div>
@@ -327,17 +345,26 @@ import {
   聖遺物メイン効果_空の杯ARRAY,
   聖遺物優先するサブ効果ARRAY,
   makePrioritySubstatValueList,
+  TArtifact,
+  聖遺物ステータスTEMPLATE,
 } from "@/input";
 import {
   calculateArtifactStats,
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
 } from "@/calculate";
-import { GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
+import { ARTIFACT_SET_MASTER, GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { resizePinnedImage } from "@/gencalc_ocr";
 import { overwriteObject } from "@/common";
+
+type TArtifactWithId = {
+  id: number,
+  artifact: TArtifact,
+};
+
+var nextId = 1;
 
 export default defineComponent({
   name: 'ArtifactDetailInput',
@@ -357,6 +384,8 @@ export default defineComponent({
   setup(props, context) {
     const { displayName, targetValue, displayStatValue } = CompositionFunction();
 
+    const STORAGE_KEY = 'artifact_list';
+
     const artifactDetailInputRea = reactive(props.artifactDetailInput as TArtifactDetailInput);
 
     const mainstats = reactive(artifactDetailInputRea.聖遺物メイン効果);
@@ -372,14 +401,18 @@ export default defineComponent({
     const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
     const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
+    const artifactList = reactive(artifactDetailInputRea.artifact_list);
+
+    const artifactOwnArr = reactive([] as TArtifactWithId[]);
 
     const editableRef = ref(false);
     const gensenEnabledRef = ref(false);
     const gensenMasterList = GENSEN_MASTER_LIST;
     const gensenRef = ref(GENSEN_MASTER_LIST[2] as TGensen);
+    const isArtifactSelectListShow = ref(false);
 
     const artifactInputModeTab = ref('1');
-    const artifactPartSelectTab = ref(1);
+    const artifactCatTabSelected = ref(1);
 
     const upTotalCount = computed(() => {
       let work = 0;
@@ -397,9 +430,54 @@ export default defineComponent({
     const substatStep = (substat: string) =>
       ['HP', '攻撃力', '防御力', '元素熟知'].includes(substat) ? 1 : 0.1;
 
-    const artifactCatList = (cat_id: any) => {
-      const result = props.artifactDetailInput.artifact_list.filter(s => s.cat_id == Number(cat_id));
+    const artifactCatTabOnChange = () => {
+      isArtifactSelectListShow.value = false;
+    };
+
+    const artifactListCat = (cat_id: any) => {
+      const result = artifactList.filter(s => s.cat_id == Number(cat_id));
       return result;
+    };
+
+    const artifactEquipOnClick = () => {
+      isArtifactSelectListShow.value = true;
+    };
+
+    const artifactRemoveOnClick = () => {
+      const cat_id = artifactCatTabSelected.value;
+      const newArtifactList = artifactList.filter(s => s.cat_id != Number(cat_id));
+      artifactList.splice(0, artifactList.length, ...newArtifactList);
+    };
+
+    const artifactReplaceOnClick = () => {
+      isArtifactSelectListShow.value = true;
+    };
+
+    const selectArtifact = (id: number) => {
+      const selected = artifactOwnArr.filter(s => s.id == id);
+      if (selected.length) {
+        console.log(selected[0].artifact);
+      }
+      isArtifactSelectListShow.value = false;
+    };
+
+    const artifactOwnArrCatId = (cat_id: any) => {
+      const result = artifactOwnArr.filter(s => s.artifact.cat_id == Number(cat_id))
+      return result.sort((a, b) => {
+        if (a.artifact.setname != b.artifact.setname) {
+          const setNameArr = Object.keys(ARTIFACT_SET_MASTER);
+          const aIndex = setNameArr.indexOf(a.artifact.setname);
+          const bIndex = setNameArr.indexOf(b.artifact.setname);
+          return aIndex - bIndex;
+        }
+        if (a.artifact.mainStat != b.artifact.mainStat) {
+          const statNameArr = Object.keys(聖遺物ステータスTEMPLATE);
+          const aIndex = statNameArr.indexOf(a.artifact.mainStat);
+          const bIndex = statNameArr.indexOf(b.artifact.mainStat);
+          return aIndex - bIndex;
+        }
+        return 0;
+      });
     };
 
     /** 聖遺物ステータスを計算します（メイン効果） */
@@ -537,10 +615,19 @@ export default defineComponent({
       }
     };
 
+    const onLoad = () => {
+      if (STORAGE_KEY in localStorage) {
+        const value: any[] = JSON.parse(localStorage[STORAGE_KEY]);
+        const newArr = value.filter(s => 'setname' in s).map(s => ({ id: nextId++, artifact: s }));
+        artifactOwnArr.splice(0, artifactOwnArr.length, ...newArr);
+      }
+    };
+    onLoad();
+
     watch(props, (newVal, oldVal) => {
       if (!_.isEqual(newVal.artifactDetailInput.artifact_list, oldVal?.artifactDetailInput?.artifact_list)) {
         for (let i = 1; i <= 5; i++) {
-          artifactCatList(i);
+          artifactListCat(i);
         }
       }
     });
@@ -577,10 +664,17 @@ export default defineComponent({
       updateMainstats,
       updatePrioritySubstats,
 
-      artifactCatList,
+      artifactCatTabOnChange,
+      artifactListCat,
+      artifactEquipOnClick,
+      artifactRemoveOnClick,
+      artifactReplaceOnClick,
+      isArtifactSelectListShow,
+      artifactOwnArrCatId,
+      selectArtifact,
 
       artifactInputModeTab,
-      artifactPartSelectTab,
+      artifactCatTabSelected,
 
       loadArtifactStatsByOcr,
       isScanning,

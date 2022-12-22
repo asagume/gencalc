@@ -94,7 +94,7 @@ export default defineComponent({
   components: {
     ArtifactSetSelect,
   },
-  emits: ['update:artifact', 'remove:artifact'],
+  emits: ['update:artifact', 'remove:artifact', 'select:artifact'],
   setup(props, context) {
     const { displayName, displayStatValue } = CompositionFunction();
 

@@ -1,33 +1,33 @@
 <template>
   <div class="tab-switch part-select">
-    <input class="hidden" id="own-list-cat-tab-1" type="radio" value="1" v-model="artifactCatSelectTab"
+    <input class="hidden" id="own-list-cat-tab-1" type="radio" value="1" v-model="artifactCatTabSelected"
       @change="catOnChange">
     <label for="own-list-cat-tab-1">
       {{ displayName('生の花') }}
     </label>
-    <input class="hidden" id="own-list-cat-tab-2" type="radio" value="2" v-model="artifactCatSelectTab"
+    <input class="hidden" id="own-list-cat-tab-2" type="radio" value="2" v-model="artifactCatTabSelected"
       @change="catOnChange">
     <label for="own-list-cat-tab-2">
       {{ displayName('死の羽') }}
     </label>
-    <input class="hidden" id="own-list-cat-tab-3" type="radio" value="3" v-model="artifactCatSelectTab"
+    <input class="hidden" id="own-list-cat-tab-3" type="radio" value="3" v-model="artifactCatTabSelected"
       @change="catOnChange">
     <label for="own-list-cat-tab-3">
       {{ displayName('時の砂') }}
     </label>
-    <input class="hidden" id="own-list-cat-tab-4" type="radio" value="4" v-model="artifactCatSelectTab"
+    <input class="hidden" id="own-list-cat-tab-4" type="radio" value="4" v-model="artifactCatTabSelected"
       @change="catOnChange">
     <label for="own-list-cat-tab-4">
       {{ displayName('空の杯') }}
     </label>
-    <input class="hidden" id="own-list-cat-tab-5" type="radio" value="5" v-model="artifactCatSelectTab"
+    <input class="hidden" id="own-list-cat-tab-5" type="radio" value="5" v-model="artifactCatTabSelected"
       @change="catOnChange">
     <label for="own-list-cat-tab-5">
       {{ displayName('理の冠') }}
     </label>
   </div>
   <div class="artifact-list">
-    <template v-for="item in getArtifactList(artifactCatSelectTab)" :key="item.id">
+    <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
       <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['edit', 'remove']"
         @update:article="updateArtifact" @remove:artifact="removeArtifact" />
     </template>
@@ -84,16 +84,16 @@ export default defineComponent({
 
     const STORAGE_KEY = 'artifact_list';
 
-    const artifactCatSelectTab = ref(1);
-    const artifactList = reactive([] as TArtifactWithId[]);
+    const artifactCatTabSelected = ref(1);
+    const artifactOwnArr = reactive([] as TArtifactWithId[]);
     const newArtifact = reactive(_.cloneDeep(ARTIFACT_TEMPLATE));
 
     const isAdding = ref(false);
     const changed = ref(false);
     const savable = ref(false);
 
-    const getArtifactList = (index: any) => {
-      const result = artifactList.filter(s => s.artifact.cat_id == Number(index))
+    const artifactOwnArrCatId = (index: any) => {
+      const result = artifactOwnArr.filter(s => s.artifact.cat_id == Number(index))
       return result.sort((a, b) => {
         if (a.artifact.setname != b.artifact.setname) {
           const setNameArr = Object.keys(ARTIFACT_SET_MASTER);
@@ -121,7 +121,7 @@ export default defineComponent({
     ];
 
     const catOnChange = () => {
-      newArtifact.cat_id = artifactCatSelectTab.value;
+      newArtifact.cat_id = artifactCatTabSelected.value;
       newArtifact.mainStat = String(CAT_MAINSTAT[newArtifact.cat_id][0]);
       newArtifact.mainStatValue = Number(CAT_MAINSTAT[newArtifact.cat_id][1]);
     };
@@ -132,9 +132,9 @@ export default defineComponent({
         return;
       }
       let index = 0;
-      for (; index < artifactList.length; index++) {
-        if (artifactList[index].id == id) {
-          artifactList[index].artifact = artifact;
+      for (; index < artifactOwnArr.length; index++) {
+        if (artifactOwnArr[index].id == id) {
+          artifactOwnArr[index].artifact = artifact;
           break;
         }
       }
@@ -143,9 +143,9 @@ export default defineComponent({
 
     const removeArtifact = (id: number) => {
       let index = 0;
-      for (; index < artifactList.length; index++) {
-        if (artifactList[index].id == id) {
-          artifactList.splice(index, 1);
+      for (; index < artifactOwnArr.length; index++) {
+        if (artifactOwnArr[index].id == id) {
+          artifactOwnArr.splice(index, 1);
           break;
         }
       }
@@ -171,12 +171,12 @@ export default defineComponent({
         artifact: _.cloneDeep(newArtifact),
       };
       console.log(newEntry);
-      artifactList.push(newEntry);
+      artifactOwnArr.push(newEntry);
       changed.value = true;
     };
 
     const save = () => {
-      const work = artifactList.map(s => s.artifact);
+      const work = artifactOwnArr.map(s => s.artifact);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(work));
       changed.value = false;
       savable.value = false;
@@ -186,18 +186,18 @@ export default defineComponent({
       if (STORAGE_KEY in localStorage) {
         const value: any[] = JSON.parse(localStorage[STORAGE_KEY]);
         const newList = value.filter(s => 'setname' in s).map(s => ({ id: nextId++, artifact: s }));
-        artifactList.splice(0, artifactList.length, ...newList);
+        artifactOwnArr.splice(0, artifactOwnArr.length, ...newList);
       }
-      console.log(artifactList);
+      console.log(artifactOwnArr);
     };
     onLoad();
 
     return {
       displayName, displayStatValue, targetValue,
 
-      artifactCatSelectTab,
+      artifactCatTabSelected,
       newArtifact,
-      getArtifactList,
+      artifactOwnArrCatId,
 
       catOnChange,
       updateArtifact,
