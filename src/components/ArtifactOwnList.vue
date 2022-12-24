@@ -1,29 +1,24 @@
 <template>
-  <div class="tab-switch part-select">
-    <input class="hidden" id="own-list-cat-tab-1" type="radio" value="1" v-model="artifactCatTabSelected"
-      @change="catOnChange">
-    <label for="own-list-cat-tab-1">
-      {{ displayName('生の花') }}
+  <div class="cat-select">
+    <label>
+      <input class="hidden" type="radio" value="1" v-model="artifactCatTabSelected" @change="catOnChange">
+      <img src="images/flower_of_life.png" :alt="displayName('生の花')">
     </label>
-    <input class="hidden" id="own-list-cat-tab-2" type="radio" value="2" v-model="artifactCatTabSelected"
-      @change="catOnChange">
-    <label for="own-list-cat-tab-2">
-      {{ displayName('死の羽') }}
+    <label>
+      <input class="hidden" type="radio" value="2" v-model="artifactCatTabSelected" @change="catOnChange">
+      <img src="images/plume_of_death.png" :alt="displayName('死の羽')">
     </label>
-    <input class="hidden" id="own-list-cat-tab-3" type="radio" value="3" v-model="artifactCatTabSelected"
-      @change="catOnChange">
-    <label for="own-list-cat-tab-3">
-      {{ displayName('時の砂') }}
+    <label>
+      <input class="hidden" type="radio" value="3" v-model="artifactCatTabSelected" @change="catOnChange">
+      <img src="images/sands_of_eon.png" :alt="displayName('時の砂')">
     </label>
-    <input class="hidden" id="own-list-cat-tab-4" type="radio" value="4" v-model="artifactCatTabSelected"
-      @change="catOnChange">
-    <label for="own-list-cat-tab-4">
-      {{ displayName('空の杯') }}
+    <label>
+      <input class="hidden" type="radio" value="4" v-model="artifactCatTabSelected" @change="catOnChange">
+      <img src="images/goblet_of_eonothem.png" :alt="displayName('空の杯')">
     </label>
-    <input class="hidden" id="own-list-cat-tab-5" type="radio" value="5" v-model="artifactCatTabSelected"
-      @change="catOnChange">
-    <label for="own-list-cat-tab-5">
-      {{ displayName('理の冠') }}
+    <label>
+      <input class="hidden" type="radio" value="5" v-model="artifactCatTabSelected" @change="catOnChange">
+      <img src="images/circlet_of_logos.png" :alt="displayName('理の冠')">
     </label>
   </div>
   <div class="artifact-list">
@@ -215,10 +210,25 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.tab-switch.part-select label {
-  width: calc(100% / 5 - 20px);
-  max-width: 16rem;
-  background: linear-gradient(to top, #55290b, black);
+.cat-select {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.cat-select label {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.cat-select img {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+}
+
+:checked+img {
+  background-color: rgb(156, 140, 49);
 }
 
 .artifact-list {

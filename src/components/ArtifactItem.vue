@@ -8,36 +8,30 @@
               @click="artifactIconOnClick()">
             <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
           </div>
-          <table class="edit-mainstat" v-if="isEditing">
-            <tr>
-              <td style="width: 60%">
-                <select v-model="copiedArtifact.mainStat" @change="onChange">
-                  <option v-for="option in mainStatOptions" :key="option" :value="option">
-                    {{ displayName(option) }}
-                  </option>
-                </select>
-              </td>
-              <td>
-                <input type="number" v-model="copiedArtifact.mainStatValue" min="0" @change="onChange">
-              </td>
-            </tr>
-          </table>
-          <div v-else>
+          <div class="edit-mainstat" v-if="isEditing">
+            <select v-model="copiedArtifact.mainStat" @change="onChange">
+              <option v-for="option in mainStatOptions" :key="option" :value="option">
+                {{ displayName(option) }}
+              </option>
+            </select>
+            <input type="number" v-model="copiedArtifact.mainStatValue" min="0" @change="onChange">
+          </div>
+          <div v-else class="mainstat" style="margin: 1px 0">
             {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(copiedArtifact.mainStat,
                 copiedArtifact.mainStatValue)
             }}
           </div>
-          <div style="margin-top: 5px">
-            <button v-show="controls?.includes('edit')" class="control" type="button" @click="isEditing = !isEditing">
+          <div>
+            <button v-show="controls?.includes('edit')" class="control" type="button" @click="isEditing = !isEditing" tabindex="-1">
               <span v-if="isEditing" class="material-symbols-outlined"> edit_off </span>
               <span v-else class="material-symbols-outlined"> edit </span>
             </button>
-            <button v-show="controls?.includes('change')" class="control" type="button">
+            <button v-show="controls?.includes('change')" class="control" type="button" tabindex="-1">
               <span class="material-symbols-outlined"> change_circle </span>
             </button>
             <div class="control-remove" v-if="controls?.includes('remove')">
-              <input type="checkbox" v-model="removable">
-              <button class="control" type="button" @click="removeOnClick" :disabled="!removable">
+              <input type="checkbox" v-model="removable" tabindex="-1">
+              <button class="control" type="button" @click="removeOnClick" :disabled="!removable" tabindex="-1">
                 <span class="material-symbols-outlined"> delete </span>
               </button>
             </div>
@@ -195,9 +189,10 @@ export default defineComponent({
 <style scoped>
 div.artifact {
   display: inline-block;
-  width: 45%;
-  min-width: 60rem;
+  width: calc(25% - 10px);
+  min-width: 44rem;
   margin: 2px;
+  font-size: 1.8rem;
 }
 
 table.artifact {
@@ -213,6 +208,10 @@ table.artifact thead th {
   border-bottom: 2px solid whitesmoke;
 }
 
+div.mainstat {
+  margin: 1px 0;
+}
+
 table.artifact-substat {
   width: 100%;
   border-spacing: 0;
@@ -221,15 +220,15 @@ table.artifact-substat {
 table.artifact tr td {
   vertical-align: top;
   border-bottom: 2px solid whitesmoke;
-  padding: 3px;
+  padding: 2px 1px;
   white-space: nowrap;
 }
 
 table.artifact-substat tr td {
   vertical-align: middle;
   border-bottom: 1px solid gray;
-  padding: 0px 3px;
-  line-height: 3.4rem;
+  padding: 0px 1px;
+  line-height: 2.8rem;
   text-align: left;
 }
 
@@ -241,37 +240,34 @@ table.artifact-substat td.right {
   text-align: right;
 }
 
-table.edit-mainstat {
-  width: 100%;
-  table-layout: fixed;
-  border-spacing: 0;
-}
-
-table.edit-mainstat tr td {
-  border: none;
-}
-
 select {
-  margin: auto;
+  width: 100%;
+  margin: auto 1px;
   padding: 0 1px;
   border: none;
+  border-radius: 2px;
 }
 
 input[type="number"] {
-  width: 10rem;
+  width: 9rem;
   margin: auto;
   padding: 0 1px;
   border: none;
 }
 
 input[type="checkbox"] {
-  transform: scale(0.75);
-  padding: 0;
+  display: inline-block;
+  transform: scale(0.6);
+  padding: 5px 0 0 0;
   margin: 0;
 }
 
-table.edit-mainstat select {
-  width: calc(100% - 2px);
+div.edit-mainstat {
+  margin: 1px 0;
+}
+
+div.edit-mainstat select {
+  width: calc(100% - 9rem - 2px);
 }
 
 table.edit-mainstat input[type="number"] {
@@ -279,8 +275,8 @@ table.edit-mainstat input[type="number"] {
 }
 
 img.artifact-icon {
-  width: 7.2rem;
-  height: 7.2rem;
+  width: calc(6rem - 2px);
+  height: calc(6rem - 2px);
   border: 1px solid gray;
   border-radius: 50%;
 }
@@ -290,14 +286,14 @@ button.control {
   width: calc(100% / 6);
   padding: 0 1px;
   padding-right: 5px;
-  margin: 0 1px;
+  margin: 0;
   border: none;
   background-color: transparent;
   color: gray;
 }
 
 button.control span {
-  font-size: 2.4rem;
+  font-size: 2rem;
   color: blanchedalmond;
 }
 
@@ -308,7 +304,7 @@ button.control:disabled span {
 div.control-remove {
   display: inline-block;
   border: 1px solid gray;
-  padding: 0 3px 0 0;
-  border-radius: 3px;
+  padding: 0 2px 0 0;
+  border-radius: 2px;
 }
 </style>

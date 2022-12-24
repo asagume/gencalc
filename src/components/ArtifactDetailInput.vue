@@ -272,27 +272,32 @@
         </table>
       </fieldset>
 
-      <div class="artifact-part-select" v-if="artifactInputModeTab == '2'">
-        <div class="tab-switch part-select">
-          <input class="hidden" id="artifact-cat-tab-1" type="radio" value="1" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
-          <label for="artifact-cat-tab-1">
-            {{ displayName('生の花') }}
+      <div class="artifact-cat-select" v-if="artifactInputModeTab == '2'">
+        <div class="cat-select">
+          <label>
+            <input class="hidden" type="radio" value="1" v-model="artifactCatTabSelected"
+              @change="artifactCatTabOnChange">
+            <img src="images/flower_of_life.png" :alt="displayName('生の花')">
           </label>
-          <input class="hidden" id="artifact-cat-tab-2" type="radio" value="2" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
-          <label for="artifact-cat-tab-2">
-            {{ displayName('死の羽') }}
+          <label>
+            <input class="hidden" type="radio" value="2" v-model="artifactCatTabSelected"
+              @change="artifactCatTabOnChange">
+            <img src="images/plume_of_death.png" :alt="displayName('死の羽')">
           </label>
-          <input class="hidden" id="artifact-cat-tab-3" type="radio" value="3" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
-          <label for="artifact-cat-tab-3">
-            {{ displayName('時の砂') }}
+          <label>
+            <input class="hidden" type="radio" value="3" v-model="artifactCatTabSelected"
+              @change="artifactCatTabOnChange">
+            <img src="images/sands_of_eon.png" :alt="displayName('時の砂')">
           </label>
-          <input class="hidden" id="artifact-cat-tab-4" type="radio" value="4" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
-          <label for="artifact-cat-tab-4">
-            {{ displayName('空の杯') }}
+          <label>
+            <input class="hidden" type="radio" value="4" v-model="artifactCatTabSelected"
+              @change="artifactCatTabOnChange">
+            <img src="images/goblet_of_eonothem.png" :alt="displayName('空の杯')">
           </label>
-          <input class="hidden" id="artifact-cat-tab-5" type="radio" value="5" v-model="artifactCatTabSelected" @change="artifactCatTabOnChange">
-          <label for="artifact-cat-tab-5">
-            {{ displayName('理の冠') }}
+          <label>
+            <input class="hidden" type="radio" value="5" v-model="artifactCatTabSelected"
+              @change="artifactCatTabOnChange">
+            <img src="images/circlet_of_logos.png" :alt="displayName('理の冠')">
           </label>
         </div>
         <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
@@ -786,17 +791,28 @@ label.button {
   color: blanchedalmond;
 }
 
-.tab-switch.part-select label {
-  width: calc(100% / 5 - 20px);
-  background: linear-gradient(to top, #55290b, black);
-}
-
 .sub-input {
   margin-bottom: 10px;
 }
 
-.artifact-part-select {
+.cat-select {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.cat-select label {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.cat-select img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+:checked+img {
+  background-color: rgb(156, 140, 49);
 }
 </style>
