@@ -9,8 +9,8 @@ textarea {
 }
 
 button[type="button"] {
-    padding-left: 3px;    
-    padding-right: 3px;    
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .stat-value, .damage-value {
@@ -86,6 +86,11 @@ button {
     vertical-align: middle;
     margin-left: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+button:disabled {
+    color: black;
+    border-color: black;
 }
 
 /* HoYoWikiの色

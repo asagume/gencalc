@@ -406,8 +406,8 @@ export const ARTIFACT_TEMPLATE = {
     rarity: 5,
     setname: 'NONE',
     cat_id: 1,
-    mainStat: 'HP',
-    mainStatValue: 4780,
+    mainStat: '',
+    mainStatValue: 0,
     subStats: [
         { name: 'HP', value: 0 },
         { name: '攻撃力', value: 0 },
@@ -988,6 +988,8 @@ export function makeSavedata(characterInput: TCharacterInput, artifactDetailInpu
         resultObj[entry.name] = conditionInput.conditionValues[entry.name];
     }
 
+    resultObj['artifact_list'] =  artifactDetailInput.artifact_list;
+    
     return resultObj;
 }
 

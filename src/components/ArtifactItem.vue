@@ -2,7 +2,23 @@
   <div class="artifact">
     <table class="artifact">
       <tr>
-        <td style="width: 45%">
+        <td class="left-column" style="width: 45%;">
+          <div class="control">
+            <template v-if="controls?.includes('select')">
+              <button type="button" @click="selectOnClick()">
+                <span v-if="selected" class="material-symbols-outlined"> select_check_box </span>
+                <span v-else class="material-symbols-outlined"> check_box_outline_blank </span>
+              </button>
+            </template>
+            <template v-else>
+              <template v-if="controls?.includes('edit')">
+                <button type="button" @click="isEditing = !isEditing">
+                  <span v-if="isEditing" class="material-symbols-outlined"> edit_off </span>
+                  <span v-else class="material-symbols-outlined"> edit </span>
+                </button>
+              </template>
+            </template>
+          </div>
           <div class="with-tooltip">
             <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)"
               @click="artifactIconOnClick()">
@@ -20,21 +36,6 @@
             {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(copiedArtifact.mainStat,
                 copiedArtifact.mainStatValue)
             }}
-          </div>
-          <div>
-            <button v-show="controls?.includes('edit')" class="control" type="button" @click="isEditing = !isEditing" tabindex="-1">
-              <span v-if="isEditing" class="material-symbols-outlined"> edit_off </span>
-              <span v-else class="material-symbols-outlined"> edit </span>
-            </button>
-            <button v-show="controls?.includes('change')" class="control" type="button" tabindex="-1">
-              <span class="material-symbols-outlined"> change_circle </span>
-            </button>
-            <div class="control-remove" v-if="controls?.includes('remove')">
-              <input type="checkbox" v-model="removable" tabindex="-1">
-              <button class="control" type="button" @click="removeOnClick" :disabled="!removable" tabindex="-1">
-                <span class="material-symbols-outlined"> delete </span>
-              </button>
-            </div>
           </div>
         </td>
         <td style="width: 55%">
@@ -84,6 +85,7 @@ export default defineComponent({
     id: { type: Number },
     controls: { type: Array as PropType<string[]> },
     initials: { type: Array as PropType<string[]> },
+    selected: { type: Boolean },
   },
   components: {
     ArtifactSetSelect,
@@ -157,7 +159,11 @@ export default defineComponent({
 
     const removeOnClick = () => {
       context.emit('remove:artifact', props.id);
-    }
+    };
+
+    const selectOnClick = () => {
+      context.emit('select:artifact', props.id);
+    };
 
     watch(props, (newVal) => {
       overwriteObject(copiedArtifact, newVal.artifact);
@@ -181,6 +187,7 @@ export default defineComponent({
       artifactIconOnClick,
       updateArtifactSet,
       removeOnClick,
+      selectOnClick,
     }
   }
 });
@@ -203,9 +210,24 @@ table.artifact {
   border-spacing: 0;
 }
 
-table.artifact thead th {
-  color: orange;
-  border-bottom: 2px solid whitesmoke;
+table.artifact td.left-column {
+  position: relative;
+}
+
+table.artifact td.left-column div.control {
+  position: absolute;
+  left: -5px;
+  bottom: -5px;
+}
+
+table.artifact td.left-column div.control button {
+  background-color: transparent;
+  border: none;
+}
+
+table.artifact td.left-column div.control span {
+  font-size: 2.4rem;
+  color: blanchedalmond;
 }
 
 div.mainstat {
@@ -255,13 +277,6 @@ input[type="number"] {
   border: none;
 }
 
-input[type="checkbox"] {
-  display: inline-block;
-  transform: scale(0.6);
-  padding: 5px 0 0 0;
-  margin: 0;
-}
-
 div.edit-mainstat {
   margin: 1px 0;
 }
@@ -279,32 +294,5 @@ img.artifact-icon {
   height: calc(6rem - 2px);
   border: 1px solid gray;
   border-radius: 50%;
-}
-
-button.control {
-  display: inline-block;
-  width: calc(100% / 6);
-  padding: 0 1px;
-  padding-right: 5px;
-  margin: 0;
-  border: none;
-  background-color: transparent;
-  color: gray;
-}
-
-button.control span {
-  font-size: 2rem;
-  color: blanchedalmond;
-}
-
-button.control:disabled span {
-  color: gray;
-}
-
-div.control-remove {
-  display: inline-block;
-  border: 1px solid gray;
-  padding: 0 2px 0 0;
-  border-radius: 2px;
 }
 </style>

@@ -23,21 +23,29 @@
   </div>
   <div class="artifact-list">
     <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
-      <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['edit', 'remove']"
-        @update:article="updateArtifact" @remove:artifact="removeArtifact" />
+      <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="artifactControls" :selected="item.selected"
+        @update:article="updateArtifact" @remove:artifact="removeArtifact" @select:artifact="selectArtifact" />
     </template>
   </div>
   <div class="new-artifact">
-    <template v-if="!isAdding">
-      <button type="button" @click="isAdding = true"> {{ displayName('新規聖遺物') }}</button>
+    <!-- 削除 -->
+    <template v-if="controlMode == 'remove'">
+      <button type="button" :disabled="selectCount == 0" @click="controlMode = ''; removeExecOnClick()">
+        {{ displayName('削除実行') }}
+      </button>
+      <button type="button" @click="controlMode = ''; selectCancelOnClick()"> {{ displayName('キャンセル') }} </button>
     </template>
-    <template v-else>
+    <template v-if="controlMode == 'add'">
       <ArtifactItem :artifact="newArtifact" :id="0" :controls="['edit']" :initials="['edit']"
         @update:artifact="updateArtifact" />
       <div>
-        <button type="button" @click="add" :disabled="!addable"> {{ displayName('追加する') }}</button>
-        <button type="button" @click="isAdding = false"> {{ displayName('閉じる') }}</button>
+        <button type="button" @click="add" :disabled="!addable"> {{ displayName('聖遺物追加') }} </button>
+        <button type="button" @click="controlMode = ''"> {{ displayName('閉じる') }} </button>
       </div>
+    </template>
+    <template v-if="!controlMode">
+      <button type="button" @click="controlMode = 'remove'; selectOnClick()"> {{ displayName('削除') }} </button>
+      <button type="button" @click="controlMode = 'add'"> {{ displayName('新規聖遺物') }} </button>
     </template>
   </div>
   <div style="margin-top: 10px">
@@ -65,6 +73,7 @@ import { overwriteObject } from '@/common';
 type TArtifactWithId = {
   id: number,
   artifact: TArtifact,
+  selected: boolean,
 };
 
 var nextId = 1;
@@ -82,8 +91,9 @@ export default defineComponent({
     const artifactCatTabSelected = ref(1);
     const artifactOwnArr = reactive([] as TArtifactWithId[]);
     const newArtifact = reactive(_.cloneDeep(ARTIFACT_TEMPLATE));
+    const artifactControls = reactive(['edit'] as string[]);
+    const controlMode = ref('' as string);
 
-    const isAdding = ref(false);
     const changed = ref(false);
     const savable = ref(false);
 
@@ -114,6 +124,30 @@ export default defineComponent({
       ['炎元素ダメージバフ', 46.6],
       ['会心率', 31.1],
     ];
+
+    const selectOnClick = () => {
+      const control = 'select';
+      if (!artifactControls.includes(control)) {
+        artifactControls.push(control);
+      }
+    };
+
+    const selectCancelOnClick = () => {
+      const control = 'select';
+      artifactControls.splice(0, artifactControls.length, ...artifactControls.filter(s => s != control));
+      artifactOwnArr.forEach(e => {
+        e.selected = false;
+      });
+    };
+
+    const removeExecOnClick = () => {
+      const newArtifactOwnArr = artifactOwnArr.filter(s => !s.selected);
+      artifactOwnArr.splice(0, artifactOwnArr.length, ...newArtifactOwnArr);
+    };
+
+    const selectCount = computed(() => {
+      return artifactOwnArr.filter(s => s.selected).length;
+    });
 
     const catOnChange = () => {
       newArtifact.cat_id = artifactCatTabSelected.value;
@@ -146,6 +180,17 @@ export default defineComponent({
       }
     };
 
+    const selectArtifact = (id: number) => {
+      console.log(id);
+      let index = 0;
+      for (; index < artifactOwnArr.length; index++) {
+        if (artifactOwnArr[index].id == id) {
+          artifactOwnArr[index].selected = !artifactOwnArr[index].selected;
+          break;
+        }
+      }
+    };
+
     const addable = computed(() => {
       if (!newArtifact.name) return false;
       if (!newArtifact.rarity) return false;
@@ -164,6 +209,7 @@ export default defineComponent({
       const newEntry = {
         id: nextId++,
         artifact: _.cloneDeep(newArtifact),
+        selected: false,
       };
       console.log(newEntry);
       artifactOwnArr.push(newEntry);
@@ -180,7 +226,9 @@ export default defineComponent({
     const onLoad = () => {
       if (STORAGE_KEY in localStorage) {
         const value: any[] = JSON.parse(localStorage[STORAGE_KEY]);
-        const newList = value.filter(s => 'setname' in s).map(s => ({ id: nextId++, artifact: s }));
+        const newList = value.filter(s => 'setname' in s).map(s => ({
+          id: nextId++, artifact: s, selected: false,
+        }));
         artifactOwnArr.splice(0, artifactOwnArr.length, ...newList);
       }
       console.log(artifactOwnArr);
@@ -190,16 +238,22 @@ export default defineComponent({
     return {
       displayName, displayStatValue, targetValue,
 
+      artifactControls,
       artifactCatTabSelected,
       newArtifact,
       artifactOwnArrCatId,
 
+      selectOnClick,
+      selectCancelOnClick,
+      removeExecOnClick,
+      selectCount,
+
       catOnChange,
       updateArtifact,
       removeArtifact,
+      selectArtifact,
 
-      isAdding,
-      addable,
+      controlMode, addable,
       add,
       changed,
       savable,

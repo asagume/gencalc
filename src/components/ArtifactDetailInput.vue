@@ -302,22 +302,20 @@
         </div>
         <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
           <ArtifactItem :artifact="artifact" />
-        </template>
-        <div>
-          <template v-if="artifactListCat(artifactCatTabSelected).length">
+          <div>
             <button type="button" @click="artifactEquipOnClick">
-              {{ displayName('装備') }}
-            </button>
-            <button type="button" @click="artifactRemoveOnClick">
-              {{ displayName('解除') }}
-            </button>
-          </template>
-          <template v-else>
-            <button type="button" @click="artifactReplaceOnClick">
               {{ displayName('変更') }}
             </button>
-          </template>
-        </div>
+            <button v-if="artifact.name" type="button" @click="artifactRemoveOnClick">
+              {{ displayName('解除') }}
+            </button>
+          </div>
+        </template>
+        <template v-if="artifactListCat(artifactCatTabSelected).length == 0">
+          <button type="button" @click="artifactReplaceOnClick">
+            {{ displayName('装備') }}
+          </button>
+        </template>
         <div v-if="isArtifactSelectListShow" class="artifact-select-list">
           <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
             <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['select']"
@@ -452,6 +450,7 @@ export default defineComponent({
       const cat_id = artifactCatTabSelected.value;
       const newArtifactList = artifactList.filter(s => s.cat_id != Number(cat_id));
       artifactList.splice(0, artifactList.length, ...newArtifactList);
+      context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
     const artifactReplaceOnClick = () => {
@@ -460,8 +459,19 @@ export default defineComponent({
 
     const selectArtifact = (id: number) => {
       const selected = artifactOwnArr.filter(s => s.id == id);
-      if (selected.length) {
-        console.log(selected[0].artifact);
+      if (selected.length > 0) {
+        const exists = artifactList.filter(s => s.cat_id == artifactCatTabSelected.value).length;
+        if (exists) {
+          for (let i = 0; i < artifactList.length; i++) {
+            if (artifactList[i].cat_id == artifactCatTabSelected.value) {
+              artifactList.splice(i, 1, _.cloneDeep(selected[0].artifact));
+              break;
+            }
+          }
+        } else {
+          artifactList.push(_.cloneDeep(selected[0].artifact));
+        }
+        context.emit('update:artifact-detail', artifactDetailInputRea);
       }
       isArtifactSelectListShow.value = false;
     };
@@ -477,8 +487,8 @@ export default defineComponent({
         }
         if (a.artifact.mainStat != b.artifact.mainStat) {
           const statNameArr = Object.keys(聖遺物ステータスTEMPLATE);
-          const aIndex = statNameArr.indexOf(a.artifact.mainStat);
-          const bIndex = statNameArr.indexOf(b.artifact.mainStat);
+          const aIndex = a.artifact.mainStat ? statNameArr.indexOf(a.artifact.mainStat) : -1;
+          const bIndex = b.artifact.mainStat ? statNameArr.indexOf(b.artifact.mainStat) : -1;
           return aIndex - bIndex;
         }
         return 0;
