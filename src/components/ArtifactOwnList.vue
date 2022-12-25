@@ -25,7 +25,7 @@
   <div class="artifact-list">
     <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
       <ArtifactItem :artifact="item.artifact" :id="item.id" :control="artifactControl" :selected="item.selected"
-        @update:article="updateArtifact" @select:artifact="selectArtifact" />
+        @update:artifact="updateArtifact" @select:artifact="selectArtifact" />
     </template>
   </div>
 
