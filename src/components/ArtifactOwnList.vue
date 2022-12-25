@@ -21,32 +21,48 @@
       <img src="images/circlet_of_logos.png" :alt="displayName('理の冠')">
     </label>
   </div>
+
   <div class="artifact-list">
     <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
-      <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="artifactControls" :selected="item.selected"
-        @update:article="updateArtifact" @remove:artifact="removeArtifact" @select:artifact="selectArtifact" />
+      <ArtifactItem :artifact="item.artifact" :id="item.id" :control="artifactControl" :selected="item.selected"
+        @update:article="updateArtifact" @select:artifact="selectArtifact" />
     </template>
   </div>
-  <div class="new-artifact" style="margin-top: 10px">
+
+  <div style="margin-top: 10px">
+    <!-- 通常モード -->
+    <template v-if="!controlMode">
+      <button type="button" @click="removeOnClick">
+        {{ displayName('削除') }}
+      </button>
+      <button type="button" @click="newArtifactOnClick">
+        {{ displayName('新規聖遺物') }}
+      </button>
+    </template>
+    <!-- 削除モード -->
     <template v-if="controlMode == 'remove'">
-      <button type="button" :disabled="selectCount == 0" @click="controlMode = ''; removeExecOnClick()">
+      <button type="button" :disabled="selectCount == 0" @click="removeExecOnClick">
         {{ displayName('削除実行') }}
       </button>
-      <button type="button" @click="controlMode = ''; selectCancelOnClick()"> {{ displayName('キャンセル') }} </button>
+      <button type="button" @click="removeModeEndProc">
+        {{ displayName('キャンセル') }}
+      </button>
     </template>
-    <template v-if="controlMode == 'add'">
-      <ArtifactItem :artifact="newArtifact" :id="0" :controls="['edit']" :initials="['edit']"
+    <!-- 新規聖遺物モード -->
+    <template v-if="controlMode == 'new-artifact'">
+      <ArtifactItem :artifact="newArtifact" :id="0" control="editable" :initial="true"
         @update:artifact="updateArtifact" />
       <div>
-        <button type="button" @click="add" :disabled="!addable"> {{ displayName('聖遺物追加') }} </button>
-        <button type="button" @click="controlMode = ''"> {{ displayName('キャンセル') }} </button>
+        <button type="button" @click="newArtifactAddOnClick" :disabled="!addable">
+          {{ displayName('聖遺物追加') }}
+        </button>
+        <button type="button" @click="newArtifactModeEndProc">
+          {{ displayName('キャンセル') }}
+        </button>
       </div>
     </template>
-    <template v-if="!controlMode">
-      <button type="button" @click="controlMode = 'remove'; selectOnClick()"> {{ displayName('削除') }} </button>
-      <button type="button" @click="controlMode = 'add'"> {{ displayName('新規聖遺物') }} </button>
-    </template>
   </div>
+
   <div style="margin-top: 10px">
     <label>
       <input type="checkbox" v-model="savable" :disabled="!changed" />
@@ -90,11 +106,29 @@ export default defineComponent({
     const artifactCatTabSelected = ref(1);
     const artifactOwnArr = reactive([] as TArtifactWithId[]);
     const newArtifact = reactive(_.cloneDeep(ARTIFACT_TEMPLATE));
-    const artifactControls = reactive(['edit'] as string[]);
+    const artifactControl = ref('editable');
     const controlMode = ref('' as string);
 
     const changed = ref(false);
     const savable = ref(false);
+
+    const selectCount = computed(() => {
+      return artifactOwnArr.filter(s => s.selected).length;
+    });
+
+    const addable = computed(() => {
+      if (!newArtifact.name) return false;
+      if (!newArtifact.rarity) return false;
+      if (!newArtifact.setname) return false;
+      if (!newArtifact.cat_id) return false;
+      if (!newArtifact.mainStat) return false;
+      if (!newArtifact.mainStatValue) return false;
+      for (const subStat of newArtifact.subStats) {
+        if (!subStat.name) return false;
+        if (!subStat.value) return false;
+      }
+      return artifactOwnArr.filter(s => _.isEqual(s.artifact, newArtifact)).length == 0;
+    });
 
     const artifactOwnArrCatId = (index: any) => {
       const result = artifactOwnArr.filter(s => s.artifact.cat_id == Number(index))
@@ -124,38 +158,81 @@ export default defineComponent({
       ['会心率', 31.1],
     ];
 
-    const selectOnClick = () => {
-      const control = 'select';
-      artifactControls.push(control);
-      if (!artifactControls.includes(control)) {
-        artifactControls.push(control);
-      }
-      artifactControls.splice(0, artifactControls.length, ...artifactControls.filter(s => s != 'edit'));
-    };
-
-    const selectCancelOnClick = () => {
-      const control = 'select';
-      artifactControls.splice(0, artifactControls.length, ...artifactControls.filter(s => s != control));
-      artifactOwnArr.forEach(e => {
-        e.selected = false;
-      });
-    };
-
-    const removeExecOnClick = () => {
-      const newArtifactOwnArr = artifactOwnArr.filter(s => !s.selected);
-      artifactOwnArr.splice(0, artifactOwnArr.length, ...newArtifactOwnArr);
-    };
-
-    const selectCount = computed(() => {
-      return artifactOwnArr.filter(s => s.selected).length;
-    });
-
+    /**
+     * 表示部位変更イベント.
+     */
     const catOnChange = () => {
+      removeModeEndProc();
+      newArtifactModeEndProc();
       newArtifact.cat_id = Number(artifactCatTabSelected.value);
       newArtifact.mainStat = String(CAT_MAINSTAT[newArtifact.cat_id][0]);
       newArtifact.mainStatValue = Number(CAT_MAINSTAT[newArtifact.cat_id][1]);
     };
 
+    /**
+     * 削除ボタンクリックイベント
+     */
+    const removeOnClick = () => {
+      controlMode.value = 'remove';
+      artifactControl.value = 'selectable';
+    };
+
+    /**
+     * [削除モード]削除実行ボタンクリックイベント
+     */
+    const removeExecOnClick = () => {
+      const newArtifactOwnArr = artifactOwnArr.filter(s => !s.selected);
+      artifactOwnArr.splice(0, artifactOwnArr.length, ...newArtifactOwnArr);
+      removeModeEndProc();
+      changed.value = true;
+    };
+
+    /**
+     * 削除モード終了処理
+     */
+    const removeModeEndProc = () => {
+      controlMode.value = '';
+      artifactOwnArr.forEach(e => {
+        e.selected = false;
+      });
+      artifactControl.value = 'editable';
+    };
+
+    /**
+     * 新規聖遺物ボタンクリックイベント
+     */
+    const newArtifactOnClick = () => {
+      controlMode.value = 'new-artifact';
+      artifactControl.value = '';
+    };
+
+    /**
+     * [新規聖遺物モード]聖遺物追加ボタンクリックイベント
+     */
+    const newArtifactAddOnClick = () => {
+      const newEntry = {
+        id: nextId++,
+        artifact: _.cloneDeep(newArtifact),
+        selected: false,
+      };
+      artifactOwnArr.push(newEntry);
+      newArtifactModeEndProc();
+      changed.value = true;
+    };
+
+    /**
+     * 新規聖遺物モード終了処理
+     */
+    const newArtifactModeEndProc = () => {
+      controlMode.value = '';
+      artifactControl.value = 'editable';
+    };
+
+    /**
+     * 聖遺物更新イベント.
+     * @param id 聖遺物ID
+     * @param artifact 聖遺物データ
+     */
     const updateArtifact = (id: number, artifact: TArtifact) => {
       if (id == 0) {
         overwriteObject(newArtifact, artifact);
@@ -171,16 +248,10 @@ export default defineComponent({
       changed.value = true;
     };
 
-    const removeArtifact = (id: number) => {
-      let index = 0;
-      for (; index < artifactOwnArr.length; index++) {
-        if (artifactOwnArr[index].id == id) {
-          artifactOwnArr.splice(index, 1);
-          break;
-        }
-      }
-    };
-
+    /**
+     * 聖遺物選択イベント.
+     * @param id 聖遺物ID
+     */
     const selectArtifact = (id: number) => {
       let index = 0;
       for (; index < artifactOwnArr.length; index++) {
@@ -191,31 +262,9 @@ export default defineComponent({
       }
     };
 
-    const addable = computed(() => {
-      if (!newArtifact.name) return false;
-      if (!newArtifact.rarity) return false;
-      if (!newArtifact.setname) return false;
-      if (!newArtifact.cat_id) return false;
-      if (!newArtifact.mainStat) return false;
-      if (!newArtifact.mainStatValue) return false;
-      for (const subStat of newArtifact.subStats) {
-        if (!subStat.name) return false;
-        if (!subStat.value) return false;
-      }
-      return true;
-    });
-
-    const add = () => {
-      const newEntry = {
-        id: nextId++,
-        artifact: _.cloneDeep(newArtifact),
-        selected: false,
-      };
-      console.log(newEntry);
-      artifactOwnArr.push(newEntry);
-      changed.value = true;
-    };
-
+    /**
+     * 聖遺物所持状況保存ボタンクリックイベント.
+     */
     const save = () => {
       const work = artifactOwnArr.map(s => s.artifact);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(work));
@@ -231,32 +280,34 @@ export default defineComponent({
         }));
         artifactOwnArr.splice(0, artifactOwnArr.length, ...newList);
       }
-      console.log(artifactOwnArr);
     };
     onLoad();
 
     return {
       displayName, displayStatValue, targetValue,
 
-      artifactControls,
       artifactCatTabSelected,
       newArtifact,
+      artifactControl,
+      controlMode,
+      selectCount,
+      addable,
       artifactOwnArrCatId,
 
-      selectOnClick,
-      selectCancelOnClick,
-      removeExecOnClick,
-      selectCount,
-
-      catOnChange,
-      updateArtifact,
-      removeArtifact,
-      selectArtifact,
-
-      controlMode, addable,
-      add,
       changed,
       savable,
+
+      catOnChange,
+      removeOnClick,
+      removeExecOnClick,
+      removeModeEndProc,
+      newArtifactOnClick,
+      newArtifactAddOnClick,
+      newArtifactModeEndProc,
+
+      updateArtifact,
+      selectArtifact,
+
       save,
     };
   },

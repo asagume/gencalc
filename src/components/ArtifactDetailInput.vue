@@ -331,8 +331,8 @@
         </template>
         <div v-if="isArtifactSelectListShow" class="artifact-select-list">
           <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
-            <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['select']"
-              :selected="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
+            <ArtifactItem :artifact="item.artifact" :id="item.id" control="selectable"
+              :initial="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
           </template>
         </div>
       </div>

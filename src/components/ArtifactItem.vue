@@ -1,6 +1,6 @@
 <template>
   <div class="artifact">
-    <table v-if="controls?.includes('edit')" class="artifact">
+    <table v-if="control == 'editable'" class="artifact">
       <tr>
         <td class="left-column" style="width: 45%;">
           <div class="control">
@@ -67,9 +67,10 @@
       <tr>
         <td class="left-column" style="width: 45%;">
           <div class="control">
-            <template v-if="controls?.includes('select')">
+            <template v-if="control == 'selectable'">
               <button type="button">
-                <span v-if="selected" class="material-symbols-outlined" style="color: yellow"> select_check_box </span>
+                <span v-if="selected" class="material-symbols-outlined" style="color: yellow"> select_check_box
+                </span>
                 <span v-else class="material-symbols-outlined"> check_box_outline_blank </span>
               </button>
             </template>
@@ -98,7 +99,7 @@
         </td>
       </tr>
     </table>
-    <div v-show="isSelecting">
+    <div v-show="isListShow">
       <ArtifactSetSelect :visible="true" :index="1" :artifact-set="artifact.setname"
         :artifact-set-masters="artifactSetMasters" :cat_id="artifact.cat_id" @update:artifact-set="updateArtifactSet" />
     </div>
@@ -119,30 +120,22 @@ export default defineComponent({
   props: {
     artifact: { type: Object as PropType<TArtifact>, required: true },
     id: { type: Number },
-    controls: { type: Array as PropType<string[]> },
-    initials: { type: Array as PropType<string[]> },
-    selected: { type: Boolean },
+    control: String,
+    initial: Boolean,
+    selected: Boolean,
   },
   components: {
     ArtifactSetSelect,
   },
-  emits: ['update:artifact', 'remove:artifact', 'select:artifact'],
+  emits: ['update:artifact', 'select:artifact'],
   setup(props, context) {
     const { displayName, displayStatValue, percent } = CompositionFunction();
 
     const copiedArtifact = reactive(_.cloneDeep(props.artifact));
-    const isEditing = ref(false);
     const artifactSetMasters = reactive([ARTIFACT_SET_MASTER_DUMMY, ARTIFACT_SET_MASTER_DUMMY] as TArtifactSetEntry[]);
-    const isSelecting = ref(false);
-    const removable = ref(false);
-
-    if (props.initials) {
-      for (const initial of props.initials) {
-        if (initial === 'edit') {
-          isEditing.value = true;
-        }
-      }
-    }
+    const isEditing = ref(false);
+    const isSelected = ref(false);
+    const isListShow = ref(false);
 
     const artifactImgSrc = computed(() => {
       return getArtifactIconUrl(copiedArtifact.setname, copiedArtifact.cat_id);
@@ -184,9 +177,15 @@ export default defineComponent({
 
     const artifactIconOnClick = () => {
       if (isEditing.value) {
-        isSelecting.value = !isSelecting.value;
+        isListShow.value = !isListShow.value;
       } else {
-        isSelecting.value = false;
+        isListShow.value = false;
+      }
+    };
+
+    const selectOnClick = () => {
+      if (props.control === 'selectable') {
+        context.emit('select:artifact', props.id);
       }
     };
 
@@ -197,32 +196,36 @@ export default defineComponent({
       if ('artifact_list' in master) {
         copiedArtifact.name = master.artifact_list[copiedArtifact.cat_id - 1];
       }
-      isSelecting.value = false;
+      isListShow.value = false;
       onChange();
     };
 
-    const removeOnClick = () => {
-      context.emit('remove:artifact', props.id);
-    };
-
-    const selectOnClick = () => {
-      if (props.controls?.includes('select')) {
-        context.emit('select:artifact', props.id);
+    function onLoad() {
+      if (props.initial !== undefined) {
+        if (props.control === 'editable') {
+          isEditing.value = props.initial;
+        } else if (props.control === 'selectable') {
+          isSelected.value = props.initial;
+        }
       }
-    };
+    }
+    onLoad();
 
-    watch(props, (newVal) => {
+    watch(props, (newVal, oldVal) => {
       overwriteObject(copiedArtifact, newVal.artifact);
+      if (newVal.initial != oldVal.initial) {
+        onLoad();
+      }
     });
 
     return {
       displayName, displayStatValue,
 
       copiedArtifact,
-      isEditing,
       artifactSetMasters,
-      isSelecting,
-      removable,
+      isEditing,
+      isSelected,
+      isListShow,
 
       artifactImgSrc,
       mainStatOptions,
@@ -234,7 +237,6 @@ export default defineComponent({
       starOnChange,
       artifactIconOnClick,
       updateArtifactSet,
-      removeOnClick,
       selectOnClick,
     }
   }
