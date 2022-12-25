@@ -894,7 +894,9 @@ export async function loadRecommendation(
         }
 
         if ('artifact_list' in build) {
-            artifactDetailInput.artifact_list.splice(0, artifactDetailInput.artifact_list.length, ...build.artifact_list);
+            const ARTIFACT_KEYS = Object.keys(ARTIFACT_TEMPLATE).sort();
+            const newList = build.artifact_list.filter((s: any) => _.isEqual(Object.keys(s).sort(), ARTIFACT_KEYS));
+            artifactDetailInput.artifact_list.splice(0, artifactDetailInput.artifact_list.length, ...newList);
         } else {
             artifactDetailInput.artifact_list.splice(0, artifactDetailInput.artifact_list.length);
         }
@@ -990,8 +992,8 @@ export function makeSavedata(characterInput: TCharacterInput, artifactDetailInpu
         resultObj[entry.name] = conditionInput.conditionValues[entry.name];
     }
 
-    resultObj['artifact_list'] =  artifactDetailInput.artifact_list;
-    
+    resultObj['artifact_list'] = artifactDetailInput.artifact_list;
+
     return resultObj;
 }
 

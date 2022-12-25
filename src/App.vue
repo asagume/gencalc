@@ -35,7 +35,7 @@
         :artifact-set="artifactSets[artifactSetIndexRef]" :artifact-set-masters="characterInputRea.artifactSetMasters"
         @update:artifact-set="updateArtifactSet($event)" />
       <ArtifactDetailInput ref="artifactDetailInputVmRef" :visible="artifactDetailInputVisibleRef"
-        :artifact-detail-input="artifactDetailInputRea" :is-sub-stat-only="isSubStatOnly"
+        :artifact-detail-input="artifactDetailInputRea" :is-sub-stat-only="isSubStatOnly" :next-stat-rows="nextStatRows"
         @update:artifact-detail="updateArtifactDetail($event)" />
       <ArtifactScoreFormula ref="artifactScoreFormulaVmRef" :visible="artifactDetailInputVisibleRef"
         @apply:formula="applyArtifactScoreFormula" />
@@ -98,10 +98,11 @@
             :category2-list="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments" />
         </div>
         <div>
-          <NextStat :visible="true" :character-input="characterInputRea" :artifact-detail-input="artifactDetailInputRea"
-            :condition-input="conditionInputRea" :option-input="optionInputRea" :stats-input="statsInput"
-            :damage-result="damageResult" :rotation-damage-info="rotationDamageInfo"
-            @update:stat-adjustments="updateNextStatAdjustments" />
+          <NextStat ref="nextStatVmRef" :visible="true" :character-input="characterInputRea"
+            :artifact-detail-input="artifactDetailInputRea" :condition-input="conditionInputRea"
+            :option-input="optionInputRea" :stats-input="statsInput" :damage-result="damageResult"
+            :rotation-damage-info="rotationDamageInfo" @update:stat-adjustments="updateNextStatAdjustments"
+            @update:next-stat-rows="updateNextStatRows" />
         </div>
       </div>
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
@@ -392,6 +393,7 @@ export default defineComponent({
     const miscOptionInputVmRef = ref();
     const artifactScoreFormulaVmRef = ref();
     const damageResultVmRef = ref();
+    const nextStatVmRef = ref();
 
     const characterInputRea = reactive(
       overwriteObject(_.cloneDeep(CHARACTER_INPUT_TEMPLATE), props.characterInput)
@@ -482,6 +484,8 @@ export default defineComponent({
       totalDamage: 0,
       rotationDamages: [],
     } as TRotationDamageInfo);
+
+    const nextStatRows = reactive([] as any[]);
 
     const pane6Toggle1Ref = ref(true);
     const pane6Toggle2Ref = ref(true);
@@ -1395,6 +1399,12 @@ export default defineComponent({
       }
     };
 
+    const updateNextStatRows = (argNextStatRows: any[]) => {
+      if (Array.isArray(argNextStatRows)) {
+        nextStatRows.splice(0, nextStatRows.length, ...argNextStatRows);
+      }
+    };
+
     const updateRotationDamage = (argRotationDamageInfo: TRotationDamageInfo) => {
       rotationDamageInfo.totalDamage = argRotationDamageInfo.totalDamage;
       rotationDamageInfo.rotationDamages.splice(0, rotationDamageInfo.rotationDamages.length, ...argRotationDamageInfo.rotationDamages);
@@ -1585,6 +1595,7 @@ export default defineComponent({
       miscOptionInputVmRef,
       artifactScoreFormulaVmRef,
       damageResultVmRef,
+      nextStatVmRef,
 
       characterInputRea,
       artifactDetailInputRea,
@@ -1621,6 +1632,7 @@ export default defineComponent({
       normalAttackReplacing,
       topStats,
       rotationDamageInfo,
+      nextStatRows,
 
       openTwitter,
 
@@ -1654,6 +1666,7 @@ export default defineComponent({
       openCharacterInfo,
       updateStatAdjustments,
       updateNextStatAdjustments,
+      updateNextStatRows,
       updateRotationDamage,
       updateElementalResonance,
       updateMiscOption,

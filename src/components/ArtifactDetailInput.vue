@@ -331,7 +331,7 @@
         </template>
         <div v-if="isArtifactSelectListShow" class="artifact-select-list">
           <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
-            <ArtifactItem :artifact="item.artifact" :id="item.id" control="selectable"
+            <ArtifactItem :artifact="item.artifact" :id="item.id" :score="item.score" control="selectable"
               :initial="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
           </template>
         </div>
@@ -363,7 +363,6 @@ import {
   聖遺物優先するサブ効果ARRAY,
   makePrioritySubstatValueList,
   TArtifact,
-  聖遺物ステータスTEMPLATE,
   ARTIFACT_TEMPLATE,
 } from "@/input";
 import {
@@ -371,7 +370,7 @@ import {
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
 } from "@/calculate";
-import { ARTIFACT_SET_MASTER, GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
+import { GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { resizePinnedImage } from "@/gencalc_ocr";
@@ -380,6 +379,7 @@ import { TKeyValue, overwriteObject } from "@/common";
 type TArtifactWithId = {
   id: number,
   artifact: TArtifact,
+  score: number,
 };
 
 var nextId = 1;
@@ -389,7 +389,8 @@ export default defineComponent({
   props: {
     visible: Boolean,
     artifactDetailInput: { type: Object as PropType<TArtifactDetailInput>, required: true, },
-    isSubStatOnly: { type: Boolean },
+    isSubStatOnly: Boolean,
+    nextStatRows: Array as PropType<any[]>,
   },
   components: {
     ArtifactDetailOcrResult,
@@ -463,22 +464,51 @@ export default defineComponent({
       return arr.length ? arr[0] : undefined;
     });
 
+    function getEvaluationValue(artifactAfter: TArtifact) {
+      let result = 0;
+      if (props.nextStatRows) {
+        props.nextStatRows.forEach(row => {
+          // if (artifactAfter.mainStat == row[0]) {
+          //   result += artifactAfter.mainStatValue * row[4] / row[1][row[2]];
+          // }
+          artifactAfter.subStats.forEach(subStat => {
+            if (subStat.name == row[0]) {
+              result += subStat.value * row[4] / row[1][row[2]];
+            }
+          });
+        });
+      }
+      return result;
+    }
+
+    function setScoreToArtifactOwnArr() {
+      artifactOwnArr.forEach(e => {
+        e.score = getEvaluationValue(e.artifact);
+      });
+    }
+
     const artifactOwnArrCatId = (cat_id: any) => {
-      const result = artifactOwnArr.filter(s => s.artifact.cat_id == Number(cat_id))
+      cat_id = Number(cat_id);
+      const result = artifactOwnArr.filter(s => s.artifact.cat_id == cat_id);
+      const tempArr = artifactList.filter((s: TArtifact) => s.cat_id == cat_id);
+      const curArtifact = tempArr.length > 0 ? tempArr[0] : undefined;
       return result.sort((a, b) => {
         if (a.artifact.setname != b.artifact.setname) {
-          const setNameArr = Object.keys(ARTIFACT_SET_MASTER);
-          const aIndex = setNameArr.indexOf(a.artifact.setname);
-          const bIndex = setNameArr.indexOf(b.artifact.setname);
-          return aIndex - bIndex;
+          if (curArtifact) {
+            if (a.artifact.setname == curArtifact.setname) return -1;
+            if (b.artifact.setname == curArtifact.setname) return 1;
+            if (a.artifact.mainStat != b.artifact.mainStat) {
+              if (a.artifact.mainStat == curArtifact.mainStat) return -1;
+              if (b.artifact.mainStat == curArtifact.mainStat) return 1;
+            }
+          }
+        } else if (a.artifact.mainStat != b.artifact.mainStat) {
+          if (curArtifact) {
+            if (a.artifact.mainStat == curArtifact.mainStat) return -1;
+            if (b.artifact.mainStat == curArtifact.mainStat) return 1;
+          }
         }
-        if (a.artifact.mainStat != b.artifact.mainStat) {
-          const statNameArr = Object.keys(聖遺物ステータスTEMPLATE);
-          const aIndex = a.artifact.mainStat ? statNameArr.indexOf(a.artifact.mainStat) : -1;
-          const bIndex = b.artifact.mainStat ? statNameArr.indexOf(b.artifact.mainStat) : -1;
-          return aIndex - bIndex;
-        }
-        return 0;
+        return b.score - a.score;
       });
     };
 
@@ -706,8 +736,9 @@ export default defineComponent({
     const onLoad = () => {
       if (STORAGE_KEY in localStorage) {
         const value: any[] = JSON.parse(localStorage[STORAGE_KEY]);
-        const newArr = value.filter(s => 'setname' in s).map(s => ({ id: nextId++, artifact: s }));
+        const newArr = value.filter(s => 'setname' in s).map(s => ({ id: nextId++, artifact: s, score: 0 }));
         artifactOwnArr.splice(0, artifactOwnArr.length, ...newArr);
+        setScoreToArtifactOwnArr();
       }
     };
     onLoad();
@@ -717,6 +748,9 @@ export default defineComponent({
         for (let i = 1; i <= 5; i++) {
           artifactListCat(i);
         }
+      }
+      if (newVal.nextStatRows) {
+        setScoreToArtifactOwnArr();
       }
     });
 

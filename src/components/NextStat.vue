@@ -72,7 +72,7 @@ export default defineComponent({
         damageResult: { type: Object as PropType<TDamageResult>, required: true, },
         rotationDamageInfo: { type: Object as PropType<TRotationDamageInfo> },
     },
-    emits: ["update:stat-adjustments"],
+    emits: ['update:stat-adjustments', 'update:next-stat-rows'],
     setup(props, context) {
         const { displayName, displayStatValue } = CompositionFunction();
 
@@ -192,6 +192,7 @@ export default defineComponent({
                 }
             }
             nextStatRows.sort((a, b) => b[4] - a[4]);
+            context.emit('update:next-stat-rows', nextStatRows);
         }
 
         function initializeEvaluationItem() {

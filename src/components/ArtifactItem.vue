@@ -66,6 +66,7 @@
     <table v-else class="artifact" @click="selectOnClick()">
       <tr>
         <td class="left-column" style="width: 45%;">
+          <div v-if="score" class="score"> {{ Math.round(score * 10) / 10 }}</div>
           <div class="control">
             <template v-if="control == 'selectable'">
               <button type="button">
@@ -123,6 +124,7 @@ export default defineComponent({
     control: String,
     initial: Boolean,
     selected: Boolean,
+    score: Number,
   },
   components: {
     ArtifactSetSelect,
@@ -357,5 +359,11 @@ img.star {
 
 select.star {
   width: 8rem;
+}
+
+div.score {
+  position: absolute;
+  left: 5px;
+  top: 3px;
 }
 </style>
