@@ -300,26 +300,39 @@
             <img src="images/circlet_of_logos.png" :alt="displayName('理の冠')">
           </label>
         </div>
-        <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
-          <ArtifactItem :artifact="artifact" />
-          <div>
-            <button type="button" @click="artifactEquipOnClick">
-              {{ displayName('変更') }}
+        <div v-if="isArtifactChangeInputShow">
+          <ArtifactChangeInput :before="artifactBefore" :after="artifactAfter"
+            @apply:artifact-change="applyArtifactChange" @cancel:artifact-change="cancelArtifactChange" />
+        </div>
+        <template v-else>
+          <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
+            <ArtifactItem :artifact="artifact" />
+            <div style="margin-top: 5px">
+              <template v-if="isArtifactSelectListShow">
+                <button type="button" @click="isArtifactSelectListShow = !isArtifactSelectListShow">
+                  {{ displayName('閉じる') }}
+                </button>
+              </template>
+              <template v-else>
+                <button type="button" @click="artifactEquipOnClick">
+                  {{ displayName('聖遺物変更') }}
+                </button>
+                <button v-if="artifact.name" type="button" @click="artifactRemoveOnClick">
+                  {{ displayName('装備解除') }}
+                </button>
+              </template>
+            </div>
+          </template>
+          <template v-if="artifactListCat(artifactCatTabSelected).length == 0">
+            <button type="button" @click="artifactReplaceOnClick">
+              {{ displayName('聖遺物装備') }}
             </button>
-            <button v-if="artifact.name" type="button" @click="artifactRemoveOnClick">
-              {{ displayName('解除') }}
-            </button>
-          </div>
-        </template>
-        <template v-if="artifactListCat(artifactCatTabSelected).length == 0">
-          <button type="button" @click="artifactReplaceOnClick">
-            {{ displayName('装備') }}
-          </button>
+          </template>
         </template>
         <div v-if="isArtifactSelectListShow" class="artifact-select-list">
           <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
             <ArtifactItem :artifact="item.artifact" :id="item.id" :controls="['select']"
-              @select:artifact="selectArtifact" />
+              :selected="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
           </template>
         </div>
       </div>
@@ -339,6 +352,7 @@
 import _ from 'lodash';
 import ArtifactDetailOcrResult from "@/components/ArtifactDetailOcrResult.vue";
 import ArtifactItem from "@/components/ArtifactItem.vue";
+import ArtifactChangeInput from "@/components/ArtifactChangeInput.vue";
 import {
   TArtifactDetailInput,
   聖遺物メイン効果_時の砂ARRAY,
@@ -350,6 +364,7 @@ import {
   makePrioritySubstatValueList,
   TArtifact,
   聖遺物ステータスTEMPLATE,
+  ARTIFACT_TEMPLATE,
 } from "@/input";
 import {
   calculateArtifactStats,
@@ -360,7 +375,7 @@ import { ARTIFACT_SET_MASTER, GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } fro
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { resizePinnedImage } from "@/gencalc_ocr";
-import { overwriteObject } from "@/common";
+import { TKeyValue, overwriteObject } from "@/common";
 
 type TArtifactWithId = {
   id: number,
@@ -373,15 +388,13 @@ export default defineComponent({
   name: 'ArtifactDetailInput',
   props: {
     visible: Boolean,
-    artifactDetailInput: {
-      type: Object as PropType<TArtifactDetailInput>,
-      required: true,
-    },
+    artifactDetailInput: { type: Object as PropType<TArtifactDetailInput>, required: true, },
     isSubStatOnly: { type: Boolean },
   },
   components: {
     ArtifactDetailOcrResult,
     ArtifactItem,
+    ArtifactChangeInput,
   },
   emits: ['update:artifact-detail'],
   setup(props, context) {
@@ -406,6 +419,7 @@ export default defineComponent({
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
     const artifactList = reactive(artifactDetailInputRea.artifact_list);
 
+    const artifactAfter = reactive(_.cloneDeep(ARTIFACT_TEMPLATE) as TArtifact);
     const artifactOwnArr = reactive([] as TArtifactWithId[]);
 
     const editableRef = ref(false);
@@ -413,6 +427,7 @@ export default defineComponent({
     const gensenMasterList = GENSEN_MASTER_LIST;
     const gensenRef = ref(GENSEN_MASTER_LIST[2] as TGensen);
     const isArtifactSelectListShow = ref(false);
+    const isArtifactChangeInputShow = ref(false);
 
     const artifactInputModeTab = ref('1');
     const artifactCatTabSelected = ref(1);
@@ -434,6 +449,7 @@ export default defineComponent({
       ['HP', '攻撃力', '防御力', '元素熟知'].includes(substat) ? 1 : 0.1;
 
     const artifactCatTabOnChange = () => {
+      clearArtifactAfter();
       isArtifactSelectListShow.value = false;
     };
 
@@ -442,39 +458,10 @@ export default defineComponent({
       return result;
     };
 
-    const artifactEquipOnClick = () => {
-      isArtifactSelectListShow.value = true;
-    };
-
-    const artifactRemoveOnClick = () => {
-      const cat_id = artifactCatTabSelected.value;
-      const newArtifactList = artifactList.filter(s => s.cat_id != Number(cat_id));
-      artifactList.splice(0, artifactList.length, ...newArtifactList);
-      context.emit('update:artifact-detail', artifactDetailInputRea);
-    };
-
-    const artifactReplaceOnClick = () => {
-      isArtifactSelectListShow.value = true;
-    };
-
-    const selectArtifact = (id: number) => {
-      const selected = artifactOwnArr.filter(s => s.id == id);
-      if (selected.length > 0) {
-        const exists = artifactList.filter(s => s.cat_id == artifactCatTabSelected.value).length;
-        if (exists) {
-          for (let i = 0; i < artifactList.length; i++) {
-            if (artifactList[i].cat_id == artifactCatTabSelected.value) {
-              artifactList.splice(i, 1, _.cloneDeep(selected[0].artifact));
-              break;
-            }
-          }
-        } else {
-          artifactList.push(_.cloneDeep(selected[0].artifact));
-        }
-        context.emit('update:artifact-detail', artifactDetailInputRea);
-      }
-      isArtifactSelectListShow.value = false;
-    };
+    const artifactBefore = computed(() => {
+      const arr = artifactListCat(artifactCatTabSelected.value);
+      return arr.length ? arr[0] : undefined;
+    });
 
     const artifactOwnArrCatId = (cat_id: any) => {
       const result = artifactOwnArr.filter(s => s.artifact.cat_id == Number(cat_id))
@@ -493,6 +480,92 @@ export default defineComponent({
         }
         return 0;
       });
+    };
+
+    const artifactSelected = (artifact: TArtifact) => {
+      const equiped = artifactBefore.value;
+      if (equiped) {
+        return _.isEqual(artifact, equiped);
+      }
+      return false;
+    };
+
+    const artifactEquipOnClick = () => {
+      isArtifactSelectListShow.value = true;
+    };
+
+    const artifactRemoveOnClick = () => {
+      clearArtifactAfter();
+      isArtifactChangeInputShow.value = true;
+    };
+
+    const artifactReplaceOnClick = () => {
+      isArtifactSelectListShow.value = true;
+    };
+
+    const selectArtifact = (id: number) => {
+      isArtifactSelectListShow.value = false;
+      const selected = artifactOwnArr.filter(s => s.id == id);
+      if (selected.length > 0) {
+        overwriteObject(artifactAfter, selected[0].artifact);
+        isArtifactChangeInputShow.value = true;
+      }
+    };
+
+    const applyArtifactChange = async (isStatsChange: boolean, subStatArr: TKeyValue[]) => {
+      isArtifactChangeInputShow.value = false;
+      if (isStatsChange) {
+        const mainStatBefore = artifactBefore.value?.mainStat;
+        const mainStatValueBefore = artifactBefore.value?.mainStatValue;
+        const mainStatAfter = artifactAfter?.mainStat;
+        const mainStatValueAfter = artifactAfter?.mainStatValue;
+        const rarityAfter = artifactAfter?.rarity;
+        if (mainStatBefore && mainStatValueBefore) {
+          (artifactStatsMain as any)[mainStatBefore] -= mainStatValueBefore;
+        }
+        if (mainStatAfter && mainStatValueAfter) {
+          if (rarityAfter) {
+            mainstats[Number(artifactCatTabSelected.value) - 1] = rarityAfter + '_' + mainStatAfter;
+          }
+          (artifactStatsMain as any)[mainStatAfter] += mainStatValueAfter;
+        }
+        for (const subStat of subStatArr) {
+          (artifactStatsSub as any)[subStat.key] += subStat.value;
+        }
+      }
+      if (artifactAfter?.name) {
+        const exists = artifactList.filter(s => s.cat_id == Number(artifactCatTabSelected.value)).length;
+        if (exists > 0) {
+          for (let i = 0; i < artifactList.length; i++) {
+            if (artifactList[i].cat_id == Number(artifactCatTabSelected.value)) {
+              artifactList.splice(i, 1, _.cloneDeep(artifactAfter));
+              break;
+            }
+          }
+        } else {
+          artifactList.push(_.cloneDeep(artifactAfter));
+        }
+      } else {
+        for (let i = 0; i < artifactList.length; i++) {
+          if (artifactList[i].cat_id == Number(artifactCatTabSelected.value)) {
+            artifactList.splice(i, 1);
+            break;
+          }
+        }
+      }
+      clearArtifactAfter();
+      calculateArtifactStats(artifactDetailInputRea);
+      await nextTick();
+      context.emit('update:artifact-detail', artifactDetailInputRea);
+    };
+
+    const cancelArtifactChange = () => {
+      clearArtifactAfter();
+      isArtifactChangeInputShow.value = false;
+    };
+
+    const clearArtifactAfter = () => {
+      overwriteObject(artifactAfter, ARTIFACT_TEMPLATE);
     };
 
     /** 聖遺物ステータスを計算します（メイン効果） */
@@ -679,17 +752,24 @@ export default defineComponent({
       updateMainstats,
       updatePrioritySubstats,
 
-      artifactCatTabOnChange,
-      artifactListCat,
-      artifactEquipOnClick,
-      artifactRemoveOnClick,
-      artifactReplaceOnClick,
       isArtifactSelectListShow,
+      isArtifactChangeInputShow,
+      artifactListCat,
       artifactOwnArrCatId,
       selectArtifact,
 
+      artifactCatTabOnChange,
+      artifactEquipOnClick,
+      artifactRemoveOnClick,
+      artifactReplaceOnClick,
+
       artifactInputModeTab,
       artifactCatTabSelected,
+      artifactBefore,
+      artifactAfter,
+      artifactSelected,
+      applyArtifactChange,
+      cancelArtifactChange,
 
       loadArtifactStatsByOcr,
       isScanning,
@@ -817,8 +897,8 @@ label.button {
 }
 
 .cat-select img {
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
 }
 

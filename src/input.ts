@@ -233,16 +233,16 @@ export const 聖遺物メイン効果_理の冠ARRAY = [
 ];
 
 export const 聖遺物サブ効果ARRAY = [
+    'HP%',
     'HP',
+    '攻撃力%',
     '攻撃力',
+    '防御力%',
     '防御力',
     '元素熟知',
     '会心率',
     '会心ダメージ',
     '元素チャージ効率',
-    '攻撃力%',
-    'HP%',
-    '防御力%',
 ];
 export const 聖遺物優先するサブ効果ARRAY = [
     '攻撃力%',
@@ -403,7 +403,7 @@ export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
 
 export const ARTIFACT_TEMPLATE = {
     name: '',
-    rarity: 5,
+    rarity: 1,
     setname: 'NONE',
     cat_id: 1,
     mainStat: '',
@@ -895,6 +895,8 @@ export async function loadRecommendation(
 
         if ('artifact_list' in build) {
             artifactDetailInput.artifact_list.splice(0, artifactDetailInput.artifact_list.length, ...build.artifact_list);
+        } else {
+            artifactDetailInput.artifact_list.splice(0, artifactDetailInput.artifact_list.length);
         }
 
         overwriteObject(artifactDetailInput.聖遺物ステータスサブ効果, artifactStatsSub);

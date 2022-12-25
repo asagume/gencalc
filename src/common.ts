@@ -1,5 +1,9 @@
 import _ from 'lodash';
 
+export type TKeyValue = {
+    key: string, value: any,
+};
+
 export function isString(value: any): boolean {
     return typeof value === 'string' || value instanceof String;
 }

@@ -27,8 +27,7 @@
         @update:article="updateArtifact" @remove:artifact="removeArtifact" @select:artifact="selectArtifact" />
     </template>
   </div>
-  <div class="new-artifact">
-    <!-- 削除 -->
+  <div class="new-artifact" style="margin-top: 10px">
     <template v-if="controlMode == 'remove'">
       <button type="button" :disabled="selectCount == 0" @click="controlMode = ''; removeExecOnClick()">
         {{ displayName('削除実行') }}
@@ -40,7 +39,7 @@
         @update:artifact="updateArtifact" />
       <div>
         <button type="button" @click="add" :disabled="!addable"> {{ displayName('聖遺物追加') }} </button>
-        <button type="button" @click="controlMode = ''"> {{ displayName('閉じる') }} </button>
+        <button type="button" @click="controlMode = ''"> {{ displayName('キャンセル') }} </button>
       </div>
     </template>
     <template v-if="!controlMode">
@@ -127,9 +126,11 @@ export default defineComponent({
 
     const selectOnClick = () => {
       const control = 'select';
+      artifactControls.push(control);
       if (!artifactControls.includes(control)) {
         artifactControls.push(control);
       }
+      artifactControls.splice(0, artifactControls.length, ...artifactControls.filter(s => s != 'edit'));
     };
 
     const selectCancelOnClick = () => {
@@ -150,7 +151,7 @@ export default defineComponent({
     });
 
     const catOnChange = () => {
-      newArtifact.cat_id = artifactCatTabSelected.value;
+      newArtifact.cat_id = Number(artifactCatTabSelected.value);
       newArtifact.mainStat = String(CAT_MAINSTAT[newArtifact.cat_id][0]);
       newArtifact.mainStatValue = Number(CAT_MAINSTAT[newArtifact.cat_id][1]);
     };
@@ -181,7 +182,6 @@ export default defineComponent({
     };
 
     const selectArtifact = (id: number) => {
-      console.log(id);
       let index = 0;
       for (; index < artifactOwnArr.length; index++) {
         if (artifactOwnArr[index].id == id) {

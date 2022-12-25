@@ -82,8 +82,8 @@
 
         <div>
           <input class="hidden" id="artifacts-toggle" type="checkbox" v-model="artifactsToggle" />
-          <label class="toggle-switch no-border" for="artifacts-toggle" style="width: 30rem">
-            ARTIFACTS
+          <label class="toggle-switch no-border" for="artifacts-toggle" style="width: 40rem">
+            聖遺物 - ARTIFACTS -
           </label>
         </div>
         <div v-if="artifactsToggle">

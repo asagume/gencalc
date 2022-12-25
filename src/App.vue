@@ -1242,7 +1242,6 @@ export default defineComponent({
     const updateArtifactDetail = (artifactDetailInput: TArtifactDetailInput) => {
       if (!artifactDetailInputRea) return;
       artifactDetailInputRea.artifact_list.splice(0, artifactDetailInputRea.artifact_list.length, ...artifactDetailInput.artifact_list);
-      console.log(artifactDetailInputRea.artifact_list);
       for (const stat of Object.keys(artifactDetailInput.聖遺物ステータス)) {
         artifactDetailInputRea.聖遺物ステータス[stat] = (artifactDetailInput.聖遺物ステータス as any)[stat];
       }
