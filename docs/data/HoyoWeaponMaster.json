@@ -784,6 +784,14 @@
     "max_level": 90
   },
   {
+    "id": 11422,
+    "name": "東花坊時雨",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 11418,
     "name": "サイフォスの月明かり",
     "icon": null,
