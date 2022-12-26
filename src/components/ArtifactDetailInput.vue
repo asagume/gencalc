@@ -324,9 +324,16 @@
             </div>
           </template>
           <template v-if="artifactListCat(artifactCatTabSelected).length == 0">
-            <button type="button" @click="artifactReplaceOnClick">
-              {{ displayName('聖遺物装備') }}
-            </button>
+            <template v-if="isArtifactSelectListShow">
+              <button type="button" @click="isArtifactSelectListShow = !isArtifactSelectListShow">
+                {{ displayName('閉じる') }}
+              </button>
+            </template>
+            <template v-else>
+              <button type="button" @click="artifactReplaceOnClick">
+                {{ displayName('聖遺物装備') }}
+              </button>
+            </template>
           </template>
         </template>
         <div v-if="isArtifactSelectListShow" class="artifact-select-list">
