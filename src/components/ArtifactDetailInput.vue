@@ -300,55 +300,38 @@
             <img src="images/circlet_of_logos.png" :alt="displayName('理の冠')">
           </label>
         </div>
-        <div v-if="isArtifactChangeInputShow">
-          <ArtifactChangeInput :before="artifactBefore" :after="artifactAfter"
-            @apply:artifact-change="applyArtifactChange" @cancel:artifact-change="cancelArtifactChange" />
-        </div>
-        <template v-else>
+        <div v-if="!isArtifactSelectListShow && !isNewArtifactInputShow && !isArtifactChangeInputShow">
           <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
             <ArtifactItem :artifact="artifact" />
-            <div style="margin-top: 5px">
-              <template v-if="isArtifactSelectListShow">
-                <button type="button" @click="isArtifactSelectListShow = !isArtifactSelectListShow">
-                  {{ displayName('閉じる') }}
-                </button>
-              </template>
-              <template v-else>
-                <button type="button" @click="artifactSelectOnClick">
-                  {{ displayName('選択') }}
-                </button>
-                <button type="button" @click="artifactNewOnClick">
-                  {{ displayName('新規') }}
-                </button>
-                <button v-if="artifact.name" type="button" @click="artifactRemoveOnClick">
-                  {{ displayName('解除') }}
-                </button>
-              </template>
-            </div>
           </template>
-          <template v-if="artifactListCat(artifactCatTabSelected).length == 0">
-            <template v-if="isArtifactSelectListShow">
-              <button type="button" @click="isArtifactSelectListShow = !isArtifactSelectListShow">
-                {{ displayName('閉じる') }}
+          <div>
+            <button type="button" @click="artifactSelectOnClick">
+              {{ displayName('選択') }}
+            </button>
+            <button type="button" @click="artifactNewOnClick">
+              {{ displayName('新規') }}
+            </button>
+            <template v-if="artifactListCat(artifactCatTabSelected).length">
+              <button type="button" @click="artifactRemoveOnClick">
+                {{ displayName('解除') }}
               </button>
             </template>
-            <template v-else>
-              <button type="button" @click="artifactSelectOnClick">
-                {{ displayName('選択') }}
-              </button>
-              <button type="button" @click="artifactNewOnClick">
-                {{ displayName('新規') }}
-              </button>
-            </template>
-          </template>
-        </template>
+          </div>
+        </div>
+        <!-- 聖遺物選択リスト -->
         <div v-if="isArtifactSelectListShow" class="artifact-select-list">
+          <div>
+            <button type="button" @click="isArtifactSelectListShow = !isArtifactSelectListShow">
+              {{ displayName('閉じる') }}
+            </button>
+          </div>
           <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
             <ArtifactItem :artifact="item.artifact" :id="item.id" :score="item.score" control="selectable"
               :initial="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
           </template>
         </div>
-        <template v-if="isNewArtifactInputShow">
+        <!-- 新規聖遺物入力 -->
+        <div v-if="isNewArtifactInputShow">
           <ArtifactItem :artifact="newArtifact" :id="0" control="editable" :initial="true"
             @update:artifact="updateNewArtifact" />
           <div>
@@ -359,7 +342,12 @@
               {{ displayName('キャンセル') }}
             </button>
           </div>
-        </template>
+        </div>
+        <!-- 聖遺物換装入力 -->
+        <div v-if="isArtifactChangeInputShow">
+          <ArtifactChangeInput :before="artifactBefore" :after="artifactAfter"
+            @apply:artifact-change="applyArtifactChange" @cancel:artifact-change="cancelArtifactChange" />
+        </div>
       </div>
     </div>
   </div>
