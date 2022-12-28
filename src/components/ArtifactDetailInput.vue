@@ -314,11 +314,14 @@
                 </button>
               </template>
               <template v-else>
-                <button type="button" @click="artifactEquipOnClick">
-                  {{ displayName('聖遺物変更') }}
+                <button type="button" @click="artifactSelectOnClick">
+                  {{ displayName('選択') }}
+                </button>
+                <button type="button" @click="artifactNewOnClick">
+                  {{ displayName('新規') }}
                 </button>
                 <button v-if="artifact.name" type="button" @click="artifactRemoveOnClick">
-                  {{ displayName('装備解除') }}
+                  {{ displayName('解除') }}
                 </button>
               </template>
             </div>
@@ -330,8 +333,11 @@
               </button>
             </template>
             <template v-else>
-              <button type="button" @click="artifactReplaceOnClick">
-                {{ displayName('聖遺物装備') }}
+              <button type="button" @click="artifactSelectOnClick">
+                {{ displayName('選択') }}
+              </button>
+              <button type="button" @click="artifactNewOnClick">
+                {{ displayName('新規') }}
               </button>
             </template>
           </template>
@@ -342,6 +348,18 @@
               :initial="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
           </template>
         </div>
+        <template v-if="isNewArtifactInputShow">
+          <ArtifactItem :artifact="newArtifact" :id="0" control="editable" :initial="true"
+            @update:artifact="updateNewArtifact" />
+          <div>
+            <button type="button" @click="newArtifactAddOnClick" :disabled="!isNewArtifactAddable">
+              {{ displayName('適用') }}
+            </button>
+            <button type="button" @click="isNewArtifactInputShowEndProc">
+              {{ displayName('キャンセル') }}
+            </button>
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -429,6 +447,7 @@ export default defineComponent({
 
     const artifactAfter = reactive(_.cloneDeep(ARTIFACT_TEMPLATE) as TArtifact);
     const artifactOwnArr = reactive([] as TArtifactWithId[]);
+    const newArtifact = reactive(_.cloneDeep(ARTIFACT_TEMPLATE));
 
     const editableRef = ref(false);
     const gensenEnabledRef = ref(false);
@@ -436,6 +455,7 @@ export default defineComponent({
     const gensenRef = ref(GENSEN_MASTER_LIST[2] as TGensen);
     const isArtifactSelectListShow = ref(false);
     const isArtifactChangeInputShow = ref(false);
+    const isNewArtifactInputShow = ref(false);
 
     const artifactInputModeTab = ref('1');
     const artifactCatTabSelected = ref(1);
@@ -446,6 +466,20 @@ export default defineComponent({
         work += count;
       }
       return Math.min(45, 40 + Math.round(Math.max(0, (work - 12) / 4)));
+    });
+
+    const isNewArtifactAddable = computed(() => {
+      if (!newArtifact.name) return false;
+      if (!newArtifact.rarity) return false;
+      if (!newArtifact.setname) return false;
+      if (!newArtifact.cat_id) return false;
+      if (!newArtifact.mainStat) return false;
+      if (!newArtifact.mainStatValue) return false;
+      for (const subStat of newArtifact.subStats) {
+        if (!subStat.name) return false;
+        if (!subStat.value) return false;
+      }
+      return true;
     });
 
     /** 優先するサブ効果上昇値のオプション値のリストを作成します */
@@ -519,6 +553,30 @@ export default defineComponent({
       });
     };
 
+    /** 個別設定：選択ボタンクリックイベント  */
+    const artifactSelectOnClick = () => {
+      isArtifactChangeInputShow.value = false;
+      isNewArtifactInputShow.value = false;
+      isArtifactSelectListShow.value = true;
+    };
+
+    /** 個別設定：新規ボタンクリックイベント  */
+    const artifactNewOnClick = () => {
+      overwriteObject(newArtifact, ARTIFACT_TEMPLATE);
+      newArtifact.cat_id = Number(artifactCatTabSelected.value);
+      isArtifactSelectListShow.value = false;
+      isArtifactChangeInputShow.value = false;
+      isNewArtifactInputShow.value = true;
+    };
+
+    /** 個別設定：解除ボタンクリックイベント  */
+    const artifactRemoveOnClick = () => {
+      clearArtifactAfter();
+      isArtifactSelectListShow.value = false;
+      isNewArtifactInputShow.value = false;
+      isArtifactChangeInputShow.value = true;
+    };
+
     const artifactSelected = (artifact: TArtifact) => {
       const equiped = artifactBefore.value;
       if (equiped) {
@@ -527,19 +585,7 @@ export default defineComponent({
       return false;
     };
 
-    const artifactEquipOnClick = () => {
-      isArtifactSelectListShow.value = true;
-    };
-
-    const artifactRemoveOnClick = () => {
-      clearArtifactAfter();
-      isArtifactChangeInputShow.value = true;
-    };
-
-    const artifactReplaceOnClick = () => {
-      isArtifactSelectListShow.value = true;
-    };
-
+    /** 聖遺物リスト：選択イベント */
     const selectArtifact = (id: number) => {
       isArtifactSelectListShow.value = false;
       const selected = artifactOwnArr.filter(s => s.id == id);
@@ -549,6 +595,29 @@ export default defineComponent({
       }
     };
 
+    /** 新規聖遺物：更新イベント */
+    const updateNewArtifact = (id: number, artifact: TArtifact) => {
+      console.log(artifact);
+      if (id == 0) {
+        overwriteObject(newArtifact, artifact);
+      }
+    };
+
+    /** 新規聖遺物：適用ボタンクリックイベント */
+    const newArtifactAddOnClick = () => {
+      if (isNewArtifactInputShow.value) {
+        overwriteObject(artifactAfter, newArtifact);
+        isArtifactChangeInputShow.value = true;
+      }
+      isNewArtifactInputShowEndProc();
+    };
+
+    /** 新規聖遺物：キャンセルボタンクリックイベント */
+    const isNewArtifactInputShowEndProc = () => {
+      isNewArtifactInputShow.value = false;
+    };
+
+    /** 聖遺物換装：適用ボタンクリックイベント */
     const applyArtifactChange = async (isStatsChange: boolean, subStatArr: TKeyValue[]) => {
       isArtifactChangeInputShow.value = false;
       if (isStatsChange) {
@@ -596,6 +665,7 @@ export default defineComponent({
       context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
+    /** 聖遺物換装：キャンセルボタンクリックイベント */
     const cancelArtifactChange = () => {
       clearArtifactAfter();
       isArtifactChangeInputShow.value = false;
@@ -795,22 +865,28 @@ export default defineComponent({
 
       isArtifactSelectListShow,
       isArtifactChangeInputShow,
+      isNewArtifactInputShow,
       artifactListCat,
       artifactOwnArrCatId,
-      selectArtifact,
+      newArtifact,
+      isNewArtifactAddable,
 
       artifactCatTabOnChange,
-      artifactEquipOnClick,
+      artifactSelectOnClick,
+      artifactNewOnClick,
       artifactRemoveOnClick,
-      artifactReplaceOnClick,
 
       artifactInputModeTab,
       artifactCatTabSelected,
       artifactBefore,
       artifactAfter,
+      selectArtifact,
       artifactSelected,
+      updateNewArtifact,
       applyArtifactChange,
       cancelArtifactChange,
+      newArtifactAddOnClick,
+      isNewArtifactInputShowEndProc,
 
       loadArtifactStatsByOcr,
       isScanning,

@@ -295,6 +295,7 @@ import {
   updateNumberConditionValues,
   ステータスチーム内最高ARRAY,
   TStats,
+  TArtifact,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -628,6 +629,26 @@ export default defineComponent({
 
       if (storageKey == makeBuildStorageKey(characterInputRea.character)) {
         characterInputRea.buildname = makeDefaultBuildname(characterInputRea.character);
+      }
+
+      // 聖遺物所持状況を更新します
+      const storageKey4 = 'artifact_list';
+      if (artifactDetailInputRea.artifact_list && artifactDetailInputRea.artifact_list.length) {
+        let savedArtifactList: TArtifact[] = [];
+        let savedValue = localStorage.getItem(storageKey4);
+        if (savedValue) {
+          savedArtifactList = JSON.parse(savedValue);
+        }
+        let isChanged = false;
+        for (const artifact of artifactDetailInputRea.artifact_list) {
+          if (savedArtifactList.filter(s => _.isEqual(s, artifact)).length == 0) {
+            savedArtifactList.push(artifact);
+            isChanged = true;
+          }
+        }
+        if (isChanged) {
+          localStorage.setItem(storageKey4, JSON.stringify(savedArtifactList));
+        }
       }
 
       characterInputRea.saveDisabled = true;

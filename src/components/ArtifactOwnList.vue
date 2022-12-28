@@ -38,6 +38,9 @@
       <button type="button" @click="newArtifactOnClick">
         {{ displayName('新規聖遺物') }}
       </button>
+      <button type="button" @click="reloadOnClick">
+        {{ displayName('最新') }}
+      </button>
     </template>
     <!-- 削除モード -->
     <template v-if="controlMode == 'remove'">
@@ -228,6 +231,11 @@ export default defineComponent({
       artifactControl.value = 'editable';
     };
 
+    const reloadOnClick = () => {
+      onLoad();
+      changed.value = false;
+    };
+
     /**
      * 聖遺物更新イベント.
      * @param id 聖遺物ID
@@ -304,6 +312,7 @@ export default defineComponent({
       newArtifactOnClick,
       newArtifactAddOnClick,
       newArtifactModeEndProc,
+      reloadOnClick,
 
       updateArtifact,
       selectArtifact,
