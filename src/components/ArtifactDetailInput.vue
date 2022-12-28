@@ -301,7 +301,7 @@
           </label>
         </div>
         <div v-if="!isArtifactSelectListShow && !isNewArtifactInputShow && !isArtifactChangeInputShow">
-          <template v-for="(artifact, index) in artifactListCat(artifactCatTabSelected)" :key="index">
+          <template v-for="(artifact, index) in artifactListCat" :key="index">
             <ArtifactItem :artifact="artifact" />
           </template>
           <div>
@@ -311,7 +311,7 @@
             <button type="button" @click="artifactNewOnClick">
               {{ displayName('新規') }}
             </button>
-            <template v-if="artifactListCat(artifactCatTabSelected).length">
+            <template v-if="artifactListCat.length">
               <button type="button" @click="artifactRemoveOnClick">
                 {{ displayName('解除') }}
               </button>
@@ -327,7 +327,7 @@
           </div>
           <template v-for="item in artifactOwnArrCatId(artifactCatTabSelected)" :key="item.id">
             <ArtifactItem :artifact="item.artifact" :id="item.id" :score="item.score" control="selectable"
-              :initial="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
+              :selected="artifactSelected(item.artifact)" @select:artifact="selectArtifact" />
           </template>
         </div>
         <!-- 新規聖遺物入力 -->
@@ -483,15 +483,20 @@ export default defineComponent({
       isArtifactSelectListShow.value = false;
     };
 
-    const artifactListCat = (cat_id: any) => {
-      const result = artifactList.filter(s => s.cat_id == Number(cat_id));
+    const artifactListCat = computed(() => {
+      const cat_id = Number(artifactCatTabSelected.value);
+      const result = artifactList.filter((s: any) => s.cat_id == cat_id);
       return result;
-    };
+    });
 
     const artifactBefore = computed(() => {
-      const arr = artifactListCat(artifactCatTabSelected.value);
-      return arr.length ? arr[0] : undefined;
+      const arr = artifactListCat.value;
+      return arr.length > 0 ? arr[0] : undefined;
     });
+
+    const artifactSelected = (artifact: TArtifact) => {
+      return _.isEqual(artifact, artifactBefore.value);
+    };
 
     function getEvaluationValue(artifactAfter: TArtifact) {
       let result = 0;
@@ -563,14 +568,6 @@ export default defineComponent({
       isArtifactSelectListShow.value = false;
       isNewArtifactInputShow.value = false;
       isArtifactChangeInputShow.value = true;
-    };
-
-    const artifactSelected = (artifact: TArtifact) => {
-      const equiped = artifactBefore.value;
-      if (equiped) {
-        return _.isEqual(artifact, equiped);
-      }
-      return false;
     };
 
     /** 聖遺物リスト：選択イベント */
@@ -808,12 +805,7 @@ export default defineComponent({
     };
     onLoad();
 
-    watch(props, (newVal, oldVal) => {
-      if (!_.isEqual(newVal.artifactDetailInput.artifact_list, oldVal?.artifactDetailInput?.artifact_list)) {
-        for (let i = 1; i <= 5; i++) {
-          artifactListCat(i);
-        }
-      }
+    watch(props, (newVal) => {
       if (newVal.nextStatRows) {
         setScoreToArtifactOwnArr();
       }
