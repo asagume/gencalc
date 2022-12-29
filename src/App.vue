@@ -944,6 +944,8 @@ export default defineComponent({
         // その他
         miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
       }
+
+      characterInputRea.saveDisabled = true;
     };
 
     /** キャラクターを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
