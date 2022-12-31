@@ -542,6 +542,7 @@ img.weapon {
 img.talent,
 img.artifact-set {
   width: 100%;
+  aspect-ratio: 1;
   object-fit: fill;
   border-radius: 50%;
   border: none;
