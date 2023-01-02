@@ -15,7 +15,10 @@
         "中国語 CV": "kinsen",
         "英語 CV": "Beau Bridgland",
         "日本語 CV": "斉藤壮馬",
-        "韓国語 CV": "양정화"
+        "韓国語 CV": "양정화",
+        "オリジナル料理": "山幸の冷やし麺",
+        "実装バージョン": "1.0",
+        "七聖召喚のカード": "$[{\"ep_id\":3176,\"icon\":\"https://upload-static.hoyoverse.com/hoyolab-wiki/2022/12/01/194600931/bffac6cdb7bf11846a00283924b7b617_2725498842060376714.png\",\"amount\":0,\"name\":\"重雲\",\"menuId\":\"17\"}]$"
     },
     "region": "璃月港",
     "ステータス": {
@@ -324,13 +327,13 @@
         {
             "名前": "吐納真定",
             "種類": "固有天賦",
-            "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>エリア内にいる時、片手剣、両手剣、長柄武器キャラクターの通常攻撃の攻撃速度+8%。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">霊刃·重華積霜</span>エリア内にいる時、片手剣、両手剣、長柄武器キャラクターの通常攻撃の攻撃速度+8%。",
             "icon_url": "images/characters/cryo_4_claymore_Chongyun/talent_4.png"
         },
         {
             "名前": "追氷剣訣",
             "種類": "固有天賦",
-            "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>エリアが消えた時、自動的に付近の敵を攻撃する霊刃を召喚し、霊刃·重華積霜のスキルダメージ100%分の<span style=\"color:#99FFFFFF\">氷元素範囲ダメージ</span>を与える。命中した敵の<span style=\"color:#99FFFFFF\">氷元素耐性</span>-10%、継続時間8秒。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">霊刃·重華積霜</span>エリアが消えた時、自動的に付近の敵を攻撃する霊刃を召喚し、霊刃·重華積霜のスキルダメージ100%分の<span style=\"color: rgb(153, 255, 255)\">氷元素範囲ダメージ</span>を与える。命中した敵の<span style=\"color: rgb(153, 255, 255)\">氷元素耐性</span>-10%、継続時間8秒。",
             "詳細": [
                 {
                     "条件": "追氷剣訣 氷元素耐性-10%",
@@ -356,13 +359,13 @@
         },
         "2": {
             "名前": "周天の回転",
-            "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>エリア内で発動した元素スキルと元素爆発のクールタイム-15%。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">霊刃·重華積霜</span>エリア内で発動した元素スキルと元素爆発のクールタイム-15%。",
             "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_2.png",
             "詳細": []
         },
         "3": {
             "名前": "雲の果てに光あり",
-            "説明": "<span style=\"color:#FFD780FF\">霊刃·雲開星落</span>のスキルLv.+3。<br/>最大Lv.15まで。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">霊刃·雲開星落</span>のスキルLv.+3。<br>最大Lv.15まで。",
             "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_3.png",
             "詳細": []
         },
@@ -374,13 +377,13 @@
         },
         "5": {
             "名前": "真道の正理",
-            "説明": "<span style=\"color:#FFD780FF\">霊刃·重華積霜</span>のスキルLv.+3。<br/>最大Lv.15まで。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">霊刃·重華積霜</span>のスキルLv.+3。<br>最大Lv.15まで。",
             "icon_url": "images/characters/cryo_4_claymore_Chongyun/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "四霊の捧げ",
-            "説明": "HPの割合が重雲より低い敵に<span style=\"color:#FFD780FF\">霊刃·雲開星落</span>が命中した時、ダメージ+15%。<br/>また、スキル発動時さらに追加で霊刃を1本を召喚する。",
+            "説明": "HPの割合が重雲より低い敵に<span style=\"color: rgb(255, 215, 128)\">霊刃·雲開星落</span>が命中した時、ダメージ+15%。<br>また、スキル発動時さらに追加で霊刃を1本を召喚する。",
             "詳細": [
                 {
                     "条件": "四霊の捧げ 霊刃·雲開星落ダメージ+15%",

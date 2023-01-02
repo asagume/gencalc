@@ -15,7 +15,10 @@
         "中国語 CV": "秦文静",
         "英語 CV": "Christina Costello",
         "日本語 CV": "前川涼子",
-        "韓国語 CV": "방시우"
+        "韓国語 CV": "방시우",
+        "オリジナル料理": "憧れ",
+        "実装バージョン": "3.0",
+        "七聖召喚のカード": "$[{\"ep_id\":3189,\"icon\":\"https://upload-static.hoyoverse.com/hoyolab-wiki/2022/12/01/194600931/ba092c866fbf6574b792b5e53eadf9ff_5435604427803901749.png\",\"amount\":0,\"name\":\"コレイ\",\"menuId\":\"17\"}]$"
     },
     "region": "スメール",
     "ステータス": {

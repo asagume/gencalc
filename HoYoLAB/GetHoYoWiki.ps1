@@ -3,7 +3,7 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 
 $pageIds = @()
 ### キャラクター
-# $pageIds += @(1..51)
+$pageIds += @(1..51)
 # $pageIds += 2252   # 夜蘭
 # $pageIds += 2256   # 久岐忍
 # $pageIds += 2263   # 鹿野院平蔵
@@ -40,10 +40,10 @@ $pageIds = @()
 # $pageIds += 3319   # 東花坊時雨
 # $pageIds += 3320   # トゥライトゥーラの記憶
 ### 聖遺物
-$pageIds += @(2061..2099)
-$pageIds += 2672   # 深林の記憶
-$pageIds += 2673   # 金メッキの夢
-$pageIds += 3321   # 楽園の絶花
+# $pageIds += @(2061..2099)
+# $pageIds += 2672   # 深林の記憶
+# $pageIds += 2673   # 金メッキの夢
+# $pageIds += 3321   # 楽園の絶花
 # $pageIds += 3322   # 砂上の楼閣の史話
 # 生物誌
 # $pageIds += @(2100..2251)
@@ -56,7 +56,7 @@ $pageIds += 3321   # 楽園の絶花
 # $pageIds += 2259
 # $pageIds += 2260
 
-$doDownloadImg = $true
+$doDownloadImg = $false
 $imgLanguage = 'ja-jp'
 
 $categoryMap = @{
@@ -67,8 +67,8 @@ $categoryMap = @{
     "9" = "object"
 }
 
-# $xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
-$xRpcLanguages = @("en-us", "ja-jp")
+$xRpcLanguages = @("zh-cn", "zh-tw", "de-de", "en-us", "es-es", "fr-fr", "id-id", "ja-jp", "ko-kr", "pt-pt", "ru-ru", "th-th", "vi-vn")
+# $xRpcLanguages = @("en-us", "ja-jp")
 
 $ProgressPreference = 'SilentlyContinue'
 

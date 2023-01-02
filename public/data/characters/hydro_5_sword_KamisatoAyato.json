@@ -15,7 +15,9 @@
         "中国語 CV": "赵路",
         "英語 CV": "Chris Hackney",
         "日本語 CV": "石田彰",
-        "韓国語 CV": "장민혁"
+        "韓国語 CV": "장민혁",
+        "オリジナル料理": "「静寂閑雅」",
+        "実装バージョン": "2.6"
     },
     "region": "稲妻城",
     "ステータス": {
@@ -463,7 +465,7 @@
     "固有天賦": [
         {
             "名前": "神里流·峰を纏いし清滝",
-            "説明": "<span style=\"color:#FFD780FF\">神里流·鏡花</span>は下記の効果を持つ。<br/>·発動後、神里綾人は2層の浪閃効果を獲得する。<br/>·水の幻影が破裂すると、神里綾人は重ね掛け上限に相当する浪閃効果を獲得する。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">神里流·鏡花</span>は下記の効果を持つ。<br>・発動後、神里綾人は2層の浪閃効果を獲得する。<br>・水の幻影が破裂すると、神里綾人は重ね掛け上限に相当する浪閃効果を獲得する。",
             "icon_url": "images/characters/hydro_5_sword_KamisatoAyato/talent_4.png",
             "詳細": []
         },
@@ -517,25 +519,25 @@
         },
         "3": {
             "名前": "無意弄花",
-            "説明": "<span style=\"color:#FFD780FF\">神里流·鏡花</span>のスキルLv.+3。<br/>最大Lv.15まで。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">神里流·鏡花</span>のスキルLv.+3。<br>最大Lv.15まで。",
             "icon_url": "images/characters/hydro_5_sword_KamisatoAyato/summaryList_3.png",
             "詳細": []
         },
         "4": {
             "名前": "細流厭わず",
-            "説明": "<span style=\"color:#FFD780FF\">神里流·水囿</span>発動後、周囲チーム全員の通常攻撃速度+15%、継続期間15秒。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">神里流·水囿</span>発動後、周囲チーム全員の通常攻撃速度+15%、継続期間15秒。",
             "icon_url": "images/characters/hydro_5_sword_KamisatoAyato/summaryList_4.png",
             "詳細": []
         },
         "5": {
             "名前": "万水一露",
-            "説明": "<span style=\"color:#FFD780FF\">神里流·水囿</span>のスキルLv.+3。<br/>最大Lv.15まで。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">神里流·水囿</span>のスキルLv.+3。<br>最大Lv.15まで。",
             "icon_url": "images/characters/hydro_5_sword_KamisatoAyato/summaryList_5.png",
             "詳細": []
         },
         "6": {
             "名前": "濫觴無底",
-            "説明": "<span style=\"color:#FFD780FF\">神里流·鏡花</span>発動後、神里綾人の次に発動する瞬水剣が敵に命中した時、神里綾人の攻撃力450%分のダメージを持つ瞬水剣を2回追加で発動する。<br/>追加で発動する2回の瞬水剣は浪閃の効果を受けない。",
+            "説明": "<span style=\"color: rgb(255, 215, 128)\">神里流·鏡花</span>発動後、神里綾人の次に発動する瞬水剣が敵に命中した時、神里綾人の攻撃力450%分のダメージを持つ瞬水剣を2回追加で発動する。<br>追加で発動する2回の瞬水剣は浪閃の効果を受けない。",
             "icon_url": "images/characters/hydro_5_sword_KamisatoAyato/summaryList_6.png",
             "詳細": []
         }

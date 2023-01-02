@@ -146,8 +146,16 @@ def suppressNull(d):
 
 def normalizeObject(d):
     if type(d) == str:
-        return re.sub('<br>$', '', d.replace('<p>', '').replace('</p>', '<br>'))
-        #  return d
+        while True:
+            m = re.search('<custom-ruby data-ruby=\\"(.+?)\\"></custom-ruby>', d)
+            if m == None:
+                break
+            custom_ruby = m.group(0)
+            data_ruby = m.group(1)
+            data_ruby = re.sub('([^|]+)\|[^|]+\|?', '\\1', data_ruby)
+            d = d.replace(custom_ruby, data_ruby)
+        d = re.sub('<br>$', '', d.replace('<p>', '').replace('</p>', '<br>')).replace('・', '·').replace('<br>·', '<br>・')
+        return d
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):
@@ -192,14 +200,16 @@ for filepath in files:
     dstJson['名前'] = srcJson['name']
     dstJson['説明'] = srcJson['desc']
     dstJson['icon_url'] = ICON_URL_PATH + '/face/' + basename + '.png'
-    for value in srcJson['filter_values']['character_rarity']['values']:
+    filter_values = srcJson['filter_values']
+    for value in filter_values['character_rarity']['values']:
         dstJson['レアリティ'] = int(value.replace('★', '').replace('-Star', ''))
-    for value in srcJson['filter_values']['character_weapon']['values']:
+    for value in filter_values['character_weapon']['values']:
         dstJson['武器'] = t(value)
-    for value in srcJson['filter_values']['character_vision']['values']:
+    for value in filter_values['character_vision']['values']:
         dstJson['元素'] = t(value.replace('元素', ''))
-    for value in srcJson['filter_values']['character_region']['values']:
-        dstJson['region'] = t(value)
+    if 'character_region' in filter_values:
+        for value in filter_values['character_region']['values']:
+            dstJson['region'] = t(value)
 
     dstJson['ステータス'] = copy.deepcopy(templateJson['ステータス'])
     # for value in srcJson['filter_values']['character_property']['values']:
@@ -208,47 +218,55 @@ for filepath in files:
 
     for module in srcJson['modules']:
         for component in module['components']:
-            if (module['name'] == 'ステータス' or module['name'] == 'Attributes') and component['component_id'] == 'baseInfo':
+            # ステータス    baseInfo
+            if component['component_id'] == 'baseInfo':
                 for entry in component['data']['list']:
+                    key = entry['key']
                     if type(entry['value']) == list:
-                        dstJson['baseInfo'][entry['key']
-                                            ] = ','.join(entry['value'])
+                        value = ','.join(entry['value'])
                     else:
-                        dstJson['baseInfo'][entry['key']] = entry['value']
+                        value = entry['value']
+                    if key == 'オリジナル料理':
+                        m = re.match('.*\\"name\\":\\"(.+?)\\".*', value)
+                        if m != None:
+                            value = m.group(1)
+                    dstJson['baseInfo'][entry['key']] = value
 
-            elif (module['name'] == '突破' or module['name'] == 'Ascend') and component['component_id'] == 'ascension':
+            # 突破          ascension
+            elif component['component_id'] == 'ascension':
                 # 突破
                 for entry in component['data']['list']:
                     level = str.strip(entry['key'].replace('Lv.', ''))
                     for combat in entry['combatList']:
                         if combat['key'] == '':
                             continue
-                        statName = normalizeStatName(combat['key'])
-                        if not statName in dstJson['ステータス']:
-                            dstJson['ステータス'][statName] = {}
+                        key = normalizeStatName(combat['key'])
+                        if not key in dstJson['ステータス']:
+                            dstJson['ステータス'][key] = {}
                         if type(combat['values']) is list:
-                            statValue = combat['values'][0]
-                            if statValue != '-':
-                                dstJson['ステータス'][statName][level] = normalizeStatValue(
-                                    statValue)
-                            statValue = combat['values'][1]
-                            if statValue != '-':
-                                dstJson['ステータス'][statName][level + '+'] = normalizeStatValue(
-                                    statValue)
+                            value = combat['values'][0]
+                            if value != '-':
+                                value = normalizeStatValue(value)
+                                dstJson['ステータス'][key][level] = value
+                            value = combat['values'][1]
+                            if value != '-':
+                                value = normalizeStatValue(value)
+                                dstJson['ステータス'][key][level + '+'] = value
 
-            elif (module['name'] == '天賦' or module['name'] == 'Talents') and component['component_id'] == 'talent':
+            # 天賦          talent
+            elif component['component_id'] == 'talent':
                 # 天賦
-                for talentIndex, entry in enumerate(component['data']['list']):
-                    if talentIndex == 0:
-                        # 通常攻撃
-                        talentKind = '通常攻撃'
+                for index, entry in enumerate(component['data']['list']):
+                    # 通常攻撃
+                    if index == 0:
+                        category = '通常攻撃'
                         for attribute in entry['attributes']:
                             if attribute['key'] == '重撃ダメージ' or attribute['key'].find('狙い撃ち') != -1:
-                                talentKind = '重撃'
+                                category = '重撃'
                             elif attribute['key'].startswith('落下期間のダメージ'):
-                                talentKind = '落下攻撃'
-                            talentJson = dstJson[talentKind]
-                            if talentKind == '通常攻撃':
+                                category = '落下攻撃'
+                            talentJson = dstJson[category]
+                            if category == '通常攻撃':
                                 talentJson['名前'] = entry['title']
                                 talentJson['説明'] = entry['desc']
                                 iconFilename = entry['icon_url'].split(
@@ -263,8 +281,8 @@ for filepath in files:
                                 continue
                             if attribute['key'].endswith('スタミナ消費') or attribute['key'].endswith('継続時間'):
                                 for value in attribute['values']:
-                                    talentJson[attribute['key']
-                                               ] = normalizeFormulaValue(value)
+                                    value = normalizeFormulaValue(value)
+                                    talentJson[attribute['key']] = value
                                 continue
                             elif attribute['key'] == '低空/高空落下攻撃ダメージ':
                                 detailName1 = '低空落下攻撃ダメージ'
@@ -291,16 +309,16 @@ for filepath in files:
                                         '数値': {}
                                     }
                                     talentJson['詳細'].append(detailJson2)
-                                for index, item in enumerate(attribute['values']):
+                                for index2, item in enumerate(attribute['values']):
                                     splitted = item.split('/')
                                     newValue1 = normalizeFormulaValue(
                                         splitted[0])
                                     newValue2 = normalizeFormulaValue(
                                         splitted[1])
                                     detailJson1['数値'][str(
-                                        index + 1)] = newValue1
+                                        index2 + 1)] = newValue1
                                     detailJson2['数値'][str(
-                                        index + 1)] = newValue2
+                                        index2 + 1)] = newValue2
                                 continue
                             detailName = attribute['key']
                             detailJson = None
@@ -335,8 +353,9 @@ for filepath in files:
                                 if talentJson == dstJson['重撃'] and not detailJson['名前'].startswith('狙い撃ち'):
                                     detailJson['元素'] = dstJson['元素']
 
-                    elif entry['attributes'] is None or len(entry['attributes']) == 0:
-                        talentName = entry['title']
+                    # 固有天賦
+                    elif entry['attributes'] is None or entry['attributes'] == []:
+                        talentName = normalizeObject(entry['title'])   
                         talentJson = None
                         for workJson in dstJson['固有天賦']:
                             if talentName == workJson['名前']:
@@ -357,11 +376,11 @@ for filepath in files:
                         talentJson['icon_url'] = ICON_URL_PATH + \
                             '/' + basename + '/' + iconFilename
 
-                    elif len(entry['attributes'][0]['values']) < 2:
                         # その他戦闘天賦
+                    elif len(entry['attributes'][0]['values']) < 2:
                         if dstJson['その他戦闘天賦'] is None:
                             dstJson['その他戦闘天賦'] = []
-                        talentName = entry['title']
+                        talentName = normalizeObject(entry['title'])   
                         talentJson = None
                         for workJson in dstJson['その他戦闘天賦']:
                             if talentName == workJson['名前']:
@@ -383,11 +402,11 @@ for filepath in files:
                             '/' + basename + '/' + iconFilename
 
                     else:
-                        if talentKind == '元素スキル':
-                            talentKind = '元素爆発'
+                        if category == '元素スキル':
+                            category = '元素爆発'
                         else:
-                            talentKind = '元素スキル'
-                        talentJson = dstJson[talentKind]
+                            category = '元素スキル'
+                        talentJson = dstJson[category]
                         talentJson['名前'] = entry['title']
                         talentJson['説明'] = entry['desc']
                         iconFilename = entry['icon_url'].split(
