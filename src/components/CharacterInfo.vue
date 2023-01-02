@@ -153,7 +153,7 @@ type TTalentInfo = {
 };
 
 export default defineComponent({
-  name: "CharacterInfo",
+  name: 'CharacterInfo',
   props: {
     visible: { type: Boolean, required: true },
     mode: { type: Number, required: true },
@@ -170,7 +170,7 @@ export default defineComponent({
 
     const statsInfoList = computed((): any[] => {
       const result = [] as any[];
-      if ("ステータス" in props.characterMaster) {
+      if ('ステータス' in props.characterMaster) {
         for (const key of Object.keys((props.characterMaster as any).ステータス)) {
           const valueObj = (props.characterMaster as any).ステータス[key];
           const value = getStatValueByLevel(valueObj, props.ascension, props.level);
@@ -182,7 +182,7 @@ export default defineComponent({
 
     const constellationInfoList = computed((): TConstellationInfo[] => {
       const result = [] as TConstellationInfo[];
-      if ("命ノ星座" in props.characterMaster) {
+      if ('命ノ星座' in props.characterMaster) {
         for (const key of Object.keys((props.characterMaster as any).命ノ星座)) {
           result.push((props.characterMaster as any).命ノ星座[key]);
         }
@@ -192,7 +192,7 @@ export default defineComponent({
 
     const passiveTalentInfoList = computed((): TTalentInfo[] => {
       const result = [] as TTalentInfo[];
-      if ("固有天賦" in props.characterMaster) {
+      if ('固有天賦' in props.characterMaster) {
         for (const entry of (props.characterMaster as any).固有天賦) {
           result.push(entry);
         }
@@ -202,15 +202,15 @@ export default defineComponent({
 
     const talentNormalAttack = (key: string) => {
       let talentObj;
-      if (key == "通常攻撃") {
+      if (key == '通常攻撃') {
         talentObj = props.normalAttackReplacing[0]
           ? props.characterMaster.特殊通常攻撃
           : props.characterMaster.通常攻撃;
-      } else if (key == "重撃") {
+      } else if (key == '重撃') {
         talentObj = props.normalAttackReplacing[1]
           ? props.characterMaster.特殊重撃
           : props.characterMaster.重撃;
-      } else if (key == "落下攻撃") {
+      } else if (key == '落下攻撃') {
         talentObj = props.normalAttackReplacing[2]
           ? props.characterMaster.特殊落下攻撃
           : props.characterMaster.落下攻撃;
@@ -221,12 +221,12 @@ export default defineComponent({
     const levelNormalAttack = (key: string) => {
       let level = props.normalAttackLevel;
       const talentObj = talentNormalAttack(key);
-      if ("種類" in talentObj) {
-        switch (talentObj["種類"]) {
-          case "元素スキルダメージ":
+      if ('種類' in talentObj) {
+        switch (talentObj['種類']) {
+          case '元素スキルダメージ':
             level = props.elementalSkillLevel;
             break;
-          case "元素爆発ダメージ":
+          case '元素爆発ダメージ':
             level = props.elementalBurstLevel;
             break;
         }
@@ -236,7 +236,7 @@ export default defineComponent({
 
     const talentAttributes = (talentObj: TTalentInfo, level: number) => {
       const result = [] as any[];
-      ["継続時間", "クールタイム", "元素エネルギー"].forEach((suffix) => {
+      ['時間', 'クールタイム', '元素エネルギー'].forEach((suffix) => {
         const keyArr = Object.keys(talentObj).filter((s) => s.endsWith(suffix));
         for (const key of keyArr) {
           let value = talentObj[key];

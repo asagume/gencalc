@@ -353,7 +353,7 @@
     "命ノ星座": {
         "1": {
             "名前": "寄身の倚草",
-            "説明": "<span style=\"color: #FFD780\">縁草剣</span>が敵に命中すると、旅人の元素エネルギーが3.5回復する。",
+            "説明": "<span style=\"color: #FFD780\">草縁剣</span>が敵に命中すると、旅人の元素エネルギーが3.5回復する。",
             "icon_url": "images/characters/dendro_5_sword_Traveler/summaryList_1.png",
             "詳細": []
         },
@@ -365,7 +365,7 @@
         },
         "3": {
             "名前": "婆娑の瑶草",
-            "説明": "<span style=\"color: #FFD780\">縁草剣</span>のスキルLv.+3。<br>最大Lv.15まで。",
+            "説明": "<span style=\"color: #FFD780\">草縁剣</span>のスキルLv.+3。<br>最大Lv.15まで。",
             "icon_url": "images/characters/dendro_5_sword_Traveler/summaryList_3.png",
             "詳細": []
         },
