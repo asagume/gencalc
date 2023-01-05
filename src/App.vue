@@ -823,11 +823,6 @@ export default defineComponent({
         optionInputRea,
         recommendation.build
       );
-      if (recommendation.overwrite) {
-        characterInputRea.buildname = recommendation.name;
-      } else {
-        characterInputRea.buildname = '';
-      }
       if (!('精錬ランク' in recommendation.build)) {
         const weapon = characterInputRea.weapon;
         let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
@@ -922,6 +917,12 @@ export default defineComponent({
         conditionInputRea as any,
         statsInput
       );
+
+      if (recommendation.overwrite) {
+        characterInputRea.buildname = recommendation.name;
+      } else {
+        characterInputRea.buildname = '';
+      }
 
       characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = !recommendation.overwrite;
