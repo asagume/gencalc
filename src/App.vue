@@ -847,11 +847,6 @@ export default defineComponent({
         if (refine > maxRefine) refine = maxRefine;
         characterInputRea.武器精錬ランク = Number(refine);
       }
-      if ("artifactScoring" in recommendation.build) {
-        const work = recommendation.build.artifactScoring;
-        artifactScoringStats.splice(0, artifactScoringStats.length, ...work);
-        artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
-      }
       // チーム編成を反映します
       updateConditionByTeamMembers();
       // キャラクターのダメージ計算式を再抽出します
@@ -912,7 +907,6 @@ export default defineComponent({
       );
       // ステータス計算後、numberタイプの条件入力を更新します
       updateNumberConditionValues(conditionInputRea, characterInputRea, statsInput.statsObj);
-      conditionInputVmRef.value.initialize(conditionInputRea);
       // 再度、ステータスを計算します
       calculateStats(
         statsInput,
@@ -932,6 +926,10 @@ export default defineComponent({
       characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = !recommendation.overwrite;
 
+      await nextTick();
+      
+      conditionInputVmRef.value.initialize(conditionInputRea);
+      
       if ("options" in recommendation.build) {
         // 元素共鳴
         elementalResonanceInputVmRef.value.initializeValues(
@@ -943,6 +941,12 @@ export default defineComponent({
         }
         // その他
         miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
+      }
+
+      if ("artifactScoring" in recommendation.build) {
+        const work = recommendation.build.artifactScoring;
+        artifactScoringStats.splice(0, artifactScoringStats.length, ...work);
+        artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
       }
 
       characterInputRea.saveDisabled = true;
