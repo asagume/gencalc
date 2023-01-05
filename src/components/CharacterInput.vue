@@ -168,7 +168,7 @@
 </template>
 
 <script lang="ts">
-import i18n from "@/i18n";
+import i18n from '@/i18n';
 import {
   ARTIFACT_SET_MASTER_DUMMY,
   TCharacterInput,
@@ -176,7 +176,7 @@ import {
   突破レベルレベルARRAY,
   getMaxConstellation,
   getMaxTalentLevel,
-} from "@/input";
+} from '@/input';
 import {
   ELEMENT_BG_COLOR_CLASS,
   ELEMENT_COLOR_CLASS,
@@ -187,7 +187,7 @@ import {
   STAR_BACKGROUND_IMAGE_CLASS,
   TCharacterDetail,
   TWeaponDetail,
-} from "@/master";
+} from '@/master';
 import {
   computed,
   defineComponent,
@@ -195,11 +195,11 @@ import {
   PropType,
   reactive,
   ref,
-} from "vue";
-import CompositionFunction from "./CompositionFunction.vue";
+} from 'vue';
+import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
-  name: "CharacterInput",
+  name: 'CharacterInput',
   props: {
     characterInput: {
       type: Object as PropType<TCharacterInput>,
@@ -217,54 +217,54 @@ export default defineComponent({
     artifactScore: { type: Number, required: true },
   },
   emits: [
-    "open:character-select",
-    "open:character-info",
-    "update:recommendation",
-    "saveToStorage",
-    "removeFromStorage",
-    "open:weapon-select",
-    "open:artifact-set-select",
-    "open:artifact-detail-input",
-    "update:character-input-character",
-    "update:character-input-weapon",
-    "open:character-info",
+    'open:character-select',
+    'open:character-info',
+    'update:recommendation',
+    'saveToStorage',
+    'removeFromStorage',
+    'open:weapon-select',
+    'open:artifact-set-select',
+    'open:artifact-detail-input',
+    'update:character-input-character',
+    'update:character-input-weapon',
+    'open:character-info',
   ],
   setup(props, context) {
     const { displayName, targetValue } = CompositionFunction();
 
     const characterInputRea = reactive(props.characterInput);
 
-    const storageOrRecommendationRef = ref("0");
+    const storageOrRecommendationRef = ref('0');
 
     const displayBuildName = (item: TRecommendation) => {
-      if (i18n.global.locale.value == "ja-jp") return item.name;
+      if (i18n.global.locale.value == 'ja-jp') return item.name;
       // if (item.name == 'あなたの' + item.build['キャラクター']) {
       //   return 'Your ' + displayName(item.build['キャラクター']);
       // }
       if (item.overwrite) return item.name;
-      let result = "";
-      result += displayName(item.build["武器"]);
-      result += " - ";
-      if (item.build["聖遺物セット効果1"]) {
-        result += displayName(item.build["聖遺物セット効果1"]);
+      let result = '';
+      result += displayName(item.build['武器']);
+      result += ' - ';
+      if (item.build['聖遺物セット効果1']) {
+        result += displayName(item.build['聖遺物セット効果1']);
       }
       if (
-        item.build["聖遺物セット効果2"] &&
-        item.build["聖遺物セット効果2"] != item.build["聖遺物セット効果1"]
+        item.build['聖遺物セット効果2'] &&
+        item.build['聖遺物セット効果2'] != item.build['聖遺物セット効果1']
       ) {
-        result += "/";
-        result += displayName(item.build["聖遺物セット効果2"]);
+        result += '/';
+        result += displayName(item.build['聖遺物セット効果2']);
       }
-      result += "[";
+      result += '[';
       for (const key of [
-        "聖遺物メイン効果3",
-        "聖遺物メイン効果4",
-        "聖遺物メイン効果5",
+        '聖遺物メイン効果3',
+        '聖遺物メイン効果4',
+        '聖遺物メイン効果5',
       ]) {
-        const statAndRarity = item.build[key].split("_");
+        const statAndRarity = item.build[key].split('_');
         result += RECOMMEND_ABBREV_EN_MAP.get(statAndRarity[1]);
       }
-      result += "]";
+      result += ']';
       return result;
     };
 
@@ -281,7 +281,7 @@ export default defineComponent({
     const visionSrc = (item: TCharacterDetail) =>
       ELEMENT_IMG_SRC[item.元素] as string;
     const bgImageClass = (item: TCharacterDetail | TWeaponDetail) =>
-      (" " + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
+      (' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
     const colorClass = (item: TCharacterDetail) =>
       ELEMENT_COLOR_CLASS[item.元素] as string;
     const bgColorClass = (item: TCharacterDetail) =>
@@ -303,7 +303,7 @@ export default defineComponent({
       characterInputRea.saveDisabled = false; // 保存不可
       characterInputRea.removeDisabled = true; // 削除可能
       await nextTick();
-      context.emit("saveToStorage", characterInputRea.buildname);
+      context.emit('saveToStorage', characterInputRea.buildname);
     };
 
     /** 構成データを削除します */
@@ -311,7 +311,7 @@ export default defineComponent({
       characterInputRea.removeDisabled = false; // 削除不可
       characterInputRea.saveDisabled = true; // 保存可能
       await nextTick();
-      context.emit("removeFromStorage", characterInputRea.buildname);
+      context.emit('removeFromStorage', characterInputRea.buildname);
     };
 
     /** 突破レベルの範囲 */
@@ -348,25 +348,24 @@ export default defineComponent({
       if (!props.recommendationList || !value) return;
       await nextTick();
       const recommendation = props.recommendationList[Number(value)];
-      console.debug(recommendation.name);
-      context.emit("update:recommendation", recommendation);
+      context.emit('update:recommendation', recommendation);
     };
 
     /** 通常攻撃レベルの範囲 */
     const normalAttackLevelRange = computed(() => {
-      const max = getMaxTalentLevel(characterMaster.value, "通常攻撃");
+      const max = getMaxTalentLevel(characterMaster.value, '通常攻撃');
       return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
     /** 元素スキルレベルの範囲 命ノ星座は考慮しません */
     const elementalSkillLevelRange = computed(() => {
-      const max = getMaxTalentLevel(characterMaster.value, "元素スキル");
+      const max = getMaxTalentLevel(characterMaster.value, '元素スキル');
       return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
     /** 元素爆発レベルの範囲 命ノ星座は考慮しません */
     const elementalBurstLevelRange = computed(() => {
-      const max = getMaxTalentLevel(characterMaster.value, "元素爆発");
+      const max = getMaxTalentLevel(characterMaster.value, '元素爆発');
       return Array.from({ length: max }, (_, i) => i + 1); // 1-
     });
 
@@ -405,11 +404,11 @@ export default defineComponent({
     const artifactSetIndexRef = ref(0);
     const artifactSetSelectClass = (index: number) =>
       props.artifactSetSelectVisible && index == artifactSetIndexRef.value
-        ? " selected"
-        : "";
+        ? ' selected'
+        : '';
     const openArtifactSetSelect = (index: number) => {
       artifactSetIndexRef.value = index;
-      context.emit("open:artifact-set-select", index);
+      context.emit('open:artifact-set-select', index);
     };
 
     /** キャラクター情報を変更しました */
@@ -422,7 +421,7 @@ export default defineComponent({
       workInput.元素スキルレベル = characterInputRea.元素スキルレベル;
       workInput.元素爆発レベル = characterInputRea.元素爆発レベル;
       await nextTick();
-      context.emit("update:character-input-character", workInput);
+      context.emit('update:character-input-character', workInput);
     };
 
     /** 武器情報を変更しました */
@@ -432,7 +431,7 @@ export default defineComponent({
       workInput.武器レベル = characterInputRea.武器レベル;
       workInput.武器精錬ランク = characterInputRea.武器精錬ランク;
       await nextTick();
-      context.emit("update:character-input-weapon", workInput);
+      context.emit('update:character-input-weapon', workInput);
     };
 
     return {
@@ -470,7 +469,7 @@ export default defineComponent({
       artifactSetSelectClass,
       characterOnChange,
       weaponOnChange,
-      IMG_SRC_DUMMY: IMG_SRC_DUMMY,
+      IMG_SRC_DUMMY,
     };
   },
 });

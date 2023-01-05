@@ -237,30 +237,30 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash";
-import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
-import TitleAndHeader from "@/components/TitleAndHeader.vue";
-import CharacterSelect from "@/components/CharacterSelect.vue";
-import CharacterInput from "@/components/CharacterInput.vue";
-import CharacterInfo from "@/components/CharacterInfo.vue";
-import WeaponSelect from "@/components/WeaponSelect.vue";
-import ArtifactSetSelect from "@/components/ArtifactSetSelect.vue";
-import ArtifactDetailInput from "@/components/ArtifactDetailInput.vue";
-import ConditionInput from "@/components/ConditionInput.vue";
-import StatsInput from "@/components/StatsInput.vue";
-import NextStat from "@/components/NextStat.vue";
-import EasyTeamInput from "@/components/EasyTeamInput.vue";
-import ElementalResonanceInput from "@/components/ElementalResonanceInput.vue";
-import TeamOptionInput from "@/components/TeamOptionInput.vue";
-import MiscOptionInput from "@/components/MiscOptionInput.vue";
-import DamageResult from "@/components/DamageResult.vue";
-import RotationDamage from "@/components/RotationDamage.vue";
-import ShareSns from "@/components/ShareSns.vue";
-import AboutMyApp from "@/components/AboutMyApp.vue";
-import ConfigurationInput from "@/components/ConfigurationInput.vue";
-import CharacterOwnList from "@/components/CharacterOwnList.vue";
-import WeaponOwnList from "@/components/WeaponOwnList.vue";
-import ArtifactOwnList from "@/components/ArtifactOwnList.vue";
+import _ from 'lodash';
+import { computed, defineComponent, nextTick, PropType, reactive, ref } from 'vue';
+import TitleAndHeader from '@/components/TitleAndHeader.vue';
+import CharacterSelect from '@/components/CharacterSelect.vue';
+import CharacterInput from '@/components/CharacterInput.vue';
+import CharacterInfo from '@/components/CharacterInfo.vue';
+import WeaponSelect from '@/components/WeaponSelect.vue';
+import ArtifactSetSelect from '@/components/ArtifactSetSelect.vue';
+import ArtifactDetailInput from '@/components/ArtifactDetailInput.vue';
+import ConditionInput from '@/components/ConditionInput.vue';
+import StatsInput from '@/components/StatsInput.vue';
+import NextStat from '@/components/NextStat.vue';
+import EasyTeamInput from '@/components/EasyTeamInput.vue';
+import ElementalResonanceInput from '@/components/ElementalResonanceInput.vue';
+import TeamOptionInput from '@/components/TeamOptionInput.vue';
+import MiscOptionInput from '@/components/MiscOptionInput.vue';
+import DamageResult from '@/components/DamageResult.vue';
+import RotationDamage from '@/components/RotationDamage.vue';
+import ShareSns from '@/components/ShareSns.vue';
+import AboutMyApp from '@/components/AboutMyApp.vue';
+import ConfigurationInput from '@/components/ConfigurationInput.vue';
+import CharacterOwnList from '@/components/CharacterOwnList.vue';
+import WeaponOwnList from '@/components/WeaponOwnList.vue';
+import ArtifactOwnList from '@/components/ArtifactOwnList.vue';
 import {
   TRecommendation,
   makeRecommendationList,
@@ -296,7 +296,7 @@ import {
   ステータスチーム内最高ARRAY,
   TStats,
   TArtifact,
-} from "@/input";
+} from '@/input';
 import {
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
@@ -310,7 +310,7 @@ import {
   TArtifactSubKey,
   TCharacterKey,
   TWeaponKey,
-} from "@/master";
+} from '@/master';
 import {
   ALL_ELEMENTS,
   ARTIFACT_SCORE_FORMULA_TEMPLATE,
@@ -323,14 +323,14 @@ import {
   calculateSupporter,
   TArtifactScoreFormula,
   TRotationDamageInfo,
-} from "@/calculate";
-import { overwriteObject } from "@/common";
-import { calculateDamageResult } from "@/calculate";
-import CompositionFunction from "@/components/CompositionFunction.vue";
-import ArtifactScoreFormula from "./components/ArtifactScoreFormula.vue";
+} from '@/calculate';
+import { overwriteObject } from '@/common';
+import { calculateDamageResult } from '@/calculate';
+import CompositionFunction from '@/components/CompositionFunction.vue';
+import ArtifactScoreFormula from './components/ArtifactScoreFormula.vue';
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   props: {
     characterInput: {
       type: Object as PropType<TCharacterInput>,
@@ -453,26 +453,26 @@ export default defineComponent({
       return configurationInputRea['聖遺物詳細サブ効果オンリー'];
     });
 
-    setI18nLanguage("en-us");
-    setI18nLanguage("ja-jp");
+    setI18nLanguage('en-us');
+    setI18nLanguage('ja-jp');
 
     // ステータス1, ステータス2, 敵
     const statsInput = reactive(_.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput);
-    const characterStats1Category1List = ["基本ステータス", "高級ステータス"];
+    const characterStats1Category1List = ['基本ステータス', '高級ステータス'];
     const characterStats1Category2List = [
-      "元素ステータス·ダメージ",
-      "ダメージバフ",
-      "実数ダメージ加算",
-      "元素反応バフ",
+      '元素ステータス·ダメージ',
+      'ダメージバフ',
+      '実数ダメージ加算',
+      '元素反応バフ',
     ];
-    const characterStats2Category1List = ["基礎ステータス", "元素ステータス·耐性"];
-    const characterStats2Category2List = ["その他", 'ステータス連動', 'チーム内最高値'];
-    const enemyStatsCategory1List = ["敵ステータス·元素耐性"];
-    const enemyStatsCategory2List = ["敵ステータス·その他"];
+    const characterStats2Category1List = ['基礎ステータス', '元素ステータス·耐性'];
+    const characterStats2Category2List = ['その他', 'ステータス連動', 'チーム内最高値'];
+    const enemyStatsCategory1List = ['敵ステータス·元素耐性'];
+    const enemyStatsCategory2List = ['敵ステータス·その他'];
     const enemyList = ENEMY_MASTER_LIST;
     const selectedEnemyRef = ref(enemyList[0]);
-    statsInput.statAdjustments["敵レベル"] = 90;
-    statsInput.statAdjustments["敵防御力"] = 0;
+    statsInput.statAdjustments['敵レベル'] = 90;
+    statsInput.statAdjustments['敵防御力'] = 0;
 
     // 元素共鳴, チーム, その他
     const optionInputRea = reactive(_.cloneDeep(OPTION_INPUT_TEMPLATE) as TOptionInput);
@@ -531,7 +531,7 @@ export default defineComponent({
         }
       });
       savedSupporters.splice(0, savedSupporters.length, ...work);
-      console.log("App", "savedSupporters", savedSupporters);
+      console.log('App', 'savedSupporters', savedSupporters);
 
       const list: Promise<void>[] = [];
       savedSupporters.forEach(savedSupporter => {
@@ -545,7 +545,7 @@ export default defineComponent({
     setupSavedSupporters();
 
     const normalAttackReplacing = computed((): boolean[] => {
-      const KEY_ARR = ["特殊通常攻撃", "特殊重撃", "特殊落下攻撃"];
+      const KEY_ARR = ['特殊通常攻撃', '特殊重撃', '特殊落下攻撃'];
       const result = [false, false, false];
       const talentObjArr = Object.keys(characterInputRea.characterMaster)
         .filter((s) => KEY_ARR.includes(s))
@@ -660,16 +660,16 @@ export default defineComponent({
       let identifier = characterInputRea.character;
       const defaultBuildname = [makeDefaultBuildname(characterInputRea.character)];
       if (buildname && !defaultBuildname.includes(buildname)) {
-        identifier += "_" + buildname;
+        identifier += '_' + buildname;
       }
 
-      const storageKey = "構成_" + identifier;
+      const storageKey = '構成_' + identifier;
       localStorage.removeItem(storageKey);
 
-      const storageKey2 = "オプション構成_" + identifier;
+      const storageKey2 = 'オプション構成_' + identifier;
       localStorage.removeItem(storageKey2);
 
-      const storageKey3 = "ArtifactScoring_" + identifier;
+      const storageKey3 = 'ArtifactScoring_' + identifier;
       localStorage.removeItem(storageKey3);
 
       // おすすめセットのリストを更新します
@@ -814,8 +814,8 @@ export default defineComponent({
 
     /** おすすめセットを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
     const updateRecommendation = async (recommendation: TRecommendation) => {
-      console.debug("updateRecommendation", recommendation);
-      if (!characterInputRea || !artifactDetailInputRea || !conditionInputRea) return;
+      console.log('updateRecommendation', recommendation);
+      if (!characterInputRea || !artifactDetailInputRea || !conditionInputRea || !optionInputRea) return;
       await loadRecommendation(
         characterInputRea,
         artifactDetailInputRea,
@@ -826,21 +826,21 @@ export default defineComponent({
       if (recommendation.overwrite) {
         characterInputRea.buildname = recommendation.name;
       } else {
-        characterInputRea.buildname = "";
+        characterInputRea.buildname = '';
       }
-      if (!("精錬ランク" in recommendation.build)) {
+      if (!('精錬ランク' in recommendation.build)) {
         const weapon = characterInputRea.weapon;
         let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
         let savedRefine;
-        if ("武器所持状況" in localStorage) {
-          const myWeaponOwnObj = JSON.parse(localStorage["武器所持状況"]);
+        if ('武器所持状況' in localStorage) {
+          const myWeaponOwnObj = JSON.parse(localStorage['武器所持状況']);
           if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon]) {
             savedRefine = Number(myWeaponOwnObj[weapon]);
           }
         }
         if (savedRefine) {
           refine = savedRefine;
-        } else if ("精錬ランク" in characterInputRea.weaponMaster) {
+        } else if ('精錬ランク' in characterInputRea.weaponMaster) {
           refine = characterInputRea.weaponMaster.精錬ランク;
         }
         const maxRefine = characterInputRea.weaponMaster.レアリティ < 3 ? 1 : 5;
@@ -865,7 +865,7 @@ export default defineComponent({
       );
       let doCalculate = !artifactDetailInputRea.聖遺物優先するサブ効果Disabled;
       if (
-        "聖遺物サブ効果計算停止" in configurationInputRea &&
+        '聖遺物サブ効果計算停止' in configurationInputRea &&
         configurationInputRea.聖遺物サブ効果計算停止
       ) {
         doCalculate = false;
@@ -930,7 +930,7 @@ export default defineComponent({
       
       conditionInputVmRef.value.initialize(conditionInputRea);
       
-      if ("options" in recommendation.build) {
+      if ('options' in recommendation.build) {
         // 元素共鳴
         elementalResonanceInputVmRef.value.initializeValues(
           optionInputRea.elementalResonance
@@ -943,7 +943,7 @@ export default defineComponent({
         miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
       }
 
-      if ("artifactScoring" in recommendation.build) {
+      if ('artifactScoring' in recommendation.build) {
         const work = recommendation.build.artifactScoring;
         artifactScoringStats.splice(0, artifactScoringStats.length, ...work);
         artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
@@ -961,7 +961,7 @@ export default defineComponent({
         !conditionInputRea
       )
         return;
-      console.debug("updateCharacter", character);
+      console.debug('updateCharacter', character);
 
       if (damageResultVmRef.value) {
         damageResultVmRef.value.clearCopiedDamageResult();
@@ -972,8 +972,8 @@ export default defineComponent({
       characterInputRea.character = character;
       characterInputRea.characterMaster = await getCharacterMasterDetail(character);
       let constellation = 0;
-      if ("キャラクター所持状況" in localStorage) {
-        const myCharacterOwnObj = JSON.parse(localStorage["キャラクター所持状況"]);
+      if ('キャラクター所持状況' in localStorage) {
+        const myCharacterOwnObj = JSON.parse(localStorage['キャラクター所持状況']);
         if (character in myCharacterOwnObj && myCharacterOwnObj[character]) {
           constellation = Number(myCharacterOwnObj[character]);
         }
@@ -999,15 +999,15 @@ export default defineComponent({
           }
         }
       }
-      // const maxNormalAttack = getMaxTalentLevel(characterInputRea.characterMaster, "通常攻撃");
+      // const maxNormalAttack = getMaxTalentLevel(characterInputRea.characterMaster, '通常攻撃');
       // if (characterInputRea.通常攻撃レベル > maxNormalAttack) {
       //   characterInputRea.通常攻撃レベル = maxNormalAttack;
       // }
-      // const maxElementalSkill = getMaxTalentLevel(characterInputRea.characterMaster, "元素スキル");
+      // const maxElementalSkill = getMaxTalentLevel(characterInputRea.characterMaster, '元素スキル');
       // if (characterInputRea.元素スキルレベル > maxElementalSkill) {
       //   characterInputRea.元素スキルレベル = maxElementalSkill;
       // }
-      // const maxElementalBurst = getMaxTalentLevel(characterInputRea.characterMaster, "元素爆発");
+      // const maxElementalBurst = getMaxTalentLevel(characterInputRea.characterMaster, '元素爆発');
       // if (characterInputRea.元素爆発レベル > maxElementalBurst) {
       //   characterInputRea.元素爆発レベル = maxElementalBurst;
       // }
@@ -1128,15 +1128,15 @@ export default defineComponent({
       );
       let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
       let savedRefine;
-      if ("武器所持状況" in localStorage) {
-        const myWeaponOwnObj = JSON.parse(localStorage["武器所持状況"]);
+      if ('武器所持状況' in localStorage) {
+        const myWeaponOwnObj = JSON.parse(localStorage['武器所持状況']);
         if (weapon in myWeaponOwnObj && myWeaponOwnObj[weapon]) {
           savedRefine = Number(myWeaponOwnObj[weapon]);
         }
       }
       if (savedRefine) {
         refine = savedRefine;
-      } else if ("精錬ランク" in characterInputRea.weaponMaster) {
+      } else if ('精錬ランク' in characterInputRea.weaponMaster) {
         refine = characterInputRea.weaponMaster.精錬ランク;
       }
       const maxRefine = characterInputRea.weaponMaster.レアリティ < 3 ? 1 : 5;
@@ -1581,7 +1581,7 @@ export default defineComponent({
     const updateConfigurationInput = (argConfigurationInput: TAnyObject) => {
       console.debug(argConfigurationInput);
       if (argConfigurationInput.全武器解放) {
-        console.log("全武器解放");
+        console.log('全武器解放');
       }
       if (argConfigurationInput.聖遺物サブ効果計算停止) {
         artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
