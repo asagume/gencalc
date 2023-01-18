@@ -3,7 +3,7 @@ $destFolder = Join-Path (Get-Location).Path -ChildPath "RawData"
 
 $pageIds = @()
 ### キャラクター
-$pageIds += @(1..51)
+# $pageIds += @(1..51)
 # $pageIds += 2252   # 夜蘭
 # $pageIds += 2256   # 久岐忍
 # $pageIds += 2263   # 鹿野院平蔵
@@ -18,6 +18,8 @@ $pageIds += @(1..51)
 # $pageIds += 2859   # レイラ
 # $pageIds += 2967   # ファルザン
 # $pageIds += 2968   # 放浪者
+$pageIds += 3335   # ヨォーヨ
+$pageIds += 3336   # アルハイゼン
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -39,6 +41,7 @@ $pageIds += @(1..51)
 # $pageIds += 2966   # 千夜に浮かぶ夢
 # $pageIds += 3319   # 東花坊時雨
 # $pageIds += 3320   # トゥライトゥーラの記憶
+$pageIds += 3461   # 萃光の裁葉
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -56,7 +59,7 @@ $pageIds += @(1..51)
 # $pageIds += 2259
 # $pageIds += 2260
 
-$doDownloadImg = $false
+$doDownloadImg = $true
 $imgLanguage = 'ja-jp'
 
 $categoryMap = @{

@@ -208,6 +208,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "ヨォーヨ": {
+    "レアリティ": 4,
+    "元素": "草",
+    "武器": "長柄武器",
+    "誕生日": "3/6",
+    "import": "data/characters/dendro_4_polearm_Yaoyao.json"
+  },
   "ファルザン": {
     "レアリティ": 4,
     "元素": "風",
