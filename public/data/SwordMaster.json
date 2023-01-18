@@ -1,4 +1,8 @@
 {
+  "萃光の裁葉": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_LightofFoliarIncision.json"
+  },
   "聖顕の鍵": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_KeyofKhaj-Nisut.json"
