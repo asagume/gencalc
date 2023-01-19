@@ -208,6 +208,14 @@
     "max_level": 90
   },
   {
+    "id": 11512,
+    "name": "萃光の裁葉",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 11511,
     "name": "聖顕の鍵",
     "icon": null,

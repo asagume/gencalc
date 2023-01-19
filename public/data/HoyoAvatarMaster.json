@@ -1,5 +1,14 @@
 [
   {
+    "id": 10000078,
+    "name": "アルハイゼン",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90
+  },
+  {
     "id": 10000075,
     "name": "放浪者",
     "icon": null,
@@ -267,6 +276,15 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000077,
+    "name": "ヨォーヨ",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 4,
     "max_level": 90
   },
   {

@@ -2,6 +2,53 @@
   {
     "skill_list": [
       {
+        "id": 10781,
+        "group_id": 7831,
+        "name": "通常攻撃·リトロダクション",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10782,
+        "group_id": 7832,
+        "name": "共相·イデア模写",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10785,
+        "group_id": 7839,
+        "name": "殊境·顕象結縛",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 7821,
+        "group_id": 7821,
+        "name": "四因是正",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7822,
+        "group_id": 7822,
+        "name": "謎林説破",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7823,
+        "group_id": 7823,
+        "name": "超越還元律",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000078
+  },
+  {
+    "skill_list": [
+      {
         "id": 10751,
         "group_id": 7531,
         "name": "通常攻撃·幡舞鳴弦",
@@ -1429,6 +1476,53 @@
       }
     ],
     "avatar_id": 10000062
+  },
+  {
+    "skill_list": [
+      {
+        "id": 10771,
+        "group_id": 7731,
+        "name": "通常攻撃·顛撲連撃槍",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10772,
+        "group_id": 7732,
+        "name": "祥雲団々落清白",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10775,
+        "group_id": 7739,
+        "name": "玉颗珊々月中落",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 7721,
+        "group_id": 7721,
+        "name": "天星零落",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7722,
+        "group_id": 7722,
+        "name": "先意承問",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 7723,
+        "group_id": 7723,
+        "name": "爪立ち·躡景足跡",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000077
   },
   {
     "skill_list": [
