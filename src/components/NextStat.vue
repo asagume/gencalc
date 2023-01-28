@@ -25,7 +25,7 @@
                                 {{ Math.round(row[4] * 1000) / 1000 + '%' }}
                             </td>
                             <td class="count">
-                                <input type="range" min="0" max="5" v-model="row[3]" @change="nextStatOnChange">
+                                <input type="range" min="-3" max="5" v-model="row[3]" @change="nextStatOnChange">
                             </td>
                             <td>
                                 {{ displayNextStatValue(row) }}

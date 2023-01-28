@@ -82,9 +82,9 @@ import {
   TDamageResultElementalReactionKey,
 } from "@/input";
 import {
-  DAMAGE_CATEGORY_ARRAY,
   ELEMENT_COLOR_CLASS,
   ELEMENT_IMG_SRC,
+  IMG_SRC_DUMMY,
   TCharacterDetail,
   TElementColorClassKey,
 } from "@/master";
@@ -142,19 +142,26 @@ export default defineComponent({
 
     const itemList = computed(() => {
       const result = [] as TRotationDamageEntryCustom[];
-      DAMAGE_CATEGORY_ARRAY.forEach((categoryDmg) => {
-        const category = categoryDmg.replace(/ダメージ$/, "");
-        const iconCategory = ["重撃", "落下攻撃"].includes(category)
-          ? "通常攻撃"
-          : category;
+      ['通常攻撃', '落下攻撃', '重撃', '元素スキル', '元素爆発', 'その他'].forEach((category) => {
+        if (!(category in props.damageResult)) {
+          return;
+        }
         const entry = {} as TRotationDamageEntryCustom;
+        entry.category = category;
         entry.id = id++;
         entry.name = category;
-        entry.src = (characterMaster.value as any)[iconCategory].icon_url;
-        entry.category = category;
+        if (category == 'その他') {
+          entry.src = IMG_SRC_DUMMY;
+        } else {
+          const iconCategory = ["重撃", "落下攻撃"].includes(category) ? "通常攻撃" : category;
+          entry.src = (characterMaster.value as any)[iconCategory].icon_url;
+        }
         entry.reactions = [] as object[];
         entry.counts = [] as number[];
         const list = getDamageResultArr(entry, props.damageResult);
+        if (list.length == 0) {
+          return;
+        }
         for (let i = 0; i < list.length; i++) {
           entry.reactions.push({});
           if (["落下期間のダメージ"].includes(list[i][0])) {

@@ -1173,11 +1173,11 @@ function calculateDamageFromDetail(
                                 newValue = addCondition.数値;
                             }
                             if (newValue !== null && isNumber(newValue)) {
-                                if (newValue < 0) {
+                                if ((newValue as number) < 0) {
                                     newValue = 0;
                                 } else {
                                     conditionInput.selectList.filter(s => s.name == addCondition.名前).forEach(entry => {
-                                        if (newValue !== null && newValue >= entry.options.length) {
+                                        if (newValue !== null && (newValue as number) >= entry.options.length) {
                                             newValue = entry.options.length - 1;
                                         }
                                     })
