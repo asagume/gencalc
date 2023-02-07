@@ -120,6 +120,10 @@
       </ol>
       <hr />
       <dl class="history">
+        <dt>0.3.0 (2023/02/07)</dt>
+        <dd>
+          Enka Networkの新APIに対応
+        </dd>
         <dt>0.2.4</dt>
         <dd>
           聖遺物の個別取込の準備
@@ -612,7 +616,7 @@ export default defineComponent({
 
     const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
-      const url = 'https://enka.network/u/' + uid.value + '/__data.json';
+      const url = 'https://enka.network/api/uid/' + uid.value + '/';
       // const url = 'data/__data_2.json';
       fetch(url)
         .then((resp) => resp.json())
