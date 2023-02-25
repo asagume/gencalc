@@ -149,19 +149,19 @@
                 <span> {{ displayNameV(item[0]) }} </span>
                 <span class="tooltip" v-html="displayDamageParam(item)" v-if="displayDamageParam(item)"></span>
               </th>
-              <td :class="'damage-value ' + elementClass(item[1])">
+              <td :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 2, category) }}
                 <span class="savepoint" v-if="displayCopiedDamageValue(index, 2, category)">
                   <br /> {{ displayCopiedDamageValue(index, 2, category) }}
                 </span>
               </td>
-              <td :class="'damage-value ' + elementClass(item[1])">
+              <td :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 3, category) }}
                 <span class="savepoint" v-if="displayCopiedDamageValue(index, 3, category)">
                   <br /> {{ displayCopiedDamageValue(index, 3, category) }}
                 </span>
               </td>
-              <td :class="'damage-value ' + elementClass(item[1])">
+              <td :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 4, category) }}
                 <span class="savepoint" v-if="displayCopiedDamageValue(index, 4, category)">
                   <br /> {{ displayCopiedDamageValue(index, 4, category) }}
@@ -183,20 +183,20 @@
           </thead>
           <tr>
             <th>{{ displayName("期待値") }}</th>
-            <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
+            <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1], item[5])">
               {{ displayDamageValue(item, 2, category) }}
             </td>
           </tr>
           <template v-if="categoryOpenClose[category]">
             <tr>
               <th>{{ displayName("会心") }}</th>
-              <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
+              <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 3, category) }}
               </td>
             </tr>
             <tr>
               <th>{{ displayName("非会心") }}</th>
-              <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1])">
+              <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 4, category) }}
               </td>
             </tr>
@@ -266,8 +266,12 @@ export default defineComponent({
 
     const 元素反応 = reactive(props.damageResult.元素反応);
     const 増幅反応 = ref("なし");
-    const elementClass = (item: string) =>
-      ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
+    const elementClass = (item: string, opt_kind?: string) => {
+      if (opt_kind == 'HP回復') {
+        return 'healing';
+      }
+      return ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
+    };
     const resultStyleRef = ref("1");
 
     const copiedDamageResult = reactive({} as TDamageResult);
@@ -684,5 +688,9 @@ button {
   margin-top: 5px;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.healing {
+    color: #bcf485;
 }
 </style>
