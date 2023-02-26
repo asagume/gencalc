@@ -1,4 +1,8 @@
 {
+  "葦海の標": {
+    "レアリティ": 5,
+    "import": "data/weapons/claymore/5_BeaconoftheReedSea.json"
+  },
   "赤角石塵滅砕": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_RedhornStonethresher.json"
@@ -18,6 +22,10 @@
   "天空の傲": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
+  },
+  "鉄彩の花": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_MailedFlower.json"
   },
   "マカイラの水色": {
     "レアリティ": 4,
