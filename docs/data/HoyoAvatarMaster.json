@@ -1,5 +1,14 @@
 [
   {
+    "id": 10000079,
+    "name": "ディシア",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90
+  },
+  {
     "id": 10000078,
     "name": "アルハイゼン",
     "icon": null,

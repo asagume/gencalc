@@ -134,8 +134,12 @@ for filepath in files:
                     #                     ] = ','.join(entry['value'])
                     if entry['key'] not in ['名称', '入手方法', '種類', 'サブステータス', '精錬素材', '鍛造素材']:
                         dstJson['武器スキル']['名前'] = entry['key']
-                        dstJson['武器スキル']['説明'] = re.sub(
-                            '<.*?>', '', ','.join(entry['value']))
+                        if isinstance(entry['value'], list):
+                            dstJson['武器スキル']['説明'] = re.sub(
+                                '<.*?>', '', ','.join(entry['value']))
+                        elif isinstance(entry['value'], str):
+                            dstJson['武器スキル']['説明'] = re.sub(
+                                '<.*?>', '', entry['value'])
 
             elif module['name'] == '突破' and component['component_id'] == 'ascension':
                 # 突破

@@ -168,6 +168,14 @@
     "max_level": 90
   },
   {
+    "id": 12511,
+    "name": "葦海の標",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 12510,
     "name": "赤角石塵滅砕",
     "icon": null,
