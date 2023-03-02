@@ -1225,7 +1225,7 @@ export default defineComponent({
         1,
         tempMaster as TArtifactSetEntry
       );
-      artifactSetSelectVisibleRef.value = false;
+      // artifactSetSelectVisibleRef.value = false;
       // 聖遺物セット効果のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjArtifactSets(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
