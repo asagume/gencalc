@@ -1121,7 +1121,7 @@ export default defineComponent({
     /** 武器を選択しました */
     const updateWeapon = async (weapon: TWeaponKey) => {
       if (!characterInputRea) return;
-      weaponSelectVisibleRef.value = false;
+      // weaponSelectVisibleRef.value = false;
       characterInputRea.weapon = weapon;
       characterInputRea.weaponMaster = await getWeaponMasterDetail(
         weapon
