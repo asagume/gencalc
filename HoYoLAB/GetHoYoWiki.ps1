@@ -20,7 +20,7 @@ $pageIds = @()
 # $pageIds += 2968   # 放浪者
 # $pageIds += 3335   # ヨォーヨ
 # $pageIds += 3336   # アルハイゼン
-$pageIds += 3463   # ディシア
+# $pageIds += 3463   # ディシア
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -43,7 +43,8 @@ $pageIds += 3463   # ディシア
 # $pageIds += 3319   # 東花坊時雨
 # $pageIds += 3320   # トゥライトゥーラの記憶
 # $pageIds += 3461   # 萃光の裁葉
-$pageIds += 3615   # 葦海の標
+$pageIds += 3614   # 鉄彩の花
+# $pageIds += 3615   # 葦海の標
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
