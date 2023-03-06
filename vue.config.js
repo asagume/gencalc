@@ -33,6 +33,11 @@ module.exports = defineConfig({
       template: 'public/CritTarget.html',
       filename: 'CritTarget.html',
     },
+    RecommendationList: {
+      entry: 'src/pages/RecommendationList/main.ts',
+      template: 'public/RecommendationList.html',
+      filename: 'RecommendationList.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'

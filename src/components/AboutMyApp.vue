@@ -38,6 +38,9 @@
             <a href="CritTarget.html">会心目標</a>
         </p>
         <p>
+            <a href="RecommendationList.html">おすすめセット一覧</a>
+        </p>
+        <p>
             <a href="index2.html">旧バージョン(V2)</a>
         </p>
     </fieldset>

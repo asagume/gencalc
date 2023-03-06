@@ -8,7 +8,7 @@
     </div>
     []
     <div class="pane2">
-      <vue-good-table :columns="columns" :rows="recommendationList" />
+      <vue-good-table :columns="columns" :rows="recommendationList" theme="nocturnal" :line-numbers="true" />
     </div>
 
     <div class="footer">
@@ -38,7 +38,7 @@ export default defineComponent({
       { label: 'キャラクター', field: 'character', },
       { label: 'ICON', field: 'icon', html: true, },
       { label: '武器', field: 'weapon', html: true, },
-      { label: '聖遺物セット', field: 'artifactSet', html: true, },
+      { label: '聖遺物セット効果', field: 'artifactSet', html: true, },
       { label: '時の砂', field: 'artifactMain3', html: true, },
       { label: '空の杯', field: 'artifactMain4', html: true, },
       { label: '理の冠', field: 'artifactMain5', html: true, },
@@ -51,8 +51,9 @@ export default defineComponent({
     const recommendationList = computed(() => {
       initialized.value;
       const result: any[] = [];
-      characterMasterMap.forEach((value, key) => {
-        const characterMasterDetail = value;
+      for (const character of Object.keys(CHARACTER_MASTER)) {
+        const characterMasterDetail = characterMasterMap.get(character);
+        if (!characterMasterDetail) continue;
         const recommendationArr = characterMasterDetail.おすすめセット;
         for (const recommendation of recommendationArr) {
           const weaponMaster = (WEAPON_MASTER as any)[characterMasterDetail.武器][recommendation.武器];
@@ -71,7 +72,7 @@ export default defineComponent({
           const artifactMain4Text = recommendation.聖遺物メイン効果4.replace(/^\d_/, '').replace(/バフ$/, "");
           const artifactMain5Text = recommendation.聖遺物メイン効果5.replace(/^\d_/, '');
           const entry = {
-            character: key,
+            character: character,
             icon: iconHtml,
             weapon: recommendation.武器,
             artifactMain3: artifactMain3Text,
@@ -84,7 +85,7 @@ export default defineComponent({
           };
           result.push(entry);
         }
-      });
+      }
       return result;
     });
 
