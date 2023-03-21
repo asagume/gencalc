@@ -672,6 +672,14 @@
     "max_level": 90
   },
   {
+    "id": 12418,
+    "name": "鉄彩の花",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 12417,
     "name": "森林のレガリア",
     "icon": null,

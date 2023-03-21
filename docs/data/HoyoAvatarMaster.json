@@ -288,6 +288,15 @@
     "max_level": 90
   },
   {
+    "id": 10000080,
+    "name": "ミカ",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
     "id": 10000077,
     "name": "ヨォーヨ",
     "icon": null,

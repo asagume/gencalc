@@ -222,6 +222,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "ミカ": {
+    "レアリティ": 4,
+    "元素": "氷",
+    "武器": "長柄武器",
+    "誕生日": "8/11",
+    "import": "data/characters/cryo_4_polearm_Mika.json"
+  },
   "ヨォーヨ": {
     "レアリティ": 4,
     "元素": "草",
