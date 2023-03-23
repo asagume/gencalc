@@ -55,17 +55,36 @@
             color: blue;
         }
 
-        table.calendar tr td img {
-            width: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-
         table.calendar tr td p {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -100%);
+        }
+
+        .face-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .square::before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+
+        .face {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .face-2 {
+            position: absolute;
+            width: 70%;
+            height: 70%;
         }
     </style>
 </head>
@@ -121,11 +140,22 @@
                     <tr v-for="week in month">
                         <td :class="'day ' + (day == 0 ? 'sunday': day == 6 ? 'saturday' : '')"
                             v-for="(date, day) in week">
-                            <template v-if="date.name">
-                                <img :src="date.url" :alt="date.name">
+                            <template v-if="date.characters && date.characters.length">
+                                <template v-if="date.characters.length == 1">
+                                    <img class="face" :src="date.characters[0].url" :alt="date.characters[0].name">
+                                </template>
+                                <template v-if="date.characters.length == 2">
+                                    <div class="face-box square">
+                                        <img class="face face-2" :src="date.characters[0].url"
+                                            :alt="date.characters[0].name" style="left: 0; top: 0">
+                                        <img class="face face-2" :src="date.characters[1].url"
+                                            :alt="date.characters[1].name" style="right: 0; bottom: 0">
+                                    </div>
+                                </template>
                             </template>
                             <template v-else>
-                                <img src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                                <img class="face"
+                                    src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
                                     :alt="date.day">
                                 <p>{{date.day}}</p>
                             </template>
@@ -204,19 +234,20 @@
                     week = [];
                 }
                 const dayObj = {
-                    day: day
+                    day: day,
+                    characters: [],
                 };
-                for (let characterUrl of CharacterImageList) {
+                for (const characterUrl of CharacterImageList) {
                     if (characterUrl['birthday']) {
                         const splitted = characterUrl['birthday'].split('/');
-                        if (month == (splitted[0] - 1) && day == splitted[1]) {
-                            dayObj['name'] = characterUrl.name;
-                            dayObj['rarity'] = characterUrl.rarity;
-                            dayObj['vision'] = characterUrl.vision;
-                            dayObj['weapon'] = characterUrl.weapon;
-                            dayObj['url'] = characterUrl.url;
-                            dayObj['rarityBgUrl'] = characterUrl.rarityBgUrl;
-                            dayObj['visionUrl'] = characterUrl.visionUrl;
+                        const birthMonth = Number(splitted[0]) - 1;
+                        const birthDay = Number(splitted[1]);
+                        if (month == birthMonth && day == birthDay) {
+                            dayObj.characters.push(characterUrl);
+                        } else if (month == 1 && day == lastDayOfMonth.getDate()) { // 2月末日
+                            if (month == birthMonth && birthDay == 29) { // うるう日
+                                dayObj.characters.push(characterUrl);
+                            }
                         }
                     }
                 }
@@ -254,6 +285,16 @@
                     visionUrl: VISION_IMG_SRC[キャラクターMaster[name]['元素']],
                     birthday: キャラクターMaster[name]['誕生日']
                 });
+            });
+            CharacterImageList.push({
+                name: 'パイモン',
+                rarity: undefined,
+                vision: undefined,
+                weapon: undefined,
+                url: 'images/characters/face/paimon.png',
+                rarityBgUrl: 'images/star5-bg.png',
+                visionUrl: undefined,
+                birthday: '6/1'
             });
 
             const year = new Vue({
