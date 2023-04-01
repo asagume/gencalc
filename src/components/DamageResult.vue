@@ -130,6 +130,15 @@
         <span>{{ Math.round(copiedDamageResult.元素反応.超開花ダメージ) }}</span>
       </span>
     </label>
+    <label v-if="damageResult.元素反応.氷砕きダメージ">
+      {{ displayName("氷砕き") }}
+      <span>{{ Math.round(reactionDmg('氷砕きダメージ')) }}</span>
+      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.氷砕きダメージ">
+        <br />
+        {{ displayName("氷砕き") }}
+        <span>{{ Math.round(copiedDamageResult.元素反応.氷砕きダメージ) }}</span>
+      </span>
+    </label>
   </div>
   <fieldset>
     <template v-for="category in CATEGORY_LIST" :key="category">

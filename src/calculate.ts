@@ -706,6 +706,19 @@ export function calculateDamageResult(
                 reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
             }
         }
+        let has氷砕き = false;
+        if (characterMaster.元素 == '岩' || characterMaster.武器 == '両手剣') {
+            has氷砕き = true;
+        } else {
+            const characterArr = (ELEMENTAL_REACTION_MASTER as any).破砕?.氷砕き?.キャラクター;
+            if (characterArr && characterArr.includes(characterMaster.名前)) {
+                has氷砕き = true;
+            }
+        }
+        if (has氷砕き) {
+            const dmgElement = '破砕';
+            reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
+        }
         reactionResult['元素'] = vision;
         reactionMasterArr.forEach(entry => {
             const element = entry[0];
@@ -731,7 +744,7 @@ export function calculateDamageResult(
                         case '乗算':    // 蒸発 溶解
                             resultValue = calculate乗算系元素反応倍率(reaction, element, statsInput.statsObj);
                             break;
-                        case '固定':    // 過負荷 感電 超電導
+                        case '固定':    // 過負荷 感電 超電導 氷砕き
                             resultValue = calculate固定値系元素反応ダメージ(reaction, element, statsInput.statsObj);
                             break;
                         case '加算':    // 超激化 草激化

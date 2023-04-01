@@ -645,6 +645,7 @@ export default defineComponent({
         }
       }
       clearArtifactAfter();
+      _calculateArtifactStatsMain();
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
       context.emit('update:artifact-detail', artifactDetailInputRea);
