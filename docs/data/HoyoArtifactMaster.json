@@ -176,6 +176,22 @@
     "max_level": 20
   },
   {
+    "id": 3054,
+    "name": "霊光起源の蕊",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2954,
+    "name": "旅中の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2854,
     "name": "月娘の華彩",
     "icon": null,
@@ -458,6 +474,22 @@
   {
     "id": 5144,
     "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3044,
+    "name": "霊光起源の蕊",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2944,
+    "name": "旅中の花",
     "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 4,
@@ -824,6 +856,22 @@
     "max_level": 20
   },
   {
+    "id": 3052,
+    "name": "霊彩奇麗の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2952,
+    "name": "悪しき魔法使いの羽杖",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2852,
     "name": "落謝の宴席",
     "icon": null,
@@ -1106,6 +1154,22 @@
   {
     "id": 5142,
     "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3042,
+    "name": "霊彩奇麗の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2942,
+    "name": "悪しき魔法使いの羽杖",
     "icon": null,
     "reliquary_cat_id": 2,
     "reliquary_level": 4,
@@ -1480,6 +1544,22 @@
     "max_level": 20
   },
   {
+    "id": 3055,
+    "name": "久遠落花の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2955,
+    "name": "水仙の一瞬一瞬",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2855,
     "name": "凝結の刹那",
     "icon": null,
@@ -1762,6 +1842,22 @@
   {
     "id": 5145,
     "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3045,
+    "name": "久遠落花の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2945,
+    "name": "水仙の一瞬一瞬",
     "icon": null,
     "reliquary_cat_id": 3,
     "reliquary_level": 4,
@@ -2128,6 +2224,22 @@
     "max_level": 20
   },
   {
+    "id": 3051,
+    "name": "喜楽無限の宴",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2951,
+    "name": "勇者たちのお茶会",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2851,
     "name": "守秘の魔瓶",
     "icon": null,
@@ -2410,6 +2522,22 @@
   {
     "id": 5141,
     "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3041,
+    "name": "喜楽無限の宴",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2941,
+    "name": "勇者たちのお茶会",
     "icon": null,
     "reliquary_cat_id": 4,
     "reliquary_level": 4,
@@ -2776,6 +2904,22 @@
     "max_level": 20
   },
   {
+    "id": 3053,
+    "name": "霊光明滅の心",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2953,
+    "name": "悪龍の片眼鏡",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 2853,
     "name": "紫晶の花冠",
     "icon": null,
@@ -3090,6 +3234,22 @@
   {
     "id": 5143,
     "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3043,
+    "name": "霊光明滅の心",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2943,
+    "name": "悪龍の片眼鏡",
     "icon": null,
     "reliquary_cat_id": 5,
     "reliquary_level": 4,
