@@ -689,13 +689,15 @@ export function calculateDamageResult(
 
         // 元素反応を計算します
         const reactionResult = _.cloneDeep(元素反応TEMPLATE);
-        const reactionMasterArr = [[vision, (ELEMENTAL_REACTION_MASTER as any)[vision]]];
+        const reactionMasterArr = [];
+        const dmgElementSet = new Set<string>();
+        dmgElementSet.add(vision); // 神の目の元素ダメージによる元素反応
         if (conditionInput.selectList.filter(s => s.name == '元素変化').length) {
             const selectEntry = conditionInput.selectList.filter(s => s.name == '元素変化')[0];
             const selectedIndex = conditionInput.conditionValues['元素変化'] as number;
             if (selectedIndex) {
                 const dmgElement = selectEntry.options[selectedIndex].replace(/元素$/, '');
-                reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
+                dmgElementSet.add(dmgElement); // 元素変化したダメージによる元素反応
             }
         }
         if (conditionInput.selectList.filter(s => s.name == '拡散').length) {
@@ -703,9 +705,18 @@ export function calculateDamageResult(
             const selectedIndex = conditionInput.conditionValues['拡散'] as number;
             if (selectedIndex) {
                 const dmgElement = selectEntry.options[selectedIndex].replace(/元素$/, '');
-                reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
+                dmgElementSet.add(dmgElement); // 拡散ダメージによる元素反応
             }
         }
+        for (const dmgElement of conditionInput.攻撃元素) {
+            if (dmgElement && dmgElement != '物理') {
+                dmgElementSet.add(dmgElement); // 元素付与で変化した通常攻撃/重撃/落下攻撃ダメージによる元素反応
+            }
+        }
+        for (const dmgElement of dmgElementSet) {
+            reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
+        }
+        console.log(reactionMasterArr);
         let has氷砕き = false;
         if (characterMaster.元素 == '岩' || characterMaster.武器 == '両手剣') {
             has氷砕き = true;
