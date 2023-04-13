@@ -59,7 +59,7 @@
           <td colspan="2" class="description" v-html="characterMaster.通常攻撃.説明"></td>
         </tr>
         <template v-for="(item, index) in talentNormalAttack('通常攻撃').詳細" :key="index">
-          <tr v-if="item.名前">
+          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">
               {{ talentValue(item.数値, levelNormalAttack("通常攻撃")) }}
@@ -67,13 +67,13 @@
           </tr>
         </template>
         <template v-for="(item, index) in talentNormalAttack('重撃').詳細" :key="index">
-          <tr v-if="item.名前">
+          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">{{ talentValue(item.数値, levelNormalAttack("重撃")) }}</td>
           </tr>
         </template>
         <template v-for="(item, index) in talentNormalAttack('落下攻撃').詳細" :key="index">
-          <tr v-if="item.名前">
+          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">
               {{ talentValue(item.数値, levelNormalAttack("落下攻撃")) }}
@@ -98,7 +98,7 @@
           <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
         </tr>
         <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
-          <tr v-if="item.名前">
+          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">{{ talentValue(item.数値, elementalSkillLevel) }}</td>
           </tr>
@@ -121,7 +121,7 @@
           <td colspan="2" class="description" v-html="characterMaster.元素爆発.説明"></td>
         </tr>
         <template v-for="(item, index) in characterMaster.元素爆発.詳細" :key="index">
-          <tr v-if="item.名前">
+          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
             <th class="key">{{ displayName(item.名前) }}</th>
             <td class="value">{{ talentValue(item.数値, elementalBurstLevel) }}</td>
           </tr>

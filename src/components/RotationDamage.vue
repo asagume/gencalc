@@ -99,7 +99,7 @@ type TRotationDamageEntryCustom = TRotationDamageEntry & {
 let id = 1;
 
 export default defineComponent({
-  name: "RotationDamage",
+  name: 'RotationDamage',
   components: {
     draggable,
   },
@@ -153,7 +153,7 @@ export default defineComponent({
         if (category == 'その他') {
           entry.src = IMG_SRC_DUMMY;
         } else {
-          const iconCategory = ["重撃", "落下攻撃"].includes(category) ? "通常攻撃" : category;
+          const iconCategory = ['重撃', '落下攻撃'].includes(category) ? '通常攻撃' : category;
           entry.src = (characterMaster.value as any)[iconCategory].icon_url;
         }
         entry.reactions = [] as object[];
@@ -164,9 +164,9 @@ export default defineComponent({
         }
         for (let i = 0; i < list.length; i++) {
           entry.reactions.push({});
-          if (["落下期間のダメージ"].includes(list[i][0])) {
+          if (['落下期間のダメージ'].includes(list[i][0])) {
             entry.counts.push(0);
-          } else if (characterMaster.value.武器 == "弓" && category == "重撃") {
+          } else if (characterMaster.value.武器 == '弓' && category == '重撃') {
             if (list.length > 3 && i < 2) {
               entry.counts.push(0);
             } else {
@@ -182,9 +182,9 @@ export default defineComponent({
         if (
           props.damageResult.元素反応[reactionDmg as TDamageResultElementalReactionKey]
         ) {
-          const reaction = reactionDmg.replace(/ダメージ$/, "");
+          const reaction = reactionDmg.replace(/ダメージ$/, '');
           let dmgElement;
-          if (reactionDmg == "拡散ダメージ") {
+          if (reactionDmg == '拡散ダメージ') {
             dmgElement = props.damageResult.元素反応.拡散元素;
           } else {
             dmgElement = REACTION_DMG_ELEMENT_MAP.get(reactionDmg) as string;
@@ -202,40 +202,40 @@ export default defineComponent({
       return result;
     });
     const itemImgClass = (item: TRotationDamageEntryCustom) => {
-      return REACTION_DMG_ARR.includes(item.category) ? " reaction " : "";
+      return REACTION_DMG_ARR.includes(item.category) ? ' reaction ' : '';
     };
 
     const storageKey = (index: number) => {
       const character = characterMaster.value.名前;
-      const key = "ROTATION_" + character + "_" + index;
+      const key = 'ROTATION_' + character + '_' + index;
       return key;
     };
 
     const savedataIndex = ref(1);
 
     const SAVEDATA_NICKNAME_MAP = new Map([
-      ["通常攻撃", "N"],
-      ["重撃", "C"],
-      ["落下攻撃", "P"],
-      ["元素スキル", "E"],
-      ["元素爆発", "Q"],
+      ['通常攻撃', 'N'],
+      ['重撃', 'C'],
+      ['落下攻撃', 'P'],
+      ['元素スキル', 'E'],
+      ['元素爆発', 'Q'],
     ]);
-    const NO_DATA_NICKNAME = "**** NEW DATA ****";
+    const NO_DATA_NICKNAME = '**** NEW DATA ****';
     const localStorageUpdatedRef = ref(0);
 
     const savedataList = computed(() => {
       const result = [] as [number, string, number][];
       const character = characterMaster.value.名前;
       const keys = Object.keys(localStorage).filter((s) =>
-        s.startsWith("ROTATION_" + character + "_")
+        s.startsWith('ROTATION_' + character + '_')
       );
       const indices = keys.map((key) =>
-        Number(key.replace("ROTATION_" + character + "_", ""))
+        Number(key.replace('ROTATION_' + character + '_', ''))
       );
       let maxIndex = Math.max(0, ...indices);
       for (let index = 1; index <= maxIndex; index++) {
         const key = storageKey(index);
-        let nickname = index + " : ";
+        let nickname = index + ' : ';
         if (key in localStorage) {
           const valueStr = localStorage.getItem(key) as string;
           const value = JSON.parse(valueStr);
@@ -244,14 +244,14 @@ export default defineComponent({
               if (SAVEDATA_NICKNAME_MAP.has(element.name)) {
                 const c = SAVEDATA_NICKNAME_MAP.get(element.name) as string;
                 nickname += c;
-                if (["N", "C", "P"].includes(c)) {
+                if (['N', 'C', 'P'].includes(c)) {
                   const n = Math.max(...element.counts);
                   if (n) {
                     nickname += n;
                   }
                 }
               } else {
-                nickname += "*";
+                nickname += '*';
               }
             });
           }
@@ -261,7 +261,7 @@ export default defineComponent({
         result.push([index, nickname, localStorageUpdatedRef.value]);
       }
       const index = maxIndex + 1;
-      const nickname = index + " : " + NO_DATA_NICKNAME;
+      const nickname = index + ' : ' + NO_DATA_NICKNAME;
       result.push([index, nickname, localStorageUpdatedRef.value]);
       return result;
     });
@@ -316,35 +316,23 @@ export default defineComponent({
       const entry = list[index];
       const dmgElement = entry[1];
       if (dmgElement) {
-        if (
-          ["炎", "水"].includes(dmgElement) &&
-          props.damageResult.元素反応.蒸発倍率 > 0
-        ) {
-          result.push([
-            "蒸発",
-            (ELEMENT_IMG_SRC as any)[["炎", "水"].filter((s) => s != dmgElement)[0]],
-          ]);
+        if (dmgElement == '炎' && props.damageResult.元素反応.蒸発倍率_炎 > 0) {
+          result.push(['蒸発', (ELEMENT_IMG_SRC as any)['水']]);
         }
-        if (
-          ["炎", "氷"].includes(dmgElement) &&
-          props.damageResult.元素反応.溶解倍率 > 0
-        ) {
-          result.push([
-            "溶解",
-            (ELEMENT_IMG_SRC as any)[["炎", "氷"].filter((s) => s != dmgElement)[0]],
-          ]);
+        if (dmgElement == '水' && props.damageResult.元素反応.蒸発倍率_水 > 0) {
+          result.push(['蒸発', (ELEMENT_IMG_SRC as any)['炎']]);
         }
-        if (
-          ["雷"].includes(dmgElement) &&
-          props.damageResult.元素反応.超激化ダメージ > 0
-        ) {
-          result.push(["超激化", (ELEMENT_IMG_SRC as any)["草"]]);
+        if (dmgElement == '氷' && props.damageResult.元素反応.溶解倍率_氷 > 0) {
+          result.push(['溶解', (ELEMENT_IMG_SRC as any)['炎']]);
         }
-        if (
-          ["草"].includes(dmgElement) &&
-          props.damageResult.元素反応.草激化ダメージ > 0
-        ) {
-          result.push(["草激化", (ELEMENT_IMG_SRC as any)["雷"]]);
+        if (dmgElement == '炎' && props.damageResult.元素反応.溶解倍率_炎 > 0) {
+          result.push(['溶解', (ELEMENT_IMG_SRC as any)['氷']]);
+        }
+        if (dmgElement == '雷' && props.damageResult.元素反応.超激化ダメージ > 0) {
+          result.push(['超激化', (ELEMENT_IMG_SRC as any)['草']]);
+        }
+        if (dmgElement == '草' && props.damageResult.元素反応.草激化ダメージ > 0) {
+          result.push(['超激化', (ELEMENT_IMG_SRC as any)['雷']]);
         }
       }
       return result;
@@ -355,7 +343,7 @@ export default defineComponent({
       index: number,
       reaction: [string, string]
     ) => {
-      let result = "";
+      let result = '';
       const reactionObj: any = customizedEntry.reactions[index];
       if (reaction[0] in reactionObj && reactionObj[reaction[0]]) {
         result = reactionObj[reaction[0]];
@@ -369,8 +357,8 @@ export default defineComponent({
       reaction: [string, string]
     ) => {
       let result;
-      if (reactionCount(customizedEntry, index, reaction)) result = "";
-      else result = " unselected ";
+      if (reactionCount(customizedEntry, index, reaction)) result = '';
+      else result = ' unselected ';
       return result;
     };
 
@@ -421,16 +409,17 @@ export default defineComponent({
       const count = customizedEntry.counts[index];
       for (let n = 0; n < count; n++) {
         let workDmg = entry[2]; // 期待値
-        ["蒸発", "溶解"].forEach((reaction) => {
+        ['蒸発', '溶解'].forEach((reaction) => {
           if (reaction in reactionObj && n < reactionObj[reaction]) {
-            workDmg *= (props.damageResult.元素反応 as any)[reaction + "倍率"];
+            const reactionKey = reaction + '倍率_' + entry[1]; 
+            workDmg *= (props.damageResult.元素反応 as any)[reactionKey];
           }
         });
         result += workDmg;
       }
-      ["超激化", "草激化"].forEach((reaction) => {
+      ['超激化', '草激化'].forEach((reaction) => {
         if (reaction in reactionObj) {
-          let reactionDmg = (props.damageResult.元素反応 as any)[reaction + "ダメージ"];
+          let reactionDmg = (props.damageResult.元素反応 as any)[reaction + 'ダメージ'];
           if (entry[2]) {
             reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
           }
@@ -453,8 +442,8 @@ export default defineComponent({
       const list = getDamageResultArr(customizedEntry, props.damageResult);
       const entry = list[index];
       return entry[1]
-        ? " " + ELEMENT_COLOR_CLASS[entry[1] as TElementColorClassKey] + " "
-        : "";
+        ? ' ' + ELEMENT_COLOR_CLASS[entry[1] as TElementColorClassKey] + ' '
+        : '';
     };
 
     const doDelete = (index: number) => {

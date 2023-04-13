@@ -2,30 +2,58 @@
   <div class="elemental-reaction">
     <input id="増幅反応-なし" type="radio" value="なし" name="増幅反応-name" @change="増幅反応 = 'なし'" checked />
     <label for="増幅反応-なし"> {{ displayName("反応なし") }} </label>
-    <template v-if="damageResult.元素反応.蒸発倍率">
-      <input id="増幅反応-蒸発" type="radio" value="蒸発" name="増幅反応-name" @change="増幅反応 = '蒸発'" />
-      <label for="増幅反応-蒸発">
+    <template v-if="damageResult.元素反応.蒸発倍率_炎">
+      <input id="増幅反応-蒸発_炎" type="radio" value="蒸発_炎" name="増幅反応-name" @change="増幅反応 = '蒸発_炎'" />
+      <label for="増幅反応-蒸発_炎" class="pyro">
         {{ displayName("蒸発") }}×<span>{{
-            Math.round(damageResult.元素反応.蒸発倍率 * 100) / 100
+          Math.round(damageResult.元素反応.蒸発倍率_炎 * 100) / 100
         }}</span>
-        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.蒸発倍率">
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.蒸発倍率_炎">
           <br />
           {{ displayName("蒸発") }}×<span>{{
-              Math.round(copiedDamageResult.元素反応.蒸発倍率 * 100) / 100
+            Math.round(copiedDamageResult.元素反応.蒸発倍率_炎 * 100) / 100
           }}</span>
         </span>
       </label>
     </template>
-    <template v-if="damageResult.元素反応.溶解倍率">
-      <input id="増幅反応-溶解" type="radio" value="溶解" name="増幅反応-name" @change="増幅反応 = '溶解'" />
-      <label for="増幅反応-溶解">
-        {{ displayName("溶解") }}×<span>{{
-            Math.round(damageResult.元素反応.溶解倍率 * 100) / 100
+    <template v-if="damageResult.元素反応.蒸発倍率_水">
+      <input id="増幅反応-蒸発_水" type="radio" value="蒸発_水" name="増幅反応-name" @change="増幅反応 = '蒸発_水'" />
+      <label for="増幅反応-蒸発_水" class="hydro">
+        {{ displayName("蒸発") }}×<span>{{
+          Math.round(damageResult.元素反応.蒸発倍率_水 * 100) / 100
         }}</span>
-        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.溶解倍率">
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.蒸発倍率_水">
+          <br />
+          {{ displayName("蒸発") }}×<span>{{
+            Math.round(copiedDamageResult.元素反応.蒸発倍率_水 * 100) / 100
+          }}</span>
+        </span>
+      </label>
+    </template>
+    <template v-if="damageResult.元素反応.溶解倍率_氷">
+      <input id="増幅反応-溶解_氷" type="radio" value="溶解_氷" name="増幅反応-name" @change="増幅反応 = '溶解_氷'" />
+      <label for="増幅反応-溶解_氷" class="cryo">
+        {{ displayName("溶解") }}×<span>{{
+          Math.round(damageResult.元素反応.溶解倍率_氷 * 100) / 100
+        }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.溶解倍率_氷">
           <br />
           {{ displayName("溶解") }}×<span>{{
-              Math.round(copiedDamageResult.元素反応.溶解倍率 * 100) / 100
+            Math.round(copiedDamageResult.元素反応.溶解倍率_氷 * 100) / 100
+          }}</span>
+        </span>
+      </label>
+    </template>
+    <template v-if="damageResult.元素反応.溶解倍率_炎">
+      <input id="増幅反応-溶解_炎" type="radio" value="溶解_炎" name="増幅反応-name" @change="増幅反応 = '溶解_炎'" />
+      <label for="増幅反応-溶解_炎" class="pyro">
+        {{ displayName("溶解") }}×<span>{{
+          Math.round(damageResult.元素反応.溶解倍率_炎 * 100) / 100
+        }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.溶解倍率_炎">
+          <br />
+          {{ displayName("溶解") }}×<span>{{
+            Math.round(copiedDamageResult.元素反応.溶解倍率_炎 * 100) / 100
           }}</span>
         </span>
       </label>
@@ -192,20 +220,23 @@
           </thead>
           <tr>
             <th>{{ displayName("期待値") }}</th>
-            <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1], item[5])">
+            <td v-for="item in itemList(category)" :key="item[0]"
+              :class="'damage-value ' + elementClass(item[1], item[5])">
               {{ displayDamageValue(item, 2, category) }}
             </td>
           </tr>
           <template v-if="categoryOpenClose[category]">
             <tr>
               <th>{{ displayName("会心") }}</th>
-              <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1], item[5])">
+              <td v-for="item in itemList(category)" :key="item[0]"
+                :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 3, category) }}
               </td>
             </tr>
             <tr>
               <th>{{ displayName("非会心") }}</th>
-              <td v-for="item in itemList(category)" :key="item[0]" :class="'damage-value ' + elementClass(item[1], item[5])">
+              <td v-for="item in itemList(category)" :key="item[0]"
+                :class="'damage-value ' + elementClass(item[1], item[5])">
                 {{ displayDamageValue(item, 4, category) }}
               </td>
             </tr>
@@ -263,7 +294,7 @@ import { computed, defineComponent, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
-  name: "DamageResult",
+  name: 'DamageResult',
   props: {
     damageResult: {
       type: Object,
@@ -274,36 +305,42 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
 
     const 元素反応 = reactive(props.damageResult.元素反応);
-    const 増幅反応 = ref("なし");
+    const 増幅反応 = ref('なし');
     const elementClass = (item: string, opt_kind?: string) => {
       if (opt_kind == 'HP回復') {
         return 'healing';
       }
       return ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
     };
-    const resultStyleRef = ref("1");
+    const resultStyleRef = ref('1');
 
     const copiedDamageResult = reactive({} as TDamageResult);
 
     watch(元素反応, () => {
       if (
-        (増幅反応.value == "蒸発" && 元素反応.蒸発倍率 == 0) ||
-        (増幅反応.value == "溶解" && 元素反応.溶解倍率 == 0) ||
-        (増幅反応.value == "超激化" && 元素反応.超激化ダメージ == 0) ||
-        (増幅反応.value == "草激化" && 元素反応.草激化ダメージ == 0)
+        (増幅反応.value == '蒸発_炎' && 元素反応.蒸発倍率_炎 == 0) ||
+        (増幅反応.value == '蒸発_水' && 元素反応.蒸発倍率_水 == 0) ||
+        (増幅反応.value == '溶解_氷' && 元素反応.溶解倍率_氷 == 0) ||
+        (増幅反応.value == '溶解_炎' && 元素反応.溶解倍率_炎 == 0) ||
+        (増幅反応.value == '超激化' && 元素反応.超激化ダメージ == 0) ||
+        (増幅反応.value == '草激化' && 元素反応.草激化ダメージ == 0)
       ) {
-        増幅反応.value = "なし";
-        (document.getElementById("増幅反応-なし") as HTMLInputElement).checked = true;
+        増幅反応.value = 'なし';
+        (document.getElementById('増幅反応-なし') as HTMLInputElement).checked = true;
       }
     });
 
     const swirlDmg = computed(() => {
       let result = 元素反応.拡散ダメージ;
-      if (増幅反応.value == "蒸発" && ["炎", "水"].includes(元素反応.拡散元素)) {
-        result *= 元素反応.蒸発倍率;
-      } else if (増幅反応.value == "溶解" && ["炎", "氷"].includes(元素反応.拡散元素)) {
-        result *= 元素反応.溶解倍率;
-      } else if (増幅反応.value == "超激化" && 元素反応.拡散元素 == "雷") {
+      if (増幅反応.value == '蒸発_炎' && 元素反応.拡散元素 == '炎') {
+        result *= 元素反応.蒸発倍率_炎;
+      } else if (増幅反応.value == '蒸発_水' && 元素反応.拡散元素 == '水') {
+        result *= 元素反応.蒸発倍率_水;
+      } else if (増幅反応.value == '溶解_氷' && 元素反応.拡散元素 == '氷') {
+        result *= 元素反応.溶解倍率_氷;
+      } else if (増幅反応.value == '溶解_炎' && 元素反応.拡散元素 == '炎') {
+        result *= 元素反応.溶解倍率_炎;
+      } else if (増幅反応.value == '超激化' && 元素反応.拡散元素 == '雷') {
         result += 元素反応.超激化ダメージ;
       }
       return result;
@@ -331,25 +368,17 @@ export default defineComponent({
 
     const displayDamageValue = (item: any, index: number, category: string) => {
       let value = item[index];
-      if (!value) return "-";
-      if (!["シールド"].includes(item[5])) {
-        if (増幅反応.value == "蒸発" && ["炎", "水"].includes(item[1])) {
-          value *= 元素反応.蒸発倍率;
-          if (元素反応.拡散ダメージ && ["炎", "水"].includes(元素反応.拡散元素) && item[1] != 元素反応.拡散元素) {
-            if (item[1] == '炎') value *= 1.5;
-            else if (item[1] == '水') value *= 2;
-            if (元素反応.拡散元素 == '炎') value /= 1.5;
-            else if (元素反応.拡散元素 == '水') value /= 2;
-          }
-        } else if (増幅反応.value == "溶解" && ["炎", "氷"].includes(item[1])) {
-          value *= 元素反応.溶解倍率;
-          if (元素反応.拡散ダメージ && ["炎", "氷"].includes(元素反応.拡散元素) && item[1] != 元素反応.拡散元素) {
-            if (item[1] == '炎') value *= 2;
-            else if (item[1] == '氷') value *= 1.5;
-            if (元素反応.拡散元素 == '炎') value /= 2;
-            else if (元素反応.拡散元素 == '氷') value /= 1.5;
-          }
-        } else if (増幅反応.value == "超激化" && ["雷"].includes(item[1])) {
+      if (!value) return '-';
+      if (!['シールド'].includes(item[5])) {
+        if (増幅反応.value == '蒸発_炎' && item[1] == '炎') {
+          value *= 元素反応.蒸発倍率_炎;
+        } else if (増幅反応.value == '蒸発_水' && item[1] == '水') {
+          value *= 元素反応.蒸発倍率_水;
+        } else if (増幅反応.value == '溶解_氷' && item[1] == '氷') {
+          value *= 元素反応.溶解倍率_氷;
+        } else if (増幅反応.value == '溶解_炎' && item[1] == '炎') {
+          value *= 元素反応.溶解倍率_炎;
+        } else if (増幅反応.value == '超激化' && item[1] == '雷') {
           let addValue = 元素反応.超激化ダメージ;
           // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
           if (item[7]) addValue *= item[7]; // ダメージバフ補正
@@ -359,7 +388,7 @@ export default defineComponent({
             addValue *= danCount.value;
           }
           value += addValue;
-        } else if (増幅反応.value == "草激化" && ["草"].includes(item[1])) {
+        } else if (増幅反応.value == '草激化' && item[1] == '草') {
           let addValue = 元素反応.草激化ダメージ;
           // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
           if (item[7]) addValue *= item[7]; // ダメージバフ補正
@@ -397,25 +426,17 @@ export default defineComponent({
           }
         }
         value = item[index] as number;
-        if (!value) return "-";
-        if (!item[5] || !["シールド"].includes(item[5])) {
-          if (item[1] && 増幅反応.value == "蒸発" && ["炎", "水"].includes(item[1])) {
-            value *= copied元素反応.蒸発倍率;
-            if (copied元素反応.拡散ダメージ && ["炎", "水"].includes(copied元素反応.拡散元素) && item[1] != copied元素反応.拡散元素) {
-              if (item[1] == '炎') value *= 1.5;
-              else if (item[1] == '水') value *= 2;
-              if (copied元素反応.拡散元素 == '炎') value /= 1.5;
-              else if (copied元素反応.拡散元素 == '水') value /= 2;
-            }
-          } else if (item[1] && 増幅反応.value == "溶解" && ["炎", "氷"].includes(item[1])) {
-            value *= copied元素反応.溶解倍率;
-            if (copied元素反応.拡散ダメージ && ["炎", "氷"].includes(copied元素反応.拡散元素) && item[1] != copied元素反応.拡散元素) {
-              if (item[1] == '炎') value *= 2;
-              else if (item[1] == '氷') value *= 1.5;
-              if (copied元素反応.拡散元素 == '炎') value /= 2;
-              else if (copied元素反応.拡散元素 == '氷') value /= 1.5;
-            }
-          } else if (item[1] && 増幅反応.value == "超激化" && ["雷"].includes(item[1])) {
+        if (!value) return '-';
+        if (!item[5] || !['シールド'].includes(item[5])) {
+          if (item[1] && 増幅反応.value == '蒸発_炎' && item[1] == '炎') {
+            value *= copied元素反応.蒸発倍率_炎;
+          } else if (item[1] && 増幅反応.value == '蒸発_水' && item[1] == '水') {
+            value *= copied元素反応.蒸発倍率_炎;
+          } else if (item[1] && 増幅反応.value == '溶解_氷' && item[1] == '氷') {
+            value *= copied元素反応.溶解倍率_氷;
+          } else if (item[1] && 増幅反応.value == '溶解_炎' && item[1] == '炎') {
+            value *= copied元素反応.溶解倍率_炎;
+          } else if (item[1] && 増幅反応.value == '超激化' && item[1] == '雷') {
             let addValue = copied元素反応.超激化ダメージ;
             // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
             if (item[7]) addValue *= item[7]; // ダメージバフ補正
@@ -425,7 +446,7 @@ export default defineComponent({
               addValue *= danCount.value;
             }
             value += addValue;
-          } else if (item[1] && 増幅反応.value == "草激化" && ["草"].includes(item[1])) {
+          } else if (item[1] && 増幅反応.value == '草激化' && item[1] == '草') {
             let addValue = copied元素反応.草激化ダメージ;
             // if (item[6]) addValue *= item[6]; // HIT数 ※天賦倍率に+や*が含まれる攻撃で元素付着CDなしのものはない気がするのでコメントアウトします
             if (item[7]) addValue *= item[7]; // ダメージバフ補正
@@ -445,17 +466,17 @@ export default defineComponent({
     };
 
     const CATEGORY_LIST = [
-      "通常攻撃",
-      "重撃",
-      "落下攻撃",
-      "元素スキル",
-      "元素爆発",
-      "その他",
+      '通常攻撃',
+      '重撃',
+      '落下攻撃',
+      '元素スキル',
+      '元素爆発',
+      'その他',
     ];
     const itemList = (category: string) => {
       const result = [] as any[];
       const workList = props.damageResult[category].filter(
-        (s: any[]) => !s[0].startsWith("非表示")
+        (s: any[]) => !s[0].startsWith('非表示')
       );
       for (let i = 0; i < workList.length; i++) {
         let span = 1;
@@ -471,7 +492,7 @@ export default defineComponent({
     const categoryOpenClose = reactive({} as { [key: string]: boolean });
     for (const key of CATEGORY_LIST) {
       categoryOpenClose[key] = true;
-      // if (["落下攻撃"].includes(key)) categoryOpenClose[key] = false;
+      // if (['落下攻撃'].includes(key)) categoryOpenClose[key] = false;
     }
 
     const categoryOnClick = (category: string) => {
@@ -479,18 +500,18 @@ export default defineComponent({
     };
 
     const displayNameV = (key: any): string => {
-      if (key && i18n.global.locale.value == "ja-jp" && key.length > 10) {
+      if (key && i18n.global.locale.value == 'ja-jp' && key.length > 10) {
         let work = key;
-        work = work.replace(/のダメージ$/, "").replace(/ダメージ$/, "");
+        work = work.replace(/のダメージ$/, '').replace(/ダメージ$/, '');
         return work;
       }
       return displayName(key);
     };
 
     const displayNameH = (key: any, category: string): string => {
-      if (key && i18n.global.locale.value == "ja-jp" && itemList(category).length > 2) {
+      if (key && i18n.global.locale.value == 'ja-jp' && itemList(category).length > 2) {
         let work = key;
-        work = work.replace(/のダメージ$/, "").replace(/ダメージ$/, "");
+        work = work.replace(/のダメージ$/, '').replace(/ダメージ$/, '');
         return work;
       }
       return displayName(key);
@@ -498,7 +519,7 @@ export default defineComponent({
 
     const displayDamageParam = (item: any): string => {
       let result = '';
-      if (!item || !item[5] || ['HP回復', 'シールド', '表示'].includes(item[5])) return "";
+      if (!item || !item[5] || ['HP回復', 'シールド', '表示'].includes(item[5])) return '';
       result += displayName('ダメージバフ');
       result += ':&nbsp;';
       result += Math.round((item[7] - 1) * 1000) / 10;
@@ -526,10 +547,10 @@ export default defineComponent({
     /** 被ダメージのリストを作成します（同値を省略したリスト） */
     const damageTakenList = computed(() => {
       const result = props.damageResult.被ダメージ.filter(
-        (s: any) => s.key == "物理"
+        (s: any) => s.key == '物理'
       ) as any;
       for (const entry of props.damageResult.被ダメージ.filter(
-        (s: any) => s.key != "物理"
+        (s: any) => s.key != '物理'
       )) {
         const valueArr = result.map((s: any) => s.value);
         if (!valueArr.includes(entry.value)) {
@@ -542,10 +563,10 @@ export default defineComponent({
     /** 耐久スコアのリストを作成します（同値を省略したリスト） */
     const resScoreList = computed(() => {
       const result = props.damageResult.耐久スコア.filter(
-        (s: any) => s.key == "物理"
+        (s: any) => s.key == '物理'
       ) as any;
       for (const entry of props.damageResult.耐久スコア.filter(
-        (s: any) => s.key != "物理"
+        (s: any) => s.key != '物理'
       )) {
         const valueArr = result.map((s: any) => s.value);
         if (!valueArr.includes(entry.value)) {
@@ -700,6 +721,6 @@ button {
 }
 
 .healing {
-    color: #bcf485;
+  color: #bcf485;
 }
 </style>

@@ -764,7 +764,10 @@ export function calculateDamageResult(
                     }
                 }
                 ['倍率', 'ダメージ', '吸収量'].forEach(suffix => {
-                    const key = reaction + suffix;
+                    let key = reaction + suffix;
+                    if (suffix === '倍率') {
+                        key += '_' + element;
+                    }
                     if (key in reactionResult) {
                         (reactionResult as any)[key] = resultValue;
                     }
@@ -1991,7 +1994,8 @@ export function calculateRotationDamageEntry(
         let workDmg = entry[2]; // 期待値
         ['蒸発', '溶解'].forEach((reaction) => {
             if (reaction in reactionObj && n < reactionObj[reaction]) {
-                workDmg *= (damageResult.元素反応 as any)[reaction + '倍率'];
+                const reactionKey = reaction + '倍率_' + entry[1];
+                workDmg *= (damageResult.元素反応 as any)[reactionKey];
             }
         });
         result += workDmg;
@@ -2031,7 +2035,8 @@ export function calculateDamageInRotation(
         let workDmg = entry[2]; // 期待値
         ['蒸発', '溶解'].forEach((reaction) => {
             if (reaction in reactionObj && n < reactionObj[reaction]) {
-                workDmg *= (damageResult.元素反応 as any)[reaction + '倍率'];
+                const reactionKey = reaction + '倍率_' + entry[1];
+                workDmg *= (damageResult.元素反応 as any)[reactionKey];
             }
         });
         result += workDmg;
