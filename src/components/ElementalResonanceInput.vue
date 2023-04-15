@@ -5,7 +5,7 @@
       <span>{{ displayName(item.名前) }}</span>
       <template v-if="item.key == '草元素共鳴'">
         <select v-model="dendroOption" @change="onChange(item.key)">
-          <option value=""></option>
+          <option value="0"></option>
           <option value="20">+20</option>
           <option value="30">+30</option>
           <option value="50">+50</option>
@@ -109,6 +109,8 @@ export default defineComponent({
       });
       if (dendroOption.value) {
         conditionValues['dendroOption'] = dendroOption.value;
+      } else {
+        conditionValues['dendroOption'] = 0;
       }
       context.emit("update:elemental-resonance", conditionValues);
     };
