@@ -411,20 +411,30 @@ export default defineComponent({
       if (category in copiedDamageResult) {
         const copied元素反応 = copiedDamageResult.元素反応;
 
+        let item;
         const workResultEntryArr: TDamageResultEntry[] = (copiedDamageResult as any)[category];
         const curItem = itemList(category)[listIndex];
-        const workList = workResultEntryArr.filter((s: any[]) => s[0] == curItem[0]);
-        if (workList.length == 0) return undefined;
-        let item = workList[0];
-        if (workList.length > 1) {
-          for (let i = 0; i < itemList(category).length; i++) {
-            if (itemList(category)[i][0] == curItem[0]) {
-              if (i < listIndex) {
-                item = workList[1];
+        if (listIndex < workResultEntryArr.length && curItem[0] == workResultEntryArr[listIndex][0]) {
+          item = workResultEntryArr[listIndex];
+        } else {
+          const workList = workResultEntryArr.filter((s: any[]) => s[0] == curItem[0]);
+          if (workList.length == 0) return undefined;
+          item = workList[0];
+          if (workList.length > 1) {
+            for (let i = 0; i < itemList(category).length; i++) {
+              if (itemList(category)[i][0] == curItem[0]) {
+                if (i < listIndex) {
+                  item = workList[1];
+                }
               }
             }
           }
         }
+
+        if (item === undefined) {
+          return 0;
+        }
+
         value = item[index] as number;
         if (!value) return '-';
         if (!item[5] || !['シールド'].includes(item[5])) {
