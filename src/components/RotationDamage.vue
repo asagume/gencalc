@@ -332,7 +332,7 @@ export default defineComponent({
           result.push(['超激化', (ELEMENT_IMG_SRC as any)['草']]);
         }
         if (dmgElement == '草' && props.damageResult.元素反応.草激化ダメージ > 0) {
-          result.push(['超激化', (ELEMENT_IMG_SRC as any)['雷']]);
+          result.push(['草激化', (ELEMENT_IMG_SRC as any)['雷']]);
         }
       }
       return result;
