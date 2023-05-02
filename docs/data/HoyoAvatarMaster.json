@@ -1,5 +1,14 @@
 [
   {
+    "id": 10000082,
+    "name": "白朮",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90
+  },
+  {
     "id": 10000079,
     "name": "ディシア",
     "icon": null,
@@ -285,6 +294,15 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 7,
+    "max_level": 90
+  },
+  {
+    "id": 10000081,
+    "name": "カーヴェ",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 4,
     "max_level": 90
   },
   {

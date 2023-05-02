@@ -12,6 +12,8 @@ ORG_PATH = '../public/data/weapons'
 DST_PATH = '../public/data/weapons'
 ICON_URL_PATH = 'images/weapons'
 
+isCreateOnly = True
+
 os.chdir(os.path.dirname(__file__))
 
 templateJson = {
@@ -78,8 +80,6 @@ def normalizeObject(d):
 files = glob.glob(SRC_PATH + '/*/ja-jp/*.json', recursive=True)
 # print(files)
 for filepath in files:
-    print(filepath)
-
     with open(filepath, 'r', encoding='utf_8_sig') as f:
         srcJson = json.load(f)
     # print(json.dumps(srcJson, indent=2, ensure_ascii=False))
@@ -91,10 +91,14 @@ for filepath in files:
     dstFilepath = os.path.join(
         DST_PATH, dirnameSplitted[len(dirnameSplitted) - 2], filename)
     if os.path.exists(dstFilepath):
+        if isCreateOnly:
+            continue
         srcStat = os.stat(filepath)
         dstStat = os.stat(dstFilepath)
         # if srcStat.st_mtime < dstStat.st_mtime:
         #     dstFilepath = None
+
+    print(filepath)
 
     dstJson = copy.deepcopy(templateJson)
     try:

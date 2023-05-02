@@ -1,4 +1,11 @@
 {
+  "白朮": {
+    "レアリティ": 5,
+    "元素": "草",
+    "武器": "法器",
+    "誕生日": "4/25",
+    "import": "data/characters/dendro_5_catalyst_Baizhu.json"
+  },
   "ディシア": {
     "レアリティ": 5,
     "元素": "炎",
@@ -221,6 +228,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "カーヴェ": {
+    "レアリティ": 4,
+    "元素": "草",
+    "武器": "両手剣",
+    "誕生日": "7/9",
+    "import": "data/characters/dendro_4_claymore_Kaveh.json"
   },
   "ミカ": {
     "レアリティ": 4,

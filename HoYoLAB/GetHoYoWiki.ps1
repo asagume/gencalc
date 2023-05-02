@@ -22,6 +22,8 @@ $pageIds = @()
 # $pageIds += 3336   # アルハイゼン
 # $pageIds += 3463   # ディシア
 # $pageIds += 3462   # ミカ
+$pageIds += 3608   # カーヴェ
+$pageIds += 3609   # 白朮
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -53,8 +55,8 @@ $pageIds += 3692   # 碧落の瓏
 # $pageIds += 2673   # 金メッキの夢
 # $pageIds += 3321   # 楽園の絶花
 # $pageIds += 3322   # 砂上の楼閣の史話
-$pageIds += 3693   # 水仙の夢
-$pageIds += 3694   # 花海甘露の光
+# $pageIds += 3693   # 水仙の夢
+# $pageIds += 3694   # 花海甘露の光
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌

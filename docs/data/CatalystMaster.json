@@ -1,4 +1,8 @@
 {
+  "碧落の瓏": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Jadefall'sSplendor.json"
+  },
   "トゥライトゥーラの記憶": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Tulaytullah'sRemembrance.json"

@@ -88,6 +88,14 @@
     "max_level": 90
   },
   {
+    "id": 14505,
+    "name": "碧落の瓏",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 14504,
     "name": "浮世の錠",
     "icon": null,
