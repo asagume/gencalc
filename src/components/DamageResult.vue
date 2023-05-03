@@ -731,6 +731,6 @@ button {
 }
 
 .healing {
-  color: #bcf485;
+  color: #d0f8a8;
 }
 </style>
