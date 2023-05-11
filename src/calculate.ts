@@ -364,8 +364,7 @@ function updateStatsWithCondition(
     const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力'];
     const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力'];
     const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
-    otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('ダメージバフ.') != -1));
-    otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('ダメージアップ.') != -1));
+    otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('.') != -1));
 
     const formulaStatArr = [...new Set(Array.from(statFormulaMap.keys()).map(s => s.replace(/V[1-3]$/, '')))].filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
     formulaStatArr.sort(compareFunction);
@@ -716,7 +715,6 @@ export function calculateDamageResult(
         for (const dmgElement of dmgElementSet) {
             reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
         }
-        console.log(reactionMasterArr);
         let has氷砕き = false;
         if (characterMaster.元素 == '岩' || characterMaster.武器 == '両手剣') {
             has氷砕き = true;
