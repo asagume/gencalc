@@ -91,8 +91,24 @@
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_FavoniusGreatsword.json"
   },
+  "飛天大御剣": {
+    "レアリティ": 3,
+    "import": "data/weapons/claymore/3_SkyriderGreatsword.json"
+  },
+  "理屈責め": {
+    "レアリティ": 3,
+    "import": "data/weapons/claymore/3_DebateClub.json"
+  },
+  "白鉄の大剣": {
+    "レアリティ": 3,
+    "import": "data/weapons/claymore/3_WhiteIronGreatsword.json"
+  },
   "龍血を浴びた剣": {
     "レアリティ": 3,
     "import": "data/weapons/claymore/3_BloodtaintedGreatsword.json"
+  },
+  "鉄影段平": {
+    "レアリティ": 3,
+    "import": "data/weapons/claymore/3_FerrousShadow.json"
   }
 }
