@@ -296,6 +296,14 @@
     "max_level": 90
   },
   {
+    "id": 15419,
+    "name": "トキの嘴",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 15418,
     "name": "竭沢",
     "icon": null,

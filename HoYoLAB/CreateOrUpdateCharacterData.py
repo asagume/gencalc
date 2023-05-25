@@ -265,6 +265,8 @@ for filepath in files:
                     if index == 0:
                         category = '通常攻撃'
                         for attribute in entry['attributes']:
+                            if attribute['key'] == 'Level' or attribute['key'] == '':
+                                continue
                             if attribute['key'] == '重撃ダメージ' or attribute['key'].find('狙い撃ち') != -1:
                                 category = '重撃'
                             elif attribute['key'].startswith('落下期間のダメージ'):
@@ -277,42 +279,27 @@ for filepath in files:
                                     '/')[len(entry['icon_url'].split('/')) - 1]
                                 talentJson['icon_url'] = ICON_URL_PATH + \
                                     '/' + basename + '/' + iconFilename
-                            if attribute['key'] == 'Level':
-                                continue
                             if '詳細' not in talentJson:
                                 talentJson['詳細'] = []
-                            else:
-                                continue
                             if attribute['key'].endswith('スタミナ消費') or attribute['key'].endswith('継続時間'):
                                 for value in attribute['values']:
                                     value = normalizeFormulaValue(value)
                                     talentJson[attribute['key']] = value
                                 continue
                             elif attribute['key'] == '低空/高空落下攻撃ダメージ':
-                                detailName1 = '低空落下攻撃ダメージ'
-                                detailJson1 = None
-                                for workJson in talentJson['詳細']:
-                                    if detailName1 == workJson['名前']:
-                                        detailJson1 = workJson
-                                        break
-                                if detailJson1 is None:
-                                    detailJson1 = {
-                                        '名前': detailName1,
-                                        '数値': {}
-                                    }
-                                    talentJson['詳細'].append(detailJson1)
-                                detailName2 = '高空落下攻撃ダメージ'
+                                detailName1 = attribute['key']
+                                detailJson1 = {
+                                    '名前': detailName1,
+                                    '数値': {}
+                                }
+                                talentJson['詳細'].append(detailJson1)
+                                detailName2 = attribute['key']
                                 detailJson2 = None
-                                for workJson in talentJson['詳細']:
-                                    if detailName2 == workJson['名前']:
-                                        detailJson2 = workJson
-                                        break
-                                if detailJson2 is None:
-                                    detailJson2 = {
-                                        '名前': detailName2,
-                                        '数値': {}
-                                    }
-                                    talentJson['詳細'].append(detailJson2)
+                                detailJson2 = {
+                                    '名前': detailName2,
+                                    '数値': {}
+                                }
+                                talentJson['詳細'].append(detailJson2)
                                 for index2, item in enumerate(attribute['values']):
                                     splitted = item.split('/')
                                     newValue1 = normalizeFormulaValue(
@@ -422,7 +409,7 @@ for filepath in files:
                         else:
                             continue
                         for attribute in entry['attributes']:
-                            if attribute['key'] == 'Level':
+                            if attribute['key'] == 'Level' or attribute['key'] == '':
                                 continue
                             if attribute['key'].endswith('クールタイム') or attribute['key'].endswith('継続時間') or attribute['key'].endswith('元素エネルギー'):
                                 for value in attribute['values']:
@@ -457,7 +444,7 @@ for filepath in files:
                                 if attribute['key'].find('回復量') != -1:
                                     detailJson['種類'] = 'HP回復'
                                 elif attribute['key'].find('吸収量') != -1:
-                                    detailJson['種類'] = 'シールド吸収量'
+                                    detailJson['種類'] = 'シールド'
                                 elif attribute['key'].find('HP継承') != -1:
                                     detailJson['種類'] = 'HP継承'
                                 elif hitCount > 1:

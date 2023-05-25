@@ -2044,6 +2044,53 @@
   {
     "skill_list": [
       {
+        "id": 10611,
+        "group_id": 6131,
+        "name": "通常攻撃·段板紙·切り裂き術",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10612,
+        "group_id": 6132,
+        "name": "にゃんにゃん町飛脚",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10615,
+        "group_id": 6139,
+        "name": "秘法·サプライズ特別配送",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 6121,
+        "group_id": 6121,
+        "name": "妖説岐尾の変",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 6122,
+        "group_id": 6122,
+        "name": "ネコのぐるぐる目時計",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 6123,
+        "group_id": 6123,
+        "name": "抜き足、差し足、忍び猫",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000061
+  },
+  {
+    "skill_list": [
+      {
         "id": 10591,
         "group_id": 5931,
         "name": "通常攻撃·不動流格闘術",

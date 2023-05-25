@@ -6,7 +6,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a48c2438dc7ec1e04623ef0f1e4a2487.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/cb1b115c92b85af0ef6f63d6865f4c99.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6e1a702166693e7dffedca2b3ee86efd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/01f19d7ce264f69211522fb829e6d454.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/babbd1180f618ffd41cc9480e9f50095.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/62e9d30caccf0f5816835871f61e3b3e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7d213887f1a7a3ed2f8d12a24486b343.png"
+    ]
   },
   {
     "id": 10000079,
@@ -15,7 +24,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 5,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6990224570bbd5192ae2259b37b49ba9.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/088cc85e286bf4e7e7f247a1279b8baa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c78ac0ae445d1bd4d26f93fb23c9779e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1e259d428d279b1473752d9b925f2631.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d1c55498e5bde2b2c85d3a3223ee48cc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/59dfeefd5d28a2475de7ae5159544e8d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/49904b226343e6b02361c5704e789c02.png"
+    ]
   },
   {
     "id": 10000078,
@@ -24,7 +42,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/918d749479493fbbf52b77c93cc37e99.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7d7df414711202d71744c893d1669f6f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7cba802fb628733e1e2471880344b8f8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/cc6edba767a0c173fc81d25f629a8ff2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7cb47ac1424bf90596f0ad76fdcf5fd3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e963f845494a13ee82c115ba1057c1a0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d8b43103b9e033dc342d9c232c9a8a38.png"
+    ]
   },
   {
     "id": 10000075,
@@ -33,7 +60,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a480c39a8bdbec38ce17561adee89385.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/844d15e9027f5d45ba8589c78b006d9f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/78add3ee5d81a4c2134cb3267bc52f76.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/98bfb72c9d299b077c3a7ebbd6123506.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e4b738a40eeac5d11c6dda9503022687.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9162a63311f671222fb7a6b874367def.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f378cf7ab04ec9743494484121954e9d.png"
+    ]
   },
   {
     "id": 10000073,
@@ -42,7 +78,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6dbf5d1635774290683ab119c2fd08ea.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9f91e27ad0dcb7488c11f55e289e6486.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eb5a8cfd202bd54528700e01f450882d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5361a733daf9ef55f994950b6f05a982.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e292753bbfae113cca863bc50c2356ee.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/704ebe3d8ff7c74c08d5fc6b6cb73482.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b69ac3358f04e69b107e1c49dc00f8c0.png"
+    ]
   },
   {
     "id": 10000071,
@@ -51,7 +96,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 5,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/dadf611253a0631f382d238e22338731.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b12601791ce05c0c4ae3297c963a5127.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b8e7e4fe71d7c5e7c59ee1cde901ce3f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/08703d9f784a7a609add47ba6b42e7a3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d374e21c7a7e491db82a497d83afeddf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9192159a4c3b3f41c9b9dc6f0ef22966.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9d96f5134f3a2c1798f48ac0d6e106c2.png"
+    ]
   },
   {
     "id": 10000070,
@@ -60,7 +114,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/785ccd9bc99950b42f9c8be83d06a0bb.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e6f6bc031b7bc4fc78da9e0028999a87.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4d25615786abf08de7ac988a09cbe95f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b46025a7f3e8da388f933b68f72ed43e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d15ea5117a47f6a76fe4a888686d9940.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/222dda2b3509da36440aef933b720aae.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/71ff4374f7654bfd64f9a7c8fabb1bb4.png"
+    ]
   },
   {
     "id": 10000069,
@@ -69,7 +132,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/813b80c9a23a6826ebb3aa76d52918dc.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c9b4985d37d2dc84b502241582590e92.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/27c308c1a637bb7500f8574a03efb85b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d45c6aafae01a448f17d47bcfc30e0fa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/aba14cd991e914fe2a1c018bb964aad2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eba591e4a01d05d6eb6a5eb97f3a121f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eec0f87d18de5acbb15ccde31cd9b3c6.png"
+    ]
   },
   {
     "id": 10000066,
@@ -78,7 +150,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/ffdac9984ff4b586d955c55a5c7df060.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/16ba6f3d637ef58985e7fee42d489a78.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f7f5027abaa8f869ad168690a7370e82.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9d319e585aa515b9ffedf0d1929aa064.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/45f1332dc196eb3ab24a6f47dadbdcbf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/98210956ba77b92c88f4da3d8d92c751.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/83fd8b1d420c53570e2fbe24cd2bf553.png"
+    ]
   },
   {
     "id": 10000063,
@@ -87,7 +168,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 5,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6c00478faf98df85491be01406f95f78.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ed30fe4e074ee0401a6ad3125f5707a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c59c0ed5781ee59a6a13079f2c8f328f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b91bb60ff2f2ba3b23c1b4bb4c041226.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/05ba63c0c5514742447444aec722198c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c0f4fea7be2b811d07c9a9d6bf7c403a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a27f6d180f6af4bdb162ad5a3916986f.png"
+    ]
   },
   {
     "id": 10000060,
@@ -96,7 +186,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6b5d91ffc3e5c07195837f25f891342d.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ce24deeb67a095a5819d4465a53f19f2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/25f2250de1ccd40c7dbc680cb6f914f7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b1a65b6e1876b44c844eaa93cd1cfecb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/06a487980a23f89cd87f9c709a543198.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5f1fe0721e8d832bc619b54b25ee6273.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5003bee11d46d64bc9891cd7975d7265.png"
+    ]
   },
   {
     "id": 10000058,
@@ -105,7 +204,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/bee99c5fc5eba7b16d9e8d8ba6a016ac.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4321066138201d01b185e93ef0d34445.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e68fccc078453eeff9f97244cc9197b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d8c147479fa4849aed67225a6b27030b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/165d18a37ad499ba7fb617052e092f37.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/06f38bd4dd85685a1b72f9afcf021e7d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ec996f4b2779820c34a6c0c530adafe.png"
+    ]
   },
   {
     "id": 10000057,
@@ -114,7 +222,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 5,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a4c35679d3d9f22e15a68dfd33c69633.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7c5b35805fa1c36979c4941d02a02134.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d9138b3a7927ed1878b685fa4773495d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/38a3ab441a43856fa275b1e2eac8ae23.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b5e9dad8b86964d1ff1169b1062e3f0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/603acdad83abb44ba62d39bf7cc9fb45.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/509e965940062c6794d14b88419daa63.png"
+    ]
   },
   {
     "id": 10000054,
@@ -123,7 +240,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a7fa1f2523d50681852f84d27597e12e.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d8618e49a96fe8e0f44f5c726ee9644b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/01a48c1328c3bcb189b6ab364c5bcd5a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8481a6edad9c1697fa8d7535c3d1c694.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/156025109678f2cdb2037364fee3bae1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d963d26db1bbabcb4cd149e857cee893.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b331876b2db15b57940787a75c2f0bb6.png"
+    ]
   },
   {
     "id": 10000052,
@@ -132,7 +258,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 5,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/474a62a930b92826657fdaa65446e3f0.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/21213a0e55ac89639c0c3c6e4fe78498.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1675786eda84f95d6a476f1bfa0de4a6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/39a55f5cb284fee921da0b176099ad2a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/74b56a121cb1a2e9faea8f123bda2019.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b328821639467650e7b3de05c230e9ff.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0fd0aeafdbdc1b6fd8b66b48ede6839b.png"
+    ]
   },
   {
     "id": 10000051,
@@ -141,7 +276,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 5,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/7b29f6db6ac088fe841c7a456ac86922.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/de0bf91d042713e370071788ab10b40a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0914f9140bc1a48a5eff96841dd64f12.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5f85d99b744a6d04d4cd74bb1be200e0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/df7e9887775af3d171eba2e75d63e989.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/75439beedd93db20181a0f01d6d4e5d7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1ae444cb68945a114d31a2f0309a9eee.png"
+    ]
   },
   {
     "id": 10000049,
@@ -150,7 +294,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/17fd6a859883c2351f0c94e15236ff0e.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fed75d65ac9e1613ffa3eeafe556995e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/de3f1234e6cf6732b9ec2a2c551fac00.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5519143450f36338ac0fa33dabfd5afc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f3bf59700b3b3cc357ef17a841eb56dc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/09d341ffb7dc144c208f38a3818f93fa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2360b15776ba0d79098dcdaaf0c9dbdf.png"
+    ]
   },
   {
     "id": 10000047,
@@ -159,7 +312,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/1ce6236805ff645b43c7a8b7e9bbffa5.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fb3b3c4e4bc568f0c303acd6cffa2271.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9c328a3dae8854fb9af1a934705ac462.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a69bafb4c29512d0358c2ce5623f9e5f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b1945af021ba0effa28e58b9794026ff.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/db5239beb343cb7220f22c40ada7bcd7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b929bf62cb578f3c1236c7906c3da560.png"
+    ]
   },
   {
     "id": 10000046,
@@ -168,7 +330,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 5,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/16288fcd0046e37c12bad33a6dbbd4c0.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c6f654cec2e1090bdd07025c88bc10db.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/52013733d30186d167b8c0db1a501e79.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/715f4c4f6f9be2fab53efad847a397a9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d0dc31052d1a7a1ecacdb3a647ae71ae.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e94b05d8f4f2c9bcb3b886aa7f9fa2b1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/30d7144b146f46887661a7af08d3a42e.png"
+    ]
   },
   {
     "id": 10000042,
@@ -177,7 +348,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9241e72d6a7497a80e6ecd9782e70fb9.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ef971b82df0429cff25fbc514aa9b78d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/29317610dbc6f466f785783d40623279.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a545532c005d0800a56565dbfc2476f6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/91a5689284686c24a6f2edc65551f335.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/db5415a40957ecb5d8cb6714757c23a9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/64b4e99b52aabc321cf7f5e7e2a9a492.png"
+    ]
   },
   {
     "id": 10000041,
@@ -186,7 +366,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/20fed656830b84add7141fc2e5718998.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0b568f69c0970635887c9f78c3882343.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/220462ab692a7b31c04ba2db7b459d3d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d2aa2082ec869f18eacc505bd1626dc6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c7fc25b5b8339167515998f012cdddb9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/40381a7d369b17d5c31843abe659f645.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1cbc0d24c5b519a88718312a1a923a04.png"
+    ]
   },
   {
     "id": 10000038,
@@ -195,7 +384,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/fff7ebfd013818a52e6ad6007c6197ce.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5d5554d973ffefa87d2f449d33902877.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a75267663a85f6f179622e33fb7f1b54.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ccd9b86ed6eabdaac133a20e32ae50e8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4709e4a934a63136bff4f860f734d185.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2c898dbb9ebcb52bc33e3e52e0593d28.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2914957d2629c466bbc8085b31a56919.png"
+    ]
   },
   {
     "id": 10000037,
@@ -204,7 +402,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f7333eefeccf42426b655d608ecc8c80.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e8aee5a41a0f7f8f5cf09b63d8b52f28.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/66989e966026c74aa1a9204b279d8efc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b2ca9dc7b8c662f2c992e52a23e17fa3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e23293ba51dd0f67d4283d20460cce27.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b10d481685ff0fce74ad542dab6cfffd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d3c54b2d6c43b9087b4a136bb2e0fd83.png"
+    ]
   },
   {
     "id": 10000035,
@@ -213,7 +420,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/c1cc2726667c04c2543b4844cd120939.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2c3a67f0041eb504f296e1a8cd22483a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/028f8e755eb2fc285ee21c97c5fbfea7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2d1f7fd6440414803e124195706aeddb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/637b3e008972fff9b7985ce6f345ddd0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0fc168c32922d013d809700ce26d010c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c8d73534b1bd74bfee8ea2d0340ffe2e.png"
+    ]
   },
   {
     "id": 10000033,
@@ -222,7 +438,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f846f7f6849d97154286dc880da56eda.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5371f717a208a1fa1212b1d7eae427d0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f4542afa78c314ebe03158fcdf34a240.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1ff71e3be2c2c6083c48da30e6435f03.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2f2fd94564e2fc4a7a3c5bada4d35b93.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c13bd924e9dc1ce8097d3aaca15ab3fb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1c68bf5c890c48275797b0a31020e95e.png"
+    ]
   },
   {
     "id": 10000030,
@@ -231,7 +456,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 5,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/b73219b3344458f17fdff41022652455.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/21b2d239d2516c384dc1a72f8850d8b6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4a57f52606065a2c9660c10faa6a6f09.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/aa4e89e5fab04d37169a6015d985b599.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/893942463c24d6f6b539f52cc8eeff57.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e261c7bd10ead234139db5df33a6ac7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e3d174e8158464f9a92f3399c6b63b8a.png"
+    ]
   },
   {
     "id": 10000029,
@@ -240,7 +474,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 5,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9f8341cced7e3146686379ea9451406a.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b193a7d8ac8b7eae6f64c6959c8cb492.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d1d501ea8c31492a8c71f8927c109e54.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0dccea99620d4cc64b3f2cbbd0fef40b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/544441be5ca246ef9baf1a04a109892d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/871b3a51ceb6880f35768850e22d6b42.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5eb2f419111d724227867d8e2cb6c815.png"
+    ]
   },
   {
     "id": 10000026,
@@ -249,7 +492,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/69cc91c9ea340ce18876ea1e94c71bd8.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b835b208107289eb46de7c029290e565.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6d06bb1713270db5c9431430c7ec09ba.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4c7f2d79a212caa8f9ffba5cf723343d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/80932936a2b5f54ba408f4e336580554.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/372f9e5f7c6881aa59012deb08f3ca32.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/558cd3ff3faf8cb0a64398004f31f403.png"
+    ]
   },
   {
     "id": 10000022,
@@ -258,7 +510,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/af0579943e5b855314e7411e6695a1db.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ca5ec2aba51d3024731621da3470c108.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0882e62729a5b013ea3822b007415498.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0e6fb1229f1d80324e88b0cbb23ead16.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/441c625009bd0e2b992bbc0ea2fae7ac.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1a0f1baeb4e495a1c7c3feaad6e9c3da.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c0b500ea7d4b453209e7dff3ecda3ca1.png"
+    ]
   },
   {
     "id": 10000016,
@@ -267,7 +528,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 5,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/bc667e9fae60f71480d84d6dd45e5cc7.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d01a8027317f94a655eb2cfab0736dc2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f95535f1e4e2ea121070a35d71a69a76.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/db6da0526a81e58a89a1cc4588003249.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d9d817cf228bfd380e3666239e3a5935.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7166609e2c209f5515f7b63e4f0597e1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/395ad8f4d991c46c5788cd98d8eb1434.png"
+    ]
   },
   {
     "id": 10000003,
@@ -276,7 +546,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/b13e4717bfcd652c1690c3a76bf06775.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/551d5bbcb87d9cd0cc2765cf73cac855.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b251915e43e59b6351d50b0a0e9071d0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/78c60e5501c275b0d8a75b9617f4f43b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0ffb4e56ca60d6d05ef4de507ee20099.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6ac3052fe43e7b627cba0b2197977a7e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/560543abc17a7ab908a3cf7289d9f16c.png"
+    ]
   },
   {
     "id": 10000002,
@@ -285,7 +564,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/64f0d07d7a6d76779cfa9fb526c7cae9.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e5f41d8b6feabb31f8022ff34dfac34.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/69a7d0998b50e32cb23a670eb954c07a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f9520e464c3da833b1ca52df64c66306.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d9a1fabb2996eaceb3e927e514d727cf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/39fc15e788a52cf1fa17c6007f82bc38.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f9aa0325432bd2fbb8b15d0dc964d80a.png"
+    ]
   },
   {
     "id": 10000062,
@@ -294,7 +582,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 5,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/4e765f79b8ed5b1824abe8f69c368f2d.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png"
+    ]
   },
   {
     "id": 10000081,
@@ -303,7 +600,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/96a66914921e1bcfae9bc2766c0e3d88.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e6a4e624df3e4fb55b7b214f2ea8e3dd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2c633402380cd369d91188dc3eb24bb0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b42ca1bfb3fd0d3a4504d8b677eed37c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4c35028b2198fe27e54fc2e1493a7dc7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/04b033b926bd47a426baa7d2004fa375.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2ef83bc18caac0db2b7fafccac8c1a64.png"
+    ]
   },
   {
     "id": 10000080,
@@ -312,7 +618,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f46f26454e4aae5ba5ed9b13deb5f45d.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4fdc60b1f40fec7beb9569d63e0a412d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0a305604b61534855844be8a82b91f4e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dca58df3422be6380393d77a3de8be53.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0a86e0ae489219619cfd57b5181a62ec.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a6892b759430c6189e8d6e01f10463c0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/86f7fba9fa6a9a00775ddb649e267374.png"
+    ]
   },
   {
     "id": 10000077,
@@ -321,7 +636,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/df9b8e0c377ac8d1995dc746d30e2695.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3998ccb31d3f3b44f4f40efb94a77ba1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6c1cb18878138cb2eb1efe65f8bee5b1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/060c8c2194f3115c62e670c22ad6cbd3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/76321a1e5c4e20f2e013f128d605adbd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d868b835805904541979f2eaf360f76e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/453a549f70c717fffdd8fbd8f9c29de6.png"
+    ]
   },
   {
     "id": 10000076,
@@ -330,7 +654,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9a120d9caf3eed052dbcacb001717f2d.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/af422b1992009ed5445371539810f50a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d2f37662fdb32cb359428df11eda9df3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a8aa5eac995a4133a83f8d72c003a8db.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6c58fa5855fb9ae861d33819f4d6668b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d2f5722bfcde777a03afccac356b87ae.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e037389cb7a190cc236dd0baf3ec8abc.png"
+    ]
   },
   {
     "id": 10000074,
@@ -339,7 +672,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 4,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f8bc91a88fce47f15ebdbc24edd513cb.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c8ab4cdfe67b3a89037f6e1023fd14d3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c270bd1dd4d526253ba9c16be01f24db.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b9fb000aff7001933bd8c9caf63c35b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/41a57029d9a40b0d67d9c5c77069aee3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9e73ef595cf57c981efec68abd1ab299.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1252e960de8a9926a5594cf0fe80f8ce.png"
+    ]
   },
   {
     "id": 10000072,
@@ -348,7 +690,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/fedf926e593b5b80e9d368549dcff0a3.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/163feb5a51efd877863ca1b944b40e24.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d54215582be0b790c4d0f3a7e8178d69.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/90a9cc680aca497337daff3013a30dad.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4590700e91cbbc6af578fb3b3eb31ab2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f09e72448ebbb767508ce990b484d83f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3181b8c80d06bd97f2031138aa8c4854.png"
+    ]
   },
   {
     "id": 10000068,
@@ -357,7 +708,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/8eb5678611aff1e36f1248e806a5e3e7.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9334f78b9864ad8f396ba5b48a1cf873.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ce2ecd2b016829c2d75138f0841b66f2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/defe9292716ce2efedaa0b0703f96f90.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dab2a9b1e8688384f08082cf4726fcb3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2ff5d83b55e2b364af82c0358c4c7685.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f35fcc00d8b89aad14176a146ac75eac.png"
+    ]
   },
   {
     "id": 10000067,
@@ -366,7 +726,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/048b08546b2b81c455999c2ee5fa2297.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e2461a5224e56d4822cd9d88348257a4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f52cf2f809e8a03a5c9bb16a780b82c5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/393c9481156bc8d1bac489f51c221c5b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b2c3b071d073516f4715b06932dc03ed.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/835458c8bdb4573305d42c058404254f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/435be3c0f40a1a5f9a324ba42d18fc6a.png"
+    ]
   },
   {
     "id": 10000065,
@@ -375,7 +744,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/106859f7a5864563d13664804ee6ae4f.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/feb9682e3880fc5a40652a9da735b2ab.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/634b34cf67f0568bbc2a7bf99daa7a47.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e67bbfa993e79eebfff78090e3984e48.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a8b057992232dfb7b4cf92829c7cfc8d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4f6eee28bda14fde5c3469afe698b4dc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b3c238d8b98a53973c88441791be18f0.png"
+    ]
   },
   {
     "id": 10000064,
@@ -384,7 +762,34 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/55ae2b4cb73fb57525567330f228da95.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2b61417f3fbc6f245ce7329ca3b3e320.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/87151b37da328c819686fa1a21fbeda0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4c20643f98ccf37ac8e70f8f71a5f27e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/15821de65d6d96eb2f27f4e3909f7767.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f7c6ef13ad27e14859ae307ee45b2666.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ad43611e0b2515f7f3842ca5d13958ba.png"
+    ]
+  },
+  {
+    "id": 10000061,
+    "name": "綺良々",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 4,
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/41d5530977e50bce704b0e191b67e32f.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4d97f2ef9c2627bcbde7908bf4bc89c5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/60d2b308fc8e3be57f252e04d18bcf03.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/686d23e29db26345d9fd52c2b73ae227.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3b022435d7494b892c4d6be316152f42.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6d019e1520a526625fdaa6e066539d11.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/487b23eb65c2a26fdb24b36899efb047.png"
+    ]
   },
   {
     "id": 10000059,
@@ -393,7 +798,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 4,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/ff44bc041949f26f9784a28075fae152.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b7edaa0280a7cf7d0ba43c6f36ff5a77.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/54862973082301928fac54dc79e2df41.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/99c806c0705fe3d96d98eb77aac9fe58.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8c1c3909fc9c20354d36dcb49b7faccd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b905944c049c0bc0695bab8e77558322.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ed4ca5264c8e24afb2c779e732a165bb.png"
+    ]
   },
   {
     "id": 10000056,
@@ -402,7 +816,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f9f022e77d4e6823a4e6237b969f83fb.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/76a1e4d02a45665ce9028ab96f7eea13.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/17037243388c89367584ed3328b96a75.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/baa71996dd70125cb47bd18bdecb45b2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/72322d7d03e86bc33b02f9d9ecaaa449.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b384acc036374a49ceb78a4fe4b16aa9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a527910cc18279f07e0ee4709fd97095.png"
+    ]
   },
   {
     "id": 10000055,
@@ -411,7 +834,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a521867ac40cb22c57d182ff511284d0.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4cf56d61bdc3041716041ec83cbe1945.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/21db6cc25d56650ea4d1fac08ecb91d2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/459b4912c985001d6d4cdef65af5bd4c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0453c08124ecee1c4b9afd9c77e783fc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/49dc826ef209cf7b44a097d0803b5628.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c0f655dcf82b4a61788188aa5d354259.png"
+    ]
   },
   {
     "id": 10000053,
@@ -420,7 +852,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/24d454a7182ea1a92e32ad146d8e7f34.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4db4af821193b5a1795ff190848b5c06.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/86359169a8c0384072a8abd7443f94aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ba62b5f4eda7f2c01f4403e6bc56074.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e0e9c0b55c471e39d3d9223949e9c94f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/74be430fab51a8651e9998835b52429d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9ad07f06cee01147885f0e1913565fff.png"
+    ]
   },
   {
     "id": 10000050,
@@ -429,7 +870,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9e1a4a0afbcfe128c8f1132d8c369f58.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6077a7839644f75448557f74036d97b7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/41fe66591923b5595443c9afe23a5842.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/33bcac0a2dfcb60d6f0a91f28fe7a7b0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eaaf591f5442181ba701c2a73519fe13.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/da7af3143f2df073129bbba8e5f92e35.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9005f3511a0f23083bd4f9c62adbb1d0.png"
+    ]
   },
   {
     "id": 10000048,
@@ -438,7 +888,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 4,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/e9883de33a1e720ba2c7c57487eed5b8.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c9d1d716e8d2630aeff47737168508bb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/161a1fe5189369aa50b0f217e07cae9f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a6558096eaee820c08c18acaaa58f962.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/19e08743178c4b72937aef1af91c027f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/397bcfc9feadeff85b603f397c6884ba.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/71f9d5da0712d3e008f6796757f5ba7d.png"
+    ]
   },
   {
     "id": 10000045,
@@ -447,7 +906,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/0498d5c8c7e45b8cecc46fe56678effa.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a161fe85bd8bfaca50580c23b4f0d978.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a73cb28fa58cab578f6a70176f6be484.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3c213372ccc922cd1d7d0749b48bcb53.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a832b385c09cdb4738e5b36e473624dd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f92741cf643a0f79b62dcf5d72266fa5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/01840a2ee66724b200289340028bf64f.png"
+    ]
   },
   {
     "id": 10000044,
@@ -456,7 +924,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/25f814833fb0ee95779fa4e8ad091960.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7f9de48fa2f5df787ca18480ac1992f8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/62ed6afacd138dfbf65230936e542aef.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/003ba7cf58549a52e7456cda01537796.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ae6ddf7c6afa90355afe412e6b9351d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d232334f5d88a4c863d858ad1c6d8156.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3329c3c6489e289f6374258c10623ac9.png"
+    ]
   },
   {
     "id": 10000043,
@@ -465,7 +942,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 4,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/aedadb1a0f5635a22b84deecfc1793af.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/233937e0b4fb7e1677706724771b2352.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a5e281c9c05ee18b0011236c4cd771f0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1b3b02c19ff72739bd8ce7060a383628.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4b3802b732ff8b80814ee14e46198619.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/348b718e877c365f82a678512ed2ff60.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/683d3b94fe56816687425553cc4ffb3b.png"
+    ]
   },
   {
     "id": 10000039,
@@ -474,7 +960,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/ad0598aca31867ca05b53b1a91d8207f.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/87c6a137ab1c09432484697fd141dcc2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c54b4fd8dde0cad2c7d1c9d030e16fd9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/529d3cb014a455c7d1217d6989d36bf0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5a84c70d0f9d34630757824bb0af82eb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8cde3c16a57a2f47de1b68225b46277c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/12669a21ef9d22dc9f634ab75ecfd33d.png"
+    ]
   },
   {
     "id": 10000036,
@@ -483,7 +978,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6c5118a075caa799566463a1148a1e47.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d5254e62725571c47b6655ad1a757199.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/375a95d4b87769f6443730331ff8eb31.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1d8755a4c1ba3f41e9837d9c1978614c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b0e01234eb2f418d35a12a297ec46d9d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ec52f23a664040eb4e5c282a6ed80629.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/204782c3ce7f03a6ef7a068171d6ce61.png"
+    ]
   },
   {
     "id": 10000034,
@@ -492,7 +996,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/b4186fb5da7172b03ee52f22c22bfda0.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bbb477635527da2a9634dae7694605d1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f6afd7af6a6d634e6b63ee1e26f59a0a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f536a57265926b71aa6b92b2e1fb98c2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/958968591b7ef80c288c64158dade56d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a5e759526eeafd84fae337eaec219d2d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a876091d22abce0a3f6eb56742a8ba8a.png"
+    ]
   },
   {
     "id": 10000032,
@@ -501,7 +1014,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 4,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/2f142b28ad83f111c076ac7bb30b1ac7.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6d3f2cfe3bc6a36cf7d9b97497f03506.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/248c35b467779b8c093c5f82a6caab5e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/378458568452a24b6b6d45b866cba4a5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3ed82669c72c0cf9932c075c565256b6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/63ed8a3b729e6d79c178d6e97ba87921.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3b46d5078f8f004f14abd43fc5729c2a.png"
+    ]
   },
   {
     "id": 10000031,
@@ -510,7 +1032,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6ebf894f5a4917b9d54df47ca2f8f0d2.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8ff45f498ded1b92f7f694dc0c131d3a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a54e22d83f9dea40b929a2ba6bee3c7d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b61ee6092ca8ea2bd11836236fe699f6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8e9dfe540c367593eb12a2a6d39921ef.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/04fd958ed8bb639cbacd4e70c56f61dc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/58a825565c6e3e254f6aea6d1ca0460e.png"
+    ]
   },
   {
     "id": 10000027,
@@ -519,7 +1050,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 4,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/74f878cff9c6171f4c48c956c70a2a25.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c5fb0e00499bc9d1df87ffe5c4bb9929.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/20533808f3d5bf1134f0842611ed013d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/37219ea97f775bbab955f6a244c69523.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e83cd2ae797d2ea2e6afbd462ccdcb4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a7cf2876fc71c1d7b69a141ce28ee025.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c8e08b2e68ae545582de645427b8e9e1.png"
+    ]
   },
   {
     "id": 10000025,
@@ -528,7 +1068,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 4,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/e086eb1562f349b8a3132a4111bd0c4b.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c1b492cc128b48fde744e7322867812c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8b0aa449e5b176daa5377ee321d9fa4c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/beb49e8fa49306550fca31cd00eefedf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4340caef5f04e85c2da957c0cbd1d7e5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/37fc27c3aa1eabff1e259a5edfa035cf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/132539d23e1be65f6aac5a22f97fdf80.png"
+    ]
   },
   {
     "id": 10000024,
@@ -537,7 +1086,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a204e89e19f8b655830ae27a509a7509.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/96af079049376b5e9491d22d4c102c0f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/854d63af0b1a51f66ee8fdb4d748fc8f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e08a26153055d824fcee6f148c590eeb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b52177cd486b568d6d4c90cb3d9a19c9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/30561f861c1bf5fa18e5dafc10c36886.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb089fbcd04efc915702f972de324557.png"
+    ]
   },
   {
     "id": 10000023,
@@ -546,7 +1104,16 @@
     "weapon_cat_id": 13,
     "avatar_level": 4,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/2c764c5ab5b2f7062aa5dde26e7c329a.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5b67addb546b76f49ca34ad630e0a043.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e1ae7297b36a60dc115e1167ca8b3d1c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2d5a6cd471384ec74464a67328e6a284.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2587852ae10759f787455c2f4e640ed1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c132314cb11d9ddcdb662acc2f0de7e7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/899e5f3131f67fc34bb0949a33b58984.png"
+    ]
   },
   {
     "id": 10000021,
@@ -555,7 +1122,16 @@
     "weapon_cat_id": 12,
     "avatar_level": 4,
     "element_attr_id": 1,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9185e35016706290a90948e277450491.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0e67f09900d1d2fa9cf446a03ede2b0d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6ea6cf3451c5826f884482223fc21690.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/cd2246f3b82220e3061fd838a8148960.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/84a13dab8dd9ba91f59a14b7c372d6dd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a5e8a255a7b2b832e995726f80ac7149.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/893f8818ffc2d94b537cb290299e56a3.png"
+    ]
   },
   {
     "id": 10000020,
@@ -564,7 +1140,16 @@
     "weapon_cat_id": 11,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a28743fbeaedf043fe42209c6303290c.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5fd516fd5791eef58eb14006d852f4b7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/791a566bf40deb4b6e4b17ea8b2cc134.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/340c7a375c355f7d005ad4ba309a9411.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/89ef16975070cd15485550227053e66c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dd07f9186bba21c221e411dc08c23957.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/86b2c88760f235a8c522e7e7e58a1eb7.png"
+    ]
   },
   {
     "id": 10000015,
@@ -573,7 +1158,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 4,
     "element_attr_id": 7,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/1bd910e4fcf2f89049f271701917bc4b.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d88bd4cd501af3735a48cc3144c15ad8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b6fbc777f8ef9a585d70512853be5e50.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e904bbc4ab7dc60e87e95aee1bc3e3e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d1942377fea4529469de8c05c2b32800.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eadb849ed1c0f79bbb64a85d8fab16e3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/269dc234a5f5566e3de4d0fc0b290164.png"
+    ]
   },
   {
     "id": 10000014,
@@ -582,7 +1176,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 4,
     "element_attr_id": 6,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/348f0b843325a03e0442b51aee192537.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a17c9b75da2de206fa31532c4e2b5622.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5ca6e9443b46c1390447565fe6afda48.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fbfd079851a9d55088ba0106afaad611.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7fcca67f45ffa4382744eb78e9013e13.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a1c9c75d3aba57950cc0f3b57b04670e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fac1beaae2c453cfe8d696e88506b6e9.png"
+    ]
   },
   {
     "id": 10000006,
@@ -591,7 +1194,16 @@
     "weapon_cat_id": 10,
     "avatar_level": 4,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/8223dfbb7fa5ea73acccf3c8352ba6bf.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b594e47e18b8a77eb3003fd99b36d928.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1da5b5a7db86140bc3302dfab06f8b6d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/667664381969e69748c082fb5e877787.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9c5b49ce5d6d3074c9ac440efc980676.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1f33d2b358169154db94639488c7961f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b42ae2c9e3665a0f0cb0aacae76161da.png"
+    ]
   },
   {
     "id": 10000007,
@@ -600,7 +1212,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a45b3bb90ad8e208329795a2f6134dc4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d273472747eb193dbbee01bf5d0a11dc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f70194dc51b9096d7febb4decadae233.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b4e6189d4f1e3f5a7da2b506fbcb5cdb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b9f26707cec5187333e808318e8cdd81.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3cb11161800642220870f4a97a7b9d03.png"
+    ]
   },
   {
     "id": 10000007,
@@ -609,7 +1230,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b12cd9bfd5856533d9b8ff70282c8b43.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eee8481e3dbb19b88522cf4e20a76dbf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/954917b912cfcddd331254b1690a2c7c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4fb6cc0076df2654cd4ddaf219374bbc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5ba59776cce2e0e33069c3955c4ad775.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dff1f3dad26530dfefa460929768f5f9.png"
+    ]
   },
   {
     "id": 10000007,
@@ -618,7 +1248,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7089345f48c35f4e8e1066254ddea3a0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e8aa012b95ea77aaac859278f845d678.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7fcf3ce034aab3e2f5d4d798684241ec.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d168b5920600316a586d288f7cd13f80.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f367f7536b4af9eff1ca7aec6dba1edf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4216f5055caf4602656add0914e1fbb5.png"
+    ]
   },
   {
     "id": 10000007,
@@ -627,7 +1266,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f96acfa4c2c35dc064431e25ed33f49e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b5ceb709f66a00ffb92df8130d19728.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7728600bb794ea7c6ba9e9533d2434aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/127563d1b94c7f9c5ed9af9eff38e561.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c83c7999663d5590796810aae8dce8b4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb8a9d6a695688ae8de83a8f59a7ba65.png"
+    ]
   },
   {
     "id": 10000005,
@@ -636,7 +1284,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 4,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a45b3bb90ad8e208329795a2f6134dc4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d273472747eb193dbbee01bf5d0a11dc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f70194dc51b9096d7febb4decadae233.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b4e6189d4f1e3f5a7da2b506fbcb5cdb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b9f26707cec5187333e808318e8cdd81.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3cb11161800642220870f4a97a7b9d03.png"
+    ]
   },
   {
     "id": 10000005,
@@ -645,7 +1302,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 5,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b12cd9bfd5856533d9b8ff70282c8b43.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eee8481e3dbb19b88522cf4e20a76dbf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/954917b912cfcddd331254b1690a2c7c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4fb6cc0076df2654cd4ddaf219374bbc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5ba59776cce2e0e33069c3955c4ad775.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dff1f3dad26530dfefa460929768f5f9.png"
+    ]
   },
   {
     "id": 10000005,
@@ -654,7 +1320,16 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 3,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7089345f48c35f4e8e1066254ddea3a0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e8aa012b95ea77aaac859278f845d678.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7fcf3ce034aab3e2f5d4d798684241ec.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d168b5920600316a586d288f7cd13f80.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f367f7536b4af9eff1ca7aec6dba1edf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4216f5055caf4602656add0914e1fbb5.png"
+    ]
   },
   {
     "id": 10000005,
@@ -663,6 +1338,15 @@
     "weapon_cat_id": 1,
     "avatar_level": 5,
     "element_attr_id": 2,
-    "max_level": 90
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f96acfa4c2c35dc064431e25ed33f49e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b5ceb709f66a00ffb92df8130d19728.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7728600bb794ea7c6ba9e9533d2434aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/127563d1b94c7f9c5ed9af9eff38e561.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c83c7999663d5590796810aae8dce8b4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb8a9d6a695688ae8de83a8f59a7ba65.png"
+    ]
   }
 ]

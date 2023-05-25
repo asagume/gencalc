@@ -229,6 +229,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "綺良々": {
+    "レアリティ": 4,
+    "元素": "草",
+    "武器": "片手剣",
+    "誕生日": "1/22",
+    "import": "data/characters/dendro_4_sword_Kirara.json"
+  },
   "カーヴェ": {
     "レアリティ": 4,
     "元素": "草",
