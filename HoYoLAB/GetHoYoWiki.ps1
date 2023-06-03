@@ -24,7 +24,7 @@ $pageIds = @()
 # $pageIds += 3462   # ミカ
 # $pageIds += 3608   # カーヴェ
 # $pageIds += 3609   # 白朮
-$pageIds += 3719   # 綺良々
+# $pageIds += 3719   # 綺良々
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -50,6 +50,7 @@ $pageIds += 3719   # 綺良々
 # $pageIds += 3614   # 鉄彩の花
 # $pageIds += 3615   # 葦海の標
 # $pageIds += 3692   # 碧落の瓏
+$pageIds += 3902   # トキの嘴
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

@@ -27,6 +27,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "トキの嘴": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_IbisPiercer.json"
+  },
   "王の近侍": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_King'sSquire.json"
