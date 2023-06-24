@@ -18,6 +18,17 @@
             <span class="material-symbols-outlined"> send </span>
           </button>
           <span class="time">&emsp; {{ timer }}</span>
+          <div v-show="uid" class="avoid">
+            <br />
+            本ページからのEnka.Networkへのリクエストが失敗する場合<br />
+            下記URLをクリックして表示されたデータをテキストエリアに貼り付けて、再度<span class="material-symbols-outlined"> send </span>をクリックして下さい。直接処理します。
+            <br />
+            <a :href="'https://enka.network/api/uid/' + uid + '/'" target="_blank">
+              {{ 'https://enka.network/api/uid/' + uid + '/' }}
+            </a>
+            <br />
+            <textarea v-model="uStr"></textarea>
+          </div>
         </form>
       </div>
     </div>
@@ -101,7 +112,7 @@
       <hr />
       <h2>
         DATA IMPORTER <span style="font-size: smaller">powered by</span> Enka.Network
-        Ver.0.2.4
+        Ver.0.3.1
       </h2>
       《Enka.Network》様経由でゲーム内のキャラクターデータ取得して《げんかるく》に取り込むためのリンクを作成します。
       <ol style="text-align: left">
@@ -325,6 +336,7 @@ export default defineComponent({
     const uid = ref('');
     const timer = ref(0);
     let timerObj: number | undefined;
+    const uStr = ref('');
     const u = reactive({
       uid: '',
       playerInfo: {
@@ -618,28 +630,39 @@ export default defineComponent({
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
       const url = 'https://enka.network/api/uid/' + uid.value + '/';
       // const url = 'data/__data_2.json';
-      fetch(url)
-        .then((resp) => resp.json())
-        .then(async (json) => {
-          console.log(json);
-          overwriteObject(u, json);
+      fetch(url).then((resp) => resp.json()).then(async (json) => {
+        console.log(json);
+        overwriteObject(u, json);
+        loadU();
+      }).catch(error => {
+        alert('Enka.Netrowkへのリクエストで異常が発生しました!');
+        console.error(error);
 
-          const work: any[] = [];
-          for (let i = 0; i < u.playerInfo.showAvatarInfoList.length; i++) {
-            work.push(await makeCharacterInfo(u, i));
-          }
-          characterInfoList.splice(0, characterInfoList.length, ...work);
-
-          artifactsSaveButtonDisabled();
-
-          if (json.ttl) {
-            timer.value = Number(json.ttl);
-            timerObj = setInterval(function () {
-              count();
-            }, 1000);
-          }
-        });
+        if (uStr.value) {
+          overwriteObject(u, JSON.parse(uStr.value));
+          loadU();
+        }
+      }).catch(error => {
+        alert('JSON parse error! ' + error);
+      });
     };
+
+    async function loadU() {
+      const work: any[] = [];
+      for (let i = 0; i < u.playerInfo.showAvatarInfoList.length; i++) {
+        work.push(await makeCharacterInfo(u, i));
+      }
+      characterInfoList.splice(0, characterInfoList.length, ...work);
+
+      artifactsSaveButtonDisabled();
+
+      if (u.ttl) {
+        timer.value = Number(u.ttl);
+        timerObj = setInterval(function () {
+          count();
+        }, 1000);
+      }
+    }
 
     const locate = (index: number) => {
       // const sharedata = makeSharedata(characterInfoList[index].savedata);
@@ -758,6 +781,7 @@ export default defineComponent({
 
       uid,
       timer,
+      uStr,
       u,
       characterInfoList,
 
@@ -846,6 +870,15 @@ button {
 
 button span {
   font-size: 2.6rem;
+}
+
+div.avoid {
+  width: 100%;
+  color: khaki;
+}
+
+textarea {
+  width: 90%;
 }
 
 table {
