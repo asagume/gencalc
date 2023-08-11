@@ -1,4 +1,8 @@
 {
+  "始まりの大魔術": {
+    "レアリティ": 5,
+    "import": "data/weapons/bow/5_TheFirstGreatMagic.json"
+  },
   "狩人の道": {
     "レアリティ": 5,
     "import": "data/weapons/bow/5_Hunter'sPath.json"
