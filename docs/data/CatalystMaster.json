@@ -31,6 +31,10 @@
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
   },
+  "古祠の瓏": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_SacrificialJade.json"
+  },
   "彷徨える星": {
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_WanderingEvenstar.json"

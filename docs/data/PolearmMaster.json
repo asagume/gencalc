@@ -27,6 +27,10 @@
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
   },
+  "フィヨルドの歌": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_BalladoftheFjords.json"
+  },
   "風信の矛": {
     "レアリティ": 4,
     "import": "data/weapons/polearm/4_MissiveWindspear.json"

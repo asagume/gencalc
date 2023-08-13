@@ -35,6 +35,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "狼牙": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_Wolf-Fang.json"
+  },
   "東花坊時雨": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_ToukabouShigure.json"

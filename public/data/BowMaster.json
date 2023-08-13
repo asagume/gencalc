@@ -31,6 +31,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "烈日の後嗣": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_ScionoftheBlazingSun.json"
+  },
   "トキの嘴": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_IbisPiercer.json"

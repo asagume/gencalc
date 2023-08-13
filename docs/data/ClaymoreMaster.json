@@ -23,6 +23,10 @@
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
   },
+  "話死合い棒": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_TalkingStick.json"
+  },
   "鉄彩の花": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_MailedFlower.json"
