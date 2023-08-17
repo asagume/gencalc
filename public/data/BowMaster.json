@@ -35,6 +35,10 @@
     "レアリティ": 4,
     "import": "data/weapons/bow/4_ScionoftheBlazingSun.json"
   },
+  "静寂の唄": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_SongofStillness.json"
+  },
   "トキの嘴": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_IbisPiercer.json"

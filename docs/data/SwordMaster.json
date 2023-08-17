@@ -39,6 +39,14 @@
     "レアリティ": 4,
     "import": "data/weapons/sword/4_Wolf-Fang.json"
   },
+  "サーンドルの渡し守": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_FleuveCendreFerryman.json"
+  },
+  "海淵のフィナーレ": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_FinaleoftheDeep.json"
+  },
   "東花坊時雨": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_ToukabouShigure.json"

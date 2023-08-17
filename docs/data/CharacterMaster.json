@@ -1,4 +1,11 @@
 {
+  "リネ": {
+    "レアリティ": 5,
+    "元素": "炎",
+    "武器": "弓",
+    "誕生日": "2/2",
+    "import": "data/characters/pyro_5_bow_Lyney.json"
+  },
   "白朮": {
     "レアリティ": 5,
     "元素": "草",
@@ -228,6 +235,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "リネット": {
+    "レアリティ": 4,
+    "元素": "風",
+    "武器": "片手剣",
+    "誕生日": "2/2",
+    "import": "data/characters/anemo_4_sword_Lynette.json"
   },
   "綺良々": {
     "レアリティ": 4,
@@ -466,6 +480,12 @@
     "武器": "弓",
     "誕生日": "8/10",
     "import": "data/characters/pyro_4_bow_Amber.json"
+  },
+  "旅人(水)": {
+    "レアリティ": 5,
+    "元素": "水",
+    "武器": "片手剣",
+    "import": "data/characters/hydro_5_sword_Traveler.json"
   },
   "旅人(草)": {
     "レアリティ": 5,

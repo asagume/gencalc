@@ -1466,6 +1466,12 @@ function calculateDamageFromDetail(
                     my元素 = '炎';
                 }
                 break;
+            case 'HP消費':  // for リネ リネット
+                is会心Calc = false;
+                is防御補正Calc = false;
+                is耐性補正Calc = false;
+                my元素 = null;
+                break;
             default:
                 if (detailObj.種類.startsWith('表示') || detailObj.種類.startsWith('非表示')) {
                     is会心Calc = false;

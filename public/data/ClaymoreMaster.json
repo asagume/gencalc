@@ -27,6 +27,10 @@
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_TalkingStick.json"
   },
+  "タイダル・シャドー": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_TidalShadow.json"
+  },
   "鉄彩の花": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_MailedFlower.json"

@@ -35,6 +35,10 @@
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_SacrificialJade.json"
   },
+  "純水流華": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_FlowingPurity.json"
+  },
   "彷徨える星": {
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_WanderingEvenstar.json"
