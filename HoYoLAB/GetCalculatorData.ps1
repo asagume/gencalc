@@ -44,7 +44,7 @@ $ArtifactListOutFile = "HoyoArtifactMaster.json"
 $Headers = @{
     "Accept"          = "application/json, text/plain, */*"
     "Accept-Encoding" = "gzip, deflate, br"
-    "Accept-Language" = "ja,en-US;q=0.9,en;q=0.8"
+    "Accept-Language" = "ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6"
 }
 
 ########
