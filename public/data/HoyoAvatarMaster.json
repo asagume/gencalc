@@ -1,5 +1,24 @@
 [
   {
+    "id": 10000084,
+    "name": "リネ",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/b8dd9928c1aa3eab54a1834050ca56ef.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/299e5c518874972e9d9613c0573dd395.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/89952ddcb393da5dd011596cb2cd5f43.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7b55405d03e6f3374d27b8437e9dc2a1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/6cebe03462a31be372c00f77c4944dfd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/6d6e4bdab3cb45b900abcb61ec5586a3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/c5064b742ff2ebc92df32ea2003fa273.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u1490e/29a40b448b03360fae8385d65c5a7792.png"
+  },
+  {
     "id": 10000082,
     "name": "白朮",
     "icon": null,
@@ -594,6 +613,25 @@
     ]
   },
   {
+    "id": 10000083,
+    "name": "リネット",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/63d9f2cd2d72c927eea5000008ec405c.png",
+    "talent_icons": [
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/0a2e8baa29a220f0e70d0b78cac93e69.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/a7da83c99c9bcd3b94bd0337f550b450.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8a78832d199f40cd1f07675d31418aee.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8f1e5f065225fb123b64fdeee0418091.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7faa2fd3f014f83fbd0b10ae79da9279.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/da2a9232caba32d3deb34fff41907f83.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u1490e/285b4e5ab58a6a8e20ace61ec85982ff.png"
+},
+{
     "id": 10000081,
     "name": "カーヴェ",
     "icon": null,
@@ -1278,6 +1316,25 @@
     ]
   },
   {
+    "id": 10000007,
+    "name": "旅人",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
+    "talent_icons": [
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/0514674e20822209fe096b03b767dba0.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7fdb95cceb2e953042c763687d6a1835.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/4d831f935a0d689d9bceb2b33994098f.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/208e8716b6a9ccdcf2275a8866345142.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8754a86037379299c2242d2cf83b48cd.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7da69a815be076063cc892d897db8268.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png"
+},
+{
     "id": 10000005,
     "name": "旅人(草)",
     "icon": null,
@@ -1348,5 +1405,24 @@
       "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c83c7999663d5590796810aae8dce8b4.png",
       "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb8a9d6a695688ae8de83a8f59a7ba65.png"
     ]
-  }
+  },
+  {
+    "id": 10000005,
+    "name": "旅人",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
+    "talent_icons": [
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/0514674e20822209fe096b03b767dba0.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7fdb95cceb2e953042c763687d6a1835.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/4d831f935a0d689d9bceb2b33994098f.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/208e8716b6a9ccdcf2275a8866345142.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8754a86037379299c2242d2cf83b48cd.png",
+        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7da69a815be076063cc892d897db8268.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png"
+}
 ]

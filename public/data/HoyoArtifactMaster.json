@@ -176,6 +176,22 @@
     "max_level": 20
   },
   {
+    "id": 3254,
+    "name": "黄金の旋律の変奏",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/ab2c77d4c1b74ffab951be2d6619444c.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3154,
+    "name": "狩人の胸花",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/62ef9d3ad434c1426832ef54c314d829.png",
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3054,
     "name": "霊光起源の蕊",
     "icon": null,

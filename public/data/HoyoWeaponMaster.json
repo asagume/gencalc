@@ -1,5 +1,13 @@
 [
   {
+    "id": 15512,
+    "name": "始まりの大魔術",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 15511,
     "name": "狩人の道",
     "icon": null,
@@ -296,6 +304,22 @@
     "max_level": 90
   },
   {
+    "id": 15425,
+    "name": "静寂の唄",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/ef87b8652f7f8ea80b18b15cffa0b1fd.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15424,
+    "name": "烈日の後嗣",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/ba3a4e551ed86d0510f8389b33b24ebe.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 15419,
     "name": "トキの嘴",
     "icon": null,
@@ -448,6 +472,22 @@
     "max_level": 90
   },
   {
+    "id": 14425,
+    "name": "純水流華",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/25cb064a842e74db445b34d6611782fd.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14424,
+    "name": "古祠の瓏",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/47cb5451fc943ae4de0d29fdd100a235.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 14417,
     "name": "満悦の実",
     "icon": null,
@@ -576,6 +616,22 @@
     "max_level": 90
   },
   {
+    "id": 13425,
+    "name": "正義の報酬",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/d8a3fa8cb6a413779b263271ea5ce5b4.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 13424,
+    "name": "フィヨルドの歌",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/8fafe69a080b110fc47af4a0a188c721.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 13419,
     "name": "風信の矛",
     "icon": null,
@@ -684,6 +740,22 @@
     "name": "匣中滅龍",
     "icon": null,
     "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12425,
+    "name": "タイダル·シャドー",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/df6675a6dd8ab02b52f8de38e88a0cc7.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 12424,
+    "name": "話死合い棒",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/de0f3b3d0af14405af23fb1cba472346.png",
+    "weapon_cat_id": 11,
     "weapon_level": 4,
     "max_level": 90
   },
@@ -820,6 +892,30 @@
     "name": "西風大剣",
     "icon": null,
     "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11426,
+    "name": "サーンドルの渡し守",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/89caa2f0015acdbe43dfa6de5e7475ff.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11425,
+    "name": "海淵のフィナーレ",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/d6c6023c298297a25925261942414eb7.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 11424,
+    "name": "狼牙",
+    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/5dce607861d7deba3a455123caef1107.png",
+    "weapon_cat_id": 1,
     "weapon_level": 4,
     "max_level": 90
   },
