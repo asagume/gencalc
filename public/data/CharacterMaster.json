@@ -236,6 +236,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "フレミネ": {
+    "レアリティ": 4,
+    "元素": "氷",
+    "武器": "両手剣",
+    "誕生日": "9/24",
+    "import": "data/characters/cryo_4_claymore_Freminet.json"
+  },
   "リネット": {
     "レアリティ": 4,
     "元素": "風",
