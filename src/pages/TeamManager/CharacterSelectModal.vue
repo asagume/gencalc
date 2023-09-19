@@ -4,8 +4,8 @@
   <hr />
 
   <div class="tags">
-    <span class="tag" v-for="tag in TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
-    tag
+    <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
+      tag
     }}</span>
   </div>
 
@@ -16,7 +16,7 @@
 
     <div class="buildname-select">
       <select v-show="buildnames.length" v-model="selectedMemberBuildname" @change="buildnameOnChange">
-        <option v-for="value in buildnames" :key="value" :value="value">{{value}}</option>
+        <option v-for="value in buildnames" :key="value" :value="value">{{ value }}</option>
       </select>
     </div>
   </div>
@@ -28,14 +28,14 @@
 </template>
 <script lang="ts">
 import _ from 'lodash';
-import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
-import CharacterSelect from "@/components/CharacterSelect.vue";
-import { getBuildnameFromStorageKey, getBuildStorageKeys, TMember } from "./team";
-import MemberItem from "./MemberItem.vue";
-import { makeDefaultBuildname } from "@/input";
+import { computed, defineComponent, PropType, reactive, ref, watch } from 'vue';
+import CharacterSelect from '@/components/CharacterSelect.vue';
+import { getBuildnameFromStorageKey, getBuildStorageKeys, TMember } from './team';
+import MemberItem from './MemberItem.vue';
+import { makeDefaultBuildname } from '@/input';
 
 export default defineComponent({
-  name: "CharacterSelectModal",
+  name: 'CharacterSelectModal',
   components: {
     CharacterSelect,
     MemberItem,
@@ -44,11 +44,11 @@ export default defineComponent({
     visible: { type: Boolean, required: true },
     members: { type: Array as PropType<TMember[]>, required: true },
   },
-  emits: ["click:cancel", "click:ok"],
+  emits: ['click:cancel', 'click:ok'],
   setup(props, context) {
     const workMembers = reactive([] as TMember[]);
     const selectedMemberId = ref(-1);
-    const TAG_LIST = ["FREE"];
+    const TAG_LIST = ['Main-DPS', 'Carry', 'Sub-DPS', 'Support', 'Driver', 'Enabler', 'Battery', 'Free'];
     const selectedMemberBuildname = ref('' as string | undefined);
 
     function duplicateMembers() {
@@ -59,7 +59,7 @@ export default defineComponent({
           name: props.members[i].name,
           buildname: props.members[i].buildname,
           builddata: props.members[i].builddata,
-          tags: _.cloneDeep(props.members[i].tags),
+          tags: _.cloneDeep(props.members[i].tags.filter(s => TAG_LIST.includes(s))),
         });
       }
       workMembers.splice(0, workMembers.length, ...work);
@@ -104,13 +104,12 @@ export default defineComponent({
       }
     };
     const memberSelectedClass = (id: number) =>
-      id == selectedMemberId.value ? " selected" : "";
+      id == selectedMemberId.value ? ' selected' : '';
 
     const tagOnClick = (tag: string) => {
       if (selectedMemberId.value < 0 || selectedMemberId.value >= workMembers.length)
         return;
       const member = workMembers[selectedMemberId.value];
-      console.log(tag, member);
       if (member && member.name) {
         const tags = member.tags;
         if (tags) {
@@ -121,6 +120,16 @@ export default defineComponent({
           }
         }
       }
+    };
+    const tagSelectedClass = (tag: string) => {
+      let result = false;
+      if (selectedMemberId.value >= 0 || selectedMemberId.value < workMembers.length) {
+        const member = workMembers[selectedMemberId.value];
+        if (member && member.name) {
+          result = member.tags.includes(tag);
+        }
+      }
+      return result ? ' selected' : '';
     };
 
     const buildnames = computed(() => {
@@ -151,11 +160,11 @@ export default defineComponent({
     };
 
     const cancelOnClick = () => {
-      context.emit("click:cancel");
+      context.emit('click:cancel');
     };
 
     const okOnClick = () => {
-      context.emit("click:ok", workMembers);
+      context.emit('click:ok', workMembers);
     };
 
     return {
@@ -163,6 +172,7 @@ export default defineComponent({
       TAG_LIST,
 
       tagOnClick,
+      tagSelectedClass,
 
       workMembers,
       memberOnClick,
@@ -217,10 +227,14 @@ span.tag {
   width: 70px;
   height: 12px;
   font-size: 10px;
-  background-color: dimgray;
-  border: 2px solid whitesmoke;
+  background: linear-gradient(to top, #3d3d3b, #141414);
+  border: 1px solid whitesmoke;
   border-radius: 3px;
   margin: 10px 3px;
+}
+
+span.tag.selected {
+  border-color: gold;
 }
 
 div.member {

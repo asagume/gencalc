@@ -228,8 +228,8 @@ div.tag {
   width: 70px;
   height: 12px;
   font-size: 10px;
-  background-color: dimgray;
-  border: 2px solid whitesmoke;
+  background: linear-gradient(to top, #3d3d3b, #141414);
+  border: 1px solid whitesmoke;
   border-radius: 3px;
   padding-top: 1px;
 }
@@ -239,15 +239,15 @@ div.tag-0 {
 }
 
 div.tag-1 {
-  bottom: 19px;
+  bottom: 17px;
 }
 
 div.tag-2 {
-  bottom: 37px;
+  bottom: 33px;
 }
 
 div.tag-3 {
-  bottom: 55px;
+  bottom: 49px;
 }
 
 img.weapon,
