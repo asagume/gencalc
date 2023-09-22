@@ -1,4 +1,8 @@
 {
+  "久遠流転の大典": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_TomeoftheEternalFlow.json"
+  },
   "碧落の瓏": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Jadefall'sSplendor.json"
@@ -30,6 +34,10 @@
   "天空の巻": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
+  },
+  "果てなき紺碧の唄": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_BalladoftheBoundlessBlue.json"
   },
   "古祠の瓏": {
     "レアリティ": 4,

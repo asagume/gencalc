@@ -35,6 +35,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "船渠剣": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_TheDockhand'sAssistant.json"
+  },
   "狼牙": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_Wolf-Fang.json"

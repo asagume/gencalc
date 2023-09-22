@@ -23,6 +23,10 @@
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
   },
+  "携帯型チェーンソー": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_PortablePowerSaw.json"
+  },
   "話死合い棒": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_TalkingStick.json"
