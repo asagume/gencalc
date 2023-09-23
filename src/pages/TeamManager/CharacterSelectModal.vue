@@ -11,7 +11,7 @@
   <div class="character-select-mode">
     Character Select Mode:
     <button class="character-select-mode" @click="characterSelectModeOnClick">
-      {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBER' }}
+      {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBERS' }}
     </button>
     <div>
       <span v-if="!characterSelectMode">
