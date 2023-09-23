@@ -7,6 +7,7 @@ export type TMember = {
     buildname: string | undefined;
     builddata: any | undefined;
     tags: string[],
+    replacements: string[],
 };
 
 export type TTeam = {

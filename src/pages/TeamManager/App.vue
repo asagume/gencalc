@@ -46,7 +46,7 @@
 
     <div class="footer">
       <hr />
-      <h2>チーム編成 Ver.0.1.3</h2>
+      <h2>チーム編成 Ver.0.2.0</h2>
       <ul class="usage">
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
@@ -105,6 +105,7 @@ export default defineComponent({
         buildname: undefined,
         builddata: undefined,
         tags: [],
+        replacements: [],
       };
     }
 
@@ -211,6 +212,11 @@ export default defineComponent({
                 } else {
                   members[j].tags = [] as string[];
                 }
+                if (work[i].members[j].replacements) {
+                  members[j].replacements = work[i].members[j].replacements;
+                } else {
+                  members[j].replacements = [] as string[];
+                }
               }
             }
           }
@@ -232,6 +238,7 @@ export default defineComponent({
             workMember.buildname = newMembers[i].buildname;
             workMember.builddata = undefined; // TODO
             workMember.tags.splice(0, workMember.tags.length, ...newMembers[i].tags);
+            workMember.replacements.splice(0, workMember.replacements.length, ...newMembers[i].replacements);
             workMembers.push(workMember);
           }
           team.members.splice(0, team.members.length, ...workMembers);

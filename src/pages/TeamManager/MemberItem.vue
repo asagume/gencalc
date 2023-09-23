@@ -2,7 +2,7 @@
   <div class="member">
     <div class="member-img" @click="characterOnClick">
       <div class="with-tooltip">
-        <img :class="'character'+characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
+        <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
         <span class="tooltip">{{ displayName(member.name) }}</span>
       </div>
       <img class="vision" :src="visionImgSrc" alt="vision" />
@@ -13,6 +13,10 @@
       <div class="tag tag-2" v-if="member.tags[2]">{{ member.tags[2] }}</div>
       <div class="tag tag-1" v-if="member.tags[1]">{{ member.tags[1] }}</div>
       <div class="tag tag-0" v-if="member.tags[0]">{{ member.tags[0] }}</div>
+      <img class="replacement replacement-0" v-if="member.replacements[0]" :src="replaceImgSrc(0)"
+        :alt="member.replacements[0]">
+      <img class="replacement replacement-1" v-if="member.replacements[1]" :src="replaceImgSrc(1)"
+        :alt="member.replacements[1]">
     </div>
     <div class="stat-value" v-if="displayStat">
       {{ statValue }}
@@ -96,6 +100,11 @@ export default defineComponent({
     );
     const constellation = computed(() => (builddata.value ? builddata.value.命ノ星座 : ""));
 
+    const replaceImgSrc = (replIndex: number) => {
+      const name = replIndex < props.member.replacements.length ? props.member.replacements[replIndex] : undefined;
+      return name ? (CHARACTER_MASTER[name as TCharacterKey] as TCharacterEntry).icon_url : IMG_SRC_DUMMY;
+    };
+
     const builddata = computed(() => {
       let result = undefined;
       const character = props.member.name;
@@ -175,6 +184,7 @@ export default defineComponent({
       characterImgClass,
       visionImgSrc,
       constellation,
+      replaceImgSrc,
       imgWeaponSrc,
       weaponName,
       imgArtifactSetSrc,
@@ -250,12 +260,33 @@ div.tag-3 {
   bottom: 49px;
 }
 
+img.replacement {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 36px;
+  object-position: 0 0;
+  object-fit: cover;
+  z-index: 10;
+}
+
+img.replacement-0 {
+  left: 25%;
+}
+
+img.replacement-1 {
+  left: 75%;
+}
+
 img.weapon,
 img.artifact-set {
   width: calc(100% / 3 - 4px);
   height: calc(100% / 3 - 4px);
   border: 2px solid silver;
   border-radius: 50%;
+  z-index: 100;
 }
 
 div.stat-value {

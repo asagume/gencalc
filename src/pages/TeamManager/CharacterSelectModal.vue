@@ -1,7 +1,27 @@
 <template>
-  <CharacterSelect :visible="true" :characters="characters" @update:characters="updateCharacters" />
+  <template v-if="!characterSelectMode">
+    <CharacterSelect :visible="true" :characters="characters" @update:characters="updateCharacters" />
+  </template>
+  <template v-else>
+    <CharacterSelect :visible="true" :characters="replacements" @update:characters="updateReplacements" />
+  </template>
 
   <hr />
+
+  <div class="character-select-mode">
+    Character Select Mode:
+    <button class="character-select-mode" @click="characterSelectModeOnClick">
+      {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBER' }}
+    </button>
+    <div>
+      <span v-if="!characterSelectMode">
+        チームメンバーを選択して下さい
+      </span>
+      <span v-else>
+        {{ selectedMemberName() + 'の代替キャラクターを選択して下さい' }}
+      </span>
+    </div>
+  </div>
 
   <div class="tags">
     <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
@@ -46,10 +66,12 @@ export default defineComponent({
   },
   emits: ['click:cancel', 'click:ok'],
   setup(props, context) {
+    const characterSelectMode = ref(false); // キャラクター選択モード=メンバー選択
     const workMembers = reactive([] as TMember[]);
     const selectedMemberId = ref(-1);
     const TAG_LIST = ['Main-DPS', 'Carry', 'Sub-DPS', 'Support', 'Driver', 'Enabler', 'Battery', 'Free'];
     const selectedMemberBuildname = ref('' as string | undefined);
+    const replacementIndex = ref(-1);
 
     function duplicateMembers() {
       const work: TMember[] = [];
@@ -60,6 +82,7 @@ export default defineComponent({
           buildname: props.members[i].buildname,
           builddata: props.members[i].builddata,
           tags: _.cloneDeep(props.members[i].tags.filter(s => TAG_LIST.includes(s))),
+          replacements: props.members[i].replacements ? [...props.members[i].replacements] : [],
         });
       }
       workMembers.splice(0, workMembers.length, ...work);
@@ -77,8 +100,23 @@ export default defineComponent({
 
     const characters = computed(() => workMembers.map((s) => s.name));
 
+    const replacements = computed(() => {
+      let result = [] as string[];
+      if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length) {
+        const member = workMembers[selectedMemberId.value];
+        result = [...member.replacements];
+        for (let i = result.length; i < 2; i++) {
+          result.push('');
+        }
+      }
+      return result;
+    });
+
     const updateCharacters = (newCharacters: string[]) => {
       for (let i = 0; i < newCharacters.length; i++) {
+        if (workMembers[i].name != newCharacters[i]) {
+          workMembers[i].replacements = [];
+        }
         workMembers[i].name = newCharacters[i];
         if (workMembers[i].name) {
           const workBuildnames = getBuildStorageKeys(workMembers[i].name).map(s => getBuildnameFromStorageKey(s));
@@ -96,15 +134,29 @@ export default defineComponent({
       }
     };
 
+    const characterSelectModeOnClick = () => {
+      if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length && workMembers[selectedMemberId.value].name) {
+        characterSelectMode.value = !characterSelectMode.value;
+      }
+    };
+
     const memberOnClick = (id: number) => {
       selectedMemberId.value = id;
       if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length) {
         const member = workMembers[selectedMemberId.value];
         selectedMemberBuildname.value = member.buildname;
+        replacementIndex.value = -1;
       }
+      characterSelectMode.value = false;  // メンバー選択
     };
     const memberSelectedClass = (id: number) =>
       id == selectedMemberId.value ? ' selected' : '';
+    const selectedMemberName = () => {
+      if (selectedMemberId.value >= 0 && selectedMemberId.value < workMembers.length) {
+        return workMembers[selectedMemberId.value].name;
+      }
+      return '';
+    };
 
     const tagOnClick = (tag: string) => {
       if (selectedMemberId.value < 0 || selectedMemberId.value >= workMembers.length)
@@ -159,6 +211,11 @@ export default defineComponent({
       member.buildname = selectedMemberBuildname.value;
     };
 
+    const updateReplacements = (newCharacters: string[]) => {
+      const member = workMembers[selectedMemberId.value];
+      member.replacements = [...newCharacters];
+    };
+
     const cancelOnClick = () => {
       context.emit('click:cancel');
     };
@@ -168,8 +225,14 @@ export default defineComponent({
     };
 
     return {
+      characterSelectMode,
       characters,
+      replacements,
       TAG_LIST,
+
+      characterSelectModeOnClick,
+      selectedMemberId,
+      selectedMemberName,
 
       tagOnClick,
       tagSelectedClass,
@@ -180,6 +243,7 @@ export default defineComponent({
       selectedMemberBuildname,
       buildnames,
       buildnameOnChange,
+      updateReplacements,
 
       updateCharacters,
       cancelOnClick,
@@ -253,6 +317,20 @@ div.buildname-select {
 
 div.buildname-select select {
   width: 220px;
+}
+
+div.character-select-mode {
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgb(225, 144, 56);
+}
+
+button.character-select-mode {
+  min-width: 30rem;
+}
+
+div.character-select-mode span {
+  font-size: 2.5rem;
 }
 
 div.buttons {
