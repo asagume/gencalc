@@ -60,18 +60,18 @@
 </template>
 <script lang="ts">
 import _ from 'lodash';
-import draggable from "vuedraggable";
-import { computed, defineComponent, reactive, ref } from "vue";
-import CompositionFunction from "@/components/CompositionFunction.vue";
-import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from "./team";
-import TeamItem from "./TeamItem.vue";
-import CharacterSelectModal from "./CharacterSelectModal.vue";
-import TeamRotation from "./TeamRotation.vue";
+import draggable from 'vuedraggable';
+import { computed, defineComponent, reactive, ref } from 'vue';
+import CompositionFunction from '@/components/CompositionFunction.vue';
+import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from './team';
+import TeamItem from './TeamItem.vue';
+import CharacterSelectModal from './CharacterSelectModal.vue';
+import TeamRotation from './TeamRotation.vue';
 
 let memberId = 1;
 
 export default defineComponent({
-  name: "TeamManager",
+  name: 'TeamManager',
   components: {
     draggable,
     TeamItem,
@@ -84,16 +84,16 @@ export default defineComponent({
     const characterSelectVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const DISPLAY_STAT_LIST = [
-      ["", "None"],
-      ["レベル", "Lv."],
-      ["HP上限", "Max HP"],
-      ["攻撃力", "ATK"],
-      ["防御力", "DEF"],
-      ["元素熟知", "EM"],
-      ["会心率/ダメージ", "CRIT"],
-      ["元素チャージ効率", "ER"],
+      ['', 'None'],
+      ['レベル', 'Lv.'],
+      ['HP上限', 'Max HP'],
+      ['攻撃力', 'ATK'],
+      ['防御力', 'DEF'],
+      ['元素熟知', 'EM'],
+      ['会心率/ダメージ', 'CRIT'],
+      ['元素チャージ効率', 'ER'],
     ];
-    const displayStat = ref("");
+    const displayStat = ref('');
 
     const selectedTeamId = ref(0);
     const teamSelected = (index: number) => index == selectedTeamId.value;
@@ -101,7 +101,7 @@ export default defineComponent({
     function makeBlankMember(index: number): TMember {
       return {
         id: index,
-        name: "",
+        name: '',
         buildname: undefined,
         builddata: undefined,
         tags: [],
@@ -112,7 +112,7 @@ export default defineComponent({
     function makeBlankTeam(index: number) {
       const team: TTeam = {
         id: index,
-        name: "チーム" + (index + 1),
+        name: 'チーム' + (index + 1),
         members: [] as TMember[],
       };
       for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
@@ -122,13 +122,15 @@ export default defineComponent({
     }
 
     function initializeMember(member: TMember) {
-      member.name = "";
+      member.name = '';
       member.buildname = undefined;
       member.builddata = undefined;
+      member.tags = [];
+      member.replacements = [];
     }
 
     function initializeTeam(team: TTeam) {
-      team.name = "チーム" + (team.id + 1);
+      team.name = 'チーム' + (team.id + 1);
       team.members.forEach((member) => {
         initializeMember(member);
       });
@@ -165,10 +167,10 @@ export default defineComponent({
       });
       return JSON.stringify(work);
     });
-    const saveddataStr = ref("");
+    const saveddataStr = ref('');
 
     const saveOnClick = () => {
-      localStorage.setItem("teams", builddataStr.value);
+      localStorage.setItem('teams', builddataStr.value);
       saveddataStr.value = builddataStr.value;
     };
 
@@ -188,7 +190,7 @@ export default defineComponent({
     };
 
     const loadOnClick = () => {
-      const storageValue = localStorage.getItem("teams");
+      const storageValue = localStorage.getItem('teams');
       if (storageValue) {
         const work = JSON.parse(storageValue);
         numberOfTeams.value = work.length;
