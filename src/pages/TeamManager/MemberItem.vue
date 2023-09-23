@@ -267,6 +267,7 @@ img.replacement {
   transform: translateX(-50%);
   width: 52px;
   height: 36px;
+  border-radius: 75%;
   object-position: 0 0;
   object-fit: cover;
   z-index: 10;
@@ -282,10 +283,12 @@ img.replacement-1 {
 
 img.weapon,
 img.artifact-set {
+  position: relative;
   width: calc(100% / 3 - 4px);
   height: calc(100% / 3 - 4px);
   border: 2px solid silver;
   border-radius: 50%;
+  background-color: black;
   z-index: 100;
 }
 
