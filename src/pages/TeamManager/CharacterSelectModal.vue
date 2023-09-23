@@ -96,6 +96,7 @@ export default defineComponent({
           selectedMemberBuildname.value = workMembers[selectedMemberId.value].buildname;
         }
       }
+      characterSelectMode.value = false;
     });
 
     const characters = computed(() => workMembers.map((s) => s.name));
