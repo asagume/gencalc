@@ -116,6 +116,7 @@ export default defineComponent({
     const updateCharacters = (newCharacters: string[]) => {
       for (let i = 0; i < newCharacters.length; i++) {
         if (workMembers[i].name != newCharacters[i]) {
+          workMembers[i].tags = [];
           workMembers[i].replacements = [];
         }
         workMembers[i].name = newCharacters[i];
