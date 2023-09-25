@@ -23,8 +23,8 @@
             本ページからのEnka.Networkへのリクエストが失敗する場合<br />
             下記URLをクリックして表示されたデータをテキストエリアに貼り付けて、再度<span class="material-symbols-outlined"> send </span>をクリックして下さい。直接処理します。
             <br />
-            <a :href="'https://enka.network/api/uid/' + uid + '/'" target="_blank">
-              {{ 'https://enka.network/api/uid/' + uid + '/' }}
+            <a :href="'https://enka.network/api/uid/' + uid" target="_blank">
+              {{ 'https://enka.network/api/uid/' + uid }}
             </a>
             <br />
             <textarea v-model="uStr"></textarea>
@@ -335,7 +335,7 @@ export default defineComponent({
 
     const uid = ref('');
     const timer = ref(0);
-    let timerObj: number | undefined;
+    let timerObj: number;
     const uStr = ref('');
     const u = reactive({
       uid: '',
@@ -628,7 +628,7 @@ export default defineComponent({
 
     const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
-      const url = 'https://enka.network/api/uid/' + uid.value + '/';
+      const url = 'https://enka.network/api/uid/' + uid.value;
       // const url = 'data/__data_2.json';
       fetch(url).then((resp) => resp.json()).then(async (json) => {
         console.log(json);
@@ -658,7 +658,7 @@ export default defineComponent({
 
       if (u.ttl) {
         timer.value = Number(u.ttl);
-        timerObj = setInterval(function () {
+        timerObj = window.setInterval(function () {
           count();
         }, 1000);
       }
