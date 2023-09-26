@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Google Drive</title>
+  <title>Google Drive 連携 - げんかるく</title>
   <link href="css/base-style.css" rel="stylesheet" />
   <link href="css/gencalc3.css" rel="stylesheet" />
   <style>
@@ -28,7 +28,30 @@
 
 <body>
   <div id="app">
-    <button type="button" @click="handleAuthClick">{{ authorizeButtonText }}</button>
+    <h2>Google Drive 連携</h2>
+    <h3>テスト中</h3>
+
+    <p><a href="./">Back to げんかるく</a> </p>
+
+    <p>本画面では、Google Driveのアプリデータフォルダを介して、ブラウザ間および端末間で《げんかるく》のデータを共有するための機能を提供します。</p>
+
+    <dl>
+      <dt>アプリデータフォルダ (Google Drive ガイドより抜粋)</dt>
+      <dd>
+        アプリが構成ファイルなどのアプリケーション固有のデータを保存するために使用できる特別な隠しフォルダです。
+        アプリケーションデータフォルダは、その中にファイルを作成しようとすると自動的に作成されます。
+        このフォルダには、ユーザーが直接操作してはならないファイルを保存します。
+        このフォルダには自分のアプリからのみアクセスでき、このフォルダのコンテンツはユーザーやドライブアプリからは見えません。
+      </dd>
+      <dt>「Googleでログイン」機能が要求する権限</dt>
+      <dd>
+        Google ドライブでのアプリ独自の設定データの参照、作成、削除
+        <p>最小限の権限を要求します。
+        </p>
+      </dd>
+    </dl>
+
+    <button type="button" @click="handleAuthClick" :disabled="isAuthButtonDisabled">{{ authorizeButtonText }}</button>
     <button type="button" @click="handleSignoutClick" :disabled="isSignoutButtonDisabled">Sign Out</button>
     <button type="button" @click="handleGetClick" :disabled="isGetButtonDisabled">Download Appdata</button>
     <button type="button" @click="handleExportClick" :disabled="isExportButtonDisabled">Export Appdata</button>
@@ -36,7 +59,13 @@
 
     <p>{{ notification }}</p>
 
-    <table>
+    <table style="width: 100%; table-layout: fixed; text-align: left;">
+      <tr>
+        <th>name</th>
+        <th style="width: 40em;">id</th>
+        <th>modifiedTime</th>
+        <th>size</th>
+      </tr>
       <tr v-for="item in remoteFiles" :key="item.id">
         <td>{{ item.name }}</td>
         <td>{{ item.id }}</td>
@@ -45,7 +74,7 @@
       </tr>
     </table>
 
-    <table>
+    <table style="table-layout: fixed;">
       <tr v-for="item in appdataComparisons" :key="item.id">
         <td>{{ item[0] }}</td>
         <td>{{ item[3] }}</td>
@@ -56,16 +85,14 @@
   </div>
 
   <script>
-    var _ = require('lodash');
-
     const CLIENT_ID = '507502242382-a7d868j5089106u313q7hd6js3i375l2.apps.googleusercontent.com';
     const API_KEY = 'AIzaSyCMehcHxbFkrej2jq_CT4TuAqQz01MTW6g';
     const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
     const SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
 
-    const APPDATA_NAME = 'appdata.json';
+    const APPDATA_NAME = 'localStorage.json';
 
-    export function overwriteObject(dst, src) {
+    function overwriteObject(dst, src) {
       if (_.isPlainObject(dst) && _.isPlainObject(src)) {
         const srcKeys = Object.keys(src);
         for (const key of srcKeys) {
@@ -91,7 +118,7 @@
         const isGetButtonDisabled = ref(true);
         const isExportButtonDisabled = ref(true);
         const isImportButtonDisabled = ref(true);
-        const authorizeButtonText = ref('Authorize');
+        const authorizeButtonText = ref('Googleでログイン');
         const notification = ref('');
         const remoteFiles = reactive([]);
         const appdataComparisons = reactive([]);
@@ -110,13 +137,14 @@
 
           function maybeEnableButtons() {
             if (gapiInited && gisInited) {
-              document.getElementById('authorize_button').style.visibility = 'visible';
+              isAuthButtonDisabled.value = false;
             }
           }
 
           const script1 = document.createElement('script');
           script1.src = 'https://apis.google.com/js/api.js';
           script1.onload = function () {
+            gapi = window.gapi;
             gapi.load('client', initializeGapiClient);
           };
 
@@ -172,21 +200,26 @@
             isImportButtonDisabled.value = true;
           }
         }
-        const handleGetClick = () => {
+
+        const handleGetClick = async () => {
           notification.value = 'processing...';
 
           try {
-            const listFilesResp = listFiles({
-              q: `name: ${APPDATA_NAME}`,
+            const listFilesResp = await listFiles({
+              q: `name = '${APPDATA_NAME}'`,
             });
-            if (listFilesResp && typeof listFilesResp !== 'string' && listFilesResp.length > 0) {
+            if (listFilesResp && listFilesResp.length > 0) {
               const fileId = listFilesResp[0].id;
-              const getFileResp = getFile(fileId);
+              const getFileResp = await getFile(fileId);
+              console.log(getFileResp);
               if (getFileResp) {
-                const json = JSON.parse(getFileResp);
+                const json = JSON.parse(getFileResp.body);
                 overwriteObject(remoteAppdata, json);
                 makeAppdataComparisonsOfLocalAndRemote();
+                notification.value = 'Appdata download succeeded.';
               }
+            } else {
+              notification.value = 'No remote appdata.';
             }
           } catch (err) {
             console.error(err);
@@ -195,11 +228,14 @@
           }
         }
 
-        const handleExportClick = () => {
+        const handleExportClick = async () => {
           notification.value = 'processing...';
 
           const appdata = getLocalAppdata();
           createAppData(APPDATA_NAME, appdata, 'application/json');
+
+          const listFilesResp = await listFiles();
+          remoteFiles.splice(0, remoteFiles.length, ...listFilesResp);
         }
 
         const handleImportClick = () => {
@@ -246,17 +282,19 @@
           const boundary = '----====----====----';
 
           let method = 'POST';
-          const metadata = {
+          let path = '/upload/drive/v3/files';
+          let metadata = {
             name: name,
             parents: ['appDataFolder'],
           };
 
-          const listFilesResponse = listFiles({
-            q: `name = ${name}`,
+          const listFilesResponse = await listFiles({
+            q: `name = '${name}'`,
           });
           if (listFilesResponse && listFilesResponse.length > 0) {
             method = 'PATCH';
-            metadata.id = listFilesResponse[0].id;
+            path += `/${listFilesResponse[0].id}`
+            metadata = {};
           }
 
           const parts = [];
@@ -268,7 +306,7 @@
           let response;
           try {
             response = await gapi.client.request({
-              path: '/upload/drive/v3/files',
+              path: path,
               method: method,
               params: {
                 uploadType: 'multipart',
@@ -280,14 +318,6 @@
             });
             console.debug(response);
             notification.value = 'Appdata upload succeeded.';
-
-            for (let i = 0; i < remoteFiles.length; i++) {
-              if (remoteFiles[i].id == response.result.id) {
-                remoteFiles.splice(i, 1, [...response.result]);
-                break;
-              }
-            }
-            printRemoteFiles();
           } catch (err) {
             notification.value = err.message;
             return;
@@ -304,6 +334,7 @@
         }
 
         function makeAppdataComparisonsOfLocalAndRemote() {
+          getLocalAppdata();
           const work = [];
           Object.keys(localAppdata).sort().forEach(key => {
             let localValue = localAppdata[key];
@@ -335,7 +366,7 @@
               work.push([key, localValue, remoteValue, 'Remote only']);
             });
           }
-          appdataComparisons.splice(0, appdataComparisons.length, ...comparisons);
+          appdataComparisons.splice(0, appdataComparisons.length, ...work);
         }
 
         // files.list

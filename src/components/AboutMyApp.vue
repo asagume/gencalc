@@ -32,6 +32,9 @@
     <fieldset>
         <legend>内部リンク</legend>
         <p>
+            <a href="GoogleDrive.html">Google Drive連携 (テスト中)</a>
+        </p>
+        <p>
             <a href="TeamOptionList.html">強化・弱体効果一覧</a>
         </p>
         <p>
