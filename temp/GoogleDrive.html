@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Google Drive</title>
+  <link href="css/base-style.css" rel="stylesheet" />
+  <link href="css/gencalc3.css" rel="stylesheet" />
+  <style>
+    p {
+      text-align: left;
+      margin-left: 10px;
+    }
+
+    dl {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    dt {
+      padding-left: 10px;
+    }
+  </style>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button type="button" @click="handleAuthClick">{{ authorizeButtonText }}</button>
+    <button type="button" @click="handleSignoutClick" :disabled="isSignoutButtonDisabled">Sign Out</button>
+    <button type="button" @click="handleGetClick" :disabled="isGetButtonDisabled">Download Appdata</button>
+    <button type="button" @click="handleExportClick" :disabled="isExportButtonDisabled">Export Appdata</button>
+    <button type="button" @click="handleImportClick" :disabled="isImportButtonDisabled">Import Appdata</button>
+
+    <p>{{ notification }}</p>
+
+    <table>
+      <tr v-for="item in remoteFiles" :key="item.id">
+        <td>{{ item.name }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.modifiedTime }}</td>
+        <td>{{ item.size }}</td>
+      </tr>
+    </table>
+
+    <table>
+      <tr v-for="item in appdataComparisons" :key="item.id">
+        <td>{{ item[0] }}</td>
+        <td>{{ item[3] }}</td>
+      </tr>
+    </table>
+
+    <hr />
+  </div>
+
+  <script>
+    var _ = require('lodash');
+
+    const CLIENT_ID = '507502242382-a7d868j5089106u313q7hd6js3i375l2.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyCMehcHxbFkrej2jq_CT4TuAqQz01MTW6g';
+    const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+    const SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
+
+    const APPDATA_NAME = 'appdata.json';
+
+    export function overwriteObject(dst, src) {
+      if (_.isPlainObject(dst) && _.isPlainObject(src)) {
+        const srcKeys = Object.keys(src);
+        for (const key of srcKeys) {
+          dst[key] = src[key];
+        }
+        for (const key of Object.keys(dst)) {
+          if (!srcKeys.includes(key)) delete dst[key];
+        }
+      }
+      return dst;
+    }
+
+    const { createApp, onMounted, reactive, ref } = Vue
+
+    createApp({
+      setup() {
+        let tokenClient;
+        let gapiInited = false;
+        let gisInited = false;
+        let gapi;
+        const isAuthButtonDisabled = ref(true);
+        const isSignoutButtonDisabled = ref(true);
+        const isGetButtonDisabled = ref(true);
+        const isExportButtonDisabled = ref(true);
+        const isImportButtonDisabled = ref(true);
+        const authorizeButtonText = ref('Authorize');
+        const notification = ref('');
+        const remoteFiles = reactive([]);
+        const appdataComparisons = reactive([]);
+        const localAppdata = reactive({});
+        const remoteAppdata = reactive({});
+
+        onMounted(() => {
+          async function initializeGapiClient() {
+            await gapi.client.init({
+              apiKey: API_KEY,
+              discoveryDocs: [DISCOVERY_DOC],
+            });
+            gapiInited = true;
+            maybeEnableButtons();
+          }
+
+          function maybeEnableButtons() {
+            if (gapiInited && gisInited) {
+              document.getElementById('authorize_button').style.visibility = 'visible';
+            }
+          }
+
+          const script1 = document.createElement('script');
+          script1.src = 'https://apis.google.com/js/api.js';
+          script1.onload = function () {
+            gapi.load('client', initializeGapiClient);
+          };
+
+          const script2 = document.createElement('script');
+          script2.src = 'https://accounts.google.com/gsi/client';
+          script2.onload = function () {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+              client_id: CLIENT_ID,
+              scope: SCOPES,
+              callback: '', // defined later
+            });
+            gisInited = true;
+            maybeEnableButtons();
+          };
+
+          document.head.appendChild(script1);
+          document.head.appendChild(script2);
+        })
+
+        const handleAuthClick = () => {
+          tokenClient.callback = async (resp) => {
+            if (resp.error !== undefined) {
+              throw (resp);
+            }
+
+            authorizeButtonText.value = 'Refresh';
+            isSignoutButtonDisabled.value = false;
+            isGetButtonDisabled.value = false;
+            isExportButtonDisabled.value = false;
+            isImportButtonDisabled.value = false;
+
+            const listFilesResp = await listFiles();
+            remoteFiles.splice(0, remoteFiles.length, ...listFilesResp);
+          };
+
+          if (gapi.client.getToken() === null) {
+            tokenClient.requestAccessToken({ prompt: 'consent' });
+          } else {
+            tokenClient.requestAccessToken({ prompt: '' });
+          }
+        }
+
+        const handleSignoutClick = () => {
+          const token = gapi.client.getToken();
+          if (token !== null) {
+            google.accounts.oauth2.revoke(token.access_token);
+            gapi.client.setToken('');
+
+            authorizeButtonText.value = 'Authorize';
+            isSignoutButtonDisabled.value = true;
+            isGetButtonDisabled.value = true;
+            isExportButtonDisabled.value = true;
+            isImportButtonDisabled.value = true;
+          }
+        }
+        const handleGetClick = () => {
+          notification.value = 'processing...';
+
+          try {
+            const listFilesResp = listFiles({
+              q: `name: ${APPDATA_NAME}`,
+            });
+            if (listFilesResp && typeof listFilesResp !== 'string' && listFilesResp.length > 0) {
+              const fileId = listFilesResp[0].id;
+              const getFileResp = getFile(fileId);
+              if (getFileResp) {
+                const json = JSON.parse(getFileResp);
+                overwriteObject(remoteAppdata, json);
+                makeAppdataComparisonsOfLocalAndRemote();
+              }
+            }
+          } catch (err) {
+            console.error(err);
+            notification.value = 'Operation failed.';
+            alert(err);
+          }
+        }
+
+        const handleExportClick = () => {
+          notification.value = 'processing...';
+
+          const appdata = getLocalAppdata();
+          createAppData(APPDATA_NAME, appdata, 'application/json');
+        }
+
+        const handleImportClick = () => {
+          if (!remoteAppdata) {
+            notification.value = 'No remote appdata.';
+            return;
+          }
+          notification.value = 'processing...';
+
+          const localKeys = Object.keys(localStorage);
+          const remoteKeys = Object.keys(remoteAppdata).sort();
+          remoteKeys.forEach(key => {
+            localStorage.setItem(key, remoteAppdata[key]);
+          });
+          localKeys.filter(s => !remoteKeys.includes(s)).forEach(key => {
+            localStorage.removeItem(key);
+          });
+
+          makeAppdataComparisonsOfLocalAndRemote();
+
+          notification.value = 'Appdata import suceeded.';
+        }
+
+        function makeMultipartBody(parts, boundary) {
+          const result = [];
+
+          parts.forEach(part => {
+            const name = part[0];
+            const body = part[1];
+            const headers = part[2];
+            result.push(`--${boundary}`);
+            Object.keys(headers).forEach(key => {
+              result.push(`${key}: ${headers[key]}`);
+            })
+            result.push('');
+            result.push(JSON.stringify(body));
+          })
+          result.push(`--${boundary}--`);
+
+          return result.join('\r\n');
+        }
+
+        async function createAppData(name, appdata, contentType) {
+          const boundary = '----====----====----';
+
+          let method = 'POST';
+          const metadata = {
+            name: name,
+            parents: ['appDataFolder'],
+          };
+
+          const listFilesResponse = listFiles({
+            q: `name = ${name}`,
+          });
+          if (listFilesResponse && listFilesResponse.length > 0) {
+            method = 'PATCH';
+            metadata.id = listFilesResponse[0].id;
+          }
+
+          const parts = [];
+          parts.push(['metadata', metadata, { 'Content-Type': 'application/json' }]);
+          parts.push(['media', appdata, { 'Content-Type': contentType }]);
+
+          const multipartBody = makeMultipartBody(parts, boundary);
+
+          let response;
+          try {
+            response = await gapi.client.request({
+              path: '/upload/drive/v3/files',
+              method: method,
+              params: {
+                uploadType: 'multipart',
+              },
+              headers: {
+                'Content-Type': `multipart/related; boundary=${boundary}`
+              },
+              body: multipartBody,
+            });
+            console.debug(response);
+            notification.value = 'Appdata upload succeeded.';
+
+            for (let i = 0; i < remoteFiles.length; i++) {
+              if (remoteFiles[i].id == response.result.id) {
+                remoteFiles.splice(i, 1, [...response.result]);
+                break;
+              }
+            }
+            printRemoteFiles();
+          } catch (err) {
+            notification.value = err.message;
+            return;
+          }
+        }
+
+        function getLocalAppdata() {
+          const result = {};
+          Object.keys(localStorage).sort().forEach(key => {
+            result[key] = localStorage.getItem(key);
+          });
+          overwriteObject(localAppdata, result);
+          return result;
+        }
+
+        function makeAppdataComparisonsOfLocalAndRemote() {
+          const work = [];
+          Object.keys(localAppdata).sort().forEach(key => {
+            let localValue = localAppdata[key];
+            if (_.isPlainObject(localValue)) {
+              localValue = JSON.stringify(localValue);
+            }
+            let remoteValue = undefined;
+            let compareresult = 'Local only';
+            if (remoteAppdata && key in remoteAppdata) {
+              remoteValue = remoteAppdata[key];
+              if (_.isPlainObject(remoteValue)) {
+                remoteValue = JSON.stringify(remoteValue);
+              }
+              if (localValue == remoteValue) {
+                compareresult = 'Same';
+              } else {
+                compareresult = 'Different';
+              }
+            }
+            work.push([key, localValue, remoteValue, compareresult]);
+          });
+          if (remoteAppdata) {
+            const localValue = undefined;
+            Object.keys(remoteAppdata).sort().forEach(key => {
+              if (key in localAppdata) {
+                return;
+              }
+              const remoteValue = JSON.stringify(remoteAppdata[key]);
+              work.push([key, localValue, remoteValue, 'Remote only']);
+            });
+          }
+          appdataComparisons.splice(0, appdataComparisons.length, ...comparisons);
+        }
+
+        // files.list
+        async function listFiles(params) {
+          const request = {
+            orderBy: 'modifiedTime desc',
+            pageSize: 10,
+            spaces: 'appDataFolder',
+            fields: 'nextPageToken, files(id, name, modifiedTime, size)',
+          };
+          if (params) {
+            Object.keys(params).forEach(key => {
+              request[key] = params[key];
+            });
+          }
+          try {
+            const response = await gapi.client.drive.files.list(request);
+            console.debug(response);
+            return response.result.files;
+          } catch (err) {
+            console.error(err);
+            throw err;
+          }
+        }
+
+        // files.get
+        async function getFile(fileId, params) {
+          const request = {
+            path: `/drive/v3/files/${fileId}`,
+            method: 'GET',
+            params: {
+              alt: 'media',
+            }
+          }
+          if (params) {
+            Object.keys(params).forEach(key => {
+              request.params[key] = params[key];
+            })
+          }
+          try {
+            const response = await gapi.client.request(request);
+            console.debug(response);
+            return response;
+          } catch (err) {
+            console.error(err);
+            throw err;
+          }
+        }
+
+        return {
+          isAuthButtonDisabled,
+          isSignoutButtonDisabled,
+          isGetButtonDisabled,
+          isExportButtonDisabled,
+          isImportButtonDisabled,
+          authorizeButtonText,
+          notification,
+          remoteFiles,
+          appdataComparisons,
+          handleAuthClick,
+          handleSignoutClick,
+          handleGetClick,
+          handleExportClick,
+          handleImportClick,
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
