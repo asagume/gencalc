@@ -81,6 +81,7 @@ export default defineComponent({
     const gapiInited = ref(false);
 
     function initGapiClient() {
+      console.log('initGapiClient');
       gapi.client.init({
         apiKey: API_KEY,
         discoveryDocs: [DISCOVERY_DOC],
@@ -106,6 +107,7 @@ export default defineComponent({
           },
         });
       };
+      document.body.appendChild(script);
     })
 
     const tokenResponse = reactive({} as TokenClientResponse);
@@ -191,8 +193,10 @@ export default defineComponent({
     /** リモート(Google Drive)のAppdataの一覧を取得します */
     const handleListClick = async () => {
       await requestFilesList().then((response: any) => {
+        console.log(response);
         if (response?.files && _.isArray(response.files)) {
           remoteFileList.splice(0, remoteFileList.length, ...response.files);
+          console.log(remoteFileList);
         }
       });
       overrideObject(selectedFile, {});
@@ -383,7 +387,10 @@ export default defineComponent({
           params: workParams,
         });
         console.debug(response);
-        return response;
+        if (response.result) {
+          return response.result;
+        }
+        throw response;
       } catch (err) {
         handleGapiException(err);
       }
@@ -490,8 +497,11 @@ export default defineComponent({
 </script>
 <style scoped>
 table {
+  margin-left: auto;
+  margin-right: auto;
   min-width: 80%;
   table-layout: fixed;
+  margin-bottom: 10px;
 }
 
 tr.selected {
@@ -500,5 +510,9 @@ tr.selected {
 
 tr.downloaded {
   color: brown;
+}
+
+td button {
+  width: 5em;
 }
 </style>
