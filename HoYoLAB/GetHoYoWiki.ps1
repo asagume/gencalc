@@ -27,8 +27,9 @@ $pageIds = @()
 # $pageIds += 3719   # 綺良々
 # $pageIds += 3962   # リネット
 # $pageIds += 3963   # リネ
-$pageIds += 3964   # フレミネ
+# $pageIds += 3964   # フレミネ
 # $pageIds += 3997   # 旅人(水)
+# $pageIds += 4023   # ヌヴィレット
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -67,6 +68,9 @@ $pageIds += 3964   # フレミネ
 # $pageIds += 4001   # フィヨルドの歌
 # $pageIds += 4002   # 烈日の後嗣
 # $pageIds += 4003   # 古祠の瓏
+# $pageIds += 4334   # 船渠剣
+# $pageIds += 4335   # 携帯型チェーンソー
+$pageIds += 4339   # 久遠流転の大典
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

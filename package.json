@@ -1,6 +1,6 @@
 {
   "name": "gencalc",
-  "version": "3.4.25",
+  "version": "3.4.26",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,12 +9,14 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@types/gapi": "^0.0.45",
     "core-js": "^3.8.3",
     "lodash": "^4.17.21",
     "tesseract.js": "^2.1.5",
     "vue": "^3.2.13",
     "vue-good-table-next": "^0.2.1",
     "vue-i18n": "^9.2.0",
+    "vue3-google-login": "^2.0.23",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {

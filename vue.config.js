@@ -38,6 +38,11 @@ module.exports = defineConfig({
       template: 'public/RecommendationList.html',
       filename: 'RecommendationList.html',
     },
+    GoogleDriveTest: {
+      entry: 'src/pages/GoogleDrive/main.ts',
+      template: 'public/GoogleDriveTest.html',
+      filename: 'GoogleDriveTest.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'
