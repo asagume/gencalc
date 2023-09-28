@@ -9,6 +9,14 @@
                             {{ item.replace('.', ' ') }}
                         </option>
                     </select>
+                    <div class="reaction-area">
+                        <div class="reaction with-tooltip" v-for="reactionName in reactionNameList" :key="reactionName">
+                            <img :class="'reaction' + (selectedReactionName == reactionName ? ' selected' : '')"
+                                :src="reactionImgSrc(reactionName)" :alt="reactionName"
+                                @click="reactionImgOnClick(reactionName)">
+                            <div class="tooltip">{{ displayName(reactionName) }}</div>
+                        </div>
+                    </div>
                 </div>
                 <table class="next-stat">
                     <template v-for="row in nextStatRows" :key="row[0]">
@@ -53,12 +61,12 @@
 import _ from 'lodash';
 import {
     DAMAGE_RESULT_TEMPLATE,
-    makeEasyInputSubstatValueList, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput,
+    makeEasyInputSubstatValueList, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput,
 } from "@/input";
-import { TArtifactSubKey } from "@/master";
+import { ELEMENT_IMG_SRC, ELEMENTAL_REACTION_MASTER, IMG_SRC_DUMMY, TArtifactSubKey, TElementalReactionKey } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { calculateDamageResult, calculateRotationTotalDamage, calculateStats, TRotationDamageInfo } from "@/calculate";
+import { calculateDamageResult, calculateReactedDamage, calculateRotationTotalDamage, calculateStats, TRotationDamageInfo } from "@/calculate";
 
 export default defineComponent({
     name: "NextStat",
@@ -78,9 +86,10 @@ export default defineComponent({
 
         const ROTATION_TOTAL_DMG_NAME = 'ローテーション合計ダメージ';
         const NEXT_STAT_ARR = ['HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率', 'HP', '攻撃力', '防御力'];
-        const toggleSwitch = ref(false);
+        const toggleSwitch = ref(props.visible);
         const evaluationItem = ref('');
         const nextStatRows = reactive([] as any[]); // 0:stat, 1:datalist, 2:index, 3:count, 4:evaluation value
+        const selectedReactionName = ref('');
 
         const evaluationItemList = computed(() => {
             let result: string[] = [];
@@ -92,8 +101,8 @@ export default defineComponent({
                 if (Array.isArray(damageResultValue)) {
                     for (const key2 of damageResultValue) {
                         if (!key2) continue;
-                        if (key2[0].endsWith('合計ダメージ')) continue;
-                        if (!key2[5]?.endsWith('ダメージ')) continue;
+                        if (key2[0].endsWith('合計ダメージ')) continue; // 名前
+                        if (!key2[5]?.endsWith('ダメージ')) continue; // 種類
                         const name = key1 + '.' + key2[0];
                         result.push(name);
                     }
@@ -101,6 +110,57 @@ export default defineComponent({
             }
             return result;
         });
+
+        const dmgElement = computed(() => {
+            let result = '物理';
+            if (props.damageResult && evaluationItem.value) {
+                const keyArr = evaluationItem.value.split('.');
+                if (keyArr.length == 2) {
+                    const dmgCategory = keyArr[0];
+                    const dmgName = keyArr[1];
+                    if (dmgCategory in props.damageResult) {
+                        const dmgResultEntryArr = (props.damageResult[dmgCategory] as TDamageResultEntry[]).filter((s) => s[0] == dmgName);
+                        if (dmgResultEntryArr.length) {
+                            const dmgResultEntry = dmgResultEntryArr[0];
+                            if (dmgResultEntry[1]) {
+                                result = dmgResultEntry[1];
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        })
+
+        const reactionNameList = computed(() => {
+            const result: string[] = [];
+            if (dmgElement.value && dmgElement.value in ELEMENTAL_REACTION_MASTER) {
+                result.push(...Object.keys(ELEMENTAL_REACTION_MASTER[dmgElement.value as TElementalReactionKey]).filter(s => ['蒸発', '溶解', '超激化', '草激化'].includes(s)));
+            }
+            return result;
+        })
+
+        const reactionImgSrc = (name: string) => {
+            let reactionElement;
+            if (name == '蒸発' && dmgElement.value == '炎') {
+                reactionElement = '水';
+            } else if (name == '蒸発' && dmgElement.value == '水') {
+                reactionElement = '炎';
+            } else if (name == '溶解' && dmgElement.value == '炎') {
+                reactionElement = '氷';
+            } else if (name == '溶解' && dmgElement.value == '氷') {
+                reactionElement = '炎';
+            } else if (name == '超激化' && dmgElement.value == '雷') {
+                reactionElement = '草';
+            } else if (name == '草激化' && dmgElement.value == '草') {
+                reactionElement = '雷';
+            }
+            if (reactionElement) {
+                return (ELEMENT_IMG_SRC as any)[reactionElement];
+            } else {
+                return IMG_SRC_DUMMY;
+            }
+        }
 
         const nextStatValue = (row: any[]) => {
             let result = 0;
@@ -144,15 +204,11 @@ export default defineComponent({
                 const keyArr = itemName.split('.');
                 const work = (damageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
                 if (work.length) {
-                    result = work[0][2];
+                    result = calculateReactedDamage(work[0], 2, damageResult.元素反応, selectedReactionName.value);
                 }
             }
             return result;
         }
-
-        const currentDamageValue = computed(() => {
-            return getDamageValue(evaluationItem.value, props.damageResult);
-        });
 
         function setupNextStatRow(row: any[], workDamageResult?: TDamageResult, workStatsInput?: TStatsInput) {
             if (!workDamageResult) {
@@ -162,10 +218,10 @@ export default defineComponent({
                 workStatsInput = _.cloneDeep(props.statsInput);
             }
             let evaluationValue = 0;
-            const stat = row[0];
+            const stat = row[0] != 'HP' ? row[0] : 'HP+';
             const step = row[1][row[2]];
             if (step && props.rotationDamageInfo) {
-                const baseValue = currentDamageValue.value;
+                const baseValue = getDamageValue(evaluationItem.value, props.damageResult);
                 if (stat in workStatsInput.statAdjustmentsEx) {
                     workStatsInput.statAdjustmentsEx[stat] += step;
                 } else {
@@ -197,19 +253,44 @@ export default defineComponent({
 
         function initializeEvaluationItem() {
             if (evaluationItemList.value.length) {
-                if (!evaluationItemList.value.includes(evaluationItem.value)) {
-                    if (evaluationItemList.value.includes(ROTATION_TOTAL_DMG_NAME)) {
-                        evaluationItem.value = ROTATION_TOTAL_DMG_NAME;
-                    } else {
-                        evaluationItem.value = evaluationItemList.value[evaluationItemList.value.length - 1];
+                let item;
+                if (evaluationItemList.value.length > 1) {
+                    if (props.characterInput?.characterMaster['NEXT STEP']) {
+                        const work = props.characterInput.characterMaster['NEXT STEP'];
+                        if (evaluationItemList.value.includes(work)) {
+                            item = work;
+                        } else {
+                            console.warn(work, evaluationItemList.value);
+                        }
                     }
                 }
+                if (!item) {
+                    if (evaluationItemList.value.includes(evaluationItem.value)) {
+                        item = evaluationItem.value;
+                    } else {
+                        if (evaluationItemList.value.includes(ROTATION_TOTAL_DMG_NAME)) {
+                            item = ROTATION_TOTAL_DMG_NAME;
+                        } else {
+                            item = evaluationItemList.value[evaluationItemList.value.length - 1];
+                        }
+                    }
+                }
+                evaluationItem.value = item;
             }
         }
 
         const evaluationItemOnChange = () => {
             setupNextStatRows();
         };
+
+        const reactionImgOnClick = (name: string) => {
+            if (selectedReactionName.value == name) {
+                selectedReactionName.value = '';
+            } else {
+                selectedReactionName.value = name;
+            }
+            setupNextStatRows();
+        }
 
         const nextStatStepOnChange = (row: any[]) => {
             setupNextStatRow(row);
@@ -260,12 +341,15 @@ export default defineComponent({
 
             evaluationItem,
             evaluationItemList,
+            reactionNameList,
+            reactionImgSrc,
+            selectedReactionName,
             evaluationItemOnChange,
+            reactionImgOnClick,
 
             nextStatRows,
             nextStatStepOnChange,
             displayNextStatValue,
-            currentDamageValue,
 
             nextStatOnChange,
             resetButtonOnClick,
@@ -345,5 +429,32 @@ select {
 
 button {
     padding: 2px 10px;
+}
+
+div.reaction-area {
+    display: inline-block;
+    width: 48px;
+    text-align: right;
+}
+
+div.reaction {
+    display: inline-block;
+}
+
+img.reaction {
+    width: 22px;
+    height: 22px;
+    margin-left: 1px;
+    border-radius: 75%;
+    background-color: transparent;
+    z-index: 10;
+}
+
+img.selected {
+    background-color: darkorange;
+}
+
+.tooltip {
+    top: -2rem;
 }
 </style>

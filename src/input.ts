@@ -1824,7 +1824,8 @@ export function getStatValue(stat: string, statsObj: TStats) {
         }
     }
     if (result === undefined) {
-        console.error(stat, statsObj);
+        console.warn(stat, statsObj); // キャラクターが切り替わったときとかによく引っ掛かる
+        result = 0; // fixed
     }
     return result;
 }

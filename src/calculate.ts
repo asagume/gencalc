@@ -36,6 +36,7 @@ import {
     makeDamageDetailObjArrObjArtifactSets,
     setupConditionValues,
     updateNumberConditionValues,
+    TDamageResultElementalReaction,
 } from '@/input';
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from '@/master';
 
@@ -617,7 +618,7 @@ export function calculateFormulaArray(
                 } else {
                     const temp = getStatValue(entry, statsObj);
                     if (temp === undefined) {
-                        console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                        console.error(formulaArr, statsObj, null, opt_max, opt_min, entry);
                     } else {
                         subResult = temp;
                     }
@@ -2074,5 +2075,34 @@ export function calculateRotationTotalDamage(
             result += calculateDamageInRotation(rotationDamageEntry, i, damageResult);
         }
     });
+    return result;
+}
+
+export function calculateReactedDamage(dmgResultEntry: TDamageResultEntry, dmgIndex: number, elementalReaction: TDamageResultElementalReaction, reaction: string) {
+    let result = Number(dmgResultEntry[dmgIndex]); // 2:期待値/3:会心/4:非会心
+    if (reaction) {
+        const dmgElement = dmgResultEntry[1];
+        if (['蒸発', '溶解'].includes(reaction)) {
+            const reactionKey = reaction + '倍率_' + dmgElement;
+            if (reactionKey in elementalReaction) {
+                result *= (elementalReaction as any)[reactionKey];
+            }
+        } else if (['超激化', '草激化'].includes(reaction)) {
+            const reactionKey = reaction + 'ダメージ';
+            if (reactionKey in elementalReaction) {
+                let reactionDmg = (elementalReaction as any)[reactionKey];
+                if (dmgResultEntry[2]) {
+                    reactionDmg *= result / dmgResultEntry[4]; // ÷ 非会心
+                }
+                if (dmgResultEntry[7]) {
+                    reactionDmg *= dmgResultEntry[7]; // ダメージバフ
+                }
+                if (dmgResultEntry[8]) {
+                    reactionDmg *= dmgResultEntry[8]; // 敵の防御補正
+                }
+                result += reactionDmg;
+            }
+        }
+    }
     return result;
 }

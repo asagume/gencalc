@@ -116,6 +116,7 @@ export type TCharacterDetail = {
     オプション初期値?: any,
     固有変数?: any,
     おすすめセット: any[],
+    'NEXT STEP'?: string,
 }
 export type TCharacterStats = {
     基礎HP: {

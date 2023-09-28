@@ -126,7 +126,7 @@ export default defineComponent({
       const localKeys = Object.keys(localAppdata).sort();
       const remoteKeys = Object.keys(remoteAppdata).sort();
       localKeys.forEach(key => {
-        if (key in remoteKeys) {
+        if (remoteKeys.includes(key)) {
           if (_.isEqual(localAppdata[key], remoteAppdata[key])) {
             result.push([key, 0]); // 同値
           } else {
@@ -136,7 +136,7 @@ export default defineComponent({
           result.push([key, 2]);  // ローカルのみ
         }
       })
-      remoteKeys.filter(key => !(key in localKeys)).forEach(key => {
+      remoteKeys.filter(key => !localKeys.includes(key)).forEach(key => {
         result.push([key, 3]);  // リモートのみ
       })
       return result;
@@ -230,6 +230,13 @@ export default defineComponent({
       reloadLocalAppdata();
       await requestFilesCreate(APPDATA_NAME, localAppdata, 'application/json');
       await handleListClick();
+      if (remoteFileList.length > 10) {
+        const deleteList = [];
+        for (let i = 10; i < remoteFileList.length; i++) {
+          deleteList.push(remoteFileList[i].id);
+        }
+        await Promise.all(deleteList.map((file: any) => requestFilesDelete(file.id)));
+      }
     }
 
     /** ダウンロード済みのリモートのAppdataをローカルストレージにコピー(上書き)します */
@@ -245,7 +252,7 @@ export default defineComponent({
       const response: any = await requestFilesList();
       if (response?.files && _.isArray(response.files)) {
         remoteFileList.splice(0, remoteFileList.length, ...response.files);
-        await Promise.all(response.files.forEach((file: any) => requestFilesDelete(file.id)));
+        await Promise.all(response.files.map((file: any) => requestFilesDelete(file.id)));
       }
     }
 
@@ -304,48 +311,47 @@ export default defineComponent({
       }
     }
 
-    /**
-     * files.update
-     * 
-     * @param id ファイルのID
-     * @param contentType Content-Type
-     * @param params APIのパラメータ
-     */
-    async function requestFilesUpdate(id: string, content: any, contentType: string, params?: any) {
-      const boundary = '----====----====----';
-      const workParams: any = {
-        uploadType: 'multipart',
-      };
-      if (params) {
-        Object.keys(params).forEach(key => {
-          workParams[key] = params[key];
-        });
-      }
-      const parts: [string, any, any][] = [];
-      parts.push(['metadata', {}, { 'Content-Type': 'application/json' }]);
-      parts.push(['media', content, { 'Content-Type': contentType }]);
+    // /**
+    //  * files.update
+    //  * 
+    //  * @param id ファイルのID
+    //  * @param contentType Content-Type
+    //  * @param params APIのパラメータ
+    //  */
+    // async function requestFilesUpdate(id: string, content: any, contentType: string, params?: any) {
+    //   const boundary = '----====----====----';
+    //   const workParams: any = {
+    //     uploadType: 'multipart',
+    //   };
+    //   if (params) {
+    //     Object.keys(params).forEach(key => {
+    //       workParams[key] = params[key];
+    //     });
+    //   }
+    //   const parts: [string, any, any][] = [];
+    //   parts.push(['metadata', {}, { 'Content-Type': 'application/json' }]);
+    //   parts.push(['media', content, { 'Content-Type': contentType }]);
 
-      try {
-        const response = await gapi.client.request({
-          path: `/upload/drive/v3/files/${id}`,
-          method: 'PATCH',
-          params: workParams,
-          headers: {
-            'Content-Type': `multipart/related; boundary=${boundary}`
-          },
-          body: makeMultipartBody(parts, boundary),
-        });
-        console.debug(response);
-        return response;
-      } catch (err) {
-        handleGapiException(err);
-      }
-    }
+    //   try {
+    //     const response = await gapi.client.request({
+    //       path: `/upload/drive/v3/files/${id}`,
+    //       method: 'PATCH',
+    //       params: workParams,
+    //       headers: {
+    //         'Content-Type': `multipart/related; boundary=${boundary}`
+    //       },
+    //       body: makeMultipartBody(parts, boundary),
+    //     });
+    //     console.debug(response);
+    //     return response;
+    //   } catch (err) {
+    //     handleGapiException(err);
+    //   }
+    // }
 
     function makeMultipartBody(parts: [string, any, any][], boundary: string) {
       const result: string[] = [];
       parts.forEach(part => {
-        const name = part[0];
         const body = part[1];
         const headers = part[2];
         result.push(`--${boundary}`);
