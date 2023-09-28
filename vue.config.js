@@ -40,8 +40,8 @@ module.exports = defineConfig({
     },
     GoogleDriveTest: {
       entry: 'src/pages/GoogleDrive/main.ts',
-      template: 'public/GoogleDriveTest.html',
-      filename: 'GoogleDriveTest.html',
+      template: 'public/GoogleDrive.html',
+      filename: 'GoogleDrive.html',
     },
   },
 

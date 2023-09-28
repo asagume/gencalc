@@ -1,23 +1,33 @@
 <template>
   <h2>Google Drive 連携</h2>
   <h3>テスト中</h3>
-  <p><a href="./">Back to げんかるく</a> </p>
+  <p style="text-align: left; margin-left: 2rem;"><a href="./">Back to げんかるく</a> </p>
   <p>本画面では、Google Driveのアプリデータフォルダを介して、ブラウザ間および端末間で《げんかるく》のデータを共有するための機能を提供します。</p>
 
-  <div>
-    <button type="button" @click="login" :disabled="!gapiInited">Googleでログイン</button>
-    <button type="button" @click="logoff" :disabled="!isSignedIn">ログアウト</button>
+  <div class="usage">
   </div>
 
   <div>
-    <button type="button" @click="handleListClick" :disabled="!isSignedIn">List remote files</button>
+    <button type="button" @click="login" :disabled="!gapiInited">
+      {{ isSignedIn ? 'リフレッシュ' : 'Googleでログイン' }}
+    </button>
+    <button type="button" @click="logoff" :disabled="!isSignedIn || isProcessing">ログアウト</button>
+  </div>
+  <br />
+
+  <div>
+    <button type="button" @click="handleListClick" :disabled="!isSignedIn || isProcessing">Google
+      Drive上の退避データ一覧を取得</button>
   </div>
 
+  <br />
   <table class="list-of-appdata">
+    <caption>Google Drive上のアプリデータ</caption>
     <tr>
       <th>name</th>
       <th>modifiedTime</th>
       <th>size</th>
+      <th></th>
     </tr>
     <tr :class="loaTrClass(item.id)" v-for="item in remoteFileList" :key="item.id"
       @click="overwriteObject(selectedFile, item)">
@@ -25,32 +35,39 @@
       <td>{{ item.modifiedTime }}</td>
       <td>{{ item.size }}</td>
       <td>
-        <button type="button" @click="handleGetClick(item.id)">取得</button>
-        <button type="button" @click="handleDeleteClick(item.id)">削除</button>
+        <button type="button" :disabled="isProcessing" @click="handleGetClick(item.id)">取得</button>
+        <button type="button" :disabled="isProcessing" @click="handleDeleteClick(item.id)">削除</button>
       </td>
     </tr>
   </table>
 
+  <br />
+  <br />
+  <br />
   <div>
-    <button type="button" @click="handleReloadLocalClick">更新</button>
+    <button type="button" @click="handleReloadLocalClick">ローカルデータ再読込</button>
     &nbsp;
-    <button type="button" @click="handleExportClick" :disabled="!canExport">エクスポート</button>
-    <button type="button" @click="handleImportClick" :disabled="!canImport">インポート</button>
+    <button type="button" @click="handleExportClick" :disabled="!canExport || isProcessing">エクスポート</button>
+    <button type="button" @click="handleImportClick" :disabled="!canImport || isProcessing">インポート</button>
   </div>
+  <br />
 
   <table class="remote-appdata">
-    <caption v-if="downloadedFile.id"> {{
-      'name:' + downloadedFile.name + ' modifiledTime:' + downloadedFile.modifiedTime + ' size:' + downloadedFile.size
-    }} </caption>
+    <caption> ローカルデータと取得データの差分 </caption>
     <tr>
       <th>key</th>
       <th>status</th>
     </tr>
-    <tr v-for="comparison in comparisonList" :key="comparison[0]">
+    <tr v-if="comparisonList.filter(s => s[1] != 0).length == 0">
+      <td colspan="2">差分なし</td>
+    </tr>
+    <tr v-else v-for="comparison in comparisonList.filter(s => s[1] != 0)" :key="comparison[0]">
       <td>{{ comparison[0] }}</td>
       <td>{{ ['同値', '差異あり', 'ローカルのみ', 'リモートのみ'][comparison[1]] }}</td>
     </tr>
   </table>
+  <br />
+  <hr />
 </template>
 
 <script lang="ts">
@@ -116,6 +133,7 @@ export default defineComponent({
     const remoteFileList = reactive([] as any[]);
     const selectedFile = reactive({} as any);
     const downloadedFile = reactive({} as any);
+    const isProcessing = ref(false);
 
     const isSignedIn = computed(() => {
       return tokenResponse.access_token ? true : false;
@@ -170,6 +188,7 @@ export default defineComponent({
               tokenResponse.token_type = response.token_type;
 
               handleListClick();
+              handleReloadLocalClick();
             }
           }
         }).requestAccessToken();
@@ -209,11 +228,15 @@ export default defineComponent({
         if (response?.body) {
           const json = JSON.parse(response?.body);
           overrideObject(remoteAppdata, json);
-          overwriteObject(downloadedFile, response);
+          const workFileList = remoteFileList.filter(file => file.id = id);
+          if (workFileList.length) {
+            overrideObject(downloadedFile, workFileList[0]);
+          }
         } else {
           overwriteObject(downloadedFile, {});
         }
       })
+      handleReloadLocalClick();
     }
 
     /** リモート(Google Drive)のAppdataを削除します */
@@ -227,7 +250,7 @@ export default defineComponent({
 
     /** ローカルストレージのAppdataをリモート(Google Drive)にアップロードします */
     const handleExportClick = async () => {
-      reloadLocalAppdata();
+      handleReloadLocalClick();
       await requestFilesCreate(APPDATA_NAME, localAppdata, 'application/json');
       await handleListClick();
       if (remoteFileList.length > 10) {
@@ -242,10 +265,12 @@ export default defineComponent({
     /** ダウンロード済みのリモートのAppdataをローカルストレージにコピー(上書き)します */
     const handleImportClick = () => {
       overrideObject(localStorage, remoteAppdata);
+      handleReloadLocalClick();
     }
 
+    /** ローカルのAppdataをローカルストレージから再読み込みします */
     const handleReloadLocalClick = () => {
-      reloadLocalAppdata();
+      overrideObject(localAppdata, localStorage);
     }
 
     const handleRemoveAllClick = async () => {
@@ -254,11 +279,6 @@ export default defineComponent({
         remoteFileList.splice(0, remoteFileList.length, ...response.files);
         await Promise.all(response.files.map((file: any) => requestFilesDelete(file.id)));
       }
-    }
-
-    /** ローカルのAppdataをローカルストレージから再読み込みします */
-    const reloadLocalAppdata = () => {
-      overrideObject(localAppdata, localStorage);
     }
 
     const overrideObject = (dst: object, src: object) => {
@@ -278,6 +298,7 @@ export default defineComponent({
      * @param params APIのパラメータ
      */
     async function requestFilesCreate(name: string, content: any, contentType: string, params?: any) {
+      isProcessing.value = true;
       const boundary = '----====----====----';
       const workParams: any = {
         uploadType: 'multipart',
@@ -308,6 +329,8 @@ export default defineComponent({
         return response;
       } catch (err) {
         handleGapiException(err);
+      } finally {
+        isProcessing.value = false;
       }
     }
 
@@ -375,6 +398,7 @@ export default defineComponent({
      * @param params APIのパラメータ
      */
     async function requestFilesList(params?: any) {
+      isProcessing.value = true;
       const workParams: any = {
         orderBy: 'modifiedTime desc',
         pageSize: 10,
@@ -399,6 +423,8 @@ export default defineComponent({
         throw response;
       } catch (err) {
         handleGapiException(err);
+      } finally {
+        isProcessing.value = false;
       }
     }
 
@@ -409,8 +435,8 @@ export default defineComponent({
      * @param params APIのパラメータ
      */
     async function requestFilesGet(fileId: string, params?: any) {
+      isProcessing.value = true;
       const workParams: any = {
-        alt: 'media',
       };
       if (params) {
         Object.keys(params).forEach(key => {
@@ -427,6 +453,8 @@ export default defineComponent({
         return response;
       } catch (err) {
         handleGapiException(err);
+      } finally {
+        isProcessing.value = false;
       }
     }
 
@@ -437,6 +465,7 @@ export default defineComponent({
      * @param params APIのパラメータ
      */
     async function requestFilesDelete(fileId: string, params?: any) {
+      isProcessing.value = true;
       const workParams: any = {
       };
       if (params) {
@@ -454,6 +483,8 @@ export default defineComponent({
         return response;
       } catch (err) {
         handleGapiException(err);
+      } finally {
+        isProcessing.value = false;
       }
     }
 
@@ -487,6 +518,7 @@ export default defineComponent({
       handleRemoveAllClick,
       gapiInited,
       isSignedIn,
+      isProcessing,
       comparisonList,
       canExport,
       canImport,
@@ -502,12 +534,33 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+div.usage {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60em;
+  max-width: 90%;
+}
+
+div.usage dl {
+  text-align: left;
+}
+
 table {
   margin-left: auto;
   margin-right: auto;
   min-width: 80%;
   table-layout: fixed;
   margin-bottom: 10px;
+  border: 1px double gray;
+}
+
+th,
+td {
+  border: 1px solid gray;
+}
+
+th {
+  background-color: cornflowerblue;
 }
 
 tr.selected {
