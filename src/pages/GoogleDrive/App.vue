@@ -29,7 +29,7 @@
       <th>size</th>
       <th></th>
     </tr>
-    <tr :class="loaTrClass(item.id)" v-for="item in remoteFileList" :key="item.id"
+    <tr :class="loaTrClass(item.id)" v-for="item in remoteFileList.filter(s => s.id !== undefined)" :key="item.id"
       @click="overwriteObject(selectedFile, item)">
       <td>{{ item.name }}</td>
       <td>{{ item.modifiedTime }}</td>
@@ -61,7 +61,7 @@
     <tr v-if="comparisonList.filter(s => s[1] != 0).length == 0">
       <td colspan="2">差分なし</td>
     </tr>
-    <tr v-else v-for="comparison in comparisonList.filter(s => s[1] != 0)" :key="comparison[0]">
+    <tr v-else v-for="comparison in comparisonList" :key="comparison[0]">
       <td>{{ comparison[0] }}</td>
       <td>{{ ['同値', '差異あり', 'ローカルのみ', 'リモートのみ'][comparison[1]] }}</td>
     </tr>
@@ -87,7 +87,7 @@ type TokenClientResponse = {
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace gapi { }
 export default defineComponent({
-  name: "VueGoogle",
+  name: "GoogleDrive",
   setup() {
     const CLIENT_ID = '507502242382-a7d868j5089106u313q7hd6js3i375l2.apps.googleusercontent.com';
     const SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
@@ -228,7 +228,7 @@ export default defineComponent({
         if (response?.body) {
           const json = JSON.parse(response?.body);
           overrideObject(remoteAppdata, json);
-          const workFileList = remoteFileList.filter(file => file.id = id);
+          const workFileList = remoteFileList.filter(file => file.id == id);
           if (workFileList.length) {
             overrideObject(downloadedFile, workFileList[0]);
           }
@@ -241,6 +241,9 @@ export default defineComponent({
 
     /** リモート(Google Drive)のAppdataを削除します */
     const handleDeleteClick = async (id: string) => {
+      if (!confirm('選択データをGoogle Driveから削除します。よろしいですか？')) {
+        return;
+      }
       await requestFilesDelete(id);
       await handleListClick();
       if (selectedFile && selectedFile.id == id) {
@@ -250,6 +253,9 @@ export default defineComponent({
 
     /** ローカルストレージのAppdataをリモート(Google Drive)にアップロードします */
     const handleExportClick = async () => {
+      if (!confirm('Google Driveにアプリデータをアップロードします。よろしいですか？')) {
+        return;
+      }
       handleReloadLocalClick();
       await requestFilesCreate(APPDATA_NAME, localAppdata, 'application/json');
       await handleListClick();
@@ -259,11 +265,15 @@ export default defineComponent({
           deleteList.push(remoteFileList[i].id);
         }
         await Promise.all(deleteList.map((file: any) => requestFilesDelete(file.id)));
+        await handleListClick();
       }
     }
 
     /** ダウンロード済みのリモートのAppdataをローカルストレージにコピー(上書き)します */
     const handleImportClick = () => {
+      if (!confirm('取得済のデータでアプリデータを上書きします。よろしいですか？')) {
+        return;
+      }
       overrideObject(localStorage, remoteAppdata);
       handleReloadLocalClick();
     }
