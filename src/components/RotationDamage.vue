@@ -2,7 +2,7 @@
   <fieldset>
     <table class="total-damage">
       <tr>
-        <th class="damage-name">{{ displayName("合計ダメージ") }}</th>
+        <th class="damage-name">{{ displayName("ローテーション合計ダメージ") }}</th>
         <td class="total-damage-value">{{ Math.round(totalDamage) }}</td>
       </tr>
     </table>
@@ -614,7 +614,7 @@ input[type="number"] {
 
 table.total-damage {
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 table.total-damage th,
