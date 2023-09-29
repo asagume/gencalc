@@ -45,6 +45,7 @@ $Headers = @{
     "Accept"          = "application/json, text/plain, */*"
     "Accept-Encoding" = "gzip, deflate, br"
     "Accept-Language" = "ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+    "Cookie"          = $Cookie
 }
 
 ########
@@ -78,8 +79,8 @@ while ($true) {
     $Body.page ++
     $BodyJson = $Body | ConvertTo-Json
 
-    $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json;charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
-
+    $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json; charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
+    $Response
     if ($Response.StatusCode -ne 200) {
         break;
     }
@@ -131,7 +132,7 @@ while ($true) {
             $entry2.icon = $null
         }
         $Json2 = @{
-            avatar_id = $entry.id;
+            avatar_id  = $entry.id;
             skill_list = $ContentObj2.data.list;
         }
         $SkillList = $SkillList + $Json2
@@ -170,7 +171,7 @@ while ($true) {
     $Body.page ++
     $BodyJson = $Body | ConvertTo-Json
 
-    $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json;charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
+    $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json; charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
 
     if ($Response.StatusCode -ne 200) {
         break;
@@ -222,7 +223,7 @@ for ($reliquary_cat_id = 1; $reliquary_cat_id -le 5; $reliquary_cat_id++) {
         $Body.page ++
         $BodyJson = $Body | ConvertTo-Json
 
-        $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json;charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
+        $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json; charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
 
         if ($Response.StatusCode -ne 200) {
             break;

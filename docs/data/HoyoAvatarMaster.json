@@ -1,5 +1,32 @@
 [
   {
+    "id": 10000087,
+    "name": "ヌヴィレット",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/985a4c214315af02c7952e01a0a710a1.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3d75ee445d41691fcdd0531ccc6a24e5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a9dbb8df00c49f5780977750c01857f5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/682ad0ec73564c2e93d67f28840f6c14.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4683ca571ff4782b47ac5e0ee9653f06.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b14e478fd81ad8097be94814f37f61f2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/85be39b5d31fff63dd60475bda25d0a0.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/9fdd0e0161ddcd9a3403462607d9e543.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000087",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/3c6e13380dc56df7cb5d0435d592ac01.png",
+        "profile_picture_id": "7100"
+      }
+    ]
+  },
+  {
     "id": 10000084,
     "name": "リネ",
     "icon": null,
@@ -7,16 +34,24 @@
     "avatar_level": 5,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/b8dd9928c1aa3eab54a1834050ca56ef.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/625a4ac333d3129c5d37431ea3a97b27.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/299e5c518874972e9d9613c0573dd395.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/89952ddcb393da5dd011596cb2cd5f43.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7b55405d03e6f3374d27b8437e9dc2a1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/6cebe03462a31be372c00f77c4944dfd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/6d6e4bdab3cb45b900abcb61ec5586a3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/c5064b742ff2ebc92df32ea2003fa273.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8d8b149d874b3778a157cb34e359c229.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2fa791d572453b21221a22a471f30629.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cd4de699e903fd1d2d211ed96883c821.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b0b3bc3802f56a5f1a8fb6667901bf6b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ade9de5e09b8136a6007418af944e8e4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6357101d069087447cdcf000cb53f62b.png"
     ],
-    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u1490e/29a40b448b03360fae8385d65c5a7792.png"
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/0f14070b7d042f8bc9dd987dcde62cc7.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000084",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b383ece87044175d15601d268971e14a.png",
+        "profile_picture_id": "6900"
+      }
+    ]
   },
   {
     "id": 10000082,
@@ -26,14 +61,23 @@
     "avatar_level": 5,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a48c2438dc7ec1e04623ef0f1e4a2487.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e9defa5e2a451fed80d11fd10b62c954.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/cb1b115c92b85af0ef6f63d6865f4c99.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6e1a702166693e7dffedca2b3ee86efd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/01f19d7ce264f69211522fb829e6d454.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/babbd1180f618ffd41cc9480e9f50095.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/62e9d30caccf0f5816835871f61e3b3e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7d213887f1a7a3ed2f8d12a24486b343.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1c1e8abad9a6d3afdb1ad028a97a6a6d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/98217db7cee03009eeb1915184d53766.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2d79e82c1e1c8bdedbe03bc02e7112aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d9b25eb05a317269458f02e4a2683972.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7ac74273a9af7e8db8279ad3f789e2da.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/63de7179599afde91a9ad1e5d42283ad.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/4b49254e58634ed114342fbfa81278f2.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000082",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b1e001d5d53a577cf8d506b67ef994ee.png",
+        "profile_picture_id": "6600"
+      }
     ]
   },
   {
@@ -44,14 +88,23 @@
     "avatar_level": 5,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6990224570bbd5192ae2259b37b49ba9.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d5f222935606fb2a337eac68d858cc60.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/088cc85e286bf4e7e7f247a1279b8baa.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c78ac0ae445d1bd4d26f93fb23c9779e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1e259d428d279b1473752d9b925f2631.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d1c55498e5bde2b2c85d3a3223ee48cc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/59dfeefd5d28a2475de7ae5159544e8d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/49904b226343e6b02361c5704e789c02.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7e7e83d2057f29d5592a843472573246.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/444883b4cda42096551a1b0b839809ca.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3c341d1e8441d6dff35f92d75ee25aec.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b206633024db7798f936dc326ace815c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/68f45e1de0e230e0f9b7e9dfd5900157.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5aaf32d95bfbf2a06e90dae022cbb119.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/71ed5a4c1932bd7c41a1ce01cf299605.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000079",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d40a06b2c2bd04a74f2ac391e7033630.png",
+        "profile_picture_id": "6300"
+      }
     ]
   },
   {
@@ -62,14 +115,23 @@
     "avatar_level": 5,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/918d749479493fbbf52b77c93cc37e99.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/202af393e2e7bface09d92490371c6b0.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7d7df414711202d71744c893d1669f6f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7cba802fb628733e1e2471880344b8f8.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/cc6edba767a0c173fc81d25f629a8ff2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7cb47ac1424bf90596f0ad76fdcf5fd3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e963f845494a13ee82c115ba1057c1a0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d8b43103b9e033dc342d9c232c9a8a38.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/375806859c5f11a3e66a2b7c60dc4eae.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/617b78038a8f2fa0aae2146f4af8af0d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/395147c21d9dddec654d61d80e48950a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fc009e50db8c2047d46f40f286f9782e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/12135162083c9b86af420f04025f3823.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/132098c3bffcb927349023b7f30a9cfb.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/d4a1ed195a54cbe04603e72a1c6cbe42.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000078",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1136b89de09bdef8dd0d57f6d5842aab.png",
+        "profile_picture_id": "6200"
+      }
     ]
   },
   {
@@ -80,14 +142,23 @@
     "avatar_level": 5,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a480c39a8bdbec38ce17561adee89385.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/7f05f1190147529f21b0aaf7b9f362e1.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/844d15e9027f5d45ba8589c78b006d9f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/78add3ee5d81a4c2134cb3267bc52f76.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/98bfb72c9d299b077c3a7ebbd6123506.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e4b738a40eeac5d11c6dda9503022687.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9162a63311f671222fb7a6b874367def.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f378cf7ab04ec9743494484121954e9d.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/65d0db8b3c76ed686715908b6044dea2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/26c9b3c53e2ca4af97a27a5fcdab1bed.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e7d0af66530953aeda01af37e6c3708e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5f5b78c111f3e6208d5a6892459c73aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9202cd602cc1bc5bc6ab530454a11094.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/04a31fe36e6f61aa1455b91e25f27a42.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/6a26bc824d4f1427ab0ef6b66b21c211.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000075",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/dd173e454157ff1535a519da0d505076.png",
+        "profile_picture_id": "6000"
+      }
     ]
   },
   {
@@ -98,14 +169,23 @@
     "avatar_level": 5,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6dbf5d1635774290683ab119c2fd08ea.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/38625fbe728731288b829ed641bf977d.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9f91e27ad0dcb7488c11f55e289e6486.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eb5a8cfd202bd54528700e01f450882d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5361a733daf9ef55f994950b6f05a982.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e292753bbfae113cca863bc50c2356ee.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/704ebe3d8ff7c74c08d5fc6b6cb73482.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b69ac3358f04e69b107e1c49dc00f8c0.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1511d83e151a7d73911c22cb2d03b3c1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3e079d6a8a773fc9271909031221f633.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/47f4bed4a29b45b4920e454c39191e69.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6ab2e894d5f82c057a88e4cb9a53dc51.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/638be5fea9d30f4645809acc7b428376.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/52f7d2468cbf6975bdd926b9529a11f4.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/18e987627c32ceaeb1525330bea7d212.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000073",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/7036769b71af374808490930b86a7222.png",
+        "profile_picture_id": "5700"
+      }
     ]
   },
   {
@@ -116,14 +196,23 @@
     "avatar_level": 5,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/dadf611253a0631f382d238e22338731.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/74a11d57083cb080c94f0af1815a77cb.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b12601791ce05c0c4ae3297c963a5127.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b8e7e4fe71d7c5e7c59ee1cde901ce3f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/08703d9f784a7a609add47ba6b42e7a3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d374e21c7a7e491db82a497d83afeddf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9192159a4c3b3f41c9b9dc6f0ef22966.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9d96f5134f3a2c1798f48ac0d6e106c2.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6856ea254c7787f2ff43ef436dce751a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/19795ecb1c0d1a418cd2b122599b9cad.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/90d7fea7091ea3eb34c290d3e42ea7e7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3a1689400044729bb4b9ef0b7e4ad6c7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/268a19cf94cbe8c91d5953ae021517e2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/00a673c0942378a7f8cb310e32a85b8a.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/760dfdfeeba4cfaaab9dfc570632eac9.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000071",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/eab4186f6c9e7c7b6f04157517e23537.png",
+        "profile_picture_id": "5500"
+      }
     ]
   },
   {
@@ -134,14 +223,23 @@
     "avatar_level": 5,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/785ccd9bc99950b42f9c8be83d06a0bb.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/ead98a0a14311b67f6730bdde60b7145.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e6f6bc031b7bc4fc78da9e0028999a87.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4d25615786abf08de7ac988a09cbe95f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b46025a7f3e8da388f933b68f72ed43e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d15ea5117a47f6a76fe4a888686d9940.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/222dda2b3509da36440aef933b720aae.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/71ff4374f7654bfd64f9a7c8fabb1bb4.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/397beb57d5152a80860f7dbfc49bfbea.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/367a3fc3fdeda9fa88e1206c8b4749aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/71c3d235010213e1c66b435dcd65afa2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/354712688c96f9ee8e1da50d4fac3684.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/19a0a837d908976e983e9f015cb6c875.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8126114cedb09546eeb2064f9e1b486a.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/a583fa9795729860e2c52a420a1e6036.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000070",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b843f394f62066111e1c2c9ea17b1578.png",
+        "profile_picture_id": "5600"
+      }
     ]
   },
   {
@@ -152,14 +250,23 @@
     "avatar_level": 5,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/813b80c9a23a6826ebb3aa76d52918dc.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e784082aea3c490520f1a7a0c7a57497.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c9b4985d37d2dc84b502241582590e92.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/27c308c1a637bb7500f8574a03efb85b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d45c6aafae01a448f17d47bcfc30e0fa.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/aba14cd991e914fe2a1c018bb964aad2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eba591e4a01d05d6eb6a5eb97f3a121f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eec0f87d18de5acbb15ccde31cd9b3c6.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/05ed4548c6f4a8be4d7766b8e9a3d3e5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fd5935e50f057a7bf4e00685c1d42618.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c91527777034b5b62cd4bbb80d3c8a8e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cf99feb1244763bd390c3a4f3804275f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/00dfcf89dcf568403939331434ccf37d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4d07bee1c5baa83d2ea22ce4f2477784.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/a7477034185556280efbdcaaf79f1010.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000069",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/89fdfe77d73992affd081bbdf6af9b12.png",
+        "profile_picture_id": "5200"
+      }
     ]
   },
   {
@@ -170,14 +277,23 @@
     "avatar_level": 5,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/ffdac9984ff4b586d955c55a5c7df060.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d33e612dcd4f116936202768341b6913.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/16ba6f3d637ef58985e7fee42d489a78.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f7f5027abaa8f869ad168690a7370e82.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9d319e585aa515b9ffedf0d1929aa064.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/45f1332dc196eb3ab24a6f47dadbdcbf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/98210956ba77b92c88f4da3d8d92c751.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/83fd8b1d420c53570e2fbe24cd2bf553.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9cb2f24a0542ed56596edd38d2f1c46d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e5e76d7bdfc5f891d23595cf7a9fca95.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4d67ffde1eda47995931ea40532897fe.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/22a422dafe3803be86698fe940e13d49.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a47f987b296e1560aba236a6b2d6daa5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/99c51fe6f9af2082ec07489e26b034f3.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/f089b965383c41b1b6fdb70064512ce7.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000066",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e27f32605730afc9eadb064f063d7931.png",
+        "profile_picture_id": "4700"
+      }
     ]
   },
   {
@@ -188,14 +304,23 @@
     "avatar_level": 5,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6c00478faf98df85491be01406f95f78.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/4d178b815923eb37a57ab06b22b7dcaa.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ed30fe4e074ee0401a6ad3125f5707a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c59c0ed5781ee59a6a13079f2c8f328f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b91bb60ff2f2ba3b23c1b4bb4c041226.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/05ba63c0c5514742447444aec722198c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c0f4fea7be2b811d07c9a9d6bf7c403a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a27f6d180f6af4bdb162ad5a3916986f.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6c1c82f059467b0b54391f6978434828.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/258220a452ac31a4a0df39c357d5d75f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/281121308ef202c8672a951d38611766.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/94c181c75a7296b71316c7419bd82d0e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fbd38b8753be3700029b9fdd2c368408.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/57ba9f2a5bfa6b4a1ba7bc08ed630af0.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/ceaf551d1cfeb16122a576b91caaa708.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000063",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/ac33f327aaa697bd44b51fac8485477d.png",
+        "profile_picture_id": "4500"
+      }
     ]
   },
   {
@@ -206,14 +331,23 @@
     "avatar_level": 5,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6b5d91ffc3e5c07195837f25f891342d.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/305cebce7a382693b777034848f3b140.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ce24deeb67a095a5819d4465a53f19f2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/25f2250de1ccd40c7dbc680cb6f914f7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b1a65b6e1876b44c844eaa93cd1cfecb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/06a487980a23f89cd87f9c709a543198.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5f1fe0721e8d832bc619b54b25ee6273.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5003bee11d46d64bc9891cd7975d7265.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/53786b0f1338a1c839d840c9b5742d00.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/62fe607b615ea718affb4afa1b6c7ffb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/78c3fca73ad3df844d2b44b8b235c7cf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5a36936110942a4550752a1f70520741.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/faa4c1f5dd6e937d62ab9be2b5ebedd8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0b27c5bc528b4fd5b277e4625e6a06bd.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/8b0ac337b754644acd8b04cb8c241276.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000060",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/7ae091781e2d820b62e48414a63ae303.png",
+        "profile_picture_id": "4800"
+      }
     ]
   },
   {
@@ -224,14 +358,23 @@
     "avatar_level": 5,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/bee99c5fc5eba7b16d9e8d8ba6a016ac.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/24ab787ae949bba0c675aa9f3256a724.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4321066138201d01b185e93ef0d34445.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e68fccc078453eeff9f97244cc9197b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d8c147479fa4849aed67225a6b27030b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/165d18a37ad499ba7fb617052e092f37.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/06f38bd4dd85685a1b72f9afcf021e7d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ec996f4b2779820c34a6c0c530adafe.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5219e6313e16760a04071dfd39f0e4f4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/bf949a79c46a55a47fcf530841d45392.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a8136c067bfe36f18d94bc1cfa2c098b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f8a52d5a098f1bd8dcd44946bbeef385.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8f63bf779b850065015287ab01843d8a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/23864c11dbff3f3cd6be9765d934dee9.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/1f8259282f08281de73b7d6a1da209f5.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000058",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/90b8bf050ef0cfbd63bb38d417951606.png",
+        "profile_picture_id": "4600"
+      }
     ]
   },
   {
@@ -242,14 +385,23 @@
     "avatar_level": 5,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a4c35679d3d9f22e15a68dfd33c69633.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/916abae5e0f57ff713f03ded56aa928e.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7c5b35805fa1c36979c4941d02a02134.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d9138b3a7927ed1878b685fa4773495d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/38a3ab441a43856fa275b1e2eac8ae23.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b5e9dad8b86964d1ff1169b1062e3f0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/603acdad83abb44ba62d39bf7cc9fb45.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/509e965940062c6794d14b88419daa63.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ddcd7c0f6e82b7908c53104bfc4e57d6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8c2433b36c3f50eac23364eb811d24d7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4dfe32fdba16766b17efd157bc484748.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f2a059c4c61e15d1545634b9dca13a58.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/556147ea036d0e84df8ac9e83e3f5c93.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0feda4fbff3313bfe3019023107b7c67.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/eeaae6ea82b92b178a830fde70922599.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000057",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0f12fb46d89d75b90fa1dc4931c184b5.png",
+        "profile_picture_id": "4300"
+      }
     ]
   },
   {
@@ -260,14 +412,23 @@
     "avatar_level": 5,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a7fa1f2523d50681852f84d27597e12e.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/fd4a91b771c735721539aa21f30f7da9.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d8618e49a96fe8e0f44f5c726ee9644b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/01a48c1328c3bcb189b6ab364c5bcd5a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8481a6edad9c1697fa8d7535c3d1c694.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/156025109678f2cdb2037364fee3bae1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d963d26db1bbabcb4cd149e857cee893.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b331876b2db15b57940787a75c2f0bb6.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b77087c2abfd25c65af64e6a8e79b1f6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4b147fd6cbf13d4dd7d8c90b87f2533a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4b42b2221e24bf59aede6ab93fe9ddbf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e796ba4bfa0a6030bbb47e62e2461ce8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/190dffff14991cd63de2727d80cf7633.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/634ac94b0d3395c4b97b0fc3d2a1dc84.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/14e59920b5d68d2b5b89e5e7df1dd3b0.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000054",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/ab4ae87e6674b620042da21a806eec77.png",
+        "profile_picture_id": "4000"
+      }
     ]
   },
   {
@@ -278,14 +439,23 @@
     "avatar_level": 5,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/474a62a930b92826657fdaa65446e3f0.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/3b7a8592a97b29ef5d8f43a7ca6bb9e6.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/21213a0e55ac89639c0c3c6e4fe78498.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1675786eda84f95d6a476f1bfa0de4a6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/39a55f5cb284fee921da0b176099ad2a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/74b56a121cb1a2e9faea8f123bda2019.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b328821639467650e7b3de05c230e9ff.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0fd0aeafdbdc1b6fd8b66b48ede6839b.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9e61f7483371238d016732c1bb8fee2f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9c6d0b554de65d1bba395f99fa5d94b3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/146fd93fe390add592e884e66302e302.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/41b634b834c0aab25c3195baaea44b36.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7bf4772e2424f1175c1112fd6ca76efd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4cb06345cc09276706946d137ce1a938.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/241fb0b0e84c023b2a71694a0653f8ed.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000052",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/bfda0d75e3571f701b5a0d4187400180.png",
+        "profile_picture_id": "3900"
+      }
     ]
   },
   {
@@ -296,14 +466,23 @@
     "avatar_level": 5,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/7b29f6db6ac088fe841c7a456ac86922.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/19561f284feb3550e410ed95069c0329.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/de0bf91d042713e370071788ab10b40a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0914f9140bc1a48a5eff96841dd64f12.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5f85d99b744a6d04d4cd74bb1be200e0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/df7e9887775af3d171eba2e75d63e989.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/75439beedd93db20181a0f01d6d4e5d7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1ae444cb68945a114d31a2f0309a9eee.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d9da46bd703d331bb7f9b5b8083ecd4e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/24eebae2065e4bec9d0b5e7b484a45a4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/44c3040063cbbfd9e393f35813075b53.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/30b18029d9864651f9850b1aca1c9699.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2bd9c5d003992577c92dbf8643f0cba0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b39b7fb5b8757b58fb25e78468e0578d.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/cc48094dc8ebed3768729b8bef42fdbb.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000051",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a572e98b1303f3c2dca53c52c7b9a775.png",
+        "profile_picture_id": "3200"
+      }
     ]
   },
   {
@@ -314,14 +493,23 @@
     "avatar_level": 5,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/17fd6a859883c2351f0c94e15236ff0e.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e55f8ac39a20c57705e210171725f394.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fed75d65ac9e1613ffa3eeafe556995e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/de3f1234e6cf6732b9ec2a2c551fac00.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5519143450f36338ac0fa33dabfd5afc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f3bf59700b3b3cc357ef17a841eb56dc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/09d341ffb7dc144c208f38a3818f93fa.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2360b15776ba0d79098dcdaaf0c9dbdf.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e897d2c87d47982afb2ec453d8f23c72.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/bd13a11808434d563d0fbbc613e75bfc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8951bf1bde875d467c8b86ba5d70ad45.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b5bfe84a068f97cdf92f8eb63d411554.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b7c982e3710d9b4b5dda068fc893e461.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/336d36ee925767b86bb2498231baca60.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/e0f3448c79f999cf821d794d5f05b7af.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000049",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/22b593e0c7fe3587c2cd8fbc9df2e6ab.png",
+        "profile_picture_id": "3600"
+      }
     ]
   },
   {
@@ -332,14 +520,23 @@
     "avatar_level": 5,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/1ce6236805ff645b43c7a8b7e9bbffa5.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/8f4bc5ad68e69f916c847a80269ddbb5.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fb3b3c4e4bc568f0c303acd6cffa2271.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9c328a3dae8854fb9af1a934705ac462.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a69bafb4c29512d0358c2ce5623f9e5f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b1945af021ba0effa28e58b9794026ff.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/db5239beb343cb7220f22c40ada7bcd7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b929bf62cb578f3c1236c7906c3da560.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/65a909230fefdfdab60a7cc32ba764a3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8c8e9cf51609b5b186051c4e2915ce4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/aa5641af15eeb4dc2a1d17366ae6defb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fee74f8c0cd9de12236c7f1638f638b6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f25603db44a3744ec1450596c227058a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d04b030c17560d987dee8d9ee8ee70e2.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/1b91bd491f0da12d80cf04d9100d129d.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000047",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0872775c17e0f70a9487299eaab6a0d2.png",
+        "profile_picture_id": "3300"
+      }
     ]
   },
   {
@@ -350,14 +547,23 @@
     "avatar_level": 5,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/16288fcd0046e37c12bad33a6dbbd4c0.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0e309ae7c1aec4344dfa61d8a8ce176f.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c6f654cec2e1090bdd07025c88bc10db.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/52013733d30186d167b8c0db1a501e79.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/715f4c4f6f9be2fab53efad847a397a9.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d0dc31052d1a7a1ecacdb3a647ae71ae.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e94b05d8f4f2c9bcb3b886aa7f9fa2b1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/30d7144b146f46887661a7af08d3a42e.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5d8cd94dcd1aedaee34b2541d847935c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9e6c199bfc3faa5b471b50502614b37c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b9c33575027e48da13cea9f97eaf9e53.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/90ed0df0cf0b210437173368d70571c2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cfca12a63940ddd2f3e06dc50d5aed87.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9b110cc34ad475f6ce3710ca175460d6.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/91ef7c2c8831edcd3fdc644b58da67e0.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000046",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a1238bc59275d2ea16337e636e3146ca.png",
+        "profile_picture_id": "2900"
+      }
     ]
   },
   {
@@ -368,14 +574,29 @@
     "avatar_level": 5,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9241e72d6a7497a80e6ecd9782e70fb9.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f17e16556a37af6efd284088988678d6.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ef971b82df0429cff25fbc514aa9b78d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/29317610dbc6f466f785783d40623279.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a545532c005d0800a56565dbfc2476f6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/91a5689284686c24a6f2edc65551f335.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/db5415a40957ecb5d8cb6714757c23a9.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/64b4e99b52aabc321cf7f5e7e2a9a492.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c261adfa3e735470bbd2ffd4239988e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/aed107553a9d3bc2f83da7f61bf9b5e5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1563dc904e1f31601d03b41c74dd10aa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1c45872f48349688de726cc088ffa57c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fc2f6072ecd552d020644963ffd56bd8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/29717c9b8797009f4fa124de71c9abb8.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/46e47b2d59afe3de6c5050f2d37d7974.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000042",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/824ac9f969c1131241c7d6924c96a6d0.png",
+        "profile_picture_id": "1900"
+      },
+      {
+        "avatar_id": "10000042",
+        "costume_id": "204201",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/2322945efc66220e7e4f4e98526c33fb.png",
+        "profile_picture_id": "1901"
+      }
     ]
   },
   {
@@ -386,14 +607,29 @@
     "avatar_level": 5,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/20fed656830b84add7141fc2e5718998.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/98f35e02733582fa0fa482b0169848ba.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0b568f69c0970635887c9f78c3882343.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/220462ab692a7b31c04ba2db7b459d3d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d2aa2082ec869f18eacc505bd1626dc6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c7fc25b5b8339167515998f012cdddb9.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/40381a7d369b17d5c31843abe659f645.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1cbc0d24c5b519a88718312a1a923a04.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/166d0881a3d02111d620ceee835ed764.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7d283c84c6189652d9b73b6bddc5b40c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b6bbc62a8eef92c383ed366faa0eefa5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4fec778f04941b56a464afea5b1a98c4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a877ae9b2b17feb30886a2dbbd120e02.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6688ff4664fdfd3a6b27d20155ea981b.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/338fda9e495870eea02ffacd79ab8d3d.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000041",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/157b1c57cc6c89fb2ef0334c9dc3e9d5.png",
+        "profile_picture_id": "1800"
+      },
+      {
+        "avatar_id": "10000041",
+        "costume_id": "204101",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/89aaa3ca50676813cb4debb759c4c61e.png",
+        "profile_picture_id": "1801"
+      }
     ]
   },
   {
@@ -404,14 +640,23 @@
     "avatar_level": 5,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/fff7ebfd013818a52e6ad6007c6197ce.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/26c0e0638b69b1aed6e369dc41687da5.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5d5554d973ffefa87d2f449d33902877.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a75267663a85f6f179622e33fb7f1b54.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ccd9b86ed6eabdaac133a20e32ae50e8.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4709e4a934a63136bff4f860f734d185.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2c898dbb9ebcb52bc33e3e52e0593d28.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2914957d2629c466bbc8085b31a56919.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/eb61df565958a05ff44eb23b8961304d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3b329e2a3f2dbf193e3309a219ce31d5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/783fefec77c129e0646a1ad7b0833534.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/54c1792e2bb5d6aa7b3f3f8a5943857d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/94bd9fd0449d7fd40e93d7873cb9cec4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/52947fc0d267f9485f5678be3a8545a2.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/55e9a7c1229b5021bf5c2d9f175458a4.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000038",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/32cf3e1a570c4fae316135c02f6ce459.png",
+        "profile_picture_id": "2600"
+      }
     ]
   },
   {
@@ -422,14 +667,23 @@
     "avatar_level": 5,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f7333eefeccf42426b655d608ecc8c80.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/090be513212e02fc965be9fe010c33af.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e8aee5a41a0f7f8f5cf09b63d8b52f28.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/66989e966026c74aa1a9204b279d8efc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b2ca9dc7b8c662f2c992e52a23e17fa3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e23293ba51dd0f67d4283d20460cce27.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b10d481685ff0fce74ad542dab6cfffd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d3c54b2d6c43b9087b4a136bb2e0fd83.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/53088cb2697970a4ff5dc13c6ea91554.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/da5304562f75d91f3689d537d4c0420a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/775c3ccaf43a29e22945abb9637d9ec0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/aaf190510ef9b8e06fa6f84f544a0525.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f1fde3374ae4736a89b02063f2840801.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f9def37d34529c67ddc295742be2a356.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/ebea14e45dee62d4aa9bbdd76ed899e5.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000037",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1ad6576d1e5148df94ec19fcc5c2e9af.png",
+        "profile_picture_id": "2700"
+      }
     ]
   },
   {
@@ -440,14 +694,23 @@
     "avatar_level": 5,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/c1cc2726667c04c2543b4844cd120939.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/6c0e4de4124ca1eeceed514998f98441.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2c3a67f0041eb504f296e1a8cd22483a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/028f8e755eb2fc285ee21c97c5fbfea7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2d1f7fd6440414803e124195706aeddb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/637b3e008972fff9b7985ce6f345ddd0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0fc168c32922d013d809700ce26d010c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c8d73534b1bd74bfee8ea2d0340ffe2e.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f2ec0d4a1d0a5cffb8fdf8ec8b0825e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9f400863a7c1ed2de6c60120a3e19845.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/903741b760c162be27108e24c962e260.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/992bcd12950c47e838b285493af472a8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7b363b54c276f843405a65ea576cb331.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b177a86e441d21a7adddc9cd497a3e54.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/d91437344bf15d7ad5376491e6e291e5.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000035",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b6229109e740afb506b7d644929c41e6.png",
+        "profile_picture_id": "1700"
+      }
     ]
   },
   {
@@ -458,14 +721,23 @@
     "avatar_level": 5,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f846f7f6849d97154286dc880da56eda.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e33cfaca51a2c1613c27da555a17899f.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5371f717a208a1fa1212b1d7eae427d0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f4542afa78c314ebe03158fcdf34a240.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1ff71e3be2c2c6083c48da30e6435f03.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2f2fd94564e2fc4a7a3c5bada4d35b93.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c13bd924e9dc1ce8097d3aaca15ab3fb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1c68bf5c890c48275797b0a31020e95e.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/59c32da6383a12f77083b4f8c63f628f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/630afcf12ed3e861face35dae1744106.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/97fd84d0dceb6299326bf94e9180bc47.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ffa5b32b39c98c356f52719a1c9f56d9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d885080cfa321797c73c868636be22bc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/924704795ad007f90ecfa35360beacd5.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/7f92332e684ba086afd5791874f7c325.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000033",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/209f2649d1ba39f17ead81973a9ae13c.png",
+        "profile_picture_id": "2300"
+      }
     ]
   },
   {
@@ -476,14 +748,23 @@
     "avatar_level": 5,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/b73219b3344458f17fdff41022652455.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d17042c2b3a96a474cd8fc3d8d4c9efd.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/21b2d239d2516c384dc1a72f8850d8b6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4a57f52606065a2c9660c10faa6a6f09.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/aa4e89e5fab04d37169a6015d985b599.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/893942463c24d6f6b539f52cc8eeff57.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e261c7bd10ead234139db5df33a6ac7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e3d174e8158464f9a92f3399c6b63b8a.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/82aa89bff58c862b9aabd9efc051ce20.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7d943cec60c1f01363a7359242b55f84.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ec3a6b5a71163f1d69a12b62f35b2d83.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/857e00bde3b0cfe02bd61d7710fd7d59.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3483b1d45dad6e87836285fe878a4e67.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9207b0039115e94e68c107a1b0975fd4.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/9f0d93a81ee79e20972b71fb5528095f.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000030",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/8d3dbdcc394809a498b43d1c241f3dff.png",
+        "profile_picture_id": "2500"
+      }
     ]
   },
   {
@@ -494,14 +775,29 @@
     "avatar_level": 5,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9f8341cced7e3146686379ea9451406a.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/af41cc6508a0d3a211ac68e1f3f2f9ce.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b193a7d8ac8b7eae6f64c6959c8cb492.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d1d501ea8c31492a8c71f8927c109e54.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0dccea99620d4cc64b3f2cbbd0fef40b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/544441be5ca246ef9baf1a04a109892d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/871b3a51ceb6880f35768850e22d6b42.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5eb2f419111d724227867d8e2cb6c815.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6bc9af2b783b57372bc95a8cc95856b2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e9ae0d20c6e25b8d13a04a60800a6084.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b5af95346d6b655017f03d9c73dc3f55.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c41aef482489c82d6f930ad91c7bf3fb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b86ec15e617ff1359f1f3f4117181385.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9c7f0ca6e8b67879f6242b60a9a62290.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/24e5c28145b18ebe8b1b54c0721cca14.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000029",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/4577a37b2fff217482b5e7416be3b434.png",
+        "profile_picture_id": "2100"
+      },
+      {
+        "avatar_id": "10000029",
+        "costume_id": "202901",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/7d889ccc4a441fcd908f381880fa4547.png",
+        "profile_picture_id": "2101"
+      }
     ]
   },
   {
@@ -512,14 +808,23 @@
     "avatar_level": 5,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/69cc91c9ea340ce18876ea1e94c71bd8.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/8da2fd7c37f54531eab6160b0634d86c.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b835b208107289eb46de7c029290e565.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6d06bb1713270db5c9431430c7ec09ba.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4c7f2d79a212caa8f9ffba5cf723343d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/80932936a2b5f54ba408f4e336580554.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/372f9e5f7c6881aa59012deb08f3ca32.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/558cd3ff3faf8cb0a64398004f31f403.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e65754b71fe37b1a73239836ddac49c6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/918723e03a7711514855c0fd02fc6190.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2da29b996da845b4cdfce2f573eba287.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d6bac31a676f9e0a56b790c99f5f38d3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3c9c1a0a1286a1226b6803c6911f6233.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ca9d833ad87fd7e19b1341f06ec12049.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/da8484f7073c902e1a7a5c72d1c6ef89.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000026",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/45a6d6b8ee609af2701ca54e30caf429.png",
+        "profile_picture_id": "2800"
+      }
     ]
   },
   {
@@ -530,14 +835,23 @@
     "avatar_level": 5,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/af0579943e5b855314e7411e6695a1db.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/8e02930e6ae2d513d69edea68d73f425.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ca5ec2aba51d3024731621da3470c108.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0882e62729a5b013ea3822b007415498.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0e6fb1229f1d80324e88b0cbb23ead16.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/441c625009bd0e2b992bbc0ea2fae7ac.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1a0f1baeb4e495a1c7c3feaad6e9c3da.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c0b500ea7d4b453209e7dff3ecda3ca1.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/12a949476f3cf29b87fe784a4b4256be.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ec88552cf8c2f5ad806012460e172f2f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c46c4426137426cf9ee49a3e00b21a74.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8488fc9a2deb8973d9de8e3926030769.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/14ec3f51a52cf886a725673b40905886.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/70c70b87cd7d2b3dfe2074f0c6a73dae.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/7c7b8013c8992edec8c46d244e5e0bea.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000022",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a02343dac2d4f4f6aef38f84071c8ce6.png",
+        "profile_picture_id": "2000"
+      }
     ]
   },
   {
@@ -548,14 +862,29 @@
     "avatar_level": 5,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/bc667e9fae60f71480d84d6dd45e5cc7.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e3625e738029cc5f46005f391a629ca9.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d01a8027317f94a655eb2cfab0736dc2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f95535f1e4e2ea121070a35d71a69a76.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/db6da0526a81e58a89a1cc4588003249.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d9d817cf228bfd380e3666239e3a5935.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7166609e2c209f5515f7b63e4f0597e1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/395ad8f4d991c46c5788cd98d8eb1434.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/406086dec394bf99ddc156e035da6e9f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c15353bf8e9ad98e9b691b70af3ce3ab.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/062dbb72b4547069797f2679476508e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/889bed2a220676437ca6254def64488a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9f1f00f3ca2b23e8f403bdd3286e4c9d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3cb6dc27d3ea8ea9b41468a39ba55062.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/3dc25289d505eb538b92cc0b9f870676.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000016",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a04e9837b34689a319af2e02b37c0b88.png",
+        "profile_picture_id": "1600"
+      },
+      {
+        "avatar_id": "10000016",
+        "costume_id": "201601",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a2133ac047a0a6e0d4d9c1c550a1ef02.png",
+        "profile_picture_id": "1601"
+      }
     ]
   },
   {
@@ -566,14 +895,35 @@
     "avatar_level": 5,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/b13e4717bfcd652c1690c3a76bf06775.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/7b5d9d799f9b583d1680e628c047081d.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/551d5bbcb87d9cd0cc2765cf73cac855.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b251915e43e59b6351d50b0a0e9071d0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/78c60e5501c275b0d8a75b9617f4f43b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0ffb4e56ca60d6d05ef4de507ee20099.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6ac3052fe43e7b627cba0b2197977a7e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/560543abc17a7ab908a3cf7289d9f16c.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2ccb900a8ba3a1932423e16e86f433e9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/da28d6ce5dc3a53afcb9b034f9e68bad.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3183152e8f8be275928147a30c467857.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5c8dd36079f98f83fe12eedd4c1f11c6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/158f7851fea565476513be83cbc956ce.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/551112ceced22b98fa4afc00a1540ce1.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/d4d3bec44e6513266fcb110e0cafd85d.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000003",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/c5217124268c12ee93a3e7c7e8b7afa5.png",
+        "profile_picture_id": "1500"
+      },
+      {
+        "avatar_id": "10000003",
+        "costume_id": "200302",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/444046a869f64498f9b6aa4fd6718c2a.png",
+        "profile_picture_id": "1501"
+      },
+      {
+        "avatar_id": "10000003",
+        "costume_id": "200301",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b4d15540bfed69f86f6c51d53c880cc8.png",
+        "profile_picture_id": "1502"
+      }
     ]
   },
   {
@@ -584,14 +934,29 @@
     "avatar_level": 5,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/64f0d07d7a6d76779cfa9fb526c7cae9.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/bd9e1f434d0a9fd6d1195bb52cab720e.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e5f41d8b6feabb31f8022ff34dfac34.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/69a7d0998b50e32cb23a670eb954c07a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f9520e464c3da833b1ca52df64c66306.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d9a1fabb2996eaceb3e927e514d727cf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/39fc15e788a52cf1fa17c6007f82bc38.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f9aa0325432bd2fbb8b15d0dc964d80a.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d46f3fb9af34b52e3892137637fba816.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6070ee94fe60e88c2a37aa8017acfd1b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4fe95b6aa27179fa9e6ab31fc920cd5b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8506f43353f806431cfc6a60ebe6ddb7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7101be5a1d2bb3f2bb15675788cefbc6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/eb24db75499b19ad28156f8a831481e7.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/cc9ad66b298a5c6cd9eac86cea5bd37a.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000002",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a8c2110490b9754d28cbca4c2119d8ff.png",
+        "profile_picture_id": "3400"
+      },
+      {
+        "avatar_id": "10000002",
+        "costume_id": "200201",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f32c2fbe82fcd2b185b2d675ff1f4fa8.png",
+        "profile_picture_id": "3401"
+      }
     ]
   },
   {
@@ -602,14 +967,50 @@
     "avatar_level": 5,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/4e765f79b8ed5b1824abe8f69c368f2d.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/9c7ce595110473200f9c88cba492d2b6.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/34b530204a732ead589c294f3d6a3509.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8bd4367e5a09f2bb3138603bc53945b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8bd4367e5a09f2bb3138603bc53945b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8bd4367e5a09f2bb3138603bc53945b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8bd4367e5a09f2bb3138603bc53945b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8bd4367e5a09f2bb3138603bc53945b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e8bd4367e5a09f2bb3138603bc53945b.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/8f3e7f062c0f24fe16e8b30e9e0050c3.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000062",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/fffa33555a1b4a981cc6b95a9042727a.png",
+        "profile_picture_id": "3700"
+      }
+    ]
+  },
+  {
+    "id": 10000085,
+    "name": "フレミネ",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 7,
+    "max_level": 90,
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/2ab829b9f931d359a2b45155c7048c32.png",
+    "talent_icons": [
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0df6a40d0971d38cfd8be8b5a52f972d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/555405d9e79a20c927363ea7267df142.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4565c56b9fee74059177b74e5496c580.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8b92a2fe3b73f323c2304a7bd987c8df.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d2962835669d03f63828ea51b665c515.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cd9b3a772e1828886289e153a63bcc2b.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/96a88a3e3b330d7dbbb5a6980f69d52e.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000085",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/044c6926947ef0aa296a2e22942c1286.png",
+        "profile_picture_id": "7000"
+      }
     ]
   },
   {
@@ -620,18 +1021,26 @@
     "avatar_level": 4,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/63d9f2cd2d72c927eea5000008ec405c.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e966ffb90efd990b741385bd299a75bc.png",
     "talent_icons": [
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/0a2e8baa29a220f0e70d0b78cac93e69.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/a7da83c99c9bcd3b94bd0337f550b450.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8a78832d199f40cd1f07675d31418aee.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8f1e5f065225fb123b64fdeee0418091.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7faa2fd3f014f83fbd0b10ae79da9279.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/da2a9232caba32d3deb34fff41907f83.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0989da995fd0c464c628528397ab044b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0594d559805ab9ff09f73eda1540ed89.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b7c483cc1755e5ed21c359c75a5aee44.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3bdab59228674475b724c9e7f1af0d1b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/30f4c59cd9a7d14d32ad6f375e30ef7d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5164d3a026a3929a5df00aa9ca6980e6.png"
     ],
-    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u1490e/285b4e5ab58a6a8e20ace61ec85982ff.png"
-},
-{
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/ff96653acca803b35fe13c1fbb157792.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000083",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0ed9327d6197f28a5e1828d4d4107e9e.png",
+        "profile_picture_id": "6800"
+      }
+    ]
+  },
+  {
     "id": 10000081,
     "name": "カーヴェ",
     "icon": null,
@@ -639,14 +1048,23 @@
     "avatar_level": 4,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/96a66914921e1bcfae9bc2766c0e3d88.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1dd111ff740aad49ae5ae29f6285e286.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e6a4e624df3e4fb55b7b214f2ea8e3dd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2c633402380cd369d91188dc3eb24bb0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b42ca1bfb3fd0d3a4504d8b677eed37c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4c35028b2198fe27e54fc2e1493a7dc7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/04b033b926bd47a426baa7d2004fa375.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2ef83bc18caac0db2b7fafccac8c1a64.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6fe550dd85a92c02211a011a1d3008cd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1a0b2c4458fd97ade002b62213f1efca.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2b14b751dcb744b37e481761cec94568.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/39909abb34ca66356f56dad05c972c50.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/21005efa0743cc64367528e50269392c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/73bc218c3ce25fda693d680a834fa736.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/e446541331c713c94de8e7a77d6da464.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000081",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/43f3b7220f0a9b597bd9b8ee24db443f.png",
+        "profile_picture_id": "6500"
+      }
     ]
   },
   {
@@ -657,14 +1075,23 @@
     "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f46f26454e4aae5ba5ed9b13deb5f45d.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/ec4e1d42b0a06beaf1bbcddf5fef1680.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4fdc60b1f40fec7beb9569d63e0a412d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0a305604b61534855844be8a82b91f4e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dca58df3422be6380393d77a3de8be53.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0a86e0ae489219619cfd57b5181a62ec.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a6892b759430c6189e8d6e01f10463c0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/86f7fba9fa6a9a00775ddb649e267374.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/56f16036b1930885c041ee44ef964b59.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b46b3b20da0cc72639e87075d98c599f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a5616e350583fe5e1669a740a6d4b044.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0f501b8d8fccd745c5c9073b6326d160.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/987021a0b680111c4992349247c92211.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/611a52753b8a1d9dd78f0278bae8f117.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/270dd395b27bcbbb26792a28e515becf.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000080",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f1b0c9f8258dd9f4543d713309cecf6f.png",
+        "profile_picture_id": "6400"
+      }
     ]
   },
   {
@@ -675,14 +1102,23 @@
     "avatar_level": 4,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/df9b8e0c377ac8d1995dc746d30e2695.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/82790ef1f9e6082437ccf9c5e5efdddf.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3998ccb31d3f3b44f4f40efb94a77ba1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6c1cb18878138cb2eb1efe65f8bee5b1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/060c8c2194f3115c62e670c22ad6cbd3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/76321a1e5c4e20f2e013f128d605adbd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d868b835805904541979f2eaf360f76e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/453a549f70c717fffdd8fbd8f9c29de6.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ca159da02d2174de8ef890c338bb188b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/61955e81b0d3dca955335db32868f919.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/55a454a947eeb3d78dd54126e3c8aed7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9423299d701c38e64aa288b51e253d30.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2adf2059baff0fcc37bdf292de01cd04.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/df7b00203d5fa2d87885e6a98468a701.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/38aeede951ef3a61d404c4d305994e8f.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000077",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1315fd70f84345c83356f7d4a42db085.png",
+        "profile_picture_id": "6100"
+      }
     ]
   },
   {
@@ -693,14 +1129,23 @@
     "avatar_level": 4,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9a120d9caf3eed052dbcacb001717f2d.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f7a4971a5efe5a4e41377389d805ef1b.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/af422b1992009ed5445371539810f50a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d2f37662fdb32cb359428df11eda9df3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a8aa5eac995a4133a83f8d72c003a8db.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6c58fa5855fb9ae861d33819f4d6668b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d2f5722bfcde777a03afccac356b87ae.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e037389cb7a190cc236dd0baf3ec8abc.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/702fedd6d937ba5d22f04144353711f8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b70e245edd716b646bd1d77edd9b9a2e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/955a3219669192b9569d02b59f3f94a8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/09df61d8cf77916f050f661a37d42cdb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/70cf67efac30854c68842f5f9e219662.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f7b8279b44556866a7a0bcf630ef0355.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/db59f58307526f2e3f742c42e27a122c.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000076",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a8d00c2aa58ec445cdd9eb51baf5a805.png",
+        "profile_picture_id": "5900"
+      }
     ]
   },
   {
@@ -711,14 +1156,23 @@
     "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f8bc91a88fce47f15ebdbc24edd513cb.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d01512050c81e62f4a12899f2a612d75.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c8ab4cdfe67b3a89037f6e1023fd14d3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c270bd1dd4d526253ba9c16be01f24db.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b9fb000aff7001933bd8c9caf63c35b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/41a57029d9a40b0d67d9c5c77069aee3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9e73ef595cf57c981efec68abd1ab299.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1252e960de8a9926a5594cf0fe80f8ce.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9389fcdde3d912bd7accc3c9a1b88ff4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fd3cd7db7f04ff4ecf836edb36084361.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5f1a8defd43b9aab570b36bf5032bf5c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/10d955fcc9ccbcd6575c72ea81cb16fc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/244f631aee7c9926e030dcedfc42cc68.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9847ad45ee6a04259978f26a95691d3e.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/53bb0749700c84fe237e84a2acec4b9a.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000074",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e169877a7a95f9c3016f35b642b8538b.png",
+        "profile_picture_id": "5800"
+      }
     ]
   },
   {
@@ -729,14 +1183,23 @@
     "avatar_level": 4,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/fedf926e593b5b80e9d368549dcff0a3.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/dee95b24bd60d195e2d338bf99ea5171.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/163feb5a51efd877863ca1b944b40e24.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d54215582be0b790c4d0f3a7e8178d69.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/90a9cc680aca497337daff3013a30dad.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4590700e91cbbc6af578fb3b3eb31ab2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f09e72448ebbb767508ce990b484d83f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3181b8c80d06bd97f2031138aa8c4854.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3594d720d223042d0da9e065d8af6cfa.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7de8dacf17e5c5342c6117123e8ebdf1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8da702ae40bb62123e99688ae85ea9ff.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3c12b5ac47ac1f7be7f2a383339282c9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c73cba75b05b92969a6a991299c7c7bf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3bd115c90f15049090302295572c12bf.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/c4a93039a95c1354ff0b383e9a6622ad.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000072",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f44402c3989c2bd3291195c9ae928b7a.png",
+        "profile_picture_id": "5400"
+      }
     ]
   },
   {
@@ -747,14 +1210,23 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/8eb5678611aff1e36f1248e806a5e3e7.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0e724bc9dd1fd09652c14e61b08978bf.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9334f78b9864ad8f396ba5b48a1cf873.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ce2ecd2b016829c2d75138f0841b66f2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/defe9292716ce2efedaa0b0703f96f90.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dab2a9b1e8688384f08082cf4726fcb3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2ff5d83b55e2b364af82c0358c4c7685.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f35fcc00d8b89aad14176a146ac75eac.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6a3df04d9a662bbd9b947f0b18b36a6e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8eb0fae273b7541f22ef44632f722ece.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d4dbacbc88494e169667365379b100ca.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/827779c4a15ed98ab10c16dca8abba12.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b0420a1ae943fe413739e70574af559b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ea7de40fad397dbb6aa7dec8ce649666.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/14035e558e2157498189a2a6fb56eb01.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000068",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/22d3cf68b73a5ae62b32e92f68d18518.png",
+        "profile_picture_id": "5300"
+      }
     ]
   },
   {
@@ -765,14 +1237,23 @@
     "avatar_level": 4,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/048b08546b2b81c455999c2ee5fa2297.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0f9384a691b86e21eb9e3c934c6f9531.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e2461a5224e56d4822cd9d88348257a4.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f52cf2f809e8a03a5c9bb16a780b82c5.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/393c9481156bc8d1bac489f51c221c5b.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b2c3b071d073516f4715b06932dc03ed.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/835458c8bdb4573305d42c058404254f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/435be3c0f40a1a5f9a324ba42d18fc6a.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/78bc4ab4e300971d75275e99984b3fef.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3104a4670c9a3617103f5977e9bef996.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6bd5ee7528bd7d0913ce2503357f2250.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/26b3b851e7ac4055a27e861cedadf847.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/28b6eb9307d16aa7f65cbdea2137d336.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/bfd0b9d6ac84178551802244c2dd7833.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/5421e292d0e9473a0b1c5be9bd161aad.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000067",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/8d62f56d3a12882de5d6e2fbf9677105.png",
+        "profile_picture_id": "5100"
+      }
     ]
   },
   {
@@ -783,14 +1264,23 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/106859f7a5864563d13664804ee6ae4f.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f6643903d5a311667652fa7a4be82b5c.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/feb9682e3880fc5a40652a9da735b2ab.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/634b34cf67f0568bbc2a7bf99daa7a47.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e67bbfa993e79eebfff78090e3984e48.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a8b057992232dfb7b4cf92829c7cfc8d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4f6eee28bda14fde5c3469afe698b4dc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b3c238d8b98a53973c88441791be18f0.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/74777f71f0c5ab7231500d6b4a76bc16.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b8bb67bae3abf58844663bcc74136411.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c510e7e7e1a65d6dc966d80538b46488.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/25a039a87f55cc0c0e390b8c95b86f49.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b0c6f9ef063168891b62eb952f6672b8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/90235031b7c85e5921451afa78d6ed99.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/8b5ff2b8864929b20d4d51a1debb5ff1.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000065",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/98b6cfdd2f5e62e1a8c6e30593bbe502.png",
+        "profile_picture_id": "4900"
+      }
     ]
   },
   {
@@ -801,14 +1291,23 @@
     "avatar_level": 4,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/55ae2b4cb73fb57525567330f228da95.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/12ffcee694437beca99ebf71775d1ab1.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2b61417f3fbc6f245ce7329ca3b3e320.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/87151b37da328c819686fa1a21fbeda0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4c20643f98ccf37ac8e70f8f71a5f27e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/15821de65d6d96eb2f27f4e3909f7767.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f7c6ef13ad27e14859ae307ee45b2666.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ad43611e0b2515f7f3842ca5d13958ba.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fef86788ae5f30a5aba053cb6e582fdb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6792f3368d453012f52788ff7710448d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a82875dffdd8fcc42fc9f3a7d7870784.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6e3e0269c4854509d46cc56b97d3d5d4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/edf72258954d43ae9de1d60b26488be2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8b1215ccefe33de2b802a5a0a4d5b662.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/931c40ed7dbbb9bb091a8c9a52fed529.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000064",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/dd2901870bde010150fcd82a373ce35d.png",
+        "profile_picture_id": "4400"
+      }
     ]
   },
   {
@@ -819,14 +1318,23 @@
     "avatar_level": 4,
     "element_attr_id": 4,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/41d5530977e50bce704b0e191b67e32f.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d61793ff7ddf00b1c0769931621af849.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4d97f2ef9c2627bcbde7908bf4bc89c5.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/60d2b308fc8e3be57f252e04d18bcf03.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/686d23e29db26345d9fd52c2b73ae227.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3b022435d7494b892c4d6be316152f42.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6d019e1520a526625fdaa6e066539d11.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/487b23eb65c2a26fdb24b36899efb047.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9cb76a2ce439ce21e8b8a5d5df4fca13.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cf8257fa37a360657b147b342a9f362b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2c5da304da247e745fe775528a407ab3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/186cbbee688439e8e842dcb4c8ea58b3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ad004a9afb8556a0c20a8b7322c6711b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/66787d14a5da0a436aa246d16a57f639.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/407de7789bac0bcd007427ee84553a44.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000061",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1aecd3ea4c260fdc25953d6e2978bcb8.png",
+        "profile_picture_id": "6700"
+      }
     ]
   },
   {
@@ -837,14 +1345,23 @@
     "avatar_level": 4,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/ff44bc041949f26f9784a28075fae152.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a173dea6ca563af74b06da45f0679961.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b7edaa0280a7cf7d0ba43c6f36ff5a77.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/54862973082301928fac54dc79e2df41.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/99c806c0705fe3d96d98eb77aac9fe58.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8c1c3909fc9c20354d36dcb49b7faccd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b905944c049c0bc0695bab8e77558322.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ed4ca5264c8e24afb2c779e732a165bb.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/40b90b11a5afc2e4fe5ff83d532acbc3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/96ccf8c31deb62fd497edb34b7128b9a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4e428407037b65f2fba8a632db9e4b9c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3970797c92d24b565c3ecb751de30703.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/333189ed3b2d24731eeeee8a342a6c9a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2f0c9c4c0665a8cab6a413024f2dac9c.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/856d836b20ffe7e8aa310ceca5487190.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000059",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/bda41c224ebc1812abc855bf4b93924f.png",
+        "profile_picture_id": "5000"
+      }
     ]
   },
   {
@@ -855,14 +1372,23 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/f9f022e77d4e6823a4e6237b969f83fb.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0dccf68e60a14f814de124463c99124d.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/76a1e4d02a45665ce9028ab96f7eea13.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/17037243388c89367584ed3328b96a75.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/baa71996dd70125cb47bd18bdecb45b2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/72322d7d03e86bc33b02f9d9ecaaa449.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b384acc036374a49ceb78a4fe4b16aa9.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a527910cc18279f07e0ee4709fd97095.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c69ef75d869d9d978f46caab2be63a7a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7f07207e382edb8de619be46d1122f33.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/451cda41df207b84a397111959c71758.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e1fc3f8588a52d5c211194a19ec20a3e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d0dc6ea517a3b1ed3b92ac734d0dc8a3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/42dcad8244dce2ea709994901a292a84.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/91bc0bf9f081636e35a39c063dcc9df5.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000056",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a3019cd2f680cb9e8715f760f6a78a9e.png",
+        "profile_picture_id": "3800"
+      }
     ]
   },
   {
@@ -873,14 +1399,23 @@
     "avatar_level": 4,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a521867ac40cb22c57d182ff511284d0.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/9e9074e17f7a98eb58b627f78becc3b0.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4cf56d61bdc3041716041ec83cbe1945.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/21db6cc25d56650ea4d1fac08ecb91d2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/459b4912c985001d6d4cdef65af5bd4c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0453c08124ecee1c4b9afd9c77e783fc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/49dc826ef209cf7b44a097d0803b5628.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c0f655dcf82b4a61788188aa5d354259.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/94b2cf456bf21d5a2d7be23d815c22c2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/02207e265baf7121fe57cb3b6b82bd0e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/132b911992cadc6e947683a79638001e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b9c08cb92f901145b506fb7071b2c481.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ecc41f34dd67ec4e129a423a2876fe9b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4c5bb16dbc42e5d8cc265ff72d07469d.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/022c94ce88e0b5b8780be6ac9b4403bb.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000055",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e7a4b84000c50bb535812fc5e6524b44.png",
+        "profile_picture_id": "4200"
+      }
     ]
   },
   {
@@ -891,14 +1426,23 @@
     "avatar_level": 4,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/24d454a7182ea1a92e32ad146d8e7f34.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/3ee8f49c2937fe1d495eabc4bf8d9be7.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4db4af821193b5a1795ff190848b5c06.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/86359169a8c0384072a8abd7443f94aa.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ba62b5f4eda7f2c01f4403e6bc56074.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e0e9c0b55c471e39d3d9223949e9c94f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/74be430fab51a8651e9998835b52429d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9ad07f06cee01147885f0e1913565fff.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/98512f2f44d14cd092fec3e56a2b6c07.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e142da114921c7acaefcb6b6b22294f6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4a491f1336628c2f908dba8c156e7896.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8a07c303d6b39cdf7904b9317558e46c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b48e4f2e632d4edbe6e70cf12bbf630b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5c08a8c03a8955334486894d736fdc33.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/707be06d085a2514e527f509ed91b2ee.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000053",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d5513b48e6bef77d1baa0d8720faecb0.png",
+        "profile_picture_id": "3500"
+      }
     ]
   },
   {
@@ -909,14 +1453,23 @@
     "avatar_level": 4,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9e1a4a0afbcfe128c8f1132d8c369f58.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/82e9f9943bd486a770b2aac1172713dd.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6077a7839644f75448557f74036d97b7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/41fe66591923b5595443c9afe23a5842.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/33bcac0a2dfcb60d6f0a91f28fe7a7b0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eaaf591f5442181ba701c2a73519fe13.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/da7af3143f2df073129bbba8e5f92e35.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9005f3511a0f23083bd4f9c62adbb1d0.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a0ffa235fc279eec665aa4d5bff50913.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c8215c5f26af8a9813ef67f3ea3aa694.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fb20925cff68d3ac24d06a0058d3322c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a35d74f52790ca2260b1e5505140b52f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/887bf1b3554b71585dc0021b34572e3f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/649b4d64711d293c588dec7e4c31287b.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/6071322bbde64d03dae55b767d015067.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000050",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b4bd8bf6a274035be6e35aa639045535.png",
+        "profile_picture_id": "4100"
+      }
     ]
   },
   {
@@ -927,14 +1480,23 @@
     "avatar_level": 4,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/e9883de33a1e720ba2c7c57487eed5b8.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/4de9344de528c4e979cfd462c0b9a2ab.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c9d1d716e8d2630aeff47737168508bb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/161a1fe5189369aa50b0f217e07cae9f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a6558096eaee820c08c18acaaa58f962.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/19e08743178c4b72937aef1af91c027f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/397bcfc9feadeff85b603f397c6884ba.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/71f9d5da0712d3e008f6796757f5ba7d.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d7277718dc50bca5671d0e74fb02240b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9c3702d017b86ac7e71cb4bb7c6a074c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4029aa67ec8ba2f62390eaae4b193450.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8ee7ec7a09c67bc456b493187cf508df.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/35bf0f12a537a1f5e3a761332b2d9404.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ec680bad193f77642d1ae0deac3c9d0e.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/33b5f6c897f3d8b1f57664932f5a7b86.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000048",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/67ee19d083994cc466b571dd4eba03f0.png",
+        "profile_picture_id": "3100"
+      }
     ]
   },
   {
@@ -945,14 +1507,29 @@
     "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/0498d5c8c7e45b8cecc46fe56678effa.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e7cd8bfcedefcd730772e2d7a87b4c37.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a161fe85bd8bfaca50580c23b4f0d978.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a73cb28fa58cab578f6a70176f6be484.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3c213372ccc922cd1d7d0749b48bcb53.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a832b385c09cdb4738e5b36e473624dd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f92741cf643a0f79b62dcf5d72266fa5.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/01840a2ee66724b200289340028bf64f.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fcc4c18d34157766a62ac0784e2c9b98.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a9f6d1eda1706e3b553455cbf5fac598.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fda9aae50b21b842be3f49504827e65e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/acdf0b899c1f38525759d4280d9ab613.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1dc7b960b489ff97358af1e86bacd841.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/73eee360d5033d28efd7256ff8495169.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/3b2997a8361bcce6cd86601e9b99913e.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000045",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d50e998b6aa1600780b30162e69acc07.png",
+        "profile_picture_id": "3000"
+      },
+      {
+        "avatar_id": "10000045",
+        "costume_id": "204501",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/33caa458a091a0700d350f3969b3940a.png",
+        "profile_picture_id": "3001"
+      }
     ]
   },
   {
@@ -963,14 +1540,23 @@
     "avatar_level": 4,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/25f814833fb0ee95779fa4e8ad091960.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/3d8327dbc452d03687ca85da5c744b7d.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7f9de48fa2f5df787ca18480ac1992f8.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/62ed6afacd138dfbf65230936e542aef.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/003ba7cf58549a52e7456cda01537796.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7ae6ddf7c6afa90355afe412e6b9351d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d232334f5d88a4c863d858ad1c6d8156.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3329c3c6489e289f6374258c10623ac9.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/74ece67afc7927fa2da1ff72c4b3c5c5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c3d71d01876294a3bd30ec2b8a2257e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/89ab13daa3f6117263df585f391ae4b9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1c8d029f965b0a113032ea9b5a4469b7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/472b232f8eb528c98cc8f587e2bce4e2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/32b2e64438767228dc80775b9ca57060.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/a5bb8df7de725e9847395892055f219e.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000044",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/bec84bb4e4dec85c9a445360ab9936ab.png",
+        "profile_picture_id": "2400"
+      }
     ]
   },
   {
@@ -981,14 +1567,23 @@
     "avatar_level": 4,
     "element_attr_id": 2,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/aedadb1a0f5635a22b84deecfc1793af.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/9163910d64852b227e7e3bd8134bfb57.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/233937e0b4fb7e1677706724771b2352.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a5e281c9c05ee18b0011236c4cd771f0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1b3b02c19ff72739bd8ce7060a383628.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4b3802b732ff8b80814ee14e46198619.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/348b718e877c365f82a678512ed2ff60.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/683d3b94fe56816687425553cc4ffb3b.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0cab11e908dcfb0986398f751fbf6a40.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0ebf9529bad6f2657c5464c4155fb2c1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8f1360b2a82f69e65dc1fb479506649c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c8a16869c03f0e994e3ac5b8f901be79.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1519199303ed657ec354e6d0299aeae0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/dedc835e7ef6ad3ad85a8eedae894983.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/58ebab6725e96664719916db73d2a9cc.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000043",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/3b29fc1e660b18f57ef2f8714b9a4aea.png",
+        "profile_picture_id": "1400"
+      }
     ]
   },
   {
@@ -999,14 +1594,23 @@
     "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/ad0598aca31867ca05b53b1a91d8207f.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/89ebd0588d9d24d7b6bddecc2ed5a38b.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/87c6a137ab1c09432484697fd141dcc2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c54b4fd8dde0cad2c7d1c9d030e16fd9.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/529d3cb014a455c7d1217d6989d36bf0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5a84c70d0f9d34630757824bb0af82eb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8cde3c16a57a2f47de1b68225b46277c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/12669a21ef9d22dc9f634ab75ecfd33d.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/13f21b4a49193a1939e0d693580ce2fc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3691a2955e87e4e74ce05b60e1495dbc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c85eee830e380907f6801dcd36657b6e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c9ea9dede40ea321de076d6c04eea55a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8c1a407b54e93e7793b651938ee6850b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9faa75581c4a586ed8caa841c54097d0.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/73f574dcce43600f626b4bf09d27a7f4.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000039",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/697913293ae380a8773f49fe4e1ff41f.png",
+        "profile_picture_id": "2200"
+      }
     ]
   },
   {
@@ -1017,14 +1621,23 @@
     "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6c5118a075caa799566463a1148a1e47.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/e9a5fc286e076f75b71e94f1f76ac860.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d5254e62725571c47b6655ad1a757199.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/375a95d4b87769f6443730331ff8eb31.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1d8755a4c1ba3f41e9837d9c1978614c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b0e01234eb2f418d35a12a297ec46d9d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/ec52f23a664040eb4e5c282a6ed80629.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/204782c3ce7f03a6ef7a068171d6ce61.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/75009fd0829331f698e49ed5691b886a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/27ed248969168e817cf2809d29e1aaf4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/52709e56908330d7ff1f72b9e6460d75.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0fd26e1b716bec52e0c573c4d0a61f44.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/db1e74e9c8e6873b5586245a0d1eb242.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e312ac994059491243143aba94db3090.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/f245005b009feef097b52757eaa3c00c.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000036",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f5a3be5c2d8ab1a5a60c11d940c20818.png",
+        "profile_picture_id": "1300"
+      }
     ]
   },
   {
@@ -1035,14 +1648,23 @@
     "avatar_level": 4,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/b4186fb5da7172b03ee52f22c22bfda0.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b29a56231b782c0f540b0b94a9778358.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bbb477635527da2a9634dae7694605d1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f6afd7af6a6d634e6b63ee1e26f59a0a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f536a57265926b71aa6b92b2e1fb98c2.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/958968591b7ef80c288c64158dade56d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a5e759526eeafd84fae337eaec219d2d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a876091d22abce0a3f6eb56742a8ba8a.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/84bd3d76498f3998299ea28ac0bcbdfb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/45e75955127d615a85d64174eae318a4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0ae9b5724f6767540e52ee6aba302f55.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/836486262851274827fd960d1d5e53f2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/71333557205f9644c9bdf0c98d0913b0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fec74314ab5bb542f6cc22872bba8598.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/c29edd4b3b534284bec065d2af779314.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000034",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/2780b22008df70ed4937435ce82c6c88.png",
+        "profile_picture_id": "1200"
+      }
     ]
   },
   {
@@ -1053,14 +1675,23 @@
     "avatar_level": 4,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/2f142b28ad83f111c076ac7bb30b1ac7.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/27686404d74aabefef4c375becca6cae.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6d3f2cfe3bc6a36cf7d9b97497f03506.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/248c35b467779b8c093c5f82a6caab5e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/378458568452a24b6b6d45b866cba4a5.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3ed82669c72c0cf9932c075c565256b6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/63ed8a3b729e6d79c178d6e97ba87921.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3b46d5078f8f004f14abd43fc5729c2a.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/372c6ba661dfe1e452618487d52d2e30.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a014bae6f331ee3da0b3efc9f28b68c4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ee70d9e5025195fab461bc785cb9b7b0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/da68f78c4ec95998bf86e88702e515cf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6a12a0b4030809bf73a2f443ce562681.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a5e2ade8e19ae7267399132ec3f76bac.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/71b8d8dd93ed59b095a6e8d4f2952ffb.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000032",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/8042a6d6e045b9ec9f9640e7fc5d3f65.png",
+        "profile_picture_id": "1100"
+      }
     ]
   },
   {
@@ -1071,14 +1702,29 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/6ebf894f5a4917b9d54df47ca2f8f0d2.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/05f762a72d9bd3990a175239806bf375.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8ff45f498ded1b92f7f694dc0c131d3a.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a54e22d83f9dea40b929a2ba6bee3c7d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b61ee6092ca8ea2bd11836236fe699f6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8e9dfe540c367593eb12a2a6d39921ef.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/04fd958ed8bb639cbacd4e70c56f61dc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/58a825565c6e3e254f6aea6d1ca0460e.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5bfa4efb1de97fc9b460a9a1c67d1ff8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c80dd9167c95a7334f7e67213c1e8166.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4968e89c4f1b60f3bb44e4dbc78c1a21.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/13c85c210a9c6ba4dabe32351dff61b0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/55c592351ab836102d2104552fb88542.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cdc98627fc68a82bb923923e4d798707.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/56ab98cd876ea7404fc85f5a02fa9ed2.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000031",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/551397fca614ada3428237e7cef0cb91.png",
+        "profile_picture_id": "1000"
+      },
+      {
+        "avatar_id": "10000031",
+        "costume_id": "203101",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/48010f1f47f5b4a6cb59592577ec90a3.png",
+        "profile_picture_id": "1001"
+      }
     ]
   },
   {
@@ -1089,14 +1735,29 @@
     "avatar_level": 4,
     "element_attr_id": 3,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/74f878cff9c6171f4c48c956c70a2a25.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/146bb344c1c86b42b263f29de2bf130b.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c5fb0e00499bc9d1df87ffe5c4bb9929.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/20533808f3d5bf1134f0842611ed013d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/37219ea97f775bbab955f6a244c69523.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3e83cd2ae797d2ea2e6afbd462ccdcb4.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a7cf2876fc71c1d7b69a141ce28ee025.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c8e08b2e68ae545582de645427b8e9e1.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/04bed7efb743faa7893ea70186b9513b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/bd9226419529d5f40d372b146bb1c7df.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/180fd5c00cf49edae8c6db2913846cb3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c2ff9e46f81a43ca381d856d6cb3f140.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/991c565b7ebdbd08f947ff08586b7f91.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fedc6b48572a9fcb88989b34439173dc.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/20ba3167e4fda0a3c9e82dec8321a46f.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000027",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1592a18105686c7f8a6983c078ede192.png",
+        "profile_picture_id": "900"
+      },
+      {
+        "avatar_id": "10000027",
+        "costume_id": "202701",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a09df72526e57cc08e0695278e1d4368.png",
+        "profile_picture_id": "901"
+      }
     ]
   },
   {
@@ -1107,14 +1768,23 @@
     "avatar_level": 4,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/e086eb1562f349b8a3132a4111bd0c4b.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/0347581e2c35802a1d4db954638f1b2c.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c1b492cc128b48fde744e7322867812c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/8b0aa449e5b176daa5377ee321d9fa4c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/beb49e8fa49306550fca31cd00eefedf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4340caef5f04e85c2da957c0cbd1d7e5.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/37fc27c3aa1eabff1e259a5edfa035cf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/132539d23e1be65f6aac5a22f97fdf80.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3e0a731a88cfee271afe174e36bc419d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/930274cb785ea77e8ffa3f493a55211b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6edceba7025a32e99746f6d67e6f8c75.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b861d9b86d74dbb0069ff1a925379c9d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7e17ba10e861171cd567a23a4d0988a8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/cd98ec24fbfdc5c9fe87571e2472abe0.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/8dcbce386b250cdbe2d044113cfc5164.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000025",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/bd780c01140acd7feb57b4ad8aef45c1.png",
+        "profile_picture_id": "800"
+      }
     ]
   },
   {
@@ -1125,14 +1795,23 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a204e89e19f8b655830ae27a509a7509.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/99ad5db687c2805f1bc53072e6969c06.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/96af079049376b5e9491d22d4c102c0f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/854d63af0b1a51f66ee8fdb4d748fc8f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e08a26153055d824fcee6f148c590eeb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b52177cd486b568d6d4c90cb3d9a19c9.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/30561f861c1bf5fa18e5dafc10c36886.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb089fbcd04efc915702f972de324557.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/22a0b2918ce4abde93376847c7eb70c7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/25e12cc9b0da97ce1e238ab42b558470.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7ce5807d430c397dff0c3d2eee048d36.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3e8559a08366887863aaeed182f680b5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1ec0939a931dfe89c1d048fc922c97ed.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/311dcef9bd7e139ff3ae4e53cc947ee8.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/d96631664d9def6f9e54c6814151852f.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000024",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/2239900caa47fc265608f490b34a3a16.png",
+        "profile_picture_id": "700"
+      }
     ]
   },
   {
@@ -1143,14 +1822,23 @@
     "avatar_level": 4,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/2c764c5ab5b2f7062aa5dde26e7c329a.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/b7865cfa58788cab84228b6007fe6401.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5b67addb546b76f49ca34ad630e0a043.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e1ae7297b36a60dc115e1167ca8b3d1c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2d5a6cd471384ec74464a67328e6a284.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/2587852ae10759f787455c2f4e640ed1.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c132314cb11d9ddcdb662acc2f0de7e7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/899e5f3131f67fc34bb0949a33b58984.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5f860c734478cddde9f5f7ce22e90e4a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/4f9f7a3c0880d74ab181c0aacecbe2ae.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2f51d732ee43e6687097f3f594385fb0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/1798bc902b9449a4b617efc83b1af6fd.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/6204e456ad2d7233ed9317c1a1981210.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0c9c63a0f40470387e79d9f924cdb9fd.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/72f69bf9ba1e5f325213b3826ec2e1e7.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000023",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/026b9f75834068be048aaae1d98132e0.png",
+        "profile_picture_id": "600"
+      }
     ]
   },
   {
@@ -1161,14 +1849,29 @@
     "avatar_level": 4,
     "element_attr_id": 1,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/9185e35016706290a90948e277450491.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a48e21d6dd8deafbf43bfe183095e00f.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/0e67f09900d1d2fa9cf446a03ede2b0d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/6ea6cf3451c5826f884482223fc21690.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/cd2246f3b82220e3061fd838a8148960.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/84a13dab8dd9ba91f59a14b7c372d6dd.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a5e8a255a7b2b832e995726f80ac7149.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/893f8818ffc2d94b537cb290299e56a3.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/448f1e4a661e9e8ffd3f3159af4067be.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e89cb609c3aac292f42e27661c897d53.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f3bc43f5ca149a602a14c1ece1acff71.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/7d810360282e1bad716f897cc2eeb7f2.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/fca2d171bd1501af3e5d10ab7fa43bb9.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/370f12e6484b7a6aeb5dc246630db9aa.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/c740dd49025c08bba35ba0bc06cf0680.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000021",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/5c37ba2d9cef1d6fb47651a05a4edec6.png",
+        "profile_picture_id": "100"
+      },
+      {
+        "avatar_id": "10000021",
+        "costume_id": "202101",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/cb58299ca2eade974e6090f47936ae04.png",
+        "profile_picture_id": "101"
+      }
     ]
   },
   {
@@ -1179,14 +1882,23 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/a28743fbeaedf043fe42209c6303290c.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/cb5390d6c459cabb9929532b27874f99.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5fd516fd5791eef58eb14006d852f4b7.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/791a566bf40deb4b6e4b17ea8b2cc134.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/340c7a375c355f7d005ad4ba309a9411.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/89ef16975070cd15485550227053e66c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dd07f9186bba21c221e411dc08c23957.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/86b2c88760f235a8c522e7e7e58a1eb7.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/34f9a028afaacb6ca5ce777aa1a1b61c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e34003d5098b0d39b44bde8986884425.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/24a23a07ce232c6257e5d592f5a382a3.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/be5d42d357d93fe3d502c7da4e597cb7.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a642e9955f04275641378ad9512451a5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d039a27a8b391e3253958a347f32bffb.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/ca3d5e2a8b5b9efa85ab0922ce748d00.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000020",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/31164fe90b4b492603adf29bf100049c.png",
+        "profile_picture_id": "500"
+      }
     ]
   },
   {
@@ -1197,14 +1909,29 @@
     "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/1bd910e4fcf2f89049f271701917bc4b.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/1bff9916d7f60b3ed54d3827b1a3c78d.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d88bd4cd501af3735a48cc3144c15ad8.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b6fbc777f8ef9a585d70512853be5e50.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e904bbc4ab7dc60e87e95aee1bc3e3e6.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d1942377fea4529469de8c05c2b32800.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eadb849ed1c0f79bbb64a85d8fab16e3.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/269dc234a5f5566e3de4d0fc0b290164.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c45b9d6b73c3220b1c04a74e4e4cedca.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3434dffaaa3f5071c359f6040b16c782.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/502039f812e853450906f1c4203ba65c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5f169d444572f8bafb4dde7f77243cee.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/bcfd834f85f134835d74678bc9cd8fde.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0410da081ebbf28287cb134442ffa467.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/0fe6fa071c7431343a95c7e5ca72f75a.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000015",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/a289ea03a923ceca8f7545a22d3e623e.png",
+        "profile_picture_id": "200"
+      },
+      {
+        "avatar_id": "10000015",
+        "costume_id": "201501",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f22e88e05e791d1d12ed5f835bb99496.png",
+        "profile_picture_id": "201"
+      }
     ]
   },
   {
@@ -1215,14 +1942,29 @@
     "avatar_level": 4,
     "element_attr_id": 6,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/348f0b843325a03e0442b51aee192537.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d06f8926e56b4b5c619e81dd062687e2.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a17c9b75da2de206fa31532c4e2b5622.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5ca6e9443b46c1390447565fe6afda48.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fbfd079851a9d55088ba0106afaad611.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7fcca67f45ffa4382744eb78e9013e13.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a1c9c75d3aba57950cc0f3b57b04670e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/fac1beaae2c453cfe8d696e88506b6e9.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/19f04c83938fb7d51ce6d86b87d25640.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f6e56bc5c0cbe806388870ef4a68225d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/f6697cbef61d1ab63e49b6757470b584.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b6ab8130ed1505ef447ac44d7625d97b.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b177a12267450578a470326f8604d5d1.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b7b91edca8d491846b497657f39ccc9a.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/daee56b76d24b20553d429e2ce812688.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000014",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/138391b4ec4469846bebc859090836fa.png",
+        "profile_picture_id": "400"
+      },
+      {
+        "avatar_id": "10000014",
+        "costume_id": "201401",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/f5ed8c8a7860cb872ffb7096b6ac502d.png",
+        "profile_picture_id": "401"
+      }
     ]
   },
   {
@@ -1233,14 +1975,29 @@
     "avatar_level": 4,
     "element_attr_id": 5,
     "max_level": 90,
-    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_ub73qe/8223dfbb7fa5ea73acccf3c8352ba6bf.png",
+    "item_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/983221063490b5f4d2f540b913fc67a6.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b594e47e18b8a77eb3003fd99b36d928.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1da5b5a7db86140bc3302dfab06f8b6d.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/667664381969e69748c082fb5e877787.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9c5b49ce5d6d3074c9ac440efc980676.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/1f33d2b358169154db94639488c7961f.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b42ae2c9e3665a0f0cb0aacae76161da.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e5206378cbf77cbf9e0e0bfe36835321.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/da10361434212dee99a382903b41dadc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/25a0c59087564fa8a7c50f7cede11264.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/9c9f398bb7bb917e34b02c27670a38cf.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/adf7c65c63032d2c6fe122f2efdf9e05.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d267333b78cae3b7bfb7b58921e16681.png"
+    ],
+    "side_icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_avatar_side_icon_u38a6e/10d7ae5d7a727cbfc5a1cbb15153d288.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000006",
+        "costume_id": "0",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/92859f73445b49ac7cbb7f05de7e9060.png",
+        "profile_picture_id": "300"
+      },
+      {
+        "avatar_id": "10000006",
+        "costume_id": "200601",
+        "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u38a6e/d80a336018573ba4063a8796b43bf227.png",
+        "profile_picture_id": "301"
+      }
     ]
   },
   {
@@ -1253,12 +2010,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a45b3bb90ad8e208329795a2f6134dc4.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d273472747eb193dbbee01bf5d0a11dc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f70194dc51b9096d7febb4decadae233.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b4e6189d4f1e3f5a7da2b506fbcb5cdb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b9f26707cec5187333e808318e8cdd81.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3cb11161800642220870f4a97a7b9d03.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2c6af0d146f468f6f56306586712a0f0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/93a774f6d8a20d5c773adc84eb46ecb4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/76cf471e1a0757ce7ecbeb735258cf34.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/63e7f5aa28d2b5b1aca6833d571e25fb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c8507a56e0c4a9022834f98ae8fc6335.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8d9d0db065d4c7b9ad4b819960917c42.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000007",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/371f60345b45a35b90931c9572209355_1542855383513070308.png",
+        "profile_picture_id": "2"
+      }
     ]
   },
   {
@@ -1271,12 +2037,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b12cd9bfd5856533d9b8ff70282c8b43.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eee8481e3dbb19b88522cf4e20a76dbf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/954917b912cfcddd331254b1690a2c7c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4fb6cc0076df2654cd4ddaf219374bbc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5ba59776cce2e0e33069c3955c4ad775.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dff1f3dad26530dfefa460929768f5f9.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0a1c7fb942a38c303786dc5bc471e41f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0118c060efefe58adc379187f2be1700.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c197e2d0ad4f36ba6189c2afe6f1d976.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ca816bc2c88f32fb592069ae3e92ab67.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3da8ef092c1228d973cc1c0631870303.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8a59cb3e442a8a84e5a7ba5469c955b4.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000007",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/371f60345b45a35b90931c9572209355_1542855383513070308.png",
+        "profile_picture_id": "2"
+      }
     ]
   },
   {
@@ -1289,12 +2064,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7089345f48c35f4e8e1066254ddea3a0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e8aa012b95ea77aaac859278f845d678.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7fcf3ce034aab3e2f5d4d798684241ec.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d168b5920600316a586d288f7cd13f80.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f367f7536b4af9eff1ca7aec6dba1edf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4216f5055caf4602656add0914e1fbb5.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b2b0cb774d39c318e4977c54a83dd76d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/761e3fd6ee5061a5e4427098ec5e4a05.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0b5d4a3d32db05aee1d00e1735a4ff9c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b5a6ba113a91e3b877feca5738aa539e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d4fe43606a02f650c89a821d69e026e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2ffae12f464388499af71d4cbd81f772.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000007",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/371f60345b45a35b90931c9572209355_1542855383513070308.png",
+        "profile_picture_id": "2"
+      }
     ]
   },
   {
@@ -1307,17 +2091,26 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f96acfa4c2c35dc064431e25ed33f49e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b5ceb709f66a00ffb92df8130d19728.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7728600bb794ea7c6ba9e9533d2434aa.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/127563d1b94c7f9c5ed9af9eff38e561.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c83c7999663d5590796810aae8dce8b4.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb8a9d6a695688ae8de83a8f59a7ba65.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0b5fa07dd163aaee07f04bbe58917e18.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/658592a31cb9173fb6912b1b2b5ffdcc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e761c4ddbf557e4e9b3062f639d17c23.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5444c1e2e67296dc5e924498cbb5f8eb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c039c7cc9052d64f4608925a1d3206d8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a69752bd1572145fbb55cb4fc4f470fe.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000007",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/371f60345b45a35b90931c9572209355_1542855383513070308.png",
+        "profile_picture_id": "2"
+      }
     ]
   },
   {
     "id": 10000007,
-    "name": "旅人",
+    "name": "旅人(水)",
     "icon": null,
     "weapon_cat_id": 1,
     "avatar_level": 5,
@@ -1325,16 +2118,24 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/bae613577eb442ebe8afa7f5ef9de459_128078519936695314.png",
     "talent_icons": [
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/0514674e20822209fe096b03b767dba0.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7fdb95cceb2e953042c763687d6a1835.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/4d831f935a0d689d9bceb2b33994098f.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/208e8716b6a9ccdcf2275a8866345142.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8754a86037379299c2242d2cf83b48cd.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7da69a815be076063cc892d897db8268.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/513f43f243e9d3140fc45b9f3c160270.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/18bd1fb6cc26e9cb37a3c5bb7a1ad8d6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ead6bbcec634219c2e13345fe8c0e8e5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/eada3417df4b5eca45fb885f5468e33a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c60aabeb44fdbc1047d546e55d09827f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/52fc943f5df3bda1325d1c1a18bf0e19.png"
     ],
-    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png"
-},
-{
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/35263f63879cc4270098b4a03d4fd658_4063129471300368143.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000007",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/371f60345b45a35b90931c9572209355_1542855383513070308.png",
+        "profile_picture_id": "2"
+      }
+    ]
+  },
+  {
     "id": 10000005,
     "name": "旅人(草)",
     "icon": null,
@@ -1344,12 +2145,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/a45b3bb90ad8e208329795a2f6134dc4.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d273472747eb193dbbee01bf5d0a11dc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f70194dc51b9096d7febb4decadae233.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b4e6189d4f1e3f5a7da2b506fbcb5cdb.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b9f26707cec5187333e808318e8cdd81.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/3cb11161800642220870f4a97a7b9d03.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2c6af0d146f468f6f56306586712a0f0.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/93a774f6d8a20d5c773adc84eb46ecb4.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/76cf471e1a0757ce7ecbeb735258cf34.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/63e7f5aa28d2b5b1aca6833d571e25fb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c8507a56e0c4a9022834f98ae8fc6335.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8d9d0db065d4c7b9ad4b819960917c42.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000005",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/493ef5ad786cc54421f1e889a1290f7e_3992282959468375086.png",
+        "profile_picture_id": "1"
+      }
     ]
   },
   {
@@ -1362,12 +2172,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/b12cd9bfd5856533d9b8ff70282c8b43.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/eee8481e3dbb19b88522cf4e20a76dbf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/954917b912cfcddd331254b1690a2c7c.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4fb6cc0076df2654cd4ddaf219374bbc.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/5ba59776cce2e0e33069c3955c4ad775.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/dff1f3dad26530dfefa460929768f5f9.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0a1c7fb942a38c303786dc5bc471e41f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0118c060efefe58adc379187f2be1700.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c197e2d0ad4f36ba6189c2afe6f1d976.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ca816bc2c88f32fb592069ae3e92ab67.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/3da8ef092c1228d973cc1c0631870303.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/8a59cb3e442a8a84e5a7ba5469c955b4.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000005",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/493ef5ad786cc54421f1e889a1290f7e_3992282959468375086.png",
+        "profile_picture_id": "1"
+      }
     ]
   },
   {
@@ -1380,12 +2199,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7089345f48c35f4e8e1066254ddea3a0.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/e8aa012b95ea77aaac859278f845d678.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7fcf3ce034aab3e2f5d4d798684241ec.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/d168b5920600316a586d288f7cd13f80.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f367f7536b4af9eff1ca7aec6dba1edf.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/4216f5055caf4602656add0914e1fbb5.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b2b0cb774d39c318e4977c54a83dd76d.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/761e3fd6ee5061a5e4427098ec5e4a05.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0b5d4a3d32db05aee1d00e1735a4ff9c.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/b5a6ba113a91e3b877feca5738aa539e.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/d4fe43606a02f650c89a821d69e026e6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/2ffae12f464388499af71d4cbd81f772.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000005",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/493ef5ad786cc54421f1e889a1290f7e_3992282959468375086.png",
+        "profile_picture_id": "1"
+      }
     ]
   },
   {
@@ -1398,17 +2226,26 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
     "talent_icons": [
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/f96acfa4c2c35dc064431e25ed33f49e.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/9b5ceb709f66a00ffb92df8130d19728.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/7728600bb794ea7c6ba9e9533d2434aa.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/127563d1b94c7f9c5ed9af9eff38e561.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/c83c7999663d5590796810aae8dce8b4.png",
-      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_ub73qe/bb8a9d6a695688ae8de83a8f59a7ba65.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/0b5fa07dd163aaee07f04bbe58917e18.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/658592a31cb9173fb6912b1b2b5ffdcc.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/e761c4ddbf557e4e9b3062f639d17c23.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/5444c1e2e67296dc5e924498cbb5f8eb.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c039c7cc9052d64f4608925a1d3206d8.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/a69752bd1572145fbb55cb4fc4f470fe.png"
+    ],
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000005",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/493ef5ad786cc54421f1e889a1290f7e_3992282959468375086.png",
+        "profile_picture_id": "1"
+      }
     ]
   },
   {
     "id": 10000005,
-    "name": "旅人",
+    "name": "旅人(水)",
     "icon": null,
     "weapon_cat_id": 1,
     "avatar_level": 5,
@@ -1416,13 +2253,21 @@
     "max_level": 90,
     "item_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/05/08/ec15648be34aa80db3ac32844af3a467_8937995274995808517.png",
     "talent_icons": [
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/0514674e20822209fe096b03b767dba0.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7fdb95cceb2e953042c763687d6a1835.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/4d831f935a0d689d9bceb2b33994098f.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/208e8716b6a9ccdcf2275a8866345142.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/8754a86037379299c2242d2cf83b48cd.png",
-        "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u1490e/7da69a815be076063cc892d897db8268.png"
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/513f43f243e9d3140fc45b9f3c160270.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/18bd1fb6cc26e9cb37a3c5bb7a1ad8d6.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/ead6bbcec634219c2e13345fe8c0e8e5.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/eada3417df4b5eca45fb885f5468e33a.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/c60aabeb44fdbc1047d546e55d09827f.png",
+      "https://act.hoyoverse.com/hk4e/e20200928calculate/item_talent_icon_u38a6e/52fc943f5df3bda1325d1c1a18bf0e19.png"
     ],
-    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png"
-}
+    "side_icon": "https://webstatic.hoyoverse.com/upload/static-resource/2023/06/15/7f6d24a0876515fb2be301e283571304_8610481116576843749.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000005",
+        "costume_id": "0",
+        "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2023/09/26/493ef5ad786cc54421f1e889a1290f7e_3992282959468375086.png",
+        "profile_picture_id": "1"
+      }
+    ]
+  }
 ]

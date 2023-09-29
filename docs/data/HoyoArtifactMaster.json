@@ -178,7 +178,7 @@
   {
     "id": 3254,
     "name": "黄金の旋律の変奏",
-    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/ab2c77d4c1b74ffab951be2d6619444c.png",
+    "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 5,
     "max_level": 20
@@ -186,7 +186,7 @@
   {
     "id": 3154,
     "name": "狩人の胸花",
-    "icon": "https://act.hoyoverse.com/hk4e/e20200928calculate/item_icon_u1490e/62ef9d3ad434c1426832ef54c314d829.png",
+    "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 5,
     "max_level": 20
@@ -490,6 +490,22 @@
   {
     "id": 5144,
     "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3244,
+    "name": "黄金の旋律の変奏",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3144,
+    "name": "狩人の胸花",
     "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 4,
@@ -872,6 +888,22 @@
     "max_level": 20
   },
   {
+    "id": 3252,
+    "name": "黄金の飛鳥の落羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3152,
+    "name": "傑作の序曲",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3052,
     "name": "霊彩奇麗の羽",
     "icon": null,
@@ -1170,6 +1202,22 @@
   {
     "id": 5142,
     "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3242,
+    "name": "黄金の飛鳥の落羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3142,
+    "name": "傑作の序曲",
     "icon": null,
     "reliquary_cat_id": 2,
     "reliquary_level": 4,
@@ -1560,6 +1608,22 @@
     "max_level": 20
   },
   {
+    "id": 3255,
+    "name": "黄金の時代の前兆",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3155,
+    "name": "審判の刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3055,
     "name": "久遠落花の時",
     "icon": null,
@@ -1858,6 +1922,22 @@
   {
     "id": 5145,
     "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3245,
+    "name": "黄金の時代の前兆",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3145,
+    "name": "審判の刻",
     "icon": null,
     "reliquary_cat_id": 3,
     "reliquary_level": 4,
@@ -2240,6 +2320,22 @@
     "max_level": 20
   },
   {
+    "id": 3251,
+    "name": "黄金の夜の喧騒",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3151,
+    "name": "忘却の容器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3051,
     "name": "喜楽無限の宴",
     "icon": null,
@@ -2538,6 +2634,22 @@
   {
     "id": 5141,
     "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3241,
+    "name": "黄金の夜の喧騒",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3141,
+    "name": "忘却の容器",
     "icon": null,
     "reliquary_cat_id": 4,
     "reliquary_level": 4,
@@ -2920,6 +3032,22 @@
     "max_level": 20
   },
   {
+    "id": 3253,
+    "name": "黄金の劇団の褒賞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3153,
+    "name": "老兵の容貌",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3053,
     "name": "霊光明滅の心",
     "icon": null,
@@ -3250,6 +3378,22 @@
   {
     "id": 5143,
     "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3243,
+    "name": "黄金の劇団の褒賞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3143,
+    "name": "老兵の容貌",
     "icon": null,
     "reliquary_cat_id": 5,
     "reliquary_level": 4,
