@@ -1989,78 +1989,26 @@ export function calculateRotationDamageEntry(
 ) {
     let result = 0;
     const list = getDamageResultArr(rotationDamageEntry, damageResult);
-    if (!list) return result;
-    const entry = list[index];
-    if (!entry) return result;
-    const reactionObj: any = rotationDamageEntry.reactions[index];
-    if (!reactionObj) return result;
-    const count = rotationDamageEntry.counts[index];
-    for (let n = 0; n < count; n++) {
-        let workDmg = entry[2]; // 期待値
-        ['蒸発', '溶解'].forEach((reaction) => {
-            if (reaction in reactionObj && n < reactionObj[reaction]) {
-                const reactionKey = reaction + '倍率_' + entry[1];
-                workDmg *= (damageResult.元素反応 as any)[reactionKey];
+    if (list && list.length > index && rotationDamageEntry.reactions.length > index) {
+        const dmgResultEntry = list[index];
+        const reactionObj: any = rotationDamageEntry.reactions[index];
+        const count = rotationDamageEntry.counts[index];
+        const plainDmg = calculateReactedDamage(dmgResultEntry, 2, damageResult.元素反応, ''); // 元素反応なし
+        for (let n = 0; n < count; n++) {
+            let workDmg = plainDmg;
+            ['蒸発', '溶解'].forEach((reaction) => {
+                if (reaction in reactionObj && n < reactionObj[reaction]) {
+                    workDmg = calculateReactedDamage(dmgResultEntry, 2, damageResult.元素反応, reaction);
+                }
+            });
+            result += workDmg;
+        }
+        ['超激化', '草激化'].forEach((reaction) => {
+            if (reaction in reactionObj) {
+                result += calculateReactedDamage(dmgResultEntry, 2, damageResult.元素反応, reaction, reactionObj[reaction]) - plainDmg;
             }
         });
-        result += workDmg;
     }
-    ['超激化', '草激化'].forEach((reaction) => {
-        if (reaction in reactionObj) {
-            let reactionDmg = (damageResult.元素反応 as any)[reaction + 'ダメージ'];
-            if (entry[2]) {
-                reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
-            }
-            if (entry[7]) {
-                reactionDmg *= entry[7]; // ダメージバフ
-            }
-            if (entry[8]) {
-                reactionDmg *= entry[8]; // 敵の防御補正
-            }
-            result += reactionDmg * reactionObj[reaction];
-        }
-    });
-    return result;
-}
-
-export function calculateDamageInRotation(
-    rotationDamageEntry: TRotationDamageEntry,
-    index: number,
-    damageResult: TDamageResult,
-) {
-    let result = 0;
-    const list = getDamageResultArr(rotationDamageEntry, damageResult);
-    if (!list) return result;
-    const entry = list[index];
-    if (!entry) return result;
-    const reactionObj: any = rotationDamageEntry.reactions[index];
-    if (!reactionObj) return result;
-    const count = rotationDamageEntry.counts[index];
-    for (let n = 0; n < count; n++) {
-        let workDmg = entry[2]; // 期待値
-        ['蒸発', '溶解'].forEach((reaction) => {
-            if (reaction in reactionObj && n < reactionObj[reaction]) {
-                const reactionKey = reaction + '倍率_' + entry[1];
-                workDmg *= (damageResult.元素反応 as any)[reactionKey];
-            }
-        });
-        result += workDmg;
-    }
-    ['超激化', '草激化'].forEach((reaction) => {
-        if (reaction in reactionObj) {
-            let reactionDmg = (damageResult.元素反応 as any)[reaction + 'ダメージ'];
-            if (entry[2]) {
-                reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
-            }
-            if (entry[7]) {
-                reactionDmg *= entry[7]; // ダメージバフ
-            }
-            if (entry[8]) {
-                reactionDmg *= entry[8]; // 敵の防御補正
-            }
-            result += reactionDmg * reactionObj[reaction];
-        }
-    });
     return result;
 }
 
@@ -2072,16 +2020,23 @@ export function calculateRotationTotalDamage(
     rotationDamageArr.forEach((rotationDamageEntry) => {
         const list = getDamageResultArr(rotationDamageEntry, damageResult);
         for (let i = 0; i < list.length; i++) {
-            result += calculateDamageInRotation(rotationDamageEntry, i, damageResult);
+            result += calculateRotationDamageEntry(rotationDamageEntry, i, damageResult);
         }
     });
     return result;
 }
 
-export function calculateReactedDamage(dmgResultEntry: TDamageResultEntry, dmgIndex: number, elementalReaction: TDamageResultElementalReaction, reaction: string) {
+/** 元素反応込みのダメージを算出します */
+export function calculateReactedDamage(
+    dmgResultEntry: TDamageResultEntry,
+    dmgIndex: number,
+    elementalReaction: TDamageResultElementalReaction,
+    reaction: string,
+    reactionTimes = 1
+) {
     let result = Number(dmgResultEntry[dmgIndex]); // 2:期待値/3:会心/4:非会心
-    if (reaction) {
-        const dmgElement = dmgResultEntry[1];
+    const dmgElement = dmgResultEntry[1];
+    if (reaction && dmgElement) {
         if (['蒸発', '溶解'].includes(reaction)) {
             const reactionKey = reaction + '倍率_' + dmgElement;
             if (reactionKey in elementalReaction) {
@@ -2100,9 +2055,28 @@ export function calculateReactedDamage(dmgResultEntry: TDamageResultEntry, dmgIn
                 if (dmgResultEntry[8]) {
                     reactionDmg *= dmgResultEntry[8]; // 敵の防御補正
                 }
+                reactionDmg *= reactionTimes; // 反応回数
                 result += reactionDmg;
             }
         }
     }
     return result;
+}
+
+export function getAmplifyingReactionElement(reaction: string, dmgElement: string) {
+    let reactionElement;
+    if (reaction === '蒸発' && dmgElement === '炎') {
+        reactionElement = '水';
+    } else if (reaction === '蒸発' && dmgElement === '水') {
+        reactionElement = '炎';
+    } else if (reaction === '溶解' && dmgElement === '炎') {
+        reactionElement = '氷';
+    } else if (reaction === '溶解' && dmgElement === '氷') {
+        reactionElement = '炎';
+    } else if (reaction === '超激化' && dmgElement === '雷') {
+        reactionElement = '草';
+    } else if (reaction === '草激化' && dmgElement === '草') {
+        reactionElement = '雷';
+    }
+    return reactionElement;
 }

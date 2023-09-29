@@ -76,7 +76,7 @@
 <script lang="ts">
 import _ from "lodash";
 import draggable from "vuedraggable";
-import { getDamageResultArr, TRotationDamageEntry, REACTION_DMG_ARR, REACTION_DMG_ELEMENT_MAP, calculateRotationTotalDamage, TRotationDamageInfo } from "@/calculate";
+import { getDamageResultArr, TRotationDamageEntry, REACTION_DMG_ARR, REACTION_DMG_ELEMENT_MAP, calculateRotationTotalDamage, TRotationDamageInfo, calculateRotationDamageEntry, getAmplifyingReactionElement } from "@/calculate";
 import {
   TDamageResult,
   TDamageResultElementalReactionKey,
@@ -87,6 +87,7 @@ import {
   IMG_SRC_DUMMY,
   TCharacterDetail,
   TElementColorClassKey,
+TElementImgSrcKey,
 } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref, toRefs, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
@@ -192,7 +193,7 @@ export default defineComponent({
           const entry = {} as TRotationDamageEntryCustom;
           entry.id = id++;
           entry.name = reaction;
-          entry.src = (ELEMENT_IMG_SRC as any)[dmgElement];
+          entry.src = ELEMENT_IMG_SRC[dmgElement as TElementImgSrcKey];
           entry.category = reactionDmg;
           entry.reactions = [{}];
           entry.counts = [1] as number[];
@@ -307,6 +308,11 @@ export default defineComponent({
       rotationDamageCustomList.push(clone(element));
     };
 
+    function getReactionImgSrc(reaction: string, dmgElement: string) {
+      const reactionElement = getAmplifyingReactionElement(reaction, dmgElement);
+      return reactionElement ? ELEMENT_IMG_SRC[reactionElement as TElementImgSrcKey] : IMG_SRC_DUMMY;
+    }
+
     const amplifyingReactionList = (
       customizedEntry: TRotationDamageEntryCustom,
       index: number
@@ -316,24 +322,34 @@ export default defineComponent({
       const entry = list[index];
       const dmgElement = entry[1];
       if (dmgElement) {
-        if (dmgElement == '炎' && props.damageResult.元素反応.蒸発倍率_炎 > 0) {
-          result.push(['蒸発', (ELEMENT_IMG_SRC as any)['水']]);
+        const reactionArr: string[] = [];
+        if (dmgElement === '炎') {
+          if (props.damageResult.元素反応.蒸発倍率_炎 > 0) {
+            reactionArr.push('蒸発');
+          }
+          if (props.damageResult.元素反応.溶解倍率_炎 > 0) {
+            reactionArr.push('溶解');
+          }
+        } else if (dmgElement === '水') {
+          if (props.damageResult.元素反応.蒸発倍率_水 > 0) {
+            reactionArr.push('蒸発');
+          }
+        } else if (dmgElement === '氷') {
+          if (props.damageResult.元素反応.溶解倍率_氷 > 0) {
+            reactionArr.push('溶解');
+          }
+        } else if (dmgElement === '雷') {
+          if (props.damageResult.元素反応.超激化ダメージ > 0) {
+            reactionArr.push('超激化');
+          }
+        } else if (dmgElement === '草') {
+          if (props.damageResult.元素反応.草激化ダメージ > 0) {
+            reactionArr.push('草激化');
+          }
         }
-        if (dmgElement == '水' && props.damageResult.元素反応.蒸発倍率_水 > 0) {
-          result.push(['蒸発', (ELEMENT_IMG_SRC as any)['炎']]);
-        }
-        if (dmgElement == '氷' && props.damageResult.元素反応.溶解倍率_氷 > 0) {
-          result.push(['溶解', (ELEMENT_IMG_SRC as any)['炎']]);
-        }
-        if (dmgElement == '炎' && props.damageResult.元素反応.溶解倍率_炎 > 0) {
-          result.push(['溶解', (ELEMENT_IMG_SRC as any)['氷']]);
-        }
-        if (dmgElement == '雷' && props.damageResult.元素反応.超激化ダメージ > 0) {
-          result.push(['超激化', (ELEMENT_IMG_SRC as any)['草']]);
-        }
-        if (dmgElement == '草' && props.damageResult.元素反応.草激化ダメージ > 0) {
-          result.push(['草激化', (ELEMENT_IMG_SRC as any)['雷']]);
-        }
+        reactionArr.forEach(reaction => {
+          result.push([reaction, getReactionImgSrc(reaction, dmgElement)]);
+        })
       }
       return result;
     };
@@ -370,7 +386,9 @@ export default defineComponent({
       const reactionObj: any = customizedEntry.reactions[index];
       let count = customizedEntry.counts[index];
       const damageResultEntry = getDamageResultArr(customizedEntry, props.damageResult)[index];
-      if (damageResultEntry[6]) count *= damageResultEntry[6];
+      if (['超激化', '草激化'].includes(reaction[0]) && damageResultEntry[6]) {
+        count *= damageResultEntry[6];
+      }
       if (reaction[0] in reactionObj) {
         if (reactionObj[reaction[0]] < count) {
           reactionObj[reaction[0]]++;
@@ -398,42 +416,7 @@ export default defineComponent({
     const damageValue = (
       customizedEntry: TRotationDamageEntryCustom,
       index: number
-    ) => {
-      let result = 0;
-      const list = getDamageResultArr(customizedEntry, props.damageResult);
-      if (!list) return result;
-      const entry = list[index];
-      if (!entry) return result;
-      const reactionObj: any = customizedEntry.reactions[index];
-      if (!reactionObj) return result;
-      const count = customizedEntry.counts[index];
-      for (let n = 0; n < count; n++) {
-        let workDmg = entry[2]; // 期待値
-        ['蒸発', '溶解'].forEach((reaction) => {
-          if (reaction in reactionObj && n < reactionObj[reaction]) {
-            const reactionKey = reaction + '倍率_' + entry[1]; 
-            workDmg *= (props.damageResult.元素反応 as any)[reactionKey];
-          }
-        });
-        result += workDmg;
-      }
-      ['超激化', '草激化'].forEach((reaction) => {
-        if (reaction in reactionObj) {
-          let reactionDmg = (props.damageResult.元素反応 as any)[reaction + 'ダメージ'];
-          if (entry[2]) {
-            reactionDmg *= entry[2] / entry[4]; // 期待値 ÷ 非会心
-          }
-          if (entry[7]) {
-            reactionDmg *= entry[7]; // ダメージバフ
-          }
-          if (entry[8]) {
-            reactionDmg *= entry[8]; // 敵の防御補正
-          }
-          result += reactionDmg * reactionObj[reaction];
-        }
-      });
-      return result;
-    };
+    ) => calculateRotationDamageEntry(customizedEntry, index, props.damageResult);
 
     const elementColorClass = (
       customizedEntry: TRotationDamageEntryCustom,
@@ -614,7 +597,7 @@ input[type="number"] {
 
 table.total-damage {
   width: 100%;
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 table.total-damage th,

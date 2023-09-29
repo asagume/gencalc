@@ -413,6 +413,7 @@ export const ELEMENT_IMG_SRC = {
     氷: 'images/element_cryo.png',
     岩: 'images/element_geo.png'
 };
+export type TElementImgSrcKey = keyof typeof ELEMENT_IMG_SRC;
 
 export const WEAPON_IMG_SRC = {
     片手剣: 'images/characters/NormalAttack_sword.png',

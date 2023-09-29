@@ -10,11 +10,10 @@
                         </option>
                     </select>
                     <div class="reaction-area">
-                        <div class="reaction with-tooltip" v-for="reactionName in reactionNameList" :key="reactionName">
-                            <img :class="'reaction' + (selectedReactionName == reactionName ? ' selected' : '')"
-                                :src="reactionImgSrc(reactionName)" :alt="reactionName"
-                                @click="reactionImgOnClick(reactionName)">
-                            <div class="tooltip">{{ displayName(reactionName) }}</div>
+                        <div class="reaction with-tooltip" v-for="reaction in amplifyingReactionList" :key="reaction">
+                            <img :class="'reaction' + (selectedAmplifyingReaction == reaction ? ' selected' : '')"
+                                :src="reactionImgSrc(reaction)" :alt="reaction" @click="reactionImgOnClick(reaction)">
+                            <div class="tooltip">{{ displayName(reaction) }}</div>
                         </div>
                     </div>
                 </div>
@@ -41,7 +40,12 @@
                         </tr>
                     </template>
                     <tr>
-                        <th class="damage"></th>
+                        <th class="damage">
+                            {{ isStop ? displayName('停止中') : displayName('稼働中') }}
+                            <button type="button" @click="stopButtonOnClick">
+                                {{ isStop ? displayName('再開') : displayName('停止') }}
+                            </button>
+                        </th>
                         <td></td>
                         <td></td>
                         <td>
@@ -58,15 +62,23 @@
 </template>
   
 <script lang="ts">
-import _ from 'lodash';
+import _, { isTypedArray } from 'lodash';
 import {
     DAMAGE_RESULT_TEMPLATE,
     makeEasyInputSubstatValueList, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput,
 } from "@/input";
-import { ELEMENT_IMG_SRC, ELEMENTAL_REACTION_MASTER, IMG_SRC_DUMMY, TArtifactSubKey, TElementalReactionKey } from "@/master";
+import { ELEMENT_IMG_SRC, ELEMENTAL_REACTION_MASTER, IMG_SRC_DUMMY, TArtifactSubKey, TElementalReactionKey, TElementImgSrcKey } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { calculateDamageResult, calculateReactedDamage, calculateRotationTotalDamage, calculateStats, TRotationDamageInfo } from "@/calculate";
+import { calculateDamageResult, calculateReactedDamage, calculateRotationTotalDamage, calculateStats, getAmplifyingReactionElement, TRotationDamageInfo } from "@/calculate";
+
+type TStatRow = [
+    string,     // stat
+    number[],   // datalist
+    number,     // index
+    number,     // count
+    number,     // evaluation value
+];
 
 export default defineComponent({
     name: "NextStat",
@@ -88,8 +100,14 @@ export default defineComponent({
         const NEXT_STAT_ARR = ['HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率', 'HP', '攻撃力', '防御力'];
         const toggleSwitch = ref(props.visible);
         const evaluationItem = ref('');
-        const nextStatRows = reactive([] as any[]); // 0:stat, 1:datalist, 2:index, 3:count, 4:evaluation value
-        const selectedReactionName = ref('');
+        const nextStatRows = reactive([] as TStatRow[]); // 0:stat, 1:datalist, 2:index, 3:count, 4:evaluation value
+        const selectedAmplifyingReaction = ref('');
+        const STORAGE_KEY_NEXT_STEP_STOP = 'nextStepStopFlg';
+        const isStop = ref(false);
+
+        if (localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP)) {
+            isStop.value = Boolean(localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP));
+        }
 
         const evaluationItemList = computed(() => {
             let result: string[] = [];
@@ -132,7 +150,7 @@ export default defineComponent({
             return result;
         })
 
-        const reactionNameList = computed(() => {
+        const amplifyingReactionList = computed(() => {
             const result: string[] = [];
             if (dmgElement.value && dmgElement.value in ELEMENTAL_REACTION_MASTER) {
                 result.push(...Object.keys(ELEMENTAL_REACTION_MASTER[dmgElement.value as TElementalReactionKey]).filter(s => ['蒸発', '溶解', '超激化', '草激化'].includes(s)));
@@ -140,37 +158,14 @@ export default defineComponent({
             return result;
         })
 
-        const reactionImgSrc = (name: string) => {
-            let reactionElement;
-            if (name == '蒸発' && dmgElement.value == '炎') {
-                reactionElement = '水';
-            } else if (name == '蒸発' && dmgElement.value == '水') {
-                reactionElement = '炎';
-            } else if (name == '溶解' && dmgElement.value == '炎') {
-                reactionElement = '氷';
-            } else if (name == '溶解' && dmgElement.value == '氷') {
-                reactionElement = '炎';
-            } else if (name == '超激化' && dmgElement.value == '雷') {
-                reactionElement = '草';
-            } else if (name == '草激化' && dmgElement.value == '草') {
-                reactionElement = '雷';
-            }
-            if (reactionElement) {
-                return (ELEMENT_IMG_SRC as any)[reactionElement];
-            } else {
-                return IMG_SRC_DUMMY;
-            }
+        const reactionImgSrc = (reaction: string) => {
+            const reactionElement = getAmplifyingReactionElement(reaction, dmgElement.value);
+            return reactionElement ? ELEMENT_IMG_SRC[reactionElement as TElementImgSrcKey] : IMG_SRC_DUMMY;
         }
 
-        const nextStatValue = (row: any[]) => {
-            let result = 0;
-            if (row && row[3]) {
-                result = row[3] * row[1][row[2]];
-            }
-            return result;
-        };
+        const nextStatValue = (row: TStatRow) => (row && row[3] ? row[3] * row[1][row[2]] : 0);
 
-        const displayNextStatValue = (row: any[]) => {
+        const displayNextStatValue = (row: TStatRow) => {
             let result = '';
             const valueNum = nextStatValue(row);
             if (valueNum > 0) {
@@ -181,14 +176,9 @@ export default defineComponent({
         }
 
         function initializeNextStat() {
-            const newRows: any[] = [];
+            const newRows: TStatRow[] = [];
             for (const stat of NEXT_STAT_ARR) {
-                const row: any[] = [];
-                row.push(stat);
-                row.push(makeEasyInputSubstatValueList(stat as TArtifactSubKey));
-                row.push(2);
-                row.push(0);
-                row.push(0);
+                const row: TStatRow = [stat, makeEasyInputSubstatValueList(stat as TArtifactSubKey), 2, 0, 0];
                 newRows.push(row);
             }
             nextStatRows.splice(0, nextStatRows.length, ...newRows);
@@ -204,13 +194,14 @@ export default defineComponent({
                 const keyArr = itemName.split('.');
                 const work = (damageResult as any)[keyArr[0]].filter((s: any[]) => s[0] == keyArr[1]);
                 if (work.length) {
-                    result = calculateReactedDamage(work[0], 2, damageResult.元素反応, selectedReactionName.value);
+                    result = calculateReactedDamage(work[0], 2, damageResult.元素反応, selectedAmplifyingReaction.value);
                 }
             }
             return result;
         }
 
-        function setupNextStatRow(row: any[], workDamageResult?: TDamageResult, workStatsInput?: TStatsInput) {
+        function setupNextStatRow(row: TStatRow, workDamageResult?: TDamageResult, workStatsInput?: TStatsInput) {
+            if (isStop.value) return;
             if (!workDamageResult) {
                 workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
             }
@@ -284,15 +275,15 @@ export default defineComponent({
         };
 
         const reactionImgOnClick = (name: string) => {
-            if (selectedReactionName.value == name) {
-                selectedReactionName.value = '';
+            if (selectedAmplifyingReaction.value == name) {
+                selectedAmplifyingReaction.value = '';
             } else {
-                selectedReactionName.value = name;
+                selectedAmplifyingReaction.value = name;
             }
             setupNextStatRows();
         }
 
-        const nextStatStepOnChange = (row: any[]) => {
+        const nextStatStepOnChange = (row: TStatRow) => {
             setupNextStatRow(row);
             nextStatRows.sort((a, b) => b[4] - a[4]);
         };
@@ -312,6 +303,14 @@ export default defineComponent({
             initializeNextStat();
             await nextStatOnChange();
         };
+
+        const stopButtonOnClick = () => {
+            isStop.value = !isStop.value;
+            localStorage.setItem(STORAGE_KEY_NEXT_STEP_STOP, String(isStop.value));
+            if (!isStop.value) {
+                setupNextStatRows();
+            }
+        }
 
         watch([props.characterInput, props.statsInput, props.rotationDamageInfo], async (newVal, oldVal) => {
             const newCharacterInput = newVal[0] as TCharacterInput;
@@ -341,9 +340,9 @@ export default defineComponent({
 
             evaluationItem,
             evaluationItemList,
-            reactionNameList,
+            amplifyingReactionList,
             reactionImgSrc,
-            selectedReactionName,
+            selectedAmplifyingReaction,
             evaluationItemOnChange,
             reactionImgOnClick,
 
@@ -353,6 +352,8 @@ export default defineComponent({
 
             nextStatOnChange,
             resetButtonOnClick,
+            isStop,
+            stopButtonOnClick,
         };
     },
 });

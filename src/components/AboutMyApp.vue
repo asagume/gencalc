@@ -30,6 +30,15 @@
     </fieldset>
 
     <fieldset>
+        <legend>NEXT STEP</legend>
+        <div class="description">
+            選択したダメージアクションについて、現在のステータスから聖遺物サブ効果1回上昇分ステータスが変化した場合のダメージの上昇率を計算します。
+            次にどのステータスを伸ばすべきかの参考情報となります。<br>
+            比較的高い計算力を要求する機能のため、動作が重い場合は下部の停止ボタンから機能を止めて下さい。
+        </div>
+    </fieldset>
+
+    <fieldset>
         <legend>内部リンク</legend>
         <p>
             <a href="GoogleDrive.html">Google Drive連携 (テスト中)</a>
