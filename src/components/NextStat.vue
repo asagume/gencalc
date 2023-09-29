@@ -46,10 +46,18 @@
                                 {{ isStop ? displayName('再開') : displayName('停止') }}
                             </button>
                         </th>
-                        <td></td>
-                        <td></td>
+                        <td>
+                        </td>
                         <td>
                             <button type="button" @click="resetButtonOnClick"> Reset </button>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="checkbox" v-model="containsDealMoreDamage" @change="containsDealMoreDamageOnChange">
+                                {{ displayName('与えるダメージ') }}
+                            </label>
+                        </td>
+                        <td>
                         </td>
                     </tr>
                 </table>
@@ -62,7 +70,7 @@
 </template>
   
 <script lang="ts">
-import _, { isTypedArray } from 'lodash';
+import _ from 'lodash';
 import {
     DAMAGE_RESULT_TEMPLATE,
     makeEasyInputSubstatValueList, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput,
@@ -104,9 +112,11 @@ export default defineComponent({
         const selectedAmplifyingReaction = ref('');
         const STORAGE_KEY_NEXT_STEP_STOP = 'nextStepStopFlg';
         const isStop = ref(false);
+        const containsDealMoreDamage = ref(false);
 
-        if (localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP)) {
-            isStop.value = Boolean(localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP));
+        const nextStepStopFlgItem = localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP);
+        if (nextStepStopFlgItem) {
+            isStop.value = JSON.parse(nextStepStopFlgItem);
         }
 
         const evaluationItemList = computed(() => {
@@ -179,6 +189,10 @@ export default defineComponent({
             const newRows: TStatRow[] = [];
             for (const stat of NEXT_STAT_ARR) {
                 const row: TStatRow = [stat, makeEasyInputSubstatValueList(stat as TArtifactSubKey), 2, 0, 0];
+                newRows.push(row);
+            }
+            if (containsDealMoreDamage.value) {
+                const row: TStatRow = ['与えるダメージ', makeEasyInputSubstatValueList('攻撃力%'), 2, 0, 0];
                 newRows.push(row);
             }
             nextStatRows.splice(0, nextStatRows.length, ...newRows);
@@ -311,6 +325,11 @@ export default defineComponent({
                 setupNextStatRows();
             }
         }
+        
+        const containsDealMoreDamageOnChange = () => {
+            initializeNextStat();
+            setupNextStatRows();
+        }
 
         watch([props.characterInput, props.statsInput, props.rotationDamageInfo], async (newVal, oldVal) => {
             const newCharacterInput = newVal[0] as TCharacterInput;
@@ -354,6 +373,8 @@ export default defineComponent({
             resetButtonOnClick,
             isStop,
             stopButtonOnClick,
+            containsDealMoreDamage,
+            containsDealMoreDamageOnChange,
         };
     },
 });
@@ -429,7 +450,8 @@ select {
 }
 
 button {
-    padding: 2px 10px;
+    padding: 2px 7px;
+    margin: 0px;
 }
 
 div.reaction-area {
