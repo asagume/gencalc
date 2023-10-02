@@ -61,7 +61,7 @@
     <tr v-if="comparisonList.filter(s => s[1] != 0).length == 0">
       <td colspan="2">差分なし</td>
     </tr>
-    <tr v-else v-for="comparison in comparisonList" :key="comparison[0]">
+    <tr v-else v-for="comparison in comparisonList.filter(s => s[1] != 0)" :key="comparison[0]">
       <td>{{ comparison[0] }}</td>
       <td>{{ ['同値', '差異あり', 'ローカルのみ', 'リモートのみ'][comparison[1]] }}</td>
     </tr>
