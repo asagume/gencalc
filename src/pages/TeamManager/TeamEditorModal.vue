@@ -321,6 +321,10 @@ input.description {
   width: 63rem;
 }
 
+div.tags {
+  margin: 5px 3px;
+}
+
 span.tag {
   display: inline-block;
   width: 70px;
@@ -329,7 +333,7 @@ span.tag {
   background: linear-gradient(to top, #3d3d3b, #141414);
   border: 1px solid whitesmoke;
   border-radius: 3px;
-  margin: 10px 3px;
+  margin: 3px 3px;
 }
 
 span.tag.selected {
