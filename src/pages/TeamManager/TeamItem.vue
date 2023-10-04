@@ -432,7 +432,7 @@ img.elemental-resonance {
 div.description {
   margin-top: 3px;
   font-size: 2rem;
-  height: 2rem;
+  height: 2.4rem;
   white-space: nowrap;
   overflow: hidden;
 }
