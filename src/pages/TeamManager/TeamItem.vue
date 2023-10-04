@@ -24,6 +24,11 @@
         </tr>
       </table>
     </div>
+    <table class="res">
+      <tr>
+        <td v-for="key in resKey" :key="key" :class="resBgClass(key)">{{ res[key] }}</td>
+      </tr>
+    </table>
     <div class="description">
       {{ description }}
     </div>
@@ -32,8 +37,8 @@
 <script lang="ts">
 import _ from 'lodash';
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENT_IMG_SRC, getCharacterMasterDetail, TAnyObject, TCharacterKey } from "@/master";
-import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
+import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENT_IMG_SRC, getCharacterMasterDetail, TAnyObject, TCharacterKey, ELEMENT_BG_COLOR_CLASS } from "@/master";
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { characterMaster, getBuilddataFromStorage, TMember, TTeam } from "./team";
 import MemberItem from "./MemberItem.vue";
 import { ALL_ELEMENTS, calculateArtifactStats, calculateArtifactStatsMain, calculateDamageResult, calculateFormulaArray, calculateStats } from "@/calculate";
@@ -83,46 +88,74 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
 
     const memberStats = reactive({} as TAnyObject);
+    const memberResults = reactive({} as { [key: string]: TMemberResult });
     const selectedClass = computed(() => (props.selected ? " selected" : ""));
     const editable = ref(false);
+    const res = reactive({} as TAnyObject);
+    const resKey = ['炎', '水', '風', '雷', '草', '氷', '岩', '物理'];
+
+    const characterOwnListStr = localStorage.getItem('キャラクター所持状況');
+    let characterOwnList: TAnyObject;
+    if (characterOwnListStr) {
+      characterOwnList = JSON.parse(characterOwnListStr);
+    } else {
+      characterOwnList = {};
+    }
 
     const watchCount = ref(0);
     watch(props, async (newVal) => {
+      watchFunc(newVal.team);
+      watchCount.value++;
+    });
+
+    onMounted(() => {
+      watchFunc(props.team);
+    })
+
+    async function watchFunc(team: TTeam) {
       const list = [];
-      for (const member of newVal.team.members) {
+      for (const member of team.members) {
         list.push(calculateMemberResult(member).then(result => ({ key: member.id, value: result })));
       }
-      const teamAdjustments: TStats = {};
       await Promise.all(list).then(results => {
         results.forEach(entry => {
           memberStats[entry.key] = entry.value.statsInput?.statsObj;
-
-          const characterMaster = entry.value.characterInput?.characterMaster;
-          const weaponMaster = entry.value.characterInput?.weaponMaster;
-          if (characterMaster && characterMaster.チームバフ) {
-            for (const damageDetail of characterMaster.チームバフ) {
-              if (damageDetail.条件) continue;
-              const value = calculateFormulaArray(damageDetail.数値, entry.value.statsInput.statsObj, entry.value.damageResult, damageDetail.最大値, damageDetail.最小値);
-              if (damageDetail.種類 in teamAdjustments) {
-                teamAdjustments[damageDetail.種類] += value;
-              } else {
-                teamAdjustments[damageDetail.種類] = value;
-              }
-            }
-          }
-          if (weaponMaster && weaponMaster.チームバフ) {
-            for (const damageDetail of weaponMaster.チームバフ) {
-              if (damageDetail.条件) continue;
-              const value = calculateFormulaArray(damageDetail.数値, entry.value.statsInput.statsObj, entry.value.damageResult, damageDetail.最大値, damageDetail.最小値);
-              if (damageDetail.種類 in teamAdjustments) {
-                teamAdjustments[damageDetail.種類] += value;
-              } else {
-                teamAdjustments[damageDetail.種類] = value;
-              }
-            }
-          }
+          memberResults[entry.key] = entry.value;
         });
       });
+      calculateStat();
+      calculateRes();
+    }
+
+    function calculateStat() {
+      const teamAdjustments: TStats = {};
+      Object.keys(memberResults).forEach(key => {
+        const memberResult = memberResults[key];
+        const characterMaster = memberResult.characterInput?.characterMaster;
+        const weaponMaster = memberResult.characterInput?.weaponMaster;
+        if (characterMaster && characterMaster.チームバフ) {
+          for (const damageDetail of characterMaster.チームバフ) {
+            if (damageDetail.条件) continue;
+            const value = calculateFormulaArray(damageDetail.数値, memberResult.statsInput.statsObj, memberResult.damageResult, damageDetail.最大値, damageDetail.最小値);
+            if (damageDetail.種類 in teamAdjustments) {
+              teamAdjustments[damageDetail.種類] += value;
+            } else {
+              teamAdjustments[damageDetail.種類] = value;
+            }
+          }
+        }
+        if (weaponMaster && weaponMaster.チームバフ) {
+          for (const damageDetail of weaponMaster.チームバフ) {
+            if (damageDetail.条件) continue;
+            const value = calculateFormulaArray(damageDetail.数値, memberResult.statsInput.statsObj, memberResult.damageResult, damageDetail.最大値, damageDetail.最小値);
+            if (damageDetail.種類 in teamAdjustments) {
+              teamAdjustments[damageDetail.種類] += value;
+            } else {
+              teamAdjustments[damageDetail.種類] = value;
+            }
+          }
+        }
+      })
       for (const stat of Object.keys(teamAdjustments)) {
         for (const memberKey of Object.keys(memberStats)) {
           if (!memberStats[memberKey]) continue;
@@ -133,8 +166,148 @@ export default defineComponent({
           }
         }
       }
-      watchCount.value++;
-    });
+    }
+
+    function initializeRes() {
+      resKey.forEach(key => {
+        res[key] = 0;
+      });
+    }
+    initializeRes();
+
+    // 元素耐性
+    function calculateRes() {
+      initializeRes();
+      const dmgElements: string[] = [];
+      const artifactSet4s: string[] = [];
+      Object.keys(memberResults).forEach(key => {
+        const memberResult = memberResults[key];
+        const characterMaster = memberResult.characterInput?.characterMaster;
+        const artifactSetMasters = memberResult.characterInput?.artifactSetMasters;
+        if (characterMaster) {
+          if (characterMaster) {
+            dmgElements.push(characterMaster.元素);
+          }
+          if (characterMaster.元素スキル?.詳細) {
+            for (const damageDetail of characterMaster.元素スキル?.詳細) {
+              if (damageDetail.種類 && damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
+                const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
+                let value = 0;
+                if (_.isNumber(damageDetail.数値)) {
+                  value = damageDetail.数値;
+                } else if (_.isPlainObject(damageDetail.数値)) {
+                  const level = memberResult.characterInput?.元素スキルレベル;
+                  if (level && level in damageDetail.数値) {
+                    value = damageDetail.数値[level];
+                  }
+                }
+                if (element === '全') {
+                  resKey.filter(s => s !== '物理').forEach(key => {
+                    res[key] -= value;
+                  })
+                } else {
+                  res[element] -= value;
+                }
+              }
+            }
+          }
+          if (characterMaster.元素爆発?.詳細) {
+            for (const damageDetail of characterMaster.元素爆発?.詳細) {
+              if (damageDetail.種類 && damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
+                const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
+                let value = 0;
+                if (_.isNumber(damageDetail.数値)) {
+                  value = damageDetail.数値;
+                } else if (_.isPlainObject(damageDetail.数値)) {
+                  const level = memberResult.characterInput?.元素爆発レベル;
+                  if (level && level in damageDetail.数値) {
+                    value = damageDetail.数値[level];
+                  }
+                }
+                if (element === '全') {
+                  resKey.filter(s => s !== '物理').forEach(key => {
+                    res[key] -= value;
+                  })
+                } else {
+                  res[element] -= value;
+                }
+              }
+            }
+          }
+          if (characterMaster.固有天賦) {
+            for (const damageDetail of characterMaster.固有天賦) {
+              if (damageDetail.種類 && damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
+                const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
+                let value = 0;
+                if (_.isNumber(damageDetail.数値)) {
+                  value = damageDetail.数値;
+                }
+                if (element === '全') {
+                  resKey.filter(s => s !== '物理').forEach(key => {
+                    res[key] -= value;
+                  })
+                } else {
+                  res[element] -= value;
+                }
+              }
+            }
+          }
+          let constellationLevel = 0;
+          if (memberResult.characterInput?.命ノ星座 !== undefined) {
+            constellationLevel = memberResult.characterInput?.命ノ星座;
+          } else if (characterMaster.名前 in characterOwnList) {
+            constellationLevel = characterOwnList[characterMaster.名前];
+          }
+          if (characterMaster.命ノ星座) {
+            for (let i = 1; i <= constellationLevel; i++) {
+              const constellationObj = characterMaster.命ノ星座[String(i)];
+              if (constellationObj.詳細) {
+                for (const damageDetail of constellationObj.詳細) {
+                  if (damageDetail.種類 && damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
+                    const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
+                    if (_.isNumber(damageDetail.数値)) {
+                      if (element === '全') {
+                        resKey.filter(s => s !== '物理').forEach(key => {
+                          res[key] -= damageDetail.数値;
+                        })
+                      } else {
+                        res[element] -= damageDetail.数値;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (artifactSetMasters && artifactSetMasters.length == 2) {
+          if (artifactSetMasters[0].key == artifactSetMasters[1].key) {
+            if (!artifactSet4s.includes(artifactSetMasters[0].key)) {
+              artifactSet4s.push(artifactSetMasters[0].key);
+              if (artifactSetMasters[0]['4セット効果']?.詳細) {
+                artifactSetMasters[0]['4セット効果']?.詳細.forEach(damageDetail => {
+                  if (damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
+                    const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
+                    res[element] -= Number(damageDetail.数値);
+                  }
+                })
+              }
+            }
+          }
+        }
+      })
+      if (dmgElements.filter(s => s === '岩').length >= 2) { // 岩元素共鳴
+        res['岩'] -= -20;
+      }
+      if (dmgElements.includes('雷') && dmgElements.includes('氷')) { // 超電導
+        res['物理'] -= -40;
+      }
+      resKey.forEach(key => {
+        if (key !== '物理' && !dmgElements.includes(key)) {
+          res[key] = 0;
+        }
+      })
+    }
 
     const elementalResonance = computed(() => {
       const result: string[] = [];
@@ -335,6 +508,14 @@ export default defineComponent({
       } as TMemberResult;
     }
 
+    const resBgClass = (key: string) => {
+      if (res[key] !== 0) {
+        return key in ELEMENT_BG_COLOR_CLASS ? (ELEMENT_BG_COLOR_CLASS as any)[key] : 'physical';
+      } else {
+        return '';
+      }
+    }
+
     const editOnClick = () => {
       context.emit("click:edit", props.team.id);
     }
@@ -352,6 +533,9 @@ export default defineComponent({
       elementalResonance,
       resonanceElementImgSrcs,
       description,
+      res,
+      resKey,
+      resBgClass,
 
       editOnClick,
       changeBuildname,
@@ -435,5 +619,16 @@ div.description {
   height: 2.4rem;
   white-space: nowrap;
   overflow: hidden;
+}
+
+table.res {
+  width: 100%;
+  table-layout: fixed;
+  color: black;
+  font-size: 2rem;
+}
+
+.physical {
+  background-color: gray;
 }
 </style>
