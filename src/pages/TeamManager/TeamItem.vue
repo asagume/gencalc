@@ -4,7 +4,7 @@
       <label class="name">
         <span class="handle">◆</span>
         <span>{{ team.name }}</span>
-        <span class="button material-symbols-outlined" @click="editOnClick"> edit_square </span>
+        <span v-if="selected" class="button material-symbols-outlined" @click="editOnClick"> edit_square </span>
       </label>
       <div class="elemental-resonance">
         <template v-for="index in [0, 1, 2, 3]" :key="index">
