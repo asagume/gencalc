@@ -1,5 +1,9 @@
 <template>
   <div class="base-container">
+    <div class="header">
+      &nbsp; <a href="./">げんかるく</a>
+    </div>
+
     <div class="pane1">
       <fieldset>
         <div class="display-stat-select">
@@ -22,18 +26,17 @@
     </div>
 
     <div class="pane2">
-      <div v-show="!characterSelectVisible">
+      <div v-show="!teamEditorVisible">
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
             <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-              @click="teamOnClick(element.id)" @change:name="teamNameOnChange" @change:buildname="buildnameOnChange"
-              @click:character="characterOnClick(element)" />
+              @click="teamOnClick(element.id)" @click:edit="editOnClick" @change:buildname="buildnameOnChange" />
           </template>
         </draggable>
       </div>
-      <div v-show="characterSelectVisible">
-        <CharacterSelectModal :visible="characterSelectVisible" :members="forcusedMembers"
-          @click:cancel="characterSelectVisible = false" @click:ok="updateCharacters" />
+      <div v-show="teamEditorVisible">
+        <TeamEditorModal :visible="teamEditorVisible" :team="forcusedTeam" @click:cancel="teamEditorVisible = false"
+          @click:ok="updateTeam" />
       </div>
     </div>
 
@@ -46,7 +49,7 @@
 
     <div class="footer">
       <hr />
-      <h2>チーム編成 Ver.0.2.0</h2>
+      <h2>チーム編成 Ver.0.3.0</h2>
       <ul class="usage">
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
@@ -65,7 +68,7 @@ import { computed, defineComponent, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from './team';
 import TeamItem from './TeamItem.vue';
-import CharacterSelectModal from './CharacterSelectModal.vue';
+import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
 
 let memberId = 1;
@@ -75,13 +78,13 @@ export default defineComponent({
   components: {
     draggable,
     TeamItem,
-    CharacterSelectModal,
+    TeamEditorModal,
     TeamRotation,
   },
   setup() {
     const { displayName } = CompositionFunction();
 
-    const characterSelectVisible = ref(false);
+    const teamEditorVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const DISPLAY_STAT_LIST = [
       ['', 'None'],
@@ -114,6 +117,7 @@ export default defineComponent({
         id: index,
         name: 'チーム' + (index + 1),
         members: [] as TMember[],
+        description: '',
       };
       for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
         team.members.push(makeBlankMember(memberId++));
@@ -147,7 +151,7 @@ export default defineComponent({
 
     const memberOnClick = (index: number) => {
       if (selectedTeamId.value == index) {
-        characterSelectVisible.value = true;
+        teamEditorVisible.value = true;
       }
       selectedTeamId.value = index;
     };
@@ -221,46 +225,42 @@ export default defineComponent({
                 }
               }
             }
+            team.description = work[i].description;
           }
         }
       }
     };
     loadOnClick();
 
-    const forcusedMembers = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0].members ?? []);
+    const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
 
-    const updateCharacters = (newMembers: TMember[]) => {
+    const updateTeam = (newTeam: TTeam) => {
       if (selectedTeamId.value != -1) {
         const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
         if (team) {
+          team.name = newTeam.name;
           const workMembers: TMember[] = [];
-          for (let i = 0; i < newMembers.length; i++) {
+          for (let i = 0; i < newTeam.members.length; i++) {
             const workMember = makeBlankMember(team.members[i].id);
-            workMember.name = newMembers[i].name;
-            workMember.buildname = newMembers[i].buildname;
+            workMember.name = newTeam.members[i].name;
+            workMember.buildname = newTeam.members[i].buildname;
             workMember.builddata = undefined; // TODO
-            workMember.tags.splice(0, workMember.tags.length, ...newMembers[i].tags);
-            workMember.replacements.splice(0, workMember.replacements.length, ...newMembers[i].replacements);
+            workMember.tags.splice(0, workMember.tags.length, ...newTeam.members[i].tags);
+            workMember.replacements.splice(0, workMember.replacements.length, ...newTeam.members[i].replacements);
             workMembers.push(workMember);
           }
           team.members.splice(0, team.members.length, ...workMembers);
         }
+        team.description = newTeam.description;
       }
-      characterSelectVisible.value = false;
+      teamEditorVisible.value = false;
     };
 
-    const characterOnClick = (team: TTeam) => {
-      if (teamSelected(team.id)) {
-        characterSelectVisible.value = true;
+    const editOnClick = (id: number) => {
+      if (id == selectedTeamId.value) {
+        teamEditorVisible.value = true;
       } else {
-        selectedTeamId.value = team.id;
-      }
-    };
-
-    const teamNameOnChange = (id: number, name: string) => {
-      const team = teams.filter((s) => s.id == id)[0];
-      if (team) {
-        team.name = name;
+        selectedTeamId.value = id;
       }
     };
 
@@ -277,7 +277,7 @@ export default defineComponent({
     return {
       displayName,
 
-      characterSelectVisible,
+      teamEditorVisible,
       NUMBER_OF_TEAMS,
       NUMBER_OF_MEMBERS,
       numberOfTeams,
@@ -293,15 +293,14 @@ export default defineComponent({
       selectedTeamId,
       teamSelected,
       teams,
-      forcusedMembers,
+      forcusedTeam,
 
       teamOnClick,
-      characterOnClick,
 
       memberOnClick,
-      updateCharacters,
+      updateTeam,
 
-      teamNameOnChange,
+      editOnClick,
       buildnameOnChange,
     };
   },
@@ -317,8 +316,9 @@ export default defineComponent({
 .base-container {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto;
   grid-template-areas:
+    "header"
     "pane1"
     "pane2"
     "pane3"
@@ -329,6 +329,12 @@ export default defineComponent({
 div.team {
   width: calc(100% - 4px);
   margin: 3px 2px;
+}
+
+.header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
 }
 
 .footer {

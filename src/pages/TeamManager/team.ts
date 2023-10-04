@@ -14,6 +14,7 @@ export type TTeam = {
     id: number;
     name: string;
     members: TMember[];
+    description: string,
 };
 
 export const NUMBER_OF_TEAMS = 10;

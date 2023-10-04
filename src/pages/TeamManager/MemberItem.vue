@@ -1,6 +1,6 @@
 <template>
   <div class="member">
-    <div class="member-img" @click="characterOnClick">
+    <div class="member-img" @dblclick="characterOnDblclick">
       <div class="with-tooltip">
         <img :class="'character' + characterImgClass" :src="characterImgSrc" :alt="displayName(member.name)" />
         <span class="tooltip">{{ displayName(member.name) }}</span>
@@ -26,11 +26,11 @@
       <img class="artifact-set" :src="imgArtifactSetSrc(0)" alt="artifact-set" />
       <img class="artifact-set" :src="imgArtifactSetSrc(1)" alt="artifact-set" />
     </div>
-    <div class="extra-control">
+    <!-- <div class="extra-control">
       <div v-if="viewable && extraControl == 'locate'">
         <button type="button" @click="locate">view</button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
@@ -147,10 +147,6 @@ export default defineComponent({
     const artifactSetName = (index: number) =>
       artifactSetMasters.value[index]?.key ?? '';
 
-    const characterOnClick = () => {
-      context.emit("click:character");
-    };
-
     const statValue = computed(() => {
       watchCount.value;
       let result = "-";
@@ -169,12 +165,21 @@ export default defineComponent({
       return result;
     });
 
+    const characterOnDblclick = () => {
+      if (props.viewable) {
+        locate();
+      }
+    };
+
     const locate = () => {
       const member = props.member;
-      const teammembers = props.members?.filter(s => s != member.name);
-      console.warn(props.members, teammembers);
-      pushBuildinfoToSession(member.name, member.buildname, undefined, teammembers);
-      window.open("./", "_blank");
+      if (member?.name) {
+        if (confirm('げんかるくで' + member.name + 'を開きます。よろしいですか？')) {
+          const teammembers = props.members?.filter(s => s != member.name);
+          pushBuildinfoToSession(member.name, member.buildname, undefined, teammembers);
+          window.open("./", "_blank");
+        }
+      }
     };
 
     return {
@@ -191,12 +196,9 @@ export default defineComponent({
       artifactSetName,
 
       statValue,
-
       extraControl,
 
-      locate,
-
-      characterOnClick,
+      characterOnDblclick,
     };
   },
 });
@@ -286,7 +288,7 @@ img.artifact-set {
   position: relative;
   width: calc(100% / 3 - 4px);
   height: calc(100% / 3 - 4px);
-  border: 2px solid silver;
+  border: 2px solid slategray;
   border-radius: 50%;
   background-color: black;
   z-index: 100;

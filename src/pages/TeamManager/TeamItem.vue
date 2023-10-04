@@ -3,22 +3,14 @@
     <div class="title">
       <label class="name">
         <span class="handle">◆</span>
-        <span v-if="editable">
-          <input type="text" minlength="1" maxlength="16" v-model="name" placeholder="INPUT TEAM NAME"
-            @change="nameOnChange" />
-          <span class="button material-symbols-outlined" @click="editable = false">
-            edit_off
-          </span>
-        </span>
-        <span v-else>
-          <span>{{ name }}</span>
-          <span class="button material-symbols-outlined" @click="editable = true">
-            edit
-          </span>
-        </span>
+        <span>{{ team.name }}</span>
+        <span class="button material-symbols-outlined" @click="editOnClick"> edit_square </span>
       </label>
       <div class="elemental-resonance">
-        <img class="elemental-resonance" v-for="src in resonanceElementImgSrcs" :key="src" :src="src" alt="resonance" />
+        <template v-for="index in [0, 1, 2, 3]" :key="index">
+          <img v-if="resonanceElementImgSrcs[index]" class="elemental-resonance" :src="resonanceElementImgSrcs[index]"
+            alt="resonance" />
+        </template>
       </div>
     </div>
     <div class="members">
@@ -27,11 +19,13 @@
           <td v-for="member in team.members" :key="member.id">
             <MemberItem :member="member" :statsObj="memberStats[member.id]" :displayStat="displayStat"
               :showEquipment="true" :viewable="true" :members="team.members.map(s => s.name)"
-              :elementalResonance="elementalResonance" @click:character="characterOnClick"
-              @change:buildname="changeBuildname" />
+              :elementalResonance="elementalResonance" @change:buildname="changeBuildname" />
           </td>
         </tr>
       </table>
+    </div>
+    <div class="description">
+      {{ description }}
     </div>
   </div>
 </template>
@@ -81,7 +75,7 @@ export default defineComponent({
     selected: { type: Boolean, requied: true },
     displayStat: { type: String },
   },
-  emits: ["change:name", "click:character", "change:buildname"],
+  emits: ["click:edit", "change:buildname"],
   components: {
     MemberItem,
   },
@@ -89,10 +83,11 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
 
     const memberStats = reactive({} as TAnyObject);
+    const selectedClass = computed(() => (props.selected ? " selected" : ""));
+    const editable = ref(false);
 
     const watchCount = ref(0);
     watch(props, async (newVal) => {
-      name.value = newVal.team.name;
       const list = [];
       for (const member of newVal.team.members) {
         list.push(calculateMemberResult(member).then(result => ({ key: member.id, value: result })));
@@ -141,13 +136,6 @@ export default defineComponent({
       watchCount.value++;
     });
 
-    const selectedClass = computed(() => (props.selected ? " selected" : ""));
-    const editable = ref(false);
-    const name = ref(props.team.name);
-    const nameOnChange = () => {
-      context.emit("change:name", props.team.id, name);
-    };
-
     const elementalResonance = computed(() => {
       const result: string[] = [];
       const work: TAnyObject = {};
@@ -181,11 +169,13 @@ export default defineComponent({
       elementalResonance.value.forEach((entry) => {
         if (entry == "元素共鳴なし") {
           const members = props.team.members.filter((s) => s.name);
-          members.forEach((member) => {
-            const master = CHARACTER_MASTER[member.name as TCharacterKey];
-            const src = (ELEMENT_IMG_SRC as any)[master.元素];
-            result.push(src);
-          });
+          if (members.length == 4) {
+            members.forEach((member) => {
+              const master = CHARACTER_MASTER[member.name as TCharacterKey];
+              const src = (ELEMENT_IMG_SRC as any)[master.元素];
+              result.push(src);
+            });
+          }
         } else {
           const src = (ELEMENT_IMG_SRC as any)[entry.replace("元素共鳴", "")];
           result.push(src);
@@ -194,6 +184,8 @@ export default defineComponent({
       });
       return result;
     });
+
+    const description = computed(() => props.team.description ? props.team.description : '-')
 
     const calculateMemberResult = async (member: TMember): Promise<TMemberResult> => {
       const characterInput: TCharacterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE);
@@ -343,9 +335,9 @@ export default defineComponent({
       } as TMemberResult;
     }
 
-    const characterOnClick = () => {
-      context.emit("click:character");
-    };
+    const editOnClick = () => {
+      context.emit("click:edit", props.team.id);
+    }
 
     const changeBuildname = (memberId: number, buildname: string) => {
       context.emit("change:buildname", props.team.id, memberId, buildname);
@@ -356,13 +348,12 @@ export default defineComponent({
 
       selectedClass,
       editable,
-      name,
       memberStats,
       elementalResonance,
       resonanceElementImgSrcs,
+      description,
 
-      nameOnChange,
-      characterOnClick,
+      editOnClick,
       changeBuildname,
     };
   },
@@ -436,5 +427,13 @@ img.elemental-resonance {
   table-layout: fixed;
   border-spacing: 0;
   text-align: center;
+}
+
+div.description {
+  margin-top: 3px;
+  font-size: 2rem;
+  height: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>
