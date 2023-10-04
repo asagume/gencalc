@@ -629,6 +629,6 @@ table.res {
 }
 
 .physical {
-  background-color: gray;
+  background-color: silver;
 }
 </style>
