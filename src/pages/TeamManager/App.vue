@@ -64,7 +64,7 @@
 <script lang="ts">
 import _ from 'lodash';
 import draggable from 'vuedraggable';
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from './team';
 import TeamItem from './TeamItem.vue';
@@ -83,9 +83,7 @@ export default defineComponent({
   },
   setup() {
     const { displayName } = CompositionFunction();
-
     const teamEditorVisible = ref(false);
-    const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const DISPLAY_STAT_LIST = [
       ['', 'None'],
       ['レベル', 'Lv.'],
@@ -96,9 +94,30 @@ export default defineComponent({
       ['会心率/ダメージ', 'CRIT'],
       ['元素チャージ効率', 'ER'],
     ];
+    const numberOfTeams = ref(NUMBER_OF_TEAMS);
+    const teams = reactive([] as TTeam[]);
     const displayStat = ref('');
-
     const selectedTeamId = ref(0);
+    const saveddataStr = ref('');
+
+    onMounted(() => {
+      loadOnClick();
+    })
+
+    const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
+
+    const builddataStr = computed(() => {
+      const work: TTeam[] = _.cloneDeep(teams);
+      work.forEach((team) => {
+        team.members.forEach((member) => {
+          member.builddata = undefined;
+        });
+      });
+      return JSON.stringify(work);
+    });
+
+    const saveDisabled = computed(() => builddataStr.value == saveddataStr.value);
+
     const teamSelected = (index: number) => index == selectedTeamId.value;
 
     function makeBlankMember(index: number): TMember {
@@ -140,7 +159,6 @@ export default defineComponent({
       });
     }
 
-    const teams = reactive([] as TTeam[]);
     for (let i = 0; i < numberOfTeams.value; i++) {
       teams.push(makeBlankTeam(i));
     }
@@ -156,30 +174,6 @@ export default defineComponent({
       selectedTeamId.value = index;
     };
 
-    const clearOnClick = () => {
-      teams.forEach((team) => {
-        initializeTeam(team);
-      });
-    };
-
-    const builddataStr = computed(() => {
-      const work: TTeam[] = _.cloneDeep(teams);
-      work.forEach((team) => {
-        team.members.forEach((member) => {
-          member.builddata = undefined;
-        });
-      });
-      return JSON.stringify(work);
-    });
-    const saveddataStr = ref('');
-
-    const saveOnClick = () => {
-      localStorage.setItem('teams', builddataStr.value);
-      saveddataStr.value = builddataStr.value;
-    };
-
-    const saveDisabled = computed(() => builddataStr.value == saveddataStr.value);
-
     const numberOfTeamsOnChange = () => {
       if (numberOfTeams.value > teams.length) {
         for (let i = teams.length; i < numberOfTeams.value; i++) {
@@ -191,6 +185,11 @@ export default defineComponent({
         }
         teams.splice(numberOfTeams.value);
       }
+    };
+
+    const saveOnClick = () => {
+      localStorage.setItem('teams', builddataStr.value);
+      saveddataStr.value = builddataStr.value;
     };
 
     const loadOnClick = () => {
@@ -230,9 +229,20 @@ export default defineComponent({
         }
       }
     };
-    loadOnClick();
 
-    const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
+    const clearOnClick = () => {
+      teams.forEach((team) => {
+        initializeTeam(team);
+      });
+    };
+
+    const editOnClick = (id: number) => {
+      if (id == selectedTeamId.value) {
+        teamEditorVisible.value = true;
+      } else {
+        selectedTeamId.value = id;
+      }
+    };
 
     const updateTeam = (newTeam: TTeam) => {
       if (selectedTeamId.value != -1) {
@@ -254,14 +264,6 @@ export default defineComponent({
         team.description = newTeam.description;
       }
       teamEditorVisible.value = false;
-    };
-
-    const editOnClick = (id: number) => {
-      if (id == selectedTeamId.value) {
-        teamEditorVisible.value = true;
-      } else {
-        selectedTeamId.value = id;
-      }
     };
 
     const buildnameOnChange = (teamId: number, memberId: number, buildname: string) => {

@@ -41,7 +41,9 @@
                   :alt="displayName(getActionDetail(element).名前)" @click="rotationActionOnClick(element)" />
                 <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
               </div>
-              <div class="action-attribute">{{ actionAttribute(element) }}</div>
+              <div class="action-attribute">
+                {{ actionAttribute(element) }}
+              </div>
               <div class="control">
                 <button type="button" @click="removeItemOnClick(element)">×</button>
               </div>
@@ -58,6 +60,7 @@ import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue"
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { TMember, TTeam } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
+import { NUMBER_CONDITION_VALUE_RE } from "@/input";
 
 type TActionItem = {
   id: number;
@@ -171,19 +174,6 @@ export default defineComponent({
       return result;
     }
 
-    const actionAttribute = (item: TActionItem) => {
-      let result = '';
-      if (NORMAL_ATTACK_ACTION_LIST.includes(item.action) || item.action.startsWith('N')) { // 通常攻撃, 重撃, 落下攻撃
-        result = item.action;
-      } else if (item.action.startsWith('E')) { // 元素スキル
-        result = item.action.replace(/^E\./, '');
-      } else if (item.action == 'Q') { // 元素爆発
-        const master = getCharacterDetail(item.member);
-        result = 'Q' + master?.元素爆発?.元素エネルギー ?? '';
-      }
-      return result;
-    }
-
     const colorClass = (character: string) => {
       const master = getCharacterMaster(character);
       return master ? ' ' + (ELEMENT_COLOR_CLASS as any)[master.元素] : '';
@@ -192,6 +182,20 @@ export default defineComponent({
     const bgColorClass = (character: string) => {
       const master = getCharacterMaster(character);
       return master ? ' ' + (ELEMENT_BG_COLOR_CLASS as any)[master.元素] : '';
+    }
+
+    const actionAttribute = (item: TActionItem) => {
+      let result = '';
+      if (NORMAL_ATTACK_ACTION_LIST.includes(item.action) || item.action.startsWith('N')) { // 通常攻撃, 重撃, 落下攻撃
+        result = item.action;
+      } else if (item.action.startsWith('E')) { // 元素スキル
+        result = item.action.replace(/^E\./, '');
+      } else if (item.action == 'Q') { // 元素爆発
+        //const master = getCharacterDetail(item.member);
+        //result = 'Q' + master?.元素爆発?.元素エネルギー ?? '';
+        result = 'Q';
+      }
+      return result;
     }
 
     const listActionOnClick = (member: TMember, actionKey: string) => {
@@ -203,7 +207,29 @@ export default defineComponent({
     }
 
     const rotationActionOnClick = (item: TActionItem) => {
-      if (NORMAL_ATTACK_ACTION_LIST.includes(item.action) || item.action.startsWith('N')) { // 通常攻撃, 重撃, 落下攻撃
+      if (item.action.startsWith('N')) { // 通常攻撃
+        const work = item.action.substring(1);
+        let n = work ? Number(work) : 1;
+        let dan = 1;
+        const master = getCharacterDetail(item.member);
+        if (master) {
+          for (const detail of [master.特殊通常攻撃?.詳細, master.通常攻撃?.詳細]) {
+            if (!detail) continue;
+            detail.forEach((dmgDetail: any) => {
+              if (dmgDetail.名前) {
+                const ret = dmgDetail.名前.match(/.*(\d)段.+/);
+                if (!ret) return;
+                const tempDan = Number(ret[1]);
+                if (tempDan > dan) {
+                  dan = tempDan;
+                }
+              }
+            })
+            break;
+          }
+        }
+        item.action = ++n > dan ? 'C' : 'N' + n;
+      } else if (NORMAL_ATTACK_ACTION_LIST.includes(item.action)) { // 重撃, 落下攻撃
         let index = NORMAL_ATTACK_ACTION_LIST.indexOf(item.action);
         index = index < (NORMAL_ATTACK_ACTION_LIST.length - 1) ? index + 1 : 0;
         item.action = NORMAL_ATTACK_ACTION_LIST[index];
@@ -296,5 +322,8 @@ div.control {
 
 div.control button {
   font-size: 12px;
+  background-color: transparent;
+  border-color: silver;
+  border-style: none;
 }
 </style>

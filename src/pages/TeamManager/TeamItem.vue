@@ -580,14 +580,14 @@ label.name span.button {
   position: absolute;
   left: 220px;
   top: 0;
-  font-size: 2.6rem;
+  font-size: 3rem;
 }
 
 label.name span.button {
   display: inline-block;
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 1px;
 }
 
 label.name input {
