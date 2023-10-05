@@ -287,8 +287,8 @@ img.action-icon {
 img.character-icon {
   vertical-align: top;
   width: 65px;
-  height: 45px;
-  object-position: 0 0;
+  height: 50px;
+  object-position: top;
   object-fit: cover;
 }
 
