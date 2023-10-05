@@ -70,7 +70,7 @@ export default defineComponent({
     elementalResonance: { type: Array as PropType<string[]> },
   },
   emits: ["click:character", "change:buildname"],
-  setup(props, context) {
+  setup(props) {
     const { displayName, displayStatValue } = CompositionFunction();
 
     const extraControl = ref("locate");
