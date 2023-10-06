@@ -36,7 +36,7 @@
             <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
               :src="getCharacterMaster(element.member).icon_url" :alt="displayName(element.member)" />
             <div :class="'action-item ' + colorClass(element.member)">
-              <div class="with-tooltip">
+              <div class="with-tooltip" @touchend="rotationActionOnClick(element)">
                 <img :class="'action-icon handle' + bgColorClass(element.member)" :src="getActionDetail(element).icon_url"
                   :alt="displayName(getActionDetail(element).名前)" @click="rotationActionOnClick(element)" />
                 <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
@@ -60,7 +60,6 @@ import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue"
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { TMember, TTeam } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
-import { NUMBER_CONDITION_VALUE_RE } from "@/input";
 
 type TActionItem = {
   id: number;
@@ -82,6 +81,8 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
     const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
     const characterDetailMap = new Map();
+    const normalAttackDanMap = new Map(); // 通常攻撃の段数
+    const elementalSkillActionsMap = new Map(); // 元素スキル 一回押し 長押し
     const rotationList = reactive([] as TActionItem[]);
 
     const watchCount = ref(0);
@@ -98,6 +99,8 @@ export default defineComponent({
               member.name as TCharacterKey
             );
             characterDetailMap.set(member.name, characterMasterDetail);
+            normalAttackDanMap.set(member.name, getNormalAttackDan(member.name));
+            elementalSkillActionsMap.set(member.name, getElementalSkillActions(member.name));
           }
         }
         rotationList.splice(0, rotationList.length);
@@ -116,6 +119,44 @@ export default defineComponent({
       watchCount.value;
       return characterDetailMap.get(character) ?? undefined;
     };
+
+    function getNormalAttackDan(name: string) {
+      let dan = 1;
+      const master = getCharacterDetail(name);
+      if (master) {
+        for (const detail of [master.特殊通常攻撃?.詳細, master.通常攻撃?.詳細]) {
+          if (!detail) continue;
+          detail.forEach((dmgDetail: any) => {
+            if (dmgDetail.名前) {
+              const ret = dmgDetail.名前.match(/.*(\d)段.+/);
+              if (!ret) return;
+              const tempDan = Number(ret[1]);
+              if (tempDan > dan) {
+                dan = tempDan;
+              }
+            }
+          })
+          break;
+        }
+      }
+      return dan;
+    }
+
+    function getElementalSkillActions(name: string) {
+      const result = [];
+      const master = getCharacterDetail(name);
+      if (master && master?.元素スキル?.説明) {
+        const description = master?.元素スキル?.説明;
+        if (description.indexOf('>一回押し<') !== -1 && description.indexOf('>長押し<') !== -1) {
+          result.push('E.Press');
+          result.push('E.Hold');
+        }
+        if (result.length == 0) {
+          result.push('E');
+        }
+      }
+      return result;
+    }
 
     const getNormalAttackDetail = (member: TMember) => {
       const master = getCharacterDetail(member.name);
@@ -147,22 +188,6 @@ export default defineComponent({
       return result;
     };
 
-    function getElementalSkillCode(name: string) {
-      const result = [];
-      const master = getCharacterDetail(name);
-      if (master && master?.元素スキル?.説明) {
-        const description = master?.元素スキル?.説明;
-        if (description.indexOf('>一回押し<') !== -1 && description.indexOf('>長押し<') !== -1) {
-          result.push('E.Press');
-          result.push('E.Hold');
-        }
-        if (result.length == 0) {
-          result.push('E');
-        }
-      }
-      return result;
-    }
-
     const previousRotation = (item: TActionItem) => {
       let result;
       for (const rotation of rotationList) {
@@ -184,9 +209,13 @@ export default defineComponent({
       return master ? ' ' + (ELEMENT_BG_COLOR_CLASS as any)[master.元素] : '';
     }
 
+    function isActionNormalAttack(action: string) {
+      return NORMAL_ATTACK_ACTION_LIST.includes(action) || action.startsWith('N');
+    }
+
     const actionAttribute = (item: TActionItem) => {
       let result = '';
-      if (NORMAL_ATTACK_ACTION_LIST.includes(item.action) || item.action.startsWith('N')) { // 通常攻撃, 重撃, 落下攻撃
+      if (isActionNormalAttack(item.action)) { // 通常攻撃, 重撃, 落下攻撃
         result = item.action;
       } else if (item.action.startsWith('E')) { // 元素スキル
         result = item.action.replace(/^E\./, '');
@@ -199,46 +228,45 @@ export default defineComponent({
     }
 
     const listActionOnClick = (member: TMember, actionKey: string) => {
+      let action = actionKey;
+      if (isActionNormalAttack(action)) {
+        const workArr = rotationList.filter(s => s.member == member.name && isActionNormalAttack(s.action));
+        if (workArr.length > 0) {
+          action = workArr[workArr.length - 1].action;
+        }
+      } else if (action.startsWith('E')) {
+        const workArr = rotationList.filter(s => s.member == member.name && s.action.startsWith('E'));
+        if (workArr.length > 0) {
+          action = workArr[workArr.length - 1].action;
+        } else {
+          action = elementalSkillActionsMap.get(member.name)[0];
+        }
+      }
       rotationList.push({
         id: ++actionId,
         member: member.name,
-        action: actionKey === 'E' ? getElementalSkillCode(member.name)[0] : actionKey,
+        action: action,
       });
     }
 
     const rotationActionOnClick = (item: TActionItem) => {
-      if (item.action.startsWith('N')) { // 通常攻撃
-        const work = item.action.substring(1);
-        let n = work ? Number(work) : 1;
-        let dan = 1;
-        const master = getCharacterDetail(item.member);
-        if (master) {
-          for (const detail of [master.特殊通常攻撃?.詳細, master.通常攻撃?.詳細]) {
-            if (!detail) continue;
-            detail.forEach((dmgDetail: any) => {
-              if (dmgDetail.名前) {
-                const ret = dmgDetail.名前.match(/.*(\d)段.+/);
-                if (!ret) return;
-                const tempDan = Number(ret[1]);
-                if (tempDan > dan) {
-                  dan = tempDan;
-                }
-              }
-            })
-            break;
-          }
+      if (isActionNormalAttack(item.action)) {
+        if (item.action.startsWith('N')) { // 通常攻撃
+          const work = item.action.substring(1);
+          let n = work ? Number(work) : 1;
+          const dan = normalAttackDanMap.get(item.member) ?? 1;
+          item.action = ++n > dan ? 'C' : 'N' + n;
+        } else { // 重撃, 落下攻撃
+          let index = NORMAL_ATTACK_ACTION_LIST.indexOf(item.action);
+          index = index < (NORMAL_ATTACK_ACTION_LIST.length - 1) ? index + 1 : 0;
+          item.action = NORMAL_ATTACK_ACTION_LIST[index];
         }
-        item.action = ++n > dan ? 'C' : 'N' + n;
-      } else if (NORMAL_ATTACK_ACTION_LIST.includes(item.action)) { // 重撃, 落下攻撃
-        let index = NORMAL_ATTACK_ACTION_LIST.indexOf(item.action);
-        index = index < (NORMAL_ATTACK_ACTION_LIST.length - 1) ? index + 1 : 0;
-        item.action = NORMAL_ATTACK_ACTION_LIST[index];
       } else if (item.action.startsWith('E')) { // 元素スキル
-        const codeArr = getElementalSkillCode(item.member);
-        if (codeArr.length > 1) {
-          let index = codeArr.indexOf(item.action);
-          index = index < (codeArr.length - 1) ? index + 1 : 0;
-          item.action = codeArr[index];
+        const actions = elementalSkillActionsMap.get(item.member);
+        if (actions.length > 1) {
+          let index = actions.indexOf(item.action);
+          index = index < (actions.length - 1) ? index + 1 : 0;
+          item.action = actions[index];
         }
       }
     }

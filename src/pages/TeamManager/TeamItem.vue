@@ -19,7 +19,7 @@
           <td v-for="member in team.members" :key="member.id">
             <MemberItem :member="member" :statsObj="memberStats[member.id]" :displayStat="displayStat"
               :showEquipment="true" :viewable="true" :members="team.members.map(s => s.name)"
-              :elementalResonance="elementalResonance" @change:buildname="changeBuildname" />
+              :elementalResonance="elementalResonance" />
           </td>
         </tr>
       </table>
@@ -578,7 +578,7 @@ label.name span {
 label.name span.button {
   display: inline-block;
   position: absolute;
-  left: 220px;
+  left: 217px;
   top: 0;
   font-size: 3rem;
 }
