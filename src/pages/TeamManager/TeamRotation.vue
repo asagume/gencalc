@@ -86,6 +86,7 @@ export default defineComponent({
     const normalAttackDanMap = new Map(); // 通常攻撃の段数
     const elementalSkillActionsMap = new Map(); // 元素スキル 一回押し 長押し
     const rotationList = reactive([] as TActionItem[]);
+    let isClickIgnore = false; // draggableによってローテーションの内容が変化したときに同時に発生するクリックイベントを無視したい
 
     const watchCount = ref(0);
     watch(props, async () => {
@@ -111,6 +112,7 @@ export default defineComponent({
           rotationList.splice(0, rotationList.length);
         }
       }
+      isClickIgnore = false;
     }
 
     onMounted(() => {
@@ -296,11 +298,16 @@ export default defineComponent({
       context.emit('update:rotation', rotationList);
     }
 
-    const rotationListOnChange = () => {
+    const rotationListOnChange = (event: any) => {
+      isClickIgnore = true;
       updateRotation();
     }
 
     const listActionOnClick = (member: TMember, actionKey: string) => {
+      if (isClickIgnore) {
+        isClickIgnore = false;
+        return;
+      }
       let action = actionKey;
       if (isActionNormalAttack(action)) {
         const workArr = rotationList.filter(s => s.member == member.name && isActionNormalAttack(s.action));
