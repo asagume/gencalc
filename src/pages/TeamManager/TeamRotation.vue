@@ -438,6 +438,7 @@ div.rotation-item {
   vertical-align: top;
   font-size: 14px;
   padding-left: 4px;
+  padding-bottom: 4px;
 }
 
 div.action-item {
