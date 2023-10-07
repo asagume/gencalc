@@ -28,6 +28,12 @@
           </span>
         </div>
       </template>
+      <div class="input-control">
+        <label :class="removeMode ? 'checked' : ''">
+          <input type="checkbox" v-model="removeMode">
+          <span class="material-symbols-outlined">delete</span>
+        </label>
+      </div>
     </fieldset>
     <fieldset class="rotation-list">
       <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle">
@@ -40,12 +46,10 @@
                 <img :class="'action-icon handle' + bgColorClass(element.member)" :src="getActionDetail(element).icon_url"
                   :alt="displayName(getActionDetail(element).名前)" @click="rotationActionOnClick(element)" />
                 <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
+                <div v-if="removeMode" class="remove-mark" @click="removeItemOnClick(element)"></div>
               </div>
               <div class="action-attribute">
                 {{ actionAttribute(element) }}
-              </div>
-              <div class="control">
-                <button type="button" @click="removeItemOnClick(element)">×</button>
               </div>
             </div>
           </div>
@@ -81,6 +85,7 @@ export default defineComponent({
   },
   setup(props) {
     const { displayName } = CompositionFunction();
+    const removeMode = ref(false);
     const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
     const characterDetailMap = new Map();
     const normalAttackDanMap = new Map(); // 通常攻撃の段数
@@ -128,17 +133,20 @@ export default defineComponent({
       if (master) {
         for (const detail of [master.特殊通常攻撃?.詳細, master.通常攻撃?.詳細]) {
           if (!detail) continue;
+          let workDan = 1;
           detail.forEach((dmgDetail: any) => {
             if (dmgDetail.名前) {
               const ret = dmgDetail.名前.match(/.*(\d)段.+/);
               if (!ret) return;
               const tempDan = Number(ret[1]);
-              if (tempDan > dan) {
-                dan = tempDan;
+              if (tempDan > workDan) {
+                workDan = tempDan;
               }
             }
           })
-          break;
+          if (dan < workDan) { // 元素スキル、元素爆発で通常攻撃が変化する場合は、段数の多い方を採用します
+            dan = workDan;
+          }
         }
       }
       return dan;
@@ -308,6 +316,10 @@ export default defineComponent({
     }
 
     const rotationActionOnClick = (item: TActionItem) => {
+      if (removeMode.value) {
+        removeItemOnClick(item);
+        return;
+      }
       if (isActionNormalAttack(item.action)) {
         if (item.action.startsWith('N')) { // 通常攻撃
           const work = item.action.substring(1);
@@ -336,6 +348,7 @@ export default defineComponent({
     return {
       displayName,
       IMG_SRC_DUMMY,
+      removeMode,
 
       colorClass,
       bgColorClass,
@@ -385,6 +398,20 @@ fieldset.rotation-list {
   background-color: whitesmoke;
 }
 
+div.input-control {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  vertical-align: middle;
+}
+
+div.input-control input[type="checkbox"] {
+  display: none;
+}
+
+div.input-control label.checked {
+  color: orange;
+}
+
 div.rotation-item {
   display: inline-block;
   position: relative;
@@ -413,5 +440,30 @@ div.control button {
   background-color: transparent;
   border-color: silver;
   border-style: none;
+}
+
+.tooltip {
+  top: -2rem;
+}
+
+div.remove-mark {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 15px);
+}
+
+.remove-mark::before,
+.remove-mark::after {
+  content: '';
+  width: 30px;
+  height: 3px;
+  background: black;
+  position: absolute;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.remove-mark::after {
+  transform: translateY(-50%) rotate(135deg);
 }
 </style>
