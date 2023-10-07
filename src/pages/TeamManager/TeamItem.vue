@@ -128,7 +128,10 @@ export default defineComponent({
     }
 
     function calculateStat() {
-      const teamAdjustments: TStats = {};
+      const teamAdjustments: { [key: string]: TStats } = {};
+      Object.keys(memberResults).forEach(key => {
+        teamAdjustments[key] = {};
+      })
       Object.keys(memberResults).forEach(key => {
         const memberResult = memberResults[key];
         const characterMaster = memberResult.characterInput?.characterMaster;
@@ -137,32 +140,44 @@ export default defineComponent({
           for (const damageDetail of characterMaster.チームバフ) {
             if (damageDetail.条件) continue;
             const value = calculateFormulaArray(damageDetail.数値, memberResult.statsInput.statsObj, memberResult.damageResult, damageDetail.最大値, damageDetail.最小値);
-            if (damageDetail.種類 in teamAdjustments) {
-              teamAdjustments[damageDetail.種類] += value;
-            } else {
-              teamAdjustments[damageDetail.種類] = value;
-            }
+            const toStat = damageDetail.種類.replace(/V[1-3]$/, '');
+            Object.keys(memberResults).forEach(key2 => {
+              if (key2 != key) { // チームバフは本人対象外とします
+                if (toStat in teamAdjustments) {
+                  teamAdjustments[key2][toStat] += value;
+                } else {
+                  teamAdjustments[key2][toStat] = value;
+                }
+              }
+            })
           }
         }
         if (weaponMaster && weaponMaster.チームバフ) {
           for (const damageDetail of weaponMaster.チームバフ) {
             if (damageDetail.条件) continue;
             const value = calculateFormulaArray(damageDetail.数値, memberResult.statsInput.statsObj, memberResult.damageResult, damageDetail.最大値, damageDetail.最小値);
-            if (damageDetail.種類 in teamAdjustments) {
-              teamAdjustments[damageDetail.種類] += value;
-            } else {
-              teamAdjustments[damageDetail.種類] = value;
-            }
+            const toStat = damageDetail.種類.replace(/V[1-3]$/, '');
+            Object.keys(memberResults).forEach(key2 => {
+              if (key2 != key) { // チームバフは本人対象外とします
+                if (toStat in teamAdjustments) {
+                  teamAdjustments[key2][toStat] += value;
+                } else {
+                  teamAdjustments[key2][toStat] = value;
+                }
+              }
+            })
           }
         }
       })
-      for (const stat of Object.keys(teamAdjustments)) {
-        for (const memberKey of Object.keys(memberStats)) {
-          if (!memberStats[memberKey]) continue;
-          if (stat in memberStats[memberKey]) {
-            memberStats[memberKey][stat] += teamAdjustments[stat];
-          } else {
-            memberStats[memberKey][stat] = teamAdjustments[stat];
+      for (const key of Object.keys(memberStats)) {
+        if (key in teamAdjustments) {
+          for (const stat of Object.keys(teamAdjustments[key])) {
+            if (!memberStats[key]) continue;
+            if (stat in memberStats[key]) {
+              memberStats[key][stat] += teamAdjustments[key][stat];
+            } else {
+              memberStats[key][stat] = teamAdjustments[key][stat];
+            }
           }
         }
       }

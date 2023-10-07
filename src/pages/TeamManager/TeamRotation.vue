@@ -52,14 +52,16 @@
         </template>
       </draggable>
     </fieldset>
+    <!-- {{ memberParticles }}
+    {{ memberEnergyRecharge }} -->
   </div>
 </template>
 <script lang="ts">
 import draggable from "vuedraggable";
-import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { TMember, TTeam } from "./team";
-import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
+import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
 
 type TActionItem = {
   id: number;
@@ -227,6 +229,62 @@ export default defineComponent({
       return result;
     }
 
+    // 初期粒子数, 継続粒子数, CT, 継続時間
+    function getParticleInfo(name: string): [string, number, number, number, number] {
+      let result: [string, number, number, number, number] = ['', 0, 0, 0, 0];
+      const master = getCharacterDetail(name);
+      if (master) {
+        result = [(master.元素 as string), 3, 0, 0, 0];
+      } else {
+        result = ['白', 3, 0, 0, 0];
+      }
+      return result;
+    }
+
+    const memberParticles = computed(() => {
+      const result: TAnyObject = {};
+      for (let i = 0; i < rotationList.length; i++) {
+        const rotation = rotationList[i];
+        if (rotation.action.startsWith('E')) {
+          const info = getParticleInfo(rotation.member);
+          if (info[1]) {
+            const nextRotation = (i + 1) < rotationList.length ? rotationList[i + 1] : rotationList[0];
+            if (!(nextRotation.member in result)) {
+              result[nextRotation.member] = {};
+            }
+            const color = info[0];
+            const currentNum = result[nextRotation.member][color] ?? 0;
+            result[nextRotation.member][color] = currentNum + info[1];
+          }
+        }
+      }
+      return result;
+    })
+
+    const memberEnergyRecharge = computed(() => {
+      const result: TAnyObject = {};
+      props.team.members.forEach(member => {
+        let energy = 0;
+        const master = getCharacterDetail(member.name);
+        Object.keys(memberParticles.value).forEach(name2 => {
+          Object.keys(memberParticles.value[name2]).forEach(color => {
+            let work = memberParticles.value[name2][color];
+            if (color === '白') {
+              work *= 2;
+            } else if (color == master?.元素) {
+              work *= 3;
+            }
+            if (member.name != name2) {
+              work *= 0.6;
+            }
+            energy += work;
+          })
+        })
+        result[member.name] = energy;
+      })
+      return result;
+    })
+
     const listActionOnClick = (member: TMember, actionKey: string) => {
       let action = actionKey;
       if (isActionNormalAttack(action)) {
@@ -293,6 +351,8 @@ export default defineComponent({
       getCharacterDetail,
       getActionDetail,
       actionAttribute,
+      memberParticles,
+      memberEnergyRecharge,
 
       listActionOnClick,
       rotationActionOnClick,

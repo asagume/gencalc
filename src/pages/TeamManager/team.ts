@@ -1,5 +1,6 @@
 import { makeBuildStorageKey, makeDefaultBuildname } from "@/input";
 import { CHARACTER_MASTER, TCharacterKey } from "@/master";
+//import PARTICLE_MASTER from '../../../public/data/ParticleMaster2.json'// assert {type: 'json'}
 
 export type TMember = {
     id: number;

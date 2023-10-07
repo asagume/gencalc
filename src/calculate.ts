@@ -643,17 +643,26 @@ export function calculateFormulaArray(
                     }
                 }
             }
-        } else {
-            if (isNumber(formulaArr)) {
-                result = Number(formulaArr);
-            } else {
-                const temp = getStatValue(formulaArr, statsObj);
-                if (temp !== undefined) {
-                    result = temp;
-                } else {
-                    console.error(formulaArr, statsObj, null, opt_max, opt_min);
-                    result = 0; // 暫定
+        } else if (isNumber(formulaArr)) {
+            result = Number(formulaArr);
+        } else if (formulaArr.indexOf('#') != -1) {
+            const nameArr = formulaArr.split('#');
+            if (damageResult && nameArr[0] in damageResult) {
+                const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
+                for (const damageArr of damageArrArr) {
+                    if (nameArr[1] == damageArr[0]) {
+                        result = damageArr[4];  // 非会心
+                        break;
+                    }
                 }
+            }
+        } else {
+            const temp = getStatValue(formulaArr, statsObj);
+            if (temp !== undefined) {
+                result = temp;
+            } else {
+                console.error(formulaArr, statsObj, null, opt_max, opt_min);
+                result = 0; // 暫定
             }
         }
         if (opt_max != null) {
