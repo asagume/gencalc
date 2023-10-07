@@ -30,7 +30,7 @@
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
             <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-              @click="teamOnClick(element.id)" @click:edit="editOnClick" @change:buildname="buildnameOnChange" />
+              @click="teamOnClick(element.id)" @click:edit="editOnClick" />
           </template>
         </draggable>
       </div>
@@ -42,17 +42,23 @@
 
     <div class="pane3">
       <hr />
-      <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" />
+      <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" @update:rotation="updateRotation" />
     </div>
 
     <div class="pane4"></div>
 
     <div class="footer">
       <hr />
-      <h2>チーム編成 Ver.0.3.0</h2>
+      <h2>チーム編成 Ver.0.5.0</h2>
       <ul class="usage">
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
+      <dl class="history">
+        <dt>0.5.0</dt>
+        <dd>
+          ローテーションが保存されるようになりました。チームデータの一部として記憶します。
+        </dd>
+      </dl>
       <p>
         <a href="./">げんかるく - 原神ダメージシミュレーター</a>
         &nbsp;
@@ -66,7 +72,7 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TMember, TTeam } from './team';
+import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TTeam } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
@@ -137,6 +143,7 @@ export default defineComponent({
         name: 'チーム' + (index + 1),
         members: [] as TMember[],
         description: '',
+        rotation: [],
       };
       for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
         team.members.push(makeBlankMember(memberId++));
@@ -225,6 +232,11 @@ export default defineComponent({
               }
             }
             team.description = work[i].description;
+            if (work[i].rotation && work[i].rotation.length) {
+              team.rotation = work[i].rotation;
+            } else {
+              team.rotation = [];
+            }
           }
         }
       }
@@ -262,19 +274,24 @@ export default defineComponent({
           team.members.splice(0, team.members.length, ...workMembers);
         }
         team.description = newTeam.description;
+        const teamMembers = newTeam.members.map(s => s.name);
+        if (newTeam.rotation.filter(s => !teamMembers.includes(s.member)).length) {
+          team.rotation = [];
+        } else {
+          team.rotation = newTeam.rotation;
+        }
       }
       teamEditorVisible.value = false;
     };
 
-    const buildnameOnChange = (teamId: number, memberId: number, buildname: string) => {
-      const team = teams.filter((s) => s.id == teamId)[0];
-      if (team) {
-        const member = team.members.filter((s) => s.id == memberId)[0];
-        if (member) {
-          member.buildname = buildname;
+    const updateRotation = (rotationList: TActionItem[]) => {
+      if (selectedTeamId.value != -1) {
+        const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
+        if (team) {
+          team.rotation.splice(0, team.rotation.length, ...rotationList);
         }
       }
-    };
+    }
 
     return {
       displayName,
@@ -298,12 +315,10 @@ export default defineComponent({
       forcusedTeam,
 
       teamOnClick,
-
+      editOnClick,
       memberOnClick,
       updateTeam,
-
-      editOnClick,
-      buildnameOnChange,
+      updateRotation,
     };
   },
 });
@@ -369,6 +384,10 @@ label.number-of-teams input[type="number"] {
 }
 
 ul.usage {
+  text-align: left;
+}
+
+dl.history {
   text-align: left;
 }
 </style>

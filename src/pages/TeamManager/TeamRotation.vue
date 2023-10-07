@@ -36,7 +36,7 @@
       </div>
     </fieldset>
     <fieldset class="rotation-list">
-      <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle">
+      <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" @change="rotationListOnChange">
         <template #item="{ element }">
           <div class="rotation-item">
             <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
@@ -64,14 +64,8 @@
 import draggable from "vuedraggable";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { TMember, TTeam } from "./team";
+import { TActionItem, TMember, TTeam } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
-
-type TActionItem = {
-  id: number;
-  member: string;
-  action: string;
-};
 
 let actionId = 0;
 
@@ -83,7 +77,8 @@ export default defineComponent({
   props: {
     team: { type: Object as PropType<TTeam>, required: true },
   },
-  setup(props) {
+  emit: ['update:rotation'],
+  setup(props, context) {
     const { displayName } = CompositionFunction();
     const removeMode = ref(false);
     const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
@@ -110,7 +105,11 @@ export default defineComponent({
             elementalSkillActionsMap.set(member.name, getElementalSkillActions(member.name));
           }
         }
-        rotationList.splice(0, rotationList.length);
+        if (team.rotation && team.rotation.length) {
+          rotationList.splice(0, rotationList.length, ...team.rotation);
+        } else {
+          rotationList.splice(0, rotationList.length);
+        }
       }
     }
 
@@ -293,6 +292,14 @@ export default defineComponent({
       return result;
     })
 
+    const updateRotation = () => {
+      context.emit('update:rotation', rotationList);
+    }
+
+    const rotationListOnChange = () => {
+      updateRotation();
+    }
+
     const listActionOnClick = (member: TMember, actionKey: string) => {
       let action = actionKey;
       if (isActionNormalAttack(action)) {
@@ -313,6 +320,7 @@ export default defineComponent({
         member: member.name,
         action: action,
       });
+      updateRotation();
     }
 
     const rotationActionOnClick = (item: TActionItem) => {
@@ -322,10 +330,19 @@ export default defineComponent({
       }
       if (isActionNormalAttack(item.action)) {
         if (item.action.startsWith('N')) { // 通常攻撃
-          const work = item.action.substring(1);
+          const master = getCharacterDetail(item.member);
+          const work = item.action.substring(1, 2);
           let n = work ? Number(work) : 1;
           const dan = normalAttackDanMap.get(item.member) ?? 1;
-          item.action = ++n > dan ? 'C' : 'N' + n;
+          if (master && ['片手剣', '長柄武器'].includes(master.武器)) {
+            if (item.action.length < 3) {
+              item.action = 'N' + n + 'C';
+            } else {
+              item.action = ++n > dan ? 'P' : 'N' + n;
+            }
+          } else {
+            item.action = ++n > dan ? 'C' : 'N' + n;
+          }
         } else { // 重撃, 落下攻撃
           let index = NORMAL_ATTACK_ACTION_LIST.indexOf(item.action);
           index = index < (NORMAL_ATTACK_ACTION_LIST.length - 1) ? index + 1 : 0;
@@ -339,10 +356,12 @@ export default defineComponent({
           item.action = actions[index];
         }
       }
+      updateRotation();
     }
 
     const removeItemOnClick = (item: TActionItem) => {
       rotationList.splice(0, rotationList.length, ...rotationList.filter(s => s != item));
+      updateRotation();
     }
 
     return {
@@ -367,6 +386,7 @@ export default defineComponent({
       memberParticles,
       memberEnergyRecharge,
 
+      rotationListOnChange,
       listActionOnClick,
       rotationActionOnClick,
       removeItemOnClick,
@@ -427,6 +447,8 @@ div.action-item {
 
 div.action-attribute {
   text-align: center;
+  text-shadow:
+    0px 1px 0px #003366;
 }
 
 div.control {

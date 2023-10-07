@@ -11,11 +11,18 @@ export type TMember = {
     replacements: string[],
 };
 
+export type TActionItem = {
+    id: number;
+    member: string;
+    action: string;
+};
+
 export type TTeam = {
     id: number;
     name: string;
     members: TMember[];
     description: string,
+    rotation: TActionItem[];
 };
 
 export const NUMBER_OF_TEAMS = 10;

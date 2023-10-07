@@ -82,6 +82,7 @@ export default defineComponent({
       name: '',
       members: [],
       description: '',
+      rotation: [],
     } as TTeam);
     const selectedMemberId = ref(-1);
     const TAG_LIST = ['Main-DPS', 'Carry', 'Sub-DPS', 'Support', 'Driver', 'Enabler', 'Battery', 'Free'];
@@ -104,6 +105,7 @@ export default defineComponent({
       }
       workTeam.members.splice(0, workTeam.members.length, ...work);
       workTeam.description = props.team.description;
+      workTeam.rotation = props.team.rotation;
     }
     duplicateTeam();
 
