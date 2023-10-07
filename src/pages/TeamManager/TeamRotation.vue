@@ -304,10 +304,6 @@ export default defineComponent({
     }
 
     const listActionOnClick = (member: TMember, actionKey: string) => {
-      if (isClickIgnore) {
-        isClickIgnore = false;
-        return;
-      }
       let action = actionKey;
       if (isActionNormalAttack(action)) {
         const workArr = rotationList.filter(s => s.member == member.name && isActionNormalAttack(s.action));
@@ -331,6 +327,10 @@ export default defineComponent({
     }
 
     const rotationActionOnClick = (item: TActionItem) => {
+      if (isClickIgnore) {
+        isClickIgnore = false;
+        return;
+      }
       if (removeMode.value) {
         removeItemOnClick(item);
         return;
