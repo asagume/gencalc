@@ -253,7 +253,7 @@ export default defineComponent({
             } else {
               team.rotation = [];
             }
-            team.rotationDescription = work[i].rotationDescription;
+            team.rotationDescription = work[i].rotationDescription ?? '';
           }
         }
       }
