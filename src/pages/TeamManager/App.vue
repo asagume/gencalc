@@ -14,7 +14,8 @@
         </div>
         <label class="number-of-teams">
           Number of teams
-          <input type="number" :min="NUMBER_OF_TEAMS" v-model="numberOfTeams" @change="numberOfTeamsOnChange" />
+          <input type="number" :min="NUMBER_OF_TEAMS" :max="999" v-model="numberOfTeams"
+            @change="numberOfTeamsOnChange" />
         </label>
         <div class="data-control">
           <button type="button" :disabled="saveDisabled" @click="saveOnClick">
@@ -29,8 +30,10 @@
       <div v-show="!teamEditorVisible">
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
-            <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-              @click="teamOnClick(element.id)" @click:edit="editOnClick" />
+            <div style="display: inline-block;" :id="'team-' + element.id">
+              <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
+                @click="teamOnClick(element.id)" @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation" />
+            </div>
           </template>
         </draggable>
       </div>
@@ -42,7 +45,10 @@
 
     <div class="pane3">
       <hr />
-      <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" @update:rotation="updateRotation" />
+      <div id="team-rotation">
+        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" @update:rotation="updateRotation"
+          @click:jump-to-team="jumpToTeam" />
+      </div>
     </div>
 
     <div class="pane4"></div>
@@ -118,6 +124,11 @@ export default defineComponent({
         team.members.forEach((member) => {
           member.builddata = undefined;
         });
+        if (team.rotation && team.rotation.length) {
+          team.rotation.forEach(e => {
+            e.id = 0;
+          })
+        }
       });
       return JSON.stringify(work);
     });
@@ -205,6 +216,7 @@ export default defineComponent({
         const work = JSON.parse(storageValue);
         numberOfTeams.value = work.length;
         numberOfTeamsOnChange();
+        let actionId = 1;
         for (let i = 0; i < teams.length; i++) {
           const team = teams[i];
           if (work[i]) {
@@ -234,6 +246,9 @@ export default defineComponent({
             team.description = work[i].description;
             if (work[i].rotation && work[i].rotation.length) {
               team.rotation = work[i].rotation;
+              team.rotation.forEach(e => {
+                e.id = actionId++;
+              })
             } else {
               team.rotation = [];
             }
@@ -293,6 +308,16 @@ export default defineComponent({
       }
     }
 
+    const jumpToRotation = () => {
+      document.getElementById('team-rotation')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const jumpToTeam = () => {
+      if (selectedTeamId.value != -1) {
+        document.getElementById('team-' + selectedTeamId.value)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
     return {
       displayName,
 
@@ -314,11 +339,13 @@ export default defineComponent({
       teams,
       forcusedTeam,
 
+      updateTeam,
+      updateRotation,
       teamOnClick,
       editOnClick,
       memberOnClick,
-      updateTeam,
-      updateRotation,
+      jumpToRotation,
+      jumpToTeam,
     };
   },
 });

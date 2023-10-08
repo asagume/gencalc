@@ -29,8 +29,11 @@
         <td v-for="key in resKey" :key="key" :class="resBgClass(key)">{{ res[key] }}</td>
       </tr>
     </table>
-    <div class="description">
-      {{ description }}
+    <div style="text-align: left;">
+      <span class="material-symbols-outlined control-button" @click="jumpToRotation">stat_minus_2</span>
+      <div class="description">
+        {{ description }}
+      </div>
     </div>
   </div>
 </template>
@@ -80,7 +83,7 @@ export default defineComponent({
     selected: { type: Boolean, requied: true },
     displayStat: { type: String },
   },
-  emits: ["click:edit", "change:buildname"],
+  emits: ['click:edit', 'change:buildname', 'click:jump-to-rotation'],
   components: {
     MemberItem,
   },
@@ -89,7 +92,7 @@ export default defineComponent({
 
     const memberStats = reactive({} as TAnyObject);
     const memberResults = reactive({} as { [key: string]: TMemberResult });
-    const selectedClass = computed(() => (props.selected ? " selected" : ""));
+    const selectedClass = computed(() => (props.selected ? ' selected' : ''));
     const editable = ref(false);
     const res = reactive({} as TAnyObject);
     const resKey = ['炎', '水', '風', '雷', '草', '氷', '岩', '物理'];
@@ -373,7 +376,7 @@ export default defineComponent({
       return result;
     });
 
-    const description = computed(() => props.team.description ? props.team.description : '-')
+    const description = computed(() => props.team.description ?? '')
 
     const calculateMemberResult = async (member: TMember): Promise<TMemberResult> => {
       const characterInput: TCharacterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE);
@@ -532,12 +535,12 @@ export default defineComponent({
     }
 
     const editOnClick = () => {
-      context.emit("click:edit", props.team.id);
+      context.emit('click:edit', props.team.id);
     }
 
-    const changeBuildname = (memberId: number, buildname: string) => {
-      context.emit("change:buildname", props.team.id, memberId, buildname);
-    };
+    const jumpToRotation = () => {
+      context.emit('click:jump-to-rotation');
+    }
 
     return {
       displayName,
@@ -553,7 +556,7 @@ export default defineComponent({
       resBgClass,
 
       editOnClick,
-      changeBuildname,
+      jumpToRotation,
     };
   },
 });
@@ -562,7 +565,7 @@ export default defineComponent({
 div.team {
   display: inline-block;
   max-width: 322px;
-  padding: 4px;
+  padding: 4px 4px 0 4px;
   border: 4px double silver;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -629,11 +632,24 @@ img.elemental-resonance {
 }
 
 div.description {
+  display: inline-block;
   margin-top: 3px;
   font-size: 2rem;
   height: 2.4rem;
+  text-align: center;
+  vertical-align: top;
   white-space: nowrap;
   overflow: hidden;
+}
+
+span.control-button {
+  display: inline-block;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: baseline;
+  color: orange;
+  font-size: 3rem;
+  padding-bottom: 0;
 }
 
 table.res {

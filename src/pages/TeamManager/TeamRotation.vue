@@ -28,12 +28,21 @@
           </span>
         </div>
       </template>
-      <div class="input-control">
-        <label :class="removeMode ? 'checked' : ''">
-          <input type="checkbox" v-model="removeMode">
-          <span class="material-symbols-outlined">delete</span>
-        </label>
-      </div>
+      <table class="control-button">
+        <tr>
+          <td style="width: 30px;">
+            <span class="material-symbols-outlined control-button" @click="$emit('click:jump-to-team')">stat_2</span>
+          </td>
+          <td>
+            <label :class="removeMode ? 'checked' : ''">
+              <input type="checkbox" v-model="removeMode">
+              <span class="material-symbols-outlined">delete</span>
+            </label>
+          </td>
+          <td style="width: 30px;">
+          </td>
+        </tr>
+      </table>
     </fieldset>
     <fieldset class="rotation-list">
       <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" @change="rotationListOnChange">
@@ -67,8 +76,6 @@ import CompositionFunction from "@/components/CompositionFunction.vue";
 import { TActionItem, TMember, TTeam } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
 
-let actionId = 0;
-
 export default defineComponent({
   name: "TeamRotation",
   components: {
@@ -77,7 +84,7 @@ export default defineComponent({
   props: {
     team: { type: Object as PropType<TTeam>, required: true },
   },
-  emit: ['update:rotation'],
+  emit: ['update:rotation', 'click:jump-to-team'],
   setup(props, context) {
     const { displayName } = CompositionFunction();
     const removeMode = ref(false);
@@ -86,6 +93,7 @@ export default defineComponent({
     const normalAttackDanMap = new Map(); // 通常攻撃の段数
     const elementalSkillActionsMap = new Map(); // 元素スキル 一回押し 長押し
     const rotationList = reactive([] as TActionItem[]);
+    const actionId = ref(0);
 
     const watchCount = ref(0);
     watch(props, async () => {
@@ -107,8 +115,10 @@ export default defineComponent({
         }
         if (team.rotation && team.rotation.length) {
           rotationList.splice(0, rotationList.length, ...team.rotation);
+          actionId.value = Math.max(...rotationList.map(s => s.id));
         } else {
           rotationList.splice(0, rotationList.length);
+          actionId.value = 0;
         }
       }
     }
@@ -316,7 +326,7 @@ export default defineComponent({
         }
       }
       rotationList.push({
-        id: ++actionId,
+        id: ++actionId.value,
         member: member.name,
         action: action,
       });
@@ -394,7 +404,11 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style scoped>
+fieldset.icon-list {
+  padding-bottom: 0px;
+}
+
 div.action {
   display: inline-block;
 }
@@ -418,17 +432,31 @@ fieldset.rotation-list {
   background-color: whitesmoke;
 }
 
-div.input-control {
+table.control-button {
+  table-layout: fixed;
+  width: 100%;
   margin-top: 5px;
   margin-bottom: 0px;
-  vertical-align: middle;
+  border: none;
 }
 
-div.input-control input[type="checkbox"] {
+table.control-button button {
+  font-size: 12px;
+  background-color: transparent;
+  border-color: silver;
+  border-style: none;
+}
+
+span.control-button {
+  color: orange;
+  font-size: 3rem;
+}
+
+table.control-button input[type="checkbox"] {
   display: none;
 }
 
-div.input-control label.checked {
+.control-button label.checked {
   color: orange;
 }
 
@@ -450,19 +478,6 @@ div.action-attribute {
   text-align: center;
   text-shadow:
     0px 1px 0px #003366;
-}
-
-div.control {
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-
-div.control button {
-  font-size: 12px;
-  background-color: transparent;
-  border-color: silver;
-  border-style: none;
 }
 
 .tooltip {
