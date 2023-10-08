@@ -65,7 +65,7 @@
         </template>
       </draggable>
       <br />
-      <textarea class="rotation-description" v-model="rotationDescription" rows="8" maxlength="255"
+      <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
         @change="updateRotation"></textarea>
     </fieldset>
     <!-- {{ memberParticles }}
