@@ -64,6 +64,9 @@
           </div>
         </template>
       </draggable>
+      <br />
+      <textarea class="rotation-description" v-model="rotationDescription" rows="8" maxlength="255"
+        @change="updateRotation"></textarea>
     </fieldset>
     <!-- {{ memberParticles }}
     {{ memberEnergyRecharge }} -->
@@ -94,6 +97,7 @@ export default defineComponent({
     const elementalSkillActionsMap = new Map(); // 元素スキル 一回押し 長押し
     const rotationList = reactive([] as TActionItem[]);
     const actionId = ref(0);
+    const rotationDescription = ref('');
 
     const watchCount = ref(0);
     watch(props, async () => {
@@ -120,6 +124,7 @@ export default defineComponent({
           rotationList.splice(0, rotationList.length);
           actionId.value = 0;
         }
+        rotationDescription.value = team.rotationDescription;
       }
     }
 
@@ -303,7 +308,7 @@ export default defineComponent({
     })
 
     const updateRotation = () => {
-      context.emit('update:rotation', rotationList);
+      context.emit('update:rotation', rotationList, rotationDescription.value);
     }
 
     const rotationListOnChange = () => {
@@ -389,6 +394,7 @@ export default defineComponent({
       getElementalBurstDetail,
 
       rotationList,
+      rotationDescription,
       previousRotation,
       getCharacterDetail,
       getActionDetail,
@@ -400,6 +406,7 @@ export default defineComponent({
       listActionOnClick,
       rotationActionOnClick,
       removeItemOnClick,
+      updateRotation,
     };
   },
 });
@@ -503,5 +510,13 @@ div.remove-mark {
 
 .remove-mark::after {
   transform: translateY(-50%) rotate(135deg);
+}
+
+textarea.rotation-description {
+  display: block;
+  width: calc(100% - 30px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3px 5px;
 }
 </style>

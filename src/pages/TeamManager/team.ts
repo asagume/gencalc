@@ -23,6 +23,7 @@ export type TTeam = {
     members: TMember[];
     description: string,
     rotation: TActionItem[];
+    rotationDescription: string,
 };
 
 export const NUMBER_OF_TEAMS = 10;

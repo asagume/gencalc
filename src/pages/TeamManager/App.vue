@@ -55,7 +55,7 @@
 
     <div class="footer">
       <hr />
-      <h2>チーム編成 Ver.0.5.0</h2>
+      <h2>チーム編成 Ver.0.6.0</h2>
       <ul class="usage">
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
@@ -155,6 +155,7 @@ export default defineComponent({
         members: [] as TMember[],
         description: '',
         rotation: [],
+        rotationDescription: '',
       };
       for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
         team.members.push(makeBlankMember(memberId++));
@@ -252,6 +253,7 @@ export default defineComponent({
             } else {
               team.rotation = [];
             }
+            team.rotationDescription = work[i].rotationDescription;
           }
         }
       }
@@ -299,11 +301,12 @@ export default defineComponent({
       teamEditorVisible.value = false;
     };
 
-    const updateRotation = (rotationList: TActionItem[]) => {
+    const updateRotation = (rotationList: TActionItem[], rotationDescription: string) => {
       if (selectedTeamId.value != -1) {
         const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
         if (team) {
           team.rotation.splice(0, team.rotation.length, ...rotationList);
+          team.rotationDescription = rotationDescription;
         }
       }
     }
