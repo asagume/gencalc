@@ -75,7 +75,7 @@
             <label>{{ displayName('会心率') }}
               <select v-model="cryoResonance" @change="calculateCritTarget">
                 <option value="0"></option>
-                <option value="15">+15</option>
+                <option value="15">+15%</option>
               </select>
             </label>
           </td>
@@ -86,8 +86,21 @@
             <label>{{ displayName('会心率') }}
               <select v-model="artifact4BS" @change="calculateCritTarget">
                 <option value="0"></option>
-                <option value="20">+20</option>
-                <option value="40">+40</option>
+                <option value="20">+20%</option>
+                <option value="40">+40%</option>
+              </select>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th>{{ displayName('ファントムハンター') }}</th>
+          <td>
+            <label>{{ displayName('会心率') }}
+              <select v-model="artifact4PH" @change="calculateCritTarget">
+                <option value="0"></option>
+                <option value="12">+12%</option>
+                <option value="24">+24%</option>
+                <option value="36">+36%</option>
               </select>
             </label>
           </td>
@@ -305,7 +318,7 @@ export default defineComponent({
       [80, 160],
       [85, 170],
     ];
-    const targetPresetSelected = ref(4);
+    const targetPresetSelected = ref(2);
     if (localStorage.getItem('CritTarget') != null) {
       targetPresetSelected.value = Number(localStorage.getItem('CritTarget'));
     }
@@ -313,25 +326,29 @@ export default defineComponent({
     const critDmgRatio = ref(2);      // 率ダメ比率のダメ
     const critRateTarget = ref(TARGET_PRESET[targetPresetSelected.value][0]);   // 会心率目標値
     const critDmgTarget = ref(TARGET_PRESET[targetPresetSelected.value][1]);   // 会心ダメージ目標値
-    const critRateLimit = ref(85);    // 会心率上限
+    const critRateLimit = ref(100);   // 会心率上限
     const cryoResonance = ref(0);     // 氷元素共鳴 会心率+15
     const artifact4BS = ref(0);       // 氷風を彷徨う勇士 4セット効果
+    const artifact4PH = ref(0);       // ファントムハンター 4セット効果
 
     const calculateCritTarget = () => {
       rows.forEach(row => {
         let workRate = critRateTarget.value;
         let workDmg = critDmgTarget.value;
         let workAdd = row.characterCritScore + row.weaponCritScore;
+        if (cryoResonance.value) {
+          workAdd += Number(cryoResonance.value) * 2;
+        }
+        if (artifact4BS.value) {
+          workAdd += Number(artifact4BS.value) * 2;
+        }
+        if (artifact4PH.value) {
+          workAdd += Number(artifact4PH.value) * 2;
+        }
         const ratioDenominator = critRateRatio.value * 2 + critDmgRatio.value;
         workRate += workAdd * (critRateRatio.value / ratioDenominator);
         workDmg += workAdd * (critDmgRatio.value / ratioDenominator);
         let workRateLimit = critRateLimit.value;
-        if (cryoResonance.value) {
-          workRateLimit -= Number(cryoResonance.value);
-        }
-        if (artifact4BS.value) {
-          workRateLimit -= Number(artifact4BS.value);
-        }
         if (workRate > workRateLimit) {
           workDmg += (workRate - workRateLimit) * 2;
           workRate = workRateLimit;
@@ -340,12 +357,6 @@ export default defineComponent({
         row.targetCritDmg = Math.round(workDmg * 10) / 10 + '%';
         // 期待値を計算します
         let expectedDmg = 0;
-        if (cryoResonance.value) {
-          workRate += Number(cryoResonance.value);
-        }
-        if (artifact4BS.value) {
-          workRate += Number(artifact4BS.value);
-        }
         expectedDmg += workRate / 100 * (100 + workDmg);
         expectedDmg += (100 - workRate) / 100 * 100;
         expectedDmg = Math.round(expectedDmg * 10) / 10;
@@ -374,6 +385,7 @@ export default defineComponent({
       critRateLimit,
       cryoResonance,
       artifact4BS,
+      artifact4PH,
       TARGET_PRESET,
       targetPresetSelected,
 
@@ -443,7 +455,7 @@ td {
 }
 
 td input[type="number"] {
-  width: 10rem;
+  width: 12rem;
 }
 
 label+label {
@@ -451,7 +463,7 @@ label+label {
 }
 
 td select {
-  width: 10rem;
+  width: 12rem;
 }
 
 .expected-value {
