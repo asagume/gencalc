@@ -26,7 +26,8 @@ const getCharacterDetail = (character: string, characterDetailMap: Map<string, T
 
 export const energyFromMyself = (name: string, rotationList: TActionItem[], team: TTeam, characterDetailMap: Map<string, TCharacterDetail>, teamMemberResult: TTeamMemberResult) => {
     let energy = 0;
-    const memberResult = teamMemberResult[name];
+    const member = getTeamMember(name, team);
+    const memberResult = teamMemberResult[member.id];
     const constellation = memberResult?.characterInput.命ノ星座 ?? 0;
     if (name === 'ジン') {
         const qCount = getQCount(name, rotationList);
@@ -200,7 +201,7 @@ export const energyFromFellow = (name: string, rotationList: TActionItem[], team
     const elementArr = team.members.map(member => getCharacterDetail(member.name, characterDetailMap)?.元素);
     team.members.filter(member => member.name != name).forEach(member => {
         const qCount = getQCount(member.name, rotationList);
-        const memberResult = teamMemberResult[member.name];
+        const memberResult = teamMemberResult[member.id];
         if (member.name === 'ウェンティ') {
             for (const element of ['炎', '水', '雷', '氷']) {
                 if ((elementArr as any).includes(element)) {
@@ -228,7 +229,7 @@ export const energyFromFellow = (name: string, rotationList: TActionItem[], team
 export const energyFromWeapon = (name: string, rotationList: TActionItem[], team: TTeam, teamMemberResult: TTeamMemberResult) => {
     let energy = 0;
     const member = getTeamMember(name, team);
-    const memberResult = teamMemberResult[name];
+    const memberResult = teamMemberResult[member.id];
     if (member && memberResult) {
         const weapon = memberResult.characterInput.weapon;
         const rank = memberResult.characterInput.武器精錬ランク;

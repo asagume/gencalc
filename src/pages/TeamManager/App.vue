@@ -109,7 +109,7 @@ export default defineComponent({
     ];
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const teams = reactive([] as TTeam[]);
-    const teamMemberResultMap = new Map<number, TTeamMemberResult>();
+    const teamMemberResultMap = reactive({} as { [key: number]: TTeamMemberResult });
     const displayStat = ref('');
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
@@ -324,24 +324,23 @@ export default defineComponent({
       }
     }
 
-    const resultCount = ref(0);
-    const updateMemberResult = (memberResults: { [key: string]: TMemberResult }) => {
-      if (selectedTeamId.value != -1) {
-        teamMemberResultMap.set(selectedTeamId.value, memberResults);
+    const updateMemberResult = (id: number, teamMmberResult: TTeamMemberResult) => {
+      teamMemberResultMap[id] = teamMmberResult;
+      if (id == selectedTeamId.value) {
+        teamMemberResult.value;
       }
-      resultCount.value++;
     }
 
     const teamMemberResult = computed(() => {
       let result = {} as TTeamMemberResult;
-      if (teamMemberResultMap.has(selectedTeamId.value)) {
-        result = teamMemberResultMap.get(selectedTeamId.value) as TTeamMemberResult;
+      if (selectedTeamId.value in teamMemberResultMap) {
+        result = teamMemberResultMap[selectedTeamId.value] as TTeamMemberResult;
       } else {
         if (selectedTeamId.value != -1) {
           const team = teams.filter(team => team.id == selectedTeamId.value)[0];
           team.members.forEach(member => {
             if (result) {
-              result[member.name] = MEMBER_RESULT_DUMMY;
+              result[member.id] = MEMBER_RESULT_DUMMY;
             }
           })
         }

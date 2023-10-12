@@ -69,7 +69,7 @@
         @change="updateRotation"></textarea>
     </fieldset>
     <br />
-    <div v-if="false">
+    <div v-if="true">
       <table class="energy-recharge">
         <tr>
           <th colspan="2"></th>
@@ -168,6 +168,7 @@ export default defineComponent({
     const watchCount = ref(0);
     watch(props, async () => {
       await watchFunc(props.team);
+      energyRechargeDetail.value;
       watchCount.value++;
     });
 
@@ -205,6 +206,7 @@ export default defineComponent({
 
     onMounted(() => {
       watchFunc(props.team);
+
     })
 
     const getCharacterMaster = (character: string): TCharacterEntry => {
@@ -394,7 +396,7 @@ export default defineComponent({
       const result: TAnyObject[] = [];
       props.team.members.forEach(member => {
         const characterDetail = getCharacterDetail(member.name);
-        const memberResult = props.teamMemberResult[member.name];
+        const memberResult = props.teamMemberResult[member.id];
         const weapon = energyFromWeapon(member.name, rotationList, props.team, props.teamMemberResult);
         const myself = energyFromMyself(member.name, rotationList, props.team, characterDetailMap, props.teamMemberResult);
         const fellow = energyFromFellow(member.name, rotationList, props.team, characterDetailMap, props.teamMemberResult);

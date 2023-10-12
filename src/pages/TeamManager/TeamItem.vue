@@ -102,7 +102,7 @@ export default defineComponent({
       });
       calculateStat();
       calculateRes();
-      context.emit('update:member-result', memberResults);
+      context.emit('update:member-result', team.id, memberResults);
     }
 
     function calculateStat() {
