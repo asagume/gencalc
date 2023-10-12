@@ -42,7 +42,7 @@ import _ from 'lodash';
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey, ELEMENT_BG_COLOR_CLASS } from "@/master";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { getElementalResonance, MEMBER_RESULT_DUMMY, TMemberResult, TTeam } from "./team";
+import { calculateMemberResult, getElementalResonance, TTeam, TTeamMemberResult } from "./team";
 import MemberItem from "./MemberItem.vue";
 import { calculateFormulaArray } from "@/calculate";
 import { TStats } from "@/input";
@@ -54,7 +54,7 @@ export default defineComponent({
     selected: { type: Boolean, requied: true },
     displayStat: { type: String },
   },
-  emits: ['click:edit', 'change:buildname', 'click:jump-to-rotation'],
+  emits: ['click:edit', 'change:buildname', 'click:jump-to-rotation', 'update:member-result'],
   components: {
     MemberItem,
   },
@@ -62,7 +62,7 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
 
     const memberStats = reactive({} as TAnyObject);
-    const memberResults = reactive({} as { [key: string]: TMemberResult });
+    const memberResults = reactive({} as TTeamMemberResult);
     const selectedClass = computed(() => (props.selected ? ' selected' : ''));
     const editable = ref(false);
     const res = reactive({} as TAnyObject);
@@ -91,7 +91,7 @@ export default defineComponent({
       for (const member of team.members) {
         list.push({
           key: member.id,
-          value: _.cloneDeep(member.results ?? MEMBER_RESULT_DUMMY),
+          value: await calculateMemberResult(member, team),
         });
       }
       await Promise.all(list).then(results => {
@@ -102,6 +102,7 @@ export default defineComponent({
       });
       calculateStat();
       calculateRes();
+      context.emit('update:member-result', memberResults);
     }
 
     function calculateStat() {

@@ -32,7 +32,8 @@
           <template #item="{ element }">
             <div style="display: inline-block;" :id="'team-' + element.id">
               <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-                @click="teamOnClick(element.id)" @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation" />
+                @click="teamOnClick(element.id)" @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation"
+                @update:member-result="updateMemberResult" />
             </div>
           </template>
         </draggable>
@@ -46,7 +47,8 @@
     <div class="pane3">
       <hr />
       <div id="team-rotation">
-        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" @update:rotation="updateRotation"
+        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]"
+          :teamMemberResult="teamMemberResult(selectedTeamId)" @update:rotation="updateRotation"
           @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
@@ -78,7 +80,7 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TTeam, calculateMemberResult, getBuilddataFromStorage } from './team';
+import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TMemberResult, TTeam, TTeamMemberResult, getBuilddataFromStorage } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
@@ -108,6 +110,7 @@ export default defineComponent({
     ];
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const teams = reactive([] as TTeam[]);
+    const teamMemberResultMap = new Map<number, TTeamMemberResult>();
     const displayStat = ref('');
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
@@ -123,7 +126,6 @@ export default defineComponent({
       work.forEach((team) => {
         team.members.forEach(member => {
           member.builddata = undefined;
-          member.results = undefined;
         })
         if (team.rotation && team.rotation.length) {
           team.rotation.forEach(e => {
@@ -146,7 +148,6 @@ export default defineComponent({
         builddata: undefined,
         tags: [],
         replacements: [],
-        results: _.cloneDeep(MEMBER_RESULT_DUMMY),
       };
     }
 
@@ -171,7 +172,6 @@ export default defineComponent({
       member.builddata = undefined;
       member.tags = [];
       member.replacements = [];
-      member.results = _.cloneDeep(MEMBER_RESULT_DUMMY);
     }
 
     function initializeTeam(team: TTeam) {
@@ -259,15 +259,6 @@ export default defineComponent({
             }
             team.rotationDescription = work[i].rotationDescription ?? '';
           }
-          for (const member of team.members) {
-            if (member.name) {
-              calculateMemberResult(member, team).then(ret => {
-                member.results = ret;
-              })
-            } else {
-              member.results = _.cloneDeep(MEMBER_RESULT_DUMMY);
-            }
-          }
         }
       }
     };
@@ -310,15 +301,6 @@ export default defineComponent({
         } else {
           team.rotation = newTeam.rotation;
         }
-        for (const member of team.members) {
-          if (member.name) {
-            calculateMemberResult(member, team).then(ret => {
-              member.results = ret;
-            })
-          } else {
-              member.results = _.cloneDeep(MEMBER_RESULT_DUMMY);
-          }
-        }
       }
       teamEditorVisible.value = false;
     };
@@ -343,6 +325,28 @@ export default defineComponent({
       }
     }
 
+    const updateMemberResult = (memberResults: { [key: string]: TMemberResult }) => {
+      if (selectedTeamId.value != -1) {
+        teamMemberResultMap.set(selectedTeamId.value, memberResults);
+      }
+    }
+
+    const teamMemberResult = (id: number) => {
+      let result = teamMemberResultMap.get(id);
+      if (!result) {
+        result = {} as TTeamMemberResult;
+        if (selectedTeamId.value != -1) {
+          const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
+          team.members.forEach(member => {
+            if (result) {
+              result[member.name] = MEMBER_RESULT_DUMMY;
+            }
+          })
+        }
+      }
+      return result;
+    }
+
     return {
       displayName,
 
@@ -362,6 +366,7 @@ export default defineComponent({
       selectedTeamId,
       teamSelected,
       teams,
+      teamMemberResult,
       forcusedTeam,
 
       updateTeam,
@@ -371,6 +376,7 @@ export default defineComponent({
       memberOnClick,
       jumpToRotation,
       jumpToTeam,
+      updateMemberResult,
     };
   },
 });

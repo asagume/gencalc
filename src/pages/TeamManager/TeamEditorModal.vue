@@ -102,7 +102,6 @@ export default defineComponent({
           builddata: props.team.members[i].builddata,
           tags: _.cloneDeep(props.team.members[i].tags.filter(s => TAG_LIST.includes(s))),
           replacements: props.team.members[i].replacements ? [...props.team.members[i].replacements] : [],
-          results: props.team.members[i].results,
         });
       }
       workTeam.members.splice(0, workTeam.members.length, ...work);

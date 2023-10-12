@@ -11,7 +11,6 @@ export type TMember = {
     builddata: any | undefined;
     tags: string[],
     replacements: string[],
-    results: TMemberResult | undefined,
 };
 
 export type TActionItem = {
@@ -36,6 +35,10 @@ export type TMemberResult = {
     optionInput: TOptionInput,
     statsInput: TStatsInput,
     damageResult: TDamageResult,
+};
+
+export type TTeamMemberResult = {
+    [key: string]: TMemberResult,
 };
 
 export const NUMBER_OF_TEAMS = 10;

@@ -131,7 +131,7 @@
 import draggable from "vuedraggable";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { TActionItem, TMember, TTeam } from "./team";
+import { TActionItem, TMember, TTeam, TTeamMemberResult } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
 import _ from "lodash";
 import { energyFromFellow, energyFromMyself, energyFromWeapon } from "./energyrecharge";
@@ -143,6 +143,7 @@ export default defineComponent({
   },
   props: {
     team: { type: Object as PropType<TTeam>, required: true },
+    teamMemberResult: { type: Object as PropType<TTeamMemberResult>, required: true },
   },
   emit: ['update:rotation', 'click:jump-to-team'],
   setup(props, context) {
@@ -393,12 +394,13 @@ export default defineComponent({
       const result: TAnyObject[] = [];
       props.team.members.forEach(member => {
         const characterDetail = getCharacterDetail(member.name);
-        const weapon = energyFromWeapon(member.name, rotationList, props.team);
-        const myself = energyFromMyself(member.name, rotationList, props.team, characterDetailMap);
-        const fellow = energyFromFellow(member.name, rotationList, props.team, characterDetailMap);
+        const memberResult = props.teamMemberResult[member.name];
+        const weapon = energyFromWeapon(member.name, rotationList, props.team, props.teamMemberResult);
+        const myself = energyFromMyself(member.name, rotationList, props.team, characterDetailMap, props.teamMemberResult);
+        const fellow = energyFromFellow(member.name, rotationList, props.team, characterDetailMap, props.teamMemberResult);
         result.push({
           name: member.name,
-          constellation: member.results?.characterInput.命ノ星座 ?? 0,
+          constellation: memberResult?.characterInput.命ノ星座 ?? 0,
           energyCost: characterDetail?.元素爆発.元素エネルギー ?? 0,
           favonius: 0,
           weapon: weapon,

@@ -1,5 +1,5 @@
 import { TCharacterDetail } from "@/master";
-import { TActionItem, TTeam, getBuilddataFromStorage } from "./team";
+import { TActionItem, TTeam, TTeamMemberResult } from "./team";
 
 function getTeamMember(name: string, team: TTeam) {
     return team.members.filter(member => member.name == name)[0];
@@ -24,11 +24,10 @@ const getCharacterDetail = (character: string, characterDetailMap: Map<string, T
     return characterDetailMap.get(character) ?? undefined;
 };
 
-export const energyFromMyself = (name: string, rotationList: TActionItem[], team: TTeam, characterDetailMap: Map<string, TCharacterDetail>) => {
+export const energyFromMyself = (name: string, rotationList: TActionItem[], team: TTeam, characterDetailMap: Map<string, TCharacterDetail>, teamMemberResult: TTeamMemberResult) => {
     let energy = 0;
-    const member = getTeamMember(name, team);
-    const builddata = getBuilddataFromStorage(name, member.buildname);
-    const constellation = member && builddata ? builddata.命ノ星座 : 0;
+    const memberResult = teamMemberResult[name];
+    const constellation = memberResult?.characterInput.命ノ星座 ?? 0;
     if (name === 'ジン') {
         const qCount = getQCount(name, rotationList);
         energy = 80 * 0.2 * qCount; // +16/元素爆発
@@ -65,7 +64,7 @@ export const energyFromMyself = (name: string, rotationList: TActionItem[], team
         const qCount = getQCount(name, rotationList);
         energy = 15 * qCount; // +15/元素爆発
     } else if (name === 'クレー') {
-        const critRate = member.results?.statsInput.statsObj.会心率 ?? 60;
+        const critRate = memberResult?.statsInput.statsObj.会心率 ?? 60;
         const cCount = getCCount(name, rotationList);
         energy = 2 * critRate / 100 * cCount; // +2/重撃会心
     } else if (name === 'ディオナ') {
@@ -75,7 +74,7 @@ export const energyFromMyself = (name: string, rotationList: TActionItem[], team
         const cCount = getCCount(name, rotationList);
         energy = 2 * cCount; // +2/重撃
     } else if (name === 'ロサリア' && constellation >= 4) {
-        let critRate =  member.results?.statsInput.statsObj.会心率 ?? 60;
+        let critRate = memberResult?.statsInput.statsObj.会心率 ?? 60;
         critRate = Math.min(100, critRate + Math.max(0, 100 - critRate) * critRate / 100);
         const eCount = getECount(name, rotationList);
         energy = 5 * critRate / 100 * eCount; // +5/元素スキル会心
@@ -86,8 +85,8 @@ export const energyFromMyself = (name: string, rotationList: TActionItem[], team
     } else if (name === '雷電将軍') {
         const qCount = getQCount(name, rotationList);
         let unit = 2.3;
-        if ( member.results) {
-            member.results.damageResult.元素爆発.forEach(entry => {
+        if (memberResult) {
+            memberResult.damageResult.元素爆発.forEach(entry => {
                 if (entry[0] === '夢想の一心エネルギー回復') {
                     unit = entry[2];
                 }
@@ -95,7 +94,7 @@ export const energyFromMyself = (name: string, rotationList: TActionItem[], team
         }
         energy += unit * 5 * qCount;
     } else if (name === '九条裟羅') {
-        const er = member.results?.statsInput.statsObj.元素チャージ効率 ?? 100;
+        const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
         const eCount = getECount(name, rotationList);
         energy = 1.2 * er / 100 * eCount;
     } else if (name === '珊瑚宮心海' && constellation >= 4) {
@@ -165,7 +164,7 @@ export const energyFromMyself = (name: string, rotationList: TActionItem[], team
             }
         }
     } else if (name === 'ドリー') {
-        const er = member.results?.statsInput.statsObj.元素チャージ効率 ?? 100;
+        const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
         const eCount = getECount(name, rotationList);
         energy = Math.min(15, 5 * er / 100 * eCount);
     } else if (name === '放浪者') {
@@ -194,13 +193,14 @@ export const energyFromMyself = (name: string, rotationList: TActionItem[], team
     return Math.round(energy * 10) / 10;
 }
 
-export const energyFromFellow = (name: string, rotationList: TActionItem[], team: TTeam, characterDetailMap: Map<string, TCharacterDetail>) => {
+export const energyFromFellow = (name: string, rotationList: TActionItem[], team: TTeam, characterDetailMap: Map<string, TCharacterDetail>, teamMemberResult: TTeamMemberResult) => {
     let energy = 0;
     const characterDetail = getCharacterDetail(name, characterDetailMap);
     const vision = characterDetail?.元素;
     const elementArr = team.members.map(member => getCharacterDetail(member.name, characterDetailMap)?.元素);
     team.members.filter(member => member.name != name).forEach(member => {
         const qCount = getQCount(member.name, rotationList);
+        const memberResult = teamMemberResult[member.name];
         if (member.name === 'ウェンティ') {
             for (const element of ['炎', '水', '雷', '氷']) {
                 if ((elementArr as any).includes(element)) {
@@ -212,8 +212,8 @@ export const energyFromFellow = (name: string, rotationList: TActionItem[], team
             }
         } else if (member.name === '雷電将軍') {
             let unit = 2.3;
-            if (member.results) {
-                member.results.damageResult.元素爆発.forEach(entry => {
+            if (memberResult) {
+                memberResult.damageResult.元素爆発.forEach(entry => {
                     if (entry[0] === '夢想の一心エネルギー回復') {
                         unit = entry[2];
                     }
@@ -225,13 +225,13 @@ export const energyFromFellow = (name: string, rotationList: TActionItem[], team
     return Math.round(energy * 10) / 10;
 }
 
-export const energyFromWeapon = (name: string, rotationList: TActionItem[], team: TTeam) => {
+export const energyFromWeapon = (name: string, rotationList: TActionItem[], team: TTeam, teamMemberResult: TTeamMemberResult) => {
     let energy = 0;
     const member = getTeamMember(name, team);
-    const builddata = getBuilddataFromStorage(name, member.buildname);
-    if (member && builddata) {
-        const weapon = builddata.武器;
-        const rank = builddata.精錬ランク;
+    const memberResult = teamMemberResult[name];
+    if (member && memberResult) {
+        const weapon = memberResult.characterInput.weapon;
+        const rank = memberResult.characterInput.武器精錬ランク;
         if (weapon === '金珀·試作') {
             // 元素爆発を発動した後の6秒間、2秒毎に元素エネルギーを4/4.5/5/5.5/6回復し、チーム全員のHPを2秒毎に4%/4.5%/5%/5.5%/6%回復する。
             const qCount = getQCount(name, rotationList);
