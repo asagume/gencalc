@@ -68,7 +68,63 @@
       <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
         @change="updateRotation"></textarea>
     </fieldset>
-    <!-- {{ energyRechargeDetail }} -->
+    <br />
+    <div v-if="false">
+      <table class="energy-recharge">
+        <tr>
+          <th colspan="2"></th>
+          <td v-for="entry in energyRechargeDetail" :key="entry.name" :class="bgColorClass(entry.name)">
+            <img class="character-icon" :src="getCharacterMaster(entry.name)?.icon_url ?? IMG_SRC_DUMMY"
+              :alt="displayName(entry.name)" />
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">{{ displayName('命ノ星座') }}</th>
+          <td v-for="entry in energyRechargeDetail" :key="entry.name" :class="bgColorClass(entry.name)">
+            <select v-model="entry.constellation" :class="bgColorClass(entry.name)">
+              <option value="0">C0</option>
+              <option value="1">C1</option>
+              <option value="2">C2</option>
+              <option value="3">C3</option>
+              <option value="4">C4</option>
+              <option value="5">C5</option>
+              <option value="6">C6</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">{{ displayName('元素エネルギー') }}</th>
+          <td v-for="entry in energyRechargeDetail" :key="entry.name" :class="bgColorClass(entry.name)">
+            <input type="number" v-model="entry.energyCost" :class="bgColorClass(entry.name)">
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="3">{{ displayName('固定値') }}</th>
+          <th>{{ displayName('当人') }}</th>
+          <td v-for="entry in energyRechargeDetail" :key="entry.name" :class="bgColorClass(entry.name)">
+            <input type="number" v-model="entry.myself" :class="bgColorClass(entry.name)">
+          </td>
+        </tr>
+        <tr>
+          <th>{{ displayName('武器') }}</th>
+          <td v-for="entry in energyRechargeDetail" :key="entry.name" :class="bgColorClass(entry.name)">
+            <input type="number" v-model="entry.weapon" :class="bgColorClass(entry.name)">
+          </td>
+        </tr>
+        <tr>
+          <th>{{ displayName('味方') }}</th>
+          <td v-for="entry in energyRechargeDetail" :key="entry.name" :class="bgColorClass(entry.name)">
+            <input type="number" v-model="entry.fellow" :class="bgColorClass(entry.name)">
+          </td>
+        </tr>
+        <tr>
+          <th>{{ displayName('元素粒子') }}</th>
+        </tr>
+        <tr>
+          <th colspan="2">{{ displayName('元素チャージ効率') }}</th>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -342,6 +398,7 @@ export default defineComponent({
         const fellow = energyFromFellow(member.name, rotationList, props.team, characterDetailMap);
         result.push({
           name: member.name,
+          constellation: member.results?.characterInput.命ノ星座 ?? 0,
           energyCost: characterDetail?.元素爆発.元素エネルギー ?? 0,
           favonius: 0,
           weapon: weapon,
@@ -491,5 +548,34 @@ textarea.rotation-description {
   margin-left: auto;
   margin-right: auto;
   padding: 3px 5px;
+}
+
+table.energy-recharge {
+  margin-left: auto;
+  margin-right: auto;
+  border: double 3px gold;
+  border-spacing: 0;
+}
+
+table.energy-recharge tr,
+table.energy-recharge th,
+table.energy-recharge td {
+  border: solid 1px gray;
+}
+
+table.energy-recharge th {
+  font-size: 2rem;
+  padding: 2px 4px;
+}
+
+table.energy-recharge td select,
+table.energy-recharge td input[type="number"] {
+  width: calc(100% - 4px);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
 }
 </style>
