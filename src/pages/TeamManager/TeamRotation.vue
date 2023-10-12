@@ -68,15 +68,17 @@
       <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
         @change="updateRotation"></textarea>
     </fieldset>
+    <!-- {{ energyRechargeDetail }} -->
   </div>
 </template>
 <script lang="ts">
 import draggable from "vuedraggable";
-import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { TActionItem, TMember, TTeam } from "./team";
-import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
+import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
 import _ from "lodash";
+import { energyFromFellow, energyFromMyself, energyFromWeapon } from "./energyrecharge";
 
 export default defineComponent({
   name: "TeamRotation",
@@ -331,6 +333,26 @@ export default defineComponent({
       updateRotation();
     }
 
+    const energyRechargeDetail = computed(() => {
+      const result: TAnyObject[] = [];
+      props.team.members.forEach(member => {
+        const characterDetail = getCharacterDetail(member.name);
+        const weapon = energyFromWeapon(member.name, rotationList, props.team);
+        const myself = energyFromMyself(member.name, rotationList, props.team, characterDetailMap);
+        const fellow = energyFromFellow(member.name, rotationList, props.team, characterDetailMap);
+        result.push({
+          name: member.name,
+          energyCost: characterDetail?.元素爆発.元素エネルギー ?? 0,
+          favonius: 0,
+          weapon: weapon,
+          myself: myself,
+          fellow: fellow,
+          enemy: 0,
+        });
+      })
+      return result;
+    })
+
     return {
       displayName,
       IMG_SRC_DUMMY,
@@ -356,6 +378,8 @@ export default defineComponent({
       rotationActionOnClick,
       removeItemOnClick,
       updateRotation,
+
+      energyRechargeDetail,
     };
   },
 });

@@ -78,7 +78,7 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TTeam } from './team';
+import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TTeam, calculateMemberResult, getBuilddataFromStorage } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
@@ -121,9 +121,10 @@ export default defineComponent({
     const builddataStr = computed(() => {
       const work: TTeam[] = _.cloneDeep(teams);
       work.forEach((team) => {
-        team.members.forEach((member) => {
+        team.members.forEach(member => {
           member.builddata = undefined;
-        });
+          member.results = undefined;
+        })
         if (team.rotation && team.rotation.length) {
           team.rotation.forEach(e => {
             e.id = 0;
@@ -145,6 +146,7 @@ export default defineComponent({
         builddata: undefined,
         tags: [],
         replacements: [],
+        results: _.cloneDeep(MEMBER_RESULT_DUMMY),
       };
     }
 
@@ -169,6 +171,7 @@ export default defineComponent({
       member.builddata = undefined;
       member.tags = [];
       member.replacements = [];
+      member.results = _.cloneDeep(MEMBER_RESULT_DUMMY);
     }
 
     function initializeTeam(team: TTeam) {
@@ -228,10 +231,11 @@ export default defineComponent({
                 members[j].name = work[i].members[j].name;
                 if (work[i].members[j].buildname) {
                   members[j].buildname = work[i].members[j].buildname;
+                  members[j].builddata = getBuilddataFromStorage(members[j].name, members[j].buildname);
                 } else {
                   members[j].buildname = undefined;
+                  members[j].builddata = undefined;
                 }
-                members[j].builddata = undefined; // TODO
                 if (work[i].members[j].tags) {
                   members[j].tags = work[i].members[j].tags;
                 } else {
@@ -254,6 +258,15 @@ export default defineComponent({
               team.rotation = [];
             }
             team.rotationDescription = work[i].rotationDescription ?? '';
+          }
+          for (const member of team.members) {
+            if (member.name) {
+              calculateMemberResult(member, team).then(ret => {
+                member.results = ret;
+              })
+            } else {
+              member.results = _.cloneDeep(MEMBER_RESULT_DUMMY);
+            }
           }
         }
       }
@@ -283,7 +296,7 @@ export default defineComponent({
             const workMember = makeBlankMember(team.members[i].id);
             workMember.name = newTeam.members[i].name;
             workMember.buildname = newTeam.members[i].buildname;
-            workMember.builddata = undefined; // TODO
+            workMember.builddata = getBuilddataFromStorage(workMember.name, workMember.buildname);
             workMember.tags.splice(0, workMember.tags.length, ...newTeam.members[i].tags);
             workMember.replacements.splice(0, workMember.replacements.length, ...newTeam.members[i].replacements);
             workMembers.push(workMember);
@@ -296,6 +309,15 @@ export default defineComponent({
           team.rotation = [];
         } else {
           team.rotation = newTeam.rotation;
+        }
+        for (const member of team.members) {
+          if (member.name) {
+            calculateMemberResult(member, team).then(ret => {
+              member.results = ret;
+            })
+          } else {
+              member.results = _.cloneDeep(MEMBER_RESULT_DUMMY);
+          }
         }
       }
       teamEditorVisible.value = false;
