@@ -47,9 +47,8 @@
     <div class="pane3">
       <hr />
       <div id="team-rotation">
-        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]"
-          :teamMemberResult="teamMemberResult(selectedTeamId)" @update:rotation="updateRotation"
-          @click:jump-to-team="jumpToTeam" />
+        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :teamMemberResult="teamMemberResult"
+          @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
 
@@ -325,18 +324,21 @@ export default defineComponent({
       }
     }
 
+    const resultCount = ref(0);
     const updateMemberResult = (memberResults: { [key: string]: TMemberResult }) => {
       if (selectedTeamId.value != -1) {
         teamMemberResultMap.set(selectedTeamId.value, memberResults);
       }
+      resultCount.value++;
     }
 
-    const teamMemberResult = (id: number) => {
-      let result = teamMemberResultMap.get(id);
-      if (!result) {
-        result = {} as TTeamMemberResult;
+    const teamMemberResult = computed(() => {
+      let result = {} as TTeamMemberResult;
+      if (teamMemberResultMap.has(selectedTeamId.value)) {
+        result = teamMemberResultMap.get(selectedTeamId.value) as TTeamMemberResult;
+      } else {
         if (selectedTeamId.value != -1) {
-          const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
+          const team = teams.filter(team => team.id == selectedTeamId.value)[0];
           team.members.forEach(member => {
             if (result) {
               result[member.name] = MEMBER_RESULT_DUMMY;
@@ -345,7 +347,7 @@ export default defineComponent({
         }
       }
       return result;
-    }
+    })
 
     return {
       displayName,
