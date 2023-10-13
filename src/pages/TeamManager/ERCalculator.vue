@@ -64,7 +64,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import _ from "lodash";
-import { ARTIFACT_ENERGY, ARTIFACT_PARTICLE, CHARACTER_ENERGY, CHARACTER_PARTICLE, getEnergyByCharacter, getEnergyByWeapon, getEnergyFromWeapon, getParticleByCharacter, getParticleByCharacterExtra, WEAPON_ENERGY, WEAPON_PARTICLE } from "./energyrecharge";
+import { ARTIFACT_ENERGY, ARTIFACT_PARTICLE, CHARACTER_ENERGY, CHARACTER_PARTICLE, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, WEAPON_ENERGY, WEAPON_PARTICLE } from "./energyrecharge";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TActionItem, TTeam, TTeamMemberResult } from "./team";
 import { ELEMENT_BG_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
