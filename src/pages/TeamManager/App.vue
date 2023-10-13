@@ -79,7 +79,7 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TMemberResult, TTeam, TTeamMemberResult, getBuilddataFromStorage } from './team';
+import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TTeam, TTeamMemberResult, getBuilddataFromStorage } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';

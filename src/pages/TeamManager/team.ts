@@ -1,7 +1,7 @@
 import { calculateArtifactStatsMain, calculateArtifactStats, ALL_ELEMENTS, calculateStats, calculateDamageResult } from "@/calculate";
 import { overwriteObject } from "@/common";
 import { ARTIFACT_DETAIL_INPUT_TEMPLATE, CHARACTER_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, DAMAGE_RESULT_TEMPLATE, OPTION_INPUT_TEMPLATE, STATS_INPUT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
-import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterKey, getCharacterMasterDetail } from "@/master";
+import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
 import _ from "lodash";
 
 export type TMember = {
@@ -44,10 +44,39 @@ export type TTeamMemberResult = {
 export const NUMBER_OF_TEAMS = 10;
 export const NUMBER_OF_MEMBERS = 4;
 
-export function characterMaster(member: TMember) {
+const characterDetailMap = new Map<string, TCharacterDetail>();
+
+export function getCharacterMaster(character: string) {
     let result;
-    if (member.name && member.name in CHARACTER_MASTER) {
-        result = CHARACTER_MASTER[member.name as TCharacterKey];
+    if (character && character in CHARACTER_MASTER) {
+        result = CHARACTER_MASTER[character as TCharacterKey] as TCharacterEntry;
+    }
+    return result;
+}
+
+export async function setupCharacterDetailMap(team: TTeam) {
+    const list: Promise<void>[] = [];
+    for (const member of team.members) {
+        if (member.name) {
+            list.push(getCharacterMasterDetail(member.name as TCharacterKey).then(response => {
+                characterDetailMap.set(member.name, response);
+            }));
+        }
+    }
+    Promise.all(list);
+}
+
+export function getCharacterDetail(character: string) {
+    return characterDetailMap.get(character);
+}
+
+export function getWeaponMaster(weaponType: string, weapon: string) {
+    let result = undefined;
+    if (weaponType && weapon && weaponType in WEAPON_MASTER) {
+        const weaponTypeMaster = WEAPON_MASTER[weaponType as TWeaponTypeKey];
+        if (weapon in weaponTypeMaster) {
+            result = (weaponTypeMaster as any)[weapon] as TWeaponEntry;
+        }
     }
     return result;
 }
@@ -236,7 +265,7 @@ export const getElementalResonance = (team: TTeam) => {
     const members = team.members.filter((member) => member.name);
     if (members.length == 4) {
         members.forEach((member) => {
-            const master = characterMaster(member);
+            const master = getCharacterMaster(member.name);
             if (master) {
                 if (master.元素 in work) {
                     work[master.元素]++;
