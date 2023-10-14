@@ -70,7 +70,8 @@ $pageIds = @()
 # $pageIds += 4003   # 古祠の瓏
 # $pageIds += 4334   # 船渠剣
 # $pageIds += 4335   # 携帯型チェーンソー
-$pageIds += 4339   # 久遠流転の大典
+$pageIds += 4338   # 果てなき紺碧の唄
+# $pageIds += 4339   # 久遠流転の大典
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -93,7 +94,7 @@ $pageIds += 4339   # 久遠流転の大典
 # $pageIds += 2260
 
 $doDownloadImg = $true
-$imgLanguage = 'ja-jp'
+$imgLanguage = 'en-us'
 
 $categoryMap = @{
     "2" = "character"
