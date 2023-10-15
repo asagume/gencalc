@@ -536,12 +536,12 @@ export function getEnergyByWeapon(
     } else if (weapon === '桂木斬長正' || weapon === '喜多院十文字槍') {
         messages.push('元素スキルが命中した時、キャラクターは元素エネルギーを3失う。その後の6秒間、2秒毎に元素エネルギーを3/3.5/4/4.5/5獲得する。この効果は10秒毎に1回のみ発動でき、待機中のキャラクターも発動できる。');
         unit = [3, 3.5, 4, 4.5, 5][weaponRefine - 1];
-        if (rotationList) {
+        if (rotationList?.length) {
             let previous = Number.MIN_VALUE;
             for (let i = 0; i < rotationList.length; i++) {
-                if (i < previous + 7) { // 10秒毎に1回のみ発動可能
-                    continue;
-                }
+                // if (i < (previous + 7)) { // 10秒毎に1回のみ発動可能
+                //     continue;
+                // }
                 const rotation = rotationList[i];
                 if (rotation.member == character && rotation.action.startsWith('E')) {
                     if (i === 0 || rotationList[i - 1].member != character && rotationList[i - 1].action !== 'Q') {
@@ -552,6 +552,7 @@ export function getEnergyByWeapon(
                 }
             }
         }
+        console.log(myEnergy, unit);
     } else if (weapon === '不滅の月華') {
         messages.push('元素爆発を発動した後の12秒間、通常攻撃が敵に命中すると元素エネルギーが0.6ポイント回復する。この方式での元素エネルギー回復は、0.1秒毎に1回のみ可能。');
         unit = 0.6;
@@ -710,7 +711,7 @@ function setSkillParticleNumToArr(
             duration = particleInfo[8];
             ct = particleInfo[9];
         }
-        if (ct <= duration) {
+        if (ct <= duration || ['フィッシュル', '珊瑚宮心海'].includes(character)) {
             num *= rotationLength;
             splitNumToArrByOnFieldRate(arr, num, team, onFields);
             result = true;
@@ -831,7 +832,7 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 3,
     },
     '甘雨': {
-        'E': 2,
+        'E': [1, -1, 4, 10]
     },
     'アルベド': {
         'E.Press': [0.3, -1, 30, 4],
@@ -863,13 +864,13 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 0,
     },
     'ディルック': {
-        'E': 0,
+        'E': 3.75,
     },
     'ジン': {
         'E': 2.5,
     },
     'フレミネ': {
-        'E': 0,
+        'E': 2,
     },
     'リネット': {
         'E.Press': 4,
@@ -891,10 +892,10 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E.Hold': [0.5, -1, 10, 15]
     },
     'ファルザン': {
-        'E': 0,
+        'E': 2,
     },
     'レイラ': {
-        'E': 0,
+        'E': [0.11, -1, 12, 12]
     },
     'キャンディス': {
         'E.Press': 2,
@@ -914,8 +915,7 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
     },
     '雲菫': {
         'E.Press': 2,
-        'E.Level1': 2.5,
-        'E.Level2': 3,
+        'E.Hold': 3,
     },
     'ゴロー': {
         'E.Press': 2,
@@ -959,7 +959,6 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
     },
     'フィッシュル': {
         'E': [2 / 3, -1, 10, 24],
-        'Q': [2 / 3, -1, 10, 24],
     },
     '凝光': {
         'E': 3,
@@ -975,8 +974,8 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': [0.5, -1, 8, 12],
     },
     'レザー': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 3,
+        'E.Hold': 4,
     },
     'バーバラ': {
         'E': 0,
@@ -989,8 +988,8 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 2.5,
     },
     'アンバー': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': [4, 8, 0, 15],
+        'E.Hold': [4, 8, 0, 15],
     },
     '旅人(水)': {
         'E.Press': 3 + 1 / 3,
