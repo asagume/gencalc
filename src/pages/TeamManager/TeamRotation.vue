@@ -69,7 +69,7 @@
         @change="updateRotation"></textarea>
     </fieldset>
     <br />
-    <div v-if="false">
+    <div v-if="true">
       <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult" />
     </div>
   </div>
@@ -153,7 +153,6 @@ export default defineComponent({
 
     onMounted(() => {
       watchFunc(props.team);
-
     })
 
     const getCharacterMaster = (character: string): TCharacterEntry => {

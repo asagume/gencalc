@@ -1,22 +1,21 @@
+import _, { words } from "lodash";
 import { TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
 
-export const RECHAEGE_TYPE_ENERGY = "0"; // 元素エネルギー(固定値)
-export const RECHAEGE_TYPE_PARTICLE = "1"; // 元素粒子
+export const RECHARGE_DIRECT = "0";
+export const RECHARGE_PARTICLE_SKILL = "1";
+export const RECHARGE_PARTICLE_TURRET = "2";
+export const RECHARGE_PARTICLE_FAVONIUS = "3";
+export const RECHARGE_PARTICLE_ENEMY = "4";
 
 export const CHARACTER_ENERGY = 'CHARACTER_ENERGY';
 export const WEAPON_ENERGY = 'WEAPON_ENERGY';
-export const ARTIFACT_ENERGY = 'ARTIFACT_ENERGY';
 export const CHARACTER_PARTICLE = 'CHARACTER_PARTICLE';
-export const WEAPON_PARTICLE = 'WEAPON_PARTICLE';
-export const ARTIFACT_PARTICLE = 'ARTIFACT_PARTICLE';
-export const RESONANCE_PARTICLE = 'RESONANCE_PARTICLE';
+export const WEAPON_PARTICLE = 'WEAPON_PARTICLE'; // 西風
+export const RESONANCE_PARTICLE = 'RESONANCE_PARTICLE'; // 雷元素共鳴
+export const ENEMY_PARTICLE = 'ENEMY_PARTICLE';
 
 export type TEREnergy = [number, number, number, number, string[]];
-export type TERParticle = [string, string, number, number, number, number, number];
-
-function getTeamMember(name: string, team: TTeam) {
-    return team.members.filter(member => member.name == name)[0];
-}
+export type TERParticle = [string, string, number, number, number, number];
 
 /** 重撃使用回数 */
 export function getCCount(name: string, rotationList: TActionItem[]) {
@@ -33,186 +32,167 @@ export function getQCount(name: string, rotationList: TActionItem[]) {
     return rotationList.filter(rotation => rotation.member == name && rotation.action === 'Q').length;
 }
 
-export const getEnergyFromMyself = (
-    character: string,
-    team: TTeam,
-    rotationList: TActionItem[],
-    teamMemberResult: TTeamMemberResult
-) => {
-    let energy = 0;
-    const member = getTeamMember(character, team);
-    const memberResult = teamMemberResult[member.id];
-    const constellation = memberResult?.characterInput.命ノ星座 ?? 0;
-    if (character === 'ジン') {
-        const qCount = getQCount(character, rotationList);
-        energy = 80 * 0.2 * qCount; // +16/元素爆発
-    } else if (character === '七七' && constellation >= 1) {
-        energy = 2 * 0;
-    } else if (character === 'ガイア' && constellation >= 6) {
-        const qCount = getQCount(character, rotationList);
-        energy = 15 * qCount; // +15/元素爆発
-    } else if (character === 'リサ' && constellation >= 1) {
-        const eCount = getECount(character, rotationList, 'E.Hold');
-        energy = 2 * eCount; // +2/元素スキル長押し
-    } else if (character === 'バーバラ') {
-        energy = 1 * rotationList.length / 7; // +1/10秒
-        if (constellation >= 4) {
-            const cCount = getCCount(character, rotationList);
-            energy += 1 * cCount; // +1/重撃
+export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[]) {
+    let result = [0, 0, 0, 0];
+    const memberNameArr = team.members.map(member => member.name);
+    const memberNum = memberNameArr.filter(name => name).length;
+    if (memberNum) {
+        for (const name of memberNameArr.filter(name => name)) {
+            result[memberNameArr.indexOf(name)] = 100 / memberNum;
         }
-    } else if (character === '行秋' && constellation >= 6) {
-        const qCount = getQCount(character, rotationList);
-        if (qCount) {
-            let n = 0;
-            rotationList.forEach(rotation => {
-                if (rotation.action.startsWith('N')) {
-                    n++;
-                }
-            })
-            energy = 3 * n / 3;
-        }
-    } else if (character === 'レザー') {
-        energy = 0;
-    } else if (character === '重雲' && constellation >= 4) {
-        energy = 0;
-    } else if (character === 'ウェンティ') {
-        const qCount = getQCount(character, rotationList);
-        energy = 15 * qCount; // +15/元素爆発
-    } else if (character === 'クレー') {
-        const critRate = memberResult?.statsInput.statsObj.会心率 ?? 60;
-        const cCount = getCCount(character, rotationList);
-        energy = 2 * critRate / 100 * cCount; // +2/重撃会心
-    } else if (character === 'ディオナ') {
-        const qCount = getQCount(character, rotationList);
-        energy = 15 * qCount; // +15/元素爆発
-    } else if (character === '甘雨' && constellation >= 1) {
-        const cCount = getCCount(character, rotationList);
-        energy = 2 * cCount; // +2/重撃
-    } else if (character === 'ロサリア' && constellation >= 4) {
-        let critRate = memberResult?.statsInput.statsObj.会心率 ?? 60;
-        critRate = Math.min(100, critRate + Math.max(0, 100 - critRate) * critRate / 100);
-        const eCount = getECount(character, rotationList);
-        energy = 5 * critRate / 100 * eCount; // +5/元素スキル会心
-    } else if (character === '楓原万葉' && constellation >= 4) {
-        energy = 0;
-    } else if (character === '旅人(雷)') {
-        energy = 0;
-    } else if (character === '雷電将軍') {
-        const qCount = getQCount(character, rotationList);
-        let unit = 2.3;
-        if (memberResult) {
-            memberResult.damageResult.元素爆発.forEach(entry => {
-                if (entry[0] === '夢想の一心エネルギー回復') {
-                    unit = entry[2];
-                }
-            })
-        }
-        energy += unit * 5 * qCount;
-    } else if (character === '九条裟羅') {
-        const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
-        const eCount = getECount(character, rotationList);
-        energy = 1.2 * er / 100 * eCount;
-    } else if (character === '珊瑚宮心海' && constellation >= 4) {
-        let isBursting = false;
-        for (let i = 0; i < rotationList.length; i++) {
-            const rotation = rotationList[i];
-            if (rotation.member == character) {
-                if (rotation.action === 'Q') {
-                    isBursting = true;
-                } else if (isBursting && rotation.action.startsWith('N')) {
-                    const n = Number(rotation.action.substring(1) ?? '1');
-                    energy += 0.8 * n;
-                }
-            } else {
-                isBursting = false;
-            }
-        }
-    } else if (character === '早柚' && constellation >= 4) {
-        energy = 1.2 * 0;
-    } else if (character === '八重神子' && constellation >= 1) {
-        const eCount = getECount(character, rotationList);
-        const qCount = getQCount(character, rotationList);
-        if (eCount || qCount) {
-            energy = 8 * Math.min(3, Math.trunc(eCount / qCount)) * qCount;
-        }
-    } else if (character === '荒瀧一斗' && constellation >= 2) {
-        const geoCount = team.members.filter(member => getCharacterDetail(member.name)?.元素 === '岩').length;
-        energy = Math.min(18, 6 * geoCount);
-    } else if (character === 'トーマ' && constellation >= 4) {
-        const qCount = getQCount(character, rotationList);
-        energy = 15 * qCount; // +15/元素爆発
-    } else if (character === '神里綾人') {
-        let isBursted = false;
-        let isOffField = false;
-        for (let i = 0; i < rotationList.length; i++) {
-            const rotation = rotationList[i];
-            if (rotation.member == character) {
-                if (rotation.action === 'Q') {
-                    isBursted = true;
-                }
-                isOffField = false;
-            } else if (isBursted) {
-                isBursted = false;
-                isOffField = true;
-            } else if (isOffField) {
-                energy += 2;
-            }
-        }
-    } else if (character === '鹿野院平蔵' && constellation >= 4) {
-        energy = 9;
-    } else if (character === '旅人(草)' && constellation >= 1) {
-        const eCount = getECount(character, rotationList);
-        energy = 3.5 * eCount;
-    } else if (character === 'ニィロウ' && constellation >= 4) {
-        let isSkilling = false;
-        for (let i = 0; i < rotationList.length; i++) {
-            const rotation = rotationList[i];
-            if (rotation.member == character) {
-                if (rotation.action === 'E') {
-                    if (!isSkilling) {
-                        energy += 15;
-                    }
-                    isSkilling = true;
-                }
-            } else {
-                isSkilling = false;
-            }
-        }
-    } else if (character === 'ドリー') {
-        const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
-        const eCount = getECount(character, rotationList);
-        energy = Math.min(15, 5 * er / 100 * eCount);
-    } else if (character === '放浪者') {
-        const electroCount = team.members.filter(member => getCharacterDetail(member.name)?.元素 === '雷').length;
-        if (electroCount) {
-            const nCount = rotationList.filter(rotation => rotation.member == character && rotation.action.startsWith('N')).reduce((sum, rotation) => sum + Number(rotation.action.substring(1) ?? '1'), 0);
-            const cCount = getCCount(character, rotationList);
-            energy = 0.8 * (nCount + cCount);
-        }
-    } else if (character === 'ミカ' && constellation >= 4) {
-        const qCount = getECount(character, rotationList);
-        energy = 3 * 5 * qCount;
-    } else if (character === 'レイラ' && constellation >= 2) {
-        energy = 1 * 0;
-    } else if (character === 'ヨォーヨ' && constellation >= 2) {
-        energy = 3 * 0;
-    } else if (character === 'ファルザン' && constellation >= 4) {
-        energy = 0.5 * 0;
-    } else if (character === 'ディシア') {
-        energy = 1.5 * 0;
-    } else if (character === 'リネ') {
-        energy = 0;
-    } else if (character === 'フレミネ' && constellation >= 2) {
-        energy = 0;
     }
-    return Math.round(energy * 10) / 10;
+    if (rotationList && rotationList.length) {
+        result = [0, 0, 0, 0];
+        const multiple = Math.ceil(100 / rotationLength);
+        const lengthList = [0, 0, 0, 0];
+        rotationList.forEach(rotation => {
+            let length = 1;
+            const characterMaster = getCharacterMaster(rotation.member);
+            if (rotation.action === 'Q') {
+                length = 1;
+                if (characterMaster?.レアリティ && characterMaster.レアリティ === 5) {
+                    length += 0.5;
+                }
+            } else if (rotation.action === 'E.Hold') {
+                length = 1;
+            } else if (['E', 'E.Press'].includes(rotation.action)) {
+                length = 0.5;
+            } else if (rotation.action.startsWith('N')) {
+                const dan = Number(rotation.action.substring(1, 2)) ?? 1;
+                const withC = rotation.action.endsWith('C');
+                if (characterMaster?.武器 === '片手剣') {
+                    length = dan * 0.3 + (withC ? 0.5 : 0);
+                    if (rotation.action == 'N' && rotation.member === '神里綾人') {
+                        length = 6;
+                    }
+                } else if (characterMaster?.武器 === '長柄武器') {
+                    length = dan * 0.3 + (withC ? 0.5 : 0);
+                } else if (characterMaster?.武器 === '両手剣') {
+                    length = dan * 0.5;
+                } else if (characterMaster?.武器 === '弓') {
+                    length = dan * 0.3;
+                } else if (characterMaster?.武器 === '法器') {
+                    length = dan * 0.5;
+                }
+            } else if (rotation.action == 'C') {
+                if (characterMaster?.武器 === '両手剣') {
+                    length = 3;
+                } else if (characterMaster?.武器 === '弓') {
+                    length = 1.5;
+                } else if (characterMaster?.武器 === '法器') {
+                    length = 1;
+                    if (rotation.member === 'ヌヴィレット') {
+                        length = 3;
+                    }
+                }
+            }
+            lengthList[memberNameArr.indexOf(rotation.member)] += length;
+        })
+        const lengthSum = _.sum(lengthList);
+        for (let i = 0; i < result.length; i++) {
+            if (lengthSum && i < lengthList.length) {
+                result[i] = Math.ceil(lengthList[i] / lengthSum * 100 / multiple) * multiple;
+            } else {
+                result[i] = 25;
+            }
+        }
+        const sumVal = _.sum(result);
+        if (sumVal > 100) {
+            const maxVal = _.max(result);
+            for (let i = 0; i < result.length; i++) {
+                if (result[i] == maxVal) {
+                    result[i] -= sumVal - 100;
+                    break;
+                }
+            }
+        }
+    }
+    return result;
+}
+
+export function getParticleByCharacter(
+    character: string,
+    constellation: number,
+    team: TTeam,
+    rotationLength: number,
+    rotationList: TActionItem[] | undefined,
+    onFields: number[],
+): TERParticle[] | undefined {
+    const resultMap = new Map<string, number[]>();
+    if (!character) return undefined;
+    const cpmv = CHARACTER_PARTICLE_MAP[character];
+    if (!cpmv) return undefined;
+    if (!rotationList || !rotationList.length) {
+        rotationList = [{
+            id: 0,
+            member: character,
+            action: Object.keys(cpmv)[0],
+        }];
+    }
+    let curCharacter;
+    for (let i = 0; i < rotationList.length; i++) {
+        const rotation = rotationList[i];
+        if (rotation.member == character) {
+            if (['ディルック', 'ニィロウ'].includes(character) && curCharacter == character) {
+                continue;
+            }
+            const action = rotation.action;
+            if (action.startsWith('E')) {
+                const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
+                const ret = setSkillParticleNumToArr(resultVal, character, constellation, team, rotationLength, rotationList, i, onFields);
+                resultMap.set(action, resultVal);
+                if (ret) break;
+            }
+        }
+        curCharacter = rotation.member;
+    }
+    const result: TERParticle[] = [];
+    const characterMaster = getCharacterMaster(character);
+    const element = characterMaster?.元素 ?? '無色';
+    resultMap.forEach((value, key) => {
+        result.push([element, key, value[0], value[1], value[2], value[3]]);
+    })
+    return result;
+}
+
+export function getParticleByCharacterExtra(
+    character: string,
+    constellation: number,
+    team: TTeam,
+    rotationLength: number,
+    rotationList: TActionItem[] | undefined,
+    onFields: number[],
+): TERParticle | undefined {
+    let element;
+    let num;
+    const eCount = rotationList ? getECount(character, rotationList) : 1;
+    const qCount = rotationList ? getQCount(character, rotationList) : 1;
+    if (character === '刻晴' && constellation >= 2) {
+        // 刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。
+        const ct = 5;
+        element = '雷';
+        num = rotationLength / ct;
+    }
+    if (character === 'ガイア') {
+        // 霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。
+        if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length) {
+            const ct = 6;
+            element = '氷';
+            num = 2 * rotationLength / ct;
+        }
+    }
+    let result: TERParticle | undefined;
+    if (num && element) {
+        result = [element, '', 0, 0, 0, 0];
+    }
+    return result;
 }
 
 export function getEnergyByCharacter(
     character: string,
     constellation: number,
     team: TTeam,
-    rotationTime: number,
+    rotationLength: number,
     rotationList: TActionItem[] | undefined,
     teamMemberResult: TTeamMemberResult | undefined,
 ): TEREnergy | undefined {
@@ -300,7 +280,7 @@ export function getEnergyByCharacter(
         messages.push('最凶鬼王·一斗轟臨！！を発動した後、チーム内に岩元素タイプキャラクターが1人いる毎に、クールタイム-1.5秒、荒瀧一斗の元素エネルギーを6ポイント回復する。この方式で短縮できるクールタイムは4.5秒までとなり、回復できる元素エネルギーは18ポイントまでとなる。');
         const geoCount = team.members.filter(member => getCharacterMaster(member.name)?.元素 === '岩').length;
         myEnergy = Math.min(18, 6 * geoCount) * qCount;
-    } else if (character === '珊瑚宮心海') {
+    } else if (character === '珊瑚宮心海' && constellation >= 4) {
         messages.push('海人の羽衣による儀来羽衣状態の時、珊瑚宮心海の通常攻撃の攻撃速度+10%。そして通常攻撃が敵に命中すると、元素エネルギーを0.8ポイント回復する。この効果は0.2秒毎に1回のみ発動可能。');
         myEnergy = 0;
     } else if (character === '雷電将軍') {
@@ -330,7 +310,10 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === '甘雨' && constellation >= 1) {
         messages.push('二段チャージ重撃の霜華の矢または霜華満開が命中した時、敵の氷元素耐性-15%、継続時間6秒。命中時に甘雨の元素エネルギーを2回復。二段チャージの重撃による元素エネルギーの回復効果は、1回の重撃で1度のみ発動可能。');
-        myEnergy = 0;
+        if (rotationList) {
+            const cCount = rotationList.filter(rotation => rotation.member == character && rotation.action.indexOf('C') != -1).length;
+            myEnergy = 2 * cCount;
+        }
     } else if (character === 'アルベド' && constellation >= 1) {
         messages.push('アルベドの創生術·擬似陽華の刹那の花が放たれた時、アルベド自身の元素エネルギーが1.2回復する。');
         myEnergy = 0;
@@ -383,13 +366,13 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === 'ミカ' && constellation >= 4) {
         messages.push('ミカ自身によるスカイフェザーソングの鷹の羽状態がチームにいるキャラクターのHPを回復した時、ミカの元素エネルギーを3回復する。1回のスカイフェザーソングの鷹の羽状態で、元素エネルギーは最大5回まで回復できる。');
-        myEnergy = 0;
+        myEnergy = 3 * 5 * qCount;
     } else if (character === 'ヨォーヨ' && constellation >= 2) {
         messages.push('玉颗珊々月中落の桂子仙機状態にある時、白玉大根の爆発が敵に命中すると、ヨォーヨの元素エネルギーを3ポイント回復する。この方法による元素エネルギーの回復は、0.8秒毎に1回のみ可能。');
         myEnergy = 0;
     } else if (character === 'ファルザン' && constellation >= 4) {
         messages.push('命中した敵の数に基づき、風圧崩潰のサイクロンはファルザンの元素エネルギーを回復する。1体の敵に命中した場合、ファルザンの元素エネルギーを2ポイント回復する。また、追加で1体の敵に命中するたびに、ファルザンの元素エネルギーが0.5ポイント回復する。この方法により1回のサイクロンで回復できる元素エネルギーは最大4ポイントまで。');
-        myEnergy = 0;
+        myEnergy = 2 * Math.trunc(rotationLength / 3);
     } else if (character === 'レイラ' && constellation >= 2) {
         messages.push('垂裳凛然の夜が発射した飛星が敵に命中すると、レイラの元素エネルギーを1ポイント回復させる。この方法を通して、各飛星はレイラの元素エネルギーを最大で1回のみ回復できる。');
         myEnergy = 0;
@@ -415,7 +398,8 @@ export function getEnergyByCharacter(
         myEnergy = 15 * qCount;
     } else if (character === '九条裟羅') {
         messages.push('天狗呪雷·伏は敵に命中すると、九条裟羅の元素チャージ効率を基準にし、その100%の元素チャージ効率毎に、チーム全員の元素エネルギーを1.2回復する。この効果は3秒毎に1回のみ発動可能。');
-        myEnergy = 0;
+        const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
+        allEnergy = 1.2 * er / 100 * eCount;
     } else if (character === '早柚') {
         messages.push('早柚がフィールド上で拡散反応を起こした時、元素エネルギーを1.2ポイント回復する。この効果は2秒毎に1回のみ発動可能。');
         myEnergy = 0;
@@ -423,7 +407,8 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === 'ロサリア' && constellation >= 4) {
         messages.push('罪喰いの懺悔で会心が発生すると、ロサリア自身の元素エネルギーが5回復する。この効果は、1回の罪喰いの懺悔で1度のみ発動可能。');
-        myEnergy = 0;
+        const critRate = memberResult?.statsInput.statsObj.会心率 ?? 100;
+        myEnergy = 5 * critRate / 100 * eCount;
     } else if (character === '辛炎') {
         myEnergy = 0;
     } else if (character === 'ディオナ' && constellation >= 1) {
@@ -455,18 +440,24 @@ export function getEnergyByCharacter(
     } else if (character === 'バーバラ') {
         if (constellation >= 1) {
             messages.push('10秒毎に元素エネルギーを1回復する。');
-            myEnergy = 0;
+            myEnergy = Math.trunc(1 * rotationLength / 10);
         }
         if (constellation >= 4) {
             messages.push('重撃が敵に命中する度に、バーバラの元素エネルギーが1回復する。一回で最大元素エネルギーが5まで回復できる。');
-            myEnergy = 0;
+            if (rotationList) {
+                const cCount = rotationList.filter(rotation => rotation.member == character && rotation.action.indexOf('C') != -1).length;
+                myEnergy = 1 * cCount;
+            }
         }
     } else if (character === 'リサ' && constellation >= 1) {
         messages.push('蒼雷を長押しで発動した後、敵に命中する度にリサの元素エネルギーが2回復する。一回で最大10まで回復可能。');
-        myEnergy = 0;
+        if (rotationList) {
+            const eHoldCount = rotationList.filter(rotation => rotation.member == character && rotation.action == 'E.Hold').length;
+            myEnergy = 2 * eHoldCount;
+        }
     } else if (character === 'ガイア' && constellation >= 6) {
         messages.push('凛冽なる輪舞の氷柱が1本追加され、発動時に元素エネルギーが15回復する。');
-        myEnergy = 0;
+        myEnergy = 15 * qCount;
     } else if (character === 'アンバー') {
         myEnergy = 0;
     } else if (character === '旅人(水)') {
@@ -484,7 +475,7 @@ export function getEnergyByCharacter(
         }
     } else if (character === '旅人(岩)' && constellation >= 4) {
         messages.push('岩潮幾重が引き起こす振動波が敵に命中する度に、元素エネルギーが5回復する。この方法で一回で最大25まで回復可能。');
-        myEnergy = 0;
+        myEnergy = 5 * qCount;
     } else if (character === '旅人(風)') {
         myEnergy = 0;
     }
@@ -516,89 +507,12 @@ export function getEnergyByCharacter(
     return undefined;
 }
 
-export function getParticleByCharacter(
-    character: string,
-    constellation: number,
-    team: TTeam,
-    rotationTime: number,
-    rotationList: TActionItem[] | undefined,
-    teamMemberResult: TTeamMemberResult | undefined,
-    ePressCount?: number,
-    eHoldCount?: number,
-): TERParticle[] | undefined {
-    const resultMap = new Map<string, number[]>();
-    const memberNameArr = team.members.map(member => member.name);
-    const myIndex = memberNameArr.indexOf(character);
-    if (!character) {
-        return undefined;
-    }
-    const characterMaster = getCharacterMaster(character);
-    const element = characterMaster?.元素 ?? '白';
-    const characterParticle = CHARACTER_PARTICLE_MAP[character];
-    if (characterParticle && rotationList) {
-        for (let i = 0; i < rotationList.length; i++) {
-            const rotation = rotationList[i];
-            if (rotation.member == character && rotation.action.startsWith('E')) {
-                const particleNum = characterParticle[rotation.action] ?? 0;
-                const nextRotation = (i + 1) < rotationList.length ? rotationList[i + 1] : rotationList[0];
-                const receiver = nextRotation.member;
-                const receiverIndex = memberNameArr.indexOf(receiver);
-                if (!resultMap.has(rotation.action)) {
-                    resultMap.set(rotation.action, [0, 0, 0, 0, 0]);
-                }
-                const work = resultMap.get(rotation.action);
-                if (work) {
-                    work[0] += particleNum;
-                    work[1 + receiverIndex] += particleNum;
-                }
-            }
-        }
-    }
-    const result: TERParticle[] = [];
-    resultMap.forEach((value, key) => {
-        result.push([element, key, value[0], value[1], value[2], value[3], value[4]]);
-    })
-    return result;
-}
-
-export function getParticleByCharacterExtra(
-    character: string,
-    constellation: number,
-    team: TTeam,
-    rotationTime: number,
-    rotationList: TActionItem[] | undefined,
-): TERParticle | undefined {
-    let element;
-    let num;
-    const eCount = rotationList ? getECount(character, rotationList) : 1;
-    const qCount = rotationList ? getQCount(character, rotationList) : 1;
-    if (character === '刻晴' && constellation >= 2) {
-        // 刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。
-        const ct = 5;
-        element = '雷';
-        num = rotationTime / ct;
-    }
-    if (character === 'ガイア') {
-        // 霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。
-        if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length) {
-            const ct = 6;
-            element = '氷';
-            num = 2 * rotationTime / ct;
-        }
-    }
-    let result: TERParticle | undefined;
-    if (num && element) {
-        result = [element, '', num, 0, 0, 0, 0];
-    }
-    return result;
-}
-
 export function getEnergyByWeapon(
     character: string,
     weapon: string,
     weaponRefine: number,
     team: TTeam,
-    rotationTime: number,
+    rotationLength: number,
     rotationList: TActionItem[] | undefined,
 ): TEREnergy | undefined {
     const energies = [0, 0, 0, 0];
@@ -691,14 +605,50 @@ export function getParticleByWeapon(
     character: string,
     weapon: string,
     weaponRefine: number,
-    rotationTime: number,
+    team: TTeam,
+    rotationLength: number,
     rotationList: TActionItem[] | undefined,
+    onFields: number[],
 ): TERParticle | undefined {
     let result: TERParticle | undefined;
+    const memberNameArr = team.members.map(member => member.name);
     if (['西風剣', '西風大剣', '西風長槍', '西風猟弓', '西風秘典'].includes(weapon)) {
+        result = ['無色', '', 0, 0, 0, 0];
         const ct = [12, 10.5, 9, 7.5, 6][weaponRefine - 1];
-        const num = 3;
-        result = ['白', '', num, 0, 0, 0, 0];
+        let triggerCnt = 1;
+        if (rotationLength && rotationList && onFields) {
+            const rindexArr: number[] = [];
+            let fieldCnt = 0;
+            for (let i = 0; i < rotationList.length; i++) {
+                if (rotationList[i].member == character) {
+                    fieldCnt += (i === 0 || rotationList[i - 1].member != character) ? 1 : 0;
+                }
+            }
+            const onField = onFields[memberNameArr.indexOf(character)];
+            triggerCnt = Math.max(Math.round(rotationLength * onField / 100 / ct), fieldCnt);
+            triggerCnt = Math.min(Math.round(rotationLength / ct), triggerCnt);
+            let curName = undefined;
+            for (let i = 0; i < rotationList.length; i++) {
+                const rotation = rotationList[i];
+                if (rotation.member == character && rotation.member != curName) {
+                    rindexArr.push(i);
+                }
+                curName = rotation.member;
+            }
+            for (let i = 0; i < triggerCnt; i++) {
+                let nxtCharacter = character;
+                if (i < rindexArr.length) {
+                    const rindex = rindexArr[i];
+                    const nxtRotation = (rindex + 1) < rotationList.length ? rotationList[rindex + 1] : rotationList[0];
+                    nxtCharacter = nxtRotation.member;
+                }
+                const toIndex = memberNameArr.indexOf(nxtCharacter);
+                result[2 + toIndex] = 3;
+            }
+        } else {
+            const toIndex = memberNameArr.indexOf(character);
+            result[2 + toIndex] = 3 * triggerCnt;
+        }
     }
     return result;
 }
@@ -708,8 +658,9 @@ export function getParticleByResonance(
     artifactSet1: string | undefined,
     artifactSet2: string | undefined,
     team: TTeam,
-    rotationTime: number,
+    rotationLength: number,
     rotationList: TActionItem[] | undefined,
+    onFields: number[],
 ): TERParticle | undefined {
     let result: TERParticle | undefined;
     if (artifactSet1 && artifactSet2 && artifactSet1 == artifactSet2) { // 4セット効果
@@ -718,8 +669,10 @@ export function getParticleByResonance(
             if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '雷').length) {
                 if (team.members.filter(member => ['氷', '炎', '水', '草'].includes(getCharacterMaster(member.name)?.元素 ?? '--')).length) {
                     const ct = 5;
-                    const num = 1 * Math.trunc(rotationTime / ct);
-                    result = ['雷', '', num, 0, 0, 0, 0];
+                    const num = 1 * Math.trunc(rotationLength / ct);
+                    const workArr = [0, 0, 0, 0];
+                    splitNumToArrByOnFieldRate(workArr, num, team, onFields);
+                    result = ['雷', '', workArr[0], workArr[1], workArr[2], workArr[3]];
                 }
             }
         }
@@ -727,38 +680,109 @@ export function getParticleByResonance(
     return result;
 }
 
+function setSkillParticleNumToArr(
+    arr: number[],
+    character: string,
+    constellaton: number,
+    team: TTeam,
+    rotationLength: number,
+    rotationList: TActionItem[],
+    index: number,
+    onFields: number[],
+) {
+    let result = false;
+    const cpmv = CHARACTER_PARTICLE_MAP[character];
+    if (!cpmv) return;
+    const rotation = rotationList[index];
+    if (!rotation || !rotation.action.startsWith('E')) return;
+    const particleInfo = cpmv[rotation.action] ?? cpmv['E'];
+    if (!particleInfo) return;
+    if (_.isNumber(particleInfo)) {
+        addNumToArr(arr, particleInfo, team, rotationList, index);
+    } else if (_.isArray(particleInfo)) {
+        let num = particleInfo[0];
+        let toIndex = particleInfo[1];
+        let duration = particleInfo[2];
+        let ct = particleInfo[3];
+        if (particleInfo.length > 4 && particleInfo[5] >= constellaton) {
+            num = particleInfo[6];
+            toIndex = particleInfo[7];
+            duration = particleInfo[8];
+            ct = particleInfo[9];
+        }
+        if (ct <= duration) {
+            num *= rotationLength;
+            splitNumToArrByOnFieldRate(arr, num, team, onFields);
+            result = true;
+        } else {
+            num *= duration;
+            splitNumToArrByOnFieldRate(arr, num, team, onFields);
+        }
+    }
+    return result;
+}
+
+function addNumToArr(
+    arr: number[],
+    num: number,
+    team: TTeam,
+    rotationList: TActionItem[],
+    index: number
+) {
+    const memberNameArr = team.members.map(member => member.name);
+    const nxtRotation = (index + 1) < rotationList.length ? rotationList[index + 1] : rotationList[0];
+    arr[memberNameArr.indexOf(nxtRotation.member)] += num;
+}
+
+function splitNumToArrByOnFieldRate(
+    arr: number[],
+    num: number,
+    team: TTeam,
+    onFields: number[],
+) {
+    for (let i = 0; i < arr.length; i++) {
+        if (team.members[i].name) {
+            const onField = onFields[i];
+            arr[i] += num * onField / 100;
+        }
+    }
+}
+
+// 元素粒子数
+// [1秒あたりの元素粒子数,-1,継続時間,クールタイム]
+// [1秒あたりの元素粒子数,-1,継続時間,クールタイム,命ノ星座,1秒あたりの元素粒子数,-1,継続時間,クールタイム]
 const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
     'ヌヴィレット': {
-        'E': 0,
+        'E': 4,
     },
     'リネ': {
-        'E': 0,
+        'E': 5,
     },
     '白朮': {
-        'E': 0,
+        'E': 3.5,
     },
     'ディシア': {
-        'E': 0,
+        'E': [0.33, -1, 12, 20, 2, 0.33, -1, 18, 20],
     },
     'アルハイゼン': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 6,
+        'E.Hold': 6,
     },
     '放浪者': {
-        'E': 0,
+        'E': 4,
     },
     'ナヒーダ': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': [0.36, -1, 25, 5],
+        'E.Hold': [0.36, -1, 25, 6],
     },
     'ニィロウ': {
-        'E': 0,
+        'E': 4.5,
     },
     'セノ': {
-        'E': 0,
+        'E': 3,
     },
     'ティナリ': {
-        'E': 0,
+        'E': 3.5,
     },
     '夜蘭': {
         'E.Press': 4,
@@ -768,7 +792,7 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 0,
     },
     '八重神子': {
-        'E': 0,
+        'E': [0.36, -1, 14, 4],
     },
     '申鶴': {
         'E.Press': 3,
@@ -778,16 +802,16 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 3.5,
     },
     '珊瑚宮心海': {
-        'E': 0,
+        'E': [0.33, -1, 12, 20],
     },
     '雷電将軍': {
-        'E': 0,
+        'E': [0.45, -1, 25, 10],
     },
     'アーロイ': {
         'E': 5,
     },
     '宵宮': {
-        'E': 5,
+        'E': 4,
     },
     '神里綾華': {
         'E': 4.5,
@@ -810,12 +834,12 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 2,
     },
     'アルベド': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': [0.3, -1, 30, 4],
+        'E.Hold': [0.3, -1, 30, 4],
     },
     '鍾離': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': [0.25, -1, 20, 4],
+        'E.Hold': [0.25, -1, 20, 12],
     },
     'タルタリヤ': {
         'E': 3.5,
@@ -832,7 +856,8 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E.Hold': 2.5,
     },
     'モナ': {
-        'E': 0,
+        'E.Press': [3.33, 5, 5, 12],
+        'E.Hold': [3.33, 5, 5, 12],
     },
     '七七': {
         'E': 0,
@@ -847,22 +872,23 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 0,
     },
     'リネット': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 4,
+        'E.Hold': 4,
     },
     '綺良々': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 3,
+        'E.Hold': 3 + 1,
     },
     'カーヴェ': {
-        'E': 0,
+        'E': 2,
     },
     'ミカ': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 4,
+        'E.Hold': 4,
     },
     'ヨォーヨ': {
-        'E': 0,
+        'E.Press': [0.5, -1, 10, 15],
+        'E.Hold': [0.5, -1, 10, 15]
     },
     'ファルザン': {
         'E': 0,
@@ -871,51 +897,52 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 0,
     },
     'キャンディス': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 2,
+        'E.Hold': 3
     },
     'ドリー': {
-        'E': 0,
+        'E': 2,
     },
     'コレイ': {
-        'E': 0,
+        'E': 3,
     },
     '鹿野院平蔵': {
-        'E': 0,
+        'E': 2,
     },
     '久岐忍': {
-        'E': 0,
+        'E': [0.3, -1, 12, 15, 2, 0.3, -1, 15, 15],
     },
     '雲菫': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 2,
+        'E.Level1': 2.5,
+        'E.Level2': 3,
     },
     'ゴロー': {
         'E.Press': 2,
         'E.Hold': 2,
     },
     'トーマ': {
-        'E': 0,
+        'E': 3.4,
     },
     '九条裟羅': {
         'E': 0,
     },
     '早柚': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 2,
+        'E.Hold': 3,
     },
     '煙緋': {
-        'E': 0,
+        'E': 3,
     },
     'ロサリア': {
         'E': 2.5,
     },
     '辛炎': {
-        'E': 0,
+        'E': 4,
     },
     'ディオナ': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 1.6,
+        'E.Hold': 4,
     },
     'スクロース': {
         'E': 4,
@@ -931,7 +958,8 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E.Hold': 3,
     },
     'フィッシュル': {
-        'E': 0,
+        'E': [2 / 3, -1, 10, 24],
+        'Q': [2 / 3, -1, 10, 24],
     },
     '凝光': {
         'E': 3,
@@ -940,11 +968,11 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E': 4.5,
     },
     '北斗': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 2,
+        'E.Hold': 3,
     },
     '香菱': {
-        'E': 0,
+        'E': [0.5, -1, 8, 12],
     },
     'レザー': {
         'E.Press': 0,
@@ -955,7 +983,7 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
     },
     'リサ': {
         'E.Press': 0,
-        'E.Hold': 0,
+        'E.Hold': 5,
     },
     'ガイア': {
         'E': 2.5,
@@ -965,20 +993,21 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E.Hold': 0,
     },
     '旅人(水)': {
-        'E': 0,
+        'E.Press': 3 + 1 / 3,
+        'E.Hold': 3 + 1 / 3,
     },
     '旅人(草)': {
-        'E': 0,
+        'E': 2.5,
     },
     '旅人(雷)': {
         'E': 1,
     },
     '旅人(岩)': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 3 + 1 / 3,
+        'E.Hold': 3 + 1 / 3,
     },
     '旅人(風)': {
-        'E.Press': 0,
-        'E.Hold': 0,
+        'E.Press': 2,
+        'E.Hold': 3 + 1 / 3,
     },
 }
