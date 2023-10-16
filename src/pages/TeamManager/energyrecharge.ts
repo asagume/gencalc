@@ -555,15 +555,21 @@ export function getParticleByCharacter(
             action: Object.keys(cpmv)[0],
         }];
     }
+    const memberNameArr = team.members.map(member => member.name);
     let curCharacter;
     let isBursting = false;
+    const timeArr = [0, 0, 0, 0];
     for (let i = 0; i < rotationList.length; i++) {
         const rotation = rotationList[i];
         if (rotation.member != curCharacter) {
             isBursting = false;
         }
         if (rotation.member == character) {
-            const action = rotation.action;
+            const index = memberNameArr.indexOf(character);
+            let action = rotation.action;
+            if (action === 'Q' && ['フィッシュル', '珊瑚宮心海'].includes(character)) {
+                action = 'E';
+            }
             if (action === 'Q') {
                 isBursting = true; // キャラチェンするまでずっと元素爆発中判定とする
             } else if (action.startsWith('E')) {
@@ -571,9 +577,8 @@ export function getParticleByCharacter(
                     continue;
                 }
                 const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
-                const ret = setSkillParticleNumToArr(resultVal, character, constellation, team, rotationLength, rotationList, i, onFields, isBursting);
+                timeArr[index] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[index], isBursting);
                 resultMap.set(action, resultVal);
-                if (ret) break;
             }
         }
         curCharacter = rotation.member;
@@ -698,40 +703,41 @@ export function getParticleByResonance(
 function setSkillParticleNumToArr(
     arr: number[],
     character: string,
+    action: string,
     constellation: number,
     team: TTeam,
     rotationLength: number,
     rotationList: TActionItem[],
     index: number,
     onFields: number[],
+    time: number,
     isBursting = false,
 ) {
-    let result = false;
     const cpmv = CHARACTER_PARTICLE_MAP[character];
-    if (!cpmv) return;
+    if (!cpmv) return time;
     const rotation = rotationList[index];
-    if (!rotation || !rotation.action.startsWith('E')) return;
+    if (!rotation) return time;
     const actionArr: string[] = [];
     if (isBursting) {
-        actionArr.push(rotation.action + '(burst)');
-        if (rotation.action === 'E') {
+        actionArr.push(action + '(burst)');
+        if (action === 'E') {
             actionArr.push('E.Press(burst)');
         } else if (rotation.action === 'E.Press') {
             actionArr.push('E(burst)');
         }
     }
-    actionArr.push(rotation.action);
-    if (rotation.action === 'E') {
+    actionArr.push(action);
+    if (action === 'E') {
         actionArr.push('E.Press');
-    } else if (rotation.action === 'E.Press') {
+    } else if (action === 'E.Press') {
         actionArr.push('E');
     }
     let particleInfo;
-    for (const action of actionArr) {
-        particleInfo = cpmv[action];
+    for (const work of actionArr) {
+        particleInfo = cpmv[work];
         if (particleInfo) break;
     }
-    if (!particleInfo) return;
+    if (!particleInfo) return time;
     if (_.isNumber(particleInfo)) { // ダイレクト
         addNumToArr(arr, particleInfo, team, rotationList, index);
     } else if (_.isArray(particleInfo)) { // ダイレクト or 設置物
@@ -750,17 +756,14 @@ function setSkillParticleNumToArr(
             }
             if (toAdd >= 0) {
                 addNumToArr(arr, particleInfo[0], team, rotationList, index, toAdd);
-            } else if (ct <= duration || ['フィッシュル', '珊瑚宮心海'].includes(character)) { // クールタイム≦継続時間は×ローテーション長
-                num *= rotationLength;
+            } else if (time < rotationLength) {
+                num *= (time + duration) <= rotationLength ? duration : rotationLength - time;
                 splitNumToArrByOnFieldRate(arr, num, team, onFields);
-                result = true; // 常時存在し続けるため、元素スキルを何回使用しても変わらないことを通知
-            } else { // ×継続時間
-                num *= duration;
-                splitNumToArrByOnFieldRate(arr, num, team, onFields);
+                time += duration;
             }
         }
     }
-    return result;
+    return time;
 }
 
 function addNumToArr(
@@ -1003,7 +1006,7 @@ const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
         'E.Hold': 3,
     },
     'フィッシュル': {
-        'E': [2 / 3, -1, 10, 24],
+        'E': [2 / 3, -1, 10, 24, 6, 2 / 3, -1, 12, 24],
     },
     '凝光': {
         'E': 3,
