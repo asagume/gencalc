@@ -65,22 +65,22 @@
                 <th>{{ displayName('生成数') }}</th>
                 <th colspan="4">{{ displayName('拾得数') }}</th>
             </tr>
-            <tr v-for="(row, rowIndex) in  calculatorInputEnemy" :key="rowIndex" :class="bgColorClass2(row)">
+            <tr v-for="(row, rowIndex) in  inputRowParticleEnemy" :key="rowIndex" :class="bgColorClass2(row)">
                 <th>
                     {{ displayName('敵') }}
                 </th>
                 <td>{{ Math.round(row.currents.reduce((p, c) => p + c, 0) * 10) / 10 }}</td>
-                <td v-for="columnIndex in [0, 1, 2, 3]" :key="columnIndex">
+                <td v-for="columnIndex in Array.from({ length: row.currents.length }, (_, i) => i)" :key="columnIndex">
                     <input type="number" v-model="row.currents[columnIndex]" min="0">
                 </td>
             </tr>
-            <tr v-for="(row, rowIndex) in  calculatorInputParticle" :key="rowIndex" :class="bgColorClass2(row)">
+            <tr v-for="(row, rowIndex) in inputRowParticle" :key="rowIndex" :class="bgColorClass2(row)">
                 <th>
-                    <img :src="characterImgSrc(row.character)" :alt="row.character" class="input-item-character">
-                    <img :src="triggeredBy3ImgSrc(row)" :alt="row.category3" class="input-item">
+                    <img :src="rowImgSrc1(row)" :alt="row.character" :class="rowImgSrc1Class(row)">
+                    <img :src="rowImgSrc2(row)" :alt="row.category3" class="input-item">
                 </th>
                 <td>{{ Math.round(row.currents.reduce((p, c) => p + c, 0) * 10) / 10 }}</td>
-                <td v-for="columnIndex in [0, 1, 2, 3]" :key="columnIndex">
+                <td v-for="columnIndex in Array.from({ length: row.currents.length }, (_, i) => i)" :key="columnIndex">
                     <input type="number" v-model="row.currents[columnIndex]" min="0">
                 </td>
             </tr>
@@ -94,13 +94,13 @@
                 <th colspan="2">元素エネルギー</th>
                 <th colspan="4">{{ displayName('獲得量') }}</th>
             </tr>
-            <tr v-for="(row, rowIndex) in  calculatorInputEnergy" :key="rowIndex" :class="bgColorClass2(row)">
+            <tr v-for="(row, rowIndex) in  inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
                 <th>
-                    <img :src="characterImgSrc(row.character)" :alt="row.character" class="input-item-character">
-                    <img :src="triggeredBy3ImgSrc(row)" :alt="row.category3" class="input-item">
+                    <img :src="rowImgSrc1(row)" :alt="row.character" :class="rowImgSrc1Class(row)">
+                    <img :src="rowImgSrc2(row)" :alt="row.category3" class="input-item">
                 </th>
                 <td></td>
-                <td v-for="columnIndex in [0, 1, 2, 3]" :key="columnIndex">
+                <td v-for="columnIndex in Array.from({ length: row.currents.length }, (_, i) => i)" :key="columnIndex">
                     <input type="number" v-model="row.currents[columnIndex]" min="0">
                 </td>
             </tr>
@@ -125,27 +125,49 @@
                 <tr v-for="(element, index) in supplyFromEnemy" :key="index"
                     v-show="isOpenSupplyFromEnemy || element[1] || element[2]">
                     <td>{{ displayName(element[0]) }}</td>
-                    <td>
-                        <input type="number" v-model="element[1]" min="0" @change="inputOnChange">
-                    </td>
-                    <td>
-                        <input type="number" v-model="element[2]" min="0" @change="inputOnChange">
-                    </td>
+                    <td> <input type="number" v-model="element[1]" min="0"> </td>
+                    <td> <input type="number" v-model="element[2]" min="0"> </td>
                 </tr>
             </table>
         </div>
         <div class="message-area">
             <p v-for="message of messages" :key="message">{{ message }}</p>
         </div>
-        <div>
+        <div class="message-area">
             <dl>
-                <dt>元素スキル</dt>
-                <dd></dd>
-                <dt>雷元素共鳴</dt>
-                <dd></dd>
-                <dt>西風武器</dt>
-                <dd></dd>
-                <dt>刻晴とガイア</dt>
+                <dt>元素スキルが生成する元素粒子</dt>
+                <dd>
+                    <ol>
+                        <li>大部分のキャラクター<br>
+                            元素スキル使用時に元素粒子が発生するタイプの元素スキルは、
+                            直後のアクション実行者が元素粒子を拾得する。
+                        </li>
+                        <li>胡桃、宵宮、神里綾人、アルハイゼン、放浪者 等<br>
+                            元素スキル使用時に元素粒子が発生せず、
+                            その後の通常攻撃または重撃命中時に元素粒子が発生するタイプの元素スキルは、
+                            継続時間一杯攻撃した場合に発生するであろう数の元素粒子を使用者自身が拾得する。
+                        </li>
+                        <li>フィッシュル、鍾離、アルベド、珊瑚宮心海、八重神子 等<br>
+                            継続時間の長い設置物からの攻撃命中時に元素粒子が発生するタイプの元素スキルは、
+                            ローテーションまたは継続時間の間ずっと攻撃し続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分する。
+                        </li>
+                        <li>アンバー、香菱、モナ、甘雨 等<br>
+                            継続時間の短い設置物からの攻撃命中時または設置物破壊時に元素粒子が発生するタイプの元素スキルは、
+                            …
+                        </li>
+                    </ol>
+                </dd>
+                <dt>雷元素共鳴が生成する元素粒子</dt>
+                <dd>
+                    ローテーションの間ずっと5秒間隔で雷元素関連反応が起き続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分する。
+                </dd>
+                <dt>西風武器が生成する元素粒子</dt>
+                <dd>
+                    使用者の出場回数および出場時間(%)、ローテーション長から武器効果をトリガーする回数を決定する。
+                    トリガー回数はローテーション長をクールタイムで割った数を超えない。<br>
+                    元素粒子は基本的に使用者が拾得するが、使用者が1アクションだけで退場する場合は次のアクション実行者が拾得する。
+                </dd>
+                <dt>刻晴とガイアとフィッシュル</dt>
                 <dd></dd>
             </dl>
         </div>
@@ -153,9 +175,9 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { CHARACTER_ENERGY, CHARACTER_PARTICLE, ENEMY_PARTICLE, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByWeapon, RECHARGE_DIRECT, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_SKILL, RESONANCE_PARTICLE, WEAPON_ENERGY, WEAPON_PARTICLE } from "./energyrecharge";
+import { CHARACTER_ENERGY, CHARACTER_PARTICLE, ENEMY_PARTICLE, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, RECHARGE_DIRECT, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, RESONANCE_PARTICLE, WEAPON_ENERGY, WEAPON_PARTICLE } from "./energyrecharge";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TActionItem, TTeam, TTeamMemberResult } from "./team";
-import { ELEMENT_BG_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
+import { ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import _ from "lodash";
 
@@ -168,16 +190,16 @@ type TCalculatorInput = {
     onField: number,            // 出場率
 }
 
-type TCalculatorInputSub = {
-    character: string,      // キャラクター名
-    triggeredBy: string,    // [CHARACTER|WEAPON|ARTIFACT]_PARTICLE,[CHARACTER|WEAPON|ARTIFACT]_ENERGY
-    category3: string,      // キャラクター名,武器名,聖遺物名
-    rechargeType: string,   // リチャージ種別
-    element: string,        // 元素粒子の元素
-    initials: number[],     // 初期値
-    currents: number[],     // 現在値
-    sum: number,            // 現在値の合計値
-    unit: number,           // 単位
+type TCalculatorInputRow = {
+    character: string,          // キャラクター名
+    kind: string,               // [CHARACTER|WEAPON|RESONANCE]_PARTICLE,[CHARACTER|WEAPON]_ENERGY
+    category3: string,          // キャラクター名,武器名
+    rechargeType: string,       // リチャージ種別
+    element: string,            // 元素粒子の元素
+    initials: number[],         // 初期値
+    currents: number[],         // 現在値
+    sum: number,                // 現在値の合計値
+    unit: number,               // 単位
 }
 
 export default defineComponent({
@@ -190,9 +212,9 @@ export default defineComponent({
     setup(props) {
         const { displayName } = CompositionFunction();
         const calculatorInput = reactive([] as TCalculatorInput[]);
-        const calculatorInputParticle = reactive([] as TCalculatorInputSub[]);
-        const calculatorInputEnergy = reactive([] as TCalculatorInputSub[]);
-        const calculatorInputEnemy = reactive([] as TCalculatorInputSub[]);
+        const inputRowParticle = reactive([] as TCalculatorInputRow[]);
+        const inputRowEnergy = reactive([] as TCalculatorInputRow[]);
+        const inputRowParticleEnemy = reactive([] as TCalculatorInputRow[]);
         const messages = reactive([] as string[]);
         const rotationLength = ref(20);
         const supplyFromEnemy = reactive([
@@ -215,14 +237,14 @@ export default defineComponent({
         watch(props, (newVal, oldVal) => {
             setupCharacterDetailMap(newVal.team).then(() => {
                 setupInput(newVal.team, newVal.rotationList, newVal.teamMemberResult);
-                setupInputSub(newVal.team, newVal.rotationList, newVal.teamMemberResult);
+                setupInputRows(newVal.team, newVal.rotationList, newVal.teamMemberResult);
             });
             watchCount.value++;
         });
 
         const setupInput = (team: TTeam, rotationList: TActionItem[], teamMemberResult: TTeamMemberResult) => {
             if (!team) return;
-            const newCalculatorInput: TCalculatorInput[] = [];
+            const newInput: TCalculatorInput[] = [];
             const onFields = getOnFieldRate(team, rotationLength.value, rotationList);
             for (let i = 0; i < team.members.length; i++) {
                 const member = team.members[i];
@@ -231,7 +253,7 @@ export default defineComponent({
                 const constellation = memberResult?.characterInput.命ノ星座 ?? 0;
                 const weapon = memberResult?.characterInput.weapon;
                 const weaponRefine = memberResult?.characterInput.武器精錬ランク ?? 1;
-                newCalculatorInput.push({
+                newInput.push({
                     character: member.name,
                     energyCost: characterDetail?.元素爆発.元素エネルギー ?? 0,
                     constellation: constellation,
@@ -240,17 +262,18 @@ export default defineComponent({
                     onField: onFields[i],
                 });
             }
-            calculatorInput.splice(0, calculatorInput.length, ...newCalculatorInput);
+            calculatorInput.splice(0, calculatorInput.length, ...newInput);
 
-            setupInputSub(team, rotationList, teamMemberResult);
+            setupInputRows(team, rotationList, teamMemberResult);
         }
 
-        const setupInputSub = (team: TTeam, rotationList: TActionItem[], teamMemberResult: TTeamMemberResult) => {
+        const setupInputRows = (team: TTeam, rotationList: TActionItem[], teamMemberResult: TTeamMemberResult) => {
             if (!team) return;
-            const newCalculatorInputPacticle1: TCalculatorInputSub[] = [];
-            const newCalculatorInputPacticle2: TCalculatorInputSub[] = [];
-            const newCalculatorInputEnergy1: TCalculatorInputSub[] = [];
-            const newCalculatorInputEnemy: TCalculatorInputSub[] = [];
+            const newInputRowPacticle1: TCalculatorInputRow[] = [];
+            const newInputRowPacticle2: TCalculatorInputRow[] = [];
+            const newInputRowEnergy1: TCalculatorInputRow[] = [];
+            const newInputRowResonance: TCalculatorInputRow[] = [];
+            const newinputRowParticleEnemy: TCalculatorInputRow[] = [];
             const newMessages: string[] = [];
             const onFields = calculatorInput.map(s => s.onField);
             for (let i = 0; i < calculatorInput.length; i++) {
@@ -259,42 +282,48 @@ export default defineComponent({
                 const weapon = calculatorInput[i].weapon;
                 const weaponRefine = calculatorInput[i].weaponRefine;
 
-                const particleByCharacter = getParticleByCharacter(character, constellation, team, rotationLength.value, rotationList, onFields);
-                if (particleByCharacter?.length) {
-                    const triggeredBy = CHARACTER_PARTICLE;
-                    particleByCharacter.forEach(entry => {
-                        const category3 = entry[1];
-                        const initials = [0, 0, 0, 0];
-                        for (let i = 0; i < initials.length; i++) {
-                            initials[i] = Math.round(Number(entry[2 + i]) * 100) / 100;
-                        }
-                        const currents = _.cloneDeep(initials);
-                        newCalculatorInputPacticle1.push({
-                            character: character,
-                            triggeredBy: triggeredBy,
-                            category3: category3,
-                            rechargeType: RECHARGE_PARTICLE_SKILL,
-                            element: entry[0],
-                            initials: initials,
-                            currents: currents,
-                            sum: currents.reduce((a, c) => a + c, 0),
-                            unit: entry[2],
+                // キャラクターの元素粒子
+                [
+                    getParticleByCharacter(character, constellation, team, rotationLength.value, rotationList, onFields),
+                    getParticleByCharacterExtra(character, constellation, team, rotationLength.value, rotationList, onFields),
+                ].forEach(result => {
+                    if (result?.length) {
+                        const kind = CHARACTER_PARTICLE;
+                        result.forEach(entry => {
+                            const category3 = entry[1];
+                            const initials = [0, 0, 0, 0];
+                            for (let i = 0; i < initials.length; i++) {
+                                initials[i] = Math.round(Number(entry[2 + i]) * 100) / 100;
+                            }
+                            const currents = _.cloneDeep(initials);
+                            newInputRowPacticle1.push({
+                                character: character,
+                                kind: kind,
+                                category3: category3,
+                                rechargeType: RECHARGE_PARTICLE_SKILL,
+                                element: entry[0],
+                                initials: initials,
+                                currents: currents,
+                                sum: currents.reduce((a, c) => a + c, 0),
+                                unit: entry[2],
+                            })
                         })
-                    })
-                }
+                    }
+                })
 
+                // キャラクターの元素エネルギー
                 const energyByCharacter = getEnergyByCharacter(character, constellation, team, rotationLength.value, rotationList, teamMemberResult);
                 if (energyByCharacter?.length) {
-                    const triggeredBy = CHARACTER_ENERGY;
+                    const kind = CHARACTER_ENERGY;
                     const category3 = character;
                     const initials = [0, 0, 0, 0];
                     for (let i = 0; i < initials.length; i++) {
                         initials[i] = Math.round(Number(energyByCharacter[i]) * 100) / 100;
                     }
                     const currents = _.cloneDeep(initials);
-                    newCalculatorInputEnergy1.push({
+                    newInputRowEnergy1.push({
                         character: character,
-                        triggeredBy: triggeredBy,
+                        kind: kind,
                         category3: category3,
                         rechargeType: RECHARGE_DIRECT,
                         element: '',
@@ -304,14 +333,15 @@ export default defineComponent({
                         unit: 0.1,
                     })
                     if (energyByCharacter[4].length) {
-                        newMessages.push(...energyByCharacter[4].map(s => category3 + '\n' + s));
+                        newMessages.push(...energyByCharacter[4].map(s => character + '\n' + s));
                     }
                 }
 
                 if (weapon) {
+                    // 武器の元素粒子（西風）
                     const particleByWeapon = getParticleByWeapon(character, weapon, weaponRefine, team, rotationLength.value, rotationList, onFields);
                     if (particleByWeapon?.length) {
-                        const triggeredBy = WEAPON_PARTICLE;
+                        const kind = WEAPON_PARTICLE;
                         const category3 = weapon;
                         const entry = particleByWeapon;
                         const initials = [0, 0, 0, 0];
@@ -319,9 +349,9 @@ export default defineComponent({
                             initials[i] = Math.round(Number(entry[2 + i]) * 100) / 100;
                         }
                         const currents = _.cloneDeep(initials);
-                        newCalculatorInputPacticle2.push({
+                        newInputRowPacticle2.push({
                             character: character,
-                            triggeredBy: triggeredBy,
+                            kind: kind,
                             category3: category3,
                             rechargeType: RECHARGE_PARTICLE_FAVONIUS,
                             element: entry[0],
@@ -332,18 +362,19 @@ export default defineComponent({
                         })
                     }
 
-                    const energyFromWeapon = getEnergyByWeapon(character, weapon, weaponRefine, team, rotationLength.value, rotationList);
-                    if (energyFromWeapon?.length) {
-                        const triggeredBy = WEAPON_ENERGY;
+                    // 武器の元素エネルギー
+                    const energyByWeapon = getEnergyByWeapon(character, weapon, weaponRefine, team, rotationLength.value, rotationList);
+                    if (energyByWeapon?.length) {
+                        const kind = WEAPON_ENERGY;
                         const category3 = weapon;
                         const initials = [0, 0, 0, 0];
                         for (let i = 0; i < initials.length; i++) {
-                            initials[i] = Math.round(Number(energyFromWeapon[i]) * 100) / 100;
+                            initials[i] = Math.round(Number(energyByWeapon[i]) * 100) / 100;
                         }
                         const currents = _.cloneDeep(initials);
-                        newCalculatorInputEnergy1.push({
+                        newInputRowEnergy1.push({
                             character: character,
-                            triggeredBy: triggeredBy,
+                            kind: kind,
                             category3: category3,
                             rechargeType: RECHARGE_DIRECT,
                             element: '',
@@ -352,16 +383,42 @@ export default defineComponent({
                             sum: currents.reduce((a, c) => a + c, 0),
                             unit: 0.1,
                         })
-                        if (energyFromWeapon[4].length) {
-                            newMessages.push(...energyFromWeapon[4].map(s => category3 + '\n' + s));
+                        if (energyByWeapon[4].length) {
+                            newMessages.push(...energyByWeapon[4].map(s => category3 + '\n' + s));
                         }
                     }
                 }
             }
 
+            // 元素共鳴の元素粒子
+            const particleByResonance = getParticleByResonance(team, rotationLength.value, rotationList, onFields);
+            if (particleByResonance?.length) {
+                const character = '';
+                const kind = RESONANCE_PARTICLE;
+                const entry = particleByResonance;
+                const category3 = entry[1];
+                const initials = [0, 0, 0, 0];
+                for (let i = 0; i < initials.length; i++) {
+                    initials[i] = Math.round(Number(entry[2 + i]) * 100) / 100;
+                }
+                const currents = _.cloneDeep(initials);
+                newInputRowResonance.push({
+                    character: character,
+                    kind: kind,
+                    category3: category3,
+                    rechargeType: RECHARGE_PARTICLE_RESONANCE,
+                    element: entry[0],
+                    initials: initials,
+                    currents: currents,
+                    sum: currents.reduce((a, c) => a + c, 0),
+                    unit: entry[2],
+                })
+            }
+
+            // 敵の元素粒子
             supplyFromEnemy.filter(s => s[1] || s[2]).forEach(entry => {
                 const character = '';
-                const triggeredBy = ENEMY_PARTICLE;
+                const kind = ENEMY_PARTICLE;
                 const category3 = '';
                 const element = entry[0];
                 const sum = entry[1] * 3 + entry[2];
@@ -370,9 +427,9 @@ export default defineComponent({
                     initials[i] = rotationLength.value / 90 * sum * onFields[i] / 100;
                 }
                 const currents = _.cloneDeep(initials);
-                newCalculatorInputEnemy.push({
+                newinputRowParticleEnemy.push({
                     character: character,
-                    triggeredBy: triggeredBy,
+                    kind: kind,
                     category3: category3,
                     rechargeType: RECHARGE_PARTICLE_ENEMY,
                     element: element,
@@ -383,9 +440,9 @@ export default defineComponent({
                 })
             })
 
-            calculatorInputParticle.splice(0, calculatorInputParticle.length, ...newCalculatorInputPacticle1, ...newCalculatorInputPacticle2);
-            calculatorInputEnergy.splice(0, calculatorInputEnergy.length, ...newCalculatorInputEnergy1);
-            calculatorInputEnemy.splice(0, calculatorInputEnemy.length, ...newCalculatorInputEnemy);
+            inputRowParticle.splice(0, inputRowParticle.length, ...newInputRowPacticle1, ...newInputRowPacticle2, ...newInputRowResonance);
+            inputRowEnergy.splice(0, inputRowEnergy.length, ...newInputRowEnergy1);
+            inputRowParticleEnemy.splice(0, inputRowParticleEnemy.length, ...newinputRowParticleEnemy);
             messages.splice(0, messages.length, ...newMessages);
         }
 
@@ -414,8 +471,8 @@ export default defineComponent({
                 const characterMaster = getCharacterMaster(member.name);
                 const myElement = characterMaster?.元素;
                 if (!myElement) continue;
-                [calculatorInputParticle, calculatorInputEnemy].forEach(input => {
-                    input.filter(s => [CHARACTER_PARTICLE, WEAPON_PARTICLE, RESONANCE_PARTICLE, ENEMY_PARTICLE].includes(s.triggeredBy)).forEach(entry => {
+                [inputRowParticle, inputRowParticleEnemy].forEach(input => {
+                    input.filter(s => [CHARACTER_PARTICLE, WEAPON_PARTICLE, RESONANCE_PARTICLE, ENEMY_PARTICLE].includes(s.kind)).forEach(entry => {
                         let energy = 0;
                         for (let j = 0; j < entry.currents.length; j++) {
                             if (j == i) {
@@ -443,7 +500,7 @@ export default defineComponent({
                 if (i >= calculatorInput.length) continue;
                 let energyCost = calculatorInput[i]?.energyCost;
                 if (!energyCost) continue;
-                calculatorInputEnergy.filter(s => [CHARACTER_ENERGY, WEAPON_ENERGY].includes(s.triggeredBy)).forEach(entry => {
+                inputRowEnergy.filter(s => [CHARACTER_ENERGY, WEAPON_ENERGY].includes(s.kind)).forEach(entry => {
                     energyCost -= entry.currents[i];
                 })
                 const burstCount = burstCounts.value[i] > 0 ? burstCounts.value[i] : 1;
@@ -458,60 +515,52 @@ export default defineComponent({
 
         const characterImgSrc = (character: string) => getCharacterMaster(character)?.icon_url ?? IMG_SRC_DUMMY;
         const weaponImgSrc = (character: string, weapon?: string) => {
+            const characterMater = getCharacterMaster(character);
+            return weapon ? characterMater ? getWeaponMaster(characterMater.武器, weapon)?.icon_url ?? IMG_SRC_DUMMY : IMG_SRC_DUMMY : IMG_SRC_DUMMY;
+        }
+        const rowImgSrc1 = (row: TCalculatorInputRow) => {
             let result = IMG_SRC_DUMMY;
-            if (weapon) {
-                const weaponType = getCharacterMaster(character)?.武器;
-                if (weaponType) {
-                    const weaponMaster = getWeaponMaster(weaponType, weapon);
-                    if (weaponMaster) {
-                        result = weaponMaster.icon_url;
-                    }
+            if (row.kind) {
+                if ([CHARACTER_PARTICLE, CHARACTER_ENERGY, WEAPON_PARTICLE, WEAPON_ENERGY].includes(row.kind)) {
+                    result = getCharacterMaster(row.character)?.icon_url ?? IMG_SRC_DUMMY;
+                } else if ([RESONANCE_PARTICLE].includes(row.kind)) { // 元素共鳴
+                    result = (ELEMENT_IMG_SRC as any)[row.element] ?? IMG_SRC_DUMMY
                 }
             }
             return result;
         }
-        const triggeredBy3ImgSrc = (element: TCalculatorInputSub) => {
+        const rowImgSrc1Class = (row: TCalculatorInputRow) =>
+            (row.kind && [CHARACTER_PARTICLE, CHARACTER_ENERGY, WEAPON_PARTICLE, WEAPON_ENERGY].includes(row.kind)) ? 'input-item-character' : 'input-item';
+        const rowImgSrc2 = (row: TCalculatorInputRow) => {
             let result = IMG_SRC_DUMMY;
-            if (element.triggeredBy && element.category3) {
-                if ([CHARACTER_PARTICLE].includes(element.triggeredBy)) { // キャラクター
-                    const characterDetail = getCharacterDetail(element.character);
+            if (row.kind) {
+                if ([CHARACTER_PARTICLE].includes(row.kind)) { // 元素スキル
+                    const characterDetail = getCharacterDetail(row.character);
                     result = characterDetail?.元素スキル.icon_url ?? IMG_SRC_DUMMY;
-                }
-                if ([WEAPON_ENERGY, WEAPON_PARTICLE].includes(element.triggeredBy)) { // 武器
-                    const characterMater = getCharacterMaster(element.character);
+                } else if ([WEAPON_ENERGY, WEAPON_PARTICLE].includes(row.kind) && row.category3) { // 武器
+                    const characterMater = getCharacterMaster(row.character);
                     if (characterMater) {
                         const weaponType = characterMater.武器;
-                        const weaponMaster = getWeaponMaster(weaponType, element.category3);
+                        const weaponMaster = getWeaponMaster(weaponType, row.category3);
                         if (weaponMaster) {
                             result = weaponMaster.icon_url;
                         }
                     }
+                } else if ([RESONANCE_PARTICLE].includes(row.kind)) { // 元素共鳴
+                    result = (ELEMENT_IMG_SRC as any)[row.element] ?? IMG_SRC_DUMMY
                 }
             }
             return result;
         }
-
         const bgColorClass = (index: number) => {
-            let result = 'white';
-            if (index < props.team.members.length) {
-                const character = props.team.members[index].name;
-                const master = getCharacterMaster(character);
-                if (master) {
-                    result = (ELEMENT_BG_COLOR_CLASS as any)[master.元素];
-                }
-            }
-            return ' ' + result;
+            const master = index < props.team.members.length ? getCharacterMaster(props.team.members[index].name) : undefined;
+            return ' ' + (master ? (ELEMENT_BG_COLOR_CLASS as any)[master.元素] : 'white');
         }
-        const bgColorClass2 = (row: TCalculatorInputSub) => {
-            let result = 'white';
-            if (row.element) {
-                result = (ELEMENT_BG_COLOR_CLASS as any)[row.element];
-            }
-            return ' ' + result;
-        }
+        const bgColorClass2 = (row: TCalculatorInputRow) =>
+            ' ' + (row.element ? (ELEMENT_BG_COLOR_CLASS as any)[row.element] : 'white');
 
         const inputOnChange = () => {
-            setupInputSub(props.team, props.rotationList, props.teamMemberResult);
+            setupInputRows(props.team, props.rotationList, props.teamMemberResult);
         }
 
         return {
@@ -521,14 +570,16 @@ export default defineComponent({
             supplyFromEnemy,
             isOpenSupplyFromEnemy,
             calculatorInput,
-            calculatorInputParticle,
-            calculatorInputEnergy,
-            calculatorInputEnemy,
+            inputRowParticle,
+            inputRowEnergy,
+            inputRowParticleEnemy,
             burstCounts,
             messages,
             characterImgSrc,
             weaponImgSrc,
-            triggeredBy3ImgSrc,
+            rowImgSrc1,
+            rowImgSrc1Class,
+            rowImgSrc2,
             bgColorClass,
             bgColorClass2,
             particleRecharges,
@@ -573,7 +624,7 @@ td {
 th {
     font-size: 1.8rem;
     font-weight: bold;
-    padding: 2px 4px;
+    padding: 0 4px;
 }
 
 input[type="number"] {
