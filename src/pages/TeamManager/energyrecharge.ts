@@ -1,38 +1,48 @@
 import _ from "lodash";
 import { TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
 
-export const RECHARGE_DIRECT = "0";
-export const RECHARGE_PARTICLE_SKILL = "1";
-export const RECHARGE_PARTICLE_TURRET = "2";
-export const RECHARGE_PARTICLE_FAVONIUS = "6";
-export const RECHARGE_PARTICLE_RESONANCE = "8";
-export const RECHARGE_PARTICLE_ENEMY = "9";
+export const RECHARGE_ENERGY_SKILL = "01";              // 元素スキルによる元素エネルギー回復
+export const RECHARGE_ENERGY_BURST = "02";              // 元素爆発による元素エネルギー回復
+export const RECHARGE_ENERGY_PASSIVE = "03";            // 固有天賦による元素エネルギー回復
+export const RECHARGE_ENERGY_CONSTELLATION = "04";      // 命ノ星座による元素エネルギー回復
+export const RECHARGE_ENERGY_WEAPON = "06";             // 武器効果による元素エネルギー回復
+export const RECHARGE_PARTICLE_SKILL = "11";            // 元素スキルによる元素粒子生成
+export const RECHARGE_PARTICLE_PASSIVE = "13";          // 固有天賦による元素粒子生成
+export const RECHARGE_PARTICLE_CONSTELLATION = "14";    // 命ノ星座による元素粒子生成
+export const RECHARGE_PARTICLE_FAVONIUS = "16";         // 武器効果（西風）による元素粒子生成
+export const RECHARGE_PARTICLE_RESONANCE = "18";        // 元素共鳴による元素粒子生成
+export const RECHARGE_PARTICLE_ENEMY = "19";            // 敵による元素粒子生成
 
-export const CHARACTER_ENERGY = 'CHARACTER_ENERGY';
-export const WEAPON_ENERGY = 'WEAPON_ENERGY';
-export const CHARACTER_PARTICLE = 'CHARACTER_PARTICLE';
-export const WEAPON_PARTICLE = 'WEAPON_PARTICLE'; // 西風
-export const RESONANCE_PARTICLE = 'RESONANCE_PARTICLE'; // 雷元素共鳴
-export const ENEMY_PARTICLE = 'ENEMY_PARTICLE';
+// rechargeKind, triggerName, energies[0], energies[1], energies[2], energies[3], messages[]
+export type TEREnergy = [string, string, number, number, number, number, string[]];
+// rechargeKind, triggerName, element, particles[0], particles[1], particles[2], particles[3]
+export type TERParticle = [string, string, string, number, number, number, number];
 
-export type TEREnergy = [number, number, number, number, string[]];
-export type TERParticle = [string, string, number, number, number, number];
-
+/** 通常攻撃使用回数 */
+export function countN(character?: string, rotationList?: TActionItem[]) {
+    return rotationList?.length ?
+        rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.startsWith('N')).reduce((sum, rotation) => sum + Number(rotation.action.substring(1, 2) ?? '1'), 0)
+        : 1;
+}
 /** 重撃使用回数 */
-export function getCCount(name: string, rotationList: TActionItem[]) {
-    return rotationList.filter(rotation => rotation.member == name && rotation.action.indexOf('C') != -1).length;
+export function countC(character?: string, rotationList?: TActionItem[]) {
+    return rotationList?.length ?
+        rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.indexOf('C') != -1).length
+        : 1;
 }
-
 /** 元素スキル使用回数 */
-export function getECount(name: string, rotationList: TActionItem[], action = 'E') {
-    return rotationList.filter(rotation => rotation.member == name && rotation.action.startsWith(action)).length;
+export function countE(character?: string, rotationList?: TActionItem[], action = 'E') {
+    return rotationList?.length ?
+        rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.startsWith(action)).length
+        : 1;
 }
-
 /** 元素爆発使用回数 */
-export function getQCount(name: string, rotationList: TActionItem[]) {
-    return rotationList.filter(rotation => rotation.member == name && rotation.action === 'Q').length;
+export function countQ(character?: string, rotationList?: TActionItem[]) {
+    return rotationList?.length ?
+        rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action === 'Q').length
+        : 1;
 }
-
+/** 出場時間(%) */
 export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[]) {
     let result = [0, 0, 0, 0];
     const memberNameArr = team.members.map(member => member.name);
@@ -130,53 +140,50 @@ export function getEnergyByCharacter(
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
     teamMemberResult: TTeamMemberResult | undefined,
-): TEREnergy | undefined {
-    const energies = [0, 0, 0, 0];
-    const messages: string[] = [];
+): TEREnergy[] {
     const memberNameArr = team.members.map(member => member.name);
     const myIndex = memberNameArr.indexOf(character);
+    if (myIndex == -1) return [];
+    const resultArr = new Array<[string, string, number, number, number, number[]]>(); // [rechargeType, triggerName, myEnergy, allEnergy, otherEnergy, herEnergies]
+    const messages: string[] = [];
     const member = team.members[myIndex];
-    const eCount = rotationList ? getECount(character, rotationList) : 1;
-    const qCount = rotationList ? getQCount(character, rotationList) : 1;
+    const eCount = countE(character, rotationList);
+    const qCount = countQ(character, rotationList);
     const memberResult = teamMemberResult ? teamMemberResult[member.id] : undefined;
     let myEnergy = 0; // 自分の元素エネルギー
     let allEnergy = 0; // 全員の元素エネルギー
     let otherEnergy = 0; // 自分以外全員の元素エネルギー
-    const herEnergies: number[] = []; // 誰かの元素エネルギー
-    const herIndeces: number[] = []; // 誰かのインデックス
-    otherEnergy = 0;
+    const herEnergies = [0, 0, 0, 0]; // 誰かの元素エネルギー
     if (!character) {
-        return undefined;
+        return [];
     } else if (character === 'ヌヴィレット') {
         myEnergy = 0;
     } else if (character === 'リネ') {
         messages.push('リネがプロップアローを発射することでHPを消費した時、そのプロップアローによって召喚されたファニーキャット·ハットが敵に命中すると、リネの元素エネルギーが3ポイント回復');
         myEnergy = 3;
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '息を呑むパフォーマンス', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '白朮') {
         myEnergy = 0;
     } else if (character === 'ディシア' && constellation >= 4) {
         messages.push('炎哮獅子咬の熾鬣拳、または残火蹴が敵に命中した時、ディシアの元素エネルギーを1.5回復。この効果は0.2秒毎に1回のみ発動可能。');
         myEnergy = 1.5;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'アルハイゼン') {
         myEnergy = 0;
     } else if (character === '放浪者') {
         messages.push('・雷元素：通常攻撃および重撃が敵に命中した後、元素エネルギーが0.8ポイント回復する。この方式による元素エネルギー回復は、0.2秒毎に1回のみ可能。');
         const electroCount = team.members.filter(member => getCharacterDetail(member.name)?.元素 === '雷').length;
         if (electroCount) {
-            let nCount = 1;
-            let cCount = 1;
-            if (rotationList) {
-                nCount = rotationList.filter(rotation => rotation.member == character && rotation.action.startsWith('N')).reduce((sum, rotation) => sum + Number(rotation.action.substring(1) ?? '1'), 0);
-                cCount = getCCount(character, rotationList);
-            }
-            myEnergy += 0.8 * (nCount + cCount);
+            const count = countN(character, rotationList) + countC(character, rotationList);
+            myEnergy += 0.8 * count;
         }
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '拾玉得花', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ナヒーダ') {
         myEnergy = 0;
     } else if (character === 'ニィロウ' && constellation >= 4) {
         messages.push('七域のダンスのピルエット状態の3段目のステップが敵に命中すると、ニィロウの元素エネルギーが15回復する。');
         let count = eCount;
-        if (rotationList) {
+        if (rotationList?.length) {
             count = 0;
             let isSkilling = false;
             for (let i = 0; i < rotationList.length; i++) {
@@ -194,11 +201,13 @@ export function getEnergyByCharacter(
             }
         }
         myEnergy += 15 * count;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'セノ' && constellation >= 4) {
         messages.push('聖儀·狼駆憑走の啓途誓使状態の時、感電、超電導、過負荷、原激化、超激化、超開花または雷元素拡散反応を起こすと、周囲のチーム全員（セノ自身を除く）の元素エネルギーを3回復する。この効果は一回の聖儀·狼駆憑走で、最大5回まで発動できる。');
         if (team.members.filter(member => ['水', '氷', '炎', '草'].includes(getCharacterMaster(member.name)?.元素 ?? '--')).length) {
             otherEnergy = 3 * 5 * qCount;
         }
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ティナリ') {
         myEnergy = 0;
     } else if (character === '夜蘭') {
@@ -206,18 +215,22 @@ export function getEnergyByCharacter(
     } else if (character === '神里綾人') {
         messages.push('神里綾人が待機中の時、元素エネルギーが40未満の場合、1秒毎に元素エネルギーを2回復する。');
         myEnergy = 2;
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '神里流·満ちゆく破月', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '八重神子' && constellation >= 1) {
         messages.push('大密法·天狐顕現で天狐雷霆を1回発生させるたびに、八重神子自身の元素エネルギーを8ポイント回復する。');
         myEnergy = 8 * 3 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '申鶴') {
         myEnergy = 0;
     } else if (character === '荒瀧一斗' && constellation >= 2) {
         messages.push('最凶鬼王·一斗轟臨！！を発動した後、チーム内に岩元素タイプキャラクターが1人いる毎に、クールタイム-1.5秒、荒瀧一斗の元素エネルギーを6ポイント回復する。この方式で短縮できるクールタイムは4.5秒までとなり、回復できる元素エネルギーは18ポイントまでとなる。');
         const geoCount = team.members.filter(member => getCharacterMaster(member.name)?.元素 === '岩').length;
         myEnergy = Math.min(18, 6 * geoCount) * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '2', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '珊瑚宮心海' && constellation >= 4) {
         messages.push('海人の羽衣による儀来羽衣状態の時、珊瑚宮心海の通常攻撃の攻撃速度+10%。そして通常攻撃が敵に命中すると、元素エネルギーを0.8ポイント回復する。この効果は0.2秒毎に1回のみ発動可能。');
         myEnergy = 0.8;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '雷電将軍') {
         messages.push('攻撃が敵に命中すると、周囲のチーム全員の元素エネルギーを回復する。この方式での元素エネルギー回復は1秒毎に1回のみ可能で、継続時間内に最大5回まで発動可能。');
         messages.push('元素チャージ効率が100%を超えている場合、超えた分1%につき、雷電将軍は下記の効果を獲得する。・夢想の一心状態で提供する元素エネルギー回復+0.6%。');
@@ -230,6 +243,7 @@ export function getEnergyByCharacter(
             })
         }
         allEnergy = unit * 5 * qCount;
+        resultArr.push([RECHARGE_ENERGY_BURST, '', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'アーロイ') {
         myEnergy = 0;
     } else if (character === '宵宮') {
@@ -238,7 +252,8 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === '楓原万葉' && constellation >= 4) {
         messages.push('楓原万葉の元素エネルギーが45以下の時、下記の効果を獲得する。・一回押し/長押しで千早振るを発動した時、元素エネルギーを3/4回復する。・滑翔状態の時、1秒毎に元素エネルギーを2回復する。');
-        myEnergy = 0;
+        myEnergy = 3;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'エウルア') {
         myEnergy = 0;
     } else if (character === '胡桃') {
@@ -247,40 +262,45 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === '甘雨' && constellation >= 1) {
         messages.push('二段チャージ重撃の霜華の矢または霜華満開が命中した時、敵の氷元素耐性-15%、継続時間6秒。命中時に甘雨の元素エネルギーを2回復。二段チャージの重撃による元素エネルギーの回復効果は、1回の重撃で1度のみ発動可能。');
-        const cCount = rotationList ? getCCount(character, rotationList) : 1;
+        const cCount = countC(character, rotationList);
         myEnergy = 2 * cCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'アルベド' && constellation >= 1) {
         messages.push('アルベドの創生術·擬似陽華の刹那の花が放たれた時、アルベド自身の元素エネルギーが1.2回復する。');
-        myEnergy = 1.2;
+        myEnergy = 1.2 * Math.trunc(rotationLength / 2);
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '鍾離') {
         myEnergy = 0;
     } else if (character === 'タルタリヤ') {
         myEnergy = 0;
     } else if (character === 'クレー') {
         messages.push('クレーの重撃が会心を発生すると、チーム全員の元素エネルギーが2回復する。');
-        const cCount = rotationList ? getCCount(character, rotationList) : 1;
+        const cCount = countC(character, rotationList);
         const critRate = memberResult?.statsInput.statsObj.会心率 ?? 100;
         allEnergy = 2 * critRate / 100 * cCount;
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '無限花火', myEnergy, allEnergy, otherEnergy, herEnergies]);
         if (constellation >= 6) {
             messages.push('ドッカン花火状態中、クレーは3秒毎にチーム全員（クレー自身を除く）の元素エネルギーを3回復する。');
+            allEnergy = 0;
             otherEnergy = 3;
+            resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '6', myEnergy, allEnergy, otherEnergy, herEnergies]);
         }
     } else if (character === 'ウェンティ') {
         messages.push('風神の詩効果終了後、ウェンティの元素エネルギーを15回復する。元素変化があった場合、該当元素のチームメンバーの元素エネルギーを15回復する。');
         myEnergy = 15 * qCount;
         const herEnergy = myEnergy;
         for (const elmt of ['炎', '水', '雷', '氷']) {
+            let doBreak = false;
             for (let herIndex = 0; herIndex < team.members.length; herIndex++) {
                 const herCm = getCharacterMaster(team.members[herIndex].name);
                 if (herCm?.元素 == elmt) {
-                    herIndeces.push(herIndex);
-                    herEnergies.push(herEnergy);
+                    herEnergies[herIndex] = herEnergy;
+                    doBreak = true;
                 }
             }
-            if (herIndeces.length) {
-                break;
-            }
+            if (doBreak) break;
         }
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '暴風の目', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '刻晴') {
         myEnergy = 0;
     } else if (character === 'モナ') {
@@ -288,13 +308,15 @@ export function getEnergyByCharacter(
     } else if (character === '七七' && constellation >= 1) {
         messages.push('度厄のお札マークがついている敵に寒病鬼差が命中した時、七七の元素エネルギーを2回復する。');
         myEnergy = 2;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ディルック') {
         myEnergy = 0;
     } else if (character === 'ジン') {
         myEnergy = 80 * 0.2 * qCount;
     } else if (character === 'フレミネ' && constellation >= 2) {
         messages.push('プレッシャー·フロウ·高圧粉砕を発動すると、フレミネの元素エネルギーが2ポイント回復する。ランク4の高圧粉砕を発動すると、元素エネルギーの回復量が3ポイントに変わる。');
-        myEnergy = 2;
+        myEnergy = 2 * eCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '2', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'リネット') {
         myEnergy = 0;
     } else if (character === '綺良々') {
@@ -304,26 +326,36 @@ export function getEnergyByCharacter(
     } else if (character === 'ミカ' && constellation >= 4) {
         messages.push('ミカ自身によるスカイフェザーソングの鷹の羽状態がチームにいるキャラクターのHPを回復した時、ミカの元素エネルギーを3回復する。1回のスカイフェザーソングの鷹の羽状態で、元素エネルギーは最大5回まで回復できる。');
         myEnergy = 3 * 5 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ヨォーヨ' && constellation >= 2) {
         messages.push('玉颗珊々月中落の桂子仙機状態にある時、白玉大根の爆発が敵に命中すると、ヨォーヨの元素エネルギーを3ポイント回復する。この方法による元素エネルギーの回復は、0.8秒毎に1回のみ可能。');
         myEnergy = 3;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '2', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ファルザン' && constellation >= 4) {
         messages.push('命中した敵の数に基づき、風圧崩潰のサイクロンはファルザンの元素エネルギーを回復する。1体の敵に命中した場合、ファルザンの元素エネルギーを2ポイント回復する。また、追加で1体の敵に命中するたびに、ファルザンの元素エネルギーが0.5ポイント回復する。この方法により1回のサイクロンで回復できる元素エネルギーは最大4ポイントまで。');
-        myEnergy = 2 * Math.trunc(rotationLength / 3);
+        if (constellation >= 6) {
+            myEnergy = 2 * Math.trunc(rotationLength / 3);
+        } else {
+            myEnergy = 2 * Math.min(eCount * 2, countC(character, rotationList)); // 元素スキル1回につきフルチャージ狙い撃ち2回まで
+        }
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'レイラ' && constellation >= 2) {
         messages.push('垂裳凛然の夜が発射した飛星が敵に命中すると、レイラの元素エネルギーを1ポイント回復させる。この方法を通して、各飛星はレイラの元素エネルギーを最大で1回のみ回復できる。');
         myEnergy = 1;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '2', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'キャンディス') {
         myEnergy = 0;
     } else if (character === 'ドリー') {
         messages.push('ジンニーランプ·トラブルシューターのトラブルシューター砲またはアフターサービス弾が敵に命中すると、ドリーの元素チャージ効率を基準にし、その100%の元素チャージ効率毎にドリーの元素エネルギーを5回復する。ジンニーランプ·トラブルシューター1回につき、この方式で回復できる元素エネルギーは15まで。');
         const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
         myEnergy = Math.min(15, 5 * er / 100 * eCount);
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '砂だるま式利子', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'コレイ') {
         myEnergy = 0;
-    } else if (character === '鹿野院平蔵') {
+    } else if (character === '鹿野院平蔵' && constellation >= 4) {
         messages.push('一回の廻風蹴で発生した「廻風真眼」が初めて爆発する時、鹿野院平蔵自身の元素エネルギーを9回復する。その後、爆発するたびに追加で元素エネルギーを1.5回復する。この方法により一回の廻風蹴で回復できる元素エネルギーは、最大13.5まで。');
         myEnergy = 9 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '久岐忍') {
         myEnergy = 0;
     } else if (character === '雲菫') {
@@ -333,29 +365,35 @@ export function getEnergyByCharacter(
     } else if (character === 'トーマ' && constellation >= 4) {
         messages.push('真紅熾炎の大鎧を発動すると、トーマの元素エネルギーを15ポイント回復する。');
         myEnergy = 15 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '九条裟羅') {
         messages.push('天狗呪雷·伏は敵に命中すると、九条裟羅の元素チャージ効率を基準にし、その100%の元素チャージ効率毎に、チーム全員の元素エネルギーを1.2回復する。この効果は3秒毎に1回のみ発動可能。');
         const er = memberResult?.statsInput.statsObj.元素チャージ効率 ?? 100;
         allEnergy = 1.2 * er / 100 * eCount;
-    } else if (character === '早柚') {
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '御公儀', myEnergy, allEnergy, otherEnergy, herEnergies]);
+    } else if (character === '早柚' && constellation >= 4) {
         messages.push('早柚がフィールド上で拡散反応を起こした時、元素エネルギーを1.2ポイント回復する。この効果は2秒毎に1回のみ発動可能。');
         myEnergy = 1.2;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '煙緋') {
         myEnergy = 0;
     } else if (character === 'ロサリア' && constellation >= 4) {
         messages.push('罪喰いの懺悔で会心が発生すると、ロサリア自身の元素エネルギーが5回復する。この効果は、1回の罪喰いの懺悔で1度のみ発動可能。');
         const critRate = memberResult?.statsInput.statsObj.会心率 ?? 100;
         myEnergy = 5 * critRate / 100 * eCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '辛炎') {
         myEnergy = 0;
     } else if (character === 'ディオナ' && constellation >= 1) {
         messages.push('特製スピリッツの効果終了時、ディオナの元素エネルギーを15回復する。');
         myEnergy = 15 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'スクロース') {
         myEnergy = 0;
     } else if (character === '重雲' && constellation >= 4) {
         messages.push('重雲の攻撃が氷元素の影響を受けた敵に命中した時、自身の元素エネルギーを1回復する。この効果は2秒毎に1回のみ発動可能。');
         myEnergy = 1;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ノエル') {
         myEnergy = 0;
     } else if (character === 'ベネット') {
@@ -366,7 +404,9 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === '行秋' && constellation >= 6) {
         messages.push('古華剣·裁雨留虹が剣雨攻撃を2回発動する度に、次の剣雨攻撃が大幅に強化され、敵に命中する時行秋の元素エネルギーを3回復する。');
-        myEnergy = 3;
+        const nCount = countN(undefined, rotationList);
+        myEnergy = 3 * Math.trunc(nCount / 3);
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '6', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '北斗') {
         myEnergy = 0;
     } else if (character === '香菱') {
@@ -374,27 +414,28 @@ export function getEnergyByCharacter(
     } else if (character === 'レザー') {
         messages.push('無形の雷狼を召喚して自身を守り、周囲の敵に雷元素ダメージを与える。同時に、雷の印を消耗して自身の元素エネルギーを回復する。退場時、残り時間を基準に、元素エネルギーを最大10まで回復する。');
         myEnergy = 0;
+        resultArr.push([RECHARGE_ENERGY_BURST, '', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'バーバラ') {
         if (constellation >= 1) {
             messages.push('10秒毎に元素エネルギーを1回復する。');
             myEnergy = Math.trunc(1 * rotationLength / 10);
+            resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
         }
         if (constellation >= 4) {
             messages.push('重撃が敵に命中する度に、バーバラの元素エネルギーが1回復する。一回で最大元素エネルギーが5まで回復できる。');
-            if (rotationList) {
-                const cCount = rotationList.filter(rotation => rotation.member == character && rotation.action.indexOf('C') != -1).length;
-                myEnergy = 1 * cCount;
-            }
+            const cCount = countC(character, rotationList);
+            myEnergy = 1 * cCount;
+            resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
         }
     } else if (character === 'リサ' && constellation >= 1) {
         messages.push('蒼雷を長押しで発動した後、敵に命中する度にリサの元素エネルギーが2回復する。一回で最大10まで回復可能。');
-        if (rotationList) {
-            const eHoldCount = rotationList.filter(rotation => rotation.member == character && rotation.action == 'E.Hold').length;
-            myEnergy = 2 * eHoldCount;
-        }
+        const eHoldCount = countE(character, rotationList, 'E.Hold');
+        myEnergy = 2 * eHoldCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'ガイア' && constellation >= 6) {
         messages.push('凛冽なる輪舞の氷柱が1本追加され、発動時に元素エネルギーが15回復する。');
         myEnergy = 15 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '6', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === 'アンバー') {
         myEnergy = 0;
     } else if (character === '旅人(水)') {
@@ -402,6 +443,7 @@ export function getEnergyByCharacter(
     } else if (character === '旅人(草)' && constellation >= 1) {
         messages.push('草縁剣が敵に命中すると、旅人の元素エネルギーが3.5回復する。');
         myEnergy = 3.5 * eCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '1', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '旅人(雷)') {
         messages.push('豊穰の勾玉 ·元素エネルギーが回復する。');
         messages.push('旅人自身の元素チャージ効率の10%を基準に、雷影剣が生成した豊穰の勾玉による元素チャージ効率をアップする。');
@@ -410,38 +452,40 @@ export function getEnergyByCharacter(
             messages.push('キャラクターが雷影剣で生成した豊穰の勾玉を獲得した時、該当キャラクターの元素エネルギーが35%未満の場合、豊穰の勾玉で回復できる元素エネルギー+100%。');
             myEnergy = 0;
         }
+        resultArr.push([RECHARGE_ENERGY_PASSIVE, '', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '旅人(岩)' && constellation >= 4) {
         messages.push('岩潮幾重が引き起こす振動波が敵に命中する度に、元素エネルギーが5回復する。この方法で一回で最大25まで回復可能。');
         myEnergy = 5 * qCount;
+        resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '4', myEnergy, allEnergy, otherEnergy, herEnergies]);
     } else if (character === '旅人(風)') {
         myEnergy = 0;
     }
-
-    if (myEnergy) {
-        energies[myIndex] += myEnergy;
-    }
-    if (allEnergy) {
-        for (let i = 0; i < energies.length; i++) {
-            energies[i] += allEnergy;
-        }
-    }
-    if (otherEnergy) {
-        for (let i = 0; i < energies.length; i++) {
-            if (i != myIndex) {
-                energies[i] += otherEnergy;
+    const result: TEREnergy[] = [];
+    if (resultArr.length) {
+        resultArr.forEach(entry => {
+            const energies = [0, 0, 0, 0];
+            if (myEnergy) {
+                energies[myIndex] += myEnergy;
             }
-        }
+            if (allEnergy) {
+                for (let i = 0; i < energies.length; i++) {
+                    energies[i] += allEnergy;
+                }
+            }
+            if (otherEnergy) {
+                for (let i = 0; i < energies.length; i++) {
+                    if (i != myIndex) {
+                        energies[i] += otherEnergy;
+                    }
+                }
+            }
+            for (let i = 0; i < herEnergies.length; i++) {
+                energies[i] += herEnergies[i];
+            }
+            result.push([entry[0], entry[1], energies[0], energies[1], energies[2], energies[3], messages]);
+        })
     }
-    if (herEnergies.length && herIndeces.length) {
-        for (let i = 0; i < herEnergies.length; i++) {
-            energies[herIndeces[i]] += herEnergies[i];
-        }
-    }
-
-    if (energies.filter(e => e > 0).length || messages.length) {
-        return [energies[0], energies[1], energies[2], energies[3], messages];
-    }
-    return undefined;
+    return result;
 }
 
 export function getEnergyByWeapon(
@@ -452,13 +496,14 @@ export function getEnergyByWeapon(
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
 ): TEREnergy | undefined {
+    const rechargeKind = RECHARGE_ENERGY_WEAPON;
     const energies = [0, 0, 0, 0];
     const messages: string[] = [];
     const memberNameArr = team.members.map(member => member.name);
     const myIndex = memberNameArr.indexOf(character);
     let unit = 1;
-    const eCount = rotationList ? getECount(character, rotationList) : 1;
-    const qCount = rotationList ? getQCount(character, rotationList) : 1;
+    const eCount = countE(character, rotationList);
+    const qCount = countQ(character, rotationList);
     let myEnergy = 0;
     if (weapon === '金珀·試作') {
         messages.push('元素爆発を発動した後の6秒間、2秒毎に元素エネルギーを4/4.5/5/5.5/6回復し、チーム全員のHPを2秒毎に4%/4.5%/5%/5.5%/6%回復する。');
@@ -531,7 +576,7 @@ export function getEnergyByWeapon(
         energies[myIndex] += myEnergy;
     }
     if (energies.filter(e => e > 0).length || messages.length) {
-        return [energies[0], energies[1], energies[2], energies[3], messages];
+        return [rechargeKind, weapon, energies[0], energies[1], energies[2], energies[3], messages];
     }
     return undefined;
 }
@@ -544,6 +589,7 @@ export function getParticleByCharacter(
     rotationList: TActionItem[] | undefined,
     onFields: number[],
 ): TERParticle[] | undefined {
+    const kind = RECHARGE_PARTICLE_SKILL;
     const resultMap = new Map<string, number[]>();
     if (!character) return undefined;
     const cpmv = CHARACTER_PARTICLE_MAP[character];
@@ -587,7 +633,7 @@ export function getParticleByCharacter(
     const characterMaster = getCharacterMaster(character);
     const element = characterMaster?.元素 ?? '無色';
     resultMap.forEach((value, key) => {
-        result.push([element, key, value[0], value[1], value[2], value[3]]);
+        result.push([kind, key, element, value[0], value[1], value[2], value[3]]);
     })
     return result;
 }
@@ -598,29 +644,33 @@ export function getParticleByCharacterExtra(
     team: TTeam,
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
-    onFields: number[],
+    onFields: number[], // eslint-disable-line
 ): TERParticle[] | undefined {
+    let kind;
     let element;
     let num;
-    const eCount = rotationList ? getECount(character, rotationList) : 1;
+    const eCount = countE(character, rotationList);
     if (character === '刻晴' && constellation >= 2) {
         // 刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。
+        kind = RECHARGE_PARTICLE_CONSTELLATION;
         const ct = 5;
         element = '雷';
         num = rotationLength / ct;
     } else if (character === 'ガイア') {
         // 霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。
         if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length) {
+            kind = RECHARGE_PARTICLE_PASSIVE;
             element = '氷';
             num = 2 * eCount;
         }
     } else if (character === 'フィッシュル' && constellation >= 6) {
+        kind = RECHARGE_PARTICLE_CONSTELLATION;
         element = '雷';
         num = 1;
     }
     let result: TERParticle[] | undefined;
-    if (num && element) {
-        result = [[element, '', 0, 0, 0, 0]];
+    if (kind && element && num) {
+        result = [[kind, '', element, 0, 0, 0, 0]];
     }
     return result;
 }
@@ -635,9 +685,10 @@ export function getParticleByWeapon(
     onFields: number[],
 ): TERParticle | undefined {
     let result: TERParticle | undefined;
+    const kind = RECHARGE_PARTICLE_FAVONIUS;
     const memberNameArr = team.members.map(member => member.name);
     if (['西風剣', '西風大剣', '西風長槍', '西風猟弓', '西風秘典'].includes(weapon)) {
-        result = ['無色', '', 0, 0, 0, 0];
+        result = [kind, weapon, '無色', 0, 0, 0, 0];
         const ct = [12, 10.5, 9, 7.5, 6][weaponRefine - 1];
         let triggerCnt = 1;
         if (rotationLength && rotationList && onFields) {
@@ -667,11 +718,11 @@ export function getParticleByWeapon(
                     nxtCharacter = nxtRotation.member;
                 }
                 const toIndex = memberNameArr.indexOf(nxtCharacter);
-                result[2 + toIndex] = 3;
+                result[3 + toIndex] = 3;
             }
         } else {
             const toIndex = memberNameArr.indexOf(character);
-            result[2 + toIndex] = 3 * triggerCnt;
+            result[3 + toIndex] = 3 * triggerCnt;
         }
     }
     return result;
@@ -684,6 +735,7 @@ export function getParticleByResonance(
     onFields: number[],
 ): TERParticle | undefined {
     let result: TERParticle | undefined;
+    const kind = RECHARGE_PARTICLE_RESONANCE;
     const memberNum = team.members.filter(member => member.name).length;
     if (memberNum !== 4) return result;
     const electroCount = team.members.filter(member => getCharacterMaster(member.name)?.元素 === '雷').length;
@@ -694,7 +746,7 @@ export function getParticleByResonance(
             const num = 1 * Math.trunc(rotationLength / ct);
             const workArr = [0, 0, 0, 0];
             splitNumToArrByOnFieldRate(workArr, num, team, onFields);
-            result = ['雷', '雷元素共鳴', workArr[0], workArr[1], workArr[2], workArr[3]];
+            result = [kind, '雷元素共鳴', '雷', workArr[0], workArr[1], workArr[2], workArr[3]];
         }
     }
     return result;
@@ -747,12 +799,10 @@ function setSkillParticleNumToArr(
             addNumToArr(arr, num, team, rotationList, index, toAdd);
         } else { // 設置物
             let duration = particleInfo[2];
-            let ct = particleInfo[3];
             if (particleInfo.length > 4 && particleInfo[4] <= constellation) { // 命ノ星座で性能が変化するケース
                 num = particleInfo[5];
                 toAdd = particleInfo[6];
                 duration = particleInfo[7];
-                ct = particleInfo[8];
             }
             if (toAdd >= 0) {
                 addNumToArr(arr, particleInfo[0], team, rotationList, index, toAdd);
@@ -793,13 +843,19 @@ function splitNumToArrByOnFieldRate(
     }
 }
 
-// 元素粒子数=[元素粒子数,1]
-// [元素粒子数,0]
-// [1秒あたりの元素粒子数,-1,継続時間,クールタイム]
-// [1秒あたりの元素粒子数,-1,継続時間,クールタイム,命ノ星座,1秒あたりの元素粒子数,-1,継続時間,クールタイム]
+// number | number[]
+// 元素粒子数
+// [元素粒子数, 拾得ディレイ]
+// [元素粒子数, 拾得ディレイ, 継続時間, クールタイム]
+// [元素粒子数, 拾得ディレイ, 継続時間, クールタイム, 命ノ星座, 元素粒子数, 拾得ディレイ, 継続時間, クールタイム]
+// 元素粒子数：
+//   拾得ディレイ=-1:1秒あたりの元素粒子数
+// 拾得ディレイ
+//   0:使用者本人が拾得/1:直後のアクション実行者が拾得/2～:/-1:全員で分ける（出場時間で按分する）
+// 継続時間、クールタイム：元素スキルの継続時間、クールタイム
 const CHARACTER_PARTICLE_MAP: { [key: string]: any } = {
     'ヌヴィレット': {
-        'E': 4,
+        'E': [4, 1, 0, 12],
     },
     'リネ': {
         'E': 5,
