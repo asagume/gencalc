@@ -710,7 +710,7 @@ tr.result-row th,
 tr.result-row td {
     border-top: 2px solid yellow;
     border-bottom: 2px solid yellow;
-    text-shadow: yellow 1px 0 3px;
+    font-weight: bold;
 }
 
 td.weapon {
