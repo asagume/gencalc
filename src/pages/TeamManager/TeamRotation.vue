@@ -82,6 +82,7 @@ import { TActionItem, TMember, TTeam, TTeamMemberResult } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
 import _ from "lodash";
 import ERCalculator from './ERCalculator.vue';
+import { getElementalSkillActions } from "@/particlemaster";
 
 export default defineComponent({
   name: "TeamRotation",
@@ -100,7 +101,7 @@ export default defineComponent({
     const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
     const characterDetailMap = new Map();
     const normalAttackDanMap = new Map(); // 通常攻撃の段数
-    const elementalSkillActionsMap = new Map<string, string[]>(); // 元素スキル 一回押し 長押し
+    const elementalSkillActionMap = new Map(); // 元素スキル
     const rotationList = reactive([] as TActionItem[]);
     const actionId = ref(0);
     const rotationDescription = ref('');
@@ -108,10 +109,6 @@ export default defineComponent({
     // 重撃の前に通常が挟まる武器、キャラクター
     const CHARGED_WITH_NORMAL_WEAPON = ['片手剣', '長柄武器'];
     const CHARGED_WITH_NORMAL_CHARACTER = ['鹿野院平蔵', 'リオセスリ'];
-
-    const CT_KEY = 'クールタイム';
-    const E_PRESS_CT_KEY = ['一回押しクールタイム', '基本クールタイム'];
-    const E_HOLD_CT_KEY = ['長押しクールタイム', '最大チャージクールタイム', '1段チャージクールタイム', '2段チャージクールタイム'];
 
     const watchCount = ref(0);
     watch(props, async () => {
@@ -128,14 +125,14 @@ export default defineComponent({
             );
             characterDetailMap.set(member.name, characterMasterDetail);
             normalAttackDanMap.set(member.name, getNormalAttackDan(member.name));
-            elementalSkillActionsMap.set(member.name, getElementalSkillActions(member.name));
+            elementalSkillActionMap.set(member.name, getElementalSkillActions(member.name));
           }
         }
         if (team.rotation && team.rotation.length) {
           const workArr = _.cloneDeep(team.rotation);
           workArr.forEach(e => {
             if (e.action.startsWith('E')) {
-              const actions = elementalSkillActionsMap.get(e.member);
+              const actions = elementalSkillActionMap.get(e.member);
               if (actions && actions.length > 0 && !actions.includes(e.action)) {
                 e.action = actions[0];
               }
@@ -187,33 +184,6 @@ export default defineComponent({
         }
       }
       return dan;
-    }
-
-    function getElementalSkillActions(name: string) {
-      const result = [];
-      let hasPressHold = false;
-      const master = getCharacterDetail(name);
-      if (master?.元素スキル) {
-        Object.keys(master.元素スキル).filter(key => key.endsWith(CT_KEY)).forEach(key => {
-          if (hasPressHold) return;
-          if (E_PRESS_CT_KEY.includes(key) || E_HOLD_CT_KEY.includes(key)) {
-            hasPressHold = true;
-          } else {
-            hasPressHold = !_.isNumber(master.元素スキル[key]);
-          }
-        })
-        if (!hasPressHold) {
-          const description = master.元素スキル.説明;
-          hasPressHold = description.indexOf('>一回押し<') !== -1 || description.indexOf('>長押し<') !== -1;
-        }
-      }
-      if (hasPressHold) {
-        result.push('E.Press');
-        result.push('E.Hold');
-      } else {
-        result.push('E');
-      }
-      return result;
     }
 
     const getNormalAttackDetail = (member: TMember) => getCharacterDetail(member.name)?.通常攻撃;
@@ -283,7 +253,7 @@ export default defineComponent({
         if (workArr.length > 0) {
           action = workArr[workArr.length - 1].action;
         } else {
-          const actions = elementalSkillActionsMap.get(member.name);
+          const actions = elementalSkillActionMap.get(member.name);
           if (actions && actions.length > 0) {
             action = actions[0];
           }
@@ -323,7 +293,7 @@ export default defineComponent({
           item.action = NORMAL_ATTACK_ACTION_LIST[index];
         }
       } else if (item.action.startsWith('E')) { // 元素スキル
-        const actions = elementalSkillActionsMap.get(item.member);
+        const actions = elementalSkillActionMap.get(item.member);
         if (actions && actions.length > 1) {
           let index = actions.indexOf(item.action);
           index = index < (actions.length - 1) ? index + 1 : 0;
