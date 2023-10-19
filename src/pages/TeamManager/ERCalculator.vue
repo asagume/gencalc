@@ -60,8 +60,7 @@
                 </td>
             </tr>
             <tr class="label-row">
-                <th>元素粒子</th>
-                <th>{{ displayName('生成数') }}</th>
+                <th colspan="2">{{ displayName('元素粒子') }}</th>
                 <th colspan="4">{{ displayName('獲得数') }}</th>
             </tr>
             <tr v-for="(row, rowIndex) in  inputRowParticleEnemy" :key="rowIndex" :class="bgColorClass2(row)">
@@ -93,7 +92,7 @@
                 </td>
             </tr>
             <tr class="label-row">
-                <th colspan="2">元素エネルギー</th>
+                <th colspan="2">{{ displayName('元素エネルギー') }}</th>
                 <th colspan="4">{{ displayName('獲得量') }}</th>
             </tr>
             <tr v-for="(row, rowIndex) in  inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
@@ -140,8 +139,8 @@
                 </caption>
                 <tr>
                     <th></th>
-                    <th>元素オーブ</th>
-                    <th>元素粒子</th>
+                    <th>{{ displayName('元素オーブ') }} </th>
+                    <th>{{ displayName('元素粒子') }} </th>
                 </tr>
                 <tr v-for="(element, index) in supplyFromEnemy" :key="index"
                     v-show="isOpenSupplyFromEnemy || element[1] || element[2]">
