@@ -32,8 +32,8 @@
           <template #item="{ element }">
             <div style="display: inline-block;" :id="'team-' + element.id">
               <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-                @click="teamOnClick(element.id)" @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation"
-                @update:member-result="updateMemberResult" />
+                :constellations="constellations" @click="teamOnClick(element.id)" @click:edit="editOnClick"
+                @click:jump-to-rotation="jumpToRotation" @update:member-result="updateMemberResult" />
             </div>
           </template>
         </draggable>
@@ -47,7 +47,7 @@
     <div class="pane3">
       <hr />
       <div id="team-rotation">
-        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :teamMemberResult="teamMemberResult"
+        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :teamMemberResult="teamMemberResult" :constellations="constellations"
           @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
@@ -79,10 +79,11 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TMember, TTeam, TTeamMemberResult, getBuilddataFromStorage } from './team';
+import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult, getBuilddataFromStorage } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
+import { overwriteObject } from '@/common';
 
 let memberId = 1;
 
@@ -113,6 +114,7 @@ export default defineComponent({
     const displayStat = ref('');
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
+    const constellations = reactive({} as TConstellation);
 
     onMounted(() => {
       loadOnClick();
@@ -126,9 +128,9 @@ export default defineComponent({
         team.members.forEach(member => {
           member.builddata = undefined;
         })
-        if (team.rotation && team.rotation.length) {
-          team.rotation.forEach(e => {
-            e.id = 0;
+        if (team.rotation?.length) {
+          team.rotation.forEach(action => {
+            action.id = 0;
           })
         }
       });
@@ -214,9 +216,22 @@ export default defineComponent({
     };
 
     const loadOnClick = () => {
-      const storageValue = localStorage.getItem('teams');
-      if (storageValue) {
-        const work = JSON.parse(storageValue);
+      const characterOwnListStr = localStorage.getItem('キャラクター所持状況');
+      if (characterOwnListStr) {
+        const newConstellations: TConstellation = {};
+        const savedObj = JSON.parse(characterOwnListStr);
+        Object.keys(savedObj).forEach((key) => {
+          const value = Number(savedObj[key]);
+          if (Number.isNaN(value)) {
+            newConstellations[key] = value;
+          }
+        });
+        overwriteObject(constellations, newConstellations);
+      }
+
+      const teamsStr = localStorage.getItem('teams');
+      if (teamsStr) {
+        const work = JSON.parse(teamsStr);
         numberOfTeams.value = work.length;
         numberOfTeamsOnChange();
         let actionId = 1;
@@ -238,20 +253,20 @@ export default defineComponent({
                 if (work[i].members[j].tags) {
                   members[j].tags = work[i].members[j].tags;
                 } else {
-                  members[j].tags = [] as string[];
+                  members[j].tags = [];
                 }
                 if (work[i].members[j].replacements) {
                   members[j].replacements = work[i].members[j].replacements;
                 } else {
-                  members[j].replacements = [] as string[];
+                  members[j].replacements = [];
                 }
               }
             }
             team.description = work[i].description;
-            if (work[i].rotation && work[i].rotation.length) {
+            if (work[i].rotation?.length) {
               team.rotation = work[i].rotation;
-              team.rotation.forEach(e => {
-                e.id = actionId++;
+              team.rotation.forEach(action => {
+                action.id = actionId++;
               })
             } else {
               team.rotation = [];
@@ -259,6 +274,7 @@ export default defineComponent({
             team.rotationDescription = work[i].rotationDescription ?? '';
           }
         }
+        saveddataStr.value = teamsStr;
       }
     };
 
@@ -358,6 +374,7 @@ export default defineComponent({
       numberOfTeamsOnChange,
       DISPLAY_STAT_LIST,
       displayStat,
+      constellations,
 
       clearOnClick,
       saveOnClick,

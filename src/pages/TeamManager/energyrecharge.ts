@@ -16,8 +16,16 @@ export const RECHARGE_PARTICLE_ENEMY = "19";            // 敵による元素粒
 
 // rechargeKind, triggerName, energies[0], energies[1], energies[2], energies[3], messages[]
 export type TEREnergy = [string, string, number, number, number, number, string[]];
-// rechargeKind, triggerName, element, particles[0], particles[1], particles[2], particles[3]
-export type TERParticle = [string, string, string, number, number, number, number];
+// rechargeKind, triggerName, element, particles[0], particles[1], particles[2], particles[3], messages[]
+export type TERParticle = [string, string, string, number, number, number, number, string[]];
+
+export function isRechargeKindEnergy(rechargeKind: string) {
+    return rechargeKind ? rechargeKind.startsWith('0') : false;
+}
+
+export function isRechargeKindParticle(rechargeKind: string) {
+    return rechargeKind ? rechargeKind.startsWith('1') : false;
+}
 
 /** 通常攻撃使用回数 */
 export function countN(character?: string, rotationList?: TActionItem[]) {
@@ -44,7 +52,7 @@ export function countQ(character?: string, rotationList?: TActionItem[]) {
         : 1;
 }
 /** 出場時間(%) */
-export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[]) {
+export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[], constellations: number[]) {
     let result = [0, 0, 0, 0];
     const memberNameArr = team.members.map(member => member.name);
     if (rotationList?.length) {
@@ -53,12 +61,14 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
         const lengthList = [0, 0, 0, 0];
         let curCharacter;
         let length = 0;
+        let isNCPIgnore = false;
         for (let i = 0; i < rotationList.length; i++) {
             const rotation = rotationList[i];
             const characterMaster = getCharacterMaster(rotation.member);
             if (curCharacter && rotation.member != curCharacter) {
                 lengthList[memberNameArr.indexOf(curCharacter)] += (length > 1 ? length : 1);
                 length = 0;
+                isNCPIgnore = false;
             }
             if (rotation.action === 'Q') {
                 length += 1;
@@ -69,35 +79,48 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                 length += 1;
             } else if (['E', 'E.Press'].includes(rotation.action)) {
                 length += 0.5;
-            } else if (rotation.action.startsWith('N')) {
-                const dan = Number(rotation.action.substring(1, 2)) ?? 1;
-                const withC = rotation.action.endsWith('C');
-                if (characterMaster?.武器 === '片手剣') {
-                    if (rotation.action == 'N' && rotation.member === '神里綾人') {
-                        length += 6;
-                    } else {
-                        length += dan * 0.3 + (withC ? 0.5 : 0);
+                const particleInfo = getParticleInfo(rotation.member, rotation.action, constellations[memberNameArr.indexOf(rotation.member)]);
+                if (particleInfo) {
+                    const duration = getDurationFromInfo(particleInfo);
+                    if (getReceiverFromInfo(particleInfo) === 0 && duration) {
+                        // 特定の元素スキル発動後は一定時間を加算して、キャラチェンまで通常攻撃、重撃、落下攻撃を無視する
+                        length += duration;
+                        isNCPIgnore = true;
                     }
-                } else if (characterMaster?.武器 === '長柄武器') {
-                    length += dan * 0.3 + (withC ? 0.5 : 0);
-                } else if (characterMaster?.武器 === '両手剣') {
-                    length += dan * 0.5;
-                } else if (characterMaster?.武器 === '弓') {
-                    length += dan * 0.3;
-                } else if (characterMaster?.武器 === '法器') {
-                    length += dan * 0.5;
                 }
-            } else if (rotation.action == 'C') {
-                if (characterMaster?.武器 === '両手剣') {
-                    length += 3;
-                } else if (characterMaster?.武器 === '弓') {
-                    length += 1.5;
-                } else if (characterMaster?.武器 === '法器') {
-                    if (rotation.member === 'ヌヴィレット') {
-                        length += 3;
-                    } else {
-                        length += 1;
+            } else if (!isNCPIgnore) {
+                if (rotation.action.startsWith('N')) {
+                    const dan = Number(rotation.action.substring(1, 2)) ?? 1;
+                    const withC = rotation.action.endsWith('C');
+                    if (characterMaster?.武器 === '片手剣') {
+                        if (rotation.action == 'N' && rotation.member === '神里綾人') {
+                            length += 6;
+                        } else {
+                            length += dan * 0.3 + (withC ? 0.5 : 0);
+                        }
+                    } else if (characterMaster?.武器 === '長柄武器') {
+                        length += dan * 0.3 + (withC ? 0.5 : 0);
+                    } else if (characterMaster?.武器 === '両手剣') {
+                        length += dan * 0.5;
+                    } else if (characterMaster?.武器 === '弓') {
+                        length += dan * 0.3;
+                    } else if (characterMaster?.武器 === '法器') {
+                        length += dan * 0.5;
                     }
+                } else if (rotation.action == 'C') {
+                    if (characterMaster?.武器 === '両手剣') {
+                        length += 3;
+                    } else if (characterMaster?.武器 === '弓') {
+                        length += 1.5;
+                    } else if (characterMaster?.武器 === '法器') {
+                        if (rotation.member === 'ヌヴィレット') {
+                            length += 3;
+                        } else {
+                            length += 1;
+                        }
+                    }
+                } else if (rotation.action == 'P') {
+                    length += 1.5;
                 }
             }
             curCharacter = rotation.member;
@@ -126,8 +149,11 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
     } else {
         const memberNum = memberNameArr.filter(name => name).length;
         if (memberNum) {
-            for (const name of memberNameArr.filter(name => name)) {
-                result[memberNameArr.indexOf(name)] = 100 / memberNum;
+            const rate = 100 / memberNum;
+            for (let i = 0; i < result.length; i++) {
+                if (memberNameArr[i]) {
+                    result[i] = rate;
+                }
             }
         }
     }
@@ -140,7 +166,7 @@ export function getEnergyByCharacter(
     team: TTeam,
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
-    teamMemberResult: TTeamMemberResult | undefined,
+    teamMemberResult?: TTeamMemberResult,
 ): TEREnergy[] {
     const memberNameArr = team.members.map(member => member.name);
     const myIndex = memberNameArr.indexOf(character);
@@ -634,7 +660,7 @@ export function getParticleByCharacter(
     const characterMaster = getCharacterMaster(character);
     const element = characterMaster?.元素 ?? '無色';
     resultMap.forEach((value, key) => {
-        result.push([kind, key, element, value[0], value[1], value[2], value[3]]);
+        result.push([kind, key, element, value[0], value[1], value[2], value[3], []]);
     })
     return result;
 }
@@ -647,18 +673,19 @@ export function getParticleByCharacterExtra(
     rotationList: TActionItem[] | undefined,
     onFields: number[], // eslint-disable-line
 ): TERParticle[] | undefined {
+    const messages: string[] = [];
     let kind;
     let element;
     let num;
     const eCount = countE(character, rotationList);
     if (character === '刻晴' && constellation >= 2) {
-        // 刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。
+        messages.push('刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。');
         kind = RECHARGE_PARTICLE_CONSTELLATION;
         const ct = 5;
         element = '雷';
         num = rotationLength / ct;
     } else if (character === 'ガイア') {
-        // 霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。
+        messages.push('霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。');
         if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length) {
             kind = RECHARGE_PARTICLE_PASSIVE;
             element = '氷';
@@ -671,7 +698,7 @@ export function getParticleByCharacterExtra(
     }
     let result: TERParticle[] | undefined;
     if (kind && element && num) {
-        result = [[kind, '', element, 0, 0, 0, 0]];
+        result = [[kind, '', element, 0, 0, 0, 0, messages]];
     }
     return result;
 }
@@ -689,7 +716,7 @@ export function getParticleByWeapon(
     const kind = RECHARGE_PARTICLE_FAVONIUS;
     const memberNameArr = team.members.map(member => member.name);
     if (['西風剣', '西風大剣', '西風長槍', '西風猟弓', '西風秘典'].includes(weapon)) {
-        result = [kind, weapon, '無色', 0, 0, 0, 0];
+        result = [kind, weapon, '無色', 0, 0, 0, 0, []];
         const ct = [12, 10.5, 9, 7.5, 6][weaponRefine - 1];
         let triggerCnt = 1;
         if (rotationLength && rotationList && onFields) {
@@ -747,7 +774,7 @@ export function getParticleByResonance(
             const num = 1 * Math.trunc(rotationLength / ct);
             const workArr = [0, 0, 0, 0];
             splitNumToArrByOnFieldRate(workArr, num, team, onFields);
-            result = [kind, '雷元素共鳴', '雷', workArr[0], workArr[1], workArr[2], workArr[3]];
+            result = [kind, '雷元素共鳴', '雷', workArr[0], workArr[1], workArr[2], workArr[3], []];
         }
     }
     return result;

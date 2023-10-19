@@ -70,7 +70,8 @@
     </fieldset>
     <br />
     <div v-if="true">
-      <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult" />
+      <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult"
+        :constellations="constellations" />
     </div>
   </div>
 </template>
@@ -78,7 +79,7 @@
 import draggable from "vuedraggable";
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { TActionItem, TMember, TTeam, TTeamMemberResult } from "./team";
+import { TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
 import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
 import _ from "lodash";
 import ERCalculator from './ERCalculator.vue';
@@ -92,7 +93,8 @@ export default defineComponent({
   },
   props: {
     team: { type: Object as PropType<TTeam>, required: true },
-    teamMemberResult: { type: Object as PropType<TTeamMemberResult>, required: true },
+    teamMemberResult: { type: Object as PropType<TTeamMemberResult> },
+    constellations: { type: Object as PropType<TConstellation> },
   },
   emit: ['update:rotation', 'click:jump-to-team'],
   setup(props, context) {

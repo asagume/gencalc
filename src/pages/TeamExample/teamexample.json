@@ -1,0 +1,35 @@
+[
+    {
+        "id": 0,
+        "name": "Noelle Geo feat.Yelan",
+        "members": [
+            {
+                "id": 0,
+                "name": "ゴロー",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 0,
+                "name": "アルベド",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 0,
+                "name": "夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 0,
+                "name": "ノエル",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "",
+        "rotation": [],
+        "rotationDescription": ""
+    }
+]

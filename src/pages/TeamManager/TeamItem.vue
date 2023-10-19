@@ -42,7 +42,7 @@ import _ from 'lodash';
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey, ELEMENT_BG_COLOR_CLASS } from "@/master";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { calculateMemberResult, getElementalResonance, TTeam, TTeamMemberResult } from "./team";
+import { calculateMemberResult, getElementalResonance, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import MemberItem from "./MemberItem.vue";
 import { calculateFormulaArray } from "@/calculate";
 import { TStats } from "@/input";
@@ -53,6 +53,7 @@ export default defineComponent({
     team: { type: Object as PropType<TTeam>, required: true },
     selected: { type: Boolean, requied: true },
     displayStat: { type: String },
+    constellations: { type: Object as PropType<TConstellation> },
   },
   emits: ['click:edit', 'change:buildname', 'click:jump-to-rotation', 'update:member-result'],
   components: {
@@ -67,14 +68,6 @@ export default defineComponent({
     const editable = ref(false);
     const res = reactive({} as TAnyObject);
     const resKey = ['炎', '水', '風', '雷', '草', '氷', '岩', '物理'];
-
-    const characterOwnListStr = localStorage.getItem('キャラクター所持状況');
-    let characterOwnList: TAnyObject;
-    if (characterOwnListStr) {
-      characterOwnList = JSON.parse(characterOwnListStr);
-    } else {
-      characterOwnList = {};
-    }
 
     const watchCount = ref(0);
     watch(props, async (newVal) => {
@@ -245,14 +238,9 @@ export default defineComponent({
               }
             }
           }
-          let constellationLevel = 0;
-          if (memberResult.characterInput?.命ノ星座 !== undefined) {
-            constellationLevel = memberResult.characterInput?.命ノ星座;
-          } else if (characterMaster.名前 in characterOwnList) {
-            constellationLevel = characterOwnList[characterMaster.名前];
-          }
+          const constellation = memberResult.characterInput?.命ノ星座 ?? (props.constellations ? props.constellations[characterMaster.名前] ?? 0 : 0);
           if (characterMaster.命ノ星座) {
-            for (let i = 1; i <= constellationLevel; i++) {
+            for (let i = 1; i <= constellation; i++) {
               const constellationObj = characterMaster.命ノ星座[String(i)];
               if (constellationObj.詳細) {
                 for (const damageDetail of constellationObj.詳細) {

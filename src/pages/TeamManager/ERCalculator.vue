@@ -187,11 +187,12 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { countQ, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
-import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TActionItem, TTeam, TTeamMemberResult } from "./team";
+import { countQ, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
+import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import _ from "lodash";
+import { getCtFromInfo, getParticleInfo } from "@/particlemaster";
 
 type TCalculatorInput = {
     character: string,                  // キャラクター名
@@ -218,8 +219,8 @@ export default defineComponent({
     name: "ERCalculator",
     props: {
         team: { type: Object as PropType<TTeam>, required: true },
-        rotationList: { type: Array as PropType<TActionItem[]>, required: true },
-        teamMemberResult: { type: Object as PropType<TTeamMemberResult>, required: true },
+        teamMemberResult: { type: Object as PropType<TTeamMemberResult> },
+        constellations: { type: Object as PropType<TConstellation> },
     },
     setup(props) {
         const { displayName } = CompositionFunction();
@@ -228,8 +229,10 @@ export default defineComponent({
         const inputRowEnergy = reactive([] as TCalculatorInputRow[]);
         const inputRowParticleEnemy = reactive([] as TCalculatorInputRow[]);
         const messages = reactive([] as string[][]);
-        const rotationLength = ref(20); // ローテーション長
-        const combatLength = ref(90);   // 戦闘時間
+        const DEFAULT_ROTATION_LENGTH = 20;
+        const DEFAULT_COMBAT_LENGTH = 90;
+        const rotationLength = ref(DEFAULT_ROTATION_LENGTH); // ローテーション長
+        const combatLength = ref(DEFAULT_COMBAT_LENGTH);   // 戦闘時間
         const supplyFromEnemy = reactive([
             ['無色', 3, 0],
             ['炎', 0, 0],
@@ -250,28 +253,103 @@ export default defineComponent({
 
         onMounted(() => {
             setupCharacterDetailMap(props.team).then(() => {
-                setupInput(props.team, props.rotationList, props.teamMemberResult);
+                setupInput(props.team, props.teamMemberResult);
             });
         })
 
         const watchCount = ref(0);
-        watch(props, (newVal, oldVal) => { // eslint-disable-line
-            setupCharacterDetailMap(newVal.team).then(() => {
-                setupInput(newVal.team, newVal.rotationList, newVal.teamMemberResult);
-                setupInputRows(newVal.team, newVal.rotationList, newVal.teamMemberResult);
-            });
-            watchCount.value++;
-        });
+        watch(() => _.cloneDeep(props), (newVal, oldVal) => {
+            updateRotationLength(newVal.team);
+            if (!_.isEqual(newVal.team.members, oldVal.team.members) || !_.isEqual(newVal.teamMemberResult, oldVal.teamMemberResult)) {
+                setupCharacterDetailMap(newVal.team).then(() => {
+                    setupInput(newVal.team, newVal.teamMemberResult);
+                    watchCount.value++;
+                });
+            } else {
+                setupInputRows(newVal.team, newVal.teamMemberResult);
+                watchCount.value++;
+            }
+        }, { deep: true })
 
-        const setupInput = (team: TTeam, rotationList: TActionItem[], teamMemberResult: TTeamMemberResult) => {
-            if (!team) return;
+        function getConstellation(character: string, team: TTeam, teamMemberResult?: TTeamMemberResult) {
+            if (teamMemberResult) {
+                const workArr = team.members.filter(member => member.name == character);
+                if (workArr.length) {
+                    return teamMemberResult[workArr[0].id]?.characterInput.命ノ星座 ?? (props.constellations ? props.constellations[character] ?? 0 : 0);
+                }
+            }
+            return props.constellations ? props.constellations[character] ?? 0 : 0;
+        }
+
+        function updateRotationLength(team: TTeam) {
+            const memberNameArr = team.members.map(member => member.name);
+            const eLength = [0, 0, 0, 0];
+            const qLength = [0, 0, 0, 0];
+            if (team.rotation.length) {
+                for (let i = 0; i < team.rotation.length; i++) {
+                    const rotation = team.rotation[i];
+                    const memberIndex = memberNameArr.indexOf(rotation.member);
+                    if (memberIndex == -1) continue;
+                    if (rotation.action === 'Q' || rotation.action.startsWith('E')) {
+                        const characterDetail = getCharacterDetail(rotation.member);
+                        if (rotation.action === 'Q') {
+                            let ct = characterDetail?.元素爆発.クールタイム ?? 0;
+                            if (memberNameArr.includes('重雲') && rotation.member != '重雲') {
+                                const constellation = getConstellation('重雲', props.team, props.teamMemberResult);
+                                if (constellation >= 2) {
+                                    ct *= 0.85;
+                                }
+                            } else if (memberNameArr.includes('雷電将軍') && rotation.member != '雷電将軍') {
+                                const constellation = getConstellation('雷電将軍', props.team, props.teamMemberResult);
+                                if (constellation >= 6) {
+                                    ct -= 5;
+                                }
+                            }
+                            qLength[memberIndex] += ct;
+                        } else {
+                            const constellation = getConstellation(rotation.member, props.team, props.teamMemberResult);
+                            const particleInfo = getParticleInfo(rotation.member, rotation.action, constellation);
+                            let ct = 0;
+                            if (particleInfo) {
+                                ct = getCtFromInfo(particleInfo) ?? 0;
+                                if (memberNameArr.includes('重雲') && rotation.member != '重雲') {
+                                    const constellation = getConstellation('重雲', props.team, props.teamMemberResult);
+                                    if (constellation >= 2) {
+                                        ct *= 0.85;
+                                    }
+                                }
+                            }
+                            if (ct > eLength[memberIndex]) {
+                                eLength[memberIndex] = ct;
+                            }
+                        }
+                    }
+                }
+            }
+            let newLength = Math.max(...eLength, ...qLength);
+            if (newLength == 0) {
+                newLength = DEFAULT_ROTATION_LENGTH;
+            }
+            rotationLength.value = newLength;
+        }
+
+        function updateOnFields(team: TTeam, teamMemberResult?: TTeamMemberResult) {
+            const constellations = team.members.map(member => getConstellation(member.name, team, teamMemberResult));
+            const onFields = getOnFieldRate(team, rotationLength.value, team.rotation, constellations);
+            for (let i = 0; i < calculatorInput.length; i++) {
+                calculatorInput[i].onField = onFields[i];
+            }
+        }
+
+        const setupInput = (team: TTeam, teamMemberResult?: TTeamMemberResult) => {
             const newInput: TCalculatorInput[] = [];
-            const onFields = getOnFieldRate(team, rotationLength.value, rotationList);
+            const constellations = team.members.map(member => getConstellation(member.name, team, teamMemberResult));
+            const onFields = getOnFieldRate(team, rotationLength.value, team.rotation, constellations);
             for (let i = 0; i < team.members.length; i++) {
                 const member = team.members[i];
                 const characterDetail = getCharacterDetail(member.name);
-                const memberResult = teamMemberResult[member.id];
-                const constellation = memberResult?.characterInput.命ノ星座 ?? 0;
+                const constellation = constellations[i];
+                const memberResult = teamMemberResult ? teamMemberResult[member.id] : undefined;
                 const weapon = memberResult?.characterInput.weapon;
                 const weaponRefine = memberResult?.characterInput.武器精錬ランク ?? 1;
                 let replaceWeapons: string[] = [];
@@ -291,10 +369,10 @@ export default defineComponent({
             }
             calculatorInput.splice(0, calculatorInput.length, ...newInput);
 
-            setupInputRows(team, rotationList, teamMemberResult);
+            setupInputRows(team, teamMemberResult);
         }
 
-        function pushInputRowParticle(inputRows: TCalculatorInputRow[], character: string, particle: TERParticle) {
+        function pushInputRowParticle(inputRows: TCalculatorInputRow[], newMessages: string[][], character: string, particle: TERParticle) {
             const initialValues = [0, 0, 0, 0];
             for (let i = 0; i < initialValues.length; i++) {
                 initialValues[i] = Math.round(Number(particle[3 + i]) * 100) / 100;
@@ -308,6 +386,17 @@ export default defineComponent({
                 currentValues: _.cloneDeep(initialValues),
                 unit: 1,
             })
+            if (particle[7].length) {
+                particle[7].forEach(message => {
+                    let work = '';
+                    if (particle[0] === RECHARGE_PARTICLE_SKILL) {
+                        work = '元素スキル';
+                    } else {
+                        work = particle[1];
+                    }
+                    newMessages.push([character, work, message]);
+                })
+            }
         }
         function pushInputRowEnergy(inputRows: TCalculatorInputRow[], newMessages: string[][], character: string, energy: TEREnergy) {
             const initialValues = [0, 0, 0, 0];
@@ -342,8 +431,8 @@ export default defineComponent({
             }
         }
 
-        const setupInputRows = (team: TTeam, rotationList: TActionItem[], teamMemberResult: TTeamMemberResult) => {
-            if (!team) return;
+        const setupInputRows = (team: TTeam, teamMemberResult?: TTeamMemberResult) => {
+            updateOnFields(team, teamMemberResult);
             const newInputRowPacticle1: TCalculatorInputRow[] = [];
             const newInputRowPacticle2: TCalculatorInputRow[] = [];
             const newInputRowEnergy: TCalculatorInputRow[] = [];
@@ -358,38 +447,38 @@ export default defineComponent({
                 const weaponRefine = calculatorInput[i].weaponRefine;
                 // キャラクターの元素粒子
                 [
-                    getParticleByCharacter(character, constellation, team, rotationLength.value, rotationList, onFields),
-                    getParticleByCharacterExtra(character, constellation, team, rotationLength.value, rotationList, onFields),
+                    getParticleByCharacter(character, constellation, team, rotationLength.value, team.rotation, onFields),
+                    getParticleByCharacterExtra(character, constellation, team, rotationLength.value, team.rotation, onFields),
                 ].forEach(result => {
                     if (result) {
                         result.forEach(entry => {
-                            pushInputRowParticle(newInputRowPacticle1, character, entry);
+                            pushInputRowParticle(newInputRowPacticle1, newMessages, character, entry);
                         })
                     }
                 })
                 // キャラクターの元素エネルギー
-                const energyByCharacter = getEnergyByCharacter(character, constellation, team, rotationLength.value, rotationList, teamMemberResult);
+                const energyByCharacter = getEnergyByCharacter(character, constellation, team, rotationLength.value, team.rotation, teamMemberResult);
                 energyByCharacter.forEach(entry => {
                     pushInputRowEnergy(newInputRowEnergy, newMessages, character, entry);
                 })
                 // 武器
                 if (weapon) {
                     // 西風武器の元素粒子
-                    const particleByWeapon = getParticleByWeapon(character, weapon, weaponRefine, team, rotationLength.value, rotationList, onFields);
+                    const particleByWeapon = getParticleByWeapon(character, weapon, weaponRefine, team, rotationLength.value, team.rotation, onFields);
                     if (particleByWeapon) {
-                        pushInputRowParticle(newInputRowPacticle2, character, particleByWeapon);
+                        pushInputRowParticle(newInputRowPacticle2, newMessages, character, particleByWeapon);
                     }
                     // 武器の元素エネルギー
-                    const energyByWeapon = getEnergyByWeapon(character, weapon, weaponRefine, team, rotationLength.value, rotationList);
+                    const energyByWeapon = getEnergyByWeapon(character, weapon, weaponRefine, team, rotationLength.value, team.rotation);
                     if (energyByWeapon) {
                         pushInputRowEnergy(newInputRowEnergy, newMessages, character, energyByWeapon);
                     }
                 }
             }
             // 元素共鳴の元素粒子
-            const particleByResonance = getParticleByResonance(team, rotationLength.value, rotationList, onFields);
+            const particleByResonance = getParticleByResonance(team, rotationLength.value, team.rotation, onFields);
             if (particleByResonance) {
-                pushInputRowParticle(newInputRowResonance, '', particleByResonance);
+                pushInputRowParticle(newInputRowResonance, newMessages, '', particleByResonance);
             }
             // 敵の元素粒子
             supplyFromEnemy.filter(s => s[1] || s[2]).forEach(entry => {
@@ -398,8 +487,8 @@ export default defineComponent({
                 for (let i = 0; i < onFields.length; i++) {
                     initialValues[i] = rotationLength.value / combatLength.value * sum * onFields[i] / 100;
                 }
-                pushInputRowParticle(newinputRowParticleEnemy, '', [
-                    RECHARGE_PARTICLE_ENEMY, '', entry[0], initialValues[0], initialValues[1], initialValues[2], initialValues[3]
+                pushInputRowParticle(newinputRowParticleEnemy, newMessages, '', [
+                    RECHARGE_PARTICLE_ENEMY, '', entry[0], initialValues[0], initialValues[1], initialValues[2], initialValues[3], []
                 ]);
             })
             inputRowParticle.splice(0, inputRowParticle.length, ...newInputRowPacticle1, ...newInputRowPacticle2, ...newInputRowResonance);
@@ -411,11 +500,11 @@ export default defineComponent({
         /** 元素爆発(回数) */
         const burstCounts = computed(() => {
             const result: { [key: number]: number } = { 0: 1, 1: 1, 2: 1, 3: 1 };
-            if (props.rotationList && props.rotationList.length) {
+            if (props.team.rotation?.length) {
                 for (let i = 0; i < props.team.members.length; i++) {
                     const member = props.team.members[i];
                     if (member.name) {
-                        result[i] = countQ(member.name, props.rotationList);
+                        result[i] = countQ(member.name, props.team.rotation);
                     }
                 }
             }
@@ -432,14 +521,7 @@ export default defineComponent({
                 const myElement = characterMaster?.元素;
                 if (!myElement) continue;
                 [inputRowParticle, inputRowParticleEnemy].forEach(input => {
-                    input.filter(s => [
-                        RECHARGE_PARTICLE_SKILL,
-                        RECHARGE_PARTICLE_PASSIVE,
-                        RECHARGE_PARTICLE_CONSTELLATION,
-                        RECHARGE_PARTICLE_FAVONIUS,
-                        RECHARGE_PARTICLE_RESONANCE,
-                        RECHARGE_PARTICLE_ENEMY,
-                    ].includes(s.rechargeKind)).forEach(entry => {
+                    input.filter(s => isRechargeKindParticle(s.rechargeKind)).forEach(entry => {
                         let energy = 0;
                         for (let j = 0; j < entry.currentValues.length; j++) {
                             if (j == i) {
@@ -467,18 +549,12 @@ export default defineComponent({
                 if (!props.team.members[i].name) continue;
                 let energyCost = calculatorInput[i]?.energyCost;
                 if (!energyCost) continue;
-                inputRowEnergy.filter(s => [
-                    RECHARGE_ENERGY_SKILL,
-                    RECHARGE_ENERGY_BURST,
-                    RECHARGE_ENERGY_PASSIVE,
-                    RECHARGE_ENERGY_CONSTELLATION,
-                    RECHARGE_ENERGY_WEAPON,
-                ].includes(s.rechargeKind)).forEach(entry => {
+                inputRowEnergy.filter(s => isRechargeKindEnergy(s.rechargeKind)).forEach(entry => {
                     energyCost -= entry.currentValues[i];
                 })
                 const burstCount = burstCounts.value[i] > 0 ? burstCounts.value[i] : 1;
                 const particleEnergy = particleRecharges.value[i] / burstCount;
-                if (energyCost > 0 && particleEnergy) {
+                if (energyCost > 0 && particleEnergy > 0) {
                     const er = Math.ceil(energyCost * 100 / particleEnergy);
                     result[i] = Math.max(100, er);
                 }
@@ -504,42 +580,27 @@ export default defineComponent({
         const rowImgSrc1 = (row: TCalculatorInputRow) => {
             let result = IMG_SRC_DUMMY;
             if (row.rechargeKind) {
-                if ([
-                    RECHARGE_PARTICLE_SKILL,
-                    RECHARGE_PARTICLE_PASSIVE,
-                    RECHARGE_PARTICLE_CONSTELLATION,
-                    RECHARGE_PARTICLE_FAVONIUS,
-                    RECHARGE_ENERGY_SKILL,
-                    RECHARGE_ENERGY_BURST,
-                    RECHARGE_ENERGY_PASSIVE,
-                    RECHARGE_ENERGY_CONSTELLATION,
-                    RECHARGE_ENERGY_WEAPON,
-                ].includes(row.rechargeKind)) {
-                    result = getCharacterMaster(row.character)?.icon_url ?? IMG_SRC_DUMMY;
-                } else if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) { // 元素共鳴
+                if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) { // 元素共鳴
                     result = (ELEMENT_IMG_SRC as any)[row.element] ?? IMG_SRC_DUMMY
+                } else {
+                    result = getCharacterMaster(row.character)?.icon_url ?? IMG_SRC_DUMMY;
                 }
             }
             return result;
         }
         const rowImgSrc1Class = (row: TCalculatorInputRow) =>
-            (row.rechargeKind && [
-                RECHARGE_PARTICLE_SKILL,
-                RECHARGE_PARTICLE_PASSIVE,
-                RECHARGE_PARTICLE_CONSTELLATION,
-                RECHARGE_PARTICLE_FAVONIUS,
-                RECHARGE_ENERGY_SKILL,
-                RECHARGE_ENERGY_BURST,
-                RECHARGE_ENERGY_PASSIVE,
-                RECHARGE_ENERGY_CONSTELLATION,
-                RECHARGE_ENERGY_WEAPON,
-            ].includes(row.rechargeKind)) ? 'input-item-character' : 'input-item';
+            (row.rechargeKind && row.rechargeKind == RECHARGE_PARTICLE_RESONANCE) ? 'input-item' : 'input-item-character';
         const rowImgSrc2 = (row: TCalculatorInputRow) => {
             let result = IMG_SRC_DUMMY;
             if (row.rechargeKind) {
-                if ([RECHARGE_PARTICLE_SKILL].includes(row.rechargeKind)) { // 元素スキル
+                if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) { // 元素共鳴
+                    result = (ELEMENT_IMG_SRC as any)[row.element] ?? IMG_SRC_DUMMY
+                } else if ([RECHARGE_ENERGY_SKILL, RECHARGE_PARTICLE_SKILL].includes(row.rechargeKind)) { // 元素スキル
                     const characterDetail = getCharacterDetail(row.character);
                     result = characterDetail?.元素スキル.icon_url ?? IMG_SRC_DUMMY;
+                } else if ([RECHARGE_ENERGY_BURST].includes(row.rechargeKind)) { // 元素爆発
+                    const characterDetail = getCharacterDetail(row.character);
+                    result = characterDetail?.元素爆発.icon_url ?? IMG_SRC_DUMMY;
                 } else if ([RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON].includes(row.rechargeKind) && row.triggerName) { // 武器
                     const characterMater = getCharacterMaster(row.character);
                     if (characterMater) {
@@ -549,8 +610,6 @@ export default defineComponent({
                             result = weaponMaster.icon_url;
                         }
                     }
-                } else if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) { // 元素共鳴
-                    result = (ELEMENT_IMG_SRC as any)[row.element] ?? IMG_SRC_DUMMY
                 }
             }
             return result;
@@ -565,7 +624,7 @@ export default defineComponent({
             input.currentWeapon == weapon ? ' disabled' : '';
 
         const inputOnChange = () => {
-            setupInputRows(props.team, props.rotationList, props.teamMemberResult);
+            setupInputRows(props.team, props.teamMemberResult);
         }
 
         const replaceWeaponOnClick = (input: TCalculatorInput, weapon: string) => {
@@ -575,7 +634,7 @@ export default defineComponent({
                 } else {
                     input.currentWeapon = weapon;
                 }
-                setupInputRows(props.team, props.rotationList, props.teamMemberResult);
+                inputOnChange();
             }
         }
 

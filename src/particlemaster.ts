@@ -48,18 +48,18 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 3.5,
     },
     '夜蘭': {
-        'E.Press': 4,
-        'E.Hold': 4,
+        'E.Press': [4, 1, 0, 10],
+        'E.Hold': [4, 1, 0, 10],
     },
     '神里綾人': {
-        'E': [4 / 6, 0, 6, 12],
+        'E': [4, 0, 6, 12],
     },
     '八重神子': {
         'E': [0.36, -1, 14, 4],
     },
     '申鶴': {
-        'E.Press': 3,
-        'E.Hold': 4,
+        'E.Press': [3, 1, 10, 10],
+        'E.Hold': [4, 1, 15, 15],
     },
     '荒瀧一斗': {
         'E': 3.5,
@@ -74,7 +74,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 5,
     },
     '宵宮': {
-        'E': [4 / 10, 0, 10, 18],
+        'E': [4, 0, 10, 18],
     },
     '神里綾華': {
         'E': 4.5,
@@ -88,7 +88,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 2.5,
     },
     '胡桃': {
-        'E': [5 / 9, 0, 9, 16],
+        'E': [5, 0, 9, 16],
     },
     '魈': {
         'E': 3,
@@ -156,7 +156,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [0.5, -1, 10, 15]
     },
     'ファルザン': {
-        'E': 2,
+        'E': [2, 1, 18, 6],
     },
     'レイラ': {
         'E': [0.11, -1, 12, 12]
@@ -228,7 +228,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 3,
     },
     '行秋': {
-        'E': 4.5,
+        'E': [4.5, 1, 15, 21],
     },
     '北斗': {
         'E.Press': 2,
@@ -243,7 +243,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Press(burst)': 0,
     },
     'バーバラ': {
-        'E': 0,
+        'E': [0, 1, 15, 32, 2, 0, 1, 15, 27.2],
     },
     'リサ': {
         'E.Press': 0,
@@ -307,12 +307,15 @@ export function getParticleNumFromInfo(particleInfo: TParticleInfo, leftTime?: n
         result = particleInfo;
     } else {
         result = particleInfo[0];
-        let duration = getDurationFromInfo(particleInfo);
-        if (duration > 0) {
-            if (leftTime !== undefined && duration > leftTime) {
-                duration = Math.max(0, leftTime);
+        const receiver = getReceiverFromInfo(particleInfo);
+        if (receiver < 0) {
+            let duration = getDurationFromInfo(particleInfo);
+            if (duration > 0) {
+                if (leftTime !== undefined && duration > leftTime) {
+                    duration = Math.max(0, leftTime);
+                }
+                result *= duration;
             }
-            result *= duration;
         }
     }
     return result;
@@ -324,4 +327,8 @@ export function getReceiverFromInfo(particleInfo: TParticleInfo) {
 
 export function getDurationFromInfo(particleInfo: TParticleInfo) {
     return (_.isArray(particleInfo) && particleInfo.length > 2) ? particleInfo[2] : 0;
+}
+
+export function getCtFromInfo(particleInfo: TParticleInfo) {
+    return (_.isArray(particleInfo) && particleInfo.length > 3) ? particleInfo[3] : undefined;
 }

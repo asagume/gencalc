@@ -41,6 +41,10 @@ export type TTeamMemberResult = {
     [key: string]: TMemberResult,
 };
 
+export type TConstellation = {
+    [key: string]: number,
+};
+
 export const NUMBER_OF_TEAMS = 10;
 export const NUMBER_OF_MEMBERS = 4;
 
