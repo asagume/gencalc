@@ -410,15 +410,14 @@ export default defineComponent({
 
 .base-container {
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto auto auto auto auto auto;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto auto auto;
   grid-template-areas:
-    "header"
-    "pane1"
-    "pane2"
-    "pane3"
-    "pane4"
-    "footer";
+    "header" "header"
+    "pane1" "pane1"
+    "pane2" "pane2"
+    "pane3" "pane4"
+    "footer" "footer";
 }
 
 div.team {

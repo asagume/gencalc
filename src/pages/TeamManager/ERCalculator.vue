@@ -1,9 +1,6 @@
 <template>
     <div class="er-calculator">
         <div>
-            <p>実験中</p>
-        </div>
-        <div>
             <label>{{ displayName('ローテーションの長さ(秒)') }}
                 <input type="number" v-model="rotationLength" min="10" max="180" @change="inputOnChange">
             </label>
@@ -745,7 +742,7 @@ td {
 }
 
 th {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
     padding: 0;
     white-space: nowrap;

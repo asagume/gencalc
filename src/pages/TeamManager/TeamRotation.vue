@@ -1,74 +1,77 @@
 <template>
-  <div class="team-rotation">
-    <fieldset class="icon-list">
-      <template v-for="member in team.members" :key="member.id">
-        <div class="action with-tooltip" v-if="getNormalAttackDetail(member)">
-          <img :class="'action-icon' + bgColorClass(member.name)" :src="getNormalAttackDetail(member).icon_url"
-            :alt="displayName(getNormalAttackDetail(member).名前)" @click="listActionOnClick(member, 'N')" />
-          <span class="tooltip">
-            {{ displayName(member.name) }}
-            {{ displayName("通常攻撃") }}
-          </span>
-        </div>
-        <div class="action with-tooltip" v-if="getElementalSkillDetail(member)">
-          <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalSkillDetail(member).icon_url"
-            :alt="displayName(getElementalSkillDetail(member).名前)" @click="listActionOnClick(member, 'E')" />
-          <span class="tooltip">
-            {{ displayName(member.name) }}
-            {{ displayName("元素スキル") }}
-          </span>
-        </div>
-        <div class="action with-tooltip" v-if="getElementalBurstDetail(member)">
-          <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalBurstDetail(member)?.icon_url"
-            :alt="displayName(getElementalBurstDetail(member).名前)" @click="listActionOnClick(member, 'Q')" />
-          <span class="tooltip">
-            {{ displayName(member.name) }}
-            {{ displayName("元素爆発") }}
-          </span>
-        </div>
-      </template>
-      <table class="control-button">
-        <tr>
-          <td style="width: 30px;">
-            <span class="material-symbols-outlined control-button" @click="$emit('click:jump-to-team')">stat_2</span>
-          </td>
-          <td>
-            <label :class="removeMode ? 'checked' : ''">
-              <input type="checkbox" v-model="removeMode">
-              <span class="material-symbols-outlined">delete</span>
-            </label>
-          </td>
-          <td style="width: 30px;">
-          </td>
-        </tr>
-      </table>
-    </fieldset>
-    <fieldset class="rotation-list">
-      <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" @change="rotationListOnChange">
-        <template #item="{ element }">
-          <div class="rotation-item">
-            <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
-              :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
-            <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
-              <div class="with-tooltip" @touchend="rotationActionOnClick(element)">
-                <img :class="'action-icon handle' + bgColorClass(element.member)" :src="getActionDetail(element).icon_url"
-                  :alt="displayName(getActionDetail(element).名前)" @click="rotationActionOnClick(element)" />
-                <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
-                <div v-if="removeMode" class="remove-mark" @click="removeItemOnClick(element)"></div>
-              </div>
-              <div class="action-attribute">
-                {{ actionDisplay(element) }}
-              </div>
-            </div>
+  <div class="rotation-box">
+    <div class="pane1">
+      <fieldset class="icon-list">
+        <template v-for="member in team.members" :key="member.id">
+          <div class="action with-tooltip" v-if="getNormalAttackDetail(member)">
+            <img :class="'action-icon' + bgColorClass(member.name)" :src="getNormalAttackDetail(member).icon_url"
+              :alt="displayName(getNormalAttackDetail(member).名前)" @click="listActionOnClick(member, 'N')" />
+            <span class="tooltip">
+              {{ displayName(member.name) }}
+              {{ displayName("通常攻撃") }}
+            </span>
+          </div>
+          <div class="action with-tooltip" v-if="getElementalSkillDetail(member)">
+            <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalSkillDetail(member).icon_url"
+              :alt="displayName(getElementalSkillDetail(member).名前)" @click="listActionOnClick(member, 'E')" />
+            <span class="tooltip">
+              {{ displayName(member.name) }}
+              {{ displayName("元素スキル") }}
+            </span>
+          </div>
+          <div class="action with-tooltip" v-if="getElementalBurstDetail(member)">
+            <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalBurstDetail(member)?.icon_url"
+              :alt="displayName(getElementalBurstDetail(member).名前)" @click="listActionOnClick(member, 'Q')" />
+            <span class="tooltip">
+              {{ displayName(member.name) }}
+              {{ displayName("元素爆発") }}
+            </span>
           </div>
         </template>
-      </draggable>
+        <table class="control-button">
+          <tr>
+            <td style="width: 30px;">
+              <span class="material-symbols-outlined control-button" @click="$emit('click:jump-to-team')">stat_2</span>
+            </td>
+            <td>
+              <label :class="removeMode ? 'checked' : ''">
+                <input type="checkbox" v-model="removeMode">
+                <span class="material-symbols-outlined">delete</span>
+              </label>
+            </td>
+            <td style="width: 30px;">
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+      <fieldset class="rotation-list">
+        <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" @change="rotationListOnChange">
+          <template #item="{ element }">
+            <div class="rotation-item">
+              <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
+                :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
+              <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
+                <div class="with-tooltip" @touchend="rotationActionOnClick(element)">
+                  <img :class="'action-icon handle' + bgColorClass(element.member)"
+                    :src="getActionDetail(element).icon_url" :alt="displayName(getActionDetail(element).名前)"
+                    @click="rotationActionOnClick(element)" />
+                  <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
+                  <div v-if="removeMode" class="remove-mark" @click="removeItemOnClick(element)"></div>
+                </div>
+                <div class="action-attribute">
+                  {{ actionDisplay(element) }}
+                </div>
+              </div>
+            </div>
+          </template>
+        </draggable>
+        <br />
+        <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
+          @change="updateRotation"></textarea>
+      </fieldset>
       <br />
-      <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
-        @change="updateRotation"></textarea>
-    </fieldset>
-    <br />
-    <div v-if="true">
+    </div>
+    <div v-if="true" class="pane2">
       <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult"
         :constellations="constellations" />
     </div>
@@ -326,6 +329,34 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+@media all and (min-width: 800px) {
+  .rotation-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "pane1 pane2";
+  }
+}
+
+@media all and (max-width: 799px) {
+  .rotation-box {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "pane1"
+      "pane2";
+  }
+}
+
+.pane1 {
+  grid-area: pane1;
+}
+
+.pane2 {
+  grid-area: pane2;
+}
+
 fieldset.icon-list {
   padding-bottom: 0px;
 }
