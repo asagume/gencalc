@@ -47,6 +47,7 @@
 
     <div class="pane3">
       <hr />
+      <h3>ROTATION</h3>
       <div id="team-rotation">
         <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :team-member-result="teamMemberResult"
           :constellations="constellations" @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
@@ -411,13 +412,14 @@ export default defineComponent({
 .base-container {
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto;
   grid-template-areas:
-    "header" "header"
-    "pane1" "pane1"
-    "pane2" "pane2"
-    "pane3" "pane4"
-    "footer" "footer";
+    "header"
+    "pane1"
+    "pane2"
+    "pane3"
+    "pane4"
+    "footer";
 }
 
 div.team {
@@ -429,6 +431,10 @@ div.team {
   padding-top: 5px;
   padding-bottom: 5px;
   text-align: left;
+}
+
+.pane2 {
+  margin-bottom: 5px;
 }
 
 .footer {
