@@ -96,16 +96,16 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                         if (rotation.action == 'N' && rotation.member === '神里綾人') {
                             length += 6;
                         } else {
-                            length += dan * 0.3 + (withC ? 0.5 : 0) + 0.2;
+                            length += dan * 0.4 + (withC ? 0.5 : 0) + 0.15;
                         }
                     } else if (characterMaster?.武器 === '長柄武器') {
-                        length += dan * 0.3 + (withC ? 0.5 : 0) + 0.1;
+                        length += dan * 0.4 + (withC ? 0.5 : 0) + 0.15;
                     } else if (characterMaster?.武器 === '両手剣') {
-                        length += dan * 0.6 + 0.3;
+                        length += dan * 0.7 + 0.4;
                     } else if (characterMaster?.武器 === '弓') {
-                        length += dan * 0.3 + 0.1;
+                        length += dan * 0.4 + 0.15;
                     } else if (characterMaster?.武器 === '法器') {
-                        length += dan * 0.5 + 0.2;
+                        length += dan * 0.5 + 0.3;
                     }
                 } else if (rotation.action == 'C') {
                     if (characterMaster?.武器 === '両手剣') {
