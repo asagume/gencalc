@@ -4,7 +4,7 @@
       <label class="name">
         <span class="handle">◆</span>
         <span>{{ team.name }}</span>
-        <span v-if="selected" class="button material-symbols-outlined" @click="editOnClick"> edit_square </span>
+        <span v-if="editable && selected" class="button material-symbols-outlined" @click="editOnClick"> edit_square </span>
       </label>
       <div class="elemental-resonance">
         <template v-for="index in [0, 1, 2, 3]" :key="index">
@@ -18,7 +18,7 @@
         <tr>
           <td v-for="member in team.members" :key="member.id">
             <MemberItem :member="member" :statsObj="memberStats[member.id]" :displayStat="displayStat"
-              :showEquipment="true" :viewable="true" :members="team.members.map(s => s.name)"
+              :showEquipment="showEquipment" :viewable="true" :members="team.members.map(s => s.name)"
               :elementalResonance="elementalResonance" />
           </td>
         </tr>
@@ -54,6 +54,8 @@ export default defineComponent({
     selected: { type: Boolean, requied: true },
     displayStat: { type: String },
     constellations: { type: Object as PropType<TConstellation> },
+    editable: { type: Boolean },
+    showEquipment: { type: Boolean },
   },
   emits: ['click:edit', 'change:buildname', 'click:jump-to-rotation', 'update:member-result'],
   components: {
@@ -65,7 +67,6 @@ export default defineComponent({
     const memberStats = reactive({} as TAnyObject);
     const memberResults = reactive({} as TTeamMemberResult);
     const selectedClass = computed(() => (props.selected ? ' selected' : ''));
-    const editable = ref(false);
     const res = reactive({} as TAnyObject);
     const resKey = ['炎', '水', '風', '雷', '草', '氷', '岩', '物理'];
 
@@ -335,7 +336,6 @@ export default defineComponent({
       displayName,
 
       selectedClass,
-      editable,
       memberStats,
       elementalResonance,
       resonanceElementImgSrcs,

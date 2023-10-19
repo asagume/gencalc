@@ -58,14 +58,12 @@ export function getCharacterMaster(character: string) {
     return result;
 }
 
-export async function setupCharacterDetailMap(team: TTeam) {
+export async function setupCharacterDetailMap() {
     const list: Promise<void>[] = [];
-    for (const member of team.members) {
-        if (member.name) {
-            list.push(getCharacterMasterDetail(member.name as TCharacterKey).then(response => {
-                characterDetailMap.set(member.name, response);
-            }));
-        }
+    for (const character of Object.keys(CHARACTER_MASTER)) {
+        list.push(getCharacterMasterDetail(character as TCharacterKey).then(response => {
+            characterDetailMap.set(character, response);
+        }));
     }
     Promise.all(list);
 }

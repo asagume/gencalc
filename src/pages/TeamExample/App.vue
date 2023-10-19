@@ -55,7 +55,7 @@ import teamexample from './teamexample.json';
 let memberId = 1;
 
 export default defineComponent({
-  name: 'TeamManager',
+  name: 'TeamExample',
   components: {
     draggable,
     TeamItem,
@@ -64,14 +64,14 @@ export default defineComponent({
   setup() {
     const { displayName } = CompositionFunction();
     const teams = reactive([] as TTeam[]);
-    const selectedTeamId = ref(0);
+    const selectedTeamId = ref(-1);
 
     onMounted(() => {
+      const newTeams: TTeam[] = [];
       if (teamexample) {
         let actionId = 1;
         for (let i = 0; i < teamexample.length; i++) {
-          const example = teamexample[i];
-          console.log(example);
+          const example = teamexample[i] as any;
           if (example) {
             const team = makeBlankTeam(i);
             team.name = example.name;
@@ -103,9 +103,13 @@ export default defineComponent({
               team.rotation = [];
             }
             team.rotationDescription = example.rotationDescription ?? '';
-            teams.push(team);
+            newTeams.push(team);
           }
         }
+      }
+      teams.splice(0, teams.length, ...newTeams);
+      if (teams.length) {
+        selectedTeamId.value = 0;
       }
     })
 
@@ -136,21 +140,6 @@ export default defineComponent({
         team.members.push(makeBlankMember(memberId++));
       }
       return team;
-    }
-
-    function initializeMember(member: TMember) {
-      member.name = '';
-      member.buildname = undefined;
-      member.builddata = undefined;
-      member.tags = [];
-      member.replacements = [];
-    }
-
-    function initializeTeam(team: TTeam) {
-      team.name = 'チーム' + (team.id + 1);
-      team.members.forEach((member) => {
-        initializeMember(member);
-      });
     }
 
     const teamOnClick = (index: number) => {

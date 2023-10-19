@@ -673,33 +673,30 @@ export function getParticleByCharacterExtra(
     rotationList: TActionItem[] | undefined,
     onFields: number[], // eslint-disable-line
 ): TERParticle[] | undefined {
+    const resultArr = new Array<[string, string, string, number]>(); // [rechargeType, triggerName, element, num]
     const messages: string[] = [];
-    let kind;
-    let element;
     let num;
     const eCount = countE(character, rotationList);
     if (character === '刻晴' && constellation >= 2) {
         messages.push('刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。');
-        kind = RECHARGE_PARTICLE_CONSTELLATION;
         const ct = 5;
-        element = '雷';
         num = rotationLength / ct;
+        resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '2', '雷', num]);
     } else if (character === 'ガイア') {
         messages.push('霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。');
         if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length) {
-            kind = RECHARGE_PARTICLE_PASSIVE;
-            element = '氷';
             num = 2 * eCount;
+            resultArr.push([RECHARGE_PARTICLE_PASSIVE, '氷淵の心', '氷', num]);
         }
     } else if (character === 'フィッシュル' && constellation >= 6) {
-        kind = RECHARGE_PARTICLE_CONSTELLATION;
-        element = '雷';
+        messages.push('オズは出場している自身のキャラクターと共に攻撃し、攻撃力30%分の雷元素ダメージを与える。');
         num = 1;
+        resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '6', '雷', num]);
     }
     let result: TERParticle[] | undefined;
-    if (kind && element && num) {
-        result = [[kind, '', element, 0, 0, 0, 0, messages]];
-    }
+    resultArr.forEach(entry => {
+        result = [[entry[0], entry[1], entry[2], 0, 0, 0, 0, messages]];
+    })
     return result;
 }
 

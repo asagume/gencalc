@@ -1,34 +1,1979 @@
 [
     {
         "id": 0,
-        "name": "Noelle Geo feat.Yelan",
+        "name": "往生夜行",
         "members": [
             {
-                "id": 0,
-                "name": "ゴロー",
+                "id": 1,
+                "name": "鍾離",
+                "buildname": "あなたの鍾離",
                 "tags": [],
                 "replacements": []
             },
             {
-                "id": 0,
-                "name": "アルベド",
+                "id": 2,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
                 "tags": [],
-                "replacements": []
+                "replacements": [
+                    "アルベド",
+                    ""
+                ]
             },
             {
-                "id": 0,
+                "id": 3,
                 "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": [
+                    "行秋",
+                    ""
+                ]
+            },
+            {
+                "id": 4,
+                "name": "胡桃",
+                "buildname": "あなたの胡桃",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水○雷○氷◎",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "胡桃",
+                "action": "Q"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 1,
+        "name": "蒸発宵宮",
+        "members": [
+            {
+                "id": 5,
+                "name": "鍾離",
+                "buildname": "あなたの鍾離",
                 "tags": [],
                 "replacements": []
             },
             {
-                "id": 0,
-                "name": "ノエル",
+                "id": 6,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": [
+                    "行秋",
+                    ""
+                ]
+            },
+            {
+                "id": 7,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": [
+                    "雲菫",
+                    ""
+                ]
+            },
+            {
+                "id": 8,
+                "name": "宵宮",
+                "buildname": "あなたの宵宮",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水○雷○氷◎",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 2,
+        "name": "リネモノパイロ",
+        "members": [
+            {
+                "id": 9,
+                "name": "リネ",
+                "buildname": "あなたのリネ",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 10,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 11,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 12,
+                "name": "香菱",
+                "buildname": "あなたの香菱",
                 "tags": [],
                 "replacements": []
             }
         ],
-        "description": "",
+        "description": "炎❌水○雷○氷◎",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 3,
+        "name": "召使",
+        "members": [
+            {
+                "id": 13,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 14,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 15,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 16,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 4,
+        "name": "モノハイドロ",
+        "members": [
+            {
+                "id": 17,
+                "name": "珊瑚宮心海",
+                "buildname": "あなたの珊瑚宮心海",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 18,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 19,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 20,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水❌雷❌氷❌",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 5,
+        "name": "豊穣開花",
+        "members": [
+            {
+                "id": 21,
+                "name": "ニィロウ",
+                "buildname": "あなたのニィロウ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 22,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": [
+                    "旅人(草)",
+                    ""
+                ]
+            },
+            {
+                "id": 23,
+                "name": "珊瑚宮心海",
+                "buildname": "あなたの珊瑚宮心海",
+                "tags": [],
+                "replacements": [
+                    "夜蘭",
+                    "バーバラ"
+                ]
+            },
+            {
+                "id": 24,
+                "name": "白朮",
+                "buildname": "あなたの白朮",
+                "tags": [],
+                "replacements": [
+                    "綺良々",
+                    "ヨォーヨ"
+                ]
+            }
+        ],
+        "description": "炎◎水◎雷○氷❌",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "ニィロウ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ニィロウ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ニィロウ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ニィロウ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "珊瑚宮心海",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "白朮",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "白朮",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "珊瑚宮心海",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "珊瑚宮心海",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "珊瑚宮心海",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "珊瑚宮心海",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "珊瑚宮心海",
+                "action": "N3"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 6,
+        "name": "超開花綾人",
+        "members": [
+            {
+                "id": 25,
+                "name": "神里綾人",
+                "buildname": "あなたの神里綾人",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 26,
+                "name": "久岐忍",
+                "buildname": "あなたの久岐忍",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 27,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 28,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": [
+                    "北斗",
+                    "雲菫"
+                ]
+            }
+        ],
+        "description": "炎○水◎雷△氷❌",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 7,
+        "name": "ヌヴィレットHC",
+        "members": [
+            {
+                "id": 29,
+                "name": "鍾離",
+                "buildname": "あなたの鍾離",
+                "tags": [
+                    "Free"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 30,
+                "name": "ヌヴィレット",
+                "buildname": "あなたのヌヴィレット",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 31,
+                "name": "フィッシュル",
+                "buildname": "あなたのフィッシュル",
+                "tags": [
+                    "Free"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 32,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [
+                    "Free"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "フリーナ殿待機中…",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 8,
+        "name": "放浪者HC",
+        "members": [
+            {
+                "id": 33,
+                "name": "鍾離",
+                "buildname": "あなたの鍾離",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 34,
+                "name": "ファルザン",
+                "buildname": "あなたのファルザン",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 35,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 36,
+                "name": "放浪者",
+                "buildname": "あなたの放浪者",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水△雷○氷○",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 9,
+        "name": "激化スクロース",
+        "members": [
+            {
+                "id": 37,
+                "name": "北斗",
+                "buildname": "あなたの北斗",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 38,
+                "name": "白朮",
+                "buildname": "あなたの白朮",
+                "tags": [],
+                "replacements": [
+                    "ヨォーヨ",
+                    ""
+                ]
+            },
+            {
+                "id": 39,
+                "name": "フィッシュル",
+                "buildname": "あなたのフィッシュル",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 40,
+                "name": "スクロース",
+                "buildname": "あなたのスクロース",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水○雷△氷△",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 10,
+        "name": "スクロースナショナル",
+        "members": [
+            {
+                "id": 41,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 42,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 43,
+                "name": "香菱",
+                "buildname": "あなたの香菱",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 44,
+                "name": "スクロース",
+                "buildname": "あなたのスクロース",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水△雷○氷◎",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 11,
+        "name": "ファルザンHC(嘘)",
+        "members": [
+            {
+                "id": 45,
+                "name": "ファルザン",
+                "buildname": "翠緑天空",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 46,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 47,
+                "name": "香菱",
+                "buildname": "あなたの香菱",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 48,
+                "name": "ロサリア",
+                "buildname": "あなたのロサリア",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水○雷○氷◎",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 12,
+        "name": "雷電ナショナル",
+        "members": [
+            {
+                "id": 49,
+                "name": "雷電将軍",
+                "buildname": "あなたの雷電将軍",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 50,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 51,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 52,
+                "name": "香菱",
+                "buildname": "あなたの香菱",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水○雷○氷◎",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 13,
+        "name": "激化刻晴",
+        "members": [
+            {
+                "id": 53,
+                "name": "刻晴",
+                "buildname": "あなたの刻晴",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 54,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": [
+                    "鍾離",
+                    ""
+                ]
+            },
+            {
+                "id": 55,
+                "name": "白朮",
+                "buildname": "あなたの白朮",
+                "tags": [],
+                "replacements": [
+                    "ナヒーダ",
+                    ""
+                ]
+            },
+            {
+                "id": 56,
+                "name": "フィッシュル",
+                "buildname": "あなたのフィッシュル",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎○水◎雷△氷○",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 14,
+        "name": "ハイブリッドセノ",
+        "members": [
+            {
+                "id": 57,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 58,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 59,
+                "name": "白朮",
+                "buildname": "あなたの白朮",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 60,
+                "name": "セノ",
+                "buildname": "あなたのセノ",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水◎雷○氷△",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 15,
+        "name": "超激化八重",
+        "members": [
+            {
+                "id": 61,
+                "name": "八重神子",
+                "buildname": "天空",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 62,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 63,
+                "name": "ヨォーヨ",
+                "buildname": "あなたのヨォーヨ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 64,
+                "name": "フィッシュル",
+                "buildname": "あなたのフィッシュル",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水◎雷△氷△",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 16,
+        "name": "双狐双神",
+        "members": [
+            {
+                "id": 65,
+                "name": "鍾離",
+                "buildname": "あなたの鍾離",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 66,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 67,
+                "name": "八重神子",
+                "buildname": "あなたの八重神子",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 68,
+                "name": "ティナリ",
+                "buildname": "あなたのティナリ",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水◎雷○氷△",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "C"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "C"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "C"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 17,
+        "name": "激化アルハイゼン",
+        "members": [
+            {
+                "id": 69,
+                "name": "鍾離",
+                "buildname": "あなたの鍾離",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 70,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 71,
+                "name": "八重神子",
+                "buildname": "あなたの八重神子",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 72,
+                "name": "アルハイゼン",
+                "buildname": "あなたのアルハイゼン",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水◎雷○氷△",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 18,
+        "name": "超開花アルハイゼン",
+        "members": [
+            {
+                "id": 73,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": [
+                    "旅人(草)",
+                    "ヨォーヨ"
+                ]
+            },
+            {
+                "id": 74,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 75,
+                "name": "久岐忍",
+                "buildname": "あなたの久岐忍",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 76,
+                "name": "アルハイゼン",
+                "buildname": "あなたのアルハイゼン",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水◎雷○氷❌",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 19,
+        "name": "超開花ナヒーダ",
+        "members": [
+            {
+                "id": 77,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 78,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 79,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 80,
+                "name": "久岐忍",
+                "buildname": "あなたの久岐忍",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水◎雷△氷❌",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "久岐忍",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "久岐忍",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "久岐忍",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "N4"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 20,
+        "name": "神鶴万心",
+        "members": [
+            {
+                "id": 81,
+                "name": "申鶴",
+                "buildname": "あなたの申鶴",
+                "tags": [],
+                "replacements": [
+                    "ロサリア",
+                    ""
+                ]
+            },
+            {
+                "id": 82,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 83,
+                "name": "珊瑚宮心海",
+                "buildname": "あなたの珊瑚宮心海",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 84,
+                "name": "神里綾華",
+                "buildname": "あなたの神里綾華",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水◎雷○氷❌",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 21,
+        "name": "溶解ロサリア",
+        "members": [
+            {
+                "id": 85,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 86,
+                "name": "香菱",
+                "buildname": "あなたの香菱",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 87,
+                "name": "楓原万葉",
+                "buildname": "あなたの楓原万葉",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 88,
+                "name": "ロサリア",
+                "buildname": "あなたのロサリア",
+                "tags": [
+                    "Enabler"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎△水○雷○氷◎",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 22,
+        "name": "モルガナ",
+        "members": [
+            {
+                "id": 89,
+                "name": "甘雨",
+                "buildname": "あなたの甘雨",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 90,
+                "name": "ウェンティ",
+                "buildname": "あなたのウェンティ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 91,
+                "name": "モナ",
+                "buildname": "あなたのモナ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 92,
+                "name": "ディオナ",
+                "buildname": "あなたのディオナ",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎○水◎雷△氷❌",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 23,
+        "name": "ナショナル",
+        "members": [
+            {
+                "id": 93,
+                "name": "重雲",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            },
+            {
+                "id": 94,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 95,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 96,
+                "name": "香菱",
+                "buildname": "あなたの香菱",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水○雷○氷◎",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "重雲",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "重雲",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "重雲",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "重雲",
+                "action": "N4"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 24,
+        "name": "ノエルHC",
+        "members": [
+            {
+                "id": 97,
+                "name": "ゴロー",
+                "buildname": "あなたのゴロー",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 98,
+                "name": "アルベド",
+                "buildname": "あなたのアルベド",
+                "tags": [],
+                "replacements": [
+                    "雲菫",
+                    ""
+                ]
+            },
+            {
+                "id": 99,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 100,
+                "name": "ノエル",
+                "buildname": "赤角華館",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水△雷△氷△",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 25,
+        "name": "マーメイド",
+        "members": [
+            {
+                "id": 101,
+                "name": "アルベド",
+                "buildname": "あなたのアルベド",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 102,
+                "name": "行秋",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 103,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 104,
+                "name": "ノエル",
+                "buildname": "赤角悠久",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水△雷△氷△",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "アルベド",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "行秋",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 26,
+        "name": "超開花ノエル",
+        "members": [
+            {
+                "id": 105,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 106,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 107,
+                "name": "久岐忍",
+                "buildname": "あなたの久岐忍",
+                "tags": [],
+                "replacements": [
+                    "雷電将軍",
+                    ""
+                ]
+            },
+            {
+                "id": 108,
+                "name": "ノエル",
+                "buildname": "赤角華館",
+                "tags": [
+                    "Driver"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水◎雷△氷△",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "久岐忍",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "久岐忍",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 27,
+        "name": "ナヴィア",
+        "members": [
+            {
+                "id": 109,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 110,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 111,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 112,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 28,
+        "name": "エウルアHC",
+        "members": [
+            {
+                "id": 113,
+                "name": "雷電将軍",
+                "buildname": "あなたの雷電将軍",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 114,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 115,
+                "name": "ベネット",
+                "buildname": "あなたのベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 116,
+                "name": "エウルア",
+                "buildname": "あなたのエウルア",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水△雷○氷△",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "エウルア",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "エウルア",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "エウルア",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "エウルア",
+                "action": "E.Hold"
+            },
+            {
+                "id": 0,
+                "member": "エウルア",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            },
+            {
+                "id": 0,
+                "member": "雷電将軍",
+                "action": "N4"
+            }
+        ],
+        "rotationDescription": ""
+    },
+    {
+        "id": 29,
+        "name": "超開花エウルア",
+        "members": [
+            {
+                "id": 117,
+                "name": "ナヒーダ",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 118,
+                "name": "夜蘭",
+                "buildname": "あなたの夜蘭",
+                "tags": [],
+                "replacements": [
+                    "行秋",
+                    ""
+                ]
+            },
+            {
+                "id": 119,
+                "name": "久岐忍",
+                "buildname": "あなたの久岐忍",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 120,
+                "name": "エウルア",
+                "buildname": "あなたのエウルア",
+                "tags": [
+                    "Main-DPS"
+                ],
+                "replacements": []
+            }
+        ],
+        "description": "炎◎水◎雷△氷❌",
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 30,
+        "name": "",
+        "members": [
+            {
+                "id": 121,
+                "name": "",
+                "buildname": "あなたのナヒーダ",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 122,
+                "name": "",
+                "buildname": "あなたの行秋",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 123,
+                "name": "",
+                "buildname": "あなたの久岐忍",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 124,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 31,
+        "name": "",
+        "members": [
+            {
+                "id": 125,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 126,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 127,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 128,
+                "name": "",
+                "tags": [],
+                "replacements": []
+            }
+        ],
         "rotation": [],
         "rotationDescription": ""
     }

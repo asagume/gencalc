@@ -3,8 +3,7 @@
     <fieldset class="icon-list">
       <template v-for="member in team.members" :key="member.id">
         <div class="action with-tooltip" v-if="getNormalAttackDetail(member)">
-          <img :class="'action-icon' + bgColorClass(member.name)"
-            :src="getNormalAttackDetail(member).icon_url ?? IMG_SRC_DUMMY"
+          <img :class="'action-icon' + bgColorClass(member.name)" :src="getNormalAttackDetail(member).icon_url"
             :alt="displayName(getNormalAttackDetail(member).名前)" @click="listActionOnClick(member, 'N')" />
           <span class="tooltip">
             {{ displayName(member.name) }}
@@ -20,7 +19,7 @@
           </span>
         </div>
         <div class="action with-tooltip" v-if="getElementalBurstDetail(member)">
-          <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalBurstDetail(member).icon_url"
+          <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalBurstDetail(member)?.icon_url"
             :alt="displayName(getElementalBurstDetail(member).名前)" @click="listActionOnClick(member, 'Q')" />
           <span class="tooltip">
             {{ displayName(member.name) }}
@@ -49,8 +48,8 @@
         <template #item="{ element }">
           <div class="rotation-item">
             <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
-              :src="getCharacterMaster(element.member).icon_url" :alt="displayName(element.member)" />
-            <div :class="'action-item ' + colorClass(element.member)">
+              :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
+            <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
               <div class="with-tooltip" @touchend="rotationActionOnClick(element)">
                 <img :class="'action-icon handle' + bgColorClass(element.member)" :src="getActionDetail(element).icon_url"
                   :alt="displayName(getActionDetail(element).名前)" @click="rotationActionOnClick(element)" />
@@ -79,8 +78,8 @@
 import draggable from "vuedraggable";
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
-import { CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, getCharacterMasterDetail, IMG_SRC_DUMMY, TCharacterDetail, TCharacterEntry, TCharacterKey } from "@/master";
+import { getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
+import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
 import _ from "lodash";
 import ERCalculator from './ERCalculator.vue';
 import { getElementalSkillActions } from "@/particlemaster";
@@ -101,9 +100,8 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
     const removeMode = ref(false);
     const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
-    const characterDetailMap = new Map();
-    const normalAttackDanMap = new Map(); // 通常攻撃の段数
-    const elementalSkillActionMap = new Map(); // 元素スキル
+    const normalAttackDans = reactive({} as { [key: string]: number }); // 通常攻撃の段数
+    const elementalSkillActions = reactive({} as { [key: string]: string[] }); // 元素スキル
     const rotationList = reactive([] as TActionItem[]);
     const actionId = ref(0);
     const rotationDescription = ref('');
@@ -113,30 +111,25 @@ export default defineComponent({
     const CHARGED_WITH_NORMAL_CHARACTER = ['鹿野院平蔵', 'リオセスリ'];
 
     const watchCount = ref(0);
-    watch(props, async () => {
-      await watchFunc(props.team);
-      watchCount.value++;
+    watch(props, () => {
+      watchFunc(props.team);
     });
 
-    async function watchFunc(team: TTeam) {
-      if (team) {
+    function watchFunc(team: TTeam) {
+      setupCharacterDetailMap().then(() => {
         for (const member of team.members) {
           if (member.name) {
-            const characterMasterDetail = await getCharacterMasterDetail(
-              member.name as TCharacterKey
-            );
-            characterDetailMap.set(member.name, characterMasterDetail);
-            normalAttackDanMap.set(member.name, getNormalAttackDan(member.name));
-            elementalSkillActionMap.set(member.name, getElementalSkillActions(member.name));
+            normalAttackDans[member.name] = getNormalAttackDan(member.name);
+            elementalSkillActions[member.name] = getElementalSkillActions(member.name);
           }
         }
-        if (team.rotation && team.rotation.length) {
+        if (team.rotation?.length) {
           const workArr = _.cloneDeep(team.rotation);
-          workArr.forEach(e => {
-            if (e.action.startsWith('E')) {
-              const actions = elementalSkillActionMap.get(e.member);
-              if (actions && actions.length > 0 && !actions.includes(e.action)) {
-                e.action = actions[0];
+          workArr.forEach(rotation => {
+            if (rotation.action.startsWith('E')) {
+              const actions = elementalSkillActions[rotation.member];
+              if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
+                rotation.action = actions[0];
               }
             }
           })
@@ -147,23 +140,16 @@ export default defineComponent({
           actionId.value = 0;
         }
         rotationDescription.value = team.rotationDescription;
-      }
+        watchCount.value++;
+      });
     }
 
     onMounted(() => {
       watchFunc(props.team);
     })
 
-    const getCharacterMaster = (character: string): TCharacterEntry => {
-      return (CHARACTER_MASTER as any)[character];
-    };
-
-    const getCharacterDetail = (character: string): TCharacterDetail | undefined => {
-      watchCount.value;
-      return characterDetailMap.get(character) ?? undefined;
-    };
-
     function getNormalAttackDan(name: string) {
+      watchCount.value;
       let dan = 1;
       const master = getCharacterDetail(name);
       if (master) {
@@ -255,7 +241,7 @@ export default defineComponent({
         if (workArr.length > 0) {
           action = workArr[workArr.length - 1].action;
         } else {
-          const actions = elementalSkillActionMap.get(member.name);
+          const actions = elementalSkillActions[member.name];
           if (actions && actions.length > 0) {
             action = actions[0];
           }
@@ -279,7 +265,7 @@ export default defineComponent({
           const master = getCharacterDetail(item.member);
           const work = item.action.substring(1, 2);
           let n = work ? Number(work) : 1;
-          const dan = normalAttackDanMap.get(item.member) ?? 1;
+          const dan = normalAttackDans[item.member] ?? 1;
           if (master && (CHARGED_WITH_NORMAL_WEAPON.includes(master.武器) || CHARGED_WITH_NORMAL_CHARACTER.includes(item.member))) {
             if (item.action.length < 3) {
               item.action = 'N' + n + 'C';
@@ -295,7 +281,7 @@ export default defineComponent({
           item.action = NORMAL_ATTACK_ACTION_LIST[index];
         }
       } else if (item.action.startsWith('E')) { // 元素スキル
-        const actions = elementalSkillActionMap.get(item.member);
+        const actions = elementalSkillActions[item.member];
         if (actions && actions.length > 1) {
           let index = actions.indexOf(item.action);
           index = index < (actions.length - 1) ? index + 1 : 0;

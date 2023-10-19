@@ -31,9 +31,10 @@
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
             <div style="display: inline-block;" :id="'team-' + element.id">
-              <TeamItem :team="element" :selected="teamSelected(element.id)" :displayStat="displayStat"
-                :constellations="constellations" @click="teamOnClick(element.id)" @click:edit="editOnClick"
-                @click:jump-to-rotation="jumpToRotation" @update:member-result="updateMemberResult" />
+              <TeamItem :team="element" :selected="teamSelected(element.id)" :display-stat="displayStat"
+                :constellations="constellations" :editable="true" :show-equipment="true" @click="teamOnClick(element.id)"
+                @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation"
+                @update:member-result="updateMemberResult" />
             </div>
           </template>
         </draggable>
@@ -47,8 +48,8 @@
     <div class="pane3">
       <hr />
       <div id="team-rotation">
-        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :teamMemberResult="teamMemberResult" :constellations="constellations"
-          @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
+        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :team-member-result="teamMemberResult"
+          :constellations="constellations" @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
 
@@ -66,6 +67,7 @@
           ローテーションが保存されるようになりました。チームデータの一部として記憶します。
         </dd>
       </dl>
+      <p><a href="./TeamExample.html">EXAMPLE</a></p>
       <p>
         <a href="./">げんかるく - 原神ダメージシミュレーター</a>
         &nbsp;

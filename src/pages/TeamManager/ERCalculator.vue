@@ -12,7 +12,11 @@
             <tr>
                 <th colspan="2"></th>
                 <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <img :src="characterImgSrc(element.character)" :alt="displayName(element.character)" class="character">
+                    <div class="with-tooltip">
+                        <img :src="characterImgSrc(element.character)" :alt="displayName(element.character)"
+                            class="character">
+                        <span class="tooltip">{{ displayName(element.character) }}</span>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -70,9 +74,10 @@
                 </td>
             </tr>
             <tr v-for="(row, rowIndex) in inputRowParticle" :key="rowIndex" :class="bgColorClass2(row)">
-                <th>
+                <th class="with-tooltip">
                     <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
                     <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
+                    <span class="tooltip">{{ row.character }}</span>
                 </th>
                 <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 10) / 10 }}</td>
                 <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
@@ -187,7 +192,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { countQ, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
+import { countQ, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
@@ -252,7 +257,7 @@ export default defineComponent({
         };
 
         onMounted(() => {
-            setupCharacterDetailMap(props.team).then(() => {
+            setupCharacterDetailMap().then(() => {
                 setupInput(props.team, props.teamMemberResult);
             });
         })
@@ -261,10 +266,8 @@ export default defineComponent({
         watch(() => _.cloneDeep(props), (newVal, oldVal) => {
             updateRotationLength(newVal.team);
             if (!_.isEqual(newVal.team.members, oldVal.team.members) || !_.isEqual(newVal.teamMemberResult, oldVal.teamMemberResult)) {
-                setupCharacterDetailMap(newVal.team).then(() => {
-                    setupInput(newVal.team, newVal.teamMemberResult);
-                    watchCount.value++;
-                });
+                setupInput(newVal.team, newVal.teamMemberResult);
+                watchCount.value++;
             } else {
                 setupInputRows(newVal.team, newVal.teamMemberResult);
                 watchCount.value++;
@@ -601,6 +604,10 @@ export default defineComponent({
                 } else if ([RECHARGE_ENERGY_BURST].includes(row.rechargeKind)) { // 元素爆発
                     const characterDetail = getCharacterDetail(row.character);
                     result = characterDetail?.元素爆発.icon_url ?? IMG_SRC_DUMMY;
+                } else if ([RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_CONSTELLATION].includes(row.rechargeKind)) { // 命ノ星座
+                    const characterDetail = getCharacterDetail(row.character);
+                    const constellationObj = characterDetail?.命ノ星座[row.triggerName];
+                    result = constellationObj?.icon_url ?? IMG_SRC_DUMMY;
                 } else if ([RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON].includes(row.rechargeKind) && row.triggerName) { // 武器
                     const characterMater = getCharacterMaster(row.character);
                     if (characterMater) {
@@ -714,7 +721,8 @@ td {
 th {
     font-size: 1.8rem;
     font-weight: bold;
-    padding: 0 4px;
+    padding: 0;
+    white-space: nowrap;
 }
 
 input[type="number"] {
@@ -742,8 +750,8 @@ img.character {
 }
 
 img.input-item-character {
-    width: 35px;
-    height: 25px;
+    width: 30px;
+    height: 22px;
     object-position: top;
     object-fit: cover;
 }
