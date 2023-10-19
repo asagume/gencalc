@@ -97,9 +97,12 @@
                 <th colspan="4">{{ displayName('獲得量') }}</th>
             </tr>
             <tr v-for="(row, rowIndex) in  inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
-                <th>
-                    <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
-                    <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
+                <th class="with-tooltip">
+                    <span>
+                        <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
+                        <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
+                    </span>
+                    <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row)) }}</span>
                 </th>
                 <td></td>
                 <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
@@ -115,10 +118,12 @@
             <tr>
                 <th colspan="2">{{ displayName('武器変更') }}</th>
                 <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <img v-for="(weapon, weaponIndex) in element.replaceWeapons" :key="weaponIndex"
-                        :src="replaceWeaponImgSrc(element, weapon)" :alt="displayName(weapon)"
-                        :class="'input-item' + replaceWeaponClass(element, weapon)"
-                        @click="replaceWeaponOnClick(element, weapon)">
+                    <span v-for="(weapon, weaponIndex) in element.replaceWeapons" :key="weaponIndex" class="with-tooltip">
+                        <img :src="replaceWeaponImgSrc(element, weapon)" :alt="displayName(weapon)"
+                            :class="'input-item' + replaceWeaponClass(element, weapon)"
+                            @click="replaceWeaponOnClick(element, weapon)">
+                        <span class="tooltip">{{ displayName(weapon) }}</span>
+                    </span>
                 </td>
             </tr>
         </table>
@@ -641,8 +646,10 @@ export default defineComponent({
                 } else if ([RECHARGE_ENERGY_PASSIVE, RECHARGE_PARTICLE_PASSIVE].includes(row.rechargeKind)) {
                     result = '固有天賦';
                 } else if ([RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_CONSTELLATION].includes(row.rechargeKind)) {
-                    result = '命ノ星座';
+                    result = '命ノ星座 第' + row.triggerName + '重';
                 } else if ([RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_FAVONIUS].includes(row.rechargeKind)) {
+                    result = row.triggerName;
+                } else if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) {
                     result = row.triggerName;
                 }
             }
@@ -783,6 +790,8 @@ img.input-item {
 
 img.disabled {
     opacity: 0.3;
+    background-color: black;
+    border-radius: 5px;
 }
 
 .white {
