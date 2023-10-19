@@ -736,7 +736,6 @@ td {
 
 th,
 td {
-    max-width: 100px;
     min-width: 35px;
     height: 22px;
 }
