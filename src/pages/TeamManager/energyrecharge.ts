@@ -71,9 +71,9 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                 isNCPIgnore = false;
             }
             if (rotation.action === 'Q') {
-                length += 1;
+                length += 0.8;
                 if (characterMaster?.レアリティ && characterMaster.レアリティ === 5) {
-                    length += 0.5;
+                    length += 0.4;
                 }
             } else if (rotation.action === 'E.Hold') {
                 length += 1;
@@ -96,16 +96,16 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                         if (rotation.action == 'N' && rotation.member === '神里綾人') {
                             length += 6;
                         } else {
-                            length += dan * 0.3 + (withC ? 0.5 : 0);
+                            length += dan * 0.3 + (withC ? 0.5 : 0) + 0.2;
                         }
                     } else if (characterMaster?.武器 === '長柄武器') {
-                        length += dan * 0.3 + (withC ? 0.5 : 0);
+                        length += dan * 0.3 + (withC ? 0.5 : 0) + 0.1;
                     } else if (characterMaster?.武器 === '両手剣') {
-                        length += dan * 0.5;
+                        length += dan * 0.6 + 0.3;
                     } else if (characterMaster?.武器 === '弓') {
-                        length += dan * 0.3;
+                        length += dan * 0.3 + 0.1;
                     } else if (characterMaster?.武器 === '法器') {
-                        length += dan * 0.5;
+                        length += dan * 0.5 + 0.2;
                     }
                 } else if (rotation.action == 'C') {
                     if (characterMaster?.武器 === '両手剣') {
@@ -129,6 +129,7 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
             lengthList[memberNameArr.indexOf(curCharacter)] += (length > 1 ? length : 1);
         }
         const lengthSum = _.sum(lengthList);
+        console.log(lengthList, lengthSum);
         for (let i = 0; i < result.length; i++) {
             if (lengthSum && i < lengthList.length) {
                 result[i] = Math.ceil(lengthList[i] / lengthSum * 100 / multiple) * multiple;
