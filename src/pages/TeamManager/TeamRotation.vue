@@ -124,17 +124,22 @@ export default defineComponent({
       }
       const isSameMember = team.rotation.filter(rotation => !team.members.filter(member => member.name).map(member => member.name).includes(rotation.member)).length == 0;
       if (isSameMember) {
-        const workArr = _.cloneDeep(team.rotation);
-        workArr.forEach(rotation => {
-          if (rotation.action.startsWith('E')) {
-            const actions = elementalSkillActions[rotation.member];
-            if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
-              rotation.action = actions[0];
+        if (team.rotation.length) {
+          const workArr = _.cloneDeep(team.rotation);
+          workArr.forEach(rotation => {
+            if (rotation.action.startsWith('E')) {
+              const actions = elementalSkillActions[rotation.member];
+              if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
+                rotation.action = actions[0];
+              }
             }
-          }
-        })
-        rotationList.splice(0, rotationList.length, ...workArr);
-        actionId.value = Math.max(...rotationList.map(s => s.id));
+          })
+          rotationList.splice(0, rotationList.length, ...workArr);
+          actionId.value = Math.max(...rotationList.map(s => s.id)) ?? rotationList.length;
+        } else {
+          rotationList.splice(0, rotationList.length);
+          actionId.value = 0;
+        }
       } else {
         rotationList.splice(0, rotationList.length);
         actionId.value = 0;
@@ -253,6 +258,7 @@ export default defineComponent({
         member: member.name,
         action: action,
       });
+      console.log(rotationList);
       updateRotation();
     }
 

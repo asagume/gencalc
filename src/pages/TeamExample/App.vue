@@ -21,7 +21,7 @@
         </draggable>
       </div>
       <div v-show="teamEditorVisible">
-        <TeamEditorModal :visible="teamEditorVisible" :team="forcusedTeam" @click:cancel="teamEditorVisible = false"
+        <TeamEditorModal :visible="true" :team="forcusedTeam" @click:cancel="teamEditorVisible = false"
           @click:ok="updateTeam" />
       </div>
     </div>
@@ -55,6 +55,7 @@ import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import { NUMBER_OF_TEAMS, TActionItem, TTeam, copyTeams, makeBlankTeam, makeTeamsStr } from '../TeamManager/team';
+import TeamEditorModal from '../TeamManager/TeamEditorModal.vue';
 import TeamItem from '../TeamManager/TeamItem.vue';
 import TeamRotation from '../TeamManager/TeamRotation.vue';
 import teamexample from './teamexample.json';
@@ -64,6 +65,7 @@ export default defineComponent({
   components: {
     draggable,
     TeamItem,
+    TeamEditorModal,
     TeamRotation,
   },
   setup() {
