@@ -18,10 +18,9 @@
             @change="numberOfTeamsOnChange" />
         </label>
         <div class="data-control">
-          <button type="button" :disabled="saveDisabled" @click="saveOnClick">
-            Save
-          </button>
-          <button type="button" @click="clearOnClick">Clear</button>
+          <button type="button" :disabled="saveDisabled" @click="saveOnClick"> Save </button>
+          <button type="button" @click="loadOnClick"> Load </button>
+          <button type="button" @click="clearOnClick"> Clear </button>
         </div>
       </fieldset>
     </div>
@@ -32,8 +31,8 @@
           <template #item="{ element }">
             <div style="display: inline-block;" :id="'team-' + element.id">
               <TeamItem :team="element" :selected="teamSelected(element.id)" :display-stat="displayStat"
-                :constellations="constellations" :editable="true" :show-equipment="true" @click="teamOnClick(element.id)"
-                @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation"
+                :display-res="displayRes" :constellations="constellations" :editable="true" :show-equipment="true"
+                @click="teamOnClick(element.id)" @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation"
                 @update:member-result="updateMemberResult" />
             </div>
           </template>
@@ -49,7 +48,7 @@
       <hr />
       <h3>ROTATION</h3>
       <div id="team-rotation">
-        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" :team-member-result="teamMemberResult"
+        <TeamRotation v-if="forcusedTeam" :team="forcusedTeam" :team-member-result="teamMemberResult"
           :constellations="constellations" @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
@@ -82,13 +81,11 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { MEMBER_RESULT_DUMMY, NUMBER_OF_MEMBERS, NUMBER_OF_TEAMS, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult, getBuilddataFromStorage } from './team';
+import { MEMBER_RESULT_DUMMY, NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult, copyTeams, getBuilddataFromStorage, initializeTeam, makeBlankTeam, makeTeamsStr } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
 import { overwriteObject } from '@/common';
-
-let memberId = 1;
 
 export default defineComponent({
   name: 'TeamManager',
@@ -113,8 +110,12 @@ export default defineComponent({
     ];
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const teams = reactive([] as TTeam[]);
+    for (let i = 0; i < numberOfTeams.value; i++) {
+      teams.push(makeBlankTeam(i));
+    }
     const teamMemberResultMap = reactive({} as { [key: number]: TTeamMemberResult });
     const displayStat = ref('');
+    const displayRes = ref(true);
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
     const constellations = reactive({} as TConstellation);
@@ -124,81 +125,26 @@ export default defineComponent({
     })
 
     const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
-
-    const builddataStr = computed(() => {
-      const work: TTeam[] = _.cloneDeep(teams);
-      work.forEach((team) => {
-        team.members.forEach(member => {
-          member.builddata = undefined;
-        })
-        if (team.rotation?.length) {
-          team.rotation.forEach(action => {
-            action.id = 0;
-          })
-        }
-      });
-      return JSON.stringify(work);
-    });
-
+    const builddataStr = computed(() => makeTeamsStr(teams));
     const saveDisabled = computed(() => builddataStr.value == saveddataStr.value);
-
     const teamSelected = (index: number) => index == selectedTeamId.value;
 
-    function makeBlankMember(index: number): TMember {
-      return {
-        id: index,
-        name: '',
-        buildname: undefined,
-        builddata: undefined,
-        tags: [],
-        replacements: [],
-      };
-    }
-
-    function makeBlankTeam(index: number) {
-      const team: TTeam = {
-        id: index,
-        name: 'チーム' + (index + 1),
-        members: [] as TMember[],
-        description: '',
-        rotation: [],
-        rotationDescription: '',
-      };
-      for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
-        team.members.push(makeBlankMember(memberId++));
+    const teamMemberResult = computed(() => {
+      let result = {} as TTeamMemberResult;
+      if (selectedTeamId.value in teamMemberResultMap) {
+        result = teamMemberResultMap[selectedTeamId.value] as TTeamMemberResult;
+      } else {
+        if (selectedTeamId.value != -1) {
+          const team = teams.filter(team => team.id == selectedTeamId.value)[0];
+          team.members.forEach(member => {
+            if (result) {
+              result[member.id] = MEMBER_RESULT_DUMMY;
+            }
+          })
+        }
       }
-      return team;
-    }
-
-    function initializeMember(member: TMember) {
-      member.name = '';
-      member.buildname = undefined;
-      member.builddata = undefined;
-      member.tags = [];
-      member.replacements = [];
-    }
-
-    function initializeTeam(team: TTeam) {
-      team.name = 'チーム' + (team.id + 1);
-      team.members.forEach((member) => {
-        initializeMember(member);
-      });
-    }
-
-    for (let i = 0; i < numberOfTeams.value; i++) {
-      teams.push(makeBlankTeam(i));
-    }
-
-    const teamOnClick = (index: number) => {
-      selectedTeamId.value = index;
-    };
-
-    const memberOnClick = (index: number) => {
-      if (selectedTeamId.value == index) {
-        teamEditorVisible.value = true;
-      }
-      selectedTeamId.value = index;
-    };
+      return result;
+    })
 
     const numberOfTeamsOnChange = () => {
       if (numberOfTeams.value > teams.length) {
@@ -231,60 +177,28 @@ export default defineComponent({
         });
         overwriteObject(constellations, newConstellations);
       }
-
       const teamsStr = localStorage.getItem('teams');
+      const newTeams: TTeam[] = [];
+      for (let i = 0; i < numberOfTeams.value; i++) {
+        newTeams.push(makeBlankTeam(i));
+      }
       if (teamsStr) {
-        const work = JSON.parse(teamsStr);
-        numberOfTeams.value = work.length;
-        numberOfTeamsOnChange();
-        let actionId = 1;
-        for (let i = 0; i < teams.length; i++) {
-          const team = teams[i];
-          if (work[i]) {
-            team.name = work[i].name;
-            const members = team.members;
-            for (let j = 0; j < members.length; j++) {
-              if (work[i].members[j]) {
-                members[j].name = work[i].members[j].name;
-                if (work[i].members[j].buildname) {
-                  members[j].buildname = work[i].members[j].buildname;
-                  members[j].builddata = getBuilddataFromStorage(members[j].name, members[j].buildname);
-                } else {
-                  members[j].buildname = undefined;
-                  members[j].builddata = undefined;
-                }
-                if (work[i].members[j].tags) {
-                  members[j].tags = work[i].members[j].tags;
-                } else {
-                  members[j].tags = [];
-                }
-                if (work[i].members[j].replacements) {
-                  members[j].replacements = work[i].members[j].replacements;
-                } else {
-                  members[j].replacements = [];
-                }
-              }
-            }
-            team.description = work[i].description;
-            if (work[i].rotation?.length) {
-              team.rotation = work[i].rotation;
-              team.rotation.forEach(action => {
-                action.id = actionId++;
-              })
-            } else {
-              team.rotation = [];
-            }
-            team.rotationDescription = work[i].rotationDescription ?? '';
-          }
-        }
+        const srcTeams: any[] = JSON.parse(teamsStr);
+        copyTeams(newTeams, srcTeams, true);
+        numberOfTeams.value = newTeams.length;
         saveddataStr.value = teamsStr;
       }
+      teams.splice(0, teams.length, ...newTeams);
     };
 
     const clearOnClick = () => {
       teams.forEach((team) => {
         initializeTeam(team);
       });
+    };
+
+    const teamOnClick = (id: number) => {
+      selectedTeamId.value = id;
     };
 
     const editOnClick = (id: number) => {
@@ -296,31 +210,30 @@ export default defineComponent({
     };
 
     const updateTeam = (newTeam: TTeam) => {
-      if (selectedTeamId.value != -1) {
-        const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
-        if (team) {
-          team.name = newTeam.name;
-          const workMembers: TMember[] = [];
-          for (let i = 0; i < newTeam.members.length; i++) {
-            const workMember = makeBlankMember(team.members[i].id);
-            workMember.name = newTeam.members[i].name;
-            workMember.buildname = newTeam.members[i].buildname;
-            workMember.builddata = getBuilddataFromStorage(workMember.name, workMember.buildname);
-            workMember.tags.splice(0, workMember.tags.length, ...newTeam.members[i].tags);
-            workMember.replacements.splice(0, workMember.replacements.length, ...newTeam.members[i].replacements);
-            workMembers.push(workMember);
-          }
-          team.members.splice(0, team.members.length, ...workMembers);
+      teamEditorVisible.value = false;
+      if (selectedTeamId.value < 0) return;
+      const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
+      if (!team) return;
+      team.name = newTeam.name;
+      for (let i = 0; i < newTeam.members.length; i++) {
+        const newMember = newTeam.members[i];
+        const member = team.members[i];
+        if (member.name != newMember.name || member.buildname != newTeam.members[i].buildname) {
+          member.name = newTeam.members[i].name;
+          member.buildname = newTeam.members[i].buildname;
+          member.builddata = member.buildname ? getBuilddataFromStorage(member.name, member.buildname) : undefined;
         }
-        team.description = newTeam.description;
-        const teamMembers = newTeam.members.map(s => s.name);
-        if (newTeam.rotation.filter(s => !teamMembers.includes(s.member)).length) {
-          team.rotation = [];
-        } else {
-          team.rotation = newTeam.rotation;
+        if (!_.isEqual(member.tags, newMember.tags)) {
+          member.tags.splice(0, member.tags.length, ...newMember.tags);
+        }
+        if (!_.isEqual(member.replacements, newMember.replacements)) {
+          member.replacements.splice(0, member.replacements.length, ...newMember.replacements);
         }
       }
-      teamEditorVisible.value = false;
+      team.description = newTeam.description;
+      if (!_.isEqual(team.rotation, newTeam.rotation)) {
+        team.rotation.splice(0, team.rotation.length, ...newTeam.rotation);
+      }
     };
 
     const updateRotation = (rotationList: TActionItem[], rotationDescription: string) => {
@@ -350,51 +263,30 @@ export default defineComponent({
       }
     }
 
-    const teamMemberResult = computed(() => {
-      let result = {} as TTeamMemberResult;
-      if (selectedTeamId.value in teamMemberResultMap) {
-        result = teamMemberResultMap[selectedTeamId.value] as TTeamMemberResult;
-      } else {
-        if (selectedTeamId.value != -1) {
-          const team = teams.filter(team => team.id == selectedTeamId.value)[0];
-          team.members.forEach(member => {
-            if (result) {
-              result[member.id] = MEMBER_RESULT_DUMMY;
-            }
-          })
-        }
-      }
-      return result;
-    })
-
     return {
       displayName,
 
-      teamEditorVisible,
-      NUMBER_OF_TEAMS,
-      NUMBER_OF_MEMBERS,
-      numberOfTeams,
-      numberOfTeamsOnChange,
       DISPLAY_STAT_LIST,
+      NUMBER_OF_TEAMS,
+      numberOfTeams,
       displayStat,
+      displayRes,
+      teams,
       constellations,
+      teamEditorVisible,
+      teamSelected,
+      forcusedTeam,
+      saveDisabled,
+      teamMemberResult,
 
-      clearOnClick,
+      numberOfTeamsOnChange,
       saveOnClick,
       loadOnClick,
-      saveDisabled,
-
-      selectedTeamId,
-      teamSelected,
-      teams,
-      teamMemberResult,
-      forcusedTeam,
-
-      updateTeam,
-      updateRotation,
+      clearOnClick,
       teamOnClick,
       editOnClick,
-      memberOnClick,
+      updateTeam,
+      updateRotation,
       jumpToRotation,
       jumpToTeam,
       updateMemberResult,

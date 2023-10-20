@@ -4,7 +4,8 @@
       <label class="name">
         <span class="handle">◆</span>
         <span>{{ team.name }}</span>
-        <span v-if="editable && selected" class="button material-symbols-outlined" @click="editOnClick"> edit_square </span>
+        <span v-if="editable && selected" class="button material-symbols-outlined" @click="editOnClick"> edit_square
+        </span>
       </label>
       <div class="elemental-resonance">
         <template v-for="index in [0, 1, 2, 3]" :key="index">
@@ -24,7 +25,7 @@
         </tr>
       </table>
     </div>
-    <table class="res">
+    <table class="res" v-if="displayRes">
       <tr>
         <td v-for="key in resKey" :key="key" :class="resBgClass(key)">{{ res[key] }}</td>
       </tr>
@@ -48,16 +49,17 @@ import { calculateFormulaArray } from "@/calculate";
 import { TStats } from "@/input";
 
 export default defineComponent({
-  name: "TeamItem",
+  name: 'TeamItem',
   props: {
     team: { type: Object as PropType<TTeam>, required: true },
     selected: { type: Boolean, requied: true },
-    displayStat: { type: String },
-    constellations: { type: Object as PropType<TConstellation> },
     editable: { type: Boolean },
     showEquipment: { type: Boolean },
+    displayStat: { type: String },
+    displayRes: { type: Boolean },
+    constellations: { type: Object as PropType<TConstellation> },
   },
-  emits: ['click:edit', 'change:buildname', 'click:jump-to-rotation', 'update:member-result'],
+  emits: ['click:edit', 'click:jump-to-rotation', 'update:member-result'],
   components: {
     MemberItem,
   },
@@ -66,9 +68,14 @@ export default defineComponent({
 
     const memberStats = reactive({} as TAnyObject);
     const memberResults = reactive({} as TTeamMemberResult);
-    const selectedClass = computed(() => (props.selected ? ' selected' : ''));
     const res = reactive({} as TAnyObject);
     const resKey = ['炎', '水', '風', '雷', '草', '氷', '岩', '物理'];
+    function initializeRes() {
+      resKey.forEach(key => {
+        res[key] = 0;
+      });
+    }
+    initializeRes();
 
     const watchCount = ref(0);
     watch(props, async (newVal) => {
@@ -79,6 +86,30 @@ export default defineComponent({
     onMounted(() => {
       watchFunc(props.team);
     })
+
+    const elementalResonance = computed(() => getElementalResonance(props.team));
+    const resonanceElementImgSrcs = computed(() => {
+      const result: string[] = [];
+      elementalResonance.value.forEach((entry) => {
+        if (entry == "元素共鳴なし") {
+          const members = props.team.members.filter((s) => s.name);
+          if (members.length == 4) {
+            members.forEach((member) => {
+              const master = CHARACTER_MASTER[member.name as TCharacterKey];
+              const src = (ELEMENT_IMG_SRC as any)[master.元素];
+              result.push(src);
+            });
+          }
+        } else {
+          const src = (ELEMENT_IMG_SRC as any)[entry.replace("元素共鳴", "")];
+          result.push(src);
+          result.push(src);
+        }
+      });
+      return result;
+    })
+    const description = computed(() => props.team.description ?? '')
+    const selectedClass = computed(() => (props.selected ? ' selected' : ''));
 
     async function watchFunc(team: TTeam) {
       const list = [];
@@ -154,13 +185,6 @@ export default defineComponent({
         }
       }
     }
-
-    function initializeRes() {
-      resKey.forEach(key => {
-        res[key] = 0;
-      });
-    }
-    initializeRes();
 
     // 元素耐性
     function calculateRes() {
@@ -290,31 +314,6 @@ export default defineComponent({
         }
       })
     }
-
-    const elementalResonance = computed(() => getElementalResonance(props.team));
-
-    const resonanceElementImgSrcs = computed(() => {
-      const result: string[] = [];
-      elementalResonance.value.forEach((entry) => {
-        if (entry == "元素共鳴なし") {
-          const members = props.team.members.filter((s) => s.name);
-          if (members.length == 4) {
-            members.forEach((member) => {
-              const master = CHARACTER_MASTER[member.name as TCharacterKey];
-              const src = (ELEMENT_IMG_SRC as any)[master.元素];
-              result.push(src);
-            });
-          }
-        } else {
-          const src = (ELEMENT_IMG_SRC as any)[entry.replace("元素共鳴", "")];
-          result.push(src);
-          result.push(src);
-        }
-      });
-      return result;
-    });
-
-    const description = computed(() => props.team.description ?? '')
 
     const resBgClass = (key: string) => {
       if (res[key] !== 0) {

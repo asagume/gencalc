@@ -1,32 +1,31 @@
 <template>
-  <div class="rotation-box">
+  <div class="rotation-box" v-if="watchCount">
     <div class="pane1">
       <fieldset class="icon-list">
-        <template v-for="member in team.members" :key="member.id">
-          <div class="action with-tooltip" v-if="getNormalAttackDetail(member)">
-            <img :class="'action-icon' + bgColorClass(member.name)" :src="getNormalAttackDetail(member).icon_url"
-              :alt="displayName(getNormalAttackDetail(member).名前)" @click="listActionOnClick(member, 'N')" />
-            <span class="tooltip">
-              {{ displayName(member.name) }}
-              {{ displayName("通常攻撃") }}
-            </span>
-          </div>
-          <div class="action with-tooltip" v-if="getElementalSkillDetail(member)">
-            <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalSkillDetail(member).icon_url"
-              :alt="displayName(getElementalSkillDetail(member).名前)" @click="listActionOnClick(member, 'E')" />
-            <span class="tooltip">
-              {{ displayName(member.name) }}
-              {{ displayName("元素スキル") }}
-            </span>
-          </div>
-          <div class="action with-tooltip" v-if="getElementalBurstDetail(member)">
-            <img :class="'action-icon' + bgColorClass(member.name)" :src="getElementalBurstDetail(member)?.icon_url"
-              :alt="displayName(getElementalBurstDetail(member).名前)" @click="listActionOnClick(member, 'Q')" />
-            <span class="tooltip">
-              {{ displayName(member.name) }}
-              {{ displayName("元素爆発") }}
-            </span>
-          </div>
+        <template v-for="member in  team.members " :key="member.id">
+          <span v-if="member.name">
+            <div class="action with-tooltip">
+              <img :class="'action-icon' + bgColorClass(member.name)" :src="normalAttackIconSrc(member.name)"
+                :alt="displayName(member.name) + ' ' + displayName('通常攻撃')" @click="listActionOnClick(member, 'N')" />
+              <span class="tooltip">
+                {{ displayName(member.name) + ' ' + displayName('通常攻撃') }}
+              </span>
+            </div>
+            <div class="action with-tooltip">
+              <img :class="'action-icon' + bgColorClass(member.name)" :src="elementalSkillIconSrc(member.name)"
+                :alt="displayName(member.name) + ' ' + displayName('元素スキル')" @click="listActionOnClick(member, 'E')" />
+              <span class="tooltip">
+                {{ displayName(member.name) + ' ' + displayName("元素スキル") }}
+              </span>
+            </div>
+            <div class="action with-tooltip">
+              <img :class="'action-icon' + bgColorClass(member.name)" :src="elementalBurstIconSrc(member.name)"
+                :alt="displayName(member.name) + ' ' + displayName('元素爆発')" @click="listActionOnClick(member, 'Q')" />
+              <span class="tooltip">
+                {{ displayName(member.name) + ' ' + displayName('元素爆発') }}
+              </span>
+            </div>
+          </span>
         </template>
         <table class="control-button">
           <tr>
@@ -45,7 +44,8 @@
         </table>
       </fieldset>
       <fieldset class="rotation-list">
-        <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" @change="rotationListOnChange">
+        <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" :delay="80" :animation="200"
+          @change="rotationListOnChange">
           <template #item="{ element }">
             <div class="rotation-item">
               <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
@@ -71,7 +71,7 @@
       </fieldset>
       <br />
     </div>
-    <div v-if="true" class="pane2">
+    <div class="pane2" v-if="true">
       <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult"
         :constellations="constellations" />
     </div>
@@ -81,7 +81,7 @@
 import draggable from "vuedraggable";
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
+import { CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
 import _ from "lodash";
 import ERCalculator from './ERCalculator.vue';
@@ -109,46 +109,46 @@ export default defineComponent({
     const actionId = ref(0);
     const rotationDescription = ref('');
 
-    // 重撃の前に通常が挟まる武器、キャラクター
-    const CHARGED_WITH_NORMAL_WEAPON = ['片手剣', '長柄武器'];
-    const CHARGED_WITH_NORMAL_CHARACTER = ['鹿野院平蔵', 'リオセスリ'];
-
     const watchCount = ref(0);
-    watch(props, () => {
-      watchFunc(props.team);
+    watch(props, async () => {
+      await watchFunc(props.team);
     });
 
-    function watchFunc(team: TTeam) {
-      setupCharacterDetailMap().then(() => {
-        for (const member of team.members) {
-          if (member.name) {
-            normalAttackDans[member.name] = getNormalAttackDan(member.name);
-            elementalSkillActions[member.name] = getElementalSkillActions(member.name);
-          }
+    async function watchFunc(team: TTeam) {
+      await setupCharacterDetailMap();
+      for (const member of team.members) {
+        if (member.name) {
+          normalAttackDans[member.name] = getNormalAttackDan(member.name);
+          elementalSkillActions[member.name] = getElementalSkillActions(member.name);
         }
-        if (team.rotation?.length) {
-          const workArr = _.cloneDeep(team.rotation);
-          workArr.forEach(rotation => {
-            if (rotation.action.startsWith('E')) {
-              const actions = elementalSkillActions[rotation.member];
-              if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
-                rotation.action = actions[0];
-              }
+      }
+      const isSameMember = team.rotation.filter(rotation => !team.members.filter(member => member.name).map(member => member.name).includes(rotation.member)).length == 0;
+      if (isSameMember) {
+        const workArr = _.cloneDeep(team.rotation);
+        workArr.forEach(rotation => {
+          if (rotation.action.startsWith('E')) {
+            const actions = elementalSkillActions[rotation.member];
+            if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
+              rotation.action = actions[0];
             }
-          })
-          rotationList.splice(0, rotationList.length, ...workArr);
-          actionId.value = Math.max(...rotationList.map(s => s.id));
-        } else {
-          rotationList.splice(0, rotationList.length);
-          actionId.value = 0;
-        }
-        rotationDescription.value = team.rotationDescription;
-        watchCount.value++;
-      });
+          }
+        })
+        rotationList.splice(0, rotationList.length, ...workArr);
+        actionId.value = Math.max(...rotationList.map(s => s.id));
+      } else {
+        rotationList.splice(0, rotationList.length);
+        actionId.value = 0;
+        updateRotation();
+      }
+      rotationDescription.value = team.rotationDescription;
+      watchCount.value++;
     }
 
     onMounted(() => {
       watchFunc(props.team);
+      props.team.members.forEach(member => {
+        normalAttackIconSrc(member.name);
+      })
     })
 
     function getNormalAttackDan(name: string) {
@@ -177,10 +177,6 @@ export default defineComponent({
       return dan;
     }
 
-    const getNormalAttackDetail = (member: TMember) => getCharacterDetail(member.name)?.通常攻撃;
-    const getElementalSkillDetail = (member: TMember) => getCharacterDetail(member.name)?.元素スキル;
-    const getElementalBurstDetail = (member: TMember) => getCharacterDetail(member.name)?.元素爆発;
-
     const getActionDetail = (item: TActionItem) => {
       let result;
       const master = getCharacterDetail(item.member);
@@ -207,11 +203,13 @@ export default defineComponent({
       return result;
     }
 
+    const normalAttackIconSrc = (character: string) => getCharacterDetail(character)?.通常攻撃.icon_url ?? IMG_SRC_DUMMY;
+    const elementalSkillIconSrc = (character: string) => getCharacterDetail(character)?.元素スキル.icon_url ?? IMG_SRC_DUMMY;
+    const elementalBurstIconSrc = (character: string) => getCharacterDetail(character)?.元素爆発.icon_url ?? IMG_SRC_DUMMY;
     const colorClass = (character: string) => {
       const master = getCharacterMaster(character);
       return master ? ' ' + (ELEMENT_COLOR_CLASS as any)[master.元素] : '';
     }
-
     const bgColorClass = (character: string) => {
       const master = getCharacterMaster(character);
       return master ? ' ' + (ELEMENT_BG_COLOR_CLASS as any)[master.元素] : '';
@@ -304,13 +302,14 @@ export default defineComponent({
       IMG_SRC_DUMMY,
       removeMode,
 
+      watchCount,
+      normalAttackIconSrc,
+      elementalSkillIconSrc,
+      elementalBurstIconSrc,
       colorClass,
       bgColorClass,
 
       getCharacterMaster,
-      getNormalAttackDetail,
-      getElementalSkillDetail,
-      getElementalBurstDetail,
 
       rotationList,
       rotationDescription,
@@ -433,7 +432,7 @@ div.action-attribute {
 }
 
 .tooltip {
-  top: -2rem;
+  top: -3rem;
 }
 
 div.remove-mark {

@@ -5,35 +5,42 @@
     </div>
 
     <div class="pane1">
+      <h4>EXAMPLE</h4>
     </div>
 
     <div class="pane2">
-      <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
-        <template #item="{ element }">
-          <div style="display: inline-block;" :id="'team-' + element.id">
-            <TeamItem :team="element" :selected="teamSelected(element.id)" @click="teamOnClick(element.id)"
-              @click:jump-to-rotation="jumpToRotation" />
-          </div>
-        </template>
-      </draggable>
+      <div v-show="!teamEditorVisible">
+        <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
+          <template #item="{ element }">
+            <div style="display: inline-block;" :id="'team-' + element.id">
+              <TeamItem :team="element" :selected="teamSelected(element.id)" :editable="!isViewOnly"
+                :show-equipment="false" @click="teamOnClick(element.id)" @click:edit="editOnClick"
+                @click:jump-to-rotation="jumpToRotation" />
+            </div>
+          </template>
+        </draggable>
+      </div>
+      <div v-show="teamEditorVisible">
+        <TeamEditorModal :visible="teamEditorVisible" :team="forcusedTeam" @click:cancel="teamEditorVisible = false"
+          @click:ok="updateTeam" />
+      </div>
     </div>
 
     <div class="pane3">
       <hr />
       <div id="team-rotation">
-        <TeamRotation v-if="teams[selectedTeamId]" :team="teams[selectedTeamId]" @update:rotation="updateRotation"
+        <TeamRotation v-if="forcusedTeam" :team="forcusedTeam" @update:rotation="updateRotation"
           @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
 
-    <div class="pane4"></div>
+    <div class="pane4">
+      <textarea v-if="!isViewOnly" v-model="builddataStr" style="width: 90%; height: 100px;"></textarea>
+    </div>
 
     <div class="footer">
       <hr />
       <h2>チーム編成例 Ver.0.1.0</h2>
-      <ul class="usage">
-        <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
-      </ul>
       <dl class="history">
         <dt>0.1.0</dt>
         <dd>
@@ -47,12 +54,10 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { NUMBER_OF_MEMBERS, TActionItem, TMember, TTeam } from '../TeamManager/team';
+import { NUMBER_OF_TEAMS, TActionItem, TTeam, copyTeams, makeBlankTeam, makeTeamsStr } from '../TeamManager/team';
 import TeamItem from '../TeamManager/TeamItem.vue';
 import TeamRotation from '../TeamManager/TeamRotation.vue';
 import teamexample from './teamexample.json';
-
-let memberId = 1;
 
 export default defineComponent({
   name: 'TeamExample',
@@ -63,87 +68,71 @@ export default defineComponent({
   },
   setup() {
     const { displayName } = CompositionFunction();
+    const isViewOnly = ref(false);
+    const teamEditorVisible = ref(false);
+    const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const teams = reactive([] as TTeam[]);
-    const selectedTeamId = ref(-1);
+    for (let i = 0; i < numberOfTeams.value; i++) {
+      teams.push(makeBlankTeam(i));
+    }
+    const selectedTeamId = ref(0);
 
     onMounted(() => {
-      const newTeams: TTeam[] = [];
-      if (teamexample) {
-        let actionId = 1;
-        for (let i = 0; i < teamexample.length; i++) {
-          const example = teamexample[i] as any;
-          if (example) {
-            const team = makeBlankTeam(i);
-            team.name = example.name;
-            const members = team.members;
-            for (let j = 0; j < members.length; j++) {
-              if (example.members[j]) {
-                members[j].name = example.members[j].name;
-                members[j].buildname = undefined;
-                members[j].builddata = undefined;
-                if (example.members[j].tags) {
-                  members[j].tags = example.members[j].tags;
-                } else {
-                  members[j].tags = [];
-                }
-                if (example.members[j].replacements) {
-                  members[j].replacements = example.members[j].replacements;
-                } else {
-                  members[j].replacements = [];
-                }
-              }
-            }
-            team.description = example.description;
-            if (example.rotation?.length) {
-              team.rotation = example.rotation;
-              team.rotation.forEach(action => {
-                action.id = actionId++;
-              })
-            } else {
-              team.rotation = [];
-            }
-            team.rotationDescription = example.rotationDescription ?? '';
-            newTeams.push(team);
-          }
-        }
-      }
-      teams.splice(0, teams.length, ...newTeams);
-      if (teams.length) {
-        selectedTeamId.value = 0;
-      }
+      loadOnClick();
     })
 
     const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
+    const builddataStr = computed(() => makeTeamsStr(teams));
     const teamSelected = (index: number) => index == selectedTeamId.value;
 
-    function makeBlankMember(index: number): TMember {
-      return {
-        id: index,
-        name: '',
-        buildname: undefined,
-        builddata: undefined,
-        tags: [],
-        replacements: [],
-      };
-    }
-
-    function makeBlankTeam(index: number) {
-      const team: TTeam = {
-        id: index,
-        name: 'チーム' + (index + 1),
-        members: [] as TMember[],
-        description: '',
-        rotation: [],
-        rotationDescription: '',
-      };
-      for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
-        team.members.push(makeBlankMember(memberId++));
+    const loadOnClick = () => {
+      const srcTeams: any[] = teamexample;
+      const newTeams: TTeam[] = [];
+      for (let i = 0; i < numberOfTeams.value; i++) {
+        newTeams.push(makeBlankTeam(i));
       }
-      return team;
-    }
+      copyTeams(newTeams, srcTeams, true);
+      numberOfTeams.value = newTeams.length;
+      teams.splice(0, teams.length, ...newTeams);
+    };
 
-    const teamOnClick = (index: number) => {
-      selectedTeamId.value = index;
+    const teamOnClick = (id: number) => {
+      selectedTeamId.value = id;
+    };
+
+    const editOnClick = (id: number) => {
+      if (id == selectedTeamId.value) {
+        teamEditorVisible.value = !isViewOnly.value;
+      } else {
+        selectedTeamId.value = id;
+      }
+    };
+
+    const updateTeam = (newTeam: TTeam) => {
+      teamEditorVisible.value = false;
+      if (selectedTeamId.value < 0) return;
+      const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
+      if (!team) return;
+      team.name = newTeam.name;
+      for (let i = 0; i < newTeam.members.length; i++) {
+        const newMember = newTeam.members[i];
+        const member = team.members[i];
+        if (member.name != newMember.name || member.buildname != newTeam.members[i].buildname) {
+          member.name = newTeam.members[i].name;
+          member.buildname = undefined;
+          member.builddata = undefined;
+        }
+        if (!_.isEqual(member.tags, newMember.tags)) {
+          member.tags.splice(0, member.tags.length, ...newMember.tags);
+        }
+        if (!_.isEqual(member.replacements, newMember.replacements)) {
+          member.replacements.splice(0, member.replacements.length, ...newMember.replacements);
+        }
+      }
+      team.description = newTeam.description;
+      if (!_.isEqual(team.rotation, newTeam.rotation)) {
+        team.rotation.splice(0, team.rotation.length, ...newTeam.rotation);
+      }
     };
 
     const updateRotation = (rotationList: TActionItem[], rotationDescription: string) => {
@@ -169,15 +158,22 @@ export default defineComponent({
     return {
       displayName,
 
-      selectedTeamId,
-      teamSelected,
+      isViewOnly,
+      NUMBER_OF_TEAMS,
+      numberOfTeams,
       teams,
+      teamEditorVisible,
+      teamSelected,
       forcusedTeam,
 
-      updateRotation,
       teamOnClick,
+      editOnClick,
+      updateTeam,
+      updateRotation,
       jumpToRotation,
       jumpToTeam,
+
+      builddataStr,
     };
   },
 });

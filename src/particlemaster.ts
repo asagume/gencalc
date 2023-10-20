@@ -14,6 +14,9 @@ export type TParticleMaster = {
 // [元素粒子数, 獲得ディレイ, 継続時間, クールタイム]
 // [元素粒子数, 獲得ディレイ, 継続時間, クールタイム, 命ノ星座, 元素粒子数, 獲得ディレイ, 継続時間, クールタイム]
 export const PARTICLE_MASTER: TParticleMaster = {
+    'リオセスリ': {
+        'E': [5, 0, 10, 16, 1, 7, 0, 14, 16],
+    },
     'ヌヴィレット': {
         'E': [4, 1, 0, 12],
     },
@@ -31,7 +34,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [6, 0],
     },
     '放浪者': {
-        'E': [4, 0],
+        'E': [5, 0, 10, 16, 6, 6, 0, 12, 18],
     },
     'ナヒーダ': {
         'E.Press': [0.36, -1, 25, 5],
@@ -74,7 +77,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 5,
     },
     '宵宮': {
-        'E': [4, 0, 10, 18],
+        'E': [5, 0, 10, 18],
     },
     '神里綾華': {
         'E': 4.5,
@@ -95,7 +98,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E(burst)': 0,
     },
     '甘雨': {
-        'E': [1, -1, 4, 10]
+        'E': [4 / 6, -1, 6, 10]
     },
     'アルベド': {
         'E.Press': [0.3, -1, 30, 4],
@@ -120,8 +123,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 2.5,
     },
     'モナ': {
-        'E.Press': [3.33, 5, 5, 12],
-        'E.Hold': [3.33, 5, 5, 12],
+        'E.Press': [4 / 5, -1, 5, 12],
+        'E.Hold': [4 / 5, -1, 5, 12],
     },
     '七七': {
         'E': 0,
@@ -235,7 +238,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 3,
     },
     '香菱': {
-        'E': [0.5, -1, 8, 12],
+        'E': [4 / 8, -1, 8, 12],
     },
     'レザー': {
         'E.Press': 3,
@@ -253,8 +256,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 2.5,
     },
     'アンバー': {
-        'E.Press': [4, 8, 0, 15],
-        'E.Hold': [4, 8, 0, 15],
+        'E.Press': [4 / 8, -1, 8, 15],
+        'E.Hold': [4 / 8, -1, 8, 15],
     },
     '旅人(水)': {
         'E.Press': 3 + 1 / 3,

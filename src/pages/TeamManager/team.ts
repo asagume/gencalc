@@ -2,6 +2,7 @@ import { calculateArtifactStatsMain, calculateArtifactStats, ALL_ELEMENTS, calcu
 import { overwriteObject } from "@/common";
 import { ARTIFACT_DETAIL_INPUT_TEMPLATE, CHARACTER_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, DAMAGE_RESULT_TEMPLATE, OPTION_INPUT_TEMPLATE, STATS_INPUT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
 import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
+import { getElementalSkillActions } from "@/particlemaster";
 import _ from "lodash";
 
 export type TMember = {
@@ -48,6 +49,11 @@ export type TConstellation = {
 export const NUMBER_OF_TEAMS = 10;
 export const NUMBER_OF_MEMBERS = 4;
 
+// 重撃の前に通常が挟まる武器、キャラクター
+export const CHARGED_WITH_NORMAL_WEAPON = ['片手剣', '長柄武器'];
+export const CHARGED_WITH_NORMAL_CHARACTER = ['鹿野院平蔵', 'リオセスリ'];
+
+let memberId = 0;
 const characterDetailMap = new Map<string, TCharacterDetail>();
 
 export function getCharacterMaster(character: string) {
@@ -65,11 +71,15 @@ export async function setupCharacterDetailMap() {
             characterDetailMap.set(character, response);
         }));
     }
-    Promise.all(list);
+    await Promise.all(list);
 }
 
 export function getCharacterDetail(character: string) {
     return characterDetailMap.get(character);
+}
+
+export function getEnergyCost(character: string) {
+    return characterDetailMap.get(character)?.元素爆発?.元素エネルギー ?? 0;
 }
 
 export function getWeaponMaster(weaponType: string, weapon: string) {
@@ -287,4 +297,109 @@ export const getElementalResonance = (team: TTeam) => {
         }
     }
     return result;
+}
+
+export function makeBlankMember(id: number): TMember {
+    return {
+        id: id,
+        name: '',
+        buildname: undefined,
+        builddata: undefined,
+        tags: [],
+        replacements: [],
+    };
+}
+
+export function makeBlankTeam(id: number) {
+    const team: TTeam = {
+        id: id,
+        name: 'チーム' + (id + 1),
+        members: [] as TMember[],
+        description: '',
+        rotation: [],
+        rotationDescription: '',
+    };
+    for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
+        team.members.push(makeBlankMember(memberId++));
+    }
+    return team;
+}
+
+export function initializeMember(member: TMember) {
+    member.name = '';
+    member.buildname = undefined;
+    member.builddata = undefined;
+    member.tags = [];
+    member.replacements = [];
+}
+
+export function initializeTeam(team: TTeam) {
+    team.name = 'チーム' + (team.id + 1);
+    team.members.forEach((member) => {
+        initializeMember(member);
+    });
+}
+
+export function makeTeamsStr(teams: TTeam[]) {
+    const work: TTeam[] = _.cloneDeep(teams);
+    work.forEach((team) => {
+        team.id = 0;
+        team.members.forEach(member => {
+            member.id = 0;
+            member.builddata = undefined;
+        })
+        if (team.rotation?.length) {
+            team.rotation.forEach(action => {
+                action.id = 0;
+            })
+        }
+    });
+    return JSON.stringify(work);
+}
+
+export function copyTeams(output: TTeam[], input: any[], useBuilddata = false) {
+    let actionId = 0;
+    for (let i = 0; i < input.length; i++) {
+        const src = input[i];
+        let dst = output[i];
+        if (!dst) {
+            dst = makeBlankTeam(i);
+            output.push(dst);
+        }
+        dst.name = src.name;
+        for (let j = 0; j < dst.members.length; j++) {
+            if (src.members?.length) {
+                const srcMember = src.members[j];
+                if (srcMember) {
+                    dst.members[j].name = srcMember.name;
+                    if (useBuilddata) {
+                        dst.members[j].buildname = srcMember.buildname;
+                        dst.members[j].builddata = srcMember.buildname ? getBuilddataFromStorage(srcMember.name, srcMember.buildname) : undefined;
+                    } else {
+                        dst.members[j].buildname = undefined;
+                        dst.members[j].builddata = undefined;
+                    }
+                    dst.members[j].tags = srcMember.tags ?? [];
+                    dst.members[j].replacements = srcMember.replacements ?? [];
+                }
+            }
+        }
+        dst.description = src.description ?? '';
+        if (src.rotation?.length) {
+            dst.rotation = _.cloneDeep(src.rotation);
+            dst.rotation.forEach(rotation => {
+                rotation.id = actionId++;
+                if (rotation.action.startsWith('E')) {
+                    const actions = getElementalSkillActions(rotation.member);
+                    if (!actions.includes(rotation.action)) {
+                        rotation.action = actions[0];
+                    }
+                }
+            })
+        }
+        dst.rotationDescription = dst.rotationDescription ?? '';
+    }
+    if (output.length > input.length && output.length >= NUMBER_OF_TEAMS) {
+        output.splice(input.length);
+    }
 }

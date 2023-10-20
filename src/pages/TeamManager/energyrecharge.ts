@@ -93,25 +93,25 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                     const dan = Number(rotation.action.substring(1, 2)) ?? 1;
                     const withC = rotation.action.endsWith('C');
                     if (characterMaster?.武器 === '片手剣') {
-                        if (rotation.action == 'N' && rotation.member === '神里綾人') {
-                            length += 6;
-                        } else {
-                            length += dan * 0.4 + (withC ? 0.5 : 0) + 0.15;
-                        }
+                        length += dan * 0.35 + (withC ? 0.5 : 0) + 0.3;
                     } else if (characterMaster?.武器 === '長柄武器') {
-                        length += dan * 0.4 + (withC ? 0.5 : 0) + 0.15;
+                        length += dan * 0.35 + (withC ? 0.5 : 0) + 0.3;
                     } else if (characterMaster?.武器 === '両手剣') {
-                        length += dan * 0.7 + 0.4;
+                        length += dan * 0.8 + 0.3;
                     } else if (characterMaster?.武器 === '弓') {
-                        length += dan * 0.4 + 0.15;
+                        length += dan * 0.6 + 0.3;
                     } else if (characterMaster?.武器 === '法器') {
-                        length += dan * 0.5 + 0.3;
+                        length += dan * 0.6 + 0.3;
                     }
                 } else if (rotation.action == 'C') {
                     if (characterMaster?.武器 === '両手剣') {
-                        length += 3;
+                        if (rotation.member === '荒瀧一斗') {
+                            length += 1;
+                        } else {
+                            length += 3;
+                        }
                     } else if (characterMaster?.武器 === '弓') {
-                        length += 1.5;
+                        length += 1.5;  // 甘雨 1段チャージ/2段チャージ=1s/1.5s
                     } else if (characterMaster?.武器 === '法器') {
                         if (rotation.member === 'ヌヴィレット') {
                             length += 3;
