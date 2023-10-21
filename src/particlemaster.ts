@@ -59,7 +59,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [4, SP_NEXT, 0, 10],
     },
     '神里綾人': {
-        'E': [4, 0, 6, 12],
+        'E': [4, SP_SELF, 6, 12],
     },
     '八重神子': {
         'E': [1 / 2.5, SP_LONG, 14, 4],     // CT2.5s
