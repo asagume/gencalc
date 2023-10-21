@@ -361,7 +361,7 @@ export function getEnergyByCharacter(
     } else if (character === 'ファルザン' && constellation >= 4) {
         messages.push('命中した敵の数に基づき、風圧崩潰のサイクロンはファルザンの元素エネルギーを回復する。1体の敵に命中した場合、ファルザンの元素エネルギーを2ポイント回復する。また、追加で1体の敵に命中するたびに、ファルザンの元素エネルギーが0.5ポイント回復する。この方法により1回のサイクロンで回復できる元素エネルギーは最大4ポイントまで。');
         if (constellation >= 6) {
-            myEnergy = 2 * Math.trunc(rotationLength / 5.5);
+            myEnergy = 2 * Math.trunc(rotationLength / 3);
         } else {
             myEnergy = 2 * Math.min(eCount * 2, countC(character, rotationList)); // 元素スキル1回につきフルチャージ狙い撃ち2回まで
         }
