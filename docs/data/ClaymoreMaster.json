@@ -122,5 +122,9 @@
   "鉄影段平": {
     "レアリティ": 3,
     "import": "data/weapons/claymore/3_FerrousShadow.json"
+  },
+  "訓練用大剣": {
+    "レアリティ": 1,
+    "import": "data/weapons/claymore/1_WasterGreatsword.json"
   }
 }

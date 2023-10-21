@@ -258,7 +258,6 @@ export default defineComponent({
         member: member.name,
         action: action,
       });
-      console.log(rotationList);
       updateRotation();
     }
 

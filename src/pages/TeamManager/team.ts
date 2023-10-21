@@ -1,7 +1,7 @@
 import { calculateArtifactStatsMain, calculateArtifactStats, ALL_ELEMENTS, calculateStats, calculateDamageResult } from "@/calculate";
 import { overwriteObject } from "@/common";
 import { ARTIFACT_DETAIL_INPUT_TEMPLATE, CHARACTER_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, DAMAGE_RESULT_TEMPLATE, OPTION_INPUT_TEMPLATE, STATS_INPUT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
-import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
+import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
 import { getElementalSkillActions } from "@/particlemaster";
 import _ from "lodash";
 
@@ -141,6 +141,15 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
     characterInput.characterMaster = await getCharacterMasterDetail(
         characterInput.character
     );
+
+    const DEFAULT_WEAPON: { [key: string]: TWeaponKey } = {
+        '片手剣': '無鋒の剣',
+        '両手剣': '訓練用大剣',
+        '長柄武器': '新米の長槍',
+        '弓': '狩猟弓',
+        '法器': '生徒ノート'
+    };
+    characterInput.weapon = DEFAULT_WEAPON[characterInput.characterMaster.武器];
 
     const builddata = member.builddata;
     if (!builddata) return result;

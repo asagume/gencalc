@@ -91,8 +91,7 @@
             </select>
           </label>
           <label class="enemy-level">Lv.
-            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1"
-              @change="updateStatAdjustments()" />
+            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" @change="updateStatAdjustments()" />
           </label>
           <StatsInput :stats-input="statsInput" :category1-list="enemyStatsCategory1List"
             :category2-list="enemyStatsCategory2List" @update:stat-adjustments="updateStatAdjustments" />
@@ -928,9 +927,9 @@ export default defineComponent({
       characterInputRea.removeDisabled = !recommendation.overwrite;
 
       await nextTick();
-      
+
       conditionInputVmRef.value.initialize(conditionInputRea);
-      
+
       if ('options' in recommendation.build) {
         // 元素共鳴
         elementalResonanceInputVmRef.value.initializeValues(
@@ -1127,6 +1126,11 @@ export default defineComponent({
         weapon
         // characterInputRea.characterMaster.武器
       );
+      const maxAscension = [4, 4, 4, 6, 6, 6][characterInputRea.weaponMaster.レアリティ];
+      if (characterInputRea.武器突破レベル > maxAscension) {
+        characterInputRea.武器突破レベル = maxAscension;
+        characterInputRea.武器レベル = [20, 40, 50, 60, 70, 80, 90][maxAscension];
+      }
       let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
       let savedRefine;
       if ('武器所持状況' in localStorage) {

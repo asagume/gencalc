@@ -122,5 +122,9 @@
   "魔導緒論": {
     "レアリティ": 3,
     "import": "data/weapons/catalyst/3_MagicGuide.json"
+  },
+  "生徒ノート": {
+    "レアリティ": 1,
+    "import": "data/weapons/catalyst/1_Apprentice'sNotes.json"
   }
 }

@@ -25,7 +25,7 @@
       </fieldset>
     </div>
 
-    <div class="pane2">
+    <div class="pane2" id="team-list-and-editor">
       <div v-show="!teamEditorVisible">
         <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
@@ -39,8 +39,8 @@
         </draggable>
       </div>
       <div v-show="teamEditorVisible">
-        <TeamEditorModal :visible="teamEditorVisible" :team="forcusedTeam" @click:cancel="teamEditorVisible = false"
-          @click:ok="updateTeam" />
+        <TeamEditorModal :visible="teamEditorVisible" :team="forcusedTeam" @click:cancel="teamEditorOnClickCancel"
+          @click:ok="teamEditorOnClickOk" />
       </div>
     </div>
 
@@ -79,7 +79,7 @@
 <script lang="ts">
 import _ from 'lodash';
 import draggable from 'vuedraggable';
-import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import { MEMBER_RESULT_DUMMY, NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult, copyTeams, getBuilddataFromStorage, initializeTeam, makeBlankTeam, makeTeamsStr } from './team';
 import TeamItem from './TeamItem.vue';
@@ -204,14 +204,18 @@ export default defineComponent({
     const editOnClick = (id: number) => {
       if (id == selectedTeamId.value) {
         teamEditorVisible.value = true;
+        nextTick().then(() => {
+          document.getElementById('team-list-and-editor')?.scrollIntoView({ behavior: 'smooth' });
+        });
       } else {
         selectedTeamId.value = id;
       }
     };
 
-    const updateTeam = (newTeam: TTeam) => {
+    const teamEditorOnClickOk = (newTeam: TTeam) => {
       teamEditorVisible.value = false;
       if (selectedTeamId.value < 0) return;
+      jumpToTeam();
       const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
       if (!team) return;
       team.name = newTeam.name;
@@ -236,6 +240,11 @@ export default defineComponent({
       }
     };
 
+    const teamEditorOnClickCancel = () => {
+      teamEditorVisible.value = false;
+      jumpToTeam();
+    }
+
     const updateRotation = (rotationList: TActionItem[], rotationDescription: string) => {
       if (selectedTeamId.value != -1) {
         const team = teams.filter((s) => s.id == selectedTeamId.value)[0];
@@ -247,12 +256,16 @@ export default defineComponent({
     }
 
     const jumpToRotation = () => {
-      document.getElementById('team-rotation')?.scrollIntoView({ behavior: 'smooth' });
+      nextTick().then(() => {
+        document.getElementById('team-rotation')?.scrollIntoView({ behavior: 'smooth' });
+      });
     }
 
     const jumpToTeam = () => {
       if (selectedTeamId.value != -1) {
-        document.getElementById('team-' + selectedTeamId.value)?.scrollIntoView({ behavior: 'smooth' });
+        nextTick().then(() => {
+          document.getElementById('team-' + selectedTeamId.value)?.scrollIntoView({ behavior: 'smooth' });
+        });
       }
     }
 
@@ -285,7 +298,8 @@ export default defineComponent({
       clearOnClick,
       teamOnClick,
       editOnClick,
-      updateTeam,
+      teamEditorOnClickOk,
+      teamEditorOnClickCancel,
       updateRotation,
       jumpToRotation,
       jumpToTeam,

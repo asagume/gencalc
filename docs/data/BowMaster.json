@@ -130,5 +130,9 @@
   "鴉羽の弓": {
     "レアリティ": 3,
     "import": "data/weapons/bow/3_RavenBow.json"
+  },
+  "狩猟弓": {
+    "レアリティ": 1,
+    "import": "data/weapons/bow/1_Hunter'sBow.json"
   }
 }

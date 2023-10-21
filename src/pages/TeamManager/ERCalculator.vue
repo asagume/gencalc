@@ -403,6 +403,13 @@ export default defineComponent({
                     let work = '';
                     if (particle[0] === RECHARGE_PARTICLE_SKILL) {
                         work = '元素スキル';
+                    } else if (particle[0] === RECHARGE_PARTICLE_PASSIVE) {
+                        work = '固有天賦';
+                    } else if (particle[0] === RECHARGE_PARTICLE_CONSTELLATION) {
+                        work = '命ノ星座';
+                        if (particle[1]) {
+                            work += ' 第' + particle[1] + '重';
+                        }
                     } else {
                         work = particle[1];
                     }
@@ -431,9 +438,12 @@ export default defineComponent({
                         work = '元素スキル';
                     } else if (energy[0] === RECHARGE_ENERGY_BURST) {
                         work = '元素爆発';
+                    } else if (energy[0] === RECHARGE_ENERGY_PASSIVE) {
+                        work = '固有天賦';
                     } else if (energy[0] === RECHARGE_ENERGY_CONSTELLATION) {
+                        work = '命ノ星座';
                         if (energy[1]) {
-                            work = 'C' + energy[1];
+                            work += ' 第' + energy[1] + '重';
                         }
                     } else {
                         work = energy[1];
@@ -454,6 +464,7 @@ export default defineComponent({
             const onFields = calculatorInput.map(s => s.onField);
             for (let i = 0; i < calculatorInput.length; i++) {
                 const character = calculatorInput[i].character;
+                if (!character) continue;
                 const constellation = calculatorInput[i].constellation;
                 const weapon = calculatorInput[i].currentWeapon;
                 const weaponRefine = calculatorInput[i].weaponRefine;
@@ -613,10 +624,18 @@ export default defineComponent({
                 } else if ([RECHARGE_ENERGY_BURST].includes(row.rechargeKind)) { // 元素爆発
                     const characterDetail = getCharacterDetail(row.character);
                     result = characterDetail?.元素爆発.icon_url ?? IMG_SRC_DUMMY;
+                } else if ([RECHARGE_ENERGY_PASSIVE, RECHARGE_PARTICLE_PASSIVE].includes(row.rechargeKind)) { // 固有天賦
+                    if (row.triggerName) {
+                        const characterDetail = getCharacterDetail(row.character);
+                        const workArr = characterDetail?.固有天賦.filter(obj => obj.名前 == row.triggerName);
+                        result = workArr?.length ? workArr[0].icon_url ?? IMG_SRC_DUMMY : IMG_SRC_DUMMY;
+                    }
                 } else if ([RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_CONSTELLATION].includes(row.rechargeKind)) { // 命ノ星座
-                    const characterDetail = getCharacterDetail(row.character);
-                    const constellationObj = characterDetail?.命ノ星座[row.triggerName];
-                    result = constellationObj?.icon_url ?? IMG_SRC_DUMMY;
+                    if (row.triggerName) {
+                        const characterDetail = getCharacterDetail(row.character);
+                        const constellationObj = characterDetail?.命ノ星座[row.triggerName];
+                        result = constellationObj?.icon_url ?? IMG_SRC_DUMMY;
+                    }
                 } else if ([RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON].includes(row.rechargeKind) && row.triggerName) { // 武器
                     const characterMater = getCharacterMaster(row.character);
                     if (characterMater) {
@@ -642,9 +661,9 @@ export default defineComponent({
             let result = '';
             if (row.rechargeKind) {
                 if ([RECHARGE_ENERGY_SKILL, RECHARGE_PARTICLE_SKILL].includes(row.rechargeKind)) {
-                    result = row.triggerName;
+                    result = '元素スキル';
                 } else if ([RECHARGE_ENERGY_BURST].includes(row.rechargeKind)) {
-                    result = row.triggerName;
+                    result = '元素爆発';
                 } else if ([RECHARGE_ENERGY_PASSIVE, RECHARGE_PARTICLE_PASSIVE].includes(row.rechargeKind)) {
                     result = '固有天賦';
                 } else if ([RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_CONSTELLATION].includes(row.rechargeKind)) {

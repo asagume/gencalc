@@ -98,5 +98,9 @@
   "白纓槍": {
     "レアリティ": 3,
     "import": "data/weapons/polearm/3_WhiteTassel.json"
+  },
+  "新米の長槍": {
+    "レアリティ": 1,
+    "import": "data/weapons/polearm/1_Beginner'sProtector.json"
   }
 }

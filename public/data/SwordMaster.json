@@ -138,5 +138,9 @@
   "冷刃": {
     "レアリティ": 3,
     "import": "data/weapons/sword/3_CoolSteel.json"
+  },
+  "無鋒の剣": {
+    "レアリティ": 1,
+    "import": "data/weapons/sword/1_DullBlade.json"
   }
 }
