@@ -735,8 +735,8 @@ export function getParticleByWeapon(
                 }
             }
             const onField = onFields[memberNameArr.indexOf(character)];
-            triggerCnt = Math.max(Math.round(rotationLength * onField / 100 / ct) + 1, fieldCnt);
-            triggerCnt = Math.min(Math.round(rotationLength / ct), triggerCnt);
+            triggerCnt = fieldCnt + Math.floor(rotationLength * onField / 100 / ct);
+            triggerCnt = Math.min(Math.floor(rotationLength / ct), triggerCnt);
             let curCharacter = undefined;
             for (let i = 0; i < rotationList.length; i++) {
                 const rotation = rotationList[i];
