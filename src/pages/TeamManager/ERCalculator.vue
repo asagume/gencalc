@@ -36,7 +36,7 @@
                 <th colspan="2">{{ displayName('武器') }}</th>
                 <td v-for="(element, index) in  calculatorInput" :key="index" :class="'weapon' + bgColorClass(index)">
                     <img :src="weaponImgSrc(element.character, element.currentWeapon)"
-                        :alt="displayName(element.currentWeapon)" class="input-item">
+                        :alt="displayName(element.currentWeapon)" class="input-item-weapon">
                     <select v-model="element.weaponRefine" @change="inputOnChange">
                         <option v-for="refine in [1, 2, 3, 4, 5]" :key="refine" :value="refine">
                             {{ 'R' + refine }}
@@ -93,14 +93,13 @@
                 <th colspan="4">{{ displayName('獲得量') }}</th>
             </tr>
             <tr v-for="(row, rowIndex) in  inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
-                <th class="with-tooltip">
+                <th colspan="2" class="with-tooltip">
                     <span>
                         <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
                         <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
                     </span>
                     <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row)) }}</span>
                 </th>
-                <td></td>
                 <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
                     <input type="number" v-model="row.currentValues[columnIndex]" min="0">
                 </td>
@@ -116,7 +115,7 @@
                 <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
                     <span v-for="(weapon, weaponIndex) in element.replaceWeapons" :key="weaponIndex" class="with-tooltip">
                         <img :src="replaceWeaponImgSrc(element, weapon)" :alt="displayName(weapon)"
-                            :class="'input-item' + replaceWeaponClass(element, weapon)"
+                            :class="'input-item-weapon' + replaceWeaponClass(element, weapon)"
                             @click="replaceWeaponOnClick(element, weapon)">
                         <span class="tooltip">{{ displayName(weapon) }}</span>
                     </span>
@@ -768,7 +767,8 @@ td {
 th {
     font-size: 1.6rem;
     font-weight: bold;
-    padding: 0;
+    padding-left: 1px;
+    padding-right: 1px;
     white-space: nowrap;
 }
 
@@ -806,6 +806,13 @@ img.input-item-character {
 img.input-item {
     width: 20px;
     height: 20px;
+    background-color: rgba(55, 55, 55, 0.2);
+    border-radius: 50%;
+}
+
+img.input-item-weapon {
+    width: 20px;
+    height: 20px;
 }
 
 img.disabled {
@@ -833,7 +840,7 @@ td.weapon {
     position: relative;
 }
 
-td.weapon img.input-item {
+td.weapon img.input-item-weapon {
     border: none;
     position: absolute;
     left: 0;

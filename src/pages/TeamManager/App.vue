@@ -81,7 +81,7 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, nextTick, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { MEMBER_RESULT_DUMMY, NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult, copyTeams, getBuilddataFromStorage, initializeTeam, makeBlankTeam, makeTeamsStr } from './team';
+import { NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult, copyTeams, getBuilddataFromStorage, getDefaultMemberResult, initializeTeam, makeBlankTeam, makeTeamsStr } from './team';
 import TeamItem from './TeamItem.vue';
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamRotation from './TeamRotation.vue';
@@ -138,7 +138,7 @@ export default defineComponent({
           const team = teams.filter(team => team.id == selectedTeamId.value)[0];
           team.members.forEach(member => {
             if (result) {
-              result[member.id] = MEMBER_RESULT_DUMMY;
+              result[member.id] = getDefaultMemberResult();
             }
           })
         }

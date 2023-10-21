@@ -1,8 +1,7 @@
-import _ from 'lodash';
 import { createApp } from 'vue'
 import App from './App.vue'
 import { basename } from '@/common';
-import { makeRecommendationList, loadRecommendation, CHARACTER_INPUT_TEMPLATE, ARTIFACT_DETAIL_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, TCharacterInput, OPTION_INPUT_TEMPLATE, TArtifactDetailInput, TConditionInput, TOptionInput, popBuildinfoFromSession } from '@/input';
+import { makeRecommendationList, loadRecommendation, popBuildinfoFromSession, getDefaultCharacterInput, getDefaultArtifactDetailInput, getDefaultConditionInput, getDefaultOptionInput } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { isNumber } from './common';
 import i18n from './i18n';
@@ -141,10 +140,10 @@ function getCharacterByBirthday(): TCharacterKey {
 }
 
 async function main() {
-    const characterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-    const artifactDetailInput = _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
-    const conditionInput = _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-    const optionInput = _.cloneDeep(OPTION_INPUT_TEMPLATE) as TOptionInput;
+    const characterInput = getDefaultCharacterInput();
+    const artifactDetailInput = getDefaultArtifactDetailInput();
+    const conditionInput = getDefaultConditionInput();
+    const optionInput = getDefaultOptionInput();
 
     const searchParams = new URLSearchParams(window.location.search);
     let character;

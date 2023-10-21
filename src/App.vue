@@ -271,16 +271,7 @@ import {
   TConditionInput,
   TCharacterInput,
   TArtifactDetailInput,
-  STATS_INPUT_TEMPLATE,
-  DAMAGE_RESULT_TEMPLATE,
-  TDamageResult,
   setupConditionValues,
-  OPTION_INPUT_TEMPLATE,
-  TOptionInput,
-  TStatsInput,
-  CHARACTER_INPUT_TEMPLATE,
-  ARTIFACT_DETAIL_INPUT_TEMPLATE,
-  CONDITION_INPUT_TEMPLATE,
   makeSavedata,
   shareByTwitter,
   getMaxConstellation,
@@ -295,6 +286,12 @@ import {
   ステータスチーム内最高ARRAY,
   TStats,
   TArtifact,
+  getDefaultCharacterInput,
+  getDefaultArtifactDetailInput,
+  getDefaultConditionInput,
+  getDefaultStatsInput,
+  getDefaultOptionInput,
+  getDefaultDamageResultInput,
 } from '@/input';
 import {
   ARTIFACT_SET_MASTER,
@@ -396,13 +393,13 @@ export default defineComponent({
     const nextStatVmRef = ref();
 
     const characterInputRea = reactive(
-      overwriteObject(_.cloneDeep(CHARACTER_INPUT_TEMPLATE), props.characterInput)
+      overwriteObject(getDefaultCharacterInput(), props.characterInput)
     );
     const artifactDetailInputRea = reactive(
-      overwriteObject(_.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE), props.artifactDetailInput)
+      overwriteObject(getDefaultArtifactDetailInput(), props.artifactDetailInput)
     );
     const conditionInputRea = reactive(
-      overwriteObject(_.cloneDeep(CONDITION_INPUT_TEMPLATE), props.conditionInput)
+      overwriteObject(getDefaultConditionInput(), props.conditionInput)
     );
     const recommendationListRea = reactive([...props.recommendationList]);
     const recommendationRef = ref(props.recommendation);
@@ -456,7 +453,7 @@ export default defineComponent({
     setI18nLanguage('ja-jp');
 
     // ステータス1, ステータス2, 敵
-    const statsInput = reactive(_.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput);
+    const statsInput = reactive(getDefaultStatsInput());
     const characterStats1Category1List = ['基本ステータス', '高級ステータス'];
     const characterStats1Category2List = [
       '元素ステータス·ダメージ',
@@ -474,11 +471,11 @@ export default defineComponent({
     statsInput.statAdjustments['敵防御力'] = 0;
 
     // 元素共鳴, チーム, その他
-    const optionInputRea = reactive(_.cloneDeep(OPTION_INPUT_TEMPLATE) as TOptionInput);
+    const optionInputRea = reactive(getDefaultOptionInput());
     const savedSupporters = reactive([] as { key: string, value: string, buildname: string }[]);
 
     // ダメージ計算結果
-    const damageResult = reactive(_.cloneDeep(DAMAGE_RESULT_TEMPLATE) as TDamageResult);
+    const damageResult = reactive(getDefaultDamageResultInput());
 
     const rotationDamageInfo = reactive({
       totalDamage: 0,

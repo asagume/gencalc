@@ -1,15 +1,11 @@
 import _ from 'lodash';
 import { isNumber, overwriteObject } from '@/common';
 import {
-    ARTIFACT_DETAIL_INPUT_TEMPLATE,
     CHANGE_KIND_STATUS,
     CHANGE_KIND_TALENT,
-    CHARACTER_INPUT_TEMPLATE,
-    CONDITION_INPUT_TEMPLATE,
     DAMAGE_RESULT_TEMPLATE,
     getStatValue,
     NUMBER_CONDITION_VALUE_RE,
-    STATS_INPUT_TEMPLATE,
     TArtifactDetailInput,
     TCharacterInput,
     TConditionInput,
@@ -37,6 +33,11 @@ import {
     setupConditionValues,
     updateNumberConditionValues,
     TDamageResultElementalReaction,
+    getDefaultCharacterInput,
+    getDefaultArtifactDetailInput,
+    getDefaultConditionInput,
+    getDefaultStatsInput,
+    getDefaultDamageResultInput,
 } from '@/input';
 import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from '@/master';
 
@@ -1858,11 +1859,11 @@ export async function calculateSupporter(
     build: string,
     character: TCharacterKey,
 ): Promise<[TStats, TDamageResult]> {
-    const characterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE) as TCharacterInput;
-    const artifactDetailInput = _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput;
-    const conditionInput = _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput;
-    const statsInput = _.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput;
-    const damageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE) as TDamageResult;
+    const characterInput =  getDefaultCharacterInput();
+    const artifactDetailInput = getDefaultArtifactDetailInput();
+    const conditionInput = getDefaultConditionInput();
+    const statsInput = getDefaultStatsInput();
+    const damageResult = getDefaultDamageResultInput();
 
     characterInput.character = supporter;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);

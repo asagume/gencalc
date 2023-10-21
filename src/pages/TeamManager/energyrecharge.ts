@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
-import { PARTICLE_MASTER, getDurationFromInfo, getParticleInfo, getParticleNumFromInfo, getReceiverFromInfo } from "@/particlemaster";
+import { PARTICLE_MASTER, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
 
 export const RECHARGE_ENERGY_SKILL = "01";              // 元素スキルによる元素エネルギー回復
 export const RECHARGE_ENERGY_BURST = "02";              // 元素爆発による元素エネルギー回復
@@ -30,7 +30,7 @@ export function isRechargeKindParticle(rechargeKind: string) {
 /** 通常攻撃使用回数 */
 export function countN(character?: string, rotationList?: TActionItem[]) {
     return rotationList?.length ?
-        rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.startsWith('N')).reduce((sum, rotation) => sum + Number(rotation.action.substring(1, 2) ?? '1'), 0)
+        rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.startsWith('N')).map(rotation => rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2))).reduce((p, c) => p + c, 0)
         : 1;
 }
 /** 重撃使用回数 */
@@ -82,7 +82,7 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                 const particleInfo = getParticleInfo(rotation.member, rotation.action, constellations[memberNameArr.indexOf(rotation.member)]);
                 if (particleInfo) {
                     const duration = getDurationFromInfo(particleInfo);
-                    if (getReceiverFromInfo(particleInfo) === 0 && duration) {
+                    if (getReceiveTypeFromInfo(particleInfo) === 0 && duration) {
                         // 特定の元素スキル発動後は一定時間を加算して、キャラチェンまで通常攻撃、重撃、落下攻撃を無視する
                         length += duration;
                         isNCPIgnore = true;
@@ -90,7 +90,7 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                 }
             } else if (!isNCPIgnore) {
                 if (rotation.action.startsWith('N')) {
-                    const dan = Number(rotation.action.substring(1, 2)) ?? 1;
+                    const dan = rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2));
                     const withC = rotation.action.endsWith('C');
                     if (characterMaster?.武器 === '片手剣') {
                         length += dan * 0.35 + (withC ? 0.5 : 0) + 0.3;
@@ -361,7 +361,7 @@ export function getEnergyByCharacter(
     } else if (character === 'ファルザン' && constellation >= 4) {
         messages.push('命中した敵の数に基づき、風圧崩潰のサイクロンはファルザンの元素エネルギーを回復する。1体の敵に命中した場合、ファルザンの元素エネルギーを2ポイント回復する。また、追加で1体の敵に命中するたびに、ファルザンの元素エネルギーが0.5ポイント回復する。この方法により1回のサイクロンで回復できる元素エネルギーは最大4ポイントまで。');
         if (constellation >= 6) {
-            myEnergy = 2 * Math.trunc(rotationLength / 3);
+            myEnergy = 2 * Math.trunc(rotationLength / 5.5);
         } else {
             myEnergy = 2 * Math.min(eCount * 2, countC(character, rotationList)); // 元素スキル1回につきフルチャージ狙い撃ち2回まで
         }
@@ -436,7 +436,7 @@ export function getEnergyByCharacter(
     } else if (character === '行秋' && constellation >= 6) {
         messages.push('古華剣·裁雨留虹が剣雨攻撃を2回発動する度に、次の剣雨攻撃が大幅に強化され、敵に命中する時行秋の元素エネルギーを3回復する。');
         const nCount = countN(undefined, rotationList);
-        myEnergy = 3 * Math.trunc(nCount / 3);
+        myEnergy = 3 * Math.trunc(nCount / 3 / 2);
         resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '6', myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
     } else if (character === '北斗') {
         myEnergy = 0;
@@ -580,7 +580,7 @@ export function getEnergyByWeapon(
                     if (rotation.action === 'Q') {
                         isBursting = true;
                     } else if (isBursting && rotation.action.startsWith('N')) {
-                        const n = Number(rotation.action.substring(1) ?? '1');
+                        const n = rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2));
                         myEnergy += unit * n;
                     }
                 } else {
@@ -681,31 +681,46 @@ export function getParticleByCharacterExtra(
     team: TTeam,
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
-    onFields: number[], // eslint-disable-line
+    onFields: number[],
 ): TERParticle[] | undefined {
-    const resultArr = new Array<[string, string, string, number]>(); // [rechargeType, triggerName, element, num]
+    const resultArr = new Array<[string, string, string, number, number]>(); // [rechargeType, triggerName, element, num]
     const messages: string[] = [];
-    let num;
+    let myParticle = 0;
+    let allParticle = 0; // 分配
     const eCount = countE(character, rotationList);
     if (character === '刻晴' && constellation >= 2) {
         messages.push('刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。');
         const ct = 5;
-        num = rotationLength / ct;
-        resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '2', '雷', num]);
+        myParticle = Math.floor(rotationLength / ct);
+        resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '2', '雷', myParticle, allParticle]);
     } else if (character === 'ガイア') {
         messages.push('霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。');
         if (team.members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length) {
-            num = 2 * eCount;
-            resultArr.push([RECHARGE_PARTICLE_PASSIVE, '氷淵の心', '氷', num]);
+            myParticle = 2 * eCount;
+            resultArr.push([RECHARGE_PARTICLE_PASSIVE, '氷淵の心', '氷', myParticle, allParticle]);
         }
     } else if (character === 'フィッシュル' && constellation >= 6) {
         messages.push('オズは出場している自身のキャラクターと共に攻撃し、攻撃力30%分の雷元素ダメージを与える。');
-        num = 1;
-        resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '6', '雷', num]);
+        allParticle = Math.floor(0.5 * Math.max(1, countN(undefined, rotationList)));
+        resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '6', '雷', myParticle, allParticle]);
+        console.log(countN(undefined, rotationList));
     }
     let result: TERParticle[] | undefined;
     resultArr.forEach(entry => {
-        result = [[entry[0], entry[1], entry[2], 0, 0, 0, 0, messages]];
+        const particles = [0, 0, 0, 0];
+        if (entry[3]) {
+            const myIndex = team.members.map(member => member.name).indexOf(character);
+            if (myIndex >= 0) {
+                particles[myIndex] += entry[3];
+            }
+        }
+        if (entry[4]) {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i] += entry[4] * onFields[i] / 100;
+            }
+        }
+        result = [[entry[0], entry[1], entry[2], particles[0], particles[1], particles[2], particles[3], messages]];
+        console.log(result, myParticle, allParticle);
     })
     return result;
 }
@@ -805,11 +820,11 @@ function setSkillParticleNumToArr(
         const rotation = rotationList[index];
         if (rotation) {
             const num = getParticleNumFromInfo(particleInfo, rotationLength - time);
-            const receiver = getReceiverFromInfo(particleInfo);
+            const receiveType = getReceiveTypeFromInfo(particleInfo);
             const duration = getDurationFromInfo(particleInfo);
-            if (receiver >= 0) {
-                addNumToArr(arr, num, team, rotationList, index, receiver);
-            } else {
+            if ([SP_SELF, SP_NEXT].includes(receiveType)) {
+                addNumToArr(arr, num, team, rotationList, index, receiveType);
+            } else if ([SP_LONG, SP_SHRT].includes(receiveType)) {
                 splitNumToArrByOnFieldRate(arr, num, team, onFields);
             }
             time += duration;
@@ -824,10 +839,10 @@ function addNumToArr(
     team: TTeam,
     rotationList: TActionItem[],
     index: number,
-    toAdd = 1,
+    receiveType = SP_NEXT,
 ) {
     const memberNameArr = team.members.map(member => member.name);
-    const nxtRotation = (index + toAdd) < rotationList.length ? rotationList[index + toAdd] : rotationList[0];
+    const nxtRotation = (index + receiveType) < rotationList.length ? rotationList[index + receiveType] : rotationList[0];
     arr[memberNameArr.indexOf(nxtRotation.member)] += num;
 }
 

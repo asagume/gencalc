@@ -1,6 +1,6 @@
 import { calculateArtifactStatsMain, calculateArtifactStats, ALL_ELEMENTS, calculateStats, calculateDamageResult } from "@/calculate";
 import { overwriteObject } from "@/common";
-import { ARTIFACT_DETAIL_INPUT_TEMPLATE, CHARACTER_INPUT_TEMPLATE, CONDITION_INPUT_TEMPLATE, DAMAGE_RESULT_TEMPLATE, OPTION_INPUT_TEMPLATE, STATS_INPUT_TEMPLATE, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
+import { TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, getDefaultArtifactDetailInput, getDefaultCharacterInput, getDefaultConditionInput, getDefaultDamageResultInput, getDefaultOptionInput, getDefaultStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
 import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
 import { getElementalSkillActions } from "@/particlemaster";
 import _ from "lodash";
@@ -118,29 +118,22 @@ export function getBuilddataFromStorage(character: string, buildname?: string) {
     return result;
 }
 
+export function getDefaultMemberResult(): TMemberResult {
+    return {
+        characterInput: getDefaultCharacterInput(),
+        artifactDetailInput: getDefaultArtifactDetailInput(),
+        conditionInput: getDefaultConditionInput(),
+        optionInput: getDefaultOptionInput(),
+        statsInput: getDefaultStatsInput(),
+        damageResult: getDefaultDamageResultInput(),
+    }
+}
+
 export const calculateMemberResult = async (member: TMember, team: TTeam): Promise<TMemberResult> => {
-    const characterInput: TCharacterInput = _.cloneDeep(CHARACTER_INPUT_TEMPLATE);
-    const artifactDetailInput: TArtifactDetailInput = _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE);
-    const conditionInput: TConditionInput = _.cloneDeep(CONDITION_INPUT_TEMPLATE);
-    const optionInput: TOptionInput = _.cloneDeep(OPTION_INPUT_TEMPLATE);
-    const statsInput: TStatsInput = _.cloneDeep(STATS_INPUT_TEMPLATE);
-    const damageResult: TDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
-
-    const result: TMemberResult = {
-        characterInput: characterInput,
-        artifactDetailInput: artifactDetailInput,
-        conditionInput: conditionInput,
-        optionInput: optionInput,
-        statsInput: statsInput,
-        damageResult: damageResult,
-    };
-
+    const result = getDefaultMemberResult();
     if (!member.name) return result;
-
-    characterInput.character = member.name as TCharacterKey;
-    characterInput.characterMaster = await getCharacterMasterDetail(
-        characterInput.character
-    );
+    result.characterInput.character = member.name as TCharacterKey;
+    result.characterInput.characterMaster = await getCharacterMasterDetail(result.characterInput.character);
 
     const DEFAULT_WEAPON: { [key: string]: TWeaponKey } = {
         '片手剣': '無鋒の剣',
@@ -149,37 +142,30 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
         '弓': '狩猟弓',
         '法器': '生徒ノート'
     };
-    characterInput.weapon = DEFAULT_WEAPON[characterInput.characterMaster.武器];
+    result.characterInput.weapon = DEFAULT_WEAPON[result.characterInput.characterMaster.武器];
 
     const builddata = member.builddata;
     if (!builddata) return result;
+    await loadRecommendation(result.characterInput, result.artifactDetailInput, result.conditionInput, result.optionInput, builddata);
 
-    await loadRecommendation(
-        characterInput,
-        artifactDetailInput,
-        conditionInput,
-        optionInput,
-        builddata
-    );
-
-    makeDamageDetailObjArrObjCharacter(characterInput);
-    makeDamageDetailObjArrObjWeapon(characterInput);
-    makeDamageDetailObjArrObjArtifactSets(characterInput);
-    setupConditionValues(conditionInput, characterInput, optionInput);
+    makeDamageDetailObjArrObjCharacter(result.characterInput);
+    makeDamageDetailObjArrObjWeapon(result.characterInput);
+    makeDamageDetailObjArrObjArtifactSets(result.characterInput);
+    setupConditionValues(result.conditionInput, result.characterInput, result.optionInput);
     calculateArtifactStatsMain(
-        artifactDetailInput.聖遺物ステータスメイン効果,
-        artifactDetailInput.聖遺物メイン効果
+        result.artifactDetailInput.聖遺物ステータスメイン効果,
+        result.artifactDetailInput.聖遺物メイン効果
     );
-    calculateArtifactStats(artifactDetailInput);
+    calculateArtifactStats(result.artifactDetailInput);
 
-    conditionInput.checkboxList.forEach((entry) => {
-        conditionInput.conditionValues[entry.name] = false;
+    result.conditionInput.checkboxList.forEach((entry) => {
+        result.conditionInput.conditionValues[entry.name] = false;
     });
-    conditionInput.selectList.forEach((entry) => {
-        conditionInput.conditionValues[entry.name] = 0;
+    result.conditionInput.selectList.forEach((entry) => {
+        result.conditionInput.conditionValues[entry.name] = 0;
     });
 
-    const myVision = characterInput.characterMaster.元素;
+    const myVision = result.characterInput.characterMaster.元素;
     const teamElements: TAnyObject = {};
     if (team.members) {
         team.members.filter(s => s.name).forEach(entry => {
@@ -193,7 +179,7 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
     }
 
     // 武器
-    if (['千岩古剣', '千岩長槍'].includes(characterInput.weapon)) {
+    if (['千岩古剣', '千岩長槍'].includes(result.characterInput.weapon)) {
         if (team.members) {
             let liyueCount = 0;
             for (const entry of team.members.filter(s => s)) {
@@ -204,10 +190,10 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
                     }
                 }
             }
-            const conditionKey = '[' + characterInput.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
-            conditionInput.conditionValues[conditionKey] = liyueCount;
+            const conditionKey = '[' + result.characterInput.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
+            result.conditionInput.conditionValues[conditionKey] = liyueCount;
         }
-    } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(characterInput.weapon)) {
+    } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(result.characterInput.weapon)) {
         if (team.members) {
             let totalEnergyCost = 0;
             for (const entry of team.members.filter(s => s)) {
@@ -217,7 +203,7 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
                 }
             }
             if (totalEnergyCost) {
-                conditionInput.conditionValues['チーム全員の元素エネルギー上限の合計'] = totalEnergyCost;
+                result.conditionInput.conditionValues['チーム全員の元素エネルギー上限の合計'] = totalEnergyCost;
             }
         }
     }
@@ -225,21 +211,21 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
     const sameCount = teamElements[myVision] - 1;
     const otherElements = Object.keys(teamElements).filter(s => s != myVision);
     const otherCount = otherElements.length ? otherElements.map(s => teamElements[s]).reduce((a, b) => a + b) : 0;
-    conditionInput.conditionValues['[チーム]同じ元素のキャラクター'] = sameCount;
-    conditionInput.conditionValues['[チーム]異なる元素のキャラクター'] = otherCount;
-    conditionInput.conditionValues['[チーム]キャラクターの元素タイプ'] = Object.keys(teamElements).length - 1; // requiredなので1減らします
+    result.conditionInput.conditionValues['[チーム]同じ元素のキャラクター'] = sameCount;
+    result.conditionInput.conditionValues['[チーム]異なる元素のキャラクター'] = otherCount;
+    result.conditionInput.conditionValues['[チーム]キャラクターの元素タイプ'] = Object.keys(teamElements).length - 1; // requiredなので1減らします
     ALL_ELEMENTS.forEach(vision => {
         const key1 = '[チーム]' + vision + '元素キャラクター';
-        conditionInput.conditionValues[key1] = teamElements[vision] ?? 0;
+        result.conditionInput.conditionValues[key1] = teamElements[vision] ?? 0;
         const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
-        conditionInput.conditionValues[key2] = (teamElements[vision] ?? 0) - (vision == myVision ? 1 : 0);
+        result.conditionInput.conditionValues[key2] = (teamElements[vision] ?? 0) - (vision == myVision ? 1 : 0);
     });
 
     // 元素共鳴
     if (getElementalResonance(team)) {
         const workObj = {} as TStats;
         getElementalResonance(team).filter(s => ['炎元素共鳴', '水元素共鳴', '草元素共鳴', '元素共鳴なし'].includes(s)).forEach(entry => {
-            optionInput.elementalResonance.conditionValues[entry] = true;
+            result.optionInput.elementalResonance.conditionValues[entry] = true;
             if ("詳細" in (ELEMENTAL_RESONANCE_MASTER as any)[entry]) {
                 const detailObjArr = (ELEMENTAL_RESONANCE_MASTER as any)[entry].詳細;
                 if (detailObjArr) {
@@ -255,29 +241,13 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
                 }
             }
         });
-        overwriteObject(optionInput.elementalResonance.conditionAdjustments, workObj);
+        overwriteObject(result.optionInput.elementalResonance.conditionAdjustments, workObj);
     }
 
-    calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
-    calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
+    calculateStats(result.statsInput, result.characterInput, result.artifactDetailInput, result.conditionInput, result.optionInput);
+    calculateDamageResult(result.damageResult, result.characterInput, result.conditionInput, result.statsInput);
 
-    return {
-        characterInput: characterInput,
-        artifactDetailInput: artifactDetailInput,
-        conditionInput: conditionInput,
-        optionInput: optionInput,
-        statsInput: statsInput,
-        damageResult: damageResult,
-    } as TMemberResult;
-}
-
-export const MEMBER_RESULT_DUMMY: TMemberResult = {
-    characterInput: CHARACTER_INPUT_TEMPLATE,
-    artifactDetailInput: ARTIFACT_DETAIL_INPUT_TEMPLATE,
-    conditionInput: CONDITION_INPUT_TEMPLATE,
-    optionInput: OPTION_INPUT_TEMPLATE,
-    statsInput: STATS_INPUT_TEMPLATE,
-    damageResult: DAMAGE_RESULT_TEMPLATE,
+    return result;
 }
 
 export const getElementalResonance = (team: TTeam) => {

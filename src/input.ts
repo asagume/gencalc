@@ -341,7 +341,6 @@ export const 突破レベルレベルARRAY = [
     Array.from({ length: 11 }, (_, i) => i + 80),
 ];
 
-
 export type TDamageDetailObj = {
     名前: string | null,
     種類: string | null,
@@ -477,17 +476,36 @@ for (const stat of Object.keys(STATS_INPUT_TEMPLATE.statAdjustments)) {
 }
 export type TStatsInput = typeof STATS_INPUT_TEMPLATE;
 
+export function getDefaultCharacterInput(): TCharacterInput {
+    return _.cloneDeep(CHARACTER_INPUT_TEMPLATE);
+}
+export function getDefaultArtifactDetailInput(): TArtifactDetailInput {
+    return _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE);
+}
+export function getDefaultConditionInput(): TConditionInput {
+    return _.cloneDeep(CONDITION_INPUT_TEMPLATE);
+}
+export function getDefaultOptionInput(): TOptionInput {
+    return _.cloneDeep(OPTION_INPUT_TEMPLATE);
+}
+export function getDefaultStatsInput(): TStatsInput {
+    return _.cloneDeep(STATS_INPUT_TEMPLATE);
+}
+export function getDefaultDamageResultInput(): TDamageResult {
+    return _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
+}
+
 export type TElementalResonance = {
     conditionValues: TConditionValues,
     conditionAdjustments: TConditionAdjustments,
 };
 
 export const SUPPORTER_INPUT_TEMPLATE = {
-    characterInput: _.cloneDeep(CHARACTER_INPUT_TEMPLATE) as TCharacterInput,
-    artifactDetailInput: _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE) as TArtifactDetailInput,
-    conditionInput: _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput,
-    statsInput: _.cloneDeep(STATS_INPUT_TEMPLATE) as TStatsInput,
-    damageResult: _.cloneDeep(DAMAGE_RESULT_TEMPLATE) as TDamageResult,
+    characterInput: getDefaultCharacterInput(),
+    artifactDetailInput: getDefaultArtifactDetailInput(),
+    conditionInput: getDefaultConditionInput(),
+    statsInput: getDefaultStatsInput(),
+    damageResult: getDefaultDamageResultInput(),
 };
 export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
