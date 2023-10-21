@@ -642,32 +642,62 @@ export function getParticleByCharacter(
         }];
     }
     const memberNameArr = team.members.map(member => member.name);
-    let curCharacter;
-    let isBursting = false;
-    const timeArr = [0, 0, 0, 0];
-    for (let i = 0; i < rotationList.length; i++) {
-        const rotation = rotationList[i];
-        if (rotation.member != curCharacter) {
-            isBursting = false;
-        }
-        if (rotation.member == character) {
-            const index = memberNameArr.indexOf(character);
-            let action = rotation.action;
-            if (action === 'Q' && ['フィッシュル', '珊瑚宮心海'].includes(character)) {
-                action = 'E';
+    const myIndex = memberNameArr.indexOf(character);
+    if (character === 'ファルザン' && constellation >= 6) {
+        const eCount = countE(character, rotationList);
+        const qCount = countQ(character, rotationList);
+        const num = 2 * Math.floor(Math.min(rotationLength, eCount * 5.5 + qCount * 18) / 5.5);
+        const action = 'E';
+        const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
+        splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
+        resultMap.set(action, resultVal);
+    } else {
+        const timeArr = [0, 0, 0, 0];
+        let curCharacter;
+        let isBursting = false;
+        let untilActions: string[] = [];
+        let untilCount = 0;
+        for (let i = 0; i < rotationList.length; i++) {
+            const rotation = rotationList[i];
+            if (rotation.member != curCharacter) {
+                isBursting = false;
             }
-            if (action === 'Q') {
-                isBursting = true; // キャラチェンするまでずっと元素爆発中判定とする
-            } else if (action.startsWith('E')) {
-                if (['ディルック', 'ニィロウ'].includes(character) && curCharacter == character) { // 連続使用される元素スキルはキャラチェンするまで1回分判定
+            if (rotation.member == character) {
+                let action = rotation.action;
+                if (action === 'Q' && ['フィッシュル', '珊瑚宮心海'].includes(character)) {
+                    action = 'E';
+                }
+                if (action === 'Q') {
+                    isBursting = true; // キャラチェンするまでずっと元素爆発中判定とする
+                }
+                if (untilCount > 0) {
+                    if (untilActions.filter(untilAction => action.indexOf(untilAction) != -1).length) {
+                        if (action.startsWith('N')) {
+                            untilCount -= action.length === 1 ? 1 : Number(action.substring(1, 2));
+                        } else {
+                            untilCount--;
+                        }
+                    }
                     continue;
                 }
-                const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
-                timeArr[index] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[index], isBursting);
-                resultMap.set(action, resultVal);
+                if (action.startsWith('E')) {
+                    if (character === 'ディルック') {
+                        untilActions = ['E'];
+                        untilCount = 2;
+                    } else if (character === '刻晴') {
+                        untilActions = ['E', 'C'];
+                        untilCount = 1;
+                    } else if (character === 'ニィロウ') {
+                        untilActions = ['E', 'N'];
+                        untilCount = 3;
+                    }
+                    const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
+                    timeArr[myIndex] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[myIndex], isBursting);
+                    resultMap.set(action, resultVal);
+                }
             }
+            curCharacter = rotation.member;
         }
-        curCharacter = rotation.member;
     }
     const result: TERParticle[] = [];
     const characterMaster = getCharacterMaster(character);

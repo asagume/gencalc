@@ -163,7 +163,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [1 / 1.5, SP_LONG, 10, 15]
     },
     'ファルザン': {
-        'E': [2, SP_NEXT, 18, 6, C6, 2 / 5.5, SP_LONG, 18, 20], // CT5.5s
+        'E': [2, SP_NEXT, 18, 6],   // CT5.5s
     },
     'レイラ': {
         'E': [1.33 / 3, SP_LONG, 12, 12]    // CT3s
@@ -179,7 +179,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 3,
     },
     '鹿野院平蔵': {
-        'E': 2,
+        'E': 4,     // 2:変格0-1/2.5:変格2-3/3:変格4=正論
     },
     '久岐忍': {
         'E': [0.45 / 1.5, SP_LONG, 12, 15, C2, 0.45 / 1.5, SP_LONG, 15, 15],    // CT1.5s
