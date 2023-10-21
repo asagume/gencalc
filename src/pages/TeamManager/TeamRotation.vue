@@ -29,7 +29,7 @@
         </template>
         <table class="control-button">
           <tr>
-            <td style="width: 30px;">
+            <td>
               <span class="material-symbols-outlined control-button" @click="$emit('click:jump-to-team')">stat_2</span>
             </td>
             <td>
@@ -38,7 +38,16 @@
                 <span class="material-symbols-outlined">delete</span>
               </label>
             </td>
-            <td style="width: 30px;">
+            <td>
+              <div class="with-tooltip" v-if="selectedAction">
+                <img :class="'action-icon handle' + bgColorClass(selectedAction.member)"
+                  :src="getActionDetail(selectedAction).icon_url" :alt="displayName(getActionDetail(selectedAction).名前)"
+                  @click="selectedActionOnClick(selectedAction)" />
+                <span class="tooltip"> {{ displayName(getActionDetail(selectedAction).名前) }} </span>
+              </div>
+              <div class="action-attribute" v-if="selectedAction">
+                {{ actionDisplay(selectedAction) }}
+              </div>
             </td>
           </tr>
         </table>
@@ -51,8 +60,8 @@
               <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
                 :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
               <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
-                <div class="with-tooltip" @touchend="rotationActionOnClick(element)">
-                  <img :class="'action-icon handle' + bgColorClass(element.member)"
+                <div class="with-tooltip">
+                  <img :class="'action-icon handle' + bgColorClass(element.member) + selectedActionClass(element)"
                     :src="getActionDetail(element).icon_url" :alt="displayName(getActionDetail(element).名前)"
                     @click="rotationActionOnClick(element)" />
                   <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
@@ -79,7 +88,7 @@
 </template>
 <script lang="ts">
 import draggable from "vuedraggable";
-import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
@@ -108,6 +117,7 @@ export default defineComponent({
     const rotationList = reactive([] as TActionItem[]);
     const actionId = ref(0);
     const rotationDescription = ref('');
+    const selectedActionId = ref(-1);
 
     const watchCount = ref(0);
     watch(props, async () => {
@@ -154,6 +164,11 @@ export default defineComponent({
       props.team.members.forEach(member => {
         normalAttackIconSrc(member.name);
       })
+    })
+
+    const selectedAction = computed((): TActionItem | undefined => {
+      const actionArr = rotationList.filter(rotation => rotation.id == selectedActionId.value);
+      return actionArr.length > 0 ? actionArr[0] : undefined;
     })
 
     function getNormalAttackDan(name: string) {
@@ -227,6 +242,9 @@ export default defineComponent({
     const actionDisplay = (item: TActionItem) =>
       item.action.startsWith('E') ? item.action.replace(/^E\./, '') : item.action;
 
+    const selectedActionClass = (item: TActionItem) =>
+      selectedActionId.value == item.id ? ' selected' : '';
+
     const updateRotation = () => {
       context.emit('update:rotation', rotationList, rotationDescription.value);
     }
@@ -264,8 +282,18 @@ export default defineComponent({
     const rotationActionOnClick = (item: TActionItem) => {
       if (removeMode.value) {
         removeItemOnClick(item);
-        return;
+      } else if (selectedActionId.value == item.id) {
+        selectedActionId.value = -1;
+      } else if (item.action.startsWith('N')) {
+        selectedActionId.value = item.id;
+      } else if (item.action.startsWith('E') && elementalSkillActions[item.member].length > 1) {
+        selectedActionId.value = item.id;
+      } else {
+        selectedActionId.value = -1;
       }
+    }
+
+    const selectedActionOnClick = (item: TActionItem) => {
       if (isActionNormalAttack(item.action)) {
         if (item.action.startsWith('N')) { // 通常攻撃
           const master = getCharacterDetail(item.member);
@@ -322,11 +350,14 @@ export default defineComponent({
       getCharacterDetail,
       getActionDetail,
       actionDisplay,
+      selectedAction,
+      selectedActionClass,
 
       rotationListOnChange,
       listActionOnClick,
       rotationActionOnClick,
       removeItemOnClick,
+      selectedActionOnClick,
       updateRotation,
     };
   },
@@ -391,9 +422,19 @@ fieldset.rotation-list {
 table.control-button {
   table-layout: fixed;
   width: 100%;
-  margin-top: 5px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
   border: none;
+}
+
+table.control-button td {
+  height: 62px;
+  vertical-align: bottom;
+}
+
+table.control-button td:first-child,
+table.control-button td:last-child {
+  width: 45px;
 }
 
 table.control-button button {
@@ -432,8 +473,13 @@ div.action-item {
 
 div.action-attribute {
   text-align: center;
-  text-shadow:
-    0px 1px 0px #003366;
+  text-shadow: 0px 1px 0px #003366;
+  font-size: 14px;
+}
+
+.selected {
+  opacity: 0.5;
+  border-radius: 5px;
 }
 
 .tooltip {
