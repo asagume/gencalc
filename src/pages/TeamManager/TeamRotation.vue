@@ -39,11 +39,10 @@
               </label>
             </td>
             <td>
-              <div class="with-tooltip" v-if="selectedAction">
+              <div v-if="selectedAction">
                 <img :class="'action-icon handle' + bgColorClass(selectedAction.member)"
                   :src="getActionDetail(selectedAction).icon_url" :alt="displayName(getActionDetail(selectedAction).名前)"
                   @click="selectedActionOnClick(selectedAction)" />
-                <span class="tooltip"> {{ displayName(getActionDetail(selectedAction).名前) }} </span>
               </div>
               <div class="action-attribute" v-if="selectedAction">
                 {{ actionDisplay(selectedAction) }}
@@ -53,18 +52,17 @@
         </table>
       </fieldset>
       <fieldset class="rotation-list">
-        <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" :delay="80" :animation="200"
+        <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" :delay="100" :animation="200"
           @change="rotationListOnChange">
           <template #item="{ element }">
             <div class="rotation-item">
               <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
                 :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
               <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
-                <div class="with-tooltip">
-                  <img :class="'action-icon handle' + bgColorClass(element.member) + selectedActionClass(element)"
+                <div class="with-tooltip handle">
+                  <img :class="'action-icon' + bgColorClass(element.member) + selectedActionClass(element)"
                     :src="getActionDetail(element).icon_url" :alt="displayName(getActionDetail(element).名前)"
                     @click="rotationActionOnClick(element)" />
-                  <span class="tooltip"> {{ displayName(getActionDetail(element).名前) }} </span>
                   <div v-if="removeMode" class="remove-mark" @click="removeItemOnClick(element)"></div>
                 </div>
                 <div class="action-attribute">
