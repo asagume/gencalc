@@ -435,8 +435,11 @@ export function getEnergyByCharacter(
         myEnergy = 0;
     } else if (character === '行秋' && constellation >= 6) {
         messages.push('古華剣·裁雨留虹が剣雨攻撃を2回発動する度に、次の剣雨攻撃が大幅に強化され、敵に命中する時行秋の元素エネルギーを3回復する。');
-        const nCount = countN(undefined, rotationList);
-        myEnergy = 3 * Math.trunc(nCount / 3 / 2);
+        myEnergy = 3;
+        if (rotationList?.length) {
+            const nCount = Math.floor(rotationList.filter(rotation => rotation.action.startsWith('N')).length / 3);
+            myEnergy *= nCount > 0 ? nCount : 1;
+        }
         resultArr.push([RECHARGE_ENERGY_CONSTELLATION, '6', myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
     } else if (character === '北斗') {
         myEnergy = 0;
