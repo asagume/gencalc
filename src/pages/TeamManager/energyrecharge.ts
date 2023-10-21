@@ -645,18 +645,24 @@ export function getParticleByCharacter(
     const myIndex = memberNameArr.indexOf(character);
     if (character === 'ファルザン' && constellation >= 6) {
         const eCount = countE(character, rotationList);
+        const cCount = countC(character, rotationList);
         const qCount = countQ(character, rotationList);
-        const num = 2 * Math.floor(Math.min(rotationLength, eCount * 5.5 + qCount * 18) / 5.5);
         const action = 'E';
-        const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
-        splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
-        resultMap.set(action, resultVal);
+        const particleInfo = getParticleInfo(character, action);
+        if (particleInfo) {
+            const num = getParticleNumFromInfo(particleInfo) * Math.floor(Math.min(rotationLength, Math.min(eCount, cCount) * 5.5 + qCount * 18) / 5.5);
+            const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
+            splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
+            resultMap.set(action, resultVal);
+            console.log(num, eCount, cCount, qCount);
+        }
     } else {
         const timeArr = [0, 0, 0, 0];
         let curCharacter;
         let isBursting = false;
-        let untilActions: string[] = [];
+        let untilActions: string[] = [];    // untilActionsをuntilCount実行するまでのEを無視
         let untilCount = 0;
+        let delayActions: string[] = [];    // delayActionsの実行まで元素粒子生成を遅らせる
         for (let i = 0; i < rotationList.length; i++) {
             const rotation = rotationList[i];
             if (rotation.member != curCharacter) {
@@ -680,16 +686,23 @@ export function getParticleByCharacter(
                     }
                     continue;
                 }
-                if (action.startsWith('E')) {
-                    if (character === 'ディルック') {
+                if (action.startsWith('E') || delayActions.filter(delayAction => action.indexOf(delayAction) != -1).length) {
+                    if (character === 'ディルック') { // 元素スキルを2回実行するまでEを無視
                         untilActions = ['E'];
                         untilCount = 2;
-                    } else if (character === '刻晴') {
+                    } else if (character === '刻晴') {  // 元素スキルまたは重撃を実行するまでEを無視
                         untilActions = ['E', 'C'];
                         untilCount = 1;
-                    } else if (character === 'ニィロウ') {
+                    } else if (character === 'ニィロウ') {  // 元素スキルまたは通常攻撃を3回実行するまでEを無視
                         untilActions = ['E', 'N'];
                         untilCount = 3;
+                    } else if (['九条裟羅', 'ファルザン'].includes(character)) {    // 次の重撃時に元素粒子を生成
+                        if (action.startsWith('E')) {
+                            delayActions = ['C'];
+                            continue;
+                        }
+                        delayActions = [];
+                        action = 'E';
                     }
                     const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
                     timeArr[myIndex] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[myIndex], isBursting);
