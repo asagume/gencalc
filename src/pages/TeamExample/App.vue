@@ -6,6 +6,14 @@
 
     <div class="pane1">
       <h4>EXAMPLE</h4>
+      <label class="bottom-right" v-if="false">
+        Language
+        <select v-model="locale" @change="localeOnChange(targetValue($event))">
+          <option v-for="item in localeList" :value="item.value" :key="item.value">
+            {{ item.name }}
+          </option>
+        </select>
+      </label>
     </div>
 
     <div class="pane2">
@@ -53,6 +61,7 @@
 import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, nextTick, onMounted, reactive, ref } from 'vue';
+import { useI18n } from "vue-i18n";
 import CompositionFunction from '@/components/CompositionFunction.vue';
 import { NUMBER_OF_TEAMS, TActionItem, TTeam, copyTeams, makeBlankTeam, makeTeamsStr } from '../TeamManager/team';
 import TeamEditorModal from '../TeamManager/TeamEditorModal.vue';
@@ -69,7 +78,10 @@ export default defineComponent({
     TeamRotation,
   },
   setup() {
-    const { displayName } = CompositionFunction();
+    const { locale } = useI18n({
+      useScope: "global",
+    });
+    const { displayName, localeList, targetValue, setI18nLanguage } = CompositionFunction();
     const isViewOnly = ref(true);
     const teamEditorVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
@@ -86,6 +98,10 @@ export default defineComponent({
     const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
     const builddataStr = computed(() => makeTeamsStr(teams));
     const teamSelected = (index: number) => index == selectedTeamId.value;
+
+    const localeOnChange = (locale: string | undefined) => {
+      if (locale) setI18nLanguage(locale);
+    };
 
     const loadOnClick = () => {
       const srcTeams: any[] = teamexample;
@@ -172,6 +188,10 @@ export default defineComponent({
 
     return {
       displayName,
+      locale,
+      localeList,
+      localeOnChange,
+      targetValue,
 
       isViewOnly,
       NUMBER_OF_TEAMS,
