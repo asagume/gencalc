@@ -47,6 +47,53 @@
     ]
   },
   {
+    "avatar_id": 10000086,
+    "skill_list": [
+      {
+        "id": 10861,
+        "group_id": 8631,
+        "name": "通常攻撃·フロストコンビネーション",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10862,
+        "group_id": 8632,
+        "name": "アイスファング·ラッシュ",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10865,
+        "group_id": 8639,
+        "name": "ガンメタル·ウルフバイト",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 8621,
+        "group_id": 8621,
+        "name": "やがて公義は弁ぜらる",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 8622,
+        "group_id": 8622,
+        "name": "いずれ罪業は贖わる",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 8623,
+        "group_id": 8623,
+        "name": "公爵の恩赦",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
     "avatar_id": 10000084,
     "skill_list": [
       {

@@ -72,6 +72,14 @@
     "max_level": 90
   },
   {
+    "id": 14513,
+    "name": "凛流の監視者",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 14512,
     "name": "トゥライトゥーラの記憶",
     "icon": null,
@@ -484,6 +492,14 @@
     "name": "西風猟弓",
     "icon": null,
     "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 14426,
+    "name": "果てなき紺碧の唄",
+    "icon": null,
+    "weapon_cat_id": 10,
     "weapon_level": 4,
     "max_level": 90
   },

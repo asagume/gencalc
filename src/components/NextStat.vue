@@ -129,7 +129,7 @@ export default defineComponent({
                 if (Array.isArray(damageResultValue)) {
                     for (const key2 of damageResultValue) {
                         if (!key2) continue;
-                        if (key2[0].endsWith('合計ダメージ')) continue; // 名前
+                        if (key2[0]?.endsWith('合計ダメージ')) continue; // 名前
                         if (!key2[5]?.endsWith('ダメージ')) continue; // 種類
                         const name = key1 + '.' + key2[0];
                         result.push(name);

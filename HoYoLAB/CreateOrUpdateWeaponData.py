@@ -134,9 +134,7 @@ for filepath in files:
         for component in module['components']:
             if module['name'] == 'ステータス' and component['component_id'] == 'baseInfo':
                 for entry in component['data']['list']:
-                    # dstJson['baseInfo'][entry['key']
-                    #                     ] = ','.join(entry['value'])
-                    if entry['key'] not in ['名称', '入手方法', '種類', 'サブステータス', '精錬素材', '鍛造素材']:
+                    if entry['key'] not in ['名称', '入手方法', '種類', 'サブステータス', '精錬素材', '鍛造素材', '実装バージョン']:
                         dstJson['武器スキル']['名前'] = entry['key']
                         if isinstance(entry['value'], list):
                             dstJson['武器スキル']['説明'] = re.sub(

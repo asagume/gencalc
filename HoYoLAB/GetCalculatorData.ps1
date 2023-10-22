@@ -1,7 +1,7 @@
 # 育成計算機のlistリクエストヘッダーのCookieの値を入力してください
 $Cookie = ""
 
-$OutputDir = ".\public\data"
+$OutputDir = "..\public\data"
 $AvatarListOutFile = "HoyoAvatarMaster.json"
 $SkillListOutFile = "HoyoSkillMaster.json"
 $WeaponListOutFile = "HoyoWeaponMaster.json"
@@ -118,6 +118,18 @@ while ($true) {
                     $entry.name += "(氷)"
                 }
             }
+        }
+        if ($null -ne $entry.item_icon) {
+            $entry.item_icon = $null
+        }
+        if ($null -ne $entry.talent_icons) {
+            $entry.talent_icons = $null
+        }
+        if ($null -ne $entry.side_icon) {
+            $entry.side_icon = $null
+        }
+        if ($null -ne $entry.profile_pictures) {
+            $entry.profile_pictures = $null
         }
 
         ###
