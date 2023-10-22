@@ -17,7 +17,7 @@
       <a href="HoYoDictionary.html">原神の辞書</a>
     </p>
 
-    <p>
+    <p style="margin-bottom: 4rem;">
       <a href="EnkaNetwork3.html">DATA IMPORTER</a>
       <a href="TeamManager.html">チーム編成</a>
     </p>
