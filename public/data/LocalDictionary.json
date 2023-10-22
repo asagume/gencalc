@@ -400,5 +400,23 @@
   },
   "第6重": {
     "en-us": "C6"
+  },
+  "命ノ星座": {
+    "en-us": "Constellations"
+  },
+  "武器": {
+    "en-us": "Weapon"
+  },
+  "ローテーションの長さ(秒)": {
+    "en-us": "Rotation Length(s)"
+  },
+  "戦闘の長さ(秒)": {
+    "en-us": "Combat Length(s)"
+  },
+  "出場時間(%)": {
+    "en-us": "On Field(%)"
+  },
+  "秒": {
+    "en-us": "s"
   }
 }
