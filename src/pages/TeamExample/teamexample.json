@@ -114,7 +114,7 @@
                 "action": "N3"
             }
         ],
-        "rotationDescription": ""
+        "rotationDescription": "シールド全般と飛行する敵と刹那の花が壊される敵が苦手。"
     },
     {
         "id": 0,
@@ -180,6 +180,11 @@
             {
                 "id": 0,
                 "member": "刻晴",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "刻晴",
                 "action": "N1C"
             },
             {
@@ -190,7 +195,17 @@
             {
                 "id": 0,
                 "member": "刻晴",
+                "action": "N3C"
+            },
+            {
+                "id": 0,
+                "member": "刻晴",
                 "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "刻晴",
+                "action": "E.Press"
             },
             {
                 "id": 0,
@@ -215,7 +230,12 @@
             {
                 "id": 0,
                 "member": "刻晴",
-                "action": "N1C"
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "刻晴",
+                "action": "Q"
             },
             {
                 "id": 0,
@@ -230,12 +250,17 @@
             {
                 "id": 0,
                 "member": "刻晴",
-                "action": "N1C"
+                "action": "N3C"
             },
             {
                 "id": 0,
                 "member": "刻晴",
                 "action": "N1C"
+            },
+            {
+                "id": 0,
+                "member": "刻晴",
+                "action": "E.Press"
             },
             {
                 "id": 0,
@@ -243,7 +268,7 @@
                 "action": "E.Press"
             }
         ],
-        "rotationDescription": ""
+        "rotationDescription": "聖遺物秘境でよく使う編成。2WAVE対応。鍾離はシールドを張れればよくて、ナヒーダの元素爆発は省略した方がだいたいはやい。刻晴パートは雰囲気で回す。"
     },
     {
         "id": 0,
@@ -352,7 +377,7 @@
                 "action": "N4"
             }
         ],
-        "rotationDescription": ""
+        "rotationDescription": "深境螺旋の常連。"
     },
     {
         "id": 0,
@@ -465,61 +490,7 @@
                 "action": "N3"
             }
         ],
-        "rotationDescription": ""
-    },
-    {
-        "id": 0,
-        "name": "溶解ロサリア",
-        "members": [
-            {
-                "id": 0,
-                "name": "ベネット",
-                "tags": [],
-                "replacements": []
-            },
-            {
-                "id": 0,
-                "name": "香菱",
-                "tags": [],
-                "replacements": []
-            },
-            {
-                "id": 0,
-                "name": "楓原万葉",
-                "tags": [],
-                "replacements": []
-            },
-            {
-                "id": 0,
-                "name": "ロサリア",
-                "tags": [],
-                "replacements": []
-            }
-        ],
-        "description": "",
-        "rotation": [
-            {
-                "id": 0,
-                "member": "ベネット",
-                "action": "E.Press"
-            },
-            {
-                "id": 0,
-                "member": "ベネット",
-                "action": "Q"
-            },
-            {
-                "id": 0,
-                "member": "香菱",
-                "action": "E"
-            },
-            {
-                "id": 0,
-                "member": "香菱",
-                "action": "Q"
-            }
-        ],
-        "rotationDescription": ""
+        "rotationDescription": "深境螺旋の常連。"
     },
     {
         "id": 0,
@@ -557,12 +528,17 @@
             {
                 "id": 0,
                 "member": "鍾離",
-                "action": "E.Press"
+                "action": "E.Hold"
+            },
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "Q"
             },
             {
                 "id": 0,
                 "member": "ナヒーダ",
-                "action": "E.Press"
+                "action": "E.Hold"
             },
             {
                 "id": 0,
@@ -588,6 +564,61 @@
                 "id": 0,
                 "member": "八重神子",
                 "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "八重神子",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "C"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "C"
+            },
+            {
+                "id": 0,
+                "member": "ティナリ",
+                "action": "C"
+            },
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "E.Hold"
+            },
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ナヒーダ",
+                "action": "E.Hold"
             },
             {
                 "id": 0,
@@ -668,6 +699,60 @@
         ],
         "description": "",
         "rotation": [],
+        "rotationDescription": ""
+    },
+    {
+        "id": 0,
+        "name": "溶解ロサリア",
+        "members": [
+            {
+                "id": 0,
+                "name": "ベネット",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 0,
+                "name": "香菱",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 0,
+                "name": "楓原万葉",
+                "tags": [],
+                "replacements": []
+            },
+            {
+                "id": 0,
+                "name": "ロサリア",
+                "tags": [],
+                "replacements": []
+            }
+        ],
+        "description": "",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ベネット",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "香菱",
+                "action": "Q"
+            }
+        ],
         "rotationDescription": ""
     },
     {

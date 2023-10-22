@@ -376,7 +376,7 @@ export function copyTeams(output: TTeam[], input: any[], useBuilddata = false) {
                 }
             })
         }
-        dst.rotationDescription = dst.rotationDescription ?? '';
+        dst.rotationDescription = src.rotationDescription ?? '';
     }
     if (output.length > input.length && output.length >= NUMBER_OF_TEAMS) {
         output.splice(input.length);
