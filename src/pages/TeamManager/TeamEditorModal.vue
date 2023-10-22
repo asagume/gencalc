@@ -86,7 +86,7 @@ export default defineComponent({
       rotationDescription: '',
     } as TTeam);
     const selectedMemberId = ref(-1);
-    const TAG_LIST = ['Main-DPS', 'Carry', 'Sub-DPS', 'Support', 'Driver', 'Enabler', 'Battery', 'Free'];
+    const TAG_LIST = ['Main-DPS', 'Sub-DPS', 'Support', 'Carry', 'Driver', 'Enabler', 'Healer', 'Shielder', 'Battery', 'Free', 'Flex'];
     const selectedMemberBuildname = ref('' as string | undefined);
     const replacementIndex = ref(-1);
 
