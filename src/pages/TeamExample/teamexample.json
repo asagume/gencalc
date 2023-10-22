@@ -164,16 +164,6 @@
             },
             {
                 "id": 0,
-                "member": "鍾離",
-                "action": "E.Hold"
-            },
-            {
-                "id": 0,
-                "member": "鍾離",
-                "action": "Q"
-            },
-            {
-                "id": 0,
                 "member": "ヌヴィレット",
                 "action": "E"
             },
@@ -185,7 +175,7 @@
             {
                 "id": 0,
                 "member": "楓原万葉",
-                "action": "E.Hold"
+                "action": "E.Press"
             },
             {
                 "id": 0,
@@ -194,6 +184,16 @@
             },
             {
                 "id": 0,
+                "member": "鍾離",
+                "action": "E.Hold"
+            },
+            {
+                "id": 0,
+                "member": "鍾離",
+                "action": "Q"
+            },
+            {
+                "id": 0,
                 "member": "ヌヴィレット",
                 "action": "C"
             },
@@ -209,11 +209,16 @@
             },
             {
                 "id": 0,
+                "member": "楓原万葉",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
                 "member": "ヌヴィレット",
                 "action": "C"
             }
         ],
-        "rotationDescription": "1キャラクターに4つまでタグを設定できます。表示のみの機能です。"
+        "rotationDescription": "1キャラクターに4つまでタグを設定できます。表示するだけの機能です。"
     },
     {
         "id": 0,
@@ -326,7 +331,7 @@
                 "action": "N3"
             }
         ],
-        "rotationDescription": "1キャラクターに2人まで代替キャラクターを設定できます。表示のみの機能です。"
+        "rotationDescription": "1キャラクターに2人まで代替キャラクターを設定できます。表示するだけの機能です。"
     },
     {
         "id": 0,

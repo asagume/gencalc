@@ -70,7 +70,7 @@ export default defineComponent({
   },
   setup() {
     const { displayName } = CompositionFunction();
-    const isViewOnly = ref(false);
+    const isViewOnly = ref(true);
     const teamEditorVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const teams = reactive([] as TTeam[]);
