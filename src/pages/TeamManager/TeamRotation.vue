@@ -560,7 +560,6 @@ table.guide {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
-  vertical-align: top;
   table-layout: fixed;
   border-spacing: 0;
   border-radius: 10px;
@@ -575,6 +574,7 @@ table.guide {
 .guide th,
 .guide td {
   border-bottom: 1px solid silver;
+  vertical-align: top;
 }
 
 .guide tr:last-child th,
