@@ -202,6 +202,7 @@ div.tag {
   background: linear-gradient(to top, #3d3d3b, #141414);
   border: 1px solid whitesmoke;
   border-radius: 3px;
+  vertical-align: middle;
   padding-top: 1px;
 }
 

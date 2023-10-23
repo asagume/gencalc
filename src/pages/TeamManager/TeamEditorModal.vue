@@ -337,6 +337,8 @@ span.tag {
   border: 1px solid whitesmoke;
   border-radius: 3px;
   margin: 3px 3px;
+  vertical-align: middle;
+  padding-top: 1px;
 }
 
 span.tag.selected {
