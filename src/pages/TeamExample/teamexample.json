@@ -1,7 +1,7 @@
 [
     {
         "id": 0,
-        "name": "元素粒子の受け渡し",
+        "name": "ローテーション1",
         "members": [
             {
                 "id": 0,
@@ -213,7 +213,7 @@
                 "action": "C"
             }
         ],
-        "rotationDescription": "1キャラクターに4つまでタグを設定できます。表示するだけの機能です。"
+        "rotationDescription": "1キャラクターに4つまでタグを設定できます。表示位置はキャラクター画像の下部から最大4段。表示するだけの機能です。"
     },
     {
         "id": 0,
@@ -326,40 +326,114 @@
                 "action": "N3"
             }
         ],
-        "rotationDescription": "1キャラクターに2人まで代替キャラクターを設定できます。表示するだけの機能です。"
+        "rotationDescription": "1キャラクターに2人まで代替キャラクターを設定できます。表示位置はキャラクター画像の下部。表示するだけの機能です。"
     },
     {
         "id": 0,
-        "name": "",
+        "name": "1行コメント",
         "members": [
             {
                 "id": 0,
-                "name": "",
+                "name": "ゴロー",
                 "tags": [],
                 "replacements": []
             },
             {
                 "id": 0,
-                "name": "",
+                "name": "アルベド",
+                "tags": [],
+                "replacements": [
+                    "雲菫",
+                    ""
+                ]
+            },
+            {
+                "id": 0,
+                "name": "夜蘭",
                 "tags": [],
                 "replacements": []
             },
             {
                 "id": 0,
-                "name": "",
-                "tags": [],
-                "replacements": []
-            },
-            {
-                "id": 0,
-                "name": "",
+                "name": "ノエル",
                 "tags": [],
                 "replacements": []
             }
         ],
-        "description": "",
-        "rotation": [],
-        "rotationDescription": ""
+        "description": "花が壊されるときは雲先生",
+        "rotation": [
+            {
+                "id": 0,
+                "member": "ゴロー",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ゴロー",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "アルベド",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "E.Hold"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "夜蘭",
+                "action": "N"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "E"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "Q"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ゴロー",
+                "action": "E.Press"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            },
+            {
+                "id": 0,
+                "member": "ノエル",
+                "action": "N3"
+            }
+        ],
+        "rotationDescription": "チーム一覧に表示する短いコメントを設定できます。表示が崩れない範囲で設定して下さい。"
     },
     {
         "id": 0,

@@ -157,70 +157,96 @@
         </div>
         <div class="message-area">
             <fieldset>
-                &nbsp;前提
-                <ol>
-                    <li>元素チャージ効率が変動するタイプの天賦や命ノ星座は無視する。 </li>
-                    <li>HP等ステータスの値を条件にして発動するタイプの天賦や命ノ星座は無視するか、最小の発動回数で計算する。</li>
-                    <li>敵の数は1。</li>
-                    <li>天賦および命ノ星座によって獲得できる元素エネルギーを計算する際に、キャラクターの天賦レベルやステータスを参照することがある。
-                        この時のキャラクターのステータス、天賦レベル、武器、聖遺物はげんかるくのセーブデータを参照する。
-                        セーブデータが存在しない場合は、天賦レベル8、武器と聖遺物なしのステータスで計算する。<br>
-                    </li>
-                </ol>
-                &nbsp;ルール
-                <ol>
-                    <li>大部分のキャラクター<br>
-                        元素スキル使用時に元素粒子が発生するタイプの元素スキルは、
-                        直後のアクション実行者が元素粒子を獲得する。
-                    </li>
-                    <li>胡桃、宵宮、神里綾人、放浪者 等<br>
-                        元素スキル使用時に元素粒子が発生せず、
-                        その後の通常攻撃または重撃命中時に元素粒子が発生するタイプの元素スキルは、
-                        継続時間一杯攻撃した場合に発生するであろう数の元素粒子を実行者自身が獲得する。
-                    </li>
-                    <li>フィッシュル、鍾離、アルベド、珊瑚宮心海、八重神子 等<br>
-                        存在時間の長い設置物からの攻撃命中時に元素粒子が発生するタイプの元素スキルは、
-                        ローテーションまたは継続時間の間ずっと攻撃し続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分する。
-                    </li>
-                    <li>アンバー、香菱、モナ、甘雨 等<br>
-                        存在時間の短い設置物からの攻撃命中または設置物が破壊された時に元素粒子が発生するタイプの元素スキルについても
-                        同様に出場時間を基準に全員に按分するが、存在時間の短さから実戦との乖離が大きくなる。(妥協)
-                    </li>
-                    <li>雷元素共鳴が生成する元素粒子<br>
-                        ローテーションの間クールタイムの5秒間隔で雷元素関連反応が起き続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分する。
-                    </li>
-                    <li>西風武器が生成する元素粒子<br>
-                        使用者の出場回数および出場時間(%)、ローテーションの長さから武器効果をトリガーする回数を決定する。
-                        トリガー回数はローテーションの長さを武器効果のクールタイムで割った数を超えない。
-                        元素粒子は基本的に装備者が獲得するが、装備者が1アクションだけで退場する場合は次のアクション実行者が獲得する。
-                    </li>
-                    <li>キャラクター別の特記事項
-                        <ul>
-                            <li>レザー、魈：元素爆発後キャラチェンまで元素スキルによる元素粒子生成なし</li>
-                            <li>セノ、フレミネ：元素爆発後キャラチェンまで元素スキルによる元素粒子生成数減</li>
-                            <li>ディルック：元素スキル⇒元素スキル2回で1セット</li>
-                            <li>刻晴：元素スキル⇒元素スキルまたは重撃で1セット</li>
-                            <li>タルタリヤ：元素粒子数は双剣モード9秒程度で設定</li>
-                            <li>九条裟羅、ファルザン(C5以下)：元素スキル⇒重撃で1セット</li>
-                            <li>鹿野院平蔵：元素粒子数は変格4(正論)で設定</li>
-                            <li>ニィロウ：元素スキル⇒元素スキルまたは通常攻撃3回で1セット</li>
-                            <li>アルハイゼン：元素粒子数は光幕攻撃6回で設定</li>
-                            <li>フレミネ：元素粒子数は圧力ランク3以下で設定</li>
-                        </ul>
-                    </li>
-                </ol>
+                <legend>
+                    <input class="hidden" type="checkbox" v-model="isShowUsage" id="show-usage-toggle">
+                    <label class="toggle-switch" for="show-usage-toggle">
+                        {{ displayName('元素チャージ効率計算機能について') }}
+                    </label>
+                </legend>
+                <div v-show="isShowUsage" style="text-align: left;">
+                    <div style="text-align: center;">{{ displayName('前提') }}</div>
+                    <ol>
+                        <li>元素チャージ効率が変動するタイプの天賦や命ノ星座は考慮しません。 </li>
+                        <li>HP等ステータスの現在値を条件にして発動するタイプの天賦や命ノ星座は無視するか、最小の発動回数で計算します。</li>
+                        <li>敵の数は1。</li>
+                        <li>天賦および命ノ星座によって獲得できる元素エネルギーを計算する際に、キャラクターの天賦レベルやステータスを参照する場合、キャラクターのステータス、天賦レベル、武器、聖遺物はげんかるくのセーブデータを使用します。
+                            セーブデータが存在しない場合は、天賦レベル8、武器と聖遺物なしのステータスで計算します。<br>
+                        </li>
+                    </ol>
+                    <div style="text-align: center;">{{ displayName('ローテーションの読み方') }}</div>
+                    <ol>
+                        <li>ローテーションの長さ<br>
+                            ローテーションに存在する元素スキルのクールタイムまたは元素爆発のクールタイムから決定します。
+                            元素スキルの発動回数は考慮しませんが、元素爆発の方は発動回数に応じて加算します。
+                            初期値は20秒。
+                        </li>
+                        <li>出場時間<br>
+                            ローテーションの内容から大雑把に計算して割り当てます。
+                            キャラクター毎アクション毎の所要時間のデータを持たないため、正確ではありません。
+                        </li>
+                        <li>大部分のキャラクターの元素スキル<br>
+                            元素スキル命中時に元素粒子が発生するタイプの元素スキルは、直後のアクション実行者が元素粒子を獲得します。
+                        </li>
+                        <li>胡桃、宵宮、神里綾人、放浪者 等の元素スキル<br>
+                            元素スキル使用時に元素粒子が発生せず、その後の通常攻撃または重撃命中時に元素粒子が発生するタイプの元素スキルは、継続時間一杯攻撃した場合に発生するであろう数の元素粒子を実行者自身が獲得します。
+                        </li>
+                        <li>フィッシュル、鍾離、アルベド、珊瑚宮心海、八重神子 等の元素スキル<br>
+                            存在時間の長い設置物からの攻撃命中時に元素粒子が発生するタイプの元素スキルは、ローテーションまたは継続時間の間ずっと攻撃し続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分します。
+                            また、設置系でない雷電将軍とナヒーダも同様の扱いとします。
+                        </li>
+                        <li>アンバー、香菱、モナ、甘雨 等の元素スキル<br>
+                            存在時間の短い設置物からの攻撃命中または設置物が破壊された時に元素粒子が発生するタイプの元素スキルについても同様に出場時間を基準に全員に按分するが、存在時間の短さから実戦との乖離が大きくなります。(妥協)
+                        </li>
+                        <li>雷元素共鳴が生成する元素粒子<br>
+                            ローテーションの間クールタイムの5秒間隔で雷元素関連反応が起き続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分します。
+                        </li>
+                        <li>西風武器が生成する元素粒子<br>
+                            使用者の出場回数および出場時間(%)、ローテーションの長さから武器効果をトリガーする回数を決定します。
+                            トリガー回数はローテーションの長さを武器効果のクールタイムで割った数までとします。
+                            元素粒子は基本的に装備者が獲得するが、装備者が1アクションだけで退場する場合は次のアクション実行者が獲得します。
+                        </li>
+                        <li>次のキャラクターについて、元素爆発の発動から退場するまでの間、元素スキルの元素粒子生成数を変更します。
+                            再出場時に元の生成数に戻ります。
+                            <ul>
+                                <li v-for="(character, index) in CHARACTER_E_DECREMENT_IN_BURST" :key="index">
+                                    {{ displayName(character) }}
+                                </li>
+                            </ul>
+                        </li>
+                        <li>次のキャラクターについて、元素スキルの発動から特定のアクションを実行するまでを1回の元素スキルとみなします。
+                            <ul>
+                                <li v-for="([character, untilMap], index) in CHARACTER_E_UNTIL_MAP.entries()" :key="index">
+                                    {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
+                                        Array.from(untilMap.entries())
+                                            .map(value => value[0]
+                                                .map(action => actionName(action)).join(displayName('または'))
+                                                + '×' + value[1] + displayName('回')).join(displayName('または'))
+                                    }}
+                                </li>
+                            </ul>
+                        </li>
+                        <li>次のキャラクターについて、それぞれの条件で元素粒子の生成数を固定しています。
+                            <ul>
+                                <li>タルタリヤ : 双剣モード9秒程度</li>
+                                <li>鹿野院平蔵 : 変格4(正論)</li>
+                                <li>アルハイゼン : 光幕攻撃6回</li>
+                                <li>フレミネ : 圧力ランク3以下</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
             </fieldset>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { countQ, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
+import { countQ, getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
-import { ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY } from "@/master";
+import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import _ from "lodash";
-import { getCtFromInfo, getParticleInfo } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, getCtFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
 
 type TCalculatorInput = {
     character: string,                  // キャラクター名
@@ -229,6 +255,7 @@ type TCalculatorInput = {
     initialWeapon: string | undefined,  // 初期武器名
     currentWeapon: string | undefined,  // 現在武器名
     weaponRefine: number,               // 武器精錬ランク 1-5
+    artifactSet4: string | undefined,   // 聖遺物4セット効果
     onField: number,                    // 出場率
     replaceWeapons: string[],           // 置き換え武器名    
 }
@@ -278,6 +305,7 @@ export default defineComponent({
             '弓': ['西風猟弓'],
             '法器': ['西風秘典', '金珀·試作'],
         };
+        const isShowUsage = ref(false);
 
         onMounted(() => {
             setupCharacterDetailMap().then(() => {
@@ -378,6 +406,10 @@ export default defineComponent({
                 const memberResult = teamMemberResult ? teamMemberResult[member.id] : undefined;
                 const weapon = memberResult?.characterInput.weapon;
                 const weaponRefine = memberResult?.characterInput.武器精錬ランク ?? 1;
+                let artifactSet4 = undefined;
+                if (memberResult && memberResult.characterInput.artifactSets.length == 2) {
+                    artifactSet4 = memberResult.characterInput.artifactSets[0] == memberResult.characterInput.artifactSets[1] ? memberResult.characterInput.artifactSets[0] : undefined;
+                }
                 let replaceWeapons: string[] = [];
                 if (characterDetail) {
                     replaceWeapons = REPLACE_WEAPON_MAP[characterDetail.武器];
@@ -389,6 +421,7 @@ export default defineComponent({
                     initialWeapon: weapon,
                     currentWeapon: weapon,
                     weaponRefine: weaponRefine,
+                    artifactSet4: artifactSet4,
                     onField: onFields[i],
                     replaceWeapons: replaceWeapons,
                 });
@@ -482,6 +515,7 @@ export default defineComponent({
                 const constellation = calculatorInput[i].constellation;
                 const weapon = calculatorInput[i].currentWeapon;
                 const weaponRefine = calculatorInput[i].weaponRefine;
+                const artifactSet4 = calculatorInput[i].artifactSet4;
                 // キャラクターの元素粒子
                 [
                     getParticleByCharacter(character, constellation, team, rotationLength.value, team.rotation, onFields),
@@ -509,6 +543,12 @@ export default defineComponent({
                     const energyByWeapon = getEnergyByWeapon(character, weapon, weaponRefine, team, rotationLength.value, team.rotation);
                     if (energyByWeapon) {
                         pushInputRowEnergy(newInputRowEnergy, newMessages, character, energyByWeapon);
+                    }
+                }
+                if (artifactSet4) {
+                    const energyByArtifact = getEnergyByArtifact(character, artifactSet4, team, rotationLength.value, team.rotation);
+                    if (energyByArtifact) {
+                        pushInputRowEnergy(newInputRowEnergy, newMessages, character, energyByArtifact);
                     }
                 }
             }
@@ -598,6 +638,8 @@ export default defineComponent({
             }
             return result;
         })
+        const CHARACTER_E_DECREMENT_IN_BURST = computed(() =>
+            Object.keys(PARTICLE_MASTER).filter(key => Object.keys(PARTICLE_MASTER[key]).filter(action => action.indexOf('burst') != -1).length > 0).sort());
 
         const characterImgSrc = (character: string) => getCharacterMaster(character)?.icon_url ?? IMG_SRC_DUMMY;
         const weaponImgSrc = (character: string, weapon?: string) => {
@@ -659,6 +701,11 @@ export default defineComponent({
                             result = weaponMaster.icon_url;
                         }
                     }
+                } else if ([RECHARGE_ENERGY_ARTIFACT].includes(row.rechargeKind) && row.triggerName) { // 武器
+                    const artifactSetMater = ARTIFACT_SET_MASTER[(row.triggerName as TArtifactSetKey)];
+                    if (artifactSetMater) {
+                        result = artifactSetMater.image;
+                    }
                 }
             }
             return result;
@@ -687,6 +734,21 @@ export default defineComponent({
                 } else if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) {
                     result = row.triggerName;
                 }
+            }
+            return result;
+        }
+        const actionName = (action: string) => {
+            let result = '';
+            if (action.startsWith('N')) {
+                result = '通常攻撃';
+            } else if (action === 'C') {
+                result = '重撃';
+            } else if (action === 'P') {
+                result = '落下攻撃';
+            } else if (action.startsWith('E')) {
+                result = '元素スキル';
+            } else if (action === 'Q') {
+                result = '元素爆発';
             }
             return result;
         }
@@ -731,6 +793,10 @@ export default defineComponent({
             inputRowParticleEnemy,
             burstCounts,
             messages,
+            CHARACTER_E_DECREMENT_IN_BURST,
+            CHARACTER_E_UNTIL_MAP,
+            CHARACTER_E_DELAY_MAP,
+            actionName,
             characterImgSrc,
             weaponImgSrc,
             replaceWeaponImgSrc,
@@ -743,6 +809,7 @@ export default defineComponent({
             particleRecharges,
             energyRechargeGls,
             triggerName,
+            isShowUsage,
 
             inputOnChange,
             replaceWeaponOnClick,
@@ -871,8 +938,16 @@ ol {
     padding-left: 4rem;
 }
 
-ol ul {
+ol li {
+    margin-bottom: 1rem;
+}
+
+ul {
     padding-left: 3rem;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
 }
 
 div.message-area {
@@ -887,5 +962,13 @@ div.message-area {
 span.character {
     font-weight: bold;
     color: yellow;
+}
+
+.message-area fieldset {
+    text-align: center;
+}
+
+.message-area fieldset legend label {
+    width: 50rem;
 }
 </style>

@@ -283,6 +283,21 @@ export const PARTICLE_MASTER: TParticleMaster = {
     },
 }
 
+/** 元素爆発で元素スキル再発動 または 継続時間延長するキャラクターたち */
+export const CHARACTER_Q_TO_E_ARR = ['フィッシュル', '珊瑚宮心海'];
+
+/** 元素スキル後に特定のアクションを実行するキャラクターとそのアクションと回数 */
+export const CHARACTER_E_UNTIL_MAP = new Map<string, Map<string[], number>>();
+CHARACTER_E_UNTIL_MAP.set('ディルック', new Map([[['E'], 2],]));            // EEE
+CHARACTER_E_UNTIL_MAP.set('刻晴', new Map([[['E', 'C'], 1],]));             // E(E|C)
+CHARACTER_E_UNTIL_MAP.set('ニィロウ', new Map([[['E', 'N'], 3],]));         // E(E|N){3}
+CHARACTER_E_UNTIL_MAP.set('フレミネ', new Map([[['E'], 1], [['N'], 4],]));  // E(E|N{4})
+
+/** 元素スキルのあとに特定のアクションを実行した時に元素粒子が発生するキャラクターとそのアクション */
+export const CHARACTER_E_DELAY_MAP = new Map<string, string[]>();
+CHARACTER_E_DELAY_MAP.set('九条裟羅', ['C']);
+CHARACTER_E_DELAY_MAP.set('ファルザン', ['C']);
+
 export function getElementalSkillActions(character: string) {
     const particleMaster = PARTICLE_MASTER[character];
     return particleMaster ? Object.keys(particleMaster).filter(action => action.startsWith('E') && action.indexOf('(burst)') == -1) : ['E'];

@@ -43,17 +43,10 @@
     </div>
 
     <div class="pane4">
-      <textarea v-if="!isViewOnly" v-model="builddataStr" style="width: 90%; height: 100px;"></textarea>
+      <textarea v-if="false" v-model="builddataStr" style="width: 90%; height: 100px;"></textarea>
     </div>
 
     <div class="footer">
-      <hr />
-      <h2>チーム編成例 Ver.0.1.0</h2>
-      <dl class="history">
-        <dt>0.1.0</dt>
-        <dd>
-        </dd>
-      </dl>
     </div>
   </div>
 </template>
@@ -82,7 +75,7 @@ export default defineComponent({
       useScope: "global",
     });
     const { displayName, localeList, targetValue, setI18nLanguage } = CompositionFunction();
-    const isViewOnly = ref(true);
+    const isViewOnly = ref(false);
     const teamEditorVisible = ref(false);
     const numberOfTeams = ref(NUMBER_OF_TEAMS);
     const teams = reactive([] as TTeam[]);
