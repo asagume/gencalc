@@ -1,0 +1,515 @@
+<template>
+  <div class="rotation-box" v-if="watchCount">
+    <div class="pane1">
+      <fieldset class="icon-list">
+        <template v-for="member in  team.members " :key="member.id">
+          <span v-if="member.name">
+            <div class="action with-tooltip">
+              <img :class="'action-icon' + bgColorClass(member.name)" :src="normalAttackIconSrc(member.name)"
+                :alt="displayName(member.name) + ' ' + displayName('通常攻撃')" @click="listActionOnClick(member, 'N')" />
+              <span class="tooltip">
+                {{ displayName(member.name) + ' ' + displayName('通常攻撃') }}
+              </span>
+            </div>
+            <div class="action with-tooltip">
+              <img :class="'action-icon' + bgColorClass(member.name)" :src="elementalSkillIconSrc(member.name)"
+                :alt="displayName(member.name) + ' ' + displayName('元素スキル')" @click="listActionOnClick(member, 'E')" />
+              <span class="tooltip">
+                {{ displayName(member.name) + ' ' + displayName("元素スキル") }}
+              </span>
+            </div>
+            <div class="action with-tooltip">
+              <img :class="'action-icon' + bgColorClass(member.name)" :src="elementalBurstIconSrc(member.name)"
+                :alt="displayName(member.name) + ' ' + displayName('元素爆発')" @click="listActionOnClick(member, 'Q')" />
+              <span class="tooltip">
+                {{ displayName(member.name) + ' ' + displayName('元素爆発') }}
+              </span>
+            </div>
+          </span>
+        </template>
+        <table class="control-button">
+          <tr>
+            <td>
+              <span class="material-symbols-outlined control-button" @click="$emit('click:jump-to-team')">stat_2</span>
+            </td>
+            <td>
+              <label :class="removeMode ? 'checked' : ''">
+                <input type="checkbox" v-model="removeMode">
+                <span class="material-symbols-outlined">delete</span>
+              </label>
+            </td>
+            <td>
+              <div v-if="selectedAction">
+                <img :class="'action-icon handle' + bgColorClass(selectedAction.member)"
+                  :src="getActionDetail(selectedAction).icon_url" :alt="displayName(getActionDetail(selectedAction).名前)"
+                  @click="selectedActionOnClick(selectedAction)" />
+              </div>
+              <div class="action-attribute" v-if="selectedAction">
+                {{ actionDisplay(selectedAction) }}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+      <fieldset class="rotation-list">
+        <draggable :list="rotationList" item-key="id" :sort="true" handle=".handle" :delay="100" :animation="200"
+          @change="rotationListOnChange">
+          <template #item="{ element }">
+            <div class="rotation-item">
+              <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
+                :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
+              <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
+                <div class="with-tooltip handle">
+                  <img :class="'action-icon' + bgColorClass(element.member) + selectedActionClass(element)"
+                    :src="getActionDetail(element).icon_url" :alt="displayName(getActionDetail(element).名前)"
+                    @click="rotationActionOnClick(element)" />
+                  <div v-if="removeMode" class="remove-mark" @click="removeItemOnClick(element)"></div>
+                </div>
+                <div class="action-attribute">
+                  {{ actionDisplay(element) }}
+                </div>
+              </div>
+            </div>
+          </template>
+        </draggable>
+        <br />
+        <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
+          @change="updateRotation"></textarea>
+      </fieldset>
+      <br />
+    </div>
+    <div class="pane2" v-if="true">
+      <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult"
+        :constellations="constellations" />
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import draggable from "vuedraggable";
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import CompositionFunction from "@/components/CompositionFunction.vue";
+import { CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
+import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
+import _ from "lodash";
+import ERCalculator from './ERCalculator.vue';
+import { getElementalSkillActions } from "@/particlemaster";
+
+export default defineComponent({
+  name: "TeamRotation",
+  components: {
+    draggable,
+    ERCalculator,
+  },
+  props: {
+    team: { type: Object as PropType<TTeam>, required: true },
+    teamMemberResult: { type: Object as PropType<TTeamMemberResult> },
+    constellations: { type: Object as PropType<TConstellation> },
+  },
+  emit: ['update:rotation', 'click:jump-to-team'],
+  setup(props, context) {
+    const { displayName } = CompositionFunction();
+    const removeMode = ref(false);
+    const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
+    const normalAttackDans = reactive({} as { [key: string]: number }); // 通常攻撃の段数
+    const elementalSkillActions = reactive({} as { [key: string]: string[] }); // 元素スキル
+    const rotationList = reactive([] as TActionItem[]);
+    const actionId = ref(0);
+    const rotationDescription = ref('');
+    const selectedActionId = ref(-1);
+
+    const watchCount = ref(0);
+    watch(props, async () => {
+      await watchFunc(props.team);
+    });
+
+    async function watchFunc(team: TTeam) {
+      await setupCharacterDetailMap();
+      for (const member of team.members) {
+        if (member.name) {
+          normalAttackDans[member.name] = getNormalAttackDan(member.name);
+          elementalSkillActions[member.name] = getElementalSkillActions(member.name);
+        }
+      }
+      const isSameMember = team.rotation.filter(rotation => !team.members.filter(member => member.name).map(member => member.name).includes(rotation.member)).length == 0;
+      if (isSameMember) {
+        if (team.rotation.length) {
+          const workArr = _.cloneDeep(team.rotation);
+          workArr.forEach(rotation => {
+            if (rotation.action.startsWith('E')) {
+              const actions = elementalSkillActions[rotation.member];
+              if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
+                rotation.action = actions[0];
+              }
+            }
+          })
+          rotationList.splice(0, rotationList.length, ...workArr);
+          actionId.value = Math.max(...rotationList.map(s => s.id)) ?? rotationList.length;
+        } else {
+          rotationList.splice(0, rotationList.length);
+          actionId.value = 0;
+        }
+      } else {
+        rotationList.splice(0, rotationList.length);
+        actionId.value = 0;
+        updateRotation();
+      }
+      rotationDescription.value = team.rotationDescription;
+      watchCount.value++;
+    }
+
+    onMounted(() => {
+      watchFunc(props.team);
+      props.team.members.forEach(member => {
+        normalAttackIconSrc(member.name);
+      })
+    })
+
+    const selectedAction = computed((): TActionItem | undefined => {
+      const actionArr = rotationList.filter(rotation => rotation.id == selectedActionId.value);
+      return actionArr.length > 0 ? actionArr[0] : undefined;
+    })
+
+    function getNormalAttackDan(name: string) {
+      watchCount.value;
+      let dan = 1;
+      const master = getCharacterDetail(name);
+      if (master) {
+        for (const detail of [master.特殊通常攻撃?.詳細, master.通常攻撃?.詳細]) {
+          if (!detail) continue;
+          let workDan = 1;
+          detail.forEach((dmgDetail: any) => {
+            if (dmgDetail.名前) {
+              const ret = dmgDetail.名前.match(/.*(\d)段.+/);
+              if (!ret) return;
+              const tempDan = Number(ret[1]);
+              if (tempDan > workDan) {
+                workDan = tempDan;
+              }
+            }
+          })
+          if (dan < workDan) { // 元素スキル、元素爆発で通常攻撃が変化する場合は、段数の多い方を採用します
+            dan = workDan;
+          }
+        }
+      }
+      return dan;
+    }
+
+    const getActionDetail = (item: TActionItem) => {
+      let result;
+      const master = getCharacterDetail(item.member);
+      if (master) {
+        if (NORMAL_ATTACK_ACTION_LIST.includes(item.action) || item.action.startsWith('N')) { // 通常攻撃, 重撃, 落下攻撃
+          result = master.通常攻撃;
+        } else if (item.action.startsWith('E')) { // 元素スキル
+          result = master.元素スキル;
+        } else if (item.action == 'Q') { // 元素爆発
+          result = master.元素爆発;
+        }
+      }
+      return result;
+    };
+
+    const previousRotation = (item: TActionItem) => {
+      let result;
+      for (const rotation of rotationList) {
+        if (item.id == rotation.id) {
+          break;
+        }
+        result = rotation;
+      }
+      return result;
+    }
+
+    const normalAttackIconSrc = (character: string) => getCharacterDetail(character)?.通常攻撃.icon_url ?? IMG_SRC_DUMMY;
+    const elementalSkillIconSrc = (character: string) => getCharacterDetail(character)?.元素スキル.icon_url ?? IMG_SRC_DUMMY;
+    const elementalBurstIconSrc = (character: string) => getCharacterDetail(character)?.元素爆発.icon_url ?? IMG_SRC_DUMMY;
+    const colorClass = (character: string) => {
+      const master = getCharacterMaster(character);
+      return master ? ' ' + (ELEMENT_COLOR_CLASS as any)[master.元素] : '';
+    }
+    const bgColorClass = (character: string) => {
+      const master = getCharacterMaster(character);
+      return master ? ' ' + (ELEMENT_BG_COLOR_CLASS as any)[master.元素] : '';
+    }
+
+    function isActionNormalAttack(action: string) {
+      return NORMAL_ATTACK_ACTION_LIST.includes(action) || action.startsWith('N');
+    }
+
+    const actionDisplay = (item: TActionItem) =>
+      item.action.startsWith('E') ? item.action.replace(/^E\./, '') : item.action;
+
+    const selectedActionClass = (item: TActionItem) =>
+      selectedActionId.value == item.id ? ' selected' : '';
+
+    const updateRotation = () => {
+      context.emit('update:rotation', rotationList, rotationDescription.value);
+    }
+
+    const rotationListOnChange = () => {
+      updateRotation();
+    }
+
+    const listActionOnClick = (member: TMember, actionKey: string) => {
+      let action = actionKey;
+      if (isActionNormalAttack(action)) {
+        const workArr = rotationList.filter(s => s.member == member.name && isActionNormalAttack(s.action));
+        if (workArr.length > 0) {
+          action = workArr[workArr.length - 1].action;
+        }
+      } else if (action.startsWith('E')) {
+        const workArr = rotationList.filter(s => s.member == member.name && s.action.startsWith('E'));
+        if (workArr.length > 0) {
+          action = workArr[workArr.length - 1].action;
+        } else {
+          const actions = elementalSkillActions[member.name];
+          if (actions && actions.length > 0) {
+            action = actions[0];
+          }
+        }
+      }
+      rotationList.push({
+        id: ++actionId.value,
+        member: member.name,
+        action: action,
+      });
+      updateRotation();
+    }
+
+    const rotationActionOnClick = (item: TActionItem) => {
+      if (removeMode.value) {
+        removeItemOnClick(item);
+      } else if (selectedActionId.value == item.id) {
+        selectedActionId.value = -1;
+      } else if (item.action.startsWith('N')) {
+        selectedActionId.value = item.id;
+      } else if (item.action.startsWith('E') && elementalSkillActions[item.member].length > 1) {
+        selectedActionId.value = item.id;
+      } else {
+        selectedActionId.value = -1;
+      }
+    }
+
+    const selectedActionOnClick = (item: TActionItem) => {
+      if (isActionNormalAttack(item.action)) {
+        if (item.action.startsWith('N')) { // 通常攻撃
+          const master = getCharacterDetail(item.member);
+          const work = item.action.substring(1, 2);
+          let n = work ? Number(work) : 1;
+          const dan = normalAttackDans[item.member] ?? 1;
+          if (master && (CHARGED_WITH_NORMAL_WEAPON.includes(master.武器) || CHARGED_WITH_NORMAL_CHARACTER.includes(item.member))) {
+            if (item.action.length < 3) {
+              item.action = 'N' + n + 'C';
+            } else {
+              item.action = ++n > dan ? 'P' : 'N' + n;
+            }
+          } else {
+            item.action = ++n > dan ? 'C' : 'N' + n;
+          }
+        } else { // 重撃, 落下攻撃
+          let index = NORMAL_ATTACK_ACTION_LIST.indexOf(item.action);
+          index = index < (NORMAL_ATTACK_ACTION_LIST.length - 1) ? index + 1 : 0;
+          item.action = NORMAL_ATTACK_ACTION_LIST[index];
+        }
+      } else if (item.action.startsWith('E')) { // 元素スキル
+        const actions = elementalSkillActions[item.member];
+        if (actions && actions.length > 1) {
+          let index = actions.indexOf(item.action);
+          index = index < (actions.length - 1) ? index + 1 : 0;
+          item.action = actions[index];
+        }
+      }
+      updateRotation();
+    }
+
+    const removeItemOnClick = (item: TActionItem) => {
+      rotationList.splice(0, rotationList.length, ...rotationList.filter(s => s != item));
+      updateRotation();
+    }
+
+    return {
+      displayName,
+      IMG_SRC_DUMMY,
+      removeMode,
+
+      watchCount,
+      normalAttackIconSrc,
+      elementalSkillIconSrc,
+      elementalBurstIconSrc,
+      colorClass,
+      bgColorClass,
+
+      getCharacterMaster,
+
+      rotationList,
+      rotationDescription,
+      previousRotation,
+      getCharacterDetail,
+      getActionDetail,
+      actionDisplay,
+      selectedAction,
+      selectedActionClass,
+
+      rotationListOnChange,
+      listActionOnClick,
+      rotationActionOnClick,
+      removeItemOnClick,
+      selectedActionOnClick,
+      updateRotation,
+    };
+  },
+});
+</script>
+<style scoped>
+@media all and (min-width: 800px) {
+  .rotation-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "pane1 pane2";
+  }
+}
+
+@media all and (max-width: 799px) {
+  .rotation-box {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "pane1"
+      "pane2";
+  }
+}
+
+.pane1 {
+  grid-area: pane1;
+}
+
+.pane2 {
+  grid-area: pane2;
+}
+
+fieldset.icon-list {
+  padding-bottom: 0px;
+}
+
+div.action {
+  display: inline-block;
+}
+
+img.action-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+img.character-icon {
+  vertical-align: top;
+  width: 65px;
+  height: 50px;
+  object-position: top;
+  object-fit: cover;
+}
+
+fieldset.rotation-list {
+  text-align: left;
+  background-color: whitesmoke;
+}
+
+table.control-button {
+  table-layout: fixed;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+table.control-button td {
+  height: 62px;
+  vertical-align: bottom;
+}
+
+table.control-button td:first-child,
+table.control-button td:last-child {
+  width: 45px;
+}
+
+table.control-button button {
+  font-size: 12px;
+  background-color: transparent;
+  border-color: silver;
+  border-style: none;
+}
+
+span.control-button {
+  color: orange;
+  font-size: 3rem;
+}
+
+table.control-button input[type="checkbox"] {
+  display: none;
+}
+
+.control-button label.checked {
+  color: orange;
+}
+
+div.rotation-item {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  font-size: 14px;
+  padding-left: 4px;
+  padding-bottom: 4px;
+}
+
+div.action-item {
+  display: inline-block;
+  text-align: center;
+}
+
+div.action-attribute {
+  text-align: center;
+  text-shadow: 0px 1px 0px #003366;
+  font-size: 14px;
+}
+
+.selected {
+  opacity: 0.5;
+  border-radius: 5px;
+}
+
+.tooltip {
+  top: -3rem;
+}
+
+div.remove-mark {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 15px);
+}
+
+.remove-mark::before,
+.remove-mark::after {
+  content: '';
+  width: 30px;
+  height: 3px;
+  background: black;
+  position: absolute;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.remove-mark::after {
+  transform: translateY(-50%) rotate(135deg);
+}
+
+textarea.rotation-description {
+  display: block;
+  width: calc(100% - 30px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3px 5px;
+}
+</style>
