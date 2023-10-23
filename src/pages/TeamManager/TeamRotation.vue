@@ -76,7 +76,44 @@
         <textarea class="rotation-description" v-model="rotationDescription" rows="10" maxlength="400"
           @change="updateRotation"></textarea>
       </fieldset>
-      <br />
+      <br /> <br />
+      <br /> <br />
+      <table class="guide">
+        <tr>
+          <th>N</th>
+          <td>通常攻撃1段</td>
+          <th>N2</th>
+          <td>通常攻撃2段</td>
+          <th>NX</th>
+          <td>通常攻撃X段</td>
+        </tr>
+        <tr>
+          <th>NC</th>
+          <td>通常攻撃1段+重撃</td>
+          <th>N2C</th>
+          <td>通常攻撃2段+重撃</td>
+          <th>NXC</th>
+          <td>通常攻撃X段+重撃</td>
+        </tr>
+        <tr>
+          <th>P</th>
+          <td>落下攻撃</td>
+          <td colspan="4"></td>
+        </tr>
+        <tr>
+          <th>E</th>
+          <td>元素スキル</td>
+          <th>E.Press</th>
+          <td>元素スキル(一回押し)</td>
+          <th>E.Hold</th>
+          <td>元素スキル(長押し)</td>
+        </tr>
+        <tr>
+          <th>Q</th>
+          <td>元素爆発</td>
+          <td colspan="4"></td>
+        </tr>
+      </table>
     </div>
     <div class="pane2" v-if="true">
       <ERCalculator :team="team" :rotationList="rotationList" :teamMemberResult="teamMemberResult"
@@ -511,5 +548,32 @@ textarea.rotation-description {
   margin-left: auto;
   margin-right: auto;
   padding: 3px 5px;
+}
+
+table.guide {
+  width: calc(100% - 15px);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  vertical-align: top;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-radius: 10px;
+  border: 1px solid silver;
+  padding: 4px 4px 2px 4px;
+}
+
+.guide th {
+  width: 9rem;
+}
+
+.guide th,
+.guide td {
+  border-bottom: 1px solid silver;
+}
+
+.guide tr:last-child th,
+.guide tr:last-child td {
+  border-bottom: none;
 }
 </style>
