@@ -96,6 +96,11 @@
           <td>通常攻撃X段+重撃</td>
         </tr>
         <tr>
+          <th>C</th>
+          <td>重撃</td>
+          <td colspan="4"></td>
+        </tr>
+        <tr>
           <th>P</th>
           <td>落下攻撃</td>
           <td colspan="4"></td>
