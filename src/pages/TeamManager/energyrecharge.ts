@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
+import { NUMBER_OF_MEMBERS, TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
 import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_TO_E_ARR, PARTICLE_MASTER, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
 
 export const RECHARGE_ENERGY_SKILL = "01";              // 元素スキルによる元素エネルギー回復
@@ -15,10 +15,10 @@ export const RECHARGE_PARTICLE_FAVONIUS = "16";         // 武器効果（西風
 export const RECHARGE_PARTICLE_RESONANCE = "18";        // 元素共鳴による元素粒子生成
 export const RECHARGE_PARTICLE_ENEMY = "19";            // 敵による元素粒子生成
 
-// rechargeKind, triggerName, energies[0], energies[1], energies[2], energies[3], messages[]
-export type TEREnergy = [string, string, number, number, number, number, string[]];
-// rechargeKind, triggerName, element, particles[0], particles[1], particles[2], particles[3], messages[]
-export type TERParticle = [string, string, string, number, number, number, number, string[]];
+// rechargeKind, triggerName, energies[], messages[]
+export type TEREnergy = [string, string, number[], string[]];
+// rechargeKind, triggerName, element, particles[], messages[]
+export type TERParticle = [string, string, string, number[], string[]];
 
 export function isRechargeKindEnergy(rechargeKind: string) {
     return rechargeKind ? rechargeKind.startsWith('0') : false;
@@ -128,12 +128,12 @@ export function countQ(character?: string, rotationList?: TActionItem[]) {
 }
 /** 出場時間(%) */
 export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[], constellations: number[]) {
-    let result = [0, 0, 0, 0];
+    let result = _.fill(Array(NUMBER_OF_MEMBERS), 0);
     const memberNameArr = team.members.map(member => member.name);
     if (rotationList?.length) {
-        result = [0, 0, 0, 0];
+        result = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         const multiple = Math.ceil(100 / rotationLength);
-        const lengthList = [0, 0, 0, 0];
+        const lengthList = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         let curCharacter;
         let length = 0;
         let isNCPIgnore = false;
@@ -255,7 +255,7 @@ export function getEnergyByCharacter(
     let myEnergy = 0; // 自分の元素エネルギー
     let allEnergy = 0; // 全員の元素エネルギー
     let otherEnergy = 0; // 自分以外全員の元素エネルギー
-    const herEnergies = [0, 0, 0, 0]; // 誰かの元素エネルギー
+    const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0); // 誰かの元素エネルギー
     if (!character) {
         return [];
     } else if (character === 'ヌヴィレット') {
@@ -576,7 +576,7 @@ export function getEnergyByCharacter(
     const result: TEREnergy[] = [];
     if (resultArr.length) {
         resultArr.forEach(entry => {
-            const energies = [0, 0, 0, 0];
+            const energies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
             if (entry[2]) {
                 energies[myIndex] += entry[2];
             }
@@ -595,7 +595,7 @@ export function getEnergyByCharacter(
             for (let i = 0; i < entry[5].length; i++) {
                 energies[i] += entry[5][i];
             }
-            result.push([entry[0], entry[1], energies[0], energies[1], energies[2], energies[3], entry[6]]);
+            result.push([entry[0], entry[1], energies, entry[6]]);
         })
     }
     return result;
@@ -610,7 +610,7 @@ export function getEnergyByWeapon(
     rotationList: TActionItem[] | undefined,
 ): TEREnergy | undefined {
     const rechargeKind = RECHARGE_ENERGY_WEAPON;
-    const energies = [0, 0, 0, 0];
+    const energies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
     const messages: string[] = [];
     const memberNameArr = team.members.map(member => member.name);
     const myIndex = memberNameArr.indexOf(character);
@@ -671,7 +671,7 @@ export function getEnergyByWeapon(
         energies[myIndex] += myEnergy;
     }
     if (energies.filter(e => e > 0).length || messages.length) {
-        return [rechargeKind, weapon, energies[0], energies[1], energies[2], energies[3], messages];
+        return [rechargeKind, weapon, energies, messages];
     }
     return undefined;
 }
@@ -684,7 +684,7 @@ export function getEnergyByArtifact(
     rotationList: TActionItem[] | undefined,
 ): TEREnergy | undefined {
     const rechargeKind = RECHARGE_ENERGY_ARTIFACT;
-    const energies = [0, 0, 0, 0];
+    const energies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
     const messages: string[] = [];
     const memberNameArr = team.members.map(member => member.name);
     const qCount = countQ(character, rotationList);
@@ -702,7 +702,7 @@ export function getEnergyByArtifact(
         }
     }
     if (energies.filter(e => e > 0).length || messages.length) {
-        return [rechargeKind, artifactSet4, energies[0], energies[1], energies[2], energies[3], messages];
+        return [rechargeKind, artifactSet4, energies, messages];
     }
     return undefined;
 }
@@ -737,12 +737,12 @@ export function getParticleByCharacter(
         const particleInfo = getParticleInfo(character, action);
         if (particleInfo) {
             const num = getParticleNumFromInfo(particleInfo) * Math.trunc(Math.min(rotationLength, Math.min(eCount, cCount) * 5.5 + qCount * 18) / 5.5);
-            const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
+            const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
             splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
             resultMap.set(action, resultVal);
         }
     } else {
-        const timeArr = [0, 0, 0, 0];
+        const timeArr = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         let curCharacter;
         let isBursting = false;
         let untilMap = new Map<string[], number>();
@@ -786,7 +786,7 @@ export function getParticleByCharacter(
                         delayActions = undefined;
                         action = 'E';
                     }
-                    const resultVal = resultMap.get(action) ?? [0, 0, 0, 0];
+                    const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
                     timeArr[myIndex] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[myIndex], isBursting);
                     resultMap.set(action, resultVal);
                 }
@@ -798,7 +798,7 @@ export function getParticleByCharacter(
     const characterMaster = getCharacterMaster(character);
     const element = characterMaster?.元素 ?? '無色';
     resultMap.forEach((value, key) => {
-        result.push([kind, key, element, value[0], value[1], value[2], value[3], []]);
+        result.push([kind, key, element, value, []]);
     })
     return result;
 }
@@ -811,7 +811,7 @@ export function getParticleByCharacterExtra(
     rotationList: TActionItem[] | undefined,
     onFields: number[],
 ): TERParticle[] | undefined {
-    const resultArr = new Array<[string, string, string, number, number]>(); // [rechargeType, triggerName, element, num]
+    const resultArr = new Array<[string, string, string, number, number]>(); // [rechargeType, triggerName, element, myParticle, allParticle]
     const messages: string[] = [];
     let myParticle = 0;
     let allParticle = 0; // 分配
@@ -832,9 +832,9 @@ export function getParticleByCharacterExtra(
         allParticle = Math.trunc(0.5 * Math.max(1, countN(undefined, rotationList)));
         resultArr.push([RECHARGE_PARTICLE_CONSTELLATION, '6', '雷', myParticle, allParticle]);
     }
-    let result: TERParticle[] | undefined;
+    const result: TERParticle[] = [];
     resultArr.forEach(entry => {
-        const particles = [0, 0, 0, 0];
+        const particles = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         if (entry[3]) {
             const myIndex = team.members.map(member => member.name).indexOf(character);
             if (myIndex >= 0) {
@@ -842,11 +842,9 @@ export function getParticleByCharacterExtra(
             }
         }
         if (entry[4]) {
-            for (let i = 0; i < particles.length; i++) {
-                particles[i] += entry[4] * onFields[i] / 100;
-            }
+            splitNumToArrByOnFieldRate(particles, entry[4], team, onFields);
         }
-        result = [[entry[0], entry[1], entry[2], particles[0], particles[1], particles[2], particles[3], messages]];
+        result.push([entry[0], entry[1], entry[2], particles, messages]);
     })
     return result;
 }
@@ -864,12 +862,12 @@ export function getParticleByWeapon(
     const kind = RECHARGE_PARTICLE_FAVONIUS;
     const memberNameArr = team.members.map(member => member.name);
     if (['西風剣', '西風大剣', '西風長槍', '西風猟弓', '西風秘典'].includes(weapon)) {
-        result = [kind, weapon, '無色', 0, 0, 0, 0, []];
+        result = [kind, weapon, '無色', _.fill(Array(NUMBER_OF_MEMBERS), 0), []];
         const ct = [12, 10.5, 9, 7.5, 6][weaponRefine - 1];
         let triggerCnt = 1;
         if (rotationLength && rotationList && onFields) {
             const rindexArr: number[] = [];
-            let fieldCnt = 0;
+            let fieldCnt = 0; // 出場回数
             for (let i = 0; i < rotationList.length; i++) {
                 if (rotationList[i].member == character) {
                     fieldCnt += (i === 0 || rotationList[i - 1].member != character) ? 1 : 0;
@@ -894,11 +892,11 @@ export function getParticleByWeapon(
                     nxtCharacter = nxtRotation.member;
                 }
                 const toIndex = memberNameArr.indexOf(nxtCharacter);
-                (result[3 + toIndex] as number) += 3;
+                (result[3][toIndex] as number) += 3;
             }
         } else {
             const toIndex = memberNameArr.indexOf(character);
-            result[3 + toIndex] = 3 * triggerCnt;
+            result[3][toIndex] = 3 * triggerCnt;
         }
     }
     return result;
@@ -909,22 +907,29 @@ export function getParticleByResonance(
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
     onFields: number[],
-): TERParticle | undefined {
-    let result: TERParticle | undefined;
-    const kind = RECHARGE_PARTICLE_RESONANCE;
+): TERParticle[] | undefined {
+    const resultArr = new Array<[string, string, string, number, number, string[]]>(); // [rechargeType, triggerName, element, myParticle, allParticle, messages]
+    const messages: string[] = [];
+    let allParticle = 0; // 分配
     const memberNum = team.members.filter(member => member.name).length;
-    if (memberNum !== 4) return result;
+    if (memberNum !== 4) return undefined;
     const electroCount = team.members.filter(member => getCharacterMaster(member.name)?.元素 === '雷').length;
     if (electroCount >= 2) { // 雷元素共鳴
-        // 超電導、過負荷、感電、原激化、超激化または超開花反応を起こした時、100%の確率で雷元素粒子を生成する。クールタイム5秒。
+        messages.push('超電導、過負荷、感電、原激化、超激化または超開花反応を起こした時、100%の確率で雷元素粒子を生成する。クールタイム5秒。');
         if (team.members.filter(member => ['氷', '炎', '水', '草'].includes(getCharacterMaster(member.name)?.元素 ?? '--')).length) {
             const ct = 5;
-            const num = 1 * Math.trunc(rotationLength / ct);
-            const workArr = [0, 0, 0, 0];
-            splitNumToArrByOnFieldRate(workArr, num, team, onFields);
-            result = [kind, '雷元素共鳴', '雷', workArr[0], workArr[1], workArr[2], workArr[3], []];
+            allParticle = 1 * Math.trunc(rotationLength / ct);
         }
+        resultArr.push([RECHARGE_PARTICLE_RESONANCE, '雷元素共鳴', '雷', 0, allParticle, messages]);
     }
+    const result: TERParticle[] =[];
+    resultArr.forEach(entry => {
+        const particles = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        if (entry[4]) {
+            splitNumToArrByOnFieldRate(particles, entry[4], team, onFields);
+        }
+        result.push([entry[0], entry[1], entry[2], particles, messages]);
+    })
     return result;
 }
 

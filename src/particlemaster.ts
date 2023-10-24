@@ -283,6 +283,24 @@ export const PARTICLE_MASTER: TParticleMaster = {
     },
 }
 
+Object.keys(PARTICLE_MASTER).forEach(key => {
+    const pentry = PARTICLE_MASTER[key];
+    Object.keys(pentry).forEach(key2 => {
+        const pinfo = pentry[key2];
+        if (_.isNumber(pinfo)) {
+            return;
+        }
+        if (_.isArray(pinfo)) {
+            if (pinfo.length == 2 || pinfo.length == 4 || pinfo.length == 9) {
+                if (pinfo.filter(s => !_.isNumber(s)).length == 0) {
+                    return;
+                }
+            }
+        }
+        console.error(key, key2, pinfo);
+    })
+})
+
 /** 元素爆発で元素スキル再発動 または 継続時間延長するキャラクターたち */
 export const CHARACTER_Q_TO_E_ARR = ['フィッシュル', '珊瑚宮心海'];
 

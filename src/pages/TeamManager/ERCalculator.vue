@@ -77,7 +77,7 @@
                     </span>
                     <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row)) }}</span>
                 </th>
-                <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 10) / 10 }}</td>
+                <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 100) / 100 }}</td>
                 <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
                     <input type="number" v-model="row.currentValues[columnIndex]" min="0">
                 </td>
@@ -92,7 +92,7 @@
                 <th colspan="2">{{ displayName('元素エネルギー') }}</th>
                 <th colspan="4">{{ displayName('獲得量') }}</th>
             </tr>
-            <tr v-for="(row, rowIndex) in  inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
+            <tr v-for="(row, rowIndex) in inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
                 <th colspan="2" class="with-tooltip">
                     <span>
                         <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
@@ -106,13 +106,14 @@
             </tr>
             <tr>
                 <th colspan="2">{{ displayName('元素爆発(回数)') }}</th>
-                <td v-for="index in [0, 1, 2, 3]" :key="index" :class="bgColorClass(index)">
+                <td v-for="index in Array.from({ length: calculatorInput.length }, (_, i) => i)" :key="index"
+                    :class="bgColorClass(index)">
                     <input type="number" v-model="burstCounts[index]" min="0">
                 </td>
             </tr>
             <tr>
                 <th colspan="2">{{ displayName('武器変更') }}</th>
-                <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
+                <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
                     <span v-for="(weapon, weaponIndex) in element.replaceWeapons" :key="weaponIndex" class="with-tooltip">
                         <img :src="replaceWeaponImgSrc(element, weapon)" :alt="displayName(weapon)"
                             :class="'input-item-weapon' + replaceWeaponClass(element, weapon)"
@@ -242,7 +243,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { countQ, getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
-import { getCharacterDetail, getCharacterMaster, getWeaponMaster, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
+import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import _ from "lodash";
@@ -337,8 +338,8 @@ export default defineComponent({
 
         function updateRotationLength(team: TTeam) {
             const memberNameArr = team.members.map(member => member.name);
-            const eLength = [0, 0, 0, 0];
-            const qLength = [0, 0, 0, 0];
+            const eLength = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            const qLength = _.fill(Array(NUMBER_OF_MEMBERS), 0);
             if (team.rotation.length) {
                 for (let i = 0; i < team.rotation.length; i++) {
                     const rotation = team.rotation[i];
@@ -432,9 +433,9 @@ export default defineComponent({
         }
 
         function pushInputRowParticle(inputRows: TCalculatorInputRow[], newMessages: string[][], character: string, particle: TERParticle) {
-            const initialValues = [0, 0, 0, 0];
+            const initialValues = _.cloneDeep(particle[3]);
             for (let i = 0; i < initialValues.length; i++) {
-                initialValues[i] = Math.round(Number(particle[3 + i]) * 100) / 100;
+                initialValues[i] = Math.round(initialValues[i] * 100) / 100;
             }
             inputRows.push({
                 character: character,
@@ -445,8 +446,8 @@ export default defineComponent({
                 currentValues: _.cloneDeep(initialValues),
                 unit: 1,
             })
-            if (particle[7].length) {
-                particle[7].forEach(message => {
+            if (particle[4].length) {
+                particle[4].forEach(message => {
                     let work = '';
                     if (particle[0] === RECHARGE_PARTICLE_SKILL) {
                         work = '元素スキル';
@@ -465,9 +466,9 @@ export default defineComponent({
             }
         }
         function pushInputRowEnergy(inputRows: TCalculatorInputRow[], newMessages: string[][], character: string, energy: TEREnergy) {
-            const initialValues = [0, 0, 0, 0];
+            const initialValues = _.cloneDeep(energy[2]);
             for (let i = 0; i < initialValues.length; i++) {
-                initialValues[i] = Math.round(Number(energy[2 + i]) * 100) / 100;
+                initialValues[i] = Math.round(initialValues[i] * 100) / 100;
             }
             inputRows.push({
                 character: character,
@@ -478,8 +479,8 @@ export default defineComponent({
                 currentValues: _.cloneDeep(initialValues),
                 unit: 0.1,
             })
-            if (energy[6].length) {
-                energy[6].forEach(message => {
+            if (energy[3].length) {
+                energy[3].forEach(message => {
                     let work = '';
                     if (energy[0] === RECHARGE_ENERGY_SKILL) {
                         work = '元素スキル';
@@ -554,19 +555,19 @@ export default defineComponent({
             }
             // 元素共鳴の元素粒子
             const particleByResonance = getParticleByResonance(team, rotationLength.value, team.rotation, onFields);
-            if (particleByResonance) {
-                pushInputRowParticle(newInputRowResonance, newMessages, '', particleByResonance);
+            if (particleByResonance?.length) {
+                particleByResonance.forEach(entry => {
+                    pushInputRowParticle(newInputRowResonance, newMessages, '', entry);
+                })
             }
             // 敵の元素粒子
             supplyFromEnemy.filter(s => s[1] || s[2]).forEach(entry => {
                 const sum = entry[1] * 3 + entry[2]; // 元素オーブは元素粒子3個に相当
-                const initialValues = [0, 0, 0, 0];
+                const initialValues = _.fill(Array(NUMBER_OF_MEMBERS), 0);
                 for (let i = 0; i < onFields.length; i++) {
                     initialValues[i] = rotationLength.value / combatLength.value * sum * onFields[i] / 100;
                 }
-                pushInputRowParticle(newinputRowParticleEnemy, newMessages, '', [
-                    RECHARGE_PARTICLE_ENEMY, '', entry[0], initialValues[0], initialValues[1], initialValues[2], initialValues[3], []
-                ]);
+                pushInputRowParticle(newinputRowParticleEnemy, newMessages, '', [RECHARGE_PARTICLE_ENEMY, '', entry[0], initialValues, []]);
             })
             inputRowParticle.splice(0, inputRowParticle.length, ...newInputRowPacticle1, ...newInputRowPacticle2, ...newInputRowResonance);
             inputRowEnergy.splice(0, inputRowEnergy.length, ...newInputRowEnergy);
@@ -590,7 +591,7 @@ export default defineComponent({
 
         /** 元素粒子による獲得元素エネルギー量(元素チャージ効率未反映) */
         const particleRecharges = computed(() => {
-            const result: number[] = [0, 0, 0, 0];
+            const result: number[] = _.fill(Array(NUMBER_OF_MEMBERS), 0);
             for (let i = 0; i < props.team.members.length; i++) {
                 const member = props.team.members[i];
                 if (!member.name) continue;
@@ -621,7 +622,7 @@ export default defineComponent({
 
         /** 元素チャージ効率の目安 */
         const energyRechargeGls = computed(() => {
-            const result = [100, 100, 100, 100];
+            const result = _.fill(Array(NUMBER_OF_MEMBERS), 100);
             for (let i = 0; i < props.team.members.length; i++) {
                 if (!props.team.members[i].name) continue;
                 let energyCost = calculatorInput[i]?.energyCost;

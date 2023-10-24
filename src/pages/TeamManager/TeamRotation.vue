@@ -574,11 +574,17 @@ table.guide {
 .guide th,
 .guide td {
   border-bottom: 1px solid silver;
+  border-right: 1px solid silver;
   vertical-align: top;
+  padding-left: 3px;
 }
 
 .guide tr:last-child th,
 .guide tr:last-child td {
   border-bottom: none;
+}
+
+.guide td:last-child {
+  border-right: none;
 }
 </style>
