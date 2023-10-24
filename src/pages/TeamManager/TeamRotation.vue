@@ -151,8 +151,7 @@ export default defineComponent({
   setup(props, context) {
     const { displayName } = CompositionFunction();
     const removeMode = ref(false);
-    const NORMAL_ATTACK_ACTION_LIST = ['N', 'C', 'P']; // 通常攻撃, 重撃, 落下攻撃
-    const normalAttackDans = reactive({} as { [key: string]: number }); // 通常攻撃の段数
+    const normalAttackActions = reactive({} as { [key: string]: string[] }); // 通常攻撃/重撃/落下攻撃
     const elementalSkillActions = reactive({} as { [key: string]: string[] }); // 元素スキル
     const rotationList = reactive([] as TActionItem[]);
     const actionId = ref(0);
@@ -168,7 +167,23 @@ export default defineComponent({
       await setupCharacterDetailMap();
       for (const member of team.members) {
         if (member.name) {
-          normalAttackDans[member.name] = getNormalAttackDan(member.name);
+          const characterMaster = getCharacterMaster(member.name);
+          if (characterMaster) {
+            const isCWith = CHARGED_WITH_NORMAL_WEAPON.includes(characterMaster?.武器) || CHARGED_WITH_NORMAL_CHARACTER.includes(member.name);
+            const workArr: string[] = [];
+            for (let i = 0; i < getNormalAttackDan(member.name); i++) {
+              const work = 'N' + (i > 0 ? String(i + 1) : '');
+              workArr.push(work);
+              if (isCWith) {
+                workArr.push(work + 'C');
+              }
+            }
+            if (!isCWith) {
+              workArr.push('C');
+            }
+            workArr.push('P');
+            normalAttackActions[member.name] = workArr;
+          }
           elementalSkillActions[member.name] = getElementalSkillActions(member.name);
         }
       }
@@ -241,9 +256,9 @@ export default defineComponent({
       let result;
       const master = getCharacterDetail(item.member);
       if (master) {
-        if (NORMAL_ATTACK_ACTION_LIST.includes(item.action) || item.action.startsWith('N')) { // 通常攻撃, 重撃, 落下攻撃
+        if (normalAttackActions[item.member].includes(item.action)) { // 通常攻撃, 重撃, 落下攻撃
           result = master.通常攻撃;
-        } else if (item.action.startsWith('E')) { // 元素スキル
+        } else if (elementalSkillActions[item.member].includes(item.action)) { // 元素スキル
           result = master.元素スキル;
         } else if (item.action == 'Q') { // 元素爆発
           result = master.元素爆発;
@@ -275,10 +290,6 @@ export default defineComponent({
       return master ? ' ' + (ELEMENT_BG_COLOR_CLASS as any)[master.元素] : '';
     }
 
-    function isActionNormalAttack(action: string) {
-      return NORMAL_ATTACK_ACTION_LIST.includes(action) || action.startsWith('N');
-    }
-
     const actionDisplay = (item: TActionItem) =>
       item.action.startsWith('E') ? item.action.replace(/^E\./, '') : item.action;
 
@@ -295,13 +306,13 @@ export default defineComponent({
 
     const listActionOnClick = (member: TMember, actionKey: string) => {
       let action = actionKey;
-      if (isActionNormalAttack(action)) {
-        const workArr = rotationList.filter(s => s.member == member.name && isActionNormalAttack(s.action));
+      if (normalAttackActions[member.name].includes(action)) {
+        const workArr = rotationList.filter(s => s.member == member.name && normalAttackActions[member.name].includes(s.action));
         if (workArr.length > 0) {
           action = workArr[workArr.length - 1].action;
         }
       } else if (action.startsWith('E')) {
-        const workArr = rotationList.filter(s => s.member == member.name && s.action.startsWith('E'));
+        const workArr = rotationList.filter(s => s.member == member.name && elementalSkillActions[member.name].includes(s.action));
         if (workArr.length > 0) {
           action = workArr[workArr.length - 1].action;
         } else {
@@ -311,6 +322,7 @@ export default defineComponent({
           }
         }
       }
+      console.log(actionKey, action);
       rotationList.push({
         id: ++actionId.value,
         member: member.name,
@@ -324,7 +336,7 @@ export default defineComponent({
         removeItemOnClick(item);
       } else if (selectedActionId.value == item.id) {
         selectedActionId.value = -1;
-      } else if (item.action.startsWith('N')) {
+      } else if (normalAttackActions[item.member].includes(item.action)) {
         selectedActionId.value = item.id;
       } else if (item.action.startsWith('E') && elementalSkillActions[item.member].length > 1) {
         selectedActionId.value = item.id;
@@ -334,32 +346,14 @@ export default defineComponent({
     }
 
     const selectedActionOnClick = (item: TActionItem) => {
-      if (isActionNormalAttack(item.action)) {
-        if (item.action.startsWith('N')) { // 通常攻撃
-          const master = getCharacterDetail(item.member);
-          const work = item.action.substring(1, 2);
-          let n = work ? Number(work) : 1;
-          const dan = normalAttackDans[item.member] ?? 1;
-          if (master && (CHARGED_WITH_NORMAL_WEAPON.includes(master.武器) || CHARGED_WITH_NORMAL_CHARACTER.includes(item.member))) {
-            if (item.action.length < 3) {
-              item.action = 'N' + n + 'C';
-            } else {
-              item.action = ++n > dan ? 'P' : 'N' + n;
-            }
-          } else {
-            item.action = ++n > dan ? 'C' : 'N' + n;
+      for (const actionArr of [normalAttackActions[item.member], elementalSkillActions[item.member]]) {
+        console.log(actionArr);
+        if (actionArr?.length) {
+          const index = actionArr.indexOf(item.action);
+          if (index != -1) {
+            item.action = (index + 1) < actionArr.length ? actionArr[index + 1] : actionArr[0];
+            break;
           }
-        } else { // 重撃, 落下攻撃
-          let index = NORMAL_ATTACK_ACTION_LIST.indexOf(item.action);
-          index = index < (NORMAL_ATTACK_ACTION_LIST.length - 1) ? index + 1 : 0;
-          item.action = NORMAL_ATTACK_ACTION_LIST[index];
-        }
-      } else if (item.action.startsWith('E')) { // 元素スキル
-        const actions = elementalSkillActions[item.member];
-        if (actions && actions.length > 1) {
-          let index = actions.indexOf(item.action);
-          index = index < (actions.length - 1) ? index + 1 : 0;
-          item.action = actions[index];
         }
       }
       updateRotation();
