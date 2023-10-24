@@ -1,7 +1,12 @@
 <template>
   <div class="base-container">
     <div class="header">
-      &nbsp; <a href="./">げんかるく</a>
+      <table style="width: 100%;">
+        <tr>
+          <td style="text-align: left;">&nbsp; <a href="./"> {{ displayName('げんかるく') }} </a></td>
+          <td style="text-align: right;"><a href="./TeamManager.html"> {{ displayName('チーム編成') }}</a> &nbsp;</td>
+        </tr>
+      </table>
     </div>
 
     <div class="pane1">
