@@ -241,13 +241,14 @@
     </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { countQ, getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getOnFieldRate, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, isRechargeKindEnergy, isRechargeKindParticle, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_WEAPON, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_SKILL, TEREnergy, TERParticle } from "./energyrecharge";
-import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
-import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
-import CompositionFunction from "@/components/CompositionFunction.vue";
 import _ from "lodash";
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import CompositionFunction from "@/components/CompositionFunction.vue";
+import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
 import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, getCtFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
+import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
+import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
+import { getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon } from "./ERCalculatorFunc";
 
 type TCalculatorInput = {
     character: string,                  // キャラクター名
@@ -310,6 +311,7 @@ export default defineComponent({
 
         onMounted(() => {
             setupCharacterDetailMap().then(() => {
+                updateRotationLength(props.team);
                 setupInput(props.team, props.teamMemberResult);
             });
         })

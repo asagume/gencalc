@@ -40,13 +40,13 @@
 </template>
 <script lang="ts">
 import _ from 'lodash';
-import CompositionFunction from "@/components/CompositionFunction.vue";
-import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey, ELEMENT_BG_COLOR_CLASS } from "@/master";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { calculateMemberResult, getElementalResonance, TConstellation, TTeam, TTeamMemberResult } from "./team";
-import MemberItem from "./MemberItem.vue";
 import { calculateFormulaArray } from "@/calculate";
 import { TStats } from "@/input";
+import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey, ELEMENT_BG_COLOR_CLASS } from "@/master";
+import CompositionFunction from "@/components/CompositionFunction.vue";
+import { calculateMemberResult, getElementalResonance, TConstellation, TTeam, TTeamMemberResult } from "./team";
+import MemberItem from "./MemberItem.vue";
 
 export default defineComponent({
   name: 'TeamItem',

@@ -9,10 +9,10 @@
       <div class="constellation" v-show="constellation">
         {{ constellation }}
       </div>
-      <div class="tag tag-3" v-if="member.tags[3]">{{ member.tags[3] }}</div>
-      <div class="tag tag-2" v-if="member.tags[2]">{{ member.tags[2] }}</div>
-      <div class="tag tag-1" v-if="member.tags[1]">{{ member.tags[1] }}</div>
-      <div class="tag tag-0" v-if="member.tags[0]">{{ member.tags[0] }}</div>
+      <div :class="'tag tag-3' + tagColorClass(3)" v-if="member.tags[3]">{{ member.tags[3] }}</div>
+      <div :class="'tag tag-2' + tagColorClass(2)" v-if="member.tags[2]">{{ member.tags[2] }}</div>
+      <div :class="'tag tag-1' + tagColorClass(1)" v-if="member.tags[1]">{{ member.tags[1] }}</div>
+      <div :class="'tag tag-0' + tagColorClass(0)" v-if="member.tags[0]">{{ member.tags[0] }}</div>
       <img class="replacement replacement-0" v-if="member.replacements[0]" :src="replaceImgSrc(0)"
         :alt="member.replacements[0]">
       <img class="replacement replacement-1" v-if="member.replacements[1]" :src="replaceImgSrc(1)"
@@ -29,28 +29,11 @@
   </div>
 </template>
 <script lang="ts">
-import CompositionFunction from "@/components/CompositionFunction.vue";
-import {
-  pushBuildinfoToSession,
-  TStats,
-} from "@/input";
-import {
-  ARTIFACT_SET_MASTER,
-  CHARACTER_MASTER,
-  ELEMENT_IMG_SRC,
-  IMG_SRC_DUMMY,
-  STAR_BACKGROUND_IMAGE_CLASS,
-  TArtifactSetEntry,
-  TCharacterEntry,
-  TCharacterKey,
-  TWeaponEntry,
-  WEAPON_MASTER,
-} from "@/master";
 import { computed, defineComponent, PropType, ref, watch } from "vue";
-import {
-  getBuilddataFromStorage,
-  TMember,
-} from "./team";
+import { pushBuildinfoToSession, TStats } from "@/input";
+import CompositionFunction from "@/components/CompositionFunction.vue";
+import { ARTIFACT_SET_MASTER, CHARACTER_MASTER, ELEMENT_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, STAR_BACKGROUND_IMAGE_CLASS, TArtifactSetEntry, TCharacterEntry, TCharacterKey, TElementColorClassKey, TWeaponEntry, WEAPON_MASTER } from "@/master";
+import { getBuilddataFromStorage, TMember } from "./team";
 
 export default defineComponent({
   name: 'MemberItem',
@@ -125,6 +108,8 @@ export default defineComponent({
     };
     const imgArtifactSetSrc = (index: number) => artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
     const artifactSetName = (index: number) => artifactSetMasters.value[index]?.key ?? '';
+    const tagColorClass = (index: number) =>
+      Object.keys(ELEMENT_COLOR_CLASS).map(key => ELEMENT_COLOR_CLASS[(key as TElementColorClassKey)]).includes(props.member.tags[index].toLowerCase()) ? ' ' + props.member.tags[index].toLowerCase() : '';
 
     const characterOnDblclick = () => {
       if (props.viewable) {
@@ -155,6 +140,7 @@ export default defineComponent({
       weaponName,
       imgArtifactSetSrc,
       artifactSetName,
+      tagColorClass,
       statValue,
 
       characterOnDblclick,

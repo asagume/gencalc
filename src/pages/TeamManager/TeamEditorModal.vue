@@ -59,10 +59,10 @@
 <script lang="ts">
 import _ from 'lodash';
 import { computed, defineComponent, PropType, reactive, ref, watch } from 'vue';
+import { makeDefaultBuildname } from '@/input';
 import CharacterSelect from '@/components/CharacterSelect.vue';
 import { getBuildnameFromStorageKey, getBuildStorageKeys, TMember, TTeam } from './team';
 import MemberItem from './MemberItem.vue';
-import { makeDefaultBuildname } from '@/input';
 
 export default defineComponent({
   name: 'TeamEditorModal',

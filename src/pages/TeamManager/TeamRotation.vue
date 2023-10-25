@@ -127,14 +127,14 @@
   </div>
 </template>
 <script lang="ts">
+import _ from "lodash";
 import draggable from "vuedraggable";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
+import { getElementalSkillActions } from "@/particlemaster";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
-import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
-import _ from "lodash";
 import ERCalculator from './ERCalculator.vue';
-import { getElementalSkillActions } from "@/particlemaster";
 
 export default defineComponent({
   name: "TeamRotation",
@@ -322,7 +322,6 @@ export default defineComponent({
           }
         }
       }
-      console.log(actionKey, action);
       rotationList.push({
         id: ++actionId.value,
         member: member.name,

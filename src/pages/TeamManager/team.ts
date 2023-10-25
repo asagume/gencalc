@@ -1,9 +1,9 @@
+import _ from "lodash";
 import { calculateArtifactStatsMain, calculateArtifactStats, ALL_ELEMENTS, calculateStats, calculateDamageResult } from "@/calculate";
 import { overwriteObject } from "@/common";
 import { TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, getDefaultArtifactDetailInput, getDefaultCharacterInput, getDefaultConditionInput, getDefaultDamageResultInput, getDefaultOptionInput, getDefaultStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
 import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
 import { getElementalSkillActions } from "@/particlemaster";
-import _ from "lodash";
 
 export type TMember = {
     id: number;

@@ -85,11 +85,11 @@ import _ from 'lodash';
 import draggable from 'vuedraggable';
 import { computed, defineComponent, nextTick, onMounted, reactive, ref } from 'vue';
 import CompositionFunction from '@/components/CompositionFunction.vue';
-import { NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult, copyTeams, getBuilddataFromStorage, getDefaultMemberResult, initializeTeam, makeBlankTeam, makeTeamsStr } from './team';
-import TeamItem from './TeamItem.vue';
-import TeamEditorModal from './TeamEditorModal.vue';
-import TeamRotation from './TeamRotation.vue';
 import { overwriteObject } from '@/common';
+import { NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult, copyTeams, getBuilddataFromStorage, getDefaultMemberResult, initializeTeam, makeBlankTeam, makeTeamsStr } from './team';
+import TeamEditorModal from './TeamEditorModal.vue';
+import TeamItem from './TeamItem.vue';
+import TeamRotation from './TeamRotation.vue';
 
 export default defineComponent({
   name: 'TeamManager',

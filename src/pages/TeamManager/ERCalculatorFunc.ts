@@ -144,7 +144,7 @@ export function getParticleByWeapon(
         result = [kind, weapon, '無色', _.fill(Array(NUMBER_OF_MEMBERS), 0), []];
         const ct = [12, 10.5, 9, 7.5, 6][weaponRefine - 1];
         let triggerCnt = 1;
-        if (rotationLength && rotationList && onFields) {
+        if (rotationLength && rotationList?.length && onFields) {
             const rindexArr: number[] = [];
             let fieldCnt = 0; // 出場回数
             for (let i = 0; i < rotationList.length; i++) {
@@ -223,10 +223,9 @@ export function getEnergyByCharacter(
     const result: TEREnergy[] = [];
     const func = CHARACTER_ENERGY_FUNC[character];
     if (func === undefined) return result;
-    const members = team.members.map(member => member.name);
-    const ret = func(character, constellation, members, rotationLength, rotationList, teamMemberResult);
-    if (ret?.length) return result;
-    const myIndex = members.indexOf(character);
+    const ret = func(character, constellation, team.members, rotationLength, rotationList, teamMemberResult);
+    if (!ret?.length) return result;
+    const myIndex = team.members.map(member => member.name).indexOf(character);
     if (myIndex === -1) return result;
     ret.forEach(entry => {
         const energies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
@@ -269,7 +268,7 @@ export function getEnergyByWeapon(
     if (func === undefined) return result;
     const members = team.members.map(member => member.name);
     const ret = func(character, weapon, weaponRefine, members, rotationLength, rotationList);
-    if (ret?.length) return result;
+    if (!ret?.length) return result;
     const myIndex = members.indexOf(character);
     if (myIndex === -1) return result;
     const entry = ret;
