@@ -54,9 +54,9 @@ export function getParticleByCharacter(
                 let action = rotation.action;
                 if (action === 'Q') {
                     isBursting = true; // キャラチェンするまでずっと元素爆発中判定とする
-                }
-                if (action === 'Q' && CHARACTER_Q_TO_E_ARR.includes(character)) {
-                    action = 'E';
+                    if (CHARACTER_Q_TO_E_ARR.includes(character)) {
+                        action = 'E';
+                    }
                 }
                 if (untilMap && untilMap.size > 0) {
                     for (const [key, value] of untilMap.entries()) {
@@ -111,19 +111,23 @@ export function getParticleByCharacterExtra(
 ): TERParticle[] | undefined {
     const func = CHARACTER_PARTICLE_EXTRA_FUNC[character];
     if (func === undefined) return undefined;
-    const members = team.members.map(member => member.name);
-    const ret = func(character, constellation, members, rotationLength, rotationList);
+    const ret = func(character, constellation, team.members, rotationLength, rotationList, onFields);
     if (ret === undefined) return undefined;
-    const myIndex = members.indexOf(character);
+    const memberNameArr = team.members.map(member => member.name);
+    const myIndex = memberNameArr.indexOf(character);
     if (myIndex === -1) return undefined;
-    const entry = ret;
     const particles = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-    const result: TERParticle = [ret[0], ret[1], ret[2], particles, ret[7]];
+    const result: TERParticle = [ret[0], ret[1], ret[2], particles, ret[6]];
     if (ret[3]) {   // 本人
-        particles[myIndex] += entry[3];
+        particles[myIndex] += ret[3];
     }
     if (ret[4]) {   // 全員
-        splitNumToArrByOnFieldRate(particles, entry[4], team, onFields);
+        splitNumToArrByOnFieldRate(particles, ret[4], team, onFields);
+    }
+    if (ret[5].length) {   // 誰か
+        for (let i = 0; i < ret[5].length && i < particles.length; i++) {
+            particles[i] += ret[5][i];
+        }
     }
     return [result];
 }
@@ -138,45 +142,34 @@ export function getParticleByWeapon(
     onFields: number[],
 ): TERParticle | undefined {
     let result: TERParticle | undefined;
-    const kind = RECHARGE_PARTICLE_FAVONIUS;
     const memberNameArr = team.members.map(member => member.name);
     if (['西風剣', '西風大剣', '西風長槍', '西風猟弓', '西風秘典'].includes(weapon)) {
-        result = [kind, weapon, '無色', _.fill(Array(NUMBER_OF_MEMBERS), 0), []];
+        const particles = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         const ct = [12, 10.5, 9, 7.5, 6][weaponRefine - 1];
         let triggerCnt = 1;
-        if (rotationLength && rotationList?.length && onFields) {
+        if (rotationList?.length) {
             const rindexArr: number[] = [];
-            let fieldCnt = 0; // 出場回数
             for (let i = 0; i < rotationList.length; i++) {
-                if (rotationList[i].member == character) {
-                    fieldCnt += (i === 0 || rotationList[i - 1].member != character) ? 1 : 0;
+                const rotation = rotationList[i];
+                if (rotation.member == character && (i === 0 || rotationList[i - 1].member != character)) {
+                    rindexArr.push(i);
                 }
             }
             const onField = onFields[memberNameArr.indexOf(character)];
-            triggerCnt = fieldCnt + Math.trunc(rotationLength * onField / 100 / ct);
-            triggerCnt = Math.min(Math.trunc(rotationLength / ct), triggerCnt);
-            let curCharacter = undefined;
-            for (let i = 0; i < rotationList.length; i++) {
-                const rotation = rotationList[i];
-                if (rotation.member == character && rotation.member != curCharacter) {
-                    rindexArr.push(i);
-                }
-                curCharacter = rotation.member;
-            }
+            triggerCnt = Math.min(Math.trunc(rotationLength / ct), rindexArr.length + Math.max(0, Math.trunc(rotationLength * onField / 100 / ct) - 1));
             for (let i = 0; i < triggerCnt; i++) {
                 let nxtCharacter = character;
-                if (i < rindexArr.length) {
-                    const rindex = rindexArr[i];
-                    const nxtRotation = (rindex + 1) < rotationList.length ? rotationList[rindex + 1] : rotationList[0];
-                    nxtCharacter = nxtRotation.member;
+                if (i < rindexArr.length && (rindexArr[i] + 1) < rotationList.length) {
+                    nxtCharacter = rotationList[rindexArr[i] + 1].member;
                 }
                 const toIndex = memberNameArr.indexOf(nxtCharacter);
-                (result[3][toIndex] as number) += 3;
+                particles[toIndex] += 3;
             }
         } else {
             const toIndex = memberNameArr.indexOf(character);
-            result[3][toIndex] = 3 * triggerCnt;
+            particles[toIndex] = 3 * triggerCnt;
         }
+        result = [RECHARGE_PARTICLE_FAVONIUS, weapon, '無色', particles, []];
     }
     return result;
 }
@@ -186,29 +179,23 @@ export function getParticleByResonance(
     rotationLength: number,
     rotationList: TActionItem[] | undefined,
     onFields: number[],
-): TERParticle[] | undefined {
-    const resultArr = new Array<[string, string, string, number, number, string[]]>(); // [rechargeType, triggerName, element, myParticle, allParticle, messages]
-    const messages: string[] = [];
-    let allParticle = 0; // 分配
-    const memberNum = team.members.filter(member => member.name).length;
-    if (memberNum !== 4) return undefined;
+): TERParticle | undefined {
+    let result: TERParticle | undefined = undefined;
+    if (team.members.filter(member => member.name).length < 4) return result;
     const electroCount = team.members.filter(member => getCharacterMaster(member.name)?.元素 === '雷').length;
     if (electroCount >= 2) { // 雷元素共鳴
-        messages.push('超電導、過負荷、感電、原激化、超激化または超開花反応を起こした時、100%の確率で雷元素粒子を生成する。クールタイム5秒。');
+        const messages = [
+            '超電導、過負荷、感電、原激化、超激化または超開花反応を起こした時、100%の確率で雷元素粒子を生成する。クールタイム5秒。',
+        ];
+        let allParticle = 0; // 分配
         if (team.members.filter(member => ['氷', '炎', '水', '草'].includes(getCharacterMaster(member.name)?.元素 ?? '--')).length) {
             const ct = 5;
             allParticle = 1 * Math.trunc(rotationLength / ct);
         }
-        resultArr.push([RECHARGE_PARTICLE_RESONANCE, '雷元素共鳴', '雷', 0, allParticle, messages]);
-    }
-    const result: TERParticle[] = [];
-    resultArr.forEach(entry => {
         const particles = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-        if (entry[4]) {
-            splitNumToArrByOnFieldRate(particles, entry[4], team, onFields);
-        }
-        result.push([entry[0], entry[1], entry[2], particles, messages]);
-    })
+        splitNumToArrByOnFieldRate(particles, allParticle, team, onFields);
+        result = [RECHARGE_PARTICLE_RESONANCE, '雷元素共鳴', '雷', particles, messages];
+    }
     return result;
 }
 

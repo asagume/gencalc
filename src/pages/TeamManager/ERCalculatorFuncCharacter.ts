@@ -3,7 +3,7 @@ import { TActionItem, TTeamMemberResult, NUMBER_OF_MEMBERS, getCharacterMaster, 
 import { countQ, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, countE, countC, RECHARGE_ENERGY_PASSIVE, countN, getCharacterInputValue, getStatsInputValue, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_PASSIVE, getMemberResult } from "./ERCalculatorCommon";
 
 export type TCharacterEnergyRet = [string, string, number, number, number, number[], string[]];
-export type TCharacterParticleRet = [string, string, string, number, number, number, number[], string[]];
+export type TCharacterParticleRet = [string, string, string, number, number, number[], string[]];
 
 export const CHARACTER_ENERGY_FUNC: {
     [key: string]: (
@@ -619,44 +619,75 @@ export const CHARACTER_PARTICLE_EXTRA_FUNC: {
     [key: string]: (
         character: string,
         constellation: number,
-        members: string[],
+        members: TMember[],
         rotationLength: number,
         rotationList: TActionItem[] | undefined,
+        onFields: number[],
     ) => TCharacterParticleRet | undefined
 } = {
-    'ガイア': (character, constellation, members, rotationLength, rotationList) => { // eslint-disable-line
+    'ガイア': (character, constellation, members, rotationLength, rotationList, onFields) => { // eslint-disable-line
         let result: TCharacterParticleRet | undefined = undefined;
         const messages: string[] = [
             '霜の襲撃が敵を凍結状態にした場合、凍結された敵から追加の元素粒子が落ちる。1回の霜襲は2つの元素粒子が追加で発生する。',
         ];
-        const hydroCount = members.filter(member => getCharacterMaster(member)?.元素 === '水').length;
+        const hydroCount = members.filter(member => getCharacterMaster(member.name)?.元素 === '水').length;
         const myParticle = hydroCount > 0 ? 2 * countE(character, rotationList) : 2;
         const allParticle = 0;
-        result = [RECHARGE_PARTICLE_PASSIVE, '', '氷', myParticle, allParticle, 0, [], messages];
+        result = [RECHARGE_PARTICLE_PASSIVE, '', '氷', myParticle, allParticle, [], messages];
         return result;
     },
-    'フィッシュル': (character, constellation, members, rotationLength, rotationList) => { // eslint-disable-line
+    'フィッシュル': (character, constellation, members, rotationLength, rotationList, onFields) => { // eslint-disable-line
         let result: TCharacterParticleRet | undefined = undefined;
-        if (constellation >= 6) {
+        const constellationLevel = 6;
+        if (constellation >= constellationLevel) {
             const messages: string[] = [
                 'オズは出場している自身のキャラクターと共に攻撃し、攻撃力30%分の雷元素ダメージを与える。',
             ];
             const myParticle = 0;
-            const allParticle = rotationList?.length ? 2 / 3 * countN(undefined, rotationList) : 1;
-            result = [RECHARGE_PARTICLE_CONSTELLATION, String(constellation), '雷', myParticle, allParticle, 0, [], messages];
+            const allParticle = rotationList?.length ? (2 / 3) * countN(undefined, rotationList) : 1;
+            result = [RECHARGE_PARTICLE_CONSTELLATION, String(constellationLevel), '雷', myParticle, allParticle, [], messages];
         }
         return result;
     },
-    '刻晴': (character, constellation, members, rotationLength, rotationList) => { // eslint-disable-line
+    '刻晴': (character, constellation, members, rotationLength, rotationList, onFields) => { // eslint-disable-line
         let result: TCharacterParticleRet | undefined = undefined;
-        if (constellation >= 2) {
+        const constellationLevel = 2;
+        if (constellation >= constellationLevel) {
             const messages: string[] = [
                 '刻晴の通常攻撃と重撃が雷元素の影響を受けた敵に命中した時、50%の確率で元素粒子を1個生成する。5秒毎に1回のみ発動可能。',
             ];
-            const countNC = countN(character, rotationList) + countC(character, rotationList);
-            const myParticle = countNC > 0 ? 1 * Math.min(countNC, Math.trunc(rotationLength / 5)) : 1;
+            const myParticle = 0;
             const allParticle = 0;
-            result = [RECHARGE_PARTICLE_CONSTELLATION, String(constellation), '雷', myParticle, allParticle, 0, [], messages];
+            const herParticles = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            let triggerCnt = 1;
+            if (rotationList?.length) {
+                const ct = 5;
+                const rindexArr: number[] = [];
+                let isRecorded = false;
+                for (let i = 0; i < rotationList.length; i++) {
+                    const rotation = rotationList[i];
+                    if (rotation.member == character) {
+                        if (rotation.action.startsWith('N') && !isRecorded) {
+                            rindexArr.push(i);
+                            isRecorded = true;
+                        }
+                    } else {
+                        isRecorded = false;
+                    }
+                }
+                const memberNameArr = members.map(member => member.name);
+                const onField = onFields[memberNameArr.indexOf(character)];
+                triggerCnt = Math.min(Math.trunc(rotationLength / ct), rindexArr.length + Math.max(0, Math.trunc(rotationLength * onField / 100 / ct) - 1));
+                for (let i = 0; i < triggerCnt; i++) {
+                    let nxtCharacter = character;
+                    if (i < rindexArr.length && (rindexArr[i] + 1) < rotationList.length) {
+                        nxtCharacter = rotationList[rindexArr[i] + 1].member;
+                    }
+                    const toIndex = memberNameArr.indexOf(nxtCharacter);
+                    herParticles[toIndex] += 1;
+                }
+            }
+            result = [RECHARGE_PARTICLE_CONSTELLATION, String(constellationLevel), '雷', myParticle, allParticle, herParticles, messages];
         }
         return result;
     },

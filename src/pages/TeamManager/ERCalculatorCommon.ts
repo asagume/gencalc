@@ -33,12 +33,17 @@ export function countN(character?: string, rotationList?: TActionItem[], isBurst
     let result = 0;
     if (rotationList?.length) {
         if (character && isBursting !== undefined) {
-            let isQ = false;
+            let isQing = false;
             for (let i = 0; i < rotationList.length; i++) {
                 const rotation = rotationList[i];
-                isQ = rotation.member == character && rotation.action === 'Q';
-                if (rotation.member == character && rotation.action.startsWith('N') && isQ == isBursting) {
-                    result += rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2));
+                if (rotation.member == character) {
+                    if (rotation.action === 'Q') {
+                        isQing = true;
+                    } else if (rotation.action.startsWith('N') && isBursting == isQing) {
+                        result += rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2));
+                    }
+                } else {
+                    isQing = false;
                 }
             }
         } else {
@@ -54,16 +59,17 @@ export function countC(character?: string, rotationList?: TActionItem[], isBurst
     let result = 0;
     if (rotationList?.length) {
         if (character && isBursting !== undefined) {
-            let isQ = false;
+            let isQing = false;
             for (let i = 0; i < rotationList.length; i++) {
                 const rotation = rotationList[i];
-                isQ = rotation.member == character && rotation.action === 'Q';
-                if (rotation.member == character && rotation.action.indexOf('C') !== -1 && isQ == isBursting) {
+                if (rotation.action === 'Q') {
+                    isQing = true;
+                } else if (rotation.action.includes('C') && isBursting == isQing) {
                     result++;
                 }
             }
         } else {
-            result = rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.indexOf('C') != -1).length;
+            result = rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.includes('C')).length;
         }
     } else {
         return 1;
@@ -75,25 +81,17 @@ export function countE(character?: string, rotationList?: TActionItem[], action 
     let result = 0;
     if (rotationList?.length) {
         if (character) {
-            let isInQ = false;
+            let isQing = false;
             let untilMap: Map<string[], number> | undefined;
-            let curCharacter: string | undefined;
             for (let i = 0; i < rotationList.length; i++) {
                 const rotation = rotationList[i];
-                if (rotation.member != curCharacter) {
-                    isInQ = false;
-                }
                 if (rotation.member == character) {
-                    const action = rotation.action;
-                    if (action === 'Q') {
-                        isInQ = true;
-                    }
                     if (untilMap && untilMap.size > 0) {
                         for (const [key, value] of untilMap.entries()) {
-                            if (key.filter(untilAction => action.indexOf(untilAction) != -1).length) {
+                            if (key.filter(untilAction => rotation.action.indexOf(untilAction) != -1).length) {
                                 let untilCount = value;
                                 if (untilCount) {
-                                    untilCount -= action.startsWith('N') ? action.length === 1 ? 1 : Number(action.substring(1, 2)) : 1;
+                                    untilCount -= rotation.action.startsWith('N') ? rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2)) : 1;
                                     if (untilCount > 0) {
                                         untilMap.set(key, untilCount);
                                     } else {
@@ -102,15 +100,18 @@ export function countE(character?: string, rotationList?: TActionItem[], action 
                                 }
                             }
                         }
-                    } else if (action.startsWith('E')) {
+                    } else if (rotation.action === 'Q') {
+                        isQing = true;
+                    } else if (rotation.action.startsWith(action)) {
                         const workMap = CHARACTER_E_UNTIL_MAP.get(character);
                         if (workMap && workMap.size > 0) {
                             untilMap = _.cloneDeep(workMap);
                         }
-                        result += (isBursting === undefined || isBursting == isInQ) ? 1 : 0;
+                        result += (isBursting === undefined || isBursting == isQing) ? 1 : 0;
                     }
+                } else {
+                    isQing = false;
                 }
-                curCharacter = character;
             }
         } else {
             result = rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.startsWith(action)).length;
@@ -128,23 +129,21 @@ export function countQ(character?: string, rotationList?: TActionItem[]) {
 }
 /** 出場時間(%) */
 export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[], constellations: number[]) {
-    let result = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+    const result = _.fill(Array(NUMBER_OF_MEMBERS), 0);
     const memberNameArr = team.members.map(member => member.name);
     if (rotationList?.length) {
-        result = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-        const multiple = Math.ceil(100 / rotationLength);
         const lengthList = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-        let curCharacter;
         let length = 0;
-        let isNCPIgnore = false;
+        let isNCPIgnoring = false;
+        let preRotation = undefined;
         for (let i = 0; i < rotationList.length; i++) {
             const rotation = rotationList[i];
-            const characterMaster = getCharacterMaster(rotation.member);
-            if (curCharacter && rotation.member != curCharacter) {
-                lengthList[memberNameArr.indexOf(curCharacter)] += (length > 1 ? length : 1);
+            if (preRotation && rotation.member != preRotation.member) {
+                lengthList[memberNameArr.indexOf(preRotation.member)] += (length > 1 ? length : 1);
                 length = 0;
-                isNCPIgnore = false;
+                isNCPIgnoring = false;
             }
+            const characterMaster = getCharacterMaster(rotation.member);
             if (rotation.action === 'Q') {
                 length += 0.8;
                 if (characterMaster?.レアリティ && characterMaster.レアリティ === 5) {
@@ -160,10 +159,10 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                     if (getReceiveTypeFromInfo(particleInfo) === SP_SELF && duration) {
                         // 特定の元素スキル発動後は一定時間を加算して、キャラチェンまで通常攻撃、重撃、落下攻撃を無視する
                         length += duration;
-                        isNCPIgnore = true;
+                        isNCPIgnoring = true;
                     }
                 }
-            } else if (!isNCPIgnore) {
+            } else if (!isNCPIgnoring) {
                 if (rotation.action.startsWith('N')) {
                     const dan = rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2));
                     const withC = rotation.action.endsWith('C');
@@ -198,11 +197,12 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                     length += 1.5;
                 }
             }
-            curCharacter = rotation.member;
+            preRotation = rotation;
         }
-        if (curCharacter && length > 0) {
-            lengthList[memberNameArr.indexOf(curCharacter)] += (length > 1 ? length : 1);
+        if (preRotation && length > 0) {
+            lengthList[memberNameArr.indexOf(preRotation.member)] += (length > 1 ? length : 1);
         }
+        const multiple = Math.ceil(100 / rotationLength);
         const lengthSum = _.sum(lengthList);
         for (let i = 0; i < result.length; i++) {
             if (lengthSum && i < lengthList.length) {
@@ -260,4 +260,3 @@ export function getCharacterInputValue(character: string, members: TMember[], it
 export function getStatsInputValue(character: string, members: TMember[], item: string, teamMemberResult?: TTeamMemberResult) {
     return (getMemberResult(character, members, teamMemberResult).statsInput.statsObj as any)[item];
 }
-

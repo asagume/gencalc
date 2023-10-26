@@ -557,10 +557,8 @@ export default defineComponent({
             }
             // 元素共鳴の元素粒子
             const particleByResonance = getParticleByResonance(team, rotationLength.value, team.rotation, onFields);
-            if (particleByResonance?.length) {
-                particleByResonance.forEach(entry => {
-                    pushInputRowParticle(newInputRowResonance, newMessages, '', entry);
-                })
+            if (particleByResonance) {
+                pushInputRowParticle(newInputRowResonance, newMessages, '', particleByResonance);
             }
             // 敵の元素粒子
             supplyFromEnemy.filter(s => s[1] || s[2]).forEach(entry => {
