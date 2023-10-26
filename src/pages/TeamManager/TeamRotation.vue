@@ -88,7 +88,7 @@
           <td>通常攻撃X段</td>
         </tr>
         <tr>
-          <th>NC</th>
+          <th>N1C</th>
           <td>通常攻撃1段+重撃</td>
           <th>N2C</th>
           <td>通常攻撃2段+重撃</td>
@@ -175,7 +175,7 @@ export default defineComponent({
               const work = 'N' + (i > 0 ? String(i + 1) : '');
               workArr.push(work);
               if (isCWith) {
-                workArr.push(work + 'C');
+                workArr.push(work + (work === 'N' ? '1C' : 'C'));
               }
             }
             if (!isCWith) {
@@ -192,7 +192,9 @@ export default defineComponent({
         if (team.rotation.length) {
           const workArr = _.cloneDeep(team.rotation);
           workArr.forEach(rotation => {
-            if (rotation.action.startsWith('E')) {
+            if (rotation.action === 'NC') {
+              rotation.action = 'N1C';
+            } else if (rotation.action.startsWith('E')) {
               const actions = elementalSkillActions[rotation.member];
               if (actions && actions.length > 0 && !actions.includes(rotation.action)) {
                 rotation.action = actions[0];
