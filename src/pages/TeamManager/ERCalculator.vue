@@ -88,7 +88,7 @@
                     {{ value }}
                 </td>
             </tr>
-            <tr class="label-row">
+            <tr class="label-row" v-if="inputRowEnergy.length">
                 <th colspan="2">{{ displayName('元素エネルギー') }}</th>
                 <th colspan="4">{{ displayName('獲得量') }}</th>
             </tr>
