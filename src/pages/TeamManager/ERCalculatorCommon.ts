@@ -154,13 +154,11 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
             } else if (['E', 'E.Press'].includes(rotation.action)) {
                 length += 0.5;
                 const particleInfo = getParticleInfo(rotation.member, rotation.action, constellations[memberNameArr.indexOf(rotation.member)]);
-                if (particleInfo) {
-                    const duration = getDurationFromInfo(particleInfo);
-                    if (getReceiveTypeFromInfo(particleInfo) === SP_SELF && duration) {
-                        // 特定の元素スキル発動後は一定時間を加算して、キャラチェンまで通常攻撃、重撃、落下攻撃を無視する
-                        length += duration;
-                        isNCPIgnoring = true;
-                    }
+                const duration = getDurationFromInfo(particleInfo);
+                if (getReceiveTypeFromInfo(particleInfo) === SP_SELF && duration) {
+                    // 特定の元素スキル発動後は一定時間を加算して、キャラチェンまで通常攻撃、重撃、落下攻撃を無視する
+                    length += duration;
+                    isNCPIgnoring = true;
                 }
             } else if (!isNCPIgnoring) {
                 if (rotation.action.startsWith('N')) {

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { NUMBER_OF_MEMBERS, TActionItem, TTeam, TTeamMemberResult, getCharacterMaster } from "./team";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_TO_E_ARR, PARTICLE_MASTER, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_TO_E_ARR, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getElementalSkillActions, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
 import { TERParticle, RECHARGE_PARTICLE_SKILL, countE, countC, countQ, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, TEREnergy, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
 import { CHARACTER_ENERGY_FUNC, CHARACTER_PARTICLE_EXTRA_FUNC } from "./ERCalculatorFuncCharacter";
 import { WEAPON_ENERGY_FUNC } from "./ERCalculatorFuncWeapon";
@@ -16,13 +16,11 @@ export function getParticleByCharacter(
     const kind = RECHARGE_PARTICLE_SKILL;
     const resultMap = new Map<string, number[]>();
     if (!character) return undefined;
-    const cpmv = PARTICLE_MASTER[character];
-    if (!cpmv) return undefined;
     if (!rotationList?.length) {
         rotationList = [{
             id: 0,
             member: character,
-            action: Object.keys(cpmv)[0],
+            action: getElementalSkillActions(character)[0],
         }];
     }
     const memberNameArr = team.members.map(member => member.name);
@@ -33,12 +31,10 @@ export function getParticleByCharacter(
         const qCount = countQ(character, rotationList);
         const action = 'E';
         const particleInfo = getParticleInfo(character, action);
-        if (particleInfo) {
-            const num = getParticleNumFromInfo(particleInfo) * Math.trunc(Math.min(rotationLength, Math.min(eCount, cCount) * 5.5 + qCount * 18) / 5.5);
-            const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
-            splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
-            resultMap.set(action, resultVal);
-        }
+        const num = getParticleNumFromInfo(particleInfo) * Math.trunc(Math.min(rotationLength, Math.min(eCount, cCount) * 5.5 + qCount * 18) / 5.5);
+        const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
+        resultMap.set(action, resultVal);
     } else {
         const timeArr = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         let curCharacter;

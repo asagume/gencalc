@@ -322,20 +322,26 @@ export function getElementalSkillActions(character: string) {
 }
 
 export function getParticleInfo(character: string, action: string, constellation = 0, isBursting = false) {
-    let result;
+    let result: TParticleInfo = 0;
     const particleMaster = PARTICLE_MASTER[character];
     if (particleMaster) {
-        const postfix = isBursting ? '(burst)' : '';
-        for (const workAction of [action + postfix, action]) {
-            result = particleMaster[workAction];
-            if (_.isArray(result) && result.length > 4) {
-                if (result[4] >= constellation) {
-                    result = result.slice(5);       // 5,6,7,8
-                } else {
-                    result = result.slice(0, 4);    // 1,2,3,4
+        const keyArr: string[] = [];
+        if (isBursting) {
+            keyArr.push(action + '(burst)');
+        }
+        keyArr.push(action);
+        for (const key of keyArr) {
+            if (key in particleMaster) {
+                result = particleMaster[key];
+                if (_.isArray(result) && result.length > 4) {
+                    if (result[4] >= constellation) {
+                        result = result.slice(5);       // 5,6,7,8
+                    } else {
+                        result = result.slice(0, 4);    // 1,2,3,4
+                    }
                 }
+                break;
             }
-            if (result !== undefined) break;
         }
     }
     return result;
@@ -362,13 +368,13 @@ export function getParticleNumFromInfo(particleInfo: TParticleInfo, leftTime?: n
 }
 
 export function getReceiveTypeFromInfo(particleInfo: TParticleInfo) {
-    return (_.isArray(particleInfo) && particleInfo.length > 1) ? particleInfo[1] : 1;
+    return (_.isArray(particleInfo) && particleInfo.length > 1) ? particleInfo[1] : SP_NEXT;
 }
 
 export function getDurationFromInfo(particleInfo: TParticleInfo) {
     return (_.isArray(particleInfo) && particleInfo.length > 2) ? particleInfo[2] : 0;
 }
 
-export function getCtFromInfo(particleInfo: TParticleInfo) {
+export function getCooltimeFromInfo(particleInfo: TParticleInfo) {
     return (_.isArray(particleInfo) && particleInfo.length > 3) ? particleInfo[3] : undefined;
 }
