@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { NUMBER_OF_MEMBERS, TActionItem, TTeam, TTeamMemberResult, getCharacterMaster } from "./team";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_TO_E_ARR, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getElementalSkillActions, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getElementalSkillActions, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
 import { TERParticle, RECHARGE_PARTICLE_SKILL, countE, countC, countQ, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, TEREnergy, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
 import { CHARACTER_ENERGY_FUNC, CHARACTER_PARTICLE_EXTRA_FUNC } from "./ERCalculatorFuncCharacter";
 import { WEAPON_ENERGY_FUNC } from "./ERCalculatorFuncWeapon";
@@ -352,6 +352,9 @@ function addNumToArr(
 ) {
     const memberNameArr = team.members.map(member => member.name);
     const nxtRotation = (index + receiveType) < rotationList.length ? rotationList[index + receiveType] : rotationList[0];
+    if (nxtRotation.action === 'Q' && CHARACTER_Q_NOT_RECHARGEABLE.includes(nxtRotation.member)) {
+        num = 0;
+    }
     arr[memberNameArr.indexOf(nxtRotation.member)] += num;
 }
 

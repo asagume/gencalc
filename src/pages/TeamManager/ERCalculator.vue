@@ -191,7 +191,7 @@
                         <li>胡桃、宵宮、神里綾人、放浪者 等の元素スキル<br>
                             元素スキル使用時に元素粒子が発生せず、その後の通常攻撃または重撃命中時に元素粒子が発生するタイプの元素スキルは、継続時間一杯攻撃した場合に発生するであろう数の元素粒子を実行者自身が獲得します。
                         </li>
-                        <li>フィッシュル、鍾離、アルベド、珊瑚宮心海、八重神子 等の元素スキル<br>
+                        <li>フィッシュル、鍾離、アルベド、八重神子 等の元素スキル<br>
                             存在時間の長い設置物からの攻撃命中時に元素粒子が発生するタイプの元素スキルは、ローテーションまたは継続時間の間ずっと攻撃し続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分します。
                             また、設置系でない雷電将軍とナヒーダも同様の扱いとします。
                         </li>
@@ -200,13 +200,14 @@
                         </li>
                         <li>雷元素共鳴が生成する元素粒子<br>
                             ローテーションの間クールタイムの5秒間隔で雷元素関連反応が起き続けた場合に発生するであろう数の元素粒子を出場時間を基準に全員に按分します。
+                            チーム内に対象となる元素反応を起こせる元素のキャラクターが存在しない場合は0。
                         </li>
                         <li>西風武器が生成する元素粒子<br>
                             使用者の出場回数および出場時間(%)、ローテーションの長さから武器効果をトリガーする回数を決定します。
                             トリガー回数はローテーションの長さを武器効果のクールタイムで割った数までとします。
                             元素粒子は基本的に装備者が獲得するが、装備者が1アクションだけで退場する場合は次のアクション実行者が獲得します。
                         </li>
-                        <li>次のキャラクターについて、元素爆発の発動から退場するまでの間、元素スキルの元素粒子生成数を変更します。
+                        <li>次のキャラクターについて、元素爆発の実行から退場するまでの間、元素スキルの元素粒子生成数を変更します。
                             再出場時に元の生成数に戻ります。
                             <ul>
                                 <li v-for="(character, index) in CHARACTER_E_DECREMENT_IN_BURST" :key="index">
@@ -214,7 +215,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>次のキャラクターについて、元素スキルの発動から特定のアクションを実行するまでを1回の元素スキルとみなします。
+                        <li>次のキャラクターについて、元素スキルの実行から特定のアクションを実行するまでを1回の元素スキルとみなします。
                             <ul>
                                 <li v-for="([character, untilMap], index) in CHARACTER_E_UNTIL_MAP.entries()" :key="index">
                                     {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
@@ -223,6 +224,22 @@
                                                 .map(action => actionName(action)).join(displayName('または'))
                                                 + '×' + value[1] + displayName('回')).join(displayName('または'))
                                     }}
+                                </li>
+                            </ul>
+                        </li>
+                        <li>次のキャラクターについて、元素スキルの実行後に特定のアクションを実行すると元素粒子を生成したとみなします。
+                            <ul>
+                                <li v-for="([character, delayArr], index) in CHARACTER_E_DELAY_MAP.entries()" :key="index">
+                                    {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
+                                        delayArr.map(action => actionName(action)).join(displayName('または'))
+                                    }}
+                                </li>
+                            </ul>
+                        </li>
+                        <li>次のキャラクターについて、元素爆発の直前の元素スキルの元素粒子生成数を0に変更します。
+                            <ul>
+                                <li v-for="(character, index) in CHARACTER_Q_NOT_RECHARGEABLE" :key="index">
+                                    {{ displayName(character) }}
                                 </li>
                             </ul>
                         </li>
@@ -245,7 +262,7 @@ import _ from "lodash";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, getCooltimeFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
 import { getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon } from "./ERCalculatorFunc";
@@ -797,6 +814,7 @@ export default defineComponent({
             CHARACTER_E_DECREMENT_IN_BURST,
             CHARACTER_E_UNTIL_MAP,
             CHARACTER_E_DELAY_MAP,
+            CHARACTER_Q_NOT_RECHARGEABLE,
             actionName,
             characterImgSrc,
             weaponImgSrc,

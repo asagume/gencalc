@@ -316,6 +316,9 @@ export const CHARACTER_E_DELAY_MAP = new Map<string, string[]>();
 CHARACTER_E_DELAY_MAP.set('九条裟羅', ['C']);
 CHARACTER_E_DELAY_MAP.set('ファルザン', ['C']);
 
+/** 元素爆発カットイン中に元素粒子を受け取らないキャラクターたち */
+export const CHARACTER_Q_NOT_RECHARGEABLE = ['ウェンティ', 'エウルア'];
+
 export function getElementalSkillActions(character: string) {
     const particleMaster = PARTICLE_MASTER[character];
     return particleMaster ? Object.keys(particleMaster).filter(action => action.startsWith('E') && action.indexOf('(burst)') == -1) : ['E'];
