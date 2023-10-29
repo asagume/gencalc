@@ -369,7 +369,7 @@ input[type="radio"]:checked+span {
 
 label.number-of-teams input[type="number"] {
   padding-left: 1rem;
-  width: 6rem;
+  width: 8rem;
 }
 
 .data-control button {

@@ -544,7 +544,7 @@ div.remove-mark {
 
 textarea.rotation-description {
   display: block;
-  width: calc(100% - 30px);
+  width: calc(100% - 20px);
   margin-left: auto;
   margin-right: auto;
   padding: 3px 5px;
