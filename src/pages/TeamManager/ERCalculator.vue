@@ -207,7 +207,7 @@
                             トリガー回数はローテーションの長さを武器効果のクールタイムで割った数までとします。
                             元素粒子は基本的に装備者が獲得するが、装備者が1アクションだけで退場する場合は次のアクション実行者が獲得します。
                         </li>
-                        <li>下記、元素爆発の実行から退場するまでの間、元素スキルの元素粒子生成数を変更します。
+                        <li>以下、元素爆発の実行から退場するまでの間、元素スキルの元素粒子生成数を変更します。
                             再出場時に元の生成数に戻ります。
                             <ul>
                                 <li v-for="(character, index) in CHARACTER_E_DECREMENT_IN_BURST" :key="index">
@@ -215,7 +215,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>下記、元素スキルの実行から特定のアクションを実行するまでを1回の元素スキルとみなします。
+                        <li>以下、元素スキルの実行から特定のアクションを実行するまでを1回の元素スキルとみなします。
                             <ul>
                                 <li v-for="([character, untilMap], index) in CHARACTER_E_UNTIL_MAP.entries()" :key="index">
                                     {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
@@ -227,7 +227,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>下記、元素スキルの実行後に特定のアクションを実行すると元素粒子を生成したとみなします。
+                        <li>以下、元素スキルの実行後に特定のアクションを実行すると元素粒子を生成したとみなします。
                             <ul>
                                 <li v-for="([character, delayArr], index) in CHARACTER_E_DELAY_MAP.entries()" :key="index">
                                     {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
@@ -236,14 +236,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>下記、元素爆発の直前の元素スキルの元素粒子生成数を0に変更します。
+                        <li>以下、元素爆発の直前の元素スキルの元素粒子生成数を0に変更します。
                             <ul>
                                 <li v-for="(character, index) in CHARACTER_Q_NOT_RECHARGEABLE" :key="index">
                                     {{ displayName(character) }}
                                 </li>
                             </ul>
                         </li>
-                        <li>下記、それぞれの条件で元素粒子の生成数を固定しています。
+                        <li>以下、それぞれの条件で元素粒子の生成数を固定しています。
                             <ul>
                                 <li>タルタリヤ : 双剣モード9秒程度</li>
                                 <li>鹿野院平蔵 : 変格4(正論)</li>
