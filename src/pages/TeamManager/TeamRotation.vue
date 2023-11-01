@@ -399,7 +399,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-@media all and (min-width: 800px) {
+@media all and (min-width: 720px) {
   .rotation-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -408,7 +408,7 @@ export default defineComponent({
   }
 }
 
-@media all and (max-width: 799px) {
+@media all and (max-width: 719px) {
   .rotation-box {
     display: grid;
     grid-template-columns: 100%;

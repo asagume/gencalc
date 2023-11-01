@@ -22,7 +22,7 @@
     }
 }
 
-@media all and (min-width: 769px) and (max-width: 1250px) {
+@media all and (min-width: 720px) and (max-width: 1250px) {
     html {
         font-size: calc(100vw / 72 / 2);
     }
@@ -32,7 +32,7 @@
     }
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-width: 719px) {
     html {
         font-size: calc(100vw / 72);
     }
