@@ -1725,7 +1725,7 @@ export default defineComponent({
 }
 
 /* 3 Columns */
-@media all and (min-width: 1251px) {
+@media all and (min-width: 1152px) {
   .base-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
@@ -1742,7 +1742,7 @@ export default defineComponent({
 }
 
 /* 2 Columns */
-@media all and (min-width: 720px) and (max-width: 1250px) {
+@media all and (min-width: 720px) and (max-width: 1151px) {
   .base-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
