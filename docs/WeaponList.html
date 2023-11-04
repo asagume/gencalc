@@ -138,8 +138,8 @@
                             if ($.isArray(desc)) {
                                 desc = desc.join('');
                             }
+                            desc = desc.replace(/\{.+?\}/g, '<span class="var">$&</span>');
                         }
-                        desc = desc.replace(/\{.+?\}/g, '<span class="var">$&</span>');
                         dataArr.push(desc);
 
                         dataMap.set(json2['名前'], dataArr);
