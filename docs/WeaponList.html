@@ -118,6 +118,8 @@
                         });
                         if ('90' in json2['ステータス']['基礎攻撃力']) {
                             dataArr.push(json2['ステータス']['基礎攻撃力']['90']);
+                        } else if ('70' in json2['ステータス']['基礎攻撃力']) {
+                            dataArr.push(json2['ステータス']['基礎攻撃力']['70']);
                         } else {
                             dataArr.push('');
                         }
