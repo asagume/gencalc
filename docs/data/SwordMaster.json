@@ -1,4 +1,8 @@
 {
+  "静水流転の輝き": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_SplendorofTranquilWaters.json"
+  },
   "萃光の裁葉": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_LightofFoliarIncision.json"
