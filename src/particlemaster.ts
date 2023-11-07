@@ -18,6 +18,9 @@ const C2 = 2;
 // const C4 = 4;
 const C6 = 6;
 export const PARTICLE_MASTER: TParticleMaster = {
+    'フリーナ': {
+        'E': [1 / 2.5, SP_LONG, 30, 20],     // CT2.5s
+    },
     'リオセスリ': {
         'E': [3, SP_SELF, 10, 16, C1, 3, SP_SELF, 14, 16],  // CT2s
     },

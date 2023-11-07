@@ -35,6 +35,23 @@ export function getParticleByCharacter(
         const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
         splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
         resultMap.set(action, resultVal);
+    } else if (character === 'フリーナ') {
+        let ousiaLength = 0;
+        let isOusia = true; // はじめはウーシア
+        rotationList.forEach(rotation => {
+            if (rotation.member == character && rotation.action.includes('C')) {    // 重撃でアルケー切り替え
+                isOusia = !isOusia;
+            }
+            if (isOusia) {
+                ousiaLength++;
+            }
+        })
+        const action = 'E';
+        const particleInfo = getParticleInfo(character, action);
+        const num = getParticleNumFromInfo(particleInfo) * Math.trunc(rotationLength * ousiaLength / rotationList.length);
+        const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
+        resultMap.set(action, resultVal);
     } else {
         const timeArr = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         let curCharacter;
