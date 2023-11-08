@@ -48,7 +48,7 @@ export function getParticleByCharacter(
         })
         const action = 'E';
         const particleInfo = getParticleInfo(character, action);
-        const num = getParticleNumFromInfo(particleInfo) * Math.trunc(rotationLength * ousiaLength / rotationList.length);
+        const num = getParticleNumFromInfo(particleInfo, rotationLength) * Math.trunc(ousiaLength / rotationList.length);
         const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
         splitNumToArrByOnFieldRate(resultVal, num, team, onFields);
         resultMap.set(action, resultVal);

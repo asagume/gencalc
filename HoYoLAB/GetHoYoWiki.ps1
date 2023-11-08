@@ -31,6 +31,8 @@ $pageIds = @()
 # $pageIds += 3997   # 旅人(水)
 # $pageIds += 4023   # ヌヴィレット
 # $pageIds += 4022   # リオセスリ
+$pageIds += 4376   # フリーナ
+$pageIds += 4377   # シャルロット
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -73,9 +75,10 @@ $pageIds = @()
 # $pageIds += 4335   # 携帯型チェーンソー
 # $pageIds += 4338   # 果てなき紺碧の唄
 # $pageIds += 4339   # 久遠流転の大典
-$pageIds += 4336   # プロスペクタードリル
-$pageIds += 4337   # レンジゲージ
+# $pageIds += 4336   # プロスペクタードリル
+# $pageIds += 4337   # レンジゲージ
 # $pageIds += 4340   # 凛流の監視者
+$pageIds += 4570   # 静水流転の輝き
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -98,7 +101,7 @@ $pageIds += 4337   # レンジゲージ
 # $pageIds += 2260
 
 $doDownloadImg = $true
-$imgLanguage = 'ja-jp'
+$imgLanguage = 'ko-kr'
 
 $categoryMap = @{
     "2" = "character"

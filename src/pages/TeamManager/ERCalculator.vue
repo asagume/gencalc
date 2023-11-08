@@ -262,7 +262,7 @@ import _ from "lodash";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getDurationFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
 import { getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon } from "./ERCalculatorFunc";
@@ -384,8 +384,10 @@ export default defineComponent({
                             const constellation = getConstellation(rotation.member, props.team, props.teamMemberResult);
                             const particleInfo = getParticleInfo(rotation.member, rotation.action, constellation);
                             let ct = 0;
+                            let duration = 0;
                             if (particleInfo) {
                                 ct = getCooltimeFromInfo(particleInfo) ?? 0;
+                                duration = getDurationFromInfo(particleInfo);
                                 if (memberNameArr.includes('重雲') && rotation.member != '重雲') {
                                     const constellation = getConstellation('重雲', props.team, props.teamMemberResult);
                                     if (constellation >= 2) {
@@ -393,7 +395,7 @@ export default defineComponent({
                                     }
                                 }
                             }
-                            if (ct > eLength[memberIndex]) {
+                            if (ct > eLength[memberIndex] && ct > duration) {
                                 eLength[memberIndex] = ct;
                             }
                         }

@@ -459,9 +459,7 @@ export default defineComponent({
     ];
     const itemList = (category: string) => {
       const result = [] as any[];
-      const workList = props.damageResult[category].filter(
-        (s: any[]) => !s[0].startsWith('非表示')
-      );
+      const workList = props.damageResult[category].filter((s: any[]) => s[0] && !s[0].startsWith('非表示'));
       for (let i = 0; i < workList.length; i++) {
         let span = 1;
         if (i > 0 && workList[i][0] == workList[i - 1][0]) span = 0;
