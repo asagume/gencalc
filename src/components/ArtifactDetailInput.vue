@@ -52,8 +52,8 @@
           <th>{{ displayName('HP') }}</th>
           <td class="stat-value">
             <template v-if="isSubStatOnly">
-              <input v-if="editableRef" type="number" v-model="artifactStatsSub['HP']" :min="0"
-                :step="substatStep('HP')" @change="artifactStatsSubOnChange" />
+              <input v-if="editableRef" type="number" v-model="artifactStatsSub['HP']" :min="0" :step="substatStep('HP')"
+                @change="artifactStatsSubOnChange" />
               <span v-else>{{ displayStatValue('HP', artifactStatsSub['HP']) }}</span>
             </template>
             <template v-else>
@@ -161,6 +161,14 @@
             </div>
             <div style="position: relative">
               <img class="wait-icon" src="images/icon_loader_f_ww_01_s1.gif" width="25" height="25" v-if="isScanning" />
+            </div>
+            <div>
+              <label><input type="checkbox" v-model="canInitializeStats">
+                {{ displayName('全てクリア') }}
+              </label>
+              <button @click="initializeAll" :disabled="!canInitializeStats">
+                {{ displayName('実行') }}
+              </button>
             </div>
           </td>
         </tr>
@@ -349,6 +357,9 @@
             @apply:artifact-change="applyArtifactChange" @cancel:artifact-change="cancelArtifactChange" />
         </div>
       </div>
+      <p>
+        聖遺物の入れ替えではなく、0から設定する場合は、「全てクリア」を実行してから行ってください。
+      </p>
     </div>
   </div>
   <div>
@@ -447,6 +458,7 @@ export default defineComponent({
 
     const artifactInputModeTab = ref('1');
     const artifactCatTabSelected = ref(1);
+    const canInitializeStats = ref(false);
 
     const upTotalCount = computed(() => {
       let work = 0;
@@ -796,6 +808,16 @@ export default defineComponent({
       }
     };
 
+    const initializeAll = async () => {
+      canInitializeStats.value = false;
+      for (let i = 0; i < mainstats.length; i++) {
+        mainstats[i] = '';
+      }
+      _calculateArtifactStatsMain();
+      await initializeArtifactStatsSub();
+      artifactList.splice(0, artifactList.length);
+    }
+
     const onLoad = () => {
       if (STORAGE_KEY in localStorage) {
         const value: any[] = JSON.parse(localStorage[STORAGE_KEY]);
@@ -876,6 +898,9 @@ export default defineComponent({
       cancelArtifactDetailOcrResult,
       acceptArtifactDetailOcrResult,
       initializeArtifactStatsSub,
+
+      canInitializeStats,
+      initializeAll,
     };
   },
 });
@@ -1002,5 +1027,9 @@ label.button {
 
 :checked+img {
   background-color: rgb(156, 140, 49);
+}
+
+label+button {
+  width: 10rem;
 }
 </style>
