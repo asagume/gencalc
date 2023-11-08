@@ -351,6 +351,18 @@ export const CHARACTER_ENERGY_FUNC: {
         }
         return result;
     },
+    'ジン': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const messages: string[] = [
+            '蒲公英の風発動後、元素エネルギーが20%回復する。',
+        ];
+        const myEnergy = 80 * 0.2 * countQ(character, rotationList);
+        const allEnergy = 0;
+        const otherEnergy = 0;
+        const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        result.push([RECHARGE_ENERGY_PASSIVE, '風の導くままに', myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        return result;
+    },
     '七七': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
         const result: TCharacterEnergyRet[] = [];
         const constellationLevel = 1;
