@@ -356,10 +356,10 @@
           <ArtifactChangeInput :before="artifactBefore" :after="artifactAfter"
             @apply:artifact-change="applyArtifactChange" @cancel:artifact-change="cancelArtifactChange" />
         </div>
+        <p>
+          聖遺物の入れ替えではなく、0から設定する場合は、「全てクリア」を実行してから行ってください。
+        </p>
       </div>
-      <p>
-        聖遺物の入れ替えではなく、0から設定する場合は、「全てクリア」を実行してから行ってください。
-      </p>
     </div>
   </div>
   <div>

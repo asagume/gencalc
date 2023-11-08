@@ -133,7 +133,7 @@ import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } 
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
 import { getElementalSkillActions } from "@/particlemaster";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
+import { CHARGED_ONLY_CHARACTER, CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
 import ERCalculator from './ERCalculator.vue';
 
 export default defineComponent({
@@ -169,7 +169,7 @@ export default defineComponent({
         if (member.name) {
           const characterMaster = getCharacterMaster(member.name);
           if (characterMaster) {
-            const isCWith = CHARGED_WITH_NORMAL_WEAPON.includes(characterMaster?.武器) || CHARGED_WITH_NORMAL_CHARACTER.includes(member.name);
+            const isCWith = (CHARGED_WITH_NORMAL_WEAPON.includes(characterMaster?.武器) || CHARGED_WITH_NORMAL_CHARACTER.includes(member.name)) && !CHARGED_ONLY_CHARACTER.includes(member.name);
             const workArr: string[] = [];
             for (let i = 0; i < getNormalAttackDan(member.name); i++) {
               const work = 'N' + (i > 0 ? String(i + 1) : '');

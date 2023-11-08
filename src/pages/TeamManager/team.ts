@@ -52,6 +52,7 @@ export const NUMBER_OF_MEMBERS = 4;
 // 重撃の前に通常が挟まる武器、キャラクター
 export const CHARGED_WITH_NORMAL_WEAPON = ['片手剣', '長柄武器'];
 export const CHARGED_WITH_NORMAL_CHARACTER = ['鹿野院平蔵', 'リオセスリ'];
+export const CHARGED_ONLY_CHARACTER = ['フリーナ'];
 
 let memberId = 0;
 const characterDetailMap = new Map<string, TCharacterDetail>();
