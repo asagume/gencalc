@@ -1,7 +1,7 @@
 import _ from "lodash";
-import { calculateArtifactStatsMain, calculateArtifactStats, ALL_ELEMENTS, calculateStats, calculateDamageResult } from "@/calculate";
+import { calculateArtifactStatsMain, calculateArtifactStats, calculateStats, calculateDamageResult } from "@/calculate";
 import { overwriteObject } from "@/common";
-import { TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, getDefaultArtifactDetailInput, getDefaultCharacterInput, getDefaultConditionInput, getDefaultDamageResultInput, getDefaultOptionInput, getDefaultStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues } from "@/input";
+import { TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TOptionInput, TStats, TStatsInput, getDefaultArtifactDetailInput, getDefaultCharacterInput, getDefaultConditionInput, getDefaultDamageResultInput, getDefaultOptionInput, getDefaultStatsInput, loadRecommendation, makeBuildStorageKey, makeDamageDetailObjArrObjArtifactSets, makeDamageDetailObjArrObjCharacter, makeDamageDetailObjArrObjWeapon, makeDefaultBuildname, setupConditionValues, updateConditionsByTeam } from "@/input";
 import { CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, TAnyObject, TCharacterDetail, TCharacterEntry, TCharacterKey, TWeaponEntry, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, getCharacterMasterDetail } from "@/master";
 import { getElementalSkillActions } from "@/particlemaster";
 
@@ -165,62 +165,7 @@ export const calculateMemberResult = async (member: TMember, team: TTeam): Promi
     result.conditionInput.selectList.forEach((entry) => {
         result.conditionInput.conditionValues[entry.name] = 0;
     });
-
-    const myVision = result.characterInput.characterMaster.元素;
-    const teamElements: TAnyObject = {};
-    if (team.members) {
-        team.members.filter(s => s.name).forEach(entry => {
-            const vision = CHARACTER_MASTER[entry.name as TCharacterKey].元素;
-            if (vision in teamElements) {
-                teamElements[vision]++;
-            } else {
-                teamElements[vision] = 1;
-            }
-        })
-    }
-
-    // 武器
-    if (['千岩古剣', '千岩長槍'].includes(result.characterInput.weapon)) {
-        if (team.members) {
-            let liyueCount = 0;
-            for (const entry of team.members.filter(s => s)) {
-                const characterDetail = await getCharacterMasterDetail(entry.name as TCharacterKey);
-                if (characterDetail.region) {
-                    if (['璃月港'].includes(characterDetail.region)) {
-                        liyueCount++;
-                    }
-                }
-            }
-            const conditionKey = '[' + result.characterInput.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
-            result.conditionInput.conditionValues[conditionKey] = liyueCount;
-        }
-    } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(result.characterInput.weapon)) {
-        if (team.members) {
-            let totalEnergyCost = 0;
-            for (const entry of team.members.filter(s => s)) {
-                const characterDetail = await getCharacterMasterDetail(entry.name as TCharacterKey);
-                if ('元素エネルギー' in characterDetail.元素爆発) {
-                    totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
-                }
-            }
-            if (totalEnergyCost) {
-                result.conditionInput.conditionValues['チーム全員の元素エネルギー上限の合計'] = totalEnergyCost;
-            }
-        }
-    }
-
-    const sameCount = teamElements[myVision] - 1;
-    const otherElements = Object.keys(teamElements).filter(s => s != myVision);
-    const otherCount = otherElements.length ? otherElements.map(s => teamElements[s]).reduce((a, b) => a + b) : 0;
-    result.conditionInput.conditionValues['[チーム]同じ元素のキャラクター'] = sameCount;
-    result.conditionInput.conditionValues['[チーム]異なる元素のキャラクター'] = otherCount;
-    result.conditionInput.conditionValues['[チーム]キャラクターの元素タイプ'] = Object.keys(teamElements).length - 1; // requiredなので1減らします
-    ALL_ELEMENTS.forEach(vision => {
-        const key1 = '[チーム]' + vision + '元素キャラクター';
-        result.conditionInput.conditionValues[key1] = teamElements[vision] ?? 0;
-        const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
-        result.conditionInput.conditionValues[key2] = (teamElements[vision] ?? 0) - (vision == myVision ? 1 : 0);
-    });
+    await updateConditionsByTeam(result.characterInput, result.conditionInput, result.optionInput);
 
     // 元素共鳴
     if (getElementalResonance(team)) {

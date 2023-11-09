@@ -348,7 +348,6 @@ export default defineComponent({
 
     const selectedActionOnClick = (item: TActionItem) => {
       for (const actionArr of [normalAttackActions[item.member], elementalSkillActions[item.member]]) {
-        console.log(actionArr);
         if (actionArr?.length) {
           const index = actionArr.indexOf(item.action);
           if (index != -1) {

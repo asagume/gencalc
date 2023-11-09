@@ -1,4 +1,4 @@
-import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
 import { basename, isNumber, overwriteObject } from './common';
 
@@ -1619,6 +1619,7 @@ function makeConditionExclusionMapFromStrSub(
                         postfix = re2Ret[2];
                     }
                 }
+                step = step ? step : 1;
                 for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
                     pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
                 }
@@ -2137,4 +2138,134 @@ export function popBuildinfoFromSession() {
     sessionStorage.removeItem('buildname');
     sessionStorage.removeItem('teammembers');
     return result;
+}
+
+export async function updateConditionsByTeam(
+    characterInput: TCharacterInput,
+    conditionInput: TConditionInput,
+    optionInput: TOptionInput,
+) {
+    const character = characterInput.character;
+    const teamMembers: string[] = [character];
+    if (optionInput?.teamMembers) {
+        teamMembers.push(...optionInput.teamMembers.filter(s => s && s != character));
+    }
+    const myVision = CHARACTER_MASTER[character as TCharacterKey].元素;
+
+    // [チーム]*出身キャラクター, [チーム]*以外出身キャラクター
+    const regionCountMap = new Map<string, number>();
+    // [チーム]元素エネルギー上限の合計
+    let totalEnergyCost = 0;
+    // Map<元素, キャラクターの数>
+    const visionCountMap = new Map<string, number>();
+    for (const entry of teamMembers) {
+        const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
+        if (characterDetail.region) {
+            const count = regionCountMap.get(characterDetail.region);
+            if (count) {
+                regionCountMap.set(characterDetail.region, count + 1);
+            } else {
+                regionCountMap.set(characterDetail.region, 1);
+            }
+        }
+        if ('元素エネルギー' in characterDetail.元素爆発) {
+            totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
+        }
+        if (characterDetail.元素) {
+            const count = visionCountMap.get(characterDetail.元素);
+            if (count) {
+                visionCountMap.set(characterDetail.元素, count + 1);
+            } else {
+                visionCountMap.set(characterDetail.元素, 1);
+            }
+        }
+    }
+    regionCountMap.forEach((value, key) => {
+        conditionInput.conditionValues['[チーム]' + key + '出身キャラクター'] = value;
+        conditionInput.conditionValues['[チーム]' + key + '以外出身キャラクター'] = teamMembers.length - value;
+    })
+    if (totalEnergyCost) {
+        conditionInput.conditionValues['[チーム]元素エネルギー上限の合計'] = totalEnergyCost;
+    }
+    visionCountMap.forEach((value, key) => {
+        conditionInput.conditionValues['[チーム]' + key + '元素キャラクター'] = value;
+        conditionInput.conditionValues['[チーム]' + key + '元素以外キャラクター'] = teamMembers.length - value;
+        if (key == myVision) {
+            conditionInput.conditionValues['[チーム]同じ元素のキャラクター'] = value - 1;
+            conditionInput.conditionValues['[チーム]異なる元素のキャラクター'] = teamMembers.length - value;
+        }
+    })
+    conditionInput.conditionValues['[チーム]キャラクターの元素タイプ'] = visionCountMap.size - 1; // requiredなので1減らします
+}
+
+export async function updateOptionsElementalResonanceByTeam(
+    characterInput: TCharacterInput,
+    optionInput: TOptionInput,
+) {
+    const character = characterInput.character;
+    const teamMembers: string[] = [character];
+    if (optionInput?.teamMembers) {
+        teamMembers.push(...optionInput.teamMembers.filter(s => s && s != character));
+    }
+
+    const visionCountMap = new Map<string, number>();
+    for (const entry of teamMembers) {
+        const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
+        if (characterDetail.元素) {
+            const count = visionCountMap.get(characterDetail.元素);
+            if (count) {
+                visionCountMap.set(characterDetail.元素, count + 1);
+            } else {
+                visionCountMap.set(characterDetail.元素, 1);
+            }
+        }
+    }
+
+    // 元素共鳴を調整します
+    const newElementResonance: TConditionValues = {};
+    const resonanceElementArr: string[] = [];
+    const restMemberElementArr: string[] = [];
+    visionCountMap.forEach((value, key) => {
+        if (value >= 2) {
+            resonanceElementArr.push(key);
+        } else if (value == 1) {
+            restMemberElementArr.push(key);
+        }
+    })
+    if (optionInput.teamMembers.length == 3) {
+        if (resonanceElementArr.length > 1) {
+            newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
+            newElementResonance[resonanceElementArr[1] + '元素共鳴'] = true;
+        } else if (resonanceElementArr.length > 0) {
+            newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
+        } else {
+            newElementResonance['元素共鳴なし'] = true;
+        }
+    } else if (resonanceElementArr.length > 0) {
+        const tempArr: string[] = [resonanceElementArr[0] + '元素共鳴'];
+        const currentElementArr = Object.keys(optionInput.elementalResonance.conditionValues).filter(s => optionInput.elementalResonance.conditionValues[s] && s != '元素共鳴なし').map(s => s.replace(/元素共鳴$/, ''));
+        currentElementArr.forEach(element => {
+            if (restMemberElementArr.includes(element)) {
+                tempArr.push(element + '元素共鳴');
+            }
+        });
+        if (tempArr.length < 2) {
+            ALL_ELEMENTS.forEach(element => {
+                const resonance = element + '元素共鳴';
+                if (optionInput.elementalResonance.conditionValues[resonance]) {
+                    if (!tempArr.includes(resonance)) {
+                        tempArr.push(resonance);
+                    }
+                }
+            });
+        }
+        tempArr.forEach(resonance => {
+            newElementResonance[resonance] = true;
+        })
+    }
+    if (!_.isEqual(newElementResonance, optionInput.elementalResonance.conditionValues)) {
+        overwriteObject(optionInput.elementalResonance.conditionValues, newElementResonance);
+        return true;
+    }
+    return false;
 }

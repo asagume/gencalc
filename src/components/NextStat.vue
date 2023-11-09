@@ -391,6 +391,7 @@ label {
 
 select.evaluation-item {
     width: auto;
+    max-width: calc(100% - 48px);
 }
 
 table {

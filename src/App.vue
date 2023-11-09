@@ -292,6 +292,8 @@ import {
   getDefaultStatsInput,
   getDefaultOptionInput,
   getDefaultDamageResultInput,
+  updateConditionsByTeam,
+  updateOptionsElementalResonanceByTeam,
 } from '@/input';
 import {
   ARTIFACT_SET_MASTER,
@@ -308,7 +310,6 @@ import {
   TWeaponKey,
 } from '@/master';
 import {
-  ALL_ELEMENTS,
   ARTIFACT_SCORE_FORMULA_TEMPLATE,
   calculateArtifactScore,
   calculateArtifactStats,
@@ -687,124 +688,10 @@ export default defineComponent({
 
     /** チーム編成に依存するオプションの値を調整します */
     async function updateConditionByTeamMembers() {
-      const teamMembers = optionInputRea?.teamMembers;
-      if (!teamMembers || teamMembers.length === 0) return;
-
-      const character = characterInputRea.character;
-      const myVision = CHARACTER_MASTER[character as TCharacterKey].元素;
-      const teamElements: TAnyObject = {};
-      teamElements[myVision] = 1;
-      teamMembers.forEach(entry => {
-        const vision = CHARACTER_MASTER[entry as TCharacterKey].元素;
-        if (vision in teamElements) {
-          teamElements[vision]++;
-        } else {
-          teamElements[vision] = 1;
-        }
-      });
-
-      // 武器のオプションを調整します
-      if (['千岩古剣', '千岩長槍'].includes(characterInputRea.weapon)) {
-        let liyueCount = 0;
-        if (['璃月港'].includes(characterInputRea.characterMaster.region)) {
-          liyueCount++;
-        }
-        for (const entry of teamMembers.filter(s => s)) {
-          const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
-          if (characterDetail.region) {
-            if (['璃月港'].includes(characterDetail.region)) {
-              liyueCount++;
-            }
-          }
-        }
-        const conditionKey = '[' + characterInputRea.weapon + ']璃月キャラ1人毎に攻撃力と会心率+';
-        conditionInputRea.conditionValues[conditionKey] = liyueCount;
-      } else if (['惡王丸', '斬波のひれ長', '曚雲の月'].includes(characterInputRea.weapon)) {
-        let totalEnergyCost = 0;
-        for (const entry of teamMembers.filter(s => s)) {
-          const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
-          if ('元素エネルギー' in characterDetail.元素爆発) {
-            totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
-          }
-        }
-        if (totalEnergyCost) {
-          conditionInputRea.conditionValues['チーム全員の元素エネルギー上限の合計'] = totalEnergyCost;
-        }
-      }
-
-      const sameCount = teamElements[myVision] - 1;
-      const otherElements = Object.keys(teamElements).filter(s => s != myVision);
-      const otherCount = otherElements.length ? otherElements.map(s => teamElements[s]).reduce((a, b) => a + b) : 0;
-      conditionInputRea.conditionValues['[チーム]同じ元素のキャラクター'] = sameCount;
-      conditionInputRea.conditionValues['[チーム]異なる元素のキャラクター'] = otherCount;
-      conditionInputRea.conditionValues['[チーム]キャラクターの元素タイプ'] = Object.keys(teamElements).length - 1; // requiredなので1減らします
-      ALL_ELEMENTS.forEach(vision => {
-        const key1 = '[チーム]' + vision + '元素キャラクター';
-        conditionInputRea.conditionValues[key1] = teamElements[vision] ?? 0;
-        const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
-        conditionInputRea.conditionValues[key2] = (teamElements[vision] ?? 0) - (vision == myVision ? 1 : 0);
-      });
-      if (character === 'ゴロー') {
-        const key = '[チーム]岩元素キャラクター';
-        let count = conditionInputRea.conditionValues[key];
-        conditionInputRea.conditionValues[key] = Math.min(3, count);
-      } else if (character === 'ナヒーダ') {
-        ['炎', '水', '雷'].forEach(vision => {
-          const key1 = '[チーム]' + vision + '元素キャラクター';
-          let count1 = conditionInputRea.conditionValues[key1];
-          if (characterInputRea.命ノ星座 >= 1) {
-            count1++;
-          }
-          conditionInputRea.conditionValues[key1] = Math.min(2, count1);
-          const key2 = '[チーム]' + vision + '元素キャラクター(自分以外)';
-          let count2 = conditionInputRea.conditionValues[key2];
-          if (characterInputRea.命ノ星座 >= 1) {
-            count2++;
-          }
-          conditionInputRea.conditionValues[key2] = Math.min(2, count2);
-        });
-      }
-
-      // 元素共鳴を調整します
-      const newElementResonance: TConditionValues = {};
-      const resonanceElementArr: string[] = Object.keys(teamElements).filter(s => teamElements[s] >= 2);
-      if (optionInputRea.teamMembers.length == 3) {
-        if (resonanceElementArr.length > 1) {
-          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
-          newElementResonance[resonanceElementArr[1] + '元素共鳴'] = true;
-        } else if (resonanceElementArr.length > 0) {
-          newElementResonance[resonanceElementArr[0] + '元素共鳴'] = true;
-        } else {
-          newElementResonance['元素共鳴なし'] = true;
-        }
-      } else if (resonanceElementArr.length > 0) {
-        const tempArr: string[] = [resonanceElementArr[0] + '元素共鳴'];
-        const restMemberElementArr = Object.keys(teamElements).filter(s => teamElements[s] == 1);
-        const currentElementArr = Object.keys(optionInputRea.elementalResonance.conditionValues).filter(s => optionInputRea.elementalResonance.conditionValues[s] && s != '元素共鳴なし').map(s => s.replace(/元素共鳴$/, ''));
-        currentElementArr.forEach(element => {
-          if (restMemberElementArr.includes(element)) {
-            tempArr.push(element + '元素共鳴');
-          }
-        });
-        if (tempArr.length < 2) {
-          ALL_ELEMENTS.forEach(element => {
-            const resonance = element + '元素共鳴';
-            if (optionInputRea.elementalResonance.conditionValues[resonance]) {
-              if (!tempArr.includes(resonance)) {
-                tempArr.push(resonance);
-              }
-            }
-          });
-        }
-        tempArr.forEach(resonance => {
-          newElementResonance[resonance] = true;
-        })
-      }
-      if (!_.isEqual(newElementResonance, optionInputRea.elementalResonance.conditionValues)) {
-        overwriteObject(optionInputRea.elementalResonance.conditionValues, newElementResonance);
+      await updateConditionsByTeam(characterInputRea, conditionInputRea, optionInputRea);
+      if (await updateOptionsElementalResonanceByTeam(characterInputRea, optionInputRea)) {
         elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
       }
-
       console.log(characterInputRea.characterMaster, conditionInputRea.conditionValues);
     }
 

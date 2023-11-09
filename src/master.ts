@@ -383,6 +383,8 @@ export async function getWeaponMasterDetail(weapon: TWeaponKey, opt_weaponType?:
     }
 }
 
+export const ALL_ELEMENTS = ['炎', '水', '風', '雷', '草', '氷', '岩'];
+
 export const ELEMENT_COLOR_CLASS = {
     炎: 'pyro',
     水: 'hydro',

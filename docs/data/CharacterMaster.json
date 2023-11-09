@@ -257,6 +257,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "シャルロット": {
+    "レアリティ": 4,
+    "元素": "氷",
+    "武器": "法器",
+    "誕生日": "4/10",
+    "import": "data/characters/cryo_4_catalyst_Charlotte.json"
+  },
   "フレミネ": {
     "レアリティ": 4,
     "元素": "氷",

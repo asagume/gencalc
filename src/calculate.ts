@@ -39,7 +39,7 @@ import {
     getDefaultStatsInput,
     getDefaultDamageResultInput,
 } from '@/input';
-import { ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from '@/master';
+import { ALL_ELEMENTS, ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from '@/master';
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -1717,8 +1717,6 @@ export function isUseReference(formulaArr: number | string | Array<number | stri
     });
     return result;
 }
-
-export const ALL_ELEMENTS = ['炎', '水', '風', '雷', '草', '氷', '岩'];
 
 /**
  * ステータスを更新します

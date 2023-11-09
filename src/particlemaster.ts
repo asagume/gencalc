@@ -18,6 +18,10 @@ const C2 = 2;
 // const C4 = 4;
 const C6 = 6;
 export const PARTICLE_MASTER: TParticleMaster = {
+    'シャルロット': {
+        'E.Press': 3,
+        'E.Hold': 5,
+    },
     'フリーナ': {
         'E': [1 / 2.5, SP_LONG, 30, 20],     // CT2.5s
     },

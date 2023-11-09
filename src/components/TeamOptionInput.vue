@@ -114,7 +114,6 @@
 <script lang="ts">
 import _ from 'lodash';
 import {
-  ALL_ELEMENTS,
   calculateFormulaArray,
   checkConditionMatches,
   makeValidConditionValueArr,
@@ -139,6 +138,7 @@ import {
 TConditionValues,
 } from "@/input";
 import {
+ALL_ELEMENTS,
   CHARACTER_MASTER,
   ELEMENT_BG_COLOR_CLASS,
   ELEMENT_IMG_SRC,
