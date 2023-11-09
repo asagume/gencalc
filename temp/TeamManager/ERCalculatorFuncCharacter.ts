@@ -640,6 +640,21 @@ export const CHARACTER_ENERGY_FUNC: {
         }
         return result;
     },
+    'シャルロット': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                'スチルフォト·多角的立証が「スナップシルエット」、または「フォーカスインプレッション」マークが付いている敵に命中したとき、与えるダメージ+10%。また、シャルロットが元素エネルギーを2ポイント回復する。この方法での元素エネルギー回復は20秒毎に5回のみ可能。',
+            ];
+            const myEnergy = 2;
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
 }
 
 export const CHARACTER_PARTICLE_EXTRA_FUNC: {
