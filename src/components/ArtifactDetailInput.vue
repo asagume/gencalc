@@ -231,7 +231,7 @@
       </label>
     </div>
 
-    <div class="sub-input">
+    <div class="sub-input" id="artifact-sub-input">
       <fieldset v-if="artifactInputModeTab == '1'">
         <table class="priority-substat">
           <tr>
@@ -590,6 +590,7 @@ export default defineComponent({
         overwriteObject(artifactAfter, selected[0].artifact);
         isArtifactChangeInputShow.value = true;
       }
+      document.getElementById('artifact-sub-input')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     /** 新規聖遺物：更新イベント */
