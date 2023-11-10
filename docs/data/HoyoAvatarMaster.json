@@ -1,5 +1,18 @@
 [
   {
+    "id": 10000089,
+    "name": "フリーナ",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": null
+  },
+  {
     "id": 10000087,
     "name": "ヌヴィレット",
     "icon": null,
@@ -460,6 +473,19 @@
     "icon": null,
     "weapon_cat_id": 12,
     "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": null
+  },
+  {
+    "id": 10000088,
+    "name": "シャルロット",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
     "element_attr_id": 7,
     "max_level": 90,
     "item_icon": null,

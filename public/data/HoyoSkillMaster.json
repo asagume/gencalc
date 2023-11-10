@@ -1,5 +1,52 @@
 [
   {
+    "avatar_id": 10000089,
+    "skill_list": [
+      {
+        "id": 10891,
+        "group_id": 8931,
+        "name": "通常攻撃·ソリストの誘い",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10892,
+        "group_id": 8932,
+        "name": "サロン·ソリティア",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10895,
+        "group_id": 8939,
+        "name": "万民のカルナバル",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 8921,
+        "group_id": 8921,
+        "name": "終わりなき円舞",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 8922,
+        "group_id": 8922,
+        "name": "聴き手なき独白",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 8923,
+        "group_id": 8923,
+        "name": "蒼海もまた舞台なり",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
     "avatar_id": 10000087,
     "skill_list": [
       {
@@ -1707,6 +1754,53 @@
         "id": 6223,
         "group_id": 6223,
         "name": "まあまあ落ち着け",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000088,
+    "skill_list": [
+      {
+        "id": 10881,
+        "group_id": 8831,
+        "name": "通常攻撃·寒色撮影技法",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10882,
+        "group_id": 8832,
+        "name": "フレーミング·氷点法",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10885,
+        "group_id": 8839,
+        "name": "スチルフォト·多角的立証",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 8821,
+        "group_id": 8821,
+        "name": "衝撃的モーメント",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 8822,
+        "group_id": 8822,
+        "name": "多様性リサーチ",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 8823,
+        "group_id": 8823,
+        "name": "主観シャッター",
         "icon": null,
         "max_level": 1
       }
