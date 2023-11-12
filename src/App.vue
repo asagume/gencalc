@@ -725,8 +725,6 @@ export default defineComponent({
         if (refine > maxRefine) refine = maxRefine;
         characterInputRea.武器精錬ランク = Number(refine);
       }
-      // チーム編成を反映します
-      updateConditionByTeamMembers();
       // キャラクターのダメージ計算式を再抽出します
       makeDamageDetailObjArrObjCharacter(characterInputRea);
       // 武器のダメージ計算式を再抽出します
@@ -736,6 +734,8 @@ export default defineComponent({
       // 元素共鳴のダメージ計算式を再抽出します
       makeDamageDetailObjArrObjElementalResonance(characterInputRea);
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+      // チーム編成を反映します
+      await updateConditionByTeamMembers();
       // 聖遺物ステータスを計算します
       calculateArtifactStatsMain(
         artifactDetailInputRea.聖遺物ステータスメイン効果,
@@ -883,18 +883,6 @@ export default defineComponent({
           }
         }
       }
-      // const maxNormalAttack = getMaxTalentLevel(characterInputRea.characterMaster, '通常攻撃');
-      // if (characterInputRea.通常攻撃レベル > maxNormalAttack) {
-      //   characterInputRea.通常攻撃レベル = maxNormalAttack;
-      // }
-      // const maxElementalSkill = getMaxTalentLevel(characterInputRea.characterMaster, '元素スキル');
-      // if (characterInputRea.元素スキルレベル > maxElementalSkill) {
-      //   characterInputRea.元素スキルレベル = maxElementalSkill;
-      // }
-      // const maxElementalBurst = getMaxTalentLevel(characterInputRea.characterMaster, '元素爆発');
-      // if (characterInputRea.元素爆発レベル > maxElementalBurst) {
-      //   characterInputRea.元素爆発レベル = maxElementalBurst;
-      // }
       let opt_buildData;
       if (props.urldata && props.urldata.キャラクター == character)
         opt_buildData = props.urldata;

@@ -53,7 +53,8 @@
                         </td>
                         <td>
                             <label>
-                                <input type="checkbox" v-model="containsDealMoreDamage" @change="containsDealMoreDamageOnChange">
+                                <input type="checkbox" v-model="containsDealMoreDamage"
+                                    @change="containsDealMoreDamageOnChange">
                                 {{ displayName('与えるダメージ') }}
                             </label>
                         </td>
@@ -118,6 +119,17 @@ export default defineComponent({
         if (nextStepStopFlgItem) {
             isStop.value = JSON.parse(nextStepStopFlgItem);
         }
+
+        const canEvaluate = computed(() => {
+            if (props.characterInput.characterMaster && props.damageResult) {
+                const eList = props.characterInput.characterMaster.元素スキル.詳細.filter((s: any) => s.名前).map((s: any) => s.名前);
+                const qList = props.characterInput.characterMaster.元素爆発.詳細.filter((s: any) => s.名前).map((s: any) => s.名前);
+                if (props.damageResult.元素スキル.filter(s => s[0] && !eList.includes(s[0])).length === 0 && props.damageResult.元素爆発.filter(s => s[0] && !qList.includes(s[0])).length === 0) {
+                    return true;
+                }
+            }
+            return false;
+        })
 
         const evaluationItemList = computed(() => {
             let result: string[] = [];
@@ -186,16 +198,18 @@ export default defineComponent({
         }
 
         function initializeNextStat() {
-            const newRows: TStatRow[] = [];
-            for (const stat of NEXT_STAT_ARR) {
-                const row: TStatRow = [stat, makeEasyInputSubstatValueList(stat as TArtifactSubKey), 2, 0, 0];
-                newRows.push(row);
+            if (canEvaluate.value) {
+                const newRows: TStatRow[] = [];
+                for (const stat of NEXT_STAT_ARR) {
+                    const row: TStatRow = [stat, makeEasyInputSubstatValueList(stat as TArtifactSubKey), 2, 0, 0];
+                    newRows.push(row);
+                }
+                if (containsDealMoreDamage.value) {
+                    const row: TStatRow = ['与えるダメージ', makeEasyInputSubstatValueList('攻撃力%'), 2, 0, 0];
+                    newRows.push(row);
+                }
+                nextStatRows.splice(0, nextStatRows.length, ...newRows);
             }
-            if (containsDealMoreDamage.value) {
-                const row: TStatRow = ['与えるダメージ', makeEasyInputSubstatValueList('攻撃力%'), 2, 0, 0];
-                newRows.push(row);
-            }
-            nextStatRows.splice(0, nextStatRows.length, ...newRows);
         }
 
         function getDamageValue(itemName: string, damageResult: TDamageResult) {
@@ -245,7 +259,7 @@ export default defineComponent({
         }
 
         function setupNextStatRows() {
-            if (evaluationItem.value) {
+            if (evaluationItem.value && canEvaluate.value) {
                 const workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
                 const workStatsInput = _.cloneDeep(props.statsInput);
                 for (const row of nextStatRows) {
@@ -325,21 +339,17 @@ export default defineComponent({
                 setupNextStatRows();
             }
         }
-        
+
         const containsDealMoreDamageOnChange = () => {
             initializeNextStat();
             setupNextStatRows();
         }
 
-        watch([props.characterInput, props.statsInput, props.rotationDamageInfo], async (newVal, oldVal) => {
-            const newCharacterInput = newVal[0] as TCharacterInput;
-            if (newCharacterInput) {
-                const oldCharacterInput = oldVal[0] as TCharacterInput;
-                if (newCharacterInput.character != oldCharacterInput?.character) {
-                    await resetButtonOnClick();
-                    return;
-                }
-            }
+        watch([props.characterInput, props.statsInput, props.rotationDamageInfo], () => {
+            setupNextStatRows();
+        });
+
+        watch(canEvaluate, () => {
             setupNextStatRows();
         });
 
