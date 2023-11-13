@@ -265,7 +265,7 @@ import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_D
 import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getDurationFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
-import { getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon } from "./ERCalculatorFunc";
+import { getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, splitNumToArrByOnFieldRate } from "./ERCalculatorFunc";
 
 type TCalculatorInput = {
     character: string,                  // キャラクター名
@@ -581,11 +581,9 @@ export default defineComponent({
             }
             // 敵の元素粒子
             supplyFromEnemy.filter(s => s[1] || s[2]).forEach(entry => {
-                const sum = entry[1] * 3 + entry[2]; // 元素オーブは元素粒子3個に相当
+                const num = (entry[1] * 3 + entry[2]) * rotationLength.value / combatLength.value; // 元素オーブは元素粒子3個に相当
                 const initialValues = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-                for (let i = 0; i < onFields.length; i++) {
-                    initialValues[i] = rotationLength.value / combatLength.value * sum * onFields[i] / 100;
-                }
+                splitNumToArrByOnFieldRate(initialValues, num, team, onFields);
                 pushInputRowParticle(newinputRowParticleEnemy, newMessages, '', [RECHARGE_PARTICLE_ENEMY, '', entry[0], initialValues, []]);
             })
             inputRowParticle.splice(0, inputRowParticle.length, ...newInputRowPacticle1, ...newInputRowPacticle2, ...newInputRowResonance);

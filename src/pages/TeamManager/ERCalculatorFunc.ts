@@ -375,16 +375,17 @@ function addNumToArr(
     arr[memberNameArr.indexOf(nxtRotation.member)] += num;
 }
 
-function splitNumToArrByOnFieldRate(
+export function splitNumToArrByOnFieldRate(
     arr: number[],
     num: number,
     team: TTeam,
     onFields: number[],
 ) {
+    const denominator = onFields.map(v => Math.pow(v / 100, 2)).reduce((p, c) => p + c, 0);
     for (let i = 0; i < arr.length; i++) {
         if (team.members[i].name) {
             const onField = onFields[i];
-            arr[i] += num * onField / 100;
+            arr[i] += num * Math.pow(onField / 100, 2) / denominator;
         }
     }
 }
