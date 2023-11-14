@@ -1,11 +1,12 @@
 import { CHARACTER_E_UNTIL_MAP, getParticleInfo, getDurationFromInfo, getReceiveTypeFromInfo, SP_SELF } from "@/particlemaster";
 import _ from "lodash";
-import { TActionItem, TTeam, NUMBER_OF_MEMBERS, getCharacterMaster, TTeamMemberResult, TMember, getDefaultMemberResult, getCharacterDetail } from "./team";
+import { TActionItem, TTeam, NUMBER_OF_MEMBERS, getCharacterMaster, TTeamMemberResult, TMember, getDefaultMemberResult, getCharacterDetail, getNormalAttackDan } from "./team";
 
 export const RECHARGE_ENERGY_SKILL = "01";              // 元素スキルによる元素エネルギー回復
 export const RECHARGE_ENERGY_BURST = "02";              // 元素爆発による元素エネルギー回復
 export const RECHARGE_ENERGY_PASSIVE = "03";            // 固有天賦による元素エネルギー回復
 export const RECHARGE_ENERGY_CONSTELLATION = "04";      // 命ノ星座による元素エネルギー回復
+export const RECHARGE_ENERGY_ATTACK = "05";             // 通常攻撃、重撃による元素エネルギー回復
 export const RECHARGE_ENERGY_WEAPON = "06";             // 武器効果による元素エネルギー回復
 export const RECHARGE_ENERGY_ARTIFACT = "07";           // 聖遺物セット効果による元素エネルギー回復
 export const RECHARGE_PARTICLE_SKILL = "11";            // 元素スキルによる元素粒子生成
@@ -14,6 +15,28 @@ export const RECHARGE_PARTICLE_CONSTELLATION = "14";    // 命ノ星座による
 export const RECHARGE_PARTICLE_FAVONIUS = "16";         // 武器効果（西風）による元素粒子生成
 export const RECHARGE_PARTICLE_RESONANCE = "18";        // 元素共鳴による元素粒子生成
 export const RECHARGE_PARTICLE_ENEMY = "19";            // 敵による元素粒子生成
+
+export const ATTACK_ENERGY_COUNT_OBJ = {
+    '片手剣': 4.52,     // 10% + 5% * n
+    '両手剣': 4.66,     // 0% + 10% * n
+    '長柄武器': 6.95,   // 0% + 4% * n
+    '弓': 6.29,         // 0% + 5% * n
+    '法器': 4.66,       // 0% + 10% * n
+}
+
+const NORMAL_ATTACK_LENGTH_OBJ = {
+    '片手剣': 0.4,
+    '両手剣': 0.8,
+    '長柄武器': 0.4,
+    '弓': 0.6,
+    '法器': 0.6,
+}
+
+const ACTION_LENGTH_MAP = new Map<string, Map<string, number>>();
+ACTION_LENGTH_MAP.set('楓原万葉', new Map<string, number>([['E.Press', 1.5], ['E.Hold', 2]]));
+ACTION_LENGTH_MAP.set('荒瀧一斗', new Map<string, number>([['C', 0.8]]));
+ACTION_LENGTH_MAP.set('ヌヴィレット', new Map<string, number>([['C', 3]]));
+ACTION_LENGTH_MAP.set('シャルロット', new Map<string, number>([['E.Hold', 2]]));
 
 // rechargeKind, triggerName, energies[], messages[]
 export type TEREnergy = [string, string, number[], string[]];
@@ -131,6 +154,7 @@ export function countQ(character?: string, rotationList?: TActionItem[]) {
 export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList: TActionItem[], constellations: number[]) {
     const result = _.fill(Array(NUMBER_OF_MEMBERS), 0);
     const memberNameArr = team.members.map(member => member.name);
+    const danArr = team.members.map(member => member.name ? getNormalAttackDan(member.name) : 0);
     if (rotationList?.length) {
         const lengthList = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         let length = 0;
@@ -142,6 +166,15 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                 lengthList[memberNameArr.indexOf(preRotation.member)] += (length > 1 ? length : 1);
                 length = 0;
                 isNCPIgnoring = false;
+            }
+            preRotation = rotation;
+            const actionLength1 = ACTION_LENGTH_MAP.get(rotation.member);
+            if (actionLength1) {
+                const actionLength2 = actionLength1.get(rotation.action);
+                if (actionLength2 !== undefined) {
+                    length += actionLength2;
+                    continue;
+                }
             }
             const characterMaster = getCharacterMaster(rotation.member);
             if (rotation.action === 'Q') {
@@ -162,40 +195,38 @@ export function getOnFieldRate(team: TTeam, rotationLength: number, rotationList
                 }
             } else if (!isNCPIgnoring) {
                 if (rotation.action.startsWith('N')) {
+                    const maxDan = danArr[memberNameArr.indexOf(preRotation.member)];
                     const dan = rotation.action.length === 1 ? 1 : Number(rotation.action.substring(1, 2));
-                    const withC = rotation.action.endsWith('C');
-                    if (characterMaster?.武器 === '片手剣') {
-                        length += dan * 0.35 + (withC ? 0.5 : 0) + 0.3;
-                    } else if (characterMaster?.武器 === '長柄武器') {
-                        length += dan * 0.35 + (withC ? 0.5 : 0) + 0.3;
-                    } else if (characterMaster?.武器 === '両手剣') {
-                        length += dan * 0.8 + 0.3;
-                    } else if (characterMaster?.武器 === '弓') {
-                        length += dan * 0.6 + 0.3;
-                    } else if (characterMaster?.武器 === '法器') {
-                        length += dan * 0.6 + 0.3;
-                    }
-                } else if (rotation.action == 'C') {
-                    if (characterMaster?.武器 === '両手剣') {
-                        if (rotation.member === '荒瀧一斗') {
-                            length += 1;
-                        } else {
-                            length += 3;
+                    if (characterMaster?.武器) {
+                        const unitLength = NORMAL_ATTACK_LENGTH_OBJ[characterMaster.武器];
+                        for (let j = 0; j < dan; j++) {
+                            if ((j / maxDan) < (2 / 3)) {
+                                length += unitLength * 0.8;
+                            } else {
+                                length += unitLength * 1.2;
+                            }
                         }
-                    } else if (characterMaster?.武器 === '弓') {
+                    } else {
+                        length += 0.6 * dan;
+                    }
+                    if (rotation.action.endsWith('C')) {
+                        length += 0.5;
+                    }
+                    length += 0.3;
+                } else if (rotation.action == 'C') {
+                    if (characterMaster?.武器 === '両手剣') {   // ぐるぐる or ぶんぶん
+                        length += 3;
+                    } else if (characterMaster?.武器 === '弓') {    // 狙い撃ち
                         length += 1.5;  // 甘雨 1段チャージ/2段チャージ=1s/1.5s
                     } else if (characterMaster?.武器 === '法器') {
-                        if (rotation.member === 'ヌヴィレット') {
-                            length += 3;
-                        } else {
-                            length += 1;
-                        }
+                        length += 1;
+                    } else {    // for フリーナ
+                        length += 1;
                     }
                 } else if (rotation.action == 'P') {
                     length += 1.5;
                 }
             }
-            preRotation = rotation;
         }
         if (preRotation && length > 0) {
             lengthList[memberNameArr.indexOf(preRotation.member)] += (length > 1 ? length : 1);

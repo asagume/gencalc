@@ -1,7 +1,7 @@
 import _ from "lodash";
-import { NUMBER_OF_MEMBERS, TActionItem, TTeam, TTeamMemberResult, getCharacterMaster } from "./team";
+import { NUMBER_OF_MEMBERS, TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
 import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getElementalSkillActions, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
-import { TERParticle, RECHARGE_PARTICLE_SKILL, countE, countC, countQ, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, TEREnergy, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
+import { TERParticle, RECHARGE_PARTICLE_SKILL, countE, countC, countQ, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, TEREnergy, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_ATTACK, ATTACK_ENERGY_COUNT_OBJ } from "./ERCalculatorCommon";
 import { CHARACTER_ENERGY_FUNC, CHARACTER_PARTICLE_EXTRA_FUNC } from "./ERCalculatorFuncCharacter";
 import { WEAPON_ENERGY_FUNC } from "./ERCalculatorFuncWeapon";
 
@@ -326,6 +326,73 @@ export function getEnergyByArtifact(
         return [rechargeKind, artifactSet4, energies, messages];
     }
     return undefined;
+}
+
+export function getEnergyByAttack(
+    character: string,
+    team: TTeam,
+    rotationLength: number,
+    rotationList: TActionItem[],
+): TEREnergy | undefined {
+    let result: TEREnergy | undefined = undefined;
+    const memberNameArr = team.members.map(member => member.name);
+    const myIndex = memberNameArr.indexOf(character);
+    const characterDetail = getCharacterDetail(character);
+    if (characterDetail) {
+        const denominator = ATTACK_ENERGY_COUNT_OBJ[characterDetail.武器];
+        if (denominator) {
+            let hitCount = 0;
+            if (rotationList?.length) {
+                rotationList.filter(rotation => rotation.member == character).forEach(rotation => {
+                    let withC = false;
+                    if (rotation.action.startsWith('N')) {
+                        let workHitCount = 0;
+                        let dans = 1;
+                        if (rotation.action.length > 1) {
+                            dans = Number(rotation.action.substring(1, 2));
+                        }
+                        characterDetail.通常攻撃.詳細.forEach((obj: any) => {
+                            if (obj.名前 && obj.名前.endsWith('段ダメージ')) {
+                                const workDan = obj.名前.substring(0, 1);
+                                if (!isNaN(workDan) && dans <= Number(workDan)) {
+                                    if (obj.HIT数) {
+                                        workHitCount += obj.HIT数;
+                                    }
+                                }
+                            }
+                        })
+                        if (workHitCount < dans) {
+                            workHitCount = dans;
+                        }
+                        hitCount += workHitCount;
+                        if (rotation.action.endsWith('C')) {
+                            withC = true;
+                        }
+                    }
+                    if (rotation.action === 'C' || withC) {
+                        let workHitCount = 1;
+                        characterDetail.重撃.詳細.forEach((obj: any) => {
+                            if (obj.名前 && obj.名前 === '重撃ダメージ') {
+                                if (obj.HIT数) {
+                                    workHitCount = obj.HIT数;
+                                }
+                            }
+                        })
+                        hitCount += workHitCount;
+                    }
+                })
+            }
+            const energy = Math.trunc(hitCount / denominator);
+            if (energy) {
+                const rechargeKind = RECHARGE_ENERGY_ATTACK;
+                const energies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+                const messages: string[] = [];
+                result = [rechargeKind, '', energies, messages];
+                energies[myIndex] += energy;
+            }
+        }
+    }
+    return result;
 }
 
 function setSkillParticleNumToArr(

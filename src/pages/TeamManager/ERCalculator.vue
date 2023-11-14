@@ -207,6 +207,10 @@
                             トリガー回数はローテーションの長さを武器効果のクールタイムで割った数までとします。
                             元素粒子は基本的に装備者が獲得するが、装備者が1アクションだけで退場する場合は次のアクション実行者が獲得します。
                         </li>
+                        <li>通常攻撃、重撃命中時に獲得する元素エネルギー<br>
+                            通常攻撃または重撃の回数に応じて元素エネルギーを獲得します。
+                            元素エネルギーを獲得する攻撃回数は武器タイプ毎に異なります。
+                        </li>
                         <li>以下、元素爆発の実行から退場するまでの間、元素スキルの元素粒子生成数を変更します。
                             再出場時に元の生成数に戻ります。
                             <ul>
@@ -261,11 +265,11 @@
 import _ from "lodash";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey } from "@/master";
+import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey, WEAPON_IMG_SRC } from "@/master";
 import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getDurationFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
-import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT } from "./ERCalculatorCommon";
-import { getEnergyByArtifact, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, splitNumToArrByOnFieldRate } from "./ERCalculatorFunc";
+import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_ATTACK } from "./ERCalculatorCommon";
+import { getEnergyByArtifact, getEnergyByAttack, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, splitNumToArrByOnFieldRate } from "./ERCalculatorFunc";
 
 type TCalculatorInput = {
     character: string,                  // キャラクター名
@@ -573,6 +577,11 @@ export default defineComponent({
                         pushInputRowEnergy(newInputRowEnergy, newMessages, character, energyByArtifact);
                     }
                 }
+                // 通常攻撃の元素エネルギー
+                const energyByAttack = getEnergyByAttack(character, team, rotationLength.value, team.rotation);
+                if (energyByAttack) {
+                    pushInputRowEnergy(newInputRowEnergy, newMessages, character, energyByAttack);
+                }
             }
             // 元素共鳴の元素粒子
             const particleByResonance = getParticleByResonance(team, rotationLength.value, team.rotation, onFields);
@@ -719,10 +728,15 @@ export default defineComponent({
                             result = weaponMaster.icon_url;
                         }
                     }
-                } else if ([RECHARGE_ENERGY_ARTIFACT].includes(row.rechargeKind) && row.triggerName) { // 武器
+                } else if ([RECHARGE_ENERGY_ARTIFACT].includes(row.rechargeKind) && row.triggerName) { // 聖遺物
                     const artifactSetMater = ARTIFACT_SET_MASTER[(row.triggerName as TArtifactSetKey)];
                     if (artifactSetMater) {
                         result = artifactSetMater.image;
+                    }
+                } else if ([RECHARGE_ENERGY_ATTACK].includes(row.rechargeKind)) { // 通常攻撃、重撃
+                    const characterMaster = getCharacterMaster(row.character);
+                    if (characterMaster) {
+                        result = WEAPON_IMG_SRC[characterMaster.武器];
                     }
                 }
             }
@@ -751,6 +765,8 @@ export default defineComponent({
                     result = row.triggerName;
                 } else if ([RECHARGE_PARTICLE_RESONANCE].includes(row.rechargeKind)) {
                     result = row.triggerName;
+                } else if ([RECHARGE_ENERGY_ATTACK].includes(row.rechargeKind)) {
+                    result = '通常攻撃';
                 }
             }
             return result;

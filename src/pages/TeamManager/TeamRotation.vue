@@ -133,7 +133,7 @@ import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } 
 import { ELEMENT_BG_COLOR_CLASS, ELEMENT_COLOR_CLASS, IMG_SRC_DUMMY } from "@/master";
 import { getElementalSkillActions } from "@/particlemaster";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { CHARGED_ONLY_CHARACTER, CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
+import { CHARGED_ONLY_CHARACTER, CHARGED_WITH_NORMAL_CHARACTER, CHARGED_WITH_NORMAL_WEAPON, getCharacterDetail, getCharacterMaster, getNormalAttackDan, setupCharacterDetailMap, TActionItem, TConstellation, TMember, TTeam, TTeamMemberResult } from "./team";
 import ERCalculator from './ERCalculator.vue';
 
 export default defineComponent({
@@ -227,32 +227,6 @@ export default defineComponent({
       const actionArr = rotationList.filter(rotation => rotation.id == selectedActionId.value);
       return actionArr.length > 0 ? actionArr[0] : undefined;
     })
-
-    function getNormalAttackDan(name: string) {
-      watchCount.value;
-      let dan = 1;
-      const master = getCharacterDetail(name);
-      if (master) {
-        for (const detail of [master.特殊通常攻撃?.詳細, master.通常攻撃?.詳細]) {
-          if (!detail) continue;
-          let workDan = 1;
-          detail.forEach((dmgDetail: any) => {
-            if (dmgDetail.名前) {
-              const ret = dmgDetail.名前.match(/.*(\d)段.+/);
-              if (!ret) return;
-              const tempDan = Number(ret[1]);
-              if (tempDan > workDan) {
-                workDan = tempDan;
-              }
-            }
-          })
-          if (dan < workDan) { // 元素スキル、元素爆発で通常攻撃が変化する場合は、段数の多い方を採用します
-            dan = workDan;
-          }
-        }
-      }
-      return dan;
-    }
 
     const getActionDetail = (item: TActionItem) => {
       let result;
