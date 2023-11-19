@@ -56,7 +56,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
     },
     'セノ': {
         'E': 3,
-        'E(burst)': 1.333,
+        'E(burst)': 1 + 1 / 3,
     },
     'ティナリ': {
         'E': 3.5,
@@ -79,7 +79,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 3.5,
     },
     '珊瑚宮心海': {
-        'E': [0.67 / 2, SP_LONG, 12, 20],   // per damage CT2s
+        'E': [2 / 3 / 2, SP_LONG, 12, 20],   // per damage CT2s
     },
     '雷電将軍': {
         'E': [0.5 / 0.9, SP_LONG, 25, 10],  // per damage CT0.9s
@@ -112,8 +112,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': [2 * 2, SP_SHRT, 6, 10]
     },
     'アルベド': {
-        'E.Press': [0.67 / 2, SP_LONG, 30, 4],      // 刹那の花ダメージ1回あたり0.67個 CT2s
-        'E.Hold': [0.67 / 2, SP_LONG, 30, 4],       // 刹那の花ダメージ1回あたり0.67個 CT2s
+        'E.Press': [2 / 3 / 2, SP_LONG, 30, 4],     // 刹那の花ダメージ1回あたり0.67個 CT2s
+        'E.Hold': [2 / 3 / 2, SP_LONG, 30, 4],      // 刹那の花ダメージ1回あたり0.67個 CT2s
     },
     '鍾離': {
         'E.Press': [0.5 / 1.5, SP_LONG, 20, 4],     // CT1.5s
@@ -134,8 +134,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 2.5,
     },
     'モナ': {
-        'E.Press': [3.33, SP_SHRT, 5, 12],
-        'E.Hold': [3.33, SP_SHRT, 5, 12],
+        'E.Press': [1 + 1 / 3, SP_SHRT, 5, 12],
+        'E.Hold': [1 + 1 / 3, SP_SHRT, 5, 12],
     },
     '七七': {
         'E': 0,
@@ -173,7 +173,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': [2, SP_NEXT, 18, 6],   // CT5.5s
     },
     'レイラ': {
-        'E': [1.33 / 3, SP_LONG, 12, 12]    // CT3s
+        'E': [(1 + 1 / 3) / 3, SP_LONG, 12, 12]    // CT3s
     },
     'キャンディス': {
         'E.Press': 2,
@@ -236,7 +236,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 3,
     },
     'フィッシュル': {
-        'E': [0.67, SP_LONG, 10, 25, C6, 0.67, SP_LONG, 12, 25],
+        'E': [2 / 3, SP_LONG, 10, 25, C6, 0.67, SP_LONG, 12, 25],
     },
     '凝光': {
         'E': 3,
@@ -271,8 +271,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [4, SP_SHRT, 8, 15],
     },
     '旅人(水)': {
-        'E.Press': 3.33,
-        'E.Hold': 3.33,
+        'E.Press': 3 + 1 / 3,
+        'E.Hold': 3 + 1 / 3,
     },
     '旅人(草)': {
         'E': 2.5,
@@ -281,12 +281,12 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 1,
     },
     '旅人(岩)': {
-        'E.Press': 3.33,
-        'E.Hold': 3.33,
+        'E.Press': 3 + 1 / 3,
+        'E.Hold': 3 + 1 / 3,
     },
     '旅人(風)': {
         'E.Press': 2,
-        'E.Hold': 3.33,
+        'E.Hold': 3 + 1 / 3,
     },
 }
 
