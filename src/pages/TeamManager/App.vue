@@ -28,6 +28,10 @@
     <div class="pane2" id="team-list-and-editor">
       <div v-show="!teamEditorVisible">
         <div class="team-tags-area">
+          <input class="search" type="search" v-model="searchWord" list="search-datalist">
+          <datalist id="search-datalist">
+            <option v-for="value in searchDatalist" :key="value" :value="displayName(value)"></option>
+          </datalist>
           <label v-for="tag in teamTagList" :key="tag">
             <input class="hidden" type="checkbox" v-model="teamTagChecked[tag]">
             <span>{{ tag }}</span>
@@ -101,6 +105,7 @@ import { NUMBER_OF_TEAMS, TActionItem, TConstellation, TTeam, TTeamMemberResult,
 import TeamEditorModal from './TeamEditorModal.vue';
 import TeamItem from './TeamItem.vue';
 import TeamRotation from './TeamRotation.vue';
+import { CHARACTER_MASTER_LIST } from '@/master';
 
 export default defineComponent({
   name: 'TeamManager',
@@ -137,6 +142,7 @@ export default defineComponent({
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
     const constellations = reactive({} as TConstellation);
+    const searchWord = ref('');
     const teamTagChecked = reactive({} as { [key: string]: boolean });
 
     onMounted(() => {
@@ -147,6 +153,17 @@ export default defineComponent({
       }
     })
 
+    const searchDatalist = computed(() => {
+      return CHARACTER_MASTER_LIST.sort((a, b) => {
+        const a1 = a.icon_url.split('/');
+        const a2 = a1[a1.length - 1].split('_');
+        const a3 = a2[a2.length - 1];
+        const b1 = b.icon_url.split('/');
+        const b2 = b1[b1.length - 1].split('_');
+        const b3 = b2[b2.length - 1];
+        return a3.localeCompare(b3);
+      }).map(s => s.key);
+    })
     const teamTagList = computed(() => {
       const result: string[] = [];
       teams.forEach(team => {
@@ -178,6 +195,10 @@ export default defineComponent({
 
     const filteredTeams = computed(() => {
       let result = teams;
+      if (searchWord.value) {
+        const word = searchWord.value;
+        result = result.filter(team => team.name.includes(word) || team.members.filter(member => member.name.includes(word) || member.replacements.filter(replacement => replacement.includes(word)).length > 0).length > 0);
+      }
       const checkedTags = Object.keys(teamTagChecked).filter(tag => teamTagList.value.includes(tag) && teamTagChecked[tag]);
       if (checkedTags.length) {
         result = result.filter(team => team.tags.filter(tag => checkedTags.includes(tag)).length > 0);
@@ -354,6 +375,8 @@ export default defineComponent({
       forcusedTeam,
       saveDisabled,
       teamMemberResult,
+      searchWord,
+      searchDatalist,
       teamTagList,
       teamTagChecked,
       filteredTeams,
@@ -440,6 +463,11 @@ label.number-of-teams input[type="number"] {
 
 .data-control button {
   width: 11rem;
+}
+
+input.search {
+  margin-right: 10px;
+  padding-left: 4px;
 }
 
 ul.usage {
