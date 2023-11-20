@@ -11,6 +11,10 @@
             <input class="hidden" type="radio" name="display-stat" v-model="displayStat" :value="item[0]" />
             <span>{{ item[1] }}</span>
           </label>
+          <label class="display-stat">
+            <input class="hidden" type="checkbox" v-model="displayTags" />
+            <span>TAGS</span>
+          </label>
         </div>
         <label class="number-of-teams">
           Number of teams
@@ -43,8 +47,8 @@
             <div style="display: inline-block;" :id="'team-' + element.id">
               <TeamItem :team="element" :selected="teamSelected(element.id)" :display-stat="displayStat"
                 :display-res="displayRes" :constellations="constellations" :editable="true" :show-equipment="true"
-                @click="teamOnClick(element.id)" @click:edit="editOnClick" @click:jump-to-rotation="jumpToRotation"
-                @update:member-result="updateMemberResult" />
+                :display-tags="displayTags" @click="teamOnClick(element.id)" @click:edit="editOnClick"
+                @click:jump-to-rotation="jumpToRotation" @update:member-result="updateMemberResult" />
             </div>
           </template>
         </draggable>
@@ -139,6 +143,7 @@ export default defineComponent({
     const teamMemberResultMap = reactive({} as { [key: number]: TTeamMemberResult });
     const displayStat = ref('');
     const displayRes = ref(true);
+    const displayTags = ref(false);
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
     const constellations = reactive({} as TConstellation);
@@ -368,6 +373,7 @@ export default defineComponent({
       numberOfTeams,
       displayStat,
       displayRes,
+      displayTags,
       teams,
       constellations,
       teamEditorVisible,
@@ -441,7 +447,8 @@ div.team {
 }
 </style>
 <style scoped>
-input[type="radio"]+span {
+input[type="radio"]+span,
+input[type="checkbox"]+span {
   display: inline-block;
   width: 45px;
   font-size: 11px;
@@ -452,7 +459,8 @@ input[type="radio"]+span {
   margin: 2px 1px;
 }
 
-input[type="radio"]:checked+span {
+input[type="radio"]:checked+span,
+input[type="checkbox"]:checked+span {
   background-color: whitesmoke;
 }
 

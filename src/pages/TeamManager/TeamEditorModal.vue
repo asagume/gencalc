@@ -31,7 +31,7 @@
         </span>
       </td>
     </tr>
-    <tr class="tags">
+    <tr class="member-tags">
       <td colspan="2">
         <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in MEMBER_TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
           tag
@@ -57,7 +57,7 @@
         <input class="description" v-model="workTeam.description" type="text" maxlength="40" placeholder="INPUT NOTE" />
       </td>
     </tr>
-    <tr class="tags">
+    <tr class="team-tags">
       <td colspan="2">
         <span :class="teamTagSelected(tag) ? 'tag selected' : 'tag'" v-for="tag in workTeamTags" :key="tag"
           @click="teamTagOnClick(tag)">{{ tag }}</span>
@@ -383,7 +383,8 @@ table td[colspan="2"] {
   text-align: center;
 }
 
-table tr.tags td {
+table tr.member-tags td,
+table tr.team-tags td {
   padding: 10px;
 }
 
@@ -408,7 +409,6 @@ td input[type="text"] {
 
 span.tag {
   display: inline-block;
-  width: 70px;
   height: 12px;
   font-size: 10px;
   background: linear-gradient(to top, #3d3d3b, #141414);
@@ -421,6 +421,16 @@ span.tag {
 
 span.tag.selected {
   border-color: gold;
+}
+
+.member-tags span.tag {
+  width: 70px;
+}
+
+.team-tags span.tag {
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 div.member {

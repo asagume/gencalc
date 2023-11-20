@@ -30,6 +30,9 @@
         <td v-for="key in resKey" :key="key" :class="resBgClass(key)">{{ res[key] }}</td>
       </tr>
     </table>
+    <div class="team-tags" v-if="displayTags">
+      <span class="tag" v-for="tag in team.tags" :key="tag">{{ tag }}</span>
+    </div>
     <div style="text-align: left;">
       <span class="material-symbols-outlined control-button" @click="jumpToRotation">stat_minus_2</span>
       <div class="description">
@@ -57,6 +60,7 @@ export default defineComponent({
     showEquipment: { type: Boolean },
     displayStat: { type: String },
     displayRes: { type: Boolean },
+    displayTags: { type: Boolean },
     constellations: { type: Object as PropType<TConstellation> },
   },
   emits: ['click:edit', 'click:jump-to-rotation', 'update:member-result'],
@@ -449,5 +453,24 @@ table.res {
 
 .physical {
   background-color: silver;
+}
+
+div.team-tags {
+  height: 12px;
+}
+
+span.tag {
+  display: inline-block;
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 12px;
+  font-size: 10px;
+  background: linear-gradient(to top, #3d3d3b, #141414);
+  border: 1px solid whitesmoke;
+  border-radius: 3px;
+  margin: 0px 1px;
+  vertical-align: middle;
+  padding-top: 1px;
 }
 </style>
