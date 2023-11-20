@@ -5,51 +5,72 @@
   <template v-else>
     <CharacterSelect :visible="true" :characters="replacements" @update:characters="updateReplacements" />
   </template>
-
   <hr />
+  <table>
+    <tr>
+      <th>Team Name</th>
+      <td>
+        <input v-model="workTeam.name" type="text" minlength="1" maxlength="16" placeholder="INPUT TEAM NAME" />
+      </td>
+    </tr>
+    <tr>
+      <th>Character Select Mode</th>
+      <td>
+        <button class="character-select-mode" @click="characterSelectModeOnClick">
+          {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBERS' }}
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="character-select-mode">
+        <span v-if="!characterSelectMode">
+          チームメンバーを選択して下さい
+        </span>
+        <span v-else>
+          {{ selectedMemberName() + 'の代替キャラクターを選択して下さい' }}
+        </span>
+      </td>
+    </tr>
+    <tr class="tags">
+      <td colspan="2">
+        <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in MEMBER_TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
+          tag
+        }}</span>
+      </td>
+    </tr>
+    <tr class="members">
+      <td colspan="2">
+        <div :class="'member' + memberSelectedClass(member.id)" v-for="member in workTeam.members" :key="member.id">
+          <MemberItem :member="member" @click="memberOnClick(member.id)" />
+        </div>
 
-  <div class="input-name">
-    Team Name:
-    <input v-model="workTeam.name" type="text" minlength="1" maxlength="16" placeholder="INPUT TEAM NAME" />
-  </div>
-
-  <div class="character-select-mode">
-    Character Select Mode:
-    <button class="character-select-mode" @click="characterSelectModeOnClick">
-      {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBERS' }}
-    </button>
-    <div>
-      <span v-if="!characterSelectMode">
-        チームメンバーを選択して下さい
-      </span>
-      <span v-else>
-        {{ selectedMemberName() + 'の代替キャラクターを選択して下さい' }}
-      </span>
-    </div>
-  </div>
-
-  <div class="tags">
-    <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
-      tag
-    }}</span>
-  </div>
-
-  <div>
-    <div :class="'member' + memberSelectedClass(member.id)" v-for="member in workTeam.members" :key="member.id">
-      <MemberItem :member="member" @click="memberOnClick(member.id)" />
-    </div>
-
-    <div class="buildname-select">
-      <select v-show="buildnames.length" v-model="selectedMemberBuildname" @change="buildnameOnChange">
-        <option v-for="value in buildnames" :key="value" :value="value">{{ value }}</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="input-description">
-    Short Note:
-    <input class="description" v-model="workTeam.description" type="text" maxlength="40" placeholder="INPUT NOTE" />
-  </div>
+        <div class="buildname-select">
+          <select v-show="buildnames.length" v-model="selectedMemberBuildname" @change="buildnameOnChange">
+            <option v-for="value in buildnames" :key="value" :value="value">{{ value }}</option>
+          </select>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>Short Note</th>
+      <td>
+        <input class="description" v-model="workTeam.description" type="text" maxlength="40" placeholder="INPUT NOTE" />
+      </td>
+    </tr>
+    <tr class="tags">
+      <td colspan="2">
+        <span :class="teamTagSelected(tag) ? 'tag selected' : 'tag'" v-for="tag in workTeamTags" :key="tag"
+          @click="teamTagOnClick(tag)">{{ tag }}</span>
+      </td>
+    </tr>
+    <tr>
+      <th>Tags</th>
+      <td>
+        <input class="team-tags" v-model="txtTeamTags" type="text" maxlength="40" placeholder="INPUT TAGS"
+          @change="txtTeamTagsOnChange" />
+      </td>
+    </tr>
+  </table>
 
   <div class="buttons">
     <button type="button" @click="cancelOnClick">cancel</button>
@@ -73,6 +94,7 @@ export default defineComponent({
   props: {
     visible: { type: Boolean, required: true },
     team: { type: Object as PropType<TTeam>, required: true },
+    teamTags: { type: Array as PropType<string[]> },
   },
   emits: ['click:cancel', 'click:ok'],
   setup(props, context) {
@@ -84,11 +106,14 @@ export default defineComponent({
       description: '',
       rotation: [],
       rotationDescription: '',
+      tags: [],
     } as TTeam);
     const selectedMemberId = ref(-1);
-    const TAG_LIST = ['Main-DPS', 'Sub-DPS', 'Support', 'Carry', 'Driver', 'Enabler', 'Healer', 'Shielder', 'Battery', 'Free', 'Flex'];
+    const MEMBER_TAG_LIST = ['Main-DPS', 'Sub-DPS', 'Support', 'Carry', 'Driver', 'Enabler', 'Healer', 'Shielder', 'Battery', 'Free', 'Flex'];
     const selectedMemberBuildname = ref('' as string | undefined);
     const replacementIndex = ref(-1);
+    const txtTeamTags = ref('');
+    const workTeamTags = reactive([] as string[]);
 
     function duplicateTeam() {
       workTeam.id = props.team.id;
@@ -100,15 +125,17 @@ export default defineComponent({
           name: props.team.members[i].name,
           buildname: props.team.members[i].buildname,
           builddata: props.team.members[i].builddata,
-          tags: _.cloneDeep(props.team.members[i].tags.filter(s => TAG_LIST.includes(s))),
+          tags: _.cloneDeep(props.team.members[i].tags.filter(s => MEMBER_TAG_LIST.includes(s))),
           replacements: props.team.members[i].replacements ? [...props.team.members[i].replacements] : [],
         });
       }
       workTeam.members.splice(0, workTeam.members.length, ...work);
       workTeam.description = props.team.description;
-      workTeam.rotation = props.team.rotation;
+      workTeam.rotation = _.cloneDeep(props.team.rotation);
+      workTeam.tags = _.clone(props.team.tags);
     }
     duplicateTeam();
+    setupTxtTeamTags();
 
     watch(props, (newVal) => {
       if (newVal.team.members) {
@@ -117,6 +144,10 @@ export default defineComponent({
           selectedMemberBuildname.value = workTeam.members[selectedMemberId.value].buildname;
         }
       }
+      if (newVal.teamTags) {
+        workTeamTags.splice(0, workTeamTags.length, ...newVal.teamTags);
+      }
+      setupTxtTeamTags();
       characterSelectMode.value = false;
     });
 
@@ -239,6 +270,29 @@ export default defineComponent({
       member.replacements = [...newCharacters];
     };
 
+    function setupTxtTeamTags() {
+      txtTeamTags.value = workTeam.tags.join(' ');
+    }
+
+    const txtTeamTagsOnChange = () => {
+      let result: string[] = [];
+      if (txtTeamTags.value) {
+        result = txtTeamTags.value.split(/\s+/).filter(tag => tag);
+      }
+      workTeam.tags = result;
+    }
+
+    const teamTagSelected = (tag: string) => workTeam.tags.includes(tag);
+
+    const teamTagOnClick = (tag: string) => {
+      if (teamTagSelected(tag)) {
+        workTeam.tags.splice(0, workTeam.tags.length, ...workTeam.tags.filter(s => s != tag));
+      } else {
+        workTeam.tags.push(tag);
+      }
+      setupTxtTeamTags();
+    }
+
     const cancelOnClick = () => {
       context.emit('click:cancel');
     };
@@ -251,7 +305,7 @@ export default defineComponent({
       characterSelectMode,
       characters,
       replacements,
-      TAG_LIST,
+      MEMBER_TAG_LIST,
 
       characterSelectModeOnClick,
       selectedMemberId,
@@ -261,6 +315,11 @@ export default defineComponent({
       tagSelectedClass,
 
       workTeam,
+      workTeamTags,
+      txtTeamTags,
+      txtTeamTagsOnChange,
+      teamTagSelected,
+      teamTagOnClick,
       memberOnClick,
       memberSelectedClass,
       selectedMemberBuildname,
@@ -303,28 +362,47 @@ export default defineComponent({
   overflow-y: auto;
 }
 
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+table th {
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgb(225, 144, 56);
+  text-align: right;
+  width: 40%;
+}
+
+table td {
+  text-align: left;
+}
+
+table td[colspan="2"] {
+  text-align: center;
+}
+
+table tr.tags td {
+  padding: 10px;
+}
+
 button {
   font-size: 3rem;
   width: 20rem;
   margin: 5px;
 }
 
-div.input-name,
-div.input-description {
-  font-size: 3rem;
-  font-weight: bold;
-  color: rgb(225, 144, 56);
-}
-
 input {
   padding-left: 1rem;
 }
 
-input.description {
+td input[type="text"] {
+  font-size: 3rem;
   width: 63rem;
 }
 
-div.tags {
+.tags {
   margin: 5px 3px;
 }
 
@@ -363,18 +441,14 @@ div.buildname-select select {
   width: 220px;
 }
 
-div.character-select-mode {
-  font-size: 3rem;
-  font-weight: bold;
-  color: rgb(225, 144, 56);
-}
-
 button.character-select-mode {
   min-width: 30rem;
 }
 
-div.character-select-mode span {
+td.character-select-mode {
   font-size: 2.5rem;
+  font-weight: bold;
+  color: rgb(225, 144, 56);
 }
 
 div.buttons {

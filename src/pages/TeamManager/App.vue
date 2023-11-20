@@ -27,7 +27,14 @@
 
     <div class="pane2" id="team-list-and-editor">
       <div v-show="!teamEditorVisible">
-        <draggable :list="teams" item-key="id" :sort="true" handle=".handle">
+        <div class="team-tags-area">
+          <label v-for="tag in teamTagList" :key="tag">
+            <input class="hidden" type="checkbox" v-model="teamTagChecked[tag]">
+            <span>{{ tag }}</span>
+          </label>
+        </div>
+
+        <draggable :list="filteredTeams" item-key="id" :sort="true" handle=".handle">
           <template #item="{ element }">
             <div style="display: inline-block;" :id="'team-' + element.id">
               <TeamItem :team="element" :selected="teamSelected(element.id)" :display-stat="displayStat"
@@ -39,8 +46,8 @@
         </draggable>
       </div>
       <div v-show="teamEditorVisible">
-        <TeamEditorModal :visible="teamEditorVisible" :team="forcusedTeam" @click:cancel="teamEditorOnClickCancel"
-          @click:ok="teamEditorOnClickOk" />
+        <TeamEditorModal v-if="forcusedTeam" :visible="teamEditorVisible" :team="forcusedTeam" :team-tags="teamTagList"
+          @click:cancel="teamEditorOnClickCancel" @click:ok="teamEditorOnClickOk" />
       </div>
     </div>
 
@@ -62,6 +69,10 @@
         <li>右上の◆のドラッグ＆ドロップでチームの並べ替えができます。</li>
       </ul>
       <dl class="history">
+        <dt>1.1.0</dt>
+        <dd>
+          チーム分類用のタグ機能を追加。
+        </dd>
         <dt>1.0.0</dt>
         <dd>
           元素チャージ効率計算機能が（ひとまず）完成しました。
@@ -93,13 +104,16 @@ import TeamRotation from './TeamRotation.vue';
 
 export default defineComponent({
   name: 'TeamManager',
+  props: {
+    id: { type: Number, },
+  },
   components: {
     draggable,
     TeamItem,
     TeamEditorModal,
     TeamRotation,
   },
-  setup() {
+  setup(props) {
     const { displayName } = CompositionFunction();
     const teamEditorVisible = ref(false);
     const DISPLAY_STAT_LIST = [
@@ -123,12 +137,24 @@ export default defineComponent({
     const selectedTeamId = ref(0);
     const saveddataStr = ref('');
     const constellations = reactive({} as TConstellation);
+    const teamTagChecked = reactive({} as { [key: string]: boolean });
 
     onMounted(() => {
       loadOnClick();
+      if (props.id !== undefined) {
+        selectedTeamId.value = props.id;
+        teamEditorVisible.value = true;
+      }
     })
 
-    const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value)[0]);
+    const teamTagList = computed(() => {
+      const result: string[] = [];
+      teams.forEach(team => {
+        result.push(...team.tags);
+      })
+      return [...new Set(result)].sort();
+    })
+    const forcusedTeam = computed(() => teams.filter(s => s.id == selectedTeamId.value).length ? teams.filter(s => s.id == selectedTeamId.value)[0] : undefined);
     const builddataStr = computed(() => makeTeamsStr(teams));
     const saveDisabled = computed(() => builddataStr.value == saveddataStr.value);
     const teamSelected = (index: number) => index == selectedTeamId.value;
@@ -150,10 +176,21 @@ export default defineComponent({
       return result;
     })
 
+    const filteredTeams = computed(() => {
+      let result = teams;
+      const checkedTags = Object.keys(teamTagChecked).filter(tag => teamTagList.value.includes(tag) && teamTagChecked[tag]);
+      if (checkedTags.length) {
+        result = result.filter(team => team.tags.filter(tag => checkedTags.includes(tag)).length > 0);
+      }
+      return result;
+    })
+
     const numberOfTeamsOnChange = () => {
       if (numberOfTeams.value > teams.length) {
-        for (let i = teams.length; i < numberOfTeams.value; i++) {
-          teams.push(makeBlankTeam(i));
+        const maxId = Math.max(...teams.map(team => team.id));
+        const incremental = numberOfTeams.value - teams.length;
+        for (let i = 0; i < incremental; i++) {
+          teams.push(makeBlankTeam(maxId + 1 + i));
         }
       } else if (numberOfTeams.value < teams.length) {
         if (selectedTeamId.value > numberOfTeams.value) {
@@ -161,14 +198,9 @@ export default defineComponent({
         }
         teams.splice(numberOfTeams.value);
       }
-    };
+    }
 
-    const saveOnClick = () => {
-      localStorage.setItem('teams', builddataStr.value);
-      saveddataStr.value = builddataStr.value;
-    };
-
-    const loadOnClick = () => {
+    function loadConstellations() {
       const characterOwnListStr = localStorage.getItem('キャラクター所持状況');
       if (characterOwnListStr) {
         const newConstellations: TConstellation = {};
@@ -178,9 +210,12 @@ export default defineComponent({
           if (Number.isNaN(value)) {
             newConstellations[key] = value;
           }
-        });
+        })
         overwriteObject(constellations, newConstellations);
       }
+    }
+
+    function loadTeams() {
       const teamsStr = localStorage.getItem('teams');
       const newTeams: TTeam[] = [];
       for (let i = 0; i < numberOfTeams.value; i++) {
@@ -193,28 +228,50 @@ export default defineComponent({
         saveddataStr.value = teamsStr;
       }
       teams.splice(0, teams.length, ...newTeams);
-    };
+    }
+
+    const setupTeamTagChecked = () => {
+      teams.forEach(team => {
+        team.tags.forEach(tag => {
+          if (teamTagChecked[tag] === undefined) {
+            teamTagChecked[tag] = false;
+          }
+        })
+      })
+    }
+
+    const loadOnClick = () => {
+      loadConstellations();
+      loadTeams();
+      setupTeamTagChecked();
+    }
+
+    const saveOnClick = () => {
+      localStorage.setItem('teams', builddataStr.value);
+      loadTeams();
+      selectedTeamId.value = 0;
+    }
 
     const clearOnClick = () => {
       teams.forEach((team) => {
         initializeTeam(team);
       });
-    };
+    }
 
     const teamOnClick = (id: number) => {
       selectedTeamId.value = id;
-    };
+    }
 
     const editOnClick = (id: number) => {
       if (id == selectedTeamId.value) {
         teamEditorVisible.value = true;
         nextTick().then(() => {
           document.getElementById('team-list-and-editor')?.scrollIntoView({ behavior: 'smooth' });
-        });
+        })
       } else {
         selectedTeamId.value = id;
       }
-    };
+    }
 
     const teamEditorOnClickOk = (newTeam: TTeam) => {
       teamEditorVisible.value = false;
@@ -242,7 +299,9 @@ export default defineComponent({
       if (!_.isEqual(team.rotation, newTeam.rotation)) {
         team.rotation.splice(0, team.rotation.length, ...newTeam.rotation);
       }
-    };
+      team.tags = newTeam.tags;
+      setupTeamTagChecked();
+    }
 
     const teamEditorOnClickCancel = () => {
       teamEditorVisible.value = false;
@@ -295,6 +354,9 @@ export default defineComponent({
       forcusedTeam,
       saveDisabled,
       teamMemberResult,
+      teamTagList,
+      teamTagChecked,
+      filteredTeams,
 
       numberOfTeamsOnChange,
       saveOnClick,
@@ -343,6 +405,10 @@ div.team {
   text-align: left;
 }
 
+.pane1 {
+  margin-bottom: 5px;
+}
+
 .pane2 {
   margin-bottom: 5px;
 }
@@ -382,5 +448,24 @@ ul.usage {
 
 dl.history {
   text-align: left;
+}
+
+div.team-tags-area {
+  margin: 8px;
+}
+
+div.team-tags-area label input[type="checkbox"]+span {
+  display: inline-block;
+  margin: 2px 3px;
+  padding: 2px 8px;
+  font-size: 2rem;
+  color: black;
+  background-color: whitesmoke;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+div.team-tags-area label input[type="checkbox"]:checked+span {
+  background-color: gold;
 }
 </style>

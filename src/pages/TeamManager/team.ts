@@ -27,6 +27,7 @@ export type TTeam = {
     description: string,
     rotation: TActionItem[];
     rotationDescription: string,
+    tags: string[],
 };
 
 export type TMemberResult = {
@@ -243,6 +244,7 @@ export function makeBlankTeam(id: number) {
         description: '',
         rotation: [],
         rotationDescription: '',
+        tags: [],
     };
     for (let i = 0; i < NUMBER_OF_MEMBERS; i++) {
         team.members.push(makeBlankMember(memberId++));
@@ -267,8 +269,9 @@ export function initializeTeam(team: TTeam) {
 
 export function makeTeamsStr(teams: TTeam[]) {
     const work: TTeam[] = _.cloneDeep(teams);
+    let id = 0;
     work.forEach((team) => {
-        team.id = 0;
+        team.id = id++;
         team.members.forEach(member => {
             member.id = 0;
             member.builddata = undefined;
@@ -323,6 +326,7 @@ export function copyTeams(output: TTeam[], input: any[], useBuilddata = false) {
             })
         }
         dst.rotationDescription = src.rotationDescription ?? '';
+        dst.tags = src.tags ?? [];
     }
     if (output.length > input.length && output.length >= NUMBER_OF_TEAMS) {
         output.splice(input.length);
