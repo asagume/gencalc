@@ -282,7 +282,7 @@ export function makeTeamsStr(teams: TTeam[]) {
             })
         }
     });
-    return JSON.stringify(work);
+    return JSON.stringify(work, (key, value) => value !== null ? value : undefined);
 }
 
 export function copyTeams(output: TTeam[], input: any[], useBuilddata = false) {

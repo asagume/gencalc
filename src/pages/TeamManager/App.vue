@@ -159,15 +159,15 @@ export default defineComponent({
     })
 
     const searchDatalist = computed(() => {
-      return CHARACTER_MASTER_LIST.sort((a, b) => {
-        const a1 = a.icon_url.split('/');
+      return CHARACTER_MASTER_LIST.map(s => [s.key, s.icon_url]).sort((a, b) => {
+        const a1 = a[1].split('/');
         const a2 = a1[a1.length - 1].split('_');
         const a3 = a2[a2.length - 1];
-        const b1 = b.icon_url.split('/');
+        const b1 = b[1].split('/');
         const b2 = b1[b1.length - 1].split('_');
         const b3 = b2[b2.length - 1];
         return a3.localeCompare(b3);
-      }).map(s => s.key);
+      }).map(s => s[0]);
     })
     const teamTagList = computed(() => {
       const result: string[] = [];
