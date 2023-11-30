@@ -239,7 +239,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': [2 / 3, SP_LONG, 10, 25, C6, 0.67, SP_LONG, 12, 25],
     },
     '凝光': {
-        'E': 3,
+        'E': 3.33,
     },
     '行秋': {
         'E': [4.5, SP_NEXT, 15, 21],
