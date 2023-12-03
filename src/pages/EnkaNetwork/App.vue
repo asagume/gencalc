@@ -628,10 +628,14 @@ export default defineComponent({
 
     const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
-      // const url = 'https://enka.network/api/uid/' + uid.value;
-      const url = 'http://35.230.24.17/enka/uid/' + uid.value;
+      // const url = 'https://enka.network/api/uid/' + uid.value + '/';
+      const url = 'https://us-west1-gencalc.cloudfunctions.net/enkaproxy/uid?uid=' + uid.value;
       // const url = 'data/__data_2.json';
-      fetch(url).then((resp) => resp.json()).then(async (json) => {
+      fetch(url, {
+        headers: {
+          'User-Agent': 'GENCALC',
+        },
+      }).then((resp) => resp.json()).then(async (json) => {
         console.log(json);
         overwriteObject(u, json);
         loadU();
