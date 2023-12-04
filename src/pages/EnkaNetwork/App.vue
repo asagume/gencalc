@@ -629,7 +629,7 @@ export default defineComponent({
     const submit = async () => {
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
       // const url = 'https://enka.network/api/uid/' + uid.value + '/';
-      const url = 'https://us-west1-gencalc.cloudfunctions.net/enkaproxy/uid?uid=' + uid.value;
+      const url = 'https://us-west1-gencalc.cloudfunctions.net/enkaproxy/api?api=uid/' + uid.value;
       // const url = 'data/__data_2.json';
       fetch(url, {
         headers: {
