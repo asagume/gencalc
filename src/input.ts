@@ -1,4 +1,4 @@
-import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
 import { basename, isNumber, overwriteObject } from './common';
 
@@ -252,6 +252,9 @@ export const 聖遺物優先するサブ効果ARRAY = [
     '会心率',
     '会心ダメージ',
     '元素チャージ効率',
+    'HP',
+    '攻撃力',
+    '防御力',
 ];
 
 export const 聖遺物ステータスTEMPLATE = {
@@ -421,7 +424,7 @@ export type TArtifact = typeof ARTIFACT_TEMPLATE;
 
 export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物メイン効果: ['', '', '', '', ''],
-    聖遺物優先するサブ効果: ['', '', ''],
+    聖遺物優先するサブ効果: _.fill(Array(NUMBER_OF_PRIORITY_SUBSTATS), ''),
     聖遺物優先するサブ効果上昇値: Array.from(GENSEN_MASTER_LIST[2].values),     // 厳選1ヶ月
     聖遺物優先するサブ効果上昇回数: Array.from(GENSEN_MASTER_LIST[2].counts),   // 厳選1ヶ月
     聖遺物ステータス: _.cloneDeep(聖遺物ステータスTEMPLATE),
@@ -634,11 +637,12 @@ export function makeRecommendationList(
 
     characterMaster['おすすめセット'].forEach((obj: { [key: string]: any }) => {
         const myRecommendation = obj;
-        ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach(stat => {
-            if (!(stat in obj)) {
-                obj[stat] = null;
+        for (let i = 1; i <= NUMBER_OF_PRIORITY_SUBSTATS; i++) {
+            const subkey = '聖遺物優先するサブ効果' + i;
+            if (!(subkey in obj)) {
+                obj[subkey] = null;
             }
-        });
+        }
         const artifactRarerityArrArr = [[5, 5, 5, 5, 5], [4, 4, 5, 5, 5], [4, 4, 4, 5, 4]];
         let artifactRarerity4Num = 0;
         const artifactSet1 = myRecommendation['聖遺物セット効果1'] as TArtifactSetKey;
@@ -812,56 +816,34 @@ export async function loadRecommendation(
             const mainstat = build[key];
             artifactDetailInput['聖遺物メイン効果'][index + 2] = mainstat;
         });
-        // for (const entry of artifactDetailInput['聖遺物メイン効果']) {
-        //     const [rarity, stat] = entry.split('_');
-        //     artifactStatsMain[stat] += (ARTIFACT_MAIN_MASTER as any)[rarity][stat];
-        // }
-        // overwriteObject(artifactDetailInput.聖遺物ステータスメイン効果, artifactStatsMain);
 
-        if (!prioritySubstatsDisabled) {
-            ['聖遺物優先するサブ効果1', '聖遺物優先するサブ効果2', '聖遺物優先するサブ効果3'].forEach((key, index) => {
-                if (!(key in build)) return;
-                const substat = build[key];
-                artifactDetailInput['聖遺物優先するサブ効果'][index] = substat;
-            });
-            ['聖遺物優先するサブ効果1上昇値', '聖遺物優先するサブ効果2上昇値', '聖遺物優先するサブ効果3上昇値'].forEach((key, index) => {
-                let doUpdate = false;
-                if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
-                    if ((key in build) && isNumber(build[key])) {
-                        doUpdate = true;
+        for (let i = 0; i < artifactDetailInput['聖遺物優先するサブ効果'].length; i++) {
+            const subkey1 = '聖遺物優先するサブ効果' + (i + 1);
+            const subkey2 = subkey1 + '上昇値';
+            const subkey3 = subkey1 + '上昇回数';
+            const substat = build[subkey1];
+            const substatValue = build[subkey2];
+            const substatCount = build[subkey3];
+            artifactDetailInput['聖遺物優先するサブ効果'][i] = substat ?? '';
+            if (substat && substatValue && isNumber(substatValue)) {
+                const prioritySubstatValueList = makePrioritySubstatValueList([substat], 0);
+                prioritySubstatValueList.forEach((value, index) => {
+                    if (substatValue <= value) {
+                        artifactDetailInput['聖遺物優先するサブ効果上昇値'][i] = index;
                     }
+                })
+            } else {
+                if (artifactDetailInput['聖遺物優先するサブ効果'][i] && !artifactDetailInput['聖遺物優先するサブ効果上昇値'][i]) {
+                    artifactDetailInput['聖遺物優先するサブ効果上昇値'][i] = GENSEN_MASTER_LIST[2].values[i];
                 }
-                if (doUpdate) {
-                    const substatValue = Number(build[key]);
-                    const substat = artifactDetailInput['聖遺物優先するサブ効果'][index] as TArtifactSubKey;
-                    const prioritySubstatValueList = makePrioritySubstatValueList([substat], 0);
-                    prioritySubstatValueList.forEach((v, i) => {
-                        if (substatValue <= v) {
-                            artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = i;
-                        }
-                    })
-                } else {
-                    if (artifactDetailInput['聖遺物優先するサブ効果'][index] && !artifactDetailInput['聖遺物優先するサブ効果上昇値'][index]) {
-                        artifactDetailInput['聖遺物優先するサブ効果上昇値'][index] = GENSEN_MASTER_LIST[2].values[index];
-                    }
+            }
+            if (substat && substatCount && isNumber(substatCount)) {
+                artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i] = substatCount;
+            } else {
+                if (artifactDetailInput['聖遺物優先するサブ効果'][i] && !artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i]) {
+                    artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i] = GENSEN_MASTER_LIST[2].counts[i];
                 }
-            });
-            ['聖遺物優先するサブ効果1上昇回数', '聖遺物優先するサブ効果2上昇回数', '聖遺物優先するサブ効果3上昇回数'].forEach((key, index) => {
-                let doUpdate = false;
-                if (artifactDetailInput['聖遺物優先するサブ効果'][index]) {
-                    if ((key in build) && isNumber(build[key])) {
-                        doUpdate = true;
-                    }
-                }
-                if (doUpdate) {
-                    const substatCount = Number(build[key]);
-                    artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = substatCount;
-                } else {
-                    if (artifactDetailInput['聖遺物優先するサブ効果'][index] && !artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index]) {
-                        artifactDetailInput['聖遺物優先するサブ効果上昇回数'][index] = GENSEN_MASTER_LIST[2].counts[index];
-                    }
-                }
-            });
+            }
         }
 
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring', 'supporterBuildname', 'artifact_list'].includes(s)).forEach(key => {
@@ -987,24 +969,16 @@ export function makeSavedata(characterInput: TCharacterInput, artifactDetailInpu
     resultObj['聖遺物サブ効果攻撃力P'] = artifactDetailInput.聖遺物ステータスサブ効果['攻撃力%'];
     // 聖遺物サブ効果防御力P
     resultObj['聖遺物サブ効果防御力P'] = artifactDetailInput.聖遺物ステータスサブ効果['防御力%'];
-    // 聖遺物優先するサブ効果1
-    resultObj['聖遺物優先するサブ効果1'] = artifactDetailInput.聖遺物優先するサブ効果[0];
-    // 聖遺物優先するサブ効果1上昇値
-    resultObj['聖遺物優先するサブ効果1上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[0];
-    // 聖遺物優先するサブ効果1上昇回数
-    resultObj['聖遺物優先するサブ効果1上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[0];
-    // 聖遺物優先するサブ効果2
-    resultObj['聖遺物優先するサブ効果2'] = artifactDetailInput.聖遺物優先するサブ効果[1];
-    // 聖遺物優先するサブ効果2上昇値
-    resultObj['聖遺物優先するサブ効果2上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[1];
-    // 聖遺物優先するサブ効果2上昇回数
-    resultObj['聖遺物優先するサブ効果2上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[1];
-    // 聖遺物優先するサブ効果3
-    resultObj['聖遺物優先するサブ効果3'] = artifactDetailInput.聖遺物優先するサブ効果[2];
-    // 聖遺物優先するサブ効果3上昇値
-    resultObj['聖遺物優先するサブ効果3上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[2];
-    // 聖遺物優先するサブ効果3上昇回数
-    resultObj['聖遺物優先するサブ効果3上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[2];
+    // 聖遺物優先するサブ効果*,  聖遺物優先するサブ効果*上昇値, 聖遺物優先するサブ効果*上昇回数
+    for (let i = 0; i < artifactDetailInput.聖遺物優先するサブ効果.length; i++) {
+        const substat = artifactDetailInput.聖遺物優先するサブ効果[i];
+        if (substat) {
+            const key = '聖遺物優先するサブ効果' + (i + 1);
+            resultObj[key] = substat;
+            resultObj[key + '上昇値'] = artifactDetailInput.聖遺物優先するサブ効果上昇値[i];
+            resultObj[key + '上昇回数'] = artifactDetailInput.聖遺物優先するサブ効果上昇回数[i];
+        }
+    }
 
     for (const entry of conditionInput.checkboxList) {
         resultObj[entry.name] = conditionInput.conditionValues[entry.name];
@@ -2025,13 +1999,11 @@ export function makeSharedata(savedata: TAnyObject) {
                     newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue.split('_')[1]);
                 }
                 break;
-            case '聖遺物優先するサブ効果1':
-            case '聖遺物優先するサブ効果2':
-            case '聖遺物優先するサブ効果3':
-                if (newValue) {
-                    newValue = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue);
-                }
-                break;
+        }
+        if (key.match(/^聖遺物優先するサブ効果\d$/)) {
+            if (newValue) {
+                newValue = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue);
+            }
         }
         sharedataArr.push(newValue);
     });

@@ -631,11 +631,7 @@ export default defineComponent({
       // const url = 'https://enka.network/api/uid/' + uid.value + '/';
       const url = 'https://us-west1-gencalc.cloudfunctions.net/enkaproxy/api?api=uid/' + uid.value;
       // const url = 'data/__data_2.json';
-      fetch(url, {
-        headers: {
-          'User-Agent': 'GENCALC',
-        },
-      }).then((resp) => resp.json()).then(async (json) => {
+      fetch(url).then((resp) => resp.json()).then(async (json) => {
         console.log(json);
         overwriteObject(u, json);
         loadU();

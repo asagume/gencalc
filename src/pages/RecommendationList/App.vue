@@ -21,6 +21,7 @@ import { computed, defineComponent, ref } from "vue";
 import {
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
+  NUMBER_OF_PRIORITY_SUBSTATS,
   TCharacterDetail,
   WEAPON_MASTER,
 } from "@/master";
@@ -79,10 +80,12 @@ export default defineComponent({
             artifactMain4: artifactMain4Text,
             artifactMain5: artifactMain5Text,
             artifactSet: artifactSetText,
-            artifactPriority1: recommendation.聖遺物優先するサブ効果1,
-            artifactPriority2: recommendation.聖遺物優先するサブ効果2,
-            artifactPriority3: recommendation.聖遺物優先するサブ効果3,
-          };
+          } as { [key: string]: any };
+          for (let i = 1; i <= NUMBER_OF_PRIORITY_SUBSTATS; i++) {
+            const fromKey = '聖遺物優先するサブ効果' + i;
+            const toKey = 'artifactPriority' + i;
+            entry[toKey] = recommendation[fromKey];
+          }
           result.push(entry);
         }
       }

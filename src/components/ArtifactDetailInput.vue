@@ -240,7 +240,7 @@
             <th>{{ displayName('初期+強化') }}</th>
             <td style="border-color: transparent">合計 {{ upTotalCount }} 回</td>
           </tr>
-          <tr v-for="i in [0, 1, 2]" :key="i">
+          <tr v-for="i in [...Array(prioritySubstats.length)].map((_, i) => i)" :key="i">
             <td>
               <select v-model="prioritySubstats[i]" @change="updatePrioritySubstats">
                 <option value=""></option>
@@ -430,15 +430,9 @@ export default defineComponent({
     const artifactDetailInputRea = reactive(props.artifactDetailInput as TArtifactDetailInput);
 
     const mainstats = reactive(artifactDetailInputRea.聖遺物メイン効果);
-    const prioritySubstats = reactive(
-      artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[]
-    );
-    const prioritySubstatIndices = reactive(
-      artifactDetailInputRea.聖遺物優先するサブ効果上昇値
-    );
-    const prioritySubstatCounts = reactive(
-      artifactDetailInputRea.聖遺物優先するサブ効果上昇回数
-    );
+    const prioritySubstats = reactive(artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[]);
+    const prioritySubstatIndices = reactive(artifactDetailInputRea.聖遺物優先するサブ効果上昇値);
+    const prioritySubstatCounts = reactive(artifactDetailInputRea.聖遺物優先するサブ効果上昇回数);
     const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
     const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
     const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
@@ -462,10 +456,12 @@ export default defineComponent({
 
     const upTotalCount = computed(() => {
       let work = 0;
-      for (let count of prioritySubstatCounts) {
-        work += count;
+      for (let i = 0; i < prioritySubstats.length; i++) {
+        if (prioritySubstats[i]) {
+          work += prioritySubstatCounts[i];
+        }
       }
-      return Math.min(45, 40 + Math.round(Math.max(0, (work - 12) / 4)));
+      return Math.min(45, 40 + Math.floor(Math.max(0, (work - 12) / 5)));
     });
 
     const isNewArtifactAddable = computed(() => {
@@ -514,9 +510,6 @@ export default defineComponent({
       let result = 0;
       if (props.nextStatRows) {
         props.nextStatRows.forEach(row => {
-          // if (artifactAfter.mainStat == row[0]) {
-          //   result += artifactAfter.mainStatValue * row[4] / row[1][row[2]];
-          // }
           artifactAfter.subStats.forEach(subStat => {
             if (subStat.name == row[0]) {
               result += subStat.value * row[4] / row[1][row[2]];
@@ -682,11 +675,10 @@ export default defineComponent({
     /** 聖遺物ステータスを計算します（優先するサブ効果） */
     const _calculateArtifactStatsPrioritySub = () => {
       if (artifactDetailInputRea.聖遺物優先するサブ効果Disabled) return;
-      const prioritySubstatValues = [
-        prioritySubstatValueList(0),
-        prioritySubstatValueList(1),
-        prioritySubstatValueList(2),
-      ];
+      const prioritySubstatValues = [];
+      for (let i = 0; i < artifactDetailInputRea.聖遺物優先するサブ効果.length; i++) {
+        prioritySubstatValues.push(prioritySubstatValueList(i));
+      }
       calculateArtifactSubStatByPriority(
         artifactStatsSub,
         mainstats,

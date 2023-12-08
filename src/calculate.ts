@@ -104,13 +104,11 @@ export function calculateArtifactSubStatByPriority(
     priotritySubstatIndices: number[],
     priotritySubstatValues: number[][],
     prioritySubstatCounts: number[]) {
-    (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach(
-        (key) => {
-            artifactStatsSub[key] = 0;
-        }
-    );
+    (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach((key) => {
+        artifactStatsSub[key] = 0;
+    });
     let totalCount = 0;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < prioritySubstats.length; i++) {
         if (!prioritySubstats[i]) continue;
         if (priotritySubstatIndices[i] === undefined || priotritySubstatIndices[i] < 0) continue;
         if (!prioritySubstatCounts[i]) continue;
@@ -121,7 +119,7 @@ export function calculateArtifactSubStatByPriority(
     // 強化: 5 (+4 +8 +12 +16 +20)
     // 初期+強化: min=40 max=45
     const noPrioritySubstatArr = 聖遺物サブ効果ARRAY.filter(s => !prioritySubstats.includes(s));
-    let noPriorityCount = Math.min(45, 40 + Math.round(Math.max(0, (totalCount - 12) / 4)));
+    let noPriorityCount = Math.min(45, 40 + Math.floor(Math.max(0, (totalCount - 12) / 5)));
     noPriorityCount -= Math.min(45, totalCount);
     for (let i = noPriorityCount; i > 0; i--) {
         const substat = noPrioritySubstatArr[i % noPrioritySubstatArr.length] as keyof typeof ARTIFACT_SUB_MASTER;
@@ -1857,7 +1855,7 @@ export async function calculateSupporter(
     build: string,
     character: TCharacterKey,
 ): Promise<[TStats, TDamageResult]> {
-    const characterInput =  getDefaultCharacterInput();
+    const characterInput = getDefaultCharacterInput();
     const artifactDetailInput = getDefaultArtifactDetailInput();
     const conditionInput = getDefaultConditionInput();
     const statsInput = getDefaultStatsInput();

@@ -77,13 +77,11 @@ function makeSaveDataFromShareData(shareData: string) {
                         newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue.split('_')[1]);
                     }
                     break;
-                case '聖遺物優先するサブ効果1':
-                case '聖遺物優先するサブ効果2':
-                case '聖遺物優先するサブ効果3':
-                    if (newValue) {
-                        newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
-                    }
-                    break;
+            }
+            if (key.match(/^聖遺物優先するサブ効果\d$/)) {
+                if (newValue) {
+                    newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
+                }
             }
             if (value != null && isNumber(value)) {
                 if (newValue) {

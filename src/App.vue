@@ -305,7 +305,6 @@ import {
   TArtifactSet,
   TArtifactSetEntry,
   TArtifactSetKey,
-  TArtifactSubKey,
   TCharacterKey,
   TWeaponKey,
 } from '@/master';
@@ -406,9 +405,7 @@ export default defineComponent({
     const recommendationRef = ref(props.recommendation);
 
     /** 聖遺物スコアを計算します（簡易版） */
-    const artifactScoringStats = reactive(
-      _.cloneDeep(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula
-    );
+    const artifactScoringStats = reactive(_.cloneDeep(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula);
     if (props.recommendation?.build?.artifactScoring) {
       artifactScoringStats.splice(
         0,
@@ -742,27 +739,14 @@ export default defineComponent({
         artifactDetailInputRea.聖遺物メイン効果
       );
       let doCalculate = !artifactDetailInputRea.聖遺物優先するサブ効果Disabled;
-      if (
-        '聖遺物サブ効果計算停止' in configurationInputRea &&
-        configurationInputRea.聖遺物サブ効果計算停止
-      ) {
+      if ('聖遺物サブ効果計算停止' in configurationInputRea && configurationInputRea.聖遺物サブ効果計算停止) {
         doCalculate = false;
       }
       if (doCalculate) {
-        const prioritySubstatValueArr = [
-          makePrioritySubstatValueList(
-            artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
-            0
-          ),
-          makePrioritySubstatValueList(
-            artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
-            1
-          ),
-          makePrioritySubstatValueList(
-            artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[],
-            2
-          ),
-        ];
+        const prioritySubstatValueArr = [];
+        for (let i = 0; i < artifactDetailInputRea.聖遺物優先するサブ効果.length; i++) {
+          prioritySubstatValueArr.push(makePrioritySubstatValueList(artifactDetailInputRea.聖遺物優先するサブ効果, i));
+        }
         calculateArtifactSubStatByPriority(
           artifactDetailInputRea.聖遺物ステータスサブ効果,
           artifactDetailInputRea.聖遺物メイン効果,

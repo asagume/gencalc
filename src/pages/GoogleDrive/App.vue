@@ -259,9 +259,9 @@ export default defineComponent({
       handleReloadLocalClick();
       await requestFilesCreate(APPDATA_NAME, localAppdata, 'application/json');
       await handleListClick();
-      if (remoteFileList.length > 10) {
+      if (remoteFileList.length > 5) {
         const deleteList = [];
-        for (let i = 10; i < remoteFileList.length; i++) {
+        for (let i = 5; i < remoteFileList.length; i++) {
           deleteList.push(remoteFileList[i].id);
         }
         await Promise.all(deleteList.map((file: any) => requestFilesDelete(file.id)));
@@ -411,7 +411,7 @@ export default defineComponent({
       isProcessing.value = true;
       const workParams: any = {
         orderBy: 'modifiedTime desc',
-        pageSize: 10,
+        pageSize: 20,
         spaces: 'appDataFolder',
         fields: 'nextPageToken, files(id, name, modifiedTime, size)',
       };

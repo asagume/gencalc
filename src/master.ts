@@ -468,8 +468,13 @@ export const キャラクター構成PROPERTY_MAP = new Map([
     ['聖遺物優先するサブ効果2上昇回数', -1],
     ['聖遺物優先するサブ効果3', null],
     ['聖遺物優先するサブ効果3上昇値', -1],
-    ['聖遺物優先するサブ効果3上昇回数', -1]
+    ['聖遺物優先するサブ効果3上昇回数', -1],
+    ['聖遺物優先するサブ効果4', null],
+    ['聖遺物優先するサブ効果4上昇値', -1],
+    ['聖遺物優先するサブ効果4上昇回数', -1],
 ]);
+
+export const NUMBER_OF_PRIORITY_SUBSTATS = Array.from(キャラクター構成PROPERTY_MAP.keys()).filter(s => s.match(/^聖遺物優先するサブ効果\d$/)).length;
 
 export const DAMAGE_CATEGORY_ARRAY = ['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ', '元素スキルダメージ', '元素爆発ダメージ'];
 
@@ -512,31 +517,39 @@ ARTIFACT_STAT_JA_EN_ABBREV_MAP.forEach((value, key) => {
 
 export const GENSEN_MASTER_LIST = [
     {
-        key: "",
-        values: [7, 7, 7],
-        counts: [0, 0, 0],
+        key: '',
+        values: [7, 7, 7, 7],
+        counts: [0, 0, 0, 0],
     },
     {
-        key: "厳選初心者",
-        values: [3, 3, 3],
-        counts: [7, 4, 4],
+        key: '厳選初心者',
+        values: [3, 3, 3, 3],
+        counts: [7, 4, 4, 4],
     },
     {
-        key: "厳選1ヶ月",
-        values: [3, 3, 3],
-        counts: [8, 5, 5],
+        key: '厳選1ヶ月',
+        values: [3, 3, 3, 3],
+        counts: [8, 5, 5, 4],
     },
     {
-        key: "厳選3ヶ月",
-        values: [3, 3, 3],
-        counts: [11, 8, 7],
+        key: '厳選3ヶ月',
+        values: [3, 3, 3, 3],
+        counts: [11, 8, 7, 4],
     },
     {
-        key: "日々石割り",
-        values: [1, 1, 1],
-        counts: [14, 11, 10],
+        key: '日々石割り',
+        values: [1, 1, 1, 1],
+        counts: [14, 11, 10, 4],
     },
 ];
+for (const gensen of GENSEN_MASTER_LIST) {
+    for (let i = gensen.values.length; i < NUMBER_OF_PRIORITY_SUBSTATS; i++) {
+        gensen.values.push(gensen.values[0]);
+    }
+    for (let i = gensen.counts.length; i < NUMBER_OF_PRIORITY_SUBSTATS; i++) {
+        gensen.counts.push(0);
+    }
+}
 export type TGensen = { key: string; values: number[]; counts: number[] };
 
 export const ARTIFACT_CAT_NAMES = {
