@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { isNumber } from "@/common";
+import { isNumeric } from "@/common";
 import {
   STAR_BACKGROUND_IMAGE_CLASS,
   TWeaponEntry,
@@ -63,7 +63,7 @@ export default defineComponent({
     if (localStorage["武器所持状況"]) {
       const savedObj = JSON.parse(localStorage["武器所持状況"]);
       Object.keys(savedObj).forEach((key) => {
-        if (isNumber(savedObj[key])) {
+        if (isNumeric(savedObj[key])) {
           refineObj[key] = Number(savedObj[key]);
         }
       });

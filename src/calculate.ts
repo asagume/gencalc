@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { isNumber, overwriteObject } from '@/common';
+import { isNumeric, overwriteObject } from '@/common';
 import {
     CHANGE_KIND_STATUS,
     CHANGE_KIND_TALENT,
@@ -183,7 +183,7 @@ export const calculateStats = function (
 
         // キャラクターマスターから元素エネルギーを設定します
         if ('元素エネルギー' in characterMaster['元素爆発']) {
-            workStatsObj['元素エネルギー'] = characterMaster['元素爆発']['元素エネルギー'];
+            workStatsObj['元素エネルギー'] = Number(characterMaster['元素爆発']['元素エネルギー']);
         }
         if ('固有変数' in characterMaster) {
             for (const name of Object.keys(characterMaster['固有変数'])) {
@@ -342,7 +342,11 @@ function updateStatsWithCondition(
                     const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, constellation);
                     if (number == 0) continue;
                     if (number != 1) {
-                        myNew数値 = (myNew数値 as any).concat(['*', number]);
+                        if (_.isString(myNew数値)) {
+                            myNew数値 += '*' + number;
+                        } else if (_.isArray(myNew数値)) {
+                            myNew数値 = (myNew数値 as any).concat(['*', number]);
+                        }
                     }
                     hasCondition = true;
                 }
@@ -576,109 +580,109 @@ export function calculateElementalResonance(
     return result;
 }
 
-/** げんかるくスタイルの式データから結果（数値）を計算します */
-export function calculateFormulaArray(
-    formulaArr: any,
-    statsObj: TStats,
-    damageResult: TDamageResult,
-    opt_max: number | string | Array<number | string> | null = null,
-    opt_min: number | string | Array<number | string> | null = null
-): number {
-    try {
-        let result = 0;
-        if (Array.isArray(formulaArr)) {
-            let operator: string | null = null;
-            for (const entry of formulaArr) {
-                let subResult = 0;
-                if (['+', '-', '*', '/'].includes(entry)) {
-                    operator = entry;
-                    continue;
-                } else if (isNumber(entry)) {
-                    subResult = Number(entry);
-                } else if (Array.isArray(entry)) {
-                    subResult = calculateFormulaArray(entry, statsObj, damageResult);
-                } else if (entry.indexOf('#') != -1) {
-                    const nameArr = entry.split('#');
-                    if (damageResult && nameArr[0] in damageResult) {
-                        const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
-                        let damage = null;
-                        for (const damageArr of damageArrArr) {
-                            if (nameArr[1] == damageArr[0]) {
-                                damage = damageArr[4];  // 非会心
-                                break;
-                            }
-                        }
-                        if (damage != null) {
-                            subResult = damage;
-                        } else {
-                            console.error(formulaArr, statsObj, damageResult, opt_max, opt_min, entry);
-                        }
-                    }
-                } else {
-                    const temp = getStatValue(entry, statsObj);
-                    if (temp === undefined) {
-                        console.error(formulaArr, statsObj, null, opt_max, opt_min, entry);
-                    } else {
-                        subResult = temp;
-                    }
-                }
-                if (operator == null) {
-                    result += subResult;
-                } else {
-                    switch (operator) {
-                        case '+':
-                            result += subResult;
-                            break;
-                        case '-':
-                            result -= subResult;
-                            break;
-                        case '*':
-                            result *= subResult;
-                            result = Math.floor(result * 100) / 100;
-                            break;
-                        case '/':
-                            result /= subResult;
-                            break;
-                    }
-                }
-            }
-        } else if (isNumber(formulaArr)) {
-            result = Number(formulaArr);
-        } else if (formulaArr.indexOf('#') != -1) {
-            const nameArr = formulaArr.split('#');
-            if (damageResult && nameArr[0] in damageResult) {
-                const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
-                for (const damageArr of damageArrArr) {
-                    if (nameArr[1] == damageArr[0]) {
-                        result = damageArr[4];  // 非会心
-                        break;
-                    }
-                }
-            }
-        } else {
-            const temp = getStatValue(formulaArr, statsObj);
-            if (temp !== undefined) {
-                result = temp;
-            } else {
-                console.error(formulaArr, statsObj, null, opt_max, opt_min);
-                result = 0; // 暫定
-            }
-        }
-        if (opt_max != null) {
-            const maxValue = calculateFormulaArray(opt_max, statsObj, damageResult);
-            result = Math.min(result, maxValue);
-        }
-        if (opt_min != null) {
-            const minValue = calculateFormulaArray(opt_min, statsObj, damageResult);
-            result = Math.max(result, minValue);
-        }
-        return result;
-    } catch (error) {
-        console.error(error);
-        console.error(formulaArr, statsObj, damageResult, opt_max, opt_min);
-        throw error;
-    }
-}
+// /** げんかるくスタイルの式データから結果（数値）を計算します */
+// function calculateFormulaArray(
+//     formulaArr: any,
+//     statsObj: TStats,
+//     damageResult: TDamageResult,
+//     opt_max: number | string | Array<number | string> | null = null,
+//     opt_min: number | string | Array<number | string> | null = null
+// ): number {
+//     try {
+//         let result = 0;
+//         if (Array.isArray(formulaArr)) {
+//             let operator: string | null = null;
+//             for (const entry of formulaArr) {
+//                 let subResult = 0;
+//                 if (['+', '-', '*', '/'].includes(entry)) {
+//                     operator = entry;
+//                     continue;
+//                 } else if (isNumeric(entry)) {
+//                     subResult = Number(entry);
+//                 } else if (Array.isArray(entry)) {
+//                     subResult = calculateFormulaArray(entry, statsObj, damageResult);
+//                 } else if (entry.indexOf('#') != -1) {
+//                     const nameArr = entry.split('#');
+//                     if (damageResult && nameArr[0] in damageResult) {
+//                         const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
+//                         let damage = null;
+//                         for (const damageArr of damageArrArr) {
+//                             if (nameArr[1] == damageArr[0]) {
+//                                 damage = damageArr[4];  // 非会心
+//                                 break;
+//                             }
+//                         }
+//                         if (damage != null) {
+//                             subResult = damage;
+//                         } else {
+//                             console.error(formulaArr, statsObj, damageResult, opt_max, opt_min, entry);
+//                         }
+//                     }
+//                 } else {
+//                     const temp = getStatValue(entry, statsObj);
+//                     if (temp === undefined) {
+//                         console.error(formulaArr, statsObj, null, opt_max, opt_min, entry);
+//                     } else {
+//                         subResult = temp;
+//                     }
+//                 }
+//                 if (operator == null) {
+//                     result += subResult;
+//                 } else {
+//                     switch (operator) {
+//                         case '+':
+//                             result += subResult;
+//                             break;
+//                         case '-':
+//                             result -= subResult;
+//                             break;
+//                         case '*':
+//                             result *= subResult;
+//                             result = Math.floor(result * 100) / 100;
+//                             break;
+//                         case '/':
+//                             result /= subResult;
+//                             break;
+//                     }
+//                 }
+//             }
+//         } else if (isNumeric(formulaArr)) {
+//             result = Number(formulaArr);
+//         } else if (formulaArr.indexOf('#') != -1) {
+//             const nameArr = formulaArr.split('#');
+//             if (damageResult && nameArr[0] in damageResult) {
+//                 const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
+//                 for (const damageArr of damageArrArr) {
+//                     if (nameArr[1] == damageArr[0]) {
+//                         result = damageArr[4];  // 非会心
+//                         break;
+//                     }
+//                 }
+//             }
+//         } else {
+//             const temp = getStatValue(formulaArr, statsObj);
+//             if (temp !== undefined) {
+//                 result = temp;
+//             } else {
+//                 console.error(formulaArr, statsObj, null, opt_max, opt_min);
+//                 result = 0; // 暫定
+//             }
+//         }
+//         if (opt_max != null) {
+//             const maxValue = calculateFormulaArray(opt_max, statsObj, damageResult);
+//             result = Math.min(result, maxValue);
+//         }
+//         if (opt_min != null) {
+//             const minValue = calculateFormulaArray(opt_min, statsObj, damageResult);
+//             result = Math.max(result, minValue);
+//         }
+//         return result;
+//     } catch (error) {
+//         console.error(error);
+//         console.error(formulaArr, statsObj, damageResult, opt_max, opt_min);
+//         throw error;
+//     }
+// }
 
 /** ダメージ計算を実施します */
 export function calculateDamageResult(
@@ -790,7 +794,6 @@ export function calculateDamageResult(
             });
         });
         overwriteObject(damageResult.元素反応, reactionResult);
-        console.debug('元素反応', damageResult.元素反応);
 
         // 戦闘天賦およびその他のダメージを計算します
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
@@ -890,7 +893,7 @@ export function calculateDamageResult(
         }
         damageResult['耐久スコア'] = resScoreArr;
 
-        console.debug(damageResult);
+        console.debug('damageResult', damageResult);
     } catch (error) {
         console.error(error);
         console.error(damageResult, characterInput, conditionInput, statsInput);
@@ -978,7 +981,7 @@ function checkConditionMatchesSub(
     const myCondArr = conditionStr.split(/[@=]/);
     if (myCondArr[0] == '命ノ星座') {
         if (myCondArr.length == 2) {
-            if (isNumber(myCondArr[1])) {
+            if (isNumeric(myCondArr[1])) {
                 const work = Number(myCondArr[1]);
                 if (work <= constellation) {
                     return 1;
@@ -1178,7 +1181,7 @@ function calculateDamageFromDetail(
                     work = delCondition.名前;
                 }
                 if (work in myConditionValuesAfter) {
-                    if (isNumber(myConditionValuesAfter[work])) {
+                    if (isNumeric(myConditionValuesAfter[work])) {
                         myConditionValuesAfter[work] = 0;
                     } else if (_.isBoolean(myConditionValuesAfter[work])) {
                         myConditionValuesAfter[work] = false;
@@ -1201,12 +1204,12 @@ function calculateDamageFromDetail(
                             if (_.isString(addCondition.数値)) {
                                 const work = String(addCondition.数値).replace(/^\+/, '');
                                 (newValue as number) += Number(work);
-                            } else if (isNumber(addCondition.数値)) {
+                            } else if (isNumeric(addCondition.数値)) {
                                 newValue = addCondition.数値;
                             } else {
                                 newValue = addCondition.数値;
                             }
-                            if (newValue !== null && isNumber(newValue)) {
+                            if (newValue !== null && isNumeric(newValue)) {
                                 if ((newValue as number) < 0) {
                                     newValue = 0;
                                 } else {
@@ -1253,19 +1256,19 @@ function calculateDamageFromDetail(
                     const matchesBefore = checkConditionMatches(conditionStr, validConditionValueArr, constellation);
                     const matchesAfter = checkConditionMatches(conditionStr, validConditionValueArrAfter, constellation);
                     if (matchesBefore == matchesAfter) return;
-                    if (matchesBefore != 0) {
+                    if (matchesBefore !== 0) {
                         let new数値 = damageDetailObj.数値;
-                        if (matchesBefore != 1) {
-                            new数値 = (new数値 as any[]).concat(['*', matchesBefore]);
+                        if (new数値 !== null) {
+                            new数値 = '(' + new数値 + ')*' + matchesBefore;
+                            valueBefore = evalFormula(new数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
                         }
-                        valueBefore = calculateFormulaArray(new数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
                     }
-                    if (matchesAfter != 0) {
+                    if (matchesAfter !== 0) {
                         let new数値 = damageDetailObj.数値;
-                        if (matchesAfter != 1) {
-                            new数値 = (new数値 as any[]).concat(['*', matchesAfter]);
+                        if (new数値 !== null) {
+                            new数値 = '(' + new数値 + ')*' + matchesAfter;
+                            valueAfter = evalFormula(new数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
                         }
-                        valueAfter = calculateFormulaArray(new数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
                     }
                     const diff = valueAfter - valueBefore;
                     if (diff) {
@@ -1324,14 +1327,18 @@ function calculateDamageFromDetail(
                         }
                     }
                 } else if (valueObj.種類 == '防御無視') {   // 防御無視は先んじて適用します for 雷電将軍
-                    const myValue = calculateFormulaArray(valueObj.数値, statsObj, damageResult, valueObj.上限, valueObj.下限);
+                    const myValue = evalFormula(valueObj.数値, statsObj, damageResult, valueObj.上限, valueObj.下限);
                     my防御無視 += myValue;
                 } else if (valueObj.種類 == '固有変数') {
                     // nop
                 } else {
                     if (number != null && number != 1) {    // オプションの@以降の数値でスケールする場合あり
                         const myNewValueObj = JSON.parse(JSON.stringify(valueObj)); // _.cloneDeep
-                        myNewValueObj.数値 = myNewValueObj.数値.concat(['*', number]);
+                        if (_.isString(myNewValueObj.数値)) {
+                            myNewValueObj.数値 += '*' + number;
+                        } else if (_.isArray(myNewValueObj.数値)) {
+                            myNewValueObj.数値 = myNewValueObj.数値.concat(['*', number]);
+                        }
                         myTalentChangeDetailObjArr.push(myNewValueObj);
                     } else {
                         myTalentChangeDetailObjArr.push(valueObj);
@@ -1339,8 +1346,6 @@ function calculateDamageFromDetail(
                 }
             });
         }
-        console.debug(detailObj['名前'] + ':myTalentChangeDetailObjArr');
-        console.debug(myTalentChangeDetailObjArr);
 
         // 対象指定ありのステータスアップを適用したい
         const tempStatsObj: TStats = {};
@@ -1391,7 +1396,6 @@ function calculateDamageFromDetail(
                 myステータス補正[stat] = tempStatsObj[stat];
             }
         });
-        console.debug('myステータス補正', myステータス補正);
 
         // for 来歆の余響 「ダメージを与えた0.05秒後にクリアされる」
         const damageDetailMyArtifactSets = characterInput.damageDetailMyArtifactSets;
@@ -1404,7 +1408,8 @@ function calculateDamageFromDetail(
                     const my条件 = valueObj.条件 as string;
                     const myHIT数 = detailObj.HIT数;
                     if (checkConditionMatches(my条件, validConditionValueArr, constellation) != 0) {
-                        const myValue = calculateFormulaArray(valueObj.数値, statsObj, damageResult, valueObj.上限, valueObj.下限);
+                        const my数値 = valueObj.数値;
+                        const myValue = evalFormula(my数値, statsObj, damageResult, valueObj.上限, valueObj.下限);
                         if (!(my種類 in myステータス補正)) {
                             myステータス補正[my種類] = 0;
                         }
@@ -1432,7 +1437,6 @@ function calculateDamageFromDetail(
             } else {
                 statsObj[stat] = myステータス補正[stat];
             }
-            console.debug('ステータス補正', stat, myステータス補正[stat]);
         });
 
         if (statsObj['別枠乗算']) {
@@ -1577,7 +1581,7 @@ function calculateDamageFromDetail(
         }
 
         const resultArr = [detailObj.名前, my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj.種類, detailObj.HIT数, my計算Result[7], my計算Result[8]] as TDamageResultEntry;
-        console.debug('calculateDamageFromDetail', detailObj, characterInput, conditionInput, statsObj, opt_element, resultArr);
+        console.debug(resultArr);
         return resultArr;
     } catch (error) {
         console.error(error);
@@ -1589,7 +1593,7 @@ function calculateDamageFromDetail(
 function calculateDamageFromDetailSub(
     statsObj: TStats,
     damageResult: TDamageResult,
-    formula: number | string | (number | string)[],
+    formula: number | string,
     buffArr: Array<string> | null,
     is会心Calc: boolean,
     is防御補正Calc: boolean,
@@ -1597,10 +1601,10 @@ function calculateDamageFromDetailSub(
     元素: string,
     防御無視: number,
     別枠乗算: number | null,
-    opt_max: number | string | Array<number | string> | null = null,
-    opt_min: number | string | Array<number | string> | null = null
+    opt_max: number | string | null = null,
+    opt_min: number | string | null = null
 ): TDamageResultEntry {
-    const myダメージ基礎値 = calculateFormulaArray(formula, statsObj, damageResult, opt_max, opt_min);
+    const myダメージ基礎値 = evalFormula(formula, statsObj, damageResult, opt_max, opt_min);
     let myダメージ = myダメージ基礎値;
 
     if (別枠乗算) { // 別枠乗算 for 宵宮
@@ -1667,7 +1671,7 @@ function calculateDamageFromDetailSub(
         my期待値Result = (my会心Result * my会心率) + (myダメージ * (1 - my会心率));
     }
 
-    console.debug('%f * %f * [%o]=%f * [%f,%f] * %f * %f => %f,%f,%f', myダメージ基礎値, 別枠乗算, buffArr, myダメージバフ補正, my会心率, my会心ダメージ, my防御補正, my耐性補正, my期待値Result, my会心Result, myダメージ);
+    console.debug('別枠乗算[%f] ダメージバフ補正[%o=%f] 会心[%f,%f] 防御補正[%f] 耐性補正[%f]', 別枠乗算, buffArr, myダメージバフ補正, my会心率, my会心ダメージ, my防御補正, my耐性補正);
     return ['未設定', 元素, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, my防御補正];
 }
 
@@ -1692,7 +1696,7 @@ function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: stri
  */
 export function isUseReference(formulaArr: number | string | Array<number | string>): boolean {
     if (!Array.isArray(formulaArr)) {
-        if (isNumber(formulaArr)) {
+        if (isNumeric(formulaArr)) {
             return false;
         }
         return String(formulaArr).indexOf('#') != -1;
@@ -1701,7 +1705,7 @@ export function isUseReference(formulaArr: number | string | Array<number | stri
     formulaArr.forEach(entry => {
         if (['+', '-', '*', '/'].includes(String(entry))) {
             return;
-        } else if (isNumber(entry)) {
+        } else if (isNumeric(entry)) {
             return;
         } else if (Array.isArray(entry)) {
             if (isUseReference(entry)) {
@@ -1722,12 +1726,12 @@ export function isUseReference(formulaArr: number | string | Array<number | stri
 function updateStats(
     statsObj: TStats,
     statName: string,
-    formulaArr: number | string | Array<number | string>,
-    opt_max: number | string | Array<number | string> | null = null,
-    opt_min: number | string | Array<number | string> | null = null,
+    formulaArr: number | string,
+    opt_max: number | string | null = null,
+    opt_min: number | string | null = null,
 ) {
-    const value = calculateFormulaArray(formulaArr, statsObj, DAMAGE_RESULT_TEMPLATE, opt_max, opt_min);    // DAMAGE_RESULT_TEMPLATEは参照しない想定なのでダミーです
-    if (!isNumber(value)) {
+    const value = evalFormula(formulaArr, statsObj, DAMAGE_RESULT_TEMPLATE, opt_max, opt_min);    // DAMAGE_RESULT_TEMPLATEは参照しない想定なのでダミーです
+    if (!isNumeric(value)) {
         console.error(statsObj, statName, formulaArr, value);
     }
     const nameArr = [];
@@ -1880,11 +1884,11 @@ export async function calculateSupporter(
     updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);
     calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
 
-    if (characterInput.character == '雷電将軍') {
+    if (characterInput.character === '雷電将軍') {
         // for 雷罰悪曜の眼
         const myCharacterMaster = await getCharacterMasterDetail(character);
         if ('元素エネルギー' in myCharacterMaster['元素爆発']) {
-            statsInput.statsObj['元素エネルギー'] = myCharacterMaster['元素爆発']['元素エネルギー'];
+            statsInput.statsObj['元素エネルギー'] = Number(myCharacterMaster['元素爆発']['元素エネルギー']);
         }
     }
 
@@ -2085,4 +2089,81 @@ export function getAmplifyingReactionElement(reaction: string, dmgElement: strin
         reactionElement = '雷';
     }
     return reactionElement;
+}
+
+function makeEvalableScript(
+    formula: string,
+    statsObj: TStats,
+    damageResult: TDamageResult,
+) {
+    const replaceMap = new Map<string, string>();
+    const re = /\$\{(.+?)\}/g;
+    let reRet;
+    while ((reRet = re.exec(formula)) !== null) {
+        const key = reRet[1];
+        if (!replaceMap.has(key)) {
+            let value;
+            if (key.includes('#')) {   // 元素爆発#スキルダメージ 等
+                const arr = key.split('#');
+                if (arr.length === 2) {
+                    const major = arr[0];
+                    const minor = arr[1];
+                    if (major in damageResult) {
+                        const entryArr = (damageResult[major] as TDamageResultEntry[]).filter(s => s[0] == minor);
+                        if (entryArr.length) {
+                            value = String(entryArr[0][4]);  // 非会心
+                        }
+                    }
+                }
+                if (value === undefined) {
+                    console.warn(formula, damageResult, key);
+                    value = '0';
+                }
+            } else {    // ステータス
+                value = String(getStatValue(key, statsObj));
+            }
+            if (value !== undefined) {
+                replaceMap.set(key, value);
+            }
+        }
+    }
+    let result = formula;
+    replaceMap.forEach((value, key) => {
+        result = result.replaceAll('${' + key + '}', value);
+    })
+    return result;
+}
+
+export function evalFormula(
+    formula: number | string | null | undefined,
+    statsObj: TStats,
+    damageResult: TDamageResult,
+    opt_max: number | string | null = null,
+    opt_min: number | string | null = null
+) {
+    let result = 0;
+    let script;
+    if (!formula) {
+        // nop
+    } else if (_.isNumber(formula)) {
+        result = formula;
+    } else {
+        script = makeEvalableScript(formula, statsObj, damageResult);
+        try {
+            result = eval(script);
+        } catch (error) {
+            console.error(error);
+            console.error(formula, statsObj, damageResult, script);
+        }
+    }
+    if (opt_max !== null) {
+        const max = evalFormula(opt_max, statsObj, damageResult);
+        result = Math.min(result, max);
+    }
+    if (opt_min !== null) {
+        const min = evalFormula(opt_min, statsObj, damageResult);
+        result = Math.max(result, min);
+    }
+    console.debug(formula, opt_max, opt_min, script, result);
+    return result;
 }

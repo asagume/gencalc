@@ -884,6 +884,13 @@ export default defineComponent({
       }
       await updateRecommendation(recommendationRef.value);
 
+      for (let supporter of ['雷電将軍']) { // 選択中キャラクターによって効果量が変化するサポーター
+        await updateOptionInputSupporter(supporter);
+      }
+      if (teamOptionInputVmRef.value) {
+        teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
+      }
+
       await nextTick();
       document.querySelector('.pane3')?.scrollIntoView({ block: 'nearest' });
     };

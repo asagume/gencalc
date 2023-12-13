@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { isNumber } from "@/common";
+import { isNumeric } from "@/common";
 import {
   TCharacterEntry,
   ELEMENT_IMG_SRC,
@@ -45,7 +45,7 @@ export default defineComponent({
     if (localStorage["キャラクター所持状況"]) {
       const savedObj = JSON.parse(localStorage["キャラクター所持状況"]);
       Object.keys(savedObj).forEach((key) => {
-        if (isNumber(savedObj[key])) {
+        if (isNumeric(savedObj[key])) {
           constellationObj[key] = Number(savedObj[key]);
         }
       });

@@ -44,8 +44,8 @@
 <script lang="ts">
 import _ from 'lodash';
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
-import { calculateFormulaArray } from "@/calculate";
-import { TStats } from "@/input";
+import { evalFormula } from "@/calculate";
+import { makeDetailObj, TStats } from "@/input";
 import { CHARACTER_MASTER, ELEMENT_IMG_SRC, TAnyObject, TCharacterKey, ELEMENT_BG_COLOR_CLASS } from "@/master";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { calculateMemberResult, getElementalResonance, TConstellation, TTeam, TTeamMemberResult } from "./team";
@@ -145,9 +145,10 @@ export default defineComponent({
         const weaponMaster = memberResult?.characterInput?.weaponMaster;
         if (characterMaster && characterMaster.チームバフ) {
           for (const damageDetail of characterMaster.チームバフ) {
-            if (damageDetail.条件) continue;
-            const value = calculateFormulaArray(damageDetail.数値, memberResult.statsInput.statsObj, memberResult.damageResult, damageDetail.最大値, damageDetail.最小値);
-            const toStat = damageDetail.種類.replace(/V[1-3]$/, '');
+            const detailObj = makeDetailObj(damageDetail, null, null, null, null);
+            if (detailObj.条件 || !detailObj.数値 || !detailObj.種類) continue;
+            const value = evalFormula(detailObj.数値, memberResult.statsInput.statsObj, memberResult.damageResult, detailObj.上限, detailObj.下限);
+            const toStat = detailObj.種類.replace(/V[1-3]$/, '');
             Object.keys(memberResults).forEach(key2 => {
               if (key2 != key) { // チームバフは本人対象外とします
                 if (toStat in teamAdjustments) {
@@ -161,9 +162,10 @@ export default defineComponent({
         }
         if (weaponMaster && weaponMaster.チームバフ) {
           for (const damageDetail of weaponMaster.チームバフ) {
-            if (damageDetail.条件) continue;
-            const value = calculateFormulaArray(damageDetail.数値, memberResult.statsInput.statsObj, memberResult.damageResult, damageDetail.最大値, damageDetail.最小値);
-            const toStat = damageDetail.種類.replace(/V[1-3]$/, '');
+            const detailObj = makeDetailObj(damageDetail, null, null, null, null);
+            if (detailObj.条件 || !detailObj.数値 || !detailObj.種類) continue;
+            const value = evalFormula(detailObj.数値, memberResult.statsInput.statsObj, memberResult.damageResult, detailObj.上限, detailObj.下限);
+            const toStat = detailObj.種類.replace(/V[1-3]$/, '');
             Object.keys(memberResults).forEach(key2 => {
               if (key2 != key) { // チームバフは本人対象外とします
                 if (toStat in teamAdjustments) {

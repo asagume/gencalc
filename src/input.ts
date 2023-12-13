@@ -1,6 +1,6 @@
-import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
-import { basename, isNumber, overwriteObject } from './common';
+import { basename, isNumeric, overwriteObject } from './common';
 
 export const 基礎ステータスARRAY = [
     '基礎HP',
@@ -348,11 +348,11 @@ export type TDamageDetailObj = {
     名前: string | null,
     種類: string | null,
     元素: string | null,
-    数値: number | string | Array<any> | null,
+    数値: string | null,
     条件: string | null,
     対象: string | null,
-    上限: number | string | Array<any> | null,
-    下限: number | string | Array<any> | null,
+    上限: string | null,
+    下限: string | null,
     HIT数: number | null,
     ダメージバフ: string | null,
     元素付与無効: boolean | null,
@@ -825,7 +825,7 @@ export async function loadRecommendation(
             const substatValue = build[subkey2];
             const substatCount = build[subkey3];
             artifactDetailInput['聖遺物優先するサブ効果'][i] = substat ?? '';
-            if (substat && substatValue && isNumber(substatValue)) {
+            if (substat && substatValue && isNumeric(substatValue)) {
                 const prioritySubstatValueList = makePrioritySubstatValueList([substat], 0);
                 prioritySubstatValueList.forEach((value, index) => {
                     if (substatValue <= value) {
@@ -837,7 +837,7 @@ export async function loadRecommendation(
                     artifactDetailInput['聖遺物優先するサブ効果上昇値'][i] = GENSEN_MASTER_LIST[2].values[i];
                 }
             }
-            if (substat && substatCount && isNumber(substatCount)) {
+            if (substat && substatCount && isNumeric(substatCount)) {
                 artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i] = substatCount;
             } else {
                 if (artifactDetailInput['聖遺物優先するサブ効果'][i] && !artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i]) {
@@ -1142,6 +1142,7 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
                         条件: '拡散@' + cond,
                         対象: null,
                         上限: null,
+                        下限: null,
                         HIT数: null,
                         ダメージバフ: null,
                         元素付与無効: null,
@@ -1349,7 +1350,7 @@ export function makeDamageDetailObjArrObjElementalResonance(characterInput: any)
     return result;
 }
 
-function makeDetailObj(
+export function makeDetailObj(
     detailObj: any,
     level: number | null,
     defaultKind: string | null,
@@ -1357,72 +1358,66 @@ function makeDetailObj(
     inputCategory: string | null,
     opt_condition?: string,
 ): TDamageDetailObj {
-    let my種類 = '種類' in detailObj ? detailObj['種類'] : defaultKind;
-    let my対象 = null;
-    if (my種類.indexOf('.') != -1) {
+    let my種類 = detailObj.種類 ?? defaultKind;
+    let my対象 = detailObj.対象 ?? null;
+    if (my種類 && my種類.indexOf('.') !== -1) {
         my対象 = my種類.substring(my種類.indexOf('.') + 1);
         my種類 = my種類.substring(0, my種類.indexOf('.'));
-    } else if ('対象' in detailObj) {
-        my対象 = detailObj['対象'];
     }
-    let my数値 = null;
-    if ('数値' in detailObj) {
-        my数値 = detailObj['数値'];
-        if (isNumber(my数値) || _.isString(my数値)) {
-            // nop
-        } else if (_.isPlainObject(my数値) && level && level in my数値) { // キャラクター|武器のサブステータス
+
+    let my数値 = detailObj.数値 ?? null;
+    if (_.isPlainObject(my数値)) {  // キャラクター|武器のサブステータス
+        if (level && level in my数値) {
             my数値 = my数値[level];
         } else {
-            console.error(detailObj, level, defaultKind, defaultElement, my数値);
-        }
-        if (DAMAGE_CATEGORY_ARRAY.includes(my種類 + 'ダメージ') || my種類.endsWith('ダメージ')) {
-            my数値 = analyzeFormulaStr(my数値, '攻撃力');
-        } else {
-            my数値 = analyzeFormulaStr(my数値, my種類);
+            console.error(detailObj, level, my数値);
+            my数値 = 0;
         }
     }
-    let my条件 = null;
-    if ('条件' in detailObj) {
-        if (_.isPlainObject(detailObj['条件']) && level && level in detailObj['条件']) {  // 武器は精錬ランクによって数値を変えたいときがあるので
-            my条件 = detailObj['条件'][level];
-        } else {
-            my条件 = detailObj['条件'];
-        }
-    } else {
-        my条件 = opt_condition ?? null;
+    my数値 = makeFormulaTemplate(my数値);
+
+    let my条件 = detailObj.条件 ?? opt_condition ?? null;
+    if (_.isPlainObject(my条件) && level && level in my条件) {  // 武器は精錬ランクによって数値を変えたいときがあるので
+        my条件 = my条件[level];
     }
-    let my上限 = null;
-    if ('上限' in detailObj) {
-        my上限 = detailObj['上限'];
-        if (_.isPlainObject(my上限) && level && level in my上限) {   // 草薙の稲光
+
+    let my上限 = detailObj.上限 ?? null;
+    if (_.isPlainObject(my上限)) {
+        if (level && level in my上限) { // for 草薙の稲光
             my上限 = my上限[level];
+        } else {
+            console.error(detailObj, level, my上限);
+            my上限 = null;
         }
-        my上限 = analyzeFormulaStr(my上限);
     }
-    let my下限 = null;
-    if ('下限' in detailObj) {  // ニィロウ
-        my下限 = detailObj['下限'];
-        if (_.isPlainObject(my下限) && level && level in my下限) {
+    my上限 = makeFormulaTemplate(my上限);
+
+    let my下限 = detailObj.下限 ?? null; // for ニィロウ
+    if (_.isPlainObject(my下限)) {
+        if (level && level in my下限) {
             my下限 = my下限[level];
+        } else {
+            console.error(detailObj, level, my下限);
+            my下限 = null;
         }
-        my下限 = analyzeFormulaStr(my下限);
     }
-    const resultObj: TDamageDetailObj = {
-        名前: detailObj['名前'],
+    my下限 = makeFormulaTemplate(my下限);
+
+    return {
+        名前: detailObj.名前 ?? null,
         種類: my種類,
-        元素: '元素' in detailObj ? detailObj['元素'] : defaultElement,
+        元素: detailObj.元素 ?? defaultElement ?? null,
         数値: my数値,
         条件: my条件,
         対象: my対象,
         上限: my上限,
         下限: my下限,
-        HIT数: 'HIT数' in detailObj ? detailObj['HIT数'] : null,
-        ダメージバフ: 'ダメージバフ' in detailObj ? detailObj['ダメージバフ'] : null,
-        元素付与無効: '元素付与無効' in detailObj ? detailObj['元素付与無効'] : inputCategory == '武器',
-        除外条件: '除外条件' in detailObj ? detailObj['除外条件'] : null,
-        適用条件: '適用条件' in detailObj ? detailObj['適用条件'] : null,
+        HIT数: detailObj.HIT数 ?? null,
+        ダメージバフ: detailObj.ダメージバフ ?? null,
+        元素付与無効: detailObj.元素付与無効 ?? inputCategory === '武器',
+        除外条件: detailObj.除外条件 ?? null,
+        適用条件: detailObj.適用条件 ?? null,
     }
-    return resultObj;
 }
 
 export function getChangeKind(kind: string) {
@@ -1466,13 +1461,13 @@ export function makeDamageDetailObjArr(
     talentDataObj['詳細'].forEach((detailObj: TAnyObject) => {
         const resultObj = makeDetailObj(detailObj, level, defaultKind, defaultElement, inputCategory, opt_condition);
         const my種類 = resultObj.種類 as string;
-        if (statusChangeDetailObjArr != null && getChangeKind(my種類) == 'STATUS') {
-            resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+        if (statusChangeDetailObjArr != null && getChangeKind(my種類) === 'STATUS') {
+            resultObj['元素'] = detailObj.元素 ?? null;
             statusChangeDetailObjArr.push(resultObj);
             return;
         }
-        if (talentChangeDetailObjArr != null && getChangeKind(my種類) == 'TALENT') {
-            resultObj['元素'] = '元素' in detailObj ? detailObj['元素'] : null;
+        if (talentChangeDetailObjArr != null && getChangeKind(my種類) === 'TALENT') {
+            resultObj['元素'] = detailObj.元素 ?? null;
             talentChangeDetailObjArr.push(resultObj);
             return;
         }
@@ -1485,15 +1480,13 @@ export function makeDamageDetailObjArr(
 export function makeTeamOptionDetailObjArr(
     detailObjArr: any[],
 ): TDamageDetailObj[] {
-    const resultArr = [] as any[];
-
+    const resultArr = [] as TDamageDetailObj[];
     detailObjArr.forEach((detailObj: { [x: string]: any; }) => {
         const resultObj = makeDetailObj(detailObj, null, null, null, null);
         if (resultObj) {
             resultArr.push(resultObj);
         }
     });
-
     return resultArr;
 }
 
@@ -1659,7 +1652,7 @@ export function setupConditionValues(
                         }
                     } else if (Array.isArray(value)) {
                         if (selectList.filter(s => s.name == key).length == 0) {
-                            const required = value[0].startsWith("required_");
+                            const required = value[0].startsWith('required_');
                             selectList.push({
                                 name: key,
                                 options: value,
@@ -1689,7 +1682,7 @@ export function setupConditionValues(
                                         conditionValues[exclusion] = 0;
                                     } else if (_.isPlainObject(value)) {    // number
                                         const minValue = (value as any).min;
-                                        if (isNumber(minValue)) {
+                                        if (isNumeric(minValue)) {
                                             conditionValues[exclusion] = minValue;
                                         } else {
                                             conditionValues[exclusion] = 0;
@@ -1715,7 +1708,7 @@ export function setupConditionValues(
                             conditionValues[key] = selectedIndex;
                         } else if (_.isPlainObject(value)) {    // number
                             const minValue = (value as any).min;
-                            if (isNumber(minValue)) {
+                            if (isNumeric(minValue)) {
                                 conditionValues[key] = minValue;
                             } else {
                                 conditionValues[key] = 0;
@@ -1745,7 +1738,7 @@ export function setupConditionValues(
                     }
                 } else if (Array.isArray(value)) {
                     if (selectList.filter(s => s.name == key).length == 0) {
-                        const required = value[0].startsWith("required_");
+                        const required = value[0].startsWith('required_');
                         selectList.push({
                             name: key,
                             options: value,
@@ -1911,54 +1904,90 @@ export function addDecimal(value1: number, value2: number, opt_max?: number): nu
     return result;
 }
 
-function analyzeFormulaStr(
-    formulaStr: number | string,
-    opt_defaultItem: string | null = null
-) {
-    const resultArr = [] as any[];
-    const re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
-    let workStr = String(formulaStr);
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-        const reRet = re.exec(workStr);
-        if (!reRet) {
-            resultArr.push(workStr);
-            break;
-        }
-        if (reRet[1]) { // + - * /
-            resultArr.push(reRet[1]);
-        }
-        resultArr.push(analyzeFormulaStrSub(reRet[2], opt_defaultItem));
-        if (!reRet[3]) {
-            break;
-        }
-        workStr = reRet[3];
-    }
-    return resultArr;
-}
+// function analyzeFormulaStr(
+//     formulaStr: number | string,
+//     opt_defaultItem: string | null = null
+// ) {
+//     const resultArr = [] as any[];
+//     const re = new RegExp('([\\+\\-\\*/]?)([^\\+\\-\\*/]+)(.*)');
+//     let workStr = String(formulaStr);
+//     // eslint-disable-next-line no-constant-condition
+//     while (true) {
+//         const reRet = re.exec(workStr);
+//         if (!reRet) {
+//             resultArr.push(workStr);
+//             break;
+//         }
+//         if (reRet[1]) { // + - * /
+//             resultArr.push(reRet[1]);
+//         }
+//         resultArr.push(analyzeFormulaStrSub(reRet[2], opt_defaultItem));
+//         if (!reRet[3]) {
+//             break;
+//         }
+//         workStr = reRet[3];
+//     }
+//     return resultArr;
+// }
+//
+// function analyzeFormulaStrSub(
+//     formulaStr: string,
+//     opt_defaultItem: string | null = null
+// ) {
+//     const resultArr = [] as any;
+//     if (isNumeric(formulaStr)) {
+//         resultArr.push(Number(formulaStr));
+//     } else {
+//         const strArr = (formulaStr as string).split('%');
+//         if (strArr.length == 1) {
+//             resultArr.push(strArr[0]);
+//         } else {
+//             resultArr.push(Number(strArr[0]) / 100);
+//             resultArr.push('*');
+//             if (strArr[1].length > 0) {
+//                 resultArr.push(strArr[1]);
+//             } else if (opt_defaultItem != null) {
+//                 resultArr.push(opt_defaultItem);
+//             }
+//         }
+//     }
+//     return resultArr;
+// }
 
-function analyzeFormulaStrSub(
-    formulaStr: string,
-    opt_defaultItem: string | null = null
+export function makeFormulaTemplate(
+    formula: number | string | null | undefined,
 ) {
-    const resultArr = [] as any;
-    if (isNumber(formulaStr)) {
-        resultArr.push(Number(formulaStr));
+    let result: string | null = '';
+    if (formula === undefined || formula === null) {
+        result = null;
+    } else if (_.isNumber(formula) || isNumeric(formula)) {
+        result = String(formula);
     } else {
-        const strArr = (formulaStr as string).split('%');
-        if (strArr.length == 1) {
-            resultArr.push(strArr[0]);
-        } else {
-            resultArr.push(Number(strArr[0]) / 100);
-            resultArr.push('*');
-            if (strArr[1].length > 0) {
-                resultArr.push(strArr[1]);
-            } else if (opt_defaultItem != null) {
-                resultArr.push(opt_defaultItem);
+        const symbols = "!\"&'()*+,-/:;<=>?@[\\]^`|~";
+        const escapedSymbols = symbols.split('').map(s => '\\' + s).join('');
+        const re = new RegExp('([^' + escapedSymbols + ']+|[' + escapedSymbols + ']+)', 'g');
+        let reRet;
+        while ((reRet = re.exec(formula)) !== null) {
+            let item = reRet[1];
+            if (!symbols.includes(item.substring(0, 1))) {
+                item = _.trim(item);
+                if (isNumeric(item)) {
+                    result += item;
+                } else if (item.length) {
+                    if (item.includes('%')) {   // 123.4% or 12.34%HP上限 等。%の前は数値
+                        const arr = item.split('%').map(s => _.trim(s));
+                        result += arr[0] + '/100*';
+                        item = arr[1].length ? arr[1] : '攻撃力';
+                    }
+                    result += '${' + item + '}';
+                }
+            } else {
+                result += item;
             }
         }
     }
-    return resultArr;
+    console.debug(formula, result);
+    return result;
 }
 
 export function makeSharedata(savedata: TAnyObject) {
@@ -2061,9 +2090,9 @@ export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string
     let max = 10;
     if (key in characterMaster) {
         const talentObj = (characterMaster as any)[key];
-        if ("詳細" in talentObj) {
+        if ('詳細' in talentObj) {
             for (const detailObj of talentObj.詳細) {
-                if ("数値" in detailObj && _.isPlainObject(detailObj.数値)) {
+                if ('数値' in detailObj && _.isPlainObject(detailObj.数値)) {
                     const work = Object.keys(detailObj.数値).length;
                     if (max < work) max = work;
                 }
@@ -2141,7 +2170,7 @@ export async function updateConditionsByTeam(
             }
         }
         if ('元素エネルギー' in characterDetail.元素爆発) {
-            totalEnergyCost += characterDetail.元素爆発.元素エネルギー;
+            totalEnergyCost += Number(characterDetail.元素爆発.元素エネルギー);
         }
         if (characterDetail.元素) {
             const count = visionCountMap.get(characterDetail.元素);

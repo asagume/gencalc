@@ -72,7 +72,7 @@ export {
 //     }
 // }
 
-export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+export const IMG_SRC_DUMMY = 'data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7';
 
 export type TVisionKey = '炎' | '水' | '風' | '雷' | '草' | '氷' | '岩';
 export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';

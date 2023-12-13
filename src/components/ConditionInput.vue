@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import _ from "lodash";
-import { isNumber, overwriteObject } from "@/common";
+import { isNumeric, overwriteObject } from "@/common";
 import {
   TCharacterInput,
   TStats,
@@ -123,7 +123,7 @@ export default defineComponent({
         let result: string = displayStatName(stat).replace('%', '');
         if (value == null) {
           // nop
-        } else if (isNumber(value)) {
+        } else if (isNumeric(value)) {
           if (value == 0) continue;
           else if (value >= 0) {
             if (stat.split('.')[0] == '別枠乗算') result += '=';

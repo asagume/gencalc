@@ -8,7 +8,7 @@ export function isString(value: any): boolean {
     return typeof value === 'string' || value instanceof String;
 }
 
-export function isNumber(value: any): boolean {
+export function isNumeric(value: any): boolean {
     return isFinite(value) && value != null;
 }
 

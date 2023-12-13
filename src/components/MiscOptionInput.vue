@@ -22,11 +22,11 @@
 <script lang="ts">
 import _ from "lodash";
 import {
-  calculateFormulaArray,
+  evalFormula,
   checkConditionMatches,
   makeValidConditionValueArr,
 } from "@/calculate";
-import { isNumber, overwriteObject } from "@/common";
+import { isNumeric, overwriteObject } from "@/common";
 import {
   CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
@@ -45,8 +45,8 @@ type TConditionValuesAny = {
 }
 
 export default defineComponent({
-  name: "MiscOptionInput",
-  emits: ["update:misc-option"],
+  name: 'MiscOptionInput',
+  emits: ['update:misc-option'],
   setup(props, context) {
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
@@ -63,9 +63,9 @@ export default defineComponent({
 
     for (const masterList of [OPTION1_MASTER_LIST, OPTION2_MASTER_LIST]) {
       for (const entry of masterList) {
-        if ("詳細" in entry) {
+        if ('詳細' in entry) {
           for (const detailObj of entry.詳細) {
-            if (!("条件" in detailObj)) {
+            if (!('条件' in detailObj)) {
               (detailObj as any).条件 = entry.key;
             }
           }
@@ -80,32 +80,28 @@ export default defineComponent({
             null,
             statusChangeDetailObjArr,
             talentChangeDetailObjArr,
-            "その他オプション"
+            'その他オプション'
           )
         );
       }
     }
-    statusChangeDetailObjArr
-      .filter((s) => s["条件"])
-      .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
-      });
-    talentChangeDetailObjArr
-      .filter((s) => s["条件"])
-      .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
-      });
+    statusChangeDetailObjArr.filter((s) => s.条件).forEach((detailObj) => {
+      makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
+    talentChangeDetailObjArr.filter((s) => s.条件).forEach((detailObj) => {
+      makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
     conditionMap.forEach((value, key) => {
       if (value && Array.isArray(value)) {
-        if (!value[0].startsWith("required_")) {
-          conditionMap.set(key, ["", ...value]);
+        if (!value[0].startsWith('required_')) {
+          conditionMap.set(key, ['', ...value]);
         }
       }
     });
     conditionMap.forEach((value: string[] | null, key: string) => {
       if (value) {
         if (selectList.filter((s) => s.name == key).length == 0) {
-          const required = value[0].startsWith("required_");
+          const required = value[0].startsWith('required_');
           selectList.push({
             name: key,
             options: value,
@@ -133,29 +129,23 @@ export default defineComponent({
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
       for (const myDetailObj of statusChangeDetailObjArr) {
         let myValue = undefined;
-        if (myDetailObj["数値"]) {
-          let myNew数値 = myDetailObj["数値"];
-          if (myDetailObj["条件"]) {
-            const number = checkConditionMatches(
-              myDetailObj["条件"],
-              validConditionValueArr,
-              0
-            );
-            if (number == 0) continue;
-            if (number != 1) {
-              myNew数値 = (myNew数値 as any).concat(["*", number]);
-            }
+        if (myDetailObj.数値) {
+          let myNew数値 = myDetailObj.数値;
+          if (myDetailObj.条件) {
+            const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, 0);
+            if (number === 0) continue;
+            myNew数値 = '(' + myNew数値 + ')*' + number;
           }
-          myValue = calculateFormulaArray(myNew数値, workObj, damageResultDummy);
+          myValue = evalFormula(myNew数値, workObj, damageResultDummy);
         }
-        if (myDetailObj["種類"]) {
+        if (myDetailObj.種類) {
           if (myValue === undefined) {
-            workObj[myDetailObj["種類"]] = 0;
+            workObj[myDetailObj.種類] = 0;
           } else {
-            if (myDetailObj["種類"] in workObj) {
-              workObj[myDetailObj["種類"]] += myValue;
+            if (myDetailObj.種類 in workObj) {
+              workObj[myDetailObj.種類] += myValue;
             } else {
-              workObj[myDetailObj["種類"]] = myValue;
+              workObj[myDetailObj.種類] = myValue;
             }
           }
         }
@@ -168,9 +158,9 @@ export default defineComponent({
       for (const stat of Object.keys(statAdjustments.value)) {
         const value = statAdjustments.value[stat];
         let result: string = displayStatName(stat).replace('%', '');
-        if (isNumber(value)) {
+        if (isNumeric(value)) {
           if (value >= 0) {
-            if (stat.split('.')[0] == '別枠乗算') result += '=';
+            if (stat.split('.')[0] === '別枠乗算') result += '=';
             else result += '+';
           }
           result += displayStatValue(stat, value);
@@ -185,7 +175,7 @@ export default defineComponent({
     const onChange = async () => {
       await nextTick();
       overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
-      context.emit("update:misc-option", conditionInput);
+      context.emit('update:misc-option', conditionInput);
     };
 
     const initializeValues = (initialObj: TConditionInput) => {

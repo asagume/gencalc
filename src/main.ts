@@ -3,7 +3,7 @@ import App from './App.vue'
 import { basename } from '@/common';
 import { makeRecommendationList, loadRecommendation, popBuildinfoFromSession, getDefaultCharacterInput, getDefaultArtifactDetailInput, getDefaultConditionInput, getDefaultOptionInput } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
-import { isNumber } from './common';
+import { isNumeric } from './common';
 import i18n from './i18n';
 
 function makeSaveDataFromShareData(shareData: string) {
@@ -83,7 +83,7 @@ function makeSaveDataFromShareData(shareData: string) {
                     newValue = ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP.get(newValue);
                 }
             }
-            if (value != null && isNumber(value)) {
+            if (value != null && isNumeric(value)) {
                 if (newValue) {
                     savedata[key] = Number(newValue);
                 } else {

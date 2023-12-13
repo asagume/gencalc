@@ -114,11 +114,11 @@
 <script lang="ts">
 import _ from 'lodash';
 import {
-  calculateFormulaArray,
   checkConditionMatches,
+  evalFormula,
   makeValidConditionValueArr,
 } from "@/calculate";
-import { isNumber, overwriteObject } from "@/common";
+import { isNumeric, overwriteObject } from "@/common";
 import {
   CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
@@ -135,10 +135,10 @@ import {
   makeBuildStorageKey,
   TSupporterInput,
   SUPPORTER_INPUT_TEMPLATE,
-TConditionValues,
+  TConditionValues,
 } from "@/input";
 import {
-ALL_ELEMENTS,
+  ALL_ELEMENTS,
   CHARACTER_MASTER,
   ELEMENT_BG_COLOR_CLASS,
   ELEMENT_IMG_SRC,
@@ -176,7 +176,7 @@ export default defineComponent({
       type: Object as PropType<TConditionValues>,
     }
   },
-  emits: ["update:team-option", "update:buildname-selection", 'update:team-members'],
+  emits: ['update:team-option', 'update:buildname-selection', 'update:team-members'],
   setup(props, context) {
     const {
       displayName,
@@ -228,34 +228,28 @@ export default defineComponent({
 
     for (const masterList of [TEAM_OPTION_MASTER_LIST]) {
       for (const entry of masterList) {
-        const supporter = entry.key.split("_")[0];
-        if ("詳細" in entry) {
+        const supporter = entry.key.split('_')[0];
+        if ('詳細' in entry) {
           for (const detailObj of entry.詳細) {
-            (detailObj as any).条件 = formatCondition(supporter, entry.名前,  (detailObj as any).条件);
+            (detailObj as any).条件 = formatCondition(supporter, entry.名前, (detailObj as any).条件);
           }
         }
-        damageDetailArr.splice(damageDetailArr.length, 0, ...makeDamageDetailObjArr(entry, null, null, null, statusChangeDetailObjArr, talentChangeDetailObjArr, "その他オプション"));
+        damageDetailArr.splice(damageDetailArr.length, 0, ...makeDamageDetailObjArr(entry, null, null, null, statusChangeDetailObjArr, talentChangeDetailObjArr, 'その他オプション'));
       }
     }
-    damageDetailArr
-      .filter((s) => s["条件"])
-      .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
-      });
-    statusChangeDetailObjArr
-      .filter((s) => s["条件"])
-      .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
-      });
-    talentChangeDetailObjArr
-      .filter((s) => s["条件"])
-      .forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj["条件"] as string, conditionMap, exclusionMap);
-      });
+    damageDetailArr.filter((s) => s.条件).forEach((detailObj) => {
+      makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
+    statusChangeDetailObjArr.filter((s) => s.条件).forEach((detailObj) => {
+      makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
+    talentChangeDetailObjArr.filter((s) => s.条件).forEach((detailObj) => {
+      makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
     conditionMap.forEach((value, key) => {
       if (value && Array.isArray(value)) {
-        if (!value[0].startsWith("required_")) {
-          conditionMap.set(key, ["", ...value]);
+        if (!value[0].startsWith('required_')) {
+          conditionMap.set(key, ['', ...value]);
         }
       }
     });
@@ -266,15 +260,15 @@ export default defineComponent({
           if (checkboxList.filter((s) => s.name == key).length == 0) {
             checkboxList.push({
               name: key,
-              displayName: key.replace(/^.+\*/, "")
+              displayName: key.replace(/^.+\*/, '')
             });
           }
         } else if (Array.isArray(value)) {  // select
           if (selectList.filter((s) => s.name == key).length == 0) {
-            const required = value[0].startsWith("required_");
+            const required = value[0].startsWith('required_');
             selectList.push({
               name: key,
-              displayName: key.replace(/^.+\*/, ""),
+              displayName: key.replace(/^.+\*/, ''),
               options: (required || !value[0]) ? value : ['', ...value],
               required: required,
             });
@@ -282,7 +276,7 @@ export default defineComponent({
         } else if (_.isPlainObject(value)) {  // number
           numberList.push({
             name: key,
-            displayName: key.replace(/^.+\*/, ""),
+            displayName: key.replace(/^.+\*/, ''),
             min: (value as any).min,
             max: (value as any).max,
             step: (value as any).step,
@@ -301,7 +295,7 @@ export default defineComponent({
     };
 
     const takeMasterTeamOption = (character: string, master: any) => {
-      if ("チームバフ" in master) {
+      if ('チームバフ' in master) {
         const detailObjArr = master.チームバフ as any[];
         const damageDetailObjArr: TDamageDetailObj[] = makeTeamOptionDetailObjArr(detailObjArr);
         damageDetailObjArr.forEach((damageDetailObj) => {
@@ -311,14 +305,12 @@ export default defineComponent({
             additionalConditions.push(condition);
           }
           const changeKind = getChangeKind(damageDetailObj.種類 as string);
-          if (
-            changeKind == "STATUS" &&
+          if (changeKind == 'STATUS' &&
             statusChangeDetailObjArr.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length == 0
           ) {
             statusChangeDetailObjArr.splice(statusChangeDetailObjArr.length, 0, damageDetailObj);
           }
-          if (
-            changeKind == "TALENT" &&
+          if (changeKind == 'TALENT' &&
             talentChangeDetailObjArr.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length == 0
           ) {
             talentChangeDetailObjArr.splice(talentChangeDetailObjArr.length, 0, damageDetailObj);
@@ -351,7 +343,7 @@ export default defineComponent({
 
       // マスターから取り込んだチームバフを削除します
       const removeConditions: string[] = additionalConditions.filter((s) =>
-        s.startsWith(characterInput.character + "*")
+        s.startsWith(characterInput.character + '*')
       );
       if (removeConditions.length > 0) {
         statusChangeDetailObjArr.splice(0, statusChangeDetailObjArr.length, ...statusChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string)));
@@ -377,15 +369,15 @@ export default defineComponent({
     };
 
     const supporterCheckboxList = (supporter: any) => {
-      return checkboxList.filter((s) => s.name.startsWith(supporter + "*"));
+      return checkboxList.filter((s) => s.name.startsWith(supporter + '*'));
     };
 
     const supporterSelectList = (supporter: any) => {
-      return selectList.filter((s) => s.name.startsWith(supporter + "*"));
+      return selectList.filter((s) => s.name.startsWith(supporter + '*'));
     };
 
     const supporterNumberList = (supporter: any) => {
-      return numberList.filter((s) => s.name.startsWith(supporter + "*"));
+      return numberList.filter((s) => s.name.startsWith(supporter + '*'));
     };
 
     /** 選択中のキャラクターのオプションは無効です */
@@ -396,27 +388,24 @@ export default defineComponent({
 
     const supporterOptionSelectedClass = (supporter: any) => {
       for (const entry of supporterCheckboxList(supporter)) {
-        if (conditionValues[entry.name]) return " selected";
+        if (conditionValues[entry.name]) return ' selected';
       }
       for (const entry of supporterSelectList(supporter)) {
-        if (!entry.required && conditionValues[entry.name]) return " selected";
+        if (!entry.required && conditionValues[entry.name]) return ' selected';
       }
       return "";
     };
 
     /** サポーターのステータス（天賦レベル）を参照するオプションには保存データが必要です */
     const conditionDisabled = (item: any): boolean => {
-      const supporter = item.name.split("*")[0];
+      const supporter = item.name.split('*')[0];
       if (props.savedSupporters.filter((s) => s.key == supporter).length > 0)
         return false;
       for (const myDetailObj of statusChangeDetailObjArr) {
         if (myDetailObj.条件) {
           if (myDetailObj.条件.startsWith(item.name)) {
-            if (isNumber(myDetailObj.数値)) return false;
-            if (Array.isArray(myDetailObj.数値)) {
-              for (const entry of myDetailObj.数値) {
-                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry)) return true;
-              }
+            if (myDetailObj.数値?.includes('$')) {
+              return true;
             }
           }
         }
@@ -424,11 +413,8 @@ export default defineComponent({
       for (const myDetailObj of talentChangeDetailObjArr) {
         if (myDetailObj.条件) {
           if (myDetailObj.条件.startsWith(item.name)) {
-            if (isNumber(myDetailObj.数値)) return false;
-            if (Array.isArray(myDetailObj.数値)) {
-              for (const entry of myDetailObj.数値) {
-                if (!isNumber(entry) && !["+", "-", "*", "/"].includes(entry)) return true;
-              }
+            if (myDetailObj.数値?.includes('$')) {
+              return true;
             }
           }
         }
@@ -442,18 +428,18 @@ export default defineComponent({
       const validConditionValueArr = makeValidConditionValueArr(conditionInput);
       [statusChangeDetailObjArr, talentChangeDetailObjArr].forEach((detailObjArr) => {
         if (detailObjArr) {
-          for (const myDetailObj of detailObjArr) {
+          for (const detailObj of detailObjArr) {
             let supporter;
-            let myNew数値 = myDetailObj.数値;
-            const my上限 = myDetailObj.上限;
-            const my下限 = myDetailObj.下限;
-            if (myDetailObj.条件) {
-              supporter = myDetailObj.条件.substring(0, myDetailObj.条件.indexOf("*"));
+            let myNew数値 = detailObj.数値;
+            const my上限 = detailObj.上限;
+            const my下限 = detailObj.下限;
+            if (detailObj.条件) {
+              supporter = detailObj.条件.substring(0, detailObj.条件.indexOf('*'));
               if (supporter == props.character) continue;
-              const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, 6);
+              const number = checkConditionMatches(detailObj.条件, validConditionValueArr, 6);
               if (!number || number == 0) continue;
-              if (number != 1 && myNew数値) {
-                myNew数値 = (myNew数値 as any).concat(["*", number]);
+              if (number !== 1 && myNew数値) {
+                myNew数値 = '(' + myNew数値 + ')*' + number;
               }
             }
             let statsObj: TStats = statsObjDummy;
@@ -470,24 +456,24 @@ export default defineComponent({
             });
             let myValue = Infinity;
             if (myNew数値) {
-              myValue = calculateFormulaArray(myNew数値, statsObj, damageResult, my上限, my下限);
+              myValue = evalFormula(myNew数値, statsObj, damageResult, my上限, my下限);
             }
             const kinds = [] as string[];
-            if (myDetailObj.種類) {
+            if (detailObj.種類) {
               if (
-                myDetailObj.種類.startsWith("全") ||
-                myDetailObj.種類.startsWith("敵全")
+                detailObj.種類.startsWith('全') ||
+                detailObj.種類.startsWith('敵全')
               ) {
-                for (const elem of ["炎", "水", "風", "雷", "草", "氷", "岩"]) {
-                  kinds.push(myDetailObj.種類.replace("全", elem));
+                for (const elem of ['炎', '水', '風', '雷', '草', '氷', '岩']) {
+                  kinds.push(detailObj.種類.replace('全', elem));
                 }
               } else {
-                kinds.push(myDetailObj.種類);
+                kinds.push(detailObj.種類);
               }
             }
             for (const kind of kinds) {
               let tempKind = kind;
-              if (myDetailObj.対象) tempKind += "." + myDetailObj.対象;
+              if (detailObj.対象) tempKind += '.' + detailObj.対象;
               if (tempKind in workObj) {
                 workObj[tempKind] += myValue;
               } else {
@@ -507,7 +493,7 @@ export default defineComponent({
         let result: string = displayStatName(stat).replace("%", "");
         const value = statAdjustments.value[stat];
         if (value != Infinity) {
-          if (isNumber(value)) {
+          if (isNumeric(value)) {
             if (value >= 0) {
               if (stat.split(".")[0] == "別枠乗算") result += "=";
               else result += "+";
