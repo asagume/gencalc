@@ -77,7 +77,7 @@ import {
     makeEasyInputSubstatValueList, TArtifactDetailInput, TCharacterInput, TConditionInput, TDamageResult, TDamageResultEntry, TOptionInput, TStats, TStatsInput,
 } from "@/input";
 import { ELEMENT_IMG_SRC, ELEMENTAL_REACTION_MASTER, IMG_SRC_DUMMY, TArtifactSubKey, TElementalReactionKey, TElementImgSrcKey } from "@/master";
-import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
+import { computed, defineComponent, nextTick, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { calculateDamageResult, calculateReactedDamage, calculateRotationTotalDamage, calculateStats, getAmplifyingReactionElement, TRotationDamageInfo } from "@/calculate";
 
@@ -244,9 +244,9 @@ export default defineComponent({
             row[4] = evaluationValue;
         }
 
-        function setupNextStatRows() {
+        function setupNextStatRows(force = false) {
             if (evaluationItem.value) {
-                if (!_.isEqual(saveDamageResult, props.damageResult) || nextStatRows.filter(row => row[4]).length === 0) {
+                if (!_.isEqual(saveDamageResult, props.damageResult) || nextStatRows.filter(row => row[4]).length === 0 || force) {
                     const workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
                     const workStatsInput = _.cloneDeep(props.statsInput);
                     for (const row of nextStatRows) {
@@ -288,7 +288,7 @@ export default defineComponent({
         }
 
         const evaluationItemOnChange = () => {
-            setupNextStatRows();
+            setupNextStatRows(true);
         };
 
         const reactionImgOnClick = (name: string) => {
@@ -297,7 +297,7 @@ export default defineComponent({
             } else {
                 selectedAmplifyingReaction.value = name;
             }
-            setupNextStatRows();
+            setupNextStatRows(true);
         }
 
         const nextStatStepOnChange = (row: TStatRow) => {
@@ -325,26 +325,28 @@ export default defineComponent({
             isStop.value = !isStop.value;
             localStorage.setItem(STORAGE_KEY_NEXT_STEP_STOP, String(isStop.value));
             if (!isStop.value) {
-                setupNextStatRows();
+                setupNextStatRows(true);
             }
         }
 
         const containsDealMoreDamageOnChange = () => {
             initializeNextStat();
-            setupNextStatRows();
+            setupNextStatRows(true);
         }
 
         watch([props.characterInput, props.statsInput, props.rotationDamageInfo], () => {
-            setupNextStatRows();
+            setupNextStatRows(true);
         });
 
         watch(evaluationItemList, () => {
             initializeEvaluationItem();
         });
 
-        initializeNextStat();
-        initializeEvaluationItem();
-        setupNextStatRows();
+        onMounted(() => {
+            initializeNextStat();
+            initializeEvaluationItem();
+            setupNextStatRows(true);
+        })
 
         return {
             displayName,
