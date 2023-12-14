@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import _ from "lodash";
-import { CONDITION_INPUT_TEMPLATE, STAT_PERCENT_LIST, TConditionInput, TElementalResonance, } from "@/input";
+import { CONDITION_INPUT_TEMPLATE, TConditionInput, TElementalResonance, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
   ELEMENTAL_RESONANCE_MASTER_LIST,
@@ -34,6 +34,7 @@ import {
 } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
+import { isNumeric } from "@/common";
 
 type TConditionValuesAny = {
   [key: string]: any;
@@ -48,7 +49,7 @@ export default defineComponent({
   },
   emits: ["update:elemental-resonance"],
   setup(props, context) {
-    const { displayName } = CompositionFunction();
+    const { displayName, displayStatName, displayStatValue } = CompositionFunction();
 
     const elementalResonanceList = ELEMENTAL_RESONANCE_MASTER_LIST;
     const elementalResonanceChecked = reactive({} as { [key: string]: boolean });
@@ -61,22 +62,26 @@ export default defineComponent({
     const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE));
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
 
-    const statAdjustments = computed(() => {
-      return props.elementalResonance?.conditionAdjustments ?? {};
-    });
-
     const displayStatAjustmentList = computed(() => {
       const resultArr: string[] = [];
       const conditionAdjustments = props.elementalResonance?.conditionAdjustments;
       if (conditionAdjustments) {
         for (const stat of Object.keys(conditionAdjustments)) {
-          const val = statAdjustments.value[stat];
-          if (!val) continue;
-          let str = stat.replace("%", "").replace(/^敵/, "敵の");
-          str += val >= 0 ? "+" : "";
-          str += val;
-          if (stat.endsWith("%") || STAT_PERCENT_LIST.includes(stat)) str += "%";
-          resultArr.push(str);
+          const value = conditionAdjustments[stat];
+          let result = displayStatName(stat).replace('%', '');
+          if (value === null) {
+            // nop
+          } else if (isNumeric(value)) {
+            if (value === 0) continue;
+            else if (value >= 0) {
+              if (stat.split('.')[0] === '別枠乗算') result += '=';
+              else result += '+';
+            }
+            result += displayStatValue(stat, value);
+          } else if (value) {
+            result += '=' + value;
+          }
+          resultArr.push(result);
         }
       }
       return resultArr;

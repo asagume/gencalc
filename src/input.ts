@@ -136,14 +136,14 @@ export const ステータスARRAY_MAP = new Map([
 
 export const STAT_PERCENT_LIST = [
     ...高級ステータスARRAY, ...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...元素反応バフARRAY, ...敵ステータス_元素耐性ARRAY,
-    '別枠乗算', '敵防御力',
+    '別枠乗算', '敵防御力', 'ダメージ軽減',
 ];
 
 export type TStats = {
     [key: string]: number,
 };
 
-function makeStatusTenmplate() {
+function makeStatusTemplate() {
     const statsObj: TStats = {};
     ステータスARRAY_MAP.forEach((value) => {
         value.forEach(stat => {
@@ -157,7 +157,7 @@ function makeStatusTenmplate() {
     statsObj['敵防御力'] = 0;
     return statsObj;
 }
-export const ステータスTEMPLATE = makeStatusTenmplate();
+export const ステータスTEMPLATE = makeStatusTemplate();
 
 function makeEnemyStatusTemplate() {
     const statsObj: TStats = {};
@@ -320,6 +320,8 @@ export type TDamageResult = {
     元素爆発: TDamageResultEntry[],
     その他: TDamageResultEntry[],
     キャラクター注釈: string[],
+    被ダメージ: any[],
+    耐久スコア: any[],
     [key: string]: TDamageResultElementalReaction | TDamageResultEntry[] | string[],
 };
 
@@ -332,6 +334,8 @@ export const DAMAGE_RESULT_TEMPLATE = {
     元素爆発: [] as TDamageResultEntry[],
     その他: [] as TDamageResultEntry[],
     キャラクター注釈: [] as string[],
+    被ダメージ: [] as any[],
+    耐久スコア: [] as any[],
 };
 
 export const 突破レベルレベルARRAY = [
@@ -705,15 +709,15 @@ function makeArtifactSetAbbrev(name: string): string {
 }
 
 export function makePrioritySubstatValueList(
-    prioritySubstats: TArtifactSubKey[],
+    prioritySubstats: string[],
     index: number,
-    opt_substat?: TArtifactSubKey
+    opt_substat?: string
 ) {
     const result: number[] = [];
     if (prioritySubstats[index]) {
         if (!opt_substat) opt_substat = prioritySubstats[index];
         if (opt_substat && opt_substat in ARTIFACT_SUB_MASTER) {
-            const valueArr = ARTIFACT_SUB_MASTER[opt_substat];
+            const valueArr = ARTIFACT_SUB_MASTER[opt_substat as TArtifactSubKey];
             for (let i = 0; i < valueArr.length; i++) {
                 result.push(valueArr[i]);
                 if (i < valueArr.length - 1) {

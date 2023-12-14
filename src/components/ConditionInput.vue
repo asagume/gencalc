@@ -41,18 +41,18 @@ import {
   TNumberEntry,
   TSelectEntry,
 } from "@/input";
-import { computed, defineComponent, nextTick, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, onMounted, PropType, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
-  name: "ConditionInput",
+  name: 'ConditionInput',
   props: {
-    characterInput: { type: Object as PropType<TCharacterInput>, required: true },
-    conditionInput: { type: Object as PropType<TConditionInput>, required: true },
-    conditionAdjustments: { type: Object as PropType<TConditionAdjustments>, required: true },
+    characterInput: { type: Object as PropType<TCharacterInput>, required: true, },
+    conditionInput: { type: Object as PropType<TConditionInput>, required: true, },
+    conditionAdjustments: { type: Object as PropType<TConditionAdjustments>, required: true, },
     statsObj: { type: Object as PropType<TStats>, }
   },
-  emits: ["update:condition"],
+  emits: ['update:condition'],
   setup(props, context) {
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
@@ -63,17 +63,27 @@ export default defineComponent({
 
     const isDisplayDescription = ref(false);
 
-    const updateNumberList = (conditionInput: TConditionInput) => {
-      numberList.splice(0, numberList.length, ...conditionInput.numberList);
-      overwriteObject(conditionValues, conditionInput.conditionValues);
-    };
-
-    const initialize = (conditionInput: TConditionInput) => {
-      checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
-      selectList.splice(0, selectList.length, ...conditionInput.selectList);
-      numberList.splice(0, numberList.length, ...conditionInput.numberList);
-      updateNumberList(conditionInput);
-    };
+    const displayStatAjustmentList = computed(() => {
+      const resultArr = [];
+      for (const stat of Object.keys(props.conditionAdjustments)) {
+        const value = props.conditionAdjustments[stat];
+        let result = displayStatName(stat).replace('%', '');
+        if (value === null) {
+          // nop
+        } else if (isNumeric(value)) {
+          if (value === 0) continue;
+          else if (value >= 0) {
+            if (stat.split('.')[0] === '別枠乗算') result += '=';
+            else result += '+';
+          }
+          result += displayStatValue(stat, value);
+        } else if (value) {
+          result += '=' + value;
+        }
+        resultArr.push(result);
+      }
+      return resultArr;
+    })
 
     const exclusionMap = computed(() => {
       const result = new Map() as Map<string, string[] | null>;
@@ -89,7 +99,28 @@ export default defineComponent({
         }
       });
       return result;
-    });
+    })
+
+    onMounted(() => {
+      initialize(props.conditionInput);
+    })
+
+    const initialize = (conditionInput: TConditionInput) => {
+      if (!_.isEqual(checkboxList, conditionInput.checkboxList)) {
+        checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
+      }
+      if (!_.isEqual(selectList, conditionInput.selectList)) {
+        selectList.splice(0, selectList.length, ...conditionInput.selectList);
+      }
+      updateNumberList(conditionInput);
+    }
+
+    const updateNumberList = (conditionInput: TConditionInput) => {
+      if (!_.isEqual(numberList, conditionInput.numberList)) {
+        numberList.splice(0, numberList.length, ...conditionInput.numberList);
+      }
+      overwriteObject(conditionValues, conditionInput.conditionValues);
+    }
 
     const updateCondition = async (event: Event, item: any) => {
       let exclusionArr;
@@ -113,47 +144,24 @@ export default defineComponent({
         });
       }
       await nextTick();
-      context.emit("update:condition", conditionValues);
-    };
-
-    const displayStatAjustmentList = computed(() => {
-      const resultArr = [];
-      for (const stat of Object.keys(props.conditionAdjustments)) {
-        const value = props.conditionAdjustments[stat];
-        let result: string = displayStatName(stat).replace('%', '');
-        if (value == null) {
-          // nop
-        } else if (isNumeric(value)) {
-          if (value == 0) continue;
-          else if (value >= 0) {
-            if (stat.split('.')[0] == '別枠乗算') result += '=';
-            else result += '+';
-          }
-          result += displayStatValue(stat, value);
-        } else if (value) {
-          result += '=' + value;
-        }
-        resultArr.push(result);
-      }
-      return resultArr;
-    });
+      context.emit('update:condition', conditionValues);
+    }
 
     return {
       displayName,
       displayOptionName,
-
-      updateNumberList,
-      initialize,
 
       checkboxList,
       selectList,
       numberList,
       conditionValues,
 
-      updateCondition,
-
       isDisplayDescription,
       displayStatAjustmentList,
+
+      updateNumberList,
+      initialize,
+      updateCondition,
     };
   },
 });

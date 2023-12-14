@@ -187,6 +187,7 @@ export type TWeaponDetail = {
     チームバフ?: any[],
     オプション初期値?: any,
     固有変数?: any,
+    精錬ランク?: number,
 };
 
 export type TArtifactSetEffect = {

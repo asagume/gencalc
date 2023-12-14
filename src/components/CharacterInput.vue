@@ -220,8 +220,8 @@ export default defineComponent({
     'open:character-select',
     'open:character-info',
     'update:recommendation',
-    'saveToStorage',
-    'removeFromStorage',
+    'save-to-storage',
+    'remove-from-storage',
     'open:weapon-select',
     'open:artifact-set-select',
     'open:artifact-detail-input',
@@ -233,8 +233,47 @@ export default defineComponent({
     const { displayName, targetValue } = CompositionFunction();
 
     const characterInputRea = reactive(props.characterInput);
-
     const storageOrRecommendationRef = ref('0');
+    const artifactSetIndexRef = ref(0);
+
+    /** 突破レベルの範囲 */
+    const ascensionRange = computed((): number[] => [0, 1, 2, 3, 4, 5, 6])
+    /** レベルの範囲 */
+    const levelRange = computed((): number[] => 突破レベルレベルARRAY[characterInputRea.突破レベル])
+
+    const characterMaster = computed(() => characterInputRea.characterMaster);
+    const weaponMaster = computed(() => characterInputRea.weaponMaster);
+    const artifactSetMasters = computed(() => characterInputRea.artifactSetMasters ?? [
+      ARTIFACT_SET_MASTER_DUMMY,
+      ARTIFACT_SET_MASTER_DUMMY,
+    ]);
+    const saveDisabled = computed(() => characterInputRea.characterMaster.武器 != characterInputRea.weaponMaster.種類 ? true : characterInputRea.saveDisabled);
+    /** 命ノ星座の範囲 */
+    const constellationRange = computed((): number[] => Array.from({ length: getMaxConstellation(characterMaster.value) + 1 }, (_, i) => i));
+    /** 通常攻撃レベルの範囲 */
+    const normalAttackLevelRange = computed(() => {
+      return Array.from({ length: getMaxTalentLevel(characterMaster.value, '通常攻撃') }, (_, i) => i + 1);
+    });
+    /** 元素スキルレベルの範囲 命ノ星座は考慮しません */
+    const elementalSkillLevelRange = computed(() => {
+      return Array.from({ length: getMaxTalentLevel(characterMaster.value, '元素スキル') }, (_, i) => i + 1);
+    });
+    /** 元素爆発レベルの範囲 命ノ星座は考慮しません */
+    const elementalBurstLevelRange = computed(() => {
+      return Array.from({ length: getMaxTalentLevel(characterMaster.value, '元素爆発') }, (_, i) => i + 1);
+    });
+    /** 武器突破レベルの範囲 */
+    const weaponAscensionRange = computed(() => {
+      const max = weaponMaster.value.レアリティ < 3 ? 4 : 6;
+      return Array.from({ length: max + 1 }, (_, i) => i); // 0-
+    });
+    /** 武器レベルの範囲 */
+    const weaponLevelRange = computed((): number[] => 突破レベルレベルARRAY[characterInputRea.武器突破レベル]);
+    /** 武器精錬ランクの範囲 */
+    const weaponRefineRange = computed((): number[] => {
+      const max = weaponMaster.value.レアリティ < 3 ? 1 : 5;
+      return Array.from({ length: max }, (_, i) => i + 1);
+    });
 
     const displayBuildName = (item: TRecommendation) => {
       if (i18n.global.locale.value == 'ja-jp') return item.name;
@@ -248,62 +287,30 @@ export default defineComponent({
       if (item.build['聖遺物セット効果1']) {
         result += displayName(item.build['聖遺物セット効果1']);
       }
-      if (
-        item.build['聖遺物セット効果2'] &&
-        item.build['聖遺物セット効果2'] != item.build['聖遺物セット効果1']
-      ) {
+      if (item.build['聖遺物セット効果2'] && item.build['聖遺物セット効果2'] != item.build['聖遺物セット効果1']) {
         result += '/';
         result += displayName(item.build['聖遺物セット効果2']);
       }
       result += '[';
-      for (const key of [
-        '聖遺物メイン効果3',
-        '聖遺物メイン効果4',
-        '聖遺物メイン効果5',
-      ]) {
+      for (const key of ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5']) {
         const statAndRarity = item.build[key].split('_');
         result += RECOMMEND_ABBREV_EN_MAP.get(statAndRarity[1]);
       }
       result += ']';
       return result;
-    };
+    }
 
-    const characterMaster = computed(() => characterInputRea.characterMaster);
-    const weaponMaster = computed(() => characterInputRea.weaponMaster);
-    const artifactSetMasters = computed(
-      () =>
-        characterInputRea.artifactSetMasters ?? [
-          ARTIFACT_SET_MASTER_DUMMY,
-          ARTIFACT_SET_MASTER_DUMMY,
-        ]
-    );
-
-    const visionSrc = (item: TCharacterDetail) =>
-      ELEMENT_IMG_SRC[item.元素] as string;
-    const bgImageClass = (item: TCharacterDetail | TWeaponDetail) =>
-      (' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
-    const colorClass = (item: TCharacterDetail) =>
-      ELEMENT_COLOR_CLASS[item.元素] as string;
-    const bgColorClass = (item: TCharacterDetail) =>
-      ELEMENT_BG_COLOR_CLASS[item.元素] as string;
-
-    const saveDisabled = computed(() => {
-      let result = characterInputRea.saveDisabled;
-      if (
-        characterInputRea.characterMaster.武器 !=
-        characterInputRea.weaponMaster.種類
-      ) {
-        result = true;
-      }
-      return result;
-    });
+    const visionSrc = (item: TCharacterDetail) => ELEMENT_IMG_SRC[item.元素] as string;
+    const bgImageClass = (item: TCharacterDetail | TWeaponDetail) => (' ' + STAR_BACKGROUND_IMAGE_CLASS[item.レアリティ]) as string;
+    const colorClass = (item: TCharacterDetail) => ELEMENT_COLOR_CLASS[item.元素] as string;
+    const bgColorClass = (item: TCharacterDetail) => ELEMENT_BG_COLOR_CLASS[item.元素] as string;
 
     /** 構成データを保存します */
     const saveOnClick = async () => {
       characterInputRea.saveDisabled = false; // 保存不可
       characterInputRea.removeDisabled = true; // 削除可能
       await nextTick();
-      context.emit('saveToStorage', characterInputRea.buildname);
+      context.emit('save-to-storage', characterInputRea.buildname);
     };
 
     /** 構成データを削除します */
@@ -311,24 +318,8 @@ export default defineComponent({
       characterInputRea.removeDisabled = false; // 削除不可
       characterInputRea.saveDisabled = true; // 保存可能
       await nextTick();
-      context.emit('removeFromStorage', characterInputRea.buildname);
+      context.emit('remove-from-storage', characterInputRea.buildname);
     };
-
-    /** 突破レベルの範囲 */
-    const ascensionRange = computed((): number[] => {
-      return [0, 1, 2, 3, 4, 5, 6]; // 0-
-    });
-
-    /** レベルの範囲 */
-    const levelRange = computed((): number[] => {
-      return 突破レベルレベルARRAY[characterInputRea.突破レベル];
-    });
-
-    /** 命ノ星座が変更されました */
-    const constellationRange = computed((): number[] => {
-      const max = getMaxConstellation(characterMaster.value);
-      return Array.from({ length: max + 1 }, (_, i) => i); // 0-
-    });
 
     /** 突破レベルが変更されました */
     const ascensionOnChange = async () => {
@@ -351,43 +342,6 @@ export default defineComponent({
       context.emit('update:recommendation', recommendation);
     };
 
-    /** 通常攻撃レベルの範囲 */
-    const normalAttackLevelRange = computed(() => {
-      const max = getMaxTalentLevel(characterMaster.value, '通常攻撃');
-      return Array.from({ length: max }, (_, i) => i + 1); // 1-
-    });
-
-    /** 元素スキルレベルの範囲 命ノ星座は考慮しません */
-    const elementalSkillLevelRange = computed(() => {
-      const max = getMaxTalentLevel(characterMaster.value, '元素スキル');
-      return Array.from({ length: max }, (_, i) => i + 1); // 1-
-    });
-
-    /** 元素爆発レベルの範囲 命ノ星座は考慮しません */
-    const elementalBurstLevelRange = computed(() => {
-      const max = getMaxTalentLevel(characterMaster.value, '元素爆発');
-      return Array.from({ length: max }, (_, i) => i + 1); // 1-
-    });
-
-    /** 武器突破レベルの範囲 */
-    const weaponAscensionRange = computed(() => {
-      let max = 6;
-      if (weaponMaster.value.レアリティ < 3) max = 4;
-      return Array.from({ length: max + 1 }, (_, i) => i); // 0-
-    });
-
-    /** 武器レベルの範囲 */
-    const weaponLevelRange = computed((): number[] => {
-      return 突破レベルレベルARRAY[characterInputRea.武器突破レベル];
-    });
-
-    /** 武器精錬ランクの範囲 */
-    const weaponRefineRange = computed((): number[] => {
-      let max = 5;
-      if (weaponMaster.value.レアリティ < 3) max = 1;
-      return Array.from({ length: max }, (_, i) => i + 1); // 1-
-    });
-
     /** 武器突破レベルが変更されました */
     const weaponAscensionOnChange = async () => {
       const minLevel = weaponLevelRange.value[0];
@@ -401,11 +355,7 @@ export default defineComponent({
       weaponOnChange();
     };
 
-    const artifactSetIndexRef = ref(0);
-    const artifactSetSelectClass = (index: number) =>
-      props.artifactSetSelectVisible && index == artifactSetIndexRef.value
-        ? ' selected'
-        : '';
+    const artifactSetSelectClass = (index: number) => props.artifactSetSelectVisible && index == artifactSetIndexRef.value ? ' selected' : '';
     const openArtifactSetSelect = (index: number) => {
       artifactSetIndexRef.value = index;
       context.emit('open:artifact-set-select', index);

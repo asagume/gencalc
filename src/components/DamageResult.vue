@@ -109,7 +109,7 @@
         <span>{{ Math.round(copiedDamageResult.元素反応.超電導ダメージ) }}</span>
       </span>
     </label>
-    <label v-if="damageResult.元素反応.拡散ダメージ" :class="elementClass(元素反応.拡散元素)">
+    <label v-if="damageResult.元素反応.拡散ダメージ" :class="elementClass(damageResult.元素反応.拡散元素)">
       {{ displayName("拡散") }}
       <span>{{ Math.round(swirlDmg) }}</span>
     </label>
@@ -288,25 +288,88 @@
 import _ from "lodash";
 import i18n from "@/i18n";
 import { overwriteObject } from "@/common";
-import { TDamageResult, TDamageResultEntry } from "@/input";
+import { TDamageResult, TDamageResultElementalReactionKey, TDamageResultEntry } from "@/input";
 import { ELEMENT_COLOR_CLASS, TElementColorClassKey } from "@/master";
-import { computed, defineComponent, reactive, ref, watch } from "vue";
+import { PropType, computed, defineComponent, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 import { calculateReactedDamage } from "@/calculate";
 
 export default defineComponent({
   name: 'DamageResult',
   props: {
-    damageResult: {
-      type: Object,
-      required: true,
-    },
+    damageResult: { type: Object as PropType<TDamageResult>, required: true, },
   },
   setup(props) {
     const { displayName } = CompositionFunction();
 
-    const 元素反応 = reactive(props.damageResult.元素反応);
+    const CATEGORY_LIST = ['通常攻撃', '重撃', '落下攻撃', '元素スキル', '元素爆発', 'その他'];
     const 増幅反応 = ref('なし');
+    const resultStyleRef = ref('1');
+    const copiedDamageResult = reactive({} as TDamageResult);
+    const categoryOpenClose = reactive({} as { [key: string]: boolean });
+
+    watch(props.damageResult, (damageResult) => {
+      if (
+        (増幅反応.value == '蒸発_炎' && damageResult.元素反応.蒸発倍率_炎 === 0) ||
+        (増幅反応.value == '蒸発_水' && damageResult.元素反応.蒸発倍率_水 === 0) ||
+        (増幅反応.value == '溶解_氷' && damageResult.元素反応.溶解倍率_氷 === 0) ||
+        (増幅反応.value == '溶解_炎' && damageResult.元素反応.溶解倍率_炎 === 0) ||
+        (増幅反応.value == '超激化' && damageResult.元素反応.超激化ダメージ === 0) ||
+        (増幅反応.value == '草激化' && damageResult.元素反応.草激化ダメージ === 0)
+      ) {
+        増幅反応.value = 'なし';
+        (document.getElementById('増幅反応-なし') as HTMLInputElement).checked = true;
+      }
+    })
+
+    const swirlDmg = computed(() => {
+      let result = props.damageResult.元素反応.拡散ダメージ;
+      if (増幅反応.value == '蒸発_炎' && props.damageResult.元素反応.拡散元素 == '炎') {
+        result *= props.damageResult.元素反応.蒸発倍率_炎;
+      } else if (増幅反応.value == '蒸発_水' && props.damageResult.元素反応.拡散元素 == '水') {
+        result *= props.damageResult.元素反応.蒸発倍率_水;
+      } else if (増幅反応.value == '溶解_氷' && props.damageResult.元素反応.拡散元素 == '氷') {
+        result *= props.damageResult.元素反応.溶解倍率_氷;
+      } else if (増幅反応.value == '溶解_炎' && props.damageResult.元素反応.拡散元素 == '炎') {
+        result *= props.damageResult.元素反応.溶解倍率_炎;
+      } else if (増幅反応.value == '超激化' && props.damageResult.元素反応.拡散元素 == '雷') {
+        result += props.damageResult.元素反応.超激化ダメージ;
+      }
+      return result;
+    })
+
+    /** 被ダメージのリストを作成します（同値を省略したリスト） */
+    const damageTakenList = computed(() => {
+      const result = props.damageResult.被ダメージ.filter(
+        (s: any) => s.key == '物理'
+      ) as any;
+      for (const entry of props.damageResult.被ダメージ.filter(
+        (s: any) => s.key != '物理'
+      )) {
+        const valueArr = result.map((s: any) => s.value);
+        if (!valueArr.includes(entry.value)) {
+          result.push(entry);
+        }
+      }
+      return result;
+    })
+
+    /** 耐久スコアのリストを作成します（同値を省略したリスト） */
+    const resScoreList = computed(() => {
+      const result = props.damageResult.耐久スコア.filter(
+        (s: any) => s.key == '物理'
+      ) as any;
+      for (const entry of props.damageResult.耐久スコア.filter(
+        (s: any) => s.key != '物理'
+      )) {
+        const valueArr = result.map((s: any) => s.value);
+        if (!valueArr.includes(entry.value)) {
+          result.push(entry);
+        }
+      }
+      return result;
+    })
+
     const elementClass = (item: string, opt_kind?: string) => {
       let result = '';
       if (opt_kind === 'HP回復') {
@@ -317,48 +380,15 @@ export default defineComponent({
         result = ELEMENT_COLOR_CLASS[item as TElementColorClassKey];
       }
       return result;
-    };
-    const resultStyleRef = ref('1');
-
-    const copiedDamageResult = reactive({} as TDamageResult);
-
-    watch(元素反応, () => {
-      if (
-        (増幅反応.value == '蒸発_炎' && 元素反応.蒸発倍率_炎 == 0) ||
-        (増幅反応.value == '蒸発_水' && 元素反応.蒸発倍率_水 == 0) ||
-        (増幅反応.value == '溶解_氷' && 元素反応.溶解倍率_氷 == 0) ||
-        (増幅反応.value == '溶解_炎' && 元素反応.溶解倍率_炎 == 0) ||
-        (増幅反応.value == '超激化' && 元素反応.超激化ダメージ == 0) ||
-        (増幅反応.value == '草激化' && 元素反応.草激化ダメージ == 0)
-      ) {
-        増幅反応.value = 'なし';
-        (document.getElementById('増幅反応-なし') as HTMLInputElement).checked = true;
-      }
-    });
-
-    const swirlDmg = computed(() => {
-      let result = 元素反応.拡散ダメージ;
-      if (増幅反応.value == '蒸発_炎' && 元素反応.拡散元素 == '炎') {
-        result *= 元素反応.蒸発倍率_炎;
-      } else if (増幅反応.value == '蒸発_水' && 元素反応.拡散元素 == '水') {
-        result *= 元素反応.蒸発倍率_水;
-      } else if (増幅反応.value == '溶解_氷' && 元素反応.拡散元素 == '氷') {
-        result *= 元素反応.溶解倍率_氷;
-      } else if (増幅反応.value == '溶解_炎' && 元素反応.拡散元素 == '炎') {
-        result *= 元素反応.溶解倍率_炎;
-      } else if (増幅反応.value == '超激化' && 元素反応.拡散元素 == '雷') {
-        result += 元素反応.超激化ダメージ;
-      }
-      return result;
-    });
+    }
 
     const reactionDmg = (reaction: string): number => {
-      let result = 元素反応[reaction];
-      if (result) {
-        const critRate = 元素反応[reaction + '会心率'];
-        if (critRate) {
-          const critDmg = 元素反応[reaction + '会心ダメージ'];
-          if (critDmg) {
+      let result = props.damageResult.元素反応[reaction as TDamageResultElementalReactionKey];
+      if (result && _.isNumber(result)) {
+        const critRate = props.damageResult.元素反応[(reaction + '会心率') as TDamageResultElementalReactionKey];
+        if (critRate && _.isNumber(critRate)) {
+          const critDmg = props.damageResult.元素反応[(reaction + '会心ダメージ') as TDamageResultElementalReactionKey];
+          if (critDmg && _.isNumber(critDmg)) {
             result *= ((100 + critDmg) / 100 * critRate + (100 - critRate)) / 100;
           }
         }
@@ -366,25 +396,21 @@ export default defineComponent({
         result = 0;
       }
       return result;
-    };
-
-    const danCount = computed(() => {
-      return itemList('通常攻撃').filter(item => item[0].endsWith('段ダメージ') && !item[0].startsWith('非表示_')).length;
-    });
+    }
 
     function getAmplifyingReaction(dmgElement: string | null) {
       let reaction = ''; // 元素反応
-      if (増幅反応.value == '蒸発_炎' && dmgElement == '炎') {
+      if (増幅反応.value === '蒸発_炎' && dmgElement === '炎') {
         reaction = '蒸発';
-      } else if (増幅反応.value == '蒸発_水' && dmgElement == '水') {
+      } else if (増幅反応.value === '蒸発_水' && dmgElement === '水') {
         reaction = '蒸発';
-      } else if (増幅反応.value == '溶解_氷' && dmgElement == '氷') {
+      } else if (増幅反応.value === '溶解_氷' && dmgElement === '氷') {
         reaction = '溶解';
-      } else if (増幅反応.value == '溶解_炎' && dmgElement == '炎') {
+      } else if (増幅反応.value === '溶解_炎' && dmgElement === '炎') {
         reaction = '溶解';
-      } else if (増幅反応.value == '超激化' && dmgElement == '雷') {
+      } else if (増幅反応.value === '超激化' && dmgElement === '雷') {
         reaction = '超激化';
-      } else if (増幅反応.value == '草激化' && dmgElement == '草') {
+      } else if (増幅反応.value === '草激化' && dmgElement === '草') {
         reaction = '草激化';
       }
       return reaction;
@@ -396,14 +422,14 @@ export default defineComponent({
       if (!dmgResultEntry[5] || !['シールド'].includes(dmgResultEntry[5])) {
         const dmgElement = dmgResultEntry[1]; // 攻撃元素
         const reaction = getAmplifyingReaction(dmgElement);
-        const reactionTimes = category == '通常攻撃' && dmgResultEntry[0] == '合計ダメージ' ? danCount.value : 1;
-        value = calculateReactedDamage(dmgResultEntry, index, 元素反応, reaction, reactionTimes);
+        const reactionTimes = category === '通常攻撃' && dmgResultEntry[0] === '合計ダメージ' ? danCount.value : 1;
+        value = calculateReactedDamage(dmgResultEntry, index, props.damageResult.元素反応, reaction, reactionTimes);
       }
       if (value < 10) value = Math.round(value * 100) / 100;
       else if (value < 100) value = Math.round(value * 10) / 10;
       else value = Math.round(value);
       return value;
-    };
+    }
 
     const displayCopiedDamageValue = (listIndex: any, index: number, category: string) => {
       let value = 0;
@@ -439,7 +465,7 @@ export default defineComponent({
         if (!dmgResultEntry[5] || !['シールド'].includes(dmgResultEntry[5])) {
           const dmgElement = dmgResultEntry[1]; // 攻撃元素
           let reaction = getAmplifyingReaction(dmgElement);
-          const reactionTimes = category == '通常攻撃' && dmgResultEntry[0] == '合計ダメージ' ? danCount.value : 1;
+          const reactionTimes = category === '通常攻撃' && dmgResultEntry[0] === '合計ダメージ' ? danCount.value : 1;
           value = calculateReactedDamage(dmgResultEntry, index, copied元素反応, reaction, reactionTimes);
         }
         if (value < 10) value = Math.round(value * 100) / 100;
@@ -447,19 +473,11 @@ export default defineComponent({
         else value = Math.round(value);
       }
       return value;
-    };
+    }
 
-    const CATEGORY_LIST = [
-      '通常攻撃',
-      '重撃',
-      '落下攻撃',
-      '元素スキル',
-      '元素爆発',
-      'その他',
-    ];
     const itemList = (category: string) => {
       const result = [] as any[];
-      const workList = props.damageResult[category].filter((s: any[]) => s[0] && !s[0].startsWith('非表示'));
+      const workList = (props.damageResult[category] as any[]).filter((s: any[]) => s[0] && !s[0].startsWith('非表示'));
       for (let i = 0; i < workList.length; i++) {
         let span = 1;
         if (i > 0 && workList[i][0] == workList[i - 1][0]) span = 0;
@@ -469,17 +487,18 @@ export default defineComponent({
         result.push([...workList[i], span]);
       }
       return result;
-    };
+    }
+    const danCount = computed(() => {
+      return itemList('通常攻撃').filter(item => item[0].endsWith('段ダメージ') && !item[0].startsWith('非表示_')).length;
+    })
 
-    const categoryOpenClose = reactive({} as { [key: string]: boolean });
     for (const key of CATEGORY_LIST) {
       categoryOpenClose[key] = true;
-      // if (['落下攻撃'].includes(key)) categoryOpenClose[key] = false;
     }
 
     const categoryOnClick = (category: string) => {
       categoryOpenClose[category] = !categoryOpenClose[category];
-    };
+    }
 
     const displayNameV = (key: any): string => {
       if (key && i18n.global.locale.value == 'ja-jp' && key.length > 10) {
@@ -488,7 +507,7 @@ export default defineComponent({
         return work;
       }
       return displayName(key);
-    };
+    }
 
     const displayNameH = (key: any, category: string): string => {
       if (key && i18n.global.locale.value == 'ja-jp' && itemList(category).length > 2) {
@@ -497,7 +516,7 @@ export default defineComponent({
         return work;
       }
       return displayName(key);
-    };
+    }
 
     const displayDamageParam = (item: any): string => {
       let result = '';
@@ -524,54 +543,21 @@ export default defineComponent({
         result += '<br>';
       }
       return result;
-    };
-
-    /** 被ダメージのリストを作成します（同値を省略したリスト） */
-    const damageTakenList = computed(() => {
-      const result = props.damageResult.被ダメージ.filter(
-        (s: any) => s.key == '物理'
-      ) as any;
-      for (const entry of props.damageResult.被ダメージ.filter(
-        (s: any) => s.key != '物理'
-      )) {
-        const valueArr = result.map((s: any) => s.value);
-        if (!valueArr.includes(entry.value)) {
-          result.push(entry);
-        }
-      }
-      return result;
-    });
-
-    /** 耐久スコアのリストを作成します（同値を省略したリスト） */
-    const resScoreList = computed(() => {
-      const result = props.damageResult.耐久スコア.filter(
-        (s: any) => s.key == '物理'
-      ) as any;
-      for (const entry of props.damageResult.耐久スコア.filter(
-        (s: any) => s.key != '物理'
-      )) {
-        const valueArr = result.map((s: any) => s.value);
-        if (!valueArr.includes(entry.value)) {
-          result.push(entry);
-        }
-      }
-      return result;
-    });
+    }
 
     const copyDamageResult = () => {
       overwriteObject(copiedDamageResult, _.cloneDeep(props.damageResult));
-    };
+    }
 
     const clearCopiedDamageResult = () => {
       overwriteObject(copiedDamageResult, {});
-    };
+    }
 
     return {
       displayName,
       displayNameV,
       displayNameH,
 
-      元素反応,
       増幅反応,
       swirlDmg,
       reactionDmg,

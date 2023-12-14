@@ -90,7 +90,7 @@ type TStatRow = [
 ];
 
 export default defineComponent({
-    name: "NextStat",
+    name: 'NextStat',
     props: {
         visible: Boolean,
         characterInput: { type: Object as PropType<TCharacterInput>, required: true, },
@@ -114,6 +114,7 @@ export default defineComponent({
         const STORAGE_KEY_NEXT_STEP_STOP = 'nextStepStopFlg';
         const isStop = ref(false);
         const containsDealMoreDamage = ref(false);
+        let saveDamageResult = reactive(_.cloneDeep(DAMAGE_RESULT_TEMPLATE));
 
         const nextStepStopFlgItem = localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP);
         if (nextStepStopFlgItem) {
@@ -149,7 +150,7 @@ export default defineComponent({
                 }
             }
             return result;
-        });
+        })
 
         const dmgElement = computed(() => {
             let result = '物理';
@@ -260,10 +261,13 @@ export default defineComponent({
 
         function setupNextStatRows() {
             if (evaluationItem.value && canEvaluate.value) {
-                const workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
-                const workStatsInput = _.cloneDeep(props.statsInput);
-                for (const row of nextStatRows) {
-                    setupNextStatRow(row, workDamageResult, workStatsInput);
+                if (!_.isEqual(saveDamageResult, props.damageResult)) {
+                    const workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
+                    const workStatsInput = _.cloneDeep(props.statsInput);
+                    for (const row of nextStatRows) {
+                        setupNextStatRow(row, workDamageResult, workStatsInput);
+                    }
+                    saveDamageResult = _.cloneDeep(props.damageResult);
                 }
             }
             nextStatRows.sort((a, b) => b[4] - a[4]);
@@ -366,24 +370,25 @@ export default defineComponent({
             displayStatValue,
 
             toggleSwitch,
-
             evaluationItem,
+            nextStatRows,
+            selectedAmplifyingReaction,
+            isStop,
+            containsDealMoreDamage,
             evaluationItemList,
             amplifyingReactionList,
-            reactionImgSrc,
-            selectedAmplifyingReaction,
-            evaluationItemOnChange,
-            reactionImgOnClick,
 
-            nextStatRows,
-            nextStatStepOnChange,
+            reactionImgSrc,
             displayNextStatValue,
 
+            setupNextStatRows,
+
+            evaluationItemOnChange,
+            reactionImgOnClick,
+            nextStatStepOnChange,
             nextStatOnChange,
             resetButtonOnClick,
-            isStop,
             stopButtonOnClick,
-            containsDealMoreDamage,
             containsDealMoreDamageOnChange,
         };
     },

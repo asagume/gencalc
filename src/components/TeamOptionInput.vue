@@ -1,6 +1,6 @@
 <template>
   <fieldset class="team-option">
-    <template v-for="supporter in supporterKeyList" :key="supporter">
+    <template v-for="supporter in SUPPORTER_KEY_LIST" :key="supporter">
       <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
         <div class="left">
           <div :class="'supporter' + supporterOptionSelectedClass(supporter)">
@@ -153,28 +153,14 @@ import CompositionFunction from "./CompositionFunction.vue";
 type TConditionValuesAny = { [key: string]: any };
 
 export default defineComponent({
-  name: "TeamOptionInput",
+  name: 'TeamOptionInput',
   props: {
-    character: { type: String as PropType<TCharacterKey>, required: true },
-    topStats: {
-      type: Object as PropType<TStats>,
-      required: true,
-    },
-    savedSupporters: {
-      type: Object as PropType<{ key: string; value: string, buildname: string }[]>,
-      required: true,
-    },
-    calculatedSupporters: {
-      type: Object as PropType<{ [key: string]: TSupporterInput | undefined }>,
-      required: true,
-    },
-    teamMembers: {
-      type: Array as PropType<string[]>,
-      required: true,
-    },
-    initialConditionValue: {
-      type: Object as PropType<TConditionValues>,
-    }
+    character: { type: String as PropType<TCharacterKey>, required: true, },
+    topStats: { type: Object as PropType<TStats>, required: true, },
+    savedSupporters: { type: Object as PropType<{ key: string; value: string, buildname: string }[]>, required: true, },
+    calculatedSupporters: { type: Object as PropType<{ [key: string]: TSupporterInput | undefined }>, required: true, },
+    teamMembers: { type: Array as PropType<string[]>, required: true, },
+    initialConditionValue: { type: Object as PropType<TConditionValues>, }
   },
   emits: ['update:team-option', 'update:buildname-selection', 'update:team-members'],
   setup(props, context) {
@@ -185,8 +171,8 @@ export default defineComponent({
       displayOptionName,
     } = CompositionFunction();
 
-    const supporterKeyList = Object.keys(CHARACTER_MASTER);
-    supporterKeyList.sort((a, b) => ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[a].元素) - ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[b].元素));
+    const SUPPORTER_KEY_LIST = Object.keys(CHARACTER_MASTER);
+    SUPPORTER_KEY_LIST.sort((a, b) => ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[a].元素) - ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[b].元素));
     const supporterOpenClose = reactive({} as { [key: string]: boolean });
 
     const damageDetailArr = [] as any[];
@@ -323,7 +309,7 @@ export default defineComponent({
 
     async function setupFromCharacterMaster() {
       const list: Promise<void>[] = [];
-      for (const character of supporterKeyList) {
+      for (const character of SUPPORTER_KEY_LIST) {
         list.push(getCharacterMasterDetail(character as TCharacterKey).then(result => {
           takeMasterTeamOption(character, result);
         }));
@@ -490,12 +476,12 @@ export default defineComponent({
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
       for (const stat of Object.keys(statAdjustments.value)) {
-        let result: string = displayStatName(stat).replace("%", "");
+        let result: string = displayStatName(stat).replace('%', '');
         const value = statAdjustments.value[stat];
         if (value != Infinity) {
           if (isNumeric(value)) {
             if (value >= 0) {
-              if (stat.split(".")[0] == "別枠乗算") result += "=";
+              if (stat.split('.')[0] == '別枠乗算') result += '=';
               else result += "+";
             }
             result += displayStatValue(stat, value);
@@ -527,7 +513,7 @@ export default defineComponent({
       setupFromCharacterMaster();
       initializeSupporters(props.calculatedSupporters);
 
-      for (const key of supporterKeyList) {
+      for (const key of SUPPORTER_KEY_LIST) {
         supporterOpenClose[key] = false;
       }
     }
@@ -540,7 +526,7 @@ export default defineComponent({
       }
       await nextTick();
       overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
-      context.emit("update:team-option", conditionInput);
+      context.emit('update:team-option', conditionInput);
     };
 
     const initializeValues = async (initialObj: TConditionInput) => {
@@ -601,7 +587,7 @@ export default defineComponent({
       return buildnameList(character).length > 0;
     };
 
-    supporterKeyList.forEach((supporter) => {
+    SUPPORTER_KEY_LIST.forEach((supporter) => {
       builddataSelectorVisible[supporter] = false;
       const list = buildnameList(supporter);
       if (list.length > 0) {
@@ -614,11 +600,11 @@ export default defineComponent({
       }
     });
     const buildnameSelectionOnChange = () => {
-      context.emit("update:buildname-selection", selectedBuildname);
+      context.emit('update:buildname-selection', selectedBuildname);
     };
 
     function updateTeamMembers(teamMembers: string[]) {
-      context.emit("update:team-members", teamMembers);
+      context.emit('update:team-members', teamMembers);
     }
 
     const addToTeamOnClick = (supporer: string) => {
@@ -715,7 +701,7 @@ export default defineComponent({
       displayName,
       displayOptionName,
 
-      supporterKeyList,
+      SUPPORTER_KEY_LIST,
       supporterCheckboxList,
       supporterSelectList,
       supporterNumberList,
