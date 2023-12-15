@@ -1694,30 +1694,8 @@ function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: stri
 /**
  * 計算式内の参照有無を求めます
  */
-export function isUseReference(formulaArr: number | string | Array<number | string>): boolean {
-    if (!Array.isArray(formulaArr)) {
-        if (isNumeric(formulaArr)) {
-            return false;
-        }
-        return String(formulaArr).indexOf('#') != -1;
-    }
-    let result = false;
-    formulaArr.forEach(entry => {
-        if (['+', '-', '*', '/'].includes(String(entry))) {
-            return;
-        } else if (isNumeric(entry)) {
-            return;
-        } else if (Array.isArray(entry)) {
-            if (isUseReference(entry)) {
-                result = true;
-            }
-        } else {
-            if (String(entry).indexOf('#') != -1) {
-                result = true;
-            }
-        }
-    });
-    return result;
+export function isUseReference(formula: number | string) {
+    return _.isString(formula) && formula.includes('#');
 }
 
 /**
