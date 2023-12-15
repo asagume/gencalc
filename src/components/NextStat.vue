@@ -114,7 +114,6 @@ export default defineComponent({
         const STORAGE_KEY_NEXT_STEP_STOP = 'nextStepStopFlg';
         const isStop = ref(false);
         const containsDealMoreDamage = ref(false);
-        let saveDamageResult = reactive(_.cloneDeep(DAMAGE_RESULT_TEMPLATE));
 
         const nextStepStopFlgItem = localStorage.getItem(STORAGE_KEY_NEXT_STEP_STOP);
         if (nextStepStopFlgItem) {
@@ -244,15 +243,12 @@ export default defineComponent({
             row[4] = evaluationValue;
         }
 
-        function setupNextStatRows(force = false) {
+        function setupNextStatRows() {
             if (evaluationItem.value) {
-                if (!_.isEqual(saveDamageResult, props.damageResult) || nextStatRows.filter(row => row[4]).length === 0 || force) {
-                    const workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
-                    const workStatsInput = _.cloneDeep(props.statsInput);
-                    for (const row of nextStatRows) {
-                        setupNextStatRow(row, workDamageResult, workStatsInput);
-                    }
-                    saveDamageResult = _.cloneDeep(props.damageResult);
+                const workDamageResult = _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
+                const workStatsInput = _.cloneDeep(props.statsInput);
+                for (const row of nextStatRows) {
+                    setupNextStatRow(row, workDamageResult, workStatsInput);
                 }
             }
             nextStatRows.sort((a, b) => b[4] - a[4]);
@@ -288,7 +284,7 @@ export default defineComponent({
         }
 
         const evaluationItemOnChange = () => {
-            setupNextStatRows(true);
+            setupNextStatRows();
         };
 
         const reactionImgOnClick = (name: string) => {
@@ -297,7 +293,7 @@ export default defineComponent({
             } else {
                 selectedAmplifyingReaction.value = name;
             }
-            setupNextStatRows(true);
+            setupNextStatRows();
         }
 
         const nextStatStepOnChange = (row: TStatRow) => {
@@ -325,17 +321,17 @@ export default defineComponent({
             isStop.value = !isStop.value;
             localStorage.setItem(STORAGE_KEY_NEXT_STEP_STOP, String(isStop.value));
             if (!isStop.value) {
-                setupNextStatRows(true);
+                setupNextStatRows();
             }
         }
 
         const containsDealMoreDamageOnChange = () => {
             initializeNextStat();
-            setupNextStatRows(true);
+            setupNextStatRows();
         }
 
         watch([props.characterInput, props.statsInput, props.rotationDamageInfo], () => {
-            setupNextStatRows(true);
+            setupNextStatRows();
         });
 
         watch(evaluationItemList, () => {
@@ -345,7 +341,7 @@ export default defineComponent({
         onMounted(() => {
             initializeNextStat();
             initializeEvaluationItem();
-            setupNextStatRows(true);
+            setupNextStatRows();
         })
 
         return {
