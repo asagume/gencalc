@@ -1,4 +1,8 @@
 {
+  "裁断": {
+    "レアリティ": 5,
+    "import": "data/weapons/claymore/5_Verdict.json"
+  },
   "葦海の標": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_BeaconoftheReedSea.json"
@@ -22,6 +26,10 @@
   "天空の傲": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
+  },
+  "スーパーアルティメット覇王魔剣": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_UltimateOverlord'sMegaMagicSword.json"
   },
   "携帯型チェーンソー": {
     "レアリティ": 4,
