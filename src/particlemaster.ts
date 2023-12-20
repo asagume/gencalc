@@ -360,7 +360,7 @@ export function getParticleInfo(character: string, action: string, constellation
         for (const key of keyArr) {
             if (key in particleMaster) {
                 const work = particleMaster[key];
-                if (_.isNull(work)) {
+                if (_.isNumber(work)) {
                     result[0] = work;
                 } else if (_.isArray(work)) {
                     let start = 0;
