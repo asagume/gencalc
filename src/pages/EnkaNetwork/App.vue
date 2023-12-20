@@ -630,8 +630,12 @@ export default defineComponent({
       if (!uid.value && !uid.value.match(/^[0-9]{9}$/)) return;
       // const url = 'https://enka.network/api/uid/' + uid.value + '/';
       const url = 'https://us-west1-gencalc.cloudfunctions.net/enkaproxy/api?api=uid/' + uid.value;
-      // const url = 'data/__data_2.json';
-      fetch(url).then((resp) => resp.json()).then(async (json) => {
+      fetch(url).then((resp) => {
+        if (!resp.ok) {
+          throw new Error(resp.statusText);
+        }
+        return resp.json();
+      }).then(async (json) => {
         console.log(json);
         overwriteObject(u, json);
         loadU();
@@ -650,18 +654,20 @@ export default defineComponent({
 
     async function loadU() {
       const work: any[] = [];
-      for (let i = 0; i < u.playerInfo.showAvatarInfoList.length; i++) {
-        work.push(await makeCharacterInfo(u, i));
-      }
-      characterInfoList.splice(0, characterInfoList.length, ...work);
-
-      artifactsSaveButtonDisabled();
-
-      if (u.ttl) {
-        timer.value = Number(u.ttl);
-        timerObj = window.setInterval(function () {
-          count();
-        }, 1000);
+      if (u) {
+        if (_.isArray(u.playerInfo?.showAvatarInfoList)) {
+          for (let i = 0; i < u.playerInfo.showAvatarInfoList.length; i++) {
+            work.push(await makeCharacterInfo(u, i));
+          }
+          characterInfoList.splice(0, characterInfoList.length, ...work);
+          artifactsSaveButtonDisabled();
+        }
+        if (u.ttl) {
+          timer.value = Number(u.ttl);
+          timerObj = window.setInterval(function () {
+            count();
+          }, 1000);
+        }
       }
     }
 
