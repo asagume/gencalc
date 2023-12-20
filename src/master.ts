@@ -141,6 +141,7 @@ export type TCharacterTalent = {
     詳細?: {
         名前?: string,
         種類?: string,
+        数値?: string | number | any[],
         対象?: string,
         条件?: string,
     }[],
@@ -192,7 +193,7 @@ export type TWeaponDetail = {
 
 export type TArtifactSetEffect = {
     説明: string,
-    詳細?: any[]
+    詳細?: any[],
 };
 export type TArtifactSetRarity = 1 | 2 | 3 | 4 | 5;
 export type TArtifactSet = {

@@ -110,7 +110,7 @@ def normalizeStatName(statName):
 
 
 def normalizeStatValue(value):
-    value = value.replace('%', '')
+    value = value.replace('%', '').replace('％', '').replace(',', '')
     if value.isdecimal():
         return int(value)
     try:
@@ -267,9 +267,9 @@ for filepath in files:
                         for attribute in entry['attributes']:
                             if attribute['key'] == 'Level' or attribute['key'] == '':
                                 continue
-                            if attribute['key'] == '重撃ダメージ' or attribute['key'].find('狙い撃ち') != -1:
+                            if attribute['key'].find('重撃') != -1 or attribute['key'].find('狙い撃ち') != -1:
                                 category = '重撃'
-                            elif attribute['key'].startswith('落下期間のダメージ'):
+                            elif attribute['key'].find('落下') != -1:
                                 category = '落下攻撃'
                             talentJson = dstJson[category]
                             if category == '通常攻撃':
@@ -281,7 +281,7 @@ for filepath in files:
                                     '/' + basename + '/' + iconFilename
                             if '詳細' not in talentJson:
                                 talentJson['詳細'] = []
-                            if attribute['key'].endswith('スタミナ消費') or attribute['key'].endswith('継続時間'):
+                            if attribute['key'].endswith('スタミナ消費') or attribute['key'].endswith('継続時間') or attribute['key'].endswith('間隔'):
                                 for value in attribute['values']:
                                     value = normalizeFormulaValue(value)
                                     talentJson[attribute['key']] = value

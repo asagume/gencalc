@@ -265,8 +265,8 @@
 import _ from "lodash";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
-import { ARTIFACT_SET_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey, WEAPON_IMG_SRC } from "@/master";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getDurationFromInfo, getParticleInfo, PARTICLE_MASTER } from "@/particlemaster";
+import { ARTIFACT_SET_MASTER, CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey, WEAPON_IMG_SRC } from "@/master";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getDurationFromInfo, getElementalSkillActions, getParticleInfo } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_ATTACK } from "./ERCalculatorCommon";
 import { getEnergyByArtifact, getEnergyByAttack, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, splitNumToArrByOnFieldRate } from "./ERCalculatorFunc";
@@ -666,7 +666,7 @@ export default defineComponent({
             return result;
         })
         const CHARACTER_E_DECREMENT_IN_BURST = computed(() =>
-            Object.keys(PARTICLE_MASTER).filter(key => Object.keys(PARTICLE_MASTER[key]).filter(action => action.indexOf('burst') != -1).length > 0).sort());
+            Object.keys(CHARACTER_MASTER).filter(key => Object.keys(getElementalSkillActions(key)).filter(action => action.indexOf('burst') != -1).length > 0).sort());
 
         const characterImgSrc = (character: string) => getCharacterMaster(character)?.icon_url ?? IMG_SRC_DUMMY;
         const weaponImgSrc = (character: string, weapon?: string) => {

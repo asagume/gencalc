@@ -58,8 +58,7 @@
       </div>
       <div v-if="pane6Toggle1Ref" style="margin-bottom: 10px">
         <ConditionInput ref="conditionInputVmRef" :character-input="characterInputRea"
-          :condition-input="conditionInputRea" :condition-adjustments="conditionInputRea.conditionAdjustments"
-          :stats-obj="statsInput.statsObj" @update:condition="updateCondition" />
+          @update:condition="updateCondition" />
       </div>
       <div v-if="pane6Toggle2Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
@@ -470,7 +469,7 @@ export default defineComponent({
       }
       return result;
     })
-    const myDamageDatailArr = computed(() => 
+    const myDamageDatailArr = computed(() =>
       [characterInputRea.damageDetailMyCharacter, characterInputRea.damageDetailMyWeapon, characterInputRea.damageDetailMyArtifactSets]
     )
     const topStats = computed(() => {

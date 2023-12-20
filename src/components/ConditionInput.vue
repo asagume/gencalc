@@ -33,40 +33,39 @@
 import _ from "lodash";
 import { isNumeric, overwriteObject } from "@/common";
 import {
+  CONDITION_INPUT_TEMPLATE,
   TCharacterInput,
-  TStats,
   TCheckboxEntry,
   TConditionAdjustments,
   TConditionInput,
+  TConditionValues,
   TNumberEntry,
   TSelectEntry,
+  makeExclusionMapFromCharacterInput,
 } from "@/input";
-import { computed, defineComponent, nextTick, onMounted, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
   name: 'ConditionInput',
   props: {
     characterInput: { type: Object as PropType<TCharacterInput>, required: true, },
-    conditionInput: { type: Object as PropType<TConditionInput>, required: true, },
-    conditionAdjustments: { type: Object as PropType<TConditionAdjustments>, required: true, },
-    statsObj: { type: Object as PropType<TStats>, }
   },
   emits: ['update:condition'],
   setup(props, context) {
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
-    const checkboxList = reactive(_.cloneDeep(props.conditionInput.checkboxList) as TCheckboxEntry[]);
-    const selectList = reactive(_.cloneDeep(props.conditionInput.selectList) as TSelectEntry[]);
-    const numberList = reactive(_.cloneDeep(props.conditionInput.numberList) as TNumberEntry[]);
-    const conditionValues = reactive(_.cloneDeep(props.conditionInput.conditionValues) as any);  // TConditionValues
-
+    const checkboxList = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.checkboxList) as TCheckboxEntry[]);
+    const selectList = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.selectList) as TSelectEntry[]);
+    const numberList = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.numberList) as TNumberEntry[]);
+    const conditionValues = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.conditionValues) as TConditionValues);
+    const conditionAdjustments = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.conditionAdjustments) as TConditionAdjustments);
     const isDisplayDescription = ref(false);
 
     const displayStatAjustmentList = computed(() => {
       const resultArr = [];
-      for (const stat of Object.keys(props.conditionAdjustments)) {
-        const value = props.conditionAdjustments[stat];
+      for (const stat of Object.keys(conditionAdjustments)) {
+        const value = conditionAdjustments[stat];
         let result = displayStatName(stat).replace('%', '');
         if (value === null) {
           // nop
@@ -85,25 +84,7 @@ export default defineComponent({
       return resultArr;
     })
 
-    const exclusionMap = computed(() => {
-      const result = new Map() as Map<string, string[] | null>;
-      [
-        props.characterInput.damageDetailMyCharacter,
-        props.characterInput.damageDetailMyWeapon,
-        props.characterInput.damageDetailMyArtifactSets,
-      ].forEach((damageDetail) => {
-        if (damageDetail && damageDetail.排他) {
-          damageDetail.排他.forEach((value, key) => {
-            result.set(key, value);
-          });
-        }
-      });
-      return result;
-    })
-
-    onMounted(() => {
-      initialize(props.conditionInput);
-    })
+    const exclusionMap = computed(() => makeExclusionMapFromCharacterInput(props.characterInput))
 
     const initialize = (conditionInput: TConditionInput) => {
       if (!_.isEqual(checkboxList, conditionInput.checkboxList)) {
@@ -112,18 +93,19 @@ export default defineComponent({
       if (!_.isEqual(selectList, conditionInput.selectList)) {
         selectList.splice(0, selectList.length, ...conditionInput.selectList);
       }
-      updateNumberList(conditionInput);
-    }
-
-    const updateNumberList = (conditionInput: TConditionInput) => {
       if (!_.isEqual(numberList, conditionInput.numberList)) {
         numberList.splice(0, numberList.length, ...conditionInput.numberList);
       }
-      overwriteObject(conditionValues, conditionInput.conditionValues);
+      if (!_.isEqual(conditionValues, conditionInput.conditionValues)) {
+        overwriteObject(conditionValues, conditionInput.conditionValues);
+      }
+      if (!_.isEqual(conditionAdjustments, conditionInput.conditionAdjustments)) {
+        overwriteObject(conditionAdjustments, conditionInput.conditionAdjustments);
+      }
     }
 
     const updateCondition = async (event: Event, item: any) => {
-      let exclusionArr;
+      let exclusionArr: string[] | null | undefined = undefined;
       if (event.currentTarget instanceof HTMLInputElement) {
         if (event.currentTarget.checked) {
           exclusionArr = exclusionMap.value.get(item.name);
@@ -141,11 +123,15 @@ export default defineComponent({
           if (selectList.filter((s) => s.name == exclusion).length > 0) {
             conditionValues[exclusion] = 0;
           }
-        });
+        })
       }
       await nextTick();
       context.emit('update:condition', conditionValues);
     }
+
+    watch(props, () => {
+      exclusionMap.value;
+    })
 
     return {
       displayName,
@@ -155,11 +141,9 @@ export default defineComponent({
       selectList,
       numberList,
       conditionValues,
-
       isDisplayDescription,
       displayStatAjustmentList,
 
-      updateNumberList,
       initialize,
       updateCondition,
     };

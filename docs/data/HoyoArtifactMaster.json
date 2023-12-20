@@ -176,6 +176,22 @@
     "max_level": 20
   },
   {
+    "id": 3454,
+    "name": "無私の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3354,
+    "name": "在りし日の遺失の契",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3254,
     "name": "黄金の旋律の変奏",
     "icon": null,
@@ -490,6 +506,22 @@
   {
     "id": 5144,
     "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3444,
+    "name": "無私の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3344,
+    "name": "在りし日の遺失の契",
     "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 4,
@@ -888,6 +920,22 @@
     "max_level": 20
   },
   {
+    "id": 3452,
+    "name": "誠実なつけペン",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3352,
+    "name": "在りし日の空想の念",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3252,
     "name": "黄金の飛鳥の落羽",
     "icon": null,
@@ -1202,6 +1250,22 @@
   {
     "id": 5142,
     "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3442,
+    "name": "誠実なつけペン",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3342,
+    "name": "在りし日の空想の念",
     "icon": null,
     "reliquary_cat_id": 2,
     "reliquary_level": 4,
@@ -1608,6 +1672,22 @@
     "max_level": 20
   },
   {
+    "id": 3455,
+    "name": "忠実な砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3355,
+    "name": "在りし日の余韻の音",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3255,
     "name": "黄金の時代の前兆",
     "icon": null,
@@ -1922,6 +2002,22 @@
   {
     "id": 5145,
     "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3445,
+    "name": "忠実な砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3345,
+    "name": "在りし日の余韻の音",
     "icon": null,
     "reliquary_cat_id": 3,
     "reliquary_level": 4,
@@ -2320,6 +2416,22 @@
     "max_level": 20
   },
   {
+    "id": 3451,
+    "name": "寛容なインク壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3351,
+    "name": "在りし日の約束の夢",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3251,
     "name": "黄金の夜の喧騒",
     "icon": null,
@@ -2634,6 +2746,22 @@
   {
     "id": 5141,
     "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3441,
+    "name": "寛容なインク壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3341,
+    "name": "在りし日の約束の夢",
     "icon": null,
     "reliquary_cat_id": 4,
     "reliquary_level": 4,
@@ -3032,6 +3160,22 @@
     "max_level": 20
   },
   {
+    "id": 3453,
+    "name": "慈愛の淑女ハット",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3353,
+    "name": "在りし日の伝奏の詩",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3253,
     "name": "黄金の劇団の褒賞",
     "icon": null,
@@ -3378,6 +3522,22 @@
   {
     "id": 5143,
     "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3443,
+    "name": "慈愛の淑女ハット",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3343,
+    "name": "在りし日の伝奏の詩",
     "icon": null,
     "reliquary_cat_id": 5,
     "reliquary_level": 4,

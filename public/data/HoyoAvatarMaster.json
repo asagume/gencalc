@@ -1,5 +1,18 @@
 [
   {
+    "id": 10000091,
+    "name": "ナヴィア",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": null
+  },
+  {
     "id": 10000089,
     "name": "フリーナ",
     "icon": null,

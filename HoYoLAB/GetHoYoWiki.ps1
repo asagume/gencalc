@@ -31,8 +31,9 @@ $pageIds = @()
 # $pageIds += 3997   # 旅人(水)
 # $pageIds += 4023   # ヌヴィレット
 # $pageIds += 4022   # リオセスリ
-$pageIds += 4376   # フリーナ
-$pageIds += 4377   # シャルロット
+# $pageIds += 4376   # フリーナ
+# $pageIds += 4377   # シャルロット
+# $pageIds += 4576   # ナヴィア
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -78,7 +79,8 @@ $pageIds += 4377   # シャルロット
 # $pageIds += 4336   # プロスペクタードリル
 # $pageIds += 4337   # レンジゲージ
 # $pageIds += 4340   # 凛流の監視者
-$pageIds += 4570   # 静水流転の輝き
+# $pageIds += 4719   # 裁断
+# $pageIds += 4720   # 「スーパーアルティメット覇王魔剣」
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -89,6 +91,8 @@ $pageIds += 4570   # 静水流転の輝き
 # $pageIds += 3694   # 花海甘露の光
 # $pageIds += 3990   # ファントムハンター
 # $pageIds += 3991   # 黄金の劇団
+$pageIds += 4716   # 残響の森で囁かれる夜話
+$pageIds += 4717   # 在りし日の歌
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌
@@ -101,7 +105,7 @@ $pageIds += 4570   # 静水流転の輝き
 # $pageIds += 2260
 
 $doDownloadImg = $true
-$imgLanguage = 'ko-kr'
+$imgLanguage = 'ja-jp'
 
 $categoryMap = @{
     "2" = "character"
@@ -275,7 +279,7 @@ foreach ($pageId in $pageIds) {
                 }
                 Invoke-WebRequest -URI $imageUrl -Headers $headers -OutFile (Join-Path $outDirPath -ChildPath $imageFile) -Verbose
             }
-            foreach ($module in $contentMLang."en-us".modules) {
+            foreach ($module in $contentMLang.$imgLanguage.modules) {
                 foreach ($component in $module.components) {
                     if ($component.component_id -eq "artifact_list") {
                         if ($component.data) {

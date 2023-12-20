@@ -453,8 +453,8 @@ export type TNumberEntry = {
     name: string;
     displayName?: string;
     min: number | string;
-    max?: number | string;
-    step?: number;
+    max?: number | string | undefined;
+    step: number;
 };
 export type TConditionValues = {
     [key: string]: boolean | number | null,
@@ -606,7 +606,7 @@ export function makeRecommendationList(
     Object.keys(localStorage).forEach(key => {
         if (key.startsWith(makeBuildStorageKey(character))) {
             storageKeyArr.push(key);
-            if (isSavable == null) {
+            if (isSavable === null) {
                 isSavable = false;
             }
         }
@@ -867,7 +867,7 @@ export async function loadRecommendation(
                 overwriteObject(optionInput.teamOption.conditionValues, {});
                 overwriteObject(optionInput.miscOption.conditionValues, {});
                 keys.forEach(key => {
-                    if (key in ELEMENTAL_RESONANCE_MASTER || key == 'dendroOption') {
+                    if (key in ELEMENTAL_RESONANCE_MASTER || key === 'dendroOption') {
                         // 元素共鳴
                         optionInput.elementalResonance.conditionValues[key] = build.options[key];
                     } else {
@@ -1177,7 +1177,7 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         });
         // conditionMap.delete('命ノ星座');
         conditionMap.forEach((value, key) => {
-            if (value && Array.isArray(value)) {
+            if (value && _.isArray(value)) {
                 if (!value[0].startsWith('required_')) {
                     conditionMap.set(key, ['', ...value]);
                 }
@@ -1233,7 +1233,7 @@ export function makeDamageDetailObjArrObjWeapon(characterInput: any) {
             makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
         });
         conditionMap.forEach((value, key) => {
-            if (value && Array.isArray(value)) {
+            if (value && _.isArray(value)) {
                 if (!value[0].startsWith('required_')) {
                     conditionMap.set(key, ['', ...value]);
                 }
@@ -1291,7 +1291,7 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
         conditionMap.forEach((value, key) => {
-            if (value && Array.isArray(value)) {
+            if (value && _.isArray(value)) {
                 if (!value[0].startsWith('required_')) {
                     conditionMap.set(key, ['', ...value]);
                 }
@@ -1337,7 +1337,7 @@ export function makeDamageDetailObjArrObjElementalResonance(characterInput: any)
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
         conditionMap.forEach((value, key) => {
-            if (value && Array.isArray(value)) {
+            if (value && _.isArray(value)) {
                 if (!value[0].startsWith('required_')) {
                     conditionMap.set(key, ['', ...value]);
                 }
@@ -1511,24 +1511,24 @@ export function makeConditionExclusionMapFromStr(
     exclusionMap: Map<string, string[] | null>
 ) {
     // 排他条件を抽出します
-    let exclusionCond: string | null = null;
-    let myCondStrArr = conditionStr.split('^');
-    if (myCondStrArr.length > 1) {
-        exclusionCond = myCondStrArr[1];
+    let exclusionStr: string | undefined = undefined;
+    const workArr = conditionStr.split('^');
+    if (workArr.length > 1) {
+        exclusionStr = workArr[1];
     }
-    const myCondStr = myCondStrArr[0];
-    if (myCondStr.indexOf('|') != -1) {
+    const workStr = workArr[0];
+    if (workStr.includes('|')) {
         // OR条件 for 申鶴
-        myCondStrArr = myCondStr.split('|');
-        myCondStrArr.forEach((myCondStr: string) => {
-            makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
-        });
+        const conditionStrArr = workStr.split('|');
+        conditionStrArr.forEach((elem) => {
+            makeConditionExclusionMapFromStrSub(elem, conditionMap, exclusionMap, exclusionStr);
+        })
     } else {
         // AND条件
-        myCondStrArr = myCondStr.split('&');
-        myCondStrArr.forEach((myCondStr: string) => {
-            makeConditionExclusionMapFromStrSub(myCondStr, conditionMap, exclusionMap, exclusionCond);
-        });
+        const conditionStrArr = workStr.split('&');
+        conditionStrArr.forEach((elem) => {
+            makeConditionExclusionMapFromStrSub(elem, conditionMap, exclusionMap, exclusionStr);
+        })
     }
 }
 
@@ -1538,45 +1538,49 @@ function makeConditionExclusionMapFromStrSub(
     conditionStr: string,
     conditionMap: Map<string, string[] | null | object>,
     exclusionMap: Map<string, string[] | null>,
-    exclusion: string | null
+    exclusion?: string,
 ) {
-    const myCondStrArr = conditionStr.split(/[@=]/);
-    const myName = myCondStrArr[0];
-    if (myCondStrArr.length == 1) {
-        pushToMapValueArray(conditionMap, myName, null);
-    } else if (myCondStrArr.length == 2) {
-        if (NUMBER_CONDITION_VALUE_RE.test(myCondStrArr[1])) {
+    const workArr = conditionStr.split(/[@=]/);
+    const name = workArr[0];
+    if (workArr.length === 1) {
+        pushToMapValueArray(conditionMap, name, null);
+    } else if (workArr.length === 2) {
+        if (NUMBER_CONDITION_VALUE_RE.test(workArr[1])) {
             try {
-                const workObj = JSON.parse(myCondStrArr[1]);
-                if ('min' in workObj) { // minは必須
-                    const conditionObj = {
-                        min: workObj.min,
-                        max: workObj.max,
-                        step: workObj.step,
-                    };
-                    pushToMapValueArray(conditionMap, myName, conditionObj);
-                } else {
+                const workObj = JSON.parse(workArr[1]);
+                const min = workObj.min;
+                const max = workObj.max;
+                if (!_.isNumber(min) && !_.isString(min)) {
                     console.error(conditionStr, conditionMap, exclusionMap, exclusion);
+                } if (max !== undefined && !_.isNumber(max) && !_.isString(max)) {
+                    console.error(conditionStr, conditionMap, exclusionMap, exclusion);
+                } else {
+                    const conditionObj = {
+                        min: min,
+                        max: max,
+                        step: isNumeric(workObj.step) ? Number(workObj.step) : 1,
+                    };
+                    pushToMapValueArray(conditionMap, name, conditionObj);
                 }
             } catch (error) {
                 console.error(error);
                 console.error(conditionStr, conditionMap, exclusionMap, exclusion);
             }
-        } else if (myCondStrArr[1].indexOf(',') != -1) {
+        } else if (workArr[1].includes(',')) {
             const re = new RegExp('([^0-9]*?)([\\+\\-0-9\\.,]+)(.*)');  // 表現可能:-10,+60%
-            const reRet = re.exec(myCondStrArr[1]);
+            const reRet = re.exec(workArr[1]);
             if (reRet) {
                 const prefix = reRet[1];
                 const condValueArr = reRet[2].split(',');
                 const postfix = reRet[3];
                 condValueArr.forEach(value => {
-                    pushToMapValueArray(conditionMap, myName, prefix + value + postfix);
-                });
+                    pushToMapValueArray(conditionMap, name, prefix + value + postfix);
+                })
             }
-        } else if (myCondStrArr[1].indexOf('-') != -1) {
+        } else if (workArr[1].includes('-')) {
             const re = new RegExp('([^0-9\\.]*)(-?[0-9\\.]+)-(-?[0-9\\.]+)(.*)');   // 数値部に+は含められない。prefixには含められる。
             const re2 = new RegExp('/([0-9\\.]+)(.*)');
-            const reRet = re.exec(myCondStrArr[1]);
+            const reRet = re.exec(workArr[1]);
             if (reRet) {
                 const prefix = reRet[1];
                 const rangeStart = Number(reRet[2]);
@@ -1592,22 +1596,22 @@ function makeConditionExclusionMapFromStrSub(
                 }
                 step = step ? step : 1;
                 for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
-                    pushToMapValueArray(conditionMap, myName, prefix + String(i) + postfix);
+                    pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);
                 }
-                pushToMapValueArray(conditionMap, myName, prefix + String(rangeEnd) + postfix);
+                pushToMapValueArray(conditionMap, name, prefix + String(rangeEnd) + postfix);
             } else {
-                pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
+                pushToMapValueArray(conditionMap, name, workArr[1]);
             }
         } else {
-            pushToMapValueArray(conditionMap, myName, myCondStrArr[1]);
+            pushToMapValueArray(conditionMap, name, workArr[1]);
         }
     } else {
         console.error(conditionStr, conditionMap, exclusionMap, exclusion);
     }
     if (exclusion) {
         exclusion.split(',').forEach(e => {
-            pushToMapValueArray(exclusionMap, myName, e);
-        });
+            pushToMapValueArray(exclusionMap, name, e);
+        })
     }
 }
 
@@ -1617,115 +1621,26 @@ export function setupConditionValues(
     optionInput: TOptionInput,
 ) {
     try {
-        const conditionValues = conditionInput.conditionValues;
-        const checkboxList = conditionInput.checkboxList as TCheckboxEntry[];
-        const selectList = conditionInput.selectList as TSelectEntry[];
-        const numberList = conditionInput.numberList as TNumberEntry[];
+        const workConditionValues = _.cloneDeep(conditionInput.conditionValues);
+        const workCheckboxList: TCheckboxEntry[] = [];
+        const workSelectList: TSelectEntry[] = [];
+        const workNumberList: TNumberEntry[] = [];
 
-        checkboxList.splice(0, checkboxList.length);
-        selectList.splice(0, selectList.length);
-
-        const masters = [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters];
-        for (const master of masters.filter(s => s)) {
+        // キャラクター、武器、聖遺物セット効果
+        for (const master of [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters]) {
             if ('オプション初期値' in master) {
                 for (const key of Object.keys((master as any)['オプション初期値'])) {
-                    if (!(key in conditionValues)) {
-                        conditionValues[key] = (master as any)['オプション初期値'][key];
-                    }
-                }
-            }
-            // 聖遺物セット効果のオプション初期値は変な位置にあります
-            if ('4セット効果' in master && 'オプション初期値' in (master as any)['4セット効果']) {
-                for (const key of Object.keys((master as any)['4セット効果']['オプション初期値'])) {
-                    if (!(key in conditionValues)) {
-                        conditionValues[key] = (master as any)['4セット効果']['オプション初期値'][key];
+                    if (!(key in workConditionValues)) {
+                        workConditionValues[key] = (master as any)['オプション初期値'][key];
                     }
                 }
             }
         }
 
-        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-            if (myDamageDetail) {
-                const conditionMap: Map<string, string[] | null | object> = myDamageDetail.条件;
-                const exclusionMap: Map<string, string[] | null> = myDamageDetail.排他;
-
-                conditionMap.forEach((value: string[] | null | object, key: string) => {
-                    if (value == null) {
-                        if (checkboxList.filter(s => s.name == key).length == 0) {
-                            checkboxList.push({ name: key });
-                        }
-                    } else if (Array.isArray(value)) {
-                        if (selectList.filter(s => s.name == key).length == 0) {
-                            const required = value[0].startsWith('required_');
-                            selectList.push({
-                                name: key,
-                                options: value,
-                                required: required,
-                            });
-                        }
-                    } else if (_.isPlainObject(value)) {
-                        if (numberList.filter(s => s.name == key).length == 0) {
-                            const entry = {
-                                name: key,
-                                min: (value as any).min,
-                                max: (value as any).max,
-                                step: (value as any).step,
-                            };
-                            numberList.push(entry);
-                        }
-                    }
-                    if (key in conditionValues && conditionValues[key] != null) {
-                        const exclusions = exclusionMap.get(key);
-                        if (exclusions) {
-                            for (const exclusion of exclusions) {
-                                if (exclusion in conditionValues) {
-                                    const conditionValue = conditionMap.get(exclusion);
-                                    if (conditionValue === null) {  // checkbox
-                                        conditionValues[exclusion] = false;
-                                    } else if (Array.isArray(value)) {    // select
-                                        conditionValues[exclusion] = 0;
-                                    } else if (_.isPlainObject(value)) {    // number
-                                        const minValue = (value as any).min;
-                                        if (isNumeric(minValue)) {
-                                            conditionValues[exclusion] = minValue;
-                                        } else {
-                                            conditionValues[exclusion] = 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (value === null) {   // checkbox
-                            let checked = true;
-                            const arr = exclusionMap.get(key);
-                            if (arr && arr.filter(s => conditionValues[s]).length > 0) {
-                                checked = false;
-                            }
-                            conditionValues[key] = checked;
-                        } else if (Array.isArray(value)) {   // select
-                            let selectedIndex = value.length - 1;
-                            const arr = exclusionMap.get(key);
-                            if (arr && arr.filter(s => conditionValues[s]).length > 0) {
-                                selectedIndex = 0;
-                            }
-                            conditionValues[key] = selectedIndex;
-                        } else if (_.isPlainObject(value)) {    // number
-                            const minValue = (value as any).min;
-                            if (isNumeric(minValue)) {
-                                conditionValues[key] = minValue;
-                            } else {
-                                conditionValues[key] = 0;
-                            }
-                        }
-                    }
-                });
-            }
-        }
+        const conditionMap = makeConditionMapFromCharacterInput(characterInput);
+        const exclusionMap = makeExclusionMapFromCharacterInput(characterInput);
 
         if (optionInput.elementalResonance) {
-            const conditionMap: Map<string, any[] | null | object> = new Map();
-            const exclusionMap: Map<string, string[] | null> = new Map();
             for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
                 if (!optionInput.elementalResonance.conditionValues[key]) continue;
                 const master = (ELEMENTAL_RESONANCE_MASTER as any)[key];
@@ -1735,59 +1650,129 @@ export function setupConditionValues(
                     makeConditionExclusionMapFromStr(detailObj.条件, conditionMap, exclusionMap);
                 }
             }
-            conditionMap.forEach((value: string[] | null | object, key: string) => {
-                if (value == null) {
-                    if (checkboxList.filter(s => s.name == key).length == 0) {
-                        checkboxList.push({ name: key });
-                    }
-                } else if (Array.isArray(value)) {
-                    if (selectList.filter(s => s.name == key).length == 0) {
-                        const required = value[0].startsWith('required_');
-                        selectList.push({
-                            name: key,
-                            options: value,
-                            required: required,
-                        });
-                    }
-                }
+        }
 
-                if (key in conditionValues && conditionValues[key] != null) {
-                    const exclusions = exclusionMap.get(key);
-                    if (exclusions) {
-                        for (const exclusion of exclusions) {
-                            if (exclusion in conditionValues) {
-                                const conditionValue = conditionMap.get(exclusion);
-                                if (conditionValue === null) {  // checkbox
-                                    conditionValues[exclusion] = false;
-                                } else if (Array.isArray(value)) {    // select
-                                    conditionValues[exclusion] = 0;
+        conditionMap.forEach((value, key) => {
+            if (value === null) {
+                if (workCheckboxList.filter(s => s.name == key).length === 0) {
+                    workCheckboxList.push({ name: key });
+                }
+            } else if (_.isArray(value)) {
+                if (workSelectList.filter(s => s.name == key).length === 0) {
+                    const required = value[0].startsWith('required_');
+                    workSelectList.push({
+                        name: key,
+                        options: value,
+                        required: required,
+                    });
+                }
+            } else if (_.isPlainObject(value)) {
+                if (workNumberList.filter(s => s.name == key).length === 0) {
+                    const numberObj = value as any;
+                    const entry = {
+                        name: key,
+                        min: numberObj.min,
+                        max: numberObj.max,
+                        step: numberObj.step,
+                    };
+                    workNumberList.push(entry);
+                }
+            }
+            if (key in workConditionValues && workConditionValues[key] !== null) {
+                const exclusions = exclusionMap.get(key);
+                if (exclusions) {
+                    for (const exclusion of exclusions) {
+                        if (exclusion in workConditionValues) {
+                            const conditionValue = conditionMap.get(exclusion);
+                            if (conditionValue === null) {  // checkbox
+                                workConditionValues[exclusion] = false;
+                            } else if (_.isArray(value)) {  // select
+                                workConditionValues[exclusion] = 0;
+                            } else if (_.isPlainObject(value)) {    // number
+                                const minValue = (value as any).min;
+                                if (isNumeric(minValue)) {
+                                    workConditionValues[exclusion] = Number(minValue);
+                                } else {
+                                    workConditionValues[exclusion] = 0;
                                 }
                             }
                         }
                     }
-                } else {
-                    if (value === null) {   // checkbox
-                        let checked = true;
-                        const arr = exclusionMap.get(key);
-                        if (arr && arr.filter(s => conditionValues[s]).length > 0) {
-                            checked = false;
-                        }
-                        conditionValues[key] = checked;
-                    } else if (Array.isArray(value)) {   // select
-                        let selectedIndex = value.length - 1;
-                        const arr = exclusionMap.get(key);
-                        if (arr && arr.filter(s => conditionValues[s]).length > 0) {
-                            selectedIndex = 0;
-                        }
-                        conditionValues[key] = selectedIndex;
+                }
+            } else {
+                if (value === null) {   // checkbox
+                    let checked = true;
+                    const arr = exclusionMap.get(key);
+                    if (arr && arr.filter(s => workConditionValues[s]).length > 0) {
+                        checked = false;
+                    }
+                    workConditionValues[key] = checked;
+                } else if (_.isArray(value)) {  // select
+                    let selectedIndex = value.length - 1;
+                    const arr = exclusionMap.get(key);
+                    if (arr && arr.filter(s => workConditionValues[s]).length > 0) {
+                        selectedIndex = 0;
+                    }
+                    workConditionValues[key] = selectedIndex;
+                } else if (_.isPlainObject(value)) {    // number
+                    const minValue = (value as any).min;
+                    if (isNumeric(minValue)) {
+                        workConditionValues[key] = Number(minValue);
+                    } else {
+                        workConditionValues[key] = 0;
                     }
                 }
-            });
+            }
+        })
+
+        if (!_.isEqual(conditionInput.conditionValues, workConditionValues)) {
+            overwriteObject(conditionInput.conditionValues, workConditionValues);
+        }
+        if (!_.isEqual(conditionInput.checkboxList, workCheckboxList)) {
+            conditionInput.checkboxList.splice(0, conditionInput.checkboxList.length, ...workCheckboxList);
+        }
+        if (!_.isEqual(conditionInput.selectList, workSelectList)) {
+            conditionInput.selectList.splice(0, conditionInput.selectList.length, ...workSelectList);
+        }
+        if (!_.isEqual(conditionInput.numberList, workNumberList)) {
+            conditionInput.numberList.splice(0, conditionInput.numberList.length, ...workNumberList);
         }
     } catch (error) {
-        console.error(conditionInput, characterInput);
+        console.error(conditionInput, characterInput, optionInput);
         // throw error;
     }
+}
+
+export function makeConditionMapFromCharacterInput(characterInput: TCharacterInput) {
+    const result = new Map() as Map<string, any[] | null | object>;
+    [
+        characterInput.damageDetailMyCharacter,
+        characterInput.damageDetailMyWeapon,
+        characterInput.damageDetailMyArtifactSets,
+    ].forEach((damageDetail) => {
+        if (damageDetail && damageDetail.条件) {
+            damageDetail.条件.forEach((value, key) => {
+                result.set(key, value);
+            });
+        }
+    });
+    return result;
+}
+
+export function makeExclusionMapFromCharacterInput(characterInput: TCharacterInput) {
+    const result = new Map() as Map<string, string[] | null>;
+    [
+        characterInput.damageDetailMyCharacter,
+        characterInput.damageDetailMyWeapon,
+        characterInput.damageDetailMyArtifactSets,
+    ].forEach((damageDetail) => {
+        if (damageDetail && damageDetail.排他) {
+            damageDetail.排他.forEach((value, key) => {
+                result.set(key, value);
+            });
+        }
+    });
+    return result;
 }
 
 export function getStatValue(stat: string, statsObj: TStats) {
@@ -1825,53 +1810,49 @@ export function updateNumberConditionValues(
     characterInput: TCharacterInput,
     statsObj: TStats,
 ) {
-    for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-        if (myDamageDetail) {
-            const conditionMap: Map<string, string[] | null | object> = myDamageDetail.条件;
-            conditionMap.forEach((value: string[] | null | object, key: string) => {
-                if (_.isPlainObject(value)) {
-                    const numberEntryArr = conditionInput.numberList.filter(s => s.name == key);
-                    if (numberEntryArr.length > 0) {
-                        let minValue = (value as any).min;
-                        let maxValue = (value as any).max;
-                        if (_.isString(minValue) || _.isString(maxValue)) {
-                            if (_.isString(minValue)) {
-                                minValue = getStatValue(minValue, statsObj);
-                            }
-                            if (_.isString(maxValue)) {
-                                maxValue = getStatValue(maxValue, statsObj);
-                            }
-                            numberEntryArr[0].min = minValue;
-                            numberEntryArr[0].max = maxValue;
-                            if (key in conditionInput.conditionValues) {
-                                const value = conditionInput.conditionValues[key];
-                                if (_.isNumber(value)) {
-                                    if (value < minValue) {
-                                        conditionInput.conditionValues[key] = minValue;
-                                    } else if (maxValue !== undefined && value > maxValue) {
-                                        conditionInput.conditionValues[key] = maxValue;
-                                    }
-                                }
+    const conditionMap = makeConditionMapFromCharacterInput(characterInput);
+    conditionMap.forEach((value, key) => {
+        if (_.isPlainObject(value)) {
+            const numberEntryArr = conditionInput.numberList.filter(s => s.name == key);
+            if (numberEntryArr.length > 0) {
+                let minValue = (value as any).min;
+                let maxValue = (value as any).max;
+                if (_.isString(minValue) || _.isString(maxValue)) {
+                    if (_.isString(minValue)) {
+                        minValue = getStatValue(minValue, statsObj);
+                    }
+                    if (_.isString(maxValue)) {
+                        maxValue = getStatValue(maxValue, statsObj);
+                    }
+                    numberEntryArr[0].min = minValue;
+                    numberEntryArr[0].max = maxValue;
+                    if (key in conditionInput.conditionValues) {
+                        const value = conditionInput.conditionValues[key];
+                        if (_.isNumber(value)) {
+                            if (value < minValue) {
+                                conditionInput.conditionValues[key] = minValue;
+                            } else if (maxValue !== undefined && value > maxValue) {
+                                conditionInput.conditionValues[key] = maxValue;
                             }
                         }
                     }
                 }
-            });
+            }
         }
-    }
+    })
 }
 
 function pushToMapValueArray(map: Map<any, any>, key: any, value: any) {
-    if (value == null) {    // checkbox
+    if (value === null) {    // checkbox
         if (!map.has(key)) {
             map.set(key, null);
         }
     } else if (_.isString(value)) { // select
         if (map.has(key)) {
             const oldValue = map.get(key);
-            if (oldValue == null) {
+            if (oldValue === null) {
                 map.set(key, [value]);
-            } else if (Array.isArray(oldValue)) {
+            } else if (_.isArray(oldValue)) {
                 if (!oldValue.includes(value)) {
                     map.get(key).push(value);
                 }
@@ -2201,6 +2182,11 @@ export async function updateConditionsByTeam(
         }
     })
     conditionInput.conditionValues['[チーム]キャラクターの元素タイプ'] = visionCountMap.size - 1; // requiredなので1減らします
+    const pyroCount = visionCountMap.get('炎') ?? 0;
+    const hydroCount = visionCountMap.get('水') ?? 0;
+    const electroCount = visionCountMap.get('雷') ?? 0;
+    const cryoCount = visionCountMap.get('氷') ?? 0;
+    conditionInput.conditionValues['[チーム]炎水雷氷元素のキャラクター'] = pyroCount + hydroCount + electroCount + cryoCount;
 }
 
 export async function updateOptionsElementalResonanceByTeam(

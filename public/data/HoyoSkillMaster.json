@@ -1,5 +1,52 @@
 [
   {
+    "avatar_id": 10000091,
+    "skill_list": [
+      {
+        "id": 10911,
+        "group_id": 9131,
+        "name": "通常攻撃·ごめんあそばせ",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10912,
+        "group_id": 9132,
+        "name": "セレモニアル·クリスタルショット",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10915,
+        "group_id": 9139,
+        "name": "晴天を衝く霰弾のサルート",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 9121,
+        "group_id": 9121,
+        "name": "未知の流通ルート",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9122,
+        "group_id": 9122,
+        "name": "相互連携ネットワーク",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9123,
+        "group_id": 9123,
+        "name": "きめ細やかなビジネス",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
     "avatar_id": 10000089,
     "skill_list": [
       {
