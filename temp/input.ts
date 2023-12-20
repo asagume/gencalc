@@ -452,8 +452,8 @@ export type TSelectEntry = {
 export type TNumberEntry = {
     name: string;
     displayName?: string;
-    min: number;
-    max?: number | undefined;
+    min: number | string;
+    max?: number | string | undefined;
     step: number;
 };
 export type TConditionValues = {
@@ -1549,12 +1549,15 @@ function makeConditionExclusionMapFromStrSub(
             try {
                 const workObj = JSON.parse(workArr[1]);
                 const min = workObj.min;
-                if (!isNumeric(min)) {
+                const max = workObj.max;
+                if (!_.isNumber(min) && !_.isString(min)) {
+                    console.error(conditionStr, conditionMap, exclusionMap, exclusion);
+                } if (max !== undefined && !_.isNumber(max) && !_.isString(max)) {
                     console.error(conditionStr, conditionMap, exclusionMap, exclusion);
                 } else {
                     const conditionObj = {
-                        min: Number(workObj.min),
-                        max: isNumeric(workObj.max) ? Number(workObj.max) : undefined,
+                        min: min,
+                        max: max,
                         step: isNumeric(workObj.step) ? Number(workObj.step) : 1,
                     };
                     pushToMapValueArray(conditionMap, name, conditionObj);
@@ -1807,40 +1810,36 @@ export function updateNumberConditionValues(
     characterInput: TCharacterInput,
     statsObj: TStats,
 ) {
-    for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
-        if (myDamageDetail) {
-            const conditionMap: Map<string, string[] | null | object> = myDamageDetail.条件;
-            conditionMap.forEach((value: string[] | null | object, key: string) => {
-                if (_.isPlainObject(value)) {
-                    const numberEntryArr = conditionInput.numberList.filter(s => s.name == key);
-                    if (numberEntryArr.length > 0) {
-                        let minValue = (value as any).min;
-                        let maxValue = (value as any).max;
-                        if (_.isString(minValue) || _.isString(maxValue)) {
-                            if (_.isString(minValue)) {
-                                minValue = getStatValue(minValue, statsObj);
-                            }
-                            if (_.isString(maxValue)) {
-                                maxValue = getStatValue(maxValue, statsObj);
-                            }
-                            numberEntryArr[0].min = minValue;
-                            numberEntryArr[0].max = maxValue;
-                            if (key in conditionInput.conditionValues) {
-                                const value = conditionInput.conditionValues[key];
-                                if (_.isNumber(value)) {
-                                    if (value < minValue) {
-                                        conditionInput.conditionValues[key] = minValue;
-                                    } else if (maxValue !== undefined && value > maxValue) {
-                                        conditionInput.conditionValues[key] = maxValue;
-                                    }
-                                }
+    const conditionMap = makeConditionMapFromCharacterInput(characterInput);
+    conditionMap.forEach((value, key) => {
+        if (_.isPlainObject(value)) {
+            const numberEntryArr = conditionInput.numberList.filter(s => s.name == key);
+            if (numberEntryArr.length > 0) {
+                let minValue = (value as any).min;
+                let maxValue = (value as any).max;
+                if (_.isString(minValue) || _.isString(maxValue)) {
+                    if (_.isString(minValue)) {
+                        minValue = getStatValue(minValue, statsObj);
+                    }
+                    if (_.isString(maxValue)) {
+                        maxValue = getStatValue(maxValue, statsObj);
+                    }
+                    numberEntryArr[0].min = minValue;
+                    numberEntryArr[0].max = maxValue;
+                    if (key in conditionInput.conditionValues) {
+                        const value = conditionInput.conditionValues[key];
+                        if (_.isNumber(value)) {
+                            if (value < minValue) {
+                                conditionInput.conditionValues[key] = minValue;
+                            } else if (maxValue !== undefined && value > maxValue) {
+                                conditionInput.conditionValues[key] = maxValue;
                             }
                         }
                     }
                 }
-            });
+            }
         }
-    }
+    })
 }
 
 function pushToMapValueArray(map: Map<any, any>, key: any, value: any) {
