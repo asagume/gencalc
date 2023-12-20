@@ -72,7 +72,7 @@ export {
 //     }
 // }
 
-export const IMG_SRC_DUMMY = "data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7";
+export const IMG_SRC_DUMMY = 'data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7';
 
 export type TVisionKey = '炎' | '水' | '風' | '雷' | '草' | '氷' | '岩';
 export type TWeaponTypeKey = '片手剣' | '両手剣' | '長柄武器' | '弓' | '法器';
@@ -91,31 +91,6 @@ export type TCharacterEntry = TCharacter & {
     icon_url: string,
 }
 
-export type TTalentDetailEntry = {
-    名前?: string,
-    種類?: string,
-    数値?: number | string | any,
-    条件?: string | any,
-    対象?: string,
-    HIT数?: number,
-    元素?: string,
-    ダメージバフ?: string,
-    元素付与無効?: boolean,
-    上限?: number | string | any,
-    下限?: number | string | any,
-    適用条件?: Array<string | any>,
-    除外条件?: Array<string | any>,
-}
-
-export type TTalentEntry = {
-    名前?: string,
-    説明?: string | string[],
-    icon_url?: string,
-    種類?: string,
-    詳細?: TTalentDetailEntry[],
-    [key: string]: number | string | string[] | TTalentDetailEntry[] | undefined,
-}
-
 export type TCharacterDetail = {
     名前: TCharacterKey,
     説明: string,
@@ -126,18 +101,18 @@ export type TCharacterDetail = {
     baseInfo: any,
     region?: string,
     ステータス: TCharacterStats,
-    通常攻撃: TTalentEntry,
-    重撃: TTalentEntry,
-    落下攻撃: TTalentEntry,
-    元素スキル: TTalentEntry,
-    元素爆発: TTalentEntry,
-    固有天賦: TTalentEntry[],
-    命ノ星座: { [key: string]: TTalentEntry },
-    特殊通常攻撃?: TTalentEntry,
-    特殊重撃?: TTalentEntry,
-    特殊落下攻撃?: TTalentEntry,
+    通常攻撃: any,
+    重撃: any,
+    落下攻撃: any,
+    元素スキル: any,
+    元素爆発: any,
+    固有天賦: any[],
+    命ノ星座?: any,
+    特殊通常攻撃?: any,
+    特殊重撃?: any,
+    特殊落下攻撃?: any,
     その他天賦?: any,
-    チームバフ?: TTalentDetailEntry[],
+    チームバフ?: any[],
     オプション初期値?: any,
     固有変数?: any,
     おすすめセット: any[],
@@ -166,6 +141,7 @@ export type TCharacterTalent = {
     詳細?: {
         名前?: string,
         種類?: string,
+        数値?: string | number | any[],
         対象?: string,
         条件?: string,
     }[],
@@ -209,14 +185,15 @@ export type TWeaponDetail = {
     種類: TWeaponTypeKey,
     ステータス: TWeaponStats,
     武器スキル?: any,
-    チームバフ?: TTalentDetailEntry[],
+    チームバフ?: any[],
     オプション初期値?: any,
     固有変数?: any,
+    精錬ランク?: number,
 };
 
 export type TArtifactSetEffect = {
     説明: string,
-    詳細?: any[]
+    詳細?: any[],
 };
 export type TArtifactSetRarity = 1 | 2 | 3 | 4 | 5;
 export type TArtifactSet = {

@@ -9,28 +9,24 @@ export type TParticleMaster = {
     [key: string]: TParticleEntry,
 };
 
-export const SP_SELF = 0;      // 元素粒子数=[0]       アクション実行者
-export const SP_NEXT = 1;      // 元素粒子数=[0]       次のアクション実行者
-export const SP_LONG = -1;     // 元素粒子数=[0]*[2]   出場時間で分配
-export const SP_SHRT = -2;     // 元素粒子数=[0]       出場時間で分配
-const C1 = 1;
-const C2 = 2;
-// const C4 = 4;
-const C6 = 6;
-const PSP_NONE = 20;       // 元素粒子発生ポイント なし
-const PSP_CHARACTER = 21;       // 元素粒子発生ポイント キャラクター
-const PSP_ENEMY = 22;       // 元素粒子発生ポイント 敵
-const PSP_CONSTRUCT = 23;       // 元素粒子発生ポイント 創造物
-const PSP_UNKNOWN = 29;       // 元素粒子発生ポイント 創造物
+export const SP_SELF = 0x1000;      // 元素粒子数=[0]       アクション実行者
+export const SP_NEXT = 0x1001;      // 元素粒子数=[0]       次のアクション実行者
+export const SP_LONG = 0x1002;      // 元素粒子数=[0]*[2]   出場時間で分配
+export const SP_SHRT = 0x1003;      // 元素粒子数=[0]       出場時間で分配
+const C0 = 0x2000;
+const C1 = 0x2001;
+const C2 = 0x2002;
+const C4 = 0x2004;
+const C6 = 0x2006;
 // 粒子数
 // 粒子数, 粒子発生ポイント
 // 粒子数, 受取タイプ, 粒子発生ポイント
 // 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成クールタイム, 粒子発生ポイント
 // 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成クールタイム, 命ノ星座, 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成クールタイム, 粒子発生ポイント
-export const PARTICLE_MASTER: TParticleMaster = {
+const PARTICLE_MASTER: TParticleMaster = {
     'シャルロット': {
-        'E.Press': [3, PSP_UNKNOWN],
-        'E.Hold': [5, PSP_UNKNOWN],
+        'E.Press': 3,
+        'E.Hold': 5,
     },
     'フリーナ': {
         'E': [1, SP_LONG, 30, 20, 2.5],   // CT2.5s
@@ -39,7 +35,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': [3, SP_SELF, 10, 16, 2, C1, 3, SP_SELF, 14, 16, 2],    // CT2s
     },
     'ヌヴィレット': {
-        'E': [4, SP_NEXT, 0, 12, 0],
+        'E': [4, SP_NEXT, 0, 12, undefined],
     },
     'リネ': {
         'E': 5,
@@ -72,8 +68,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 3.5,
     },
     '夜蘭': {
-        'E.Press': [4, SP_NEXT, 0, 10, 0],
-        'E.Hold': [4, SP_NEXT, 0, 10, 0],
+        'E.Press': [4, SP_NEXT, 0, 10, undefined],
+        'E.Hold': [4, SP_NEXT, 0, 10, undefined],
     },
     '神里綾人': {
         'E': [4, SP_SELF, 6, 12, 0],
@@ -82,8 +78,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': [1, SP_LONG, 14, 4, 2.5],    // CT2.5s
     },
     '申鶴': {
-        'E.Press': [3, SP_NEXT, 10, 10, 0],
-        'E.Hold': [4, SP_NEXT, 15, 15, 0],
+        'E.Press': [3, SP_NEXT, 10, 10, undefined],
+        'E.Hold': [4, SP_NEXT, 15, 15, undefined],
     },
     '荒瀧一斗': {
         'E': 3.5,
@@ -112,14 +108,14 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 2.5,
     },
     '胡桃': {
-        'E': [2.5 * 2, SP_SELF, 9, 16, 0],
+        'E': [2.5 * 2, SP_SELF, 9, 16, undefined],
     },
     '魈': {
         'E': 3,
         'E(burst)': 0,
     },
     '甘雨': {
-        'E': [2 * 2, SP_SHRT, 6, 10, 0]
+        'E': [2 * 2, SP_SHRT, 6, 10, undefined]
     },
     'アルベド': {
         'E.Press': [0.67, SP_LONG, 30, 4, 2],   // 刹那の花ダメージ1回あたり0.67個 CT2s
@@ -144,8 +140,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 2.5,
     },
     'モナ': {
-        'E.Press': [1 + 1 / 3, SP_SHRT, 5, 12, 0],
-        'E.Hold': [1 + 1 / 3, SP_SHRT, 5, 12, 0],
+        'E.Press': [1.33, SP_SHRT, 5, 12, undefined],
+        'E.Hold': [1.33, SP_SHRT, 5, 12, undefined],
     },
     '七七': {
         'E': 0,
@@ -246,20 +242,20 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': 3,
     },
     'フィッシュル': {
-        'E': [0.67, SP_LONG, 10, 25, 1, C6, 0.67, SP_LONG, 12, 25, 1, PSP_CONSTRUCT],
+        'E': [0.67, SP_LONG, 10, 25, 1, C6, 0.67, SP_LONG, 12, 25, 1],
     },
     '凝光': {
         'E': 3.33,
     },
     '行秋': {
-        'E': [4.5, SP_NEXT, 15, 21, 0],
+        'E': [4.5, SP_NEXT, 15, 21, undefined],
     },
     '北斗': {
         'E.Press': 2,
         'E.Hold': 4,
     },
     '香菱': {
-        'E': [4, SP_SHRT, 8, 12, 0],
+        'E': [4, SP_SHRT, 8, 12, undefined],
     },
     'レザー': {
         'E.Press': 3,
@@ -267,7 +263,7 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E.Press(burst)': 0,
     },
     'バーバラ': {
-        'E': [0, SP_NEXT, 15, 32, 0, C2, 0, SP_NEXT, 15, 27.2, 0, PSP_NONE],
+        'E': [0, SP_NEXT, 15, 32, undefined, C2, 0, SP_NEXT, 15, 27.2, undefined],
     },
     'リサ': {
         'E.Press': 0,
@@ -277,8 +273,8 @@ export const PARTICLE_MASTER: TParticleMaster = {
         'E': 2.67,
     },
     'アンバー': {
-        'E.Press': [4, SP_SHRT, 8, 15, 0],
-        'E.Hold': [4, SP_SHRT, 8, 15, 0],
+        'E.Press': [4, SP_SHRT, 8, 15, undefined],
+        'E.Hold': [4, SP_SHRT, 8, 15, undefined],
     },
     '旅人(水)': {
         'E.Press': 3 + 1 / 3,
@@ -308,8 +304,15 @@ Object.keys(PARTICLE_MASTER).forEach(key => {
             return;
         }
         if (_.isArray(pinfo)) {
-            if (pinfo.length == 2 || pinfo.length == 4 || pinfo.length == 9) {
-                if (pinfo.filter(s => !_.isNumber(s)).length == 0) {
+            if (pinfo.length === 2 || pinfo.length === 5 || pinfo.length === 11) {
+                const receiveTypeArr: (number | undefined)[] = [];
+                receiveTypeArr.push(pinfo[1]);
+                if (pinfo.length === 11) {
+                    receiveTypeArr.push(pinfo[7]);
+                }
+                if (pinfo.filter(s => s !== undefined && !_.isNumber(s)).length === 0
+                    && receiveTypeArr.filter(s => s === undefined || ![SP_SELF, SP_NEXT, SP_LONG, SP_SHRT].includes(s)).length === 0
+                    && (pinfo.length !== 11 || (pinfo[5] !== undefined && [C1, C2, C4, C6].includes(pinfo[5])))) {
                     return;
                 }
             }
@@ -342,7 +345,7 @@ export function getElementalSkillActions(character: string) {
 }
 
 export function getParticleInfo(character: string, action: string, constellation = 0, isBursting = false) {
-    let result: TParticleInfo = [0, SP_NEXT, 0, undefined, undefined, PSP_UNKNOWN];
+    const result: TParticleInfo = [0, SP_NEXT, 0, undefined, undefined];    // 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成CT
     const particleMaster = PARTICLE_MASTER[character];
     if (particleMaster) {
         const keyArr: string[] = [];
@@ -357,17 +360,13 @@ export function getParticleInfo(character: string, action: string, constellation
                     result[0] = work;
                 } else if (_.isArray(work)) {
                     let start = 0;
-                    if (work.length > 5 && work[5] !== undefined && work[5] < PSP_NONE) {
+                    if (work.length > 5 && work[5] !== undefined && work[5] <= (constellation + C0)) {
                         start = 6;
                     }
                     for (let i = 0; i < 5; i++) {
-                        if (work[i + start] !== undefined) {
+                        if (work.length > (i + start)) {
                             result[i] = work[i + start];
                         }
-                    }
-                    const psp = work[work.length - 1];
-                    if (psp !== undefined && psp >= PSP_NONE) {
-                        result[5] = psp;
                     }
                 }
                 break;
@@ -419,4 +418,3 @@ export function getCooltimeFromInfo(particleInfo: TParticleInfo) {
 export function getParticleCooltimeFromInfo(particleInfo: TParticleInfo) {
     return (_.isArray(particleInfo) && particleInfo.length > 4) ? particleInfo[4] : undefined;
 }
-
