@@ -435,7 +435,7 @@ function addNumToArr(
     receiveType = SP_NEXT,
 ) {
     const memberNameArr = team.members.map(member => member.name);
-    const nxtRotation = (index + receiveType) < rotationList.length ? rotationList[index + receiveType] : rotationList[0];
+    const nxtRotation = (index + receiveType - SP_SELF) < rotationList.length ? rotationList[index + receiveType - SP_SELF] : rotationList[0];
     if (nxtRotation.action === 'Q' && CHARACTER_Q_NOT_RECHARGEABLE.includes(nxtRotation.member)) {
         num = 0;
     }
