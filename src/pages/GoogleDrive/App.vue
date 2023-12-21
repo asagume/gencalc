@@ -264,7 +264,7 @@ export default defineComponent({
         for (let i = 5; i < remoteFileList.length; i++) {
           deleteList.push(remoteFileList[i].id);
         }
-        await Promise.all(deleteList.map((file: any) => requestFilesDelete(file.id)));
+        await Promise.all(deleteList.map((fileId: any) => requestFilesDelete(fileId)));
         await handleListClick();
       }
     }
