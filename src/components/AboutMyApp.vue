@@ -54,6 +54,7 @@
         </p>
         <p>
             <a href="index2.html">旧バージョン(V2)</a>
+            <a href="RotationVisualizer.html">げんろーて</a>
         </p>
     </fieldset>
 </template>

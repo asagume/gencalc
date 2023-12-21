@@ -66,10 +66,11 @@
                     { title: '4セット効果', width: '50%' }
                 ];
 
-                let data = [];
+                const data = [];
                 Object.keys(json).forEach(name => {
-                    let dataArr = [];
-                    dataArr.push('<img width="50" height="50" src="' + json[name]['image'] + '" alt="' + name + '">');
+                    const dataArr = [];
+                    const icon_url = json[name]['image'].replace('.png', '/flower_of_life.png');
+                    dataArr.push('<img width="50" height="50" src="' + icon_url + '" alt="' + name + '">');
                     dataArr.push(name);
                     dataArr.push(json[name]['レアリティ']);
                     let desc2 = json[name]['2セット効果']['説明'];

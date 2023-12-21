@@ -176,7 +176,8 @@ label.open-close input[type="checkbox"]+span::before {
   width: 100%;
 }
 
-input[type=number] {
+input[type="number"] {
   width: 10rem;
+  text-align: right;
 }
 </style>

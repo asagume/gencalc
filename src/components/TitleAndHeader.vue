@@ -36,7 +36,6 @@
     </div>
 
     <div class="bottom-left">
-      <a href="RotationVisualizer.html">げんろーて</a>
     </div>
 
     <label class="bottom-right">

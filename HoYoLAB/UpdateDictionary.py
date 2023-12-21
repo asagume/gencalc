@@ -21,7 +21,7 @@ LANGUAGES = ["zh-cn", "zh-tw", "de-de", "en-us", "es-es",
 
 def normalizeObject(d):
     if type(d) == str:
-        return d.replace('<p>', '').replace('</p>', '').replace('・', '·').strip()
+        return re.sub(re.compile('<.*?>'), '', d).replace('・', '·').strip()
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):
@@ -64,9 +64,13 @@ for category_dir in CATEGORY_DIRS:
         langJsonMap = {}
         for language in LANGUAGES:
             langFile = str(jaJpFile).replace('ja-jp', language)
-            with open(langFile, 'r', encoding='utf_8_sig') as f:
-                langJson = json.load(f)
-                langJsonMap[language] = langJson
+            try:
+                with open(langFile, 'r', encoding='utf_8_sig') as f:
+                    langJson = json.load(f)
+                    langJsonMap[language] = langJson
+            except:
+                langJsonMap[language] = {}
+                continue
 
         jaJpDict = {}
         langDictMap = {}
@@ -99,21 +103,23 @@ for category_dir in CATEGORY_DIRS:
                 langDictMap[language] = {}
                 langArrMap[language] = []
                 for key in ['name']:
-                    langDictMap[language][key] = langJsonMap[language][key]
-                for module in langJsonMap[language]['modules']:
-                    for component in module['components']:
-                        # 天賦
-                        if component['component_id'] == 'talent' and 'data' in component and component['data'] != None and 'list' in component['data'] and component['data']['list'] != None:
-                            for entry in component['data']['list']:
-                                langArrMap[language].append(entry['title'])
-                                if 'attributes' in entry and entry['attributes'] != None:
-                                    for attribute in entry['attributes']:
-                                        langArrMap[language].append(
-                                            attribute['key'])
-                        # 命ノ星座
-                        if component['component_id'] == 'summaryList' and 'data' in component and component['data'] != None and 'list' in component['data'] and component['data']['list'] != None:
-                            for entry in component['data']['list']:
-                                langArrMap[language].append(entry['name'])
+                    if key in langJsonMap[language]:
+                        langDictMap[language][key] = langJsonMap[language][key]
+                if 'modules' in langJsonMap[language]:
+                    for module in langJsonMap[language]['modules']:
+                        for component in module['components']:
+                            # 天賦
+                            if component['component_id'] == 'talent' and 'data' in component and component['data'] != None and 'list' in component['data'] and component['data']['list'] != None:
+                                for entry in component['data']['list']:
+                                    langArrMap[language].append(entry['title'])
+                                    if 'attributes' in entry and entry['attributes'] != None:
+                                        for attribute in entry['attributes']:
+                                            langArrMap[language].append(
+                                                attribute['key'])
+                            # 命ノ星座
+                            if component['component_id'] == 'summaryList' and 'data' in component and component['data'] != None and 'list' in component['data'] and component['data']['list'] != None:
+                                for entry in component['data']['list']:
+                                    langArrMap[language].append(entry['name'])
 
             for key in ['name']:
                 newDictKey = normalizeObject(jaJpDict[key])
@@ -121,9 +127,10 @@ for category_dir in CATEGORY_DIRS:
                     continue
                 newDictValue = {}
                 for language in LANGUAGES:
-                    work = normalizeObject(langDictMap[language][key])
-                    if len(work) > 0:
-                        newDictValue[language] = work
+                    if key in langDictMap[language]:
+                        work = normalizeObject(langDictMap[language][key])
+                        if len(work) > 0:
+                            newDictValue[language] = work
                 newDictValue['id'] = id
                 newDictValue['category'] = menuId
                 newDictValue['name'] = name
@@ -162,21 +169,25 @@ for category_dir in CATEGORY_DIRS:
             for language in LANGUAGES:
                 langDictMap[language] = {}
                 langArrMap[language] = []
+                if langJsonMap[language] is None:
+                    continue
                 for key in ['name']:
-                    langDictMap[language][key] = langJsonMap[language][key]
-                for module in langJsonMap[language]['modules']:
-                    for component in module['components']:
-                        if component['component_id'] == 'baseInfo':
-                            if 'data' in component and 'list' in component['data']:
-                                for entry in component['data']['list']:
-                                    langArrMap[language].append(entry['key'])
+                    if key in langJsonMap[language]:
+                        langDictMap[language][key] = langJsonMap[language][key]
+                if 'modules' in langJsonMap[language]:
+                    for module in langJsonMap[language]['modules']:
+                        for component in module['components']:
+                            if component['component_id'] == 'baseInfo':
+                                if 'data' in component and 'list' in component['data']:
+                                    for entry in component['data']['list']:
+                                        langArrMap[language].append(entry['key'])
 
             for key in ['name']:
                 newDictKey = normalizeObject(jaJpDict[key])
                 newDictValue = {}
                 for language in LANGUAGES:
-                    newDictValue[language] = normalizeObject(
-                        langDictMap[language][key])
+                    if key in langDictMap[language]:
+                        newDictValue[language] = normalizeObject(langDictMap[language][key])
                 newDictValue['id'] = id
                 newDictValue['category'] = menuId
                 newDictValue['name'] = name
@@ -201,25 +212,27 @@ for category_dir in CATEGORY_DIRS:
             for language in LANGUAGES:
                 langDictMap[language] = {}
                 for key in ['name']:
-                    langDictMap[language][key] = langJsonMap[language][key]
-                for module in langJsonMap[language]['modules']:
-                    for component in module['components']:
-                        if component['component_id'] == 'artifact_list':
-                            if 'data' not in component:
-                                continue
-                            for position in ['flower_of_life', 'plume_of_death', 'sands_of_eon', 'goblet_of_eonothem', 'circlet_of_logos']:
-                                if position not in component['data']:
+                    if key in langJsonMap[language]:
+                        langDictMap[language][key] = langJsonMap[language][key]
+                if 'modules' in langJsonMap[language]:
+                    for module in langJsonMap[language]['modules']:
+                        for component in module['components']:
+                            if component['component_id'] == 'artifact_list':
+                                if 'data' not in component:
                                     continue
-                                if 'title' in component['data'][position]:
-                                    langDictMap[language][position +
-                                                          '_title'] = component['data'][position]['title']
+                                for position in ['flower_of_life', 'plume_of_death', 'sands_of_eon', 'goblet_of_eonothem', 'circlet_of_logos']:
+                                    if position not in component['data']:
+                                        continue
+                                    if 'title' in component['data'][position]:
+                                        langDictMap[language][position +
+                                                              '_title'] = component['data'][position]['title']
 
             for key in ['name']:
                 newDictKey = normalizeObject(jaJpDict[key])
                 newDictValue = {}
                 for language in LANGUAGES:
-                    newDictValue[language] = normalizeObject(
-                        langDictMap[language][key])
+                    if key in langDictMap[language]:
+                        newDictValue[language] = normalizeObject(langDictMap[language][key])
                 newDictValue['id'] = id
                 newDictValue['category'] = menuId
                 newDictValue['name'] = name
