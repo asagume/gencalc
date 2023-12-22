@@ -900,4 +900,8 @@ button.execute {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+input[type="number"] {
+  text-align: right;
+}
 </style>
