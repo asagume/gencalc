@@ -60,7 +60,7 @@
           <label class="condition" v-for="item in supporterNumberList(supporter)" :key="item.name">
             <span> {{ displayName(item.displayName) }}</span>
             <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max" :step="item.step"
-              :disabled="conditionDisabled(item)" @change="onChange(supporter, item)" />
+              :disabled="conditionDisabled(item)" @blur="onChange(supporter, item)" />
           </label>
         </div>
       </fieldset>
@@ -199,7 +199,7 @@ export default defineComponent({
 
     const elementBgClass = (supporter: string) => {
       return ' ' + (ELEMENT_BG_COLOR_CLASS as any)[(CHARACTER_MASTER as any)[supporter].元素];
-    };
+    }
 
     function formatCondition(supporter: string, name: string | null, condition: string | null | undefined) {
       let result = supporter + '*';
@@ -225,60 +225,62 @@ export default defineComponent({
     }
     damageDetailArr.filter((s) => s.条件).forEach((detailObj) => {
       makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
-    });
+    })
     statusChangeDetailObjArr.filter((s) => s.条件).forEach((detailObj) => {
       makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
-    });
+    })
     talentChangeDetailObjArr.filter((s) => s.条件).forEach((detailObj) => {
       makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
-    });
+    })
     conditionMap.forEach((value, key) => {
-      if (value && Array.isArray(value)) {
+      if (value && _.isArray(value)) {
         if (!value[0].startsWith('required_')) {
           conditionMap.set(key, ['', ...value]);
         }
       }
-    });
+    })
 
     const updateConditionList = () => {
       conditionMap.forEach((value: string[] | null | object, key: string) => {
         if (value === null) { // checkbox
-          if (checkboxList.filter((s) => s.name == key).length == 0) {
+          if (checkboxList.filter((s) => s.name == key).length === 0) {
             checkboxList.push({
               name: key,
               displayName: key.replace(/^.+\*/, '')
-            });
+            })
           }
-        } else if (Array.isArray(value)) {  // select
-          if (selectList.filter((s) => s.name == key).length == 0) {
+        } else if (_.isArray(value)) {  // select
+          if (selectList.filter((s) => s.name == key).length === 0) {
             const required = value[0].startsWith('required_');
             selectList.push({
               name: key,
               displayName: key.replace(/^.+\*/, ''),
               options: (required || !value[0]) ? value : ['', ...value],
               required: required,
-            });
+            })
           }
         } else if (_.isPlainObject(value)) {  // number
-          numberList.push({
-            name: key,
-            displayName: key.replace(/^.+\*/, ''),
-            min: (value as any).min,
-            max: (value as any).max,
-            step: (value as any).step,
-          });
+          if (numberList.filter((s) => s.name == key).length === 0) {
+            numberList.push({
+              name: key,
+              displayName: key.replace(/^.+\*/, ''),
+              min: (value as any).min,
+              max: (value as any).max,
+              step: (value as any).step,
+            })
+          }
         }
       });
       conditionMap.forEach((value, key) => {
         if (value === null) { // checkbox
           if (!(key in conditionValues)) conditionValues[key] = false;
-        } else if (Array.isArray(value)) {  // select
+        } else if (_.isArray(value)) {  // select
           if (!(key in conditionValues)) conditionValues[key] = 0;
         } else if (_.isPlainObject(value)) {  // number
           if (!(key in conditionValues)) conditionValues[key] = (value as any).min;
         }
-      });
-    };
+      })
+    }
 
     const takeMasterTeamOption = (character: string, master: any) => {
       if ('チームバフ' in master) {
@@ -302,17 +304,17 @@ export default defineComponent({
             talentChangeDetailObjArr.splice(talentChangeDetailObjArr.length, 0, damageDetailObj);
           }
           makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
-        });
+        })
         updateConditionList();
       }
-    };
+    }
 
     async function setupFromCharacterMaster() {
       const list: Promise<void>[] = [];
       for (const character of SUPPORTER_KEY_LIST) {
         list.push(getCharacterMasterDetail(character as TCharacterKey).then(result => {
           takeMasterTeamOption(character, result);
-        }));
+        }))
       }
       await Promise.all(list);
     }
@@ -330,7 +332,7 @@ export default defineComponent({
       // マスターから取り込んだチームバフを削除します
       const removeConditions: string[] = additionalConditions.filter((s) =>
         s.startsWith(characterInput.character + '*')
-      );
+      )
       if (removeConditions.length > 0) {
         statusChangeDetailObjArr.splice(0, statusChangeDetailObjArr.length, ...statusChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string)));
         talentChangeDetailObjArr.splice(0, talentChangeDetailObjArr.length, ...talentChangeDetailObjArr.filter((s) => !removeConditions.includes(s.条件 as string)));
@@ -338,7 +340,7 @@ export default defineComponent({
           if (conditionMap.has(condition)) {
             conditionMap.delete(condition);
           }
-        });
+        })
         checkboxList.splice(0, checkboxList.length, ...checkboxList.filter((s) => !removeConditions.includes(s.name)));
         selectList.splice(0, selectList.length, ...selectList.filter((s) => !removeConditions.includes(s.name)));
         numberList.splice(0, numberList.length, ...numberList.filter((s) => !removeConditions.includes(s.name)));
@@ -352,53 +354,74 @@ export default defineComponent({
       takeMasterTeamOption(characterInput.character, characterInput.weaponMaster);
 
       return supporterInputResult;
-    };
-
-    const supporterCheckboxList = (supporter: any) => {
-      return checkboxList.filter((s) => s.name.startsWith(supporter + '*'));
-    };
-
-    const supporterSelectList = (supporter: any) => {
-      return selectList.filter((s) => s.name.startsWith(supporter + '*'));
-    };
-
-    const supporterNumberList = (supporter: any) => {
-      return numberList.filter((s) => s.name.startsWith(supporter + '*'));
-    };
+    }
 
     /** 選択中のキャラクターのオプションは無効です */
-    const supporterVisible = (supporter: any) => {
-      if (supporter == props.character) return false;
-      return true;
-    };
-
+    const supporterVisible = (supporter: any) => supporter != props.character;
     const supporterOptionSelectedClass = (supporter: any) => {
-      for (const entry of supporterCheckboxList(supporter)) {
-        if (conditionValues[entry.name]) return ' selected';
+      if (supporterCheckboxList(supporter).filter(s => conditionValues[s.name]).length > 0
+        || supporterSelectList(supporter).filter(s => !s.required && conditionValues[s.name]).length > 0) {
+        return ' selected';
       }
-      for (const entry of supporterSelectList(supporter)) {
-        if (!entry.required && conditionValues[entry.name]) return ' selected';
+      return '';
+    }
+    const supporterCheckboxList = (supporter: any) => checkboxList.filter((s) => s.name.startsWith(supporter + '*'));
+    const supporterSelectList = (supporter: any) => selectList.filter((s) => s.name.startsWith(supporter + '*'));
+    const supporterNumberList = (supporter: any) => numberList.filter((s) => s.name.startsWith(supporter + '*'));
+
+
+    const characterIconSrc = (character: string) => (CHARACTER_MASTER as any)[character].icon_url;
+    const characterVisionIconSrc = (character: string) => (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[character].元素];
+    const weaponIconSrc = (character: string) => {
+      let result = IMG_SRC_DUMMY;
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.weaponMaster) {
+        result = inputResult.characterInput.weaponMaster.icon_url;
       }
-      return "";
-    };
+      return result;
+    }
+    const weaponName = (character: string) => {
+      let result = '';
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.weaponMaster) {
+        result = inputResult.characterInput.weaponMaster.名前;
+      }
+      return result;
+    }
+    const artifactSetIconSrc = (character: string, index: number) => {
+      let result = IMG_SRC_DUMMY;
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
+        if (inputResult.characterInput.artifactSetMasters.length > index) {
+          result = inputResult.characterInput.artifactSetMasters[index].icon_url;
+        }
+      }
+      return result;
+    }
+    const artifactSetName = (character: string, index: number) => {
+      let result = '';
+      const inputResult = supporterInputResultMap.get(character);
+      if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
+        if (inputResult.characterInput.artifactSetMasters.length > index) {
+          result = inputResult.characterInput.artifactSetMasters[index].key;
+        }
+      }
+      return result;
+    }
 
     /** サポーターのステータス（天賦レベル）を参照するオプションには保存データが必要です */
     const conditionDisabled = (item: any): boolean => {
       const supporter = item.name.split('*')[0];
-      if (props.savedSupporters.filter((s) => s.key == supporter).length > 0)
-        return false;
-      for (const myDetailObj of statusChangeDetailObjArr) {
-        if (myDetailObj.条件) {
-          if (myDetailObj.条件.startsWith(item.name)) {
+      if (props.savedSupporters.filter((s) => s.key == supporter).length === 0) {
+        for (const myDetailObj of statusChangeDetailObjArr) {
+          if (_.isString(myDetailObj.条件) && myDetailObj.条件.startsWith(item.name)) {
             if (myDetailObj.数値?.includes('$')) {
               return true;
             }
           }
         }
-      }
-      for (const myDetailObj of talentChangeDetailObjArr) {
-        if (myDetailObj.条件) {
-          if (myDetailObj.条件.startsWith(item.name)) {
+        for (const myDetailObj of talentChangeDetailObjArr) {
+          if (_.isString(myDetailObj.条件) && myDetailObj.条件.startsWith(item.name)) {
             if (myDetailObj.数値?.includes('$')) {
               return true;
             }
@@ -406,7 +429,7 @@ export default defineComponent({
         }
       }
       return false;
-    };
+    }
 
     /** ステータス補正値を計算します */
     const statAdjustments = computed(() => {
@@ -423,7 +446,7 @@ export default defineComponent({
               supporter = detailObj.条件.substring(0, detailObj.条件.indexOf('*'));
               if (supporter == props.character) continue;
               const number = checkConditionMatches(detailObj.条件, validConditionValueArr, 6);
-              if (!number || number == 0) continue;
+              if (!number || number === 0) continue;
               if (number !== 1 && myNew数値) {
                 myNew数値 = '(' + myNew数値 + ')*' + number;
               }
@@ -439,18 +462,15 @@ export default defineComponent({
             }
             Object.keys(props.topStats).forEach(stat => { // チーム内で最も高いステータスをセットします
               statsObj[stat] = props.topStats[stat];
-            });
+            })
             let myValue = Infinity;
             if (myNew数値) {
               myValue = evalFormula(myNew数値, statsObj, damageResult, my上限, my下限);
             }
             const kinds = [] as string[];
             if (detailObj.種類) {
-              if (
-                detailObj.種類.startsWith('全') ||
-                detailObj.種類.startsWith('敵全')
-              ) {
-                for (const elem of ['炎', '水', '風', '雷', '草', '氷', '岩']) {
+              if (detailObj.種類.startsWith('全') || detailObj.種類.startsWith('敵全')) {
+                for (const elem of ALL_ELEMENTS) {
                   kinds.push(detailObj.種類.replace('全', elem));
                 }
               } else {
@@ -459,7 +479,9 @@ export default defineComponent({
             }
             for (const kind of kinds) {
               let tempKind = kind;
-              if (detailObj.対象) tempKind += '.' + detailObj.対象;
+              if (detailObj.対象) {
+                tempKind += '.' + detailObj.対象;
+              }
               if (tempKind in workObj) {
                 workObj[tempKind] += myValue;
               } else {
@@ -468,9 +490,9 @@ export default defineComponent({
             }
           }
         }
-      });
+      })
       return workObj;
-    });
+    })
 
     /** ステータス補正値を表示用の形式に編集します */
     const displayStatAjustmentList = computed(() => {
@@ -481,7 +503,7 @@ export default defineComponent({
         if (value != Infinity) {
           if (isNumeric(value)) {
             if (value >= 0) {
-              if (stat.split('.')[0] == '別枠乗算') result += '=';
+              if (stat.split('.')[0] === '別枠乗算') result += '=';
               else result += "+";
             }
             result += displayStatValue(stat, value);
@@ -492,12 +514,12 @@ export default defineComponent({
         resultArr.push(result);
       }
       return resultArr;
-    });
+    })
 
     const initializeSupporters = (calculatedSupporters: { [key: string]: TSupporterInput | undefined }) => {
       for (const entry of props.savedSupporters) {
         selectedBuildname[entry.key] = entry.buildname;
-        let result = setupSupporterDamageResult(entry);
+        const result = setupSupporterDamageResult(entry);
         supporterInputResultMap.set(entry.key, result);
       }
       Object.keys(calculatedSupporters).forEach(key => {
@@ -505,8 +527,41 @@ export default defineComponent({
         if (supporterInputResult) {
           supporterInputResultMap.set(key, supporterInputResult);
         }
-      });
-    };
+      })
+    }
+
+    function convertBuildname(character: string, storageKey: string) {
+      const prefix = makeBuildStorageKey(character);
+      if (storageKey == prefix) return makeDefaultBuildname(character);
+      return storageKey.replace(new RegExp('^' + prefix + '_'), '');
+    }
+
+    const buildnameList = (character: string) => {
+      const re = new RegExp('^構成_' + character.replace('(', '\\(').replace(')', '\\)') + '(_|$)');
+      const storageKeys = Object.keys(localStorage).filter((s) => re.test(s));
+      const list = storageKeys.map((s) => convertBuildname(character, s));
+      const defaultBuildname = makeDefaultBuildname(character);
+      const result = list.filter((s) => s != defaultBuildname).sort();
+      if (list.includes(defaultBuildname)) {
+        result.unshift(defaultBuildname);
+      }
+      return result;
+    }
+
+    const builddataSelectable = (character: string) => buildnameList(character).length > 0;
+
+    SUPPORTER_KEY_LIST.forEach((supporter) => {
+      builddataSelectorVisible[supporter] = false;
+      const list = buildnameList(supporter);
+      if (list.length > 0) {
+        let buildname = list[0];
+        const workArr = props.savedSupporters.filter(s => s.key == supporter);
+        if (workArr.length) {
+          buildname = workArr[0].buildname;
+        }
+        selectedBuildname[supporter] = buildname;
+      }
+    })
 
     async function onLoad() {
       updateConditionList();
@@ -527,7 +582,7 @@ export default defineComponent({
       await nextTick();
       overwriteObject(conditionInput.conditionAdjustments, statAdjustments.value);
       context.emit('update:team-option', conditionInput);
-    };
+    }
 
     const initializeValues = async (initialObj: TConditionInput) => {
       Object.keys(conditionValues).forEach((key) => {
@@ -538,22 +593,22 @@ export default defineComponent({
             const value = conditionMap.get(key);
             if (value === null) {
               conditionValues[key] = false;
-            } else if (Array.isArray(value)) {
+            } else if (_.isArray(value)) {
               conditionValues[key] = 0;
             } else if (_.isPlainObject(value)) {
               conditionValues[key] = (value as any).min;
             }
           }
         }
-      });
+      })
       onChange();
-    };
+    }
 
     const closeAllSupporters = () => {
       for (const supporter of Object.keys(supporterOpenClose)) {
         supporterOpenClose[supporter] = false;
       }
-    };
+    }
 
     const clearAllSupporterOptions = () => {
       for (const entry of checkboxList) {
@@ -565,43 +620,11 @@ export default defineComponent({
       for (const entry of numberList) {
         conditionValues[entry.name] = entry.min;
       }
-    };
-
-    function convertBuildname(character: string, storageKey: string) {
-      const prefix = makeBuildStorageKey(character);
-      if (storageKey == prefix) return makeDefaultBuildname(character);
-      return storageKey.replace(new RegExp("^" + prefix + "_"), "");
     }
 
-    const buildnameList = (character: string) => {
-      const re = new RegExp("^構成_" + character.replace('(', '\\(').replace(')', '\\)') + "(_|$)");
-      const storageKeys = Object.keys(localStorage).filter((s) => re.test(s));
-      const list = storageKeys.map((s) => convertBuildname(character, s));
-      const defaultBuildname = makeDefaultBuildname(character);
-      const result = list.filter((s) => s != defaultBuildname).sort();
-      if (list.includes(defaultBuildname)) result.unshift(defaultBuildname);
-      return result;
-    };
-
-    const builddataSelectable = (character: string) => {
-      return buildnameList(character).length > 0;
-    };
-
-    SUPPORTER_KEY_LIST.forEach((supporter) => {
-      builddataSelectorVisible[supporter] = false;
-      const list = buildnameList(supporter);
-      if (list.length > 0) {
-        let buildname = list[0];
-        const workArr = props.savedSupporters.filter(s => s.key == supporter);
-        if (workArr.length) {
-          buildname = workArr[0].buildname;
-        }
-        selectedBuildname[supporter] = buildname;
-      }
-    });
     const buildnameSelectionOnChange = () => {
       context.emit('update:buildname-selection', selectedBuildname);
-    };
+    }
 
     function updateTeamMembers(teamMembers: string[]) {
       context.emit('update:team-members', teamMembers);
@@ -609,11 +632,11 @@ export default defineComponent({
 
     const addToTeamOnClick = (supporer: string) => {
       updateTeamMembers([...props.teamMembers, supporer]);
-    };
+    }
 
     const removeFromTeamOnClick = (member: string) => {
       updateTeamMembers(props.teamMembers.filter(s => s != member));
-    };
+    }
 
     watch(props, async (newVal, oldVal) => {
       const workPromiseArr: any[] = [];
@@ -639,7 +662,7 @@ export default defineComponent({
         }
       }
       for (const entry of oldVal.savedSupporters) {
-        const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length == 0;
+        const absent = newVal.savedSupporters.filter((s) => s.key == entry.key).length === 0;
         if (absent) {
           supporterInputResultMap.delete(entry.key);
           delete selectedBuildname[entry.key];
@@ -647,55 +670,7 @@ export default defineComponent({
       }
       await Promise.all(workPromiseArr);  // ここをPromise.allでやっちゃっていいかは…？
       onChange();
-    });
-
-    const characterIconSrc = (character: string) => {
-      return (CHARACTER_MASTER as any)[character].icon_url;
-    };
-
-    const characterVisionIconSrc = (character: string) => {
-      return (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[character].元素];
-    };
-
-    const weaponIconSrc = (character: string) => {
-      let result = IMG_SRC_DUMMY;
-      const inputResult = supporterInputResultMap.get(character);
-      if (inputResult && inputResult?.characterInput?.weaponMaster) {
-        result = inputResult.characterInput.weaponMaster.icon_url;
-      }
-      return result;
-    };
-
-    const weaponName = (character: string) => {
-      let result = '';
-      const inputResult = supporterInputResultMap.get(character);
-      if (inputResult && inputResult?.characterInput?.weaponMaster) {
-        result = inputResult.characterInput.weaponMaster.名前;
-      }
-      return result;
-    };
-
-    const artifactSetIconSrc = (character: string, index: number) => {
-      let result = IMG_SRC_DUMMY;
-      const inputResult = supporterInputResultMap.get(character);
-      if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
-        if (inputResult.characterInput.artifactSetMasters.length > index) {
-          result = inputResult.characterInput.artifactSetMasters[index].icon_url;
-        }
-      }
-      return result;
-    };
-
-    const artifactSetName = (character: string, index: number) => {
-      let result = '';
-      const inputResult = supporterInputResultMap.get(character);
-      if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
-        if (inputResult.characterInput.artifactSetMasters.length > index) {
-          result = inputResult.characterInput.artifactSetMasters[index].key;
-        }
-      }
-      return result;
-    };
+    })
 
     return {
       displayName,

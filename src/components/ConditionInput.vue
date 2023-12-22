@@ -15,7 +15,7 @@
     <label v-for="item in numberList" :key="item.name">
       <span>{{ displayName(item.name) }}</span>
       <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max" :step="item.step"
-        @change="updateCondition($event, item)" />
+        @blur="updateCondition($event, item)" />
     </label>
     <div style="text-align: center">
       <label class="open-close">
