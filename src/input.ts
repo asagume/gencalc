@@ -373,7 +373,7 @@ export type TDamageDetail = {
     その他?: TDamageDetailObj[],
     ステータス変更系詳細: TDamageDetailObj[],
     天賦性能変更系詳細: TDamageDetailObj[],
-    条件: Map<string, string[]>,
+    条件: Map<string, string[] | object | null>,
     排他: Map<string, string[]>,
 };
 
@@ -513,6 +513,10 @@ export const SUPPORTER_INPUT_TEMPLATE = {
     conditionInput: getDefaultConditionInput(),
     statsInput: getDefaultStatsInput(),
     damageResult: getDefaultDamageResultInput(),
+    teamOptionDetails1: [] as TDamageDetailObj[],
+    teamOptionDetails2: [] as TDamageDetailObj[],
+    teamConditions: new Map<string, string[] | object | null>(),
+    teamExclusions: new Map<string, string[]>(),
 };
 export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
 
@@ -1507,8 +1511,8 @@ export function makeTeamOptionDetailObjArr(
 // 排他条件 条件A^条件B
 export function makeConditionExclusionMapFromStr(
     conditionStr: string,
-    conditionMap: Map<string, string[] | null | object>,
-    exclusionMap: Map<string, string[] | null>
+    conditionMap: Map<string, string[] | object | null>,
+    exclusionMap: Map<string, string[]>
 ) {
     // 排他条件を抽出します
     let exclusionStr: string | undefined = undefined;
@@ -1536,14 +1540,14 @@ export const NUMBER_CONDITION_VALUE_RE = /^\s*{.+}\s*$/;
 
 function makeConditionExclusionMapFromStrSub(
     conditionStr: string,
-    conditionMap: Map<string, string[] | null | object>,
-    exclusionMap: Map<string, string[] | null>,
+    conditionMap: Map<string, string[] | object | null>,
+    exclusionMap: Map<string, string[]>,
     exclusion?: string,
 ) {
     const workArr = conditionStr.split(/[@=]/);
     const name = workArr[0];
     if (workArr.length === 1) {
-        pushToMapValueArray(conditionMap, name, null);
+        pushToMapValueArray(conditionMap, name, null);  // null
     } else if (workArr.length === 2) {
         if (NUMBER_CONDITION_VALUE_RE.test(workArr[1])) {
             try {
@@ -1560,7 +1564,7 @@ function makeConditionExclusionMapFromStrSub(
                         max: max,
                         step: isNumeric(workObj.step) ? Number(workObj.step) : 1,
                     };
-                    pushToMapValueArray(conditionMap, name, conditionObj);
+                    pushToMapValueArray(conditionMap, name, conditionObj);  // object
                 }
             } catch (error) {
                 console.error(error);
@@ -1574,7 +1578,7 @@ function makeConditionExclusionMapFromStrSub(
                 const condValueArr = reRet[2].split(',');
                 const postfix = reRet[3];
                 condValueArr.forEach(value => {
-                    pushToMapValueArray(conditionMap, name, prefix + value + postfix);
+                    pushToMapValueArray(conditionMap, name, prefix + value + postfix);  // string[]
                 })
             }
         } else if (workArr[1].includes('-')) {
@@ -1596,21 +1600,21 @@ function makeConditionExclusionMapFromStrSub(
                 }
                 step = step ? step : 1;
                 for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
-                    pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);
+                    pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);  // string[]
                 }
-                pushToMapValueArray(conditionMap, name, prefix + String(rangeEnd) + postfix);
+                pushToMapValueArray(conditionMap, name, prefix + String(rangeEnd) + postfix);  // string[]
             } else {
-                pushToMapValueArray(conditionMap, name, workArr[1]);
+                pushToMapValueArray(conditionMap, name, workArr[1]);  // string[]
             }
         } else {
-            pushToMapValueArray(conditionMap, name, workArr[1]);
+            pushToMapValueArray(conditionMap, name, workArr[1]);  // string[]
         }
     } else {
         console.error(conditionStr, conditionMap, exclusionMap, exclusion);
     }
     if (exclusion) {
         exclusion.split(',').forEach(e => {
-            pushToMapValueArray(exclusionMap, name, e);
+            pushToMapValueArray(exclusionMap, name, e);  // string[]
         })
     }
 }
@@ -1760,7 +1764,7 @@ export function makeConditionMapFromCharacterInput(characterInput: TCharacterInp
 }
 
 export function makeExclusionMapFromCharacterInput(characterInput: TCharacterInput) {
-    const result = new Map() as Map<string, string[] | null>;
+    const result = new Map() as Map<string, string[]>;
     [
         characterInput.damageDetailMyCharacter,
         characterInput.damageDetailMyWeapon,

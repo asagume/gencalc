@@ -662,7 +662,7 @@ export const CHARACTER_ENERGY_FUNC: {
             const messages: string[] = [
                 'セレモニアル·クリスタルショット発動時、「裂晶の欠片」を1個消費するごとに、ナヴィアは元素エネルギーを3ポイント回復し、晴天を衝く霰弾のサルートのクールタイムｰ1秒。この方法による元素エネルギー回復は最大9ポイント、短縮できるクールタイムは最大3秒まで。',
             ];
-            const myEnergy = 3 * 3;
+            const myEnergy = 3 * 3 * countE(character, rotationList);
             const allEnergy = 0;
             const otherEnergy = 0;
             const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);

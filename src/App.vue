@@ -596,9 +596,15 @@ export default defineComponent({
           calculateSupporter(optionInputRea, s.key as TCharacterKey, s.value, characterInputRea.character as TCharacterKey));
         await Promise.all(list);
       }
-      deleteKeyArr.forEach(supporter => {
-        delete optionInputRea.supporters[supporter];
-      })
+      if (deleteKeyArr.length) {
+        const list = deleteKeyArr.map(s => calculateSupporter(optionInputRea, s as TCharacterKey, ''));
+        await Promise.all(list);
+      }
+      const list = CHARACTER_KEYS.filter(key => !savedSupporters.map(s => s.key).includes(key) && !(key in optionInputRea.supporters)).map(s =>
+        calculateSupporter(optionInputRea, s as TCharacterKey, ''));
+      if (list.length) {
+        await Promise.all(list);
+      }
       console.log('App', 'supporters', newKeyArr);
       console.log('App', 'deletedSupporters', deleteKeyArr);
       if (teamOptionInputVmRef.value) {

@@ -4,17 +4,34 @@ import {
     CHANGE_KIND_STATUS,
     CHANGE_KIND_TALENT,
     DAMAGE_RESULT_TEMPLATE,
+    getChangeKind,
+    getDefaultArtifactDetailInput,
+    getDefaultCharacterInput,
+    getDefaultConditionInput,
+    getDefaultDamageResultInput,
+    getDefaultStatsInput,
     getStatValue,
+    loadRecommendation,
+    makeConditionExclusionMapFromStr,
+    makeDamageDetailObjArr,
+    makeDamageDetailObjArrObjArtifactSets,
+    makeDamageDetailObjArrObjCharacter,
+    makeDamageDetailObjArrObjWeapon,
+    makeTeamOptionDetailObjArr,
     NUMBER_CONDITION_VALUE_RE,
+    setupConditionValues,
     TArtifactDetailInput,
     TCharacterInput,
     TConditionInput,
     TConditionValues,
+    TDamageDetailObj,
     TDamageResult,
+    TDamageResultElementalReaction,
     TDamageResultEntry,
     TOptionInput,
     TStats,
     TStatsInput,
+    updateNumberConditionValues,
     ステータスTEMPLATE,
     ステータスチーム内最高ARRAY,
     ダメージバフARRAY,
@@ -26,20 +43,72 @@ import {
     実数ダメージ加算ARRAY,
     突破レベルレベルARRAY,
     聖遺物サブ効果ARRAY,
-    loadRecommendation,
-    makeDamageDetailObjArrObjCharacter,
-    makeDamageDetailObjArrObjWeapon,
-    makeDamageDetailObjArrObjArtifactSets,
-    setupConditionValues,
-    updateNumberConditionValues,
-    TDamageResultElementalReaction,
-    getDefaultCharacterInput,
-    getDefaultArtifactDetailInput,
-    getDefaultConditionInput,
-    getDefaultStatsInput,
-    getDefaultDamageResultInput,
 } from '@/input';
-import { ALL_ELEMENTS, ARTIFACT_MAIN_MASTER, ARTIFACT_SUB_MASTER, DAMAGE_CATEGORY_ARRAY, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, getCharacterMasterDetail, TArtifactMainRarity, TArtifactMainStat, TCharacterKey } from '@/master';
+import {
+    ALL_ELEMENTS,
+    ARTIFACT_MAIN_MASTER,
+    ARTIFACT_SUB_MASTER,
+    DAMAGE_CATEGORY_ARRAY,
+    ELEMENTAL_REACTION_MASTER,
+    ELEMENTAL_RESONANCE_MASTER,
+    getCharacterMasterDetail,
+    TArtifactMainRarity,
+    TArtifactMainStat,
+    TCharacterKey,
+    TEAM_OPTION_MASTER_LIST,
+} from '@/master';
+
+export type TArtifactScoreFormulaElement = [string, number];
+export type TArtifactScoreFormula = TArtifactScoreFormulaElement[];
+export const ARTIFACT_SCORE_FACTORS = [
+    'HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率',
+];
+export const ARTIFACT_SCORE_FORMULA_TEMPLATE: TArtifactScoreFormula[] = [
+    [['会心率', 2], ['会心ダメージ', 1]],
+    [['攻撃力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
+    [['HP%', 1], ['会心率', 2], ['会心ダメージ', 1]],
+    [['防御力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
+    [['HP%', 0.5], ['攻撃力%', 0.5], ['会心率', 2], ['会心ダメージ', 1]],
+    [['攻撃力%', 0.5], ['防御力%', 0.5], ['会心率', 2], ['会心ダメージ', 1]],
+    [['攻撃力%', 0.5], ['元素熟知', 0.125], ['会心率', 2], ['会心ダメージ', 1]],
+];
+
+export type TRotationDamageEntry = {
+    name: string;
+    category: string;
+    reactions: object[];
+    counts: number[];
+};
+export type TRotationDamageInfo = {
+    totalDamage: number,
+    rotationDamages: TRotationDamageEntry[],
+};
+export const REACTION_DMG_ARR = [
+    '過負荷ダメージ',
+    '感電ダメージ',
+    '超電導ダメージ',
+    '拡散ダメージ',
+    '燃焼ダメージ',
+    '開花ダメージ',
+    '烈開花ダメージ',
+    '超開花ダメージ',
+];
+export const REACTION_DMG_ELEMENT_MAP = new Map<string, string>();
+function setupReactionDmgElementMap() {
+    REACTION_DMG_ARR.forEach((reactionDmg) => {
+        const reaction = reactionDmg.replace(/ダメージ$/, '');
+        Object.keys(ELEMENTAL_REACTION_MASTER).forEach((element) => {
+            const reactionMaster = (ELEMENTAL_REACTION_MASTER as any)[element];
+            const workArr = Object.keys(reactionMaster);
+            if (workArr.includes(reaction)) {
+                if ('元素' in reactionMaster[reaction]) {
+                    REACTION_DMG_ELEMENT_MAP.set(reactionDmg, reactionMaster[reaction].元素);
+                }
+            }
+        });
+    });
+}
+setupReactionDmgElementMap();
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
@@ -152,6 +221,83 @@ export function calculateArtifactStats(artifactDetailInput: TArtifactDetailInput
     }
 }
 
+function makeEvalableScript(
+    formula: string,
+    statsObj: TStats,
+    damageResult: TDamageResult,
+) {
+    const replaceMap = new Map<string, string>();
+    const re = /\$\{(.+?)\}/g;
+    let reRet;
+    while ((reRet = re.exec(formula)) !== null) {
+        const key = reRet[1];
+        if (!replaceMap.has(key)) {
+            let value;
+            if (key.includes('#')) {   // 元素爆発#スキルダメージ 等
+                const arr = key.split('#');
+                if (arr.length === 2) {
+                    const major = arr[0];
+                    const minor = arr[1];
+                    if (major in damageResult) {
+                        const entryArr = (damageResult[major] as TDamageResultEntry[]).filter(s => s[0] == minor);
+                        if (entryArr.length) {
+                            value = String(entryArr[0][4]);  // 非会心
+                        }
+                    }
+                }
+                if (value === undefined) {
+                    console.warn(formula, damageResult, key);
+                    value = '0';
+                }
+            } else {    // ステータス
+                value = String(getStatValue(key, statsObj));
+            }
+            if (value !== undefined) {
+                replaceMap.set(key, value);
+            }
+        }
+    }
+    let result = formula;
+    replaceMap.forEach((value, key) => {
+        result = result.replaceAll('${' + key + '}', value);
+    })
+    return result;
+}
+
+export function evalFormula(
+    formula: number | string | null | undefined,
+    statsObj: TStats,
+    damageResult: TDamageResult,
+    opt_max: number | string | null = null,
+    opt_min: number | string | null = null
+) {
+    let result = 0;
+    let script;
+    if (!formula) {
+        // nop
+    } else if (_.isNumber(formula)) {
+        result = formula;
+    } else {
+        script = makeEvalableScript(formula, statsObj, damageResult);
+        try {
+            result = eval(script);
+        } catch (error) {
+            console.error(error);
+            console.error(formula, statsObj, damageResult, script);
+        }
+    }
+    if (opt_max !== null) {
+        const max = evalFormula(opt_max, statsObj, damageResult);
+        result = Math.min(result, max);
+    }
+    if (opt_min !== null) {
+        const min = evalFormula(opt_min, statsObj, damageResult);
+        result = Math.max(result, min);
+    }
+    console.debug(formula, opt_max, opt_min, script, result);
+    return result;
+}
+
 /** キャラクターのステータスを計算します */
 export const calculateStats = function (
     statsInput: TStatsInput,
@@ -160,11 +306,7 @@ export const calculateStats = function (
     conditionInput: TConditionInput,
     optionInput: TOptionInput
 ) {
-    if (!characterInput) return;
-    if (!artifactDetailInput) return;
-    if (!conditionInput) return;
-    if (!optionInput) return;
-
+    if (!characterInput || !artifactDetailInput || !conditionInput || !optionInput) return;
     try {
         const characterMaster = characterInput.characterMaster;
         const ascension = characterInput.突破レベル;
@@ -1590,6 +1732,13 @@ function calculateDamageFromDetail(
     }
 }
 
+/**
+ * 計算式内の参照有無を求めます
+ */
+export function isUseReference(formula: number | string) {
+    return _.isString(formula) && formula.includes('#');
+}
+
 function calculateDamageFromDetailSub(
     statsObj: TStats,
     damageResult: TDamageResult,
@@ -1692,13 +1841,6 @@ function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: stri
 }
 
 /**
- * 計算式内の参照有無を求めます
- */
-export function isUseReference(formula: number | string) {
-    return _.isString(formula) && formula.includes('#');
-}
-
-/**
  * ステータスを更新します
  */
 function updateStats(
@@ -1774,23 +1916,6 @@ function calculateDamageTaken(statsObj: TStats, damage: number, element: string)
 //     return result;
 // }
 
-export type TArtifactScoreFormulaElement = [string, number];
-export type TArtifactScoreFormula = TArtifactScoreFormulaElement[];
-
-export const ARTIFACT_SCORE_FACTORS = [
-    'HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率',
-];
-
-export const ARTIFACT_SCORE_FORMULA_TEMPLATE: TArtifactScoreFormula[] = [
-    [['会心率', 2], ['会心ダメージ', 1]],
-    [['攻撃力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
-    [['HP%', 1], ['会心率', 2], ['会心ダメージ', 1]],
-    [['防御力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
-    [['HP%', 0.5], ['攻撃力%', 0.5], ['会心率', 2], ['会心ダメージ', 1]],
-    [['攻撃力%', 0.5], ['防御力%', 0.5], ['会心率', 2], ['会心ダメージ', 1]],
-    [['攻撃力%', 0.5], ['元素熟知', 0.125], ['会心率', 2], ['会心ダメージ', 1]],
-];
-
 export function calculateArtifactScore(
     characterInput: TCharacterInput,
     artifactDetailInput: TArtifactDetailInput,
@@ -1834,43 +1959,120 @@ export function calculateStatsTop(
 export async function calculateSupporter(
     optionInput: TOptionInput,
     supporter: TCharacterKey,
-    build: string,
-    character: TCharacterKey,
+    build?: string,
+    character?: TCharacterKey,
 ): Promise<[TStats, TDamageResult]> {
     const characterInput = getDefaultCharacterInput();
     const artifactDetailInput = getDefaultArtifactDetailInput();
     const conditionInput = getDefaultConditionInput();
     const statsInput = getDefaultStatsInput();
     const damageResult = getDefaultDamageResultInput();
+    const teamOptionDetails1: TDamageDetailObj[] = [];
+    const teamOptionDetails2: TDamageDetailObj[] = [];
+    const teamConditions = new Map<string, string[] | object | null>();
+    const teamExclusions = new Map<string, string[]>();
 
     characterInput.character = supporter;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
 
-    const builddata = JSON.parse(build);
+    if (build) {
+        const builddata = JSON.parse(build);
 
-    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, builddata);
-    makeDamageDetailObjArrObjCharacter(characterInput);
-    makeDamageDetailObjArrObjWeapon(characterInput);
-    makeDamageDetailObjArrObjArtifactSets(characterInput);
-    setupConditionValues(conditionInput, characterInput, optionInput);
-    calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
-    calculateArtifactStats(artifactDetailInput);
-    if (optionInput.elementalResonance) {
-        optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput.elementalResonance.conditionValues, conditionInput);
+        await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, builddata);
+        makeDamageDetailObjArrObjCharacter(characterInput);
+        makeDamageDetailObjArrObjWeapon(characterInput);
+        makeDamageDetailObjArrObjArtifactSets(characterInput);
+        setupConditionValues(conditionInput, characterInput, optionInput);
+        calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
+        calculateArtifactStats(artifactDetailInput);
+        if (optionInput.elementalResonance) {
+            optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput.elementalResonance.conditionValues, conditionInput);
+        }
+        calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
+        updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);
+        calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
+
+        if (character && characterInput.character === '雷電将軍') {
+            // for 雷罰悪曜の眼
+            const myCharacterMaster = await getCharacterMasterDetail(character);
+            if ('元素エネルギー' in myCharacterMaster['元素爆発']) {
+                statsInput.statsObj['元素エネルギー'] = Number(myCharacterMaster['元素爆発']['元素エネルギー']);
+            }
+        }
+
+        calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
     }
-    calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
-    updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);
-    calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
 
-    if (characterInput.character === '雷電将軍') {
-        // for 雷罰悪曜の眼
-        const myCharacterMaster = await getCharacterMasterDetail(character);
-        if ('元素エネルギー' in myCharacterMaster['元素爆発']) {
-            statsInput.statsObj['元素エネルギー'] = Number(myCharacterMaster['元素爆発']['元素エネルギー']);
+    // TEAM_OPTION_MASTER
+    const teamOptions: any[] = [];
+    TEAM_OPTION_MASTER_LIST.filter(entry => entry.key.startsWith(supporter + '_')).forEach(entry => {
+        if (_.isArray(entry.詳細)) {
+            for (const detailObj of entry.詳細) {
+                (detailObj as any).条件 = makeSupporterCondition(supporter, entry.名前, (detailObj as any).条件);
+            }
+        }
+        teamOptions.splice(teamOptions.length, 0, ...makeDamageDetailObjArr(entry, null, null, null, teamOptionDetails1, teamOptionDetails2, 'その他オプション'));
+    })
+    teamOptions.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, teamConditions, teamExclusions);
+    })
+    teamOptionDetails1.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, teamConditions, teamExclusions);
+    })
+    teamOptionDetails2.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, teamConditions, teamExclusions);
+    })
+    teamConditions.forEach((value, key) => {
+        if (value && _.isArray(value)) {
+            if (!value[0].startsWith('required_')) {
+                teamConditions.set(key, ['', ...value]);
+            }
+        }
+    })
+    // CHARACTER_MASTER
+    let characterOptions: any[] = [];
+    if (characterInput.characterMaster?.チームバフ) {
+        characterOptions = characterInput.characterMaster.チームバフ;
+    }
+    // WEAPON_MASTER
+    let weaponOptions: any[] = [];
+    if (characterInput.weaponMaster?.チームバフ) {
+        weaponOptions = characterInput.weaponMaster.チームバフ;
+    }
+    // ARTIFACT_SET_MASTER
+    const artifactSetOptions: any[] = [];
+    if (characterInput.artifactSets[0] && characterInput.artifactSets[1] && characterInput.artifactSets[0] == characterInput.artifactSets[1]) {
+        if (characterInput.artifactSetMasters[0]['4セット効果']) {
+            if (_.isArray(characterInput.artifactSetMasters[0]['4セット効果']['詳細'])) {
+                characterInput.artifactSetMasters[0]['4セット効果']['詳細'].forEach(detailObj => {
+                    if (detailObj.チーム) {
+                        artifactSetOptions.push(detailObj);
+                    }
+                })
+            }
         }
     }
-
-    calculateDamageResult(damageResult, characterInput, conditionInput, statsInput);
+    for (const options of [characterOptions, weaponOptions, artifactSetOptions]) {
+        if (options.length) {
+            const damageDetailObjArr = makeTeamOptionDetailObjArr(options);
+            damageDetailObjArr.forEach((damageDetailObj) => {
+                const condition = makeSupporterCondition(supporter, damageDetailObj.名前, damageDetailObj.条件);
+                damageDetailObj.条件 = condition;
+                const changeKind = getChangeKind(damageDetailObj.種類 as string);
+                if (changeKind === 'STATUS' &&
+                    teamOptionDetails1.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
+                ) {
+                    teamOptionDetails1.splice(teamOptionDetails1.length, 0, damageDetailObj);
+                }
+                if (changeKind === 'TALENT' &&
+                    teamOptionDetails2.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
+                ) {
+                    teamOptionDetails2.splice(teamOptionDetails2.length, 0, damageDetailObj);
+                }
+                makeConditionExclusionMapFromStr(condition, teamConditions, teamExclusions);
+            })
+        }
+    }
 
     optionInput.supporters[supporter] = {
         characterInput: characterInput,
@@ -1878,22 +2080,26 @@ export async function calculateSupporter(
         conditionInput: conditionInput,
         statsInput: statsInput,
         damageResult: damageResult,
+        teamOptionDetails1: teamOptionDetails1,
+        teamOptionDetails2: teamOptionDetails2,
+        teamConditions: teamConditions,
+        teamExclusions: teamExclusions,
     };
 
+    console.log(supporter, teamOptionDetails1, teamOptionDetails2, teamConditions, teamExclusions);
     return [statsInput.statsObj, damageResult];
 }
 
-export type TRotationDamageEntry = {
-    name: string;
-    category: string;
-    reactions: object[];
-    counts: number[];
-};
-
-export type TRotationDamageInfo = {
-    totalDamage: number,
-    rotationDamages: TRotationDamageEntry[],
-};
+function makeSupporterCondition(supporter: string, name: string | null, condition: string | null | undefined) {
+    let result = supporter + '*';
+    if (condition) {
+        result += condition.replace(/([&|^])/g, '$1' + supporter + '*');
+    } else if (name) {
+        result += name;
+    }
+    result = result.replace(supporter + '*' + supporter + '*', supporter + '*');
+    return result;
+}
 
 export function getCritFromResultEntry(entry: TDamageResultEntry) {
     let critRate = 0;
@@ -1906,34 +2112,6 @@ export function getCritFromResultEntry(entry: TDamageResultEntry) {
     }
     return [critRate, critDmg];
 }
-
-export const REACTION_DMG_ARR = [
-    '過負荷ダメージ',
-    '感電ダメージ',
-    '超電導ダメージ',
-    '拡散ダメージ',
-    '燃焼ダメージ',
-    '開花ダメージ',
-    '烈開花ダメージ',
-    '超開花ダメージ',
-];
-
-export const REACTION_DMG_ELEMENT_MAP = new Map<string, string>();
-function setupReactionDmgElementMap() {
-    REACTION_DMG_ARR.forEach((reactionDmg) => {
-        const reaction = reactionDmg.replace(/ダメージ$/, '');
-        Object.keys(ELEMENTAL_REACTION_MASTER).forEach((element) => {
-            const reactionMaster = (ELEMENTAL_REACTION_MASTER as any)[element];
-            const workArr = Object.keys(reactionMaster);
-            if (workArr.includes(reaction)) {
-                if ('元素' in reactionMaster[reaction]) {
-                    REACTION_DMG_ELEMENT_MAP.set(reactionDmg, reactionMaster[reaction].元素);
-                }
-            }
-        });
-    });
-}
-setupReactionDmgElementMap();
 
 export function getDamageResultArr(
     rotationDamageEntry: TRotationDamageEntry,
@@ -2067,81 +2245,4 @@ export function getAmplifyingReactionElement(reaction: string, dmgElement: strin
         reactionElement = '雷';
     }
     return reactionElement;
-}
-
-function makeEvalableScript(
-    formula: string,
-    statsObj: TStats,
-    damageResult: TDamageResult,
-) {
-    const replaceMap = new Map<string, string>();
-    const re = /\$\{(.+?)\}/g;
-    let reRet;
-    while ((reRet = re.exec(formula)) !== null) {
-        const key = reRet[1];
-        if (!replaceMap.has(key)) {
-            let value;
-            if (key.includes('#')) {   // 元素爆発#スキルダメージ 等
-                const arr = key.split('#');
-                if (arr.length === 2) {
-                    const major = arr[0];
-                    const minor = arr[1];
-                    if (major in damageResult) {
-                        const entryArr = (damageResult[major] as TDamageResultEntry[]).filter(s => s[0] == minor);
-                        if (entryArr.length) {
-                            value = String(entryArr[0][4]);  // 非会心
-                        }
-                    }
-                }
-                if (value === undefined) {
-                    console.warn(formula, damageResult, key);
-                    value = '0';
-                }
-            } else {    // ステータス
-                value = String(getStatValue(key, statsObj));
-            }
-            if (value !== undefined) {
-                replaceMap.set(key, value);
-            }
-        }
-    }
-    let result = formula;
-    replaceMap.forEach((value, key) => {
-        result = result.replaceAll('${' + key + '}', value);
-    })
-    return result;
-}
-
-export function evalFormula(
-    formula: number | string | null | undefined,
-    statsObj: TStats,
-    damageResult: TDamageResult,
-    opt_max: number | string | null = null,
-    opt_min: number | string | null = null
-) {
-    let result = 0;
-    let script;
-    if (!formula) {
-        // nop
-    } else if (_.isNumber(formula)) {
-        result = formula;
-    } else {
-        script = makeEvalableScript(formula, statsObj, damageResult);
-        try {
-            result = eval(script);
-        } catch (error) {
-            console.error(error);
-            console.error(formula, statsObj, damageResult, script);
-        }
-    }
-    if (opt_max !== null) {
-        const max = evalFormula(opt_max, statsObj, damageResult);
-        result = Math.min(result, max);
-    }
-    if (opt_min !== null) {
-        const min = evalFormula(opt_min, statsObj, damageResult);
-        result = Math.max(result, min);
-    }
-    console.debug(formula, opt_max, opt_min, script, result);
-    return result;
 }

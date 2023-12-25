@@ -53,8 +53,8 @@ export default defineComponent({
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr: TDamageDetailObj[] = [];
     const talentChangeDetailObjArr: TDamageDetailObj[] = [];
-    const conditionMap = new Map() as Map<string, string[] | null>;
-    const exclusionMap = new Map() as Map<string, string[] | null>;
+    const conditionMap = new Map() as Map<string, string[] | object | null>;
+    const exclusionMap = new Map() as Map<string, string[]>;
     const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput);
     const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
     const checkboxList = conditionInput.checkboxList;
@@ -98,9 +98,9 @@ export default defineComponent({
         }
       }
     });
-    conditionMap.forEach((value: string[] | null, key: string) => {
-      if (value) {
-        if (selectList.filter((s) => s.name == key).length == 0) {
+    conditionMap.forEach((value: string[] | object | null, key: string) => {
+      if (_.isArray(value)) {
+        if (selectList.filter((s) => s.name == key).length === 0) {
           const required = value[0].startsWith('required_');
           selectList.push({
             name: key,

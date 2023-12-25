@@ -122,20 +122,20 @@ import { isNumeric, overwriteObject } from "@/common";
 import {
   CONDITION_INPUT_TEMPLATE,
   DAMAGE_RESULT_TEMPLATE,
-  TConditionInput,
-  TDamageResult,
-  makeDamageDetailObjArr,
-  makeConditionExclusionMapFromStr,
-  TStats,
-  makeTeamOptionDetailObjArr,
-  TDamageDetailObj,
-  ステータスTEMPLATE,
   getChangeKind,
-  makeDefaultBuildname,
   makeBuildStorageKey,
-  TSupporterInput,
+  makeConditionExclusionMapFromStr,
+  makeDamageDetailObjArr,
+  makeDefaultBuildname,
+  makeTeamOptionDetailObjArr,
   SUPPORTER_INPUT_TEMPLATE,
+  TConditionInput,
   TConditionValues,
+  TDamageDetailObj,
+  TDamageResult,
+  TStats,
+  TSupporterInput,
+  ステータスTEMPLATE,
 } from "@/input";
 import {
   ALL_ELEMENTS,
@@ -178,8 +178,8 @@ export default defineComponent({
     const damageDetailArr = [] as any[];
     const statusChangeDetailObjArr: TDamageDetailObj[] = [];
     const talentChangeDetailObjArr: TDamageDetailObj[] = [];
-    const conditionMap = new Map() as Map<string, string[] | null | object>;
-    const exclusionMap = new Map() as Map<string, string[] | null>;
+    const conditionMap = new Map() as Map<string, string[] | object | null>;
+    const exclusionMap = new Map() as Map<string, string[]>;
     const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput);
     if (props.initialConditionValue) {
       _.merge(conditionInput.conditionValues, props.initialConditionValue);
@@ -369,13 +369,12 @@ export default defineComponent({
     const supporterSelectList = (supporter: any) => selectList.filter((s) => s.name.startsWith(supporter + '*'));
     const supporterNumberList = (supporter: any) => numberList.filter((s) => s.name.startsWith(supporter + '*'));
 
-
     const characterIconSrc = (character: string) => (CHARACTER_MASTER as any)[character].icon_url;
     const characterVisionIconSrc = (character: string) => (ELEMENT_IMG_SRC as any)[(CHARACTER_MASTER as any)[character].元素];
     const weaponIconSrc = (character: string) => {
       let result = IMG_SRC_DUMMY;
       const inputResult = supporterInputResultMap.get(character);
-      if (inputResult && inputResult?.characterInput?.weaponMaster) {
+      if (inputResult && inputResult?.characterInput?.weaponMaster?.icon_url) {
         result = inputResult.characterInput.weaponMaster.icon_url;
       }
       return result;
@@ -383,7 +382,7 @@ export default defineComponent({
     const weaponName = (character: string) => {
       let result = '';
       const inputResult = supporterInputResultMap.get(character);
-      if (inputResult && inputResult?.characterInput?.weaponMaster) {
+      if (inputResult && inputResult?.characterInput?.weaponMaster.icon_url) {
         result = inputResult.characterInput.weaponMaster.名前;
       }
       return result;
@@ -393,7 +392,7 @@ export default defineComponent({
       const inputResult = supporterInputResultMap.get(character);
       if (inputResult && inputResult?.characterInput?.artifactSetMasters) {
         if (inputResult.characterInput.artifactSetMasters.length > index) {
-          result = inputResult.characterInput.artifactSetMasters[index].icon_url;
+          result = inputResult.characterInput.artifactSetMasters[index].icon_url ?? IMG_SRC_DUMMY;
         }
       }
       return result;
