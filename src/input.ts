@@ -455,6 +455,7 @@ export type TNumberEntry = {
     min: number | string;
     max?: number | string | undefined;
     step: number;
+    initial: number;
 };
 export type TConditionValues = {
     [key: string]: boolean | number | null,
@@ -1568,6 +1569,7 @@ function makeConditionExclusionMapFromStrSub(
                         min: min,
                         max: max,
                         step: isNumeric(workObj.step) ? Number(workObj.step) : 1,
+                        initial: isNumeric(workObj.initial) ? Number(workObj.initial) : min,
                     };
                     pushToMapValueArray(conditionMap, name, conditionObj);  // object
                 }
@@ -1683,6 +1685,7 @@ export function setupConditionValues(
                         min: numberObj.min,
                         max: numberObj.max,
                         step: numberObj.step,
+                        initial: numberObj.initial,
                     };
                     workNumberList.push(entry);
                 }
@@ -2055,6 +2058,7 @@ export function setupTeamOption(optionInput: TOptionInput) {
                             min: (value as any).min,
                             max: (value as any).max,
                             step: (value as any).step,
+                            initial: (value as any).initial,
                         })
                     }
                 }
@@ -2127,6 +2131,7 @@ export function setupMiscOption(optionInput: TOptionInput) {
                     min: (value as any).min,
                     max: (value as any).max,
                     step: (value as any).step,
+                    initial: (value as any).initial,
                 })
             }
         }

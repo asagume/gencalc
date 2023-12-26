@@ -130,7 +130,7 @@ import {
   TAnyObject,
   TCharacterKey,
 } from "@/master";
-import { computed, defineComponent, nextTick, PropType, reactive, watch } from "vue";
+import { computed, defineComponent, nextTick, onMounted, PropType, reactive, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
 export default defineComponent({
@@ -324,14 +324,14 @@ export default defineComponent({
       }
     }
     const clearAllSupporterOptions = () => {
-      for (const entry of checkboxList.value) {
-        conditionValues[entry.name] = false;
+      for (const item of checkboxList.value) {
+        conditionValues[item.name] = false;
       }
-      for (const entry of selectList.value) {
-        conditionValues[entry.name] = 0;
+      for (const item of selectList.value) {
+        conditionValues[item.name] = 0;
       }
-      for (const entry of numberList.value) {
-        conditionValues[entry.name] = Number(entry.min);
+      for (const item of numberList.value) {
+        conditionValues[item.name] = item.initial;
       }
       updateOption();
     }
@@ -348,10 +348,11 @@ export default defineComponent({
           }
         } else if (_.isPlainObject(value)) {  // number
           if (!(key in conditionValues)) {
-            conditionValues[key] = (value as any).min;
+            conditionValues[key] = (value as any).initial;
           }
         }
       })
+      updateOption();
     }
 
     const initializeSupporters = (argSupporters: TSupporters) => {
@@ -373,29 +374,42 @@ export default defineComponent({
     }
 
     const initializeValues = (input: TConditionInput) => {
-      Object.keys(conditionValues).forEach((key) => {
-        if (input.conditionValues[key] !== undefined) {
-          conditionValues[key] = input.conditionValues[key];
-        } else {
-          if (conditionMap.value.has(key)) {
-            const value = conditionMap.value.get(key);
-            if (value === null) {
-              conditionValues[key] = false;
-            } else if (_.isArray(value)) {
-              conditionValues[key] = 0;
-            } else if (_.isPlainObject(value)) {
-              conditionValues[key] = (value as any).min;
-            }
-          }
+      checkboxList.value.forEach(item => {
+        if (input.conditionValues[item.name] !== undefined) {
+          conditionValues[item.name] = input.conditionValues[item.name];
+        } else if (conditionValues[item.name] === undefined) {
+          conditionValues[item.name] = false;
+        }
+      })
+      selectList.value.forEach(item => {
+        if (input.conditionValues[item.name] !== undefined) {
+          conditionValues[item.name] = input.conditionValues[item.name];
+        } else if (conditionValues[item.name] === undefined) {
+          conditionValues[item.name] = 0;
+        }
+      })
+      numberList.value.forEach(item => {
+        if (input.conditionValues[item.name] !== undefined) {
+          conditionValues[item.name] = input.conditionValues[item.name];
+        } else if (conditionValues[item.name] === undefined) {
+          conditionValues[item.name] = Number(item.initial);
         }
       })
       updateOption();
     }
 
+    onMounted(() => {
+      if (_.isEqual(teamMembers, props.teamMembers)) {
+        teamMembers.splice(0, teamMembers.length, ...props.teamMembers);
+      }
+      updateConditionValues();
+    })
+
     watch(props, () => {
       if (_.isEqual(teamMembers, props.teamMembers)) {
         teamMembers.splice(0, teamMembers.length, ...props.teamMembers);
       }
+      updateConditionValues();
     })
 
     return {

@@ -2100,7 +2100,6 @@ export async function setupTeamOptionSupporter(
         exclusionMap: exclusionMap,
     };
 
-    console.log(supporter, optionDetails1, optionDetails2, conditionMap, exclusionMap);
     return [statsInput.statsObj, damageResult];
 }
 
@@ -2121,7 +2120,6 @@ export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStat
     makeValidConditionValueArr(optionInput.teamOption).forEach(value => {
         const indexOf = value.indexOf('*');
         const supporter = value.substring(0, indexOf);
-        console.log(supporter, character);
         if (supporter != character) {
             const work = value.substring(indexOf);
             if (validConditionValueArr.filter(s => s.endsWith(work)).length === 0) {

@@ -115,13 +115,13 @@
             :elemental-resonance="optionInputRea.elementalResonance"
             @update:elemental-resonance="updateElementalResonance" />
         </div>
-        <div v-show="optionInputTabRef == 2" v-if="optionInputTabRef == 2 || isTeamOptionActivate">
+        <div v-if="optionInputTabRef == 2">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
             :team-members="optionInputRea.teamMembers" :condition-input="optionInputRea.teamOption"
             @update:team-option="updateTeamOption" @update:buildname-selection="updateBuildnameSelection"
             @update:team-members="updateTeamMembers" />
         </div>
-        <div v-show="optionInputTabRef == 3">
+        <div v-if="optionInputTabRef == 3">
           <MiscOptionInput ref="miscOptionInputVmRef" :condition-input="optionInputRea.miscOption"
             @update:misc-option="updateMiscOption" />
         </div>
@@ -288,7 +288,7 @@ import {
   updateNumberConditionValues,
   updateOptionsElementalResonanceByTeam,
   ステータスチーム内最高ARRAY,
-setupMiscOption,
+  setupMiscOption,
 } from '@/input';
 import {
   ARTIFACT_SET_MASTER,
@@ -486,9 +486,6 @@ export default defineComponent({
       })
       return result;
     })
-    const isTeamOptionActivate = computed(() =>
-      teamOptionInputVmRef.value || Object.keys(optionInputRea.teamOption.conditionValues).length > 0
-    )
 
     /** キャラクター選択画面を開きます/閉じます */
     const openCharacterSelect = async () => {
@@ -601,7 +598,7 @@ export default defineComponent({
       savedSupporters.splice(0, savedSupporters.length, ...newSavedSupporters);
       if (newOrUpdateArr.length) {
         const list = newOrUpdateArr.map(s =>
-        setupTeamOptionSupporter(optionInputRea, s.key as TCharacterKey, s.value, characterInputRea.character as TCharacterKey));
+          setupTeamOptionSupporter(optionInputRea, s.key as TCharacterKey, s.value, characterInputRea.character as TCharacterKey));
         await Promise.all(list);
       }
       CHARACTER_KEYS.filter(key => !savedSupporters.map(s => s.key).includes(key)).forEach(key => {
@@ -610,8 +607,8 @@ export default defineComponent({
 
       setupTeamOption(optionInputRea);
 
-      console.log('App', 'supporters', newKeyArr, deleteKeyArr);
       if (teamOptionInputVmRef.value) {
+        console.log('App', 'supporters', newKeyArr, deleteKeyArr);
         teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
       }
     }
@@ -763,19 +760,17 @@ export default defineComponent({
       characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = !recommendation.overwrite;
       await nextTick();
-      if ('options' in recommendation.build) {
-        // 元素共鳴
-        if (elementalResonanceInputVmRef.value) {
-          elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
-        }
-        // チーム
-        if (teamOptionInputVmRef.value) {
-          teamOptionInputVmRef.value.initializeValues(optionInputRea.teamOption);
-        }
-        // その他
-        if (miscOptionInputVmRef.value) {
-          miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
-        }
+      // 元素共鳴
+      if (elementalResonanceInputVmRef.value) {
+        elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
+      }
+      // チーム
+      if (teamOptionInputVmRef.value) {
+        teamOptionInputVmRef.value.initializeValues(optionInputRea.teamOption);
+      }
+      // その他
+      if (miscOptionInputVmRef.value) {
+        miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
       }
       if ('artifactScoring' in recommendation.build) {
         const work = recommendation.build.artifactScoring;
@@ -1156,7 +1151,6 @@ export default defineComponent({
       normalAttackReplacing,
       myDamageDatailArr,
       topStats,
-      isTeamOptionActivate,
 
       openCharacterSelect,
       openWeaponSelect,
