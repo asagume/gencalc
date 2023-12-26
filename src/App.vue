@@ -116,14 +116,14 @@
             @update:elemental-resonance="updateElementalResonance" />
         </div>
         <div v-show="optionInputTabRef == 2" v-if="optionInputTabRef == 2 || isTeamOptionActivate">
-          <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character" :top-stats="topStats"
-            :saved-supporters="savedSupporters" :calculated-supporters="optionInputRea.supporters"
-            :team-members="optionInputRea.teamMembers"
-            :initial-condition-value="optionInputRea.teamOption.conditionValues" @update:team-option="updateTeamOption"
-            @update:buildname-selection="updateBuildnameSelection" @update:team-members="updateTeamMembers" />
+          <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
+            :team-members="optionInputRea.teamMembers" :condition-input="optionInputRea.teamOption"
+            @update:team-option="updateTeamOption" @update:buildname-selection="updateBuildnameSelection"
+            @update:team-members="updateTeamMembers" />
         </div>
         <div v-show="optionInputTabRef == 3">
-          <MiscOptionInput ref="miscOptionInputVmRef" @update:misc-option="updateMiscOption" />
+          <MiscOptionInput ref="miscOptionInputVmRef" :condition-input="optionInputRea.miscOption"
+            @update:misc-option="updateMiscOption" />
         </div>
       </div>
     </div>
@@ -275,6 +275,7 @@ import {
   makeRecommendationList,
   makeSavedata,
   setupConditionValues,
+  setupTeamOption,
   shareByTwitter,
   TArtifact,
   TArtifactDetailInput,
@@ -287,6 +288,7 @@ import {
   updateNumberConditionValues,
   updateOptionsElementalResonanceByTeam,
   ステータスチーム内最高ARRAY,
+setupMiscOption,
 } from '@/input';
 import {
   ARTIFACT_SET_MASTER,
@@ -308,8 +310,10 @@ import {
   calculateArtifactStatsMain,
   calculateArtifactSubStatByPriority,
   calculateElementalResonance,
+  calculateMiscStatsAdjustments,
   calculateStats,
-  calculateSupporter,
+  setupTeamOptionSupporter,
+  calculateTeamStatsAdjustments,
   TArtifactScoreFormula,
   TRotationDamageInfo,
 } from '@/calculate';
@@ -402,6 +406,7 @@ export default defineComponent({
     } as TAnyObject);
     const artifactScoringStats = reactive(_.cloneDeep(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]) as TArtifactScoreFormula);
     const savedSupporters = reactive([] as TSavedSupporter[]);
+    const defaultSupporterOptionInput = getDefaultOptionInput();
     const nextStatRows = reactive([] as any[]);
     const rotationDamageInfo = reactive({
       totalDamage: 0,
@@ -443,10 +448,12 @@ export default defineComponent({
       if (props.recommendation.build?.artifactScoring) {
         applyArtifactScoreFormula(props.recommendation.build.artifactScoring);
       }
+      setupMiscOption(optionInputRea);
 
       await nextTick();
 
-      await _setupSavedSupporters();
+      await Promise.all(CHARACTER_KEYS.map(key => setupTeamOptionSupporter(defaultSupporterOptionInput, key as TCharacterKey)));
+      await _setupSupporters();
       await updateCharacter(characterInputRea.character, props.teamMembers);
     })
 
@@ -551,8 +558,8 @@ export default defineComponent({
       artifactScoringStats.splice(0, artifactScoringStats.length, ...formula);
     }
 
-    /** 保存データが存在するサポーターをセットアップします */
-    async function _setupSavedSupporters() {
+    /** サポーターをセットアップします */
+    async function _setupSupporters() {
       const buildnameKeys = Object.keys(buildnameSelectionRea);
       const newSavedSupporters: TSavedSupporter[] = [];
       CHARACTER_KEYS.forEach((character) => {
@@ -577,6 +584,7 @@ export default defineComponent({
           }
         }
       })
+
       const newOrUpdateArr: TSavedSupporter[] = [];
       newSavedSupporters.forEach(obj => {
         const workArr = savedSupporters.filter(s => s.key == obj.key);
@@ -593,20 +601,16 @@ export default defineComponent({
       savedSupporters.splice(0, savedSupporters.length, ...newSavedSupporters);
       if (newOrUpdateArr.length) {
         const list = newOrUpdateArr.map(s =>
-          calculateSupporter(optionInputRea, s.key as TCharacterKey, s.value, characterInputRea.character as TCharacterKey));
+        setupTeamOptionSupporter(optionInputRea, s.key as TCharacterKey, s.value, characterInputRea.character as TCharacterKey));
         await Promise.all(list);
       }
-      if (deleteKeyArr.length) {
-        const list = deleteKeyArr.map(s => calculateSupporter(optionInputRea, s as TCharacterKey, ''));
-        await Promise.all(list);
-      }
-      const list = CHARACTER_KEYS.filter(key => !savedSupporters.map(s => s.key).includes(key) && !(key in optionInputRea.supporters)).map(s =>
-        calculateSupporter(optionInputRea, s as TCharacterKey, ''));
-      if (list.length) {
-        await Promise.all(list);
-      }
-      console.log('App', 'supporters', newKeyArr);
-      console.log('App', 'deletedSupporters', deleteKeyArr);
+      CHARACTER_KEYS.filter(key => !savedSupporters.map(s => s.key).includes(key)).forEach(key => {
+        optionInputRea.supporters[key] = defaultSupporterOptionInput.supporters[key];
+      })
+
+      setupTeamOption(optionInputRea);
+
+      console.log('App', 'supporters', newKeyArr, deleteKeyArr);
       if (teamOptionInputVmRef.value) {
         teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
       }
@@ -680,7 +684,8 @@ export default defineComponent({
       } else {
         optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length);  // チーム編成を初期化します（解散）
       }
-      await _setupSavedSupporters();
+      await _setupSupporters();
+      calculateTeamStatsAdjustments(optionInputRea, topStats.value, character);
       await updateRecommendation(recommendationRef.value);
       if (teamOptionInputVmRef.value) {
         teamOptionInputVmRef.value.initializeSupporters(optionInputRea.supporters);
@@ -920,29 +925,39 @@ export default defineComponent({
     }
 
     /** その他オプションが変更されました。ステータスおよびダメージを再計算します */
-    const updateMiscOption = (argConditionInput: TConditionInput) => {
-      if (argConditionInput && Object.keys(argConditionInput).length) {
-        overwriteObject(optionInputRea.miscOption, argConditionInput);
+    const updateMiscOption = (conditionValues: TConditionValues) => {
+      if (conditionValues) {
+        if (!_.isEqual(optionInputRea.miscOption.conditionValues, conditionValues)) {
+          overwriteObject(optionInputRea.miscOption.conditionValues, conditionValues);
+        }
+        calculateMiscStatsAdjustments(optionInputRea);
         // ステータスとダメージを計算します
         _calculateStatsAndDamageResult();
       }
     }
 
     /** チームオプションが変更されました。ステータスおよびダメージを再計算します */
-    const updateTeamOption = (argConditionInput: TConditionInput) => {
-      if (argConditionInput && Object.keys(argConditionInput).length) {
-        overwriteObject(optionInputRea.teamOption, argConditionInput);
+    const updateTeamOption = (conditionValues: TConditionValues) => {
+      if (conditionValues) {
+        if (!_.isEqual(optionInputRea.teamOption.conditionValues, conditionValues)) {
+          overwriteObject(optionInputRea.teamOption.conditionValues, conditionValues);
+        }
+        calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
         // ステータスとダメージを計算します
         _calculateStatsAndDamageResult();
       }
     }
-    const updateBuildnameSelection = (argBuildnameSelection: TAnyObject) => {
+    const updateBuildnameSelection = async (argBuildnameSelection: TAnyObject) => {
       overwriteObject(buildnameSelectionRea, argBuildnameSelection);
-      _setupSavedSupporters();
+      await _setupSupporters();
+      calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
+      // ステータスとダメージを計算します
+      _calculateStatsAndDamageResult();
     }
     const updateTeamMembers = async (teamMembers: string[]) => {
       optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length, ...teamMembers);
       await _updateConditionByTeamMembers();
+      calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
     }
@@ -1017,7 +1032,7 @@ export default defineComponent({
         ...makeRecommendationList(characterInputRea.characterMaster, opt_buildData)
       );
       // サポーター情報を更新します
-      await _setupSavedSupporters();
+      await _setupSupporters();
       if (storageKey == makeBuildStorageKey(characterInputRea.character)) {
         characterInputRea.buildname = makeDefaultBuildname(characterInputRea.character);
       }
@@ -1065,7 +1080,7 @@ export default defineComponent({
         ...makeRecommendationList(characterInputRea.characterMaster, opt_buildData)
       );
       // サポーター情報を更新します
-      await _setupSavedSupporters();
+      await _setupSupporters();
       characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = true;
     };

@@ -1,4 +1,4 @@
-import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, OPTION1_MASTER_LIST, OPTION2_MASTER_LIST, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
 import { basename, isNumeric, overwriteObject } from './common';
 
@@ -463,6 +463,10 @@ export type TConditionAdjustments = {
     [key: string]: number | null,
 };
 export const CONDITION_INPUT_TEMPLATE = {
+    optionDetails1: [] as TDamageDetailObj[],
+    optionDetails2: [] as TDamageDetailObj[],
+    conditionMap: new Map<string, string[] | object | null>(),
+    exclusionMap: new Map<string, string[]>(),
     checkboxList: [] as TCheckboxEntry[],
     selectList: [] as TSelectEntry[],
     numberList: [] as TNumberEntry[],
@@ -513,12 +517,13 @@ export const SUPPORTER_INPUT_TEMPLATE = {
     conditionInput: getDefaultConditionInput(),
     statsInput: getDefaultStatsInput(),
     damageResult: getDefaultDamageResultInput(),
-    teamOptionDetails1: [] as TDamageDetailObj[],
-    teamOptionDetails2: [] as TDamageDetailObj[],
-    teamConditions: new Map<string, string[] | object | null>(),
-    teamExclusions: new Map<string, string[]>(),
+    optionDetails1: [] as TDamageDetailObj[],
+    optionDetails2: [] as TDamageDetailObj[],
+    conditionMap: new Map<string, string[] | object | null>(),
+    exclusionMap: new Map<string, string[]>(),
 };
 export type TSupporterInput = typeof SUPPORTER_INPUT_TEMPLATE;
+export type TSupporters = { [key: string]: TSupporterInput | undefined };
 
 export const OPTION_INPUT_TEMPLATE = {
     elementalResonance: {
@@ -526,7 +531,7 @@ export const OPTION_INPUT_TEMPLATE = {
         conditionAdjustments: {},
     } as TElementalResonance,
     supporterBuildname: {} as { [key: string]: string | undefined },
-    supporters: {} as { [key: string]: TSupporterInput | undefined },
+    supporters: {} as TSupporters,
     teamMembers: [] as string[],
     teamOption: _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput,
     miscOption: _.cloneDeep(CONDITION_INPUT_TEMPLATE) as TConditionInput,
@@ -1979,94 +1984,6 @@ export function makeFormulaTemplate(
     return result;
 }
 
-export function makeSharedata(savedata: TAnyObject) {
-    const sharedataArr = [] as any[];
-
-    let character: TCharacterKey;
-    let weaponType: TWeaponTypeKey;
-
-    キャラクター構成PROPERTY_MAP.forEach((value, key) => {
-        let newValue = savedata[key];
-        let myBasename;
-        switch (key) {
-            case 'キャラクター':
-                character = newValue as TCharacterKey;
-                myBasename = basename(CHARACTER_MASTER[character]['import']);
-                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
-                break;
-            case '武器':
-                weaponType = CHARACTER_MASTER[character]['武器'] as TWeaponTypeKey;
-                myBasename = basename((WEAPON_MASTER as any)[weaponType][newValue]['import']);
-                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
-                break;
-            case '聖遺物セット効果1':
-            case '聖遺物セット効果2':
-                if (newValue == 'NONE') {
-                    newValue = '';  // 聖遺物セット効果なし
-                } else {
-                    myBasename = basename(ARTIFACT_SET_MASTER[newValue as TArtifactSetKey]['image']);
-                    newValue = myBasename.split('_')[myBasename.split('_').length - 1];
-                }
-                break;
-            case '聖遺物メイン効果1':
-            case '聖遺物メイン効果2':
-            case '聖遺物メイン効果3':
-            case '聖遺物メイン効果4':
-            case '聖遺物メイン効果5':
-                if (newValue) {
-                    newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue.split('_')[1]);
-                }
-                break;
-        }
-        if (key.match(/^聖遺物優先するサブ効果\d$/)) {
-            if (newValue) {
-                newValue = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue);
-            }
-        }
-        sharedataArr.push(newValue);
-    });
-    Object.keys(savedata).forEach(key => {
-        if (!キャラクター構成PROPERTY_MAP.has(key)) {
-            sharedataArr.push(key + '=' + savedata[key]);
-        }
-    });
-
-    return sharedataArr.join(',');
-}
-
-function openTwitter(text: string, url: string, opt_hashtags?: string, opt_via?: string) {
-    const baseUrl = 'https://twitter.com/intent/tweet?';
-    const params = new URLSearchParams();
-    params.append('text', text);
-    params.append('url', url);
-    if (opt_hashtags) {
-        params.append('hashtags', opt_hashtags);
-    }
-    if (opt_via) {
-        params.append('via', opt_via);
-    }
-    const query = params.toString();
-    const shareUrl = `${baseUrl}${query}`;
-    console.log(params);
-    console.log(shareUrl);
-    window.open(shareUrl);
-}
-
-export function shareByTwitter(
-    characterInput: TCharacterInput,
-    artifactDetailInput: TArtifactDetailInput,
-    conditionInput: TConditionInput
-) {
-    const savedata = makeSavedata(characterInput, artifactDetailInput, conditionInput);
-    const sharedata = makeSharedata(savedata);
-
-    const text = characterInput.buildname;
-    const encoded = encodeURI(sharedata);
-    const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
-
-    openTwitter(text, url);
-}
-
 export function getMaxConstellation(characterMaster: TCharacterDetail) {
     let max = 0;
     if ('命ノ星座' in characterMaster) {
@@ -2091,43 +2008,136 @@ export function getMaxTalentLevel(characterMaster: TCharacterDetail, key: string
     return max;
 }
 
-export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any, teammembers?: string[]) {
-    sessionStorage.setItem('character', character);
-    if (buildname) {
-        sessionStorage.setItem('buildname', buildname);
-    }
-    if (builddata) {
-        sessionStorage.setItem('builddata', JSON.stringify(builddata));
-    }
-    if (teammembers) {
-        sessionStorage.setItem('teammembers', JSON.stringify(teammembers));
-    }
+export function setupTeamOption(optionInput: TOptionInput) {
+    const optionDetails1: TDamageDetailObj[] = [];
+    const optionDetails2: TDamageDetailObj[] = [];
+    const conditionMap = new Map<string, string[] | object | null>();
+    const exclusionMap = new Map<string, string[]>();
+    const checkboxList: TCheckboxEntry[] = [];
+    const selectList: TSelectEntry[] = [];
+    const numberList: TNumberEntry[] = [];
+    Object.keys(optionInput.supporters).forEach(key => {
+        const workDetails1 = optionInput.supporters[key]?.optionDetails1;
+        const workDetails2 = optionInput.supporters[key]?.optionDetails2;
+        const workMap1 = optionInput.supporters[key]?.conditionMap;
+        const workMap2 = optionInput.supporters[key]?.exclusionMap;
+        if (workDetails1 !== undefined) {
+            optionDetails1.push(...workDetails1);
+        }
+        if (workDetails2 !== undefined) {
+            optionDetails2.push(...workDetails2);
+        }
+        if (workMap1 !== undefined) {
+            workMap1.forEach((value, key) => {
+                conditionMap.set(key, value);
+                if (value === null) { // checkbox
+                    if (checkboxList.filter((s) => s.name == key).length === 0) {
+                        checkboxList.push({
+                            name: key,
+                            displayName: key.replace(/^.+\*/, ''),
+                        })
+                    }
+                } else if (_.isArray(value)) {  // select
+                    if (selectList.filter((s) => s.name == key).length === 0) {
+                        const required = value[0].startsWith('required_');
+                        selectList.push({
+                            name: key,
+                            displayName: key.replace(/^.+\*/, ''),
+                            options: (required || !value[0]) ? value : ['', ...value],
+                            required: required,
+                        })
+                    }
+                } else if (_.isPlainObject(value)) {  // number
+                    if (numberList.filter((s) => s.name == key).length === 0) {
+                        numberList.push({
+                            name: key,
+                            displayName: key.replace(/^.+\*/, ''),
+                            min: (value as any).min,
+                            max: (value as any).max,
+                            step: (value as any).step,
+                        })
+                    }
+                }
+            })
+        }
+        if (workMap2 !== undefined) {
+            workMap2.forEach((value, key) => {
+                exclusionMap.set(key, value);
+            })
+        }
+    })
+    optionInput.teamOption.optionDetails1.splice(0, optionInput.teamOption.optionDetails1.length, ...optionDetails1);
+    optionInput.teamOption.optionDetails2.splice(0, optionInput.teamOption.optionDetails2.length, ...optionDetails2);
+    optionInput.teamOption.conditionMap = conditionMap;
+    optionInput.teamOption.exclusionMap = exclusionMap;
+    optionInput.teamOption.checkboxList.splice(0, optionInput.teamOption.checkboxList.length, ...checkboxList);
+    optionInput.teamOption.selectList.splice(0, optionInput.teamOption.selectList.length, ...selectList);
+    optionInput.teamOption.numberList.splice(0, optionInput.teamOption.numberList.length, ...numberList);
 }
 
-export function popBuildinfoFromSession() {
-    const result: [string | undefined, string | undefined, TAnyObject | undefined, string[] | undefined] = [undefined, undefined, undefined, undefined];
-    const character = sessionStorage.getItem('character');
-    if (character) {
-        result[0] = character;
-        const buildname = sessionStorage.getItem('buildname');
-        if (buildname) {
-            result[1] = buildname;
+export function setupMiscOption(optionInput: TOptionInput) {
+    const optionDetails1: TDamageDetailObj[] = [];
+    const optionDetails2: TDamageDetailObj[] = [];
+    const conditionMap = new Map<string, string[] | object | null>();
+    const exclusionMap = new Map<string, string[]>();
+    const checkboxList: TCheckboxEntry[] = [];
+    const selectList: TSelectEntry[] = [];
+    const numberList: TNumberEntry[] = [];
+    [OPTION1_MASTER_LIST, OPTION2_MASTER_LIST].forEach(masterList => {
+        for (const entry of masterList) {
+            if ('詳細' in entry) {
+                for (const detailObj of entry.詳細) {
+                    if (!('条件' in detailObj)) {
+                        (detailObj as any).条件 = entry.key;
+                    }
+                }
+            }
+            makeDamageDetailObjArr(entry, null, null, null, optionDetails1, optionDetails2, 'その他オプション');
         }
-        const builddata = sessionStorage.getItem('builddata');
-        if (builddata) {
-            result[2] = JSON.parse(builddata);
+    })
+    optionDetails1.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
+    optionDetails2.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
+    });
+    conditionMap.forEach((value, key) => {
+        if (value === null) { // checkbox
+            if (checkboxList.filter((s) => s.name == key).length === 0) {
+                checkboxList.push({
+                    name: key,
+                    displayName: key.replace(/^.+\*/, ''),
+                })
+            }
+        } else if (_.isArray(value)) {  // select
+            if (selectList.filter((s) => s.name == key).length === 0) {
+                const required = value[0].startsWith('required_');
+                selectList.push({
+                    name: key,
+                    displayName: key.replace(/^.+\*/, ''),
+                    options: (required || !value[0]) ? value : ['', ...value],
+                    required: required,
+                })
+            }
+        } else if (_.isPlainObject(value)) {  // number
+            if (numberList.filter((s) => s.name == key).length === 0) {
+                numberList.push({
+                    name: key,
+                    displayName: key.replace(/^.+\*/, ''),
+                    min: (value as any).min,
+                    max: (value as any).max,
+                    step: (value as any).step,
+                })
+            }
         }
-        const teammembers = sessionStorage.getItem('teammembers');
-        if (teammembers) {
-            result[3] = JSON.parse(teammembers);
-        }
-        console.log(character, buildname, builddata, teammembers);
-    }
-    sessionStorage.removeItem('character');
-    sessionStorage.removeItem('builddata');
-    sessionStorage.removeItem('buildname');
-    sessionStorage.removeItem('teammembers');
-    return result;
+    });
+    optionInput.miscOption.optionDetails1.splice(0, optionInput.miscOption.optionDetails1.length, ...optionDetails1);
+    optionInput.miscOption.optionDetails2.splice(0, optionInput.miscOption.optionDetails2.length, ...optionDetails2);
+    optionInput.miscOption.conditionMap = conditionMap;
+    optionInput.miscOption.exclusionMap = exclusionMap;
+    optionInput.miscOption.checkboxList.splice(0, optionInput.miscOption.checkboxList.length, ...checkboxList);
+    optionInput.miscOption.selectList.splice(0, optionInput.miscOption.selectList.length, ...selectList);
+    optionInput.miscOption.numberList.splice(0, optionInput.miscOption.numberList.length, ...numberList);
 }
 
 export async function updateConditionsByTeam(
@@ -2263,4 +2273,131 @@ export async function updateOptionsElementalResonanceByTeam(
         return true;
     }
     return false;
+}
+
+export function makeSharedata(savedata: TAnyObject) {
+    const sharedataArr = [] as any[];
+
+    let character: TCharacterKey;
+    let weaponType: TWeaponTypeKey;
+
+    キャラクター構成PROPERTY_MAP.forEach((value, key) => {
+        let newValue = savedata[key];
+        let myBasename;
+        switch (key) {
+            case 'キャラクター':
+                character = newValue as TCharacterKey;
+                myBasename = basename(CHARACTER_MASTER[character]['import']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '武器':
+                weaponType = CHARACTER_MASTER[character]['武器'] as TWeaponTypeKey;
+                myBasename = basename((WEAPON_MASTER as any)[weaponType][newValue]['import']);
+                newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                break;
+            case '聖遺物セット効果1':
+            case '聖遺物セット効果2':
+                if (newValue == 'NONE') {
+                    newValue = '';  // 聖遺物セット効果なし
+                } else {
+                    myBasename = basename(ARTIFACT_SET_MASTER[newValue as TArtifactSetKey]['image']);
+                    newValue = myBasename.split('_')[myBasename.split('_').length - 1];
+                }
+                break;
+            case '聖遺物メイン効果1':
+            case '聖遺物メイン効果2':
+            case '聖遺物メイン効果3':
+            case '聖遺物メイン効果4':
+            case '聖遺物メイン効果5':
+                if (newValue) {
+                    newValue = newValue.split('_')[0] + '_' + ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue.split('_')[1]);
+                }
+                break;
+        }
+        if (key.match(/^聖遺物優先するサブ効果\d$/)) {
+            if (newValue) {
+                newValue = ARTIFACT_STAT_JA_EN_ABBREV_MAP.get(newValue);
+            }
+        }
+        sharedataArr.push(newValue);
+    });
+    Object.keys(savedata).forEach(key => {
+        if (!キャラクター構成PROPERTY_MAP.has(key)) {
+            sharedataArr.push(key + '=' + savedata[key]);
+        }
+    });
+
+    return sharedataArr.join(',');
+}
+
+function openTwitter(text: string, url: string, opt_hashtags?: string, opt_via?: string) {
+    const baseUrl = 'https://twitter.com/intent/tweet?';
+    const params = new URLSearchParams();
+    params.append('text', text);
+    params.append('url', url);
+    if (opt_hashtags) {
+        params.append('hashtags', opt_hashtags);
+    }
+    if (opt_via) {
+        params.append('via', opt_via);
+    }
+    const query = params.toString();
+    const shareUrl = `${baseUrl}${query}`;
+    console.log(params);
+    console.log(shareUrl);
+    window.open(shareUrl);
+}
+
+export function shareByTwitter(
+    characterInput: TCharacterInput,
+    artifactDetailInput: TArtifactDetailInput,
+    conditionInput: TConditionInput
+) {
+    const savedata = makeSavedata(characterInput, artifactDetailInput, conditionInput);
+    const sharedata = makeSharedata(savedata);
+
+    const text = characterInput.buildname;
+    const encoded = encodeURI(sharedata);
+    const url = 'https://asagume.github.io/gencalc/' + '?allin=' + encoded;
+
+    openTwitter(text, url);
+}
+
+export function pushBuildinfoToSession(character: TCharacterKey | string, buildname?: string, builddata?: any, teammembers?: string[]) {
+    sessionStorage.setItem('character', character);
+    if (buildname) {
+        sessionStorage.setItem('buildname', buildname);
+    }
+    if (builddata) {
+        sessionStorage.setItem('builddata', JSON.stringify(builddata));
+    }
+    if (teammembers) {
+        sessionStorage.setItem('teammembers', JSON.stringify(teammembers));
+    }
+}
+
+export function popBuildinfoFromSession() {
+    const result: [string | undefined, string | undefined, TAnyObject | undefined, string[] | undefined] = [undefined, undefined, undefined, undefined];
+    const character = sessionStorage.getItem('character');
+    if (character) {
+        result[0] = character;
+        const buildname = sessionStorage.getItem('buildname');
+        if (buildname) {
+            result[1] = buildname;
+        }
+        const builddata = sessionStorage.getItem('builddata');
+        if (builddata) {
+            result[2] = JSON.parse(builddata);
+        }
+        const teammembers = sessionStorage.getItem('teammembers');
+        if (teammembers) {
+            result[3] = JSON.parse(teammembers);
+        }
+        console.log(character, buildname, builddata, teammembers);
+    }
+    sessionStorage.removeItem('character');
+    sessionStorage.removeItem('builddata');
+    sessionStorage.removeItem('buildname');
+    sessionStorage.removeItem('teammembers');
+    return result;
 }

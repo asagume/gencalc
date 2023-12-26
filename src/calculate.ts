@@ -436,7 +436,7 @@ export const calculateStats = function (
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
                     if (myDetailObj['条件']) {
                         const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
-                        if (number == 0) continue;
+                        if (number === 0) continue;
                     }
                     if (myDetailObj['種類'] && myDetailObj['種類'].endsWith('元素付与')) {
                         const my元素 = myDetailObj['種類'].replace('元素付与', '');
@@ -479,28 +479,30 @@ function updateStatsWithCondition(
         if (myDamageDetail && CHANGE_KIND_STATUS in myDamageDetail) {
             for (const myDetailObj of myDamageDetail[CHANGE_KIND_STATUS]) {
                 let hasCondition = false;
-                let myNew数値 = myDetailObj['数値'];
+                let my数値 = myDetailObj['数値'];
+                if (my数値 === null) {
+                    continue;
+                }
                 if (myDetailObj['条件']) {
                     const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, constellation);
-                    if (number == 0) continue;
-                    if (number != 1) {
-                        if (_.isString(myNew数値)) {
-                            myNew数値 += '*' + number;
-                        } else if (_.isArray(myNew数値)) {
-                            myNew数値 = (myNew数値 as any).concat(['*', number]);
-                        }
+                    if (my数値.includes('${INDEX}')) {
+                        my数値 = my数値.replaceAll('${INDEX}', String(number));
+                    } else if (number === 0) {
+                        continue;
+                    } else {
+                        my数値 = '(' + my数値 + ')*' + number;
                     }
                     hasCondition = true;
                 }
-                let myNew種類 = myDetailObj['種類'];
-                if (myNew種類) {
+                let my種類 = myDetailObj['種類'];
+                if (my種類) {
                     if (myDetailObj['対象']) {
-                        myNew種類 += '.' + myDetailObj['対象'];
+                        my種類 += '.' + myDetailObj['対象'];
                     }
-                    if (!statFormulaMap.has(myNew種類)) {
-                        statFormulaMap.set(myNew種類, []);
+                    if (!statFormulaMap.has(my種類)) {
+                        statFormulaMap.set(my種類, []);
                     }
-                    statFormulaMap.get(myNew種類)?.push([myNew種類, myNew数値, myDetailObj.上限, myDetailObj.下限, hasCondition]);
+                    statFormulaMap.get(my種類)?.push([my種類, my数値, myDetailObj.上限, myDetailObj.下限, hasCondition]);
                 }
             }
         }
@@ -704,7 +706,7 @@ export function calculateElementalResonance(
             for (const detailObj of master.詳細) {
                 if (detailObj.条件) {
                     const matchRet = checkConditionMatches(detailObj.条件, validConditionValueArr, 0);
-                    if (matchRet == 0) continue;
+                    if (matchRet === 0) continue;
                 }
                 if (detailObj.種類 && detailObj.数値) {
                     if (detailObj.種類 in result) {
@@ -956,12 +958,12 @@ export function calculateDamageResult(
                 let talentDetailArr = (damageDetailMyCharacter as any)[category];
                 if (('特殊' + category) in damageDetailMyCharacter) {
                     const workObj = (damageDetailMyCharacter as any)['特殊' + category];
-                    if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation) != 0) {
+                    if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation) !== 0) {
                         talentDetailArr = workObj['詳細'];
                     }
                 }
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) == 0) {
+                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) === 0) {
                         continue;
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult, element);
@@ -996,7 +998,7 @@ export function calculateDamageResult(
                 if (!(category in damageDetailMyCharacter)) continue;
                 const talentDetailArr = (damageDetailMyCharacter as any)[category];
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) == 0) {
+                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) === 0) {
                         continue;
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
@@ -1011,7 +1013,7 @@ export function calculateDamageResult(
             if (!myDamageDetail || !(category in myDamageDetail)) continue;
             const talentDetailArr = (myDamageDetail as any)[category];
             for (const talentDetail of talentDetailArr) {
-                if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) == 0) {
+                if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) === 0) {
                     continue;
                 }
                 const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
@@ -1043,7 +1045,7 @@ export function calculateDamageResult(
     }
 }
 
-export function makeValidConditionValueArr(conditionInput: any) {
+export function makeValidConditionValueArr(conditionInput: TConditionInput) {
     try {
         const result = [] as string[];
         if (!conditionInput) return result;
@@ -1059,8 +1061,8 @@ export function makeValidConditionValueArr(conditionInput: any) {
         if (selectList) {
             selectList.forEach((entry: any) => {
                 const value = conditionInput.conditionValues[entry.name];
-                if (value !== undefined && value !== null) {
-                    if (value > 0 || (value == 0 && entry.required)) {
+                if (_.isNumber(value)) {
+                    if (value > 0 || (value === 0 && entry.required)) {
                         result.push(entry.name + '@' + entry.options[value]);
                     }
                 }
@@ -1070,7 +1072,7 @@ export function makeValidConditionValueArr(conditionInput: any) {
         if (numberList) {
             numberList.forEach((entry: any) => {
                 const value = conditionInput.conditionValues[entry.name];
-                if (value !== undefined && value !== null) {
+                if (_.isNumber(value)) {
                     result.push(entry.name + '=' + value);
                 }
             });
@@ -1090,11 +1092,11 @@ export function checkConditionMatches(
 ): number {
     const myCondStr = conditionStr.split('^')[0];
 
-    if (myCondStr.indexOf('|') != -1) {  // |はOR条件です
+    if (myCondStr.indexOf('|') !== -1) {  // |はOR条件です
         const myCondStrArr = myCondStr.split('|');
         for (let i = 0; i < myCondStrArr.length; i++) {
             const resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation);
-            if (resultSub == 1) {
+            if (resultSub === 1) {
                 return 1;   // マッチ
             }
         }
@@ -1105,10 +1107,10 @@ export function checkConditionMatches(
     let result = 1;
     for (let i = 0; i < myCondStrArr.length; i++) {
         const resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation);
-        if (resultSub == 0) {
+        if (resultSub === 0) {
             return 0;   // アンマッチ
         }
-        if (resultSub != 1) {
+        if (resultSub !== 1) {
             result = resultSub;
         }
     }
@@ -1121,8 +1123,8 @@ function checkConditionMatchesSub(
     constellation: number,
 ): number {
     const myCondArr = conditionStr.split(/[@=]/);
-    if (myCondArr[0] == '命ノ星座') {
-        if (myCondArr.length == 2) {
+    if (myCondArr[0] === '命ノ星座') {
+        if (myCondArr.length === 2) {
             if (isNumeric(myCondArr[1])) {
                 const work = Number(myCondArr[1]);
                 if (work <= constellation) {
@@ -1135,13 +1137,13 @@ function checkConditionMatchesSub(
     if (validConditionValueArr.includes(conditionStr) || validConditionValueArr.includes(conditionStr.replace('=', '@'))) {
         return 1;   // マッチ 等倍
     }
-    if (myCondArr.length == 1) {
+    if (myCondArr.length === 1) {
         if (validConditionValueArr.filter(s => s.split('@')[0] == conditionStr).length > 0) {
             return 1;   // マッチ 等倍
         }
         return 0;   // アンマッチ
     }
-    if (conditionStr.indexOf('=') != -1) {
+    if (conditionStr.indexOf('=') !== -1) {
         if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
             const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
             if (workArr.length > 0) {
@@ -1392,26 +1394,35 @@ function calculateDamageFromDetail(
             [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets].forEach(damageDetail => {
                 if (!damageDetail) return;
                 damageDetail.ステータス変更系詳細.filter(s => s.条件).forEach(damageDetailObj => {
+                    if (damageDetailObj.数値 === null) {
+                        return;
+                    }
                     const conditionStr = damageDetailObj.条件 as string;
-                    let valueBefore = 0;
-                    let valueAfter = 0;
                     const matchesBefore = checkConditionMatches(conditionStr, validConditionValueArr, constellation);
                     const matchesAfter = checkConditionMatches(conditionStr, validConditionValueArrAfter, constellation);
-                    if (matchesBefore == matchesAfter) return;
-                    if (matchesBefore !== 0) {
-                        let new数値 = damageDetailObj.数値;
-                        if (new数値 !== null) {
-                            new数値 = '(' + new数値 + ')*' + matchesBefore;
-                            valueBefore = evalFormula(new数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
-                        }
+                    if (matchesBefore == matchesAfter) {
+                        return;
                     }
-                    if (matchesAfter !== 0) {
-                        let new数値 = damageDetailObj.数値;
-                        if (new数値 !== null) {
-                            new数値 = '(' + new数値 + ')*' + matchesAfter;
-                            valueAfter = evalFormula(new数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
-                        }
+                    let valueBefore = 0;
+                    let valueAfter = 0;
+                    let before数値 = damageDetailObj.数値;
+                    if (before数値.includes('${INDEX}')) {
+                        before数値 = before数値.replaceAll('${INDEX}', String(matchesBefore));
+                    } else if (matchesBefore !== 0) {
+                        before数値 = '(' + before数値 + ')*' + matchesBefore;
+                    } else {
+                        before数値 = '0';
                     }
+                    valueBefore = evalFormula(before数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
+                    let after数値 = damageDetailObj.数値;
+                    if (after数値.includes('${INDEX}')) {
+                        after数値 = after数値.replaceAll('${INDEX}', String(matchesAfter));
+                    } else if (matchesAfter !== 0) {
+                        after数値 = '(' + after数値 + ')*' + matchesAfter;
+                    } else {
+                        after数値 = '0';
+                    }
+                    valueAfter = evalFormula(after数値, statsObj, damageResult, damageDetailObj.上限, damageDetailObj.下限);
                     const diff = valueAfter - valueBefore;
                     if (diff) {
                         let new種類 = damageDetailObj.種類 as string;
@@ -1437,7 +1448,7 @@ function calculateDamageFromDetail(
                 let number = null;
                 if (valueObj.条件) {
                     number = checkConditionMatches(valueObj.条件, validConditionValueArr, constellation);
-                    if (number == 0) {
+                    if (number === 0) {
                         return;
                     }
                 }
@@ -1549,7 +1560,7 @@ function calculateDamageFromDetail(
                     const my種類 = valueObj.種類 as string; // 通常攻撃ダメージアップ
                     const my条件 = valueObj.条件 as string;
                     const myHIT数 = detailObj.HIT数;
-                    if (checkConditionMatches(my条件, validConditionValueArr, constellation) != 0) {
+                    if (checkConditionMatches(my条件, validConditionValueArr, constellation) !== 0) {
                         const my数値 = valueObj.数値;
                         const myValue = evalFormula(my数値, statsObj, damageResult, valueObj.上限, valueObj.下限);
                         if (!(my種類 in myステータス補正)) {
@@ -1956,7 +1967,7 @@ export function calculateStatsTop(
     });
 }
 
-export async function calculateSupporter(
+export async function setupTeamOptionSupporter(
     optionInput: TOptionInput,
     supporter: TCharacterKey,
     build?: string,
@@ -1967,10 +1978,10 @@ export async function calculateSupporter(
     const conditionInput = getDefaultConditionInput();
     const statsInput = getDefaultStatsInput();
     const damageResult = getDefaultDamageResultInput();
-    const teamOptionDetails1: TDamageDetailObj[] = [];
-    const teamOptionDetails2: TDamageDetailObj[] = [];
-    const teamConditions = new Map<string, string[] | object | null>();
-    const teamExclusions = new Map<string, string[]>();
+    const optionDetails1: TDamageDetailObj[] = [];
+    const optionDetails2: TDamageDetailObj[] = [];
+    const conditionMap = new Map<string, string[] | object | null>();
+    const exclusionMap = new Map<string, string[]>();
 
     characterInput.character = supporter;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
@@ -2011,21 +2022,21 @@ export async function calculateSupporter(
                 (detailObj as any).条件 = makeSupporterCondition(supporter, entry.名前, (detailObj as any).条件);
             }
         }
-        teamOptions.splice(teamOptions.length, 0, ...makeDamageDetailObjArr(entry, null, null, null, teamOptionDetails1, teamOptionDetails2, 'その他オプション'));
+        teamOptions.splice(teamOptions.length, 0, ...makeDamageDetailObjArr(entry, null, null, null, optionDetails1, optionDetails2, 'その他オプション'));
     })
     teamOptions.filter((s) => s.条件).forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj.条件 as string, teamConditions, teamExclusions);
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
     })
-    teamOptionDetails1.filter((s) => s.条件).forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj.条件 as string, teamConditions, teamExclusions);
+    optionDetails1.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
     })
-    teamOptionDetails2.filter((s) => s.条件).forEach((detailObj) => {
-        makeConditionExclusionMapFromStr(detailObj.条件 as string, teamConditions, teamExclusions);
+    optionDetails2.filter((s) => s.条件).forEach((detailObj) => {
+        makeConditionExclusionMapFromStr(detailObj.条件 as string, conditionMap, exclusionMap);
     })
-    teamConditions.forEach((value, key) => {
+    conditionMap.forEach((value, key) => {
         if (value && _.isArray(value)) {
             if (!value[0].startsWith('required_')) {
-                teamConditions.set(key, ['', ...value]);
+                conditionMap.set(key, ['', ...value]);
             }
         }
     })
@@ -2046,6 +2057,9 @@ export async function calculateSupporter(
             if (_.isArray(characterInput.artifactSetMasters[0]['4セット効果']['詳細'])) {
                 characterInput.artifactSetMasters[0]['4セット効果']['詳細'].forEach(detailObj => {
                     if (detailObj.チーム) {
+                        if (_.isString(detailObj.条件)) {
+                            detailObj.条件 = detailObj.条件.replace('拡散', '翠緑の影');
+                        }
                         artifactSetOptions.push(detailObj);
                     }
                 })
@@ -2060,16 +2074,16 @@ export async function calculateSupporter(
                 damageDetailObj.条件 = condition;
                 const changeKind = getChangeKind(damageDetailObj.種類 as string);
                 if (changeKind === 'STATUS' &&
-                    teamOptionDetails1.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
+                    optionDetails1.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
                 ) {
-                    teamOptionDetails1.splice(teamOptionDetails1.length, 0, damageDetailObj);
+                    optionDetails1.splice(optionDetails1.length, 0, damageDetailObj);
                 }
                 if (changeKind === 'TALENT' &&
-                    teamOptionDetails2.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
+                    optionDetails2.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
                 ) {
-                    teamOptionDetails2.splice(teamOptionDetails2.length, 0, damageDetailObj);
+                    optionDetails2.splice(optionDetails2.length, 0, damageDetailObj);
                 }
-                makeConditionExclusionMapFromStr(condition, teamConditions, teamExclusions);
+                makeConditionExclusionMapFromStr(condition, conditionMap, exclusionMap);
             })
         }
     }
@@ -2080,13 +2094,13 @@ export async function calculateSupporter(
         conditionInput: conditionInput,
         statsInput: statsInput,
         damageResult: damageResult,
-        teamOptionDetails1: teamOptionDetails1,
-        teamOptionDetails2: teamOptionDetails2,
-        teamConditions: teamConditions,
-        teamExclusions: teamExclusions,
+        optionDetails1: optionDetails1,
+        optionDetails2: optionDetails2,
+        conditionMap: conditionMap,
+        exclusionMap: exclusionMap,
     };
 
-    console.log(supporter, teamOptionDetails1, teamOptionDetails2, teamConditions, teamExclusions);
+    console.log(supporter, optionDetails1, optionDetails2, conditionMap, exclusionMap);
     return [statsInput.statsObj, damageResult];
 }
 
@@ -2098,6 +2112,137 @@ function makeSupporterCondition(supporter: string, name: string | null, conditio
         result += name;
     }
     result = result.replace(supporter + '*' + supporter + '*', supporter + '*');
+    return result;
+}
+
+export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStats: TStats, character: string) {
+    const result = {} as TStats;
+    const validConditionValueArr: string[] = [];
+    makeValidConditionValueArr(optionInput.teamOption).forEach(value => {
+        const indexOf = value.indexOf('*');
+        const supporter = value.substring(0, indexOf);
+        console.log(supporter, character);
+        if (supporter != character) {
+            const work = value.substring(indexOf);
+            if (validConditionValueArr.filter(s => s.endsWith(work)).length === 0) {
+                validConditionValueArr.push(value);
+            }
+        }
+    })
+    Object.keys(optionInput.supporters).filter(supporter => supporter != character).forEach(supporter => {
+        [
+            optionInput.supporters[supporter]?.optionDetails1,
+            optionInput.supporters[supporter]?.optionDetails2,
+        ].forEach(optionDetails => {
+            if (optionDetails === undefined) {
+                return;
+            }
+            for (const detailObj of optionDetails) {
+                let my数値 = detailObj.数値;
+                if (my数値 === null) {
+                    continue;
+                }
+                if (detailObj.条件) {
+                    const number = checkConditionMatches(detailObj.条件, validConditionValueArr, 6);
+                    if (number === 0) continue;
+                    if (my数値.includes('${INDEX}')) {
+                        my数値 = my数値.replaceAll('${INDEX}', String(number));
+                    } else {
+                        my数値 = '(' + my数値 + ')*' + number;
+                    }
+                }
+                const workInput = optionInput.supporters[supporter];
+                const statsObj = workInput ? workInput.statsInput.statsObj : _.cloneDeep(ステータスTEMPLATE);
+                const damageResult = workInput ? workInput.damageResult : _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
+                Object.keys(topStats).forEach(stat => { // チーム内で最も高いステータスをセットします
+                    statsObj[stat] = topStats[stat];
+                })
+                const myValue = evalFormula(my数値, statsObj, damageResult, detailObj.上限, detailObj.下限);
+                const kinds = [] as string[];
+                if (detailObj.種類) {
+                    if (detailObj.種類.startsWith('全') || detailObj.種類.startsWith('敵全')) {
+                        for (const elem of ALL_ELEMENTS) {
+                            kinds.push(detailObj.種類.replace('全', elem));
+                        }
+                    } else {
+                        kinds.push(detailObj.種類);
+                    }
+                }
+                for (const kind of kinds) {
+                    let tempKind = kind;
+                    if (detailObj.対象) {
+                        tempKind += '.' + detailObj.対象;
+                    }
+                    if (tempKind in result) {
+                        result[tempKind] += myValue;
+                    } else {
+                        result[tempKind] = myValue;
+                    }
+                }
+            }
+        })
+    })
+    overwriteObject(optionInput.teamOption.conditionAdjustments, result);
+    return result;
+}
+
+export function calculateMiscStatsAdjustments(optionInput: TOptionInput) {
+    const result = {} as TStats;
+    const validConditionValueArr: string[] = [];
+    const teamConditionValueArr = makeValidConditionValueArr(optionInput.teamOption);
+    makeValidConditionValueArr(optionInput.miscOption).forEach(value => {
+        if (teamConditionValueArr.filter(s => s.endsWith('*' + value)).length === 0) {
+            validConditionValueArr.push(value);
+        }
+    });
+    [
+        optionInput.miscOption.optionDetails1,
+        optionInput.miscOption.optionDetails2,
+    ].forEach(optionDetails => {
+        if (optionDetails === undefined) {
+            return;
+        }
+        for (const detailObj of optionDetails) {
+            let my数値 = detailObj.数値;
+            if (my数値 === null) {
+                continue;
+            }
+            if (detailObj.条件) {
+                const number = checkConditionMatches(detailObj.条件, validConditionValueArr, 6);
+                if (number === 0) continue;
+                if (my数値.includes('${INDEX}')) {
+                    my数値 = my数値.replaceAll('${INDEX}', String(number));
+                } else {
+                    my数値 = '(' + my数値 + ')*' + number;
+                }
+            }
+            const statsObj = ステータスTEMPLATE;
+            const damageResult = DAMAGE_RESULT_TEMPLATE;
+            const myValue = evalFormula(my数値, statsObj, damageResult, detailObj.上限, detailObj.下限);
+            const kinds = [] as string[];
+            if (detailObj.種類) {
+                if (detailObj.種類.startsWith('全') || detailObj.種類.startsWith('敵全')) {
+                    for (const elem of ALL_ELEMENTS) {
+                        kinds.push(detailObj.種類.replace('全', elem));
+                    }
+                } else {
+                    kinds.push(detailObj.種類);
+                }
+            }
+            for (const kind of kinds) {
+                let tempKind = kind;
+                if (detailObj.対象) {
+                    tempKind += '.' + detailObj.対象;
+                }
+                if (tempKind in result) {
+                    result[tempKind] += myValue;
+                } else {
+                    result[tempKind] = myValue;
+                }
+            }
+        }
+    })
+    overwriteObject(optionInput.miscOption.conditionAdjustments, result);
     return result;
 }
 
