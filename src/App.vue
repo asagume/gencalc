@@ -908,9 +908,12 @@ export default defineComponent({
     }
 
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
-    const updateElementalResonance = (conditionValues: TConditionValues) => {
+    const updateElementalResonance = (conditionValues: TConditionValues, flag: boolean) => {
       if (conditionValues && Object.keys(conditionValues).length) {
-        overwriteObject(optionInputRea.elementalResonance.conditionValues, conditionValues);
+        if (!_.isEqual(optionInputRea.elementalResonance.conditionValues, conditionValues)) {
+          overwriteObject(optionInputRea.elementalResonance.conditionValues, conditionValues);
+          characterInputRea.saveDisabled = flag;
+        }
         setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
         const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
         overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
@@ -924,6 +927,7 @@ export default defineComponent({
       if (conditionValues) {
         if (!_.isEqual(optionInputRea.miscOption.conditionValues, conditionValues)) {
           overwriteObject(optionInputRea.miscOption.conditionValues, conditionValues);
+          characterInputRea.saveDisabled = false;
         }
         calculateMiscStatsAdjustments(optionInputRea);
         // ステータスとダメージを計算します
@@ -932,10 +936,11 @@ export default defineComponent({
     }
 
     /** チームオプションが変更されました。ステータスおよびダメージを再計算します */
-    const updateTeamOption = (conditionValues: TConditionValues) => {
+    const updateTeamOption = (conditionValues: TConditionValues, flag: boolean) => {
       if (conditionValues) {
         if (!_.isEqual(optionInputRea.teamOption.conditionValues, conditionValues)) {
           overwriteObject(optionInputRea.teamOption.conditionValues, conditionValues);
+          characterInputRea.saveDisabled = flag;
         }
         calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
         // ステータスとダメージを計算します
@@ -955,6 +960,7 @@ export default defineComponent({
       calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
+      characterInputRea.saveDisabled = false;
     }
     /** チーム編成に依存するオプションの値を調整します */
     async function _updateConditionByTeamMembers() {
@@ -1204,7 +1210,7 @@ export default defineComponent({
   .base-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-rows: auto auto max(400px) auto auto auto auto;
     grid-template-areas:
       "pane1 pane1 pane1"
       "pane2 pane2 pane2"

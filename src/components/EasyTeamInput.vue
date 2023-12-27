@@ -79,8 +79,10 @@ export default defineComponent({
 }
 
 .member img.character {
-    width: 36px;
+    width: 45px;
     height: 36px;
+    object-position: top;
+    object-fit: cover;
 }
 
 .member img.vision {

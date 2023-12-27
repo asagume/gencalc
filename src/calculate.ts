@@ -2114,6 +2114,56 @@ function makeSupporterCondition(supporter: string, name: string | null, conditio
     return result;
 }
 
+export function calculateConditionAdjustments(
+    stats: TStats,
+    damageDetailObjs: TDamageDetailObj[] | undefined,
+    validConditionValueArr: string[],
+    refStats: TStats,
+    damageResult: TDamageResult,
+    constellation = 6,
+) {
+    if (damageDetailObjs === undefined) {
+        return;
+    }
+    for (const detailObj of damageDetailObjs) {
+        let my数値 = detailObj.数値;
+        if (my数値 === null) {
+            continue;
+        }
+        if (detailObj.条件) {
+            const number = checkConditionMatches(detailObj.条件, validConditionValueArr, constellation);
+            if (number === 0) continue;
+            if (my数値.includes('${INDEX}')) {
+                my数値 = my数値.replaceAll('${INDEX}', String(number));
+            } else {
+                my数値 = '(' + my数値 + ')*' + number;
+            }
+        }
+        const myValue = evalFormula(my数値, refStats, damageResult, detailObj.上限, detailObj.下限);
+        const kinds = [] as string[];
+        if (detailObj.種類) {
+            if (detailObj.種類.startsWith('全') || detailObj.種類.startsWith('敵全')) {
+                for (const elem of ALL_ELEMENTS) {
+                    kinds.push(detailObj.種類.replace('全', elem));
+                }
+            } else {
+                kinds.push(detailObj.種類);
+            }
+        }
+        for (const kind of kinds) {
+            let tempKind = kind;
+            if (detailObj.対象) {
+                tempKind += '.' + detailObj.対象;
+            }
+            if (tempKind in stats) {
+                stats[tempKind] += myValue;
+            } else {
+                stats[tempKind] = myValue;
+            }
+        }
+    }
+}
+
 export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStats: TStats, character: string) {
     const result = {} as TStats;
     const validConditionValueArr: string[] = [];
@@ -2128,56 +2178,20 @@ export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStat
         }
     })
     Object.keys(optionInput.supporters).filter(supporter => supporter != character).forEach(supporter => {
+        const workInput = optionInput.supporters[supporter];
+        let statsObj = workInput ? workInput.statsInput.statsObj : ステータスTEMPLATE;
+        if (Object.keys(topStats).length) {
+            statsObj = _.cloneDeep(statsObj);
+            Object.keys(topStats).forEach(stat => { // チーム内で最も高いステータスをセットします
+                statsObj[stat] = topStats[stat];
+            })
+        }
+        const damageResult = workInput ? workInput.damageResult : DAMAGE_RESULT_TEMPLATE;
         [
             optionInput.supporters[supporter]?.optionDetails1,
             optionInput.supporters[supporter]?.optionDetails2,
         ].forEach(optionDetails => {
-            if (optionDetails === undefined) {
-                return;
-            }
-            for (const detailObj of optionDetails) {
-                let my数値 = detailObj.数値;
-                if (my数値 === null) {
-                    continue;
-                }
-                if (detailObj.条件) {
-                    const number = checkConditionMatches(detailObj.条件, validConditionValueArr, 6);
-                    if (number === 0) continue;
-                    if (my数値.includes('${INDEX}')) {
-                        my数値 = my数値.replaceAll('${INDEX}', String(number));
-                    } else {
-                        my数値 = '(' + my数値 + ')*' + number;
-                    }
-                }
-                const workInput = optionInput.supporters[supporter];
-                const statsObj = workInput ? workInput.statsInput.statsObj : _.cloneDeep(ステータスTEMPLATE);
-                const damageResult = workInput ? workInput.damageResult : _.cloneDeep(DAMAGE_RESULT_TEMPLATE);
-                Object.keys(topStats).forEach(stat => { // チーム内で最も高いステータスをセットします
-                    statsObj[stat] = topStats[stat];
-                })
-                const myValue = evalFormula(my数値, statsObj, damageResult, detailObj.上限, detailObj.下限);
-                const kinds = [] as string[];
-                if (detailObj.種類) {
-                    if (detailObj.種類.startsWith('全') || detailObj.種類.startsWith('敵全')) {
-                        for (const elem of ALL_ELEMENTS) {
-                            kinds.push(detailObj.種類.replace('全', elem));
-                        }
-                    } else {
-                        kinds.push(detailObj.種類);
-                    }
-                }
-                for (const kind of kinds) {
-                    let tempKind = kind;
-                    if (detailObj.対象) {
-                        tempKind += '.' + detailObj.対象;
-                    }
-                    if (tempKind in result) {
-                        result[tempKind] += myValue;
-                    } else {
-                        result[tempKind] = myValue;
-                    }
-                }
-            }
+            calculateConditionAdjustments(result, optionDetails, validConditionValueArr, statsObj, damageResult);
         })
     })
     overwriteObject(optionInput.teamOption.conditionAdjustments, result);
@@ -2193,52 +2207,13 @@ export function calculateMiscStatsAdjustments(optionInput: TOptionInput) {
             validConditionValueArr.push(value);
         }
     });
+    const statsObj = ステータスTEMPLATE;
+    const damageResult = DAMAGE_RESULT_TEMPLATE;
     [
         optionInput.miscOption.optionDetails1,
         optionInput.miscOption.optionDetails2,
     ].forEach(optionDetails => {
-        if (optionDetails === undefined) {
-            return;
-        }
-        for (const detailObj of optionDetails) {
-            let my数値 = detailObj.数値;
-            if (my数値 === null) {
-                continue;
-            }
-            if (detailObj.条件) {
-                const number = checkConditionMatches(detailObj.条件, validConditionValueArr, 6);
-                if (number === 0) continue;
-                if (my数値.includes('${INDEX}')) {
-                    my数値 = my数値.replaceAll('${INDEX}', String(number));
-                } else {
-                    my数値 = '(' + my数値 + ')*' + number;
-                }
-            }
-            const statsObj = ステータスTEMPLATE;
-            const damageResult = DAMAGE_RESULT_TEMPLATE;
-            const myValue = evalFormula(my数値, statsObj, damageResult, detailObj.上限, detailObj.下限);
-            const kinds = [] as string[];
-            if (detailObj.種類) {
-                if (detailObj.種類.startsWith('全') || detailObj.種類.startsWith('敵全')) {
-                    for (const elem of ALL_ELEMENTS) {
-                        kinds.push(detailObj.種類.replace('全', elem));
-                    }
-                } else {
-                    kinds.push(detailObj.種類);
-                }
-            }
-            for (const kind of kinds) {
-                let tempKind = kind;
-                if (detailObj.対象) {
-                    tempKind += '.' + detailObj.対象;
-                }
-                if (tempKind in result) {
-                    result[tempKind] += myValue;
-                } else {
-                    result[tempKind] = myValue;
-                }
-            }
-        }
+        calculateConditionAdjustments(result, optionDetails, validConditionValueArr, statsObj, damageResult);
     })
     overwriteObject(optionInput.miscOption.conditionAdjustments, result);
     return result;

@@ -25,27 +25,21 @@
 
 <script lang="ts">
 import _ from "lodash";
-import { CONDITION_INPUT_TEMPLATE, TConditionInput, TElementalResonance, } from "@/input";
+import { TConditionInput, TConditionValues, TElementalResonance, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
   ELEMENTAL_RESONANCE_MASTER_LIST,
   ELEMENT_COLOR_CLASS,
   TElementalResonanceKey,
 } from "@/master";
-import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
+import { computed, defineComponent, nextTick, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { isNumeric } from "@/common";
-
-type TConditionValuesAny = {
-  [key: string]: any;
-}
+import { isNumeric, overwriteObject } from "@/common";
 
 export default defineComponent({
   name: "ElementalResonanceInput",
   props: {
-    elementalResonance: {
-      type: Object as PropType<TElementalResonance>,
-    }
+    elementalResonance: { type: Object as PropType<TElementalResonance>, required: true, }
   },
   emits: ["update:elemental-resonance"],
   setup(props, context) {
@@ -58,9 +52,7 @@ export default defineComponent({
     });
     // 燃焼、原激化、開花反応を発動すると、周囲チーム全員の元素熟知+30、継続時間6秒。超激化、草激化、超開花、烈開花反応を発動すると、周囲チーム全員の元素熟知+20、継続時間6秒。
     const dendroOption = ref(0);
-
-    const conditionInput = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE));
-    const conditionValues = conditionInput.conditionValues as TConditionValuesAny;
+    const conditionValues = reactive({} as TConditionValues);
 
     const displayStatAjustmentList = computed(() => {
       const resultArr: string[] = [];
@@ -85,7 +77,34 @@ export default defineComponent({
         }
       }
       return resultArr;
-    });
+    })
+
+    const descriptionList = computed(() => {
+      const result = [] as any[];
+      for (const name of Object.keys(elementalResonanceChecked).filter(
+        (s) => elementalResonanceChecked[s]
+      )) {
+        result.push([
+          name,
+          ELEMENTAL_RESONANCE_MASTER[name as TElementalResonanceKey].説明,
+        ]);
+      }
+      return result;
+    })
+
+    const elementClass = (item: string) => {
+      let result = "";
+      if (item) {
+        result = (ELEMENT_COLOR_CLASS as any)[item.substring(0, 1)];
+      }
+      return result;
+    }
+
+    /** オプションの値が変更されたことを上位に通知します */
+    const updateOption = async (flag = false) => {
+      await nextTick();
+      context.emit('update:elemental-resonance', conditionValues, flag);
+    }
 
     const onChange = async (key?: string) => {
       if (key) {
@@ -117,47 +136,32 @@ export default defineComponent({
       } else {
         conditionValues['dendroOption'] = 0;
       }
-      context.emit("update:elemental-resonance", conditionValues);
-    };
+      updateOption();
+    }
 
-    const initializeValues = (initialObj: TConditionInput) => {
+    const initializeValues = (input: TConditionInput) => {
+      overwriteObject(conditionValues, input.conditionValues);
       Object.keys(elementalResonanceChecked).forEach(key => {
-        if (key in initialObj.conditionValues) {
-          elementalResonanceChecked[key] = Boolean(initialObj.conditionValues[key]);
+        if (key in conditionValues) {
+          elementalResonanceChecked[key] = Boolean(conditionValues[key]);
         } else {
           elementalResonanceChecked[key] = false;
         }
       });
-      if ('dendroOption' in initialObj.conditionValues) {
-        dendroOption.value = Number(initialObj.conditionValues['dendroOption']);
+      if ('dendroOption' in conditionValues) {
+        dendroOption.value = Number(conditionValues['dendroOption']);
       }
-      onChange();
-    };
+      updateOption(true);
+    }
 
-    const descriptionList = computed(() => {
-      const result = [] as any[];
-      for (const name of Object.keys(elementalResonanceChecked).filter(
-        (s) => elementalResonanceChecked[s]
-      )) {
-        result.push([
-          name,
-          ELEMENTAL_RESONANCE_MASTER[name as TElementalResonanceKey].説明,
-        ]);
-      }
-      return result;
-    });
+    onMounted(() => {
+      overwriteObject(conditionValues, props.elementalResonance.conditionValues);
+      updateOption(true);
+    })
 
     watch(props, () => {
       displayStatAjustmentList.value;
-    });
-
-    const elementClass = (item: string) => {
-      let result = "";
-      if (item) {
-        result = (ELEMENT_COLOR_CLASS as any)[item.substring(0, 1)];
-      }
-      return result;
-    };
+    })
 
     return {
       displayName,

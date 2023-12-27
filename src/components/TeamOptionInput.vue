@@ -113,7 +113,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { isNumeric } from "@/common";
+import { isNumeric, overwriteObject } from "@/common";
 import {
   makeBuildStorageKey,
   makeDefaultBuildname,
@@ -273,9 +273,9 @@ export default defineComponent({
     })
 
     /** オプションの値が変更されたことを上位に通知します */
-    const updateOption = async () => {
+    const updateOption = async (flag = false) => {
       await nextTick();
-      context.emit('update:team-option', conditionValues);
+      context.emit('update:team-option', conditionValues, flag);
     }
 
     const valueOnChange = async (event: Event, item: any) => {
@@ -352,7 +352,6 @@ export default defineComponent({
           }
         }
       })
-      updateOption();
     }
 
     const initializeSupporters = (argSupporters: TSupporters) => {
@@ -371,38 +370,23 @@ export default defineComponent({
         }
       })
       updateConditionValues();
+      updateOption();
     }
 
     const initializeValues = (input: TConditionInput) => {
-      checkboxList.value.forEach(item => {
-        if (input.conditionValues[item.name] !== undefined) {
-          conditionValues[item.name] = input.conditionValues[item.name];
-        } else if (conditionValues[item.name] === undefined) {
-          conditionValues[item.name] = false;
-        }
-      })
-      selectList.value.forEach(item => {
-        if (input.conditionValues[item.name] !== undefined) {
-          conditionValues[item.name] = input.conditionValues[item.name];
-        } else if (conditionValues[item.name] === undefined) {
-          conditionValues[item.name] = 0;
-        }
-      })
-      numberList.value.forEach(item => {
-        if (input.conditionValues[item.name] !== undefined) {
-          conditionValues[item.name] = input.conditionValues[item.name];
-        } else if (conditionValues[item.name] === undefined) {
-          conditionValues[item.name] = Number(item.initial);
-        }
-      })
-      updateOption();
+      overwriteObject(conditionValues, input.conditionValues);
+      updateConditionValues();
+      updateOption(true);
     }
 
     onMounted(() => {
       if (_.isEqual(teamMembers, props.teamMembers)) {
         teamMembers.splice(0, teamMembers.length, ...props.teamMembers);
       }
+      overwriteObject(conditionValues, props.conditionInput.conditionValues);
       updateConditionValues();
+      updateOption(true);
+      buildnameSelectionOnChange();
     })
 
     watch(props, () => {
@@ -581,20 +565,22 @@ span.builddata-selector .material-symbols-outlined {
 div.character {
   position: relative;
   display: inline-block;
-  margin-left: 4px;
+  margin-left: 2px;
   margin-right: 4px;
 }
 
 div.character img.character {
-  width: 36px;
+  width: 42px;
   height: 36px;
+  object-position: top;
+  object-fit: cover;
 }
 
 div.character img.vision {
-  width: 12px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
   position: absolute;
-  left: 2px;
+  left: -4px;
   top: 2px;
 }
 
