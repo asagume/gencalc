@@ -21,6 +21,8 @@ import {
     NUMBER_CONDITION_VALUE_RE,
     setupConditionValues,
     TArtifactDetailInput,
+    TArtifactStats,
+    TArtifactStatsKey,
     TCharacterInput,
     TConditionInput,
     TConditionValues,
@@ -167,12 +169,13 @@ export function calculateArtifactStatsMain(artifactStatsMain: any, mainstats: st
 
 /** 聖遺物優先するサブ効果のステータスを算出します */
 export function calculateArtifactSubStatByPriority(
-    artifactStatsSub: any,
+    artifactStatsSub: TArtifactStats,
     mainstats: string[],
     prioritySubstats: string[],
     priotritySubstatIndices: number[],
     priotritySubstatValues: number[][],
-    prioritySubstatCounts: number[]) {
+    prioritySubstatCounts: number[],
+) {
     (Object.keys(artifactStatsSub) as (keyof typeof artifactStatsSub)[]).forEach((key) => {
         artifactStatsSub[key] = 0;
     });
@@ -181,7 +184,7 @@ export function calculateArtifactSubStatByPriority(
         if (!prioritySubstats[i]) continue;
         if (priotritySubstatIndices[i] === undefined || priotritySubstatIndices[i] < 0) continue;
         if (!prioritySubstatCounts[i]) continue;
-        artifactStatsSub[prioritySubstats[i]] += priotritySubstatValues[i][priotritySubstatIndices[i]] * prioritySubstatCounts[i];
+        artifactStatsSub[prioritySubstats[i] as TArtifactStatsKey] += priotritySubstatValues[i][priotritySubstatIndices[i]] * prioritySubstatCounts[i];
         totalCount += prioritySubstatCounts[i];
     }
     // 初期: 3 or 4

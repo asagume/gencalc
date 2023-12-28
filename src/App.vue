@@ -12,11 +12,11 @@
     <div class="pane3" style="margin-bottom: 15px">
       <CharacterInput ref="characterInputVmRef" :characterInput="characterInputRea"
         :recommendation-list="recommendationListRea" :recommendation="recommendationRef"
-        :artifact-set-select-visible="artifactSetSelectVisibleRef" :artifact-score="artifactScore"
-        @open:character-select="openCharacterSelect" @save-to-storage="saveToStorage($event)"
-        @remove-from-storage="removeFromStorage($event)" @update:recommendation="updateRecommendation($event)"
-        @open:weapon-select="openWeaponSelect" @open:artifact-set-select="openArtifactSetSelect($event)"
-        @open:artifact-detail-input="openArtifactDetailInput"
+        :builddata-savable="builddataSavable" :artifact-set-select-visible="artifactSetSelectVisibleRef"
+        :artifact-score="artifactScore" @open:character-select="openCharacterSelect"
+        @save-to-storage="saveToStorage($event)" @remove-from-storage="removeFromStorage($event)"
+        @update:recommendation="updateRecommendation($event)" @open:weapon-select="openWeaponSelect"
+        @open:artifact-set-select="openArtifactSetSelect($event)" @open:artifact-detail-input="openArtifactDetailInput"
         @update:character-input-character="updateCharacterInputCharacter($event)"
         @update:character-input-weapon="updateCharacterInputWeapon($event)"
         @open:character-info="openCharacterInfo($event)" />
@@ -440,6 +440,7 @@ export default defineComponent({
     const ownListToggle2Ref = ref(false);       // true:武器所持状況表示, false:非表示
     const ownListToggle3Ref = ref(false);       // true:聖遺物所持状況表示, false:非表示
     const enableClearLocalStorage = ref(false);
+    const evalCount = ref(0);
 
     onMounted(async () => {
       setI18nLanguage('en-us');
@@ -484,6 +485,23 @@ export default defineComponent({
       ステータスチーム内最高ARRAY.forEach(stat => {
         result[stat] = statsInput.statsObj[stat];
       })
+      return result;
+    })
+    const savedata = computed(() => {
+      const build = makeSavedata(characterInputRea, artifactDetailInputRea, conditionInputRea);
+      const option = makeOptionsSavedata(characterInputRea.character, optionInputRea);
+      return [build, option];
+    })
+    const builddataSavable = computed(() => {
+      evalCount.value;
+      const [build, option] = savedata.value;
+      const buildKey = makeBuildStorageKey(characterInputRea.character, characterInputRea.buildname);
+      const optionKey = makeOptionStorageKey(characterInputRea.character, characterInputRea.buildname);
+      let result = false;
+      if (!_.isEqual(JSON.stringify(build), localStorage.getItem(buildKey))
+        || !_.isEqual(JSON.stringify(option), localStorage.getItem(optionKey))) {
+        result = true;
+      }
       return result;
     })
 
@@ -629,6 +647,7 @@ export default defineComponent({
       if (nextStatVmRef.value) {
         nextStatVmRef.value.setupNextStatRows();
       }
+      evalCount.value++;
     }
 
     /** キャラクターを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
@@ -694,7 +713,7 @@ export default defineComponent({
     /** おすすめセットを選択しました。もろもろのデータを再作成、ステータスおよびダメージを再計算します */
     const updateRecommendation = async (recommendation: TRecommendation) => {
       console.log('App', 'recommendation', recommendation);
-      await loadRecommendation(characterInputRea, artifactDetailInputRea, conditionInputRea, optionInputRea, recommendation.build);
+      await loadRecommendation(characterInputRea, artifactDetailInputRea, conditionInputRea, optionInputRea, recommendation.build, recommendation.name);
       if (!('精錬ランク' in recommendation.build)) {
         const weapon = characterInputRea.weapon;
         let refine = [1, 1, 1, 5, 3, 1][characterInputRea.weaponMaster.レアリティ];
@@ -757,7 +776,6 @@ export default defineComponent({
       } else {
         characterInputRea.buildname = '';
       }
-      characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = !recommendation.overwrite;
       await nextTick();
       // 元素共鳴
@@ -779,7 +797,6 @@ export default defineComponent({
           artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
         }
       }
-      characterInputRea.saveDisabled = true;
     }
 
     /** キャラクターのパラメータ（突破レベル、レベル、命ノ星座、通常攻撃レベル、元素スキルレベル、元素爆発レベル）を更新します */
@@ -794,7 +811,6 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
-      characterInputRea.saveDisabled = false;
     }
 
     /** 武器を選択しました */
@@ -829,7 +845,6 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
-      characterInputRea.saveDisabled = false;
       await nextTick();
       document.querySelector('.pane3')?.scrollIntoView({ block: 'nearest' });
     }
@@ -846,7 +861,6 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
-      characterInputRea.saveDisabled = false;
     }
 
     /** 聖遺物セット効果を選択しました */
@@ -863,21 +877,23 @@ export default defineComponent({
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
-      characterInputRea.saveDisabled = false;
       await nextTick();
       document.querySelector('.pane3')?.scrollIntoView({ block: 'nearest' });
     }
 
     /** 聖遺物ステータスが変更されました。ステータスおよびダメージを再計算します */
     const updateArtifactDetail = (argArtifactDetailInput: TArtifactDetailInput) => {
-      artifactDetailInputRea.artifact_list.splice(0, artifactDetailInputRea.artifact_list.length, ...argArtifactDetailInput.artifact_list);
+      artifactDetailInputRea.聖遺物メイン効果.splice(0, artifactDetailInputRea.聖遺物メイン効果.length, ...argArtifactDetailInput.聖遺物メイン効果);
+      artifactDetailInputRea.聖遺物優先するサブ効果.splice(0, artifactDetailInputRea.聖遺物優先するサブ効果.length, ...argArtifactDetailInput.聖遺物優先するサブ効果);
+      artifactDetailInputRea.聖遺物優先するサブ効果上昇値.splice(0, artifactDetailInputRea.聖遺物優先するサブ効果上昇値.length, ...argArtifactDetailInput.聖遺物優先するサブ効果上昇値);
+      artifactDetailInputRea.聖遺物優先するサブ効果上昇回数.splice(0, artifactDetailInputRea.聖遺物優先するサブ効果上昇回数.length, ...argArtifactDetailInput.聖遺物優先するサブ効果上昇回数);
       for (const stat of Object.keys(argArtifactDetailInput.聖遺物ステータス)) {
         (artifactDetailInputRea.聖遺物ステータス as any)[stat] = (argArtifactDetailInput.聖遺物ステータス as any)[stat];
       }
+      artifactDetailInputRea.artifact_list.splice(0, artifactDetailInputRea.artifact_list.length, ...argArtifactDetailInput.artifact_list);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
       configurationInputRea.聖遺物サブ効果計算停止 = argArtifactDetailInput.聖遺物優先するサブ効果Disabled;
-      characterInputRea.saveDisabled = false;
     }
 
     /** 敵が変更されました。ステータスおよびダメージを再計算します */
@@ -904,15 +920,13 @@ export default defineComponent({
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
-      characterInputRea.saveDisabled = false;
     }
 
     /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
-    const updateElementalResonance = (conditionValues: TConditionValues, flag: boolean) => {
+    const updateElementalResonance = (conditionValues: TConditionValues) => {
       if (conditionValues && Object.keys(conditionValues).length) {
         if (!_.isEqual(optionInputRea.elementalResonance.conditionValues, conditionValues)) {
           overwriteObject(optionInputRea.elementalResonance.conditionValues, conditionValues);
-          characterInputRea.saveDisabled = flag;
         }
         setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
         const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
@@ -927,7 +941,6 @@ export default defineComponent({
       if (conditionValues) {
         if (!_.isEqual(optionInputRea.miscOption.conditionValues, conditionValues)) {
           overwriteObject(optionInputRea.miscOption.conditionValues, conditionValues);
-          characterInputRea.saveDisabled = false;
         }
         calculateMiscStatsAdjustments(optionInputRea);
         // ステータスとダメージを計算します
@@ -936,11 +949,10 @@ export default defineComponent({
     }
 
     /** チームオプションが変更されました。ステータスおよびダメージを再計算します */
-    const updateTeamOption = (conditionValues: TConditionValues, flag: boolean) => {
+    const updateTeamOption = (conditionValues: TConditionValues) => {
       if (conditionValues) {
         if (!_.isEqual(optionInputRea.teamOption.conditionValues, conditionValues)) {
           overwriteObject(optionInputRea.teamOption.conditionValues, conditionValues);
-          characterInputRea.saveDisabled = flag;
         }
         calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
         // ステータスとダメージを計算します
@@ -960,7 +972,6 @@ export default defineComponent({
       calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
-      characterInputRea.saveDisabled = false;
     }
     /** チーム編成に依存するオプションの値を調整します */
     async function _updateConditionByTeamMembers() {
@@ -1007,7 +1018,6 @@ export default defineComponent({
       if (artifactDetailInputVmRef.value) {
         artifactDetailInputVmRef.value.initializeArtifactStatsSub();
       }
-      characterInputRea.saveDisabled = false;
     }
 
     const openTwitter = () => {
@@ -1016,12 +1026,11 @@ export default defineComponent({
 
     /** 構成情報をローカルストレージに保存します */
     const saveToStorage = async (buildname: string) => {
-      const storageKey = makeBuildStorageKey(characterInputRea.character, buildname);
-      const savedata = makeSavedata(characterInputRea, artifactDetailInputRea, conditionInputRea);
-      localStorage.setItem(storageKey, JSON.stringify(savedata));
-      const optionsSavedata = makeOptionsSavedata(characterInputRea.character, optionInputRea);
-      const storageKey2 = makeOptionStorageKey(characterInputRea.character, buildname);
-      localStorage.setItem(storageKey2, JSON.stringify(optionsSavedata));
+      const [build, option] = savedata.value;
+      const buildKey = makeBuildStorageKey(characterInputRea.character, buildname);
+      const optionKey = makeOptionStorageKey(characterInputRea.character, buildname);
+      localStorage.setItem(buildKey, JSON.stringify(build));
+      localStorage.setItem(optionKey, JSON.stringify(option));
       const artifactScoringSavedata = artifactScoringStats;
       const storageKey3 = makeArtifactScoringStorageKey(characterInputRea.character, buildname);
       localStorage.setItem(storageKey3, JSON.stringify(artifactScoringSavedata));
@@ -1034,7 +1043,7 @@ export default defineComponent({
       );
       // サポーター情報を更新します
       await _setupSupporters();
-      if (storageKey == makeBuildStorageKey(characterInputRea.character)) {
+      if (buildKey == makeBuildStorageKey(characterInputRea.character)) {
         characterInputRea.buildname = makeDefaultBuildname(characterInputRea.character);
       }
       // 聖遺物所持状況を更新します
@@ -1056,8 +1065,8 @@ export default defineComponent({
           localStorage.setItem(storageKey4, JSON.stringify(savedArtifactList));
         }
       }
-      characterInputRea.saveDisabled = true;
       characterInputRea.removeDisabled = false;
+      evalCount.value++;
     }
 
     /** ローカルストレージの構成情報を削除します */
@@ -1082,8 +1091,8 @@ export default defineComponent({
       );
       // サポーター情報を更新します
       await _setupSupporters();
-      characterInputRea.saveDisabled = false;
       characterInputRea.removeDisabled = true;
+      evalCount.value++;
     };
 
     /** ローカルストレージを全削除します */
@@ -1150,6 +1159,7 @@ export default defineComponent({
       ownListToggle2Ref,
       ownListToggle3Ref,
       enableClearLocalStorage,
+      builddataSavable,
 
       weaponType,
       artifactScore,

@@ -378,6 +378,9 @@ import ArtifactDetailOcrResult from "@/components/ArtifactDetailOcrResult.vue";
 import ArtifactItem from "@/components/ArtifactItem.vue";
 import ArtifactChangeInput from "@/components/ArtifactChangeInput.vue";
 import {
+  ARTIFACT_TEMPLATE,
+  makePrioritySubstatValueList,
+  TArtifact,
   TArtifactDetailInput,
   聖遺物メイン効果_時の砂ARRAY,
   聖遺物メイン効果_死の羽ARRAY,
@@ -385,9 +388,6 @@ import {
   聖遺物メイン効果_生の花ARRAY,
   聖遺物メイン効果_空の杯ARRAY,
   聖遺物優先するサブ効果ARRAY,
-  makePrioritySubstatValueList,
-  TArtifact,
-  ARTIFACT_TEMPLATE,
 } from "@/input";
 import {
   calculateArtifactStats,
@@ -428,15 +428,14 @@ export default defineComponent({
     const STORAGE_KEY = 'artifact_list';
 
     const artifactDetailInputRea = reactive(props.artifactDetailInput as TArtifactDetailInput);
-
-    const mainstats = reactive(artifactDetailInputRea.聖遺物メイン効果);
-    const prioritySubstats = reactive(artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[]);
-    const prioritySubstatIndices = reactive(artifactDetailInputRea.聖遺物優先するサブ効果上昇値);
-    const prioritySubstatCounts = reactive(artifactDetailInputRea.聖遺物優先するサブ効果上昇回数);
-    const artifactStats = reactive(artifactDetailInputRea.聖遺物ステータス);
-    const artifactStatsMain = reactive(artifactDetailInputRea.聖遺物ステータスメイン効果);
-    const artifactStatsSub = reactive(artifactDetailInputRea.聖遺物ステータスサブ効果);
-    const artifactList = reactive(artifactDetailInputRea.artifact_list);
+    const mainstats = artifactDetailInputRea.聖遺物メイン効果;
+    const prioritySubstats = artifactDetailInputRea.聖遺物優先するサブ効果 as TArtifactSubKey[];
+    const prioritySubstatIndices = artifactDetailInputRea.聖遺物優先するサブ効果上昇値;
+    const prioritySubstatCounts = artifactDetailInputRea.聖遺物優先するサブ効果上昇回数;
+    const artifactStats = artifactDetailInputRea.聖遺物ステータス;
+    const artifactStatsMain = artifactDetailInputRea.聖遺物ステータスメイン効果;
+    const artifactStatsSub = artifactDetailInputRea.聖遺物ステータスサブ効果;
+    const artifactList = artifactDetailInputRea.artifact_list;
 
     const artifactAfter = reactive(_.cloneDeep(ARTIFACT_TEMPLATE) as TArtifact);
     const artifactOwnArr = reactive([] as TArtifactWithId[]);
@@ -478,6 +477,17 @@ export default defineComponent({
       return true;
     });
 
+    const artifactListCat = computed(() => {
+      const cat_id = Number(artifactCatTabSelected.value);
+      const result = artifactList.filter((s: any) => s.cat_id == cat_id);
+      return result;
+    });
+
+    const artifactBefore = computed(() => {
+      const arr = artifactListCat.value;
+      return arr.length > 0 ? arr[0] : undefined;
+    });
+
     /** 優先するサブ効果上昇値のオプション値のリストを作成します */
     const prioritySubstatValueList = (index: number, opt_substat?: TArtifactSubKey) =>
       makePrioritySubstatValueList(prioritySubstats, index, opt_substat);
@@ -490,17 +500,6 @@ export default defineComponent({
       clearArtifactAfter();
       isArtifactSelectListShow.value = false;
     };
-
-    const artifactListCat = computed(() => {
-      const cat_id = Number(artifactCatTabSelected.value);
-      const result = artifactList.filter((s: any) => s.cat_id == cat_id);
-      return result;
-    });
-
-    const artifactBefore = computed(() => {
-      const arr = artifactListCat.value;
-      return arr.length > 0 ? arr[0] : undefined;
-    });
 
     const artifactSelected = (artifact: TArtifact) => {
       return _.isEqual(artifact, artifactBefore.value);
@@ -704,17 +703,16 @@ export default defineComponent({
 
     /** サブ効果が更新されました */
     const artifactStatsOnChange = async (opt_stat?: any, opt_value?: string) => {
-      Object.keys(artifactStats)
-        .filter((s) => !opt_stat || s == opt_stat)
-        .forEach((key) => {
-          if (key == opt_stat && opt_value !== undefined)
-            (artifactStatsSub as any)[key] = Number(opt_value);
-          (artifactStatsSub as any)[key] = (artifactStats as any)[key] - (artifactStatsMain as any)[key];
-          if ((artifactStatsSub as any)[key] < 0) {
-            (artifactStatsSub as any)[key] = 0;
-            (artifactStats as any)[key] = (artifactStatsMain as any)[key];
-          }
-        });
+      Object.keys(artifactStats).filter((s) => !opt_stat || s == opt_stat).forEach((key) => {
+        if (key == opt_stat && opt_value !== undefined) {
+          (artifactStatsSub as any)[key] = Number(opt_value);
+        }
+        (artifactStatsSub as any)[key] = (artifactStats as any)[key] - (artifactStatsMain as any)[key];
+        if ((artifactStatsSub as any)[key] < 0) {
+          (artifactStatsSub as any)[key] = 0;
+          (artifactStats as any)[key] = (artifactStatsMain as any)[key];
+        }
+      });
       calculateArtifactStats(artifactDetailInputRea);
       await nextTick();
       context.emit('update:artifact-detail', artifactDetailInputRea);

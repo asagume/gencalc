@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash";
 import { TConditionInput, TConditionValues, TElementalResonance, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
@@ -101,9 +100,9 @@ export default defineComponent({
     }
 
     /** オプションの値が変更されたことを上位に通知します */
-    const updateOption = async (flag = false) => {
+    const updateOption = async () => {
       await nextTick();
-      context.emit('update:elemental-resonance', conditionValues, flag);
+      context.emit('update:elemental-resonance', conditionValues);
     }
 
     const onChange = async (key?: string) => {
@@ -151,12 +150,12 @@ export default defineComponent({
       if ('dendroOption' in conditionValues) {
         dendroOption.value = Number(conditionValues['dendroOption']);
       }
-      updateOption(true);
+      updateOption();
     }
 
     onMounted(() => {
       overwriteObject(conditionValues, props.elementalResonance.conditionValues);
-      updateOption(true);
+      updateOption();
     })
 
     watch(props, () => {

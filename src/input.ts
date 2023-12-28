@@ -278,6 +278,8 @@ export const 聖遺物ステータスTEMPLATE = {
     '物理ダメージバフ': 0,
     '与える治療効果': 0,
 };
+export type TArtifactStats = typeof 聖遺物ステータスTEMPLATE;
+export type TArtifactStatsKey = keyof typeof 聖遺物ステータスTEMPLATE;
 
 export const 元素反応TEMPLATE = {
     元素: '炎',
@@ -405,7 +407,6 @@ export const CHARACTER_INPUT_TEMPLATE = {
     damageDetailElementalResonance: null as TDamageDetail | null,
     buildname: '',
     recommendationSelectedIndex: 0,
-    saveDisabled: true,     // ローカルストレージへの構成保存不可か？
     removeDisabled: true,   // ローカルストレージの構成削除不可か？
 };
 export type TCharacterInput = typeof CHARACTER_INPUT_TEMPLATE;
@@ -431,9 +432,9 @@ export const ARTIFACT_DETAIL_INPUT_TEMPLATE = {
     聖遺物優先するサブ効果: _.fill(Array(NUMBER_OF_PRIORITY_SUBSTATS), ''),
     聖遺物優先するサブ効果上昇値: Array.from(GENSEN_MASTER_LIST[2].values),     // 厳選1ヶ月
     聖遺物優先するサブ効果上昇回数: Array.from(GENSEN_MASTER_LIST[2].counts),   // 厳選1ヶ月
-    聖遺物ステータス: _.cloneDeep(聖遺物ステータスTEMPLATE),
-    聖遺物ステータスメイン効果: _.cloneDeep(聖遺物ステータスTEMPLATE),
-    聖遺物ステータスサブ効果: _.cloneDeep(聖遺物ステータスTEMPLATE),
+    聖遺物ステータス: _.cloneDeep(聖遺物ステータスTEMPLATE) as TArtifactStats,
+    聖遺物ステータスメイン効果: _.cloneDeep(聖遺物ステータスTEMPLATE) as TArtifactStats,
+    聖遺物ステータスサブ効果: _.cloneDeep(聖遺物ステータスTEMPLATE) as TArtifactStats,
     聖遺物優先するサブ効果Disabled: false,
     artifact_list: [] as TArtifact[],
 };
@@ -766,13 +767,17 @@ export async function loadRecommendation(
     artifactDetailInput: TArtifactDetailInput,
     conditionInput: TConditionInput,
     optionInput: TOptionInput,
-    build: { [key: string]: any }
+    build: { [key: string]: any },
+    buildname?: string,
 ) {
     try {
         const character = characterInput.character;
         const characterMaster = await getCharacterMasterDetail(character);
         characterInput.characterMaster = characterMaster;
         const artifactStatsSub = _.cloneDeep(聖遺物ステータスTEMPLATE);
+        if (buildname) {
+            characterInput.buildname = buildname;
+        }
 
         if ('レベル' in build) {
             [characterInput.突破レベル, characterInput.レベル] = parseLevelStr(build['レベル']);
@@ -810,30 +815,35 @@ export async function loadRecommendation(
         }
         artifactDetailInput.聖遺物優先するサブ効果Disabled = prioritySubstatsDisabled;
 
-        ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key, index) => {
-            if (!(key in build)) return;
-            const artifactSet = build[key] as TArtifactSetKey;
-            if (artifactSet && artifactSet in ARTIFACT_SET_MASTER) {
-                characterInput.artifactSets[index] = artifactSet;
-                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER[artifactSet] as TArtifactSetEntry;
-            } else {
-                characterInput.artifactSetMasters[index] = ARTIFACT_SET_MASTER_DUMMY as TArtifactSetEntry;
-            }
+        const newArtifactSets: TArtifactSetKey[] = [];
+        const newArtifactSetMasters: TArtifactSetEntry[] = [];
+        ['聖遺物セット効果1', '聖遺物セット効果2'].forEach((key) => {
+            const artifactSet: TArtifactSetKey = build[key] ?? 'NONE';
+            newArtifactSets.push(artifactSet);
+            newArtifactSetMasters.push(ARTIFACT_SET_MASTER[artifactSet] as TArtifactSetEntry);
         });
+        characterInput.artifactSets.splice(0, characterInput.artifactSets.length, ...newArtifactSets);
+        characterInput.artifactSetMasters.splice(0, characterInput.artifactSetMasters.length, ...newArtifactSetMasters);
 
+        const newArtifactStatsMain: string[] = [];
         ['聖遺物メイン効果1', '聖遺物メイン効果2'].forEach((key, index) => {
+            const value = build[key];
+            newArtifactStatsMain.push(value ?? ['5_HP', '5_攻撃力'][index]);
             if (key in build) {
                 artifactDetailInput['聖遺物メイン効果'][index] = build[key];
             } else {
                 artifactDetailInput['聖遺物メイン効果'][index] = ['5_HP', '5_攻撃力'][index];
             }
         });
-        ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key, index) => {
-            if (!(key in build)) return;
-            const mainstat = build[key];
-            artifactDetailInput['聖遺物メイン効果'][index + 2] = mainstat;
+        ['聖遺物メイン効果3', '聖遺物メイン効果4', '聖遺物メイン効果5'].forEach((key) => {
+            const value = build[key];
+            newArtifactStatsMain.push(value ?? '');
         });
+        artifactDetailInput['聖遺物メイン効果'].splice(0, artifactDetailInput['聖遺物メイン効果'].length, ...newArtifactStatsMain);
 
+        const newPriotitySubstat: string[] = [];
+        const newPriotitySubstatValue: number[] = [];
+        const newPriotitySubstatCount: number[] = [];
         for (let i = 0; i < artifactDetailInput['聖遺物優先するサブ効果'].length; i++) {
             const subkey1 = '聖遺物優先するサブ効果' + (i + 1);
             const subkey2 = subkey1 + '上昇値';
@@ -841,30 +851,16 @@ export async function loadRecommendation(
             const substat = build[subkey1];
             const substatValue = build[subkey2];
             const substatCount = build[subkey3];
-            artifactDetailInput['聖遺物優先するサブ効果'][i] = substat ?? '';
-            if (substat && substatValue && isNumeric(substatValue)) {
-                const prioritySubstatValueList = makePrioritySubstatValueList([substat], 0);
-                prioritySubstatValueList.forEach((value, index) => {
-                    if (substatValue <= value) {
-                        artifactDetailInput['聖遺物優先するサブ効果上昇値'][i] = index;
-                    }
-                })
-            } else {
-                if (artifactDetailInput['聖遺物優先するサブ効果'][i] && !artifactDetailInput['聖遺物優先するサブ効果上昇値'][i]) {
-                    artifactDetailInput['聖遺物優先するサブ効果上昇値'][i] = GENSEN_MASTER_LIST[2].values[i];
-                }
-            }
-            if (substat && substatCount && isNumeric(substatCount)) {
-                artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i] = substatCount;
-            } else {
-                if (artifactDetailInput['聖遺物優先するサブ効果'][i] && !artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i]) {
-                    artifactDetailInput['聖遺物優先するサブ効果上昇回数'][i] = GENSEN_MASTER_LIST[2].counts[i];
-                }
-            }
+            newPriotitySubstat.push(substat ?? '');
+            newPriotitySubstatValue.push(substatValue !== undefined ? Number(substatValue) : GENSEN_MASTER_LIST[2].values[i]);
+            newPriotitySubstatCount.push(substatCount !== undefined ? Number(substatCount) : GENSEN_MASTER_LIST[2].counts[i]);
         }
+        artifactDetailInput['聖遺物優先するサブ効果'].splice(0, artifactDetailInput['聖遺物優先するサブ効果'].length, ...newPriotitySubstat);
+        artifactDetailInput['聖遺物優先するサブ効果上昇値'].splice(0, artifactDetailInput['聖遺物優先するサブ効果上昇値'].length, ...newPriotitySubstatValue);
+        artifactDetailInput['聖遺物優先するサブ効果上昇回数'].splice(0, artifactDetailInput['聖遺物優先するサブ効果上昇回数'].length, ...newPriotitySubstatCount);
 
         Object.keys(build).filter(s => !キャラクター構成PROPERTY_MAP.has(s) && !['options', 'artifactScoring', 'supporterBuildname', 'artifact_list'].includes(s)).forEach(key => {
-            if (build[key] == null) {
+            if (build[key] === null) {
                 conditionInput.conditionValues[key] = build[key];   // null
             } else if (_.isString(build[key])) {
                 conditionInput.conditionValues[key] = Number(build[key]);
@@ -874,11 +870,12 @@ export async function loadRecommendation(
         });
 
         if ('options' in build) {
+            overwriteObject(optionInput.elementalResonance.conditionValues, {});
+            overwriteObject(optionInput.teamOption.conditionValues, {});
+            overwriteObject(optionInput.miscOption.conditionValues, {});
+            optionInput.teamMembers.splice(0, optionInput.teamMembers.length);
             const keys = Object.keys(build.options);
             if (keys.length) {
-                overwriteObject(optionInput.elementalResonance.conditionValues, {});
-                overwriteObject(optionInput.teamOption.conditionValues, {});
-                overwriteObject(optionInput.miscOption.conditionValues, {});
                 keys.forEach(key => {
                     if (key === 'teamMembers' && _.isArray(build.options[key])) {
                         optionInput.teamMembers.splice(0, optionInput.teamMembers.length, ...build.options[key]);

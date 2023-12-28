@@ -273,9 +273,9 @@ export default defineComponent({
     })
 
     /** オプションの値が変更されたことを上位に通知します */
-    const updateOption = async (flag = false) => {
+    const updateOption = async () => {
       await nextTick();
-      context.emit('update:team-option', conditionValues, flag);
+      context.emit('update:team-option', conditionValues);
     }
 
     const valueOnChange = async (event: Event, item: any) => {
@@ -376,7 +376,7 @@ export default defineComponent({
     const initializeValues = (input: TConditionInput) => {
       overwriteObject(conditionValues, input.conditionValues);
       updateConditionValues();
-      updateOption(true);
+      updateOption();
     }
 
     onMounted(() => {
@@ -385,7 +385,7 @@ export default defineComponent({
       }
       overwriteObject(conditionValues, props.conditionInput.conditionValues);
       updateConditionValues();
-      updateOption(true);
+      updateOption();
       buildnameSelectionOnChange();
     })
 

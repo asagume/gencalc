@@ -139,7 +139,7 @@
       <td>buildname</td>
       <td colspan="3">
         <input class="save-name" type="text" v-model="characterInputRea.buildname" maxlength="20"
-          placeholder="input build name" @change="characterInputRea.saveDisabled = false" />
+          placeholder="input build name" />
       </td>
       <td>
         <button type="button" :disabled="saveDisabled" @click="saveOnClick">
@@ -201,18 +201,10 @@ import CompositionFunction from './CompositionFunction.vue';
 export default defineComponent({
   name: 'CharacterInput',
   props: {
-    characterInput: {
-      type: Object as PropType<TCharacterInput>,
-      required: true,
-    },
-    recommendationList: {
-      type: Array as PropType<TRecommendation[]>,
-      required: true,
-    },
-    recommendation: {
-      type: Object as PropType<TRecommendation>,
-      required: true,
-    },
+    characterInput: { type: Object as PropType<TCharacterInput>, required: true, },
+    recommendationList: { type: Array as PropType<TRecommendation[]>, required: true, },
+    recommendation: { type: Object as PropType<TRecommendation>, required: true, },
+    builddataSavable: { type: Boolean, required: true, },
     artifactSetSelectVisible: { type: Boolean },
     artifactScore: { type: Number, required: true },
   },
@@ -247,7 +239,7 @@ export default defineComponent({
       ARTIFACT_SET_MASTER_DUMMY,
       ARTIFACT_SET_MASTER_DUMMY,
     ]);
-    const saveDisabled = computed(() => characterInputRea.characterMaster.武器 != characterInputRea.weaponMaster.種類 ? true : characterInputRea.saveDisabled);
+    const saveDisabled = computed(() => characterInputRea.characterMaster.武器 != characterInputRea.weaponMaster.種類 ? true : !props.builddataSavable);
     /** 命ノ星座の範囲 */
     const constellationRange = computed((): number[] => Array.from({ length: getMaxConstellation(characterMaster.value) + 1 }, (_, i) => i));
     /** 通常攻撃レベルの範囲 */
@@ -307,7 +299,6 @@ export default defineComponent({
 
     /** 構成データを保存します */
     const saveOnClick = async () => {
-      characterInputRea.saveDisabled = false; // 保存不可
       characterInputRea.removeDisabled = true; // 削除可能
       await nextTick();
       context.emit('save-to-storage', characterInputRea.buildname);
@@ -316,7 +307,6 @@ export default defineComponent({
     /** 構成データを削除します */
     const removeOnClick = async () => {
       characterInputRea.removeDisabled = false; // 削除不可
-      characterInputRea.saveDisabled = true; // 保存可能
       await nextTick();
       context.emit('remove-from-storage', characterInputRea.buildname);
     };
