@@ -613,7 +613,7 @@ export function makeRecommendationList(
     if (opt_buildData) {
         result.push({ name: 'IMPORTED DATA', build: opt_buildData, overwrite: false });
         isSavable = true;
-        console.log(opt_buildData);
+        console.log('IMPORTED DATA', opt_buildData);
     }
 
     const storageKeyArr: string[] = [];

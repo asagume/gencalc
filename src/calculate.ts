@@ -367,8 +367,10 @@ export const calculateStats = function (
         }
 
         // 武器の基礎ステータスと突破ステータスを計上します
-        for (const stat of Object.keys(weaponMaster['ステータス'])) {
-            workStatsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
+        if (weaponMaster['ステータス']) {
+            for (const stat of Object.keys(weaponMaster['ステータス'])) {
+                workStatsObj[stat] += getStatValueByLevel(weaponMaster['ステータス'][stat], weaponAscension, weaponLevel);
+            }
         }
 
         // 聖遺物のステータスを計上します

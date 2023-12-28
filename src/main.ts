@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { basename } from '@/common';
-import { makeRecommendationList, loadRecommendation, popBuildinfoFromSession, getDefaultCharacterInput, getDefaultArtifactDetailInput, getDefaultConditionInput, getDefaultOptionInput } from '@/input';
+import { makeRecommendationList, loadRecommendation, popBuildinfoFromSession, getDefaultCharacterInput, getDefaultArtifactDetailInput, getDefaultConditionInput, getDefaultOptionInput, makeBuildStorageKey } from '@/input';
 import { ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_REVERSE_MAP, CHARACTER_MASTER, CHARACTER_MASTER_LIST, getCharacterMasterDetail, TCharacterKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import { isNumeric } from './common';
 import i18n from './i18n';
@@ -161,6 +161,18 @@ async function main() {
         if (!character) {
             character = getCharacterByBirthday();
         }
+        if (buildname && !builddata) {
+            const work = localStorage.getItem(makeBuildStorageKey(character, buildname));
+            if (work) {
+                builddata = JSON.parse(work);
+            }
+        }
+        if (builddata && teammembers !== undefined) {
+            if (builddata.options === undefined) {
+                builddata.options = {};
+            }
+            builddata.options.teamMembers = teammembers;
+        }
     }
     characterInput.character = character as TCharacterKey;
     characterInput.characterMaster = await getCharacterMasterDetail(characterInput.character);
@@ -172,10 +184,7 @@ async function main() {
     if (!recommendation) {
         recommendation = recommendationList[0];
     }
-    if (teammembers) {
-        optionInput.teamMembers = teammembers;
-    }
-    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendationList[0].build);
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendation);
 
     createApp(App, {
         characterInput: characterInput,

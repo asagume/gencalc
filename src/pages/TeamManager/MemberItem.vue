@@ -124,6 +124,7 @@ export default defineComponent({
           const teammembers = props.members?.filter(s => s != member.name);
           pushBuildinfoToSession(member.name, member.buildname, undefined, teammembers);
           window.open('./', '_blank');
+          // window.location.href = './';
         }
       }
     };
