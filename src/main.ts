@@ -184,7 +184,7 @@ async function main() {
     if (!recommendation) {
         recommendation = recommendationList[0];
     }
-    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendation);
+    await loadRecommendation(characterInput, artifactDetailInput, conditionInput, optionInput, recommendation.build);
 
     createApp(App, {
         characterInput: characterInput,

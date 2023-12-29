@@ -60,21 +60,6 @@ import {
     TEAM_OPTION_MASTER_LIST,
 } from '@/master';
 
-export type TArtifactScoreFormulaElement = [string, number];
-export type TArtifactScoreFormula = TArtifactScoreFormulaElement[];
-export const ARTIFACT_SCORE_FACTORS = [
-    'HP%', '攻撃力%', '防御力%', '元素熟知', '会心率', '会心ダメージ', '元素チャージ効率',
-];
-export const ARTIFACT_SCORE_FORMULA_TEMPLATE: TArtifactScoreFormula[] = [
-    [['会心率', 2], ['会心ダメージ', 1]],
-    [['攻撃力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
-    [['HP%', 1], ['会心率', 2], ['会心ダメージ', 1]],
-    [['防御力%', 1], ['会心率', 2], ['会心ダメージ', 1]],
-    [['HP%', 0.5], ['攻撃力%', 0.5], ['会心率', 2], ['会心ダメージ', 1]],
-    [['攻撃力%', 0.5], ['防御力%', 0.5], ['会心率', 2], ['会心ダメージ', 1]],
-    [['攻撃力%', 0.5], ['元素熟知', 0.125], ['会心率', 2], ['会心ダメージ', 1]],
-];
-
 export type TRotationDamageEntry = {
     name: string;
     category: string;

@@ -291,12 +291,14 @@ import {
   setupMiscOption,
 } from '@/input';
 import {
+  ARTIFACT_SCORE_FORMULA_TEMPLATE,
   ARTIFACT_SET_MASTER,
   CHARACTER_MASTER,
   ENEMY_MASTER_LIST,
   getCharacterMasterDetail,
   getWeaponMasterDetail,
   TAnyObject,
+  TArtifactScoreFormula,
   TArtifactSet,
   TArtifactSetEntry,
   TArtifactSetKey,
@@ -304,7 +306,6 @@ import {
   TWeaponKey,
 } from '@/master';
 import {
-  ARTIFACT_SCORE_FORMULA_TEMPLATE,
   calculateArtifactScore,
   calculateArtifactStats,
   calculateArtifactStatsMain,
@@ -314,7 +315,6 @@ import {
   calculateStats,
   setupTeamOptionSupporter,
   calculateTeamStatsAdjustments,
-  TArtifactScoreFormula,
   TRotationDamageInfo,
 } from '@/calculate';
 import { overwriteObject } from '@/common';
@@ -700,6 +700,7 @@ export default defineComponent({
       } else {
         optionInputRea.teamMembers.splice(0, optionInputRea.teamMembers.length);  // チーム編成を初期化します（解散）
       }
+      applyArtifactScoreFormula(ARTIFACT_SCORE_FORMULA_TEMPLATE[0]);
       await _setupSupporters();
       calculateTeamStatsAdjustments(optionInputRea, topStats.value, character);
       await updateRecommendation(recommendationRef.value);
@@ -792,7 +793,7 @@ export default defineComponent({
       }
       if ('artifactScoring' in recommendation.build) {
         const work = recommendation.build.artifactScoring;
-        artifactScoringStats.splice(0, artifactScoringStats.length, ...work);
+        applyArtifactScoreFormula(work);
         if (artifactScoreFormulaVmRef.value) {
           artifactScoreFormulaVmRef.value.initialize(artifactScoringStats);
         }

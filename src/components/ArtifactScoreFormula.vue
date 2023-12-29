@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import _ from "lodash";
-import { ARTIFACT_SCORE_FORMULA_TEMPLATE, TArtifactScoreFormula } from "@/calculate";
+import { ARTIFACT_SCORE_FORMULA_TEMPLATE, TArtifactScoreFormula } from "@/master";
 import { defineComponent, reactive, ref } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
 
