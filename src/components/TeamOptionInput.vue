@@ -196,7 +196,7 @@ export default defineComponent({
     }
     const artifactSetIconSrc = (character: string, index: number) => {
       const work = supporters[character]?.characterInput?.artifactSetMasters;
-      return _.isArray(work) ? work[index].icon_url ?? IMG_SRC_DUMMY : IMG_SRC_DUMMY;
+      return _.isArray(work) ? work[index].icon_url?.replace(/\.png$/, '/flower_of_life.png') ?? IMG_SRC_DUMMY : IMG_SRC_DUMMY;
     }
     const artifactSetName = (character: string, index: number) => {
       const work = supporters[character]?.characterInput?.artifactSetMasters;

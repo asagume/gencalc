@@ -264,6 +264,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "シュヴルーズ": {
+    "レアリティ": 4,
+    "元素": "炎",
+    "武器": "長柄武器",
+    "誕生日": "1/10",
+    "import": "data/characters/pyro_4_polearm_Chevreuse.json"
+  },
   "シャルロット": {
     "レアリティ": 4,
     "元素": "氷",

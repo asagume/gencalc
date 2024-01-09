@@ -1701,8 +1701,11 @@ export function setupConditionValues(
                             } else if (_.isArray(value)) {  // select
                                 workConditionValues[exclusion] = 0;
                             } else if (_.isPlainObject(value)) {    // number
+                                const initialValue = (value as any).initial;
                                 const minValue = (value as any).min;
-                                if (isNumeric(minValue)) {
+                                if (isNumeric(initialValue)) {
+                                    workConditionValues[exclusion] = Number(initialValue);
+                                } else if (isNumeric(minValue)) {
                                     workConditionValues[exclusion] = Number(minValue);
                                 } else {
                                     workConditionValues[exclusion] = 0;
@@ -1727,8 +1730,11 @@ export function setupConditionValues(
                     }
                     workConditionValues[key] = selectedIndex;
                 } else if (_.isPlainObject(value)) {    // number
+                    const initialValue = (value as any).initial;
                     const minValue = (value as any).min;
-                    if (isNumeric(minValue)) {
+                    if (isNumeric(initialValue)) {
+                        workConditionValues[key] = Number(initialValue);
+                    } else if (isNumeric(minValue)) {
                         workConditionValues[key] = Number(minValue);
                     } else {
                         workConditionValues[key] = 0;
