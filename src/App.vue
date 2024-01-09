@@ -791,6 +791,11 @@ export default defineComponent({
       if (miscOptionInputVmRef.value) {
         miscOptionInputVmRef.value.initializeValues(optionInputRea.miscOption);
       }
+      // NEXT STEP
+      if (nextStatVmRef.value) {
+        nextStatVmRef.value.initializeEvaluationItem();
+        nextStatVmRef.value.setupNextStatRows();
+      }
       if ('artifactScoring' in recommendation.build) {
         const work = recommendation.build.artifactScoring;
         applyArtifactScoreFormula(work);

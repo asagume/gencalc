@@ -330,11 +330,11 @@ export default defineComponent({
             setupNextStatRows();
         }
 
-        watch([props.characterInput, props.statsInput, props.rotationDamageInfo], () => {
+        watch([props.characterInput, props.statsInput], () => {
             setupNextStatRows();
         });
 
-        watch(evaluationItemList, () => {
+        watch([props.damageResult, props.rotationDamageInfo], () => {
             initializeEvaluationItem();
         });
 
@@ -360,6 +360,7 @@ export default defineComponent({
             reactionImgSrc,
             displayNextStatValue,
 
+            initializeEvaluationItem,
             setupNextStatRows,
 
             evaluationItemOnChange,
