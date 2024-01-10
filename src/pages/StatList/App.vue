@@ -19,6 +19,11 @@
           <img class="weapon" :src="(WEAPON_IMG_SRC as any)[key]" :alt="key">
         </label>
       </div>
+      <div>
+        <select v-model="level">
+          <option v-for="key in LEVEL_LIST" :key="key" :value="key">{{ 'Lv.' + key }}</option>
+        </select>
+      </div>
       <br />
       <vue-good-table :columns="columns" :rows="rows" />
     </div>
@@ -110,6 +115,8 @@ export default defineComponent({
       WEAPON_IMG_SRC,
       visionChecked,
       weaponChecked,
+      LEVEL_LIST,
+      level,
 
       columns,
       rows,
@@ -154,7 +161,9 @@ h3 {
 }
 
 .pane2 div {
-  width: 100%;
+  width: 94%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
 

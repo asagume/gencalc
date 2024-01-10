@@ -44,6 +44,9 @@
             <a href="GoogleDrive.html">Google Drive連携 (テスト中)</a>
         </p>
         <p>
+            <a href="StatList.html">キャラクターステータス一覧</a>
+        </p>
+        <p>
             <a href="TeamOptionList.html">強化・弱体効果一覧</a>
         </p>
         <p>

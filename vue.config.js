@@ -48,6 +48,11 @@ module.exports = defineConfig({
       template: 'public/TeamExample.html',
       filename: 'TeamExample.html',
     },
+    StatList: {
+      entry: 'src/pages/StatList/main.ts',
+      template: 'public/StatList.html',
+      filename: 'StatList.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'
