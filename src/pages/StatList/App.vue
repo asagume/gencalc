@@ -95,7 +95,6 @@ export default defineComponent({
           addStat: displayName(addStat),
         })
       })
-      console.log(result);
       return result;
     })
 
