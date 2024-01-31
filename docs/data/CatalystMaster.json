@@ -1,4 +1,8 @@
 {
+  "鶴鳴の余韻": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Crane'sEchoingCall.json"
+  },
   "凛流の監視者": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_CashflowSupervision.json"

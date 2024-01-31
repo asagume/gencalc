@@ -2241,6 +2241,7 @@ export function getDamageResultArr(
         ]);
     } else {
         for (let entry of damageResult[category] as TDamageResultEntry[]) {
+            if (!entry[0]) continue;
             if (entry[0].startsWith('非表示')) continue;
             if (entry[0].endsWith('合計ダメージ')) continue;
             if (entry[5]?.endsWith('ダメージ')) {
