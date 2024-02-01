@@ -64,6 +64,14 @@
     "max_level": 90
   },
   {
+    "id": 14515,
+    "name": "鶴鳴の余韻",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 14514,
     "name": "久遠流転の大典",
     "icon": null,
