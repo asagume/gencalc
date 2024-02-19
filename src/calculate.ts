@@ -375,14 +375,12 @@ export const calculateStats = function (
                 if (optionObj && optionObj.conditionAdjustments) {
                     Object.keys(optionObj.conditionAdjustments).forEach(stat => {
                         const workValue = optionObj.conditionAdjustments[stat];
-                        if (workValue === Infinity) {
-                            if (stat.endsWith('元素付与')) {
-                                if (['片手剣', '両手剣', '長柄武器'].includes(characterMaster.武器)) {
-                                    const my付与元素 = stat.replace(/元素付与$/, '');
-                                    通常攻撃_元素Var = my付与元素;
-                                    重撃_元素Var = my付与元素;
-                                    落下攻撃_元素Var = my付与元素;
-                                }
+                        if (stat.endsWith('元素付与')) {
+                            if (['片手剣', '両手剣', '長柄武器'].includes(characterMaster.武器)) {
+                                const my付与元素 = stat.replace(/元素付与$/, '');
+                                通常攻撃_元素Var = my付与元素;
+                                重撃_元素Var = my付与元素;
+                                落下攻撃_元素Var = my付与元素;
                             }
                         } else if (workValue !== null) {
                             if (stat in workStatsObj) {

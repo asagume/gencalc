@@ -1379,7 +1379,7 @@ export function makeDetailObj(
         my種類 = my種類.substring(0, my種類.indexOf('.'));
     }
 
-    let my数値 = detailObj.数値 ?? null;
+    let my数値 = detailObj.数値 ?? 0;
     if (_.isPlainObject(my数値)) {  // キャラクター|武器のサブステータス
         if (level && level in my数値) {
             my数値 = my数値[level];

@@ -249,7 +249,7 @@ export default defineComponent({
       for (const stat of Object.keys(props.conditionInput.conditionAdjustments)) {
         let work = displayStatName(stat).replace('%', '');
         const value = props.conditionInput.conditionAdjustments[stat];
-        if (value !== null) {
+        if (!stat.endsWith('元素付与') && value !== null) {
           if (isNumeric(value)) {
             if (value >= 0) {
               work += ['別枠乗算'].includes(stat.split('.')[0]) ? '=' : '+';

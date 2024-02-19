@@ -31,7 +31,7 @@ import {
   TConditionInput,
   TConditionValues,
 } from "@/input";
-import { PropType, computed, defineComponent, nextTick, reactive } from "vue";
+import { PropType, computed, defineComponent, nextTick, onMounted, reactive } from "vue";
 import CompositionFunction from './CompositionFunction.vue';
 
 export default defineComponent({
@@ -103,7 +103,7 @@ export default defineComponent({
     }
 
     const initializeValues = (input: TConditionInput) => {
-      Object.keys(conditionValues).forEach((key) => {
+      Object.keys(input.conditionValues).forEach((key) => {
         if (input.conditionValues[key] !== undefined) {
           conditionValues[key] = input.conditionValues[key];
         } else {
@@ -121,6 +121,10 @@ export default defineComponent({
       })
       updateOption();
     }
+
+    onMounted(()=> {
+      initializeValues(props.conditionInput);
+    })
 
     return {
       displayName, displayOptionName,
