@@ -103,26 +103,23 @@ export default defineComponent({
     }
 
     const initializeValues = (input: TConditionInput) => {
-      Object.keys(input.conditionValues).forEach((key) => {
+      conditionMap.value.forEach((value, key) => {
         if (input.conditionValues[key] !== undefined) {
           conditionValues[key] = input.conditionValues[key];
+        } else if (value === null) { // checkbox
+          conditionValues[key] = false;
+        } else if (_.isArray(value)) {  // select
+          conditionValues[key] = 0;
+        } else if (_.isPlainObject(value)) {  // number
+          conditionValues[key] = (value as any).initial;
         } else {
-          if (conditionMap.value.has(key)) {
-            const value = conditionMap.value.get(key);
-            if (value === null) {
-              conditionValues[key] = false;
-            } else if (_.isArray(value)) {
-              conditionValues[key] = 0;
-            } else if (_.isPlainObject(value)) {
-              conditionValues[key] = (value as any).min;
-            }
-          }
+          conditionValues[key] = 0;
         }
       })
       updateOption();
     }
 
-    onMounted(()=> {
+    onMounted(() => {
       initializeValues(props.conditionInput);
     })
 
