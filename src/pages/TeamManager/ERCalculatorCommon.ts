@@ -99,6 +99,27 @@ export function countC(character?: string, rotationList?: TActionItem[], isBurst
     }
     return result;
 }
+export function countP(character?: string, rotationList?: TActionItem[], isBursting?: boolean) {
+    let result = 0;
+    if (rotationList?.length) {
+        if (character && isBursting !== undefined) {
+            let isQing = false;
+            for (let i = 0; i < rotationList.length; i++) {
+                const rotation = rotationList[i];
+                if (rotation.action === 'Q') {
+                    isQing = true;
+                } else if (rotation.action.includes('P') && isBursting == isQing) {
+                    result++;
+                }
+            }
+        } else {
+            result = rotationList.filter(rotation => (!character || rotation.member == character) && rotation.action.includes('P')).length;
+        }
+    } else {
+        return 1;
+    }
+    return result;
+}
 /** 元素スキル使用回数 */
 export function countE(character?: string, rotationList?: TActionItem[], action = 'E', isBursting?: boolean) {
     let result = 0;

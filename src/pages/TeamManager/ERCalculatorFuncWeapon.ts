@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { NUMBER_OF_MEMBERS, TActionItem } from "./team";
-import { RECHARGE_ENERGY_WEAPON, countC, countE, countN, countQ } from "./ERCalculatorCommon";
+import { RECHARGE_ENERGY_WEAPON, countC, countE, countN, countP, countQ } from "./ERCalculatorCommon";
 
 export type TWeaponEnergyRet = [string, string, number, number, number, number[], string[]];
 
@@ -85,6 +85,16 @@ export const WEAPON_ENERGY_FUNC: {
     },
     '携帯型チェーンソー': (character, weapon, weaponRefine, members, rotationLength, rotationList) => {
         return weaponEnergySub_船工の唄(character, weapon, weaponRefine, members, rotationLength, rotationList);
+    },
+    '鶴鳴の余韻': (character, weapon, weaponRefine, members, rotationLength, rotationList) => { // eslint-disable-line
+        const messages = [
+            '周囲のチーム全員の落下攻撃が敵に命中した時、装備者の元素エネルギーが2.5/2.75/3/3.25/3.5ポイント回復する。この方法による元素エネルギーの回復は、0.7秒毎に1回のみ可能で、装備したキャラクターが待機している場合にも発動できる。',
+        ];
+        const myEnergy = [2.5, 2.75, 3, 3.25, 3.5][weaponRefine - 1] * countP(undefined, rotationList);
+        const allEnergy = 0;
+        const otherEnergy = 0;
+        const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        return [RECHARGE_ENERGY_WEAPON, weapon, myEnergy, allEnergy, otherEnergy, herEnergies, messages];
     },
 }
 

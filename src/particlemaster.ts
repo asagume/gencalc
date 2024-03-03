@@ -24,6 +24,12 @@ const C6 = 0x2006;
 // 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成クールタイム, 粒子発生ポイント
 // 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成クールタイム, 命ノ星座, 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成クールタイム, 粒子発生ポイント
 const PARTICLE_MASTER: TParticleMaster = {
+    '嘉明': {
+        'E': 2,
+    },
+    '閑雲': {
+        'E': 5,
+    },
     'シュヴルーズ': {
         'E.Press': [4, SP_NEXT, 0, 15, 10],
         'E.Hold': [4, SP_NEXT, 0, 15, 10],
@@ -343,6 +349,7 @@ CHARACTER_E_UNTIL_MAP.set('フレミネ', new Map([[['E'], 1], [['N'], 4],]));  
 export const CHARACTER_E_DELAY_MAP = new Map<string, string[]>();
 CHARACTER_E_DELAY_MAP.set('九条裟羅', ['C']);
 CHARACTER_E_DELAY_MAP.set('ファルザン', ['C']);
+CHARACTER_E_DELAY_MAP.set('嘉明', ['P']);
 
 /** 元素爆発カットイン中に元素粒子を受け取らないキャラクターたち */
 export const CHARACTER_Q_NOT_RECHARGEABLE = ['ウェンティ', 'エウルア'];

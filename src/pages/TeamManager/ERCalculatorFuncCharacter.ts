@@ -670,6 +670,21 @@ export const CHARACTER_ENERGY_FUNC: {
         }
         return result;
     },
+    '嘉明': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                '瑞獣登楼の落下攻撃·踏雲献瑞が敵に命中した時、嘉明の元素エネルギーを2ポイント回復する。この効果は0.2秒毎に1回のみ発動可能。',
+            ];
+            const myEnergy = 2 * countE(character, rotationList);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
 }
 
 export const CHARACTER_PARTICLE_EXTRA_FUNC: {
