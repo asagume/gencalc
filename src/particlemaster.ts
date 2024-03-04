@@ -349,6 +349,7 @@ CHARACTER_E_UNTIL_MAP.set('フレミネ', new Map([[['E'], 1], [['N'], 4],]));  
 export const CHARACTER_E_DELAY_MAP = new Map<string, string[]>();
 CHARACTER_E_DELAY_MAP.set('九条裟羅', ['C']);
 CHARACTER_E_DELAY_MAP.set('ファルザン', ['C']);
+CHARACTER_E_DELAY_MAP.set('閑雲', ['P']);
 CHARACTER_E_DELAY_MAP.set('嘉明', ['P']);
 
 /** 元素爆発カットイン中に元素粒子を受け取らないキャラクターたち */
