@@ -2152,6 +2152,8 @@ export function calculateConditionAdjustments(
     }
 }
 
+const TEAM_OPTION_NOT_UNIQUE_ARR = ['千夜に浮かぶ夢'];
+
 export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStats: TStats, character: string) {
     const result = {} as TStats;
     const validConditionValueArr: string[] = [];
@@ -2160,7 +2162,7 @@ export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStat
         const supporter = value.substring(0, indexOf);
         if (supporter != character) {
             const work = value.substring(indexOf);
-            if (validConditionValueArr.filter(s => s.endsWith(work)).length === 0) {
+            if (TEAM_OPTION_NOT_UNIQUE_ARR.includes(work.substring(1)) || validConditionValueArr.filter(s => s.endsWith(work)).length === 0) {
                 validConditionValueArr.push(value);
             }
         }
