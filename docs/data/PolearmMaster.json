@@ -27,6 +27,10 @@
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
   },
+  "砂中の賢者達の問答": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_DialoguesoftheDesertSages.json"
+  },
   "プロスペクタードリル": {
     "レアリティ": 4,
     "import": "data/weapons/polearm/4_Prospector'sDrill.json"

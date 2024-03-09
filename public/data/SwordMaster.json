@@ -1,4 +1,8 @@
 {
+  "有楽御簾切": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_UrakuMisugiri.json"
+  },
   "静水流転の輝き": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_SplendorofTranquilWaters.json"
