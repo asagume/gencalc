@@ -2152,7 +2152,7 @@ export function calculateConditionAdjustments(
     }
 }
 
-const TEAM_OPTION_NOT_UNIQUE_ARR = ['千夜に浮かぶ夢'];
+const TEAM_OPTION_NOT_UNIQUE_ARR = ['千夜に浮かぶ夢', 'サイフォスの月明かり', 'マカイラの水色', '彷徨える星'];
 
 export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStats: TStats, character: string) {
     const result = {} as TStats;
