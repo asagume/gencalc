@@ -1,5 +1,18 @@
 [
   {
+    "id": 10000094,
+    "name": "千織",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": null
+  },
+  {
     "id": 10000093,
     "name": "閑雲",
     "icon": null,

@@ -1,5 +1,52 @@
 [
   {
+    "avatar_id": 10000094,
+    "skill_list": [
+      {
+        "id": 10941,
+        "group_id": 9431,
+        "name": "通常攻撃·心織刀流",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10942,
+        "group_id": 9432,
+        "name": "羽袖一触",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10945,
+        "group_id": 9439,
+        "name": "二刀の型·比翼",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 9421,
+        "group_id": 9421,
+        "name": "量体裁衣",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9422,
+        "group_id": 9422,
+        "name": "錦上添花",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9423,
+        "group_id": 9423,
+        "name": "衣香襟影",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
     "avatar_id": 10000093,
     "skill_list": [
       {
@@ -933,7 +980,7 @@
       {
         "id": 5423,
         "group_id": 5423,
-        "name": "海祇の姬君",
+        "name": "海祇の姫君",
         "icon": null,
         "max_level": 1
       },
@@ -3880,7 +3927,7 @@
       {
         "id": 622,
         "group_id": 622,
-        "name": "澄明の净水",
+        "name": "澄明の浄水",
         "icon": null,
         "max_level": 1
       }
@@ -4080,7 +4127,7 @@
       {
         "id": 622,
         "group_id": 622,
-        "name": "澄明の净水",
+        "name": "澄明の浄水",
         "icon": null,
         "max_level": 1
       }
