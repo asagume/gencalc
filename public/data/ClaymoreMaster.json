@@ -131,6 +131,10 @@
     "レアリティ": 3,
     "import": "data/weapons/claymore/3_FerrousShadow.json"
   },
+  "傭兵の重剣": {
+    "レアリティ": 2,
+    "import": "data/weapons/claymore/2_OldMerc'sPal.json"
+  },
   "訓練用大剣": {
     "レアリティ": 1,
     "import": "data/weapons/claymore/1_WasterGreatsword.json"

@@ -688,6 +688,14 @@
     "max_level": 90
   },
   {
+    "id": 13426,
+    "name": "砂中の賢者達の問答",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
     "id": 13425,
     "name": "正義の報酬",
     "icon": null,

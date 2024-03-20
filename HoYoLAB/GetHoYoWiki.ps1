@@ -37,7 +37,7 @@ $pageIds = @()
 # $pageIds += 4577   # シュヴルーズ
 # $pageIds += 4774   # 閑雲
 # $pageIds += 4775   # 嘉明
-$pageIds += 4946   # 千織
+# $pageIds += 4946   # 千織
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -83,10 +83,12 @@ $pageIds += 4946   # 千織
 # $pageIds += 4336   # プロスペクタードリル
 # $pageIds += 4337   # レンジゲージ
 # $pageIds += 4340   # 凛流の監視者
+$pageIds += 4592   # 水仙十字の剣
 # $pageIds += 4719   # 裁断
 # $pageIds += 4720   # 「スーパーアルティメット覇王魔剣」
 # $pageIds += 4941   # 鶴鳴の余韻
-$pageIds += 5150   # 有楽御簾切
+# $pageIds += 5150   # 有楽御簾切
+$pageIds += 5151   # 砂中の賢者達の問答
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

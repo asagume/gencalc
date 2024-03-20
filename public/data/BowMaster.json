@@ -135,6 +135,10 @@
     "レアリティ": 3,
     "import": "data/weapons/bow/3_RavenBow.json"
   },
+  "歴戦の狩猟弓": {
+    "レアリティ": 2,
+    "import": "data/weapons/bow/2_SeasonedHunter'sBow.json"
+  },
   "狩猟弓": {
     "レアリティ": 1,
     "import": "data/weapons/bow/1_Hunter'sBow.json"

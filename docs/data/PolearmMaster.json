@@ -103,9 +103,17 @@
     "レアリティ": 3,
     "import": "data/weapons/polearm/3_BlackTassel.json"
   },
+  "鉾槍": {
+    "レアリティ": 3,
+    "import": "data/weapons/polearm/3_Halberd.json"
+  },
   "白纓槍": {
     "レアリティ": 3,
     "import": "data/weapons/polearm/3_WhiteTassel.json"
+  },
+  "鉄尖槍": {
+    "レアリティ": 2,
+    "import": "data/weapons/polearm/2_IronPoint.json"
   },
   "新米の長槍": {
     "レアリティ": 1,

@@ -43,6 +43,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "水仙十字の剣": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_SwordofNarzissenkreuz.json"
+  },
   "船渠剣": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_TheDockhand'sAssistant.json"
@@ -139,6 +143,10 @@
     "レアリティ": 3,
     "import": "data/weapons/sword/3_DarkIronSword.json"
   },
+  "旅道の剣": {
+    "レアリティ": 3,
+    "import": "data/weapons/sword/3_Traveler'sHandySword.json"
+  },
   "黎明の神剣": {
     "レアリティ": 3,
     "import": "data/weapons/sword/3_HarbingerofDawn.json"
@@ -146,6 +154,10 @@
   "冷刃": {
     "レアリティ": 3,
     "import": "data/weapons/sword/3_CoolSteel.json"
+  },
+  "銀の剣": {
+    "レアリティ": 2,
+    "import": "data/weapons/sword/2_SilverSword.json"
   },
   "無鋒の剣": {
     "レアリティ": 1,

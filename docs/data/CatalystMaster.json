@@ -119,6 +119,18 @@
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_FavoniusCodex.json"
   },
+  "特級の宝玉": {
+    "レアリティ": 3,
+    "import": "data/weapons/catalyst/3_TwinNephrite.json"
+  },
+  "翡玉法珠": {
+    "レアリティ": 3,
+    "import": "data/weapons/catalyst/3_EmeraldOrb.json"
+  },
+  "異世界旅行記": {
+    "レアリティ": 3,
+    "import": "data/weapons/catalyst/3_OtherworldlyStory.json"
+  },
   "龍殺しの英傑譚": {
     "レアリティ": 3,
     "import": "data/weapons/catalyst/3_ThrillingTalesofDragonSlayers.json"
@@ -126,6 +138,10 @@
   "魔導緒論": {
     "レアリティ": 3,
     "import": "data/weapons/catalyst/3_MagicGuide.json"
+  },
+  "ポケット魔導書": {
+    "レアリティ": 2,
+    "import": "data/weapons/catalyst/2_PocketGrimoire.json"
   },
   "生徒ノート": {
     "レアリティ": 1,
