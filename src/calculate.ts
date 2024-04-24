@@ -1110,7 +1110,21 @@ function checkConditionMatchesSub(
     validConditionValueArr: string[],
     constellation: number,
 ): number {
-    const myCondArr = conditionStr.split(/[@=]/);
+    let opkind = undefined;
+    if (conditionStr.includes('@')) {
+        opkind = '@';
+    } else if (conditionStr.includes('>=')) {
+        opkind = '>=';
+    } else if (conditionStr.includes('<=')) {
+        opkind = '<=';
+    } else if (conditionStr.includes('>')) {
+        opkind = '>';
+    } else if (conditionStr.includes('<')) {
+        opkind = '<';
+    } else if (conditionStr.includes('=')) {
+        opkind = '=';
+    }
+    const myCondArr = opkind ? conditionStr.split(opkind) : [conditionStr];
     if (myCondArr[0] === '命ノ星座') {
         if (myCondArr.length === 2) {
             if (isNumeric(myCondArr[1])) {
@@ -1131,11 +1145,30 @@ function checkConditionMatchesSub(
         }
         return 0;   // アンマッチ
     }
-    if (conditionStr.indexOf('=') !== -1) {
+    if (opkind === '=') {
         if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
             const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
             if (workArr.length > 0) {
                 return Number(workArr[0].split('=')[1]);   // マッチ
+            }
+        }
+        return 0;   // アンマッチ
+    }
+    if (opkind === '>=' || opkind === '<=' || opkind === '>' || opkind === '<') {
+        if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
+            const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
+            if (workArr.length > 0) {
+                const val1 = Number(myCondArr[1]);
+                const val2 = Number(workArr[0].split('=')[1]);
+                if (opkind === '>=') {
+                    return val2 >= val1 ? 1 : 0;
+                } else if (opkind === '<=') {
+                    return val2 <= val1 ? 1 : 0;
+                } else if (opkind === '>') {
+                    return val2 > val1 ? 1 : 0;
+                } else if (opkind === '<') {
+                    return val2 < val1 ? 1 : 0;
+                }
             }
         }
         return 0;   // アンマッチ

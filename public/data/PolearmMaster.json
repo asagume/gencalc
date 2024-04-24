@@ -1,4 +1,8 @@
 {
+  "赤月のシルエット": {
+    "レアリティ": 5,
+    "import": "data/weapons/polearm/5_CrimsonMoon'sSemblance.json"
+  },
   "赤砂の杖": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_StaffoftheScarletSands.json"
