@@ -404,6 +404,21 @@ export const calculateStats = function (
 
         const validConditionValueArr = makeValidConditionValueArr(conditionInput);
 
+        // 特殊な固有変数 for アルレッキーノ
+        for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
+            if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
+                for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
+                    if (myDetailObj['条件']) {
+                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
+                        if (number === 0) continue;
+                    }
+                    if (myDetailObj['種類'] === '固有変数' && myDetailObj['名前']) {
+                        workStatsObj[myDetailObj['名前']] = evalFormula(myDetailObj['数値'], workStatsObj, DAMAGE_RESULT_TEMPLATE);
+                    }
+                }
+            }
+        }
+
         // チーム内で最も高いステータス値を求めます
         calculateStatsTop(workStatsObj, optionInput);
         // ステータス補正を計上します

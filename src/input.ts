@@ -1451,8 +1451,8 @@ export function getChangeKind(kind: string) {
         return 'STATUS';
     } else if (kind.endsWith('強化')
         || kind.endsWith('付与')
-        || kind == '防御無視' ||
-        kind == '固有変数'
+        || kind == '防御無視'
+        || kind == '固有変数'
     ) {   // ex.元素爆発強化,氷元素付与
         return 'TALENT';
     }
