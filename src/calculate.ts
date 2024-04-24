@@ -412,7 +412,7 @@ export const calculateStats = function (
                         const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
                         if (number === 0) continue;
                     }
-                    if (myDetailObj['種類'] === '固有変数' && myDetailObj['名前']) {
+                    if (myDetailObj['種類'] === '固有変数' && myDetailObj['名前'] && myDetailObj['数値'] !== null) {
                         workStatsObj[myDetailObj['名前']] = evalFormula(myDetailObj['数値'], workStatsObj, DAMAGE_RESULT_TEMPLATE);
                     }
                 }
