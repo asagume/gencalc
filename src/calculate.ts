@@ -5,6 +5,7 @@ import {
     CHANGE_KIND_TALENT,
     DAMAGE_RESULT_TEMPLATE,
     getChangeKind,
+    getConditionOpkind,
     getDefaultArtifactDetailInput,
     getDefaultCharacterInput,
     getDefaultConditionInput,
@@ -315,6 +316,15 @@ export const calculateStats = function (
         if ('元素エネルギー' in characterMaster['元素爆発']) {
             workStatsObj['元素エネルギー'] = Number(characterMaster['元素爆発']['元素エネルギー']);
         }
+        if ('固有変数' in weaponMaster) {   // for 赤月のシルエット
+            for (const name of Object.keys(weaponMaster['固有変数'])) {
+                if (name in conditionInput.conditionValues) {
+                    workStatsObj[name] = Number(conditionInput.conditionValues[name]);
+                } else {
+                    workStatsObj[name] = weaponMaster['固有変数'][name];
+                }
+            }
+        }
         if ('固有変数' in characterMaster) {
             for (const name of Object.keys(characterMaster['固有変数'])) {
                 if (name in conditionInput.conditionValues) {
@@ -409,7 +419,7 @@ export const calculateStats = function (
             if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
                     if (myDetailObj['条件']) {
-                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
+                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);   // ステータス依存は不可
                         if (number === 0) continue;
                     }
                     if (myDetailObj['種類'] === '固有変数' && myDetailObj['名前'] && myDetailObj['数値'] !== null) {
@@ -433,12 +443,12 @@ export const calculateStats = function (
         // ステータス変化
         const conditionAdjustments = updateStatsWithCondition(characterInput, validConditionValueArr, workStatsObj);
 
-        // 天賦性能変化
+        // 天賦性能変化 元素付与
         for (const myDamageDetail of [characterInput.damageDetailMyCharacter, characterInput.damageDetailMyWeapon, characterInput.damageDetailMyArtifactSets]) {
             if (myDamageDetail && CHANGE_KIND_TALENT in myDamageDetail) {
                 for (const myDetailObj of myDamageDetail[CHANGE_KIND_TALENT]) {
                     if (myDetailObj['条件']) {
-                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation);
+                        const number = checkConditionMatches(myDetailObj['条件'], validConditionValueArr, constellation, workStatsObj, conditionInput.conditionValues);
                         if (number === 0) continue;
                     }
                     if (myDetailObj['種類'] && myDetailObj['種類'].endsWith('元素付与')) {
@@ -487,7 +497,7 @@ function updateStatsWithCondition(
                     continue;
                 }
                 if (myDetailObj['条件']) {
-                    const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, constellation);
+                    const number = checkConditionMatches(myDetailObj.条件, validConditionValueArr, constellation, workStatsObj);
                     if (my数値.includes('${INDEX}')) {
                         my数値 = my数値.replaceAll('${INDEX}', String(number));
                     } else if (number === 0) {
@@ -961,12 +971,12 @@ export function calculateDamageResult(
                 let talentDetailArr = (damageDetailMyCharacter as any)[category];
                 if (('特殊' + category) in damageDetailMyCharacter) {
                     const workObj = (damageDetailMyCharacter as any)['特殊' + category];
-                    if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation) !== 0) {
+                    if (checkConditionMatches(workObj['条件'], validConditionValueArr, constellation, statsInput.statsObj, conditionInput.conditionValues) !== 0) {
                         talentDetailArr = workObj['詳細'];
                     }
                 }
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) === 0) {
+                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation, statsInput.statsObj, conditionInput.conditionValues) === 0) {
                         continue;
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult, element);
@@ -1001,7 +1011,7 @@ export function calculateDamageResult(
                 if (!(category in damageDetailMyCharacter)) continue;
                 const talentDetailArr = (damageDetailMyCharacter as any)[category];
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) === 0) {
+                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation, statsInput.statsObj, conditionInput.conditionValues) === 0) {
                         continue;
                     }
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
@@ -1016,7 +1026,7 @@ export function calculateDamageResult(
             if (!myDamageDetail || !(category in myDamageDetail)) continue;
             const talentDetailArr = (myDamageDetail as any)[category];
             for (const talentDetail of talentDetailArr) {
-                if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation) === 0) {
+                if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation, statsInput.statsObj, conditionInput.conditionValues) === 0) {
                     continue;
                 }
                 const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
@@ -1092,13 +1102,15 @@ export function checkConditionMatches(
     conditionStr: string,
     validConditionValueArr: string[],
     constellation: number,
+    statsObj: TStats = {},
+    conditionValues: TConditionValues = {},
 ): number {
     const myCondStr = conditionStr.split('^')[0];
 
     if (myCondStr.indexOf('|') !== -1) {  // |はOR条件です
         const myCondStrArr = myCondStr.split('|');
         for (let i = 0; i < myCondStrArr.length; i++) {
-            const resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation);
+            const resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation, statsObj, conditionValues);
             if (resultSub === 1) {
                 return 1;   // マッチ
             }
@@ -1109,7 +1121,7 @@ export function checkConditionMatches(
     const myCondStrArr = myCondStr.split('&');    // &はAND条件です
     let result = 1;
     for (let i = 0; i < myCondStrArr.length; i++) {
-        const resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation);
+        const resultSub = checkConditionMatchesSub(myCondStrArr[i], validConditionValueArr, constellation, statsObj, conditionValues);
         if (resultSub === 0) {
             return 0;   // アンマッチ
         }
@@ -1124,78 +1136,119 @@ function checkConditionMatchesSub(
     conditionStr: string,
     validConditionValueArr: string[],
     constellation: number,
+    statsObj: TStats,
+    conditionValues: TConditionValues,
 ): number {
-    let opkind = undefined;
-    if (conditionStr.includes('@')) {
-        opkind = '@';
-    } else if (conditionStr.includes('>=')) {
-        opkind = '>=';
-    } else if (conditionStr.includes('<=')) {
-        opkind = '<=';
-    } else if (conditionStr.includes('>')) {
-        opkind = '>';
-    } else if (conditionStr.includes('<')) {
-        opkind = '<';
-    } else if (conditionStr.includes('=')) {
-        opkind = '=';
+    const opkind = getConditionOpkind(conditionStr);
+    const conditionKeyValArr = opkind ? conditionStr.split(opkind) : [conditionStr];
+    const conditionKey = conditionKeyValArr[0];
+    let conditionVal: number | string | undefined = conditionKeyValArr.length === 2 ? conditionKeyValArr[1] : undefined;
+    if (opkind === undefined) {
+        return validConditionValueArr.filter(s => s.split('@')[0] == conditionKey).length > 0 ? 1 : 0;
     }
-    const myCondArr = opkind ? conditionStr.split(opkind) : [conditionStr];
-    if (myCondArr[0] === '命ノ星座') {
-        if (myCondArr.length === 2) {
-            if (isNumeric(myCondArr[1])) {
-                const work = Number(myCondArr[1]);
-                if (work <= constellation) {
-                    return 1;
+    if (!conditionVal) {
+        console.error(conditionStr, validConditionValueArr, constellation, statsObj);
+        return 0;
+    }
+    if (conditionKey === '命ノ星座') {
+        if (isNumeric(conditionVal)) {
+            conditionVal = Number(conditionVal);
+            if (opkind === '>=' || opkind === '@') {
+                return constellation >= conditionVal ? 1 : 0;
+            } else if (opkind === '<=') {
+                return constellation <= conditionVal ? 1 : 0;
+            } else if (opkind === '>') {
+                return constellation > conditionVal ? 1 : 0;
+            } else if (opkind === '<') {
+                return constellation < conditionVal ? 1 : 0;
+            } else if (opkind === '=') {
+                return constellation == conditionVal ? 1 : 0;
+            }
+        }
+    } else if (opkind === '@') {
+        const re = new RegExp('([^0-9]*?)([\\-0-9\\.]+)(.*)');    // 条件値={prefix}{倍率}{postfix}
+        for (let i = 0; i < validConditionValueArr.length; i++) {
+            if (validConditionValueArr[i].startsWith(conditionKey + '@')) {
+                const tempArr = validConditionValueArr[i].split('@');
+                const reRet = re.exec(tempArr[1]);
+                if (reRet) {
+                    let tempVal = conditionVal;
+                    if (reRet[1]) tempVal = tempVal.substring(reRet[1].length);
+                    if (reRet[3]) tempVal = tempVal.substring(0, tempVal.length - reRet[3].length);
+                    tempVal = tempVal.replace(/\/.+/, '');
+                    const tempValArr = tempVal.split(/[,-]/);
+                    const fromVal = Number(tempValArr[0]);
+                    const toVal = Number(tempValArr[tempValArr.length - 1]);
+                    const actualVal = Number(reRet[2]);
+                    if (fromVal <= actualVal && actualVal <= toVal) {
+                        return actualVal;   // マッチ 倍率
+                    }
                 }
             }
         }
-        return 0;   // アンマッチ
-    }
-    if (validConditionValueArr.includes(conditionStr) || validConditionValueArr.includes(conditionStr.replace('=', '@'))) {
-        return 1;   // マッチ 等倍
-    }
-    if (myCondArr.length === 1) {
-        if (validConditionValueArr.filter(s => s.split('@')[0] == conditionStr).length > 0) {
-            return 1;   // マッチ 等倍
+    } else if (opkind === '=') {
+        if (validConditionValueArr.includes(conditionKey + '@' + conditionVal)) {
+            return 1;   // マッチ
         }
-        return 0;   // アンマッチ
-    }
-    if (opkind === '=') {
-        if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
-            const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
-            if (workArr.length > 0) {
-                return Number(workArr[0].split('=')[1]);   // マッチ
+        if (NUMBER_CONDITION_VALUE_RE.test(conditionVal)) { // 数値入力条件
+            const tempArr = validConditionValueArr.filter(s => s.split('=')[0] == conditionKey);
+            if (tempArr.length > 0) {
+                return Number(tempArr[0].split('=')[1]);   // マッチ 倍率
             }
         }
-        return 0;   // アンマッチ
-    }
-    if (opkind === '>=' || opkind === '<=' || opkind === '>' || opkind === '<') {
-        if (NUMBER_CONDITION_VALUE_RE.test(myCondArr[1])) { // 数値入力条件
-            const workArr = validConditionValueArr.filter(s => s.split('=')[0] == myCondArr[0]);
-            if (workArr.length > 0) {
-                const val1 = Number(myCondArr[1]);
-                const val2 = Number(workArr[0].split('=')[1]);
-                if (opkind === '>=') {
-                    return val2 >= val1 ? 1 : 0;
-                } else if (opkind === '<=') {
-                    return val2 <= val1 ? 1 : 0;
-                } else if (opkind === '>') {
-                    return val2 > val1 ? 1 : 0;
-                } else if (opkind === '<') {
-                    return val2 < val1 ? 1 : 0;
+        if (isNumeric(conditionVal)) {
+            return conditionKey in statsObj && statsObj[conditionKey] == Number(conditionVal) ? 1 : 0;
+        }
+    } else if (opkind === '>=') {    // 以上
+        if (isNumeric(conditionVal)) {
+            return conditionKey in statsObj && statsObj[conditionKey] >= Number(conditionVal) ? 1 : 0;
+        }
+        if (conditionVal.startsWith('index_')) {    // selectListのindex
+            conditionVal = conditionVal.replace(/$index_/, '');
+            if (isNumeric(conditionVal) && conditionKey in conditionValues) {
+                const actualVal = conditionValues[conditionKey];
+                if (_.isNumber(actualVal) && actualVal >= Number(conditionVal)) {
+                    return 1;   // マッチ
                 }
             }
         }
-        return 0;   // アンマッチ
-    }
-    const re = new RegExp('[^0-9]*?([\\-0-9\\.]+).*');    // 条件値={prefix}{倍率}{postfix}
-    for (let i = 0; i < validConditionValueArr.length; i++) {
-        if (validConditionValueArr[i].startsWith(myCondArr[0] + '@')) {
-            const workCondArr = validConditionValueArr[i].split('@');
-            const reRet = re.exec(workCondArr[1]);
-            if (reRet) {
-                const work = Number(reRet[1]);
-                return work;    // マッチ 倍率
+    } else if (opkind === '<=') {    // 以下
+        if (isNumeric(conditionVal)) {
+            return conditionKey in statsObj && statsObj[conditionKey] <= Number(conditionVal) ? 1 : 0;
+        }
+        if (conditionVal.startsWith('index_')) {    // selectListのindex
+            conditionVal = conditionVal.replace(/$index_/, '');
+            if (isNumeric(conditionVal) && conditionKey in conditionValues) {
+                const actualVal = conditionValues[conditionKey];
+                if (_.isNumber(actualVal) && actualVal <= Number(conditionVal)) {
+                    return 1;   // マッチ
+                }
+            }
+        }
+    } else if (opkind === '>') {     // 大なり
+        if (isNumeric(conditionVal)) {
+            return conditionKey in statsObj && statsObj[conditionKey] > Number(conditionVal) ? 1 : 0;
+        }
+        if (conditionVal.startsWith('index_')) {    // selectListのindex
+            conditionVal = conditionVal.replace(/$index_/, '');
+            if (isNumeric(conditionVal) && conditionKey in conditionValues) {
+                const actualVal = conditionValues[conditionKey];
+                if (_.isNumber(actualVal) && actualVal > Number(conditionVal)) {
+                    return 1;   // マッチ
+                }
+            }
+        }
+    } else if (opkind === '<') {     // 小なり
+        if (isNumeric(conditionVal)) {
+            return conditionKey in statsObj && statsObj[conditionKey] < Number(conditionVal) ? 1 : 0;
+        }
+        if (conditionVal.startsWith('index_')) {    // selectListのindex
+            conditionVal = conditionVal.replace(/$index_/, '');
+            if (isNumeric(conditionVal) && conditionKey in conditionValues) {
+                const actualVal = conditionValues[conditionKey];
+                if (_.isNumber(actualVal) && actualVal < Number(conditionVal)) {
+                    return 1;   // マッチ
+                }
             }
         }
     }
@@ -1434,8 +1487,8 @@ function calculateDamageFromDetail(
                         return;
                     }
                     const conditionStr = damageDetailObj.条件 as string;
-                    const matchesBefore = checkConditionMatches(conditionStr, validConditionValueArr, constellation);
-                    const matchesAfter = checkConditionMatches(conditionStr, validConditionValueArrAfter, constellation);
+                    const matchesBefore = checkConditionMatches(conditionStr, validConditionValueArr, constellation, statsObj, conditionInput.conditionValues);
+                    const matchesAfter = checkConditionMatches(conditionStr, validConditionValueArrAfter, constellation, statsObj, conditionInput.conditionValues);
                     if (matchesBefore == matchesAfter) {
                         return;
                     }
@@ -1483,7 +1536,7 @@ function calculateDamageFromDetail(
             talentChangeDetailObjArr.forEach(valueObj => {
                 let number = null;
                 if (valueObj.条件) {
-                    number = checkConditionMatches(valueObj.条件, validConditionValueArr, constellation);
+                    number = checkConditionMatches(valueObj.条件, validConditionValueArr, constellation, statsObj, conditionInput.conditionValues);
                     if (number === 0) {
                         return;
                     }
@@ -1596,7 +1649,7 @@ function calculateDamageFromDetail(
                     const my種類 = valueObj.種類 as string; // 通常攻撃ダメージアップ
                     const my条件 = valueObj.条件 as string;
                     const myHIT数 = detailObj.HIT数;
-                    if (checkConditionMatches(my条件, validConditionValueArr, constellation) !== 0) {
+                    if (checkConditionMatches(my条件, validConditionValueArr, constellation, statsObj, conditionInput.conditionValues) !== 0) {
                         const my数値 = valueObj.数値;
                         const myValue = evalFormula(my数値, statsObj, damageResult, valueObj.上限, valueObj.下限);
                         if (!(my種類 in myステータス補正)) {
@@ -2167,7 +2220,7 @@ export function calculateConditionAdjustments(
             continue;
         }
         if (detailObj.条件) {
-            const number = checkConditionMatches(detailObj.条件, validConditionValueArr, constellation);
+            const number = checkConditionMatches(detailObj.条件, validConditionValueArr, constellation, refStats);
             if (number === 0) continue;
             if (my数値.includes('${INDEX}')) {
                 my数値 = my数値.replaceAll('${INDEX}', String(number));

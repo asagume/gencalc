@@ -192,7 +192,7 @@
     </div>
   </div>
 
-  <div id="debug-info" v-if="false">
+  <div id="debug-info" v-if="true">
     <hr />
     <h2>DEBUG</h2>
     <template v-if="characterInputRea">

@@ -1542,6 +1542,24 @@ export function makeConditionExclusionMapFromStr(
     }
 }
 
+export function getConditionOpkind(conditionStr: string) {
+    let opkind = undefined;
+    if (conditionStr.includes('@')) {   // イコール。右辺の値で倍率がかかる
+        opkind = '@';
+    } else if (conditionStr.includes('>=')) {   // 数値比較 以上
+        opkind = '>=';
+    } else if (conditionStr.includes('<=')) {   // 数値比較 以下
+        opkind = '<=';
+    } else if (conditionStr.includes('>')) {    // 数値比較 大なり
+        opkind = '>';
+    } else if (conditionStr.includes('<')) {    // 数値比較 小なり
+        opkind = '<';
+    } else if (conditionStr.includes('=')) {    // イコール。右辺の値で倍率がかからない
+        opkind = '=';
+    }
+    return opkind;
+}
+
 export const NUMBER_CONDITION_VALUE_RE = /^\s*{.+}\s*$/;
 
 function makeConditionExclusionMapFromStrSub(
@@ -1550,74 +1568,77 @@ function makeConditionExclusionMapFromStrSub(
     exclusionMap: Map<string, string[]>,
     exclusion?: string,
 ) {
-    const workArr = conditionStr.split(/[@=]/);
+    const opkind = getConditionOpkind(conditionStr);
+    const workArr = opkind ? conditionStr.split(opkind) : [conditionStr];
     const name = workArr[0];
-    if (workArr.length === 1) {
+    if (opkind === undefined) {
         pushToMapValueArray(conditionMap, name, null);  // null
-    } else if (workArr.length === 2) {
-        if (NUMBER_CONDITION_VALUE_RE.test(workArr[1])) {
-            try {
-                const workObj = JSON.parse(workArr[1]);
-                const min = workObj.min;
-                const max = workObj.max;
-                if (!_.isNumber(min) && !_.isString(min)) {
-                    console.error(conditionStr, conditionMap, exclusionMap, exclusion);
-                } if (max !== undefined && !_.isNumber(max) && !_.isString(max)) {
-                    console.error(conditionStr, conditionMap, exclusionMap, exclusion);
-                } else {
-                    const conditionObj = {
-                        min: min,
-                        max: max,
-                        step: isNumeric(workObj.step) ? Number(workObj.step) : 1,
-                        initial: isNumeric(workObj.initial) ? Number(workObj.initial) : min,
-                    };
-                    pushToMapValueArray(conditionMap, name, conditionObj);  // object
-                }
-            } catch (error) {
-                console.error(error);
-                console.error(conditionStr, conditionMap, exclusionMap, exclusion);
-            }
-        } else if (workArr[1].includes(',')) {
-            const re = new RegExp('([^0-9]*?)([\\+\\-0-9\\.,]+)(.*)');  // 表現可能:-10,+60%
-            const reRet = re.exec(workArr[1]);
-            if (reRet) {
-                const prefix = reRet[1];
-                const condValueArr = reRet[2].split(',');
-                const postfix = reRet[3];
-                condValueArr.forEach(value => {
-                    pushToMapValueArray(conditionMap, name, prefix + value + postfix);  // string[]
-                })
-            }
-        } else if (workArr[1].includes('-')) {
-            const re = new RegExp('([^0-9\\.]*)(-?[0-9\\.]+)-(-?[0-9\\.]+)(.*)');   // 数値部に+は含められない。prefixには含められる。
-            const re2 = new RegExp('/([0-9\\.]+)(.*)');
-            const reRet = re.exec(workArr[1]);
-            if (reRet) {
-                const prefix = reRet[1];
-                const rangeStart = Number(reRet[2]);
-                const rangeEnd = Number(reRet[3]);
-                let step = rangeStart;
-                let postfix = reRet[4];
-                if (postfix) {
-                    const re2Ret = re2.exec(postfix);
-                    if (re2Ret) {
-                        step = Number(re2Ret[1]);
-                        postfix = re2Ret[2];
+    } else if (opkind === '@' || opkind === '=') {
+        if (workArr.length === 2) {
+            if (NUMBER_CONDITION_VALUE_RE.test(workArr[1])) {
+                try {
+                    const workObj = JSON.parse(workArr[1]);
+                    const min = workObj.min;
+                    const max = workObj.max;
+                    if (!_.isNumber(min) && !_.isString(min)) {
+                        console.error(conditionStr, conditionMap, exclusionMap, exclusion);
+                    } if (max !== undefined && !_.isNumber(max) && !_.isString(max)) {
+                        console.error(conditionStr, conditionMap, exclusionMap, exclusion);
+                    } else {
+                        const conditionObj = {
+                            min: min,
+                            max: max,
+                            step: isNumeric(workObj.step) ? Number(workObj.step) : 1,
+                            initial: isNumeric(workObj.initial) ? Number(workObj.initial) : min,
+                        };
+                        pushToMapValueArray(conditionMap, name, conditionObj);  // object
                     }
+                } catch (error) {
+                    console.error(error);
+                    console.error(conditionStr, conditionMap, exclusionMap, exclusion);
                 }
-                step = step ? step : 1;
-                for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
-                    pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);  // string[]
+            } else if (workArr[1].includes(',')) {
+                const re = new RegExp('([^0-9]*?)([\\+\\-0-9\\.,]+)(.*)');  // 表現可能:-10,+60%
+                const reRet = re.exec(workArr[1]);
+                if (reRet) {
+                    const prefix = reRet[1];
+                    const condValueArr = reRet[2].split(',');
+                    const postfix = reRet[3];
+                    condValueArr.forEach(value => {
+                        pushToMapValueArray(conditionMap, name, prefix + value + postfix);  // string[]
+                    })
                 }
-                pushToMapValueArray(conditionMap, name, prefix + String(rangeEnd) + postfix);  // string[]
+            } else if (workArr[1].includes('-')) {
+                const re = new RegExp('([^0-9\\.]*)(-?[0-9\\.]+)-(-?[0-9\\.]+)(.*)');   // 数値部に+は含められない。prefixには含められる。
+                const re2 = new RegExp('/([0-9\\.]+)(.*)');
+                const reRet = re.exec(workArr[1]);
+                if (reRet) {
+                    const prefix = reRet[1];
+                    const rangeStart = Number(reRet[2]);
+                    const rangeEnd = Number(reRet[3]);
+                    let step = rangeStart;
+                    let postfix = reRet[4];
+                    if (postfix) {
+                        const re2Ret = re2.exec(postfix);
+                        if (re2Ret) {
+                            step = Number(re2Ret[1]);
+                            postfix = re2Ret[2];
+                        }
+                    }
+                    step = step ? step : 1;
+                    for (let i = rangeStart; i < rangeEnd; i = addDecimal(i, step, rangeEnd)) {
+                        pushToMapValueArray(conditionMap, name, prefix + String(i) + postfix);  // string[]
+                    }
+                    pushToMapValueArray(conditionMap, name, prefix + String(rangeEnd) + postfix);  // string[]
+                } else {
+                    pushToMapValueArray(conditionMap, name, workArr[1]);  // string[]
+                }
             } else {
                 pushToMapValueArray(conditionMap, name, workArr[1]);  // string[]
             }
         } else {
-            pushToMapValueArray(conditionMap, name, workArr[1]);  // string[]
+            console.error(conditionStr, conditionMap, exclusionMap, exclusion);
         }
-    } else {
-        console.error(conditionStr, conditionMap, exclusionMap, exclusion);
     }
     if (exclusion) {
         exclusion.split(',').forEach(e => {
