@@ -685,6 +685,21 @@ export const CHARACTER_ENERGY_FUNC: {
         }
         return result;
     },
+    'アルレッキーノ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                'アルレッキーノが血償の勅令の回収に成功した時、昇りゆく凶月のクールタイムが2秒減少し、自身の元素エネルギーを15ポイント回復する。この効果は10秒毎に1回のみ発動可能。',
+            ];
+            const myEnergy = 15 * countE(character, rotationList);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
 }
 
 export const CHARACTER_PARTICLE_EXTRA_FUNC: {

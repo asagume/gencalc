@@ -176,6 +176,22 @@
     "max_level": 20
   },
   {
+    "id": 3654,
+    "name": "陰に咲く光の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3554,
+    "name": "響き合う諧律の前奏",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3454,
     "name": "無私の花飾り",
     "icon": null,
@@ -506,6 +522,22 @@
   {
     "id": 5144,
     "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3644,
+    "name": "陰に咲く光の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3544,
+    "name": "響き合う諧律の前奏",
     "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 4,
@@ -920,6 +952,22 @@
     "max_level": 20
   },
   {
+    "id": 3652,
+    "name": "光褪せた翠尾",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3552,
+    "name": "古海の幽深なる夜想",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3452,
     "name": "誠実なつけペン",
     "icon": null,
@@ -1250,6 +1298,22 @@
   {
     "id": 5142,
     "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3642,
+    "name": "光褪せた翠尾",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3542,
+    "name": "古海の幽深なる夜想",
     "icon": null,
     "reliquary_cat_id": 2,
     "reliquary_level": 4,
@@ -1672,6 +1736,22 @@
     "max_level": 20
   },
   {
+    "id": 3655,
+    "name": "大業を成す刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3555,
+    "name": "運命と輪廻の諧謔",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3455,
     "name": "忠実な砂時計",
     "icon": null,
@@ -2002,6 +2082,22 @@
   {
     "id": 5145,
     "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3645,
+    "name": "大業を成す刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3545,
+    "name": "運命と輪廻の諧謔",
     "icon": null,
     "reliquary_cat_id": 3,
     "reliquary_level": 4,
@@ -2416,6 +2512,22 @@
     "max_level": 20
   },
   {
+    "id": 3651,
+    "name": "計略の盃",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3551,
+    "name": "降り注ぐイコルの狂詩",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3451,
     "name": "寛容なインク壺",
     "icon": null,
@@ -2746,6 +2858,22 @@
   {
     "id": 5141,
     "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3641,
+    "name": "計略の盃",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3541,
+    "name": "降り注ぐイコルの狂詩",
     "icon": null,
     "reliquary_cat_id": 4,
     "reliquary_level": 4,
@@ -3160,6 +3288,22 @@
     "max_level": 20
   },
   {
+    "id": 3653,
+    "name": "主なき冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3553,
+    "name": "異想が枯れ落ちる円舞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3453,
     "name": "慈愛の淑女ハット",
     "icon": null,
@@ -3522,6 +3666,22 @@
   {
     "id": 5143,
     "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3643,
+    "name": "主なき冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3543,
+    "name": "異想が枯れ落ちる円舞",
     "icon": null,
     "reliquary_cat_id": 5,
     "reliquary_level": 4,

@@ -152,6 +152,14 @@
     "max_level": 90
   },
   {
+    "id": 13512,
+    "name": "赤月のシルエット",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 13511,
     "name": "赤砂の杖",
     "icon": null,
