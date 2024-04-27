@@ -2,7 +2,7 @@
   <div class="rotation-box" v-if="watchCount">
     <div class="pane1">
       <fieldset class="icon-list">
-        <template v-for="member in  team.members " :key="member.id">
+        <template v-for="member in team.members " :key="member.id">
           <span v-if="member.name">
             <div class="action with-tooltip">
               <img :class="'action-icon' + bgColorClass(member.name)" :src="normalAttackIconSrc(member.name)"
@@ -57,7 +57,8 @@
           <template #item="{ element }">
             <div class="rotation-item">
               <img v-if="previousRotation(element)?.member != element.member" class="character-icon"
-                :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY" :alt="displayName(element.member)" />
+                :src="getCharacterMaster(element.member)?.icon_url ?? IMG_SRC_DUMMY"
+                :alt="displayName(element.member)" />
               <div v-if="getActionDetail(element)" :class="'action-item ' + colorClass(element.member)">
                 <div class="with-tooltip handle">
                   <img :class="'action-icon' + bgColorClass(element.member) + selectedActionClass(element)"
@@ -320,13 +321,15 @@ export default defineComponent({
       }
     }
 
-    const selectedActionOnClick = (item: TActionItem) => {
-      for (const actionArr of [normalAttackActions[item.member], elementalSkillActions[item.member]]) {
-        if (actionArr?.length) {
-          const index = actionArr.indexOf(item.action);
-          if (index != -1) {
-            item.action = (index + 1) < actionArr.length ? actionArr[index + 1] : actionArr[0];
-            break;
+    const selectedActionOnClick = (item: TActionItem | undefined) => {
+      if (item) {
+        for (const actionArr of [normalAttackActions[item.member], elementalSkillActions[item.member]]) {
+          if (actionArr?.length) {
+            const index = actionArr.indexOf(item.action);
+            if (index != -1) {
+              item.action = (index + 1) < actionArr.length ? actionArr[index + 1] : actionArr[0];
+              break;
+            }
           }
         }
       }
