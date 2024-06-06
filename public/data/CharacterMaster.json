@@ -1,4 +1,11 @@
 {
+  "クロリンデ": {
+    "レアリティ": 5,
+    "元素": "雷",
+    "武器": "片手剣",
+    "誕生日": "9/20",
+    "import": "data/characters/electro_5_sword_Clorinde.json"
+  },
   "アルレッキーノ": {
     "レアリティ": 5,
     "元素": "炎",
@@ -284,6 +291,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "セトス": {
+    "レアリティ": 4,
+    "元素": "雷",
+    "武器": "弓",
+    "誕生日": "5/31",
+    "import": "data/characters/electro_4_bow_Sethos.json"
   },
   "嘉明": {
     "レアリティ": 4,

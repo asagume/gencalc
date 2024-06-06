@@ -1,4 +1,8 @@
 {
+  "赦罪": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_Absolution.json"
+  },
   "有楽御簾切": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_UrakuMisugiri.json"
