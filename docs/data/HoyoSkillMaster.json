@@ -2,6 +2,53 @@
   {
     "skill_list": [
       {
+        "id": 10981,
+        "group_id": 9831,
+        "name": "通常攻撃·影追いの誓い",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10982,
+        "group_id": 9832,
+        "name": "夜狩の巡回",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10985,
+        "group_id": 9839,
+        "name": "消えゆく残光",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 9821,
+        "group_id": 9821,
+        "name": "夜を裂く紫焔",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9822,
+        "group_id": 9822,
+        "name": "契約の報償",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9823,
+        "group_id": 9823,
+        "name": "夜巡りの収穫",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000098
+  },
+  {
+    "skill_list": [
+      {
         "id": 10961,
         "group_id": 9631,
         "name": "通常攻撃·斬首への招待状",
@@ -1946,6 +1993,53 @@
       }
     ],
     "avatar_id": 10000062
+  },
+  {
+    "skill_list": [
+      {
+        "id": 10971,
+        "group_id": 9731,
+        "name": "通常攻撃·王家の弓術·葦ノ矢",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10972,
+        "group_id": 9732,
+        "name": "古儀·鳴砂牽雷",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10975,
+        "group_id": 9739,
+        "name": "秘儀·瞑光貫影",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 9721,
+        "group_id": 9721,
+        "name": "黒鳶の謎掛",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9722,
+        "group_id": 9722,
+        "name": "砂王からの賜物",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9723,
+        "group_id": 9723,
+        "name": "猿月の顕現",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000097
   },
   {
     "skill_list": [

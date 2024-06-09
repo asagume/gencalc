@@ -39,8 +39,8 @@ $pageIds = @()
 # $pageIds += 4775   # 嘉明
 # $pageIds += 4946   # 千織
 # $pageIds += 5149   # アルレッキーノ
-$pageIds += 5596   # クロリンデ
-$pageIds += 5598   # セトス
+# $pageIds += 5596   # クロリンデ
+# $pageIds += 5598   # セトス
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -93,7 +93,8 @@ $pageIds += 5598   # セトス
 # $pageIds += 5150   # 有楽御簾切
 # $pageIds += 5151   # 砂中の賢者達の問答
 # $pageIds += 5577   # 赤月のシルエット
-$pageIds += 5674   # 赦罪
+# $pageIds += 5674   # 赦罪
+$pageIds += 5713  # 築雲
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

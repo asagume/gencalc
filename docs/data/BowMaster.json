@@ -31,6 +31,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "築雲": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_Cloudforged.json"
+  },
   "レンジゲージ": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_RangeGauge.json"

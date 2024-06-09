@@ -272,6 +272,14 @@
     "max_level": 90
   },
   {
+    "id": 11515,
+    "name": "赦罪",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 11514,
     "name": "有楽御簾切",
     "icon": null,
@@ -362,6 +370,14 @@
   {
     "id": 15427,
     "name": "レンジゲージ",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90
+  },
+  {
+    "id": 15426,
+    "name": "築雲",
     "icon": null,
     "weapon_cat_id": 12,
     "weapon_level": 4,
