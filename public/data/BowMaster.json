@@ -1,4 +1,8 @@
 {
+  "白雨心弦": {
+    "レアリティ": 5,
+    "import": "data/weapons/bow/5_SilvershowerHeartstrings.json"
+  },
   "始まりの大魔術": {
     "レアリティ": 5,
     "import": "data/weapons/bow/5_TheFirstGreatMagic.json"
