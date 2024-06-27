@@ -26,6 +26,19 @@
     "profile_pictures": null
   },
   {
+    "id": 10000095,
+    "name": "シグウィン",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": null
+  },
+  {
     "id": 10000094,
     "name": "千織",
     "icon": null,

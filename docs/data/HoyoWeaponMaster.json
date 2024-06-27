@@ -1,5 +1,13 @@
 [
   {
+    "id": 15513,
+    "name": "白雨心弦",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90
+  },
+  {
     "id": 15512,
     "name": "始まりの大魔術",
     "icon": null,

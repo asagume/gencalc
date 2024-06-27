@@ -96,6 +96,53 @@
   {
     "skill_list": [
       {
+        "id": 10951,
+        "group_id": 9531,
+        "name": "通常攻撃·ターゲットセラピー",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10952,
+        "group_id": 9532,
+        "name": "ぴょんぴょんハイドロセラピー",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10955,
+        "group_id": 9539,
+        "name": "過飽和まごころお注射",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 9521,
+        "group_id": 9521,
+        "name": "休息は適度に取るのよ",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9522,
+        "group_id": 9522,
+        "name": "丁寧な診療",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 9523,
+        "group_id": 9523,
+        "name": "緊急時の投与量",
+        "icon": null,
+        "max_level": 1
+      }
+    ],
+    "avatar_id": 10000095
+  },
+  {
+    "skill_list": [
+      {
         "id": 10941,
         "group_id": 9431,
         "name": "通常攻撃·心織刀流",
