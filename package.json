@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/gapi": "^0.0.45",
     "core-js": "^3.8.3",
+    "gencalc": "file:",
     "lodash": "^4.17.21",
     "tesseract.js": "^2.1.5",
     "vue": "^3.2.13",
