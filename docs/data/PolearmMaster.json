@@ -1,4 +1,8 @@
 {
+  "ルミドゥースの挽歌": {
+    "レアリティ": 5,
+    "import": "data/weapons/polearm/5_LumidouceElegy.json"
+  },
   "赤月のシルエット": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_CrimsonMoon'sSemblance.json"
