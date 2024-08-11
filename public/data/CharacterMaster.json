@@ -1,7 +1,7 @@
 {
   "エミリエ": {
     "レアリティ": 5,
-    "元素": "水",
+    "元素": "草",
     "武器": "長柄武器",
     "誕生日": "9/22",
     "import": "data/characters/dendro_5_polearm_Emilie.json"
