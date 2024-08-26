@@ -1,4 +1,4 @@
-import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, OPTION1_MASTER_LIST, OPTION2_MASTER_LIST, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
+import { ALL_ELEMENTS, ARTIFACT_SET_MASTER, ARTIFACT_STAT_JA_EN_ABBREV_MAP, ARTIFACT_SUB_MASTER, CHARACTER_MASTER, ELEMENTAL_REACTION_MASTER, ELEMENTAL_RESONANCE_MASTER, ELEMENTAL_RESONANCE_MASTER_LIST, ENEMY_MASTER_LIST, GENSEN_MASTER_LIST, getCharacterMasterDetail, getWeaponMasterDetail, IMG_SRC_DUMMY, NUMBER_OF_PRIORITY_SUBSTATS, OPTION1_MASTER_LIST, OPTION2_MASTER_LIST, RECOMMEND_ABBREV_MAP, TAnyObject, TArtifactSet, TArtifactSetEntry, TArtifactSetKey, TArtifactSubKey, TCharacterDetail, TCharacterKey, TEnemyEntry, TWeaponDetail, TWeaponKey, TWeaponTypeKey, WEAPON_MASTER, キャラクター構成PROPERTY_MAP } from '@/master';
 import _ from 'lodash';
 import { basename, isNumeric, overwriteObject } from './common';
 
@@ -1292,9 +1292,18 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
         result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
         result[CHANGE_KIND_TALENT] = myTalentChangeDetailObjArr;
 
+        const vision = characterInput.characterMaster.元素;
+        const elementalReactionArr = Object.keys((ELEMENTAL_REACTION_MASTER as any)[vision]);
+
         const conditionMap = new Map();
         const exclusionMap = new Map();
         myStatusChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
+            if (detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻')) { // for 灰燼の都に立つ英雄の絵巻
+                if (elementalReactionArr.filter(s => detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻=' + s)).length === 0) {
+                    return;
+                }
+                console.log(detailObj['条件']);
+            }
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
         myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
