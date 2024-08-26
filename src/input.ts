@@ -1294,6 +1294,9 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
 
         const vision = characterInput.characterMaster.元素;
         const elementalReactionArr = Object.keys((ELEMENTAL_REACTION_MASTER as any)[vision]);
+        if (['水', '氷'].includes(vision) && !elementalReactionArr.includes('凍結')) {
+            elementalReactionArr.push('凍結');
+        }
 
         const conditionMap = new Map();
         const exclusionMap = new Map();
@@ -1302,7 +1305,6 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
                 if (elementalReactionArr.filter(s => detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻=' + s)).length === 0) {
                     return;
                 }
-                console.log(detailObj['条件']);
             }
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
