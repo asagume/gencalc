@@ -27,6 +27,10 @@
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
   },
+  "アースシェイカー": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_EarthShaker.json"
+  },
   "「スーパーアルティメット覇王魔剣」": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_UltimateOverlord'sMegaMagicSword.json"

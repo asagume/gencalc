@@ -1,4 +1,11 @@
 {
+  "ムアラニ": {
+    "レアリティ": 5,
+    "元素": "水",
+    "武器": "法器",
+    "誕生日": "8/3",
+    "import": "data/characters/hydro_5_catalyst_Mualani.json"
+  },
   "エミリエ": {
     "レアリティ": 5,
     "元素": "草",
@@ -305,6 +312,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "カチーナ": {
+    "レアリティ": 4,
+    "元素": "岩",
+    "武器": "長柄武器",
+    "誕生日": "4/22",
+    "import": "data/characters/geo_4_polearm_Kachina.json"
   },
   "セトス": {
     "レアリティ": 4,

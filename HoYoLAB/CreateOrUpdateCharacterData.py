@@ -154,7 +154,7 @@ def normalizeObject(d):
                 break
             custom_ruby = m.group(0)
             data_ruby = m.group(1)
-            data_ruby = re.sub('([^|]+)\|[^|]+\|?', '\\1', data_ruby)
+            data_ruby = re.sub('([^|]+)\\|[^|]+\\|?', '\\1', data_ruby)
             d = d.replace(custom_ruby, data_ruby)
         d = re.sub('<br>$', '', d.replace('<p>', '').replace('</p>', '<br>')).replace('・', '·').replace('<br>·', '<br>・')
         return d
@@ -329,7 +329,7 @@ for filepath in files:
                             hitCount = 1
                             for index, item in enumerate(attribute['values']):
                                 if item.find('♂') != -1:
-                                    item = re.search('♂:\s*([^♀]+)', item)[1]
+                                    item = re.search('♂:\\s*([^♀]+)', item)[1]
                                 newValue = normalizeFormulaValue(item)
                                 detailJson['数値'][str(index + 1)] = newValue
                                 if str(newValue).find('*') != -1:

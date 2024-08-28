@@ -47,6 +47,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "エズピツァルの笛": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_FluteofEzpitzal.json"
+  },
   "水仙十字の剣": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_SwordofNarzissenkreuz.json"

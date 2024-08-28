@@ -1,4 +1,8 @@
 {
+  "サーフィンタイム": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Surf'sUp.json"
+  },
   "鶴鳴の余韻": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Crane'sEchoingCall.json"
@@ -42,6 +46,14 @@
   "天空の巻": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
+  },
+  "蒼紋の角杯": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/GravenDrinkingHorn.json"
+  },
+  "ヤシュチェの環": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_RingofYaxche.json"
   },
   "果てなき紺碧の唄": {
     "レアリティ": 4,

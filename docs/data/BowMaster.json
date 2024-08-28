@@ -35,6 +35,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "チェーンブレイカー": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_ChainBreaker.json"
+  },
   "築雲": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_Cloudforged.json"

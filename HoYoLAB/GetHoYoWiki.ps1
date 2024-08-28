@@ -43,6 +43,8 @@ $pageIds = @()
 # $pageIds += 5597   # シグウィン
 # $pageIds += 5598   # セトス
 # $pageIds += 5714   # エミリエ
+$pageIds += 6318   # カチーナ
+$pageIds += 6319   # ムアラニ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -99,6 +101,13 @@ $pageIds = @()
 # $pageIds += 5673  # 白雨心弦
 # $pageIds += 5713  # 築雲
 # $pageIds += 5847  # ルミドゥースの挽歌
+$pageIds += 6546  # サーフィンタイム
+$pageIds += 6547  # エズピツァルの笛
+$pageIds += 6548  # アースシェイカー
+$pageIds += 6549  # 虹の行方
+$pageIds += 6550  # 蒼紋の角杯
+$pageIds += 6551  # ヤシュチュの環
+$pageIds += 6552  # チェーンブレイカー
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -111,8 +120,8 @@ $pageIds = @()
 # $pageIds += 3991   # 黄金の劇団
 # $pageIds += 4716   # 残響の森で囁かれる夜話
 # $pageIds += 4717   # 在りし日の歌
-$pageIds += 5578   # 諧律奇想の断章
-$pageIds += 5579   # 遂げられなかった想い
+# $pageIds += 5578   # 諧律奇想の断章
+# $pageIds += 5579   # 遂げられなかった想い
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌
@@ -196,11 +205,11 @@ foreach ($pageId in $pageIds) {
             $weapon = $value.ToLower()
         }
 
-        if ($null -eq $vision) {
-            continue
-        }
-
         $basename = $vision + "_" + $rarity + "_" + $weapon + "_" + $writableName
+
+        # if ($null -eq $vision) {
+        #     continue
+        # }
 
         $outDirPath = Join-Path $destFolder -ChildPath ("data\" + $categoryMap.$menuId)
         if (-not (Test-Path $outDirPath)) {
