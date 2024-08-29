@@ -90,6 +90,16 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1956"
   },
   {
+    "id": 14516,
+    "name": "サーフィンタイム",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6546"
+  },
+  {
     "id": 14515,
     "name": "鶴鳴の余韻",
     "icon": null,
@@ -480,6 +490,16 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2046"
   },
   {
+    "id": 15431,
+    "name": "チェーンブレイカー",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6552"
+  },
+  {
     "id": 15427,
     "name": "レンジゲージ",
     "icon": null,
@@ -710,6 +730,26 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2019"
   },
   {
+    "id": 14431,
+    "name": "ヤシュチェの環",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6551"
+  },
+  {
+    "id": 14427,
+    "name": "蒼紋の角杯",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6550"
+  },
+  {
     "id": 14426,
     "name": "果てなき紺碧の唄",
     "icon": null,
@@ -900,6 +940,16 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2020"
   },
   {
+    "id": 13431,
+    "name": "虹の行方",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6549"
+  },
+  {
     "id": 13427,
     "name": "プロスペクタードリル",
     "icon": null,
@@ -1078,6 +1128,16 @@
     "max_level": 90,
     "is_recommend": false,
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1940"
+  },
+  {
+    "id": 12431,
+    "name": "アースシェイカー",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6548"
   },
   {
     "id": 12427,
@@ -1288,6 +1348,16 @@
     "max_level": 90,
     "is_recommend": false,
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2018"
+  },
+  {
+    "id": 11431,
+    "name": "エズピツァルの笛",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6547"
   },
   {
     "id": 11428,

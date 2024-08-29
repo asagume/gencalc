@@ -176,6 +176,22 @@
     "max_level": 20
   },
   {
+    "id": 3854,
+    "name": "異種の期待",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3754,
+    "name": "獣使いの護符",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3654,
     "name": "陰に咲く光の花",
     "icon": null,
@@ -522,6 +538,22 @@
   {
     "id": 5144,
     "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3844,
+    "name": "異種の期待",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3744,
+    "name": "獣使いの護符",
     "icon": null,
     "reliquary_cat_id": 1,
     "reliquary_level": 4,
@@ -952,6 +984,22 @@
     "max_level": 20
   },
   {
+    "id": 3852,
+    "name": "霊髄の根源",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3752,
+    "name": "登山者の標",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3652,
     "name": "光褪せた翠尾",
     "icon": null,
@@ -1298,6 +1346,22 @@
   {
     "id": 5142,
     "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3842,
+    "name": "霊髄の根源",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3742,
+    "name": "登山者の標",
     "icon": null,
     "reliquary_cat_id": 2,
     "reliquary_level": 4,
@@ -1736,6 +1800,22 @@
     "max_level": 20
   },
   {
+    "id": 3855,
+    "name": "夜域の神話",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3755,
+    "name": "秘術家の金皿",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3655,
     "name": "大業を成す刻",
     "icon": null,
@@ -2082,6 +2162,22 @@
   {
     "id": 5145,
     "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3845,
+    "name": "夜域の神話",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3745,
+    "name": "秘術家の金皿",
     "icon": null,
     "reliquary_cat_id": 3,
     "reliquary_level": 4,
@@ -2512,6 +2608,22 @@
     "max_level": 20
   },
   {
+    "id": 3851,
+    "name": "紛争の前夜",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3751,
+    "name": "遊学者の爪型杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3651,
     "name": "計略の盃",
     "icon": null,
@@ -2858,6 +2970,22 @@
   {
     "id": 5141,
     "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3841,
+    "name": "紛争の前夜",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3741,
+    "name": "遊学者の爪型杯",
     "icon": null,
     "reliquary_cat_id": 4,
     "reliquary_level": 4,
@@ -3288,6 +3416,22 @@
     "max_level": 20
   },
   {
+    "id": 3853,
+    "name": "諸聖の栄冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3753,
+    "name": "呪戦士の羽面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 3653,
     "name": "主なき冠",
     "icon": null,
@@ -3666,6 +3810,22 @@
   {
     "id": 5143,
     "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3843,
+    "name": "諸聖の栄冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3743,
+    "name": "呪戦士の羽面",
     "icon": null,
     "reliquary_cat_id": 5,
     "reliquary_level": 4,

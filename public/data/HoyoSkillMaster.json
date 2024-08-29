@@ -1,5 +1,59 @@
 [
   {
+    "avatar_id": 10000102,
+    "skill_list": [
+      {
+        "id": 30000,
+        "group_id": 10231,
+        "name": "通常攻撃·クーリングトリートメント",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 30002,
+        "group_id": 10232,
+        "name": "サメサメウェーブブレイカー",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 30007,
+        "group_id": 10239,
+        "name": "爆瀑ロケット",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10221,
+        "group_id": 10221,
+        "name": "耐熱型淡水プクフグ",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10222,
+        "group_id": 10222,
+        "name": "ナタのナンバーワンガイド",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10223,
+        "group_id": 10223,
+        "name": "夜域の賜物·逆巻く怒濤",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10225,
+        "group_id": 10225,
+        "name": "笑顔が秘訣！",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
     "avatar_id": 10000099,
     "skill_list": [
       {
@@ -1991,37 +2045,37 @@
     "avatar_id": 10000007,
     "skill_list": [
       {
-        "id": 100555,
-        "group_id": 731,
-        "name": "通常攻撃·異邦の岩峰",
+        "id": 100552,
+        "group_id": 631,
+        "name": "通常攻撃·異邦の激流",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10077,
-        "group_id": 932,
-        "name": "星落としの剣",
+        "id": 10087,
+        "group_id": 632,
+        "name": "水紋の剣",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10078,
-        "group_id": 939,
-        "name": "岩潮幾重",
+        "id": 10088,
+        "group_id": 639,
+        "name": "昇流統水",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 921,
-        "group_id": 921,
-        "name": "破れた断崖",
+        "id": 621,
+        "group_id": 621,
+        "name": "無染の清水",
         "icon": null,
         "max_level": 1
       },
       {
-        "id": 922,
-        "group_id": 922,
-        "name": "狂乱の岩崩れ",
+        "id": 622,
+        "group_id": 622,
+        "name": "澄明の浄水",
         "icon": null,
         "max_level": 1
       }
@@ -2071,77 +2125,37 @@
     "avatar_id": 10000007,
     "skill_list": [
       {
-        "id": 100552,
-        "group_id": 631,
-        "name": "通常攻撃·異邦の激流",
+        "id": 100555,
+        "group_id": 731,
+        "name": "通常攻撃·異邦の岩峰",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10087,
-        "group_id": 632,
-        "name": "水紋の剣",
+        "id": 10077,
+        "group_id": 932,
+        "name": "星落としの剣",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10088,
-        "group_id": 639,
-        "name": "昇流統水",
+        "id": 10078,
+        "group_id": 939,
+        "name": "岩潮幾重",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 621,
-        "group_id": 621,
-        "name": "無染の清水",
+        "id": 921,
+        "group_id": 921,
+        "name": "破れた断崖",
         "icon": null,
         "max_level": 1
       },
       {
-        "id": 622,
-        "group_id": 622,
-        "name": "澄明の浄水",
-        "icon": null,
-        "max_level": 1
-      }
-    ]
-  },
-  {
-    "avatar_id": 10000007,
-    "skill_list": [
-      {
-        "id": 100557,
-        "group_id": 1131,
-        "name": "通常攻撃·異邦の草薙",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10117,
-        "group_id": 1132,
-        "name": "草縁剣",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10118,
-        "group_id": 1139,
-        "name": "臥草若化",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 1121,
-        "group_id": 1121,
-        "name": "蔓生の埜草",
-        "icon": null,
-        "max_level": 1
-      },
-      {
-        "id": 1122,
-        "group_id": 1122,
-        "name": "生い茂る草叢",
+        "id": 922,
+        "group_id": 922,
+        "name": "狂乱の岩崩れ",
         "icon": null,
         "max_level": 1
       }
@@ -2188,80 +2202,40 @@
     ]
   },
   {
-    "avatar_id": 10000005,
+    "avatar_id": 10000007,
     "skill_list": [
       {
-        "id": 100543,
-        "group_id": 730,
-        "name": "通常攻撃·異邦の鉄風",
+        "id": 100557,
+        "group_id": 1131,
+        "name": "通常攻撃·異邦の草薙",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10067,
-        "group_id": 732,
-        "name": "旋風の剣",
+        "id": 10117,
+        "group_id": 1132,
+        "name": "草縁剣",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10068,
-        "group_id": 739,
-        "name": "激風の息",
+        "id": 10118,
+        "group_id": 1139,
+        "name": "臥草若化",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 721,
-        "group_id": 721,
-        "name": "空を裂く風",
+        "id": 1121,
+        "group_id": 1121,
+        "name": "蔓生の埜草",
         "icon": null,
         "max_level": 1
       },
       {
-        "id": 722,
-        "group_id": 722,
-        "name": "蘇生の風",
-        "icon": null,
-        "max_level": 1
-      }
-    ]
-  },
-  {
-    "avatar_id": 10000005,
-    "skill_list": [
-      {
-        "id": 100545,
-        "group_id": 730,
-        "name": "通常攻撃·異邦の岩峰",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10077,
-        "group_id": 932,
-        "name": "星落としの剣",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10078,
-        "group_id": 939,
-        "name": "岩潮幾重",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 921,
-        "group_id": 921,
-        "name": "破れた断崖",
-        "icon": null,
-        "max_level": 1
-      },
-      {
-        "id": 922,
-        "group_id": 922,
-        "name": "狂乱の岩崩れ",
+        "id": 1122,
+        "group_id": 1122,
+        "name": "生い茂る草叢",
         "icon": null,
         "max_level": 1
       }
@@ -2311,37 +2285,77 @@
     "avatar_id": 10000005,
     "skill_list": [
       {
-        "id": 100547,
-        "group_id": 1130,
-        "name": "通常攻撃·異邦の草薙",
+        "id": 100545,
+        "group_id": 730,
+        "name": "通常攻撃·異邦の岩峰",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10117,
-        "group_id": 1132,
-        "name": "草縁剣",
+        "id": 10077,
+        "group_id": 932,
+        "name": "星落としの剣",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10118,
-        "group_id": 1139,
-        "name": "臥草若化",
+        "id": 10078,
+        "group_id": 939,
+        "name": "岩潮幾重",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 1121,
-        "group_id": 1121,
-        "name": "蔓生の埜草",
+        "id": 921,
+        "group_id": 921,
+        "name": "破れた断崖",
         "icon": null,
         "max_level": 1
       },
       {
-        "id": 1122,
-        "group_id": 1122,
-        "name": "生い茂る草叢",
+        "id": 922,
+        "group_id": 922,
+        "name": "狂乱の岩崩れ",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000005,
+    "skill_list": [
+      {
+        "id": 100543,
+        "group_id": 730,
+        "name": "通常攻撃·異邦の鉄風",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10067,
+        "group_id": 732,
+        "name": "旋風の剣",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10068,
+        "group_id": 739,
+        "name": "激風の息",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 721,
+        "group_id": 721,
+        "name": "空を裂く風",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 722,
+        "group_id": 722,
+        "name": "蘇生の風",
         "icon": null,
         "max_level": 1
       }
@@ -2382,6 +2396,46 @@
         "id": 622,
         "group_id": 622,
         "name": "澄明の浄水",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000005,
+    "skill_list": [
+      {
+        "id": 100547,
+        "group_id": 1130,
+        "name": "通常攻撃·異邦の草薙",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10117,
+        "group_id": 1132,
+        "name": "草縁剣",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10118,
+        "group_id": 1139,
+        "name": "臥草若化",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 1121,
+        "group_id": 1121,
+        "name": "蔓生の埜草",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 1122,
+        "group_id": 1122,
+        "name": "生い茂る草叢",
         "icon": null,
         "max_level": 1
       }
@@ -2483,6 +2537,60 @@
         "id": 223,
         "group_id": 223,
         "name": "鑑査の心得",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000100,
+    "skill_list": [
+      {
+        "id": 11001,
+        "group_id": 10031,
+        "name": "通常攻撃·テペトルバイト",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 11002,
+        "group_id": 10032,
+        "name": "いけ、ぐるぐるコマちゃん！",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 11005,
+        "group_id": 10039,
+        "name": "さあ、本気出すよ！",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10021,
+        "group_id": 10021,
+        "name": "山のこだま",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10022,
+        "group_id": 10022,
+        "name": "磐岩の重み",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10023,
+        "group_id": 10023,
+        "name": "夜域の賜物·団結の炉心",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10025,
+        "group_id": 10025,
+        "name": "晶焔の祝福",
         "icon": null,
         "max_level": 1
       }
