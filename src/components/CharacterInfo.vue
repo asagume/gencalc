@@ -5,127 +5,139 @@
         <caption>
           {{ displayName("ステータス") }}
         </caption>
-        <template v-for="(item, index) in statsInfoList" :key="index">
-          <tr>
-            <th>{{ displayName(item.key) }}</th>
-            <td>{{ displayStatValue(item.key, item.value) }}</td>
-          </tr>
-        </template>
+        <tbody>
+          <template v-for="(item, index) in statsInfoList" :key="index">
+            <tr>
+              <th>{{ displayName(item.key) }}</th>
+              <td>{{ displayStatValue(item.key, item.value) }}</td>
+            </tr>
+          </template>
+        </tbody>
       </table>
       <table class="character-info">
         <caption>
           {{ displayName("命ノ星座") }}
         </caption>
-        <template v-for="(item, index) in constellationInfoList" :key="index">
-          <tr>
-            <td rowspan="2">
-              <img class="icon" :src="item.icon_url" :alt="item.名前" />
-            </td>
-            <th class="title">
-              {{ displayName("第" + (index + 1) + "重") }} {{ displayName(item.名前) }}
-            </th>
-          </tr>
-          <tr>
-            <td class="description" v-html="item.説明"></td>
-          </tr>
-        </template>
+        <tbody>
+          <template v-for="(item, index) in constellationInfoList" :key="index">
+            <tr>
+              <td rowspan="2">
+                <img class="icon" :src="item.icon_url" :alt="item.名前" />
+              </td>
+              <th class="title">
+                {{ displayName("第" + (index + 1) + "重") }} {{ displayName(item.名前) }}
+              </th>
+            </tr>
+            <tr>
+              <td class="description" v-html="item.説明"></td>
+            </tr>
+          </template>
+        </tbody>
       </table>
       <table class="character-info">
         <caption>
           {{ displayName("固有天賦") }}
         </caption>
-        <template v-for="(item, index) in passiveTalentInfoList" :key="index">
-          <tr>
-            <td rowspan="2">
-              <img class="icon" :src="item.icon_url" :alt="item.名前" />
-            </td>
-            <th class="title">{{ displayName(item.名前) }}</th>
-          </tr>
-          <tr>
-            <td class="description" v-html="item.説明"></td>
-          </tr>
-        </template>
+        <tbody>
+          <template v-for="(item, index) in passiveTalentInfoList" :key="index">
+            <tr>
+              <td rowspan="2">
+                <img class="icon" :src="item.icon_url" :alt="item.名前" />
+              </td>
+              <th class="title">{{ displayName(item.名前) }}</th>
+            </tr>
+            <tr>
+              <td class="description" v-html="item.説明"></td>
+            </tr>
+          </template>
+        </tbody>
       </table>
     </template>
     <template v-if="mode == 2">
       <table class="character-info">
         <caption></caption>
-        <tr>
-          <th colspan="2" class="title">
-            {{ displayName(characterMaster.通常攻撃.名前) }}
-          </th>
-        </tr>
-        <tr>
-          <td colspan="2" class="description" v-html="characterMaster.通常攻撃.説明"></td>
-        </tr>
-        <template v-for="(item, index) in talentNormalAttack('通常攻撃').詳細" :key="index">
-          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
-            <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">
-              {{ talentValue(item.数値, levelNormalAttack("通常攻撃")) }}
-            </td>
+        <tbody>
+          <tr>
+            <th colspan="2" class="title">
+              {{ displayName(characterMaster.通常攻撃.名前) }}
+            </th>
           </tr>
-        </template>
-        <template v-for="(item, index) in talentNormalAttack('重撃').詳細" :key="index">
-          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
-            <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">{{ talentValue(item.数値, levelNormalAttack("重撃")) }}</td>
+          <tr>
+            <td colspan="2" class="description" v-html="characterMaster.通常攻撃.説明"></td>
           </tr>
-        </template>
-        <template v-for="(item, index) in talentNormalAttack('落下攻撃').詳細" :key="index">
-          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
-            <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">
-              {{ talentValue(item.数値, levelNormalAttack("落下攻撃")) }}
-            </td>
-          </tr>
-        </template>
+          <template v-for="(item, index) in talentNormalAttack('通常攻撃').詳細" :key="index">
+            <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
+              <th class="key">{{ displayName(item.名前) }}</th>
+              <td class="value">
+                {{ talentValue(item.数値, levelNormalAttack("通常攻撃")) }}
+              </td>
+            </tr>
+          </template>
+          <template v-for="(item, index) in talentNormalAttack('重撃').詳細" :key="index">
+            <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
+              <th class="key">{{ displayName(item.名前) }}</th>
+              <td class="value">{{ talentValue(item.数値, levelNormalAttack("重撃")) }}</td>
+            </tr>
+          </template>
+          <template v-for="(item, index) in talentNormalAttack('落下攻撃').詳細" :key="index">
+            <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
+              <th class="key">{{ displayName(item.名前) }}</th>
+              <td class="value">
+                {{ talentValue(item.数値, levelNormalAttack("落下攻撃")) }}
+              </td>
+            </tr>
+          </template>
+        </tbody>
       </table>
     </template>
     <template v-if="mode == 3">
       <table class="character-info">
         <caption></caption>
-        <tr>
-          <th colspan="2" class="title">
-            {{ displayName(characterMaster.元素スキル.名前) }}
-          </th>
-        </tr>
-        <tr v-for="(item, index) in talentAttributes(characterMaster.元素スキル, elementalSkillLevel)" :key="index">
-          <th class="key">{{ displayName(item[0]) }}</th>
-          <td class="value">{{ item[1] }}</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
-        </tr>
-        <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
-          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
-            <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">{{ talentValue(item.数値, elementalSkillLevel) }}</td>
+        <tbody>
+          <tr>
+            <th colspan="2" class="title">
+              {{ displayName(characterMaster.元素スキル.名前) }}
+            </th>
           </tr>
-        </template>
+          <tr v-for="(item, index) in talentAttributes(characterMaster.元素スキル, elementalSkillLevel)" :key="index">
+            <th class="key">{{ displayName(item[0]) }}</th>
+            <td class="value">{{ item[1] }}</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="description" v-html="characterMaster.元素スキル.説明"></td>
+          </tr>
+          <template v-for="(item, index) in characterMaster.元素スキル.詳細" :key="index">
+            <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
+              <th class="key">{{ displayName(item.名前) }}</th>
+              <td class="value">{{ talentValue(item.数値, elementalSkillLevel) }}</td>
+            </tr>
+          </template>
+        </tbody>
       </table>
     </template>
     <template v-if="mode == 4">
       <table class="character-info">
         <caption></caption>
-        <tr>
-          <th colspan="2" class="title">
-            {{ displayName(characterMaster.元素爆発.名前) }}
-          </th>
-        </tr>
-        <tr v-for="(item, index) in talentAttributes(characterMaster.元素爆発, elementalBurstLevel)" :key="index">
-          <th class="key">{{ displayName(item[0]) }}</th>
-          <td class="value">{{ item[1] }}</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="description" v-html="characterMaster.元素爆発.説明"></td>
-        </tr>
-        <template v-for="(item, index) in characterMaster.元素爆発.詳細" :key="index">
-          <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
-            <th class="key">{{ displayName(item.名前) }}</th>
-            <td class="value">{{ talentValue(item.数値, elementalBurstLevel) }}</td>
+        <tbody>
+          <tr>
+            <th colspan="2" class="title">
+              {{ displayName(characterMaster.元素爆発.名前) }}
+            </th>
           </tr>
-        </template>
+          <tr v-for="(item, index) in talentAttributes(characterMaster.元素爆発, elementalBurstLevel)" :key="index">
+            <th class="key">{{ displayName(item[0]) }}</th>
+            <td class="value">{{ item[1] }}</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="description" v-html="characterMaster.元素爆発.説明"></td>
+          </tr>
+          <template v-for="(item, index) in characterMaster.元素爆発.詳細" :key="index">
+            <tr v-if="item.名前 && !item.名前.startsWith('非表示_')">
+              <th class="key">{{ displayName(item.名前) }}</th>
+              <td class="value">{{ talentValue(item.数値, elementalBurstLevel) }}</td>
+            </tr>
+          </template>
+        </tbody>
       </table>
     </template>
   </template>

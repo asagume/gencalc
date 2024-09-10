@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^3.0.0",
-    "@types/lodash": "^4.14.186",
+    "@types/lodash": "^4.14.74",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",

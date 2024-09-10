@@ -7,69 +7,73 @@
   </template>
   <hr />
   <table>
-    <tr>
-      <th>Team Name</th>
-      <td>
-        <input v-model="workTeam.name" type="text" minlength="1" maxlength="16" placeholder="INPUT TEAM NAME" />
-      </td>
-    </tr>
-    <tr>
-      <th>Character Select Mode</th>
-      <td>
-        <button class="character-select-mode" @click="characterSelectModeOnClick">
-          {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBERS' }}
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" class="character-select-mode">
-        <span v-if="!characterSelectMode">
-          チームメンバーを選択して下さい
-        </span>
-        <span v-else>
-          {{ selectedMemberName() + 'の代替キャラクターを選択して下さい' }}
-        </span>
-      </td>
-    </tr>
-    <tr class="member-tags">
-      <td colspan="2">
-        <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in MEMBER_TAG_LIST" :key="tag" @click="tagOnClick(tag)">{{
-          tag
-        }}</span>
-      </td>
-    </tr>
-    <tr class="members">
-      <td colspan="2">
-        <div :class="'member' + memberSelectedClass(member.id)" v-for="member in workTeam.members" :key="member.id">
-          <MemberItem :member="member" @click="memberOnClick(member.id)" />
-        </div>
+    <tbody>
+      <tr>
+        <th>Team Name</th>
+        <td>
+          <input v-model="workTeam.name" type="text" minlength="1" maxlength="16" placeholder="INPUT TEAM NAME" />
+        </td>
+      </tr>
+      <tr>
+        <th>Character Select Mode</th>
+        <td>
+          <button class="character-select-mode" @click="characterSelectModeOnClick">
+            {{ characterSelectMode ? 'REPLACEMENTS' : 'MEMBERS' }}
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="character-select-mode">
+          <span v-if="!characterSelectMode">
+            チームメンバーを選択して下さい
+          </span>
+          <span v-else>
+            {{ selectedMemberName() + 'の代替キャラクターを選択して下さい' }}
+          </span>
+        </td>
+      </tr>
+      <tr class="member-tags">
+        <td colspan="2">
+          <span :class="'tag' + tagSelectedClass(tag)" v-for="tag in MEMBER_TAG_LIST" :key="tag"
+            @click="tagOnClick(tag)">{{
+              tag
+            }}</span>
+        </td>
+      </tr>
+      <tr class="members">
+        <td colspan="2">
+          <div :class="'member' + memberSelectedClass(member.id)" v-for="member in workTeam.members" :key="member.id">
+            <MemberItem :member="member" @click="memberOnClick(member.id)" />
+          </div>
 
-        <div class="buildname-select">
-          <select v-show="buildnames.length" v-model="selectedMemberBuildname" @change="buildnameOnChange">
-            <option v-for="value in buildnames" :key="value" :value="value">{{ value }}</option>
-          </select>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <th>Short Note</th>
-      <td>
-        <input class="description" v-model="workTeam.description" type="text" maxlength="40" placeholder="INPUT NOTE" />
-      </td>
-    </tr>
-    <tr class="team-tags">
-      <td colspan="2">
-        <span :class="teamTagSelected(tag) ? 'tag selected' : 'tag'" v-for="tag in workTeamTags" :key="tag"
-          @click="teamTagOnClick(tag)">{{ tag }}</span>
-      </td>
-    </tr>
-    <tr>
-      <th>Tags</th>
-      <td>
-        <input class="team-tags" v-model="txtTeamTags" type="text" maxlength="40" placeholder="INPUT TAGS"
-          @change="txtTeamTagsOnChange" />
-      </td>
-    </tr>
+          <div class="buildname-select">
+            <select v-show="buildnames.length" v-model="selectedMemberBuildname" @change="buildnameOnChange">
+              <option v-for="value in buildnames" :key="value" :value="value">{{ value }}</option>
+            </select>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Short Note</th>
+        <td>
+          <input class="description" v-model="workTeam.description" type="text" maxlength="40"
+            placeholder="INPUT NOTE" />
+        </td>
+      </tr>
+      <tr class="team-tags">
+        <td colspan="2">
+          <span :class="teamTagSelected(tag) ? 'tag selected' : 'tag'" v-for="tag in workTeamTags" :key="tag"
+            @click="teamTagOnClick(tag)">{{ tag }}</span>
+        </td>
+      </tr>
+      <tr>
+        <th>Tags</th>
+        <td>
+          <input class="team-tags" v-model="txtTeamTags" type="text" maxlength="40" placeholder="INPUT TAGS"
+            @change="txtTeamTagsOnChange" />
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <div class="buttons">

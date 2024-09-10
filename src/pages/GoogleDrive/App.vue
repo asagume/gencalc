@@ -23,22 +23,26 @@
   <br />
   <table class="list-of-appdata">
     <caption>Google Drive上のアプリデータ</caption>
-    <tr>
-      <th>name</th>
-      <th>modifiedTime</th>
-      <th>size</th>
-      <th></th>
-    </tr>
-    <tr :class="loaTrClass(item.id)" v-for="item in remoteFileList.filter(s => s.id !== undefined)" :key="item.id"
-      @click="overwriteObject(selectedFile, item)">
-      <td>{{ item.name }}</td>
-      <td>{{ item.modifiedTime }}</td>
-      <td>{{ item.size }}</td>
-      <td>
-        <button type="button" :disabled="isProcessing" @click="handleGetClick(item.id)">取得</button>
-        <button type="button" :disabled="isProcessing" @click="handleDeleteClick(item.id)">削除</button>
-      </td>
-    </tr>
+    <thead>
+      <tr>
+        <th>name</th>
+        <th>modifiedTime</th>
+        <th>size</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr :class="loaTrClass(item.id)" v-for="item in remoteFileList.filter(s => s.id !== undefined)" :key="item.id"
+        @click="overwriteObject(selectedFile, item)">
+        <td>{{ item.name }}</td>
+        <td>{{ item.modifiedTime }}</td>
+        <td>{{ item.size }}</td>
+        <td>
+          <button type="button" :disabled="isProcessing" @click="handleGetClick(item.id)">取得</button>
+          <button type="button" :disabled="isProcessing" @click="handleDeleteClick(item.id)">削除</button>
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <br />
@@ -54,17 +58,21 @@
 
   <table class="remote-appdata">
     <caption> ローカルデータと取得データの差分 </caption>
-    <tr>
-      <th>key</th>
-      <th>status</th>
-    </tr>
-    <tr v-if="comparisonList.filter(s => s[1] != 0).length == 0">
-      <td colspan="2">差分なし</td>
-    </tr>
-    <tr v-else v-for="comparison in comparisonList.filter(s => s[1] != 0)" :key="comparison[0]">
-      <td>{{ comparison[0] }}</td>
-      <td>{{ ['同値', '差異あり', 'ローカルのみ', 'リモートのみ'][comparison[1]] }}</td>
-    </tr>
+    <thead>
+      <tr>
+        <th>key</th>
+        <th>status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-if="comparisonList.filter(s => s[1] != 0).length == 0">
+        <td colspan="2">差分なし</td>
+      </tr>
+      <tr v-else v-for="comparison in comparisonList.filter(s => s[1] != 0)" :key="comparison[0]">
+        <td>{{ comparison[0] }}</td>
+        <td>{{ ['同値', '差異あり', 'ローカルのみ', 'リモートのみ'][comparison[1]] }}</td>
+      </tr>
+    </tbody>
   </table>
   <br />
   <hr />

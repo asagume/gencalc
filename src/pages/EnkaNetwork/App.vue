@@ -21,7 +21,8 @@
           <div v-show="uid" class="avoid">
             <br />
             本ページからのEnka.Networkへのリクエストが失敗する場合<br />
-            下記URLをクリックして表示されたデータをテキストエリアに貼り付けて、再度<span class="material-symbols-outlined"> send </span>をクリックして下さい。直接処理します。
+            下記URLをクリックして表示されたデータをテキストエリアに貼り付けて、再度<span class="material-symbols-outlined"> send
+            </span>をクリックして下さい。直接処理します。
             <br />
             <a :href="'https://enka.network/api/uid/' + uid" target="_blank">
               {{ 'https://enka.network/api/uid/' + uid }}
@@ -36,27 +37,29 @@
     <div class="pane3">
       <template v-if="u">
         <table>
-          <tr>
-            <th>UID</th>
-            <td>{{ u.uid }}</td>
-          </tr>
-          <tr>
-            <th>NICKNAME</th>
-            <td>{{ u.playerInfo.nickname }}</td>
-          </tr>
-          <tr>
-            <th>AR</th>
-            <td>{{ u.playerInfo.level }}</td>
-          </tr>
-          <tr>
-            <th>WR</th>
-            <td>{{ u.playerInfo.worldLevel }}</td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <p>{{ u.playerInfo.signature }}</p>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>UID</th>
+              <td>{{ u.uid }}</td>
+            </tr>
+            <tr>
+              <th>NICKNAME</th>
+              <td>{{ u.playerInfo.nickname }}</td>
+            </tr>
+            <tr>
+              <th>AR</th>
+              <td>{{ u.playerInfo.level }}</td>
+            </tr>
+            <tr>
+              <th>WR</th>
+              <td>{{ u.playerInfo.worldLevel }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p>{{ u.playerInfo.signature }}</p>
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <ul>

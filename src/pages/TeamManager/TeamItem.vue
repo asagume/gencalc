@@ -16,19 +16,23 @@
     </div>
     <div class="members">
       <table>
-        <tr>
-          <td v-for="member in team.members" :key="member.id">
-            <MemberItem :member="member" :statsObj="memberStats[member.id]" :displayStat="displayStat"
-              :showEquipment="showEquipment" :viewable="true" :members="team.members.map(s => s.name)"
-              :elementalResonance="elementalResonance" />
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td v-for="member in team.members" :key="member.id">
+              <MemberItem :member="member" :statsObj="memberStats[member.id]" :displayStat="displayStat"
+                :showEquipment="showEquipment" :viewable="true" :members="team.members.map(s => s.name)"
+                :elementalResonance="elementalResonance" />
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <table class="res" v-if="displayRes">
-      <tr>
-        <td v-for="key in resKey" :key="key" :class="resBgClass(key)">{{ res[key] }}</td>
-      </tr>
+      <tbody>
+        <tr>
+          <td v-for="key in resKey" :key="key" :class="resBgClass(key)">{{ res[key] }}</td>
+        </tr>
+      </tbody>
     </table>
     <div class="team-tags" v-if="displayTags">
       <span class="tag" v-for="tag in team.tags" :key="tag">{{ tag }}</span>

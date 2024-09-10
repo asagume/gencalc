@@ -6,122 +6,132 @@
             </label>
         </div>
         <table class="er-calculator">
-            <tr>
-                <th colspan="2"></th>
-                <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <div class="with-tooltip">
-                        <img :src="characterImgSrc(element.character)" :alt="displayName(element.character)"
-                            class="character">
-                        <span class="tooltip">{{ displayName(element.character) }}</span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('元素爆発') }}</th>
-                <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <input type="number" v-model="element.energyCost">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('命ノ星座') }}</th>
-                <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <select v-model="element.constellation" @change="inputOnChange">
-                        <option v-for="constellation in [0, 1, 2, 3, 4, 5, 6]" :key="constellation" :value="constellation">
-                            {{ 'C' + constellation }}
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('武器') }}</th>
-                <td v-for="(element, index) in  calculatorInput" :key="index" :class="'weapon' + bgColorClass(index)">
-                    <img :src="weaponImgSrc(element.character, element.currentWeapon)"
-                        :alt="displayName(element.currentWeapon)" class="input-item-weapon">
-                    <select v-model="element.weaponRefine" @change="inputOnChange">
-                        <option v-for="refine in [1, 2, 3, 4, 5]" :key="refine" :value="refine">
-                            {{ 'R' + refine }}
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="result-row">
-                <th colspan="2">{{ displayName('元素チャージ効率') }}</th>
-                <td v-for="(value, index) in energyRechargeGls" :key="index" :class="bgColorClass(index)">
-                    {{ value + '%' }}
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('出場時間(%)') }}</th>
-                <td v-for="(element, index) in  calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <input type="number" v-model="element.onField" min="0" max="100" @change="inputOnChange">
-                </td>
-            </tr>
-            <tr class="label-row">
-                <th colspan="2">{{ displayName('元素粒子') }}</th>
-                <th colspan="4">{{ displayName('獲得数') }}</th>
-            </tr>
-            <tr v-for="(row, rowIndex) in  inputRowParticleEnemy" :key="rowIndex" :class="bgColorClass2(row)">
-                <th>
-                    {{ displayName('敵') }}
-                </th>
-                <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 10) / 10 }}</td>
-                <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
-                    <input type="number" v-model="row.currentValues[columnIndex]" min="0">
-                </td>
-            </tr>
-            <tr v-for="(row, rowIndex) in inputRowParticle" :key="rowIndex" :class="bgColorClass2(row)">
-                <th class="with-tooltip">
-                    <span>
-                        <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
-                        <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
-                    </span>
-                    <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row)) }}</span>
-                </th>
-                <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 100) / 100 }}</td>
-                <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
-                    <input type="number" v-model="row.currentValues[columnIndex]" min="0">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('元素チャージ') }}</th>
-                <td v-for="(value, index) in particleRecharges" :key="index" class="result">
-                    {{ value }}
-                </td>
-            </tr>
-            <tr class="label-row" v-if="inputRowEnergy.length">
-                <th colspan="2">{{ displayName('元素エネルギー') }}</th>
-                <th colspan="4">{{ displayName('獲得量') }}</th>
-            </tr>
-            <tr v-for="(row, rowIndex) in inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
-                <th colspan="2" class="with-tooltip">
-                    <span>
-                        <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
-                        <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
-                    </span>
-                    <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row)) }}</span>
-                </th>
-                <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)" :key="columnIndex">
-                    <input type="number" v-model="row.currentValues[columnIndex]" min="0">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('元素爆発(回数)') }}</th>
-                <td v-for="index in Array.from({ length: calculatorInput.length }, (_, i) => i)" :key="index"
-                    :class="bgColorClass(index)">
-                    <input type="number" v-model="burstCounts[index]" min="0">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">{{ displayName('武器変更') }}</th>
-                <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
-                    <span v-for="(weapon, weaponIndex) in element.replaceWeapons" :key="weaponIndex" class="with-tooltip">
-                        <img :src="replaceWeaponImgSrc(element, weapon)" :alt="displayName(weapon)"
-                            :class="'input-item-weapon' + replaceWeaponClass(element, weapon)"
-                            @click="replaceWeaponOnClick(element, weapon)">
-                        <span class="tooltip">{{ displayName(weapon) }}</span>
-                    </span>
-                </td>
-            </tr>
+            <tbody>
+                <tr>
+                    <th colspan="2"></th>
+                    <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
+                        <div class="with-tooltip">
+                            <img :src="characterImgSrc(element.character)" :alt="displayName(element.character)"
+                                class="character">
+                            <span class="tooltip">{{ displayName(element.character) }}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('元素爆発') }}</th>
+                    <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
+                        <input type="number" v-model="element.energyCost">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('命ノ星座') }}</th>
+                    <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
+                        <select v-model="element.constellation" @change="inputOnChange">
+                            <option v-for="constellation in [0, 1, 2, 3, 4, 5, 6]" :key="constellation"
+                                :value="constellation">
+                                {{ 'C' + constellation }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('武器') }}</th>
+                    <td v-for="(element, index) in calculatorInput" :key="index"
+                        :class="'weapon' + bgColorClass(index)">
+                        <img :src="weaponImgSrc(element.character, element.currentWeapon)"
+                            :alt="displayName(element.currentWeapon)" class="input-item-weapon">
+                        <select v-model="element.weaponRefine" @change="inputOnChange">
+                            <option v-for="refine in [1, 2, 3, 4, 5]" :key="refine" :value="refine">
+                                {{ 'R' + refine }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="result-row">
+                    <th colspan="2">{{ displayName('元素チャージ効率') }}</th>
+                    <td v-for="(value, index) in energyRechargeGls" :key="index" :class="bgColorClass(index)">
+                        {{ value + '%' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('出場時間(%)') }}</th>
+                    <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
+                        <input type="number" v-model="element.onField" min="0" max="100" @change="inputOnChange">
+                    </td>
+                </tr>
+                <tr class="label-row">
+                    <th colspan="2">{{ displayName('元素粒子') }}</th>
+                    <th colspan="4">{{ displayName('獲得数') }}</th>
+                </tr>
+                <tr v-for="(row, rowIndex) in inputRowParticleEnemy" :key="rowIndex" :class="bgColorClass2(row)">
+                    <th>
+                        {{ displayName('敵') }}
+                    </th>
+                    <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 10) / 10 }}</td>
+                    <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)"
+                        :key="columnIndex">
+                        <input type="number" v-model="row.currentValues[columnIndex]" min="0">
+                    </td>
+                </tr>
+                <tr v-for="(row, rowIndex) in inputRowParticle" :key="rowIndex" :class="bgColorClass2(row)">
+                    <th class="with-tooltip">
+                        <span>
+                            <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
+                            <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
+                        </span>
+                        <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row))
+                            }}</span>
+                    </th>
+                    <td>{{ Math.round(row.currentValues.reduce((p, c) => p + c, 0) * 100) / 100 }}</td>
+                    <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)"
+                        :key="columnIndex">
+                        <input type="number" v-model="row.currentValues[columnIndex]" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('元素チャージ') }}</th>
+                    <td v-for="(value, index) in particleRecharges" :key="index" class="result">
+                        {{ value }}
+                    </td>
+                </tr>
+                <tr class="label-row" v-if="inputRowEnergy.length">
+                    <th colspan="2">{{ displayName('元素エネルギー') }}</th>
+                    <th colspan="4">{{ displayName('獲得量') }}</th>
+                </tr>
+                <tr v-for="(row, rowIndex) in inputRowEnergy" :key="rowIndex" :class="bgColorClass2(row)">
+                    <th colspan="2" class="with-tooltip">
+                        <span>
+                            <img :src="rowImgSrc1(row)" :alt="displayName(row.character)" :class="rowImgSrc1Class(row)">
+                            <img :src="rowImgSrc2(row)" :alt="displayName(row.triggerName)" class="input-item">
+                        </span>
+                        <span class="tooltip">{{ displayName(row.character) + ' ' + displayName(triggerName(row))
+                            }}</span>
+                    </th>
+                    <td v-for="columnIndex in Array.from({ length: row.currentValues.length }, (_, i) => i)"
+                        :key="columnIndex">
+                        <input type="number" v-model="row.currentValues[columnIndex]" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('元素爆発(回数)') }}</th>
+                    <td v-for="index in Array.from({ length: calculatorInput.length }, (_, i) => i)" :key="index"
+                        :class="bgColorClass(index)">
+                        <input type="number" v-model="burstCounts[index]" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ displayName('武器変更') }}</th>
+                    <td v-for="(element, index) in calculatorInput" :key="index" :class="bgColorClass(index)">
+                        <span v-for="(weapon, weaponIndex) in element.replaceWeapons" :key="weaponIndex"
+                            class="with-tooltip">
+                            <img :src="replaceWeaponImgSrc(element, weapon)" :alt="displayName(weapon)"
+                                :class="'input-item-weapon' + replaceWeaponClass(element, weapon)"
+                                @click="replaceWeaponOnClick(element, weapon)">
+                            <span class="tooltip">{{ displayName(weapon) }}</span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <br />
         <div>
@@ -134,17 +144,21 @@
                     {{ displayName('敵') }}
                     {{ isOpenSupplyFromEnemy ? '-' : '+' }}
                 </caption>
-                <tr>
-                    <th></th>
-                    <th>{{ displayName('元素オーブ') }} </th>
-                    <th>{{ displayName('元素粒子') }} </th>
-                </tr>
-                <tr v-for="(element, index) in supplyFromEnemy" :key="index"
-                    v-show="isOpenSupplyFromEnemy || element[1] || element[2]">
-                    <th>{{ displayName(element[0]) }}</th>
-                    <td><input type="number" v-model="element[1]" min="0"></td>
-                    <td><input type="number" v-model="element[2]" min="0"></td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ displayName('元素オーブ') }} </th>
+                        <th>{{ displayName('元素粒子') }} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(element, index) in supplyFromEnemy" :key="index"
+                        v-show="isOpenSupplyFromEnemy || element[1] || element[2]">
+                        <th>{{ displayName(element[0]) }}</th>
+                        <td><input type="number" v-model="element[1]" min="0"></td>
+                        <td><input type="number" v-model="element[2]" min="0"></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="message-area">
@@ -221,7 +235,8 @@
                         </li>
                         <li>以下、元素スキルの実行から特定のアクションを実行するまでを1回の元素スキルとみなします。
                             <ul>
-                                <li v-for="([character, untilMap], index) in CHARACTER_E_UNTIL_MAP.entries()" :key="index">
+                                <li v-for="([character, untilMap], index) in CHARACTER_E_UNTIL_MAP.entries()"
+                                    :key="index">
                                     {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
                                         Array.from(untilMap.entries())
                                             .map(value => value[0]
@@ -233,7 +248,8 @@
                         </li>
                         <li>以下、元素スキルの実行後に特定のアクションを実行すると元素粒子を生成したとみなします。
                             <ul>
-                                <li v-for="([character, delayArr], index) in CHARACTER_E_DELAY_MAP.entries()" :key="index">
+                                <li v-for="([character, delayArr], index) in CHARACTER_E_DELAY_MAP.entries()"
+                                    :key="index">
                                     {{ displayName(character) + ' : ' + actionName('E') + '⇒' +
                                         delayArr.map(action => actionName(action)).join(displayName('または'))
                                     }}

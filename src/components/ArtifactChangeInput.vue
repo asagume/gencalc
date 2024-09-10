@@ -1,69 +1,77 @@
 <template>
   <div class="artifact">
     <table class="artifact">
-      <tr>
-        <td>
-          <table v-if="before" class="artifact-before-after">
-            <tr>
-              <th colspan="2">{{ displayName('現在装備') }}</th>
-            </tr>
-            <tr>
-              <th>
-                <img class="artifact-icon" :src="artifactImgSrc(before)" :alt="displayName(before.name)">
-              </th>
-              <td>
-                {{ displayStatStr(before.mainStat, before.mainStatValue) }}
-                <br />
-                <img class="star" v-for="dummy in new Array(before.rarity)" src="images/star.png" :key="dummy">
-              </td>
-            </tr>
-            <tr v-for="item in before.subStats" :key="item.name">
-              <td colspan="2">{{ displayStatStr(item.name, item.value) }}</td>
-            </tr>
-          </table>
-        </td>
-        <td>
-          <table v-if="after" class="artifact-before-after">
-            <tr>
-              <th colspan="2">{{ displayName('変更後') }}</th>
-            </tr>
-            <tr>
-              <th>
-                <img class="artifact-icon" :src="artifactImgSrc(after)" :alt="displayName(after.name)">
-              </th>
-              <td>
-                {{ displayStatStr(after.mainStat, after.mainStatValue) }}
-                <br />
-                <img class="star" v-for="dummy in new Array(after.rarity)" src="images/star.png" :key="dummy">
-              </td>
-            </tr>
-            <tr v-for="item in after.subStats" :key="item.name">
-              <td colspan="2">{{ displayStatStr(item.name, item.value) }}</td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr v-if="isStatsChange">
-        <td colspan="2">
-          <table class="artifact-stat">
-            <tr>
-              <th colspan="2">{{ displayName('ステータス変化') }}</th>
-            </tr>
-            <tr v-for="item in mainStatDiffList" :key="item.key">
-              <td>{{ displayName(item.key) }}</td>
-              <td :class="'value ' + statValueClass(item.value)">
-                {{ (item.value >= 0 ? '+' : '') + displayStatValue(item.key, item.value) }}
-              </td>
-            </tr>
-            <tr v-for="item in subStatDiffList" :key="item.key">
-              <td>{{ displayName(item.key) }}</td>
-              <td :class="'value ' + statValueClass(item.value)">
-                {{ (item.value >= 0 ? '+' : '') + displayStatValue(item.key, item.value) }}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>
+            <table v-if="before" class="artifact-before-after">
+              <tbody>
+                <tr>
+                  <th colspan="2">{{ displayName('現在装備') }}</th>
+                </tr>
+                <tr>
+                  <th>
+                    <img class="artifact-icon" :src="artifactImgSrc(before)" :alt="displayName(before.name)">
+                  </th>
+                  <td>
+                    {{ displayStatStr(before.mainStat, before.mainStatValue) }}
+                    <br />
+                    <img class="star" v-for="dummy in new Array(before.rarity)" src="images/star.png" :key="dummy">
+                  </td>
+                </tr>
+                <tr v-for="item in before.subStats" :key="item.name">
+                  <td colspan="2">{{ displayStatStr(item.name, item.value) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>
+            <table v-if="after" class="artifact-before-after">
+              <tbody>
+                <tr>
+                  <th colspan="2">{{ displayName('変更後') }}</th>
+                </tr>
+                <tr>
+                  <th>
+                    <img class="artifact-icon" :src="artifactImgSrc(after)" :alt="displayName(after.name)">
+                  </th>
+                  <td>
+                    {{ displayStatStr(after.mainStat, after.mainStatValue) }}
+                    <br />
+                    <img class="star" v-for="dummy in new Array(after.rarity)" src="images/star.png" :key="dummy">
+                  </td>
+                </tr>
+                <tr v-for="item in after.subStats" :key="item.name">
+                  <td colspan="2">{{ displayStatStr(item.name, item.value) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr v-if="isStatsChange">
+          <td colspan="2">
+            <table class="artifact-stat">
+              <tbody>
+                <tr>
+                  <th colspan="2">{{ displayName('ステータス変化') }}</th>
+                </tr>
+                <tr v-for="item in mainStatDiffList" :key="item.key">
+                  <td>{{ displayName(item.key) }}</td>
+                  <td :class="'value ' + statValueClass(item.value)">
+                    {{ (item.value >= 0 ? '+' : '') + displayStatValue(item.key, item.value) }}
+                  </td>
+                </tr>
+                <tr v-for="item in subStatDiffList" :key="item.key">
+                  <td>{{ displayName(item.key) }}</td>
+                  <td :class="'value ' + statValueClass(item.value)">
+                    {{ (item.value >= 0 ? '+' : '') + displayStatValue(item.key, item.value) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div style="margin-top: 5px">
@@ -78,7 +86,7 @@
     </div>
   </div>
 </template>
-  
+
 <script lang="ts">
 import { TKeyValue } from "@/common";
 import { TArtifact, 聖遺物サブ効果ARRAY } from "@/input";

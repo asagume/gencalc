@@ -1289,23 +1289,28 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
             result['その他'] = damageDetailObjArr;
         }
 
-        result[CHANGE_KIND_STATUS] = myStatusChangeDetailObjArr;
-        result[CHANGE_KIND_TALENT] = myTalentChangeDetailObjArr;
-
         const vision = characterInput.characterMaster.元素;
         const elementalReactionArr = Object.keys((ELEMENTAL_REACTION_MASTER as any)[vision]);
         if (['水', '氷'].includes(vision) && !elementalReactionArr.includes('凍結')) {
             elementalReactionArr.push('凍結');
         }
 
-        const conditionMap = new Map();
-        const exclusionMap = new Map();
-        myStatusChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {
-            if (detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻')) { // for 灰燼の都に立つ英雄の絵巻
+        const workArr = [] as any[];
+        myStatusChangeDetailObjArr.forEach(detailObj => {
+            if (detailObj['条件'] && detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻')) { // for 灰燼の都に立つ英雄の絵巻
                 if (elementalReactionArr.filter(s => detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻=' + s)).length === 0) {
                     return;
                 }
             }
+            workArr.push(detailObj);
+        });
+
+        result[CHANGE_KIND_STATUS] = workArr;
+        result[CHANGE_KIND_TALENT] = myTalentChangeDetailObjArr;
+
+        const conditionMap = new Map();
+        const exclusionMap = new Map();
+        workArr.filter(s => s['条件']).forEach(detailObj => {
             makeConditionExclusionMapFromStr(detailObj['条件'], conditionMap, exclusionMap);
         });
         myTalentChangeDetailObjArr.filter(s => s['条件']).forEach(detailObj => {

@@ -28,27 +28,31 @@
           </span>
         </template>
         <table class="control-button">
-          <tr>
-            <td>
-              <span class="material-symbols-outlined control-button" @click="$emit('click:jump-to-team')">stat_2</span>
-            </td>
-            <td>
-              <label :class="removeMode ? 'checked' : ''">
-                <input type="checkbox" v-model="removeMode">
-                <span class="material-symbols-outlined">delete</span>
-              </label>
-            </td>
-            <td>
-              <div v-if="selectedAction">
-                <img :class="'action-icon handle' + bgColorClass(selectedAction.member)"
-                  :src="getActionDetail(selectedAction).icon_url" :alt="displayName(getActionDetail(selectedAction).名前)"
-                  @click="selectedActionOnClick(selectedAction)" />
-              </div>
-              <div class="action-attribute" v-if="selectedAction">
-                {{ actionDisplay(selectedAction) }}
-              </div>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                <span class="material-symbols-outlined control-button"
+                  @click="$emit('click:jump-to-team')">stat_2</span>
+              </td>
+              <td>
+                <label :class="removeMode ? 'checked' : ''">
+                  <input type="checkbox" v-model="removeMode">
+                  <span class="material-symbols-outlined">delete</span>
+                </label>
+              </td>
+              <td>
+                <div v-if="selectedAction">
+                  <img :class="'action-icon handle' + bgColorClass(selectedAction.member)"
+                    :src="getActionDetail(selectedAction).icon_url"
+                    :alt="displayName(getActionDetail(selectedAction).名前)"
+                    @click="selectedActionOnClick(selectedAction)" />
+                </div>
+                <div class="action-attribute" v-if="selectedAction">
+                  {{ actionDisplay(selectedAction) }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </fieldset>
       <fieldset class="rotation-list">
@@ -80,45 +84,47 @@
       <br /> <br />
       <br /> <br />
       <table class="guide">
-        <tr>
-          <th>N</th>
-          <td>通常攻撃1段</td>
-          <th>N2</th>
-          <td>通常攻撃2段</td>
-          <th>NX</th>
-          <td>通常攻撃X段</td>
-        </tr>
-        <tr>
-          <th>N1C</th>
-          <td>通常攻撃1段+重撃</td>
-          <th>N2C</th>
-          <td>通常攻撃2段+重撃</td>
-          <th>NXC</th>
-          <td>通常攻撃X段+重撃</td>
-        </tr>
-        <tr>
-          <th>C</th>
-          <td>重撃</td>
-          <td colspan="4"></td>
-        </tr>
-        <tr>
-          <th>P</th>
-          <td>落下攻撃</td>
-          <td colspan="4"></td>
-        </tr>
-        <tr>
-          <th>E</th>
-          <td>元素スキル</td>
-          <th>E.Press</th>
-          <td>元素スキル(一回押し)</td>
-          <th>E.Hold</th>
-          <td>元素スキル(長押し)</td>
-        </tr>
-        <tr>
-          <th>Q</th>
-          <td>元素爆発</td>
-          <td colspan="4"></td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>N</th>
+            <td>通常攻撃1段</td>
+            <th>N2</th>
+            <td>通常攻撃2段</td>
+            <th>NX</th>
+            <td>通常攻撃X段</td>
+          </tr>
+          <tr>
+            <th>N1C</th>
+            <td>通常攻撃1段+重撃</td>
+            <th>N2C</th>
+            <td>通常攻撃2段+重撃</td>
+            <th>NXC</th>
+            <td>通常攻撃X段+重撃</td>
+          </tr>
+          <tr>
+            <th>C</th>
+            <td>重撃</td>
+            <td colspan="4"></td>
+          </tr>
+          <tr>
+            <th>P</th>
+            <td>落下攻撃</td>
+            <td colspan="4"></td>
+          </tr>
+          <tr>
+            <th>E</th>
+            <td>元素スキル</td>
+            <th>E.Press</th>
+            <td>元素スキル(一回押し)</td>
+            <th>E.Hold</th>
+            <td>元素スキル(長押し)</td>
+          </tr>
+          <tr>
+            <th>Q</th>
+            <td>元素爆発</td>
+            <td colspan="4"></td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="pane2" v-if="true">

@@ -1,10 +1,12 @@
 <template>
   <fieldset>
     <table class="total-damage">
-      <tr>
-        <th class="damage-name">{{ displayName("ローテーション合計ダメージ") }}</th>
-        <td class="total-damage-value">{{ Math.round(totalDamage) }}</td>
-      </tr>
+      <tbody>
+        <tr>
+          <th class="damage-name">{{ displayName("ローテーション合計ダメージ") }}</th>
+          <td class="total-damage-value">{{ Math.round(totalDamage) }}</td>
+        </tr>
+      </tbody>
     </table>
     <hr />
     <ul class="action-list">
@@ -87,7 +89,7 @@ import {
   IMG_SRC_DUMMY,
   TCharacterDetail,
   TElementColorClassKey,
-TElementImgSrcKey,
+  TElementImgSrcKey,
 } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref, toRefs, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";

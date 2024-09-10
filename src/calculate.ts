@@ -2140,6 +2140,11 @@ export async function setupTeamOptionSupporter(
         weaponOptions = characterInput.weaponMaster.チームバフ;
     }
     // ARTIFACT_SET_MASTER
+    const vision = characterInput.characterMaster.元素;
+    const elementalReactionArr = Object.keys((ELEMENTAL_REACTION_MASTER as any)[vision]);
+    if (['水', '氷'].includes(vision) && !elementalReactionArr.includes('凍結')) {
+        elementalReactionArr.push('凍結');
+    }
     const artifactSetOptions: any[] = [];
     if (characterInput.artifactSets[0] && characterInput.artifactSets[1] && characterInput.artifactSets[0] == characterInput.artifactSets[1]) {
         if (characterInput.artifactSetMasters[0]['4セット効果']) {
@@ -2148,6 +2153,11 @@ export async function setupTeamOptionSupporter(
                     if (detailObj.チーム) {
                         if (_.isString(detailObj.条件)) {
                             detailObj.条件 = detailObj.条件.replace('拡散', '翠緑の影');
+                            if (detailObj.条件.startsWith('灰燼の都に立つ英雄の絵巻')) { // for 灰燼の都に立つ英雄の絵巻
+                                if (elementalReactionArr.filter(s => detailObj['条件'].startsWith('灰燼の都に立つ英雄の絵巻=' + s)).length === 0) {
+                                    return;
+                                }
+                            }
                         }
                         artifactSetOptions.push(detailObj);
                     }

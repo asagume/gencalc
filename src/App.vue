@@ -86,7 +86,8 @@
             </select>
           </label>
           <label class="enemy-level">Lv.
-            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1" @change="updateStatAdjustments()" />
+            <input type="number" v-model="statsInput.statAdjustments['敵レベル']" min="1"
+              @change="updateStatAdjustments()" />
           </label>
           <StatsInput :stats-input="statsInput" :category1-list="ENEMY_STATS_CATEGORY1_LIST"
             :category2-list="ENEMY_STATS_CATEGORY2_LIST" @update:stat-adjustments="updateStatAdjustments" />
@@ -217,10 +218,12 @@
     <hr />
     <template v-if="statsInput">
       <table>
-        <tr v-for="stat in Object.keys(statsInput.statsObj)" :key="stat">
-          <th style="text-align: right">{{ stat }}</th>
-          <td style="text-align: right">{{ statsInput.statsObj[stat] }}</td>
-        </tr>
+        <tbody>
+          <tr v-for="stat in Object.keys(statsInput.statsObj)" :key="stat">
+            <th style="text-align: right">{{ stat }}</th>
+            <td style="text-align: right">{{ statsInput.statsObj[stat] }}</td>
+          </tr>
+        </tbody>
       </table>
     </template>
     <hr />

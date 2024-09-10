@@ -63,22 +63,26 @@
 
     <div class="pane5">
       <table>
-        <tr>
-          <th>Name</th>
-          <th>Vision</th>
-          <th>Rarity</th>
-          <th>Elemental SKill</th>
-          <th>Energy Cost</th>
-          <th>Elemental SKill CD</th>
-        </tr>
-        <tr v-for="item in characterMasterList" :key="item.名前">
-          <th>{{ item.名前 }}</th>
-          <td>{{ item.元素 }}</td>
-          <td>{{ item.レアリティ }}</td>
-          <td>{{ item.元素スキル.名前 }}</td>
-          <td>{{ energyCost(item.名前) }}</td>
-          <td>{{ elementalSKillCd(item.名前) }}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Vision</th>
+            <th>Rarity</th>
+            <th>Elemental SKill</th>
+            <th>Energy Cost</th>
+            <th>Elemental SKill CD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in characterMasterList" :key="item.名前">
+            <th>{{ item.名前 }}</th>
+            <td>{{ item.元素 }}</td>
+            <td>{{ item.レアリティ }}</td>
+            <td>{{ item.元素スキル.名前 }}</td>
+            <td>{{ energyCost(item.名前) }}</td>
+            <td>{{ elementalSKillCd(item.名前) }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 

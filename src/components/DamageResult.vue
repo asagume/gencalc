@@ -180,32 +180,34 @@
               <th>{{ displayName("非会心") }}</th>
             </tr>
           </thead>
-          <template v-if="categoryOpenClose[category]">
-            <tr v-for="(item, index) in itemList(category)" :key="index">
-              <th class="with-tooltip" v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
-                <span> {{ displayNameV(item[0]) }} </span>
-                <span class="tooltip" v-html="displayDamageParam(item)" v-if="displayDamageParam(item)"></span>
-              </th>
-              <td :class="'damage-value ' + elementClass(item[1], item[5])">
-                {{ displayDamageValue(item, 2, category) }}
-                <span class="savepoint" v-if="displayCopiedDamageValue(index, 2, category)">
-                  <br /> {{ displayCopiedDamageValue(index, 2, category) }}
-                </span>
-              </td>
-              <td :class="'damage-value ' + elementClass(item[1], item[5])">
-                {{ displayDamageValue(item, 3, category) }}
-                <span class="savepoint" v-if="displayCopiedDamageValue(index, 3, category)">
-                  <br /> {{ displayCopiedDamageValue(index, 3, category) }}
-                </span>
-              </td>
-              <td :class="'damage-value ' + elementClass(item[1], item[5])">
-                {{ displayDamageValue(item, 4, category) }}
-                <span class="savepoint" v-if="displayCopiedDamageValue(index, 4, category)">
-                  <br /> {{ displayCopiedDamageValue(index, 4, category) }}
-                </span>
-              </td>
-            </tr>
-          </template>
+          <tbody>
+            <template v-if="categoryOpenClose[category]">
+              <tr v-for="(item, index) in itemList(category)" :key="index">
+                <th class="with-tooltip" v-if="item[item.length - 1]" :rowspan="item[item.length - 1]">
+                  <span> {{ displayNameV(item[0]) }} </span>
+                  <span class="tooltip" v-html="displayDamageParam(item)" v-if="displayDamageParam(item)"></span>
+                </th>
+                <td :class="'damage-value ' + elementClass(item[1], item[5])">
+                  {{ displayDamageValue(item, 2, category) }}
+                  <span class="savepoint" v-if="displayCopiedDamageValue(index, 2, category)">
+                    <br /> {{ displayCopiedDamageValue(index, 2, category) }}
+                  </span>
+                </td>
+                <td :class="'damage-value ' + elementClass(item[1], item[5])">
+                  {{ displayDamageValue(item, 3, category) }}
+                  <span class="savepoint" v-if="displayCopiedDamageValue(index, 3, category)">
+                    <br /> {{ displayCopiedDamageValue(index, 3, category) }}
+                  </span>
+                </td>
+                <td :class="'damage-value ' + elementClass(item[1], item[5])">
+                  {{ displayDamageValue(item, 4, category) }}
+                  <span class="savepoint" v-if="displayCopiedDamageValue(index, 4, category)">
+                    <br /> {{ displayCopiedDamageValue(index, 4, category) }}
+                  </span>
+                </td>
+              </tr>
+            </template>
+          </tbody>
         </table>
         <table v-if="resultStyleRef == '0'" class="result h-style">
           <thead>
@@ -218,50 +220,54 @@
               </template>
             </tr>
           </thead>
-          <tr>
-            <th>{{ displayName("期待値") }}</th>
-            <td v-for="item in itemList(category)" :key="item[0]"
-              :class="'damage-value ' + elementClass(item[1], item[5])">
-              {{ displayDamageValue(item, 2, category) }}
-            </td>
-          </tr>
-          <template v-if="categoryOpenClose[category]">
+          <tbody>
             <tr>
-              <th>{{ displayName("会心") }}</th>
+              <th>{{ displayName("期待値") }}</th>
               <td v-for="item in itemList(category)" :key="item[0]"
                 :class="'damage-value ' + elementClass(item[1], item[5])">
-                {{ displayDamageValue(item, 3, category) }}
+                {{ displayDamageValue(item, 2, category) }}
               </td>
             </tr>
-            <tr>
-              <th>{{ displayName("非会心") }}</th>
-              <td v-for="item in itemList(category)" :key="item[0]"
-                :class="'damage-value ' + elementClass(item[1], item[5])">
-                {{ displayDamageValue(item, 4, category) }}
-              </td>
-            </tr>
-          </template>
+            <template v-if="categoryOpenClose[category]">
+              <tr>
+                <th>{{ displayName("会心") }}</th>
+                <td v-for="item in itemList(category)" :key="item[0]"
+                  :class="'damage-value ' + elementClass(item[1], item[5])">
+                  {{ displayDamageValue(item, 3, category) }}
+                </td>
+              </tr>
+              <tr>
+                <th>{{ displayName("非会心") }}</th>
+                <td v-for="item in itemList(category)" :key="item[0]"
+                  :class="'damage-value ' + elementClass(item[1], item[5])">
+                  {{ displayDamageValue(item, 4, category) }}
+                </td>
+              </tr>
+            </template>
+          </tbody>
         </table>
       </template>
     </template>
     <hr />
     <table class="result damage-result">
-      <tr>
-        <th>{{ displayName("被ダメージ") }}</th>
-        <td class="damage-value" v-for="item in damageTakenList" :key="item.key">
-          <span :class="elementClass(item.key)">
-            {{ Math.round(item.value) }}
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <th>{{ displayName("耐久スコア") }}</th>
-        <td class="damage-value" v-for="item in resScoreList" :key="item.key">
-          <span :class="elementClass(item.key)">
-            {{ Math.round(item.value) }}
-          </span>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <th>{{ displayName("被ダメージ") }}</th>
+          <td class="damage-value" v-for="item in damageTakenList" :key="item.key">
+            <span :class="elementClass(item.key)">
+              {{ Math.round(item.value) }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>{{ displayName("耐久スコア") }}</th>
+          <td class="damage-value" v-for="item in resScoreList" :key="item.key">
+            <span :class="elementClass(item.key)">
+              {{ Math.round(item.value) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </fieldset>
   <div>

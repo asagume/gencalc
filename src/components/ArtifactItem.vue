@@ -1,104 +1,116 @@
 <template>
   <div class="artifact">
     <table v-if="control == 'editable'" class="artifact">
-      <tr>
-        <td class="left-column" style="width: 45%;">
-          <div class="control">
-            <button type="button" @click="isEditing = !isEditing">
-              <span v-if="isEditing" class="material-symbols-outlined"> edit_off </span>
-              <span v-else class="material-symbols-outlined"> edit </span>
-            </button>
-          </div>
-          <div class="with-tooltip">
-            <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)"
-              @click="artifactIconOnClick()">
-            <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
-          </div>
-          <div class="edit-mainstat" v-if="isEditing">
-            <select v-model="copiedArtifact.mainStat" @change="onChange">
-              <option v-for="option in mainStatOptions" :key="option" :value="option">
-                {{ displayName(option) }}
-              </option>
-            </select>
-            <input type="number" v-model="copiedArtifact.mainStatValue" :step="statStep(copiedArtifact.mainStat)"
-              min="0" @change="onChange">
-          </div>
-          <div v-else class="mainstat" style="margin: 1px 0">
-            {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(copiedArtifact.mainStat,
-                copiedArtifact.mainStatValue)
-            }}
-          </div>
-          <div v-if="isEditing">
-            <select class="star" v-model="copiedArtifact.rarity" @change="starOnChange">
-              <option value="5"> ★5 </option>
-              <option value="4"> ★4 </option>
-            </select>
-          </div>
-          <div v-else>
-            <img class="star" v-for="dummy in new Array(copiedArtifact.rarity)" src="images/star.png" :key="dummy">
-          </div>
-        </td>
-        <td style="width: 55%">
-          <table class="artifact-substat">
-            <tr v-for="(subStat, index) in copiedArtifact.subStats" :key="index">
-              <template v-if="isEditing">
-                <td class="right">
-                  <select v-model="subStat.name" @change="onChange">
-                    <option v-for="option in subStatOptions" :key="option" :value="option"
-                      :disabled="subStatOptionDisabled(option, subStat.name)">
-                      {{ displayName(option) }}
-                    </option>
-                  </select>
-                </td>
-                <td class="right">
-                  <input type="number" v-model="subStat.value" :step="statStep(subStat.name)" min="0"
-                    @change="onChange">
-                </td>
-              </template>
-              <td v-else>
-                {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value) }}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td class="left-column" style="width: 45%;">
+            <div class="control">
+              <button type="button" @click="isEditing = !isEditing">
+                <span v-if="isEditing" class="material-symbols-outlined"> edit_off </span>
+                <span v-else class="material-symbols-outlined"> edit </span>
+              </button>
+            </div>
+            <div class="with-tooltip">
+              <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)"
+                @click="artifactIconOnClick()">
+              <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
+            </div>
+            <div class="edit-mainstat" v-if="isEditing">
+              <select v-model="copiedArtifact.mainStat" @change="onChange">
+                <option v-for="option in mainStatOptions" :key="option" :value="option">
+                  {{ displayName(option) }}
+                </option>
+              </select>
+              <input type="number" v-model="copiedArtifact.mainStatValue" :step="statStep(copiedArtifact.mainStat)"
+                min="0" @change="onChange">
+            </div>
+            <div v-else class="mainstat" style="margin: 1px 0">
+              {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' +
+                displayStatValue(copiedArtifact.mainStat,
+                  copiedArtifact.mainStatValue)
+              }}
+            </div>
+            <div v-if="isEditing">
+              <select class="star" v-model="copiedArtifact.rarity" @change="starOnChange">
+                <option value="5"> ★5 </option>
+                <option value="4"> ★4 </option>
+              </select>
+            </div>
+            <div v-else>
+              <img class="star" v-for="dummy in new Array(copiedArtifact.rarity)" src="images/star.png" :key="dummy">
+            </div>
+          </td>
+          <td style="width: 55%">
+            <table class="artifact-substat">
+              <tbody>
+                <tr v-for="(subStat, index) in copiedArtifact.subStats" :key="index">
+                  <template v-if="isEditing">
+                    <td class="right">
+                      <select v-model="subStat.name" @change="onChange">
+                        <option v-for="option in subStatOptions" :key="option" :value="option"
+                          :disabled="subStatOptionDisabled(option, subStat.name)">
+                          {{ displayName(option) }}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="right">
+                      <input type="number" v-model="subStat.value" :step="statStep(subStat.name)" min="0"
+                        @change="onChange">
+                    </td>
+                  </template>
+                  <td v-else>
+                    {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value)
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
     </table>
     <table v-else class="artifact" @click="selectOnClick()">
-      <tr>
-        <td class="left-column" style="width: 45%;">
-          <div v-if="score" class="score"> {{ Math.round(score * 10) / 10 }}</div>
-          <div class="control">
-            <template v-if="control == 'selectable'">
-              <button type="button">
-                <span v-if="selected" class="material-symbols-outlined" style="color: yellow"> select_check_box
-                </span>
-                <span v-else class="material-symbols-outlined"> check_box_outline_blank </span>
-              </button>
-            </template>
-          </div>
-          <div class="with-tooltip">
-            <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)">
-            <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
-          </div>
-          <div class="mainstat" style="margin: 1px 0">
-            {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' + displayStatValue(copiedArtifact.mainStat,
-                copiedArtifact.mainStatValue)
-            }}
-          </div>
-          <div>
-            <img class="star" v-for="dummy in new Array(copiedArtifact.rarity)" src="images/star.png" :key="dummy">
-          </div>
-        </td>
-        <td style="width: 55%">
-          <table class="artifact-substat">
-            <tr v-for="(subStat, index) in copiedArtifact.subStats" :key="index">
-              <td>
-                {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value) }}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td class="left-column" style="width: 45%;">
+            <div v-if="score" class="score"> {{ Math.round(score * 10) / 10 }}</div>
+            <div class="control">
+              <template v-if="control == 'selectable'">
+                <button type="button">
+                  <span v-if="selected" class="material-symbols-outlined" style="color: yellow"> select_check_box
+                  </span>
+                  <span v-else class="material-symbols-outlined"> check_box_outline_blank </span>
+                </button>
+              </template>
+            </div>
+            <div class="with-tooltip">
+              <img class="artifact-icon" :src="artifactImgSrc" :alt="displayName(copiedArtifact.name)">
+              <div class="tooltip">{{ displayName(copiedArtifact.name) }}</div>
+            </div>
+            <div class="mainstat" style="margin: 1px 0">
+              {{ displayName(copiedArtifact.mainStat).replace(/%$/, '') + '+' +
+                displayStatValue(copiedArtifact.mainStat,
+                  copiedArtifact.mainStatValue)
+              }}
+            </div>
+            <div>
+              <img class="star" v-for="dummy in new Array(copiedArtifact.rarity)" src="images/star.png" :key="dummy">
+            </div>
+          </td>
+          <td style="width: 55%">
+            <table class="artifact-substat">
+              <tbody>
+                <tr v-for="(subStat, index) in copiedArtifact.subStats" :key="index">
+                  <td>
+                    {{ displayName(subStat.name).replace(/%$/, '') + '+' + displayStatValue(subStat.name, subStat.value)
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
     </table>
     <div v-show="isListShow">
       <ArtifactSetSelect :visible="true" :index="1" :artifact-set="artifact.setname"

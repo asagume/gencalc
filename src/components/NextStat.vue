@@ -18,49 +18,51 @@
                     </div>
                 </div>
                 <table class="next-stat">
-                    <template v-for="row in nextStatRows" :key="row[0]">
-                        <tr v-if="row[3] || row[4]">
-                            <th class="name">{{ displayName(row[0]) }}</th>
-                            <td class="step">
-                                <select v-model="row[2]" @change="nextStatStepOnChange(row)">
-                                    <option v-for="(data, index) in row[1]" :key="index" :value="index">
-                                        {{ Math.round(data * 10) / 10 }}
-                                    </option>
-                                </select>
+                    <tbody>
+                        <template v-for="row in nextStatRows" :key="row[0]">
+                            <tr v-if="row[3] || row[4]">
+                                <th class="name">{{ displayName(row[0]) }}</th>
+                                <td class="step">
+                                    <select v-model="row[2]" @change="nextStatStepOnChange(row)">
+                                        <option v-for="(data, index) in row[1]" :key="index" :value="index">
+                                            {{ Math.round(data * 10) / 10 }}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    {{ Math.round(row[4] * 1000) / 1000 + '%' }}
+                                </td>
+                                <td class="count">
+                                    <input type="range" min="-3" max="5" v-model="row[3]" @change="nextStatOnChange">
+                                </td>
+                                <td>
+                                    {{ displayNextStatValue(row) }}
+                                </td>
+                            </tr>
+                        </template>
+                        <tr>
+                            <th class="damage">
+                                {{ isStop ? displayName('停止中') : displayName('稼働中') }}
+                                <button type="button" @click="stopButtonOnClick">
+                                    {{ isStop ? displayName('再開') : displayName('停止') }}
+                                </button>
+                            </th>
+                            <td>
                             </td>
                             <td>
-                                {{ Math.round(row[4] * 1000) / 1000 + '%' }}
-                            </td>
-                            <td class="count">
-                                <input type="range" min="-3" max="5" v-model="row[3]" @change="nextStatOnChange">
+                                <button type="button" @click="resetButtonOnClick"> Reset </button>
                             </td>
                             <td>
-                                {{ displayNextStatValue(row) }}
+                                <label>
+                                    <input type="checkbox" v-model="containsDealMoreDamage"
+                                        @change="containsDealMoreDamageOnChange">
+                                    {{ displayName('与えるダメージ') }}
+                                </label>
+                            </td>
+                            <td>
                             </td>
                         </tr>
-                    </template>
-                    <tr>
-                        <th class="damage">
-                            {{ isStop ? displayName('停止中') : displayName('稼働中') }}
-                            <button type="button" @click="stopButtonOnClick">
-                                {{ isStop ? displayName('再開') : displayName('停止') }}
-                            </button>
-                        </th>
-                        <td>
-                        </td>
-                        <td>
-                            <button type="button" @click="resetButtonOnClick"> Reset </button>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="checkbox" v-model="containsDealMoreDamage"
-                                    @change="containsDealMoreDamageOnChange">
-                                {{ displayName('与えるダメージ') }}
-                            </label>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
+                    </tbody>
                 </table>
             </fieldset>
         </template>
@@ -69,7 +71,7 @@
         </div>
     </div>
 </template>
-  
+
 <script lang="ts">
 import _ from 'lodash';
 import {
@@ -374,7 +376,7 @@ export default defineComponent({
     },
 });
 </script>
-  
+
 <style scoped>
 div.next-step {
     margin-top: 10px;

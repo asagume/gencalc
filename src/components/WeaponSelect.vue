@@ -1,33 +1,37 @@
 <template>
   <div v-if="visible">
     <table>
-      <tr>
-        <th class="title">{{ displayName(weaponMaster.名前) }}</th>
-        <th class="stat">{{ displayName("基礎攻撃力") }}</th>
-        <td class="stat-value">{{ displayStatValue("基礎攻撃力", stats[0].value) }}</td>
-      </tr>
-      <tr>
-        <td>
-          <img v-for="i in Array.from({ length: weaponMaster.レアリティ }, (_, i) => i)" class="star" src="images/star.png"
-            alt="star" :key="i" />
-        </td>
-        <th class="stat">
-          <template v-if="stats[1]"> {{ displayName(stats[1].key) }} </template>
-        </th>
-        <td class="stat-value">
-          <template v-if="stats[1]">
-            {{ displayStatValue(stats[1].key, stats[1].value) }}
-          </template>
-        </td>
-      </tr>
-      <template v-if="weaponMaster.武器スキル">
+      <thead>
         <tr>
-          <th class="title" colspan="3">{{ weaponMaster.武器スキル.名前 }}</th>
+          <th class="title">{{ displayName(weaponMaster.名前) }}</th>
+          <th class="stat">{{ displayName("基礎攻撃力") }}</th>
+          <td class="stat-value">{{ displayStatValue("基礎攻撃力", stats[0].value) }}</td>
         </tr>
+      </thead>
+      <tbody>
         <tr>
-          <td colspan="3" class="description" v-html="weaponMaster.武器スキル.説明"></td>
+          <td>
+            <img v-for="i in Array.from({ length: weaponMaster.レアリティ }, (_, i) => i)" class="star" src="images/star.png"
+              alt="star" :key="i" />
+          </td>
+          <th class="stat">
+            <template v-if="stats[1]"> {{ displayName(stats[1].key) }} </template>
+          </th>
+          <td class="stat-value">
+            <template v-if="stats[1]">
+              {{ displayStatValue(stats[1].key, stats[1].value) }}
+            </template>
+          </td>
         </tr>
-      </template>
+        <template v-if="weaponMaster.武器スキル">
+          <tr>
+            <th class="title" colspan="3">{{ weaponMaster.武器スキル.名前 }}</th>
+          </tr>
+          <tr>
+            <td colspan="3" class="description" v-html="weaponMaster.武器スキル.説明"></td>
+          </tr>
+        </template>
+      </tbody>
     </table>
 
     <ul class="select-list">

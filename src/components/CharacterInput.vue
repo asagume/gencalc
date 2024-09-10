@@ -1,169 +1,175 @@
 <template>
   <table>
-    <tr>
-      <td :class="'name ' + colorClass(characterMaster)" colspan="2">
-        <span @click="$emit('open:character-info', 1)">
-          {{ displayName(characterMaster.名前) }}
-          <span class="material-symbols-outlined"> info </span>
-        </span>
-      </td>
-      <td colspan="2" :class="'title ' + colorClass(characterMaster)">
-        <span v-show="characterMaster.baseInfo.称号">
-          {{ displayName(characterMaster.baseInfo.称号) }}</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 20%">
-        <select v-model="characterInputRea.突破レベル" @change="ascensionOnChange">
-          <option v-for="item in ascensionRange" :value="item" :key="item">
-            A{{ item }}
-          </option>
-        </select>
-        <select v-model="characterInputRea.レベル" @change="characterOnChange">
-          <option v-for="item in levelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-        <select v-model="characterInputRea.命ノ星座" @change="characterOnChange">
-          <option v-for="item in constellationRange" :value="item" :key="item">
-            C{{ item }}
-          </option>
-        </select>
-      </td>
-      <td style="position: relative; width: 30%">
-        <img :class="'character' + bgImageClass(characterMaster)" :src="characterMaster.icon_url"
-          :alt="characterMaster.名前" @click="$emit('open:character-select')" />
-        <img class="vision" :src="visionSrc(characterMaster)" :alt="characterMaster.元素" />
-      </td>
-      <td class="icon">
-        <img :class="'weapon' + bgImageClass(weaponMaster)" :src="weaponMaster['icon_url']" :alt="weaponMaster.名前"
-          @click="$emit('open:weapon-select')" />
-        <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
-      </td>
-      <td style="width: 20%">
-        <select v-model="characterInputRea.武器突破レベル" @change="weaponAscensionOnChange">
-          <option v-for="item in weaponAscensionRange" :value="item" :key="item">
-            A{{ item }}
-          </option>
-        </select>
-        <select v-model="characterInputRea.武器レベル" @change="weaponOnChange">
-          <option v-for="item in weaponLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-        <select v-model="characterInputRea.武器精錬ランク" @change="weaponOnChange">
-          <option v-for="item in weaponRefineRange" :value="item" :key="item">
-            R{{ item }}
-          </option>
-        </select>
-      </td>
-    </tr>
+    <tbody>
+      <tr>
+        <td :class="'name ' + colorClass(characterMaster)" colspan="2">
+          <span @click="$emit('open:character-info', 1)">
+            {{ displayName(characterMaster.名前) }}
+            <span class="material-symbols-outlined"> info </span>
+          </span>
+        </td>
+        <td colspan="2" :class="'title ' + colorClass(characterMaster)">
+          <span v-show="characterMaster.baseInfo.称号">
+            {{ displayName(characterMaster.baseInfo.称号) }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 20%">
+          <select v-model="characterInputRea.突破レベル" @change="ascensionOnChange">
+            <option v-for="item in ascensionRange" :value="item" :key="item">
+              A{{ item }}
+            </option>
+          </select>
+          <select v-model="characterInputRea.レベル" @change="characterOnChange">
+            <option v-for="item in levelRange" :value="item" :key="item">
+              Lv.{{ item }}
+            </option>
+          </select>
+          <select v-model="characterInputRea.命ノ星座" @change="characterOnChange">
+            <option v-for="item in constellationRange" :value="item" :key="item">
+              C{{ item }}
+            </option>
+          </select>
+        </td>
+        <td style="position: relative; width: 30%">
+          <img :class="'character' + bgImageClass(characterMaster)" :src="characterMaster.icon_url"
+            :alt="characterMaster.名前" @click="$emit('open:character-select')" />
+          <img class="vision" :src="visionSrc(characterMaster)" :alt="characterMaster.元素" />
+        </td>
+        <td class="icon">
+          <img :class="'weapon' + bgImageClass(weaponMaster)" :src="weaponMaster['icon_url']" :alt="weaponMaster.名前"
+            @click="$emit('open:weapon-select')" />
+          <div class="tooltip">{{ displayName(weaponMaster.名前) }}</div>
+        </td>
+        <td style="width: 20%">
+          <select v-model="characterInputRea.武器突破レベル" @change="weaponAscensionOnChange">
+            <option v-for="item in weaponAscensionRange" :value="item" :key="item">
+              A{{ item }}
+            </option>
+          </select>
+          <select v-model="characterInputRea.武器レベル" @change="weaponOnChange">
+            <option v-for="item in weaponLevelRange" :value="item" :key="item">
+              Lv.{{ item }}
+            </option>
+          </select>
+          <select v-model="characterInputRea.武器精錬ランク" @change="weaponOnChange">
+            <option v-for="item in weaponRefineRange" :value="item" :key="item">
+              R{{ item }}
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
   </table>
   <table class="talent-and-artifact">
-    <tr>
-      <td class="icon">
-        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['通常攻撃']['icon_url']"
-          :alt="characterMaster['通常攻撃']['名前']" @click="$emit('open:character-info', 2)" />
-        <div class="tooltip">
-          {{ displayName(characterMaster["通常攻撃"]["名前"]) }}
-        </div>
-      </td>
-      <td class="icon">
-        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素スキル']['icon_url']"
-          :alt="characterMaster['元素スキル']['名前']" @click="$emit('open:character-info', 3)" />
-        <div class="tooltip">
-          {{ displayName(characterMaster["元素スキル"]["名前"]) }}
-        </div>
-      </td>
-      <td class="icon">
-        <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素爆発']['icon_url']"
-          :alt="characterMaster['元素爆発']['名前']" @click="$emit('open:character-info', 4)" />
-        <div class="tooltip">
-          {{ displayName(characterMaster["元素爆発"]["名前"]) }}
-        </div>
-      </td>
-      <td class="icon">
-        <label @click="openArtifactSetSelect(0)">
-          <img :class="'artifact-set' + artifactSetSelectClass(0)" :src="getArtifactIconUrl(artifactSetMasters[0].key)"
-            :alt="artifactSetMasters[0].key" />
-        </label>
-        <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
-      </td>
-      <td class="icon">
-        <label @click="openArtifactSetSelect(1)">
-          <img :class="'artifact-set' + artifactSetSelectClass(1)" :src="getArtifactIconUrl(artifactSetMasters[1].key)"
-            :alt="artifactSetMasters[1].key" />
-        </label>
-        <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
-      </td>
-      <td class="artifact-detail-button icon">
-        <label @click="$emit('open:artifact-detail-input')">
-          <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')" />
-          <img class="left-icon" src="images/artifact.png" alt="artifact" />
-          <img class="right-icon" src="images/artifact.png" alt="artifact" />
-          <div class="artifact-score">
-            score <br />
-            {{ Math.round(artifactScore * 10) / 10 }}
+    <tbody>
+      <tr>
+        <td class="icon">
+          <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['通常攻撃']['icon_url']"
+            :alt="characterMaster['通常攻撃']['名前']" @click="$emit('open:character-info', 2)" />
+          <div class="tooltip">
+            {{ displayName(characterMaster["通常攻撃"]["名前"]) }}
           </div>
-        </label>
-        <div class="tooltip">{{ displayName("聖遺物詳細") }}</div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <select v-model="characterInputRea.通常攻撃レベル" @change="characterOnChange">
-          <option v-for="item in normalAttackLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-      <td>
-        <select v-model="characterInputRea.元素スキルレベル" @change="characterOnChange">
-          <option v-for="item in elementalSkillLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-      <td>
-        <select v-model="characterInputRea.元素爆発レベル" @change="characterOnChange">
-          <option v-for="item in elementalBurstLevelRange" :value="item" :key="item">
-            Lv.{{ item }}
-          </option>
-        </select>
-      </td>
-    </tr>
+        </td>
+        <td class="icon">
+          <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素スキル']['icon_url']"
+            :alt="characterMaster['元素スキル']['名前']" @click="$emit('open:character-info', 3)" />
+          <div class="tooltip">
+            {{ displayName(characterMaster["元素スキル"]["名前"]) }}
+          </div>
+        </td>
+        <td class="icon">
+          <img :class="'talent ' + bgColorClass(characterMaster)" :src="characterMaster['元素爆発']['icon_url']"
+            :alt="characterMaster['元素爆発']['名前']" @click="$emit('open:character-info', 4)" />
+          <div class="tooltip">
+            {{ displayName(characterMaster["元素爆発"]["名前"]) }}
+          </div>
+        </td>
+        <td class="icon">
+          <label @click="openArtifactSetSelect(0)">
+            <img :class="'artifact-set' + artifactSetSelectClass(0)"
+              :src="getArtifactIconUrl(artifactSetMasters[0].key)" :alt="artifactSetMasters[0].key" />
+          </label>
+          <div class="tooltip">{{ displayName(artifactSetMasters[0].key) }}</div>
+        </td>
+        <td class="icon">
+          <label @click="openArtifactSetSelect(1)">
+            <img :class="'artifact-set' + artifactSetSelectClass(1)"
+              :src="getArtifactIconUrl(artifactSetMasters[1].key)" :alt="artifactSetMasters[1].key" />
+          </label>
+          <div class="tooltip">{{ displayName(artifactSetMasters[1].key) }}</div>
+        </td>
+        <td class="artifact-detail-button icon">
+          <label @click="$emit('open:artifact-detail-input')">
+            <img class="artifact-set" :src="IMG_SRC_DUMMY" :alt="displayName('聖遺物ステータス')" />
+            <img class="left-icon" src="images/artifact.png" alt="artifact" />
+            <img class="right-icon" src="images/artifact.png" alt="artifact" />
+            <div class="artifact-score">
+              score <br />
+              {{ Math.round(artifactScore * 10) / 10 }}
+            </div>
+          </label>
+          <div class="tooltip">{{ displayName("聖遺物詳細") }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select v-model="characterInputRea.通常攻撃レベル" @change="characterOnChange">
+            <option v-for="item in normalAttackLevelRange" :value="item" :key="item">
+              Lv.{{ item }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select v-model="characterInputRea.元素スキルレベル" @change="characterOnChange">
+            <option v-for="item in elementalSkillLevelRange" :value="item" :key="item">
+              Lv.{{ item }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select v-model="characterInputRea.元素爆発レベル" @change="characterOnChange">
+            <option v-for="item in elementalBurstLevelRange" :value="item" :key="item">
+              Lv.{{ item }}
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <table style="table-layout: fixed">
-    <tr>
-      <td>buildname</td>
-      <td colspan="3">
-        <input class="save-name" type="text" v-model="characterInputRea.buildname" maxlength="20"
-          placeholder="input build name" />
-      </td>
-      <td>
-        <button type="button" :disabled="saveDisabled" @click="saveOnClick">
-          Save
-          <!-- <span class="material-symbols-outlined"> save </span> -->
-        </button>
-      </td>
-      <td>
-        <button type="button" :disabled="characterInputRea.removeDisabled" @click="removeOnClick">
-          Remove
-          <!-- <span class="material-symbols-outlined"> delete </span> -->
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="6">
-        <select v-model="characterInputRea.recommendationSelectedIndex"
-          @change="recommendationOnChange(targetValue($event))" placeholder="select preset or saved build">
-          <option v-for="(item, index) in recommendationList" :value="index" :key="index">
-            {{ displayBuildName(item) }}
-          </option>
-        </select>
-      </td>
-    </tr>
+    <tbody>
+      <tr>
+        <td>buildname</td>
+        <td colspan="3">
+          <input class="save-name" type="text" v-model="characterInputRea.buildname" maxlength="20"
+            placeholder="input build name" />
+        </td>
+        <td>
+          <button type="button" :disabled="saveDisabled" @click="saveOnClick">
+            Save
+            <!-- <span class="material-symbols-outlined"> save </span> -->
+          </button>
+        </td>
+        <td>
+          <button type="button" :disabled="characterInputRea.removeDisabled" @click="removeOnClick">
+            Remove
+            <!-- <span class="material-symbols-outlined"> delete </span> -->
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <select v-model="characterInputRea.recommendationSelectedIndex"
+            @change="recommendationOnChange(targetValue($event))" placeholder="select preset or saved build">
+            <option v-for="(item, index) in recommendationList" :value="index" :key="index">
+              {{ displayBuildName(item) }}
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 

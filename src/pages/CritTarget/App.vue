@@ -23,88 +23,90 @@
     <div class="pane3">
       <h3>{{ displayName('設定') }}</h3>
       <table>
-        <tr>
-          <th>比率</th>
-          <td>
-            <label>{{ displayName('会心率') }}
-              <input type="number" v-model="critRateRatio" min="0" skip="0.01" @change="calculateCritTarget">
-            </label>
-          </td>
-          <td>:</td>
-          <td>
-            <label>{{ displayName('会心ダメージ') }}
-              <input type="number" v-model="critDmgRatio" min="0" skip="0.01" @change="calculateCritTarget">
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th rowspan="2">聖遺物のみの目標値</th>
-          <td colspan="3">
-            <template v-for="(item, index) in TARGET_PRESET" :key="item[0]">
-              <label>
-                <input type="radio" v-model="targetPresetSelected" :value="index" @change="targetPresetOnChange">
-                {{ 'Lv.' + index }}
+        <tbody>
+          <tr>
+            <th>比率</th>
+            <td>
+              <label>{{ displayName('会心率') }}
+                <input type="number" v-model="critRateRatio" min="0" skip="0.01" @change="calculateCritTarget">
               </label>
-            </template>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>{{ displayName('会心率') }}
-              <input type="number" v-model="critRateTarget" min="0" @change="calculateCritTarget">
-            </label>
-          </td>
-          <td></td>
-          <td>
-            <label>{{ displayName('会心ダメージ') }}
-              <input type="number" v-model="critDmgTarget" min="0" @change="calculateCritTarget">
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>上限</th>
-          <td>
-            <label>{{ displayName('会心率') }}
-              <input type="number" v-model="critRateLimit" min="0" max="100" @change="calculateCritTarget">
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>{{ displayName('氷元素共鳴') }}</th>
-          <td>
-            <label>{{ displayName('会心率') }}
-              <select v-model="cryoResonance" @change="calculateCritTarget">
-                <option value="0"></option>
-                <option value="15">+15%</option>
-              </select>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>{{ displayName('氷風を彷徨う勇士') }}</th>
-          <td>
-            <label>{{ displayName('会心率') }}
-              <select v-model="artifact4BS" @change="calculateCritTarget">
-                <option value="0"></option>
-                <option value="20">+20%</option>
-                <option value="40">+40%</option>
-              </select>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>{{ displayName('ファントムハンター') }}</th>
-          <td>
-            <label>{{ displayName('会心率') }}
-              <select v-model="artifact4PH" @change="calculateCritTarget">
-                <option value="0"></option>
-                <option value="12">+12%</option>
-                <option value="24">+24%</option>
-                <option value="36">+36%</option>
-              </select>
-            </label>
-          </td>
-        </tr>
+            </td>
+            <td>:</td>
+            <td>
+              <label>{{ displayName('会心ダメージ') }}
+                <input type="number" v-model="critDmgRatio" min="0" skip="0.01" @change="calculateCritTarget">
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th rowspan="2">聖遺物のみの目標値</th>
+            <td colspan="3">
+              <template v-for="(item, index) in TARGET_PRESET" :key="item[0]">
+                <label>
+                  <input type="radio" v-model="targetPresetSelected" :value="index" @change="targetPresetOnChange">
+                  {{ 'Lv.' + index }}
+                </label>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>{{ displayName('会心率') }}
+                <input type="number" v-model="critRateTarget" min="0" @change="calculateCritTarget">
+              </label>
+            </td>
+            <td></td>
+            <td>
+              <label>{{ displayName('会心ダメージ') }}
+                <input type="number" v-model="critDmgTarget" min="0" @change="calculateCritTarget">
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>上限</th>
+            <td>
+              <label>{{ displayName('会心率') }}
+                <input type="number" v-model="critRateLimit" min="0" max="100" @change="calculateCritTarget">
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>{{ displayName('氷元素共鳴') }}</th>
+            <td>
+              <label>{{ displayName('会心率') }}
+                <select v-model="cryoResonance" @change="calculateCritTarget">
+                  <option value="0"></option>
+                  <option value="15">+15%</option>
+                </select>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>{{ displayName('氷風を彷徨う勇士') }}</th>
+            <td>
+              <label>{{ displayName('会心率') }}
+                <select v-model="artifact4BS" @change="calculateCritTarget">
+                  <option value="0"></option>
+                  <option value="20">+20%</option>
+                  <option value="40">+40%</option>
+                </select>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>{{ displayName('ファントムハンター') }}</th>
+            <td>
+              <label>{{ displayName('会心率') }}
+                <select v-model="artifact4PH" @change="calculateCritTarget">
+                  <option value="0"></option>
+                  <option value="12">+12%</option>
+                  <option value="24">+24%</option>
+                  <option value="36">+36%</option>
+                </select>
+              </label>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
