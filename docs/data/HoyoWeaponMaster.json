@@ -300,6 +300,16 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1972"
   },
   {
+    "id": 12513,
+    "name": "山の王の長牙",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6545"
+  },
+  {
     "id": 12512,
     "name": "裁断",
     "icon": null,

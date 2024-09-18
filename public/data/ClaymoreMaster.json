@@ -1,4 +1,8 @@
 {
+  "山の王の長牙": {
+    "レアリティ": 5,
+    "import": "data/weapons/claymore/5_FangoftheMountainKing.json"
+  },
   "裁断": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_Verdict.json"
