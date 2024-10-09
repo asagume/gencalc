@@ -1,4 +1,8 @@
 {
+  "岩峰を巡る歌": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_PeakPatrolSong.json"
+  },
   "赦罪": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_Absolution.json"
@@ -46,6 +50,10 @@
   "風鷹剣": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
+  },
+  "ストロング・ボーン": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_SturdyBone.json"
   },
   "エズピツァルの笛": {
     "レアリティ": 4,

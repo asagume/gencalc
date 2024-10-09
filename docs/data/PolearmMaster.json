@@ -35,6 +35,10 @@
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
   },
+  "鎮山の釘": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_Mountain-BracingBolt.json"
+  },
   "虹の行方": {
     "レアリティ": 4,
     "import": "data/weapons/polearm/4_FootprintoftheRainbow.json"
