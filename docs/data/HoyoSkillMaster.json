@@ -1,5 +1,59 @@
 [
   {
+    "avatar_id": 10000103,
+    "skill_list": [
+      {
+        "id": 11031,
+        "group_id": 10331,
+        "name": "通常攻撃・エエカトル・ロアー",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 11032,
+        "group_id": 10332,
+        "name": "ヨワル・スクラッチ",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 11035,
+        "group_id": 10339,
+        "name": "オセロット・キューポイント！",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10321,
+        "group_id": 10321,
+        "name": "ネトティリズトリの残響",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10322,
+        "group_id": 10322,
+        "name": "ポータブル・アーマー",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10323,
+        "group_id": 10323,
+        "name": "夜域の賜物・鍛火の祝福",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 10325,
+        "group_id": 10325,
+        "name": "山を駆け巡る鐵火",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
     "avatar_id": 10000102,
     "skill_list": [
       {
@@ -2099,86 +2153,6 @@
     "avatar_id": 10000007,
     "skill_list": [
       {
-        "id": 100552,
-        "group_id": 631,
-        "name": "通常攻撃·異邦の激流",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10087,
-        "group_id": 632,
-        "name": "水紋の剣",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10088,
-        "group_id": 639,
-        "name": "昇流統水",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 621,
-        "group_id": 621,
-        "name": "無染の清水",
-        "icon": null,
-        "max_level": 1
-      },
-      {
-        "id": 622,
-        "group_id": 622,
-        "name": "澄明の浄水",
-        "icon": null,
-        "max_level": 1
-      }
-    ]
-  },
-  {
-    "avatar_id": 10000007,
-    "skill_list": [
-      {
-        "id": 100557,
-        "group_id": 1131,
-        "name": "通常攻撃·異邦の草薙",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10117,
-        "group_id": 1132,
-        "name": "草縁剣",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 10118,
-        "group_id": 1139,
-        "name": "臥草若化",
-        "icon": null,
-        "max_level": 10
-      },
-      {
-        "id": 1121,
-        "group_id": 1121,
-        "name": "蔓生の埜草",
-        "icon": null,
-        "max_level": 1
-      },
-      {
-        "id": 1122,
-        "group_id": 1122,
-        "name": "生い茂る草叢",
-        "icon": null,
-        "max_level": 1
-      }
-    ]
-  },
-  {
-    "avatar_id": 10000007,
-    "skill_list": [
-      {
         "id": 100556,
         "group_id": 1031,
         "name": "通常攻撃·異邦の驚雷",
@@ -2296,40 +2270,80 @@
     ]
   },
   {
-    "avatar_id": 10000005,
+    "avatar_id": 10000007,
     "skill_list": [
       {
-        "id": 100543,
-        "group_id": 730,
-        "name": "通常攻撃·異邦の鉄風",
+        "id": 100557,
+        "group_id": 1131,
+        "name": "通常攻撃·異邦の草薙",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10067,
-        "group_id": 732,
-        "name": "旋風の剣",
+        "id": 10117,
+        "group_id": 1132,
+        "name": "草縁剣",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 10068,
-        "group_id": 739,
-        "name": "激風の息",
+        "id": 10118,
+        "group_id": 1139,
+        "name": "臥草若化",
         "icon": null,
         "max_level": 10
       },
       {
-        "id": 721,
-        "group_id": 721,
-        "name": "空を裂く風",
+        "id": 1121,
+        "group_id": 1121,
+        "name": "蔓生の埜草",
         "icon": null,
         "max_level": 1
       },
       {
-        "id": 722,
-        "group_id": 722,
-        "name": "蘇生の風",
+        "id": 1122,
+        "group_id": 1122,
+        "name": "生い茂る草叢",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000007,
+    "skill_list": [
+      {
+        "id": 100552,
+        "group_id": 631,
+        "name": "通常攻撃·異邦の激流",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10087,
+        "group_id": 632,
+        "name": "水紋の剣",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10088,
+        "group_id": 639,
+        "name": "昇流統水",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 621,
+        "group_id": 621,
+        "name": "無染の清水",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 622,
+        "group_id": 622,
+        "name": "澄明の浄水",
         "icon": null,
         "max_level": 1
       }
@@ -2490,6 +2504,46 @@
         "id": 622,
         "group_id": 622,
         "name": "澄明の浄水",
+        "icon": null,
+        "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000005,
+    "skill_list": [
+      {
+        "id": 100543,
+        "group_id": 730,
+        "name": "通常攻撃·異邦の鉄風",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10067,
+        "group_id": 732,
+        "name": "旋風の剣",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 10068,
+        "group_id": 739,
+        "name": "激風の息",
+        "icon": null,
+        "max_level": 10
+      },
+      {
+        "id": 721,
+        "group_id": 721,
+        "name": "空を裂く風",
+        "icon": null,
+        "max_level": 1
+      },
+      {
+        "id": 722,
+        "group_id": 722,
+        "name": "蘇生の風",
         "icon": null,
         "max_level": 1
       }

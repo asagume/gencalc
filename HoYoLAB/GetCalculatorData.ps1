@@ -1,7 +1,7 @@
 # 育成計算機のlistリクエストヘッダーのCookieの値を入力してください
 $Cookie = ""
 
-$OutputDir = "..\public\data"
+$OutputDir = ".\public\data"
 $AvatarListOutFile = "HoyoAvatarMaster.json"
 $SkillListOutFile = "HoyoSkillMaster.json"
 $WeaponListOutFile = "HoyoWeaponMaster.json"
@@ -131,6 +131,12 @@ while ($true) {
         if ($null -ne $entry.profile_pictures) {
             $entry.profile_pictures = $null
         }
+        foreach ($entry2 in $entry.talents) {
+            $entry2.icon = $null
+        }
+        foreach ($entry2 in $entry.skill_list) {
+            $entry2.icon = $null
+        }
 
         ###
         # キャラクター 詳細
@@ -198,6 +204,7 @@ while ($true) {
 
     foreach ($entry in $ContentObj.data.list) {
         $entry.icon = $null
+        $entry.wiki_url = $null;
     }
 
     $WeaponList = $WeaponList + $ContentObj.data.list
