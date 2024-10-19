@@ -1552,7 +1552,7 @@ function calculateDamageFromDetail(
                         }
                     } else {
                         // 大分類 or 大分類.小分類
-                        const myダメージ種類 = detailObj.種類;
+                        const myダメージ種類 = detailObj.ダメージバフ ? detailObj.ダメージバフ.replace(/バフ$/, '') : detailObj.種類;
                         const my対象カテゴリArr = valueObj.対象.split('.');
                         if (my対象カテゴリArr[0] != myダメージ種類) {
                             return;
@@ -1596,7 +1596,8 @@ function calculateDamageFromDetail(
                 const tempArr = stat.split('.');
                 if (tempArr.length == 1) return;
                 let isValid = false;
-                if (tempArr[1] == detailObj.種類) {
+                const myダメージ種類 = detailObj.ダメージバフ ? detailObj.ダメージバフ.replace(/バフ$/, '') : detailObj.種類;
+                if (tempArr[1] == myダメージ種類) {
                     if (tempArr.length == 2) {
                         isValid = true;
                     } else if (tempArr[2] == detailObj.名前) {
