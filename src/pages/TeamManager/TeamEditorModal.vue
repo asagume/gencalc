@@ -113,7 +113,7 @@ export default defineComponent({
       tags: [],
     } as TTeam);
     const selectedMemberId = ref(-1);
-    const MEMBER_TAG_LIST = ['Main-DPS', 'Sub-DPS', 'Support', 'Carry', 'Driver', 'Enabler', 'Healer', 'Shielder', 'Battery', 'Free', 'Flex'];
+    const MEMBER_TAG_LIST = ['Main-DPS', 'Sub-DPS', 'Support', 'Carry', 'Driver', 'Enabler', 'Healer', 'Shielder', 'Battery', 'Free', 'Flex', 'On Field', 'Off Field', 'Attacker', 'Supporter', 'Life Keeper'];
     const selectedMemberBuildname = ref('' as string | undefined);
     const replacementIndex = ref(-1);
     const txtTeamTags = ref('');

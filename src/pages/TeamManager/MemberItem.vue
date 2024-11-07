@@ -106,8 +106,8 @@ export default defineComponent({
       const name = replIndex < props.member.replacements.length ? props.member.replacements[replIndex] : undefined;
       return name ? (CHARACTER_MASTER[name as TCharacterKey] as TCharacterEntry).icon_url : IMG_SRC_DUMMY;
     };
-    const imgArtifactSetSrc = (index: number) => artifactSetMasters.value[index]?.image ?? IMG_SRC_DUMMY;
-    const artifactSetName = (index: number) => artifactSetMasters.value[index]?.key ?? '';
+    const imgArtifactSetSrc = (index: number) => artifactSetMasters.value[index]?.image ? artifactSetMasters.value[index].image.replace(/\.png$/, '/flower_of_life.png') : IMG_SRC_DUMMY;
+    const artifactSetName = (index: number) => artifactSetMasters.value[index]?.key ??  '';
     const tagColorClass = (index: number) =>
       Object.keys(ELEMENT_COLOR_CLASS).map(key => ELEMENT_COLOR_CLASS[(key as TElementColorClassKey)]).includes(props.member.tags[index].toLowerCase()) ? ' ' + props.member.tags[index].toLowerCase() : '';
 
