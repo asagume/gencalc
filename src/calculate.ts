@@ -52,6 +52,7 @@ import {
     ARTIFACT_MAIN_MASTER,
     ARTIFACT_SUB_MASTER,
     DAMAGE_CATEGORY_ARRAY,
+    ELEMENTAL_REACTION_BASE_DAMAGE_MASTER,
     ELEMENTAL_REACTION_MASTER,
     ELEMENTAL_RESONANCE_MASTER,
     getCharacterMasterDetail,
@@ -1290,7 +1291,9 @@ function calculate固定値系元素反応ダメージ(
         const elementalMastery = statsObj['元素熟知'];
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
-        let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
+        const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
+        const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
+        let result = baseDmg * multiplier;
         result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
@@ -1308,7 +1311,9 @@ function calculate結晶シールド吸収量(element: string, statsObj: TStats)
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
         const dmgBuff = statsObj['結晶反応ボーナス'] ?? 0;
-        let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element]['結晶']['数値']);
+        const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element]['結晶']['数値'];
+        const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
+        let result = baseDmg * multiplier;
         result *= 1 + (40 * elementalMastery / (9 * (elementalMastery + 1400))) + dmgBuff / 100;
         return result;
     } catch (error) {
@@ -1326,7 +1331,9 @@ function calculate加算系元素反応ダメージ(reaction: any, element: stri
         const elementalMastery = statsObj['元素熟知'];
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgElement = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
-        let result = getValueByLevel(level, (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値']);
+        const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
+        const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
+        let result = baseDmg * multiplier;
         result *= 1 + (5 * elementalMastery / (elementalMastery + 1200)) + dmgBuff / 100;
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
@@ -1552,7 +1559,7 @@ function calculateDamageFromDetail(
                         }
                     } else {
                         // 大分類 or 大分類.小分類
-                        const myダメージ種類 = detailObj.ダメージバフ ? detailObj.ダメージバフ.replace(/バフ$/, '') : detailObj.種類;
+                        const myダメージ種類 = detailObj.種類;
                         const my対象カテゴリArr = valueObj.対象.split('.');
                         if (my対象カテゴリArr[0] != myダメージ種類) {
                             return;
@@ -1596,8 +1603,7 @@ function calculateDamageFromDetail(
                 const tempArr = stat.split('.');
                 if (tempArr.length == 1) return;
                 let isValid = false;
-                const myダメージ種類 = detailObj.ダメージバフ ? detailObj.ダメージバフ.replace(/バフ$/, '') : detailObj.種類;
-                if (tempArr[1] == myダメージ種類) {
+                if (tempArr[1] == detailObj.種類) {
                     if (tempArr.length == 2) {
                         isValid = true;
                     } else if (tempArr[2] == detailObj.名前) {

@@ -22,6 +22,7 @@ import OPTION1_MASTER from '../public/data/OptionMaster1.json'// assert {type: '
 import OPTION2_MASTER from '../public/data/OptionMaster2.json'// assert {type: 'json'}
 
 import ELEMENTAL_REACTION_MASTER from '../public/data/ElementalReactionMaster.json'// assert {type: 'json'}
+import ELEMENTAL_REACTION_BASE_DAMAGE_MASTER from '../public/data/ElementalReactionBaseDamageMaster.json'// assert {type: 'json'}
 
 // import HOYO_DICTIONARY2 from '../public/data/HoYoDictionary2.json'// assert {type: 'json'}
 // import HOYO_DICTIONARY4 from '../public/data/HoYoDictionary4.json'// assert {type: 'json'}
@@ -39,7 +40,8 @@ export {
     TEAM_OPTION_MASTER,
     OPTION1_MASTER,
     OPTION2_MASTER,
-    ELEMENTAL_REACTION_MASTER
+    ELEMENTAL_REACTION_MASTER,
+    ELEMENTAL_REACTION_BASE_DAMAGE_MASTER,
 };
 
 // function removeStrFromUrl(obj: any, str: string) {
