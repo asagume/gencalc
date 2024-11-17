@@ -51,6 +51,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "厄水の災い": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_CalamityofEshu.json"
+  },
   "ストロング・ボーン": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_SturdyBone.json"

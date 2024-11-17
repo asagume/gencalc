@@ -1,4 +1,8 @@
 {
+  "星鷲の紅き羽": {
+    "レアリティ": 5,
+    "import": "data/weapons/bow/5_AstralVulture'sCrimsonPlumage.json"
+  },
   "白雨心弦": {
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SilvershowerHeartstrings.json"
@@ -34,6 +38,10 @@
   "天空の翼": {
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
+  },
+  "花飾りの羽": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_Flower-WreathedFeathers.json"
   },
   "チェーンブレイカー": {
     "レアリティ": 4,
