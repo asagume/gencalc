@@ -47,6 +47,10 @@
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
   },
+  "波乗りの旋回": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_WaveridingWhirl.json"
+  },
   "蒼紋の角杯": {
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_Ash-GravenDrinkingHorn.json"

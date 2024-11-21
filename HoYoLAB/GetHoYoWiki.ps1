@@ -47,6 +47,8 @@ $pageIds = @()
 # $pageIds += 6318   # カチーナ
 # $pageIds += 6319   # ムアラニ
 # $pageIds += 6924   # シロネン
+$pageIds += 7079   # オルロン
+$pageIds += 7080   # チャスカ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水

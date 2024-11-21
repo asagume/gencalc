@@ -883,6 +883,17 @@ export function calculateDamageResult(
                 dmgElementSet.add(dmgElement); // 元素付与で変化した通常攻撃/重撃/落下攻撃ダメージによる元素反応
             }
         }
+        if (characterInput.character == 'チャスカ') {
+            for (const dmgElement of ['炎', '水', '雷', '氷']) {
+                const key = '[チーム]' + dmgElement + '元素キャラクター';
+                if (conditionInput.selectList.filter(s => s.name == key).length) {
+                    const selectedIndex = conditionInput.conditionValues[key] as number;
+                    if (selectedIndex) {
+                        dmgElementSet.add(dmgElement);
+                    }
+                }
+            }
+        }
         for (const dmgElement of dmgElementSet) {
             reactionMasterArr.push([dmgElement, (ELEMENTAL_REACTION_MASTER as any)[dmgElement]]);
         }
@@ -1205,9 +1216,12 @@ function checkConditionMatchesSub(
             return conditionKey in statsObj && statsObj[conditionKey] >= Number(conditionVal) ? 1 : 0;
         }
         if (conditionVal.startsWith('index_')) {    // selectListのindex
-            conditionVal = conditionVal.replace(/$index_/, '');
+            console.log(conditionVal);
+            conditionVal = conditionVal.replace(/^index_/, '');
+            console.log(conditionVal, conditionKey, conditionValues);
             if (isNumeric(conditionVal) && conditionKey in conditionValues) {
                 const actualVal = conditionValues[conditionKey];
+                console.log(actualVal);
                 if (_.isNumber(actualVal) && actualVal >= Number(conditionVal)) {
                     return 1;   // マッチ
                 }
@@ -1218,7 +1232,7 @@ function checkConditionMatchesSub(
             return conditionKey in statsObj && statsObj[conditionKey] <= Number(conditionVal) ? 1 : 0;
         }
         if (conditionVal.startsWith('index_')) {    // selectListのindex
-            conditionVal = conditionVal.replace(/$index_/, '');
+            conditionVal = conditionVal.replace(/^index_/, '');
             if (isNumeric(conditionVal) && conditionKey in conditionValues) {
                 const actualVal = conditionValues[conditionKey];
                 if (_.isNumber(actualVal) && actualVal <= Number(conditionVal)) {
@@ -1231,7 +1245,7 @@ function checkConditionMatchesSub(
             return conditionKey in statsObj && statsObj[conditionKey] > Number(conditionVal) ? 1 : 0;
         }
         if (conditionVal.startsWith('index_')) {    // selectListのindex
-            conditionVal = conditionVal.replace(/$index_/, '');
+            conditionVal = conditionVal.replace(/^index_/, '');
             if (isNumeric(conditionVal) && conditionKey in conditionValues) {
                 const actualVal = conditionValues[conditionKey];
                 if (_.isNumber(actualVal) && actualVal > Number(conditionVal)) {
@@ -1244,7 +1258,7 @@ function checkConditionMatchesSub(
             return conditionKey in statsObj && statsObj[conditionKey] < Number(conditionVal) ? 1 : 0;
         }
         if (conditionVal.startsWith('index_')) {    // selectListのindex
-            conditionVal = conditionVal.replace(/$index_/, '');
+            conditionVal = conditionVal.replace(/^index_/, '');
             if (isNumeric(conditionVal) && conditionKey in conditionValues) {
                 const actualVal = conditionValues[conditionKey];
                 if (_.isNumber(actualVal) && actualVal < Number(conditionVal)) {
