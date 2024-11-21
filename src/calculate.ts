@@ -1216,12 +1216,9 @@ function checkConditionMatchesSub(
             return conditionKey in statsObj && statsObj[conditionKey] >= Number(conditionVal) ? 1 : 0;
         }
         if (conditionVal.startsWith('index_')) {    // selectListのindex
-            console.log(conditionVal);
             conditionVal = conditionVal.replace(/^index_/, '');
-            console.log(conditionVal, conditionKey, conditionValues);
             if (isNumeric(conditionVal) && conditionKey in conditionValues) {
                 const actualVal = conditionValues[conditionKey];
-                console.log(actualVal);
                 if (_.isNumber(actualVal) && actualVal >= Number(conditionVal)) {
                     return 1;   // マッチ
                 }
