@@ -1,5 +1,15 @@
 [
   {
+    "id": 15514,
+    "name": "星鷲の紅き羽",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": null
+  },
+  {
     "id": 15513,
     "name": "白雨心弦",
     "icon": null,
@@ -520,6 +530,16 @@
     "wiki_url": null
   },
   {
+    "id": 15430,
+    "name": "花飾りの羽",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": null
+  },
+  {
     "id": 15427,
     "name": "レンジゲージ",
     "icon": null,
@@ -752,6 +772,16 @@
   {
     "id": 14431,
     "name": "ヤシュチェの環",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": null
+  },
+  {
+    "id": 14430,
+    "name": "波乗りの旋回",
     "icon": null,
     "weapon_cat_id": 10,
     "weapon_level": 4,

@@ -334,6 +334,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "オロルン": {
+    "レアリティ": 4,
+    "元素": "雷",
+    "武器": "弓",
+    "誕生日": "10/14",
+    "import": "data/characters/electro_4_bow_Ororon.json"
+  },
   "カチーナ": {
     "レアリティ": 4,
     "元素": "岩",
