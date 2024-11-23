@@ -2235,6 +2235,10 @@ export async function updateConditionsByTeam(
     if (totalEnergyCost) {
         conditionInput.conditionValues['[チーム]元素エネルギー上限の合計'] = totalEnergyCost;
     }
+    ALL_ELEMENTS.forEach(key => {
+        conditionInput.conditionValues['[チーム]' + key + '元素キャラクター'] = 0;
+        conditionInput.conditionValues['[チーム]' + key + '元素以外キャラクター'] = 0;
+    })
     visionCountMap.forEach((value, key) => {
         conditionInput.conditionValues['[チーム]' + key + '元素キャラクター'] = value;
         conditionInput.conditionValues['[チーム]' + key + '元素以外キャラクター'] = teamMembers.length - value;
