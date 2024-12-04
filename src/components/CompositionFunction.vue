@@ -41,6 +41,7 @@ export default function CompositionFunction() {
 
     const displayName = function (key: any): string {
         if (!key) return key;
+        key = String(key).replace(/^非表示_/, '');
         if (i18n.global.locale.value === 'ja-jp') { // 日本語はtranslateしません
             let result = String(key);
             if (['ダメージバフ', 'ダメージアップ', '反応ボーナス', '敵'].includes(result)) {
@@ -89,7 +90,7 @@ export default function CompositionFunction() {
             result = displayName(result);
             result = result.replace('ダメージ会心', 'ダメージの会心')
         } else if (i18n.global.locale.value === 'ja-jp') {
-            result = tempArr[tempArr.length - 1] + 'の' + displayName(tempArr[0]);
+            result = displayName(tempArr[tempArr.length - 1]) + 'の' + displayName(tempArr[0]);
         } else {
             result = displayName(tempArr[tempArr.length - 1]) + ' ' + displayName(tempArr[0]);
         }
