@@ -47,8 +47,10 @@ $pageIds = @()
 # $pageIds += 6318   # カチーナ
 # $pageIds += 6319   # ムアラニ
 # $pageIds += 6924   # シロネン
-$pageIds += 7079   # オルロン
+# $pageIds += 7079   # オルロン
 # $pageIds += 7080   # チャスカ
+$pageIds += 7299   # マーヴィカ
+$pageIds += 7300   # シトラリ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -121,6 +123,8 @@ $pageIds += 7079   # オルロン
 # $pageIds += 7114  # 波乗りの旋回
 # $pageIds += 7115  # 花飾りの羽
 # $pageIds += 7116  # 星鷲の紅き羽
+$pageIds += 7365  # 千烈の日輪
+$pageIds += 7366  # 祭星者の眺め
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
