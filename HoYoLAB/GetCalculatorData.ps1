@@ -1,7 +1,7 @@
 # 育成計算機のlistリクエストヘッダーのCookieの値を入力してください
 $Cookie = ""
 
-$OutputDir = "..\public\data"
+$OutputDir = ".\public\data"
 $AvatarListOutFile = "HoyoAvatarMaster.json"
 $SkillListOutFile = "HoyoSkillMaster.json"
 $WeaponListOutFile = "HoyoWeaponMaster.json"
@@ -58,8 +58,7 @@ $Body = @{
     "element_attr_ids" = @()
     "weapon_cat_ids"   = @()
     "page"             = 0
-    "size"             = 20
-    "is_all"           = $true
+    "size"             = 200
     "lang"             = "ja-jp"
 }
 
@@ -85,8 +84,9 @@ while ($true) {
         break;
     }
 
-    # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+    # $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
 
     if ($ContentObj.data.list.Length -eq 0) {
         break;
@@ -142,7 +142,9 @@ while ($true) {
         # キャラクター 詳細
         $GetUrl = $SkillListUri + "?avatar_id=" + $entry.id + "&element_attr_id=" + $entry.element_attr_id + "&lang=ja-jp"
         $Response2 = Invoke-WebRequest -URI $GetUrl -Headers $Headers -WebSession $MySession -Verbose
-        $ContentObj2 = ConvertFrom-Json -InputObject $Response2.Content
+        # $ContentObj2 = ConvertFrom-Json -InputObject $Response2.Content
+        $ResponseContent2 = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response2.Content) )
+        $ContentObj2 = ConvertFrom-Json -InputObject $ResponseContent2
         if ($ContentObj2.data.list.Length -eq 0) {
             continue;
         }
@@ -171,7 +173,7 @@ $Body = @{
     "weapon_cat_ids" = @()
     "weapon_levels"  = @()
     "page"           = 0
-    "size"           = 20
+    "size"           = 200
     "lang"           = "ja-jp"
 }
 
@@ -195,8 +197,9 @@ while ($true) {
         break;
     }
 
-    # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+    # $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
 
     if ($ContentObj.data.list.Length -eq 0) {
         break;
@@ -221,7 +224,7 @@ $Body = @{
     "reliquary_levels" = @()
     "reliquary_cat_id" = 1
     "page"             = 0
-    "size"             = 20
+    "size"             = 200
     "lang"             = "ja-jp"
 }
 
@@ -248,8 +251,9 @@ for ($reliquary_cat_id = 1; $reliquary_cat_id -le 5; $reliquary_cat_id++) {
             break;
         }
 
-        # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-        $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+        # $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+        $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+        $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
 
         if ($ContentObj.data.list.Length -eq 0) {
             break;

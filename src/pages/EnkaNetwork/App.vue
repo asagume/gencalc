@@ -473,7 +473,7 @@ export default defineComponent({
             for (const character of Object.keys(CHARACTER_MASTER).filter(s => s.startsWith('旅人'))) {
               const characterDetail = await getCharacterMasterDetail(character as TCharacterKey);
               const talentName = characterDetail.通常攻撃.名前;
-              if (skillEntry.skill_list.filter(s => s.name == talentName).length) {
+              if (skillEntry.skill_list.filter(s => s.name.replace("·", "・") == talentName.replace("·", "・")).length) {
                 name = character as TCharacterKey;
                 break;
               }
@@ -559,31 +559,31 @@ export default defineComponent({
             }
           }
           if (skillInfo) {
-            if (characterMasterDetail.通常攻撃.名前 == skillInfo.name) {
+            if (characterMasterDetail.通常攻撃.名前.replace("·", "・") == skillInfo.name.replace("·", "・")) {
               result['通常攻撃レベル'] = skillLevel[1];
-            } else if (characterMasterDetail.元素スキル.名前 == skillInfo.name) {
+            } else if (characterMasterDetail.元素スキル.名前.replace("·", "・") == skillInfo.name.replace("·", "・")) {
               result['元素スキルレベル'] = skillLevel[1];
-            } else if (characterMasterDetail.元素爆発.名前 == skillInfo.name) {
+            } else if (characterMasterDetail.元素爆発.名前.replace("·", "・") == skillInfo.name.replace("·", "・")) {
               result['元素爆発レベル'] = skillLevel[1];
             }
           }
         });
         if (result['命ノ星座'] >= 3) {
-          const desc = characterMasterDetail.命ノ星座['3']?.説明;
+          const desc = characterMasterDetail.命ノ星座['3']?.説明.replace("·", "・");
           if (desc) {
-            if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
+            if (desc.indexOf(characterMasterDetail.元素スキル.名前.replace("·", "・")) != -1) {
               result['元素スキルレベル'] += 3;
-            } else if (desc.indexOf(characterMasterDetail.元素爆発.名前) != -1) {
+            } else if (desc.indexOf(characterMasterDetail.元素爆発.名前.replace("·", "・")) != -1) {
               result['元素爆発レベル'] += 3;
             }
           }
         }
         if (result['命ノ星座'] >= 5) {
-          const desc = characterMasterDetail.命ノ星座['5']?.説明;
+          const desc = characterMasterDetail.命ノ星座['5']?.説明.replace("·", "・");
           if (desc) {
-            if (desc.indexOf(characterMasterDetail.元素スキル.名前) != -1) {
+            if (desc.indexOf(characterMasterDetail.元素スキル.名前.replace("·", "・")) != -1) {
               result['元素スキルレベル'] += 3;
-            } else if (desc.indexOf(characterMasterDetail.元素爆発.名前) != -1) {
+            } else if (desc.indexOf(characterMasterDetail.元素爆発.名前.replace("·", "・")) != -1) {
               result['元素爆発レベル'] += 3;
             }
           }
