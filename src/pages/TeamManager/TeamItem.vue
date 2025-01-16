@@ -127,6 +127,12 @@ export default defineComponent({
           value: await calculateMemberResult(member, team),
         });
       }
+      Object.keys(memberStats).forEach(key => {
+        delete memberStats[key];
+      })
+      Object.keys(memberResults).forEach(key => {
+        delete memberResults[key];
+      })
       await Promise.all(list).then(results => {
         results.forEach(entry => {
           memberStats[entry.key] = entry.value?.statsInput?.statsObj;

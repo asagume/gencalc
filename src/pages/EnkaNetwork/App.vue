@@ -320,6 +320,19 @@ export default defineComponent({
     let HoyoArtifactMaster: THoyoArtifactMaster;
     let HoyoSkillMaster: THoyoSkillMaster;
 
+    const uid = ref('');
+    const timer = ref(0);
+    let timerObj: number;
+    const uStr = ref('');
+    const u = reactive({
+      uid: '',
+      playerInfo: {
+        nickname: '',
+      },
+    } as TAnyObject);
+    const characterInfoList = reactive([] as any[]);
+    const artifactsToggle = ref(false);
+
     async function onLoad() {
       const responses = await Promise.all(
         [
@@ -333,21 +346,10 @@ export default defineComponent({
       HoyoWeaponMaster = responses[1];
       HoyoArtifactMaster = responses[2];
       HoyoSkillMaster = responses[3];
+
+      loadFromLocalStorage();
     }
     onLoad();
-
-    const uid = ref('');
-    const timer = ref(0);
-    let timerObj: number;
-    const uStr = ref('');
-    const u = reactive({
-      uid: '',
-      playerInfo: {
-        nickname: '',
-      },
-    } as TAnyObject);
-    const characterInfoList = reactive([] as any[]);
-    const artifactsToggle = ref(false);
 
     function getHoyoArtifactValue(id: number) {
       id = Math.trunc(id / 10);
@@ -642,6 +644,7 @@ export default defineComponent({
         console.log(json);
         overwriteObject(u, json);
         loadU();
+        saveToLocalStorage();
       }).catch(error => {
         alert('Enka.Netrowkへのリクエストで異常が発生しました!');
         console.error(error);
@@ -784,6 +787,14 @@ export default defineComponent({
         }
       }
       return result;
+    };
+
+    const saveToLocalStorage = () => {
+      localStorage['uid'] = uid.value;
+    };
+
+    const loadFromLocalStorage = () => {
+      uid.value = localStorage['uid'];
     };
 
     return {

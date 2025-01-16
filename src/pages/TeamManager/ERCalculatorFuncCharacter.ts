@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { TActionItem, TTeamMemberResult, NUMBER_OF_MEMBERS, getCharacterMaster, getCharacterDetail, TMember } from "./team";
-import { countQ, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, countE, countC, RECHARGE_ENERGY_PASSIVE, countN, getCharacterInputValue, getStatsInputValue, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_PASSIVE, getMemberResult } from "./ERCalculatorCommon";
+import { RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_PASSIVE, countC, countE, countN, countP, countQ, getCharacterInputValue, getMemberResult, getStatsInputValue, } from "./ERCalculatorCommon";
+import { CHARACTER_MASTER } from "@/master";
 
 export type TCharacterEnergyRet = [string, string, number, number, number, number[], string[]];
 export type TCharacterParticleRet = [string, string, string, number, number, number[], string[]];
@@ -693,6 +694,125 @@ export const CHARACTER_ENERGY_FUNC: {
                 'アルレッキーノが血償の勅令の回収に成功した時、昇りゆく凶月のクールタイムが2秒減少し、自身の元素エネルギーを15ポイント回復する。この効果は10秒毎に1回のみ発動可能。',
             ];
             const myEnergy = 15 * countE(character, rotationList);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
+    'ムアラニ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                'プクフグフロートを獲得するとき、ムアラニは元素エネルギーを8回復する。',
+            ];
+            const myEnergy = 8 * 2 * countE(character, rotationList);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
+    'カチーナ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 1;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                'チーム内のキャラクターが結晶の欠片を獲得した時、カチーナは元素エネルギーを3回復する。この方法による元素エネルギーの回復は、5秒毎に1回のみ可能。',
+            ];
+            const myEnergy = 3 * Math.trunc(rotationLength / 5);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
+    'キィニチ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                '夜魂の加護状態にあるとき、キィニチは円軌道射撃または廻狩貫鱗砲を発動した後、自身の元素エネルギーを5ポイント回復する。この方法による元素エネルギーの回復は、2.8秒毎に1回のみ可能。',
+            ];
+            const myEnergy = 5 * countE(character, rotationList);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
+    'シロネン': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 2;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                'シロネンの「サンプル音源」がアクティブ状態の時、「サンプル音源」の元素タイプに応じて、その元素タイプと同じであり、かつ付近にいるチーム内キャラクターに対応する効果を与える。・<span style="color: rgb(255, 172, 255)">雷元素</span>：元素エネルギーが25ポイント回復し、かつ元素爆発のクールタイム-6秒',
+            ];
+            const myEnergy = 0;
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            for (let i = 0; i < members.length; i++) {
+                if ('雷' == (CHARACTER_MASTER as any)[members[i].name]?.元素) {
+                    herEnergies[i] = 25 * countE(character, rotationList);
+                }
+            }
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
+    'オロルン': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const messages: string[] = [
+            '元素スキル<span style="color:#FFD780FF">冥色のタイトロープ</span>の<span style="color:#FFD780FF">宿霊玉</span>が敵に命中した後、オロルンは継続時間15秒の「霊相の印」効果を獲得する。<br><br><span style="color:#FFD780FF">霊相の印</span><br>付近にいるチーム内フィールド上キャラクターの通常攻撃、重撃、または落下攻撃が敵に命中した後、そのキャラクターは元素エネルギーを3ポイント回復する。さらに、オロルンが待機中の場合、オロルンは元素エネルギーを3ポイント回復する。この効果は1秒毎に1回のみ発動でき、継続期間中最大3回まで発動できる。',
+        ];
+        const ncpCounts = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        for (let i = 0; i < members.length; i++) {
+            if (members[i].name != character) {
+                ncpCounts[i] = countN(members[i].name, rotationList) + countC(members[i].name, rotationList) + countP(members[i].name, rotationList);
+            }
+        }
+        const ncpTotal = ncpCounts.reduce((sum, element) => sum + element, 0);
+        const eCount = countE(character, rotationList);
+        const myEnergy = 3 * Math.min(3 * eCount, ncpTotal);
+        const allEnergy = 0;
+        const otherEnergy = 0;
+        const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        for (let i = 0; i < ncpCounts.length; i++) {
+            herEnergies[i] = 3 * Math.trunc(3 * eCount * ncpCounts[i] / ncpTotal);
+        }
+        result.push([RECHARGE_ENERGY_CONSTELLATION, '霊相のカタリスト', myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        return result;
+    },
+    'チャスカ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                '元素爆発<span style="color:#FFD780FF">ソウルリーパーの猛襲</span>の<span style="color:#FFD780FF">ソウルリーパー弾·光溢</span>が敵に命中した時、チャスカの元素エネルギーを1.5ポイント回復する。さらに、チャスカの攻撃力400%分に相当する、<span style="color:#FFD780FF">ソウルリーパー弾·光溢</span>の元素タイプと同一元素の範囲ダメージを与える。このダメージは重撃ダメージと見なされる。<br>上記の同一元素の範囲ダメージを与える効果は、<span style="color:#FFD780FF">ソウルリーパーの猛襲</span>を発動するたびに1回発動できる。',
+            ];
+            const visionCount = members.filter(member => ['炎', '水', '雷', '氷'].includes((CHARACTER_MASTER as any)[member.name]?.元素)).length;
+            const myEnergy = 1.5 * 2 * visionCount * countQ(character, rotationList);
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
+        }
+        return result;
+    },
+    'シトラリ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
+        const result: TCharacterEnergyRet[] = [];
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                '元素スキル<span style="color:#FFD780FF">霜暁の黒星</span>において、イツパパの霜落の嵐が敵に命中した時、追加で<span style="color:#FFD780FF">憑霊のスカル·黒星</span>を1つ召喚する。この方法で召喚した憑霊のスカルは、爆発時、シトラリの元素熟知1800%分の夜魂性質の<span style="color:#99FFFFFF">氷元素範囲ダメージ</span>を与え、シトラリの夜魂値を16、元素エネルギーを8ポイント回復する。この効果は8秒毎に1回のみ発動可能。',
+            ];
+            const myEnergy = 8 * Math.trunc(rotationLength / 8);
             const allEnergy = 0;
             const otherEnergy = 0;
             const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);

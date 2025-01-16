@@ -1728,24 +1728,27 @@ export function setupConditionValues(
                 }
             }
             if (key in workConditionValues && workConditionValues[key] !== null) {
-                const exclusions = exclusionMap.get(key);
-                if (exclusions) {
-                    for (const exclusion of exclusions) {
-                        if (exclusion in workConditionValues) {
-                            const conditionValue = conditionMap.get(exclusion);
-                            if (conditionValue === null) {  // checkbox
-                                workConditionValues[exclusion] = false;
-                            } else if (_.isArray(value)) {  // select
-                                workConditionValues[exclusion] = 0;
-                            } else if (_.isPlainObject(value)) {    // number
-                                const initialValue = (value as any).initial;
-                                const minValue = (value as any).min;
-                                if (isNumeric(initialValue)) {
-                                    workConditionValues[exclusion] = Number(initialValue);
-                                } else if (isNumeric(minValue)) {
-                                    workConditionValues[exclusion] = Number(minValue);
-                                } else {
+                const conditionValue = workConditionValues[key]; // boolean:checkbox / number:select,input[number]
+                if ((_.isBoolean(conditionValue) && conditionValue) || (_.isNumber(conditionValue) && conditionValue > 0)) {
+                    const exclusions = exclusionMap.get(key);
+                    if (exclusions) {
+                        for (const exclusion of exclusions) {
+                            if (exclusion in workConditionValues) {
+                                const conditionValue = conditionMap.get(exclusion);
+                                if (conditionValue === null) {  // checkbox
+                                    workConditionValues[exclusion] = false;
+                                } else if (_.isArray(value)) {  // select
                                     workConditionValues[exclusion] = 0;
+                                } else if (_.isPlainObject(value)) {    // number
+                                    const initialValue = (value as any).initial;
+                                    const minValue = (value as any).min;
+                                    if (isNumeric(initialValue)) {
+                                        workConditionValues[exclusion] = Number(initialValue);
+                                    } else if (isNumeric(minValue)) {
+                                        workConditionValues[exclusion] = Number(minValue);
+                                    } else {
+                                        workConditionValues[exclusion] = 0;
+                                    }
                                 }
                             }
                         }
