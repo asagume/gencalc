@@ -509,7 +509,7 @@ export default defineComponent({
     const displayNameV = (key: any): string => {
       if (key && i18n.global.locale.value == 'ja-jp' && key.length > 10) {
         let work = key;
-        work = work.replace(/のダメージ$/, '').replace(/ダメージ$/, '');
+        work = work.replace(/の攻撃ダメージ$/, '').replace(/のダメージ$/, '').replace(/ダメージ$/, '');
         return work;
       }
       return displayName(key);
@@ -518,7 +518,7 @@ export default defineComponent({
     const displayNameH = (key: any, category: string): string => {
       if (key && i18n.global.locale.value == 'ja-jp' && itemList(category).length > 2) {
         let work = key;
-        work = work.replace(/のダメージ$/, '').replace(/ダメージ$/, '');
+        work = work.replace(/の攻撃ダメージ$/, '').replace(/のダメージ$/, '').replace(/ダメージ$/, '');
         return work;
       }
       return displayName(key);
