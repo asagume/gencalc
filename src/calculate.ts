@@ -525,7 +525,7 @@ function updateStatsWithCondition(
     const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限'];
     const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力'];
     const atkStatArr = ['基礎攻撃力', '攻撃力%', '攻撃力+', '攻撃力'];
-    const otherStatArr = [...元素ステータス_ダメージARRAY, ...元素ステータス_耐性ARRAY, ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
+    const otherStatArr = [...元素ステータス_ダメージARRAY, '全元素ダメージバフ', ...元素ステータス_耐性ARRAY, '全元素耐性', ...ダメージバフARRAY, ...実数ダメージ加算ARRAY, ...元素反応バフARRAY, 'ダメージ軽減'];
     otherStatArr.push(...Array.from(statFormulaMap.keys()).filter(s => s.indexOf('.') != -1));
 
     const formulaStatArr = [...new Set(Array.from(statFormulaMap.keys()).map(s => s.replace(/V[1-3]$/, '')))].filter(s => ![...hpStatArr, ...defStatArr, ...atkStatArr, ...otherStatArr].includes(s));
