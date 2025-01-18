@@ -642,6 +642,12 @@
     "誕生日": "8/10",
     "import": "data/characters/pyro_4_bow_Amber.json"
   },
+  "旅人(炎)": {
+    "レアリティ": 5,
+    "元素": "炎",
+    "武器": "片手剣",
+    "import": "data/characters/pyro_5_sword_Traveler.json"
+  },
   "旅人(水)": {
     "レアリティ": 5,
     "元素": "水",
