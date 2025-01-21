@@ -51,7 +51,8 @@ $pageIds = @()
 # $pageIds += 7080   # チャスカ
 # $pageIds += 7299   # マーヴィカ
 # $pageIds += 7300   # シトラリ
-$pageIds += 7306   # 旅人(炎)
+$pageIds += 7301   # 藍硯
+# $pageIds += 7306   # 旅人(炎)
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
