@@ -891,7 +891,7 @@ export const CHARACTER_PARTICLE_EXTRA_FUNC: {
                 'オズは出場している自身のキャラクターと共に攻撃し、攻撃力30%分の雷元素ダメージを与える。',
             ];
             const myParticle = 0;
-            const allParticle = rotationList?.length ? (2 / 3) * countN(undefined, rotationList) : 1;
+            const allParticle = 2 / 3 * countN(undefined, rotationList);
             result = [RECHARGE_PARTICLE_CONSTELLATION, String(constellationLevel), '雷', myParticle, allParticle, [], messages];
         }
         return result;
