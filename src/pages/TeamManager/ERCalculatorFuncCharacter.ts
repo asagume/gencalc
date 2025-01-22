@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { TActionItem, TTeamMemberResult, NUMBER_OF_MEMBERS, getCharacterMaster, getCharacterDetail, TMember } from "./team";
-import { RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_PASSIVE, countC, countE, countN, countP, countQ, getCharacterInputValue, getMemberResult, getStatsInputValue, } from "./ERCalculatorCommon";
+import { RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_SKILL, RECHARGE_PARTICLE_CONSTELLATION, RECHARGE_PARTICLE_PASSIVE, countC, countE, countN, countQ, getCharacterInputValue, getMemberResult, getStatsInputValue, } from "./ERCalculatorCommon";
 import { CHARACTER_MASTER } from "@/master";
 
 export type TCharacterEnergyRet = [string, string, number, number, number, number[], string[]];
@@ -751,7 +751,7 @@ export const CHARACTER_ENERGY_FUNC: {
         const constellationLevel = 2;
         if (constellation >= constellationLevel) {
             const messages: string[] = [
-                'シロネンの「サンプル音源」がアクティブ状態の時、「サンプル音源」の元素タイプに応じて、その元素タイプと同じであり、かつ付近にいるチーム内キャラクターに対応する効果を与える。・<span style="color: rgb(255, 172, 255)">雷元素</span>：元素エネルギーが25ポイント回復し、かつ元素爆発のクールタイム-6秒',
+                'シロネンの「サンプル音源」がアクティブ状態の時、「サンプル音源」の元素タイプに応じて、その元素タイプと同じであり、かつ付近にいるチーム内キャラクターに対応する効果を与える。・雷元素：元素エネルギーが25ポイント回復し、かつ元素爆発のクールタイム-6秒',
             ];
             const myEnergy = 0;
             const allEnergy = 0;
@@ -768,25 +768,65 @@ export const CHARACTER_ENERGY_FUNC: {
     },
     'オロルン': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
         const result: TCharacterEnergyRet[] = [];
-        const messages: string[] = [
-            '元素スキル<span style="color:#FFD780FF">冥色のタイトロープ</span>の<span style="color:#FFD780FF">宿霊玉</span>が敵に命中した後、オロルンは継続時間15秒の「霊相の印」効果を獲得する。<br><br><span style="color:#FFD780FF">霊相の印</span><br>付近にいるチーム内フィールド上キャラクターの通常攻撃、重撃、または落下攻撃が敵に命中した後、そのキャラクターは元素エネルギーを3ポイント回復する。さらに、オロルンが待機中の場合、オロルンは元素エネルギーを3ポイント回復する。この効果は1秒毎に1回のみ発動でき、継続期間中最大3回まで発動できる。',
-        ];
-        const ncpCounts = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-        for (let i = 0; i < members.length; i++) {
-            if (members[i].name != character) {
-                ncpCounts[i] = countN(members[i].name, rotationList) + countC(members[i].name, rotationList) + countP(members[i].name, rotationList);
+        {
+            const messages: string[] = [
+                '元素スキル冥色のタイトロープの宿霊玉が敵に命中した後、オロルンは継続時間15秒の「霊相の印」効果を獲得する。\n\n霊相の印\n付近にいるチーム内フィールド上キャラクターの通常攻撃、重撃、または落下攻撃が敵に命中した後、そのキャラクターは元素エネルギーを3ポイント回復する。さらに、オロルンが待機中の場合、オロルンは元素エネルギーを3ポイント回復する。この効果は1秒毎に1回のみ発動でき、継続期間中最大3回まで発動できる。',
+            ];
+            let myEnergy = 0;
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            if (rotationList) {
+                let startIndex = -1;
+                for (let i = 0; i < rotationList.length; i++) {
+                    if (rotationList[i].member == character && rotationList[i].action === 'E') {
+                        startIndex = i;
+                        break;
+                    }
+                }
+                if (startIndex >= 0) {
+                    const ncpCountMap = new Map<string, number>();
+                    let rechargeCount = 0;
+                    for (let i = startIndex; i < rotationList.length; i++) {
+                        if (rotationList[i].member == character && rotationList[i].action === 'E') {
+                            rechargeCount = 3;
+                        } else if (rotationList[i].member != character && rechargeCount > 0) {
+                            if (rotationList[i].action.startsWith('N') || rotationList[i].action.startsWith('C') || ['P'].includes(rotationList[i].action)) {
+                                ncpCountMap.set(character, (ncpCountMap.get(character) ?? 0) + 1);
+                                rechargeCount--;
+                            }
+                        }
+                    }
+                    for (let i = 0; i < startIndex; i++) {
+                        if (rotationList[i].member != character && rechargeCount > 0) {
+                            if (rotationList[i].action.startsWith('N') || rotationList[i].action.startsWith('C') || ['P'].includes(rotationList[i].action)) {
+                                ncpCountMap.set(character, (ncpCountMap.get(character) ?? 0) + 1);
+                                rechargeCount--;
+                            }
+                        }
+                    }
+                    myEnergy = _.sum(Array.from(ncpCountMap.values())) * 3;
+                    for (let i = 0; i < members.length; i++) {
+                        if (ncpCountMap.has(members[i].name)) {
+                            herEnergies[i] = (ncpCountMap.get(members[i].name) ?? 0) * 3;
+                        }
+                    }
+                }
             }
+            result.push([RECHARGE_ENERGY_PASSIVE, '霊相のカタリスト', myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
         }
-        const ncpTotal = ncpCounts.reduce((sum, element) => sum + element, 0);
-        const eCount = countE(character, rotationList);
-        const myEnergy = 3 * Math.min(3 * eCount, ncpTotal);
-        const allEnergy = 0;
-        const otherEnergy = 0;
-        const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
-        for (let i = 0; i < ncpCounts.length; i++) {
-            herEnergies[i] = 3 * Math.trunc(3 * eCount * ncpCounts[i] / ncpTotal);
+
+        const constellationLevel = 4;
+        if (constellation >= constellationLevel) {
+            const messages: string[] = [
+                '闇声の残響を発動した後、オロルンの元素エネルギーを8ポイント回復する。',
+            ];
+            const myEnergy = countQ(character) * 8;
+            const allEnergy = 0;
+            const otherEnergy = 0;
+            const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+            result.push([RECHARGE_ENERGY_CONSTELLATION, String(constellationLevel), myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
         }
-        result.push([RECHARGE_ENERGY_CONSTELLATION, '霊相のカタリスト', myEnergy, allEnergy, otherEnergy, herEnergies, messages]);
         return result;
     },
     'チャスカ': (character, constellation, members, rotationLength, rotationList, teamMemberResult) => { // eslint-disable-line
@@ -794,7 +834,7 @@ export const CHARACTER_ENERGY_FUNC: {
         const constellationLevel = 4;
         if (constellation >= constellationLevel) {
             const messages: string[] = [
-                '元素爆発<span style="color:#FFD780FF">ソウルリーパーの猛襲</span>の<span style="color:#FFD780FF">ソウルリーパー弾·光溢</span>が敵に命中した時、チャスカの元素エネルギーを1.5ポイント回復する。さらに、チャスカの攻撃力400%分に相当する、<span style="color:#FFD780FF">ソウルリーパー弾·光溢</span>の元素タイプと同一元素の範囲ダメージを与える。このダメージは重撃ダメージと見なされる。<br>上記の同一元素の範囲ダメージを与える効果は、<span style="color:#FFD780FF">ソウルリーパーの猛襲</span>を発動するたびに1回発動できる。',
+                '元素爆発ソウルリーパーの猛襲のソウルリーパー弾·光溢が敵に命中した時、チャスカの元素エネルギーを1.5ポイント回復する。さらに、チャスカの攻撃力400%分に相当する、ソウルリーパー弾·光溢の元素タイプと同一元素の範囲ダメージを与える。このダメージは重撃ダメージと見なされる。\n上記の同一元素の範囲ダメージを与える効果は、ソウルリーパーの猛襲を発動するたびに1回発動できる。',
             ];
             const visionCount = members.filter(member => ['炎', '水', '雷', '氷'].includes((CHARACTER_MASTER as any)[member.name]?.元素)).length;
             const myEnergy = 1.5 * 2 * visionCount * countQ(character, rotationList);

@@ -96,6 +96,16 @@ export const WEAPON_ENERGY_FUNC: {
         const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         return [RECHARGE_ENERGY_WEAPON, weapon, myEnergy, allEnergy, otherEnergy, herEnergies, messages];
     },
+    '砂中の賢者達の問答': (character, weapon, weaponRefine, members, rotationLength, rotationList) => { // eslint-disable-line
+        const messages = [
+            '治療を行う時、元素エネルギーを8/10/12/14/16ポイント回復する。この効果は10秒ごとに1度のみ発動可能。キャラクターが待機中でも発動できる。',
+        ];
+        const myEnergy = [8, 10, 12, 14, 16][weaponRefine - 1] * Math.trunc(rotationLength / 10);
+        const allEnergy = 0;
+        const otherEnergy = 0;
+        const herEnergies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
+        return [RECHARGE_ENERGY_WEAPON, weapon, myEnergy, allEnergy, otherEnergy, herEnergies, messages];
+    },
     'ルミドゥースの挽歌': (character, weapon, weaponRefine, members, rotationLength, rotationList) => { // eslint-disable-line
         const messages = [
             '装備者が敵に燃焼反応を起こした後、または燃焼状態の敵に草元素ダメージを与えた後、与えるダメージ+18%/23%/28%/33%/38%。この効果の継続時間は8秒で、最大2層まで重ね掛け可能。2層まで重ねた時、または2層の継続時間がリセットされた時、元素エネルギーを12/13/14/15/16ポイント回復する。この方法による元素エネルギーの回復は、12秒毎に1回のみ可能。この二つの効果は、キャラクターが待機中でも発動可能。',

@@ -262,19 +262,23 @@ export default defineComponent({
             }
           }
           if (characterMaster.固有天賦) {
-            for (const damageDetail of characterMaster.固有天賦) {
-              if (damageDetail.種類 && damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
-                const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
-                let value = 0;
-                if (_.isNumber(damageDetail.数値)) {
-                  value = damageDetail.数値;
-                }
-                if (element === '全') {
-                  resKey.filter(s => s !== '物理').forEach(key => {
-                    res[key] -= value;
-                  })
-                } else {
-                  res[element] -= value;
+            for (const talentDetail of characterMaster.固有天賦) {
+              if (talentDetail.詳細) {
+                for (const damageDetail of talentDetail.詳細) {
+                  if (damageDetail.種類 && damageDetail.種類.startsWith('敵') && damageDetail.種類.endsWith('耐性') && damageDetail.数値) {
+                    const element = damageDetail.種類.replace(/^敵/, '').replace(/元素耐性$/, '').replace(/耐性$/, '');
+                    let value = 0;
+                    if (_.isNumber(damageDetail.数値)) {
+                      value = damageDetail.数値;
+                    }
+                    if (element === '全') {
+                      resKey.filter(s => s !== '物理').forEach(key => {
+                        res[key] -= value;
+                      })
+                    } else {
+                      res[element] -= value;
+                    }
+                  }
                 }
               }
             }
