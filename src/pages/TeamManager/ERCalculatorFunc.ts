@@ -308,18 +308,27 @@ export function getEnergyByArtifact(
     const energies = _.fill(Array(NUMBER_OF_MEMBERS), 0);
     const messages: string[] = [];
     const memberNameArr = team.members.map(member => member.name);
-    const qCount = countQ(character, rotationList);
     const myIndex = memberNameArr.indexOf(character);
-    let otherEnergy = 0;
     if (artifactSet4 === '亡命者') {
-        otherEnergy = 6 * qCount;
-    }
-    if (otherEnergy) {
         messages.push('元素爆発を発動すると、2秒毎にチーム全員（自分を除く）の元素エネルギーを2回復する、継続時間6秒。重ね掛け不可。');
-        for (let i = 0; i < energies.length; i++) {
-            if (i != myIndex) {
-                energies[i] += otherEnergy;
+        const otherEnergy = 6 * countQ(character, rotationList);
+        if (otherEnergy) {
+            for (let i = 0; i < energies.length; i++) {
+                if (i != myIndex) {
+                    energies[i] += otherEnergy;
+                }
             }
+        }
+    } else if (artifactSet4 === '灰燼の都に立つ英雄の絵巻') {
+        messages.push('付近にいるチーム内キャラクターが「夜魂バースト」を起こすと、装備者は元素エネルギーを6ポイント回復する。');
+        const natlanCount = team.members.filter(member => (getCharacterDetail(member.name) as any)?.region === 'ナタ').length;
+        console.log(natlanCount, (getCharacterDetail(character) as any));
+        if (natlanCount > 0) {
+            let myEnergy = 6 * Math.trunc(rotationLength / [-1, 18, 12, 9][natlanCount]);
+            if (team.members.filter(member => member.name === 'シロネン').length > 0) {
+                myEnergy += 6 * Math.trunc(rotationLength / 14);
+            }
+            energies[myIndex] += myEnergy;
         }
     }
     if (energies.filter(e => e > 0).length || messages.length) {

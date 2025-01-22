@@ -747,7 +747,7 @@ export default defineComponent({
                 } else if ([RECHARGE_ENERGY_ARTIFACT].includes(row.rechargeKind) && row.triggerName) { // 聖遺物
                     const artifactSetMater = ARTIFACT_SET_MASTER[(row.triggerName as TArtifactSetKey)];
                     if (artifactSetMater) {
-                        result = artifactSetMater.image;
+                        result = artifactSetMater.image.replace('.png', '/flower_of_life.png');
                     }
                 } else if ([RECHARGE_ENERGY_ATTACK].includes(row.rechargeKind)) { // 通常攻撃、重撃
                     const characterMaster = getCharacterMaster(row.character);

@@ -2029,7 +2029,6 @@ export function makeFormulaTemplate(
             }
         }
     }
-    console.debug(formula, result);
     return result;
 }
 
