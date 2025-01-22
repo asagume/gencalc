@@ -321,8 +321,7 @@ export function getEnergyByArtifact(
         }
     } else if (artifactSet4 === '灰燼の都に立つ英雄の絵巻') {
         messages.push('付近にいるチーム内キャラクターが「夜魂バースト」を起こすと、装備者は元素エネルギーを6ポイント回復する。');
-        const natlanCount = team.members.filter(member => (getCharacterDetail(member.name) as any)?.region === 'ナタ').length;
-        console.log(natlanCount, (getCharacterDetail(character) as any));
+        const natlanCount = team.members.filter(member => (getCharacterDetail(member.name) as any)?.region == 'ナタ').length;
         if (natlanCount > 0) {
             let myEnergy = 6 * Math.trunc(rotationLength / [-1, 18, 12, 9][natlanCount]);
             if (team.members.filter(member => member.name === 'シロネン').length > 0) {
