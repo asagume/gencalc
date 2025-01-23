@@ -288,6 +288,9 @@ export default defineComponent({
     }
 
     const listActionOnClick = (member: TMember, actionKey: string) => {
+      if (!normalAttackActions[member.name] || !elementalSkillActions[member.name]) {
+        return;
+      }
       let action = actionKey;
       if (normalAttackActions[member.name].includes(action)) {
         const workArr = rotationList.filter(s => s.member == member.name && normalAttackActions[member.name].includes(s.action));

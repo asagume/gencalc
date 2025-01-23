@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { NUMBER_OF_MEMBERS, TActionItem, TTeam, TTeamMemberResult, getCharacterDetail, getCharacterMaster } from "./team";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getElementalSkillActions, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_FIRST_ARR, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, SP_LONG, SP_NEXT, SP_SELF, SP_SHRT, getDurationFromInfo, getElementalSkillActions, getParticleInfo, getParticleNumFromInfo, getReceiveTypeFromInfo } from "@/particlemaster";
 import { TERParticle, RECHARGE_PARTICLE_SKILL, countE, countC, countQ, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_PARTICLE_RESONANCE, TEREnergy, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_ATTACK, ATTACK_ENERGY_COUNT_OBJ } from "./ERCalculatorCommon";
 import { CHARACTER_ENERGY_FUNC, CHARACTER_PARTICLE_EXTRA_FUNC } from "./ERCalculatorFuncCharacter";
 import { WEAPON_ENERGY_FUNC } from "./ERCalculatorFuncWeapon";
@@ -56,12 +56,14 @@ export function getParticleByCharacter(
         const timeArr = _.fill(Array(NUMBER_OF_MEMBERS), 0);
         let curCharacter;
         let isBursting = false;
+        let skillCount = 0;
         let untilMap = new Map<string[], number>();
         let delayActions: string[] | undefined;    // delayActionsの実行まで元素粒子生成を遅らせる
         for (let i = 0; i < rotationList.length; i++) {
             const rotation = rotationList[i];
             if (rotation.member != curCharacter) {
                 isBursting = false;
+                skillCount = 0;
             }
             if (rotation.member == character) {
                 let action = rotation.action;
@@ -69,6 +71,10 @@ export function getParticleByCharacter(
                     isBursting = true; // キャラチェンするまでずっと元素爆発中判定とする
                     if (CHARACTER_Q_TO_E_ARR.includes(character)) {
                         action = 'E';
+                    }
+                } else if (action.startsWith('E')) {
+                    if (CHARACTER_E_FIRST_ARR.includes(character)) {
+                        skillCount++;
                     }
                 }
                 if (untilMap && untilMap.size > 0) {
@@ -98,7 +104,7 @@ export function getParticleByCharacter(
                         action = 'E';
                     }
                     const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
-                    timeArr[myIndex] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[myIndex], isBursting);
+                    timeArr[myIndex] = setSkillParticleNumToArr(resultVal, character, action, constellation, team, rotationLength, rotationList, i, onFields, timeArr[myIndex], isBursting, skillCount > 1);
                     resultMap.set(action, resultVal);
                 }
             }
@@ -415,8 +421,9 @@ function setSkillParticleNumToArr(
     onFields: number[],
     time: number,
     isBursting = false,
+    isSkilling = false,
 ) {
-    const particleInfo = getParticleInfo(character, action, constellation, isBursting);
+    const particleInfo = getParticleInfo(character, action, constellation, isBursting, isSkilling);
     if (particleInfo) {
         const rotation = rotationList[index];
         if (rotation) {

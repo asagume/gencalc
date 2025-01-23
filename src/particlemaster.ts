@@ -44,6 +44,7 @@ const PARTICLE_MASTER: TParticleMaster = {
     },
     'キィニチ': {
         'E': 5,
+        'E(skill)': 0,
     },
     'カチーナ': {
         'E': [4, SP_SHRT],  // 0.667 * 6回
@@ -63,6 +64,7 @@ const PARTICLE_MASTER: TParticleMaster = {
     },
     'クロリンデ': {
         'E': [4, SP_SELF, 7.5, 16, 2],
+        'E(skill)': 0,
     },
     'アルレッキーノ': {
         'E': 5,
@@ -383,7 +385,7 @@ Object.keys(PARTICLE_MASTER).forEach(key => {
 })
 
 /** 元素爆発で元素スキル再発動 または 継続時間延長するキャラクターたち */
-export const CHARACTER_Q_TO_E_ARR = ['フィッシュル', '珊瑚宮心海'];
+export const CHARACTER_Q_TO_E_ARR = ['フィッシュル', '珊瑚宮心海', 'エミリエ'];
 
 /** 元素スキル後に特定のアクションを実行するキャラクターとそのアクションと回数 */
 export const CHARACTER_E_UNTIL_MAP = new Map<string, Map<string[], number>>();
@@ -399,6 +401,9 @@ CHARACTER_E_DELAY_MAP.set('ファルザン', ['C']);
 CHARACTER_E_DELAY_MAP.set('閑雲', ['P']);
 CHARACTER_E_DELAY_MAP.set('嘉明', ['P']);
 
+/** 元素スキル継続中に元素スキルボタンを何度も押せるキャラクターたち */
+export const CHARACTER_E_FIRST_ARR = ['クロリンデ', 'キィニチ']; 
+
 /** 元素爆発カットイン中に元素粒子を受け取らないキャラクターたち */
 export const CHARACTER_Q_NOT_RECHARGEABLE = ['ウェンティ', 'エウルア'];
 
@@ -407,13 +412,16 @@ export function getElementalSkillActions(character: string) {
     return particleMaster ? Object.keys(particleMaster).filter(action => action.startsWith('E') && action.indexOf('(burst)') == -1) : ['E'];
 }
 
-export function getParticleInfo(character: string, action: string, constellation = 0, isBursting = false) {
+export function getParticleInfo(character: string, action: string, constellation = 0, isBursting = false, isSkilling = false) {
     const result: TParticleInfo = [0, SP_NEXT, 0, undefined, undefined];    // 粒子数, 受取タイプ, 継続時間, クールタイム, 粒子生成CT
     const particleMaster = PARTICLE_MASTER[character];
     if (particleMaster) {
         const keyArr: string[] = [];
         if (isBursting) {
             keyArr.push(action + '(burst)');
+        }
+        if (isSkilling) {
+            keyArr.push(action + '(skill)');
         }
         keyArr.push(action);
         for (const key of keyArr) {
