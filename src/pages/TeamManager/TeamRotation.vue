@@ -167,10 +167,10 @@ export default defineComponent({
 
     const watchCount = ref(0);
     watch(props, async () => {
-      await watchFunc(props.team);
+      await initializeTeam(props.team);
     });
 
-    async function watchFunc(team: TTeam) {
+    const initializeTeam = async (team: TTeam) => {
       await setupCharacterDetailMap();
       for (const member of team.members) {
         if (member.name) {
@@ -221,10 +221,10 @@ export default defineComponent({
       }
       rotationDescription.value = team.rotationDescription;
       watchCount.value++;
-    }
+    } 
 
     onMounted(() => {
-      watchFunc(props.team);
+      initializeTeam(props.team);
       props.team.members.forEach(member => {
         normalAttackIconSrc(member.name);
       })
@@ -379,6 +379,8 @@ export default defineComponent({
       removeItemOnClick,
       selectedActionOnClick,
       updateRotation,
+
+      initializeTeam,
     };
   },
 });

@@ -63,7 +63,7 @@
       <hr />
       <h3>ROTATION</h3>
       <div id="team-rotation">
-        <TeamRotation v-if="forcusedTeam" :team="forcusedTeam" :team-member-result="teamMemberResult"
+        <TeamRotation ref="teamRotationVmRef" v-if="forcusedTeam" :team="forcusedTeam" :team-member-result="teamMemberResult"
           :constellations="constellations" @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
@@ -149,6 +149,7 @@ export default defineComponent({
     const constellations = reactive({} as TConstellation);
     const searchWord = ref('');
     const teamTagChecked = reactive({} as { [key: string]: boolean });
+    const teamRotationVmRef = ref();
 
     onMounted(() => {
       loadOnClick();
@@ -327,6 +328,9 @@ export default defineComponent({
       }
       team.tags = newTeam.tags;
       setupTeamTagChecked();
+      if (teamRotationVmRef.value) {
+        teamRotationVmRef.value.initializeTeam(team);
+      }
     }
 
     const teamEditorOnClickCancel = () => {
@@ -367,6 +371,7 @@ export default defineComponent({
 
     return {
       displayName,
+      teamRotationVmRef,
 
       DISPLAY_STAT_LIST,
       NUMBER_OF_TEAMS,
