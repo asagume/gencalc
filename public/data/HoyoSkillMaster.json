@@ -2893,6 +2893,65 @@
     ]
   },
   {
+    "avatar_id": 10000108,
+    "skill_list": [
+      {
+          "id": 11081,
+          "group_id": 10831,
+          "name": "通常攻撃・玄鳥画水",
+          "icon": null,
+          "max_level": 10,
+          "is_proud": false,
+          "pos_name": "普通攻击"
+      },
+      {
+          "id": 11082,
+          "group_id": 10832,
+          "name": "鳳跡随翦舞",
+          "icon": null,
+          "max_level": 10,
+          "is_proud": false,
+          "pos_name": "元素战技"
+      },
+      {
+          "id": 11085,
+          "group_id": 10839,
+          "name": "月踏む鶴弦",
+          "icon": null,
+          "max_level": 10,
+          "is_proud": false,
+          "pos_name": "元素爆发"
+      },
+      {
+          "id": 10821,
+          "group_id": 10821,
+          "name": "四方封刀の霊占",
+          "icon": null,
+          "max_level": 1,
+          "is_proud": true,
+          "pos_name": ""
+      },
+      {
+          "id": 10822,
+          "group_id": 10822,
+          "name": "蒼羽鎮邪の勅符",
+          "icon": null,
+          "max_level": 1,
+          "is_proud": true,
+          "pos_name": ""
+      },
+      {
+          "id": 10823,
+          "group_id": 10823,
+          "name": "「芳る心、綿々たる想い」",
+          "icon": null,
+          "max_level": 1,
+          "is_proud": true,
+          "pos_name": ""
+      }
+  ]
+  },
+  {
     "avatar_id": 10000105,
     "skill_list": [
       {
