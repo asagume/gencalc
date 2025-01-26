@@ -1,4114 +1,4114 @@
-﻿[
-    {
-        "id":  9854,
-        "name":  "魂香の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9754,
-        "name":  "生霊の華",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9654,
-        "name":  "海染の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9554,
-        "name":  "栄花の期",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9454,
-        "name":  "威厳の鍔",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9354,
-        "name":  "羈絆の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9254,
-        "name":  "無垢の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9154,
-        "name":  "偉勲の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9054,
-        "name":  "金メッキのコサージュ",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8954,
-        "name":  "夏祭りの花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8854,
-        "name":  "盤石芽生の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8254,
-        "name":  "血染めの鉄の心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8154,
-        "name":  "旧貴族の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8054,
-        "name":  "魔女の炎の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7954,
-        "name":  "雷鳥の憐み",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7754,
-        "name":  "楽団の朝の光",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7654,
-        "name":  "野花の記憶の草原",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7554,
-        "name":  "剣闘士の未練",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7454,
-        "name":  "彼方にある少女の心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7354,
-        "name":  "火渡りの堅実",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7254,
-        "name":  "雷討ちの心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7154,
-        "name":  "吹雪の中の思い",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3854,
-        "name":  "異種の期待",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3754,
-        "name":  "獣使いの護符",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3654,
-        "name":  "陰に咲く光の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3554,
-        "name":  "響き合う諧律の前奏",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3454,
-        "name":  "無私の花飾り",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3354,
-        "name":  "在りし日の遺失の契",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3254,
-        "name":  "黄金の旋律の変奏",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3154,
-        "name":  "狩人の胸花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3054,
-        "name":  "霊光起源の蕊",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2954,
-        "name":  "旅中の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2854,
-        "name":  "月娘の華彩",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2754,
-        "name":  "諸王の都の始まり",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2154,
-        "name":  "夢境の鉄花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2054,
-        "name":  "迷宮の遊客",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9844,
-        "name":  "魂香の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9744,
-        "name":  "生霊の華",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9644,
-        "name":  "海染の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9544,
-        "name":  "栄花の期",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9444,
-        "name":  "威厳の鍔",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9344,
-        "name":  "羈絆の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9244,
-        "name":  "無垢の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9144,
-        "name":  "偉勲の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9044,
-        "name":  "金メッキのコサージュ",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8944,
-        "name":  "夏祭りの花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8844,
-        "name":  "盤石芽生の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8244,
-        "name":  "血染めの鉄の心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8144,
-        "name":  "旧貴族の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8044,
-        "name":  "魔女の炎の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7944,
-        "name":  "雷鳥の憐み",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7744,
-        "name":  "楽団の朝の光",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7644,
-        "name":  "野花の記憶の草原",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7544,
-        "name":  "剣闘士の未練",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7444,
-        "name":  "彼方にある少女の心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7344,
-        "name":  "火渡りの堅実",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7244,
-        "name":  "雷討ちの心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7144,
-        "name":  "吹雪の中の思い",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6244,
-        "name":  "学者のしおり",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5944,
-        "name":  "亡命者の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5844,
-        "name":  "博徒の花飾り",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5744,
-        "name":  "教官の花飾り",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5644,
-        "name":  "武人の赤い花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5544,
-        "name":  "狂戦士の薔薇",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5444,
-        "name":  "奇跡の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5344,
-        "name":  "守護の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5244,
-        "name":  "勇士の勲章",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5144,
-        "name":  "故人の心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3844,
-        "name":  "異種の期待",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3744,
-        "name":  "獣使いの護符",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3644,
-        "name":  "陰に咲く光の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3544,
-        "name":  "響き合う諧律の前奏",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3444,
-        "name":  "無私の花飾り",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3344,
-        "name":  "在りし日の遺失の契",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3244,
-        "name":  "黄金の旋律の変奏",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3144,
-        "name":  "狩人の胸花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3044,
-        "name":  "霊光起源の蕊",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2944,
-        "name":  "旅中の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2844,
-        "name":  "月娘の華彩",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2744,
-        "name":  "諸王の都の始まり",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2144,
-        "name":  "夢境の鉄花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2044,
-        "name":  "迷宮の遊客",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6334,
-        "name":  "医者のアネモネ",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6234,
-        "name":  "学者のしおり",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6134,
-        "name":  "幸運のクローバー",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6034,
-        "name":  "冒険者の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5934,
-        "name":  "亡命者の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5834,
-        "name":  "博徒の花飾り",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5734,
-        "name":  "教官の花飾り",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5634,
-        "name":  "武人の赤い花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5534,
-        "name":  "狂戦士の薔薇",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5434,
-        "name":  "奇跡の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5334,
-        "name":  "守護の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5234,
-        "name":  "勇士の勲章",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5134,
-        "name":  "故人の心",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6324,
-        "name":  "医者のアネモネ",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6124,
-        "name":  "幸運のクローバー",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6024,
-        "name":  "冒険者の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6314,
-        "name":  "医者のアネモネ",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6114,
-        "name":  "幸運のクローバー",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6014,
-        "name":  "冒険者の花",
-        "icon":  null,
-        "reliquary_cat_id":  1,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  9852,
-        "name":  "垂玉の葉",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9752,
-        "name":  "潜光の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9652,
-        "name":  "淵宮の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9552,
-        "name":  "華館の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9452,
-        "name":  "切落の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9352,
-        "name":  "憶念の矢",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9252,
-        "name":  "良医の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9152,
-        "name":  "昭武の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9052,
-        "name":  "追憶の風",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8952,
-        "name":  "夏祭りの終わり",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8852,
-        "name":  "嵯峨連山の翼",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8252,
-        "name":  "血染めの黒羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8152,
-        "name":  "旧貴族の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8052,
-        "name":  "魔女の炎の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7952,
-        "name":  "雷災の生存者",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7752,
-        "name":  "琴師の矢羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7652,
-        "name":  "狩人の青緑色の矢羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7552,
-        "name":  "剣闘士の帰着",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7452,
-        "name":  "少女の揺らぐ思い",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7352,
-        "name":  "火渡りの解放",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7252,
-        "name":  "雷討ちの羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7152,
-        "name":  "氷を砕く執念",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3852,
-        "name":  "霊髄の根源",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3752,
-        "name":  "登山者の標",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3652,
-        "name":  "光褪せた翠尾",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3552,
-        "name":  "古海の幽深なる夜想",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3452,
-        "name":  "誠実なつけペン",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3352,
-        "name":  "在りし日の空想の念",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3252,
-        "name":  "黄金の飛鳥の落羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3152,
-        "name":  "傑作の序曲",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3052,
-        "name":  "霊彩奇麗の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2952,
-        "name":  "悪しき魔法使いの羽杖",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2852,
-        "name":  "落謝の宴席",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2752,
-        "name":  "黄金の邦国の結末",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2152,
-        "name":  "裁断の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2052,
-        "name":  "翠蔓の知者",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9842,
-        "name":  "垂玉の葉",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9742,
-        "name":  "潜光の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9642,
-        "name":  "淵宮の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9542,
-        "name":  "華館の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9442,
-        "name":  "切落の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9342,
-        "name":  "憶念の矢",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9242,
-        "name":  "良医の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9142,
-        "name":  "昭武の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9042,
-        "name":  "追憶の風",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8942,
-        "name":  "夏祭りの終わり",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8842,
-        "name":  "嵯峨連山の翼",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8242,
-        "name":  "血染めの黒羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8142,
-        "name":  "旧貴族の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8042,
-        "name":  "魔女の炎の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7942,
-        "name":  "雷災の生存者",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7742,
-        "name":  "琴師の矢羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7642,
-        "name":  "狩人の青緑色の矢羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7542,
-        "name":  "剣闘士の帰着",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7442,
-        "name":  "少女の揺らぐ思い",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7342,
-        "name":  "火渡りの解放",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7242,
-        "name":  "雷討ちの羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7142,
-        "name":  "氷を砕く執念",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6242,
-        "name":  "学者の羽根ペン",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5942,
-        "name":  "亡命者の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5842,
-        "name":  "博徒の羽飾り",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5742,
-        "name":  "教官の羽飾り",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5642,
-        "name":  "武人の羽飾り",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5542,
-        "name":  "狂戦士の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5442,
-        "name":  "奇跡の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5342,
-        "name":  "守護の印",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5242,
-        "name":  "勇士の期待",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5142,
-        "name":  "帰郷の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3842,
-        "name":  "霊髄の根源",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3742,
-        "name":  "登山者の標",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3642,
-        "name":  "光褪せた翠尾",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3542,
-        "name":  "古海の幽深なる夜想",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3442,
-        "name":  "誠実なつけペン",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3342,
-        "name":  "在りし日の空想の念",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3242,
-        "name":  "黄金の飛鳥の落羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3142,
-        "name":  "傑作の序曲",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3042,
-        "name":  "霊彩奇麗の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2942,
-        "name":  "悪しき魔法使いの羽杖",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2842,
-        "name":  "落謝の宴席",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2742,
-        "name":  "黄金の邦国の結末",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2142,
-        "name":  "裁断の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2042,
-        "name":  "翠蔓の知者",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6332,
-        "name":  "医者の梟の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6232,
-        "name":  "学者の羽根ペン",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6132,
-        "name":  "幸運の鷹の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6032,
-        "name":  "冒険者の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5932,
-        "name":  "亡命者の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5832,
-        "name":  "博徒の羽飾り",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5732,
-        "name":  "教官の羽飾り",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5632,
-        "name":  "武人の羽飾り",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5532,
-        "name":  "狂戦士の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5432,
-        "name":  "奇跡の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5332,
-        "name":  "守護の印",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5232,
-        "name":  "勇士の期待",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5132,
-        "name":  "帰郷の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6322,
-        "name":  "医者の梟の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6122,
-        "name":  "幸運の鷹の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6022,
-        "name":  "冒険者の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6312,
-        "name":  "医者の梟の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6112,
-        "name":  "幸運の鷹の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6012,
-        "name":  "冒険者の羽根",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  2000,
-        "name":  "初心者の羽",
-        "icon":  null,
-        "reliquary_cat_id":  2,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  9855,
-        "name":  "祭祀の証",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9755,
-        "name":  "陽轡の遺品",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9655,
-        "name":  "別れの貝",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9555,
-        "name":  "衆生の歌",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9455,
-        "name":  "雷雲の印籠",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9355,
-        "name":  "朝露の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9255,
-        "name":  "停頓の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9155,
-        "name":  "金銅の日時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9055,
-        "name":  "堅い銅のコンパス",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8955,
-        "name":  "夏祭りの刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8855,
-        "name":  "星羅圭玉の日時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8255,
-        "name":  "騎士が血に染めた時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8155,
-        "name":  "旧貴族の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8055,
-        "name":  "魔女の破滅の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7955,
-        "name":  "雷霆の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7755,
-        "name":  "フィナーレの時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7655,
-        "name":  "緑の狩人の決心",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7555,
-        "name":  "剣闘士の希望",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7455,
-        "name":  "少女の短い華年",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7355,
-        "name":  "火渡りの苦しみ",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7255,
-        "name":  "雷討ちの刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7155,
-        "name":  "雪覆う故郷の最後",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3855,
-        "name":  "夜域の神話",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3755,
-        "name":  "秘術家の金皿",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3655,
-        "name":  "大業を成す刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3555,
-        "name":  "運命と輪廻の諧謔",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3455,
-        "name":  "忠実な砂時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3355,
-        "name":  "在りし日の余韻の音",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3255,
-        "name":  "黄金の時代の前兆",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3155,
-        "name":  "審判の刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3055,
-        "name":  "久遠落花の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2955,
-        "name":  "水仙の一瞬一瞬",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2855,
-        "name":  "凝結の刹那",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2755,
-        "name":  "没落迷途のコア",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2155,
-        "name":  "深金の歳月",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2055,
-        "name":  "賢知の定期",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9845,
-        "name":  "祭祀の証",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9745,
-        "name":  "陽轡の遺品",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9645,
-        "name":  "別れの貝",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9545,
-        "name":  "衆生の歌",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9445,
-        "name":  "雷雲の印籠",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9345,
-        "name":  "朝露の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9245,
-        "name":  "停頓の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9145,
-        "name":  "金銅の日時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9045,
-        "name":  "堅い銅のコンパス",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8945,
-        "name":  "夏祭りの刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8845,
-        "name":  "星羅圭玉の日時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8245,
-        "name":  "騎士が血に染めた時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8145,
-        "name":  "旧貴族の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8045,
-        "name":  "魔女の破滅の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7945,
-        "name":  "雷霆の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7745,
-        "name":  "フィナーレの時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7645,
-        "name":  "緑の狩人の決心",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7545,
-        "name":  "剣闘士の希望",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7445,
-        "name":  "少女の短い華年",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7345,
-        "name":  "火渡りの苦しみ",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7245,
-        "name":  "雷討ちの刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7145,
-        "name":  "雪覆う故郷の最後",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6245,
-        "name":  "学者の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5945,
-        "name":  "亡命者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5845,
-        "name":  "博徒の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5745,
-        "name":  "教官の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5645,
-        "name":  "武人の水時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5545,
-        "name":  "狂戦士の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5445,
-        "name":  "奇跡の砂",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5345,
-        "name":  "守護の置き時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5245,
-        "name":  "勇士の毅然",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5145,
-        "name":  "逐光の石",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3845,
-        "name":  "夜域の神話",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3745,
-        "name":  "秘術家の金皿",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3645,
-        "name":  "大業を成す刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3545,
-        "name":  "運命と輪廻の諧謔",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3445,
-        "name":  "忠実な砂時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3345,
-        "name":  "在りし日の余韻の音",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3245,
-        "name":  "黄金の時代の前兆",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3145,
-        "name":  "審判の刻",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3045,
-        "name":  "久遠落花の時",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2945,
-        "name":  "水仙の一瞬一瞬",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2845,
-        "name":  "凝結の刹那",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2745,
-        "name":  "没落迷途のコア",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2145,
-        "name":  "深金の歳月",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2045,
-        "name":  "賢知の定期",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6335,
-        "name":  "医者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6235,
-        "name":  "学者の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6135,
-        "name":  "幸運の砂時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6035,
-        "name":  "冒険者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5935,
-        "name":  "亡命者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5835,
-        "name":  "博徒の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5735,
-        "name":  "教官の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5635,
-        "name":  "武人の水時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5535,
-        "name":  "狂戦士の時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5435,
-        "name":  "奇跡の砂",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5335,
-        "name":  "守護の置き時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5235,
-        "name":  "勇士の毅然",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5135,
-        "name":  "逐光の石",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6325,
-        "name":  "医者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6125,
-        "name":  "幸運の砂時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6025,
-        "name":  "冒険者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6315,
-        "name":  "医者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6115,
-        "name":  "幸運の砂時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6015,
-        "name":  "冒険者の懐中時計",
-        "icon":  null,
-        "reliquary_cat_id":  3,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  9851,
-        "name":  "湧水の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9751,
-        "name":  "契約の時",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9651,
-        "name":  "真珠の籠",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9551,
-        "name":  "夢醒の瓢箪",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9451,
-        "name":  "緋花の壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9351,
-        "name":  "祈望の心",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9251,
-        "name":  "超越の盃",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9151,
-        "name":  "誓いの金杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9051,
-        "name":  "浮沈の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8951,
-        "name":  "夏祭りの水風船",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8851,
-        "name":  "危岩磐石の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8251,
-        "name":  "血染めの騎士のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8151,
-        "name":  "旧貴族の銀瓶",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8051,
-        "name":  "魔女の心の炎",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7951,
-        "name":  "落雷の前兆",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7751,
-        "name":  "吟遊者の水筒",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7651,
-        "name":  "緑の狩人の容器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7551,
-        "name":  "剣闘士の酩酊",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7451,
-        "name":  "少女の暫く息抜き",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7351,
-        "name":  "火渡りの悟り",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7251,
-        "name":  "雷討ちの器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7151,
-        "name":  "霜を纏った気骨",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3851,
-        "name":  "紛争の前夜",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3751,
-        "name":  "遊学者の爪型杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3651,
-        "name":  "計略の盃",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3551,
-        "name":  "降り注ぐイコルの狂詩",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3451,
-        "name":  "寛容なインク壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3351,
-        "name":  "在りし日の約束の夢",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3251,
-        "name":  "黄金の夜の喧騒",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3151,
-        "name":  "忘却の容器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3051,
-        "name":  "喜楽無限の宴",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2951,
-        "name":  "勇者たちのお茶会",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2851,
-        "name":  "守秘の魔瓶",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2751,
-        "name":  "迷酔の長夢の守護",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2151,
-        "name":  "甘露の終宴",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2051,
-        "name":  "迷い人の灯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9841,
-        "name":  "湧水の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9741,
-        "name":  "契約の時",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9641,
-        "name":  "真珠の籠",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9541,
-        "name":  "夢醒の瓢箪",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9441,
-        "name":  "緋花の壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9341,
-        "name":  "祈望の心",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9241,
-        "name":  "超越の盃",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9141,
-        "name":  "誓いの金杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9041,
-        "name":  "浮沈の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8941,
-        "name":  "夏祭りの水風船",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8841,
-        "name":  "危岩磐石の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8241,
-        "name":  "血染めの騎士のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8141,
-        "name":  "旧貴族の銀瓶",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8041,
-        "name":  "魔女の心の炎",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7941,
-        "name":  "落雷の前兆",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7741,
-        "name":  "吟遊者の水筒",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7641,
-        "name":  "緑の狩人の容器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7541,
-        "name":  "剣闘士の酩酊",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7441,
-        "name":  "少女の暫く息抜き",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7341,
-        "name":  "火渡りの悟り",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7241,
-        "name":  "雷討ちの器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7141,
-        "name":  "霜を纏った気骨",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6241,
-        "name":  "学者のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5941,
-        "name":  "亡命者のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5841,
-        "name":  "博徒のツボ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5741,
-        "name":  "教官のティーカップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5641,
-        "name":  "武人の酒器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5541,
-        "name":  "狂戦士のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5441,
-        "name":  "奇跡のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5341,
-        "name":  "守護の瓶",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5241,
-        "name":  "勇士の壮行",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5141,
-        "name":  "異国の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3841,
-        "name":  "紛争の前夜",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3741,
-        "name":  "遊学者の爪型杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3641,
-        "name":  "計略の盃",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3541,
-        "name":  "降り注ぐイコルの狂詩",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3441,
-        "name":  "寛容なインク壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3341,
-        "name":  "在りし日の約束の夢",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3241,
-        "name":  "黄金の夜の喧騒",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3141,
-        "name":  "忘却の容器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3041,
-        "name":  "喜楽無限の宴",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2941,
-        "name":  "勇者たちのお茶会",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2841,
-        "name":  "守秘の魔瓶",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2741,
-        "name":  "迷酔の長夢の守護",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2141,
-        "name":  "甘露の終宴",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2041,
-        "name":  "迷い人の灯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6331,
-        "name":  "医者の薬壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6231,
-        "name":  "学者のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6131,
-        "name":  "幸運のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6031,
-        "name":  "冒険者の金杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5931,
-        "name":  "亡命者のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5831,
-        "name":  "博徒のツボ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5731,
-        "name":  "教官のティーカップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5631,
-        "name":  "武人の酒器",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5531,
-        "name":  "狂戦士のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5431,
-        "name":  "奇跡のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5331,
-        "name":  "守護の瓶",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5231,
-        "name":  "勇士の壮行",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5131,
-        "name":  "異国の杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6321,
-        "name":  "医者の薬壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6121,
-        "name":  "幸運のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6021,
-        "name":  "冒険者の金杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6311,
-        "name":  "医者の薬壺",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6111,
-        "name":  "幸運のコップ",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6011,
-        "name":  "冒険者の金杯",
-        "icon":  null,
-        "reliquary_cat_id":  4,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  9853,
-        "name":  "浮流の対玉",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9753,
-        "name":  "虺雷の姿",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9653,
-        "name":  "海祇の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9553,
-        "name":  "形骸の笠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9453,
-        "name":  "華飾の兜",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9353,
-        "name":  "無常の面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9253,
-        "name":  "嗤笑の面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9153,
-        "name":  "将帥の兜",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9053,
-        "name":  "酒に漬けた帽子",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8953,
-        "name":  "夏祭りの仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8853,
-        "name":  "不動玄石の相",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8253,
-        "name":  "血染めの鉄仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8153,
-        "name":  "旧貴族の仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  8053,
-        "name":  "焦げた魔女の帽子",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7953,
-        "name":  "雷を呼ぶ冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7753,
-        "name":  "指揮者のハット",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7653,
-        "name":  "緑の狩人の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7553,
-        "name":  "剣闘士の凱旋",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7453,
-        "name":  "少女の儚き顔",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7353,
-        "name":  "火渡りの知恵",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7253,
-        "name":  "雷討ちの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  7153,
-        "name":  "氷雪を踏む音",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3853,
-        "name":  "諸聖の栄冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3753,
-        "name":  "呪戦士の羽面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3653,
-        "name":  "主なき冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3553,
-        "name":  "異想が枯れ落ちる円舞",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3453,
-        "name":  "慈愛の淑女ハット",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3353,
-        "name":  "在りし日の伝奏の詩",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3253,
-        "name":  "黄金の劇団の褒賞",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3153,
-        "name":  "老兵の容貌",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  3053,
-        "name":  "霊光明滅の心",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2953,
-        "name":  "悪龍の片眼鏡",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2853,
-        "name":  "紫晶の花冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2753,
-        "name":  "流砂の嗣君の遺宝",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2153,
-        "name":  "砂王の投影",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  2053,
-        "name":  "月桂の宝冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  5,
-        "max_level":  20
-    },
-    {
-        "id":  9843,
-        "name":  "浮流の対玉",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9743,
-        "name":  "虺雷の姿",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9643,
-        "name":  "海祇の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9543,
-        "name":  "形骸の笠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9443,
-        "name":  "華飾の兜",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9343,
-        "name":  "無常の面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9243,
-        "name":  "嗤笑の面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9143,
-        "name":  "将帥の兜",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  9043,
-        "name":  "酒に漬けた帽子",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8943,
-        "name":  "夏祭りの仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8843,
-        "name":  "不動玄石の相",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8743,
-        "name":  "氷祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8543,
-        "name":  "雷祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8443,
-        "name":  "水祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8343,
-        "name":  "火祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8243,
-        "name":  "血染めの鉄仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8143,
-        "name":  "旧貴族の仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8043,
-        "name":  "焦げた魔女の帽子",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7943,
-        "name":  "雷を呼ぶ冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7743,
-        "name":  "指揮者のハット",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7643,
-        "name":  "緑の狩人の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7543,
-        "name":  "剣闘士の凱旋",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7443,
-        "name":  "少女の儚き顔",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7343,
-        "name":  "火渡りの知恵",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7243,
-        "name":  "雷討ちの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  7143,
-        "name":  "氷雪を踏む音",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  6243,
-        "name":  "学者のレンズ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5943,
-        "name":  "亡命者の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5843,
-        "name":  "博徒のピアス",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5743,
-        "name":  "教官の帽子",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5643,
-        "name":  "武人のバンダナ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5543,
-        "name":  "狂戦士の仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5443,
-        "name":  "奇跡のピアス",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5343,
-        "name":  "守護の帯",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5243,
-        "name":  "勇士の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  5143,
-        "name":  "別離の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3843,
-        "name":  "諸聖の栄冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3743,
-        "name":  "呪戦士の羽面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3643,
-        "name":  "主なき冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3543,
-        "name":  "異想が枯れ落ちる円舞",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3443,
-        "name":  "慈愛の淑女ハット",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3343,
-        "name":  "在りし日の伝奏の詩",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3243,
-        "name":  "黄金の劇団の褒賞",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3143,
-        "name":  "老兵の容貌",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  3043,
-        "name":  "霊光明滅の心",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2943,
-        "name":  "悪龍の片眼鏡",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2843,
-        "name":  "紫晶の花冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2743,
-        "name":  "流砂の嗣君の遺宝",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2143,
-        "name":  "砂王の投影",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  2043,
-        "name":  "月桂の宝冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  4,
-        "max_level":  16
-    },
-    {
-        "id":  8733,
-        "name":  "氷祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  8533,
-        "name":  "雷祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  8433,
-        "name":  "水祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  8333,
-        "name":  "火祭りの冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6333,
-        "name":  "医者の方巾",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6233,
-        "name":  "学者のレンズ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6133,
-        "name":  "幸運の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6033,
-        "name":  "冒険者のバンダナ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5933,
-        "name":  "亡命者の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5833,
-        "name":  "博徒のピアス",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5733,
-        "name":  "教官の帽子",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5633,
-        "name":  "武人のバンダナ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5533,
-        "name":  "狂戦士の仮面",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5433,
-        "name":  "奇跡のピアス",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5333,
-        "name":  "守護の帯",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5233,
-        "name":  "勇士の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  5133,
-        "name":  "別離の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  3,
-        "max_level":  12
-    },
-    {
-        "id":  6323,
-        "name":  "医者の方巾",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6123,
-        "name":  "幸運の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6023,
-        "name":  "冒険者のバンダナ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  2,
-        "max_level":  4
-    },
-    {
-        "id":  6313,
-        "name":  "医者の方巾",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6113,
-        "name":  "幸運の冠",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  1,
-        "max_level":  4
-    },
-    {
-        "id":  6013,
-        "name":  "冒険者のバンダナ",
-        "icon":  null,
-        "reliquary_cat_id":  5,
-        "reliquary_level":  1,
-        "max_level":  4
-    }
+[
+  {
+    "id": 9854,
+    "name": "魂香の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9754,
+    "name": "生霊の華",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9654,
+    "name": "海染の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9554,
+    "name": "栄花の期",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9454,
+    "name": "威厳の鍔",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9354,
+    "name": "羈絆の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9254,
+    "name": "無垢の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9154,
+    "name": "偉勲の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9054,
+    "name": "金メッキのコサージュ",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8954,
+    "name": "夏祭りの花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8854,
+    "name": "盤石芽生の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8254,
+    "name": "血染めの鉄の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8154,
+    "name": "旧貴族の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8054,
+    "name": "魔女の炎の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7954,
+    "name": "雷鳥の憐み",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7754,
+    "name": "楽団の朝の光",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7654,
+    "name": "野花の記憶の草原",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7554,
+    "name": "剣闘士の未練",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7454,
+    "name": "彼方にある少女の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7354,
+    "name": "火渡りの堅実",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7254,
+    "name": "雷討ちの心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7154,
+    "name": "吹雪の中の思い",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3854,
+    "name": "異種の期待",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3754,
+    "name": "獣使いの護符",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3654,
+    "name": "陰に咲く光の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3554,
+    "name": "響き合う諧律の前奏",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3454,
+    "name": "無私の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3354,
+    "name": "在りし日の遺失の契",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3254,
+    "name": "黄金の旋律の変奏",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3154,
+    "name": "狩人の胸花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3054,
+    "name": "霊光起源の蕊",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2954,
+    "name": "旅中の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2854,
+    "name": "月娘の華彩",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2754,
+    "name": "諸王の都の始まり",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2154,
+    "name": "夢境の鉄花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2054,
+    "name": "迷宮の遊客",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9844,
+    "name": "魂香の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9744,
+    "name": "生霊の華",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9644,
+    "name": "海染の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9544,
+    "name": "栄花の期",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9444,
+    "name": "威厳の鍔",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9344,
+    "name": "羈絆の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9244,
+    "name": "無垢の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9144,
+    "name": "偉勲の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9044,
+    "name": "金メッキのコサージュ",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8944,
+    "name": "夏祭りの花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8844,
+    "name": "盤石芽生の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8244,
+    "name": "血染めの鉄の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8144,
+    "name": "旧貴族の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8044,
+    "name": "魔女の炎の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7944,
+    "name": "雷鳥の憐み",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7744,
+    "name": "楽団の朝の光",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7644,
+    "name": "野花の記憶の草原",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7544,
+    "name": "剣闘士の未練",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7444,
+    "name": "彼方にある少女の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7344,
+    "name": "火渡りの堅実",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7244,
+    "name": "雷討ちの心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7144,
+    "name": "吹雪の中の思い",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6244,
+    "name": "学者のしおり",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5944,
+    "name": "亡命者の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5844,
+    "name": "博徒の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5744,
+    "name": "教官の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5644,
+    "name": "武人の赤い花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5544,
+    "name": "狂戦士の薔薇",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5444,
+    "name": "奇跡の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5344,
+    "name": "守護の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5244,
+    "name": "勇士の勲章",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5144,
+    "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3844,
+    "name": "異種の期待",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3744,
+    "name": "獣使いの護符",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3644,
+    "name": "陰に咲く光の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3544,
+    "name": "響き合う諧律の前奏",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3444,
+    "name": "無私の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3344,
+    "name": "在りし日の遺失の契",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3244,
+    "name": "黄金の旋律の変奏",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3144,
+    "name": "狩人の胸花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3044,
+    "name": "霊光起源の蕊",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2944,
+    "name": "旅中の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2844,
+    "name": "月娘の華彩",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2744,
+    "name": "諸王の都の始まり",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2144,
+    "name": "夢境の鉄花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2044,
+    "name": "迷宮の遊客",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6334,
+    "name": "医者のアネモネ",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6234,
+    "name": "学者のしおり",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6134,
+    "name": "幸運のクローバー",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6034,
+    "name": "冒険者の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5934,
+    "name": "亡命者の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5834,
+    "name": "博徒の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5734,
+    "name": "教官の花飾り",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5634,
+    "name": "武人の赤い花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5534,
+    "name": "狂戦士の薔薇",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5434,
+    "name": "奇跡の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5334,
+    "name": "守護の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5234,
+    "name": "勇士の勲章",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5134,
+    "name": "故人の心",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6324,
+    "name": "医者のアネモネ",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6124,
+    "name": "幸運のクローバー",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6024,
+    "name": "冒険者の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6314,
+    "name": "医者のアネモネ",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6114,
+    "name": "幸運のクローバー",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6014,
+    "name": "冒険者の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 9852,
+    "name": "垂玉の葉",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9752,
+    "name": "潜光の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9652,
+    "name": "淵宮の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9552,
+    "name": "華館の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9452,
+    "name": "切落の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9352,
+    "name": "憶念の矢",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9252,
+    "name": "良医の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9152,
+    "name": "昭武の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9052,
+    "name": "追憶の風",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8952,
+    "name": "夏祭りの終わり",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8852,
+    "name": "嵯峨連山の翼",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8252,
+    "name": "血染めの黒羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8152,
+    "name": "旧貴族の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8052,
+    "name": "魔女の炎の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7952,
+    "name": "雷災の生存者",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7752,
+    "name": "琴師の矢羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7652,
+    "name": "狩人の青緑色の矢羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7552,
+    "name": "剣闘士の帰着",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7452,
+    "name": "少女の揺らぐ思い",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7352,
+    "name": "火渡りの解放",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7252,
+    "name": "雷討ちの羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7152,
+    "name": "氷を砕く執念",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3852,
+    "name": "霊髄の根源",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3752,
+    "name": "登山者の標",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3652,
+    "name": "光褪せた翠尾",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3552,
+    "name": "古海の幽深なる夜想",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3452,
+    "name": "誠実なつけペン",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3352,
+    "name": "在りし日の空想の念",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3252,
+    "name": "黄金の飛鳥の落羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3152,
+    "name": "傑作の序曲",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3052,
+    "name": "霊彩奇麗の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2952,
+    "name": "悪しき魔法使いの羽杖",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2852,
+    "name": "落謝の宴席",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2752,
+    "name": "黄金の邦国の結末",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2152,
+    "name": "裁断の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2052,
+    "name": "翠蔓の知者",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9842,
+    "name": "垂玉の葉",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9742,
+    "name": "潜光の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9642,
+    "name": "淵宮の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9542,
+    "name": "華館の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9442,
+    "name": "切落の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9342,
+    "name": "憶念の矢",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9242,
+    "name": "良医の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9142,
+    "name": "昭武の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9042,
+    "name": "追憶の風",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8942,
+    "name": "夏祭りの終わり",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8842,
+    "name": "嵯峨連山の翼",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8242,
+    "name": "血染めの黒羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8142,
+    "name": "旧貴族の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8042,
+    "name": "魔女の炎の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7942,
+    "name": "雷災の生存者",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7742,
+    "name": "琴師の矢羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7642,
+    "name": "狩人の青緑色の矢羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7542,
+    "name": "剣闘士の帰着",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7442,
+    "name": "少女の揺らぐ思い",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7342,
+    "name": "火渡りの解放",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7242,
+    "name": "雷討ちの羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7142,
+    "name": "氷を砕く執念",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6242,
+    "name": "学者の羽根ペン",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5942,
+    "name": "亡命者の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5842,
+    "name": "博徒の羽飾り",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5742,
+    "name": "教官の羽飾り",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5642,
+    "name": "武人の羽飾り",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5542,
+    "name": "狂戦士の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5442,
+    "name": "奇跡の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5342,
+    "name": "守護の印",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5242,
+    "name": "勇士の期待",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5142,
+    "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3842,
+    "name": "霊髄の根源",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3742,
+    "name": "登山者の標",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3642,
+    "name": "光褪せた翠尾",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3542,
+    "name": "古海の幽深なる夜想",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3442,
+    "name": "誠実なつけペン",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3342,
+    "name": "在りし日の空想の念",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3242,
+    "name": "黄金の飛鳥の落羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3142,
+    "name": "傑作の序曲",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3042,
+    "name": "霊彩奇麗の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2942,
+    "name": "悪しき魔法使いの羽杖",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2842,
+    "name": "落謝の宴席",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2742,
+    "name": "黄金の邦国の結末",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2142,
+    "name": "裁断の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2042,
+    "name": "翠蔓の知者",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6332,
+    "name": "医者の梟の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6232,
+    "name": "学者の羽根ペン",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6132,
+    "name": "幸運の鷹の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6032,
+    "name": "冒険者の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5932,
+    "name": "亡命者の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5832,
+    "name": "博徒の羽飾り",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5732,
+    "name": "教官の羽飾り",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5632,
+    "name": "武人の羽飾り",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5532,
+    "name": "狂戦士の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5432,
+    "name": "奇跡の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5332,
+    "name": "守護の印",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5232,
+    "name": "勇士の期待",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5132,
+    "name": "帰郷の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6322,
+    "name": "医者の梟の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6122,
+    "name": "幸運の鷹の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6022,
+    "name": "冒険者の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6312,
+    "name": "医者の梟の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6112,
+    "name": "幸運の鷹の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6012,
+    "name": "冒険者の羽根",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 2000,
+    "name": "初心者の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 9855,
+    "name": "祭祀の証",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9755,
+    "name": "陽轡の遺品",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9655,
+    "name": "別れの貝",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9555,
+    "name": "衆生の歌",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9455,
+    "name": "雷雲の印籠",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9355,
+    "name": "朝露の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9255,
+    "name": "停頓の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9155,
+    "name": "金銅の日時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9055,
+    "name": "堅い銅のコンパス",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8955,
+    "name": "夏祭りの刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8855,
+    "name": "星羅圭玉の日時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8255,
+    "name": "騎士が血に染めた時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8155,
+    "name": "旧貴族の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8055,
+    "name": "魔女の破滅の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7955,
+    "name": "雷霆の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7755,
+    "name": "フィナーレの時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7655,
+    "name": "緑の狩人の決心",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7555,
+    "name": "剣闘士の希望",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7455,
+    "name": "少女の短い華年",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7355,
+    "name": "火渡りの苦しみ",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7255,
+    "name": "雷討ちの刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7155,
+    "name": "雪覆う故郷の最後",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3855,
+    "name": "夜域の神話",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3755,
+    "name": "秘術家の金皿",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3655,
+    "name": "大業を成す刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3555,
+    "name": "運命と輪廻の諧謔",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3455,
+    "name": "忠実な砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3355,
+    "name": "在りし日の余韻の音",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3255,
+    "name": "黄金の時代の前兆",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3155,
+    "name": "審判の刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3055,
+    "name": "久遠落花の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2955,
+    "name": "水仙の一瞬一瞬",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2855,
+    "name": "凝結の刹那",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2755,
+    "name": "没落迷途のコア",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2155,
+    "name": "深金の歳月",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2055,
+    "name": "賢知の定期",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9845,
+    "name": "祭祀の証",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9745,
+    "name": "陽轡の遺品",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9645,
+    "name": "別れの貝",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9545,
+    "name": "衆生の歌",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9445,
+    "name": "雷雲の印籠",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9345,
+    "name": "朝露の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9245,
+    "name": "停頓の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9145,
+    "name": "金銅の日時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9045,
+    "name": "堅い銅のコンパス",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8945,
+    "name": "夏祭りの刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8845,
+    "name": "星羅圭玉の日時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8245,
+    "name": "騎士が血に染めた時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8145,
+    "name": "旧貴族の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8045,
+    "name": "魔女の破滅の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7945,
+    "name": "雷霆の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7745,
+    "name": "フィナーレの時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7645,
+    "name": "緑の狩人の決心",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7545,
+    "name": "剣闘士の希望",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7445,
+    "name": "少女の短い華年",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7345,
+    "name": "火渡りの苦しみ",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7245,
+    "name": "雷討ちの刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7145,
+    "name": "雪覆う故郷の最後",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6245,
+    "name": "学者の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5945,
+    "name": "亡命者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5845,
+    "name": "博徒の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5745,
+    "name": "教官の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5645,
+    "name": "武人の水時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5545,
+    "name": "狂戦士の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5445,
+    "name": "奇跡の砂",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5345,
+    "name": "守護の置き時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5245,
+    "name": "勇士の毅然",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5145,
+    "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3845,
+    "name": "夜域の神話",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3745,
+    "name": "秘術家の金皿",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3645,
+    "name": "大業を成す刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3545,
+    "name": "運命と輪廻の諧謔",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3445,
+    "name": "忠実な砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3345,
+    "name": "在りし日の余韻の音",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3245,
+    "name": "黄金の時代の前兆",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3145,
+    "name": "審判の刻",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3045,
+    "name": "久遠落花の時",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2945,
+    "name": "水仙の一瞬一瞬",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2845,
+    "name": "凝結の刹那",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2745,
+    "name": "没落迷途のコア",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2145,
+    "name": "深金の歳月",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2045,
+    "name": "賢知の定期",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6335,
+    "name": "医者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6235,
+    "name": "学者の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6135,
+    "name": "幸運の砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6035,
+    "name": "冒険者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5935,
+    "name": "亡命者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5835,
+    "name": "博徒の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5735,
+    "name": "教官の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5635,
+    "name": "武人の水時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5535,
+    "name": "狂戦士の時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5435,
+    "name": "奇跡の砂",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5335,
+    "name": "守護の置き時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5235,
+    "name": "勇士の毅然",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5135,
+    "name": "逐光の石",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6325,
+    "name": "医者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6125,
+    "name": "幸運の砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6025,
+    "name": "冒険者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6315,
+    "name": "医者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6115,
+    "name": "幸運の砂時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6015,
+    "name": "冒険者の懐中時計",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 9851,
+    "name": "湧水の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9751,
+    "name": "契約の時",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9651,
+    "name": "真珠の籠",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9551,
+    "name": "夢醒の瓢箪",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9451,
+    "name": "緋花の壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9351,
+    "name": "祈望の心",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9251,
+    "name": "超越の盃",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9151,
+    "name": "誓いの金杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9051,
+    "name": "浮沈の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8951,
+    "name": "夏祭りの水風船",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8851,
+    "name": "危岩磐石の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8251,
+    "name": "血染めの騎士のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8151,
+    "name": "旧貴族の銀瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8051,
+    "name": "魔女の心の炎",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7951,
+    "name": "落雷の前兆",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7751,
+    "name": "吟遊者の水筒",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7651,
+    "name": "緑の狩人の容器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7551,
+    "name": "剣闘士の酩酊",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7451,
+    "name": "少女の暫く息抜き",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7351,
+    "name": "火渡りの悟り",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7251,
+    "name": "雷討ちの器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7151,
+    "name": "霜を纏った気骨",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3851,
+    "name": "紛争の前夜",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3751,
+    "name": "遊学者の爪型杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3651,
+    "name": "計略の盃",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3551,
+    "name": "降り注ぐイコルの狂詩",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3451,
+    "name": "寛容なインク壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3351,
+    "name": "在りし日の約束の夢",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3251,
+    "name": "黄金の夜の喧騒",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3151,
+    "name": "忘却の容器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3051,
+    "name": "喜楽無限の宴",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2951,
+    "name": "勇者たちのお茶会",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2851,
+    "name": "守秘の魔瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2751,
+    "name": "迷酔の長夢の守護",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2151,
+    "name": "甘露の終宴",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2051,
+    "name": "迷い人の灯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9841,
+    "name": "湧水の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9741,
+    "name": "契約の時",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9641,
+    "name": "真珠の籠",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9541,
+    "name": "夢醒の瓢箪",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9441,
+    "name": "緋花の壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9341,
+    "name": "祈望の心",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9241,
+    "name": "超越の盃",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9141,
+    "name": "誓いの金杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9041,
+    "name": "浮沈の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8941,
+    "name": "夏祭りの水風船",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8841,
+    "name": "危岩磐石の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8241,
+    "name": "血染めの騎士のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8141,
+    "name": "旧貴族の銀瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8041,
+    "name": "魔女の心の炎",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7941,
+    "name": "落雷の前兆",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7741,
+    "name": "吟遊者の水筒",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7641,
+    "name": "緑の狩人の容器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7541,
+    "name": "剣闘士の酩酊",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7441,
+    "name": "少女の暫く息抜き",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7341,
+    "name": "火渡りの悟り",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7241,
+    "name": "雷討ちの器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7141,
+    "name": "霜を纏った気骨",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6241,
+    "name": "学者のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5941,
+    "name": "亡命者のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5841,
+    "name": "博徒のツボ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5741,
+    "name": "教官のティーカップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5641,
+    "name": "武人の酒器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5541,
+    "name": "狂戦士のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5441,
+    "name": "奇跡のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5341,
+    "name": "守護の瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5241,
+    "name": "勇士の壮行",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5141,
+    "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3841,
+    "name": "紛争の前夜",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3741,
+    "name": "遊学者の爪型杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3641,
+    "name": "計略の盃",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3541,
+    "name": "降り注ぐイコルの狂詩",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3441,
+    "name": "寛容なインク壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3341,
+    "name": "在りし日の約束の夢",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3241,
+    "name": "黄金の夜の喧騒",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3141,
+    "name": "忘却の容器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3041,
+    "name": "喜楽無限の宴",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2941,
+    "name": "勇者たちのお茶会",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2841,
+    "name": "守秘の魔瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2741,
+    "name": "迷酔の長夢の守護",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2141,
+    "name": "甘露の終宴",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2041,
+    "name": "迷い人の灯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6331,
+    "name": "医者の薬壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6231,
+    "name": "学者のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6131,
+    "name": "幸運のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6031,
+    "name": "冒険者の金杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5931,
+    "name": "亡命者のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5831,
+    "name": "博徒のツボ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5731,
+    "name": "教官のティーカップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5631,
+    "name": "武人の酒器",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5531,
+    "name": "狂戦士のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5431,
+    "name": "奇跡のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5331,
+    "name": "守護の瓶",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5231,
+    "name": "勇士の壮行",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5131,
+    "name": "異国の杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6321,
+    "name": "医者の薬壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6121,
+    "name": "幸運のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6021,
+    "name": "冒険者の金杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6311,
+    "name": "医者の薬壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6111,
+    "name": "幸運のコップ",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6011,
+    "name": "冒険者の金杯",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 9853,
+    "name": "浮流の対玉",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9753,
+    "name": "虺雷の姿",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9653,
+    "name": "海祇の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9553,
+    "name": "形骸の笠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9453,
+    "name": "華飾の兜",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9353,
+    "name": "無常の面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9253,
+    "name": "嗤笑の面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9153,
+    "name": "将帥の兜",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9053,
+    "name": "酒に漬けた帽子",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8953,
+    "name": "夏祭りの仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8853,
+    "name": "不動玄石の相",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8253,
+    "name": "血染めの鉄仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8153,
+    "name": "旧貴族の仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 8053,
+    "name": "焦げた魔女の帽子",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7953,
+    "name": "雷を呼ぶ冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7753,
+    "name": "指揮者のハット",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7653,
+    "name": "緑の狩人の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7553,
+    "name": "剣闘士の凱旋",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7453,
+    "name": "少女の儚き顔",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7353,
+    "name": "火渡りの知恵",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7253,
+    "name": "雷討ちの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 7153,
+    "name": "氷雪を踏む音",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3853,
+    "name": "諸聖の栄冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3753,
+    "name": "呪戦士の羽面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3653,
+    "name": "主なき冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3553,
+    "name": "異想が枯れ落ちる円舞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3453,
+    "name": "慈愛の淑女ハット",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3353,
+    "name": "在りし日の伝奏の詩",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3253,
+    "name": "黄金の劇団の褒賞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3153,
+    "name": "老兵の容貌",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3053,
+    "name": "霊光明滅の心",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2953,
+    "name": "悪龍の片眼鏡",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2853,
+    "name": "紫晶の花冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2753,
+    "name": "流砂の嗣君の遺宝",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2153,
+    "name": "砂王の投影",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 2053,
+    "name": "月桂の宝冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 9843,
+    "name": "浮流の対玉",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9743,
+    "name": "虺雷の姿",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9643,
+    "name": "海祇の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9543,
+    "name": "形骸の笠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9443,
+    "name": "華飾の兜",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9343,
+    "name": "無常の面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9243,
+    "name": "嗤笑の面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9143,
+    "name": "将帥の兜",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 9043,
+    "name": "酒に漬けた帽子",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8943,
+    "name": "夏祭りの仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8843,
+    "name": "不動玄石の相",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8743,
+    "name": "氷祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8543,
+    "name": "雷祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8443,
+    "name": "水祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8343,
+    "name": "火祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8243,
+    "name": "血染めの鉄仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8143,
+    "name": "旧貴族の仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8043,
+    "name": "焦げた魔女の帽子",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7943,
+    "name": "雷を呼ぶ冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7743,
+    "name": "指揮者のハット",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7643,
+    "name": "緑の狩人の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7543,
+    "name": "剣闘士の凱旋",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7443,
+    "name": "少女の儚き顔",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7343,
+    "name": "火渡りの知恵",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7243,
+    "name": "雷討ちの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 7143,
+    "name": "氷雪を踏む音",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 6243,
+    "name": "学者のレンズ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5943,
+    "name": "亡命者の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5843,
+    "name": "博徒のピアス",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5743,
+    "name": "教官の帽子",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5643,
+    "name": "武人のバンダナ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5543,
+    "name": "狂戦士の仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5443,
+    "name": "奇跡のピアス",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5343,
+    "name": "守護の帯",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5243,
+    "name": "勇士の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 5143,
+    "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3843,
+    "name": "諸聖の栄冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3743,
+    "name": "呪戦士の羽面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3643,
+    "name": "主なき冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3543,
+    "name": "異想が枯れ落ちる円舞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3443,
+    "name": "慈愛の淑女ハット",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3343,
+    "name": "在りし日の伝奏の詩",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3243,
+    "name": "黄金の劇団の褒賞",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3143,
+    "name": "老兵の容貌",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 3043,
+    "name": "霊光明滅の心",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2943,
+    "name": "悪龍の片眼鏡",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2843,
+    "name": "紫晶の花冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2743,
+    "name": "流砂の嗣君の遺宝",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2143,
+    "name": "砂王の投影",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 2043,
+    "name": "月桂の宝冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 4,
+    "max_level": 16
+  },
+  {
+    "id": 8733,
+    "name": "氷祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 8533,
+    "name": "雷祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 8433,
+    "name": "水祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 8333,
+    "name": "火祭りの冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6333,
+    "name": "医者の方巾",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6233,
+    "name": "学者のレンズ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6133,
+    "name": "幸運の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6033,
+    "name": "冒険者のバンダナ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5933,
+    "name": "亡命者の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5833,
+    "name": "博徒のピアス",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5733,
+    "name": "教官の帽子",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5633,
+    "name": "武人のバンダナ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5533,
+    "name": "狂戦士の仮面",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5433,
+    "name": "奇跡のピアス",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5333,
+    "name": "守護の帯",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5233,
+    "name": "勇士の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 5133,
+    "name": "別離の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 3,
+    "max_level": 12
+  },
+  {
+    "id": 6323,
+    "name": "医者の方巾",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6123,
+    "name": "幸運の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6023,
+    "name": "冒険者のバンダナ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 2,
+    "max_level": 4
+  },
+  {
+    "id": 6313,
+    "name": "医者の方巾",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6113,
+    "name": "幸運の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 1,
+    "max_level": 4
+  },
+  {
+    "id": 6013,
+    "name": "冒険者のバンダナ",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 1,
+    "max_level": 4
+  }
 ]

@@ -13,7 +13,7 @@ $ArtifactListOutFile = "HoyoArtifactMaster.json"
 # "element_attr_ids": [],
 # "weapon_cat_ids": [],
 # "page": 1,
-# "size": 20,
+# "size": 200,
 # "is_all": true,
 # "lang": "ja-jp"
 # }
@@ -43,8 +43,8 @@ $ArtifactListOutFile = "HoyoArtifactMaster.json"
 
 $Headers = @{
     "Accept"          = "application/json, text/plain, */*"
-    "Accept-Encoding" = "gzip, deflate, br"
-    "Accept-Language" = "ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+    "Accept-Encoding" = "gzip, deflate, br, zstd"
+    "Accept-Language" = "ja,en-US;q=0.9,en;q=0.8"
     "Cookie"          = $Cookie
 }
 
@@ -54,12 +54,14 @@ $AvatarList = @()
 $SkillList = @()
 
 $Uri = "https://sg-public-api.hoyolab.com/event/calculateos/avatar/list"
+# $Uri = "https://sg-public-api.hoyolab.com/event/e20200928calculate/v1/avatar/list"
 $Body = @{
     "element_attr_ids" = @()
     "weapon_cat_ids"   = @()
     "page"             = 0
     "size"             = 200
     "lang"             = "ja-jp"
+    "is_all"           = $true
 }
 
 $MySession = New-Object -TypeName Microsoft.PowerShell.Commands.WebRequestSession
@@ -72,24 +74,29 @@ $Cookie -split ';' | ForEach-Object {
     $MySession.Cookies.Add($Uri, $MyCookie)
 } 
 
-$SkillListUri = "https://sg-public-api.hoyolab.com/event/calculateos/avatar/skill_list"
+# $SkillListUri = "https://sg-public-api.hoyolab.com/event/calculateos/avatar/skill_list"
 
 while ($true) {
     $Body.page ++
     $BodyJson = $Body | ConvertTo-Json
 
-    $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json; charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
-    $Response
+    try {
+        $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json;charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
+        $Response
+    } catch {
+        $_.Exception.Response
+        break
+    }
     if ($Response.StatusCode -ne 200) {
-        break;
+        break
     }
 
-    # $ContentObj = ConvertFrom-Json -InputObject $Response.Content
-    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
+    $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+    # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+    # $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
 
     if ($ContentObj.data.list.Length -eq 0) {
-        break;
+        break
     }
 
     foreach ($entry in $ContentObj.data.list) {
@@ -119,6 +126,7 @@ while ($true) {
                 }
             }
         }
+        $entry.name
         if ($null -ne $entry.item_icon) {
             $entry.item_icon = $null
         }
@@ -137,23 +145,28 @@ while ($true) {
         foreach ($entry2 in $entry.skill_list) {
             $entry2.icon = $null
         }
+        $entry
 
         ###
-        # キャラクター 詳細
-        $GetUrl = $SkillListUri + "?avatar_id=" + $entry.id + "&element_attr_id=" + $entry.element_attr_id + "&lang=ja-jp"
-        $Response2 = Invoke-WebRequest -URI $GetUrl -Headers $Headers -WebSession $MySession -Verbose
+        # # キャラクター 詳細
+        # $GetUrl = $SkillListUri + "?avatar_id=" + $entry.id + "&element_attr_id=" + $entry.element_attr_id + "&lang=ja-jp"
+        # $Response2 = Invoke-WebRequest -URI $GetUrl -Headers $Headers -WebSession $MySession -Verbose
         # $ContentObj2 = ConvertFrom-Json -InputObject $Response2.Content
-        $ResponseContent2 = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response2.Content) )
-        $ContentObj2 = ConvertFrom-Json -InputObject $ResponseContent2
-        if ($ContentObj2.data.list.Length -eq 0) {
-            continue;
-        }
-        foreach ($entry2 in $ContentObj2.data.list) {
-            $entry2.icon = $null
-        }
+        # # $ResponseContent2 = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response2.Content) )
+        # # $ContentObj2 = ConvertFrom-Json -InputObject $ResponseContent2
+        # if ($ContentObj2.data.list.Length -eq 0) {
+        #     continue;
+        # }
+        # foreach ($entry2 in $ContentObj2.data.list) {
+        #     $entry2.icon = $null
+        # }
+        # $Json2 = @{
+        #     avatar_id  = $entry.id;
+        #     skill_list = $ContentObj2.data.list;
+        # }
         $Json2 = @{
             avatar_id  = $entry.id;
-            skill_list = $ContentObj2.data.list;
+            skill_list = $entry.skill_list;
         }
         $SkillList = $SkillList + $Json2
     }
@@ -194,15 +207,15 @@ while ($true) {
     $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json; charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
 
     if ($Response.StatusCode -ne 200) {
-        break;
+        break
     }
 
-    # $ContentObj = ConvertFrom-Json -InputObject $Response.Content
-    $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-    $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
+    $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+    # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+    # $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
 
     if ($ContentObj.data.list.Length -eq 0) {
-        break;
+        break
     }
 
     foreach ($entry in $ContentObj.data.list) {
@@ -248,15 +261,15 @@ for ($reliquary_cat_id = 1; $reliquary_cat_id -le 5; $reliquary_cat_id++) {
         $Response = Invoke-WebRequest -URI $Uri -Method Post -Headers $Headers -ContentType "application/json; charset=UTF-8" -Body $BodyJson -WebSession $MySession -Verbose
 
         if ($Response.StatusCode -ne 200) {
-            break;
+            break
         }
 
-        # $ContentObj = ConvertFrom-Json -InputObject $Response.Content
-        $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
-        $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
+        $ContentObj = ConvertFrom-Json -InputObject $Response.Content
+        # $ResponseContent = [System.Text.Encoding]::UTF8.GetString( [System.Text.Encoding]::GetEncoding("ISO-8859-1").GetBytes($Response.Content) )
+        # $ContentObj = ConvertFrom-Json -InputObject $ResponseContent
 
         if ($ContentObj.data.list.Length -eq 0) {
-            break;
+            break
         }
 
         foreach ($entry in $ContentObj.data.list) {
