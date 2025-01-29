@@ -30,7 +30,7 @@ export function getParticleByCharacter(
         const cCount = countC(character, rotationList);
         const qCount = countQ(character, rotationList);
         const action = 'E';
-        const particleInfo = getParticleInfo(character, action);
+        const particleInfo = getParticleInfo(character, action, 0);
         const num = getParticleNumFromInfo(particleInfo) * Math.trunc(Math.min(rotationLength, Math.min(eCount, cCount) * 5.5 + qCount * 18) / 5.5);
         const resultVal = resultMap.get(action) ?? _.fill(Array(NUMBER_OF_MEMBERS), 0);
         splitNumToArrByOnFieldRate(resultVal, num, team, onFields);

@@ -1,7 +1,12 @@
 <template>
   <div class="base-container">
     <div class="header">
-      &nbsp; <a href="./">げんかるく</a>
+      <div class="top-left">
+        <p><a href="./">げんかるく</a></p>
+      </div>
+      <div class="top-right">
+        <p><a href="./EnergyList">元素粒子生成一覧</a></p>
+      </div>
     </div>
 
     <div class="pane1">
@@ -63,8 +68,9 @@
       <hr />
       <h3>ROTATION</h3>
       <div id="team-rotation">
-        <TeamRotation ref="teamRotationVmRef" v-if="forcusedTeam" :team="forcusedTeam" :team-member-result="teamMemberResult"
-          :constellations="constellations" @update:rotation="updateRotation" @click:jump-to-team="jumpToTeam" />
+        <TeamRotation ref="teamRotationVmRef" v-if="forcusedTeam" :team="forcusedTeam"
+          :team-member-result="teamMemberResult" :constellations="constellations" @update:rotation="updateRotation"
+          @click:jump-to-team="jumpToTeam" />
       </div>
     </div>
 
@@ -508,5 +514,22 @@ div.team-tags-area label input[type="checkbox"]+span {
 
 div.team-tags-area label input[type="checkbox"]:checked+span {
   background-color: gold;
+}
+
+.header {
+  position: relative;
+  height: 5rem;
+}
+
+.top-left {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 1rem;
 }
 </style>

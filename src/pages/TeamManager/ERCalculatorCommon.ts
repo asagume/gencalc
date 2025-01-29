@@ -304,9 +304,11 @@ export function getMemberResult(character: string, members: TMember[], teamMembe
 }
 
 export function getCharacterInputValue(character: string, members: TMember[], item: string, teamMemberResult?: TTeamMemberResult) {
-    return (getMemberResult(character, members, teamMemberResult).characterInput as any)[item];
+    const result = getMemberResult(character, members, teamMemberResult)?.characterInput;
+    return result ? (result as any)[item] : undefined;
 }
 
 export function getStatsInputValue(character: string, members: TMember[], item: string, teamMemberResult?: TTeamMemberResult) {
-    return (getMemberResult(character, members, teamMemberResult).statsInput.statsObj as any)[item];
+    const result = getMemberResult(character, members, teamMemberResult)?.statsInput?.statsObj;
+    return result ? (result as any)[item] : undefined;
 }

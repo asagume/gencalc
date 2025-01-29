@@ -41,8 +41,8 @@ export const CHARACTER_ENERGY_FUNC: {
         if (constellation >= constellationLevel) {
             messages.push('キャラクターが雷影剣で生成した豊穰の勾玉を獲得した時、該当キャラクターの元素エネルギーが35%未満の場合、豊穰の勾玉で回復できる元素エネルギー+100%。');
         }
-        const skillLevel = getCharacterInputValue(character, members, '元素スキルレベル', teamMemberResult);
-        const er = getStatsInputValue(character, members, '元素チャージ効率', teamMemberResult);
+        const skillLevel = getCharacterInputValue(character, members, '元素スキルレベル', teamMemberResult) ?? 8;
+        const er = getStatsInputValue(character, members, '元素チャージ効率', teamMemberResult) ?? 100;
         const myEnergy = [3, 3, 3, 3.5, 3.5, 3.5, 4, 4, 4, 4, 4, 4, 4, 4, 4][skillLevel - 1] * (100 + (er / 10)) / 100;
         const allEnergy = 0;
         const otherEnergy = 0;
@@ -477,18 +477,20 @@ export const CHARACTER_ENERGY_FUNC: {
             '攻撃が敵に命中すると、周囲のチーム全員の元素エネルギーを回復する。この方式での元素エネルギー回復は1秒毎に1回のみ可能で、継続時間内に最大5回まで発動可能。',
             '元素チャージ効率が100%を超えている場合、超えた分1%につき、雷電将軍は下記の効果を獲得する。・夢想の一心状態で提供する元素エネルギー回復+0.6%。',
         ];
-        const er = getStatsInputValue(character, members, '元素チャージ効率', teamMemberResult);
+        const er = getStatsInputValue(character, members, '元素チャージ効率', teamMemberResult) ?? 100;
         let unit = 2.3 * (1 + (er - 100) * 0.006);
         let unit2 = 0;
         const memberResult = getMemberResult(character, members, teamMemberResult);
-        memberResult.damageResult.元素爆発.forEach(entry => {
-            if (entry[0] === '夢想の一心エネルギー回復') {
-                unit = entry[2];
-            } else if (entry[0] === '非表示_夢想の一心エネルギー回復') {
-                unit2 = entry[2];
-            }
-        })
-        if (memberResult.characterInput.weapon === '草薙の稲光') {
+        if (memberResult?.damageResult?.元素爆発) {
+            memberResult.damageResult.元素爆発.forEach(entry => {
+                if (entry[0] === '夢想の一心エネルギー回復') {
+                    unit = entry[2];
+                } else if (entry[0] === '非表示_夢想の一心エネルギー回復') {
+                    unit2 = entry[2];
+                }
+            })
+        }
+        if (memberResult?.characterInput?.weapon === '草薙の稲光') {
             unit2 *= [30, 35, 40, 45, 50][memberResult.characterInput.武器精錬ランク - 1] * 0.006;
         }
         const myEnergy = 0;

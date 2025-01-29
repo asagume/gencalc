@@ -53,6 +53,11 @@ module.exports = defineConfig({
       template: 'public/StatList.html',
       filename: 'StatList.html',
     },
+    EnergyList: {
+      entry: 'src/pages/EnergyList/main.ts',
+      template: 'public/EnergyList.html',
+      filename: 'EnergyList.html',
+    },
   },
 
   publicPath: process.env.NODE_ENV === 'production'

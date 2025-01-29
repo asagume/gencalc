@@ -2,7 +2,7 @@
   <fieldset>
     <legend>げんかるく - 原神ダメージシミュレーター Ver.{{ version }}</legend>
     <p>
-      <a href="ArtifactSetList.html">聖遺物セット効果一覧</a>
+      <a href="StatList.html">ステータス一覧</a>
       <a href="BirthdayCalendar.html">誕生日カレンダー</a>
     </p>
     <p>
@@ -11,6 +11,9 @@
       <a href="WeaponList.html?kind=Polearm">長柄武器一覧</a>
       <a href="WeaponList.html?kind=Bow">弓一覧</a>
       <a href="WeaponList.html?kind=Catalyst">法器一覧</a>
+    </p>
+    <p>
+      <a href="ArtifactSetList.html">聖遺物セット効果一覧</a>
     </p>
     <p>
       <a href="RandomTeam.html">ランダムチーム編成メーカー</a>

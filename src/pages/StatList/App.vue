@@ -3,7 +3,7 @@
     <div class="pane1">
       <p class="left-top"><a href="./">げんかるく</a></p>
       <p>&nbsp;</p>
-      <h2>ステータス一覧</h2>
+      <h2>キャラクターステータス一覧</h2>
     </div>
 
     <div class="pane2">
@@ -25,7 +25,7 @@
         </select>
       </div>
       <br />
-      <vue-good-table :columns="columns" :rows="rows" />
+      <vue-good-table :columns="columns" :rows="rows" theme="nocturnal" styleClass="vgt-table bordered" />
     </div>
 
     <div class="footer">
@@ -54,11 +54,35 @@ export default defineComponent({
     const { displayName } = CompositionFunction();
 
     const columns = [
-      { label: displayName('キャラクター'), field: 'name', },
-      { label: displayName('基礎HP'), field: 'baseHp', type: 'number', },
-      { label: displayName('基礎攻撃力'), field: 'baseAtk', type: 'number', },
-      { label: displayName('基礎防御力'), field: 'baseDef', type: 'number', },
-      { label: displayName('突破ステータス'), field: 'addStat', html: true, },
+      {
+        label: displayName('キャラクター'),
+        field: 'name',
+        thClass: 'text-center',
+      },
+      {
+        label: displayName('基礎HP'),
+        field: 'baseHp',
+        type: 'number',
+        thClass: 'text-center',
+      },
+      {
+        label: displayName('基礎攻撃力'),
+        field: 'baseAtk',
+        type: 'number',
+        thClass: 'text-center',
+      },
+      {
+        label: displayName('基礎防御力'),
+        field: 'baseDef',
+        type: 'number',
+        thClass: 'text-center',
+      },
+      {
+        label: displayName('突破ステータス'),
+        field: 'addStat',
+        html: true,
+        thClass: 'text-center',
+      },
     ];
 
     const LEVEL_LIST = ['1+', '20', '20+', '40', '40+', '50', '50+', '60', '60+', '70', '70+', '80', '80+', '90'];
@@ -138,6 +162,10 @@ export default defineComponent({
     "pane1"
     "pane2"
     "footer";
+}
+
+.text-center {
+  text-align: center;
 }
 </style>
 <style scoped>

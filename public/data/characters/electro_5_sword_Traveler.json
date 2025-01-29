@@ -372,7 +372,14 @@
             "名前": "転瞬の迅雷",
             "種類": "固有天賦",
             "説明": "周囲のチームメンバー（旅人自身を除く）が<span style=\"color:#FFD780FF\">雷影剣</span>で生成された豊穰の勾玉を拾うと、<span style=\"color:#FFD780FF\">雷影剣</span>のクールタイム-1.5秒。",
-            "icon_url": "images/characters/electro_5_sword_Traveler/talent_4.png"
+            "icon_url": "images/characters/electro_5_sword_Traveler/talent_4.png",
+            "詳細": [
+                {
+                    "条件": "活性化済み・缶詰知識",
+                    "種類": "基礎攻撃力",
+                    "数値": 3
+                }
+            ]
         },
         {
             "名前": "轟く雷鳴",
