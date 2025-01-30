@@ -31,33 +31,33 @@ const PARTICLE_GENERATE_6 = 0x6000; // 1アクションで元素粒子を生成�
 // [0]粒子数,[1]受取タイプ,[2]継続時間,[3]クールタイム,[4]粒子生成クールタイム,[5]命ノ星座,[6]粒子数,[7]受取タイプ,[8]継続時間,[9]クールタイム,[10]粒子生成クールタイム
 const PARTICLE_MASTER: TParticleMaster = {
     '藍硯': {
-        'E': 3,
+        'E': [3, SP_NEXT, 12.5, 16, undefined],
     },
     'シトラリ': {
-        'E': 5,
+        'E': [5, SP_NEXT, 20, 16, undefined],
     },
     'マーヴィカ': {
-        'E.Press': 5,
-        'E.Hold': 5,
+        'E.Press': [5, SP_NEXT, undefined, 15, undefined],  // 継続時間は夜魂値に依存
+        'E.Hold': [5, SP_NEXT, undefined, 15, undefined],   // 継続時間は夜魂値に依存
     },
     'チャスカ': {
-        'E': [5, SP_SELF, undefined, 6.5 + CT_AFTER_DURATION, undefined],
+        'E': [5, SP_SELF, undefined, 6.5 + CT_AFTER_DURATION, undefined],   // 継続時間は夜魂値に依存
     },
     'オロルン': {
-        'E': 3,
+        'E': [3, SP_NEXT, undefined, 15, undefined],    // 継続時間は夜魂値に依存
     },
     'シロネン': {
-        'E': [4, SP_NEXT, 1, 7 + CT_AFTER_DURATION, undefined],
+        'E': [4, SP_NEXT, 1, 7 + CT_AFTER_DURATION, undefined], // 継続時間はEN2の場合を記載、それ以外は夜魂値に依存
     },
     'キィニチ': {
-        'E': 5,
+        'E': [5, SP_NEXT, undefined, 18, undefined],    // 継続時間は夜魂値に依存
         'E(skill)': 0,
     },
     'カチーナ': {
-        'E': [0.67, SP_SHRT, undefined, 20, 2 + PARTICLE_GENERATE_6],  // 0.667 * 6回
+        'E': [0.67, SP_SHRT, undefined, 20, 2 + PARTICLE_GENERATE_6],  // 0.667 * 6回、攻撃回数は夜魂値に依存
     },
     'ムアラニ': {
-        'E': 4.5,
+        'E': [4.5, SP_NEXT, undefined, 6 + CT_AFTER_DURATION, undefined],   // 継続時間は夜魂値に依存
     },
     'エミリエ': {
         'E': [1, SP_LONG, 22, 14, 2.5],
@@ -66,15 +66,15 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': 2,
     },
     'シグウィン': {
-        'E.Press': 4,
-        'E.Hold': 4,
+        'E.Press': [4, SP_NEXT, undefined, 18, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 18, undefined],
     },
     'クロリンデ': {
         'E': [1, SP_SELF, 7.5, 16, 2],
         'E(skill)': 0,
     },
     'アルレッキーノ': {
-        'E': 5,
+        'E': [5, SP_NEXT, 30, 30, undefined],
     },
     '千織': {
         'E.Press': [1.2, SP_LONG, 17, 15, 3.6],
@@ -84,19 +84,19 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': [2, SP_NEXT, undefined, 6, 3], // CT3s
     },
     '閑雲': {
-        'E': 5,
+        'E': [5, SP_NEXT, undefined, 12, undefined],
     },
     'シュヴルーズ': {
         'E.Press': [4, SP_NEXT, 12, 15, 10],
         'E.Hold': [4, SP_NEXT, 12, 15, 10, C4, 4, SP_NEXT, 12, 15, 10],   // CT10s
     },
     'ナヴィア': {
-        'E.Press': 3.5,
-        'E.Hold': 3.5,
+        'E.Press': [3.5, SP_NEXT, undefined, 9, undefined],
+        'E.Hold': [3.5, SP_NEXT, undefined, 9, undefined],
     },
     'シャルロット': {
-        'E.Press': 3,
-        'E.Hold': 5,
+        'E.Press': [3, SP_NEXT, 6, 12, undefined],  // スナップシルエット
+        'E.Hold': [5, SP_NEXT, 12, 18, undefined],  // フォーカスインプレッション 最大画角まで2秒かかる
     },
     'フリーナ': {
         'E': [1, SP_LONG, 30, 20, 2.5],   // CT2.5s
@@ -105,13 +105,13 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': [1, SP_SELF, 10, 16, 2, C1, 1, SP_SELF, 14, 16, 2],    // CT2s
     },
     'ヌヴィレット': {
-        'E': [4, SP_NEXT, 0, 12, undefined],
+        'E': [4, SP_NEXT, undefined, 12, undefined],
     },
     'リネ': {
-        'E': 5,
+        'E': [5, SP_NEXT, undefined, 15, undefined],
     },
     '白朮': {
-        'E': 3.5,
+        'E': [3.5, SP_NEXT, undefined, 10, undefined],
     },
     'ディシア': {
         'E': [1, SP_LONG, 12, 20, 2.5, C2, 1, SP_LONG, 18, 20, 2.5],    // フィールドダメージ CT2.5s
@@ -128,18 +128,18 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [3, SP_LONG, 25, 6, 7],      // CT7s
     },
     'ニィロウ': {
-        'E': [1.5 + 1 + 1 + 1, SP_SELF]
+        'E': [1.5 + 1 + 1 + 1, SP_SELF, 8, 18, undefined],  // 祈月継続時間8秒 天を滌う水環の継続時間12秒
     },
     'セノ': {
-        'E': 3,
-        'E(burst)': 1 + 1 / 3,
+        'E': [3, SP_NEXT, undefined, 7.5, undefined],
+        'E(burst)': [1.33, SP_NEXT, undefined, 3, undefined],  // 冥祭クールタイム3s
     },
     'ティナリ': {
-        'E': 3.5,
+        'E': [3.5, SP_NEXT, 8, 12, undefined],
     },
     '夜蘭': {
-        'E.Press': [4, SP_NEXT, 0, 10, undefined],
-        'E.Hold': [4, SP_NEXT, 0, 10, undefined],
+        'E.Press': [4, SP_NEXT, undefined, 10, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 10, undefined],
     },
     '神里綾人': {
         'E': [1.5, SP_SELF, 6, 12, 2.5 + PARTICLE_GENERATE_3],
@@ -152,7 +152,7 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E.Hold': [4, SP_NEXT, 15, 15, undefined],
     },
     '荒瀧一斗': {
-        'E': 3.5,
+        'E': [3.5, SP_NEXT, 6, 10, undefined],
     },
     '珊瑚宮心海': {
         'E': [0.67, SP_LONG, 12, 20, 2],    // per damage CT2s
@@ -167,22 +167,22 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': [1, SP_SELF, 10, 18, 2 + PARTICLE_GENERATE_4],   // CT2s 4回まで
     },
     '神里綾華': {
-        'E': 4.5,
+        'E': [4.5, SP_NEXT, undefined, 10, undefined],
     },
     '楓原万葉': {
-        'E.Press': 3,
-        'E.Hold': 4,
+        'E.Press': [3, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 9, undefined],
     },
     'エウルア': {
-        'E.Press': 1.5,
-        'E.Hold': 2.5,
+        'E.Press': [1.5, SP_NEXT, undefined, 4, undefined],
+        'E.Hold': [2.5, SP_NEXT, undefined, 10, undefined],
     },
     '胡桃': {
         'E': [2.5, SP_SELF, 9, 16, 5 + PARTICLE_GENERATE_2], // CT5s 2回まで
     },
     '魈': {
-        'E': 3,
-        'E(burst)': 0,
+        'E': [3, SP_NEXT, undefined, 10, undefined],
+        'E(burst)': [0, SP_NEXT, undefined, 10, undefined],
     },
     '甘雨': {
         'E': [2, SP_SHRT, 6, 10, 0 + PARTICLE_GENERATE_2]
@@ -199,47 +199,48 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': [1 / 3 * 9, SP_SELF],              // とりあえず居座り時間9sとする。運用次第すぎて計算できない
     },
     'クレー': {
-        'E': 3.5,
+        'E': [3.5, SP_NEXT, undefined, 20, undefined],
     },
     'ウェンティ': {
-        'E.Press': 3,
-        'E.Hold': 4,
+        'E.Press': [3, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 15, undefined],
     },
     '刻晴': {
-        'E.Press': 2.5,
-        'E.Hold': 2.5,
+        'E.Press': [2.5, SP_NEXT, undefined, 7.5, undefined],
+        'E.Hold': [2.5, SP_NEXT, undefined, 7.5, undefined],
     },
     'モナ': {
         'E.Press': [3.33, SP_SHRT, 5, 12, undefined],
         'E.Hold': [3.33, SP_SHRT, 5, 12, undefined],
     },
     '七七': {
-        'E': 0,
+        'E': [0, SP_NEXT, 15, 30, undefined],
     },
     'ディルック': {
         'E': [1.33, SP_SELF, undefined, 10, 0 + PARTICLE_GENERATE_3],
     },
     'ジン': {
-        'E': 2.67,
+        'E.Press': [2.67, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [2.67, SP_NEXT, 1, 6 + CT_AFTER_DURATION, undefined], // 長押し最大5秒
     },
     'フレミネ': {
-        'E': 2,
-        'E(burst)': 1,
+        'E': [2, SP_NEXT, undefined, 10, undefined],
+        'E(burst)': [1, SP_NEXT, undefined, 10, undefined], // 潜猟モード
     },
     'リネット': {
-        'E.Press': 4,
-        'E.Hold': 4,
+        'E.Press': [4, SP_NEXT, undefined, 12, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 12, undefined],
     },
     '綺良々': {
-        'E.Press': 3,
-        'E.Hold': 3 + 1,
+        'E.Press': [3, SP_NEXT, 12, 8, undefined],
+        'E.Hold': [3 + 1, SP_NEXT, 12, 12, undefined],
     },
     'カーヴェ': {
-        'E': 2,
+        'E': [2, SP_NEXT, undefined, 6, undefined],
     },
     'ミカ': {
-        'E.Press': 4,
-        'E.Hold': 4,
+        'E.Press': [4, SP_NEXT, 12, 15, undefined],
+        'E.Hold': [4, SP_NEXT, 12, 15, undefined],
     },
     'ヨォーヨ': {
         'E.Press': [1, SP_LONG, 10, 15, 1.5],
@@ -252,14 +253,14 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': [1.33, SP_LONG, 12, 12, 3]     // CT3s
     },
     'キャンディス': {
-        'E.Press': 2,
-        'E.Hold': 3
+        'E.Press': [2, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [3, SP_NEXT, undefined, 9, undefined],
     },
     'ドリー': {
-        'E': 2,
+        'E': [2, SP_NEXT, undefined, 9, undefined],
     },
     'コレイ': {
-        'E': 3,
+        'E': [3, SP_NEXT, undefined, 12, undefined],
     },
     '鹿野院平蔵': {
         'E': 4,     // 2:変格0-1/2.5:変格2-3/3:変格4=正論
@@ -268,105 +269,105 @@ const PARTICLE_MASTER: TParticleMaster = {
         'E': [0.45, SP_LONG, 12, 15, 1.5, C2, 0.45, SP_LONG, 15, 15, 1.5],  // CT1.5s
     },
     '雲菫': {
-        'E.Press': 2,
-        'E.Hold': 3,
+        'E.Press': [2, SP_NEXT, undefined, 9, undefined],
+        'E.Hold': [3, SP_NEXT, undefined, 9, undefined],
     },
     'ゴロー': {
-        'E.Press': 2,
-        'E.Hold': 2,
+        'E.Press': [2, SP_NEXT, 10, 10, undefined],
+        'E.Hold': [2, SP_NEXT, 10, 10, undefined],
     },
     'トーマ': {
-        'E': 3.5,
+        'E': [3.5, SP_NEXT, 8, 15, undefined],
     },
     '九条裟羅': {
-        'E': 3,
+        'E': [3, SP_NEXT, 10, 6, undefined],
     },
     '早柚': {
-        'E.Press': 2,
-        'E.Hold': 3,
+        'E.Press': [2, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [3, SP_NEXT, 10, 10 + CT_AFTER_DURATION, undefined], // 最大10秒継続可能
     },
     '煙緋': {
-        'E': 3,
+        'E': [3, SP_NEXT, undefined, 9, undefined],
     },
     'ロサリア': {
-        'E': 3,
+        'E': [3, SP_NEXT, undefined, 6, undefined],
     },
     '辛炎': {
-        'E': 4,
+        'E': [4, SP_NEXT, 12, 18, undefined],
     },
     'ディオナ': {
-        'E.Press': 0.8 * 2,
-        'E.Hold': 0.8 * 5,
+        'E.Press': [0.8 * 2, SP_NEXT, 4.8, 6, undefined], // 継続時間は天賦レベルに依存 Lv.7以降は命中したフリーズキャッツクローの数×2.4秒
+        'E.Hold': [0.8 * 5, SP_NEXT, 12, 15, undefined], // 継続時間は天賦レベルに依存 Lv.7以降は命中したフリーズキャッツクローの数×2.4秒
     },
     'スクロース': {
-        'E': 4,
+        'E': [4, SP_NEXT, undefined, 15, undefined],
     },
     '重雲': {
-        'E': 4,
+        'E': [4, SP_NEXT, 10, 15, undefined],
     },
     'ノエル': {
-        'E': 0,
+        'E': [0, SP_NEXT, 12, 24, undefined],
     },
     'ベネット': {
-        'E.Press': 2.25,
-        'E.Hold': 3,
+        'E.Press': [2.25, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [3, SP_NEXT, undefined, 7.5, undefined],  // 1段チャージの上に2段チャージ（CT10）があるが省略
     },
     'フィッシュル': {
         'E': [0.67, SP_LONG, 10, 25, 1, C6, 0.67, SP_LONG, 12, 25, 1],
     },
     '凝光': {
-        'E': 3.33,
+        'E': [3.33, SP_NEXT, undefined, 12, undefined],
     },
     '行秋': {
         'E': [4.5, SP_NEXT, 15, 21, undefined],
     },
     '北斗': {
-        'E.Press': 2,
-        'E.Hold': 4,
+        'E.Press': [2, SP_NEXT, undefined, 7.5, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 7.5, undefined],  // 最大
     },
     '香菱': {
         'E': [1, SP_SHRT, 8, 12, 2 + PARTICLE_GENERATE_4],
     },
     'レザー': {
-        'E.Press': 3,
-        'E.Hold': 4,
+        'E.Press': [3, SP_NEXT, undefined, 6, undefined],
+        'E.Hold': [4, SP_NEXT, undefined, 10, undefined],
         'E.Press(burst)': 0,
     },
     'バーバラ': {
         'E': [0, SP_NEXT, 15, 32, undefined, C2, 0, SP_NEXT, 15, 27.2, undefined],
     },
     'リサ': {
-        'E.Press': 0,
-        'E.Hold': 5,
+        'E.Press': [0, SP_NEXT, undefined, 1, undefined],
+        'E.Hold': [5, SP_NEXT, undefined, 16, undefined],
     },
     'ガイア': {
-        'E': 2.67,
+        'E': [2.67, SP_NEXT, undefined, 6, undefined],
     },
     'アンバー': {
         'E.Press': [4, SP_SHRT, 8, 15, undefined],
         'E.Hold': [4, SP_SHRT, 8, 15, undefined],
     },
     '旅人(炎)': {
-        'E.Press': [1, SP_SHRT, 12, 18, 2.9],
-        'E.Hold': [1, SP_SHRT, 12, 18, 2.9],
+        'E.Press': [1, SP_SHRT, 12, 18, 2.9],   // 継続時間は夜魂値に依存。最大12秒、補充なしなら6秒
+        'E.Hold': [1, SP_SHRT, 12, 18, 2.9],    // 継続時間は夜魂値に依存。最大12秒、補充なしなら6秒
     },
     '旅人(水)': {
-        'E.Press': 3.33,
-        'E.Hold': 3.33,
+        'E.Press': [3.33, SP_NEXT, undefined, 10, undefined],
+        'E.Hold': [3.33, SP_NEXT, 6, 10, undefined],            // 長押しの継続時間は最大6秒
     },
     '旅人(草)': {
-        'E': 2.5,
+        'E': [2.5, SP_NEXT, undefined, 8, undefined],
     },
     '旅人(雷)': {
-        'E': 1,
+        'E': [1, SP_NEXT, 6, 13.5, undefined],
     },
     '旅人(岩)': {
-        'E.Press': 3.33,
-        'E.Hold': 3.33,
+        'E.Press': [3.33, SP_NEXT, 30, 6, undefined],   // 固有天賦1でCT-2
+        'E.Hold': [3.33, SP_NEXT, 30, 6, undefined],    // 固有天賦1でCT-2
     },
     '旅人(風)': {
-        'E.Press': 2,
-        'E.Hold': 3.33,
+        'E.Press': [2, SP_NEXT, undefined, 5, undefined],
+        'E.Hold': [3.33, SP_NEXT, undefined, 8, undefined], // 最大チャージ
     },
 }
 

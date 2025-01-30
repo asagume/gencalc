@@ -190,13 +190,13 @@ export default defineComponent({
       //   thClass: 'text-center',
       //   tdClass: 'text-center',
       // },
-      {
-        label: displayName('総粒子数'),
-        field: 'totalParticleNum',
-        formatFn: formatTotalParticleNum,
-        thClass: 'text-center',
-        tdClass: 'text-center',
-      },
+      // {
+      //   label: displayName('総粒子数'),
+      //   field: 'totalParticleNum',
+      //   formatFn: formatTotalParticleNum,
+      //   thClass: 'text-center',
+      //   tdClass: 'text-center',
+      // },
     ];
     const rows = computed(() => {
       const result: any[] = [];
