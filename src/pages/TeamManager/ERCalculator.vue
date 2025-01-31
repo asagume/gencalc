@@ -282,7 +282,7 @@ import _ from "lodash";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { ARTIFACT_SET_MASTER, CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey, WEAPON_IMG_SRC } from "@/master";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, getCooltimeFromInfo, getDurationFromInfo, getElementalSkillActions, getParticleInfo } from "@/particlemaster";
+import { CHARACTER_E_CT_RESET_BY_Q_ARR, CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, getCooltimeFromInfo, getDurationFromInfo, getElementalSkillActions, getParticleInfo } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_ATTACK } from "./ERCalculatorCommon";
 import { getEnergyByArtifact, getEnergyByAttack, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, splitNumToArrByOnFieldRate } from "./ERCalculatorFunc";
@@ -398,6 +398,11 @@ export default defineComponent({
                                 if (constellation >= 6) {
                                     ct -= 5;
                                 }
+                            } else if (memberNameArr.includes('シロネン') && characterDetail?.元素 == '雷') {
+                                const constellation = getConstellation('シロネン', props.team, props.teamMemberResult);
+                                if (constellation >= 2) {
+                                    ct -= 6;
+                                }
                             }
                             if (CHARACTER_Q_TO_E_ARR.includes(rotation.member)) {
                                 const constellation = getConstellation(rotation.member, props.team, props.teamMemberResult);
@@ -425,6 +430,11 @@ export default defineComponent({
                                 if (CHARACTER_Q_TO_E_ARR.includes(rotation.member)) {
                                     const qct = characterDetail?.元素爆発.クールタイム ?? 0;
                                     ct = _.round(Math.max(ct, qct) / 2, 1);
+                                } else if (CHARACTER_E_CT_RESET_BY_Q_ARR.includes(rotation.member)) {
+                                    const qct = characterDetail?.元素爆発.クールタイム ?? 0;
+                                    if (qct) {
+                                        ct = Math.min(ct, qct);
+                                    }
                                 }
                             }
                             if (ct > eLength[memberIndex]) {

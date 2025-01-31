@@ -398,6 +398,8 @@ Object.keys(PARTICLE_MASTER).forEach(key => {
 
 /** 元素爆発で元素スキル再発動 または 継続時間延長するキャラクターたち */
 export const CHARACTER_Q_TO_E_ARR = ['フィッシュル', '珊瑚宮心海', 'エミリエ'];
+/** 元素爆発で元素スキルCTリセットするキャラクターたち */
+export const CHARACTER_E_CT_RESET_BY_Q_ARR = ['フレミネ', 'アルレッキーノ'];
 
 /** 元素スキル後に特定のアクションを実行するキャラクターとそのアクションと回数 */
 export const CHARACTER_E_UNTIL_MAP = new Map<string, Map<string[], number>>();
