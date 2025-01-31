@@ -282,7 +282,7 @@ import _ from "lodash";
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "@/components/CompositionFunction.vue";
 import { ARTIFACT_SET_MASTER, CHARACTER_MASTER, ELEMENT_BG_COLOR_CLASS, ELEMENT_IMG_SRC, IMG_SRC_DUMMY, TArtifactSetKey, WEAPON_IMG_SRC } from "@/master";
-import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, getCooltimeFromInfo, getDurationFromInfo, getElementalSkillActions, getParticleInfo } from "@/particlemaster";
+import { CHARACTER_E_DELAY_MAP, CHARACTER_E_UNTIL_MAP, CHARACTER_Q_NOT_RECHARGEABLE, CHARACTER_Q_TO_E_ARR, getCooltimeFromInfo, getDurationFromInfo, getElementalSkillActions, getParticleInfo } from "@/particlemaster";
 import { getCharacterDetail, getCharacterMaster, getWeaponMaster, NUMBER_OF_MEMBERS, setupCharacterDetailMap, TConstellation, TTeam, TTeamMemberResult } from "./team";
 import { getOnFieldRate, TERParticle, RECHARGE_PARTICLE_SKILL, RECHARGE_PARTICLE_PASSIVE, RECHARGE_PARTICLE_CONSTELLATION, TEREnergy, RECHARGE_ENERGY_SKILL, RECHARGE_ENERGY_BURST, RECHARGE_ENERGY_PASSIVE, RECHARGE_ENERGY_CONSTELLATION, RECHARGE_PARTICLE_ENEMY, countQ, isRechargeKindParticle, isRechargeKindEnergy, RECHARGE_PARTICLE_RESONANCE, RECHARGE_PARTICLE_FAVONIUS, RECHARGE_ENERGY_WEAPON, RECHARGE_ENERGY_ARTIFACT, RECHARGE_ENERGY_ATTACK } from "./ERCalculatorCommon";
 import { getEnergyByArtifact, getEnergyByAttack, getEnergyByCharacter, getEnergyByWeapon, getParticleByCharacter, getParticleByCharacterExtra, getParticleByResonance, getParticleByWeapon, splitNumToArrByOnFieldRate } from "./ERCalculatorFunc";
@@ -399,6 +399,14 @@ export default defineComponent({
                                     ct -= 5;
                                 }
                             }
+                            if (CHARACTER_Q_TO_E_ARR.includes(rotation.member)) {
+                                const constellation = getConstellation(rotation.member, props.team, props.teamMemberResult);
+                                const particleInfo = getParticleInfo(rotation.member, 'E', constellation);
+                                if (particleInfo) {
+                                    const ect = getCooltimeFromInfo(particleInfo) ?? 0;
+                                    ct = _.round(Math.max(ct, ect) / 2, 1);
+                                }
+                            }
                             qLength[memberIndex] += ct;
                         } else {
                             const constellation = getConstellation(rotation.member, props.team, props.teamMemberResult);
@@ -414,8 +422,12 @@ export default defineComponent({
                                         ct *= 0.85;
                                     }
                                 }
+                                if (CHARACTER_Q_TO_E_ARR.includes(rotation.member)) {
+                                    const qct = characterDetail?.元素爆発.クールタイム ?? 0;
+                                    ct = _.round(Math.max(ct, qct) / 2, 1);
+                                }
                             }
-                            if (ct > eLength[memberIndex] && ct > duration) {
+                            if (ct > eLength[memberIndex]) {
                                 eLength[memberIndex] = ct;
                             }
                         }
