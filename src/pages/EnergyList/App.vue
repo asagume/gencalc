@@ -126,9 +126,9 @@ export default defineComponent({
     const formatCooltime = (value: any) => {
       return value ? value + displayName('秒') : '';
     };
-    const formatTotalParticleNum = (value: any) => {
-      return value ? value + displayName('個') : '';
-    };
+//    const formatTotalParticleNum = (value: any) => {
+//      return value ? value + displayName('個') : '';
+//    };
 
     const columns = [
       {

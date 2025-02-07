@@ -35,6 +35,10 @@
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
   },
+  "玉響停の御噺": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_TamayurateinoOhanashi.json"
+  },
   "鎮山の釘": {
     "レアリティ": 4,
     "import": "data/weapons/polearm/4_Mountain-BracingBolt.json"

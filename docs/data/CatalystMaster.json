@@ -1,4 +1,8 @@
 {
+  "寝正月の初晴": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_SunnyMorningSleep-In.json"
+  },
   "祭星者の眺め": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Starcaller'sWatch.json"
