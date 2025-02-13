@@ -63,7 +63,8 @@ export const 実数ダメージ加算ARRAY = [
     '草元素ダメージアップ',
     '氷元素ダメージアップ',
     '岩元素ダメージアップ',
-    '物理ダメージアップ'
+    '物理ダメージアップ',
+    '拡散ダメージアップ',
 ];
 export const 元素反応バフARRAY = [
     '蒸発反応ボーナス',
@@ -308,6 +309,8 @@ export const 元素反応TEMPLATE = {
     烈開花ダメージ会心ダメージ: 0,  // for ナヒーダ
     超開花ダメージ会心率: 0,        // for ナヒーダ
     超開花ダメージ会心ダメージ: 0,  // for ナヒーダ
+    拡散ダメージ会心率: 0,          // for 夢見月瑞希
+    拡散ダメージ会心ダメージ: 0,    // for 夢見月瑞希
 };
 export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
 export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;

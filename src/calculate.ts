@@ -1301,11 +1301,13 @@ function calculate固定値系元素反応ダメージ(
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
+        const dmgUp = statsObj[reaction + 'ダメージアップ'] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
         const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
         let result = baseDmg * multiplier;
         result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
+        result += dmgUp;
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
     } catch (error) {

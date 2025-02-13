@@ -329,7 +329,7 @@ export default defineComponent({
     })
 
     const swirlDmg = computed(() => {
-      let result = props.damageResult.元素反応.拡散ダメージ;
+      let result = reactionDmg('拡散ダメージ');
       if (増幅反応.value == '蒸発_炎' && props.damageResult.元素反応.拡散元素 == '炎') {
         result *= props.damageResult.元素反応.蒸発倍率_炎;
       } else if (増幅反応.value == '蒸発_水' && props.damageResult.元素反応.拡散元素 == '水') {
