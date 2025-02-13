@@ -51,8 +51,9 @@ $pageIds = @()
 # $pageIds += 7080   # チャスカ
 # $pageIds += 7299   # マーヴィカ
 # $pageIds += 7300   # シトラリ
-$pageIds += 7301   # 藍硯
+# $pageIds += 7301   # 藍硯
 # $pageIds += 7306   # 旅人(炎)
+$pageIds += 7420   # 夢見月瑞希
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -127,6 +128,7 @@ $pageIds += 7301   # 藍硯
 # $pageIds += 7116  # 星鷲の紅き羽
 # $pageIds += 7365  # 千烈の日輪
 # $pageIds += 7366  # 祭星者の眺め
+$pageIds += 7434  # 寝正月の初晴
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

@@ -1,4 +1,11 @@
 {
+  "夢見月瑞希": {
+    "レアリティ": 5,
+    "元素": "風",
+    "武器": "法器",
+    "誕生日": "3/16",
+    "import": "data/characters/anemo_5_catalyst_YumemizukiMizuki.json"
+  },
   "シトラリ": {
     "レアリティ": 5,
     "元素": "氷",
