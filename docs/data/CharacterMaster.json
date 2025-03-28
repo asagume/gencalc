@@ -1,4 +1,11 @@
 {
+  "ヴァレサ": {
+    "レアリティ": 5,
+    "元素": "雷",
+    "武器": "法器",
+    "誕生日": "11/15",
+    "import": "data/characters/electro_5_catalyst_Varesa.json"
+  },
   "夢見月瑞希": {
     "レアリティ": 5,
     "元素": "風",
@@ -354,6 +361,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "イアンサ": {
+    "レアリティ": 4,
+    "元素": "雷",
+    "武器": "長柄武器",
+    "誕生日": "8/8",
+    "import": "data/characters/electro_4_polearm_Iansan.json"
   },
   "藍硯": {
     "レアリティ": 4,
