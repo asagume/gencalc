@@ -1,5 +1,21 @@
 [
   {
+    "id": 4054,
+    "name": "深廊に響く歌",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 3954,
+    "name": "ライトキーパーの誓い",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 9854,
     "name": "魂香の花",
     "icon": null,

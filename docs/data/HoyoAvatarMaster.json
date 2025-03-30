@@ -1,5 +1,126 @@
 [
   {
+    "id": 10000111,
+    "name": "ヴァレサ",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": [
+      {
+        "avatar_id": "10000111",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "9600"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1111,
+        "name": "燃え続ける情熱",
+        "icon": null
+      },
+      {
+        "id": 1112,
+        "name": "天光の極限を超えて",
+        "icon": null
+      },
+      {
+        "id": 1113,
+        "name": "不撓不屈の決意",
+        "icon": null
+      },
+      {
+        "id": 1114,
+        "name": "突き進む勇気",
+        "icon": null
+      },
+      {
+        "id": 1115,
+        "name": "温かな風に揺れる想い",
+        "icon": null
+      },
+      {
+        "id": 1116,
+        "name": "正義のヒーローの凱旋",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11111,
+        "group_id": 11131,
+        "name": "通常攻撃・バイ・ザ・ホーンズ",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11112,
+        "group_id": 11132,
+        "name": "ホッピング・ナイトレインボー",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11115,
+        "group_id": 11139,
+        "name": "シャイニングヴェント！",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 11121,
+        "group_id": 11121,
+        "name": "連翔、三段跳び！",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11122,
+        "group_id": 11122,
+        "name": "ヒーロー、二度目の見参！",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11123,
+        "group_id": 11123,
+        "name": "夜域の賜物・悪を焼き尽くす灯り",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11125,
+        "group_id": 11125,
+        "name": "熱き心、一心不乱！",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7488",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/7488",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000109,
     "name": "夢見月瑞希",
     "icon": null,
@@ -5669,6 +5790,127 @@
       }
     ],
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/32"
+  },
+  {
+    "id": 10000110,
+    "name": "イアンサ",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 5,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": null,
+    "side_icon": null,
+    "profile_pictures": [
+      {
+        "avatar_id": "10000110",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "9500"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1101,
+        "name": "千里の道も一歩から",
+        "icon": null
+      },
+      {
+        "id": 1102,
+        "name": "おサボり厳禁！",
+        "icon": null
+      },
+      {
+        "id": 1103,
+        "name": "科学的食事プラン",
+        "icon": null
+      },
+      {
+        "id": 1104,
+        "name": "継続は力なり",
+        "icon": null
+      },
+      {
+        "id": 1105,
+        "name": "まだまだやれる！",
+        "icon": null
+      },
+      {
+        "id": 1106,
+        "name": "「豊穣の邦」の教え",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11101,
+        "group_id": 11031,
+        "name": "通常攻撃・ウェイトスピア",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11102,
+        "group_id": 11032,
+        "name": "サンダーボルト・スプリント",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11105,
+        "group_id": 11039,
+        "name": "力の三原則",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 11021,
+        "group_id": 11021,
+        "name": "高負荷トレーニング・強化版",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11022,
+        "group_id": 11022,
+        "name": "運動量グラジエント分析",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11023,
+        "group_id": 11023,
+        "name": "夜域の賜物・ハードワークアウト",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11025,
+        "group_id": 11025,
+        "name": "カロリーバランス計画",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7502",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/7502",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
   },
   {
     "id": 10000108,

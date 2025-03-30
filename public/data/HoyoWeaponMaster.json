@@ -7,7 +7,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7116"
   },
   {
     "id": 15513,
@@ -17,7 +17,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5673"
   },
   {
     "id": 15512,
@@ -27,7 +27,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3983"
   },
   {
     "id": 15511,
@@ -37,7 +37,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2665"
   },
   {
     "id": 15509,
@@ -47,7 +47,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2049"
   },
   {
     "id": 15508,
@@ -57,7 +57,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2254"
   },
   {
     "id": 15507,
@@ -67,7 +67,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1936"
   },
   {
     "id": 15503,
@@ -77,7 +77,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2008"
   },
   {
     "id": 15502,
@@ -87,7 +87,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2040"
   },
   {
     "id": 15501,
@@ -97,7 +97,27 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1956"
+  },
+  {
+    "id": 14519,
+    "name": "ヴィヴィッド・ハート",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7588"
+  },
+  {
+    "id": 14518,
+    "name": "寝正月の初晴",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7434"
   },
   {
     "id": 14517,
@@ -107,7 +127,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7366"
   },
   {
     "id": 14516,
@@ -117,7 +137,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6546"
   },
   {
     "id": 14515,
@@ -127,7 +147,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4941"
   },
   {
     "id": 14514,
@@ -137,7 +157,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4339"
   },
   {
     "id": 14513,
@@ -147,7 +167,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4340"
   },
   {
     "id": 14512,
@@ -157,7 +177,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3320"
   },
   {
     "id": 14511,
@@ -167,7 +187,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2966"
   },
   {
     "id": 14509,
@@ -177,7 +197,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2001"
   },
   {
     "id": 14506,
@@ -187,7 +207,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1932"
   },
   {
     "id": 14505,
@@ -197,7 +217,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3692"
   },
   {
     "id": 14504,
@@ -207,7 +227,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1964"
   },
   {
     "id": 14502,
@@ -217,7 +237,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1951"
   },
   {
     "id": 14501,
@@ -227,7 +247,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1955"
   },
   {
     "id": 13513,
@@ -237,7 +257,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5847"
   },
   {
     "id": 13512,
@@ -247,7 +267,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5577"
   },
   {
     "id": 13511,
@@ -257,7 +277,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2849"
   },
   {
     "id": 13509,
@@ -267,7 +287,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2014"
   },
   {
     "id": 13507,
@@ -277,7 +297,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1970"
   },
   {
     "id": 13505,
@@ -287,7 +307,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1948"
   },
   {
     "id": 13504,
@@ -297,7 +317,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2030"
   },
   {
     "id": 13502,
@@ -307,7 +327,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1957"
   },
   {
     "id": 13501,
@@ -317,7 +337,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1972"
   },
   {
     "id": 12514,
@@ -327,7 +347,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7365"
   },
   {
     "id": 12513,
@@ -337,7 +357,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6545"
   },
   {
     "id": 12512,
@@ -347,7 +367,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4719"
   },
   {
     "id": 12511,
@@ -357,7 +377,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3615"
   },
   {
     "id": 12510,
@@ -367,7 +387,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2031"
   },
   {
     "id": 12504,
@@ -377,7 +397,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1978"
   },
   {
     "id": 12503,
@@ -387,7 +407,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1986"
   },
   {
     "id": 12502,
@@ -397,7 +417,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1992"
   },
   {
     "id": 12501,
@@ -407,7 +427,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1953"
   },
   {
     "id": 11516,
@@ -417,7 +437,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7029"
   },
   {
     "id": 11515,
@@ -427,7 +447,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5674"
   },
   {
     "id": 11514,
@@ -437,7 +457,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5150"
   },
   {
     "id": 11513,
@@ -447,7 +467,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4570"
   },
   {
     "id": 11512,
@@ -457,7 +477,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3461"
   },
   {
     "id": 11511,
@@ -467,7 +487,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2908"
   },
   {
     "id": 11510,
@@ -477,7 +497,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1989"
   },
   {
     "id": 11509,
@@ -487,7 +507,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2044"
   },
   {
     "id": 11505,
@@ -497,7 +517,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2000"
   },
   {
     "id": 11504,
@@ -507,7 +527,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1974"
   },
   {
     "id": 11503,
@@ -517,7 +537,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2012"
   },
   {
     "id": 11502,
@@ -527,7 +547,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1954"
   },
   {
     "id": 11501,
@@ -537,7 +557,7 @@
     "weapon_level": 5,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2046"
   },
   {
     "id": 15431,
@@ -547,7 +567,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6552"
   },
   {
     "id": 15430,
@@ -557,7 +577,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7115"
   },
   {
     "id": 15427,
@@ -567,7 +587,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4337"
   },
   {
     "id": 15426,
@@ -577,7 +597,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5713"
   },
   {
     "id": 15425,
@@ -587,7 +607,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3987"
   },
   {
     "id": 15424,
@@ -597,7 +617,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4002"
   },
   {
     "id": 15419,
@@ -607,7 +627,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3902"
   },
   {
     "id": 15418,
@@ -617,7 +637,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2666"
   },
   {
     "id": 15417,
@@ -627,7 +647,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2670"
   },
   {
     "id": 15416,
@@ -637,7 +657,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1985"
   },
   {
     "id": 15415,
@@ -647,7 +667,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1973"
   },
   {
     "id": 15414,
@@ -657,7 +677,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1999"
   },
   {
     "id": 15413,
@@ -667,7 +687,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2045"
   },
   {
     "id": 15412,
@@ -677,7 +697,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1965"
   },
   {
     "id": 15411,
@@ -687,7 +707,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2255"
   },
   {
     "id": 15410,
@@ -697,7 +717,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1981"
   },
   {
     "id": 15409,
@@ -707,7 +727,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2013"
   },
   {
     "id": 15408,
@@ -717,7 +737,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2055"
   },
   {
     "id": 15407,
@@ -727,7 +747,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2034"
   },
   {
     "id": 15406,
@@ -737,7 +757,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2028"
   },
   {
     "id": 15405,
@@ -747,7 +767,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1967"
   },
   {
     "id": 15404,
@@ -757,7 +777,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1963"
   },
   {
     "id": 15403,
@@ -767,7 +787,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2005"
   },
   {
     "id": 15402,
@@ -777,7 +797,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2009"
   },
   {
     "id": 15401,
@@ -787,7 +807,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2019"
   },
   {
     "id": 14431,
@@ -797,7 +817,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6551"
   },
   {
     "id": 14430,
@@ -807,7 +827,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7114"
   },
   {
     "id": 14427,
@@ -817,7 +837,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6550"
   },
   {
     "id": 14426,
@@ -827,7 +847,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4338"
   },
   {
     "id": 14425,
@@ -837,7 +857,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3988"
   },
   {
     "id": 14424,
@@ -847,7 +867,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4003"
   },
   {
     "id": 14417,
@@ -857,7 +877,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2669"
   },
   {
     "id": 14416,
@@ -867,7 +887,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2910"
   },
   {
     "id": 14415,
@@ -877,7 +897,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2024"
   },
   {
     "id": 14414,
@@ -887,7 +907,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1997"
   },
   {
     "id": 14413,
@@ -897,7 +917,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1950"
   },
   {
     "id": 14412,
@@ -907,7 +927,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1969"
   },
   {
     "id": 14410,
@@ -917,7 +937,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1982"
   },
   {
     "id": 14409,
@@ -927,7 +947,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1980"
   },
   {
     "id": 14408,
@@ -937,7 +957,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2057"
   },
   {
     "id": 14407,
@@ -947,7 +967,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1931"
   },
   {
     "id": 14406,
@@ -957,7 +977,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2029"
   },
   {
     "id": 14405,
@@ -967,7 +987,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1939"
   },
   {
     "id": 14404,
@@ -977,7 +997,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1961"
   },
   {
     "id": 14403,
@@ -987,7 +1007,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2006"
   },
   {
     "id": 14402,
@@ -997,7 +1017,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1991"
   },
   {
     "id": 14401,
@@ -1007,7 +1027,17 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2020"
+  },
+  {
+    "id": 13432,
+    "name": "玉響停の御噺",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7435"
   },
   {
     "id": 13431,
@@ -1017,7 +1047,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6549"
   },
   {
     "id": 13430,
@@ -1027,7 +1057,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7031"
   },
   {
     "id": 13427,
@@ -1037,7 +1067,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4336"
   },
   {
     "id": 13426,
@@ -1047,7 +1077,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5151"
   },
   {
     "id": 13425,
@@ -1057,7 +1087,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3986"
   },
   {
     "id": 13424,
@@ -1067,7 +1097,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4001"
   },
   {
     "id": 13419,
@@ -1077,7 +1107,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2847"
   },
   {
     "id": 13417,
@@ -1087,7 +1117,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2668"
   },
   {
     "id": 13416,
@@ -1097,7 +1127,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1975"
   },
   {
     "id": 13415,
@@ -1107,7 +1137,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1930"
   },
   {
     "id": 13414,
@@ -1117,7 +1147,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1949"
   },
   {
     "id": 13409,
@@ -1127,7 +1157,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2060"
   },
   {
     "id": 13408,
@@ -1137,7 +1167,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1960"
   },
   {
     "id": 13407,
@@ -1147,7 +1177,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2021"
   },
   {
     "id": 13406,
@@ -1157,7 +1187,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1943"
   },
   {
     "id": 13405,
@@ -1167,7 +1197,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1937"
   },
   {
     "id": 13404,
@@ -1177,7 +1207,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2054"
   },
   {
     "id": 13403,
@@ -1187,7 +1217,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1990"
   },
   {
     "id": 13402,
@@ -1197,7 +1227,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2027"
   },
   {
     "id": 13401,
@@ -1207,7 +1237,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1940"
   },
   {
     "id": 12431,
@@ -1217,7 +1247,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6548"
   },
   {
     "id": 12430,
@@ -1227,7 +1257,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7030"
   },
   {
     "id": 12427,
@@ -1237,7 +1267,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4335"
   },
   {
     "id": 12426,
@@ -1247,7 +1277,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": ""
   },
   {
     "id": 12425,
@@ -1257,7 +1287,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3985"
   },
   {
     "id": 12424,
@@ -1267,7 +1297,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4000"
   },
   {
     "id": 12418,
@@ -1277,7 +1307,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3614"
   },
   {
     "id": 12417,
@@ -1287,7 +1317,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2671"
   },
   {
     "id": 12416,
@@ -1297,7 +1327,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1971"
   },
   {
     "id": 12415,
@@ -1307,7 +1337,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2848"
   },
   {
     "id": 12414,
@@ -1317,7 +1347,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1987"
   },
   {
     "id": 12412,
@@ -1327,7 +1357,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2016"
   },
   {
     "id": 12411,
@@ -1337,7 +1367,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2043"
   },
   {
     "id": 12410,
@@ -1347,7 +1377,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1942"
   },
   {
     "id": 12409,
@@ -1357,7 +1387,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2015"
   },
   {
     "id": 12408,
@@ -1367,7 +1397,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2056"
   },
   {
     "id": 12407,
@@ -1377,7 +1407,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1995"
   },
   {
     "id": 12406,
@@ -1387,7 +1417,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2025"
   },
   {
     "id": 12405,
@@ -1397,7 +1427,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2042"
   },
   {
     "id": 12404,
@@ -1407,7 +1437,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1959"
   },
   {
     "id": 12403,
@@ -1417,7 +1447,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2004"
   },
   {
     "id": 12402,
@@ -1427,7 +1457,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2033"
   },
   {
     "id": 12401,
@@ -1437,7 +1467,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2018"
   },
   {
     "id": 11432,
@@ -1447,7 +1477,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7113"
   },
   {
     "id": 11431,
@@ -1457,7 +1487,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6547"
   },
   {
     "id": 11430,
@@ -1467,7 +1497,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7028"
   },
   {
     "id": 11428,
@@ -1477,7 +1507,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4592"
   },
   {
     "id": 11427,
@@ -1487,7 +1517,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4334"
   },
   {
     "id": 11426,
@@ -1497,7 +1527,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3989"
   },
   {
     "id": 11425,
@@ -1507,7 +1537,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3984"
   },
   {
     "id": 11424,
@@ -1517,7 +1547,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3999"
   },
   {
     "id": 11422,
@@ -1527,7 +1557,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3319"
   },
   {
     "id": 11418,
@@ -1537,7 +1567,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2909"
   },
   {
     "id": 11417,
@@ -1547,7 +1577,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2667"
   },
   {
     "id": 11416,
@@ -1557,7 +1587,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2264"
   },
   {
     "id": 11415,
@@ -1567,7 +1597,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2032"
   },
   {
     "id": 11414,
@@ -1577,7 +1607,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1952"
   },
   {
     "id": 11413,
@@ -1587,7 +1617,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2011"
   },
   {
     "id": 11412,
@@ -1597,7 +1627,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2041"
   },
   {
     "id": 11410,
@@ -1607,7 +1637,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1983"
   },
   {
     "id": 11409,
@@ -1617,7 +1647,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2053"
   },
   {
     "id": 11408,
@@ -1627,7 +1657,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2058"
   },
   {
     "id": 11407,
@@ -1637,7 +1667,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2038"
   },
   {
     "id": 11406,
@@ -1647,7 +1677,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2026"
   },
   {
     "id": 11405,
@@ -1657,7 +1687,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1941"
   },
   {
     "id": 11404,
@@ -1667,7 +1697,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1962"
   },
   {
     "id": 11403,
@@ -1677,7 +1707,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2003"
   },
   {
     "id": 11402,
@@ -1687,7 +1717,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2007"
   },
   {
     "id": 11401,
@@ -1697,7 +1727,7 @@
     "weapon_level": 4,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2017"
   },
   {
     "id": 15305,
@@ -1707,7 +1737,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1935"
   },
   {
     "id": 15304,
@@ -1717,7 +1747,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1968"
   },
   {
     "id": 15303,
@@ -1727,7 +1757,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1945"
   },
   {
     "id": 15302,
@@ -1737,7 +1767,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2002"
   },
   {
     "id": 15301,
@@ -1747,7 +1777,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2051"
   },
   {
     "id": 14305,
@@ -1757,7 +1787,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1994"
   },
   {
     "id": 14304,
@@ -1767,7 +1797,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2010"
   },
   {
     "id": 14303,
@@ -1777,7 +1807,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1966"
   },
   {
     "id": 14302,
@@ -1787,7 +1817,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2022"
   },
   {
     "id": 14301,
@@ -1797,7 +1827,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2050"
   },
   {
     "id": 13303,
@@ -1807,7 +1837,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2059"
   },
   {
     "id": 13302,
@@ -1817,7 +1847,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2035"
   },
   {
     "id": 13301,
@@ -1827,7 +1857,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1996"
   },
   {
     "id": 12306,
@@ -1837,7 +1867,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2047"
   },
   {
     "id": 12305,
@@ -1847,7 +1877,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1933"
   },
   {
     "id": 12303,
@@ -1857,7 +1887,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1998"
   },
   {
     "id": 12302,
@@ -1867,7 +1897,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1988"
   },
   {
     "id": 12301,
@@ -1877,7 +1907,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2037"
   },
   {
     "id": 11306,
@@ -1887,7 +1917,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2048"
   },
   {
     "id": 11305,
@@ -1897,7 +1927,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1947"
   },
   {
     "id": 11304,
@@ -1907,7 +1937,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1984"
   },
   {
     "id": 11303,
@@ -1917,7 +1947,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1977"
   },
   {
     "id": 11302,
@@ -1927,7 +1957,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2052"
   },
   {
     "id": 11301,
@@ -1937,7 +1967,7 @@
     "weapon_level": 3,
     "max_level": 90,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1938"
   },
   {
     "id": 15201,
@@ -1947,7 +1977,7 @@
     "weapon_level": 2,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1944"
   },
   {
     "id": 14201,
@@ -1957,7 +1987,7 @@
     "weapon_level": 2,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1946"
   },
   {
     "id": 13201,
@@ -1967,7 +1997,7 @@
     "weapon_level": 2,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2036"
   },
   {
     "id": 12201,
@@ -1977,7 +2007,7 @@
     "weapon_level": 2,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1934"
   },
   {
     "id": 11201,
@@ -1987,7 +2017,7 @@
     "weapon_level": 2,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2039"
   },
   {
     "id": 15101,
@@ -1997,7 +2027,7 @@
     "weapon_level": 1,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1993"
   },
   {
     "id": 14101,
@@ -2007,7 +2037,7 @@
     "weapon_level": 1,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1958"
   },
   {
     "id": 13101,
@@ -2017,7 +2047,7 @@
     "weapon_level": 1,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1976"
   },
   {
     "id": 12101,
@@ -2027,7 +2057,7 @@
     "weapon_level": 1,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2023"
   },
   {
     "id": 11101,
@@ -2037,6 +2067,6 @@
     "weapon_level": 1,
     "max_level": 70,
     "is_recommend": false,
-    "wiki_url": null
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1979"
   }
 ]

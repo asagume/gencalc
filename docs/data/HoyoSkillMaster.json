@@ -1,5 +1,73 @@
 [
   {
+    "avatar_id": 10000111,
+    "skill_list": [
+      {
+        "id": 11111,
+        "group_id": 11131,
+        "name": "通常攻撃・バイ・ザ・ホーンズ",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11112,
+        "group_id": 11132,
+        "name": "ホッピング・ナイトレインボー",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11115,
+        "group_id": 11139,
+        "name": "シャイニングヴェント！",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 11121,
+        "group_id": 11121,
+        "name": "連翔、三段跳び！",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11122,
+        "group_id": 11122,
+        "name": "ヒーロー、二度目の見参！",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11123,
+        "group_id": 11123,
+        "name": "夜域の賜物・悪を焼き尽くす灯り",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11125,
+        "group_id": 11125,
+        "name": "熱き心、一心不乱！",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000109,
     "skill_list": [
       {
@@ -2948,6 +3016,74 @@
         "name": "鑑査の心得",
         "icon": null,
         "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000110,
+    "skill_list": [
+      {
+        "id": 11101,
+        "group_id": 11031,
+        "name": "通常攻撃・ウェイトスピア",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11102,
+        "group_id": 11032,
+        "name": "サンダーボルト・スプリント",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11105,
+        "group_id": 11039,
+        "name": "力の三原則",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 11021,
+        "group_id": 11021,
+        "name": "高負荷トレーニング・強化版",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11022,
+        "group_id": 11022,
+        "name": "運動量グラジエント分析",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11023,
+        "group_id": 11023,
+        "name": "夜域の賜物・ハードワークアウト",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11025,
+        "group_id": 11025,
+        "name": "カロリーバランス計画",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
       }
     ]
   },
