@@ -227,14 +227,14 @@ export default defineComponent({
       if (buildnameList(supporter).length === 0) {
         for (const myDetailObj of teamOptionDetails1.value) {
           if (_.isString(myDetailObj.条件) && myDetailObj.条件.startsWith(item.name)) {
-            if (myDetailObj.数値?.includes('$')) {
+            if (myDetailObj.数値?.includes('$') || myDetailObj.上限?.includes('$')) {
               return true;
             }
           }
         }
         for (const myDetailObj of teamOptionDetails2.value) {
           if (_.isString(myDetailObj.条件) && myDetailObj.条件.startsWith(item.name)) {
-            if (myDetailObj.数値?.includes('$')) {
+            if (myDetailObj.数値?.includes('$') || myDetailObj.上限?.includes('$')) {
               return true;
             }
           }
