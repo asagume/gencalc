@@ -794,7 +794,18 @@ export async function loadRecommendation(
         const weaponType = characterMaster['武器'];
         if ('武器' in build) {
             if (Object.keys(WEAPON_MASTER[weaponType]).includes(build['武器'])) {
-                characterInput.weapon = build['武器'] as TWeaponKey;
+                let weaponKey = build['武器'];
+                if (weaponKey in WEAPON_MASTER[weaponType]) {
+                    characterInput.weapon = weaponKey as TWeaponKey;
+                } else if (weaponKey.includes('·') && weaponKey.replace('·', '・') in WEAPON_MASTER[weaponType]) {
+                    weaponKey = weaponKey.replace('·', '・');
+                    characterInput.weapon = weaponKey as TWeaponKey;
+                } else if (weaponKey.includes('・') && weaponKey.replace('・', '·') in WEAPON_MASTER[weaponType]) {
+                    weaponKey = weaponKey.replace( '・', '·');
+                    characterInput.weapon = weaponKey as TWeaponKey;
+                } else {
+                    characterInput.weapon = Object.keys(WEAPON_MASTER[weaponType]).filter(s => s.startsWith('西風'))[0] as TWeaponKey;
+                }
             } else {
                 characterInput.weapon = Object.keys(WEAPON_MASTER[weaponType]).filter(s => s.startsWith('西風'))[0] as TWeaponKey;
             }
