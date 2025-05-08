@@ -362,6 +362,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "イファ": {
+    "レアリティ": 4,
+    "元素": "風",
+    "武器": "法器",
+    "誕生日": "3/23",
+    "import": "data/characters/anemo_4_catalyst_Ifa.json"
+  },
   "イアンサ": {
     "レアリティ": 4,
     "元素": "雷",

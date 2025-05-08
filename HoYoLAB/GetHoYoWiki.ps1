@@ -52,10 +52,12 @@ $pageIds = @()
 # $pageIds += 7299   # マーヴィカ
 # $pageIds += 7300   # シトラリ
 # $pageIds += 7301   # 藍硯
-$pageIds += 7306   # 旅人(炎)
+# $pageIds += 7306   # 旅人(炎)
 # $pageIds += 7420   # 夢見月瑞希
 # $pageIds += 7488   # ヴァレサ
 # $pageIds += 7502   # イアンサ
+$pageIds += 7624   # エスコフィエ
+$pageIds += 7627   # イファ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -131,8 +133,9 @@ $pageIds += 7306   # 旅人(炎)
 # $pageIds += 7365  # 千烈の日輪
 # $pageIds += 7366  # 祭星者の眺め
 # $pageIds += 7434  # 寝正月の初晴
-# $pageIds += 7435    # 玉響停の御噺
-# $pageIds += 7588    # ヴィヴィッド・ハート
+# $pageIds += 7435  # 玉響停の御噺
+# $pageIds += 7588  # ヴィヴィッド・ハート
+$pageIds += 7640    # 香りのシンフォニスト
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

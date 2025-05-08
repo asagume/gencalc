@@ -1,4 +1,8 @@
 {
+  "香りのシンフォニスト": {
+    "レアリティ": 5,
+    "import": "data/weapons/polearm/5_SymphonistofScents.json"
+  },
   "ルミドゥースの挽歌": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_LumidouceElegy.json"
