@@ -577,6 +577,8 @@ export default defineComponent({
               result['元素スキルレベル'] += 3;
             } else if (desc.indexOf(characterMasterDetail.元素爆発.名前.replace("·", "・")) != -1) {
               result['元素爆発レベル'] += 3;
+            } else if (desc.indexOf(characterMasterDetail.通常攻撃.名前.replace("·", "・")) != -1) {
+              result['通常攻撃レベル'] += 3;
             }
           }
         }
@@ -587,6 +589,8 @@ export default defineComponent({
               result['元素スキルレベル'] += 3;
             } else if (desc.indexOf(characterMasterDetail.元素爆発.名前.replace("·", "・")) != -1) {
               result['元素爆発レベル'] += 3;
+            } else if (desc.indexOf(characterMasterDetail.通常攻撃.名前.replace("·", "・")) != -1) {
+              result['通常攻撃レベル'] += 3;
             }
           }
         }
