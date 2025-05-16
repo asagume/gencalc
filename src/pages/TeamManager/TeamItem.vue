@@ -261,7 +261,7 @@ export default defineComponent({
               }
             }
           }
-          if (characterMaster.固有天賦) {
+          if (characterMaster.固有天賦 && characterMaster.名前 !== 'エスコフィエ') {
             for (const talentDetail of characterMaster.固有天賦) {
               if (talentDetail.詳細) {
                 for (const damageDetail of talentDetail.詳細) {
@@ -322,6 +322,14 @@ export default defineComponent({
           }
         }
       })
+      if (Object.keys(memberResults).filter(key => memberResults[key].characterInput?.characterMaster.名前 === 'エスコフィエ').length) {
+        const countHy = dmgElements.filter(s => s === '水').length;
+        const countCr = dmgElements.filter(s => s === '氷').length;
+        const workRes = (countHy + countCr) >= 4 ? -55 : -5 * (countHy + countCr);
+        res['水'] -= workRes;
+        res['氷'] -= workRes;
+      }
+      console.log(Object.keys(memberResults));
       if (dmgElements.filter(s => s === '岩').length >= 2) { // 岩元素共鳴
         res['岩'] -= -20;
       }
