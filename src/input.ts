@@ -801,7 +801,7 @@ export async function loadRecommendation(
                     weaponKey = weaponKey.replace('·', '・');
                     characterInput.weapon = weaponKey as TWeaponKey;
                 } else if (weaponKey.includes('・') && weaponKey.replace('・', '·') in WEAPON_MASTER[weaponType]) {
-                    weaponKey = weaponKey.replace( '・', '·');
+                    weaponKey = weaponKey.replace('・', '·');
                     characterInput.weapon = weaponKey as TWeaponKey;
                 } else {
                     characterInput.weapon = Object.keys(WEAPON_MASTER[weaponType]).filter(s => s.startsWith('西風'))[0] as TWeaponKey;
@@ -1077,7 +1077,7 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         const characterMaster = characterInput.characterMaster as any;
 
         let myTalentDetail;
-        let myTalentLevel: number;
+        const myTalentLevelArr = [characterInput['通常攻撃レベル'], characterInput['元素スキルレベル'], characterInput['元素爆発レベル']];
         let myDefaultKind: string | null;
         let myDefaultElement: string | null;
         const myInputCategory = 'キャラクター';
@@ -1085,13 +1085,13 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
         const myStatusChangeDetailObjArr = [] as any[];
         const myTalentChangeDetailObjArr = [] as any[];
 
+
         // 通常攻撃 重撃 落下攻撃
-        myTalentLevel = characterInput['通常攻撃レベル'];
         myDefaultElement = characterMaster['武器'] === '法器' ? characterMaster['元素'] : null;
         ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
             myTalentDetail = characterMaster[category];
             myDefaultKind = category + 'ダメージ';
-            result[category] = makeDamageDetailObjArr(myTalentDetail, myTalentLevel, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+            result[category] = makeDamageDetailObjArr(myTalentDetail, myTalentLevelArr, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
         });
 
         ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
@@ -1100,37 +1100,27 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
                 myTalentDetail = characterMaster[workCategory];
                 if ('種類' in myTalentDetail) {
                     myDefaultKind = myTalentDetail['種類'];
-                    switch (myDefaultKind) {
-                        case '元素スキルダメージ':
-                            myTalentLevel = characterInput['元素スキルレベル'];
-                            break;
-                        case '元素爆発ダメージ':
-                            myTalentLevel = characterInput['元素爆発レベル'];
-                            break;
-                    }
                 }
                 if ('元素' in myTalentDetail) {
                     myDefaultElement = myTalentDetail['元素'];
                 }
                 const workObj = {
                     条件: myTalentDetail['条件'],
-                    詳細: makeDamageDetailObjArr(myTalentDetail, myTalentLevel, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory)
+                    詳細: makeDamageDetailObjArr(myTalentDetail, myTalentLevelArr, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory)
                 };
                 result[workCategory] = workObj;
             }
         });
 
         // 元素スキル
-        myTalentLevel = characterInput['元素スキルレベル'];
         myDefaultKind = '元素スキルダメージ';
         myDefaultElement = characterMaster['元素'];
-        result['元素スキル'] = makeDamageDetailObjArr(characterMaster['元素スキル'], myTalentLevel, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+        result['元素スキル'] = makeDamageDetailObjArr(characterMaster['元素スキル'], myTalentLevelArr, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
 
         // 元素爆発
-        myTalentLevel = characterInput['元素爆発レベル'];
         myDefaultKind = '元素爆発ダメージ';
         myDefaultElement = characterMaster['元素'];
-        result['元素爆発'] = makeDamageDetailObjArr(characterMaster['元素爆発'], myTalentLevel, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
+        result['元素爆発'] = makeDamageDetailObjArr(characterMaster['元素爆発'], myTalentLevelArr, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory);
 
         result['その他'] = [] as TDamageDetailObj[];
 
@@ -1491,7 +1481,7 @@ export function getChangeKind(kind: string) {
 
 export function makeDamageDetailObjArr(
     talentDataObj: any,
-    level: number | null,
+    level: number[] | number | null,
     defaultKind: string | null,
     defaultElement: string | null,
     statusChangeDetailObjArr: any[],
@@ -1503,7 +1493,49 @@ export function makeDamageDetailObjArr(
     if (!('詳細' in talentDataObj)) return resultArr;
 
     talentDataObj['詳細'].forEach((detailObj: TAnyObject) => {
-        const resultObj = makeDetailObj(detailObj, level, defaultKind, defaultElement, inputCategory, opt_condition);
+        let myLevel = null;
+        if (level == null) {
+            myLevel = null;
+        } else if (_.isArray(level)) {
+            switch (defaultKind) {
+                case '通常攻撃ダメージ':
+                case '重撃ダメージ':
+                case '落下攻撃ダメージ':
+                    myLevel = level[0];
+                    break;
+                case '元素スキルダメージ':
+                    myLevel = level[1];
+                    break;
+                case '元素爆発ダメージ':
+                    myLevel = level[2];
+                    break;
+            }
+            if (detailObj.種類) {
+                let isChanged = false;
+                switch (detailObj.種類) {
+                    case '通常攻撃ダメージ':
+                    case '重撃ダメージ':
+                    case '落下攻撃ダメージ':
+                        myLevel = level[0];
+                        isChanged = true;
+                        break;
+                    case '元素スキルダメージ':
+                        myLevel = level[1];
+                        isChanged = true;
+                        break;
+                    case '元素爆発ダメージ':
+                        myLevel = level[2];
+                        isChanged = true;
+                        break;
+                }
+                if (isChanged) {
+                    console.info('makeDamageDetailObjArr', detailObj.名前, myLevel, defaultKind, detailObj);
+                }
+            }
+        } else {
+            myLevel = level;
+        }
+        const resultObj = makeDetailObj(detailObj, myLevel, defaultKind, defaultElement, inputCategory, opt_condition);
         const my種類 = resultObj.種類 as string;
         if (statusChangeDetailObjArr != null && getChangeKind(my種類) === 'STATUS') {
             resultObj['元素'] = detailObj.元素 ?? null;
