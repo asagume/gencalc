@@ -1096,17 +1096,35 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
 
         ['通常攻撃', '重撃', '落下攻撃'].forEach(category => {
             const workCategory = '特殊' + category;
+            let workTalentLevelArr = myTalentLevelArr;
             if (workCategory in characterMaster) {
                 myTalentDetail = characterMaster[workCategory];
                 if ('種類' in myTalentDetail) {
                     myDefaultKind = myTalentDetail['種類'];
+                    let myLevel;
+                    switch (myDefaultKind) {
+                        case '通常攻撃ダメージ':
+                        case '重撃ダメージ':
+                        case '落下攻撃ダメージ':
+                            myLevel = myTalentLevelArr[0];
+                            workTalentLevelArr = [myLevel, myLevel, myLevel];
+                            break;
+                        case '元素スキルダメージ':
+                            myLevel = myTalentLevelArr[1];
+                            workTalentLevelArr = [myLevel, myLevel, myLevel];
+                            break;
+                        case '元素爆発ダメージ':
+                            myLevel = myTalentLevelArr[2];
+                            workTalentLevelArr = [myLevel, myLevel, myLevel];
+                            break;
+                    }
                 }
                 if ('元素' in myTalentDetail) {
                     myDefaultElement = myTalentDetail['元素'];
                 }
                 const workObj = {
                     条件: myTalentDetail['条件'],
-                    詳細: makeDamageDetailObjArr(myTalentDetail, myTalentLevelArr, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory)
+                    詳細: makeDamageDetailObjArr(myTalentDetail, workTalentLevelArr, myDefaultKind, myDefaultElement, myStatusChangeDetailObjArr, myTalentChangeDetailObjArr, myInputCategory)
                 };
                 result[workCategory] = workObj;
             }
