@@ -58,6 +58,8 @@ $pageIds = @()
 # $pageIds += 7502   # イアンサ
 # $pageIds += 7624   # エスコフィエ
 # $pageIds += 7627   # イファ
+$pageIds += 7706   # スカーク
+# $pageIds += 7707   # ダリア
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -136,7 +138,8 @@ $pageIds = @()
 # $pageIds += 7435  # 玉響停の御噺
 # $pageIds += 7588  # ヴィヴィッド・ハート
 # $pageIds += 7640    # 香りのシンフォニスト
-$pageIds += 7641    # 冷寂の音
+# $pageIds += 7641    # 冷寂の音
+# $pageIds += 7785    # 蒼耀
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -218,7 +221,10 @@ foreach ($pageId in $pageIds) {
     $nameEn = $contentMLang."en-us".name
     $writableName = $nameEn -replace "[`"<>`|:`*`?`\/ ]", ""
     $writableName = $writableName -replace "\(.*?\)", ""
-    $menuId = $contentMLang."en-us".menu_id
+    $menuId = $contentMLang."ja-jp".menu_id
+    if ($null -eq $menuId) {
+        $menuId = 2
+    }
 
     $jsonFilePath = ""
     $jsonFileName = ""

@@ -1,5 +1,126 @@
 [
   {
+    "id": 10000114,
+    "name": "スカーク",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90,
+    "level_current": 90,
+    "promote_level": 6,
+    "skill_list": [
+      {
+        "id": 11141,
+        "group_id": 11431,
+        "name": "極悪技・断",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11142,
+        "group_id": 11432,
+        "name": "極悪技・閃",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 10
+      },
+      {
+        "id": 11145,
+        "group_id": 11439,
+        "name": "極悪技・滅",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 6
+      },
+      {
+        "id": 11421,
+        "group_id": 11421,
+        "name": "理の超越",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11422,
+        "group_id": 11422,
+        "name": "万流帰寂",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11423,
+        "group_id": 11423,
+        "name": "武芸伝授",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 11509,
+      "name": "霧切の廻光",
+      "icon": null,
+      "weapon_cat_id": 1,
+      "weapon_level": 5,
+      "max_level": 90,
+      "level_current": 90
+    },
+    "reliquary_list": [
+      {
+        "id": 3154,
+        "name": "狩人の胸花",
+        "icon": null,
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 3252,
+        "name": "黄金の飛鳥の落羽",
+        "icon": null,
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 3155,
+        "name": "審判の刻",
+        "icon": null,
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 3151,
+        "name": "忘却の容器",
+        "icon": null,
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 3153,
+        "name": "老兵の容貌",
+        "icon": null,
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7706",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/7706",
+    "constellation_num": 0,
+    "fetter_level": 2
+  },
+  {
     "id": 10000112,
     "name": "エスコフィエ",
     "icon": null,
@@ -5902,6 +6023,81 @@
       }
     ],
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/32"
+  },
+  {
+    "id": 10000115,
+    "name": "ダリア",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 4,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "level_current": 20,
+    "promote_level": 1,
+    "skill_list": [
+      {
+        "id": 11151,
+        "group_id": 11531,
+        "name": "西風剣術・祭儀",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11152,
+        "group_id": 11532,
+        "name": "受洗の礼典",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11155,
+        "group_id": 11539,
+        "name": "純光の祈り",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11521,
+        "group_id": 11521,
+        "name": "優しき風の寵愛",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11522,
+        "group_id": 11522,
+        "name": "遊び心に満ちた祈り",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11523,
+        "group_id": 11523,
+        "name": "帰風の巡礼",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 11101,
+      "name": "無鋒の剣",
+      "icon": null,
+      "weapon_cat_id": 1,
+      "weapon_level": 1,
+      "max_level": 70,
+      "level_current": 1
+    },
+    "reliquary_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7707",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/7707",
+    "constellation_num": 0,
+    "fetter_level": 2
   },
   {
     "id": 10000113,

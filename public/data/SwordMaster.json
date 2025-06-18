@@ -1,4 +1,8 @@
 {
+  "蒼耀": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_Azurelight.json"
+  },
   "岩峰を巡る歌": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_PeakPatrolSong.json"
