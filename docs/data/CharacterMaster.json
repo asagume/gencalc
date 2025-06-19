@@ -376,6 +376,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "ダリア": {
+    "レアリティ": 4,
+    "元素": "水",
+    "武器": "片手剣",
+    "誕生日": "5/25",
+    "import": "data/characters/hydro_4_sword_Dahlia.json"
+  },
   "イファ": {
     "レアリティ": 4,
     "元素": "風",
