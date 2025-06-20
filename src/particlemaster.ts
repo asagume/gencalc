@@ -30,6 +30,26 @@ const PARTICLE_GENERATE_6 = 0x6000; // 1アクションで元素粒子を生成�
 // [0]粒子数,[1]受取タイプ,[2]継続時間,[3]クールタイム,[4]粒子生成クールタイム
 // [0]粒子数,[1]受取タイプ,[2]継続時間,[3]クールタイム,[4]粒子生成クールタイム,[5]命ノ星座,[6]粒子数,[7]受取タイプ,[8]継続時間,[9]クールタイム,[10]粒子生成クールタイム
 const PARTICLE_MASTER: TParticleMaster = {
+    'ダリア': {
+        'E.Press': [3, SP_NEXT, undefined, 9, undefined],
+        'E.Hold': [3, SP_NEXT, undefined, 9, undefined],
+    },
+    'スカーク': {
+        'E.Press': [4, SP_NEXT, undefined, 8 + CT_AFTER_DURATION, 15],
+        'E.Hold': [4, SP_NEXT, undefined, 8 + CT_AFTER_DURATION, 15],
+    },
+    'イファ': {
+        'E': [4, SP_SELF, undefined, 7.5 + CT_AFTER_DURATION, undefined],
+    },
+    'エスコフィエ': {
+        'E': [4, SP_NEXT, 20, 15, undefined],
+    },
+    'イアンサ': {
+        'E': [4, SP_NEXT, undefined, 16, undefined],
+    },
+    'ヴァレサ': {
+        'E': [2.3, SP_NEXT, undefined, 9, undefined],
+    },
     '夢見月瑞希': {
         'E': [1, SP_SELF, 5, 15, 0.5 + PARTICLE_GENERATE_4],
     },
