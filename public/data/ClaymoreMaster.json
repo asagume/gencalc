@@ -35,6 +35,10 @@
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
   },
+  "知恵の溶炎": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_Flame-ForgedInsight.json"
+  },
   "実りの鉤鉈": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_FruitfulHook.json"
