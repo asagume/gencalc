@@ -81,7 +81,8 @@ export const 元素反応バフARRAY = [
     '超開花反応ボーナス',
     '超激化反応ボーナス',
     '草激化反応ボーナス',
-    '月感電反応ボーナス',   // for イネファ
+    '月感電反応ボーナス',           // for イネファ
+    '月感電反応基礎ダメージアップ', // for イネファ
 ];
 export const ステータスその他ARRAY = [
     'ダメージ軽減',
@@ -283,6 +284,8 @@ export const 聖遺物ステータスTEMPLATE = {
 export type TArtifactStats = typeof 聖遺物ステータスTEMPLATE;
 export type TArtifactStatsKey = keyof typeof 聖遺物ステータスTEMPLATE;
 
+export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null, number | null];    // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正
+
 export const 元素反応TEMPLATE = {
     元素: '炎',
     蒸発倍率_炎: 0,                 // 1.5倍
@@ -312,11 +315,24 @@ export const 元素反応TEMPLATE = {
     超開花ダメージ会心ダメージ: 0,  // for ナヒーダ
     拡散ダメージ会心率: 0,          // for 夢見月瑞希
     拡散ダメージ会心ダメージ: 0,    // for 夢見月瑞希
+    月感電ダメージ: 0,              // for イネファ
+    月感電ダメージ会心率: 0,        // for イネファ
+    月感電ダメージ会心ダメージ: 0,  // for イネファ
+    月感電ダメージALL: [] as TDamageResultEntry[],  // for イネファ
 };
-export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
-export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
+Object.keys(元素反応TEMPLATE).forEach(key => {
+    if (key.endsWith('ALL')) {
+        const template: TDamageResultEntry[] = [];
+        for (let i = 0; i < 4; i++) {
+            template.push(['', null, 0, 0, 0, null, null, null, null]);  // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正
+        }
+        (元素反応TEMPLATE as any)[key] = template;
+    }
+})
 
-export type TDamageResultEntry = [string, string | null, number, number | null, number, string | null, number | null, number | null, number | null];    // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正
+export type TDamageResultElementalReactionKey = keyof typeof 元素反応TEMPLATE;
+export type TDamageResultElementalReaction = typeof 元素反応TEMPLATE;
+
 export type TDamageResult = {
     元素反応: TDamageResultElementalReaction,
     通常攻撃: TDamageResultEntry[],

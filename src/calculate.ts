@@ -42,10 +42,12 @@ import {
     元素ステータス_耐性ARRAY,
     元素反応TEMPLATE,
     元素反応バフARRAY,
+    基本ステータスARRAY,
     基礎ステータスARRAY,
     実数ダメージ加算ARRAY,
     突破レベルレベルARRAY,
     聖遺物サブ効果ARRAY,
+    高級ステータスARRAY,
 } from '@/input';
 import {
     ALL_ELEMENTS,
@@ -632,6 +634,19 @@ function updateStatsWithCondition(
     workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
     workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
 
+    // HP, 防御力, 攻撃力以外のステータスを再計算します for イネファ
+    const tempStatObj = _.cloneDeep(workStatsObj);
+    Object.keys(tempStatObj).forEach(stat => {
+        if (hpStatArr.includes(stat) || defStatArr.includes(stat) || atkStatArr.includes(stat)) {
+            return;
+        }
+        tempStatObj[stat] = 0;
+    })
+    for (const stat of [...基本ステータスARRAY, ...高級ステータスARRAY].filter(s => !hpStatArr.includes(s) && !defStatArr.includes(s) && !atkStatArr.includes(s))) {
+        updateStatsWithConditionSub(workConditionAdjustments, tempStatObj, statFormulaMap, stat);
+        workStatsObj[stat] += tempStatObj[stat];
+    }
+
     // 元素ステータスおよび隠しステータスを計算します
     for (const stat of otherStatArr) {
         const oldStatsObj: TStats = {};
@@ -961,6 +976,20 @@ export function calculateDamageResult(
                     (reactionResult as any)[key] = statsInput.statsObj[key];
                 }
             });
+            if (dmg.startsWith('月')) { // for ナド・クライ
+                const critRateKey = dmg + '会心率';
+                let critRate = Math.min(100, statsInput.statsObj['会心率']);
+                if (critRateKey in reactionResult && (reactionResult as any)[critRateKey]) {
+                    critRate *= (reactionResult as any)[critRateKey] / 100;
+                }
+                (reactionResult as any)[critRateKey] = critRate;
+                const critDmgKey = dmg + '会心ダメージ';
+                let critDmg = statsInput.statsObj['会心ダメージ'];
+                if (critDmgKey in reactionResult && (reactionResult as any)[critDmgKey]) {
+                    critDmg *= (reactionResult as any)[critDmgKey] / 100;
+                }
+                (reactionResult as any)[critDmgKey] = critDmg;
+            }
         });
         overwriteObject(damageResult.元素反応, reactionResult);
 
@@ -1068,6 +1097,54 @@ export function calculateDamageResult(
         console.error(damageResult, characterInput, conditionInput, statsInput);
         // throw error;
     }
+}
+
+export function calculateDamageResultLunarReaction(
+    damageResult: TDamageResult,
+    characterInput: TCharacterInput,
+    optionInput: TOptionInput,
+) {
+    const allMap = new Map<string, TDamageResultEntry[]>();
+
+    if (damageResult?.元素反応) {
+        Object.keys(damageResult.元素反応).forEach(key => {
+            let value = (damageResult.元素反応 as any)[key];
+            if (key.endsWith('ALL') && _.isArray(value)) {
+                key = key.replace(/ALL$/, '');
+                const template: TDamageResultEntry[] = [];
+                const work = damageResult.元素反応 as any;
+                template.push(makeTDamageResultEntry(characterInput.character, null, work[key], work[key + '会心率'], work[key + '会心ダメージ']));
+                value = template;
+                allMap.set(key, value);
+            }
+        })
+    }
+    if (optionInput?.teamMembers) {
+        for (const member of optionInput.teamMembers) {
+            if (member == characterInput.character) {
+                continue;
+            }
+            const supporter = optionInput.supporters[member];
+            if (supporter?.damageResult?.元素反応) {
+                allMap.forEach((value, key) => {
+                    const work = supporter.damageResult.元素反応 as any;
+                    value.push(makeTDamageResultEntry(member, null, work[key], work[key + '会心率'], work[key + '会心ダメージ']));
+                })
+            }
+        }
+    }
+
+    allMap.forEach((value, key) => {
+        (damageResult.元素反応 as any)[key + 'ALL'].splice(0, value.length, ...value);
+    })
+}
+
+function makeTDamageResultEntry(name: string, element: string | null, nonCrit: number, critRate: number, critDmg: number, type: string | null = null): TDamageResultEntry {
+    const crit = nonCrit * (1 + critDmg / 100);
+    critRate = Math.min(100, critRate);
+    const expectedValue = nonCrit * critRate / 100 * (1 + critDmg / 100) + (1 - critRate / 100) * nonCrit;
+    const result: TDamageResultEntry = [name, element, expectedValue, crit, nonCrit, type, null, null, null];  // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正
+    return result;
 }
 
 export function makeValidConditionValueArr(conditionInput: TConditionInput) {
@@ -1300,13 +1377,18 @@ function calculate固定値系元素反応ダメージ(
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
+        const baseDmgUp = statsObj[reaction + '基礎ダメージアップ'] ?? 0;
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgUp = statsObj[reaction + 'ダメージアップ'] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
         const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
-        let result = baseDmg * multiplier;
-        result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
+        let result = baseDmg * multiplier * (1 + baseDmgUp / 100);
+        if (reaction.startsWith('月')) {
+            result *= 1 + (5 * elementalMastery / (elementalMastery + 2100)) + dmgBuff / 100;
+        } else {
+            result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
+        }
         result += dmgUp;
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
@@ -1768,7 +1850,12 @@ function calculateDamageFromDetail(
                 }
                 break;
         }
-        const my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, detailObj.数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj.上限, detailObj.下限);
+        let my計算Result: TDamageResultEntry;
+        if (detailObj.種類.startsWith('月') && detailObj.種類.endsWith('反応ダメージ')) {   // for イネファ
+            my計算Result = calculateDamageFromDetailSubLunar(statsObj, damageResult, detailObj.数値, detailObj.種類, my元素);
+        } else {
+            my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, detailObj.数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj.上限, detailObj.下限);
+        }
 
         myTalentChangeDetailObjArr.forEach(valueObj => {
             const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, valueObj.数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, null, valueObj.上限, valueObj.下限);
@@ -1942,6 +2029,43 @@ function calculateDamageFromDetailSub(
 
     console.debug('別枠乗算[%f] ダメージバフ補正[%o=%f] 会心[%f,%f] 防御補正[%f] 耐性補正[%f]', 別枠乗算, buffArr, myダメージバフ補正, my会心率, my会心ダメージ, my防御補正, my耐性補正);
     return ['未設定', 元素, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, my防御補正];
+}
+
+function calculateDamageFromDetailSubLunar(
+    statsObj: TStats,
+    damageResult: TDamageResult,
+    formula: number | string,
+    kind: string,
+    dmgElement: string,
+): TDamageResultEntry {
+    const myダメージ基礎値 = evalFormula(formula, statsObj, damageResult, null, null);
+    const workKind = kind.replace('反応ダメージ', '');
+    const baseDmgUp = statsObj[workKind + '反応基礎ダメージアップ'] ?? 0;
+    const em = statsObj['元素熟知'] ?? 0;
+    const emBonus = (5 * em) / (em + 2100);
+    const otherBonus = statsObj[workKind + '反応ボーナス'] ?? 0;
+
+    let myダメージ = 3 * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + emBonus + otherBonus / 100);
+
+    const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);
+    myダメージ *= my耐性補正;
+
+    let my会心率 = statsObj['会心率'];
+    my会心率 += statsObj[dmgElement + '元素ダメージ会心率'] || 0;
+    my会心率 = Math.min(100, Math.max(0, my会心率)) / 100;    // 0≦会心率≦1
+
+    let my会心ダメージ = statsObj['会心ダメージ'];
+    my会心ダメージ += statsObj[dmgElement + '元素ダメージ会心ダメージ'] || 0;
+    my会心ダメージ = (100 + my会心ダメージ) / 100;
+
+    let my会心Result = null;
+    let my期待値Result = myダメージ;
+    if (my会心率 > 0) {
+        my会心Result = myダメージ * my会心ダメージ;
+        my期待値Result = (my会心Result * my会心率) + (myダメージ * (1 - my会心率));
+    }
+
+    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, null, null];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {

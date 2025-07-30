@@ -193,7 +193,7 @@
     </div>
   </div>
 
-  <div id="debug-info" v-if="false">
+  <div id="debug-info" v-if="true">
     <hr />
     <h2>DEBUG</h2>
     <template v-if="characterInputRea">
@@ -319,6 +319,7 @@ import {
   setupTeamOptionSupporter,
   calculateTeamStatsAdjustments,
   TRotationDamageInfo,
+  calculateDamageResultLunarReaction,
 } from '@/calculate';
 import { overwriteObject } from '@/common';
 import { calculateDamageResult } from '@/calculate';
@@ -646,6 +647,7 @@ export default defineComponent({
       calculateStats(statsInput, characterInputRea, artifactDetailInputRea, conditionInputRea, optionInputRea);
       // ダメージ計算を実行します
       calculateDamageResult(damageResult, characterInputRea, conditionInputRea, statsInput);
+      calculateDamageResultLunarReaction(damageResult, characterInputRea, optionInputRea);
       // NEXT STEPを更新します
       if (nextStatVmRef.value) {
         nextStatVmRef.value.setupNextStatRows();

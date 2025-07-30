@@ -167,6 +167,35 @@
         <span>{{ Math.round(copiedDamageResult.元素反応.氷砕きダメージ) }}</span>
       </span>
     </label>
+    <div class="with-tooltip">
+      <label v-if="damageResult.元素反応.月感電ダメージ" class="electro">
+        {{ displayName("月感電") }}
+        <span>{{ Math.round(lunarReactionDmg('月感電ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月感電ダメージ">
+          <br />
+          {{ displayName("月感電") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.月感電ダメージ) }}</span>
+        </span>
+      </label>
+      <div v-if="damageResult.元素反応.月感電ダメージ会心率" class="tooltip">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ displayName('期待値') }}</th>
+              <th>{{ displayName('会心') }}</th>
+              <th>{{ displayName('非会心') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in damageResult.元素反応.月感電ダメージALL" :key="index">
+              <td>{{ Math.round(item[2]) }} </td>
+              <td>{{ Math.round(item[3] || 0) }}</td>
+              <td>{{ Math.round(item[4]) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <fieldset>
     <template v-for="category in CATEGORY_LIST" :key="category">
@@ -404,6 +433,26 @@ export default defineComponent({
       return result;
     }
 
+    const lunarReactionDmg = (reaction: string): number => {
+      let result = 0;
+      let workReactionDmgArr = props.damageResult.元素反応[(reaction + 'ALL') as TDamageResultElementalReactionKey] as TDamageResultEntry[];
+      if (_.isArray(workReactionDmgArr)) {
+        const workArr = workReactionDmgArr.map(s => s[2]);
+        workArr.sort((a, b) => b - a);
+        result = workArr[0];
+        if (workArr.length > 1) {
+          result += workArr[1] / 2;
+        }
+        if (workArr.length > 2) {
+          result += workArr[2] / 12;
+        }
+        if (workArr.length > 3) {
+          result += workArr[3] / 12;
+        }
+      }
+      return result;
+    }
+
     function getAmplifyingReaction(dmgElement: string | null) {
       let reaction = ''; // 元素反応
       if (増幅反応.value === '蒸発_炎' && dmgElement === '炎') {
@@ -567,6 +616,7 @@ export default defineComponent({
       増幅反応,
       swirlDmg,
       reactionDmg,
+      lunarReactionDmg,
       elementClass,
       displayDamageValue,
       displayDamageParam,
@@ -596,6 +646,16 @@ export default defineComponent({
 .elemental-reaction label {
   margin-top: 2px;
   margin-bottom: 2px;
+}
+
+.elemental-reaction div.with-tooltip {
+  display: inline-block;
+  width: calc(100% / 4 - 6px - 1rem);
+  margin: 0;
+}
+
+.elemental-reaction div.with-tooltip label {
+  width: 100%;
 }
 
 .elemental-reaction [type="radio"]+label {
@@ -677,11 +737,21 @@ ul.notes {
 }
 
 .tooltip {
-  left: calc(100% - 10px);
+  left: 0.5rem;
+  top: 3.5rem;
   padding: 5px;
   border: 2px solid gray;
   border-radius: 10px;
   background-color: black;
+}
+
+.tooltip table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tooltip table tr {
+  border-bottom: 1px solid gray;
 }
 
 span.savepoint {
