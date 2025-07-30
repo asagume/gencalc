@@ -635,17 +635,17 @@ function updateStatsWithCondition(
     workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
 
     // HP, 防御力, 攻撃力以外のステータスを再計算します for イネファ
-    const tempStatObj = _.cloneDeep(workStatsObj);
-    Object.keys(tempStatObj).forEach(stat => {
-        if (hpStatArr.includes(stat) || defStatArr.includes(stat) || atkStatArr.includes(stat)) {
-            return;
-        }
-        tempStatObj[stat] = 0;
-    })
-    for (const stat of [...基本ステータスARRAY, ...高級ステータスARRAY].filter(s => !hpStatArr.includes(s) && !defStatArr.includes(s) && !atkStatArr.includes(s))) {
-        updateStatsWithConditionSub(workConditionAdjustments, tempStatObj, statFormulaMap, stat);
-        workStatsObj[stat] += tempStatObj[stat];
-    }
+    // const tempStatObj = _.cloneDeep(workStatsObj);
+    // Object.keys(tempStatObj).forEach(stat => {
+    //     if (hpStatArr.includes(stat) || defStatArr.includes(stat) || atkStatArr.includes(stat)) {
+    //         return;
+    //     }
+    //     tempStatObj[stat] = 0;
+    // })
+    // for (const stat of [...基本ステータスARRAY, ...高級ステータスARRAY].filter(s => !hpStatArr.includes(s) && !defStatArr.includes(s) && !atkStatArr.includes(s))) {
+    //     updateStatsWithConditionSub(workConditionAdjustments, tempStatObj, statFormulaMap, stat);
+    //     workStatsObj[stat] += tempStatObj[stat];
+    // }
 
     // 元素ステータスおよび隠しステータスを計算します
     for (const stat of otherStatArr) {
@@ -678,7 +678,7 @@ function updateStatsWithConditionSub(
     workConditionAdjustments: TStats,
     workStatsObj: TStats,
     statFormulaMap: Map<string, any[]>,
-    formulaKey: string
+    formulaKey: string,
 ) {
     for (const formulaArr of [statFormulaMap.get(formulaKey), ...['V1', 'V2', 'V3'].map(s => statFormulaMap.get(formulaKey + s))]) {
         if (!formulaArr) continue;
