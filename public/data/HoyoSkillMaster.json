@@ -1,5 +1,66 @@
 [
   {
+    "avatar_id": 10000116,
+    "skill_list": [
+      {
+        "id": 11161,
+        "group_id": 11631,
+        "name": "サイクロン・ダスター",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11162,
+        "group_id": 11632,
+        "name": "洗浄モード・定常周波数",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11165,
+        "group_id": 11639,
+        "name": "至高なる指令・全域浄化",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11621,
+        "group_id": 11621,
+        "name": "オーバークロック",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11622,
+        "group_id": 11622,
+        "name": "再構築プロトコル",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11623,
+        "group_id": 11623,
+        "name": "月兆の祝福・疑似中継",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11625,
+        "group_id": 11625,
+        "name": "味覚合成ユニット",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      }
+    ]
+  },
+  {
     "avatar_id": 10000114,
     "skill_list": [
       {

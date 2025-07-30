@@ -270,6 +270,16 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1955"
   },
   {
+    "id": 13515,
+    "name": "砕け散る光輪",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8299"
+  },
+  {
     "id": 13513,
     "name": "ルミドゥースの挽歌",
     "icon": null,
@@ -1258,6 +1268,16 @@
     "max_level": 90,
     "is_recommend": false,
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1940"
+  },
+  {
+    "id": 12432,
+    "name": "知恵の溶炎",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8300"
   },
   {
     "id": 12431,

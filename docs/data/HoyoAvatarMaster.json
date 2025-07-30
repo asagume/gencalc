@@ -1,5 +1,134 @@
 [
   {
+    "id": 10000116,
+    "name": "イネファ",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90,
+    "level_current": 90,
+    "promote_level": 6,
+    "skill_list": [
+      {
+        "id": 11161,
+        "group_id": 11631,
+        "name": "サイクロン・ダスター",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11162,
+        "group_id": 11632,
+        "name": "洗浄モード・定常周波数",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11165,
+        "group_id": 11639,
+        "name": "至高なる指令・全域浄化",
+        "icon": null,
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11621,
+        "group_id": 11621,
+        "name": "オーバークロック",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11622,
+        "group_id": 11622,
+        "name": "再構築プロトコル",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11623,
+        "group_id": 11623,
+        "name": "月兆の祝福・疑似中継",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 11625,
+        "group_id": 11625,
+        "name": "味覚合成ユニット",
+        "icon": null,
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 13424,
+      "name": "フィヨルドの歌",
+      "icon": null,
+      "weapon_cat_id": 13,
+      "weapon_level": 4,
+      "max_level": 90,
+      "level_current": 90
+    },
+    "reliquary_list": [
+      {
+        "id": 2154,
+        "name": "夢境の鉄花",
+        "icon": null,
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 2152,
+        "name": "裁断の羽根",
+        "icon": null,
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 2155,
+        "name": "深金の歳月",
+        "icon": null,
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 2151,
+        "name": "甘露の終宴",
+        "icon": null,
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 2153,
+        "name": "砂王の投影",
+        "icon": null,
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7852",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/7852",
+    "constellation_num": 0,
+    "fetter_level": 1
+  },
+  {
     "id": 10000114,
     "name": "スカーク",
     "icon": null,
