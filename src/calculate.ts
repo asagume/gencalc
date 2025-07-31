@@ -42,12 +42,10 @@ import {
     元素ステータス_耐性ARRAY,
     元素反応TEMPLATE,
     元素反応バフARRAY,
-    基本ステータスARRAY,
     基礎ステータスARRAY,
     実数ダメージ加算ARRAY,
     突破レベルレベルARRAY,
     聖遺物サブ効果ARRAY,
-    高級ステータスARRAY,
 } from '@/input';
 import {
     ALL_ELEMENTS,
@@ -515,14 +513,27 @@ function updateStatsWithCondition(
                     if (myDetailObj['対象']) {
                         my種類 += '.' + myDetailObj['対象'];
                     }
-                    if (!statFormulaMap.has(my種類)) {
-                        statFormulaMap.set(my種類, []);
+                    if (my数値.indexOf('${') === -1 && my数値.indexOf('}') === -1) { // 他ステータス依存でないもの
+                        updateStatsWithConditionSub2(workConditionAdjustments, workStatsObj, my種類, my数値, myDetailObj.上限, myDetailObj.下限, hasCondition);
+                    } else {    // 他ステータス依存のもの
+                        if (!statFormulaMap.has(my種類)) {
+                            statFormulaMap.set(my種類, []);
+                        }
+                        statFormulaMap.get(my種類)?.push([my種類, my数値, myDetailObj.上限, myDetailObj.下限, hasCondition]);
                     }
-                    statFormulaMap.get(my種類)?.push([my種類, my数値, myDetailObj.上限, myDetailObj.下限, hasCondition]);
                 }
             }
         }
     }
+
+    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
+    workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
+    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
+    workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
+    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
+    workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
+
+    const saveStatsObj = _.cloneDeep(workStatsObj);
 
     const hpStatArr = ['基礎HP', 'HP%', 'HP+', 'HP上限'];
     const defStatArr = ['基礎防御力', '防御力%', '防御力+', '防御力'];
@@ -556,8 +567,12 @@ function updateStatsWithCondition(
             }
         });
     }
-    workStatsObj['HP上限'] += workStatsObj['基礎HP'] + workStatsObj['HP+'];
-    workStatsObj['HP上限'] += (workStatsObj['基礎HP'] * workStatsObj['HP%']) / 100;
+    if (workStatsObj['HP+'] != saveStatsObj['HP+']) {
+        workStatsObj['HP上限'] += workStatsObj['HP+'] - saveStatsObj['HP+'];
+    }
+    if (workStatsObj['HP%'] != saveStatsObj['HP%']) {
+        workStatsObj['HP上限'] += workStatsObj['基礎HP'] * (workStatsObj['HP%'] - saveStatsObj['HP%']) / 100;
+    }
 
     for (const stat of formulaStatArr) {
         const oldStatsObj: TStats = {};
@@ -605,8 +620,12 @@ function updateStatsWithCondition(
             }
         });
     }
-    workStatsObj['防御力'] += workStatsObj['基礎防御力'] + workStatsObj['防御力+'];
-    workStatsObj['防御力'] += (workStatsObj['基礎防御力'] * workStatsObj['防御力%']) / 100;
+    if (workStatsObj['防御力+'] != saveStatsObj['防御力+']) {
+        workStatsObj['防御力'] += workStatsObj['防御力+'] - saveStatsObj['防御力+'];
+    }
+    if (workStatsObj['防御力%'] != saveStatsObj['防御力%']) {
+        workStatsObj['防御力'] += workStatsObj['基礎防御力'] * (workStatsObj['防御力%'] - saveStatsObj['防御力%']) / 100;
+    }
 
     // 攻撃力を計算します
     for (const stat of atkStatArr) {
@@ -631,21 +650,12 @@ function updateStatsWithCondition(
             }
         });
     }
-    workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] + workStatsObj['攻撃力+'];
-    workStatsObj['攻撃力'] += (workStatsObj['基礎攻撃力'] * workStatsObj['攻撃力%']) / 100;
-
-    // HP, 防御力, 攻撃力以外のステータスを再計算します for イネファ
-    // const tempStatObj = _.cloneDeep(workStatsObj);
-    // Object.keys(tempStatObj).forEach(stat => {
-    //     if (hpStatArr.includes(stat) || defStatArr.includes(stat) || atkStatArr.includes(stat)) {
-    //         return;
-    //     }
-    //     tempStatObj[stat] = 0;
-    // })
-    // for (const stat of [...基本ステータスARRAY, ...高級ステータスARRAY].filter(s => !hpStatArr.includes(s) && !defStatArr.includes(s) && !atkStatArr.includes(s))) {
-    //     updateStatsWithConditionSub(workConditionAdjustments, tempStatObj, statFormulaMap, stat);
-    //     workStatsObj[stat] += tempStatObj[stat];
-    // }
+    if (workStatsObj['攻撃力+'] != saveStatsObj['攻撃力+']) {
+        workStatsObj['攻撃力'] += workStatsObj['攻撃力+'] - saveStatsObj['攻撃力+'];
+    }
+    if (workStatsObj['攻撃力%'] != saveStatsObj['攻撃力%']) {
+        workStatsObj['攻撃力'] += workStatsObj['基礎攻撃力'] * (workStatsObj['攻撃力%'] - saveStatsObj['攻撃力%']) / 100;
+    }
 
     // 元素ステータスおよび隠しステータスを計算します
     for (const stat of otherStatArr) {
@@ -705,6 +715,38 @@ function updateStatsWithConditionSub(
                 }
             }
         })
+    }
+}
+
+function updateStatsWithConditionSub2(
+    workConditionAdjustments: TStats,
+    workStatsObj: TStats,
+    kind: string,
+    formula: string,
+    maxFormula: string | null,
+    minFormula: string | null,
+    hasCondition = false,
+) {
+    const diffStats = updateStats(workStatsObj, kind, formula, maxFormula, minFormula);
+    for (const stat of Object.keys(diffStats)) {
+        if (ステータスチーム内最高ARRAY.includes(stat + 'TOP')) {
+            const statValue = getStatValue(stat + 'X7', workStatsObj);
+            const topValue = workStatsObj[stat + 'TOP'];
+            if (statValue !== undefined && topValue !== undefined) {
+                if (statValue > topValue) {
+                    workStatsObj[stat + 'TOP'] = statValue;
+                }
+            }
+        }
+    }
+    if (hasCondition) {
+        for (const stat of Object.keys(diffStats)) {
+            if (stat in workConditionAdjustments) {
+                workConditionAdjustments[stat] += diffStats[stat];
+            } else {
+                workConditionAdjustments[stat] = diffStats[stat];
+            }
+        }
     }
 }
 
