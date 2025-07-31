@@ -174,7 +174,7 @@
         <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月感電ダメージ">
           <br />
           {{ displayName("月感電") }}
-          <span>{{ Math.round(copiedDamageResult.元素反応.月感電ダメージ) }}</span>
+          <span>{{ Math.round(copiedLunarReactionDmg('月感電ダメージ')) }}</span>
         </span>
       </label>
       <div v-if="damageResult.元素反応.月感電ダメージ会心率" class="tooltip">
@@ -453,6 +453,26 @@ export default defineComponent({
       return result;
     }
 
+    const copiedLunarReactionDmg = (reaction: string): number => {
+      let result = 0;
+      let workReactionDmgArr = copiedDamageResult.元素反応[(reaction + 'ALL') as TDamageResultElementalReactionKey] as TDamageResultEntry[];
+      if (_.isArray(workReactionDmgArr)) {
+        const workArr = workReactionDmgArr.map(s => s[2]);
+        workArr.sort((a, b) => b - a);
+        result = workArr[0];
+        if (workArr.length > 1) {
+          result += workArr[1] / 2;
+        }
+        if (workArr.length > 2) {
+          result += workArr[2] / 12;
+        }
+        if (workArr.length > 3) {
+          result += workArr[3] / 12;
+        }
+      }
+      return result;
+    }
+
     function getAmplifyingReaction(dmgElement: string | null) {
       let reaction = ''; // 元素反応
       if (増幅反応.value === '蒸発_炎' && dmgElement === '炎') {
@@ -617,6 +637,7 @@ export default defineComponent({
       swirlDmg,
       reactionDmg,
       lunarReactionDmg,
+      copiedLunarReactionDmg,
       elementClass,
       displayDamageValue,
       displayDamageParam,
