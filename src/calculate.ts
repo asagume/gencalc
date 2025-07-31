@@ -1427,7 +1427,7 @@ function calculate固定値系元素反応ダメージ(
         const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
         let result = baseDmg * multiplier * (1 + baseDmgUp / 100);
         if (reaction.startsWith('月')) {
-            result *= 1 + (5 * elementalMastery / (elementalMastery + 2100)) + dmgBuff / 100;
+            result *= 1 + (6 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
         } else {
             result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
         }
@@ -2084,7 +2084,7 @@ function calculateDamageFromDetailSubLunar(
     const workKind = kind.replace('反応ダメージ', '');
     const baseDmgUp = statsObj[workKind + '反応基礎ダメージアップ'] ?? 0;
     const em = statsObj['元素熟知'] ?? 0;
-    const emBonus = (5 * em) / (em + 2100);
+    const emBonus = (6 * em) / (em + 2000);
     const otherBonus = statsObj[workKind + '反応ボーナス'] ?? 0;
 
     let myダメージ = 3 * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + emBonus + otherBonus / 100);
