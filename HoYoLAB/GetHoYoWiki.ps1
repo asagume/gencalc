@@ -60,7 +60,7 @@ $pageIds = @()
 # $pageIds += 7627   # イファ
 # $pageIds += 7706   # スカーク
 # $pageIds += 7707   # ダリア
-$pageIds += 7852   # イネファ
+# $pageIds += 7852   # イネファ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -141,7 +141,8 @@ $pageIds += 7852   # イネファ
 # $pageIds += 7640    # 香りのシンフォニスト
 # $pageIds += 7641    # 冷寂の音
 # $pageIds += 7785    # 蒼耀
-$pageIds += 8299    # 砕け散る光輪
+# $pageIds += 8299    # 砕け散る光輪
+$pageIds += 8300    # 知恵の溶炎
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
