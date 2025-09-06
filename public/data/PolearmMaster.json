@@ -43,6 +43,10 @@
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
   },
+  "金堀りのシャベル": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_Prospector'sShovel.json"
+  },
   "玉響停の御噺": {
     "レアリティ": 4,
     "import": "data/weapons/polearm/4_TamayurateinoOhanashi.json"

@@ -55,6 +55,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "静謐の笛": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_Serenity'sCall.json"
+  },
   "厄水の災い": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_CalamityofEshu.json"

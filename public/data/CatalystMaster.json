@@ -1,4 +1,8 @@
 {
+  "夜を紡ぐ天鏡": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Nightweaver'sLookingGlass.json"
+  },
   "ヴィヴィッド・ハート": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_VividNotions.json"
@@ -58,6 +62,14 @@
   "天空の巻": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
+  },
+  "天光のリュート": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_EverlightSpindlelute.json"
+  },
+  "烏髄の孤灯": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_BlackmarrowLantern.json"
   },
   "波乗りの旋回": {
     "レアリティ": 4,

@@ -39,6 +39,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "羅針の針": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_SnareHook.json"
+  },
   "冷寂の音": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_SequenceofSolitude.json"
