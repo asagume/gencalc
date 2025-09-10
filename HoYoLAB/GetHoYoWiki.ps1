@@ -61,6 +61,8 @@ $pageIds = @()
 # $pageIds += 7706   # スカーク
 # $pageIds += 7707   # ダリア
 # $pageIds += 7852   # イネファ
+$pageIds += 8396   # ラウマ
+$pageIds += 8397   # アイノ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -142,7 +144,13 @@ $pageIds = @()
 # $pageIds += 7641    # 冷寂の音
 # $pageIds += 7785    # 蒼耀
 # $pageIds += 8299    # 砕け散る光輪
-$pageIds += 8300    # 知恵の溶炎
+# $pageIds += 8300    # 知恵の溶炎
+$pageIds += 8511    # 静謐の笛
+$pageIds += 8513    # 万能の鍵
+$pageIds += 8514    # 金掘りのシャベル
+$pageIds += 8517    # 烏髄の孤灯
+$pageIds += 8835    # 羅網の針
+$pageIds += 8836    # 夜を紡ぐ天鏡
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
@@ -161,6 +169,8 @@ $pageIds += 8300    # 知恵の溶炎
 # $pageIds += 6554   # 黒曜の秘典
 # $pageIds += 7571   # 長き夜の誓い
 # $pageIds += 7572   # 深廊の終曲
+$pageIds += 8520   # 天穹の顕現せし夜
+$pageIds += 8521   # 月を紡ぐ夜の歌
 # 生物誌
 # $pageIds += @(2100..2251)
 # 物産誌

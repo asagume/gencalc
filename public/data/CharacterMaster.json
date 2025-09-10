@@ -1,4 +1,11 @@
 {
+  "ラウマ": {
+    "レアリティ": 5,
+    "元素": "草",
+    "武器": "法器",
+    "誕生日": "3/1",
+    "import": "data/characters/dendro_5_catalyst_Lauma.json"
+  },
   "イネファ": {
     "レアリティ": 5,
     "元素": "雷",
@@ -382,6 +389,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "アイノ": {
+    "レアリティ": 4,
+    "元素": "水",
+    "武器": "両手剣",
+    "誕生日": "9/21",
+    "import": "data/characters/hydro_4_claymore_Aino.json"
   },
   "ダリア": {
     "レアリティ": 4,
