@@ -101,13 +101,14 @@ setupReactionDmgElementMap();
 
 /** [突破レベル, レベル] => レベル\+?  */
 export function getLevelStr(ascension: number, level: number): string {
-    return level + 突破レベルレベルARRAY[ascension][0] == level ? '+' : '';
+    return level + (突破レベルレベルARRAY[ascension][0] == level ? '+' : '');
 }
 
 /** キャラクターのレベルに応じた（基礎/突破）ステータスを算出します */
 export function getStatValueByLevel(statObj: any, ascension: number, level: number): number {
     if (!statObj) return 0;
     const myLevelStr = getLevelStr(ascension, level);
+    console.log(myLevelStr);
     if (myLevelStr in statObj) {
         return statObj[myLevelStr];
     }

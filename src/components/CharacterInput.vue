@@ -237,7 +237,13 @@ export default defineComponent({
     /** 突破レベルの範囲 */
     const ascensionRange = computed((): number[] => [0, 1, 2, 3, 4, 5, 6])
     /** レベルの範囲 */
-    const levelRange = computed((): number[] => 突破レベルレベルARRAY[characterInputRea.突破レベル])
+    const levelRange = computed((): number[] => {
+      if (characterInputRea.突破レベル < 6) {
+        return 突破レベルレベルARRAY[characterInputRea.突破レベル];
+      } else {
+        return [...突破レベルレベルARRAY[6], 95, 100];
+      }
+    })
 
     const characterMaster = computed(() => characterInputRea.characterMaster);
     const weaponMaster = computed(() => characterInputRea.weaponMaster);
