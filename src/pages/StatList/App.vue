@@ -85,7 +85,7 @@ export default defineComponent({
       },
     ];
 
-    const LEVEL_LIST = ['1+', '20', '20+', '40', '40+', '50', '50+', '60', '60+', '70', '70+', '80', '80+', '90'];
+    const LEVEL_LIST = ['1+', '20', '20+', '40', '40+', '50', '50+', '60', '60+', '70', '70+', '80', '80+', '90', '95', '100'];
     const level = ref(LEVEL_LIST[LEVEL_LIST.length - 1]);
     const characterMasterMap = reactive(new Map<string, TCharacterDetail>());
     const visionChecked = reactive({} as { [key: string]: boolean });
