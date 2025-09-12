@@ -108,7 +108,6 @@ export function getLevelStr(ascension: number, level: number): string {
 export function getStatValueByLevel(statObj: any, ascension: number, level: number): number {
     if (!statObj) return 0;
     const myLevelStr = getLevelStr(ascension, level);
-    console.log(myLevelStr);
     if (myLevelStr in statObj) {
         return statObj[myLevelStr];
     }
@@ -709,7 +708,11 @@ function updateStatsWithConditionSub(
             if (formula[4]) {
                 for (const stat of Object.keys(diffStats)) {
                     if (stat in workConditionAdjustments) {
-                        workConditionAdjustments[stat] += diffStats[stat];
+                        if (stat.endsWith('会心ダメージ') && Object.keys(元素反応TEMPLATE).includes(stat)) {
+                            workConditionAdjustments[stat] = Math.max(workConditionAdjustments[stat] ?? 0, diffStats[stat]);  // for ラウマ
+                        } else {
+                            workConditionAdjustments[stat] += diffStats[stat];
+                        }
                     } else {
                         workConditionAdjustments[stat] = diffStats[stat];
                     }
@@ -743,7 +746,11 @@ function updateStatsWithConditionSub2(
     if (hasCondition) {
         for (const stat of Object.keys(diffStats)) {
             if (stat in workConditionAdjustments) {
-                workConditionAdjustments[stat] += diffStats[stat];
+                if (stat.endsWith('会心ダメージ') && Object.keys(元素反応TEMPLATE).includes(stat)) {
+                    workConditionAdjustments[stat] = Math.max(workConditionAdjustments[stat] ?? 0, diffStats[stat]);  // for ラウマ
+                } else {
+                    workConditionAdjustments[stat] += diffStats[stat];
+                }
             } else {
                 workConditionAdjustments[stat] = diffStats[stat];
             }
@@ -795,110 +802,6 @@ export function calculateElementalResonance(
     }
     return result;
 }
-
-// /** げんかるくスタイルの式データから結果（数値）を計算します */
-// function calculateFormulaArray(
-//     formulaArr: any,
-//     statsObj: TStats,
-//     damageResult: TDamageResult,
-//     opt_max: number | string | Array<number | string> | null = null,
-//     opt_min: number | string | Array<number | string> | null = null
-// ): number {
-//     try {
-//         let result = 0;
-//         if (Array.isArray(formulaArr)) {
-//             let operator: string | null = null;
-//             for (const entry of formulaArr) {
-//                 let subResult = 0;
-//                 if (['+', '-', '*', '/'].includes(entry)) {
-//                     operator = entry;
-//                     continue;
-//                 } else if (isNumeric(entry)) {
-//                     subResult = Number(entry);
-//                 } else if (Array.isArray(entry)) {
-//                     subResult = calculateFormulaArray(entry, statsObj, damageResult);
-//                 } else if (entry.indexOf('#') != -1) {
-//                     const nameArr = entry.split('#');
-//                     if (damageResult && nameArr[0] in damageResult) {
-//                         const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
-//                         let damage = null;
-//                         for (const damageArr of damageArrArr) {
-//                             if (nameArr[1] == damageArr[0]) {
-//                                 damage = damageArr[4];  // 非会心
-//                                 break;
-//                             }
-//                         }
-//                         if (damage != null) {
-//                             subResult = damage;
-//                         } else {
-//                             console.error(formulaArr, statsObj, damageResult, opt_max, opt_min, entry);
-//                         }
-//                     }
-//                 } else {
-//                     const temp = getStatValue(entry, statsObj);
-//                     if (temp === undefined) {
-//                         console.error(formulaArr, statsObj, null, opt_max, opt_min, entry);
-//                     } else {
-//                         subResult = temp;
-//                     }
-//                 }
-//                 if (operator == null) {
-//                     result += subResult;
-//                 } else {
-//                     switch (operator) {
-//                         case '+':
-//                             result += subResult;
-//                             break;
-//                         case '-':
-//                             result -= subResult;
-//                             break;
-//                         case '*':
-//                             result *= subResult;
-//                             result = Math.floor(result * 100) / 100;
-//                             break;
-//                         case '/':
-//                             result /= subResult;
-//                             break;
-//                     }
-//                 }
-//             }
-//         } else if (isNumeric(formulaArr)) {
-//             result = Number(formulaArr);
-//         } else if (formulaArr.indexOf('#') != -1) {
-//             const nameArr = formulaArr.split('#');
-//             if (damageResult && nameArr[0] in damageResult) {
-//                 const damageArrArr = damageResult[nameArr[0]] as TDamageResultEntry[];
-//                 for (const damageArr of damageArrArr) {
-//                     if (nameArr[1] == damageArr[0]) {
-//                         result = damageArr[4];  // 非会心
-//                         break;
-//                     }
-//                 }
-//             }
-//         } else {
-//             const temp = getStatValue(formulaArr, statsObj);
-//             if (temp !== undefined) {
-//                 result = temp;
-//             } else {
-//                 console.error(formulaArr, statsObj, null, opt_max, opt_min);
-//                 result = 0; // 暫定
-//             }
-//         }
-//         if (opt_max != null) {
-//             const maxValue = calculateFormulaArray(opt_max, statsObj, damageResult);
-//             result = Math.min(result, maxValue);
-//         }
-//         if (opt_min != null) {
-//             const minValue = calculateFormulaArray(opt_min, statsObj, damageResult);
-//             result = Math.max(result, minValue);
-//         }
-//         return result;
-//     } catch (error) {
-//         console.error(error);
-//         console.error(formulaArr, statsObj, damageResult, opt_max, opt_min);
-//         throw error;
-//     }
-// }
 
 /** ダメージ計算を実施します */
 export function calculateDamageResult(
@@ -1895,7 +1798,7 @@ function calculateDamageFromDetail(
         }
         let my計算Result: TDamageResultEntry;
         if (detailObj.種類.startsWith('月') && detailObj.種類.endsWith('反応ダメージ')) {   // for イネファ
-            my計算Result = calculateDamageFromDetailSubLunar(statsObj, damageResult, detailObj.数値, detailObj.種類, my元素);
+            my計算Result = calculateDamageFromDetailSubLunar(statsObj, damageResult, detailObj.数値, detailObj.種類, my元素, my別枠乗算);
         } else {
             my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, detailObj.数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj.上限, detailObj.下限);
         }
@@ -2080,6 +1983,7 @@ function calculateDamageFromDetailSubLunar(
     formula: number | string,
     kind: string,
     dmgElement: string,
+    別枠乗算: number | null,
 ): TDamageResultEntry {
     const myダメージ基礎値 = evalFormula(formula, statsObj, damageResult, null, null);
     const workKind = kind.replace('反応ダメージ', '');
@@ -2087,15 +1991,23 @@ function calculateDamageFromDetailSubLunar(
     const em = statsObj['元素熟知'] ?? 0;
     const emBonus = (6 * em) / (em + 2000);
     const otherBonus = statsObj[workKind + '反応ボーナス'] ?? 0;
+    const dmgUp = statsObj[workKind + 'ダメージアップ'] ?? 0;
 
     let multiplier = 1;
     if (workKind == '月感電') {
         multiplier = 3;
     }
     let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + emBonus + otherBonus / 100);
+    myダメージ += dmgUp;
 
     const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);
     myダメージ *= my耐性補正;
+
+    if (別枠乗算) { // 別枠乗算 for 宵宮
+        myダメージ *= 別枠乗算 / 100;
+    } else {
+        別枠乗算 = 1;
+    }
 
     let my会心率 = statsObj['会心率'];
     my会心率 += statsObj[dmgElement + '元素ダメージ会心率'] || 0;
@@ -2171,6 +2083,8 @@ function updateStats(
         if (name in statsObj) {
             if (name.startsWith('別枠乗算') && diffStats[name] > 0) {
                 statsObj[name] *= diffStats[name] / 100;    // for ディオナ
+            } else if (name.endsWith('会心ダメージ') && Object.keys(元素反応TEMPLATE).includes(name)) {
+                statsObj[name] = Math.max(statsObj[name] ?? 0, diffStats[name]);  // for ラウマ
             } else {
                 statsObj[name] += diffStats[name];
             }
