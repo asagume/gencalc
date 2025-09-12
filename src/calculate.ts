@@ -53,6 +53,7 @@ import {
     ARTIFACT_SUB_MASTER,
     DAMAGE_CATEGORY_ARRAY,
     ELEMENTAL_REACTION_BASE_DAMAGE_MASTER,
+    ELEMENTAL_REACTION_BASE_SHIELD_HP_MASTER,
     ELEMENTAL_REACTION_MASTER,
     ELEMENTAL_RESONANCE_MASTER,
     getCharacterMasterDetail,
@@ -1353,7 +1354,7 @@ function calculate結晶シールド吸収量(element: string, statsObj: TStats)
         const elementalMastery = statsObj['元素熟知'];
         const dmgBuff = statsObj['結晶反応ボーナス'] ?? 0;
         const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element]['結晶']['数値'];
-        const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
+        const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_SHIELD_HP_MASTER);
         let result = baseDmg * multiplier;
         result *= 1 + (40 * elementalMastery / (9 * (elementalMastery + 1400))) + dmgBuff / 100;
         return result;
