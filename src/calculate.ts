@@ -2088,7 +2088,11 @@ function calculateDamageFromDetailSubLunar(
     const emBonus = (6 * em) / (em + 2000);
     const otherBonus = statsObj[workKind + '反応ボーナス'] ?? 0;
 
-    let myダメージ = 3 * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + emBonus + otherBonus / 100);
+    let multiplier = 1;
+    if (workKind == '月感電') {
+        multiplier = 3;
+    }
+    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + emBonus + otherBonus / 100);
 
     const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);
     myダメージ *= my耐性補正;
