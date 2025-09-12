@@ -1,5 +1,126 @@
 [
   {
+    "id": 10000119,
+    "name": "ラウマ",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": [],
+    "side_icon": null,
+    "profile_pictures": [
+      {
+        "avatar_id": "10000119",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "10300"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1191,
+        "name": "「唇よ歌を紡ぎて 詩を織りなせ」",
+        "icon": null
+      },
+      {
+        "id": 1192,
+        "name": "「北の戒めを綴りて 伝承を語れ」",
+        "icon": null
+      },
+      {
+        "id": 1193,
+        "name": "「狡き狐の小径を 貪ること勿れ」",
+        "icon": null
+      },
+      {
+        "id": 1194,
+        "name": "「巨熊の力を 恋い慕うこと勿れ」",
+        "icon": null
+      },
+      {
+        "id": 1195,
+        "name": "「真なる物を その眼に納むる時」",
+        "icon": null
+      },
+      {
+        "id": 1196,
+        "name": "「我が血と涙を 月に捧げ奉らん」",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11191,
+        "group_id": 11931,
+        "name": "森を巡る旅",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11192,
+        "group_id": 11932,
+        "name": "聖言のルノ・永夜の眠り",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11195,
+        "group_id": 11939,
+        "name": "聖言のルノ・月の心",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 11921,
+        "group_id": 11921,
+        "name": "霜夜に捧ぐ光",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11922,
+        "group_id": 11922,
+        "name": "甘泉に捧ぐ禊",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11923,
+        "group_id": 11923,
+        "name": "月兆の祝福・千響の恩寵",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11925,
+        "group_id": 11925,
+        "name": "蒼樹に捧ぐ祈り",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8396",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/8396",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000116,
     "name": "イネファ",
     "icon": null,
@@ -6152,6 +6273,127 @@
       }
     ],
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/32"
+  },
+  {
+    "id": 10000121,
+    "name": "アイノ",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "avatar_level": 4,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": [],
+    "side_icon": null,
+    "profile_pictures": [
+      {
+        "avatar_id": "10000121",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "10200"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1211,
+        "name": "灰と力場のバランス理論",
+        "icon": null
+      },
+      {
+        "id": 1212,
+        "name": "歯車差分の進数原理",
+        "icon": null
+      },
+      {
+        "id": 1213,
+        "name": "ケーキと機械のリペアアート",
+        "icon": null
+      },
+      {
+        "id": 1214,
+        "name": "バターと猫と エネルギー供給の法則",
+        "icon": null
+      },
+      {
+        "id": 1215,
+        "name": "金属と光の永久タービン",
+        "icon": null
+      },
+      {
+        "id": 1216,
+        "name": "天才なりの構築責任",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11211,
+        "group_id": 12131,
+        "name": "叩いて直す！",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11212,
+        "group_id": 12132,
+        "name": "アイデアキャッチャー",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11215,
+        "group_id": 12139,
+        "name": "お水ひえひえ装置",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12121,
+        "group_id": 12121,
+        "name": "効率運用プロトコル",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12122,
+        "group_id": 12122,
+        "name": "構造的パワーアップ",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12123,
+        "group_id": 12123,
+        "name": "月兆の祝福・全力オペレーション",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12125,
+        "group_id": 12125,
+        "name": "小型識別センサー",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8397",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/8397",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
   },
   {
     "id": 10000115,

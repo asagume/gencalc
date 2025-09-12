@@ -1,5 +1,73 @@
 [
   {
+    "avatar_id": 10000119,
+    "skill_list": [
+      {
+        "id": 11191,
+        "group_id": 11931,
+        "name": "森を巡る旅",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11192,
+        "group_id": 11932,
+        "name": "聖言のルノ・永夜の眠り",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11195,
+        "group_id": 11939,
+        "name": "聖言のルノ・月の心",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 11921,
+        "group_id": 11921,
+        "name": "霜夜に捧ぐ光",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11922,
+        "group_id": 11922,
+        "name": "甘泉に捧ぐ禊",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11923,
+        "group_id": 11923,
+        "name": "月兆の祝福・千響の恩寵",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 11925,
+        "group_id": 11925,
+        "name": "蒼樹に捧ぐ祈り",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000116,
     "skill_list": [
       {
@@ -3189,6 +3257,74 @@
         "name": "鑑査の心得",
         "icon": null,
         "max_level": 1
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000121,
+    "skill_list": [
+      {
+        "id": 11211,
+        "group_id": 12131,
+        "name": "叩いて直す！",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11212,
+        "group_id": 12132,
+        "name": "アイデアキャッチャー",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11215,
+        "group_id": 12139,
+        "name": "お水ひえひえ装置",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12121,
+        "group_id": 12121,
+        "name": "効率運用プロトコル",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12122,
+        "group_id": 12122,
+        "name": "構造的パワーアップ",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12123,
+        "group_id": 12123,
+        "name": "月兆の祝福・全力オペレーション",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12125,
+        "group_id": 12125,
+        "name": "小型識別センサー",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
       }
     ]
   },

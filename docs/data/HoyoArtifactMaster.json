@@ -1,5 +1,85 @@
 [
   {
+    "id": 4254,
+    "name": "彷徨える者の涙晶",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4154,
+    "name": "渇真の花",
+    "icon": null,
+    "reliquary_cat_id": 1,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4252,
+    "name": "祝福されし者の白羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4152,
+    "name": "深罪の羽",
+    "icon": null,
+    "reliquary_cat_id": 2,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4255,
+    "name": "霜祀者の狂宴",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4155,
+    "name": "告諭の鐘",
+    "icon": null,
+    "reliquary_cat_id": 3,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4251,
+    "name": "純粋なる者の歓喜",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4151,
+    "name": "満溢の壺",
+    "icon": null,
+    "reliquary_cat_id": 4,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4253,
+    "name": "神託者の聖冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
+    "id": 4153,
+    "name": "永劫の冠",
+    "icon": null,
+    "reliquary_cat_id": 5,
+    "reliquary_level": 5,
+    "max_level": 20
+  },
+  {
     "id": 4054,
     "name": "深廊に響く歌",
     "icon": null,

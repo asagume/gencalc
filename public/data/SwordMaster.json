@@ -55,6 +55,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "月紡ぎの曙光": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_Moonweaver'sDawn.json"
+  },
   "静謐の笛": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_Serenity'sCall.json"

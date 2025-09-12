@@ -518,7 +518,7 @@
         {
             "名前": "甘泉に捧ぐ禊",
             "説明": "ラウマの元素熟知1につき、ラウマは以下の強化効果を獲得する。<br>・元素スキルの与えるダメージ+0.04%。この方法でアップできるダメージは最大32%まで。<br>・重撃<span style=\"color: rgb(255, 215, 128)\">「獣霊の御使い·顕現」</span>のクールタイム-0.02%。この方法で短縮できる「獣霊の御使い·顕現」のクールタイムは最大20%まで。",
-            "icon_url": "images/characters/dendro_5_catalyst_Lauma/",
+            "icon_url": "images/characters/dendro_5_catalyst_Lauma/talent_5.png",
             "詳細": [
                 {
                     "種類": "元素スキルダメージバフ",

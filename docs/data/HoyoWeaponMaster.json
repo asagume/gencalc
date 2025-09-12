@@ -1,5 +1,85 @@
 [
   {
+    "id": 14520,
+    "name": "夜を紡ぐ天鏡",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8836"
+  },
+  {
+    "id": 15433,
+    "name": "羅網の針",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8835"
+  },
+  {
+    "id": 14433,
+    "name": "烏髄の孤灯",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8517"
+  },
+  {
+    "id": 14432,
+    "name": "天光のリュート",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8837"
+  },
+  {
+    "id": 13433,
+    "name": "金掘りのシャベル",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8514"
+  },
+  {
+    "id": 12433,
+    "name": "万能の鍵",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8513"
+  },
+  {
+    "id": 11434,
+    "name": "月紡ぎの曙光",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8512"
+  },
+  {
+    "id": 11433,
+    "name": "静謐の笛",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8511"
+  },
+  {
     "id": 11517,
     "name": "蒼耀",
     "icon": null,
