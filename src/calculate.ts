@@ -999,10 +999,14 @@ export function calculateDamageResult(
                 if (!(category in damageDetailMyCharacter)) continue;
                 const talentDetailArr = (damageDetailMyCharacter as any)[category];
                 for (const talentDetail of talentDetailArr) {
-                    if (talentDetail['条件'] && checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation, statsInput.statsObj, conditionInput.conditionValues) === 0) {
-                        continue;
+                    let conditionMultiplier = 1;
+                    if (talentDetail['条件']) {
+                        conditionMultiplier = checkConditionMatches(talentDetail['条件'], validConditionValueArr, constellation, statsInput.statsObj, conditionInput.conditionValues);
+                        if (conditionMultiplier === 0) {
+                            continue;
+                        }
                     }
-                    const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult);
+                    const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult, null, conditionMultiplier);
                     (damageResult[category] as TDamageResultEntry[]).push(resultArr);
                 }
             }
@@ -1437,7 +1441,8 @@ function calculateDamageFromDetail(
     conditionInput: TConditionInput,
     statsObj: TStats,
     damageResult: TDamageResult,
-    opt_element: string | null = null
+    opt_element: string | null = null,
+    opt_conditionMultiplier = 1,
 ): TDamageResultEntry {
     try {
         const myバフArr = [] as Array<string>;
@@ -1797,11 +1802,15 @@ function calculateDamageFromDetail(
                 }
                 break;
         }
+        let my数値 = detailObj.数値;
+        if (opt_conditionMultiplier != 1) {
+            my数値 = '(' + my数値 + ')*' + opt_conditionMultiplier;
+        }
         let my計算Result: TDamageResultEntry;
         if (detailObj.種類.startsWith('月') && detailObj.種類.endsWith('反応ダメージ')) {   // for イネファ
-            my計算Result = calculateDamageFromDetailSubLunar(statsObj, damageResult, detailObj.数値, detailObj.種類, my元素, my別枠乗算);
+            my計算Result = calculateDamageFromDetailSubLunar(statsObj, damageResult, my数値, detailObj.種類, my元素, my別枠乗算);
         } else {
-            my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, detailObj.数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj.上限, detailObj.下限);
+            my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, my数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj.上限, detailObj.下限);
         }
 
         myTalentChangeDetailObjArr.forEach(valueObj => {
