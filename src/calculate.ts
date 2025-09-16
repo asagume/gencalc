@@ -2021,10 +2021,12 @@ function calculateDamageFromDetailSubLunar(
 
     let my会心率 = statsObj['会心率'];
     my会心率 += statsObj[dmgElement + '元素ダメージ会心率'] || 0;
+    my会心率 += statsObj[workKind + 'ダメージ会心率'] || 0;
     my会心率 = Math.min(100, Math.max(0, my会心率)) / 100;    // 0≦会心率≦1
 
     let my会心ダメージ = statsObj['会心ダメージ'];
     my会心ダメージ += statsObj[dmgElement + '元素ダメージ会心ダメージ'] || 0;
+    my会心ダメージ += statsObj[workKind + 'ダメージ会心ダメージ'] || 0;
     my会心ダメージ = (100 + my会心ダメージ) / 100;
 
     let my会心Result = null;
