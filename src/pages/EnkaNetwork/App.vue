@@ -12,7 +12,7 @@
         <form @submit.prevent="submit">
           <label>
             UID:
-            <input v-model="uid" type="text" maxlength="9" placeholder="ENTER UID" pattern="[0-9]+" />
+            <input v-model="uid" type="text" maxlength="10" placeholder="ENTER UID" pattern="[0-9]+" />
           </label>
           <button type="submit" :disabled="timer > 0">
             <span class="material-symbols-outlined"> send </span>
