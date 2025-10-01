@@ -1,4 +1,8 @@
 {
+  "血染めの荒れ地": {
+    "レアリティ": 5,
+    "import": "data/weapons/polearm/5_BloodsoakedRuins.json"
+  },
   "砕け散る光輪": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_FracturedHalo.json"

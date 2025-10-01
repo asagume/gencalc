@@ -61,8 +61,9 @@ $pageIds = @()
 # $pageIds += 7706   # スカーク
 # $pageIds += 7707   # ダリア
 # $pageIds += 7852   # イネファ
-$pageIds += 8396   # ラウマ
+# $pageIds += 8396   # ラウマ
 # $pageIds += 8397   # アイノ
+$pageIds += 8398   # フリンズ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -146,13 +147,14 @@ $pageIds += 8396   # ラウマ
 # $pageIds += 8299    # 砕け散る光輪
 # $pageIds += 8300    # 知恵の溶炎
 # $pageIds += 8511    # 静謐の笛
-$pageIds += 8512    # 月紡ぎの曙光
+# $pageIds += 8512    # 月紡ぎの曙光
 # $pageIds += 8513    # 万能の鍵
 # $pageIds += 8514    # 金掘りのシャベル
 # $pageIds += 8517    # 烏髄の孤灯
 # $pageIds += 8835    # 羅網の針
 # $pageIds += 8836    # 夜を紡ぐ天鏡
-$pageIds += 8837    # 天光のリュート
+# $pageIds += 8837    # 天光のリュート
+$pageIds += 8838    # 血染めの荒れ地
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
