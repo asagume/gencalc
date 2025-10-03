@@ -1330,6 +1330,7 @@ function calculate固定値系元素反応ダメージ(
         const elementalMastery = statsObj['元素熟知'];
         const baseDmgUp = statsObj[reaction + '基礎ダメージアップ'] ?? 0;
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
+        const dmgMultiplier = statsObj['別枠乗算.' + reaction + '反応ダメージ'] ?? 100;
         const dmgUp = statsObj[reaction + 'ダメージアップ'] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
@@ -1340,6 +1341,7 @@ function calculate固定値系元素反応ダメージ(
         } else {
             result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
         }
+        result *= dmgMultiplier / 100;
         result += dmgUp;
         result *= calculateEnemyRes(dmgElement, statsObj);
         return result;
