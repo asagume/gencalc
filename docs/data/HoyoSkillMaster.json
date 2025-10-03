@@ -1,5 +1,73 @@
 [
   {
+    "avatar_id": 10000120,
+    "skill_list": [
+      {
+        "id": 11201,
+        "group_id": 12031,
+        "name": "聖護の魔槍",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11202,
+        "group_id": 12032,
+        "name": "古律・孤灯の秘密",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11205,
+        "group_id": 12039,
+        "name": "旧儀・夜の賓客",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12021,
+        "group_id": 12021,
+        "name": "厳冬の響き",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12022,
+        "group_id": 12022,
+        "name": "幽炎の囁き",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12023,
+        "group_id": 12023,
+        "name": "月兆の祝福・旧世の秘奥",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12025,
+        "group_id": 12025,
+        "name": "照夜の灯り",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000119,
     "skill_list": [
       {

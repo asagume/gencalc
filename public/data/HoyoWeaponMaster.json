@@ -350,6 +350,16 @@
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1955"
   },
   {
+    "id": 13516,
+    "name": "血染めの荒れ地",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8838"
+  },
+  {
     "id": 13515,
     "name": "砕け散る光輪",
     "icon": null,

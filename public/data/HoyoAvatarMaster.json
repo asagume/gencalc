@@ -1,5 +1,126 @@
 [
   {
+    "id": 10000120,
+    "name": "フリンズ",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": [],
+    "side_icon": null,
+    "profile_pictures": [
+      {
+        "avatar_id": "10000120",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "10400"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1201,
+        "name": "雪影の幕をひらく時",
+        "icon": null
+      },
+      {
+        "id": 1202,
+        "name": "邪悪の壁を超える者",
+        "icon": null
+      },
+      {
+        "id": 1203,
+        "name": "闇に訪う見知らぬ客",
+        "icon": null
+      },
+      {
+        "id": 1204,
+        "name": "咆哮する荒れ山の夜",
+        "icon": null
+      },
+      {
+        "id": 1205,
+        "name": "俗世から遠ざかる影",
+        "icon": null
+      },
+      {
+        "id": 1206,
+        "name": "歌と死の舞踏",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11201,
+        "group_id": 12031,
+        "name": "聖護の魔槍",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11202,
+        "group_id": 12032,
+        "name": "古律・孤灯の秘密",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11205,
+        "group_id": 12039,
+        "name": "旧儀・夜の賓客",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12021,
+        "group_id": 12021,
+        "name": "厳冬の響き",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12022,
+        "group_id": 12022,
+        "name": "幽炎の囁き",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12023,
+        "group_id": 12023,
+        "name": "月兆の祝福・旧世の秘奥",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12025,
+        "group_id": 12025,
+        "name": "照夜の灯り",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8398",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/8398",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000119,
     "name": "ラウマ",
     "icon": null,
