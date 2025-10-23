@@ -63,7 +63,8 @@ $pageIds = @()
 # $pageIds += 7852   # イネファ
 # $pageIds += 8396   # ラウマ
 # $pageIds += 8397   # アイノ
-$pageIds += 8398   # フリンズ
+# $pageIds += 8398   # フリンズ
+$pageIds += 8894   # ネフェル
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -154,7 +155,10 @@ $pageIds += 8398   # フリンズ
 # $pageIds += 8835    # 羅網の針
 # $pageIds += 8836    # 夜を紡ぐ天鏡
 # $pageIds += 8837    # 天光のリュート
-$pageIds += 8838    # 血染めの荒れ地
+# $pageIds += 8838    # 血染めの荒れ地
+$pageIds += 8989    # 聖祭者の輝杖
+$pageIds += 8990    # 霜辰
+$pageIds += 8991    # 真言の匣
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

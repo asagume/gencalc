@@ -1,4 +1,8 @@
 {
+  "真言の匣": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_ReliquaryofTruth.json"
+  },
   "夜を紡ぐ天鏡": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Nightweaver'sLookingGlass.json"
@@ -62,6 +66,10 @@
   "天空の巻": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
+  },
+  "霜辰": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_DawningFrost.json"
   },
   "天光のリュート": {
     "レアリティ": 4,

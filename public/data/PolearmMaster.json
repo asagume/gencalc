@@ -47,6 +47,10 @@
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_PrimordialJadeWinged-Spear.json"
   },
+  "聖祭者の輝杖": {
+    "レアリティ": 4,
+    "import": "data/weapons/polearm/4_Sacrificer'sStaff.json"
+  },
   "金堀りのシャベル": {
     "レアリティ": 4,
     "import": "data/weapons/polearm/4_Prospector'sShovel.json"
