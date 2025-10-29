@@ -20,6 +20,7 @@ import ELEMENTAL_RESONANCE_MASTER from '../public/data/ElementalResonanceMaster.
 import TEAM_OPTION_MASTER from '../public/data/TeamOptionMaster.json'// assert {type: 'json'}
 import OPTION1_MASTER from '../public/data/OptionMaster1.json'// assert {type: 'json'}
 import OPTION2_MASTER from '../public/data/OptionMaster2.json'// assert {type: 'json'}
+import MOON_SIGN_OPTION_MASTER from '../public/data/MoonSignOptionMaster.json'// assert {type: 'json'}
 
 import ELEMENTAL_REACTION_MASTER from '../public/data/ElementalReactionMaster.json'// assert {type: 'json'}
 import ELEMENTAL_REACTION_BASE_DAMAGE_MASTER from '../public/data/ElementalReactionBaseDamageMaster.json'// assert {type: 'json'}
@@ -41,10 +42,13 @@ export {
     TEAM_OPTION_MASTER,
     OPTION1_MASTER,
     OPTION2_MASTER,
+    MOON_SIGN_OPTION_MASTER,
     ELEMENTAL_REACTION_MASTER,
     ELEMENTAL_REACTION_BASE_DAMAGE_MASTER,
     ELEMENTAL_REACTION_BASE_SHIELD_HP_MASTER,
 };
+
+export const MOON_SIGN_CHARACTER_ARR = ['イネファ', 'アイノ', 'ラウマ', 'フリンズ', 'ネフェル'];
 
 // function removeStrFromUrl(obj: any, str: string) {
 //     if (isPlainObject(obj)) {

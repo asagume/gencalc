@@ -57,6 +57,8 @@ import {
     ELEMENTAL_REACTION_MASTER,
     ELEMENTAL_RESONANCE_MASTER,
     getCharacterMasterDetail,
+    MOON_SIGN_CHARACTER_ARR,
+    MOON_SIGN_OPTION_MASTER,
     TArtifactMainRarity,
     TArtifactMainStat,
     TCharacterKey,
@@ -2284,7 +2286,12 @@ export async function setupTeamOptionSupporter(
             }
         }
     }
-    for (const options of [characterOptions, weaponOptions, artifactSetOptions]) {
+    // MOON_SIGN_OPTION_MASTER
+    let moonSignOptions: any[] = [];
+    if (!MOON_SIGN_CHARACTER_ARR.includes(supporter)) {
+        moonSignOptions = MOON_SIGN_OPTION_MASTER[vision];
+    }
+    for (const options of [characterOptions, weaponOptions, artifactSetOptions, moonSignOptions]) {
         if (options.length) {
             const damageDetailObjArr = makeTeamOptionDetailObjArr(options);
             damageDetailObjArr.forEach((damageDetailObj) => {

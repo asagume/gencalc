@@ -68,6 +68,7 @@ export const 実数ダメージ加算ARRAY = [
     '開花ダメージアップ',       // for ラウマ
     '烈開花ダメージアップ',     // for ラウマ
     '超開花ダメージアップ',     // for ラウマ
+    '月感電ダメージアップ',     // for ナド・クライ
     '月開花ダメージアップ',     // for ラウマ
 ];
 export const 元素反応バフARRAY = [
@@ -1508,6 +1509,8 @@ export function getChangeKind(kind: string) {
         || kind.endsWith('クールタイム')
         || kind.endsWith('会心率')
         || kind.endsWith('会心ダメージ')
+        || kind.endsWith('反応ボーナス')
+        || kind.endsWith('反応基礎ダメージアップ')
     ) {
         return 'STATUS';
     } else if (kind.endsWith('強化')
