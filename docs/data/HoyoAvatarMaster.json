@@ -1,5 +1,127 @@
 [
   {
+    "id": 10000122,
+    "name": "ネフェル",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90,
+    "item_icon": null,
+    "talent_icons": [
+    ],
+    "side_icon": null,
+    "profile_pictures": [
+      {
+        "avatar_id": "10000122",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "10500"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1221,
+        "name": "策謀は成否の源",
+        "icon": null
+      },
+      {
+        "id": 1222,
+        "name": "洞察は計略の礎",
+        "icon": null
+      },
+      {
+        "id": 1223,
+        "name": "虚実を覆う偽り",
+        "icon": null
+      },
+      {
+        "id": 1224,
+        "name": "藪に堕ちる幻惑",
+        "icon": null
+      },
+      {
+        "id": 1225,
+        "name": "勝機は刹那にあり",
+        "icon": null
+      },
+      {
+        "id": 1226,
+        "name": "必勝は逆転にあり",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11221,
+        "group_id": 12231,
+        "name": "蛇の威嚇",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11222,
+        "group_id": 12232,
+        "name": "盤術・千夜一舞",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11225,
+        "group_id": 12239,
+        "name": "聖約・真眼の幻戯",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12221,
+        "group_id": 12221,
+        "name": "月下の賭け",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12222,
+        "group_id": 12222,
+        "name": "砂塵の娘",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12223,
+        "group_id": 12223,
+        "name": "月兆の祝福・廊下の夕影",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12225,
+        "group_id": 12225,
+        "name": "金の密謀",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8894",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/8894",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000120,
     "name": "フリンズ",
     "icon": null,

@@ -1,5 +1,73 @@
 [
   {
+    "avatar_id": 10000122,
+    "skill_list": [
+      {
+        "id": 11221,
+        "group_id": 12231,
+        "name": "蛇の威嚇",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11222,
+        "group_id": 12232,
+        "name": "盤術・千夜一舞",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11225,
+        "group_id": 12239,
+        "name": "聖約・真眼の幻戯",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12221,
+        "group_id": 12221,
+        "name": "月下の賭け",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12222,
+        "group_id": 12222,
+        "name": "砂塵の娘",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12223,
+        "group_id": 12223,
+        "name": "月兆の祝福・廊下の夕影",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12225,
+        "group_id": 12225,
+        "name": "金の密謀",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000120,
     "skill_list": [
       {

@@ -1,5 +1,35 @@
 [
   {
+    "id": 14521,
+    "name": "真言の匣",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8991"
+  },
+  {
+    "id": 13434,
+    "name": "聖祭者の輝杖",
+    "icon": null,
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8989"
+  },
+  {
+    "id": 14434,
+    "name": "霜辰",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8990"
+  },
+  {
     "id": 14520,
     "name": "夜を紡ぐ天鏡",
     "icon": null,
