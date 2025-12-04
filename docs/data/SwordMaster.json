@@ -1,4 +1,8 @@
 {
+  "黒触": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_AthameArtis.json"
+  },
   "蒼耀": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_Azurelight.json"
