@@ -1,5 +1,132 @@
 [
   {
+    "avatar_id": 10000123,
+    "skill_list": [
+      {
+        "id": 11231,
+        "group_id": 12331,
+        "name": "輝炎の翼斬り",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11232,
+        "group_id": 12332,
+        "name": "二元術式・融合精錬",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11235,
+        "group_id": 12339,
+        "name": "純白の法則・変転する光",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12321,
+        "group_id": 12321,
+        "name": "顕現せし光霊",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12322,
+        "group_id": 12322,
+        "name": "混沌を創りし闇夜",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12323,
+        "group_id": 12323,
+        "name": "大地の残響",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000124,
+    "skill_list": [
+      {
+        "id": 11241,
+        "group_id": 12431,
+        "name": "気転の矢",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11242,
+        "group_id": 12432,
+        "name": "奇策・財宝分配法",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11245,
+        "group_id": 12439,
+        "name": "秘器・狩人の七つ道具",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12421,
+        "group_id": 12421,
+        "name": "報酬ゲットの妙案",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12422,
+        "group_id": 12422,
+        "name": "ベリーの褒賞",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12423,
+        "group_id": 12423,
+        "name": "月兆の祝福・屋根上の疾走",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12425,
+        "group_id": 12425,
+        "name": "アンダーグラウンドの悪知恵",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000122,
     "skill_list": [
       {

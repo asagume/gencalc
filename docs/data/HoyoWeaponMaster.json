@@ -1,5 +1,25 @@
 [
   {
+    "id": 11518,
+    "name": "黒蝕",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9045"
+  },
+  {
+    "id": 15515,
+    "name": "暁を告げる歴史",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9047"
+  },
+  {
     "id": 14521,
     "name": "真言の匣",
     "icon": null,

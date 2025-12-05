@@ -1,5 +1,244 @@
 [
   {
+    "id": 10000123,
+    "name": "ドゥリン",
+    "icon": null,
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90,
+    "item_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/692f7d8b/38ebcd3fbd91e287f7282a3bc504392a.png",
+    "talent_icons": [],
+    "side_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/692f7dce/24c0cce8c4651f94518b34379b865826.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000123",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "10600"
+      },
+      {
+        "avatar_id": "10000123",
+        "costume_id": "212301",
+        "icon": null,
+        "profile_picture_id": "10601"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1231,
+        "name": "赤土の逆理",
+        "icon": null
+      },
+      {
+        "id": 1232,
+        "name": "底無き想い",
+        "icon": null
+      },
+      {
+        "id": 1233,
+        "name": "焔鏡の顕現",
+        "icon": null
+      },
+      {
+        "id": 1234,
+        "name": "充溢の根源",
+        "icon": null
+      },
+      {
+        "id": 1235,
+        "name": "業火の裂目",
+        "icon": null
+      },
+      {
+        "id": 1236,
+        "name": "二重の誕生",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11231,
+        "group_id": 12331,
+        "name": "輝炎の翼斬り",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11232,
+        "group_id": 12332,
+        "name": "二元術式・融合精錬",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11235,
+        "group_id": 12339,
+        "name": "純白の法則・変転する光",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12321,
+        "group_id": 12321,
+        "name": "顕現せし光霊",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12322,
+        "group_id": 12322,
+        "name": "混沌を創りし闇夜",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12323,
+        "group_id": 12323,
+        "name": "大地の残響",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9017",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9017",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000124,
+    "name": "ヤフォダ",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "avatar_level": 4,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "item_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/692f7d8b/8be9213063c665c0eb0e4a6a007e04cb.png",
+    "talent_icons": [],
+    "side_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/692f7dce/0f74abd472d9ed1a60318d9843fc37f0.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000124",
+        "costume_id": "0",
+        "icon": null,
+        "profile_picture_id": "10700"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1241,
+        "name": "よーし、もう一本！",
+        "icon": null
+      },
+      {
+        "id": 1242,
+        "name": "ゴロツキの臨機応変",
+        "icon": null
+      },
+      {
+        "id": 1243,
+        "name": "寄る辺ないギャンブル",
+        "icon": null
+      },
+      {
+        "id": 1244,
+        "name": "砂の上のベリー",
+        "icon": null
+      },
+      {
+        "id": 1245,
+        "name": "偉大なる財宝",
+        "icon": null
+      },
+      {
+        "id": 1246,
+        "name": "ほんの小さな幸運",
+        "icon": null
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11241,
+        "group_id": 12431,
+        "name": "気転の矢",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11242,
+        "group_id": 12432,
+        "name": "奇策・財宝分配法",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11245,
+        "group_id": 12439,
+        "name": "秘器・狩人の七つ道具",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12421,
+        "group_id": 12421,
+        "name": "報酬ゲットの妙案",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12422,
+        "group_id": 12422,
+        "name": "ベリーの褒賞",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12423,
+        "group_id": 12423,
+        "name": "月兆の祝福・屋根上の疾走",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12425,
+        "group_id": 12425,
+        "name": "アンダーグラウンドの悪知恵",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9018",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9018",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000122,
     "name": "ネフェル",
     "icon": null,
@@ -8,8 +247,7 @@
     "element_attr_id": 4,
     "max_level": 90,
     "item_icon": null,
-    "talent_icons": [
-    ],
+    "talent_icons": [],
     "side_icon": null,
     "profile_pictures": [
       {
@@ -360,6 +598,234 @@
     ],
     "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8396",
     "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/8396",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000118,
+    "name": "ドール（女）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/7328f006a498626b32a1e187c0dba1ea_7198130205836288559.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/96df141f7d4d44b153a5af52420fd1ce_5040035997387079748.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000118,
+    "name": "ドール（女）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/7328f006a498626b32a1e187c0dba1ea_7198130205836288559.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/96df141f7d4d44b153a5af52420fd1ce_5040035997387079748.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000118,
+    "name": "ドール（女）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/7328f006a498626b32a1e187c0dba1ea_7198130205836288559.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/96df141f7d4d44b153a5af52420fd1ce_5040035997387079748.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000118,
+    "name": "ドール（女）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/7328f006a498626b32a1e187c0dba1ea_7198130205836288559.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/96df141f7d4d44b153a5af52420fd1ce_5040035997387079748.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000118,
+    "name": "ドール（女）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/7328f006a498626b32a1e187c0dba1ea_7198130205836288559.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/96df141f7d4d44b153a5af52420fd1ce_5040035997387079748.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000118,
+    "name": "ドール（女）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/7328f006a498626b32a1e187c0dba1ea_7198130205836288559.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/96df141f7d4d44b153a5af52420fd1ce_5040035997387079748.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9021",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000117,
+    "name": "ドール（男）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/af27ded694227c5c49f0f75730eecbb9_5249597265949308504.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/d926ba69ae198f3f85bda32257a0a2a3_1760293996047392150.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000117,
+    "name": "ドール（男）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/af27ded694227c5c49f0f75730eecbb9_5249597265949308504.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 5,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/d926ba69ae198f3f85bda32257a0a2a3_1760293996047392150.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000117,
+    "name": "ドール（男）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/af27ded694227c5c49f0f75730eecbb9_5249597265949308504.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 4,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/d926ba69ae198f3f85bda32257a0a2a3_1760293996047392150.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000117,
+    "name": "ドール（男）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/af27ded694227c5c49f0f75730eecbb9_5249597265949308504.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/d926ba69ae198f3f85bda32257a0a2a3_1760293996047392150.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000117,
+    "name": "ドール（男）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/af27ded694227c5c49f0f75730eecbb9_5249597265949308504.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/d926ba69ae198f3f85bda32257a0a2a3_1760293996047392150.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000117,
+    "name": "ドール（男）",
+    "icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/af27ded694227c5c49f0f75730eecbb9_5249597265949308504.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90,
+    "item_icon": "",
+    "talent_icons": [],
+    "side_icon": "https://fastcdn.hoyoverse.com/static-resource-v2/2025/10/16/d926ba69ae198f3f85bda32257a0a2a3_1760293996047392150.png",
+    "profile_pictures": [],
+    "talents": [],
+    "skill_list": [],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9020",
     "wiki_reliquary_url": "",
     "wiki_recommend_skill_url": ""
   },
