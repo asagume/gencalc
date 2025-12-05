@@ -1,4 +1,8 @@
 {
+  "暁を告げる歴史": {
+    "レアリティ": 5,
+    "import": "data/weapons/bow/5_TheDaybreakChronicles.json"
+  },
   "星鷲の紅き羽": {
     "レアリティ": 5,
     "import": "data/weapons/bow/5_AstralVulture'sCrimsonPlumage.json"

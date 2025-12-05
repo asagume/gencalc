@@ -411,6 +411,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "ヤフォダ": {
+    "レアリティ": 4,
+    "元素": "風",
+    "武器": "弓",
+    "誕生日": "1/5",
+    "import": "data/characters/anemo_4_bow_Jahoda.json"
+  },
   "アイノ": {
     "レアリティ": 4,
     "元素": "水",
