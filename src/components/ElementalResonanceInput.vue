@@ -35,11 +35,8 @@
       </label>
     </template>
     <label>{{ '月反応ダメージ' }}
-      <select v-model="lunarDmgBonus" @change="onChangeMoonsign(2)" :disabled="!moonsignChecked.ascendantGleam">
-        <option v-for="bonus in Array.from({ length: 37 }, (_, i) => i)" :key="bonus" :value="bonus">
-          {{ '+' + bonus + '%' }}
-        </option>
-      </select>
+      <input type="number" v-model="lunarDmgBonus" min="0" max="36" @change="onChangeMoonsign(2)"
+        :disabled="!moonsignChecked.ascendantGleam">
     </label>
     <hr />
     <p>{{ displayName('魔導') }}</p>
