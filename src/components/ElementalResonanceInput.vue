@@ -34,7 +34,7 @@
         </select>
       </label>
     </template>
-    <label>{{ '月反応ダメージ' }}
+    <label>{{ '月兆キャラクター以外による月反応ダメージ +' }}
       <input type="number" v-model="lunarDmgBonus" min="0" max="36" @change="onChangeMoonsign(2)"
         :disabled="!moonsignChecked.ascendantGleam">
     </label>
