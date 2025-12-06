@@ -2493,7 +2493,7 @@ export async function updateOptionsElementalResonanceByTeam(
     } else {
         newElementResonance['魔導秘儀'] = false;
     }
-    newElementResonance['月反応ボーナス'] = optionInput.elementalResonance.conditionValues['月反応ボーナス'] || 36;
+    newElementResonance['月反応ボーナス'] = optionInput.elementalResonance.conditionValues['月反応ボーナス'] || 0;
 
     if (!_.isEqual(newElementResonance, optionInput.elementalResonance.conditionValues)) {
         overwriteObject(optionInput.elementalResonance.conditionValues, newElementResonance);

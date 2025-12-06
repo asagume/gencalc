@@ -96,7 +96,7 @@ export default defineComponent({
       });
       return result;
     })
-    const lunarDmgBonus = ref(36);
+    const lunarDmgBonus = ref(18);
 
     const displayStatAjustmentList = computed(() => {
       const resultArr: string[] = [];
