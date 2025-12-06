@@ -1,5 +1,6 @@
 <template>
   <fieldset class="elemental-resonance">
+    <p>{{ displayName('元素共鳴') }}</p>
     <label v-for="item in elementalResonanceList" :key="item.key">
       <input type="checkbox" v-model="elementalResonanceChecked[item.key]" @change="onChange(item.key)" />
       <span>{{ displayName(item.名前) }}</span>
@@ -12,23 +13,54 @@
         </select>
       </template>
     </label>
+    <article v-for="(item, index) in descriptionList" :key="index" :class="elementClass(item[0])">
+      {{ item[1] }}
+    </article>
+    <hr />
+    <p>{{ displayName('月兆') }}</p>
+    <label>
+      <input type="checkbox" v-model="moonsignChecked.nascentGleam" @change="onChangeMoonsign(1)" />
+      <span>{{ displayName('初照') }}</span>
+    </label>
+    <label>
+      <input type="checkbox" v-model="moonsignChecked.ascendantGleam" @change="onChangeMoonsign(2)" />
+      <span>{{ displayName('満照') }}</span>
+    </label>
+    <br />
+    <template v-if="moonsignChecked.ascendantGleam && false">
+      <label>
+        <select>
+          <option v-for="member in otherMemberList" :key="member" :value="member">{{ member }}</option>
+        </select>
+      </label>
+    </template>
+    <label>{{ '月反応ダメージ' }}
+      <select v-model="lunarDmgBonus" @change="onChangeMoonsign(2)" :disabled="!moonsignChecked.ascendantGleam">
+        <option v-for="bonus in Array.from({ length: 37 }, (_, i) => i)" :key="bonus" :value="bonus">
+          {{ '+' + bonus + '%' }}
+        </option>
+      </select>
+    </label>
+    <hr />
+    <p>{{ displayName('魔導') }}</p>
+    <label>
+      <input type="checkbox" v-model="hexereiChecked" @change="onChangeHexerei()" />
+      <span>魔導秘儀</span>
+    </label>
     <hr />
     <ul class="option-description">
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
-    <hr />
-    <article v-for="(item, index) in descriptionList" :key="index" :class="elementClass(item[0])">
-      {{ item[1] }}
-    </article>
   </fieldset>
 </template>
 
 <script lang="ts">
-import { TConditionInput, TConditionValues, TElementalResonance, } from "@/input";
+import { TConditionInput, TConditionValues, TElementalResonance, TMoonsign, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
   ELEMENTAL_RESONANCE_MASTER_LIST,
   ELEMENT_COLOR_CLASS,
+  TCharacterKey,
   TElementalResonanceKey,
 } from "@/master";
 import { computed, defineComponent, nextTick, onMounted, PropType, reactive, ref, watch } from "vue";
@@ -38,7 +70,11 @@ import { isNumeric, overwriteObject } from "@/common";
 export default defineComponent({
   name: "ElementalResonanceInput",
   props: {
-    elementalResonance: { type: Object as PropType<TElementalResonance>, required: true, }
+    elementalResonance: { type: Object as PropType<TElementalResonance>, required: true, },
+    moonsign: { type: Object as PropType<TMoonsign>, required: true, },
+    hexerei: { type: Boolean, required: true, },
+    character: { type: String as PropType<TCharacterKey>, required: true, },
+    teamMembers: { type: Array as PropType<string[]>, required: true, },
   },
   emits: ["update:elemental-resonance"],
   setup(props, context) {
@@ -52,6 +88,18 @@ export default defineComponent({
     // 燃焼、原激化、開花反応を発動すると、周囲チーム全員の元素熟知+30、継続時間6秒。超激化、草激化、超開花、烈開花反応を発動すると、周囲チーム全員の元素熟知+20、継続時間6秒。
     const dendroOption = ref(0);
     const conditionValues = reactive({} as TConditionValues);
+    const moonsignChecked = reactive({} as TMoonsign);
+    const hexereiChecked = ref(false);
+    const otherMemberList = computed(() => {
+      const result = [] as string[];
+      props.teamMembers.forEach(name => {
+        if (name != props.character) {
+          result.push(name);
+        }
+      });
+      return result;
+    })
+    const lunarDmgBonus = ref(36);
 
     const displayStatAjustmentList = computed(() => {
       const resultArr: string[] = [];
@@ -138,6 +186,36 @@ export default defineComponent({
       updateOption();
     }
 
+    const onChangeMoonsign = async (level: number) => {
+      if (level == 1) {
+        if (!moonsignChecked.nascentGleam) {
+          moonsignChecked.ascendantGleam = false;
+        }
+      } else if (level == 2) {
+        if (moonsignChecked.ascendantGleam) {
+          moonsignChecked.nascentGleam = true;
+        }
+      }
+      if (moonsignChecked.ascendantGleam) { // 満照
+        conditionValues['月兆'] = 2;
+        conditionValues['月反応ボーナス'] = lunarDmgBonus.value;
+      } else if (moonsignChecked.nascentGleam) { // 初照
+        conditionValues['月兆'] = 1;
+        conditionValues['月反応ボーナス'] = 0;
+      } else {
+        conditionValues['月兆'] = 0;
+        conditionValues['月反応ボーナス'] = 0;
+      }
+      await nextTick();
+      updateOption();
+    }
+
+    const onChangeHexerei = async () => {
+      conditionValues['魔導秘儀'] = hexereiChecked.value;
+      await nextTick();
+      updateOption();
+    }
+
     const initializeValues = (input: TConditionInput) => {
       overwriteObject(conditionValues, input.conditionValues);
       Object.keys(elementalResonanceChecked).forEach(key => {
@@ -150,11 +228,29 @@ export default defineComponent({
       if ('dendroOption' in conditionValues) {
         dendroOption.value = Number(conditionValues['dendroOption']);
       }
+      if ('月兆' in conditionValues) {
+        if (conditionValues['月兆'] === 2) {
+          moonsignChecked.nascentGleam = true;
+          moonsignChecked.ascendantGleam = true;
+        } else if (conditionValues['月兆'] === 1) {
+          moonsignChecked.nascentGleam = true;
+          moonsignChecked.ascendantGleam = false;
+        } else {
+          moonsignChecked.nascentGleam = false;
+          moonsignChecked.ascendantGleam = false;
+        }
+      }
+      if ('魔導秘儀' in conditionValues) {
+        hexereiChecked.value = Boolean(conditionValues['魔導秘儀']);
+      }
       updateOption();
     }
 
     onMounted(() => {
       overwriteObject(conditionValues, props.elementalResonance.conditionValues);
+      moonsignChecked.nascentGleam = props.moonsign.nascentGleam;
+      moonsignChecked.ascendantGleam = props.moonsign.ascendantGleam;
+      hexereiChecked.value = props.hexerei;
       updateOption();
     })
 
@@ -168,12 +264,18 @@ export default defineComponent({
       elementalResonanceList,
       elementalResonanceChecked,
       dendroOption,
+      moonsignChecked,
+      otherMemberList,
+      lunarDmgBonus,
+      hexereiChecked,
 
       displayStatAjustmentList,
       descriptionList,
       elementClass,
 
       onChange,
+      onChangeMoonsign,
+      onChangeHexerei,
       initializeValues,
     };
   },
@@ -182,6 +284,17 @@ export default defineComponent({
 <style scoped>
 div.elemental-resonance {
   margin-top: 10px;
+}
+
+fieldset.elemental-resonance p {
+  color: gold;
+  background-color: #333;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  vertical-align: middle;
+  font-weight: bold;
 }
 
 label {

@@ -55,6 +55,8 @@ export default defineComponent({
   setup(props, context) {
     const { displayName, displayStatName, displayStatValue, displayOptionName } = CompositionFunction();
 
+    const INVISIBLE_NAMES = ['月兆', '月反応ボーナス', '魔導秘儀'];
+
     const checkboxList = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.checkboxList) as TCheckboxEntry[]);
     const selectList = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.selectList) as TSelectEntry[]);
     const numberList = reactive(_.cloneDeep(CONDITION_INPUT_TEMPLATE.numberList) as TNumberEntry[]);
@@ -87,14 +89,17 @@ export default defineComponent({
     const exclusionMap = computed(() => makeExclusionMapFromCharacterInput(props.characterInput))
 
     const initialize = (conditionInput: TConditionInput) => {
-      if (!_.isEqual(checkboxList, conditionInput.checkboxList)) {
-        checkboxList.splice(0, checkboxList.length, ...conditionInput.checkboxList);
+      const filteredCheckboxList = conditionInput.checkboxList.filter(item => !INVISIBLE_NAMES.includes(item.name));
+      if (!_.isEqual(checkboxList, filteredCheckboxList)) {
+        checkboxList.splice(0, checkboxList.length, ...filteredCheckboxList);
       }
-      if (!_.isEqual(selectList, conditionInput.selectList)) {
-        selectList.splice(0, selectList.length, ...conditionInput.selectList);
+      const filteredSelectList = conditionInput.selectList.filter(item => !INVISIBLE_NAMES.includes(item.name));
+      if (!_.isEqual(selectList, filteredSelectList)) {
+        selectList.splice(0, selectList.length, ...filteredSelectList);
       }
-      if (!_.isEqual(numberList, conditionInput.numberList)) {
-        numberList.splice(0, numberList.length, ...conditionInput.numberList);
+      const filteredNumberList = conditionInput.numberList.filter(item => !INVISIBLE_NAMES.includes(item.name));
+      if (!_.isEqual(numberList, filteredNumberList)) {
+        numberList.splice(0, numberList.length, ...filteredNumberList);
       }
       if (!_.isEqual(conditionValues, conditionInput.conditionValues)) {
         overwriteObject(conditionValues, conditionInput.conditionValues);

@@ -523,7 +523,23 @@ export function getDefaultArtifactDetailInput(): TArtifactDetailInput {
     return _.cloneDeep(ARTIFACT_DETAIL_INPUT_TEMPLATE);
 }
 export function getDefaultConditionInput(): TConditionInput {
-    return _.cloneDeep(CONDITION_INPUT_TEMPLATE);
+    const result = _.cloneDeep(CONDITION_INPUT_TEMPLATE);
+    result.selectList.push({
+        name: '月兆',
+        options: ['初照', '満照'],
+        required: false,
+    });
+    result.numberList.push({
+        name: '月反応ボーナス',
+        min: 0,
+        max: 36,
+        step: 0.1,
+        initial: 0,
+    });
+    result.checkboxList.push({
+        name: '魔導秘儀',
+    });
+    return result;
 }
 export function getDefaultOptionInput(): TOptionInput {
     return _.cloneDeep(OPTION_INPUT_TEMPLATE);
@@ -538,6 +554,11 @@ export function getDefaultDamageResultInput(): TDamageResult {
 export type TElementalResonance = {
     conditionValues: TConditionValues,
     conditionAdjustments: TConditionAdjustments,
+};
+
+export type TMoonsign = {
+    nascentGleam: boolean,
+    ascendantGleam: boolean,
 };
 
 export const SUPPORTER_INPUT_TEMPLATE = {
@@ -559,6 +580,11 @@ export const OPTION_INPUT_TEMPLATE = {
         conditionValues: {},
         conditionAdjustments: {},
     } as TElementalResonance,
+    moonSign: {
+        nascentGleam: false,
+        ascendantGleam: false,
+    } as TMoonsign,
+    hexerei: false as boolean,
     supporterBuildname: {} as { [key: string]: string | undefined },
     supporters: {} as TSupporters,
     teamMembers: [] as string[],
@@ -1763,6 +1789,16 @@ export function setupConditionValues(
         const workCheckboxList: TCheckboxEntry[] = [];
         const workSelectList: TSelectEntry[] = [];
         const workNumberList: TNumberEntry[] = [];
+
+        if ('月兆' in optionInput.elementalResonance.conditionValues) {
+            workConditionValues['月兆'] = optionInput.elementalResonance.conditionValues['月兆'];
+        }
+        if ('月反応ボーナス' in optionInput.elementalResonance.conditionValues) {
+            workConditionValues['月反応ボーナス'] = optionInput.elementalResonance.conditionValues['月反応ボーナス'];
+        }
+        if ('魔導秘儀' in optionInput.elementalResonance.conditionValues) {
+            workConditionValues['魔導秘儀'] = optionInput.elementalResonance.conditionValues['魔導秘儀'];
+        }
 
         // キャラクター、武器、聖遺物セット効果
         for (const master of [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters]) {

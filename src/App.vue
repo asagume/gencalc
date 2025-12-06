@@ -103,7 +103,7 @@
       <div v-if="pane6Toggle3Ref" style="margin-bottom: 10px">
         <div class="tab-switch">
           <input id="option-input-tab-1" type="radio" value="1" v-model="optionInputTabRef" />
-          <label for="option-input-tab-1"> {{ displayName('元素共鳴') }} </label>
+          <label for="option-input-tab-1"> {{ displayName('チーム強化') }} </label>
           <input id="option-input-tab-2" type="radio" value="2" v-model="optionInputTabRef" />
           <label for="option-input-tab-2"> {{ displayName('チーム') }} </label>
           <input id="option-input-tab-3" type="radio" value="3" v-model="optionInputTabRef" />
@@ -113,8 +113,9 @@
           @update:team-members="updateTeamMembers" />
         <div v-show="optionInputTabRef == 1">
           <ElementalResonanceInput ref="elementalResonanceInputVmRef"
-            :elemental-resonance="optionInputRea.elementalResonance"
-            @update:elemental-resonance="updateElementalResonance" />
+            :elemental-resonance="optionInputRea.elementalResonance" :moonsign="optionInputRea.moonSign"
+            :hexerei="optionInputRea.hexerei" :character="characterInputRea.character"
+            :team-members="optionInputRea.teamMembers" @update:elemental-resonance="updateElementalResonance" />
         </div>
         <div v-if="optionInputTabRef == 2">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
@@ -222,6 +223,17 @@
           <tr v-for="stat in Object.keys(statsInput.statsObj)" :key="stat">
             <th style="text-align: right">{{ stat }}</th>
             <td style="text-align: right">{{ statsInput.statsObj[stat] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+    <hr />
+    <template v-if="conditionInput">
+      <table>
+        <tbody>
+          <tr v-for="condition in Object.keys(conditionInput.conditionValues)" :key="condition">
+            <th style="text-align: right">{{ condition }}</th>
+            <td style="text-align: right">{{ conditionInput.conditionValues[condition] }}</td>
           </tr>
         </tbody>
       </table>

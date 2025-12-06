@@ -803,6 +803,11 @@ export function calculateElementalResonance(
             result['元素熟知'] += Number(conditionValues.dendroOption);
         }
     }
+    if ('月兆' in conditionValues && conditionValues['月兆'] === 2 && '月反応ボーナス' in conditionValues) {
+        const bonus = Number(conditionValues['月反応ボーナス']);
+        result['月感電反応ボーナス'] = (result['月感電反応ボーナス'] || 0) + bonus;
+        result['月開花反応ボーナス'] = (result['月開花反応ボーナス'] || 0) + bonus;
+    }
     return result;
 }
 
