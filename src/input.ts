@@ -2334,6 +2334,10 @@ export async function updateConditionsByTeam(
     let totalEnergyCost = 0;
     // Map<元素, キャラクターの数>
     const visionCountMap = new Map<string, number>();
+    // 月兆キャラクターの数
+    let moonsignCount = 0;
+    // 魔導キャラクターの数
+    let hexereiCount = 0;
     for (const entry of teamMembers) {
         const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
         if (characterDetail.region) {
@@ -2354,6 +2358,16 @@ export async function updateConditionsByTeam(
             } else {
                 visionCountMap.set(characterDetail.元素, 1);
             }
+        }
+        if (characterDetail['固有天賦']) {
+            characterDetail['固有天賦'].forEach((talentObj) => {
+                if (talentObj.説明 && talentObj.説明.includes('月兆レベル')) {
+                    moonsignCount++;
+                }
+                if (talentObj.説明 && talentObj.説明.includes('魔導キャラクター')) {
+                    hexereiCount++;
+                }
+            });
         }
     }
     regionCountMap.forEach((value, key) => {
@@ -2392,6 +2406,7 @@ export async function updateOptionsElementalResonanceByTeam(
     if (optionInput?.teamMembers) {
         teamMembers.push(...optionInput.teamMembers.filter(s => s && s != character));
     }
+    const newElementResonance: TConditionValues = {};
     if (teamMembers.length == 4) {
         const visionCountMap = new Map<string, number>();
         for (const entry of teamMembers) {
@@ -2407,7 +2422,6 @@ export async function updateOptionsElementalResonanceByTeam(
         }
 
         // 元素共鳴を調整します
-        const newElementResonance: TConditionValues = {};
         const resonanceElementArr: string[] = [];
         const restMemberElementArr: string[] = [];
         visionCountMap.forEach((value, key) => {
@@ -2448,10 +2462,42 @@ export async function updateOptionsElementalResonanceByTeam(
                 newElementResonance[resonance] = true;
             })
         }
-        if (!_.isEqual(newElementResonance, optionInput.elementalResonance.conditionValues)) {
-            overwriteObject(optionInput.elementalResonance.conditionValues, newElementResonance);
-            return true;
+    }
+
+    // 月兆キャラクターの数
+    let moonsignCount = 0;
+    // 魔導キャラクターの数
+    let hexereiCount = 0;
+    for (const entry of teamMembers) {
+        const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
+        if (characterDetail['固有天賦']) {
+            characterDetail['固有天賦'].forEach((talentObj) => {
+                if (talentObj.説明 && talentObj.説明.includes('月兆レベル')) {
+                    moonsignCount++;
+                }
+                if (talentObj.説明 && talentObj.説明.includes('魔導キャラクター')) {
+                    hexereiCount++;
+                }
+            });
         }
+    }
+    if (moonsignCount === 1) {
+        newElementResonance['月兆'] = 1;
+    } else if (moonsignCount >= 2) {
+        newElementResonance['月兆'] = 2;
+    } else {
+        newElementResonance['月兆'] = 0;
+    }
+    if (hexereiCount >= 2) {
+        newElementResonance['魔導秘儀'] = true;
+    } else {
+        newElementResonance['魔導秘儀'] = false;
+    }
+    newElementResonance['月反応ボーナス'] = optionInput.elementalResonance.conditionValues['月反応ボーナス'] || 36;
+
+    if (!_.isEqual(newElementResonance, optionInput.elementalResonance.conditionValues)) {
+        overwriteObject(optionInput.elementalResonance.conditionValues, newElementResonance);
+        return true;
     }
     return false;
 }
