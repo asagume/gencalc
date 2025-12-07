@@ -135,7 +135,7 @@
 
     <div class="pane5">
       <RotationDamage :character-master="characterInputRea.characterMaster" :damage-result="damageResult"
-        @update:rotation-damage="updateRotationDamage" />
+        :damage-result2="damageResult2" @update:rotation-damage="updateRotationDamage" />
 
       <ShareSns @share:twitter="openTwitter" />
     </div>
@@ -412,6 +412,7 @@ export default defineComponent({
     const statsInput = reactive(getDefaultStatsInput());
     const selectedEnemyRef = ref(ENEMY_LIST[0]);  // 選択中の敵
     const damageResult = reactive(getDefaultDamageResultInput());
+    const damageResult2 = reactive(getDefaultDamageResultInput());
     const recommendationListRea = reactive([] as TRecommendation[]);  // おすすめセットの候補
     const recommendationRef = ref({} as TRecommendation); // おすすめセット
     const buildnameSelectionRea = reactive({} as TAnyObject);
@@ -660,6 +661,10 @@ export default defineComponent({
       // ダメージ計算を実行します
       calculateDamageResult(damageResult, characterInputRea, conditionInputRea, statsInput);
       calculateDamageResultLunarReaction(damageResult, characterInputRea, optionInputRea);
+      const statsInput2 = _.cloneDeep(statsInput);
+      statsInput2.statsObj['元素熟知'] = (statsInput2.statsObj['元素熟知'] || 0) + 120;
+      calculateDamageResult(damageResult2, characterInputRea, conditionInputRea, statsInput2);
+      calculateDamageResultLunarReaction(damageResult2, characterInputRea, optionInputRea);
       // NEXT STEPを更新します
       if (nextStatVmRef.value) {
         nextStatVmRef.value.setupNextStatRows();
@@ -1177,6 +1182,7 @@ export default defineComponent({
       statsInput,
       selectedEnemyRef,
       damageResult,
+      damageResult2,
       recommendationListRea,
       recommendationRef,
       configurationInputRea,

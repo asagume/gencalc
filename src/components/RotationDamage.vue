@@ -3,7 +3,7 @@
     <table class="total-damage">
       <tbody>
         <tr>
-          <th class="damage-name">{{ displayName("ローテーション合計ダメージ") }}</th>
+          <th class="damage-name">{{ displayNameV("ローテーション合計ダメージ") }}</th>
           <td class="total-damage-value">{{ Math.round(totalDamage) }}</td>
         </tr>
       </tbody>
@@ -26,10 +26,10 @@
               <img :class="'action' + itemImgClass(element)" :src="element.src" :alt="displayName(element.name)" />
               <div class="tooltip">{{ displayName(element.name) }}</div>
             </th>
-            <td class="damage">
+            <td class="damage" style="vertical-align: middle;">
               <table>
-                <tr v-for="(entry, index2) in getDamageResultArr(element, damageResult)" :key="index2">
-                  <th class="damage-name">{{ displayName(entry[0]) }}</th>
+                <tr v-for="(entry, index2) in getDamageResultArr(element, selectDamageResult(element))" :key="index2">
+                  <th class="damage-name">{{ displayNameV(entry[0]) }}</th>
                   <td class="reaction-list">
                     <div class="reaction with-tooltip" v-for="reaction in amplifyingReactionList(element, index2)"
                       :key="reaction[0]" @click="reactionOnClick(element, index2, reaction)">
@@ -37,6 +37,13 @@
                       <img :class="'reaction' + reactionUnselectedClass(element, index2, reaction)" :src="reaction[1]"
                         :alt="displayName(reaction[0])" />
                       <div class="tooltip">{{ displayName(reaction[0]) }}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="reaction with-tooltip" @click="statChangeOnClick(element)">
+                      <img :class="'stat-change' + statChangeUnselectedClass(element)" :src="instructorImg"
+                        :alt="displayName('教官')" />
+                      <div class="tooltip">{{ displayName('教官') }}</div>
                     </div>
                   </td>
                   <td>
@@ -84,6 +91,7 @@ import {
   TDamageResultElementalReactionKey,
 } from "@/input";
 import {
+  ARTIFACT_SET_MASTER,
   ELEMENT_COLOR_CLASS,
   ELEMENT_IMG_SRC,
   IMG_SRC_DUMMY,
@@ -93,10 +101,12 @@ import {
 } from "@/master";
 import { computed, defineComponent, PropType, reactive, ref, toRefs, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
+import i18n from "@/i18n";
 
 type TRotationDamageEntryCustom = TRotationDamageEntry & {
   id: number;
   src: string;
+  resultIndex: number;
 };
 
 let id = 1;
@@ -107,11 +117,9 @@ export default defineComponent({
     draggable,
   },
   props: {
-    characterMaster: {
-      type: Object as PropType<TCharacterDetail>,
-      required: true,
-    },
+    characterMaster: { type: Object as PropType<TCharacterDetail>, required: true, },
     damageResult: { type: Object as PropType<TDamageResult>, required: true },
+    damageResult2: { type: Object as PropType<TDamageResult>, required: true }, // +教官
   },
   emits: ['update:rotation-damage'],
   setup(props, context) {
@@ -121,6 +129,19 @@ export default defineComponent({
     const rotationDamageCustomList = reactive([] as TRotationDamageEntryCustom[]);
 
     const totalDamage = computed(() => calculateRotationTotalDamage(rotationDamageList.value, props.damageResult));
+
+    const selectDamageResult = (customizedEntry: TRotationDamageEntryCustom) => {
+      return customizedEntry.resultIndex === 1 ? props.damageResult : props.damageResult2;
+    };
+
+    const displayNameV = (key: any): string => {
+      if (key && i18n.global.locale.value == 'ja-jp' && key.length > 10) {
+        let work = key;
+        work = work.replace(/の攻撃ダメージ$/, '').replace(/のダメージ$/, '').replace(/ダメージ$/, '');
+        return work;
+      }
+      return displayName(key);
+    }
 
     const rotationDamageList = computed(() => {
       let result: TRotationDamageEntry[] = [];
@@ -149,37 +170,38 @@ export default defineComponent({
         if (!(category in props.damageResult)) {
           return;
         }
-        const entry = {} as TRotationDamageEntryCustom;
-        entry.category = category;
-        entry.id = id++;
-        entry.name = category;
+        const customizedEntry = {} as TRotationDamageEntryCustom;
+        customizedEntry.category = category;
+        customizedEntry.id = id++;
+        customizedEntry.name = category;
         if (category == 'その他') {
-          entry.src = IMG_SRC_DUMMY;
+          customizedEntry.src = IMG_SRC_DUMMY;
         } else {
           const iconCategory = ['重撃', '落下攻撃'].includes(category) ? '通常攻撃' : category;
-          entry.src = (characterMaster.value as any)[iconCategory].icon_url;
+          customizedEntry.src = (characterMaster.value as any)[iconCategory].icon_url;
         }
-        entry.reactions = [] as object[];
-        entry.counts = [] as number[];
-        const list = getDamageResultArr(entry, props.damageResult);
+        customizedEntry.reactions = [] as object[];
+        customizedEntry.counts = [] as number[];
+        customizedEntry.resultIndex = 1;
+        const list = getDamageResultArr(customizedEntry, selectDamageResult(customizedEntry));
         if (list.length == 0) {
           return;
         }
         for (let i = 0; i < list.length; i++) {
-          entry.reactions.push({});
+          customizedEntry.reactions.push({});
           if (['落下期間のダメージ'].includes(list[i][0])) {
-            entry.counts.push(0);
+            customizedEntry.counts.push(0);
           } else if (characterMaster.value.武器 == '弓' && category == '重撃') {
             if (list.length > 3 && i < 2) {
-              entry.counts.push(0);
+              customizedEntry.counts.push(0);
             } else {
-              entry.counts.push(1);
+              customizedEntry.counts.push(1);
             }
           } else {
-            entry.counts.push(1);
+            customizedEntry.counts.push(1);
           }
         }
-        result.push(entry);
+        result.push(customizedEntry);
       });
       REACTION_DMG_ARR.forEach((reactionDmg) => {
         if (
@@ -192,14 +214,15 @@ export default defineComponent({
           } else {
             dmgElement = REACTION_DMG_ELEMENT_MAP.get(reactionDmg) as string;
           }
-          const entry = {} as TRotationDamageEntryCustom;
-          entry.id = id++;
-          entry.name = reaction;
-          entry.src = ELEMENT_IMG_SRC[dmgElement as TElementImgSrcKey];
-          entry.category = reactionDmg;
-          entry.reactions = [{}];
-          entry.counts = [1] as number[];
-          result.push(entry);
+          const customizedEntry = {} as TRotationDamageEntryCustom;
+          customizedEntry.id = id++;
+          customizedEntry.name = reaction;
+          customizedEntry.src = ELEMENT_IMG_SRC[dmgElement as TElementImgSrcKey];
+          customizedEntry.category = reactionDmg;
+          customizedEntry.reactions = [{}];
+          customizedEntry.counts = [1] as number[];
+          customizedEntry.resultIndex = 1;
+          result.push(customizedEntry);
         }
       });
       return result;
@@ -320,7 +343,7 @@ export default defineComponent({
       index: number
     ) => {
       const result = [] as [string, string][];
-      const list = getDamageResultArr(customizedEntry, props.damageResult);
+      const list = getDamageResultArr(customizedEntry, selectDamageResult(customizedEntry));
       const entry = list[index];
       const dmgElement = entry[1];
       if (dmgElement) {
@@ -387,7 +410,7 @@ export default defineComponent({
     ) => {
       const reactionObj: any = customizedEntry.reactions[index];
       let count = customizedEntry.counts[index];
-      const damageResultEntry = getDamageResultArr(customizedEntry, props.damageResult)[index];
+      const damageResultEntry = getDamageResultArr(customizedEntry, selectDamageResult(customizedEntry))[index];
       if (['超激化', '草激化'].includes(reaction[0]) && damageResultEntry[6]) {
         count *= damageResultEntry[6];
       }
@@ -418,17 +441,29 @@ export default defineComponent({
     const damageValue = (
       customizedEntry: TRotationDamageEntryCustom,
       index: number
-    ) => calculateRotationDamageEntry(customizedEntry, index, props.damageResult);
+    ) => calculateRotationDamageEntry(customizedEntry, index, selectDamageResult(customizedEntry));
 
     const elementColorClass = (
       customizedEntry: TRotationDamageEntryCustom,
       index: number
     ) => {
-      const list = getDamageResultArr(customizedEntry, props.damageResult);
+      const list = getDamageResultArr(customizedEntry, selectDamageResult(customizedEntry));
       const entry = list[index];
-      return entry[1]
-        ? ' ' + ELEMENT_COLOR_CLASS[entry[1] as TElementColorClassKey] + ' '
-        : '';
+      return entry[1] ? ' ' + ELEMENT_COLOR_CLASS[entry[1] as TElementColorClassKey] + ' ' : '';
+    };
+
+    const instructorImg = ARTIFACT_SET_MASTER['教官'].image;
+    const statChangeOnClick = (
+      customizedEntry: TRotationDamageEntryCustom,
+    ) => {
+      if (customizedEntry) {
+        customizedEntry.resultIndex = customizedEntry.resultIndex === 1 ? 2 : 1;
+      }
+    };
+    const statChangeUnselectedClass = (
+      customizedEntry: TRotationDamageEntryCustom,
+    ) => {
+      return customizedEntry.resultIndex === 1 ? ' unselected' : '';
     };
 
     const doDelete = (index: number) => {
@@ -448,11 +483,13 @@ export default defineComponent({
     return {
       displayName,
       targetValue,
+      displayNameV,
 
       itemList,
       itemImgClass,
       addItem,
 
+      selectDamageResult,
       getDamageResultArr,
       clone,
       rotationDamageCustomList,
@@ -461,6 +498,9 @@ export default defineComponent({
       reactionUnselectedClass,
       reactionOnClick,
       countOnChange,
+      instructorImg,
+      statChangeOnClick,
+      statChangeUnselectedClass,
       damageValue,
       elementColorClass,
       doDelete,
@@ -555,7 +595,7 @@ select {
 
 .damage-name {
   text-align: right;
-  width: 45%;
+  width: 40%;
   white-space: nowrap;
 }
 
@@ -570,6 +610,10 @@ div.reaction {
 
 img.reaction {
   width: 3rem;
+}
+
+img.stat-change {
+  width: 4rem;
 }
 
 div.reaction span {
