@@ -112,10 +112,9 @@
         <EasyTeamInput :character="characterInputRea.character" :team-members="optionInputRea.teamMembers"
           @update:team-members="updateTeamMembers" />
         <div v-show="optionInputTabRef == 1">
-          <ElementalResonanceInput ref="elementalResonanceInputVmRef"
-            :elemental-resonance="optionInputRea.elementalResonance" :moonsign="optionInputRea.moonSign"
-            :hexerei="optionInputRea.hexerei" :character="characterInputRea.character"
-            :team-members="optionInputRea.teamMembers" @update:elemental-resonance="updateElementalResonance" />
+          <ElementalResonanceInput ref="elementalResonanceInputVmRef" :option-input="optionInputRea"
+            :character="characterInputRea.character" :team-members="optionInputRea.teamMembers"
+            @update:elemental-resonance="updateElementalResonance" />
         </div>
         <div v-if="optionInputTabRef == 2">
           <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
@@ -304,6 +303,7 @@ import {
   updateOptionsElementalResonanceByTeam,
   ステータスチーム内最高ARRAY,
   setupMiscOption,
+  TOptionInput,
 } from '@/input';
 import {
   ARTIFACT_SCORE_FORMULA_TEMPLATE,
@@ -785,7 +785,7 @@ export default defineComponent({
         );
       }
       calculateArtifactStats(artifactDetailInputRea);
-      const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
@@ -798,7 +798,7 @@ export default defineComponent({
       await nextTick();
       // 元素共鳴
       if (elementalResonanceInputVmRef.value) {
-        elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
+        elementalResonanceInputVmRef.value.initializeValues(optionInputRea);
       }
       // チーム
       if (teamOptionInputVmRef.value) {
@@ -939,24 +939,43 @@ export default defineComponent({
     /** オプション条件が変更されました。ステータスおよびダメージを再計算します */
     const updateCondition = (conditionValues: TConditionValues) => {
       overwriteObject(conditionInputRea.conditionValues, conditionValues);
-      const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
     }
 
-    /** 元素共鳴が変更されました。ステータスおよびダメージを再計算します */
-    const updateElementalResonance = (conditionValues: TConditionValues) => {
-      if (conditionValues && Object.keys(conditionValues).length) {
-        if (!_.isEqual(optionInputRea.elementalResonance.conditionValues, conditionValues)) {
-          overwriteObject(optionInputRea.elementalResonance.conditionValues, conditionValues);
+    /** チーム強化が変更されました。ステータスおよびダメージを再計算します */
+    const updateElementalResonance = (optionInput: TOptionInput) => {
+      let isChanged = false;
+      // 元素共鳴
+      if (optionInput?.elementalResonance?.conditionValues && Object.keys(optionInput.elementalResonance.conditionValues).length) {
+        if (!_.isEqual(optionInputRea.elementalResonance.conditionValues, optionInput.elementalResonance.conditionValues)) {
+          overwriteObject(optionInputRea.elementalResonance.conditionValues, optionInput.elementalResonance.conditionValues);
+          isChanged = true;
         }
-        setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
-        const conditionAdjustments = calculateElementalResonance(optionInputRea.elementalResonance.conditionValues, conditionInputRea);
-        overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
-        // ステータスとダメージを計算します
-        _calculateStatsAndDamageResult();
       }
+      // 月兆
+      if (optionInput?.moonsign && !_.isEqual(optionInputRea.moonsign, optionInput.moonsign)) {
+        optionInputRea.moonsign.nascentGleam = optionInput.moonsign.nascentGleam;
+        optionInputRea.moonsign.ascendantGleam = optionInput.moonsign.ascendantGleam;
+        optionInputRea.moonsign.otherCharacter = optionInput.moonsign.otherCharacter;
+        optionInputRea.moonsign.lunarDmgBonus = optionInput.moonsign.lunarDmgBonus;
+        isChanged = true;
+      }
+      // 魔導
+      if (optionInput?.hexerei && !_.isEqual(optionInputRea.hexerei, optionInput.hexerei)) {
+        optionInputRea.hexerei.hexerei = optionInput.hexerei.hexerei;
+        isChanged = true;
+      }
+      if (!isChanged) {
+        return;
+      }
+      setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea);
+      overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
+      // ステータスとダメージを計算します
+      _calculateStatsAndDamageResult();
     }
 
     /** その他オプションが変更されました。ステータスおよびダメージを再計算します */
@@ -1001,7 +1020,7 @@ export default defineComponent({
       await updateConditionsByTeam(characterInputRea, conditionInputRea, optionInputRea);
       if (await updateOptionsElementalResonanceByTeam(characterInputRea, optionInputRea)) {
         if (elementalResonanceInputVmRef.value) {
-          elementalResonanceInputVmRef.value.initializeValues(optionInputRea.elementalResonance);
+          elementalResonanceInputVmRef.value.initializeValues(optionInputRea);
         }
       }
       console.log('App', 'conditionValues', conditionInputRea.conditionValues);

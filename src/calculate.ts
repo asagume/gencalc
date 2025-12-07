@@ -776,13 +776,13 @@ function compareFunction(a: string, b: string) {
 }
 
 export function calculateElementalResonance(
-    conditionValues: TConditionValues,
+    optionInput: TOptionInput,
     conditionInput: TConditionInput,
 ): TStats {
     const result: TStats = {};
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
     for (const key of Object.keys(ELEMENTAL_RESONANCE_MASTER)) {
-        if (!conditionValues[key]) continue;
+        if (!optionInput.elementalResonance.conditionValues[key]) continue;
         const master = (ELEMENTAL_RESONANCE_MASTER as any)[key];
         if (master.詳細) {
             for (const detailObj of master.詳細) {
@@ -799,14 +799,13 @@ export function calculateElementalResonance(
                 }
             }
         }
-        if (key == '草元素共鳴' && conditionValues.dendroOption) {
-            result['元素熟知'] += Number(conditionValues.dendroOption);
+        if (key == '草元素共鳴' && optionInput.elementalResonance.conditionValues.dendroOption) {
+            result['元素熟知'] += Number(optionInput.elementalResonance.conditionValues.dendroOption);
         }
     }
-    if ('月兆' in conditionValues && conditionValues['月兆'] === 2 && '月反応ボーナス' in conditionValues) {
-        const bonus = Number(conditionValues['月反応ボーナス']);
-        result['月感電反応ボーナス'] = (result['月感電反応ボーナス'] || 0) + bonus;
-        result['月開花反応ボーナス'] = (result['月開花反応ボーナス'] || 0) + bonus;
+    if (optionInput.moonsign.ascendantGleam) {
+        result['月感電反応ボーナス'] = (result['月感電反応ボーナス'] || 0) + optionInput.moonsign.lunarDmgBonus;
+        result['月開花反応ボーナス'] = (result['月開花反応ボーナス'] || 0) + optionInput.moonsign.lunarDmgBonus;
     }
     return result;
 }
@@ -2212,7 +2211,7 @@ export async function setupTeamOptionSupporter(
         calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
         calculateArtifactStats(artifactDetailInput);
         if (optionInput.elementalResonance) {
-            optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput.elementalResonance.conditionValues, conditionInput);
+            optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput, conditionInput);
         }
         calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
         updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);

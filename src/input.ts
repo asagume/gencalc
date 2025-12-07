@@ -559,6 +559,13 @@ export type TElementalResonance = {
 export type TMoonsign = {
     nascentGleam: boolean,
     ascendantGleam: boolean,
+    moonsignCharacters: string[],
+    otherCharacter: string | null,
+    lunarDmgBonus: number,
+};
+export type THexerei = {
+    hexerei: boolean,
+    hexereiCharacters: string[],
 };
 
 export const SUPPORTER_INPUT_TEMPLATE = {
@@ -580,11 +587,17 @@ export const OPTION_INPUT_TEMPLATE = {
         conditionValues: {},
         conditionAdjustments: {},
     } as TElementalResonance,
-    moonSign: {
+    moonsign: {
         nascentGleam: false,
         ascendantGleam: false,
+        moonsignCharacters: [],
+        otherCharacter: null,
+        lunarDmgBonus: 18,
     } as TMoonsign,
-    hexerei: false as boolean,
+    hexerei: {
+        hexerei: false,
+        hexereiCharacters: [],
+    } as THexerei,
     supporterBuildname: {} as { [key: string]: string | undefined },
     supporters: {} as TSupporters,
     teamMembers: [] as string[],
@@ -1790,15 +1803,19 @@ export function setupConditionValues(
         const workSelectList: TSelectEntry[] = [];
         const workNumberList: TNumberEntry[] = [];
 
-        if ('月兆' in optionInput.elementalResonance.conditionValues) {
-            workConditionValues['月兆'] = optionInput.elementalResonance.conditionValues['月兆'];
+        // 月兆
+        if (optionInput.moonsign.ascendantGleam) {
+            workConditionValues['月兆'] = 2;
+            workConditionValues['月反応ボーナス'] = optionInput.moonsign.lunarDmgBonus;
+        } else if (optionInput.moonsign.nascentGleam) {
+            workConditionValues['月兆'] = 1;
+            workConditionValues['月反応ボーナス'] = 0;
+        } else {
+            workConditionValues['月兆'] = 0;
+            workConditionValues['月反応ボーナス'] = 0;
         }
-        if ('月反応ボーナス' in optionInput.elementalResonance.conditionValues) {
-            workConditionValues['月反応ボーナス'] = optionInput.elementalResonance.conditionValues['月反応ボーナス'];
-        }
-        if ('魔導秘儀' in optionInput.elementalResonance.conditionValues) {
-            workConditionValues['魔導秘儀'] = optionInput.elementalResonance.conditionValues['魔導秘儀'];
-        }
+        // 魔導
+        workConditionValues['魔導秘儀'] = optionInput.hexerei.hexerei;
 
         // キャラクター、武器、聖遺物セット効果
         for (const master of [characterInput.characterMaster, characterInput.weaponMaster, ...characterInput.artifactSetMasters]) {
@@ -2334,10 +2351,10 @@ export async function updateConditionsByTeam(
     let totalEnergyCost = 0;
     // Map<元素, キャラクターの数>
     const visionCountMap = new Map<string, number>();
-    // 月兆キャラクターの数
-    let moonsignCount = 0;
-    // 魔導キャラクターの数
-    let hexereiCount = 0;
+    // 月兆キャラクター
+    const moonsignCharacters = [] as string[];
+    // 魔導キャラクター
+    const hexereiCharacters = [] as string[];
     for (const entry of teamMembers) {
         const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
         if (characterDetail.region) {
@@ -2362,10 +2379,14 @@ export async function updateConditionsByTeam(
         if (characterDetail['固有天賦']) {
             characterDetail['固有天賦'].forEach((talentObj) => {
                 if (talentObj.説明 && talentObj.説明.includes('月兆レベル')) {
-                    moonsignCount++;
+                    if (!moonsignCharacters.includes(entry)) {
+                        moonsignCharacters.push(entry);
+                    }
                 }
                 if (talentObj.説明 && talentObj.説明.includes('魔導キャラクター')) {
-                    hexereiCount++;
+                    if (!hexereiCharacters.includes(entry)) {
+                        hexereiCharacters.push(entry);
+                    }
                 }
             });
         }
@@ -2395,6 +2416,8 @@ export async function updateConditionsByTeam(
     const electroCount = visionCountMap.get('雷') ?? 0;
     const cryoCount = visionCountMap.get('氷') ?? 0;
     conditionInput.conditionValues['[チーム]炎水雷氷元素のキャラクター'] = pyroCount + hydroCount + electroCount + cryoCount;
+    conditionInput.conditionValues['[チーム]月兆キャラクター'] = moonsignCharacters.length;
+    conditionInput.conditionValues['[チーム]魔導キャラクター'] = hexereiCharacters.length;
 }
 
 export async function updateOptionsElementalResonanceByTeam(
@@ -2464,42 +2487,62 @@ export async function updateOptionsElementalResonanceByTeam(
         }
     }
 
-    // 月兆キャラクターの数
-    let moonsignCount = 0;
-    // 魔導キャラクターの数
-    let hexereiCount = 0;
+    // 月兆
+    const newMoonsign = _.cloneDeep(optionInput.moonsign);
+    newMoonsign.moonsignCharacters = [];
+    // 魔導
+    const newHexerei = _.cloneDeep(optionInput.hexerei);
+    newHexerei.hexereiCharacters = [];
     for (const entry of teamMembers) {
         const characterDetail = await getCharacterMasterDetail(entry as TCharacterKey);
         if (characterDetail['固有天賦']) {
             characterDetail['固有天賦'].forEach((talentObj) => {
                 if (talentObj.説明 && talentObj.説明.includes('月兆レベル')) {
-                    moonsignCount++;
+                    if (!newMoonsign.moonsignCharacters.includes(entry)) {
+                        newMoonsign.moonsignCharacters.push(entry);
+                    }
                 }
                 if (talentObj.説明 && talentObj.説明.includes('魔導キャラクター')) {
-                    hexereiCount++;
+                    if (!newHexerei.hexereiCharacters.includes(entry)) {
+                        newHexerei.hexereiCharacters.push(entry);
+                    }
                 }
             });
         }
     }
-    if (moonsignCount === 1) {
-        newElementResonance['月兆'] = 1;
-    } else if (moonsignCount >= 2) {
-        newElementResonance['月兆'] = 2;
+    if (newMoonsign.moonsignCharacters.length === 1) {
+        newMoonsign.nascentGleam = true;
+        newMoonsign.ascendantGleam = false;
+    } else if (newMoonsign.moonsignCharacters.length >= 2) {
+        newMoonsign.nascentGleam = true;
+        newMoonsign.ascendantGleam = true;
     } else {
-        newElementResonance['月兆'] = 0;
+        newMoonsign.nascentGleam = false;
+        newMoonsign.ascendantGleam = false;
     }
-    if (hexereiCount >= 2) {
-        newElementResonance['魔導秘儀'] = true;
+    if (newHexerei.hexereiCharacters.length >= 2) {
+        newHexerei.hexerei = true;
     } else {
-        newElementResonance['魔導秘儀'] = false;
+        newHexerei.hexerei = false;
     }
-    newElementResonance['月反応ボーナス'] = optionInput.elementalResonance.conditionValues['月反応ボーナス'] || 0;
+    if (newMoonsign.otherCharacter && !teamMembers.includes(newMoonsign.otherCharacter)) {
+        newMoonsign.otherCharacter = null;
+    }
 
+    let result = false;
     if (!_.isEqual(newElementResonance, optionInput.elementalResonance.conditionValues)) {
         overwriteObject(optionInput.elementalResonance.conditionValues, newElementResonance);
-        return true;
+        result = true;
     }
-    return false;
+    if (!_.isEqual(newMoonsign, optionInput.moonsign)) {
+        overwriteObject(optionInput.moonsign, newMoonsign);
+        result = true;
+    }
+    if (!_.isEqual(newHexerei, optionInput.hexerei)) {
+        overwriteObject(optionInput.hexerei, newHexerei);
+        result = true;
+    }
+    return result;
 }
 
 export function makeSharedata(savedata: TAnyObject) {
