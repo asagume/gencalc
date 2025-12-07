@@ -48,8 +48,6 @@ export {
     ELEMENTAL_REACTION_BASE_SHIELD_HP_MASTER,
 };
 
-export const MOON_SIGN_CHARACTER_ARR = ['イネファ', 'アイノ', 'ラウマ', 'フリンズ', 'ネフェル'];
-
 // function removeStrFromUrl(obj: any, str: string) {
 //     if (isPlainObject(obj)) {
 //         for (const key of Object.keys(obj)) {

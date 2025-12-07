@@ -18,6 +18,7 @@ import {
     makeDamageDetailObjArrObjArtifactSets,
     makeDamageDetailObjArrObjCharacter,
     makeDamageDetailObjArrObjWeapon,
+    makeFormulaTemplate,
     makeTeamOptionDetailObjArr,
     NUMBER_CONDITION_VALUE_RE,
     setupConditionValues,
@@ -57,7 +58,6 @@ import {
     ELEMENTAL_REACTION_MASTER,
     ELEMENTAL_RESONANCE_MASTER,
     getCharacterMasterDetail,
-    MOON_SIGN_CHARACTER_ARR,
     MOON_SIGN_OPTION_MASTER,
     TArtifactMainRarity,
     TArtifactMainStat,
@@ -778,6 +778,8 @@ function compareFunction(a: string, b: string) {
 export function calculateElementalResonance(
     optionInput: TOptionInput,
     conditionInput: TConditionInput,
+    characterInput: TCharacterInput,
+    statsInput: TStatsInput,
 ): TStats {
     const result: TStats = {};
     const validConditionValueArr = makeValidConditionValueArr(conditionInput);
@@ -804,8 +806,30 @@ export function calculateElementalResonance(
         }
     }
     if (optionInput.moonsign.ascendantGleam) {
-        result['月感電反応ボーナス'] = (result['月感電反応ボーナス'] || 0) + optionInput.moonsign.lunarDmgBonus;
-        result['月開花反応ボーナス'] = (result['月開花反応ボーナス'] || 0) + optionInput.moonsign.lunarDmgBonus;
+        let lunarDmgBonus = optionInput.moonsign.lunarDmgBonus;
+        const damageResultDummy = getDefaultDamageResultInput();
+        if (optionInput.moonsign.otherCharacter == characterInput.character) {
+            const vision = characterInput.characterMaster.元素;
+            if (vision && statsInput) {
+                MOON_SIGN_OPTION_MASTER[vision].forEach(detailObj => {
+                    const formula = makeFormulaTemplate(detailObj.数値);
+                    lunarDmgBonus = evalFormula(formula, statsInput.statsObj, damageResultDummy, detailObj?.上限);
+                })
+            }
+        } else if (optionInput.moonsign.otherCharacter && optionInput.moonsign.otherCharacter in optionInput.supporters) {
+            const supporterInput = optionInput.supporters[optionInput.moonsign.otherCharacter];
+            if (supporterInput) {
+                const vision = supporterInput.characterInput?.characterMaster.元素;
+                if (vision && supporterInput.statsInput) {
+                    MOON_SIGN_OPTION_MASTER[vision].forEach(detailObj => {
+                        const formula = makeFormulaTemplate(detailObj.数値);
+                        lunarDmgBonus = evalFormula(formula, supporterInput.statsInput.statsObj, damageResultDummy, detailObj?.上限);
+                    })
+                }
+            }
+        }
+        result['月感電反応ボーナス'] = lunarDmgBonus;
+        result['月開花反応ボーナス'] = lunarDmgBonus;
     }
     return result;
 }
@@ -2211,7 +2235,7 @@ export async function setupTeamOptionSupporter(
         calculateArtifactStatsMain(artifactDetailInput.聖遺物ステータスメイン効果, artifactDetailInput.聖遺物メイン効果);
         calculateArtifactStats(artifactDetailInput);
         if (optionInput.elementalResonance) {
-            optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput, conditionInput);
+            optionInput.elementalResonance.conditionAdjustments = calculateElementalResonance(optionInput, conditionInput, characterInput, statsInput);
         }
         calculateStats(statsInput, characterInput, artifactDetailInput, conditionInput, optionInput);
         updateNumberConditionValues(conditionInput, characterInput, statsInput.statsObj);
@@ -2290,12 +2314,7 @@ export async function setupTeamOptionSupporter(
             }
         }
     }
-    // MOON_SIGN_OPTION_MASTER
-    let moonSignOptions: any[] = [];
-    if (!MOON_SIGN_CHARACTER_ARR.includes(supporter)) {
-        moonSignOptions = MOON_SIGN_OPTION_MASTER[vision];
-    }
-    for (const options of [characterOptions, weaponOptions, artifactSetOptions, moonSignOptions]) {
+    for (const options of [characterOptions, weaponOptions, artifactSetOptions]) {
         if (options.length) {
             const damageDetailObjArr = makeTeamOptionDetailObjArr(options);
             damageDetailObjArr.forEach((damageDetailObj) => {

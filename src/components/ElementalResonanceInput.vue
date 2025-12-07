@@ -27,16 +27,17 @@
       <span>{{ displayName('満照') }}</span>
     </label>
     <br />
-    <label>{{ '月兆キャラクター以外' }}
-      <select v-model="workMoonsign.otherCharacter">
-        <option v-for="character in moonsignOtherCharacterList" :key="character" :value="character"
-          :disabled="!workMoonsign.ascendantGleam">{{ character }}</option>
+    <label>{{ '発動キャラクター' }}
+      <select v-model="workMoonsign.otherCharacter" @change="onChangeMoonsign(2)"
+        :disabled="!workMoonsign.ascendantGleam">
+        <option v-for="character in moonsignOtherCharacterList" :key="character" :value="character">{{ character }}
+        </option>
       </select>
     </label>
     <br />
     <label>{{ '月兆キャラクター以外による月反応ダメージ +' }}
       <input type="number" v-model="workMoonsign.lunarDmgBonus" min="0" max="36" @change="onChangeMoonsign(2)"
-        :disabled="!workMoonsign.ascendantGleam">
+        :disabled="!workMoonsign.ascendantGleam || (workMoonsign.otherCharacter !== null && workMoonsign.otherCharacter.length > 0)" />
     </label>
     <hr />
     <p>{{ displayName('魔導') }}</p>
@@ -88,12 +89,12 @@ export default defineComponent({
     const workHexerei = reactive({} as THexerei);
 
     const moonsignOtherCharacterList = computed(() => {
+      const result = [''] as string[];
       if (workMoonsign?.moonsignCharacters) {
         const teamMembers = Array.from(new Set([...props.teamMembers, props.character]));
-        return teamMembers.filter(name => !workMoonsign.moonsignCharacters.includes(name));
-      } else {
-        return [];
+        result.push(...teamMembers.filter(name => !workMoonsign.moonsignCharacters.includes(name)));
       }
+      return result;
     })
 
     const displayStatAjustmentList = computed(() => {

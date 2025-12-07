@@ -785,7 +785,7 @@ export default defineComponent({
         );
       }
       calculateArtifactStats(artifactDetailInputRea);
-      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea, characterInputRea, statsInput);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
@@ -939,7 +939,7 @@ export default defineComponent({
     /** オプション条件が変更されました。ステータスおよびダメージを再計算します */
     const updateCondition = (conditionValues: TConditionValues) => {
       overwriteObject(conditionInputRea.conditionValues, conditionValues);
-      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea, characterInputRea, statsInput);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
@@ -972,7 +972,7 @@ export default defineComponent({
         return;
       }
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
-      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea);
+      const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea, characterInputRea, statsInput);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
