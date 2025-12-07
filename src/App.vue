@@ -946,7 +946,7 @@ export default defineComponent({
     }
 
     /** チーム強化が変更されました。ステータスおよびダメージを再計算します */
-    const updateElementalResonance = (optionInput: TOptionInput) => {
+    const updateElementalResonance = (optionInput: TOptionInput, forceUpdate = false) => {
       let isChanged = false;
       // 元素共鳴
       if (optionInput?.elementalResonance?.conditionValues && Object.keys(optionInput.elementalResonance.conditionValues).length) {
@@ -968,7 +968,7 @@ export default defineComponent({
         optionInputRea.hexerei.hexerei = optionInput.hexerei.hexerei;
         isChanged = true;
       }
-      if (!isChanged) {
+      if (!isChanged && !forceUpdate) {
         return;
       }
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);

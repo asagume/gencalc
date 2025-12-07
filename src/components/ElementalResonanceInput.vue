@@ -144,12 +144,12 @@ export default defineComponent({
     }
 
     /** オプションの値が変更されたことを上位に通知します */
-    const updateOption = async () => {
+    const updateOption = async (force = false) => {
       await nextTick();
       workOptionInput.elementalResonance.conditionValues = conditionValues;
       workOptionInput.moonsign = workMoonsign;
       workOptionInput.hexerei = workHexerei;
-      context.emit('update:elemental-resonance', workOptionInput);
+      context.emit('update:elemental-resonance', workOptionInput, force);
     }
 
     const onChange = async (key?: string) => {
@@ -218,7 +218,7 @@ export default defineComponent({
       if ('dendroOption' in conditionValues) {
         dendroOption.value = Number(conditionValues['dendroOption']);
       }
-      updateOption();
+      updateOption(true);
     }
 
     onMounted(() => {
