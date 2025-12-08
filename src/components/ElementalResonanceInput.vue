@@ -27,7 +27,7 @@
       <span>{{ displayName('満照') }}</span>
     </label>
     <br />
-    <label>{{ '発動キャラクター' }}
+    <label>{{ '月兆キャラクター以外' }}
       <select v-model="workMoonsign.otherCharacter" @change="onChangeMoonsign(2)"
         :disabled="!workMoonsign.ascendantGleam">
         <option v-for="character in moonsignOtherCharacterList" :key="character" :value="character">{{ character }}
