@@ -1000,9 +1000,9 @@ export function calculateDamageResult(
                     const resultArr = calculateDamageFromDetail(talentDetail, characterInput, conditionInput, statsInput.statsObj, damageResult, element);
                     (damageResult[category] as any).push(resultArr);
                 }
-                if (category == '通常攻撃') {
+                if (category === '通常攻撃') {
                     let n = 0;
-                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1] as TDamageResultEntry;
+                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1,  '通常攻撃'] as TDamageResultEntry;
                     for (const entry of damageResult[category]) {
                         if ((entry[0].endsWith('段ダメージ') || ['水月ダメージ'].includes(entry[0])) && !entry[0].startsWith('非表示_')) {  // ニィロウ
                             sum[1] = entry[1];
@@ -1124,7 +1124,7 @@ function makeTDamageResultEntry(name: string, element: string | null, nonCrit: n
     const crit = nonCrit * (1 + critDmg / 100);
     critRate = Math.min(100, critRate);
     const expectedValue = nonCrit * critRate / 100 * (1 + critDmg / 100) + (1 - critRate / 100) * nonCrit;
-    const result: TDamageResultEntry = [name, element, expectedValue, crit, nonCrit, type, null, null, null];  // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正
+    const result: TDamageResultEntry = [name, element, expectedValue, crit, nonCrit, type, null, null, null, null];  // 0:名前, 1:元素, 2:期待値, 3:会心, 4:非会心, 5:種類, 6:HIT数, 7:ダメージバフ, 8:敵の防御補正, 9:天賦種類
     return result;
 }
 
@@ -1638,9 +1638,8 @@ function calculateDamageFromDetail(
                         }
                     } else {
                         // 大分類 or 大分類.小分類
-                        const myダメージ種類 = detailObj.種類;
                         const my対象カテゴリArr = valueObj.対象.split('.');
-                        if (my対象カテゴリArr[0] != myダメージ種類) {
+                        if (my対象カテゴリArr[0] != detailObj.ダメージ種類) {
                             return;
                         }
                         if (my対象カテゴリArr.length > 1 && my対象カテゴリArr[my対象カテゴリArr.length - 1] != detailObj.名前) {
@@ -1649,7 +1648,7 @@ function calculateDamageFromDetail(
                     }
                 }
                 if (valueObj['種類'].endsWith('元素付与')) {   // 元素付与は先んじて適用します
-                    if (['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ'].includes(detailObj.種類)) {
+                    if (['通常攻撃ダメージ', '重撃ダメージ', '落下攻撃ダメージ'].includes(detailObj.ダメージ種類)) {
                         if (!detailObj['元素付与無効']) {
                             my元素 = valueObj['種類'].replace('元素付与', '');
                         }
@@ -1728,7 +1727,7 @@ function calculateDamageFromDetail(
         // for 来歆の余響 「ダメージを与えた0.05秒後にクリアされる」
         const damageDetailMyArtifactSets = characterInput.damageDetailMyArtifactSets;
         if (damageDetailMyArtifactSets) {
-            if (detailObj.種類 == '通常攻撃ダメージ' && detailObj.HIT数 > 1
+            if (detailObj.ダメージ種類 == '通常攻撃ダメージ' && detailObj.HIT数 > 1
                 && characterInput.artifactSets[0] == '来歆の余響' && characterInput.artifactSets[1] == '来歆の余響') {
                 let isValid = false;
                 for (const valueObj of damageDetailMyArtifactSets[CHANGE_KIND_STATUS].filter(s => s.条件 && s.種類 && s.数値)) {
@@ -1821,11 +1820,11 @@ function calculateDamageFromDetail(
                     my元素 = null;
                 } else {
                     myバフArr.push('与えるダメージ');
-                    if (detailObj.ダメージバフ != 'NONE') {  // for コレイ
+                    if (detailObj.ダメージバフ !== 'NONE') {  // for コレイ
                         if (detailObj.ダメージバフ) {
                             myバフArr.push(detailObj.ダメージバフ);
-                        } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj.種類)) {
-                            myバフArr.push(detailObj.種類 + 'バフ');
+                        } else if (DAMAGE_CATEGORY_ARRAY.includes(detailObj.ダメージ種類)) {
+                            myバフArr.push(detailObj.ダメージ種類 + 'バフ');
                         }
                     }
                     if (my元素) {
@@ -1849,7 +1848,7 @@ function calculateDamageFromDetail(
             const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, valueObj.数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, null, valueObj.上限, valueObj.下限);
             if (valueObj.種類.endsWith('ダメージアップ')) {  // 実数ダメージ加算
                 if (detailObj.名前 == 'ダメージアップ') return;  // for 申鶴
-                if (DAMAGE_CATEGORY_ARRAY.includes(detailObj.種類)) {
+                if (DAMAGE_CATEGORY_ARRAY.includes(detailObj.ダメージ種類)) {
                     // 複数回HITするダメージについては、HIT数を乗算します
                     if (myHIT数 > 1) {
                         myResultWork[2] *= myHIT数;
@@ -1868,8 +1867,8 @@ function calculateDamageFromDetail(
         });
 
         // ステータスによる実数ダメージ加算を計算します
-        if ([...DAMAGE_CATEGORY_ARRAY, 'その他ダメージ'].includes(detailObj.種類)) {
-            let myダメージ種類 = detailObj.種類;
+        if (detailObj.ダメージ種類) {
+            let myダメージ種類 = detailObj.ダメージ種類;
             if (detailObj.ダメージバフ) {    // for 夢想の一心状態の時、雷電将軍の通常攻撃、重撃、落下攻撃のダメージは元素爆発ダメージと見なす
                 const temp = detailObj.ダメージバフ.replace(/バフ$/, '');
                 if (DAMAGE_CATEGORY_ARRAY.includes(temp)) {
@@ -1917,7 +1916,7 @@ function calculateDamageFromDetail(
             }
         }
 
-        const resultArr = [detailObj.名前, my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj.種類, detailObj.HIT数, my計算Result[7], my計算Result[8]] as TDamageResultEntry;
+        const resultArr = [detailObj.名前, my計算Result[1], my計算Result[2], my計算Result[3], my計算Result[4], detailObj.ダメージ種類 ?? detailObj.種類, detailObj.HIT数, my計算Result[7], my計算Result[8], detailObj.天賦種類] as TDamageResultEntry;
         console.debug(resultArr);
         return resultArr;
     } catch (error) {
@@ -2016,7 +2015,7 @@ function calculateDamageFromDetailSub(
     }
 
     console.debug('別枠乗算[%f] ダメージバフ補正[%o=%f] 会心[%f,%f] 防御補正[%f] 耐性補正[%f]', 別枠乗算, buffArr, myダメージバフ補正, my会心率, my会心ダメージ, my防御補正, my耐性補正);
-    return ['未設定', 元素, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, my防御補正];
+    return ['未設定', 元素, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, my防御補正, null];
 }
 
 function calculateDamageFromDetailSubLunar(
@@ -2068,7 +2067,7 @@ function calculateDamageFromDetailSubLunar(
         my期待値Result = (my会心Result * my会心率) + (myダメージ * (1 - my会心率));
     }
 
-    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, null, null];
+    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, null, null, null];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {
@@ -2496,6 +2495,7 @@ export function getDamageResultArr(
             (damageResult.元素反応 as any)[category],
             null,
             1,
+            null,
             null,
             null,
         ]);

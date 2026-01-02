@@ -596,6 +596,12 @@ export default defineComponent({
     const displayDamageParam = (item: any): string => {
       let result = '';
       if (!item || !item[5] || ['HP回復', 'シールド', '表示', 'HP消費'].includes(item[5])) return '';
+      if (item[9]) {
+        result += displayName('天賦') + ':' + displayName(item[9]);
+        result += '<br>';
+      }
+      result += displayName(item[5]);
+      result += '<br>';
       result += displayName('ダメージバフ');
       result += ':&nbsp;';
       result += Math.round((item[7] - 1) * 1000) / 10;
