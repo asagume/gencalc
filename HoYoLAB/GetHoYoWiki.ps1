@@ -65,8 +65,8 @@ $pageIds = @()
 # $pageIds += 8397   # アイノ
 # $pageIds += 8398   # フリンズ
 # $pageIds += 8894   # ネフェル
-$pageIds += 9017   # ドゥリン
-$pageIds += 9018   # ヤフォダ
+# $pageIds += 9017   # ドゥリン
+# $pageIds += 9018   # ヤフォダ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -161,8 +161,9 @@ $pageIds += 9018   # ヤフォダ
 # $pageIds += 8989    # 聖祭者の輝杖
 # $pageIds += 8990    # 霜辰
 # $pageIds += 8991    # 真言の匣
-$pageIds += 9045    # 黒蝕
-$pageIds += 9047    # 暁を告げる歴史
+# $pageIds += 9045    # 黒蝕
+# $pageIds += 9047    # 暁を告げる歴史
+$pageIds += 9046    # 虹蛇の雨弦
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

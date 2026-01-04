@@ -43,6 +43,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "虹蛇の雨弦": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_RainbowSerpent'sRainBow.json"
+  },
   "羅針の針": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_SnareHook.json"
