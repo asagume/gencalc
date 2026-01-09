@@ -1686,6 +1686,8 @@ export function makeConditionExclusionMapFromStr(
             makeConditionExclusionMapFromStrSub(elem, conditionMap, exclusionMap, exclusionStr);
         })
     }
+    console.log('conditionMap:', conditionMap);
+    console.log('exclusionMap:', exclusionMap);
 }
 
 export function getConditionOpkind(conditionStr: string) {

@@ -1002,7 +1002,7 @@ export function calculateDamageResult(
                 }
                 if (category === '通常攻撃') {
                     let n = 0;
-                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1,  '通常攻撃'] as TDamageResultEntry;
+                    const sum = ['合計ダメージ', null, 0, 0, 0, null, 0, 0, 1, '通常攻撃'] as TDamageResultEntry;
                     for (const entry of damageResult[category]) {
                         if ((entry[0].endsWith('段ダメージ') || ['水月ダメージ'].includes(entry[0])) && !entry[0].startsWith('非表示_')) {  // ニィロウ
                             sum[1] = entry[1];
@@ -2358,6 +2358,8 @@ function makeSupporterCondition(supporter: string, name: string | null, conditio
         result += name;
     }
     result = result.replace(supporter + '*' + supporter + '*', supporter + '*');
+    result = result.replace(supporter + '*魔導秘儀', '魔導秘儀');
+    result = result.replace(supporter + '*月兆', '月兆');
     return result;
 }
 
@@ -2426,6 +2428,14 @@ export function calculateTeamStatsAdjustments(optionInput: TOptionInput, topStat
             }
         }
     })
+    if (optionInput.moonsign.ascendantGleam) {
+        validConditionValueArr.push('月兆=満照');
+    } else if (optionInput.moonsign.nascentGleam) {
+        validConditionValueArr.push('月兆=初照');
+    }
+    if (optionInput.hexerei.hexerei) {
+        validConditionValueArr.push('魔導秘儀');
+    }
     Object.keys(optionInput.supporters).filter(supporter => supporter != character).forEach(supporter => {
         const workInput = optionInput.supporters[supporter];
         let statsObj = workInput ? workInput.statsInput.statsObj : ステータスTEMPLATE;
