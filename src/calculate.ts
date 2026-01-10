@@ -1361,11 +1361,12 @@ function calculate固定値系元素反応ダメージ(
         const baseDmgUp = statsObj[reaction + '基礎ダメージアップ'] ?? 0;
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgMultiplier = statsObj['別枠乗算.' + reaction + '反応ダメージ'] ?? 100;
-        const dmgUp = statsObj[reaction + 'ダメージアップ'] ?? 0;
+        const dmgUp = statsObj[reaction + '反応ダメージアップ'] ?? 0;
+        const dmgElevate = statsObj[reaction + '反応ダメージ向上'] ?? 0;
         const dmgElement = opt_dmgElement ?? (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['元素'];
         const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
         const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
-        let result = baseDmg * multiplier * (1 + baseDmgUp / 100);
+        let result = baseDmg * multiplier * (1 + baseDmgUp / 100) * (1 + dmgElevate / 100);
         if (reaction.startsWith('月')) {
             result *= 1 + (6 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
         } else {
@@ -2027,18 +2028,19 @@ function calculateDamageFromDetailSubLunar(
     別枠乗算: number | null,
 ): TDamageResultEntry {
     const myダメージ基礎値 = evalFormula(formula, statsObj, damageResult, null, null);
-    const workKind = kind.replace('反応ダメージ', '');
-    const baseDmgUp = statsObj[workKind + '反応基礎ダメージアップ'] ?? 0;
+    const reaction = kind.replace('反応ダメージ', '');
+    const baseDmgUp = statsObj[reaction + '反応基礎ダメージアップ'] ?? 0;
     const em = statsObj['元素熟知'] ?? 0;
     const emBonus = (6 * em) / (em + 2000);
-    const otherBonus = statsObj[workKind + '反応ボーナス'] ?? 0;
-    const dmgUp = statsObj[workKind + 'ダメージアップ'] ?? 0;
+    const otherBonus = statsObj[reaction + '反応ボーナス'] ?? 0;
+    const dmgUp = statsObj[reaction + '反応ダメージアップ'] ?? 0;
+    const dmgElavate = statsObj[reaction + '反応ダメージ向上'] ?? 0;
 
     let multiplier = 1;
-    if (workKind == '月感電') {
+    if (['月感電', '月結晶'].includes(reaction)) {
         multiplier = 3;
     }
-    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + emBonus + otherBonus / 100);
+    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) + (1 + dmgElavate / 100) + (1 + emBonus + otherBonus / 100);
     myダメージ += dmgUp;
 
     const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);
@@ -2052,12 +2054,12 @@ function calculateDamageFromDetailSubLunar(
 
     let my会心率 = statsObj['会心率'];
     my会心率 += statsObj[dmgElement + '元素ダメージ会心率'] || 0;
-    my会心率 += statsObj[workKind + 'ダメージ会心率'] || 0;
+    my会心率 += statsObj[reaction + 'ダメージ会心率'] || 0;
     my会心率 = Math.min(100, Math.max(0, my会心率)) / 100;    // 0≦会心率≦1
 
     let my会心ダメージ = statsObj['会心ダメージ'];
     my会心ダメージ += statsObj[dmgElement + '元素ダメージ会心ダメージ'] || 0;
-    my会心ダメージ += statsObj[workKind + 'ダメージ会心ダメージ'] || 0;
+    my会心ダメージ += statsObj[reaction + 'ダメージ会心ダメージ'] || 0;
     my会心ダメージ = (100 + my会心ダメージ) / 100;
 
     let my会心Result = null;
@@ -2359,7 +2361,7 @@ function makeSupporterCondition(supporter: string, name: string | null, conditio
     }
     result = result.replace(supporter + '*' + supporter + '*', supporter + '*');
     result = result.replace(supporter + '*魔導秘儀', '魔導秘儀');
-    result = result.replace(supporter + '*月兆', '月兆');
+    result = result.replace(supporter + '*月兆=', '月兆=');
     return result;
 }
 

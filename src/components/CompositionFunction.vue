@@ -112,7 +112,9 @@ export default function CompositionFunction() {
             stat = stat.replace(/TOP$/, '');
             if (stat.startsWith('敵')) stat = stat.replace(/^敵/, '');
             if (stat.endsWith('ダメージバフ')) stat = stat.replace(/ダメージバフ$/, '');
+            else if (stat.endsWith('反応ダメージ向上')) stat = stat.replace(/反応ダメージ向上$/, '向上');
             else if (stat.endsWith('反応基礎ダメージアップ')) stat = stat.replace(/反応基礎ダメージアップ$/, '基礎');
+            else if (stat.endsWith('反応ダメージアップ')) stat = stat.replace(/反応ダメージアップ$/, '');
             else if (stat.endsWith('ダメージアップ')) stat = stat.replace(/ダメージアップ$/, '');
             else if (stat.endsWith('元素ダメージ')) stat = stat.replace(/元素ダメージ$/, '');
             else if (stat.endsWith('物理ダメージ')) stat = stat.replace(/ダメージ$/, '');
