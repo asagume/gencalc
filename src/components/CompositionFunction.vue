@@ -51,7 +51,9 @@ export default function CompositionFunction() {
             result = result.replace(/ダメージアップ$/, 'ダメージ');
             result = result.replace('凍結反応ボーナス', '凍結反応の継続時間');
             result = result.replace(/反応ボーナス$/, '反応ダメージ');
-            result = result.replace(/^敵/, '敵の');
+            if (!result.includes('敵の')) {
+                result = result.replace(/^敵/, '敵の');
+            }
             return result;
         }
         if (te(key)) return t(key);
