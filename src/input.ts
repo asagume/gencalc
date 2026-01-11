@@ -1172,6 +1172,7 @@ export function makeDamageDetailObjArrObjCharacter(characterInput: TCharacterInp
             const workCategory = '特殊' + category;
             if (workCategory in characterMaster) {
                 myTalentDetail = characterMaster[workCategory];
+                myDefaultKind = category + 'ダメージ';
                 if ('元素' in myTalentDetail) {
                     myDefaultElement = myTalentDetail['元素'];
                 }
