@@ -308,6 +308,16 @@ export default defineComponent({
         const valueStr = localStorage.getItem(key) as string;
         const value = JSON.parse(valueStr);
         if (Array.isArray(value)) {
+          value.forEach((element: any) => {
+            if (element.category) {
+              REACTION_DMG_ARR.forEach((reactionDmg) => {
+                const reaction = reactionDmg.replace(/反応ダメージ$/, '');
+                if (element.category == (reaction + 'ダメージ')) {
+                  element.category = reactionDmg;
+                }
+              });
+            }
+          });
           rotationDamageCustomList.splice(0, rotationDamageCustomList.length, ...value);
         }
         updateRotationDamage();
