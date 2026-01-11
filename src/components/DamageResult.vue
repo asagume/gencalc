@@ -1,8 +1,10 @@
 <template>
   <div class="elemental-reaction">
-    <input id="増幅反応-なし" type="radio" value="なし" name="増幅反応-name" @change="増幅反応 = 'なし'" checked />
-    <label for="増幅反応-なし"> {{ displayName("反応なし") }} </label>
-    <template v-if="damageResult.元素反応.蒸発倍率_炎">
+    <div>
+      <input id="増幅反応-なし" type="radio" value="なし" name="増幅反応-name" @change="増幅反応 = 'なし'" checked />
+      <label for="増幅反応-なし"> {{ displayName("反応なし") }} </label>
+    </div>
+    <div v-if="damageResult.元素反応.蒸発倍率_炎">
       <input id="増幅反応-蒸発_炎" type="radio" value="蒸発_炎" name="増幅反応-name" @change="増幅反応 = '蒸発_炎'" />
       <label for="増幅反応-蒸発_炎" class="pyro">
         {{ displayName("蒸発") }}×<span>{{
@@ -15,8 +17,8 @@
           }}</span>
         </span>
       </label>
-    </template>
-    <template v-if="damageResult.元素反応.蒸発倍率_水">
+    </div>
+    <div v-if="damageResult.元素反応.蒸発倍率_水">
       <input id="増幅反応-蒸発_水" type="radio" value="蒸発_水" name="増幅反応-name" @change="増幅反応 = '蒸発_水'" />
       <label for="増幅反応-蒸発_水" class="hydro">
         {{ displayName("蒸発") }}×<span>{{
@@ -29,8 +31,8 @@
           }}</span>
         </span>
       </label>
-    </template>
-    <template v-if="damageResult.元素反応.溶解倍率_氷">
+    </div>
+    <div v-if="damageResult.元素反応.溶解倍率_氷">
       <input id="増幅反応-溶解_氷" type="radio" value="溶解_氷" name="増幅反応-name" @change="増幅反応 = '溶解_氷'" />
       <label for="増幅反応-溶解_氷" class="cryo">
         {{ displayName("溶解") }}×<span>{{
@@ -43,8 +45,8 @@
           }}</span>
         </span>
       </label>
-    </template>
-    <template v-if="damageResult.元素反応.溶解倍率_炎">
+    </div>
+    <div v-if="damageResult.元素反応.溶解倍率_炎">
       <input id="増幅反応-溶解_炎" type="radio" value="溶解_炎" name="増幅反応-name" @change="増幅反応 = '溶解_炎'" />
       <label for="増幅反応-溶解_炎" class="pyro">
         {{ displayName("溶解") }}×<span>{{
@@ -57,127 +59,145 @@
           }}</span>
         </span>
       </label>
-    </template>
-    <template v-if="damageResult.元素反応.超激化ダメージ">
+    </div>
+    <div v-if="damageResult.元素反応.超激化反応ダメージ">
       <input id="増幅反応-超激化" type="radio" value="超激化" name="増幅反応-name" @change="増幅反応 = '超激化'" />
       <label for="増幅反応-超激化">
         {{ displayName("超激化") }}
-        <span>{{ Math.round(damageResult.元素反応.超激化ダメージ) }}</span>
-        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超激化ダメージ">
+        <span>{{ Math.round(damageResult.元素反応.超激化反応ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超激化反応ダメージ">
           <br />
           {{ displayName("超激化") }}
-          <span>{{ Math.round(copiedDamageResult.元素反応.超激化ダメージ) }}</span>
+          <span>{{ Math.round(copiedDamageResult.元素反応.超激化反応ダメージ) }}</span>
         </span>
       </label>
-    </template>
-    <template v-if="damageResult.元素反応.草激化ダメージ">
+    </div>
+    <div v-if="damageResult.元素反応.草激化反応ダメージ">
       <input id="増幅反応-草激化" type="radio" value="草激化" name="増幅反応-name" @change="増幅反応 = '草激化'" />
       <label for="増幅反応-草激化">
         {{ displayName("草激化") }}
-        <span>{{ Math.round(damageResult.元素反応.草激化ダメージ) }}</span>
-        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.草激化ダメージ">
+        <span>{{ Math.round(damageResult.元素反応.草激化反応ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.草激化反応ダメージ">
           <br />
           {{ displayName("草激化") }}
-          <span>{{ Math.round(copiedDamageResult.元素反応.草激化ダメージ) }}</span>
+          <span>{{ Math.round(copiedDamageResult.元素反応.草激化反応ダメージ) }}</span>
         </span>
       </label>
-    </template>
-    <label v-if="damageResult.元素反応.過負荷ダメージ" class="pyro">
-      {{ displayName("過負荷") }}
-      <span>{{ Math.round(damageResult.元素反応.過負荷ダメージ) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.過負荷ダメージ">
-        <br />
+    </div>
+    <div v-if="damageResult.元素反応.過負荷反応ダメージ">
+      <label class="pyro">
         {{ displayName("過負荷") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.過負荷ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.感電ダメージ" class="electro">
-      {{ displayName("感電") }}
-      <span>{{ Math.round(damageResult.元素反応.感電ダメージ) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.感電ダメージ">
-        <br />
+        <span>{{ Math.round(damageResult.元素反応.過負荷反応ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.過負荷反応ダメージ">
+          <br />
+          {{ displayName("過負荷") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.過負荷反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.感電反応ダメージ">
+      <label class="electro">
         {{ displayName("感電") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.感電ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.超電導ダメージ" class="cryo">
-      {{ displayName("超電導") }}
-      <span>{{ Math.round(damageResult.元素反応.超電導ダメージ) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超電導ダメージ">
-        <br />
+        <span>{{ Math.round(damageResult.元素反応.感電反応ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.感電反応ダメージ">
+          <br />
+          {{ displayName("感電") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.感電反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.超電導反応ダメージ">
+      <label class="cryo">
         {{ displayName("超電導") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.超電導ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.拡散ダメージ" :class="elementClass(damageResult.元素反応.拡散元素)">
-      {{ displayName("拡散") }}
-      <span>{{ Math.round(swirlDmg) }}</span>
-    </label>
-    <label v-if="damageResult.元素反応.結晶吸収量">
-      {{ displayName("結晶") }}
-      <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.結晶吸収量">
-        <br />
+        <span>{{ Math.round(damageResult.元素反応.超電導反応ダメージ) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超電導反応ダメージ">
+          <br />
+          {{ displayName("超電導") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.超電導反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.拡散反応ダメージ">
+      <label :class="elementClass(damageResult.元素反応.拡散元素)">
+        {{ displayName("拡散") }}
+        <span>{{ Math.round(swirlDmg) }}</span>
+      </label>
+      <label v-if="damageResult.元素反応.結晶吸収量">
         {{ displayName("結晶") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.結晶吸収量) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.燃焼ダメージ" class="pyro">
-      {{ displayName("燃焼") }}
-      <span>{{ Math.round(reactionDmg('燃焼ダメージ')) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.燃焼ダメージ">
-        <br />
+        <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.結晶吸収量">
+          <br />
+          {{ displayName("結晶") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.結晶吸収量) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.燃焼反応ダメージ">
+      <label class="pyro">
         {{ displayName("燃焼") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.燃焼ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.開花ダメージ" class="dendro">
-      {{ displayName("開花") }}
-      <span>{{ Math.round(reactionDmg('開花ダメージ')) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.開花ダメージ">
-        <br />
+        <span>{{ Math.round(reactionDmg('燃焼反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.燃焼反応ダメージ">
+          <br />
+          {{ displayName("燃焼") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.燃焼反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.開花反応ダメージ">
+      <label class="dendro">
         {{ displayName("開花") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.開花ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.烈開花ダメージ" class="dendro">
-      {{ displayName("烈開花") }}
-      <span>{{ Math.round(reactionDmg('烈開花ダメージ')) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.烈開花ダメージ">
-        <br />
+        <span>{{ Math.round(reactionDmg('開花反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.開花反応ダメージ">
+          <br />
+          {{ displayName("開花") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.開花反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.烈開花反応ダメージ">
+      <label class="dendro">
         {{ displayName("烈開花") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.烈開花ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.超開花ダメージ" class="dendro">
-      {{ displayName("超開花") }}
-      <span>{{ Math.round(reactionDmg('超開花ダメージ')) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超開花ダメージ">
-        <br />
+        <span>{{ Math.round(reactionDmg('烈開花反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.烈開花反応ダメージ">
+          <br />
+          {{ displayName("烈開花") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.烈開花反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.超開花反応ダメージ">
+      <label class="dendro">
         {{ displayName("超開花") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.超開花ダメージ) }}</span>
-      </span>
-    </label>
-    <label v-if="damageResult.元素反応.氷砕きダメージ">
-      {{ displayName("氷砕き") }}
-      <span>{{ Math.round(reactionDmg('氷砕きダメージ')) }}</span>
-      <span class="savepoint" v-if="copiedDamageResult?.元素反応?.氷砕きダメージ">
-        <br />
+        <span>{{ Math.round(reactionDmg('超開花反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.超開花反応ダメージ">
+          <br />
+          {{ displayName("超開花") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.超開花反応ダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.氷砕きダメージ">
+      <label class="cryo">
         {{ displayName("氷砕き") }}
-        <span>{{ Math.round(copiedDamageResult.元素反応.氷砕きダメージ) }}</span>
-      </span>
-    </label>
-    <div class="with-tooltip">
-      <label v-if="damageResult.元素反応.月感電ダメージ" class="electro">
+        <span>{{ Math.round(reactionDmg('氷砕きダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.氷砕きダメージ">
+          <br />
+          {{ displayName("氷砕き") }}
+          <span>{{ Math.round(copiedDamageResult.元素反応.氷砕きダメージ) }}</span>
+        </span>
+      </label>
+    </div>
+    <div v-if="damageResult.元素反応.月感電反応ダメージ" class="with-tooltip">
+      <label class="electro">
         {{ displayName("月感電") }}
-        <span>{{ Math.round(lunarReactionDmg('月感電ダメージ')) }}</span>
-        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月感電ダメージ">
+        <span>{{ Math.round(lunarReactionDmg('月感電反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月感電反応ダメージ">
           <br />
           {{ displayName("月感電") }}
-          <span>{{ Math.round(copiedLunarReactionDmg('月感電ダメージ')) }}</span>
+          <span>{{ Math.round(copiedLunarReactionDmg('月感電反応ダメージ')) }}</span>
         </span>
       </label>
-      <div v-if="damageResult.元素反応.月感電ダメージ会心率" class="tooltip">
+      <div v-if="damageResult.元素反応.月感電反応ダメージ会心率" class="tooltip">
         <table>
           <thead>
             <tr>
@@ -187,7 +207,36 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in damageResult.元素反応.月感電ダメージALL" :key="index">
+            <tr v-for="(item, index) in damageResult.元素反応.月感電反応ダメージALL" :key="index">
+              <td>{{ Math.round(item[2]) }} </td>
+              <td>{{ Math.round(item[3] || 0) }}</td>
+              <td>{{ Math.round(item[4]) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div v-if="damageResult.元素反応.月結晶反応ダメージ" class="with-tooltip">
+      <label class="geo">
+        {{ displayName("月結晶") }}
+        <span>{{ Math.round(lunarReactionDmg('月結晶反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月結晶反応ダメージ">
+          <br />
+          {{ displayName("月結晶") }}
+          <span>{{ Math.round(copiedLunarReactionDmg('月結晶反応ダメージ')) }}</span>
+        </span>
+      </label>
+      <div v-if="damageResult.元素反応.月結晶反応ダメージ会心率" class="tooltip">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ displayName('期待値') }}</th>
+              <th>{{ displayName('会心') }}</th>
+              <th>{{ displayName('非会心') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in damageResult.元素反応.月結晶反応ダメージALL" :key="index">
               <td>{{ Math.round(item[2]) }} </td>
               <td>{{ Math.round(item[3] || 0) }}</td>
               <td>{{ Math.round(item[4]) }}</td>
@@ -349,8 +398,8 @@ export default defineComponent({
         (増幅反応.value == '蒸発_水' && damageResult.元素反応.蒸発倍率_水 === 0) ||
         (増幅反応.value == '溶解_氷' && damageResult.元素反応.溶解倍率_氷 === 0) ||
         (増幅反応.value == '溶解_炎' && damageResult.元素反応.溶解倍率_炎 === 0) ||
-        (増幅反応.value == '超激化' && damageResult.元素反応.超激化ダメージ === 0) ||
-        (増幅反応.value == '草激化' && damageResult.元素反応.草激化ダメージ === 0)
+        (増幅反応.value == '超激化' && damageResult.元素反応.超激化反応ダメージ === 0) ||
+        (増幅反応.value == '草激化' && damageResult.元素反応.草激化反応ダメージ === 0)
       ) {
         増幅反応.value = 'なし';
         (document.getElementById('増幅反応-なし') as HTMLInputElement).checked = true;
@@ -368,7 +417,7 @@ export default defineComponent({
       } else if (増幅反応.value == '溶解_炎' && props.damageResult.元素反応.拡散元素 == '炎') {
         result *= props.damageResult.元素反応.溶解倍率_炎;
       } else if (増幅反応.value == '超激化' && props.damageResult.元素反応.拡散元素 == '雷') {
-        result += props.damageResult.元素反応.超激化ダメージ;
+        result += props.damageResult.元素反応.超激化反応ダメージ;
       }
       return result;
     })
@@ -665,31 +714,38 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.elemental-reaction {
+div.elemental-reaction {
   margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.elemental-reaction label {
-  margin-top: 2px;
   margin-bottom: 2px;
 }
 
-.elemental-reaction div.with-tooltip {
+div.elemental-reaction div {
   display: inline-block;
   width: calc(100% / 4 - 6px - 1rem);
-  margin: 0;
+  margin: 0 3px 5px 3px;
 }
 
-.elemental-reaction div.with-tooltip label {
+div.elemental-reaction div label {
   width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 3px 0 3px 0;
 }
 
-.elemental-reaction [type="radio"]+label {
+.with-tooltip .tooltip {
+  width: 150%;
+  display: none;
+}
+
+.with-tooltip:hover .tooltip {
+    display: block;
+}
+
+div.elemental-reaction div [type="radio"]+label {
   background-color: black;
 }
 
-.elemental-reaction label span {
+div.elemental-reaction div label span {
   white-space: nowrap;
 }
 
@@ -770,6 +826,7 @@ ul.notes {
   border: 2px solid gray;
   border-radius: 10px;
   background-color: black;
+  display: none;
 }
 
 .tooltip table {

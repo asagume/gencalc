@@ -89,6 +89,7 @@ import { getDamageResultArr, TRotationDamageEntry, REACTION_DMG_ARR, REACTION_DM
 import {
   TDamageResult,
   TDamageResultElementalReactionKey,
+  TDamageResultEntry,
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,
@@ -207,7 +208,7 @@ export default defineComponent({
         if (
           props.damageResult.元素反応[reactionDmg as TDamageResultElementalReactionKey]
         ) {
-          const reaction = reactionDmg.replace(/ダメージ$/, '');
+          const reaction = reactionDmg.replace(/反応ダメージ$/, '');
           let dmgElement;
           if (reactionDmg == '拡散ダメージ') {
             dmgElement = props.damageResult.元素反応.拡散元素;
@@ -364,11 +365,11 @@ export default defineComponent({
             reactionArr.push('溶解');
           }
         } else if (dmgElement === '雷') {
-          if (props.damageResult.元素反応.超激化ダメージ > 0) {
+          if (props.damageResult.元素反応.超激化反応ダメージ > 0) {
             reactionArr.push('超激化');
           }
         } else if (dmgElement === '草') {
-          if (props.damageResult.元素反応.草激化ダメージ > 0) {
+          if (props.damageResult.元素反応.草激化反応ダメージ > 0) {
             reactionArr.push('草激化');
           }
         }

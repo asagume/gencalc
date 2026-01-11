@@ -31,6 +31,7 @@ import {
     TDamageDetailObj,
     TDamageResult,
     TDamageResultElementalReaction,
+    TDamageResultElementalReactionKey,
     TDamageResultEntry,
     TOptionInput,
     TStats,
@@ -76,19 +77,21 @@ export type TRotationDamageInfo = {
     rotationDamages: TRotationDamageEntry[],
 };
 export const REACTION_DMG_ARR = [
-    '過負荷ダメージ',
-    '感電ダメージ',
-    '超電導ダメージ',
-    '拡散ダメージ',
-    '燃焼ダメージ',
-    '開花ダメージ',
-    '烈開花ダメージ',
-    '超開花ダメージ',
+    '過負荷反応ダメージ',
+    '感電反応ダメージ',
+    '超電導反応ダメージ',
+    '拡散反応ダメージ',
+    '燃焼反応ダメージ',
+    '開花反応ダメージ',
+    '烈開花反応ダメージ',
+    '超開花反応ダメージ',
+    '月感電反応ダメージ',
+    '月結晶反応ダメージ',
 ];
 export const REACTION_DMG_ELEMENT_MAP = new Map<string, string>();
 function setupReactionDmgElementMap() {
     REACTION_DMG_ARR.forEach((reactionDmg) => {
-        const reaction = reactionDmg.replace(/ダメージ$/, '');
+        const reaction = reactionDmg.replace(/反応ダメージ$/, '');
         Object.keys(ELEMENTAL_REACTION_MASTER).forEach((element) => {
             const reactionMaster = (ELEMENTAL_REACTION_MASTER as any)[element];
             const workArr = Object.keys(reactionMaster);
@@ -935,7 +938,7 @@ export function calculateDamageResult(
                             break;
                     }
                 }
-                ['倍率', 'ダメージ', '吸収量'].forEach(suffix => {
+                ['倍率', '反応ダメージ', '吸収量'].forEach(suffix => {
                     let key = reaction + suffix;
                     if (suffix === '倍率') {
                         key += '_' + element;
@@ -946,7 +949,7 @@ export function calculateDamageResult(
                 });
             });
         });
-        Object.keys(reactionResult).filter(s => s.endsWith('ダメージ') && s.indexOf('会心') == -1).forEach(dmg => {
+        Object.keys(reactionResult).filter(s => s.endsWith('反応ダメージ')).forEach(dmg => {
             ['会心率', '会心ダメージ'].forEach(stat => {
                 const key = dmg + stat;
                 if (key in statsInput.statsObj) {
@@ -2499,12 +2502,13 @@ export function getDamageResultArr(
     const result = [] as TDamageResultEntry[];
     const category = rotationDamageEntry.category;
     if (REACTION_DMG_ARR.includes(category)) {
+        const dmgValue = category.startsWith('月') ? lunarReactionDmg(category, damageResult) : (damageResult.元素反応 as any)[category];
         result.push([
             category,
             REACTION_DMG_ELEMENT_MAP?.get(category) ?? null,
-            (damageResult.元素反応 as any)[category],
+            dmgValue,
             null,
-            (damageResult.元素反応 as any)[category],
+            dmgValue,
             null,
             1,
             null,
@@ -2524,6 +2528,29 @@ export function getDamageResultArr(
                 }
                 result.push(entry);
             }
+        }
+    }
+    return result;
+}
+
+const lunarReactionDmg = (
+    reaction: string,
+    damageResult: TDamageResult,
+): number => {
+    let result = 0;
+    const workReactionDmgArr = damageResult.元素反応[(reaction + 'ALL') as TDamageResultElementalReactionKey] as TDamageResultEntry[];
+    if (_.isArray(workReactionDmgArr)) {
+        const workArr = workReactionDmgArr.map(s => s[2]);
+        workArr.sort((a, b) => b - a);
+        result = workArr[0];
+        if (workArr.length > 1) {
+            result += workArr[1] / 2;
+        }
+        if (workArr.length > 2) {
+            result += workArr[2] / 12;
+        }
+        if (workArr.length > 3) {
+            result += workArr[3] / 12;
         }
     }
     return result;
@@ -2590,7 +2617,7 @@ export function calculateReactedDamage(
                 result *= (elementalReaction as any)[reactionKey];
             }
         } else if (['超激化', '草激化'].includes(reaction)) {
-            const reactionKey = reaction + 'ダメージ';
+            const reactionKey = reaction + '反応ダメージ';
             if (reactionKey in elementalReaction) {
                 let reactionDmg = (elementalReaction as any)[reactionKey];
                 if (dmgResultEntry[2]) {
