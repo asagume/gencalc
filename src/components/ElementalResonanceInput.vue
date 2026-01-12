@@ -39,6 +39,14 @@
       <input type="number" v-model="workMoonsign.lunarDmgBonus" min="0" max="36" @change="onChangeMoonsign(2)"
         :disabled="!workMoonsign.ascendantGleam || (workMoonsign.otherCharacter !== null && workMoonsign.otherCharacter.length > 0)" />
     </label>
+    <br />
+    <span v-if="workMoonsign.ascendantGleam">
+      月反応ダメージ最大36%アップ<br>
+      <span class="pyro">炎元素</span>、<span class="electro">雷元素</span>、<span class="cryo">氷元素</span>:攻撃力4000まで<br>
+      <span class="hydro">水元素</span>:HP上限60000まで<br>
+      <span class="geo">岩元素</span>:防御力3600まで<br>
+      <span class="anemo">風元素</span>、<span class="dendro">草元素</span>:元素熟知1600まで
+    </span>
     <hr />
     <p>{{ displayName('魔導') }}</p>
     <label>

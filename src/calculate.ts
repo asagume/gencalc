@@ -833,6 +833,7 @@ export function calculateElementalResonance(
         }
         result['月感電反応ボーナス'] = lunarDmgBonus;
         result['月開花反応ボーナス'] = lunarDmgBonus;
+        result['月結晶反応ボーナス'] = lunarDmgBonus;
     }
     return result;
 }
