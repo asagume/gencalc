@@ -2044,8 +2044,9 @@ function calculateDamageFromDetailSubLunar(
     if (['月感電', '月結晶'].includes(reaction)) {
         multiplier = 3;
     }
+    const myダメージバフ補正 = 1 + emBonus + otherBonus / 100;
     let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + dmgElevate / 100);
-    myダメージ *= 1 + emBonus + otherBonus / 100;
+    myダメージ *= myダメージバフ補正;
     myダメージ += dmgUp;
 
     const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);
@@ -2059,12 +2060,12 @@ function calculateDamageFromDetailSubLunar(
 
     let my会心率 = statsObj['会心率'];
     my会心率 += statsObj[dmgElement + '元素ダメージ会心率'] || 0;
-    my会心率 += statsObj[reaction + 'ダメージ会心率'] || 0;
+    my会心率 += statsObj[reaction + '反応ダメージ会心率'] || 0;
     my会心率 = Math.min(100, Math.max(0, my会心率)) / 100;    // 0≦会心率≦1
 
     let my会心ダメージ = statsObj['会心ダメージ'];
     my会心ダメージ += statsObj[dmgElement + '元素ダメージ会心ダメージ'] || 0;
-    my会心ダメージ += statsObj[reaction + 'ダメージ会心ダメージ'] || 0;
+    my会心ダメージ += statsObj[reaction + '反応ダメージ会心ダメージ'] || 0;
     my会心ダメージ = (100 + my会心ダメージ) / 100;
 
     let my会心Result = null;
@@ -2074,7 +2075,7 @@ function calculateDamageFromDetailSubLunar(
         my期待値Result = (my会心Result * my会心率) + (myダメージ * (1 - my会心率));
     }
 
-    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, null, null, null];
+    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, null, null];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {
