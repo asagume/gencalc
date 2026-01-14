@@ -1,4 +1,8 @@
 {
+  "帳の夜曲": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Nocturne'sCurtainCall.json"
+  },
   "真言の匣": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_ReliquaryofTruth.json"

@@ -2038,13 +2038,14 @@ function calculateDamageFromDetailSubLunar(
     const emBonus = (6 * em) / (em + 2000);
     const otherBonus = statsObj[reaction + '反応ボーナス'] ?? 0;
     const dmgUp = statsObj[reaction + '反応ダメージアップ'] ?? 0;
-    const dmgElavate = statsObj[reaction + '反応ダメージ向上'] ?? 0;
+    const dmgElevate = statsObj[reaction + '反応ダメージ向上'] ?? 0;
 
     let multiplier = 1;
     if (['月感電', '月結晶'].includes(reaction)) {
         multiplier = 3;
     }
-    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) + (1 + dmgElavate / 100) + (1 + emBonus + otherBonus / 100);
+    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + dmgElevate / 100);
+    myダメージ *= 1 + emBonus + otherBonus / 100;
     myダメージ += dmgUp;
 
     const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);

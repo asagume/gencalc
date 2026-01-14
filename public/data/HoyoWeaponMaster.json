@@ -1,5 +1,15 @@
 [
   {
+    "id": 14522,
+    "name": "帳の夜曲",
+    "icon": null,
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9250"
+  },
+  {
     "id": 11518,
     "name": "黒蝕",
     "icon": null,

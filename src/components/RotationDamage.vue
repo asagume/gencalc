@@ -88,8 +88,7 @@ import draggable from "vuedraggable";
 import { getDamageResultArr, TRotationDamageEntry, REACTION_DMG_ARR, REACTION_DMG_ELEMENT_MAP, calculateRotationTotalDamage, TRotationDamageInfo, calculateRotationDamageEntry, getAmplifyingReactionElement } from "@/calculate";
 import {
   TDamageResult,
-  TDamageResultElementalReactionKey,
-  TDamageResultEntry,
+  TDamageResultElementalReactionKey,  
 } from "@/input";
 import {
   ARTIFACT_SET_MASTER,

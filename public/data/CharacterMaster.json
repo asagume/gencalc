@@ -1,4 +1,11 @@
 {
+  "コロンビーナ": {
+    "レアリティ": 5,
+    "元素": "水",
+    "武器": "法器",
+    "誕生日": "1/14",
+    "import": "data/characters/hydro_5_catalyst_ColumbinaHyposelenia.json"
+  },
   "ドゥリン": {
     "レアリティ": 5,
     "元素": "炎",

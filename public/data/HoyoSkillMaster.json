@@ -1,5 +1,73 @@
 [
   {
+    "avatar_id": 10000125,
+    "skill_list": [
+      {
+        "id": 11251,
+        "group_id": 12531,
+        "name": "注がれる月露",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11252,
+        "group_id": 12532,
+        "name": "万古の潮汐",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11255,
+        "group_id": 12539,
+        "name": "月明かりの郷愁",
+        "icon": null,
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12521,
+        "group_id": 12521,
+        "name": "月が呼んだ狂気",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12522,
+        "group_id": 12522,
+        "name": "新月の法則",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12523,
+        "group_id": 12523,
+        "name": "月兆の祝福・汝に月光を授けん",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12525,
+        "group_id": 12525,
+        "name": "月の守護",
+        "icon": null,
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000123,
     "skill_list": [
       {
