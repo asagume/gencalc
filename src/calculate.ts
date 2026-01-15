@@ -1883,16 +1883,20 @@ function calculateDamageFromDetail(
 
             const dmgUpStatArr = [];
             dmgUpStatArr.push(myダメージ種類 + 'アップ');
-            if (my元素) {
+            if (my元素 && (detailObj.ダメージ種類.startsWith('月') && detailObj.種類.endsWith('反応ダメージ') == false)) {
                 dmgUpStatArr.push(my元素 == '物理' ? '物理ダメージアップ' : my元素 + '元素ダメージアップ');
             }
             dmgUpStatArr.forEach(dmgUpStat => {
                 if (!statsObj[dmgUpStat]) return;
-                if (!is防御補正Calc || !is耐性補正Calc) return;
-
+                if (!is耐性補正Calc) return;
                 if (detailObj.名前.startsWith('非表示_狼の魂基礎')) return;    // for レザー
-
-                const myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[dmgUpStat], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, null);
+                let myResultWork;
+                if (detailObj.ダメージ種類.startsWith('月') && detailObj.種類.endsWith('反応ダメージ')) {
+                    myResultWork = calculateDamageFromDetailSubLunar(statsObj, damageResult, statsObj[dmgUpStat], detailObj.ダメージ種類, my元素, null, true);
+                } else {
+                    if (!is防御補正Calc) return;
+                    myResultWork = calculateDamageFromDetailSub(statsObj, damageResult, statsObj[dmgUpStat], myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, null);
+                }
                 // 複数回HITするダメージについては、HIT数を乗算します
                 if (myHIT数 > 1) {
                     myResultWork[2] *= myHIT数;
@@ -2030,24 +2034,28 @@ function calculateDamageFromDetailSubLunar(
     kind: string,
     dmgElement: string,
     別枠乗算: number | null,
+    isDmgUp = false,
 ): TDamageResultEntry {
     const myダメージ基礎値 = evalFormula(formula, statsObj, damageResult, null, null);
     const reaction = kind.replace('反応ダメージ', '');
-    const baseDmgUp = statsObj[reaction + '反応基礎ダメージアップ'] ?? 0;
-    const em = statsObj['元素熟知'] ?? 0;
-    const emBonus = (6 * em) / (em + 2000);
-    const otherBonus = statsObj[reaction + '反応ボーナス'] ?? 0;
-    const dmgUp = statsObj[reaction + '反応ダメージアップ'] ?? 0;
-    const dmgElevate = statsObj[reaction + '反応ダメージ向上'] ?? 0;
+    let baseDmgUp = 0;
+    let dmgBonus = 0;
+    if (!isDmgUp) {
+        baseDmgUp = (statsObj[reaction + '反応基礎ダメージアップ'] ?? 0) / 100;
+        const em = statsObj['元素熟知'] ?? 0;
+        const emBonus = (6 * em) / (em + 2000);
+        const otherBonus = (statsObj[reaction + '反応ボーナス'] ?? 0) / 100;
+        dmgBonus = emBonus + otherBonus;
+    }
+    const dmgElevate = (statsObj[reaction + '反応ダメージ向上'] ?? 0) / 100;
 
     let multiplier = 1;
-    if (['月感電', '月結晶'].includes(reaction)) {
+    if (['月感電', '月結晶'].includes(reaction) && !isDmgUp) {
         multiplier = 3;
     }
-    const myダメージバフ補正 = 1 + emBonus + otherBonus / 100;
-    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp / 100) * (1 + dmgElevate / 100);
-    myダメージ *= myダメージバフ補正;
-    myダメージ += dmgUp;
+    let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp);
+    myダメージ *= 1 + dmgBonus;
+    myダメージ *= 1 + dmgElevate;
 
     const my耐性補正 = calculateEnemyRes(dmgElement, statsObj);
     myダメージ *= my耐性補正;
@@ -2075,7 +2083,7 @@ function calculateDamageFromDetailSubLunar(
         my期待値Result = (my会心Result * my会心率) + (myダメージ * (1 - my会心率));
     }
 
-    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, myダメージバフ補正, null, null];
+    return ['未設定', dmgElement, my期待値Result, my会心Result, myダメージ, null, null, 1 + dmgBonus, null, null];
 }
 
 function getChangeDetailObjArr(characterInput: TCharacterInput, changeKind: string) {

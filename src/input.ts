@@ -70,6 +70,7 @@ export const 実数ダメージ加算ARRAY = [
     '超開花反応ダメージアップ',     // for ラウマ
     '月感電反応ダメージアップ',     // for ナド・クライ
     '月開花反応ダメージアップ',     // for ラウマ
+    '月結晶反応ダメージアップ',     // for コロンビーナ
 ];
 export const 元素反応バフARRAY = [
     '蒸発反応ボーナス',
@@ -1485,6 +1486,8 @@ export function makeDetailObj(
     if (!myダメージ種類) {
         if (detailObj.ダメージバフ) {
             myダメージ種類 = detailObj.ダメージバフ.replace(/バフ$/, '');
+        } else if (my種類.endsWith('反応ダメージ') && Object.keys(元素反応TEMPLATE).includes(my種類)) {
+            myダメージ種類 = my種類;
         } else if ([...DAMAGE_CATEGORY_ARRAY, 'その他ダメージ'].includes(my種類)) {
             myダメージ種類 = my種類;
         }
