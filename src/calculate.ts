@@ -2050,8 +2050,10 @@ function calculateDamageFromDetailSubLunar(
     const dmgElevate = (statsObj[reaction + '反応ダメージ向上'] ?? 0) / 100;
 
     let multiplier = 1;
-    if (['月感電', '月結晶'].includes(reaction) && !isDmgUp) {
+    if (['月感電'].includes(reaction) && !isDmgUp) {
         multiplier = 3;
+    } else if (['月結晶'].includes(reaction) && !isDmgUp) {
+        multiplier = 1.6;
     }
     let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp);
     myダメージ *= 1 + dmgBonus;
