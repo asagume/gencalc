@@ -16,13 +16,13 @@
       <a href="ArtifactSetList.html">聖遺物セット効果一覧</a>
     </p>
     <p>
+      <a href="TeamManager.html">チーム編成</a>
       <a href="RandomTeam.html">ランダムチーム編成メーカー</a>
-      <a href="HoYoDictionary.html">原神の辞書</a>
     </p>
 
     <p style="margin-bottom: 4rem;">
       <a href="EnkaNetwork3.html">DATA IMPORTER</a>
-      <a href="TeamManager.html">チーム編成</a>
+      <a href="GoogleDrive.html">Google Drive連携</a>
     </p>
 
     <div class="top-left">
@@ -30,12 +30,7 @@
     </div>
 
     <div class="top-right">
-      <a
-        href="https://zawazawa.jp/gencalc/topic/1"
-        target="_blank"
-        rel="noopener noreferrer"
-        >バグ報告·要望</a
-      >
+      <a href="https://zawazawa.jp/gencalc/topic/1" target="_blank" rel="noopener noreferrer">バグ報告·要望</a>
     </div>
 
     <div class="bottom-left">

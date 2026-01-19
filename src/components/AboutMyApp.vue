@@ -41,19 +41,16 @@
     <fieldset>
         <legend>内部リンク</legend>
         <p>
-            <a href="GoogleDrive.html">Google Drive連携 (テスト中)</a>
+            <a href="RecommendationList.html">おすすめセット一覧</a>
         </p>
         <p>
-            <a href="StatList.html">キャラクターステータス一覧</a>
+            <a href="HoYoDictionary.html">原神の辞書</a>
         </p>
         <p>
             <a href="TeamOptionList.html">強化・弱体効果一覧</a>
         </p>
         <p>
             <a href="CritTarget.html">会心目標</a>
-        </p>
-        <p>
-            <a href="RecommendationList.html">おすすめセット一覧</a>
         </p>
         <p>
             <a href="index2.html">旧バージョン(V2)</a>

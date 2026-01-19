@@ -1,6 +1,5 @@
 <template>
   <h2>Google Drive 連携</h2>
-  <h3>テスト中</h3>
   <p style="text-align: left; margin-left: 2rem;"><a href="./">げんかるく</a> </p>
   <p>本画面では、Google Driveのアプリデータフォルダを介して、ブラウザ間および端末間で《げんかるく》のデータを共有するための機能を提供します。</p>
 
