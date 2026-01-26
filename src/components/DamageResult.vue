@@ -188,7 +188,7 @@
       </label>
     </div>
     <div v-if="damageResult.元素反応.月感電反応ダメージ" class="with-tooltip">
-      <label class="electro">
+      <label class="electro lunar">
         {{ displayName("月感電") }}
         <span>{{ Math.round(lunarReactionDmg('月感電反応ダメージ')) }}</span>
         <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月感電反応ダメージ">
@@ -217,7 +217,7 @@
       </div>
     </div>
     <div v-if="damageResult.元素反応.月結晶反応ダメージ" class="with-tooltip">
-      <label class="geo">
+      <label class="geo lunar">
         {{ displayName("月結晶") }}
         <span>{{ Math.round(lunarReactionDmg('月結晶反応ダメージ')) }}</span>
         <span class="savepoint" v-if="copiedDamageResult?.元素反応?.月結晶反応ダメージ">
@@ -738,7 +738,7 @@ div.elemental-reaction div label {
 }
 
 .with-tooltip:hover .tooltip {
-    display: block;
+  display: block;
 }
 
 div.elemental-reaction div [type="radio"]+label {
@@ -854,5 +854,9 @@ button {
 
 .hpcost {
   color: lightgray;
+}
+
+.lunar {
+  background: linear-gradient(rgb(72, 72, 72), rgb(48, 48, 48));
 }
 </style>
