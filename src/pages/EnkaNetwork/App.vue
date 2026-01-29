@@ -331,7 +331,7 @@ export default defineComponent({
       },
     } as TAnyObject);
     const characterInfoList = reactive([] as any[]);
-    const artifactsToggle = ref(false);
+    const artifactsToggle = ref(true);
 
     async function onLoad() {
       const responses = await Promise.all(
