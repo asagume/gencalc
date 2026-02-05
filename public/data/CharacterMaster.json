@@ -425,6 +425,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "イルーガ": {
+    "レアリティ": 4,
+    "元素": "岩",
+    "武器": "長柄武器",
+    "誕生日": "12/23",
+    "import": "data/characters/geo_4_polearm_Illuga.json"
+  },
   "ヤフォダ": {
     "レアリティ": 4,
     "元素": "風",
