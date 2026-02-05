@@ -67,7 +67,9 @@ $pageIds = @()
 # $pageIds += 8894   # ネフェル
 # $pageIds += 9017   # ドゥリン
 # $pageIds += 9018   # ヤフォダ
-$pageIds += 9121   # コロンビーナ
+# $pageIds += 9121   # コロンビーナ
+$pageIds += 9122   # 茲白
+$pageIds += 9123   # イルーガ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -165,7 +167,8 @@ $pageIds += 9121   # コロンビーナ
 # $pageIds += 9045    # 黒蝕
 # $pageIds += 9047    # 暁を告げる歴史
 # $pageIds += 9046    # 虹蛇の雨弦
-$pageIds += 9250    # 帳の夜曲
+# $pageIds += 9250    # 帳の夜曲
+$pageIds += 9249    # 三日月の含光
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

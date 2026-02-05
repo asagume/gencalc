@@ -1488,7 +1488,6 @@ export function makeDetailObj(
             myダメージ種類 = detailObj.ダメージバフ.replace(/バフ$/, '');
         } else if (my種類.endsWith('反応ダメージ') && ['月開花反応ダメージ', ...Object.keys(元素反応TEMPLATE)].includes(my種類)) {
             myダメージ種類 = my種類;
-            console.log(myダメージ種類)
         } else if ([...DAMAGE_CATEGORY_ARRAY, 'その他ダメージ'].includes(my種類)) {
             myダメージ種類 = my種類;
         }
@@ -2175,8 +2174,15 @@ export function makeFormulaTemplate(
                 } else if (item.length) {
                     if (item.includes('%')) {   // 123.4% or 12.34%HP上限 等。%の前は数値
                         const arr = item.split('%').map(s => _.trim(s));
-                        result += arr[0] + '/100*';
-                        item = arr[1].length ? arr[1] : '攻撃力';
+                        const re2 = new RegExp('^([^0-9\\.]+)([0-9\\.]+)$');
+                        let re2Ret;
+                        if ((re2Ret = re2.exec(arr[0])) !== null) {
+                            result += re2Ret[2] + '/100*';
+                            item = re2Ret[1];
+                        } else {
+                            result += arr[0] + '/100*';
+                            item = arr[1].length ? arr[1] : '攻撃力';
+                        }
                     }
                     result += '${' + item + '}';
                 }

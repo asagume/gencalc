@@ -1,4 +1,8 @@
 {
+  "三日月の含光": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_LightbearingMoonshard.json"
+  },
   "黒蝕": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AthameArtis.json"
