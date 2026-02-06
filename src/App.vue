@@ -104,8 +104,8 @@
         <div class="tab-switch">
           <input id="option-input-tab-1" type="radio" value="1" v-model="optionInputTabRef" />
           <label for="option-input-tab-1"> {{ displayName('チーム強化') }} </label>
-          <input id="option-input-tab-2" type="radio" value="2" v-model="optionInputTabRef" />
-          <label for="option-input-tab-2"> {{ displayName('チーム') }} </label>
+          <input class="hidden" id="option-input-tab-2" type="checkbox" v-model="optionInputSupporterRef" />
+          <label class="toggle-switch" for="option-input-tab-2"> {{ displayName('サポーター') }} </label>
           <input id="option-input-tab-3" type="radio" value="3" v-model="optionInputTabRef" />
           <label for="option-input-tab-3"> {{ displayName('その他') }} </label>
         </div>
@@ -116,15 +116,15 @@
             :character="characterInputRea.character" :team-members="optionInputRea.teamMembers"
             @update:elemental-resonance="updateElementalResonance" />
         </div>
-        <div v-if="optionInputTabRef == 2">
-          <TeamOptionInput ref="teamOptionInputVmRef" :character="characterInputRea.character"
-            :team-members="optionInputRea.teamMembers" :condition-input="optionInputRea.teamOption"
-            @update:team-option="updateTeamOption" @update:buildname-selection="updateBuildnameSelection"
-            @update:team-members="updateTeamMembers" />
-        </div>
         <div v-if="optionInputTabRef == 3">
           <MiscOptionInput ref="miscOptionInputVmRef" :condition-input="optionInputRea.miscOption"
             @update:misc-option="updateMiscOption" />
+        </div>
+        <div v-show="optionInputSupporterRef" style="margin-top: 10px;">
+          <TeamOptionInput ref="teamOptionInputVmRef" :visible="true" :character="characterInputRea.character"
+            :team-members="optionInputRea.teamMembers" :condition-input="optionInputRea.teamOption"
+            @update:team-option="updateTeamOption" @update:buildname-selection="updateBuildnameSelection"
+            @update:team-members="updateTeamMembers" />
         </div>
       </div>
     </div>
@@ -193,7 +193,7 @@
     </div>
   </div>
 
-  <div id="debug-info" v-if="false">
+  <div id="debug-info" v-if="true">
     <hr />
     <h2>DEBUG</h2>
     <template v-if="characterInputRea">
@@ -453,6 +453,7 @@ export default defineComponent({
     const pane6Toggle3Ref = ref(true);          // true:バフ/デバフ条件表示, false:非表示
     const statInputTabRef = ref(1);             // 1:ステータス1, 2:ステータス2, 3:敵
     const optionInputTabRef = ref(1);           // 1:元素共鳴, 2:チーム, 3:その他
+    const optionInputSupporterRef = ref(false); // true:表示, false:非表示 
     const ownListToggle1Ref = ref(false);       // true:キャラクター所持状況表示, false:非表示
     const ownListToggle2Ref = ref(false);       // true:武器所持状況表示, false:非表示
     const ownListToggle3Ref = ref(false);       // true:聖遺物所持状況表示, false:非表示
@@ -952,12 +953,14 @@ export default defineComponent({
 
     /** チーム強化が変更されました。ステータスおよびダメージを再計算します */
     const updateElementalResonance = (optionInput: TOptionInput, forceUpdate = false) => {
-      let isChanged = false;
+      let isChanged1 = false;
+      let isChanged2 = false;
+      let isChanged3 = false;
       // 元素共鳴
       if (optionInput?.elementalResonance?.conditionValues && Object.keys(optionInput.elementalResonance.conditionValues).length) {
         if (!_.isEqual(optionInputRea.elementalResonance.conditionValues, optionInput.elementalResonance.conditionValues)) {
           overwriteObject(optionInputRea.elementalResonance.conditionValues, optionInput.elementalResonance.conditionValues);
-          isChanged = true;
+          isChanged1 = true;
         }
       }
       // 月兆
@@ -966,19 +969,20 @@ export default defineComponent({
         optionInputRea.moonsign.ascendantGleam = optionInput.moonsign.ascendantGleam;
         optionInputRea.moonsign.otherCharacter = optionInput.moonsign.otherCharacter;
         optionInputRea.moonsign.lunarDmgBonus = optionInput.moonsign.lunarDmgBonus;
-        isChanged = true;
+        isChanged2 = true;
       }
       // 魔導
       if (optionInput?.hexerei && !_.isEqual(optionInputRea.hexerei, optionInput.hexerei)) {
         optionInputRea.hexerei.hexerei = optionInput.hexerei.hexerei;
-        isChanged = true;
+        isChanged3 = true;
       }
-      if (!isChanged && !forceUpdate) {
+      if (!isChanged1 && !isChanged2 && !isChanged3 && !forceUpdate) {
         return;
       }
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);
       const conditionAdjustments = calculateElementalResonance(optionInputRea, conditionInputRea, characterInputRea, statsInput);
       overwriteObject(optionInputRea.elementalResonance.conditionAdjustments, conditionAdjustments);
+      calculateTeamStatsAdjustments(optionInputRea, topStats.value, characterInputRea.character);
       // ステータスとダメージを計算します
       _calculateStatsAndDamageResult();
     }
@@ -1203,6 +1207,7 @@ export default defineComponent({
       pane6Toggle3Ref,
       statInputTabRef,
       optionInputTabRef,
+      optionInputSupporterRef,
       ownListToggle1Ref,
       ownListToggle2Ref,
       ownListToggle3Ref,

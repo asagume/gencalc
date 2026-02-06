@@ -1,12 +1,88 @@
 <template>
-  <fieldset class="team-option">
-    <template v-for="supporter in SUPPORTER_KEY_LIST" :key="supporter">
-      <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
-        <div class="left">
-          <div :class="'supporter' + supporterOptionSelectedClass(supporter)">
-            <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
+  <div v-if="true">
+    <fieldset class="team-option">
+      <legend @click="toggleSwitch = !toggleSwitch">&nbsp; {{ displayName("サポーター") }} &nbsp;</legend>
+      <div>
+        <ul class="select-list">
+          <li v-for="item in elementList" :key="item">
+            <label>
+              <input class="hidden" type="checkbox" v-model="elementCheckList[item]"
+                @change="checkListOnChange(item, elementCheckList)" />
+              <img class="filter" :src="elementSrc(item)" :alt="item" />
+            </label>
+          </li>
+        </ul>
+      </div>
+      <template v-for="supporter in SUPPORTER_KEY_LIST" :key="supporter">
+        <fieldset v-if="supporterOpenClose[supporter]" class="supporter" v-show="supporterVisible(supporter)">
+          <div class="left">
+            <div :class="'supporter' + supporterOptionSelectedClass(supporter)">
+              <input class="hidden" :id="'supporter-' + supporter" type="checkbox"
+                v-model="supporterOpenClose[supporter]" />
+              <label class="fold with-tooltip" :for="'supporter-' + supporter">
+                <div class="character">
+                  <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
+                  <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
+                </div>
+                <span class="tooltip"> {{ displayName(supporter) }} </span>
+              </label>
+              <button type="button" v-if="teamMembers.includes(supporter)" @click="removeFromTeamOnClick(supporter)">
+                <span class="material-symbols-outlined remove"> person_remove </span>
+              </button>
+              <button type="button" v-else :disabled="teamMembers.length >= 3" @click="addToTeamOnClick(supporter)">
+                <span class="material-symbols-outlined add"> person_add </span>
+              </button>
+            </div>
+            <div class="builddata-selector" v-if="buildnameList(supporter).length">
+              <label>
+                <select v-model="selectedBuildname[supporter]" @change="buildnameSelectionOnChange">
+                  <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
+                    {{ item }}
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div class="equipment">
+              <div class="with-tooltip">
+                <img :src="weaponIconSrc(supporter)" alt="weapon" />
+                <span class="tooltip">{{ weaponName(supporter) }}</span>
+              </div>
+              <div class="with-tooltip">
+                <img :src="artifactSetIconSrc(supporter, 0)" alt="artifact set" />
+                <span class="tooltip">{{ artifactSetName(supporter, 0) }}</span>
+              </div>
+              <div class="with-tooltip">
+                <img :src="artifactSetIconSrc(supporter, 1)" alt="artifact set" />
+                <span class="tooltip">{{ artifactSetName(supporter, 1) }}</span>
+              </div>
+            </div>
+            <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
+              <input type="checkbox" v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
+                @change="valueOnChange($event, item)" />
+              <span> {{ displayName(item.displayName) }}</span>
+            </label>
+            <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
+              <span> {{ displayName(item.displayName) }} </span>
+              <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
+                @change="valueOnChange($event, item)">
+                <option v-for="(option, index) in item.options" :value="index" :key="option">
+                  {{ displayOptionName(option) }}
+                </option>
+              </select>
+            </label>
+            <label class="condition" v-for="item in supporterNumberList(supporter)" :key="item.name">
+              <span> {{ displayName(item.displayName) }}</span>
+              <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max"
+                :step="item.step" :disabled="conditionDisabled(item)" @blur="valueOnChange($event, item)" />
+            </label>
+          </div>
+        </fieldset>
+        <template v-else>
+          <div v-show="supporterVisible(supporter)"
+            :class="'supporter-else' + elementBgClass(supporter) + supporterOptionSelectedClass(supporter)">
+            <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
               v-model="supporterOpenClose[supporter]" />
-            <label class="fold with-tooltip" :for="'supporter-' + supporter">
+            <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
               <div class="character">
                 <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
                 <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
@@ -20,95 +96,36 @@
               <span class="material-symbols-outlined add"> person_add </span>
             </button>
           </div>
-          <div class="builddata-selector" v-if="buildnameList(supporter).length">
-            <label>
-              <select v-model="selectedBuildname[supporter]" @change="buildnameSelectionOnChange">
-                <option v-for="item in buildnameList(supporter)" :value="item" :key="item">
-                  {{ item }}
-                </option>
-              </select>
-            </label>
-          </div>
-          <div class="equipment">
-            <div class="with-tooltip">
-              <img :src="weaponIconSrc(supporter)" alt="weapon" />
-              <span class="tooltip">{{ weaponName(supporter) }}</span>
-            </div>
-            <div class="with-tooltip">
-              <img :src="artifactSetIconSrc(supporter, 0)" alt="artifact set" />
-              <span class="tooltip">{{ artifactSetName(supporter, 0) }}</span>
-            </div>
-            <div class="with-tooltip">
-              <img :src="artifactSetIconSrc(supporter, 1)" alt="artifact set" />
-              <span class="tooltip">{{ artifactSetName(supporter, 1) }}</span>
-            </div>
-          </div>
-          <label class="condition" v-for="item in supporterCheckboxList(supporter)" :key="item.name">
-            <input type="checkbox" v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
-              @change="valueOnChange($event, item)" />
-            <span> {{ displayName(item.displayName) }}</span>
-          </label>
-          <label class="condition" v-for="item in supporterSelectList(supporter)" :key="item.name">
-            <span> {{ displayName(item.displayName) }} </span>
-            <select v-model="conditionValues[item.name]" :disabled="conditionDisabled(item)"
-              @change="valueOnChange($event, item)">
-              <option v-for="(option, index) in item.options" :value="index" :key="option">
-                {{ displayOptionName(option) }}
-              </option>
-            </select>
-          </label>
-          <label class="condition" v-for="item in supporterNumberList(supporter)" :key="item.name">
-            <span> {{ displayName(item.displayName) }}</span>
-            <input type="number" v-model="conditionValues[item.name]" :min="item.min" :max="item.max" :step="item.step"
-              :disabled="conditionDisabled(item)" @blur="valueOnChange($event, item)" />
-          </label>
-        </div>
-      </fieldset>
-      <template v-else>
-        <div v-show="supporterVisible(supporter)"
-          :class="'supporter-else' + elementBgClass(supporter) + supporterOptionSelectedClass(supporter)">
-          <input class="hidden" :id="'supporter-else-' + supporter" type="checkbox"
-            v-model="supporterOpenClose[supporter]" />
-          <label class="fold with-tooltip" :for="'supporter-else-' + supporter">
-            <div class="character">
-              <img class="character" :src="characterIconSrc(supporter)" :alt="displayName(supporter)">
-              <img class="vision" :src="characterVisionIconSrc(supporter)" alt="vision">
-            </div>
-            <span class="tooltip"> {{ displayName(supporter) }} </span>
-          </label>
-          <button type="button" v-if="teamMembers.includes(supporter)" @click="removeFromTeamOnClick(supporter)">
-            <span class="material-symbols-outlined remove"> person_remove </span>
-          </button>
-          <button type="button" v-else :disabled="teamMembers.length >= 3" @click="addToTeamOnClick(supporter)">
-            <span class="material-symbols-outlined add"> person_add </span>
-          </button>
-        </div>
+        </template>
       </template>
-    </template>
 
-    <hr />
+      <hr />
 
-    <ul class="option-description">
-      <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
-    </ul>
+      <ul class="option-description">
+        <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
+      </ul>
 
-    <label>
-      {{ displayName("すべて閉じる") }}
-      <button class="execute" type="button" @click="closeAllSupporters">{{ displayName("実行") }}</button>
-    </label>
-    <label>
-      {{ displayName("すべてクリア") }}
-      <button class="execute" type="button" @click="clearAllSupporterOptions">
-        {{ displayName("実行") }}
-      </button>
-    </label>
-  </fieldset>
+      <label>
+        {{ displayName("すべて閉じる") }}
+        <button class="execute" type="button" @click="closeAllSupporters">{{ displayName("実行") }}</button>
+      </label>
+      <label>
+        {{ displayName("すべてクリア") }}
+        <button class="execute" type="button" @click="clearAllSupporterOptions">
+          {{ displayName("実行") }}
+        </button>
+      </label>
+    </fieldset>
 
-  <p class="notice">
-    キャラクターの天賦レベルやステータスによって効果量が変動する種類のオプションはデフォルト名称の構成保存データが存在する場合に選択可能になります。
-    <br />
-    構成保存データのデフォルト名称：あなたの{キャラクターの名前}
-  </p>
+    <p class="notice">
+      キャラクターの天賦レベルやステータスによって効果量が変動する種類のオプションはデフォルト名称の構成保存データが存在する場合に選択可能になります。
+      <br />
+      構成保存データのデフォルト名称：あなたの{キャラクターの名前}
+    </p>
+  </div>
+  <div v-else>
+    <label class="closed" @click="toggleSwitch = !toggleSwitch">{{ '+ ' + displayName("サポーター") + '+ ' }}</label>
+  </div>
 </template>
 
 <script lang="ts">
@@ -129,13 +146,19 @@ import {
   IMG_SRC_DUMMY,
   TAnyObject,
   TCharacterKey,
+  TVisionKey,
 } from "@/master";
-import { computed, defineComponent, nextTick, onMounted, PropType, reactive, watch } from "vue";
+import { computed, defineComponent, nextTick, onMounted, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
+
+interface ICheckList {
+  [key: string]: boolean;
+}
 
 export default defineComponent({
   name: 'TeamOptionInput',
   props: {
+    visible: Boolean,
     character: { type: String as PropType<TCharacterKey>, required: true, },
     teamMembers: { type: Array as PropType<string[]>, required: true, },
     conditionInput: { type: Object as PropType<TConditionInput>, required: true, },
@@ -149,6 +172,7 @@ export default defineComponent({
       displayOptionName,
     } = CompositionFunction();
 
+    const toggleSwitch = ref(props.visible);
     const SUPPORTER_KEY_LIST = Object.keys(CHARACTER_MASTER);
     SUPPORTER_KEY_LIST.sort((a, b) => ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[a].元素) - ALL_ELEMENTS.indexOf((CHARACTER_MASTER as any)[b].元素));
     const supporterOpenClose = reactive({} as { [key: string]: boolean });  // true:開, false:閉
@@ -170,11 +194,29 @@ export default defineComponent({
     const selectList = computed(() => props.conditionInput.selectList);
     const numberList = computed(() => props.conditionInput.numberList);
 
+    const elementList = Object.keys(ELEMENT_IMG_SRC) as TVisionKey[];
+    const elementSrc = (element: TVisionKey) => ELEMENT_IMG_SRC[element] as string;
+    const elementCheckList = reactive({}) as ICheckList;
+    for (let key of elementList) {
+      elementCheckList[key] = false;
+    }
+    const checkListOnChange = function (item: string, checkList: ICheckList) {
+      console.log('checkListOnChange', item, checkList);
+    };
+
     const supporterCheckboxList = (supporter: any) => checkboxList.value.filter((s) => s.name.startsWith(supporter + '*'));
     const supporterSelectList = (supporter: any) => selectList.value.filter((s) => s.name.startsWith(supporter + '*'));
     const supporterNumberList = (supporter: any) => numberList.value.filter((s) => s.name.startsWith(supporter + '*'));
     /** 選択中のキャラクターのオプションは表示しません */
-    const supporterVisible = (supporter: any) => supporter != props.character;
+    const supporterVisible = (supporter: any) => {
+      if (supporter == props.character) {
+        return false;
+      }
+      if (Object.keys(elementCheckList).filter((key) => elementCheckList[key]).length == 0) {
+        return true;
+      }
+      return elementCheckList[(CHARACTER_MASTER as any)[supporter].元素];
+    }
     const supporterOptionSelectedClass = (supporter: any) => {
       return (supporterCheckboxList(supporter).filter(s => conditionValues[s.name]).length > 0
         || supporterSelectList(supporter).filter(s => !s.required && conditionValues[s.name]).length > 0)
@@ -400,6 +442,7 @@ export default defineComponent({
       displayName,
       displayOptionName,
 
+      toggleSwitch,
       SUPPORTER_KEY_LIST,
       supporterCheckboxList,
       supporterSelectList,
@@ -415,6 +458,11 @@ export default defineComponent({
       builddataSelectorVisible,
       buildnameList,
       selectedBuildname,
+
+      elementList,
+      elementSrc,
+      elementCheckList,
+      checkListOnChange,
 
       elementBgClass,
       characterIconSrc,
@@ -629,5 +677,33 @@ button.execute {
 
 input[type="number"] {
   text-align: right;
+}
+
+ul.select-list {
+  margin-top: 0;
+}
+
+img.vision {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+}
+
+img.filter {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+:checked+img {
+  background-color: rgb(156, 140, 49);
+}
+
+label.closed {
+  display: inline-block;
+  color: #df8f37;
+  width: calc(100px + 3rem);
 }
 </style>

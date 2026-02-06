@@ -1224,6 +1224,9 @@ function checkConditionMatchesSub(
         console.error(conditionStr, validConditionValueArr, constellation, statsObj);
         return 0;
     }
+    if (validConditionValueArr.includes(conditionStr)) {
+        return 1;   // マッチ
+    }
     if (conditionKey === '命ノ星座') {
         if (isNumeric(conditionVal)) {
             conditionVal = Number(conditionVal);
@@ -1686,7 +1689,7 @@ function calculateDamageFromDetail(
                 const tempArr = stat.split('.');
                 if (tempArr.length == 1) return;
                 let isValid = false;
-                if (tempArr[1] == detailObj.種類) {
+                if (tempArr[1] == detailObj.種類 || tempArr[1] == detailObj.天賦種類 + 'ダメージ') {
                     if (tempArr.length == 2) {
                         isValid = true;
                     } else if (tempArr[2] == detailObj.名前) {
@@ -2339,12 +2342,12 @@ export async function setupTeamOptionSupporter(
                 damageDetailObj.条件 = condition;
                 const changeKind = getChangeKind(damageDetailObj.種類 as string);
                 if (changeKind === 'STATUS' &&
-                    optionDetails1.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
+                    optionDetails1.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類 && s.対象 == damageDetailObj.対象).length === 0
                 ) {
                     optionDetails1.splice(optionDetails1.length, 0, damageDetailObj);
                 }
                 if (changeKind === 'TALENT' &&
-                    optionDetails2.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類).length === 0
+                    optionDetails2.filter((s) => s.条件 == condition && s.種類 == damageDetailObj.種類 && s.対象 == damageDetailObj.対象).length === 0
                 ) {
                     optionDetails2.splice(optionDetails2.length, 0, damageDetailObj);
                 }
