@@ -1,5 +1,15 @@
 [
   {
+    "id": 11519,
+    "name": "三日月の含光",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/fa2ac4d5a0238fb674c44670652fc284.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9249"
+  },
+  {
     "id": 14522,
     "name": "帳の夜曲",
     "icon": null,

@@ -1,5 +1,261 @@
 [
   {
+    "id": 10000126,
+    "name": "兹白",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/b7ea76f3f77eec4997dad6576c183939.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 3,
+    "max_level": 90,
+    "item_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/f5ec885485cef503db7d261545cc57dd.png",
+    "talent_icons": [
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/6a1690865fbf95e51fa32b919a75e6cc.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b12ade3240739acb9020fadfac9d2eb1.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/4b743bd75b5b9bd288e7fc6a80f1455b.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/2858642f249a8cb59bd90eb4520e953e.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/40240906648c62952e9ee441fffc0f70.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/d69e6116beb8c4bafc19845364ca62c7.png"
+    ],
+    "side_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dceb/3bbae77703f1013fc8a66924f94a45b0.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000126",
+        "costume_id": "0",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/0ff45f3a8faf1ea6c8690441669d1b9f.png",
+        "profile_picture_id": "11000"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1261,
+        "name": "疾く出でて粛然と帰す",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/6a1690865fbf95e51fa32b919a75e6cc.png"
+      },
+      {
+        "id": 1262,
+        "name": "生は変じて屍と化する",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b12ade3240739acb9020fadfac9d2eb1.png"
+      },
+      {
+        "id": 1263,
+        "name": "天法を解き帳を下ろす",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/4b743bd75b5b9bd288e7fc6a80f1455b.png"
+      },
+      {
+        "id": 1264,
+        "name": "魂向かひて身も従ずる",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/2858642f249a8cb59bd90eb4520e953e.png"
+      },
+      {
+        "id": 1265,
+        "name": "聡きは視たとて論ぜず",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/40240906648c62952e9ee441fffc0f70.png"
+      },
+      {
+        "id": 1266,
+        "name": "天地の人は過客の如し",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/d69e6116beb8c4bafc19845364ca62c7.png"
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11261,
+        "group_id": 12631,
+        "name": "桂花に触れる金刃",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/3f016e2d606ca39ea86e24d5245dfa5b.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11262,
+        "group_id": 12632,
+        "name": "衆生は忽然たるのみ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/97eb17767b6b733fd7688a6ceabb6717.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11265,
+        "group_id": 12639,
+        "name": "三垣の威儀法",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/5e650c2627355ed30c4aaa6ed698cffa.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12621,
+        "group_id": 12621,
+        "name": "月下に舞い降りる天女",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/33fc636d8f9da57b21ac9ab825c4bdfa.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12622,
+        "group_id": 12622,
+        "name": "雲間に連なる山々",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/2c02c9e5cb3ac4e17db42c46d22e7ea6.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12623,
+        "group_id": 12623,
+        "name": "月兆の祝福・日月は流れるが如し",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/19221c8d25e414a5cba330c71e029d0d.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12625,
+        "group_id": 12625,
+        "name": "花は霰の如し",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/dd9151edfa3526cdfbe35a6a42df9c60.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9122",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9122",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
+    "id": 10000127,
+    "name": "イルーガ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/64666707baedabc3e6a7d80738d24730.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 4,
+    "element_attr_id": 3,
+    "max_level": 90,
+    "item_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/7cf1d00e62def9b2ef3bd0bbd6311a57.png",
+    "talent_icons": [
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/8e77217e818d528d0e6383d61046bbe2.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/a0138b2d244c15ff4e39ec75295e08e1.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/c30308b5c2849b6b667d77f3dad994e4.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/99732b7b4466104c150b06e7650c603c.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/a3baf1fb1b39aef4bf1ec7b2d6bc7b79.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/0e2a0a4be1f98f9d5f55afc26bc03396.png"
+    ],
+    "side_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dceb/fdd4b91f0e0e4f055dcfb4e059dea2eb.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000127",
+        "costume_id": "0",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/b7075067e9e3620801afff65a0d83e09.png",
+        "profile_picture_id": "10900"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1271,
+        "name": "危機を告げる禽",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/8e77217e818d528d0e6383d61046bbe2.png"
+      },
+      {
+        "id": 1272,
+        "name": "枝を咥える鹿",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/a0138b2d244c15ff4e39ec75295e08e1.png"
+      },
+      {
+        "id": 1273,
+        "name": "山に吠える羆",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/c30308b5c2849b6b667d77f3dad994e4.png"
+      },
+      {
+        "id": 1274,
+        "name": "日逐いの狼",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/99732b7b4466104c150b06e7650c603c.png"
+      },
+      {
+        "id": 1275,
+        "name": "風に嘶く馬",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/a3baf1fb1b39aef4bf1ec7b2d6bc7b79.png"
+      },
+      {
+        "id": 1276,
+        "name": "闇夜の鶯",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/0e2a0a4be1f98f9d5f55afc26bc03396.png"
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11271,
+        "group_id": 12731,
+        "name": "誓いの槍術",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/0a4af4ecb63b4741aa3e42d18a2a0c21.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11272,
+        "group_id": 12732,
+        "name": "暁を破る夜鳴鶯",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/3972d09a057110aad73f0cbc620043f1.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11275,
+        "group_id": 12739,
+        "name": "影無き灯り",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/181d57ec681c94ee6351a751bcd216c4.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12721,
+        "group_id": 12721,
+        "name": "ライトブリンガーの盟約",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/fa4ab71c214ed125b0a7738a187b2e17.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12722,
+        "group_id": 12722,
+        "name": "魔を狩る者の黄昏",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b28ced2959b2bd51042745eaef7009f8.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12723,
+        "group_id": 12723,
+        "name": "月兆の祝福・折れぬ凛冬",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b19507475b63a939e0b99592b7e3ac73.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12725,
+        "group_id": 12725,
+        "name": "夜を巡る疾駆者",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b01bc5481c2d7c607c9b4581306d7918.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9123",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9123",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000125,
     "name": "コロンビーナ",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/3e648c232fb84bea351096c3f2129489.png",

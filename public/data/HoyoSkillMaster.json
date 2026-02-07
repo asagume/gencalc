@@ -1,5 +1,141 @@
 [
   {
+    "avatar_id": 10000126,
+    "skill_list": [
+      {
+        "id": 11261,
+        "group_id": 12631,
+        "name": "桂花に触れる金刃",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/3f016e2d606ca39ea86e24d5245dfa5b.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11262,
+        "group_id": 12632,
+        "name": "衆生は忽然たるのみ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/97eb17767b6b733fd7688a6ceabb6717.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11265,
+        "group_id": 12639,
+        "name": "三垣の威儀法",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/5e650c2627355ed30c4aaa6ed698cffa.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12621,
+        "group_id": 12621,
+        "name": "月下に舞い降りる天女",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/33fc636d8f9da57b21ac9ab825c4bdfa.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12622,
+        "group_id": 12622,
+        "name": "雲間に連なる山々",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/2c02c9e5cb3ac4e17db42c46d22e7ea6.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12623,
+        "group_id": 12623,
+        "name": "月兆の祝福・日月は流れるが如し",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/19221c8d25e414a5cba330c71e029d0d.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12625,
+        "group_id": 12625,
+        "name": "花は霰の如し",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/dd9151edfa3526cdfbe35a6a42df9c60.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
+    "avatar_id": 10000127,
+    "skill_list": [
+      {
+        "id": 11271,
+        "group_id": 12731,
+        "name": "誓いの槍術",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/0a4af4ecb63b4741aa3e42d18a2a0c21.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11272,
+        "group_id": 12732,
+        "name": "暁を破る夜鳴鶯",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/3972d09a057110aad73f0cbc620043f1.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11275,
+        "group_id": 12739,
+        "name": "影無き灯り",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce5/181d57ec681c94ee6351a751bcd216c4.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12721,
+        "group_id": 12721,
+        "name": "ライトブリンガーの盟約",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/fa4ab71c214ed125b0a7738a187b2e17.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12722,
+        "group_id": 12722,
+        "name": "魔を狩る者の黄昏",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b28ced2959b2bd51042745eaef7009f8.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12723,
+        "group_id": 12723,
+        "name": "月兆の祝福・折れぬ凛冬",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b19507475b63a939e0b99592b7e3ac73.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12725,
+        "group_id": 12725,
+        "name": "夜を巡る疾駆者",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dce8/b01bc5481c2d7c607c9b4581306d7918.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ]
+  },
+  {
     "avatar_id": 10000125,
     "skill_list": [
       {
