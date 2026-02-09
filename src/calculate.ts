@@ -1365,7 +1365,7 @@ function calculate固定値系元素反応ダメージ(
         if (!element || element == '物理') return 0;
         const level = statsObj['レベル'];
         const elementalMastery = statsObj['元素熟知'];
-        const baseDmgUp = statsObj[reaction + '基礎ダメージアップ'] ?? 0;
+        const baseDmgUp = statsObj[reaction + '反応基礎ダメージアップ'] ?? 0;
         const dmgBuff = statsObj[reaction + '反応ボーナス'] ?? 0;
         const dmgMultiplier = statsObj['別枠乗算.' + reaction + '反応ダメージ'] ?? 100;
         const dmgUp = statsObj[reaction + '反応ダメージアップ'] ?? 0;
