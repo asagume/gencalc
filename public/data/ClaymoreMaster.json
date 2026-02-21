@@ -1,4 +1,8 @@
 {
+  "狼の武勲詩": {
+    "レアリティ": 5,
+    "import": "data/weapons/claymore/5_GestoftheMightyWolf.json"
+  },
   "千烈の日輪": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_AThousandBlazingSuns.json"
