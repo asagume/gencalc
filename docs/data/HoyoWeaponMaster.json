@@ -1,8 +1,18 @@
 [
   {
+    "id": 12515,
+    "name": "狼の武勲詩",
+    "icon": null,
+    "weapon_cat_id": 11,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9456"
+  },
+  {
     "id": 11519,
     "name": "三日月の含光",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/fa2ac4d5a0238fb674c44670652fc284.png",
+    "icon": null,
     "weapon_cat_id": 1,
     "weapon_level": 5,
     "max_level": 90,

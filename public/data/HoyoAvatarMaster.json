@@ -1,5 +1,124 @@
 [
   {
+    "id": 10000128,
+    "name": "ファルカ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3449/bd2ad505d700cc342095d8ddd49d0c7b.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "item_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3449/06a8afd6d54ad68b7c50d1977d849cf1.png",
+    "talent_icons": [
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/416499204f47355d9e785b193de5d0e4.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/d2c108d5ec05cf6d0feda65c239c0b4f.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/f2ccd807337b8948627c9dcf0f913bdc.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/28ca8d88fd0ec4b70eccdc307d188d4a.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/f19368f14ca919df0ccc71e69b9ff2b4.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/2c53827ba41e78404b49ca1024d73be1.png"
+    ],
+    "side_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3489/28eb74063dd71693e3ba9703670ef30e.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000128",
+        "costume_id": "0",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3449/e9d6afd687bfd5b125a7765fe9e3326c.png",
+        "profile_picture_id": "11100"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1281,
+        "name": "「友よ、月明かりの下で踊ろう」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/416499204f47355d9e785b193de5d0e4.png"
+      },
+      {
+        "id": 1282,
+        "name": "「暁とともに、遠き旅路へ」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/d2c108d5ec05cf6d0feda65c239c0b4f.png"
+      },
+      {
+        "id": 1283,
+        "name": "「友よ、もう涙の酒を飲むな」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/f2ccd807337b8948627c9dcf0f913bdc.png"
+      },
+      {
+        "id": 1284,
+        "name": "「謳え、誰にも奪えない自由を」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/28ca8d88fd0ec4b70eccdc307d188d4a.png"
+      },
+      {
+        "id": 1285,
+        "name": "「注げ美酒を、暴君は来りて去りゆく」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/f19368f14ca919df0ccc71e69b9ff2b4.png"
+      },
+      {
+        "id": 1286,
+        "name": "「愛しきモンドよ、変わらぬ姿で」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/2c53827ba41e78404b49ca1024d73be1.png"
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11281,
+        "group_id": 12831,
+        "name": "西風剣術・流光の舞",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/bf0237fba9d4ab5b47ea86b90711a765.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11282,
+        "group_id": 12832,
+        "name": "堕ちる烈風",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3486/ee6b5523d3153ecbf7696152bbf8cb54.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11285,
+        "group_id": 12839,
+        "name": "我こそ朔風",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3486/9d97165de5c4e84e6e98610744d3d38d.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12821,
+        "group_id": 12821,
+        "name": "暁の風の行軍",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/8ad8e078f756477ae2ea8699f36d8984.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12822,
+        "group_id": 12822,
+        "name": "風の御旗の導き",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/a8290909830b306824b8b19f24539c16.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12823,
+        "group_id": 12823,
+        "name": "帰風の凱歌",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/699e3488/166fbaaa494393b5baa6614c5a406008.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9342",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/9342",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000126,
     "name": "兹白",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/b7ea76f3f77eec4997dad6576c183939.png",

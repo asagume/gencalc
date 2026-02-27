@@ -197,6 +197,15 @@ type THoyoAvatarMasterValue = {
   avatar_level: number;
   element_attr_id: number;
   max_level: number;
+  skill_list: [
+    {
+      id: number;
+      group_id: number;
+      name: string;
+      icon: string | null;
+      max_level: number;
+    }
+  ];
 };
 type THoyoAvatarMaster = THoyoAvatarMasterValue[];
 
@@ -464,9 +473,9 @@ export default defineComponent({
       if (avatarWork.length) {
         let name: TCharacterKey = avatarWork[0].name as TCharacterKey;
         if (avatarWork.length > 1) {
-          const skillWorkArr = HoyoSkillMaster.filter(s => s.avatar_id == result.avatarId);
+          const avatarWorkArr = HoyoAvatarMaster.filter(s => s.id == result.avatarId);
           let skillEntry;
-          for (skillEntry of skillWorkArr) {
+          for (skillEntry of avatarWorkArr) {
             if (skillEntry.skill_list.filter(s => String(s.id) == result.skillLevelList[0][0]).length) {
               break;
             }
@@ -548,12 +557,12 @@ export default defineComponent({
       // 命ノ星座
       result['命ノ星座'] = characterInfo.constellation;
 
-      const workSkillArr = HoyoSkillMaster.filter((s) => s.avatar_id == characterInfo.avatarId);
-      if (workSkillArr.length) {
+      const workAvatarArr = HoyoAvatarMaster.filter((s) => s.id == characterInfo.avatarId);
+      if (workAvatarArr.length) {
         const characterMasterDetail = await getCharacterMasterDetail(result['キャラクター']);
         characterInfo.skillLevelList.forEach((skillLevel) => {
           let skillInfo;
-          for (const skillEntry of workSkillArr) {
+          for (const skillEntry of workAvatarArr) {
             const workArr = skillEntry.skill_list.filter((s) => s.id == Number(skillLevel[0]));
             if (workArr.length) {
               skillInfo = workArr[0];
