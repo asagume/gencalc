@@ -1,5 +1,15 @@
 [
   {
+    "id": 15516,
+    "name": "霜契の金枝",
+    "icon": null,
+    "weapon_cat_id": 12,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10547"
+  },
+  {
     "id": 12515,
     "name": "狼の武勲詩",
     "icon": null,
