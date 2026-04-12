@@ -70,7 +70,8 @@ $pageIds = @()
 # $pageIds += 9121   # コロンビーナ
 # $pageIds += 9122   # 茲白
 # $pageIds += 9123   # イルーガ
-$pageIds += 9342   # ファルカ
+# $pageIds += 9342   # ファルカ
+$pageIds += 10412   # リンネア
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -170,7 +171,8 @@ $pageIds += 9342   # ファルカ
 # $pageIds += 9046    # 虹蛇の雨弦
 # $pageIds += 9250    # 帳の夜曲
 # $pageIds += 9249    # 三日月の含光
-$pageIds += 9456    # 狼の武勲詩
+# $pageIds += 9456    # 狼の武勲詩
+$pageIds += 10547    # 霜契の金枝
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

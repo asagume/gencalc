@@ -1,4 +1,8 @@
 {
+  "霜契の金枝": {
+    "レアリティ": 5,
+    "import": "data/weapons/bow/5_GoldenFrostboundOath.json"
+  },
   "暁を告げる歴史": {
     "レアリティ": 5,
     "import": "data/weapons/bow/5_TheDaybreakChronicles.json"
