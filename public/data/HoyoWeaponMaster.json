@@ -1,4 +1,14 @@
 [
+            {
+                "id": 15434,
+                "name": "虹蛇の雨弦",
+                "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/692f7d8b/430a2ee3f7bb4817d96e4179110ffb21.png",
+                "weapon_cat_id": 12,
+                "weapon_level": 4,
+                "max_level": 90,
+                "is_recommend": false,
+                "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9046"
+            },
   {
     "id": 15516,
     "name": "霜契の金枝",
