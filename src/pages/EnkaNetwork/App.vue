@@ -229,20 +229,6 @@ type THoyoArtifactMasterValue = {
 };
 type THoyoArtifactMaster = THoyoArtifactMasterValue[];
 
-type THoyoSkillMasterValue = {
-  avatar_id: number;
-  skill_list: [
-    {
-      id: number;
-      group_id: number;
-      name: string;
-      icon: string | null;
-      max_level: number;
-    }
-  ];
-};
-type THoyoSkillMaster = THoyoSkillMasterValue[];
-
 const WEAPON_INFO_TEMPLATE = {
   itemId: 0,
   ascension: 0,
@@ -327,7 +313,6 @@ export default defineComponent({
     let HoyoAvatarMaster: THoyoAvatarMaster;
     let HoyoWeaponMaster: THoyoWeaponMaster;
     let HoyoArtifactMaster: THoyoArtifactMaster;
-    let HoyoSkillMaster: THoyoSkillMaster;
 
     const uid = ref('');
     const timer = ref(0);
@@ -348,13 +333,11 @@ export default defineComponent({
           'data/HoyoAvatarMaster.json',
           'data/HoyoWeaponMaster.json',
           'data/HoyoArtifactMaster.json',
-          'data/HoyoSkillMaster.json',
         ].map((s) => fetch(s).then((resp) => resp.json()))
       );
       HoyoAvatarMaster = responses[0];
       HoyoWeaponMaster = responses[1];
       HoyoArtifactMaster = responses[2];
-      HoyoSkillMaster = responses[3];
 
       loadFromLocalStorage();
     }

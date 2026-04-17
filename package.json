@@ -11,7 +11,7 @@
   "dependencies": {
     "@types/gapi": "^0.0.45",
     "core-js": "^3.8.3",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "tesseract.js": "^2.1.5",
     "vue": "^3.2.13",
     "vue-good-table-next": "^0.2.1",
