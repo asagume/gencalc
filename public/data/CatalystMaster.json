@@ -1,4 +1,8 @@
 {
+  "塵と光の七つの誓約": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_Angelos'Heptades.json"
+  },
   "帳の夜曲": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Nocturne'sCurtainCall.json"
