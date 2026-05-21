@@ -1,4 +1,11 @@
 {
+  "ニコ": {
+    "レアリティ": 5,
+    "元素": "炎",
+    "武器": "法器",
+    "誕生日": "9/29",
+    "import": "data/characters/pyro_5_catalyst_Nicole.json"
+  },
   "リンネア": {
     "レアリティ": 5,
     "元素": "岩",
@@ -438,6 +445,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "プルーネ": {
+    "レアリティ": 4,
+    "元素": "風",
+    "武器": "法器",
+    "誕生日": "11/20",
+    "import": "data/characters/anemo_4_catalyst_Prune.json"
   },
   "イルーガ": {
     "レアリティ": 4,
