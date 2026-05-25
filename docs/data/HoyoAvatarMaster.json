@@ -1,5 +1,247 @@
 [
   {
+    "id": 10000131,
+    "name": "ニコ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/233e3baf9bd2c030a49b46c31173da9e.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 1,
+    "max_level": 90,
+    "level_current": 90,
+    "promote_level": 6,
+    "skill_list": [
+      {
+        "id": 11311,
+        "group_id": 13131,
+        "name": "寓意",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/2c014e6053c4f0d032e1d1ff0c6de0e1.png",
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11312,
+        "group_id": 13132,
+        "name": "聖言黙示・顕れぬ光",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d1/6162dada5d703d04a0bb6f81a301fa99.png",
+        "max_level": 10,
+        "level_current": 10
+      },
+      {
+        "id": 11315,
+        "group_id": 13139,
+        "name": "聖言黙示・天路歴程",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d1/290f2b3cbdabcad9546916f5c40cdb05.png",
+        "max_level": 10,
+        "level_current": 6
+      },
+      {
+        "id": 13121,
+        "group_id": 13121,
+        "name": "分かち合い",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/03506ec274279f257d74b1a5f3750c37.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13122,
+        "group_id": 13122,
+        "name": "美への愛",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/5888606bb4e818be622bf4b540c9b9b8.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13123,
+        "group_id": 13123,
+        "name": "静かなる思い",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/c64cc1e905b4cd66396013e40aa74ff5.png",
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 14501,
+      "name": "天空の巻",
+      "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/d3f398d9ee417e931b1e273242dd8008.png",
+      "weapon_cat_id": 10,
+      "weapon_level": 5,
+      "max_level": 90,
+      "level_current": 90
+    },
+    "reliquary_list": [
+      {
+        "id": 4454,
+        "name": "風花の箴言",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/f3ce928d25fa416c879c4db18ee546ef.png",
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4452,
+        "name": "朝日の誓約",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6966dc8c/054eea89a265ff4b74d5b12d6d5e0fce.png",
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 7555,
+        "name": "剣闘士の希望",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/34b9935fadcb083f8b4db3c4fd915754.png",
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 7551,
+        "name": "剣闘士の酩酊",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/0c3a5868f5b77bf7bf8ae6c56e016557.png",
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 7453,
+        "name": "少女の儚き顔",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/37fe25ed4ab1c52a54e0c26017b1cf54.png",
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10622",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/10622",
+    "constellation_num": 0,
+    "fetter_level": 3
+  },
+  {
+    "id": 10000132,
+    "name": "プルーネ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/e1a65f12e336519381e38a4068d537d3.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 4,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "level_current": 70,
+    "promote_level": 5,
+    "skill_list": [
+      {
+        "id": 11321,
+        "group_id": 13231,
+        "name": "ドッスン！魔女祓いの鉄槌",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/2c014e6053c4f0d032e1d1ff0c6de0e1.png",
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11322,
+        "group_id": 13232,
+        "name": "リンリン！魔女を狩る音",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d1/05624966b63bb97aa6d2f3f66c38acb3.png",
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11325,
+        "group_id": 13239,
+        "name": "魔女狩りの時間なのだ！",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d1/278ebfbca2d96fa183cd97f789ab1405.png",
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 13221,
+        "group_id": 13221,
+        "name": "さらなる懲罰",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/936023d0221104d18acb4e07747fadc6.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13222,
+        "group_id": 13222,
+        "name": "鈴の音とともに",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/847a3f1d5ca8c8c011e3448b61973953.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13223,
+        "group_id": 13223,
+        "name": "改造！トンテンカン！",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/3814fe58e4b9904c0b9049102b2fd543.png",
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 14501,
+      "name": "天空の巻",
+      "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/d3f398d9ee417e931b1e273242dd8008.png",
+      "weapon_cat_id": 10,
+      "weapon_level": 5,
+      "max_level": 90,
+      "level_current": 1
+    },
+    "reliquary_list": [
+      {
+        "id": 7654,
+        "name": "野花の記憶の草原",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/79119f6a441fc37f39b08f225d63034b.png",
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 3752,
+        "name": "登山者の標",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/662fe59fa0acfe4ed6e03b8c5cac75c8.png",
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 7655,
+        "name": "緑の狩人の決心",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/892c53d0973b06b805a48c8d5054f53c.png",
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 7651,
+        "name": "緑の狩人の容器",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/cfd075bca5834faa858d8a6c5d6dc95c.png",
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 7653,
+        "name": "緑の狩人の冠",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/f568e5d02b0cfa74365cda3159cfacc8.png",
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10624",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/10624",
+    "constellation_num": 1,
+    "fetter_level": 3
+  },
+  {
     "id": 10000130,
     "name": "リンネア",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/69d58c7d/d1c44e49e1fcfdf9474ba6c2d2c9369d.png",
