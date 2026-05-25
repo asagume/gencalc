@@ -1381,6 +1381,11 @@ export function makeDamageDetailObjArrObjArtifactSets(characterInput: any) {
                     return;
                 }
             }
+            if (detailObj['条件'] && detailObj['条件'].startsWith('天からの贈り物')) { // for 天からの贈り物
+                if (!detailObj['条件'].startsWith('天からの贈り物=' + vision)) {
+                    return;
+                }
+            }
             workArr.push(detailObj);
         });
 

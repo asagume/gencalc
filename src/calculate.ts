@@ -2327,6 +2327,11 @@ export async function setupTeamOptionSupporter(
                                     return;
                                 }
                             }
+                            if (detailObj['条件'] && detailObj['条件'].startsWith('天からの贈り物')) { // for 天からの贈り物
+                                if (!detailObj['条件'].startsWith('天からの贈り物=' + vision)) {
+                                    return;
+                                }
+                            }
                         }
                         artifactSetOptions.push(detailObj);
                     }
