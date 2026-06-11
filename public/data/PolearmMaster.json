@@ -1,4 +1,8 @@
 {
+  "災憾": {
+    "レアリティ": 5,
+    "import": "data/weapons/polearm/5_DisasterandRemorse.json"
+  },
   "血染めの荒れ地": {
     "レアリティ": 5,
     "import": "data/weapons/polearm/5_BloodsoakedRuins.json"
