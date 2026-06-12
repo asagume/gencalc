@@ -1,5 +1,15 @@
 [
   {
+    "id": 13517,
+    "name": "災憾",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/fce1c32ef5e9cd3bd775dfdf5c0de06c.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10758"
+  },
+  {
     "id": 14523,
     "name": "塵と光の七つの誓約",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/8bc74e76d3888a46a6279ba1a765978b.png",

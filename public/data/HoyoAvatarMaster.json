@@ -1,5 +1,124 @@
 [
   {
+    "id": 10000129,
+    "name": "ローエン",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/e3c37d250fc8af7e63992f6bd50a3ee7.png",
+    "weapon_cat_id": 13,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90,
+    "item_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/85cc00f32cd45eb6834ee3441ed2ddfd.png",
+    "talent_icons": [
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/99c2b9ec9df64448d52879b984cbb092.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/465ab5df733422e13801b59f5a8ca17e.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/5711854ca18af759f654aab9d2567d63.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/95a93c9f3307b748eca3037374c60614.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/37ba9e1902cca227bfb85c9cc581b9f7.png",
+      "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/07ab0e9e5e7711ae1e2162c64c946dd0.png"
+    ],
+    "side_icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d6/8b9a428accdc1691d5f79bd8702e86b4.png",
+    "profile_pictures": [
+      {
+        "avatar_id": "10000129",
+        "costume_id": "0",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/6caa0ee8cb19170080a40e1d57e0c8f0.png",
+        "profile_picture_id": "11500"
+      }
+    ],
+    "talents": [
+      {
+        "id": 1291,
+        "name": "哀しき歌を運ぶ あの日のそよ風",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/99c2b9ec9df64448d52879b984cbb092.png"
+      },
+      {
+        "id": 1292,
+        "name": "的にするものは 翼を持つすべて",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/465ab5df733422e13801b59f5a8ca17e.png"
+      },
+      {
+        "id": 1293,
+        "name": "この傷を癒すは 鋭く光る刃だけ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/5711854ca18af759f654aab9d2567d63.png"
+      },
+      {
+        "id": 1294,
+        "name": "愛は果てた 光や歓びの歌のように",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/95a93c9f3307b748eca3037374c60614.png"
+      },
+      {
+        "id": 1295,
+        "name": "見えざるものと 疑われ得ぬもの",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/37ba9e1902cca227bfb85c9cc581b9f7.png"
+      },
+      {
+        "id": 1296,
+        "name": "身も心も堕ちて 残るは悦楽のみ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/07ab0e9e5e7711ae1e2162c64c946dd0.png"
+      }
+    ],
+    "skill_list": [
+      {
+        "id": 11291,
+        "group_id": 12931,
+        "name": "西風槍術・破誓",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/0a4af4ecb63b4741aa3e42d18a2a0c21.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "普通攻击"
+      },
+      {
+        "id": 11292,
+        "group_id": 12932,
+        "name": "掟破りの奇兵",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d1/a2fc343670945ae7adc404acddad7fc8.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素战技"
+      },
+      {
+        "id": 11295,
+        "group_id": 12939,
+        "name": "制裁の刻",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d1/2a641a8ec82c66fb15c9d25a7661c624.png",
+        "max_level": 10,
+        "is_proud": false,
+        "pos_name": "元素爆发"
+      },
+      {
+        "id": 12921,
+        "group_id": 12921,
+        "name": "絶対服従の訓戒",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/c539440cd58c94f5817c623379326486.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12922,
+        "group_id": 12922,
+        "name": "秀逸なる戯言",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/09fe3910dc17a6ea69088a7228538196.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      },
+      {
+        "id": 12923,
+        "group_id": 12923,
+        "name": "気の赴くままに",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf9d3/152f441030f99aac3e47691e24ebd3be.png",
+        "max_level": 1,
+        "is_proud": true,
+        "pos_name": ""
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10623",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/10623",
+    "wiki_reliquary_url": "",
+    "wiki_recommend_skill_url": ""
+  },
+  {
     "id": 10000131,
     "name": "ニコ",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/233e3baf9bd2c030a49b46c31173da9e.png",
