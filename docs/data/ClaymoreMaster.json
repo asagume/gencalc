@@ -1,4 +1,8 @@
 {
+  "超越の鍵": {
+    "レアリティ": 5,
+    "import": "data/weapons/claymore/5_ATeaspoonofTranscendence.json"
+  },
   "狼の武勲詩": {
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_GestoftheMightyWolf.json"

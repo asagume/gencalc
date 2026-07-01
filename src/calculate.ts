@@ -87,6 +87,7 @@ export const REACTION_DMG_ARR = [
     '超開花反応ダメージ',
     '月感電反応ダメージ',
     '月結晶反応ダメージ',
+    '星電導反応ダメージ',
 ];
 export const REACTION_DMG_ELEMENT_MAP = new Map<string, string>();
 function setupReactionDmgElementMap() {
@@ -1846,7 +1847,7 @@ function calculateDamageFromDetail(
             my数値 = '(' + my数値 + ')*' + opt_conditionMultiplier;
         }
         let my計算Result: TDamageResultEntry;
-        if (detailObj.種類.startsWith('月') && detailObj.種類.endsWith('反応ダメージ')) {   // for イネファ
+        if ((detailObj.種類.startsWith('月') || detailObj.種類.startsWith('星')) && detailObj.種類.endsWith('反応ダメージ')) {   // for イネファ
             my計算Result = calculateDamageFromDetailSubLunar(statsObj, damageResult, my数値, detailObj.種類, my元素, my別枠乗算);
         } else {
             my計算Result = calculateDamageFromDetailSub(statsObj, damageResult, my数値, myバフArr, is会心Calc, is防御補正Calc, is耐性補正Calc, my元素, my防御無視, my別枠乗算, detailObj.上限, detailObj.下限);
@@ -2057,6 +2058,8 @@ function calculateDamageFromDetailSubLunar(
         multiplier = 3;
     } else if (['月結晶'].includes(reaction) && !isDmgUp) {
         multiplier = 1.6;
+    } else if (['星電導'].includes(reaction) && !isDmgUp) {
+        multiplier = 1.45;
     }
     let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp);
     myダメージ *= 1 + dmgBonus;

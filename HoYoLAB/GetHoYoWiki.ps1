@@ -74,7 +74,8 @@ $pageIds = @()
 # $pageIds += 10412  # リンネア
 # $pageIds += 10622  # ニコ
 # $pageIds += 10624  # プルーネ
-$pageIds += 10623  # ローエン
+# $pageIds += 10623  # ローエン
+$pageIds += 10920  # サンドローネ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -177,7 +178,8 @@ $pageIds += 10623  # ローエン
 # $pageIds += 9456    # 狼の武勲詩
 # $pageIds += 10547   # 霜契の金枝
 # $pageIds += 10757   # 塵と光の七つの誓約
-$pageIds += 10758   # 災憾
+# $pageIds += 10758   # 災憾
+$pageIds += 10949   # 超越の鍵
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
