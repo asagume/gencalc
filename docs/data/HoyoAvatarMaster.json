@@ -1,5 +1,134 @@
 [
   {
+    "id": 10000133,
+    "name": "サンドローネ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a44588e/417922ce01627959571b3355b9f462ac.png",
+    "weapon_cat_id": 11,
+    "avatar_level": 5,
+    "element_attr_id": 7,
+    "max_level": 90,
+    "level_current": 90,
+    "promote_level": 6,
+    "skill_list": [
+      {
+        "id": 11331,
+        "group_id": 13331,
+        "name": "事象式：自明の演繹",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/bf0237fba9d4ab5b47ea86b90711a765.png",
+        "max_level": 10,
+        "level_current": 10
+      },
+      {
+        "id": 11332,
+        "group_id": 13332,
+        "name": "事象式：自在な解析",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a4458e2/1eadd79dc3ea5e976fc1673a4171bcbe.png",
+        "max_level": 10,
+        "level_current": 6
+      },
+      {
+        "id": 11335,
+        "group_id": 13339,
+        "name": "事象式：Q.E.D",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a4458e2/24be187930db1328494ebc85deb0bade.png",
+        "max_level": 10,
+        "level_current": 6
+      },
+      {
+        "id": 13321,
+        "group_id": 13321,
+        "name": "悠久の演算機関",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a4458e6/59f303e07447b82e1465dcf3373e337e.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13322,
+        "group_id": 13322,
+        "name": "淑女の礼儀作法",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a4458e6/f0061f7a973ace6ae6c1a884144a109b.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13323,
+        "group_id": 13323,
+        "name": "星光の祝福・理論のみを光に",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a4458e6/2f2fe7e21e410cf0b4ad8ff902f6bb03.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 13325,
+        "group_id": 13325,
+        "name": "お茶会の序曲と長い物語",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a4458e6/34dd8c2405fad70b306932fd69e5d253.png",
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 12502,
+      "name": "狼の末路",
+      "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/45c64eb0f4dfffe24ab9e993616f02c6.png",
+      "weapon_cat_id": 11,
+      "weapon_level": 5,
+      "max_level": 90,
+      "level_current": 90
+    },
+    "reliquary_list": [
+      {
+        "id": 4654,
+        "name": "栄光の儀に留まる色彩",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/06fa300aff19d3a5de4c4ce6048a5404.png",
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4652,
+        "name": "創造に留まる鋒鋩",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/78cfacac47588a8472a40d5c411b4b6d.png",
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 2755,
+        "name": "没落迷途のコア",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/1f50efac4732db6a2bc4bc195cfa5c61.png",
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4651,
+        "name": "祝典に留まる喝采",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/c28506a99c203909248bf259774760c4.png",
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4653,
+        "name": "墜落に留まる振り子",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/96ccb9bdc03619c89825dd424fb8312e.png",
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10920",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/10920",
+    "constellation_num": 0,
+    "fetter_level": 2
+  },
+  {
     "id": 10000129,
     "name": "ローエン",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/e3c37d250fc8af7e63992f6bd50a3ee7.png",
