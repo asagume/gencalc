@@ -54,6 +54,27 @@
       <span>魔導秘儀</span>
     </label>
     <hr />
+    <p>{{ displayName('極星フィールド') }}</p>
+    <label>
+      <span>極星フィールド</span>
+      <select v-model="workPolestar.polestar" @change="onChangePolestar()">
+        <option value="-1"></option>
+        <option value="0">0層</option>
+        <option value="1">1層</option>
+        <option value="2">2層</option>
+        <option value="3">3層</option>
+        <option value="4">4層</option>
+        <option value="5">5層</option>
+        <option value="6">6層</option>
+        <option value="7">7層</option>
+        <option value="8">8層</option>
+        <option value="9">9層</option>
+        <option value="10">10層</option>
+        <option value="11">11層</option>
+        <option value="12">12層</option>
+      </select>
+    </label>
+    <hr />
     <ul class="option-description">
       <li v-for="item in displayStatAjustmentList" :key="item">{{ item }}</li>
     </ul>
@@ -61,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { getDefaultOptionInput, TConditionValues, THexerei, TMoonsign, TOptionInput, } from "@/input";
+import { getDefaultOptionInput, TConditionValues, THexerei, TMoonsign, TOptionInput, TPolestar, } from "@/input";
 import {
   ELEMENTAL_RESONANCE_MASTER,
   ELEMENTAL_RESONANCE_MASTER_LIST,
@@ -95,6 +116,7 @@ export default defineComponent({
     const conditionValues = reactive({} as TConditionValues);
     const workMoonsign = reactive({} as TMoonsign);
     const workHexerei = reactive({} as THexerei);
+    const workPolestar = reactive({} as TPolestar);
 
     const moonsignOtherCharacterList = computed(() => {
       const result = [''] as string[];
@@ -157,6 +179,7 @@ export default defineComponent({
       workOptionInput.elementalResonance.conditionValues = conditionValues;
       workOptionInput.moonsign = workMoonsign;
       workOptionInput.hexerei = workHexerei;
+      workOptionInput.polestar = workPolestar;
       context.emit('update:elemental-resonance', workOptionInput, force);
     }
 
@@ -212,10 +235,17 @@ export default defineComponent({
       updateOption();
     }
 
+    const onChangePolestar = async () => {
+      console.log('onChangePolestar', workPolestar.polestar);
+      await nextTick();
+      updateOption();
+    }
+
     const initializeValues = (input: TOptionInput) => {
       overwriteObject(conditionValues, input.elementalResonance.conditionValues);
       overwriteObject(workMoonsign, input.moonsign);
       overwriteObject(workHexerei, input.hexerei);
+      overwriteObject(workPolestar, input.polestar);
       Object.keys(elementalResonanceChecked).forEach(key => {
         if (key in conditionValues) {
           elementalResonanceChecked[key] = Boolean(conditionValues[key]);
@@ -233,6 +263,7 @@ export default defineComponent({
       overwriteObject(conditionValues, props.optionInput.elementalResonance.conditionValues);
       overwriteObject(workMoonsign, props.optionInput.moonsign);
       overwriteObject(workHexerei, props.optionInput.hexerei);
+      overwriteObject(workPolestar, props.optionInput.polestar);
       updateOption();
     })
 
@@ -249,6 +280,7 @@ export default defineComponent({
       workMoonsign,
       moonsignOtherCharacterList,
       workHexerei,
+      workPolestar,
 
       displayStatAjustmentList,
       descriptionList,
@@ -257,6 +289,7 @@ export default defineComponent({
       onChange,
       onChangeMoonsign,
       onChangeHexerei,
+      onChangePolestar,
       initializeValues,
     };
   },

@@ -956,6 +956,7 @@ export default defineComponent({
       let isChanged1 = false;
       let isChanged2 = false;
       let isChanged3 = false;
+      let isChanged4 = false;
       // 元素共鳴
       if (optionInput?.elementalResonance?.conditionValues && Object.keys(optionInput.elementalResonance.conditionValues).length) {
         if (!_.isEqual(optionInputRea.elementalResonance.conditionValues, optionInput.elementalResonance.conditionValues)) {
@@ -976,7 +977,12 @@ export default defineComponent({
         optionInputRea.hexerei.hexerei = optionInput.hexerei.hexerei;
         isChanged3 = true;
       }
-      if (!isChanged1 && !isChanged2 && !isChanged3 && !forceUpdate) {
+      // 極星フィールド
+      if (optionInput?.polestar && !_.isEqual(optionInputRea.polestar, optionInput.polestar)) {
+        optionInputRea.polestar.polestar = optionInput.polestar.polestar;
+        isChanged4 = true;
+      }
+      if (!isChanged1 && !isChanged2 && !isChanged3 && !isChanged4 && !forceUpdate) {
         return;
       }
       setupConditionValues(conditionInputRea, characterInputRea, optionInputRea);

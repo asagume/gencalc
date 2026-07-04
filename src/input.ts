@@ -587,6 +587,9 @@ export type THexerei = {
     hexerei: boolean,
     hexereiCharacters: string[],
 };
+export type TPolestar = {
+    polestar: number,
+};
 
 export const SUPPORTER_INPUT_TEMPLATE = {
     characterInput: getDefaultCharacterInput(),
@@ -618,6 +621,9 @@ export const OPTION_INPUT_TEMPLATE = {
         hexerei: false,
         hexereiCharacters: [],
     } as THexerei,
+    polestar: {
+        polestar: -1,
+    } as TPolestar,
     supporterBuildname: {} as { [key: string]: string | undefined },
     supporters: {} as TSupporters,
     teamMembers: [] as string[],

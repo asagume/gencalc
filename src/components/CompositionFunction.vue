@@ -102,6 +102,9 @@ export default function CompositionFunction() {
     const displayStatValue = function (stat: string, value: number, opt_s?: number): string {
         const myPercent = percent(stat);
         let p = myPercent ? 10 : 1;
+        if (stat.endsWith('係数') && !opt_s) {
+            opt_s = 2;
+        }
         if (opt_s) p = Math.pow(10, opt_s);
         return String(Math.round(value * p) / p) + myPercent;
     }

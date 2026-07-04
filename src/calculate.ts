@@ -836,6 +836,24 @@ export function calculateElementalResonance(
         result['月開花反応ボーナス'] = lunarDmgBonus;
         result['月結晶反応ボーナス'] = lunarDmgBonus;
     }
+    // 極星フィールド
+    if (optionInput.polestar && optionInput.polestar.polestar >= 0) {
+        const workPolestar = Number(optionInput.polestar.polestar);
+        let dmgbuff = 0;
+        let stellarConductFactor = 0;
+        if (workPolestar === 0) {
+            dmgbuff = 20;
+            stellarConductFactor = 1;
+        } else {
+            dmgbuff = 28 + workPolestar;
+            stellarConductFactor = 1.4 + (workPolestar * 0.05);
+        }
+        result['雷元素ダメージバフ'] = dmgbuff;
+        result['氷元素ダメージバフ'] = dmgbuff;
+        result['星電導反応基礎反応係数'] = stellarConductFactor;
+        result['敵物理耐性'] = -40;
+    }
+
     return result;
 }
 
@@ -2059,7 +2077,11 @@ function calculateDamageFromDetailSubLunar(
     } else if (['月結晶'].includes(reaction) && !isDmgUp) {
         multiplier = 1.6;
     } else if (['星電導'].includes(reaction) && !isDmgUp) {
-        multiplier = 1.45;
+        if ('星電導反応基礎反応係数' in statsObj) {
+            multiplier = statsObj['星電導反応基礎反応係数'];
+        } else {
+            multiplier = 1;
+        }
     }
     let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp);
     myダメージ *= 1 + dmgBonus;
