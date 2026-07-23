@@ -147,23 +147,12 @@
                 <span v-else>{{ displayStatValue('元素熟知', artifactStats['元素熟知']) }}</span>
               </template>
             </td>
-            <td rowspan="4" colspan="2" style="border-color: transparent">
+            <td rowspan="4" colspan="2" style="border-color: transparent; vertical-align: bottom;">
               <div>
                 <label>
                   <input type="checkbox" v-model="editableRef" />
                   {{ displayName('直接入力モード') }}
                 </label>
-              </div>
-              <div>
-                <label class="button">
-                  {{ displayName('聖遺物詳細画面OCR') }}
-                  <input class="hidden" type="file" id="artifact-stats-image"
-                    @change="loadArtifactStatsByOcr($event)" />
-                </label>
-              </div>
-              <div style="position: relative">
-                <img class="wait-icon" src="images/icon_loader_f_ww_01_s1.gif" width="25" height="25"
-                  v-if="isScanning" />
               </div>
               <div>
                 <label><input type="checkbox" v-model="canInitializeStats">
@@ -369,19 +358,11 @@
       </div>
     </div>
   </div>
-  <div>
-    <ArtifactDetailOcrResult :visible="ocrResultVisible" :ocrResult="ocrResult"
-      @cancel:artifact-detail-ocr-result="cancelArtifactDetailOcrResult"
-      @accept:artifact-detail-ocr-result="acceptArtifactDetailOcrResult" />
-  </div>
-  <div v-show="false">
-    <canvas id="artifact-stats-canvas" />
-  </div>
+
 </template>
 
 <script lang="ts">
 import _ from 'lodash';
-import ArtifactDetailOcrResult from "@/components/ArtifactDetailOcrResult.vue";
 import ArtifactItem from "@/components/ArtifactItem.vue";
 import ArtifactChangeInput from "@/components/ArtifactChangeInput.vue";
 import {
@@ -404,7 +385,6 @@ import {
 import { GENSEN_MASTER_LIST, TArtifactSubKey, TGensen } from "@/master";
 import { computed, defineComponent, nextTick, PropType, reactive, ref, watch } from "vue";
 import CompositionFunction from "./CompositionFunction.vue";
-import { resizePinnedImage } from "@/gencalc_ocr";
 import { TKeyValue, overwriteObject } from "@/common";
 
 type TArtifactWithId = {
@@ -424,7 +404,6 @@ export default defineComponent({
     nextStatRows: Array as PropType<any[]>,
   },
   components: {
-    ArtifactDetailOcrResult,
     ArtifactItem,
     ArtifactChangeInput,
   },
@@ -774,37 +753,7 @@ export default defineComponent({
       context.emit('update:artifact-detail', artifactDetailInputRea);
     };
 
-    /** 聖遺物詳細OCR機能 */
-    const isScanning = ref(false);
-    const ocrResultVisible = ref(false);
-    const ocrResult = reactive({} as { [key: string]: number });
-    const loadArtifactStatsByOcr = async (event: Event) => {
-      isScanning.value = true;
-      const workOcrResult = await resizePinnedImage(event);
-      isScanning.value = false;
-      if (workOcrResult) {
-        overwriteObject(ocrResult, workOcrResult);
-        ocrResultVisible.value = true;
-      }
-    };
-    const cancelArtifactDetailOcrResult = () => {
-      ocrResultVisible.value = false;
-    };
-    const acceptArtifactDetailOcrResult = () => {
-      cancelArtifactDetailOcrResult();
-      if (ocrResult) {
-        artifactDetailInputRea.聖遺物優先するサブ効果Disabled = true;
-        for (const stat of Object.keys(artifactStatsSub)) {
-          if (stat in ocrResult) (artifactStatsSub as any)[stat] = ocrResult[stat];
-          else (artifactStatsSub as any)[stat] = 0;
-        }
-        for (const [index, stat] of mainstats.entries()) {
-          if (stat.endsWith('ダメージバフ') || stat == '与える治療効果') continue;
-          mainstats.splice(index, 1, '');
-        }
-        updateMainstats();
-      }
-    };
+
 
     const initializeAll = async () => {
       canInitializeStats.value = false;
@@ -889,12 +838,6 @@ export default defineComponent({
       newArtifactAddOnClick,
       isNewArtifactInputShowEndProc,
 
-      loadArtifactStatsByOcr,
-      isScanning,
-      ocrResultVisible,
-      ocrResult,
-      cancelArtifactDetailOcrResult,
-      acceptArtifactDetailOcrResult,
       initializeArtifactStatsSub,
 
       canInitializeStats,
