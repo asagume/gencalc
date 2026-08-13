@@ -47,6 +47,14 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "霜雪の契": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_CovenantofFrostandSnow.json"
+  },
+  "千鈞懸黎": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_JadeVista.json"
+  },
   "虹蛇の雨弦": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_RainbowSerpent'sRainBow.json"

@@ -1,4 +1,12 @@
 {
+  "星鋒の剣": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_ExaiphanesBlade.json"
+  },
+  "白銀の湖を舞う翼": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_WhitelakeFrostfeather.json"
+  },
   "三日月の含光": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_LightbearingMoonshard.json"
@@ -62,6 +70,14 @@
   "風鷹剣": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
+  },
+  "導炎の源": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_Emberwell.json"
+  },
+  "異端を狩る熔刃": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_Heretic'sMoltenBlade.json"
   },
   "月紡ぎの曙光": {
     "レアリティ": 4,

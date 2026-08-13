@@ -75,6 +75,14 @@
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
   },
+  "胸中の谺": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_EchoesoftheHeart.json"
+  },
+  "諸王の対局": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_ClashofKings.json"
+  },
   "霜辰": {
     "レアリティ": 4,
     "import": "data/weapons/catalyst/4_DawningFrost.json"

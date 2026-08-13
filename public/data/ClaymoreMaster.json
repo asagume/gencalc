@@ -43,6 +43,14 @@
     "レアリティ": 5,
     "import": "data/weapons/claymore/5_SkywardPride.json"
   },
+  "救済の剣": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_BladeofAtonement.json"
+  },
+  "シンフォニーの鋳影": {
+    "レアリティ": 4,
+    "import": "data/weapons/claymore/4_ForgedbytheGoldenMelody.json"
+  },
   "万能の鍵": {
     "レアリティ": 4,
     "import": "data/weapons/claymore/4_MasterKey.json"
