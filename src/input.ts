@@ -348,6 +348,14 @@ export const 元素反応TEMPLATE = {
     星電導反応ダメージ会心率: 0,        // for サンドローネ
     星電導反応ダメージ会心ダメージ: 0,  // for サンドローネ
     星電導反応ダメージALL: [] as TDamageResultEntry[],  // for サンドローネ
+    星拡散反応ダメージ: 0,              // for オデット
+    星拡散反応ダメージ会心率: 0,        // for オデット
+    星拡散反応ダメージ会心ダメージ: 0,  // for オデット
+    星拡散反応ダメージALL: [] as TDamageResultEntry[],  // for オデット
+    星の嵐反応ダメージ: 0,              // for オデット
+    星の嵐反応ダメージ会心率: 0,        // for オデット
+    星の嵐反応ダメージ会心ダメージ: 0,  // for オデット
+    星の嵐反応ダメージALL: [] as TDamageResultEntry[],  // for オデット
 };
 Object.keys(元素反応TEMPLATE).forEach(key => {
     if (key.endsWith('ALL')) {

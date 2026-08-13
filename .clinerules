@@ -1,0 +1,260 @@
+# Cline Rules for gencalc
+
+## Project
+
+- This is a Vue 3 + TypeScript application.
+- The project uses Vue CLI 5, not Vite.
+- Follow the existing project architecture and coding conventions.
+- Keep changes focused on the requested task.
+- Do not refactor unrelated code.
+- Do not migrate tooling, frameworks, or dependencies unless explicitly requested.
+
+## Technology Stack
+
+- Vue 3.2.x
+- TypeScript 4.5.x
+- Vue CLI 5.x
+- ESLint 7.x
+- Vue I18n 9.x
+- Lodash 4.x
+- vue-good-table-next
+- vue3-google-login
+- vuedraggable
+
+## Before Making Changes
+
+1. Inspect the relevant existing files.
+2. Identify existing patterns and conventions.
+3. Reuse existing components, utilities, types, and services where possible.
+4. Determine the smallest change that solves the task.
+5. Check whether related locale files, types, or components need to be updated.
+
+Do not introduce a new pattern when an established project pattern already exists.
+
+## Vue
+
+- Use Vue 3.
+- Prefer Composition API for new code.
+- Prefer script setup with TypeScript for new components.
+- Do not convert existing Options API components unless explicitly requested.
+- Do not mix Options API and Composition API unnecessarily.
+- Keep components focused on a single responsibility.
+- Keep complex business logic out of templates.
+- Use computed properties for derived state.
+- Use watchers only when a side effect is required.
+- Avoid unnecessary watchers.
+- Never mutate props directly.
+
+## TypeScript
+
+- Use TypeScript for new application code.
+- Maintain compatibility with TypeScript 4.5.
+- Do not use TypeScript features that require a newer TypeScript version unless the project is intentionally upgraded.
+- Avoid any.
+- Prefer unknown when the type is genuinely unknown.
+- Avoid unnecessary type assertions.
+- Do not use ts-ignore unless there is no reasonable alternative.
+- Explicitly type component props, emits, and exported APIs.
+- Allow type inference for simple local variables.
+- Handle null and undefined explicitly.
+
+## Components
+
+- Follow the existing component directory structure.
+- Reuse existing components before creating new ones.
+- Use PascalCase for component names when consistent with the existing codebase.
+- Keep templates readable.
+- Move complicated conditions and transformations into computed properties or functions.
+- Do not create generic wrapper components without a clear purpose.
+- Do not change component APIs unnecessarily.
+
+## Props and Emits
+
+- Use typed defineProps and defineEmits.
+- Do not mutate props.
+- Use events or v-model when a child component needs to communicate changes to its parent.
+- Preserve existing component contracts unless the task requires changing them.
+
+## Reactivity
+
+- Use ref for primitive or independently managed reactive values.
+- Use reactive when managing a related object makes the code clearer.
+- Use computed for derived state.
+- Do not duplicate state that can be derived from another reactive value.
+- Be careful when destructuring reactive objects.
+- Use toRef or toRefs when necessary to preserve reactivity.
+- Avoid deep watchers unless required.
+- Do not perform side effects inside computed properties.
+
+## Composables
+
+- Name composables with the use prefix.
+- Create a composable when logic is reusable or when it significantly simplifies a component.
+- Do not create a composable for trivial one-off logic.
+- Keep composables independent from UI concerns where possible.
+- Clearly define inputs and outputs of composables.
+
+## State Management
+
+- Follow the existing state-management approach in the project.
+- Do not introduce a global store for state that can remain local to a component.
+- Do not introduce Pinia or another state-management library unless explicitly requested.
+- Avoid duplicating the same state across multiple components.
+- Preserve existing state ownership and data flow.
+
+## API and External Services
+
+- Follow existing API and service patterns.
+- Do not introduce a new API abstraction if an existing one can be reused.
+- Avoid making API calls directly from templates.
+- Keep API and external-service logic out of components when an existing service or composable pattern is available.
+- Type request and response data where practical.
+- Handle loading and error states where appropriate.
+- Do not silently swallow errors.
+- Never hardcode API keys, secrets, passwords, or tokens.
+
+## Google Login
+
+- Use the existing vue3-google-login integration.
+- Do not replace or restructure authentication without explicit instructions.
+- Never expose private credentials or secrets in source code.
+- Preserve the existing authentication flow when making unrelated changes.
+
+## Internationalization
+
+This project uses Vue I18n 9.
+
+- All user-facing text should use the existing i18n system.
+- Prefer $t() in templates and t() in script code.
+- When adding user-facing text, update the appropriate locale files.
+- Follow the existing locale-file structure.
+- Keep translation keys consistent across locales.
+- Do not rename existing translation keys without checking all usages.
+- Do not remove translation keys without checking all usages.
+- Do not add hardcoded UI strings when an i18n solution is appropriate.
+- Run npm run i18n:report after significant i18n changes.
+
+## Lodash
+
+- Reuse Lodash when it is already appropriate for the operation.
+- Do not add another utility library for functionality already available through Lodash or standard JavaScript.
+- Prefer native TypeScript for simple operations when it is clearer.
+
+## vue-good-table-next
+
+- Follow the existing table implementation.
+- Do not replace the table library unless explicitly requested.
+- Reuse existing table configuration and styling patterns.
+- Handle loading and empty states consistently with the existing UI.
+
+## vuedraggable
+
+- Follow existing drag-and-drop patterns.
+- Preserve the underlying data model.
+- Be careful with reactive arrays and object identity.
+- Avoid mutating unrelated state during drag operations.
+
+## Styling
+
+- Follow the existing styling approach.
+- Do not introduce a new CSS framework or styling methodology.
+- Reuse existing classes, variables, and styles where possible.
+- Avoid unnecessary global CSS changes.
+- Prefer scoped styles when consistent with the existing project.
+- Do not make unrelated visual changes.
+
+## Accessibility
+
+- Prefer semantic HTML.
+- Use button elements for actions and anchor elements for navigation.
+- Do not use clickable div elements when a semantic element is appropriate.
+- Ensure interactive elements are keyboard accessible.
+- Provide appropriate alt text for meaningful images.
+- Preserve existing accessibility attributes.
+
+## Error Handling
+
+- Handle expected errors explicitly.
+- Do not use empty catch blocks.
+- Do not silently ignore errors.
+- Provide user-friendly error messages where appropriate.
+- Do not expose internal implementation details to users.
+- Preserve existing error-handling conventions.
+
+## Performance
+
+- Avoid unnecessary reactive state.
+- Avoid unnecessary watchers.
+- Avoid repeated expensive calculations in templates.
+- Use computed properties for derived values.
+- Be especially careful with large datasets and Tesseract.js operations.
+- Do not introduce optimizations without a reasonable justification.
+- When performance is an issue, identify the actual bottleneck before changing the architecture.
+
+## Security
+
+- Never commit secrets or credentials.
+- Never expose private keys or client secrets.
+- Treat user-provided data as untrusted.
+- Avoid v-html unless the content is trusted or properly sanitized.
+- Do not weaken authentication or authorization checks.
+- Do not bypass validation to make a feature work.
+
+## ESLint
+
+- Follow the existing ESLint configuration.
+- Run npm run lint after meaningful code changes.
+- Do not disable ESLint rules merely to make lint pass.
+- If a rule must be disabled, keep the scope as small as possible and explain why.
+- Remove unused imports, variables, and dead code introduced by the change.
+
+## Validation
+
+After making meaningful changes:
+
+1. Run npm run lint.
+2. Run npm run build when the change can affect compilation or production behavior.
+3. Run npm run i18n:report when making significant i18n changes.
+4. Review the changed files.
+5. Check for unintended changes.
+6. Check for unused imports and variables.
+
+Never claim that a command passed if it was not actually run.
+
+If validation cannot be performed, clearly state what could not be verified.
+
+## Dependencies
+
+- Do not add dependencies unless clearly necessary.
+- Prefer existing dependencies.
+- Do not add a library for trivial functionality.
+- Do not upgrade dependencies as part of an unrelated task.
+- Do not upgrade Vue, TypeScript, Vue CLI, ESLint, or other core dependencies unless explicitly requested.
+- Be especially careful with dependency upgrades because this project uses specific older versions.
+
+## Git Safety
+
+- Do not reset or revert user changes.
+- Do not overwrite unrelated uncommitted changes.
+- Do not delete files unless required by the task.
+- Do not use destructive Git commands unless explicitly requested.
+- Keep changes focused on the requested task.
+
+## Cline Behavior
+
+- Inspect existing code before proposing a new implementation.
+- Prefer existing patterns over introducing new architecture.
+- If requirements are ambiguous, infer intent from the existing codebase first.
+- Ask for clarification when a reasonable assumption could cause significant architectural or behavioral changes.
+- Do not rewrite large portions of the codebase for a small feature.
+- When fixing a bug, identify and fix the root cause rather than applying a superficial workaround.
+- Preserve existing behavior unless the requested change requires otherwise.
+- Explain important architectural decisions briefly when they are not obvious.
+- Before finishing, review the diff and remove unrelated changes.
+
+## Available Commands
+
+- Development: npm run serve
+- Build: npm run build
+- Lint: npm run lint
+- i18n report: npm run i18n:report

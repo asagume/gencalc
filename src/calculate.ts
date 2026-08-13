@@ -87,7 +87,8 @@ export const REACTION_DMG_ARR = [
     '超開花反応ダメージ',
     '月感電反応ダメージ',
     '月結晶反応ダメージ',
-    '星電導反応ダメージ',
+    '星拡散反応ダメージ',
+    '星の嵐反応ダメージ',
 ];
 export const REACTION_DMG_ELEMENT_MAP = new Map<string, string>();
 function setupReactionDmgElementMap() {
@@ -976,7 +977,7 @@ export function calculateDamageResult(
                     (reactionResult as any)[key] = statsInput.statsObj[key];
                 }
             });
-            if (dmg.startsWith('月')) { // for ナド・クライ
+            if (dmg.startsWith('月') || dmg.startsWith('星')) { // for ナド・クライ オデット
                 const critRateKey = dmg + '会心率';
                 let critRate = Math.min(100, statsInput.statsObj['会心率']);
                 if (critRateKey in reactionResult && (reactionResult as any)[critRateKey]) {
@@ -1393,7 +1394,7 @@ function calculate固定値系元素反応ダメージ(
         const multiplier = (ELEMENTAL_REACTION_MASTER as any)[element][reaction]['数値'];
         const baseDmg = getValueByLevel(level, ELEMENTAL_REACTION_BASE_DAMAGE_MASTER);
         let result = baseDmg * multiplier * (1 + baseDmgUp / 100) * (1 + dmgElevate / 100);
-        if (reaction.startsWith('月')) {
+        if (reaction.startsWith('月') || reaction.startsWith('星')) {
             result *= 1 + (6 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
         } else {
             result *= 1 + (16 * elementalMastery / (elementalMastery + 2000)) + dmgBuff / 100;
@@ -2082,6 +2083,8 @@ function calculateDamageFromDetailSubLunar(
         } else {
             multiplier = 1;
         }
+    } else if (['星拡散'].includes(reaction) && !isDmgUp) {
+        multiplier = 1;
     }
     let myダメージ = multiplier * myダメージ基礎値 * (1 + baseDmgUp);
     myダメージ *= 1 + dmgBonus;
@@ -2548,7 +2551,7 @@ export function getDamageResultArr(
     const result = [] as TDamageResultEntry[];
     const category = rotationDamageEntry.category;
     if (REACTION_DMG_ARR.includes(category)) {
-        const dmgValue = category.startsWith('月') ? lunarReactionDmg(category, damageResult) : (damageResult.元素反応 as any)[category];
+        const dmgValue = (category.startsWith('月') || category.startsWith('星')) ? lunarReactionDmg(category, damageResult) : (damageResult.元素反応 as any)[category];
         result.push([
             category,
             REACTION_DMG_ELEMENT_MAP?.get(category) ?? null,

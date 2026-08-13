@@ -122,7 +122,9 @@
         {{ displayName("拡散") }}
         <span>{{ Math.round(swirlDmg) }}</span>
       </label>
-      <label v-if="damageResult.元素反応.結晶吸収量">
+    </div>
+    <div v-if="damageResult.元素反応.結晶吸収量">
+      <label>
         {{ displayName("結晶") }}
         <span>{{ Math.round(damageResult.元素反応.結晶吸収量) }}</span>
         <span class="savepoint" v-if="copiedDamageResult?.元素反応?.結晶吸収量">
@@ -240,6 +242,93 @@
               <td>{{ Math.round(item[2]) }} </td>
               <td>{{ Math.round(item[3] || 0) }}</td>
               <td>{{ Math.round(item[4]) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div v-if="damageResult.元素反応.星拡散反応ダメージ" class="with-tooltip">
+      <label class="anemo lunar">
+        {{ displayName("星拡散") }}
+        <span>{{ Math.round(lunarReactionDmg('星拡散反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.星拡散反応ダメージ">
+          <br />
+          {{ displayName("星拡散") }}
+          <span>{{ Math.round(copiedLunarReactionDmg('星拡散反応ダメージ')) }}</span>
+        </span>
+      </label>
+      <div v-if="damageResult.元素反応.星拡散反応ダメージ会心率" class="tooltip">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ displayName('期待値') }}</th>
+              <th>{{ displayName('会心') }}</th>
+              <th>{{ displayName('非会心') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in damageResult.元素反応.星拡散反応ダメージALL" :key="index">
+              <td>{{ Math.round(item[2]) }} </td>
+              <td>{{ Math.round(item[3] || 0) }}</td>
+              <td>{{ Math.round(item[4]) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div v-if="damageResult.元素反応.星の嵐反応ダメージ" class="with-tooltip">
+      <label class="cryo lunar">
+        {{ displayName("星の嵐1") }}
+        <span>{{ Math.round(lunarReactionDmg('星の嵐反応ダメージ')) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.星の嵐反応ダメージ">
+          <br />
+          {{ displayName("星の嵐1") }}
+          <span>{{ Math.round(copiedLunarReactionDmg('星の嵐反応ダメージ')) }}</span>
+        </span>
+      </label>
+      <div v-if="damageResult.元素反応.星の嵐反応ダメージ会心率" class="tooltip">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ displayName('期待値') }}</th>
+              <th>{{ displayName('会心') }}</th>
+              <th>{{ displayName('非会心') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in damageResult.元素反応.星の嵐反応ダメージALL" :key="index">
+              <td>{{ Math.round(item[2]) }} </td>
+              <td>{{ Math.round(item[3] || 0) }}</td>
+              <td>{{ Math.round(item[4]) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div v-if="damageResult.元素反応.星の嵐反応ダメージ" class="with-tooltip">
+      <label class="cryo lunar">
+        {{ displayName("星の嵐2") }}
+        <span>{{ Math.round(lunarReactionDmg('星の嵐反応ダメージ') * 1.5) }}</span>
+        <span class="savepoint" v-if="copiedDamageResult?.元素反応?.星の嵐反応ダメージ">
+          <br />
+          {{ displayName("星の嵐2") }}
+          <span>{{ Math.round(copiedLunarReactionDmg('星の嵐反応ダメージ') * 1.5) }}</span>
+        </span>
+      </label>
+      <div v-if="damageResult.元素反応.星の嵐反応ダメージ会心率" class="tooltip">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ displayName('期待値') }}</th>
+              <th>{{ displayName('会心') }}</th>
+              <th>{{ displayName('非会心') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in damageResult.元素反応.星の嵐反応ダメージALL" :key="index">
+              <td>{{ Math.round(item[2] * 1.5) }} </td>
+              <td>{{ Math.round(item[3] * 1.5 || 0) }}</td>
+              <td>{{ Math.round(item[4] * 1.5) }}</td>
             </tr>
           </tbody>
         </table>
