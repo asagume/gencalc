@@ -1,4 +1,11 @@
 {
+  "オデット": {
+    "レアリティ": 5,
+    "元素": "氷",
+    "武器": "片手剣",
+    "誕生日": "2/20",
+    "import": "data/characters/cryo_5_sword_Odette.json"
+  },
   "サンドローネ": {
     "レアリティ": 5,
     "元素": "氷",
@@ -460,6 +467,13 @@
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
   },
+  "アリョーシャ": {
+    "レアリティ": 4,
+    "元素": "雷",
+    "武器": "長柄武器",
+    "誕生日": "2/9",
+    "import": "data/characters/electro_4_polearm_Alyosha.json"
+  },
   "プルーネ": {
     "レアリティ": 4,
     "元素": "風",
@@ -809,6 +823,12 @@
     "武器": "弓",
     "誕生日": "8/10",
     "import": "data/characters/pyro_4_bow_Amber.json"
+  },
+  "旅人(氷)": {
+    "レアリティ": 5,
+    "元素": "氷",
+    "武器": "片手剣",
+    "import": "data/characters/cryo_5_sword_Traveler.json"
   },
   "旅人(炎)": {
     "レアリティ": 5,
