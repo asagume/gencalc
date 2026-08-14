@@ -276,13 +276,13 @@
         </table>
       </div>
     </div>
-    <div v-if="damageResult.元素反応.星の嵐反応ダメージ" class="with-tooltip">
+    <div v-if="damageResult.元素反応.星の嵐反応ダメージ" class="with-tooltip stella">
       <label class="cryo lunar">
-        {{ displayName("星の嵐1") }}
+        {{ displayName("星の嵐Lv1") }}
         <span>{{ Math.round(lunarReactionDmg('星の嵐反応ダメージ')) }}</span>
         <span class="savepoint" v-if="copiedDamageResult?.元素反応?.星の嵐反応ダメージ">
           <br />
-          {{ displayName("星の嵐1") }}
+          {{ displayName("星の嵐Lv1") }}
           <span>{{ Math.round(copiedLunarReactionDmg('星の嵐反応ダメージ')) }}</span>
         </span>
       </label>
@@ -305,13 +305,13 @@
         </table>
       </div>
     </div>
-    <div v-if="damageResult.元素反応.星の嵐反応ダメージ" class="with-tooltip">
+    <div v-if="damageResult.元素反応.星の嵐反応ダメージ" class="with-tooltip stella">
       <label class="cryo lunar">
-        {{ displayName("星の嵐2") }}
+        {{ displayName("星の嵐Lv2") }}
         <span>{{ Math.round(lunarReactionDmg('星の嵐反応ダメージ') * 1.5) }}</span>
         <span class="savepoint" v-if="copiedDamageResult?.元素反応?.星の嵐反応ダメージ">
           <br />
-          {{ displayName("星の嵐2") }}
+          {{ displayName("星の嵐Lv2") }}
           <span>{{ Math.round(copiedLunarReactionDmg('星の嵐反応ダメージ') * 1.5) }}</span>
         </span>
       </label>
@@ -812,6 +812,10 @@ div.elemental-reaction div {
   display: inline-block;
   width: calc(100% / 4 - 6px - 1rem);
   margin: 0 3px 5px 3px;
+}
+
+div.elemental-reaction div.stella {
+  width: calc(100% / 3 - 6px - 1rem);
 }
 
 div.elemental-reaction div label {
