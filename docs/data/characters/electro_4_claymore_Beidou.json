@@ -444,10 +444,16 @@
             "icon_url": "images/characters/electro_4_claymore_Beidou/talent_5.png"
         },
         {
-            "名前": "怒濤踏み",
+            "名前": "星の導き",
             "種類": "固有天賦",
             "説明": "元素スキル<span style=\"color: rgb(255, 215, 128)\">浪追い</span>を長押しして発動する時、攻撃を受けなくても0.8秒ごとに自動で力を1蓄積し、発動時に与えるダメージをアップさせる。<br>また、長押しで<span style=\"color: rgb(255, 215, 128)\">浪追い</span>を発動すると、敵に命中した時、蓄積していた力に応じて追加のバフ効果を獲得する。発動時の力1ごとに元素スキルのクールタイム-4秒、自身の元素エネルギーを8ポイント回復。この効果は15秒ごとに最大1回まで発動可能。<br>さらに、<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>内にいる時、北斗は<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入る。<br><br><br><strong><span style=\"color: rgb(255, 214, 128)\">極星フィールド</span></strong><br>星電導反応を発動すると、近くのエリアがしばらくの間<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>に変化する。極星フィールド内にいる間、特定のキャラクターは<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入り、各スキルはそれぞれに対応する強化効果を得る。",
             "icon_url": "images/characters/electro_4_claymore_Beidou/talent_6.png"
+        },
+        {
+            "名前": "怒濤踏み",
+            "種類": "固有天賦",
+            "説明": "チーム内の自身のキャラクター全員が泳ぎに消費するスタミナ-20%。<br>同じ効果を持つ固有天賦との重ね掛け不可。",
+            "icon_url": "images/characters/electro_4_claymore_Beidou/talent_7.png"
         }
     ],
     "命ノ星座": {

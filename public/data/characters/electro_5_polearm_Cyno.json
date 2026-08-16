@@ -562,9 +562,15 @@
             ]
         },
         {
-            "名前": "沈黙の恵賜",
+            "名前": "旅立ちの伴星",
             "説明": "啓途誓使状態にない時、元素スキル<span style=\"color: rgba(255,214,128,1)\">秘儀·律淵渡魂</span>を発動した後、セノは一時的に啓途誓使状態に入る。継続時間6秒。<br>また、<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>内にいる時、セノは<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入る。<br><br><br><strong><span style=\"color: rgb(255, 214, 128)\">極星フィールド</span></strong><br>星電導反応を発動すると、近くのエリアがしばらくの間<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>に変化する。極星フィールド内にいる間、特定のキャラクターは<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入り、各スキルはそれぞれに対応する強化効果を得る。",
             "icon_url": "images/characters/electro_5_polearm_Cyno/talent_6.png",
+            "詳細": []
+        },
+        {
+            "名前": "沈黙の恵賜",
+            "説明": "スメールで20時間かかる探索任務を完了した時、獲得する報酬+25%。",
+            "icon_url": "images/characters/electro_5_polearm_Cyno/talent_7.png",
             "詳細": []
         }
     ],

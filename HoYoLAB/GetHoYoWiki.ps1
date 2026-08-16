@@ -76,9 +76,9 @@ $pageIds = @()
 # $pageIds += 10624  # プルーネ
 # $pageIds += 10623  # ローエン
 # $pageIds += 10920  # サンドローネ
-$pageIds += 11162  # オデット
-$pageIds += 11163  # アリョーシャ
-$pageIds += 11609  # 旅人(氷)
+# $pageIds += 11162  # オデット
+# $pageIds += 11163  # アリョーシャ
+# $pageIds += 11609  # 旅人(氷)
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水

@@ -371,9 +371,14 @@
             "icon_url": "images/characters/electro_5_catalyst_YaeMiko/talent_5.png"
         },
         {
-            "名前": "野狐説禅",
+            "名前": "大祓之宣託",
             "説明": "殺生櫻の継続時間が10秒延長される。付近にいるチーム内キャラクターが超電導または星電導反応を起こした後、次の殺生櫻の落雷が強化され、与えるダメージが八重神子の攻撃力の80%分アップする。この効果は2.5秒毎に最大1回のみ発動可能。<br><span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>：上記効果により強化された落雷が敵に命中した後、さらに八重神子の攻撃力の200%分に相当する<span style=\"color: rgb(255, 172, 255)\">雷元素ダメージ</span>を追加で1回与える。このダメージは星電導反応ダメージと見なされる。<br>また、<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>内にいる時、八重神子は<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入る。<br><br><br><strong><span style=\"color: rgb(255, 214, 128)\">極星フィールド</span></strong><br>星電導反応を発動すると、近くのエリアがしばらくの間<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>に変化する。極星フィールド内にいる間、特定のキャラクターは<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入り、各スキルはそれぞれに対応する強化効果を得る。",
             "icon_url": "images/characters/electro_5_catalyst_YaeMiko/talent_6.png"
+        },
+        {
+            "名前": "野狐説禅",
+            "説明": "キャラクター天賦素材を合成する時、25%の確率で同じ地域の異なる天賦素材をランダムで1個獲得できる。追加獲得素材は、消費素材と同ランクになる。",
+            "icon_url": "images/characters/electro_5_catalyst_YaeMiko/talent_7.png"
         }
     ],
     "命ノ星座": {
