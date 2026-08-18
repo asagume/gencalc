@@ -416,10 +416,16 @@
             "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_5.png"
         },
         {
-            "名前": "往事記憶",
+            "名前": "七宝奉真",
             "種類": "固有天賦",
             "説明": "元素スキル<span style=\"color: rgb(255, 214, 128)\">仙法·寒病鬼差</span>のクールタイムが15秒に短縮される。<br><span style=\"color: rgb(255, 214, 128)\">輝映·星閃</span>：寒病鬼差の継続期間中、チーム内の自身のキャラクターが与える対応する反応のダメージがアップする。<br><span style=\"color: rgba(255,214,128,1)\">輝映·星電導</span>：超電導、星電導反応のダメージ+50%。<br><span style=\"color: rgba(255,214,128,1)\">輝映·星拡散</span>：氷元素拡散、星拡散反応のダメージ+50%。<br>また、<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>内にいる時/チーム内のキャラクターが付近で星拡散反応を起こした後の8秒間、七七はそれぞれ<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>/<span style=\"color: rgba(255,214,128,1)\">輝映·星拡散</span>状態に入る。<br><br><br><strong><span style=\"color: rgb(255, 214, 128)\">極星フィールド</span></strong><br>星電導反応を発動すると、近くのエリアがしばらくの間<span style=\"color: rgb(255, 214, 128)\">極星フィールド</span>に変化する。極星フィールド内にいる間、特定のキャラクターは<span style=\"color: rgb(255, 214, 128)\">輝映·星電導</span>状態に入り、各スキルはそれぞれに対応する強化効果を得る。",
             "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_6.png"
+        },
+        {
+            "名前": "往事記憶",
+            "種類": "固有天賦",
+            "説明": "ミニマップで周囲の璃月地域の特産の位置を表示する。",
+            "icon_url": "images/characters/cryo_5_sword_Qiqi/talent_7.png"
         }
     ],
     "命ノ星座": {

@@ -327,7 +327,7 @@
           <tbody>
             <tr v-for="(item, index) in damageResult.元素反応.星の嵐反応ダメージALL" :key="index">
               <td>{{ Math.round(item[2] * 1.5) }} </td>
-              <td>{{ Math.round(item[3] * 1.5 || 0) }}</td>
+              <td>{{ Math.round((item[3] || 0) * 1.5) }}</td>
               <td>{{ Math.round(item[4] * 1.5) }}</td>
             </tr>
           </tbody>
