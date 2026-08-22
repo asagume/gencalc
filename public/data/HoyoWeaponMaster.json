@@ -1,5 +1,125 @@
 [
   {
+    "id": 11521,
+    "name": "星鋒の剣",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/8ec89cd8827583d02662704f5738efc8.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11211"
+  },
+  {
+    "id": 11520,
+    "name": "白銀の湖を舞う翼",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/8ddba75e7fec894e50aa646f1f0fe069.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11210"
+  },
+  {
+    "id": 11436,
+    "name": "導炎の源",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/b994ba18cd4931b61958de51b5395d67.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11212"
+  },
+  {
+    "id": 11435,
+    "name": "異端を狩る熔刃",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/87d27550c758abfcfe4295bf1feaa7f3.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11213"
+  },
+  {
+    "id": 12436,
+    "name": "救済の剣",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/7f31b15690c0c7d5f3fc385b7ad0bf8d.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11214"
+  },
+  {
+    "id": 12435,
+    "name": "シンフォニーの鋳影",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/f3831aed5e415c960fe1b6ad8f6024e5.png",
+    "weapon_cat_id": 11,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11215"
+  },
+  {
+    "id": 14436,
+    "name": "胸中の谺",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/93c5de39db16c894abaf1df56b710dd5.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11218"
+  },
+  {
+    "id": 14435,
+    "name": "諸王の対局",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/741f589153ef2d22307233be14b00e12.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11219"
+  },
+  {
+    "id": 13436,
+    "name": "遠望の歌",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/1c4ebc0821298a77ebd8cf5ef487b871.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11216"
+  },
+  {
+    "id": 13435,
+    "name": "氷の吐息",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/42f9925ccf0ed36513ab375d0ccd606f.png",
+    "weapon_cat_id": 13,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11217"
+  },
+  {
+    "id": 15436,
+    "name": "霜雪の契",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/2865b59789886b72f1a9a9bcf3e731de.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11220"
+  },
+  {
+    "id": 15435,
+    "name": "千鈞懸黎",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/0f601bcd039f213598bb9d89842c982e.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11221"
+  },
+  {
     "id": 12516,
     "name": "超越の鍵",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a44588e/0ce22fa824865975f716bc620a24a0d8.png",
