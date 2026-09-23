@@ -79,6 +79,8 @@ $pageIds = @()
 # $pageIds += 11162  # オデット
 # $pageIds += 11163  # アリョーシャ
 # $pageIds += 11609  # 旅人(氷)
+$pageIds += 11661  # ヴェスナ
+$pageIds += 11702  # ヴォジャニーツァ
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -195,6 +197,11 @@ $pageIds = @()
 # $pageIds += 11219   # 諸王の対局
 # $pageIds += 11220   # 霜雪の契
 # $pageIds += 11221   # 千鈞懸黎
+$pageIds += 11728   # 蝶の羽化
+$pageIds += 11729   # 旋流の讃美歌
+$pageIds += 11730   # 新たなる枝
+$pageIds += 11732   # 雪に沈む心
+$pageIds += 11733   # 風に遊ぶ弦
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶
