@@ -1760,7 +1760,11 @@ function makeConditionExclusionMapFromStrSub(
     const workArr = opkind ? conditionStr.split(opkind) : [conditionStr];
     const name = workArr[0];
     if (opkind === undefined) {
-        pushToMapValueArray(conditionMap, name, null);  // null
+        if (name.startsWith('!')) { // NOT条件
+            pushToMapValueArray(conditionMap, name.substring(1), null);  // null
+        } else {
+            pushToMapValueArray(conditionMap, name, null);  // null
+        }
     } else if (opkind === '@' || opkind === '=') {
         if (workArr.length === 2) {
             if (NUMBER_CONDITION_VALUE_RE.test(workArr[1])) {

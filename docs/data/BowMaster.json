@@ -47,6 +47,10 @@
     "レアリティ": 5,
     "import": "data/weapons/bow/5_SkywardHarp.json"
   },
+  "風に遊ぶ弦": {
+    "レアリティ": 4,
+    "import": "data/weapons/bow/4_BreezeborneRefrain.json"
+  },
   "霜雪の契": {
     "レアリティ": 4,
     "import": "data/weapons/bow/4_CovenantofFrostandSnow.json"

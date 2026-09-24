@@ -1235,10 +1235,15 @@ function checkConditionMatchesSub(
 ): number {
     const opkind = getConditionOpkind(conditionStr);
     const conditionKeyValArr = opkind ? conditionStr.split(opkind) : [conditionStr];
-    const conditionKey = conditionKeyValArr[0];
+    let conditionKey = conditionKeyValArr[0];
     let conditionVal: number | string | undefined = conditionKeyValArr.length === 2 ? conditionKeyValArr[1] : undefined;
     if (opkind === undefined) {
-        return validConditionValueArr.filter(s => s.split('@')[0] == conditionKey).length > 0 ? 1 : 0;
+        if (conditionKey.startsWith('!')) { // NOT条件
+            conditionKey = conditionKey.substring(1);
+            return validConditionValueArr.filter(s => s.split('@')[0] == conditionKey).length === 0 ? 1 : 0;
+        } else {
+            return validConditionValueArr.filter(s => s.split('@')[0] == conditionKey).length > 0 ? 1 : 0;
+        }
     }
     if (!conditionVal) {
         console.error(conditionStr, validConditionValueArr, constellation, statsObj);

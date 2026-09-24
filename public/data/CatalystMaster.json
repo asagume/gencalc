@@ -1,4 +1,8 @@
 {
+  "旋流の讃美歌": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_HymnoftheMaelstrom.json"
+  },
   "塵と光の七つの誓約": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_Angelos'Heptades.json"
@@ -74,6 +78,10 @@
   "天空の巻": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_SkywardAtlas.json"
+  },
+  "雪に沈む心": {
+    "レアリティ": 4,
+    "import": "data/weapons/catalyst/4_Winter'sHeavyHeart.json"
   },
   "胸中の谺": {
     "レアリティ": 4,

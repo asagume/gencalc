@@ -1,4 +1,8 @@
 {
+  "蝶の羽化": {
+    "レアリティ": 5,
+    "import": "data/weapons/sword/5_BeyondtheChrysalis.json"
+  },
   "星鋒の剣": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_ExaiphanesBlade.json"
@@ -70,6 +74,10 @@
   "風鷹剣": {
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
+  },
+  "新たなる枝": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_NewBough.json"
   },
   "導炎の源": {
     "レアリティ": 4,
