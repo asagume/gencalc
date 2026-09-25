@@ -1911,7 +1911,7 @@ function calculateDamageFromDetail(
 
             const dmgUpStatArr = [];
             dmgUpStatArr.push(myダメージ種類 + 'アップ');
-            if (my元素 && !(detailObj.ダメージ種類.startsWith('月') && detailObj.ダメージ種類.endsWith('反応ダメージ'))) {
+            if (my元素 && !(detailObj.ダメージ種類.startsWith('月') && detailObj.ダメージ種類.endsWith('反応ダメージ')) && !(detailObj.ダメージ種類.startsWith('星') && detailObj.ダメージ種類.endsWith('反応ダメージ'))) {
                 dmgUpStatArr.push(my元素 == '物理' ? '物理ダメージアップ' : my元素 + '元素ダメージアップ');
             }
             dmgUpStatArr.forEach(dmgUpStat => {
@@ -1920,6 +1920,8 @@ function calculateDamageFromDetail(
                 if (detailObj.名前.startsWith('非表示_狼の魂基礎')) return;    // for レザー
                 let myResultWork;
                 if (detailObj.ダメージ種類.startsWith('月') && detailObj.ダメージ種類.endsWith('反応ダメージ')) {
+                    myResultWork = calculateDamageFromDetailSubLunar(statsObj, damageResult, statsObj[dmgUpStat], detailObj.ダメージ種類, my元素, null, true);
+                } else if (detailObj.ダメージ種類.startsWith('星') && detailObj.ダメージ種類.endsWith('反応ダメージ')) {
                     myResultWork = calculateDamageFromDetailSubLunar(statsObj, damageResult, statsObj[dmgUpStat], detailObj.ダメージ種類, my元素, null, true);
                 } else {
                     if (!is防御補正Calc) return;

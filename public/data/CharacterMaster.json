@@ -1,4 +1,18 @@
 {
+  "ヴェスナ": {
+    "レアリティ": 5,
+    "元素": "風",
+    "武器": "片手剣",
+    "誕生日": "2/4",
+    "import": "data/characters/anemo_5_sword_Vesna.json"
+  },
+  "ヴァジャニーツァ": {
+    "レアリティ": 5,
+    "元素": "水",
+    "武器": "法器",
+    "誕生日": "3/29",
+    "import": "data/characters/hydro_5_catalyst_Vodyanitsa.json"
+  },
   "オデット": {
     "レアリティ": 5,
     "元素": "氷",
