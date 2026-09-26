@@ -1,5 +1,263 @@
 [
   {
+    "id": 10000143,
+    "name": "ヴェスナ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/88e4654b892a5ada8d0fd21301c07518.png",
+    "weapon_cat_id": 1,
+    "avatar_level": 5,
+    "element_attr_id": 2,
+    "max_level": 90,
+    "level_current": 90,
+    "promote_level": 6,
+    "skill_list": [
+      {
+        "id": 11431,
+        "group_id": 14331,
+        "name": "風巡りの剣舞",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/3f016e2d606ca39ea86e24d5245dfa5b.png",
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11432,
+        "group_id": 14332,
+        "name": "操典「勝利への道筋」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/9786d20583f617c1fdd9c196bb8eb6d6.png",
+        "max_level": 10,
+        "level_current": 9
+      },
+      {
+        "id": 11435,
+        "group_id": 14339,
+        "name": "女皇陛下に敬礼を",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/c69f680aafe793aab73cba3a27a06371.png",
+        "max_level": 10,
+        "level_current": 4
+      },
+      {
+        "id": 14321,
+        "group_id": 14321,
+        "name": "儀典「春の行列」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/a5687108b94cfaacaadb3c20eef945f2.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 14322,
+        "group_id": 14322,
+        "name": "法典「冬の凱旋」",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/c377cf652e41042f3260ce02942d94ff.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 14323,
+        "group_id": 14323,
+        "name": "星光の祝福・花舞うプロローグ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/c95abaf61e9ffd2626d9bd020c27e526.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 14325,
+        "group_id": 14325,
+        "name": "宝石の巡遊",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/0be256b007885064a71e136a8b5f9b86.png",
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 11509,
+      "name": "霧切の廻光",
+      "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/3c881bf12a6b24197d9df60b81329e52.png",
+      "weapon_cat_id": 1,
+      "weapon_level": 5,
+      "max_level": 90,
+      "level_current": 90
+    },
+    "reliquary_list": [
+      {
+        "id": 4754,
+        "name": "献身に感謝を",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/80425abeeb96bfefbfcb2b49cd5339db.png",
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4752,
+        "name": "功績に栄光を",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/f60c04735c5a36d349a2802b51e9b6fc.png",
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 3355,
+        "name": "在りし日の余韻の音",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/3ad8ff36fc68ca77b699594ee354812e.png",
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4751,
+        "name": "聖杯に血涙を",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/d653c3aa684c882bbf09757f695ab533.png",
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 4753,
+        "name": "信仰に追悼を",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/11eeed27d2d7fbb0ab34f03c87325688.png",
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11661",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/11661",
+    "constellation_num": 0,
+    "fetter_level": 3
+  },
+  {
+    "id": 10000140,
+    "name": "ヴォジャニーツァ",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/750126424226dddd1dbe8a75db5cbad1.png",
+    "weapon_cat_id": 10,
+    "avatar_level": 5,
+    "element_attr_id": 6,
+    "max_level": 90,
+    "level_current": 90,
+    "promote_level": 6,
+    "skill_list": [
+      {
+        "id": 11401,
+        "group_id": 14031,
+        "name": "水色のアリア",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f71a/2c014e6053c4f0d032e1d1ff0c6de0e1.png",
+        "max_level": 10,
+        "level_current": 1
+      },
+      {
+        "id": 11402,
+        "group_id": 14032,
+        "name": "流れる朝のレチタティーヴォ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/fc2be12ff475ff938ed2dc56eb886f4c.png",
+        "max_level": 10,
+        "level_current": 10
+      },
+      {
+        "id": 11405,
+        "group_id": 14039,
+        "name": "共に沈みゆくコーダ",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/4a43be93b264c1a411b55e3ad33c89b0.png",
+        "max_level": 10,
+        "level_current": 6
+      },
+      {
+        "id": 14021,
+        "group_id": 14021,
+        "name": "最後の詩詠者",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/38b3d175dd5ecb21260f3c2eea0c99bf.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 14022,
+        "group_id": 14022,
+        "name": "十二弦の涙唄",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/50bd42914ab9cf4782e2b9de65017f54.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 14023,
+        "group_id": 14023,
+        "name": "氷湖を巡る余韻",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/ba4b38bead11a5d0ee0dfcfa2c61cfa0.png",
+        "max_level": 1,
+        "level_current": 0
+      },
+      {
+        "id": 14025,
+        "group_id": 14025,
+        "name": "無弦の誘い歌",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31695/89737c32d3c6ccb9e7b8769dea9916c2.png",
+        "max_level": 1,
+        "level_current": 0
+      }
+    ],
+    "weapon": {
+      "id": 14302,
+      "name": "龍殺しの英傑譚",
+      "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/aff08755a2149ffb6c0fa7d1d189a222.png",
+      "weapon_cat_id": 10,
+      "weapon_level": 3,
+      "max_level": 90,
+      "level_current": 90
+    },
+    "reliquary_list": [
+      {
+        "id": 9154,
+        "name": "偉勲の花",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/e52f0d8928f3982864ecc8ea13165ebf.png",
+        "reliquary_cat_id": 1,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 9152,
+        "name": "昭武の羽根",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/84ba5a506941c2e7c67eec4fc91f6e6a.png",
+        "reliquary_cat_id": 2,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 9155,
+        "name": "金銅の日時計",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/5e1fe50f98902ba239b743a552c95288.png",
+        "reliquary_cat_id": 3,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 9651,
+        "name": "真珠の籠",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/7ebafcb6489bf83e21b7aa53959b7f41.png",
+        "reliquary_cat_id": 4,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      },
+      {
+        "id": 9153,
+        "name": "将帥の兜",
+        "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/67c7f6c8/dcdf1f408c923028f4565bcb1f2d12ae.png",
+        "reliquary_cat_id": 5,
+        "reliquary_level": 5,
+        "level_current": 20,
+        "max_level": 20
+      }
+    ],
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11702",
+    "wiki_recommend_weapon_url": "https://wiki.hoyolab.com/pc/genshin/entry/11702",
+    "constellation_num": 0,
+    "fetter_level": 3
+  },
+  {
     "id": 10000150,
     "name": "オデット",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/38c83cb1b5c605921b3d773d9e5dffc2.png",

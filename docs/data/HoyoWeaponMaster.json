@@ -1,5 +1,65 @@
 [
   {
+    "id": 11522,
+    "name": "蝶の羽化",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/ecedbeb41258bf291e127603ea519449.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11728"
+  },
+  {
+    "id": 14524,
+    "name": "旋流の讃美歌",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/c506b7ca17eac4081f7749f68a3ad398.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 5,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11729"
+  },
+  {
+    "id": 11438,
+    "name": "銀灯",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/0c2f38fc6c8afb31613c16f6f950c517.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11731"
+  },
+  {
+    "id": 11437,
+    "name": "新たなる枝",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/a6fbdeef294997e18e778f4cba34df66.png",
+    "weapon_cat_id": 1,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11730"
+  },
+  {
+    "id": 15437,
+    "name": "風に遊ぶ弦",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/59eed844cf69781f41f9f9f733b1bc4b.png",
+    "weapon_cat_id": 12,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11733"
+  },
+  {
+    "id": 14437,
+    "name": "雪に沈む心",
+    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/b84084f9e87288a72730c7114c997e4a.png",
+    "weapon_cat_id": 10,
+    "weapon_level": 4,
+    "max_level": 90,
+    "is_recommend": false,
+    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11732"
+  },
+  {
     "id": 11521,
     "name": "星鋒の剣",
     "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/8ec89cd8827583d02662704f5738efc8.png",
