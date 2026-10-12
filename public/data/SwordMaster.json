@@ -75,6 +75,10 @@
     "レアリティ": 5,
     "import": "data/weapons/sword/5_AquilaFavonia.json"
   },
+  "銀灯": {
+    "レアリティ": 4,
+    "import": "data/weapons/sword/4_SilverLight.json"
+  },
   "新たなる枝": {
     "レアリティ": 4,
     "import": "data/weapons/sword/4_NewBough.json"

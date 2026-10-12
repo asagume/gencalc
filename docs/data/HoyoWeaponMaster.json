@@ -1,2512 +1,2522 @@
 [
-  {
-    "id": 11522,
-    "name": "蝶の羽化",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/ecedbeb41258bf291e127603ea519449.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11728"
-  },
-  {
-    "id": 14524,
-    "name": "旋流の讃美歌",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/c506b7ca17eac4081f7749f68a3ad398.png",
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11729"
-  },
-  {
-    "id": 11438,
-    "name": "銀灯",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/0c2f38fc6c8afb31613c16f6f950c517.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11731"
-  },
-  {
-    "id": 11437,
-    "name": "新たなる枝",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/a6fbdeef294997e18e778f4cba34df66.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11730"
-  },
-  {
-    "id": 15437,
-    "name": "風に遊ぶ弦",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/59eed844cf69781f41f9f9f733b1bc4b.png",
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11733"
-  },
-  {
-    "id": 14437,
-    "name": "雪に沈む心",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6ab31686/b84084f9e87288a72730c7114c997e4a.png",
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11732"
-  },
-  {
-    "id": 11521,
-    "name": "星鋒の剣",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/8ec89cd8827583d02662704f5738efc8.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11211"
-  },
-  {
-    "id": 11520,
-    "name": "白銀の湖を舞う翼",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/8ddba75e7fec894e50aa646f1f0fe069.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11210"
-  },
-  {
-    "id": 11436,
-    "name": "導炎の源",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/b994ba18cd4931b61958de51b5395d67.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11212"
-  },
-  {
-    "id": 11435,
-    "name": "異端を狩る熔刃",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/87d27550c758abfcfe4295bf1feaa7f3.png",
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11213"
-  },
-  {
-    "id": 12436,
-    "name": "救済の剣",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/7f31b15690c0c7d5f3fc385b7ad0bf8d.png",
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11214"
-  },
-  {
-    "id": 12435,
-    "name": "シンフォニーの鋳影",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/f3831aed5e415c960fe1b6ad8f6024e5.png",
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11215"
-  },
-  {
-    "id": 14436,
-    "name": "胸中の谺",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/93c5de39db16c894abaf1df56b710dd5.png",
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11218"
-  },
-  {
-    "id": 14435,
-    "name": "諸王の対局",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/741f589153ef2d22307233be14b00e12.png",
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11219"
-  },
-  {
-    "id": 13436,
-    "name": "遠望の歌",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/1c4ebc0821298a77ebd8cf5ef487b871.png",
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11216"
-  },
-  {
-    "id": 13435,
-    "name": "氷の吐息",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/42f9925ccf0ed36513ab375d0ccd606f.png",
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11217"
-  },
-  {
-    "id": 15436,
-    "name": "霜雪の契",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/2865b59789886b72f1a9a9bcf3e731de.png",
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11220"
-  },
-  {
-    "id": 15435,
-    "name": "千鈞懸黎",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a7ba976/0f601bcd039f213598bb9d89842c982e.png",
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/11221"
-  },
-  {
-    "id": 12516,
-    "name": "超越の鍵",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a44588e/0ce22fa824865975f716bc620a24a0d8.png",
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10949"
-  },
-  {
-    "id": 13517,
-    "name": "災憾",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/fce1c32ef5e9cd3bd775dfdf5c0de06c.png",
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10758"
-  },
-  {
-    "id": 14523,
-    "name": "塵と光の七つの誓約",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/6a0cf98d/8bc74e76d3888a46a6279ba1a765978b.png",
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10757"
-  },
-  {
-    "id": 15434,
-    "name": "虹蛇の雨弦",
-    "icon": "https://act-webstatic.hoyoverse.com/hk4e/e20200928calculate/item_icon/692f7d8b/430a2ee3f7bb4817d96e4179110ffb21.png",
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9046"
-  },
-  {
-    "id": 15516,
-    "name": "霜契の金枝",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/10547"
-  },
-  {
-    "id": 12515,
-    "name": "狼の武勲詩",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9456"
-  },
-  {
-    "id": 11519,
-    "name": "三日月の含光",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9249"
-  },
-  {
-    "id": 14522,
-    "name": "帳の夜曲",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9250"
-  },
-  {
-    "id": 11518,
-    "name": "黒蝕",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9045"
-  },
-  {
-    "id": 15515,
-    "name": "暁を告げる歴史",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/9047"
-  },
-  {
-    "id": 14521,
-    "name": "真言の匣",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8991"
-  },
-  {
-    "id": 13434,
-    "name": "聖祭者の輝杖",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8989"
-  },
-  {
-    "id": 14434,
-    "name": "霜辰",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8990"
-  },
-  {
-    "id": 14520,
-    "name": "夜を紡ぐ天鏡",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8836"
-  },
-  {
-    "id": 15433,
-    "name": "羅網の針",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8835"
-  },
-  {
-    "id": 14433,
-    "name": "烏髄の孤灯",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8517"
-  },
-  {
-    "id": 14432,
-    "name": "天光のリュート",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8837"
-  },
-  {
-    "id": 13433,
-    "name": "金掘りのシャベル",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8514"
-  },
-  {
-    "id": 12433,
-    "name": "万能の鍵",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8513"
-  },
-  {
-    "id": 11434,
-    "name": "月紡ぎの曙光",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8512"
-  },
-  {
-    "id": 11433,
-    "name": "静謐の笛",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8511"
-  },
-  {
-    "id": 11517,
-    "name": "蒼耀",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7785"
-  },
-  {
-    "id": 13514,
-    "name": "香りのシンフォニスト",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7640"
-  },
-  {
-    "id": 15514,
-    "name": "星鷲の紅き羽",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7116"
-  },
-  {
-    "id": 15513,
-    "name": "白雨心弦",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5673"
-  },
-  {
-    "id": 15512,
-    "name": "始まりの大魔術",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3983"
-  },
-  {
-    "id": 15511,
-    "name": "狩人の道",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2665"
-  },
-  {
-    "id": 15509,
-    "name": "飛雷の鳴弦",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2049"
-  },
-  {
-    "id": 15508,
-    "name": "若水",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2254"
-  },
-  {
-    "id": 15507,
-    "name": "冬極の白星",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1936"
-  },
-  {
-    "id": 15503,
-    "name": "終焉を嘆く詩",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2008"
-  },
-  {
-    "id": 15502,
-    "name": "アモスの弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2040"
-  },
-  {
-    "id": 15501,
-    "name": "天空の翼",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1956"
-  },
-  {
-    "id": 14519,
-    "name": "ヴィヴィッド・ハート",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7588"
-  },
-  {
-    "id": 14518,
-    "name": "寝正月の初晴",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7434"
-  },
-  {
-    "id": 14517,
-    "name": "祭星者の眺め",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7366"
-  },
-  {
-    "id": 14516,
-    "name": "サーフィンタイム",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6546"
-  },
-  {
-    "id": 14515,
-    "name": "鶴鳴の余韻",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4941"
-  },
-  {
-    "id": 14514,
-    "name": "久遠流転の大典",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4339"
-  },
-  {
-    "id": 14513,
-    "name": "凛流の監視者",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4340"
-  },
-  {
-    "id": 14512,
-    "name": "トゥライトゥーラの記憶",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3320"
-  },
-  {
-    "id": 14511,
-    "name": "千夜に浮かぶ夢",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2966"
-  },
-  {
-    "id": 14509,
-    "name": "神楽の真意",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2001"
-  },
-  {
-    "id": 14506,
-    "name": "不滅の月華",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1932"
-  },
-  {
-    "id": 14505,
-    "name": "碧落の瓏",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3692"
-  },
-  {
-    "id": 14504,
-    "name": "浮世の錠",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1964"
-  },
-  {
-    "id": 14502,
-    "name": "四風原典",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1951"
-  },
-  {
-    "id": 14501,
-    "name": "天空の巻",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1955"
-  },
-  {
-    "id": 13516,
-    "name": "血染めの荒れ地",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8838"
-  },
-  {
-    "id": 13515,
-    "name": "砕け散る光輪",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8299"
-  },
-  {
-    "id": 13513,
-    "name": "ルミドゥースの挽歌",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5847"
-  },
-  {
-    "id": 13512,
-    "name": "赤月のシルエット",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5577"
-  },
-  {
-    "id": 13511,
-    "name": "赤砂の杖",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2849"
-  },
-  {
-    "id": 13509,
-    "name": "草薙の稲光",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2014"
-  },
-  {
-    "id": 13507,
-    "name": "息災",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1970"
-  },
-  {
-    "id": 13505,
-    "name": "和璞鳶",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1948"
-  },
-  {
-    "id": 13504,
-    "name": "破天の槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2030"
-  },
-  {
-    "id": 13502,
-    "name": "天空の脊",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1957"
-  },
-  {
-    "id": 13501,
-    "name": "護摩の杖",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1972"
-  },
-  {
-    "id": 12514,
-    "name": "千烈の日輪",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7365"
-  },
-  {
-    "id": 12513,
-    "name": "山の王の長牙",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6545"
-  },
-  {
-    "id": 12512,
-    "name": "裁断",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4719"
-  },
-  {
-    "id": 12511,
-    "name": "葦海の標",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3615"
-  },
-  {
-    "id": 12510,
-    "name": "赤角石塵滅砕",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2031"
-  },
-  {
-    "id": 12504,
-    "name": "無工の剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1978"
-  },
-  {
-    "id": 12503,
-    "name": "松韻の響く頃",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1986"
-  },
-  {
-    "id": 12502,
-    "name": "狼の末路",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1992"
-  },
-  {
-    "id": 12501,
-    "name": "天空の傲",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1953"
-  },
-  {
-    "id": 11516,
-    "name": "岩峰を巡る歌",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7029"
-  },
-  {
-    "id": 11515,
-    "name": "赦罪",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5674"
-  },
-  {
-    "id": 11514,
-    "name": "有楽御簾切",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5150"
-  },
-  {
-    "id": 11513,
-    "name": "静水流転の輝き",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4570"
-  },
-  {
-    "id": 11512,
-    "name": "萃光の裁葉",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3461"
-  },
-  {
-    "id": 11511,
-    "name": "聖顕の鍵",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2908"
-  },
-  {
-    "id": 11510,
-    "name": "波乱月白経津",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1989"
-  },
-  {
-    "id": 11509,
-    "name": "霧切の廻光",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2044"
-  },
-  {
-    "id": 11505,
-    "name": "磐岩結緑",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2000"
-  },
-  {
-    "id": 11504,
-    "name": "斬山の刃",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1974"
-  },
-  {
-    "id": 11503,
-    "name": "蒼古なる自由への誓い",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2012"
-  },
-  {
-    "id": 11502,
-    "name": "天空の刃",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1954"
-  },
-  {
-    "id": 11501,
-    "name": "風鷹剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 5,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2046"
-  },
-  {
-    "id": 15431,
-    "name": "チェーンブレイカー",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6552"
-  },
-  {
-    "id": 15430,
-    "name": "花飾りの羽",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7115"
-  },
-  {
-    "id": 15427,
-    "name": "レンジゲージ",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4337"
-  },
-  {
-    "id": 15426,
-    "name": "築雲",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5713"
-  },
-  {
-    "id": 15425,
-    "name": "静寂の唄",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3987"
-  },
-  {
-    "id": 15424,
-    "name": "烈日の後嗣",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4002"
-  },
-  {
-    "id": 15419,
-    "name": "トキの嘴",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3902"
-  },
-  {
-    "id": 15418,
-    "name": "竭沢",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2666"
-  },
-  {
-    "id": 15417,
-    "name": "王の近侍",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2670"
-  },
-  {
-    "id": 15416,
-    "name": "曚雲の月",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1985"
-  },
-  {
-    "id": 15415,
-    "name": "プレデター",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1973"
-  },
-  {
-    "id": 15414,
-    "name": "破魔の弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1999"
-  },
-  {
-    "id": 15413,
-    "name": "風花の頌歌",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2045"
-  },
-  {
-    "id": 15412,
-    "name": "幽夜のワルツ",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1965"
-  },
-  {
-    "id": 15411,
-    "name": "落霞",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2255"
-  },
-  {
-    "id": 15410,
-    "name": "ダークアレイの狩人",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1981"
-  },
-  {
-    "id": 15409,
-    "name": "蒼翠の狩猟弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2013"
-  },
-  {
-    "id": 15408,
-    "name": "黒岩の戦弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2055"
-  },
-  {
-    "id": 15407,
-    "name": "リングボウ",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2034"
-  },
-  {
-    "id": 15406,
-    "name": "澹月·試作",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2028"
-  },
-  {
-    "id": 15405,
-    "name": "弓蔵",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1967"
-  },
-  {
-    "id": 15404,
-    "name": "旧貴族長弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1963"
-  },
-  {
-    "id": 15403,
-    "name": "祭礼の弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2005"
-  },
-  {
-    "id": 15402,
-    "name": "絶弦",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2009"
-  },
-  {
-    "id": 15401,
-    "name": "西風猟弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2019"
-  },
-  {
-    "id": 14431,
-    "name": "ヤシュチェの環",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6551"
-  },
-  {
-    "id": 14430,
-    "name": "波乗りの旋回",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7114"
-  },
-  {
-    "id": 14427,
-    "name": "蒼紋の角杯",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6550"
-  },
-  {
-    "id": 14426,
-    "name": "果てなき紺碧の唄",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4338"
-  },
-  {
-    "id": 14425,
-    "name": "純水流華",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3988"
-  },
-  {
-    "id": 14424,
-    "name": "古祠の瓏",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4003"
-  },
-  {
-    "id": 14417,
-    "name": "満悦の実",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2669"
-  },
-  {
-    "id": 14416,
-    "name": "彷徨える星",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2910"
-  },
-  {
-    "id": 14415,
-    "name": "誓いの明瞳",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2024"
-  },
-  {
-    "id": 14414,
-    "name": "白辰の輪",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1997"
-  },
-  {
-    "id": 14413,
-    "name": "ドドコの物語",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1950"
-  },
-  {
-    "id": 14412,
-    "name": "冬忍びの実",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1969"
-  },
-  {
-    "id": 14410,
-    "name": "ダークアレイの酒と詩",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1982"
-  },
-  {
-    "id": 14409,
-    "name": "昭心",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1980"
-  },
-  {
-    "id": 14408,
-    "name": "黒岩の緋玉",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2057"
-  },
-  {
-    "id": 14407,
-    "name": "万国諸海の図譜",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1931"
-  },
-  {
-    "id": 14406,
-    "name": "金珀·試作",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2029"
-  },
-  {
-    "id": 14405,
-    "name": "匣中日月",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1939"
-  },
-  {
-    "id": 14404,
-    "name": "旧貴族秘法録",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1961"
-  },
-  {
-    "id": 14403,
-    "name": "祭礼の断片",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2006"
-  },
-  {
-    "id": 14402,
-    "name": "流浪楽章",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1991"
-  },
-  {
-    "id": 14401,
-    "name": "西風秘典",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2020"
-  },
-  {
-    "id": 13432,
-    "name": "玉響停の御噺",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7435"
-  },
-  {
-    "id": 13431,
-    "name": "虹の行方",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6549"
-  },
-  {
-    "id": 13430,
-    "name": "鎮山の釘",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7031"
-  },
-  {
-    "id": 13427,
-    "name": "プロスペクタードリル",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4336"
-  },
-  {
-    "id": 13426,
-    "name": "砂中の賢者達の問答",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/5151"
-  },
-  {
-    "id": 13425,
-    "name": "正義の報酬",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3986"
-  },
-  {
-    "id": 13424,
-    "name": "フィヨルドの歌",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4001"
-  },
-  {
-    "id": 13419,
-    "name": "風信の矛",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2847"
-  },
-  {
-    "id": 13417,
-    "name": "ムーンピアサー",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2668"
-  },
-  {
-    "id": 13416,
-    "name": "斬波のひれ長",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1975"
-  },
-  {
-    "id": 13415,
-    "name": "「漁獲」",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1930"
-  },
-  {
-    "id": 13414,
-    "name": "喜多院十文字槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1949"
-  },
-  {
-    "id": 13409,
-    "name": "ドラゴンスピア",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2060"
-  },
-  {
-    "id": 13408,
-    "name": "旧貴族猟槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1960"
-  },
-  {
-    "id": 13407,
-    "name": "西風長槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2021"
-  },
-  {
-    "id": 13406,
-    "name": "千岩長槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1943"
-  },
-  {
-    "id": 13405,
-    "name": "死闘の槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1937"
-  },
-  {
-    "id": 13404,
-    "name": "黒岩の突槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2054"
-  },
-  {
-    "id": 13403,
-    "name": "流月の針",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1990"
-  },
-  {
-    "id": 13402,
-    "name": "星鎌·試作",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2027"
-  },
-  {
-    "id": 13401,
-    "name": "匣中滅龍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1940"
-  },
-  {
-    "id": 12432,
-    "name": "知恵の溶炎",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/8300"
-  },
-  {
-    "id": 12431,
-    "name": "アースシェイカー",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6548"
-  },
-  {
-    "id": 12430,
-    "name": "実りの鉤鉈",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7030"
-  },
-  {
-    "id": 12427,
-    "name": "携帯型チェーンソー",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4335"
-  },
-  {
-    "id": 12426,
-    "name": "「スーパーアルティメット覇王魔剣」",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": ""
-  },
-  {
-    "id": 12425,
-    "name": "タイダル·シャドー",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3985"
-  },
-  {
-    "id": 12424,
-    "name": "話死合い棒",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4000"
-  },
-  {
-    "id": 12418,
-    "name": "鉄彩の花",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3614"
-  },
-  {
-    "id": 12417,
-    "name": "森林のレガリア",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2671"
-  },
-  {
-    "id": 12416,
-    "name": "惡王丸",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1971"
-  },
-  {
-    "id": 12415,
-    "name": "マカイラの水色",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2848"
-  },
-  {
-    "id": 12414,
-    "name": "桂木斬長正",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1987"
-  },
-  {
-    "id": 12412,
-    "name": "銜玉の海皇",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2016"
-  },
-  {
-    "id": 12411,
-    "name": "雪葬の星銀",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2043"
-  },
-  {
-    "id": 12410,
-    "name": "千岩古剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1942"
-  },
-  {
-    "id": 12409,
-    "name": "螭龍の剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2015"
-  },
-  {
-    "id": 12408,
-    "name": "黒岩の斬刀",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2056"
-  },
-  {
-    "id": 12407,
-    "name": "白影の剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1995"
-  },
-  {
-    "id": 12406,
-    "name": "古華·試作",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2025"
-  },
-  {
-    "id": 12405,
-    "name": "雨裁",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2042"
-  },
-  {
-    "id": 12404,
-    "name": "旧貴族大剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1959"
-  },
-  {
-    "id": 12403,
-    "name": "祭礼の大剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2004"
-  },
-  {
-    "id": 12402,
-    "name": "鐘の剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2033"
-  },
-  {
-    "id": 12401,
-    "name": "西風大剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2018"
-  },
-  {
-    "id": 11432,
-    "name": "厄水の災い",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7113"
-  },
-  {
-    "id": 11431,
-    "name": "エズピツァルの笛",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/6547"
-  },
-  {
-    "id": 11430,
-    "name": "ストロング・ボーン",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/7028"
-  },
-  {
-    "id": 11428,
-    "name": "水仙十字の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4592"
-  },
-  {
-    "id": 11427,
-    "name": "船渠剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/4334"
-  },
-  {
-    "id": 11426,
-    "name": "サーンドルの渡し守",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3989"
-  },
-  {
-    "id": 11425,
-    "name": "海淵のフィナーレ",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3984"
-  },
-  {
-    "id": 11424,
-    "name": "狼牙",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3999"
-  },
-  {
-    "id": 11422,
-    "name": "東花坊時雨",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/3319"
-  },
-  {
-    "id": 11418,
-    "name": "サイフォスの月明かり",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2909"
-  },
-  {
-    "id": 11417,
-    "name": "原木刀",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2667"
-  },
-  {
-    "id": 11416,
-    "name": "籠釣瓶一心",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2264"
-  },
-  {
-    "id": 11415,
-    "name": "シナバースピンドル",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2032"
-  },
-  {
-    "id": 11414,
-    "name": "天目影打",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1952"
-  },
-  {
-    "id": 11413,
-    "name": "腐植の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2011"
-  },
-  {
-    "id": 11412,
-    "name": "降臨の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2041"
-  },
-  {
-    "id": 11410,
-    "name": "ダークアレイの閃光",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1983"
-  },
-  {
-    "id": 11409,
-    "name": "黒剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2053"
-  },
-  {
-    "id": 11408,
-    "name": "黒岩の長剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2058"
-  },
-  {
-    "id": 11407,
-    "name": "鉄蜂の刺し",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2038"
-  },
-  {
-    "id": 11406,
-    "name": "斬岩·試作",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2026"
-  },
-  {
-    "id": 11405,
-    "name": "匣中龍吟",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1941"
-  },
-  {
-    "id": 11404,
-    "name": "旧貴族長剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1962"
-  },
-  {
-    "id": 11403,
-    "name": "祭礼の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2003"
-  },
-  {
-    "id": 11402,
-    "name": "笛の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2007"
-  },
-  {
-    "id": 11401,
-    "name": "西風剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 4,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2017"
-  },
-  {
-    "id": 15305,
-    "name": "文使い",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1935"
-  },
-  {
-    "id": 15304,
-    "name": "弾弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1968"
-  },
-  {
-    "id": 15303,
-    "name": "リカーブボウ",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1945"
-  },
-  {
-    "id": 15302,
-    "name": "シャープシューターの誓い",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2002"
-  },
-  {
-    "id": 15301,
-    "name": "鴉羽の弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2051"
-  },
-  {
-    "id": 14305,
-    "name": "特級の宝玉",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1994"
-  },
-  {
-    "id": 14304,
-    "name": "翡玉法珠",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2010"
-  },
-  {
-    "id": 14303,
-    "name": "異世界旅行記",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1966"
-  },
-  {
-    "id": 14302,
-    "name": "龍殺しの英傑譚",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2022"
-  },
-  {
-    "id": 14301,
-    "name": "魔導緒論",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2050"
-  },
-  {
-    "id": 13303,
-    "name": "黒纓槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2059"
-  },
-  {
-    "id": 13302,
-    "name": "鉾槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2035"
-  },
-  {
-    "id": 13301,
-    "name": "白纓槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1996"
-  },
-  {
-    "id": 12306,
-    "name": "飛天大御剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2047"
-  },
-  {
-    "id": 12305,
-    "name": "理屈責め",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1933"
-  },
-  {
-    "id": 12303,
-    "name": "白鉄の大剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1998"
-  },
-  {
-    "id": 12302,
-    "name": "龍血を浴びた剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1988"
-  },
-  {
-    "id": 12301,
-    "name": "鉄影段平",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2037"
-  },
-  {
-    "id": 11306,
-    "name": "飛天御剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2048"
-  },
-  {
-    "id": 11305,
-    "name": "チ虎魚の刀",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1947"
-  },
-  {
-    "id": 11304,
-    "name": "暗鉄剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1984"
-  },
-  {
-    "id": 11303,
-    "name": "旅道の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1977"
-  },
-  {
-    "id": 11302,
-    "name": "黎明の神剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2052"
-  },
-  {
-    "id": 11301,
-    "name": "冷刃",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 3,
-    "max_level": 90,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1938"
-  },
-  {
-    "id": 15201,
-    "name": "歴戦の狩猟弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 2,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1944"
-  },
-  {
-    "id": 14201,
-    "name": "ポケット魔導書",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 2,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1946"
-  },
-  {
-    "id": 13201,
-    "name": "鉄尖槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 2,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2036"
-  },
-  {
-    "id": 12201,
-    "name": "傭兵の重剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 2,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1934"
-  },
-  {
-    "id": 11201,
-    "name": "銀の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 2,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2039"
-  },
-  {
-    "id": 15101,
-    "name": "狩猟弓",
-    "icon": null,
-    "weapon_cat_id": 12,
-    "weapon_level": 1,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1993"
-  },
-  {
-    "id": 14101,
-    "name": "生徒ノート",
-    "icon": null,
-    "weapon_cat_id": 10,
-    "weapon_level": 1,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1958"
-  },
-  {
-    "id": 13101,
-    "name": "新米の長槍",
-    "icon": null,
-    "weapon_cat_id": 13,
-    "weapon_level": 1,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1976"
-  },
-  {
-    "id": 12101,
-    "name": "訓練用大剣",
-    "icon": null,
-    "weapon_cat_id": 11,
-    "weapon_level": 1,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/2023"
-  },
-  {
-    "id": 11101,
-    "name": "無鋒の剣",
-    "icon": null,
-    "weapon_cat_id": 1,
-    "weapon_level": 1,
-    "max_level": 70,
-    "is_recommend": false,
-    "wiki_url": "https://wiki.hoyolab.com/pc/genshin/entry/1979"
-  }
+    {
+        "id":  15516,
+        "name":  "霜契の金枝",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15515,
+        "name":  "暁を告げる歴史",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15514,
+        "name":  "星鷲の紅き羽",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15513,
+        "name":  "白雨心弦",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15512,
+        "name":  "始まりの大魔術",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15511,
+        "name":  "狩人の道",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15509,
+        "name":  "飛雷の鳴弦",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15508,
+        "name":  "若水",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15507,
+        "name":  "冬極の白星",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15503,
+        "name":  "終焉を嘆く詩",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15502,
+        "name":  "アモスの弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15501,
+        "name":  "天空の翼",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14524,
+        "name":  "旋流の讃美歌",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14523,
+        "name":  "塵と光の七つの誓約",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14522,
+        "name":  "帳の夜曲",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14521,
+        "name":  "真言の匣",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14520,
+        "name":  "夜を紡ぐ天鏡",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14519,
+        "name":  "ヴィヴィッド・ハート",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14518,
+        "name":  "寝正月の初晴",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14517,
+        "name":  "祭星者の眺め",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14516,
+        "name":  "サーフィンタイム",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14515,
+        "name":  "鶴鳴の余韻",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14514,
+        "name":  "久遠流転の大典",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14513,
+        "name":  "凛流の監視者",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14512,
+        "name":  "トゥライトゥーラの記憶",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14511,
+        "name":  "千夜に浮かぶ夢",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14509,
+        "name":  "神楽の真意",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14506,
+        "name":  "不滅の月華",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14505,
+        "name":  "碧落の瓏",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14504,
+        "name":  "浮世の錠",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14502,
+        "name":  "四風原典",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14501,
+        "name":  "天空の巻",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13517,
+        "name":  "災憾",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13516,
+        "name":  "血染めの荒れ地",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13515,
+        "name":  "砕け散る光輪",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13514,
+        "name":  "香りのシンフォニスト",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13513,
+        "name":  "ルミドゥースの挽歌",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13512,
+        "name":  "赤月のシルエット",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13511,
+        "name":  "赤砂の杖",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13509,
+        "name":  "草薙の稲光",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13507,
+        "name":  "息災",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13505,
+        "name":  "和璞鳶",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13504,
+        "name":  "破天の槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13502,
+        "name":  "天空の脊",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13501,
+        "name":  "護摩の杖",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12516,
+        "name":  "超越の鍵",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12515,
+        "name":  "狼の武勲詩",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12514,
+        "name":  "千烈の日輪",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12513,
+        "name":  "山の王の長牙",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12512,
+        "name":  "裁断",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12511,
+        "name":  "葦海の標",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12510,
+        "name":  "赤角石塵滅砕",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12504,
+        "name":  "無工の剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12503,
+        "name":  "松韻の響く頃",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12502,
+        "name":  "狼の末路",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12501,
+        "name":  "天空の傲",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11522,
+        "name":  "蝶の羽化",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11521,
+        "name":  "星鋒の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11520,
+        "name":  "白銀の湖を舞う翼",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11519,
+        "name":  "三日月の含光",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11518,
+        "name":  "黒蝕",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11517,
+        "name":  "蒼耀",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11516,
+        "name":  "岩峰を巡る歌",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11515,
+        "name":  "赦罪",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11514,
+        "name":  "有楽御簾切",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11513,
+        "name":  "静水流転の輝き",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11512,
+        "name":  "萃光の裁葉",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11511,
+        "name":  "聖顕の鍵",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11510,
+        "name":  "波乱月白経津",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11509,
+        "name":  "霧切の廻光",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11505,
+        "name":  "磐岩結緑",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11504,
+        "name":  "斬山の刃",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11503,
+        "name":  "蒼古なる自由への誓い",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11502,
+        "name":  "天空の刃",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11501,
+        "name":  "風鷹剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15437,
+        "name":  "風に遊ぶ弦",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15436,
+        "name":  "霜雪の契",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15435,
+        "name":  "千鈞懸黎",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15434,
+        "name":  "虹蛇の雨弦",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15433,
+        "name":  "羅網の針",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15432,
+        "name":  "冷寂の音",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15431,
+        "name":  "チェーンブレイカー",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15430,
+        "name":  "花飾りの羽",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15427,
+        "name":  "レンジゲージ",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15426,
+        "name":  "築雲",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15425,
+        "name":  "静寂の唄",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15424,
+        "name":  "烈日の後嗣",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15419,
+        "name":  "トキの嘴",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15418,
+        "name":  "竭沢",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15417,
+        "name":  "王の近侍",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15416,
+        "name":  "曚雲の月",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15415,
+        "name":  "プレデター",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15414,
+        "name":  "破魔の弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15413,
+        "name":  "風花の頌歌",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15412,
+        "name":  "幽夜のワルツ",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15411,
+        "name":  "落霞",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15410,
+        "name":  "ダークアレイの狩人",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15409,
+        "name":  "蒼翠の狩猟弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15408,
+        "name":  "黒岩の戦弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15407,
+        "name":  "リングボウ",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15406,
+        "name":  "澹月·試作",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15405,
+        "name":  "弓蔵",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15404,
+        "name":  "旧貴族長弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15403,
+        "name":  "祭礼の弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15402,
+        "name":  "絶弦",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15401,
+        "name":  "西風猟弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14437,
+        "name":  "雪に沈む心",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14436,
+        "name":  "胸中の谺",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14435,
+        "name":  "諸王の対局",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14434,
+        "name":  "霜辰",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14433,
+        "name":  "烏髄の孤灯",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14432,
+        "name":  "天光のリュート",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14431,
+        "name":  "ヤシュチェの環",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14430,
+        "name":  "波乗りの旋回",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14427,
+        "name":  "蒼紋の角杯",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14426,
+        "name":  "果てなき紺碧の唄",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14425,
+        "name":  "純水流華",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14424,
+        "name":  "古祠の瓏",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14417,
+        "name":  "満悦の実",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14416,
+        "name":  "彷徨える星",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14415,
+        "name":  "誓いの明瞳",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14414,
+        "name":  "白辰の輪",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14413,
+        "name":  "ドドコの物語",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14412,
+        "name":  "冬忍びの実",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14410,
+        "name":  "ダークアレイの酒と詩",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14409,
+        "name":  "昭心",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14408,
+        "name":  "黒岩の緋玉",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14407,
+        "name":  "万国諸海の図譜",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14406,
+        "name":  "金珀·試作",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14405,
+        "name":  "匣中日月",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14404,
+        "name":  "旧貴族秘法録",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14403,
+        "name":  "祭礼の断片",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14402,
+        "name":  "流浪楽章",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14401,
+        "name":  "西風秘典",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13436,
+        "name":  "遠望の歌",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13435,
+        "name":  "氷の吐息",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13434,
+        "name":  "聖祭者の輝杖",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13433,
+        "name":  "金掘りのシャベル",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13432,
+        "name":  "玉響停の御噺",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13431,
+        "name":  "虹の行方",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13430,
+        "name":  "鎮山の釘",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13427,
+        "name":  "プロスペクタードリル",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13426,
+        "name":  "砂中の賢者達の問答",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13425,
+        "name":  "正義の報酬",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13424,
+        "name":  "フィヨルドの歌",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13419,
+        "name":  "風信の矛",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13417,
+        "name":  "ムーンピアサー",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13416,
+        "name":  "斬波のひれ長",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13415,
+        "name":  "「漁獲」",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13414,
+        "name":  "喜多院十文字槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13409,
+        "name":  "ドラゴンスピア",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13408,
+        "name":  "旧貴族猟槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13407,
+        "name":  "西風長槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13406,
+        "name":  "千岩長槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13405,
+        "name":  "死闘の槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13404,
+        "name":  "黒岩の突槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13403,
+        "name":  "流月の針",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13402,
+        "name":  "星鎌·試作",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13401,
+        "name":  "匣中滅龍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12436,
+        "name":  "救済の剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12435,
+        "name":  "シンフォニーの鋳影",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12433,
+        "name":  "万能の鍵",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12432,
+        "name":  "知恵の溶炎",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12431,
+        "name":  "アースシェイカー",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12430,
+        "name":  "実りの鉤鉈",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12427,
+        "name":  "携帯型チェーンソー",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12426,
+        "name":  "「スーパーアルティメット覇王魔剣」",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12425,
+        "name":  "タイダル·シャドー",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12424,
+        "name":  "話死合い棒",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12418,
+        "name":  "鉄彩の花",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12417,
+        "name":  "森林のレガリア",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12416,
+        "name":  "惡王丸",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12415,
+        "name":  "マカイラの水色",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12414,
+        "name":  "桂木斬長正",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12412,
+        "name":  "銜玉の海皇",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12411,
+        "name":  "雪葬の星銀",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12410,
+        "name":  "千岩古剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12409,
+        "name":  "螭龍の剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12408,
+        "name":  "黒岩の斬刀",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12407,
+        "name":  "白影の剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12406,
+        "name":  "古華·試作",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12405,
+        "name":  "雨裁",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12404,
+        "name":  "旧貴族大剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12403,
+        "name":  "祭礼の大剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12402,
+        "name":  "鐘の剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12401,
+        "name":  "西風大剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11438,
+        "name":  "銀灯",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11437,
+        "name":  "新たなる枝",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11436,
+        "name":  "導炎の源",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11435,
+        "name":  "異端を狩る熔刃",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11434,
+        "name":  "月紡ぎの曙光",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11433,
+        "name":  "静謐の笛",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11432,
+        "name":  "厄水の災い",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11431,
+        "name":  "エズピツァルの笛",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11430,
+        "name":  "ストロング・ボーン",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11428,
+        "name":  "水仙十字の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11427,
+        "name":  "船渠剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11426,
+        "name":  "サーンドルの渡し守",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11425,
+        "name":  "海淵のフィナーレ",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11424,
+        "name":  "狼牙",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11422,
+        "name":  "東花坊時雨",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11418,
+        "name":  "サイフォスの月明かり",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11417,
+        "name":  "原木刀",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11416,
+        "name":  "籠釣瓶一心",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11415,
+        "name":  "シナバースピンドル",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11414,
+        "name":  "天目影打",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11413,
+        "name":  "腐植の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11412,
+        "name":  "降臨の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11410,
+        "name":  "ダークアレイの閃光",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11409,
+        "name":  "黒剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11408,
+        "name":  "黒岩の長剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11407,
+        "name":  "鉄蜂の刺し",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11406,
+        "name":  "斬岩·試作",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11405,
+        "name":  "匣中龍吟",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11404,
+        "name":  "旧貴族長剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11403,
+        "name":  "祭礼の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11402,
+        "name":  "笛の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11401,
+        "name":  "西風剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  4,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15305,
+        "name":  "文使い",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15304,
+        "name":  "弾弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15303,
+        "name":  "リカーブボウ",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15302,
+        "name":  "シャープシューターの誓い",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15301,
+        "name":  "鴉羽の弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14305,
+        "name":  "特級の宝玉",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14304,
+        "name":  "翡玉法珠",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14303,
+        "name":  "異世界旅行記",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14302,
+        "name":  "龍殺しの英傑譚",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14301,
+        "name":  "魔導緒論",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13303,
+        "name":  "黒纓槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13302,
+        "name":  "鉾槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13301,
+        "name":  "白纓槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12306,
+        "name":  "飛天大御剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12305,
+        "name":  "理屈責め",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12303,
+        "name":  "白鉄の大剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12302,
+        "name":  "龍血を浴びた剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12301,
+        "name":  "鉄影段平",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11306,
+        "name":  "飛天御剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11305,
+        "name":  "チ虎魚の刀",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11304,
+        "name":  "暗鉄剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11303,
+        "name":  "旅道の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11302,
+        "name":  "黎明の神剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11301,
+        "name":  "冷刃",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  3,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15201,
+        "name":  "歴戦の狩猟弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  2,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14201,
+        "name":  "ポケット魔導書",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  2,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13201,
+        "name":  "鉄尖槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  2,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12201,
+        "name":  "傭兵の重剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  2,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11201,
+        "name":  "銀の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  2,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  15101,
+        "name":  "狩猟弓",
+        "icon":  null,
+        "weapon_cat_id":  12,
+        "weapon_level":  1,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  14101,
+        "name":  "生徒ノート",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  1,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  13101,
+        "name":  "新米の長槍",
+        "icon":  null,
+        "weapon_cat_id":  13,
+        "weapon_level":  1,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  12101,
+        "name":  "訓練用大剣",
+        "icon":  null,
+        "weapon_cat_id":  11,
+        "weapon_level":  1,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
+        "id":  11101,
+        "name":  "無鋒の剣",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "weapon_level":  1,
+        "max_level":  70,
+        "is_recommend":  false,
+        "wiki_url":  null
+    }
 ]
