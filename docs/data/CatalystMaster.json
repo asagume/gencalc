@@ -1,4 +1,8 @@
 {
+  "秘星の聖典": {
+    "レアリティ": 5,
+    "import": "data/weapons/catalyst/5_StarsealedEdict.json"
+  },
   "旋流の讃美歌": {
     "レアリティ": 5,
     "import": "data/weapons/catalyst/5_HymnoftheMaelstrom.json"
