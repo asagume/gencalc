@@ -81,6 +81,8 @@ $pageIds = @()
 # $pageIds += 11609  # 旅人(氷)
 # $pageIds += 11661  # ヴェスナ
 # $pageIds += 11702  # ヴォジャニーツァ
+$pageIds += 11827  # ミティヤ
+$pageIds += 11828  # バレリー
 ### 武器
 # $pageIds += @(1930..2060)
 # $pageIds += 2254   # 若水
@@ -200,9 +202,10 @@ $pageIds = @()
 # $pageIds += 11728   # 蝶の羽化
 # $pageIds += 11729   # 旋流の讃美歌
 # $pageIds += 11730   # 新たなる枝
-$pageIds += 11731   # 銀灯
+# $pageIds += 11731   # 銀灯
 # $pageIds += 11732   # 雪に沈む心
 # $pageIds += 11733   # 風に遊ぶ弦
+$pageIds += 13625   # 秘星の聖典
 ### 聖遺物
 # $pageIds += @(2061..2099)
 # $pageIds += 2672   # 深林の記憶

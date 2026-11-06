@@ -1,4 +1,11 @@
 {
+  "ミティヤ": {
+    "レアリティ": 5,
+    "元素": "雷",
+    "武器": "法器",
+    "誕生日": "2/8",
+    "import": "data/characters/electro_5_catalyst_Mitya.json"
+  },
   "ヴェスナ": {
     "レアリティ": 5,
     "元素": "風",
@@ -480,6 +487,13 @@
     "武器": "片手剣",
     "誕生日": "3/14",
     "import": "data/characters/anemo_5_sword_Jean.json"
+  },
+  "バレリー": {
+    "レアリティ": 4,
+    "元素": "雷",
+    "武器": "片手剣",
+    "誕生日": "3/24",
+    "import": "data/characters/electro_4_sword_Valeriy.json"
   },
   "アリョーシャ": {
     "レアリティ": 4,
