@@ -206,6 +206,74 @@
     {
         "skill_list":  [
                            {
+                               "id":  11361,
+                               "group_id":  13631,
+                               "name":  "連鎖反応",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "普通攻击"
+                           },
+                           {
+                               "id":  11362,
+                               "group_id":  13632,
+                               "name":  "定律・変数検知",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素战技"
+                           },
+                           {
+                               "id":  11364,
+                               "group_id":  13639,
+                               "name":  "解析・変化ノ理",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素爆发"
+                           },
+                           {
+                               "id":  13621,
+                               "group_id":  13621,
+                               "name":  "基準耐圧テスト",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13622,
+                               "group_id":  13622,
+                               "name":  "臨界爆発性試薬",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13623,
+                               "group_id":  13623,
+                               "name":  "星光の祝福・極秘プロトコル",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13625,
+                               "group_id":  13625,
+                               "name":  "エネルギー活性触媒",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           }
+                       ],
+        "avatar_id":  10000136
+    },
+    {
+        "skill_list":  [
+                           {
                                "id":  11331,
                                "group_id":  13331,
                                "name":  "事象式：自明の演繹",
@@ -5128,6 +5196,74 @@
                            }
                        ],
         "avatar_id":  10000148
+    },
+    {
+        "skill_list":  [
+                           {
+                               "id":  30601,
+                               "group_id":  13731,
+                               "name":  "近衛戦法・剣攻盾守",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "普通攻击"
+                           },
+                           {
+                               "id":  30602,
+                               "group_id":  13732,
+                               "name":  "攻勢防御・要塞突撃",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素战技"
+                           },
+                           {
+                               "id":  30605,
+                               "group_id":  13739,
+                               "name":  "集中砲火・雷弾強襲",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素爆发"
+                           },
+                           {
+                               "id":  13721,
+                               "group_id":  13721,
+                               "name":  "弾幕攻撃の奇襲",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13722,
+                               "group_id":  13722,
+                               "name":  "突破口への突撃",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13723,
+                               "group_id":  13723,
+                               "name":  "極寒適応性",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13725,
+                               "group_id":  13725,
+                               "name":  "氷原行動情報",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           }
+                       ],
+        "avatar_id":  10000137
     },
     {
         "skill_list":  [

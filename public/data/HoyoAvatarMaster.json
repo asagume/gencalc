@@ -342,6 +342,120 @@
         "wiki_recommend_skill_url":  ""
     },
     {
+        "id":  10000136,
+        "name":  "ミティヤ",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "avatar_level":  5,
+        "element_attr_id":  5,
+        "max_level":  90,
+        "item_icon":  null,
+        "talent_icons":  null,
+        "side_icon":  null,
+        "profile_pictures":  null,
+        "talents":  [
+                        {
+                            "id":  1361,
+                            "name":  "欠落の痕跡を追う観察者",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1362,
+                            "name":  "慣性の彼方に微睡むもの",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1363,
+                            "name":  "不変なる位相の超弦理論",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1364,
+                            "name":  "崩壊より生まれし同位体",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1365,
+                            "name":  "万物の秩序定めし周期律",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1366,
+                            "name":  "段階的元素跳躍の理の門",
+                            "icon":  null
+                        }
+                    ],
+        "skill_list":  [
+                           {
+                               "id":  11361,
+                               "group_id":  13631,
+                               "name":  "連鎖反応",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "普通攻击"
+                           },
+                           {
+                               "id":  11362,
+                               "group_id":  13632,
+                               "name":  "定律・変数検知",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素战技"
+                           },
+                           {
+                               "id":  11364,
+                               "group_id":  13639,
+                               "name":  "解析・変化ノ理",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素爆发"
+                           },
+                           {
+                               "id":  13621,
+                               "group_id":  13621,
+                               "name":  "基準耐圧テスト",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13622,
+                               "group_id":  13622,
+                               "name":  "臨界爆発性試薬",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13623,
+                               "group_id":  13623,
+                               "name":  "星光の祝福・極秘プロトコル",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13625,
+                               "group_id":  13625,
+                               "name":  "エネルギー活性触媒",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           }
+                       ],
+        "wiki_url":  "https://wiki.hoyolab.com/pc/genshin/entry/11827",
+        "wiki_recommend_weapon_url":  "https://wiki.hoyolab.com/pc/genshin/entry/11827",
+        "wiki_reliquary_url":  "",
+        "wiki_recommend_skill_url":  ""
+    },
+    {
         "id":  10000133,
         "name":  "サンドローネ",
         "icon":  null,
@@ -9228,6 +9342,120 @@
                        ],
         "wiki_url":  "https://wiki.hoyolab.com/pc/genshin/entry/11163",
         "wiki_recommend_weapon_url":  "https://wiki.hoyolab.com/pc/genshin/entry/11163",
+        "wiki_reliquary_url":  "",
+        "wiki_recommend_skill_url":  ""
+    },
+    {
+        "id":  10000137,
+        "name":  "バレリー",
+        "icon":  null,
+        "weapon_cat_id":  1,
+        "avatar_level":  4,
+        "element_attr_id":  5,
+        "max_level":  90,
+        "item_icon":  null,
+        "talent_icons":  null,
+        "side_icon":  null,
+        "profile_pictures":  null,
+        "talents":  [
+                        {
+                            "id":  1371,
+                            "name":  "持続的制圧の法則",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1372,
+                            "name":  "一斉突撃の陣構え",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1373,
+                            "name":  "白兵戦への心構え",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1374,
+                            "name":  "消耗を恐れぬ意思",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1375,
+                            "name":  "各個撃破の気負い",
+                            "icon":  null
+                        },
+                        {
+                            "id":  1376,
+                            "name":  "敵陣をも貫く威厳",
+                            "icon":  null
+                        }
+                    ],
+        "skill_list":  [
+                           {
+                               "id":  30601,
+                               "group_id":  13731,
+                               "name":  "近衛戦法・剣攻盾守",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "普通攻击"
+                           },
+                           {
+                               "id":  30602,
+                               "group_id":  13732,
+                               "name":  "攻勢防御・要塞突撃",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素战技"
+                           },
+                           {
+                               "id":  30605,
+                               "group_id":  13739,
+                               "name":  "集中砲火・雷弾強襲",
+                               "icon":  null,
+                               "max_level":  10,
+                               "is_proud":  false,
+                               "pos_name":  "元素爆发"
+                           },
+                           {
+                               "id":  13721,
+                               "group_id":  13721,
+                               "name":  "弾幕攻撃の奇襲",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13722,
+                               "group_id":  13722,
+                               "name":  "突破口への突撃",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13723,
+                               "group_id":  13723,
+                               "name":  "極寒適応性",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           },
+                           {
+                               "id":  13725,
+                               "group_id":  13725,
+                               "name":  "氷原行動情報",
+                               "icon":  null,
+                               "max_level":  1,
+                               "is_proud":  true,
+                               "pos_name":  ""
+                           }
+                       ],
+        "wiki_url":  "https://wiki.hoyolab.com/pc/genshin/entry/11828",
+        "wiki_recommend_weapon_url":  "https://wiki.hoyolab.com/pc/genshin/entry/11828",
         "wiki_reliquary_url":  "",
         "wiki_recommend_skill_url":  ""
     },

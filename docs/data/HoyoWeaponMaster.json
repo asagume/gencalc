@@ -120,6 +120,16 @@
         "wiki_url":  null
     },
     {
+        "id":  14525,
+        "name":  "秘星の聖典",
+        "icon":  null,
+        "weapon_cat_id":  10,
+        "weapon_level":  5,
+        "max_level":  90,
+        "is_recommend":  false,
+        "wiki_url":  null
+    },
+    {
         "id":  14524,
         "name":  "旋流の讃美歌",
         "icon":  null,
